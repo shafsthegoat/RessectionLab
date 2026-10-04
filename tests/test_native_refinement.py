@@ -1,5 +1,6 @@
 """Real native updates reach the desktop only through an independent replay gate."""
 import copy
+import json
 
 import numpy as np
 import pytest
@@ -77,6 +78,46 @@ def test_cancelled_training_exposes_no_uncertified_replay_and_resumes(native_cas
     resumed = run_native_refinement(native_case, tmp_path, budget_seconds=3., seed=11,
                                     max_steps=1, resume=True)
     assert resumed["gradient_steps"] >= first["gradient_steps"]
+    assert resumed["replay_status"] == "accepted_independent_geometry"
+
+
+@pytest.mark.parametrize("cancel_during_panel", [False, True])
+def test_incomplete_initial_panel_retains_checkpoint_without_replay_and_can_resume(
+        native_case, tmp_path, monkeypatch, cancel_during_panel):
+    from resectionlab import learning
+    original = learning.rollout_policy
+    state = {"calls": 0, "cancelled": False}
+
+    def partial_panel(*args, **kwargs):
+        state["calls"] += 1
+        if state["calls"] == 1:
+            return original(*args, **kwargs)
+        state["cancelled"] = cancel_during_panel
+        raise learning.RolloutInterrupted(1)
+
+    def forbid_candidate(*args, **kwargs):
+        raise AssertionError("An incomplete selection panel must not load or certify a candidate")
+
+    with monkeypatch.context() as patch:
+        patch.setattr(learning, "rollout_policy", partial_panel)
+        patch.setattr(learning, "load_policy", forbid_candidate)
+        patch.setattr("resectionlab.evaluation.independent_check_native_history", forbid_candidate)
+        first = run_native_refinement(native_case, tmp_path, budget_seconds=3., seed=11,
+            max_steps=1, cancelled=lambda: state["cancelled"])
+    assert first["status"] == ("cancelled" if cancel_during_panel else "incomplete_selection")
+    assert first["replay_status"] == ("cancelled" if cancel_during_panel else "no_completed_selection")
+    assert first["selection_panel_complete"] is False and first["replay"] is None
+    raw = json.loads((tmp_path / "result.json").read_text())
+    assert raw["status"] == ("cancelled" if cancel_during_panel else "wall_time_budget")
+    assert raw["selection_environment_steps"] >= 2
+    assert raw["selected_selection_return"] is None and raw["selection_history"] == []
+    assert (tmp_path / "checkpoint.pt").is_file()
+    assert not (tmp_path / "native-candidate-freeze.json").exists()
+    assert not (tmp_path / "native-selection-replay.json").exists()
+    resumed = run_native_refinement(native_case, tmp_path, budget_seconds=3., seed=11,
+                                    max_steps=1, resume=True)
+    assert resumed["selection_panel_complete"] is True
+    assert resumed["selection_environment_steps"] > first["selection_environment_steps"]
     assert resumed["replay_status"] == "accepted_independent_geometry"
 
 

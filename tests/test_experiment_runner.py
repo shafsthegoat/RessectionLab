@@ -98,6 +98,39 @@ def test_development_only_never_opens_final_evaluator(tmp_path, monkeypatch, sta
     assert not list((tmp_path / "dev").glob("evaluation-*"))
 
 
+@pytest.mark.parametrize("cancel_during_panel", [False, True])
+def test_unfinished_initial_selection_never_enters_frozen_candidate_set(
+        tmp_path, monkeypatch, stable_sources, cancel_during_panel):
+    from resectionlab import learning
+    state = {"cancelled": False}
+
+    def interrupted(*args, **kwargs):
+        state["cancelled"] = cancel_during_panel
+        raise learning.RolloutInterrupted(1)
+
+    def forbidden(*args, **kwargs):
+        raise AssertionError("Unselected checkpoints must not be extracted or evaluated")
+
+    monkeypatch.setattr(learning, "rollout_policy", interrupted)
+    monkeypatch.setattr(runner, "load_policy", forbidden)
+    monkeypatch.setattr(runner, "evaluate_frozen_candidates", forbidden)
+    output = tmp_path / "incomplete"
+    result = runner.run_experiment(make_synthetic_simulator, output,
+        config=TrainingConfig(max_environment_steps=16, max_gradient_steps=1, max_wall_seconds=10),
+        seeds=(11, 23, 47), counts=(1, 2, 1, 1), cancelled=lambda: state["cancelled"])
+    assert result["status"] == ("cancelled" if cancel_during_panel else "incomplete_selection")
+    assert result["planned_learning_arms"] == 3
+    assert result["attempted_learning_arms"] == 1 and result["eligible_learning_arms"] == 0
+    raw = json.loads((output / "scratch-11/result.json").read_text())
+    assert raw["selected_selection_return"] is None and raw["selection_environment_steps"] == 1
+    assert raw["status"] == ("cancelled" if cancel_during_panel else "wall_time_budget")
+    assert (output / "scratch-11/checkpoint.pt").is_file()
+    training = json.loads((output / "training.json").read_text())
+    assert training[0]["selection_panel_complete"] is False
+    assert not (output / "candidate-freeze.json").exists()
+    assert not list(output.glob("evaluation-*"))
+
+
 def test_ppo_runner_records_distinct_algorithm_and_actual_adam_steps(tmp_path, monkeypatch, stable_sources):
     from resectionlab.learning_ppo import PPOConfig, train_patient_ppo
     def forbidden(*args, **kwargs):

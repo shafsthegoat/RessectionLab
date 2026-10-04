@@ -34,6 +34,7 @@ from resectionlab.evaluation import (EvaluationLedger, IndependentGeometryResult
     independent_check_sequence, independent_native_removal_check, independent_check_native_history)
 from resectionlab.learning import (TrainingConfig, load_policy, policy_hash,
     rollout_policy, train_patient_policy, RolloutInterrupted)
+from resectionlab.selection_contract import has_completed_selection
 from resectionlab.simulation import (SequentialSimulator, beam_search,
     greedy_search, make_synthetic_simulator)
 from resectionlab.native_simulation import (NativeSequentialSimulator,
@@ -335,9 +336,20 @@ def run_experiment(factory: Callable[[], SequentialSimulator], output: Path, *,
             if mode == "POPULATION_ADAPTED" and result.initial_checkpoint_hash != population_info["policy_hash"]:
                 raise ValueError("Adaptation did not start from the frozen shared policy")
             training.append({**asdict(result), "preparation_seconds": preparation_seconds})
+            raw_report = json.loads((folder / "result.json").read_text())
+            # Bind the typed trainer outcome to its retained full-panel evidence.
+            selection_complete = has_completed_selection(
+                {**raw_report, **asdict(result)}, partitions.selection.to_dict())
+            training[-1]["selection_panel_complete"] = selection_complete
             write_json(output / "training.json", training)
-            if result.status in {"cancelled", "failed"}:
-                status["status"] = result.status
+            if result.status in {"cancelled", "failed"} or cancelled() or not selection_complete:
+                status.update(status="cancelled" if cancelled() or result.status == "cancelled"
+                    else "failed" if result.status == "failed" else "incomplete_selection",
+                    reason="No eligible checkpoint with a completed selection panel",
+                    unfinished_arm={"mode": mode, "seed": seed, "training_status": result.status},
+                    planned_learning_arms=len(learning_arms), attempted_learning_arms=len(training),
+                    eligible_learning_arms=len(training) - 1,
+                    evaluation_status="not_started_incomplete_learning_arm")
                 write_json(output / "status.json", status)
                 return status
             policy = load_policy(folder / "checkpoint.pt")

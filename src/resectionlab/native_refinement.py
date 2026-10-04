@@ -12,6 +12,7 @@ from typing import Any
 import numpy as np
 
 from .worlds import content_hash
+from .selection_contract import has_completed_selection
 
 
 def _write(path: Path, value: Any) -> None:
@@ -22,6 +23,22 @@ def _write(path: Path, value: Any) -> None:
 
 def replay_artifact_hash(replay: dict[str, Any]) -> str:
     return content_hash({key: value for key, value in replay.items() if key != "artifact_hash"})
+
+
+def require_completed_selection_replay(report: dict[str, Any], contract: dict[str, Any]) -> None:
+    """Gate fresh and historical desktop replay against its frozen learner contract."""
+    replay = report.get("replay")
+    if replay is None:
+        return
+    partitions = contract.get("partitions", {})
+    selection = partitions.get("selection", {}) if isinstance(partitions, dict) else {}
+    if (not isinstance(replay, dict) or not isinstance(selection, dict)
+            or report.get("status") in {"cancelled", "failed", "running", "incomplete_selection"}
+            or not has_completed_selection(report, selection)
+            or not isinstance(selection.get("partition_hash"), str) or not selection["partition_hash"]
+            or replay.get("checkpoint_hash") != report.get("selected_checkpoint_hash")
+            or replay.get("selection_partition_hash") != selection.get("partition_hash")):
+        raise ValueError("Replay requires a completed selection panel for its frozen checkpoint and worlds")
 
 
 def _point(value: Any, name: str) -> list[float] | None:
@@ -244,7 +261,7 @@ def run_native_refinement(case: Any, output_dir: str | Path, *, budget_seconds: 
                           selected_target_mm=None) -> dict[str, Any]:
     """Train within fixed assumptions; only independently accepted replay is exposed.
 
-    The budget covers learner initialization, optimization and selection; native
+    The budget covers optimization and selection; learner initialization, native
     preprocessing and independent certification are separate measured costs.
     Resume retains the original total learner budget and frozen source contract.
     """
@@ -314,7 +331,16 @@ def run_native_refinement(case: Any, output_dir: str | Path, *, budget_seconds: 
         role="selection", final_evaluation=False, preparation_seconds=preparation_seconds,
         readiness=readiness, route_binding=readiness["route_binding"],
         replay=None, replay_status="cancelled" if cancelled() else "pending_independent_check")
+    report["selection_panel_complete"] = has_completed_selection(
+        {**report, **asdict(result)}, partitions.selection.to_dict())
     if cancelled() or result.status == "cancelled":
+        report.update(status="cancelled", replay_status="cancelled")
+        _write(directory / "native-refinement.json", report)
+        return report
+    if result.status == "failed" or not report["selection_panel_complete"]:
+        report.update(training_status=result.status,
+            status="failed" if result.status == "failed" else "incomplete_selection",
+            replay_status="failed" if result.status == "failed" else "no_completed_selection")
         _write(directory / "native-refinement.json", report)
         return report
     check_started = time.perf_counter()
