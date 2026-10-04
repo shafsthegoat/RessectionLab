@@ -1,0 +1,24 @@
+{
+  "elapsed_seconds": 5.386523458058946,
+  "peak_rss_bytes_macos": 371933184,
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "numpy": "2.5.3",
+  "nibabel": "5.4.2",
+  "numpy_module": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/__init__.py",
+  "nibabel_module": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/nibabel/__init__.py",
+  "resectionlab_module_origins": {
+    "resectionlab": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/btc-spatial-preparation-086b7cd/src/resectionlab/__init__.py",
+    "resectionlab.core": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/btc-spatial-preparation-086b7cd/src/resectionlab/core.py",
+    "resectionlab.imaging": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/btc-spatial-preparation-086b7cd/src/resectionlab/imaging.py",
+    "resectionlab.structural_evidence": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/btc-spatial-preparation-086b7cd/src/resectionlab/structural_evidence.py"
+  },
+  "sys_path": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/btc-spatial-preparation-086b7cd/src",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/btc-spatial-preparation-086b7cd/scripts",
+    "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python312.zip",
+    "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12",
+    "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/lib-dynload",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages"
+  ],
+  "live_repository_modules_imported": false
+}

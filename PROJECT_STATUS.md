@@ -71,6 +71,12 @@ has at most 0.000858 mm corner discrepancy. These are acquisition/integrity
 results; brain envelopes and cortical access remain unreviewed. PAT29/PAT31 stay
 unopened. Receipts are in `artifacts/btc-spatial-acquisition-v1/`; no new human
 training or planning run has been executed from this batch.
+All four cases now also have source-bound portable bundles with exact save/reopen
+identity checks, prepared in 21.02 seconds from committed code. Native MRI and
+annotation frames, missing modalities, and cohort roles are preserved. Peak
+worker memory was 430 MB. Brain masks and cortical access remain unavailable;
+preparation is not anatomical approval. Execution receipts are in
+`artifacts/btc-spatial-preparation-v1/`.
 
 The read-only inspection bridge and separate linked MRI/3D tool display were
 committed after 100 bridge checks and 68 viewer checks, respectively. App host

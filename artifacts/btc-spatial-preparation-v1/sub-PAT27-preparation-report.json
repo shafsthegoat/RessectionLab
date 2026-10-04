@@ -1,0 +1,313 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-04T17:09:43.550735+00:00",
+  "case_id": "BTC-ds001226-sub-PAT27-preop",
+  "case_hash": "sha256:93c258353a18aa436210f1056ce55b0f85f692fc43d608b1269b02cb4836c53c",
+  "planning_hash": "sha256:756a7fbb3fc79075a0e036dc5aa3e9cd6e7073f1d8bbe456068319af7dc5cad8",
+  "source_hashes_checked": 7,
+  "source_files_unchanged": true,
+  "acquisition_manifest_sha256": "c95aaee50921dda1f8a5cb4ec5ea3349d9986e111c7e9be53d0dab208a9a8959",
+  "source_release": {
+    "accession": "ds001226",
+    "release": "5.0.1",
+    "git_commit": "359d372c5e972a161966312128adb365870df949"
+  },
+  "bundle": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/cases/BTC-sub-PAT27.ressectionlab",
+  "bundle_bytes": 9168261,
+  "reopened_identical": true,
+  "shape": [
+    160,
+    256,
+    256
+  ],
+  "affine_ras_mm": [
+    [
+      0.9996031522750854,
+      -0.024373624473810196,
+      -0.013942251913249493,
+      -74.70027923583984
+    ],
+    [
+      0.0243711918592453,
+      0.9997029304504395,
+      -0.00033993780380114913,
+      -100.91281127929688
+    ],
+    [
+      0.01394636183977127,
+      1.358186096922509e-08,
+      0.9999027252197266,
+      -145.96343994140625
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "compartment_volumes_mm3": {
+    "fractional_source_target_threshold_scenario": 11982.969458941207
+  },
+  "annotation_derivation": {
+    "interpretation": "Creator-supplied manual/semiautomated fractional annotation; file-specific smoothing history unverified.",
+    "provenance": "observed",
+    "intensity_meaning": "source annotation intensity; not a calibrated probability",
+    "source_min": 0.0,
+    "source_max": 1.0,
+    "source_shape": [
+      160,
+      256,
+      256
+    ],
+    "source_affine_ras_mm": [
+      [
+        -0.999605655670166,
+        -0.024373650550842285,
+        -0.013942241668701172,
+        84.23662567138672
+      ],
+      [
+        -0.02437126636505127,
+        0.9997029304504395,
+        -0.0003399848937988281,
+        -97.03779602050781
+      ],
+      [
+        -0.01394641399383545,
+        0.0,
+        0.9999027252197266,
+        -143.74598693847656
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "target_voxel_to_source_voxel": [
+      [
+        -0.9999974950487758,
+        -2.625616853102475e-08,
+        9.092865630774743e-09,
+        158.99960504486472
+      ],
+      [
+        -1.3466827795266534e-08,
+        0.9999999993644085,
+        4.732570447362654e-08,
+        6.476868457783169e-06
+      ],
+      [
+        -1.7220652504871845e-08,
+        1.3216967250577298e-08,
+        1.0000000001268252,
+        2.1315955848422163e-05
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "applied_integer_reindex": [
+      [
+        -1.0,
+        -0.0,
+        0.0,
+        159.0
+      ],
+      [
+        -0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        -0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "max_grid_rounding_error_voxels": 0.00040245792297895216,
+    "grid_rounding_error_definition": "maximum Euclidean source-voxel displacement at the eight structural-grid corners",
+    "threshold": 0.5,
+    "threshold_rule": "source_intensity >= threshold",
+    "threshold_evidence": "declared_research_assumption",
+    "derived_provenance": "estimated",
+    "source_compartments_meaning": "initial threshold-derived binary annotation, not original fractional values",
+    "raw_source_retention": "immutable external source file referenced by SHA256; not embedded in compact bundle"
+  },
+  "threshold_sensitivity": [
+    {
+      "threshold": 0.25,
+      "source_voxel_count": 12624,
+      "interpretation": "source-intensity threshold sensitivity; not resection or clinical probability"
+    },
+    {
+      "threshold": 0.5,
+      "source_voxel_count": 11983,
+      "interpretation": "source-intensity threshold sensitivity; not resection or clinical probability"
+    },
+    {
+      "threshold": 0.75,
+      "source_voxel_count": 11366,
+      "interpretation": "source-intensity threshold sensitivity; not resection or clinical probability"
+    }
+  ],
+  "diffusion_input_audit": {
+    "usable_for_reconstruction": false,
+    "issues": [
+      "MISSING_DIRECTIONAL_DIFFUSION"
+    ],
+    "reason": "This predeclared acquisition contains structural imaging only; diffusion was not acquired."
+  },
+  "structural_coverage": "full_head",
+  "brain_mask_supplied_or_derived": false,
+  "automatic_cortical_access_status": "blocked_without_reviewed_cerebral_mask",
+  "allow_nonzero_mri_access_support": false,
+  "withheld_context": {
+    "source_diagnosis": {
+      "value": null,
+      "unit": null,
+      "available_at": null,
+      "measurement_at": null,
+      "reason": "availability_time_unknown",
+      "source_id": "btc_participant_table"
+    },
+    "age": {
+      "value": null,
+      "unit": "years",
+      "available_at": null,
+      "measurement_at": null,
+      "reason": "availability_time_unknown",
+      "source_id": "btc_participant_table"
+    },
+    "source_reported_tumor_volume": {
+      "value": null,
+      "unit": "cm3",
+      "available_at": null,
+      "measurement_at": null,
+      "reason": "availability_time_unknown",
+      "source_id": "btc_participant_table"
+    },
+    "source_location": {
+      "value": null,
+      "unit": null,
+      "available_at": null,
+      "measurement_at": null,
+      "reason": "availability_time_unknown",
+      "source_id": "btc_participant_table"
+    },
+    "source_handedness": {
+      "value": null,
+      "unit": "source_scale",
+      "available_at": null,
+      "measurement_at": null,
+      "reason": "availability_time_unknown",
+      "source_id": "btc_participant_table"
+    },
+    "IDH1_IDH2_status": {
+      "value": null,
+      "unit": null,
+      "available_at": null,
+      "measurement_at": null,
+      "reason": "not_supplied_in_selected_inputs",
+      "source_id": "btc_participant_table"
+    },
+    "1p19q_codeletion": {
+      "value": null,
+      "unit": null,
+      "available_at": null,
+      "measurement_at": null,
+      "reason": "not_supplied_in_selected_inputs",
+      "source_id": "btc_participant_table"
+    },
+    "MGMT_promoter_methylation": {
+      "value": null,
+      "unit": null,
+      "available_at": null,
+      "measurement_at": null,
+      "reason": "not_supplied_in_selected_inputs",
+      "source_id": "btc_participant_table"
+    },
+    "baseline_motor_assessment": {
+      "value": null,
+      "unit": null,
+      "available_at": null,
+      "measurement_at": null,
+      "reason": "not_supplied_in_selected_inputs",
+      "source_id": "btc_participant_table"
+    },
+    "baseline_language_assessment": {
+      "value": null,
+      "unit": null,
+      "available_at": null,
+      "measurement_at": null,
+      "reason": "not_supplied_in_selected_inputs",
+      "source_id": "btc_participant_table"
+    }
+  },
+  "planning_as_of": null,
+  "planning_cutoff_status": "historical_preoperative_cutoff_unknown",
+  "visual_alignment_review": "pending",
+  "clinical_deficit_probability": null,
+  "benchmark_role": "checkpoint_selection_development",
+  "split": {
+    "role": "development",
+    "development_role": "checkpoint_selection_development",
+    "patient_group": "BTC:sub-PAT27",
+    "visit": "preop",
+    "outer_role_locked": true,
+    "external_holdout_eligible": false,
+    "policy_training_allowed": false
+  },
+  "benchmark_track": "annotation_assisted_threshold_scenario",
+  "selection_cohort_sha256": "962d964e1d71427f3625cdbebc0f7e4759e5d2345d8f95cb211ed45810ed2985",
+  "preoperative_information_policy": {
+    "planning_as_of": null,
+    "calendar_cutoff": "source deidentified; historical availability cutoff unknown",
+    "source_preoperative_images_permitted_for_research_replay": true,
+    "source_tumor_annotation": "annotation-assisted research input; not observed resection, biological removal prescription, or clinical probability",
+    "fractional_annotation_threshold": 0.5,
+    "threshold_evidence": "unchanged declared research assumption; preserve raw source values",
+    "metadata_diagnosis_use": "archival diffuse-glioma cohort eligibility only; never actor, critic, reward, or uncertainty model",
+    "molecular_pathology_outcome_cognitive_demographic_inputs": "excluded without independently verified availability at or before a valid planning cutoff",
+    "resting_state_fMRI_not_patient_task_localization": true
+  },
+  "target_input_status": "annotation_assisted_research_input",
+  "target_policy_input_allowed": false,
+  "target_usage": "inspection_and_hidden_environment_reference_only; excluded_from_scan_only_actor_observation",
+  "unknowns": [
+    "annotation_threshold_is_research_assumption",
+    "automatic_cortical_access_requires_reviewed_cerebral_mask",
+    "brain_segmentation_unassessed",
+    "clinical_context_availability_unknown",
+    "diffusion_not_audited",
+    "full_head_MRI_is_not_a_cortical_surface",
+    "historical_preoperative_information_cutoff_unavailable",
+    "language_function_unassessed",
+    "missing_T1ce_T2_FLAIR",
+    "missing_directional_diffusion",
+    "motor_function_unassessed",
+    "native_frame_provenance_requires_review",
+    "skull_anatomy_unassessed",
+    "vascular_anatomy_unassessed"
+  ],
+  "timings_seconds": {
+    "source_verification": 0.05954687495250255,
+    "import_and_audit": 0.5609325841069221,
+    "sensitivity_and_save": 3.9215509159257635,
+    "reopen": 0.17458716698456556
+  },
+  "interpretation": "Verified creator-source inputs, explicit annotation derivation and persistence checks; no cortical access, functional localization, resection, or clinical validation."
+}
