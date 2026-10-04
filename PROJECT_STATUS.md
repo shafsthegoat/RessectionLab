@@ -237,6 +237,19 @@ unchanged. These are homogeneous analytical controls, not measured tissue
 agreement, mesh convergence or patient validation. See
 `artifacts/mechanics-febio-patch-run-v1/RESULT.md` and its independent audit.
 
+The separate actual tet10 and multipoint-constraint attempt passed three
+controls: finite affine stretch/shear, constrained rigid translation and a small
+nonrigid deformation. Independent saved-output review checked all five states
+per case, original constraints, stress, energy and all 72 feasible force
+directions. Maximum nonrigid constraint error was 2.00e-16 m; maximum reduced
+force was 2.10e-11 N and minimum sampled Jacobian was 0.996685. The three
+Skyline calls completed in one 0.781 s supervised attempt with 40.1 MB sampled
+peak memory, unchanged inputs and no retry. Concurrent work prevents treating
+that time as an isolated benchmark. These are analytical software controls;
+the patient volume-integral observation operator and anatomical mesh remain
+unvalidated. See `artifacts/mechanics-patient-constraints-run-v1/RESULT.md` and
+`artifacts/mechanics-patient-constraints-run-review-v1/REVIEW.md`.
+
 One bounded Gmsh preparation generated the three measured-specimen meshes
 (96/768/2,592 hex elements) and 18 fixed loading decks in 3.43 s, with
 140.2 MB maximum sampled memory. Independent native-mesh and deck review

@@ -4,6 +4,18 @@ Status: **static source review and control specification only**. No patient arra
 
 A minimal existing-framework path is available: keep the volume mesh and material in FEBio; express the frozen observation operator as exact inhomogeneous linear multipoint constraints; let FEBio minimize its hyperelastic energy on the remaining degrees of freedom. No new physics solver or artificial fixed node is needed. Whether a particular anatomy/operator yields a well-posed, tractable solve remains untested.
 
+## Subsequent executed controls
+
+The separately committed tet10/constraint preparation was executed once from
+`ddaa7e3`. All three analytical solver controls passed, and an independent audit
+recomputed saved displacement, energy, stress, constraint residuals and feasible
+force directions without rerunning the solver. See the
+[actual result](../artifacts/mechanics-patient-constraints-run-v1/RESULT.md) and
+[independent review](../artifacts/mechanics-patient-constraints-run-review-v1/REVIEW.md).
+Those controls used nodal averages; they do not establish the following fixed
+volume-integral operator, patient mesh convergence or physical validity. The
+original prospective specification below remains as written.
+
 ## Freeze the observation functional first
 
 For reference-coordinate landmark source `p_b`, define `k_b(X)=max(1−||X−p_b||/0.005 m,0)` and

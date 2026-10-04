@@ -1,0 +1,378 @@
+===========================================================================
+         ________    _________   _______       __     _________            
+        |        |\ |        |\ |       \\    |  |\  /         \\          
+        |    ____|| |    ____|| |    __  ||   |__|| |    ___    ||         
+        |   |\___\| |   |\___\| |   |\_| ||    \_\| |   //  \   ||         
+        |   ||__    |   ||__    |   ||_| ||   |  |\ |  ||    |  ||         
+        |       |\  |       |\  |         \\  |  || |  ||    |  ||         
+        |    ___||  |    ___||  |    ___   || |  || |  ||    |  ||         
+        |   |\__\|  |   |\__\|  |   |\__|  || |  || |  ||    |  ||         
+        |   ||      |   ||___   |   ||__|  || |  || |   \\__/   ||         
+        |   ||      |        |\ |          || |  || |           ||         
+        |___||      |________|| |_________//  |__||  \_________//          
+                                                                           
+      F I N I T E   E L E M E N T S   F O R   B I O M E C H A N I C S      
+                                                                           
+  version 4.13.0
+  FEBio is a registered trademark.                                         
+  copyright (c) 2006-2026 - All rights reserved                            
+                                                                           
+===========================================================================
+
+
+
+
+
+ FILES USED
+===========================================================================
+	Input file : mpc_translation.feb
+	Plot file  : mpc_translation.xplt
+	Log file   : mpc_translation.log
+
+
+ MESH INFO
+===========================================================================
+	Number of materials ............................ : 1
+	Number of domains .............................. : 1
+	Number of nodes ................................ : 27
+	Number of solid elements ....................... : 6
+
+
+ MODULE
+===========================================================================
+	Module type ....................................... : solid
+
+
+ CONTROL DATA
+===========================================================================
+	analysis .......................................... : STATIC (0)
+	time_steps ........................................ : 4
+	step_size ......................................... : 0.25
+	plot_zero_state ................................... : no (0)
+	plot_range ........................................ : 0,-1
+	plot_level ........................................ : PLOT_NEVER (0)
+	output_level ...................................... : OUTPUT_MAJOR_ITRS (1)
+	plot_stride ....................................... : 1
+	output_stride ..................................... : 1
+	adaptor_re_solve .................................. : yes (1)
+	Auto time stepper activated ....................... : yes
+	  max_retries ..................................... : 0
+	  opt_iter ........................................ : 11
+	  dtmin ........................................... : 0.25
+	  dtmax ........................................... : 0.25
+	  aggressiveness .................................. : 0
+	  cutback ......................................... : 0.5
+	  dtforce ......................................... : no (0)
+ SOLVER PARAMETERS
+===========================================================================
+	symmetric_stiffness ............................... : symmetric (1)
+	equation_scheme ................................... : staggered (0)
+	equation_order .................................... : default (0)
+	optimize_bw ....................................... : no (0)
+	lstol ............................................. : 0.9
+	lsmin ............................................. : 0.01
+	lsiter ............................................ : 5
+	ls_check_jacobians ................................ : no (0)
+	max_refs .......................................... : 20
+	check_zero_diagonal ............................... : no (0)
+	zero_diagonal_tol ................................. : 0
+	force_partition ................................... : 0
+	reform_each_time_step ............................. : yes (1)
+	reform_augment .................................... : no (0)
+	diverge_reform .................................... : yes (1)
+	min_residual ...................................... : 1e-20
+	max_residual ...................................... : 0
+	dtol .............................................. : 1e-10
+	etol .............................................. : 1e-10
+	rtol .............................................. : 1e-10
+	rhoi .............................................. : -2
+	alpha ............................................. : 1
+	beta .............................................. : 0.25
+	gamma ............................................. : 0.5
+	logSolve .......................................... : no (0)
+	arc_length ........................................ : 0
+	arc_length_scale .................................. : 0
+
+
+
+
+
+
+ MATERIAL DATA
+===========================================================================
+  1 - numerical_ogden (type: Ogden)
+	density ........................................... : 1
+	k ................................................. : 9666.67
+	pressure_model .................................... : NIKE3D (1)
+	c1 ................................................ : 2000
+	c2 ................................................ : 0
+	c3 ................................................ : 0
+	c4 ................................................ : 0
+	c5 ................................................ : 0
+	c6 ................................................ : 0
+	m1 ................................................ : 2
+	m2 ................................................ : 2
+	m3 ................................................ : 2
+	m4 ................................................ : 2
+	m5 ................................................ : 2
+	m6 ................................................ : 2
+
+
+ LOAD CONTROLLER DATA
+===========================================================================
+load controller   1 - lc1 (type: loadcurve)
+	interpolate ....................................... : LINEAR (0)
+	extend ............................................ : CONSTANT (0)
+	points ............................................ : (can't display value)
+
+
+ OUTPUT DATA
+===========================================================================
+ LINEAR SOLVER DATA
+===========================================================================
+	Default linear solver ............................. : skyline
+
+
+Data Record #1
+===========================================================================
+Step = 0
+Time = 0
+Data = mechanics_nodes_si
+File = mpc_translation.nodes.log
+
+Data Record #2
+===========================================================================
+Step = 0
+Time = 0
+Data = mechanics_elements_si
+File = mpc_translation.elements.log
+
+ *************************************************************************
+ * Selecting linear solver skyline                                       *
+ *************************************************************************
+
+===== beginning time step 1 : 0.25 =====
+
+
+Reforming stiffness matrix: reformation #1
+
+===== reforming stiffness matrix:
+	Nr of equations ........................... : 72
+	Nr of nonzeroes in stiffness matrix ....... : 2484
+ 1
+ Nonlinear solution status: time= 0.25
+	stiffness updates             = 0
+	right hand side evaluations   = 2
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            5.598500e-04    7.911813e-32    5.598500e-14 
+	   energy              3.475000e-06    3.972404e-21    3.475000e-16 
+	   displacement        2.100000e-07    2.100000e-07    2.100000e-27 
+
+ *************************************************************************
+ *                               WARNING                                 *
+ * No force acting on the system.                                        *
+ *************************************************************************
+
+convergence summary
+    number of iterations   : 1
+    number of reformations : 1
+
+------- converged at time : 0.25
+
+
+Data Record #1
+===========================================================================
+Step = 1
+Time = 0.25
+Data = mechanics_nodes_si
+File = mpc_translation.nodes.log
+
+Data Record #2
+===========================================================================
+Step = 1
+Time = 0.25
+Data = mechanics_elements_si
+File = mpc_translation.elements.log
+
+===== beginning time step 2 : 0.5 =====
+
+
+Reforming stiffness matrix: reformation #1
+
+ 1
+ Nonlinear solution status: time= 0.5
+	stiffness updates             = 0
+	right hand side evaluations   = 2
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            5.598500e-04    7.553289e-32    5.598500e-14 
+	   energy              3.475000e-06    9.647171e-21    3.475000e-16 
+	   displacement        2.100000e-07    2.100000e-07    2.100000e-27 
+
+ *************************************************************************
+ *                               WARNING                                 *
+ * No force acting on the system.                                        *
+ *************************************************************************
+
+convergence summary
+    number of iterations   : 1
+    number of reformations : 1
+
+------- converged at time : 0.5
+
+
+Data Record #1
+===========================================================================
+Step = 2
+Time = 0.5
+Data = mechanics_nodes_si
+File = mpc_translation.nodes.log
+
+Data Record #2
+===========================================================================
+Step = 2
+Time = 0.5
+Data = mechanics_elements_si
+File = mpc_translation.elements.log
+
+===== beginning time step 3 : 0.75 =====
+
+
+Reforming stiffness matrix: reformation #1
+
+ 1
+ Nonlinear solution status: time= 0.75
+	stiffness updates             = 0
+	right hand side evaluations   = 2
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            5.598500e-04    1.059559e-31    5.598500e-14 
+	   energy              3.475000e-06    1.710796e-20    3.475000e-16 
+	   displacement        2.100000e-07    2.100000e-07    2.100000e-27 
+
+ *************************************************************************
+ *                               WARNING                                 *
+ * No force acting on the system.                                        *
+ *************************************************************************
+
+convergence summary
+    number of iterations   : 1
+    number of reformations : 1
+
+------- converged at time : 0.75
+
+
+Data Record #1
+===========================================================================
+Step = 3
+Time = 0.75
+Data = mechanics_nodes_si
+File = mpc_translation.nodes.log
+
+Data Record #2
+===========================================================================
+Step = 3
+Time = 0.75
+Data = mechanics_elements_si
+File = mpc_translation.elements.log
+
+===== beginning time step 4 : 1 =====
+
+
+Reforming stiffness matrix: reformation #1
+
+ 1
+ Nonlinear solution status: time= 1
+	stiffness updates             = 0
+	right hand side evaluations   = 2
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            5.598500e-04    1.105826e-31    5.598500e-14 
+	   energy              3.475000e-06    7.549027e-21    3.475000e-16 
+	   displacement        2.100000e-07    2.100000e-07    2.100000e-27 
+
+ *************************************************************************
+ *                               WARNING                                 *
+ * No force acting on the system.                                        *
+ *************************************************************************
+
+convergence summary
+    number of iterations   : 1
+    number of reformations : 1
+
+------- converged at time : 1
+
+
+Data Record #1
+===========================================================================
+Step = 4
+Time = 1
+Data = mechanics_nodes_si
+File = mpc_translation.nodes.log
+
+Data Record #2
+===========================================================================
+Step = 4
+Time = 1
+Data = mechanics_elements_si
+File = mpc_translation.elements.log
+
+
+ N O N L I N E A R   I T E R A T I O N   I N F O R M A T I O N
+
+	Number of time steps completed .................... : 4
+
+	Total number of equilibrium iterations ............ : 4
+
+	Average number of equilibrium iterations .......... : 1
+
+	Total number of right hand evaluations ............ : 8
+
+	Total number of stiffness reformations ............ : 4
+
+
+ L I N E A R   S O L V E R   S T A T S
+
+	Total calls to linear solver ........ : 0
+
+	Avg iterations per solve ............ : 0
+
+	Time in linear solver: 0:00:00
+
+
+ Elapsed time : 0:00:00
+
+ T I M I N G   I N F O R M A T I O N
+
+	Input time ...................... : 0:00:00 (0.00136883 sec)
+
+	Initialization time ............. : 0:00:00 (0.000250502 sec)
+
+	Solve time ...................... : 0:00:00 (0.00242925 sec)
+
+	   IO-time (plot, dmp, data) .... : 0:00:00 (0.00120479 sec)
+
+	   serialization ................ : 0:00:00 (0 sec)
+
+	   reforming stiffness .......... : 0:00:00 (0.000201543 sec)
+
+	   evaluating stiffness ......... : 0:00:00 (0.000507542 sec)
+
+	   evaluating residual .......... : 0:00:00 (5.754e-05 sec)
+
+	   model update ................. : 0:00:00 (0.000334541 sec)
+
+	   QN updates ................... : 0:00:00 (0 sec)
+
+	   time in linear solver ........ : 0:00:00 (0.000115333 sec)
+
+	Total elapsed time .............. : 0:00:00 (0.00414883 sec)
+
+
+ N O R M A L   T E R M I N A T I O N
+

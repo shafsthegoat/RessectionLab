@@ -1,0 +1,210 @@
+{
+  "status": "completed",
+  "cases": [
+    {
+      "case": "tet10_affine",
+      "status": "passed",
+      "deck_sha256": "8a75158a97750f3db57a5a2a48ab3f03760a4a95a8818ff3d30218ceca262f62",
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/bin/febio4",
+        "-noconfig",
+        "-no_title",
+        "-i",
+        "tet10_affine.feb",
+        "-o",
+        "tet10_affine.log"
+      ],
+      "solver_seconds": 0.04069741698913276,
+      "solver_exit_code": 0,
+      "skyline_console_lines": [
+        "Default linear solver: skyline",
+        "* Selecting linear solver skyline                                       *"
+      ],
+      "checker_passed": true,
+      "output_hashes": {
+        "checked.json": "5aa1d6484a098af615c22a98a085930322b674100a881d32f54907de752c5fb7",
+        "console.txt": "db034722dae54d0ad206b53e7a968148a30da1a19b7cd0d7c20efd2bf98b4ed3",
+        "tet10_affine.elements.log": "1389f65aa1ea44eb98514e7241ecf21ba8fe641c083754553a6ef76ca51397c6",
+        "tet10_affine.feb": "8a75158a97750f3db57a5a2a48ab3f03760a4a95a8818ff3d30218ceca262f62",
+        "tet10_affine.log": "c8ab12bcf44721cbb1a7d2d903d91ba4285030c9868b640b257026ec468ec034",
+        "tet10_affine.nodes.log": "1aa0f5a0d08f9b47a975685ed9bd01557411bd20dc7ca6bad77bfe66ed9804c9"
+      }
+    },
+    {
+      "case": "mpc_translation",
+      "status": "passed",
+      "deck_sha256": "dad1653d2015d04f3499ea87f37246e5fce3c86f849ffc363e99cddd230386fa",
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/bin/febio4",
+        "-noconfig",
+        "-no_title",
+        "-i",
+        "mpc_translation.feb",
+        "-o",
+        "mpc_translation.log"
+      ],
+      "solver_seconds": 0.04056166601367295,
+      "solver_exit_code": 0,
+      "skyline_console_lines": [
+        "Default linear solver: skyline",
+        "* Selecting linear solver skyline                                       *"
+      ],
+      "checker_passed": true,
+      "output_hashes": {
+        "checked.json": "f252a1c40f12b6f032ffa51a1560516924e0e8a5551639b038ebb2b32abe498c",
+        "console.txt": "5ad6cbc6e6d3c692be019f937958c481abe801f48a5e0187669bc16600d5bb45",
+        "mpc_translation.elements.log": "02941dc5551f4bd92df11ea26d3f6b8cef84505103f21aa07a77cd30a66c57ea",
+        "mpc_translation.feb": "dad1653d2015d04f3499ea87f37246e5fce3c86f849ffc363e99cddd230386fa",
+        "mpc_translation.log": "208a3bb5db4787ce5ecaed4b9b62b80c409f9374070cd22d44b48993f5b14265",
+        "mpc_translation.nodes.log": "f445ef3f85087b109e3b091b4cce862e6b95256a504511879e737581e6e3b6b5"
+      }
+    },
+    {
+      "case": "mpc_nonrigid",
+      "status": "passed",
+      "deck_sha256": "40900e8761e663ca37568f9b911a06bfb34acb3db2bd5b1fd4840c7d55fadb93",
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/bin/febio4",
+        "-noconfig",
+        "-no_title",
+        "-i",
+        "mpc_nonrigid.feb",
+        "-o",
+        "mpc_nonrigid.log"
+      ],
+      "solver_seconds": 0.0390669999178499,
+      "solver_exit_code": 0,
+      "skyline_console_lines": [
+        "Default linear solver: skyline",
+        "* Selecting linear solver skyline                                       *"
+      ],
+      "checker_passed": true,
+      "output_hashes": {
+        "checked.json": "926ec8151cf7857fea0820fc141bdcf80d0cc4032c0621a66af2eef2680a88e6",
+        "console.txt": "97dc469f59ccd8f1565ecd8d2698c78b0c07c3df0803f97f84365088d621b96d",
+        "mpc_nonrigid.elements.log": "b0a34aa4a6e4d8df617f7293dce346c2cedf6c00347c136a9e611e14933331df",
+        "mpc_nonrigid.feb": "40900e8761e663ca37568f9b911a06bfb34acb3db2bd5b1fd4840c7d55fadb93",
+        "mpc_nonrigid.log": "70a3fe10d1a943835ec767c8fe54a9718fd479c1658ed4bf651992a4a918dd5a",
+        "mpc_nonrigid.nodes.log": "c0155ea16def1b33def055158abf483e6c3209f64072695382edd6b64e0a7576"
+      }
+    }
+  ],
+  "solver_invocations": 3,
+  "no_retry": true,
+  "checker_import_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-patient-constraints-v1/ddaa7e352282d159f454562cfa091cdad0a284d3/scripts/mechanics_patient_constraints.py",
+  "numpy_version": "2.5.3",
+  "worker_seconds": 0.5825628329766914,
+  "inputs_after": {
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics-patient-constraints-run-v1/release.json": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-patient-constraints-v1/ddaa7e352282d159f454562cfa091cdad0a284d3/scripts/mechanics_patient_constraints_run.py": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-patient-constraints-v1/ddaa7e352282d159f454562cfa091cdad0a284d3/scripts/mechanics_patient_constraints.py": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-patient-constraints-v1/ddaa7e352282d159f454562cfa091cdad0a284d3/scripts/mechanics_febio_verification.py": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-patient-constraints-v1/ddaa7e352282d159f454562cfa091cdad0a284d3/scripts/febio_runtime.py": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-patient-constraints-v1/ddaa7e352282d159f454562cfa091cdad0a284d3/artifacts/febio-runtime-investigation-v1/prospective-runtime.json": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-patient-constraints-v1/ddaa7e352282d159f454562cfa091cdad0a284d3/artifacts/mechanics-patient-constraints-runtime-v1/decks/manifest.json": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-patient-constraints-v1/ddaa7e352282d159f454562cfa091cdad0a284d3/artifacts/mechanics-patient-constraints-runtime-v1/decks/tet10_affine.feb": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-patient-constraints-v1/ddaa7e352282d159f454562cfa091cdad0a284d3/artifacts/mechanics-patient-constraints-runtime-v1/decks/mpc_translation.feb": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-patient-constraints-v1/ddaa7e352282d159f454562cfa091cdad0a284d3/artifacts/mechanics-patient-constraints-runtime-v1/decks/mpc_nonrigid.feb": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-runtime-build-v1/runtime-identity.json": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/bin/febio4": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfeamr.dylib": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiofluid.dylib": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiolib.dylib": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiomech.dylib": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiomix.dylib": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebioopt.dylib": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebioplot.dylib": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiorve.dylib": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebioxml.dylib": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfecore.dylib": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfeimglib.dylib": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libnumcore.dylib": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib/libomp.dylib": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-runtime-build-v1/acquire-01/acceptance.json": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-runtime-build-v1/acquire-01/acquisition.json": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-runtime-build-v1/acquire-01/input-inventory.json": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-runtime-build-v1/acquire-01/payload-review.json": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-runtime-build-v1/configure-01/acceptance.json": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-runtime-build-v1/configure-01/verified-cache.json": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-runtime-build-v1/build-01/acceptance.json": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-runtime-build-v1/build-01/installed-inventory.json": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-runtime-build-v1/linkage-review.json": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-runtime-build-v1/version-launch.json": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-runtime-build-v1/version-01/supervision.json": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-runtime-build-v1/version-01/interpretation.json": {
+      "unchanged": true
+    }
+  }
+}

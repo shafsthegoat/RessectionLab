@@ -1,0 +1,244 @@
+===========================================================================
+         ________    _________   _______       __     _________            
+        |        |\ |        |\ |       \\    |  |\  /         \\          
+        |    ____|| |    ____|| |    __  ||   |__|| |    ___    ||         
+        |   |\___\| |   |\___\| |   |\_| ||    \_\| |   //  \   ||         
+        |   ||__    |   ||__    |   ||_| ||   |  |\ |  ||    |  ||         
+        |       |\  |       |\  |         \\  |  || |  ||    |  ||         
+        |    ___||  |    ___||  |    ___   || |  || |  ||    |  ||         
+        |   |\__\|  |   |\__\|  |   |\__|  || |  || |  ||    |  ||         
+        |   ||      |   ||___   |   ||__|  || |  || |   \\__/   ||         
+        |   ||      |        |\ |          || |  || |           ||         
+        |___||      |________|| |_________//  |__||  \_________//          
+                                                                           
+      F I N I T E   E L E M E N T S   F O R   B I O M E C H A N I C S      
+                                                                           
+  version 4.13.0
+  FEBio is a registered trademark.                                         
+  copyright (c) 2006-2026 - All rights reserved                            
+                                                                           
+===========================================================================
+
+Starting without configuration file
+Default linear solver: skyline
+Reading file tet10_affine.feb ...SUCCESS!
+
+
+
+Data Record #1
+===========================================================================
+Step = 0
+Time = 0
+Data = mechanics_nodes_si
+File = tet10_affine.nodes.log
+
+Data Record #2
+===========================================================================
+Step = 0
+Time = 0
+Data = mechanics_elements_si
+File = tet10_affine.elements.log
+
+ *************************************************************************
+ * Selecting linear solver skyline                                       *
+ *************************************************************************
+
+===== beginning time step 1 : 0.25 =====
+
+
+Reforming stiffness matrix: reformation #1
+
+===== reforming stiffness matrix:
+	Nr of equations ........................... : 81
+	Nr of nonzeroes in stiffness matrix ....... : 3321
+ 1
+ Nonlinear solution status: time= 0.25
+	stiffness updates             = 0
+	right hand side evaluations   = 2
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            7.344889e-05    5.621442e-27    7.344889e-15 
+	   energy              5.216667e-07    4.052126e-18    5.216667e-17 
+	   displacement        4.062500e-09    4.062500e-09    4.062500e-29 
+
+ *************************************************************************
+ *                               WARNING                                 *
+ * No force acting on the system.                                        *
+ *************************************************************************
+
+convergence summary
+    number of iterations   : 1
+    number of reformations : 1
+
+------- converged at time : 0.25
+
+
+Data Record #1
+===========================================================================
+Step = 1
+Time = 0.25
+Data = mechanics_nodes_si
+File = tet10_affine.nodes.log
+
+Data Record #2
+===========================================================================
+Step = 1
+Time = 0.25
+Data = mechanics_elements_si
+File = tet10_affine.elements.log
+
+===== beginning time step 2 : 0.5 =====
+
+
+Reforming stiffness matrix: reformation #1
+
+ 1
+ Nonlinear solution status: time= 0.5
+	stiffness updates             = 0
+	right hand side evaluations   = 2
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            7.253139e-05    5.519571e-27    7.253139e-15 
+	   energy              5.176766e-07    3.997255e-18    5.176766e-17 
+	   displacement        4.062500e-09    4.062500e-09    4.062500e-29 
+
+ *************************************************************************
+ *                               WARNING                                 *
+ * No force acting on the system.                                        *
+ *************************************************************************
+
+convergence summary
+    number of iterations   : 1
+    number of reformations : 1
+
+------- converged at time : 0.5
+
+
+Data Record #1
+===========================================================================
+Step = 2
+Time = 0.5
+Data = mechanics_nodes_si
+File = tet10_affine.nodes.log
+
+Data Record #2
+===========================================================================
+Step = 2
+Time = 0.5
+Data = mechanics_elements_si
+File = tet10_affine.elements.log
+
+===== beginning time step 3 : 0.75 =====
+
+
+Reforming stiffness matrix: reformation #1
+
+ 1
+ Nonlinear solution status: time= 0.75
+	stiffness updates             = 0
+	right hand side evaluations   = 2
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            7.165078e-05    5.400407e-27    7.165078e-15 
+	   energy              5.137806e-07    3.902518e-18    5.137806e-17 
+	   displacement        4.062500e-09    4.062500e-09    4.062500e-29 
+
+ *************************************************************************
+ *                               WARNING                                 *
+ * No force acting on the system.                                        *
+ *************************************************************************
+
+convergence summary
+    number of iterations   : 1
+    number of reformations : 1
+
+------- converged at time : 0.75
+
+
+Data Record #1
+===========================================================================
+Step = 3
+Time = 0.75
+Data = mechanics_nodes_si
+File = tet10_affine.nodes.log
+
+Data Record #2
+===========================================================================
+Step = 3
+Time = 0.75
+Data = mechanics_elements_si
+File = tet10_affine.elements.log
+
+===== beginning time step 4 : 1 =====
+
+
+Reforming stiffness matrix: reformation #1
+
+ 1
+ Nonlinear solution status: time= 1
+	stiffness updates             = 0
+	right hand side evaluations   = 2
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            7.080574e-05    5.278502e-27    7.080574e-15 
+	   energy              5.099759e-07    3.820022e-18    5.099759e-17 
+	   displacement        4.062500e-09    4.062500e-09    4.062500e-29 
+
+ *************************************************************************
+ *                               WARNING                                 *
+ * No force acting on the system.                                        *
+ *************************************************************************
+
+convergence summary
+    number of iterations   : 1
+    number of reformations : 1
+
+------- converged at time : 1
+
+
+Data Record #1
+===========================================================================
+Step = 4
+Time = 1
+Data = mechanics_nodes_si
+File = tet10_affine.nodes.log
+
+Data Record #2
+===========================================================================
+Step = 4
+Time = 1
+Data = mechanics_elements_si
+File = tet10_affine.elements.log
+
+
+ N O N L I N E A R   I T E R A T I O N   I N F O R M A T I O N
+
+	Number of time steps completed .................... : 4
+
+	Total number of equilibrium iterations ............ : 4
+
+	Average number of equilibrium iterations .......... : 1
+
+	Total number of right hand evaluations ............ : 8
+
+	Total number of stiffness reformations ............ : 4
+
+
+ L I N E A R   S O L V E R   S T A T S
+
+	Total calls to linear solver ........ : 0
+
+	Avg iterations per solve ............ : 0
+
+	Time in linear solver: 0:00:00
+
+
+ Elapsed time : 0:00:00
+
+
+ N O R M A L   T E R M I N A T I O N
+
