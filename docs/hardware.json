@@ -1,0 +1,82 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-10-04T06:29:27.438844+00:00",
+  "scope": "local development machine; no serial numbers or hardware UUIDs",
+  "os": {
+    "system": "Darwin",
+    "macos_version": "26.6",
+    "architecture": "arm64"
+  },
+  "compute": {
+    "chip": "Apple M5",
+    "logical_cpu_count": 10,
+    "memory_bytes": 17179869184,
+    "cuda_assumed": false,
+    "mps_execution_tested": false
+  },
+  "storage": {
+    "total_bytes": 994610155520,
+    "free_bytes": 785502765056,
+    "scope": "filesystem containing this repository"
+  },
+  "python": {
+    "version": "3.12.14",
+    "implementation": "CPython",
+    "isolated_environment": false,
+    "packages": {
+      "numpy": {
+        "available": true,
+        "version": "2.3.5"
+      },
+      "scipy": {
+        "available": false,
+        "version": null
+      },
+      "torch": {
+        "available": false,
+        "version": null
+      },
+      "PySide6": {
+        "available": false,
+        "version": null
+      },
+      "vtk": {
+        "available": false,
+        "version": null
+      },
+      "pyvista": {
+        "available": false,
+        "version": null
+      },
+      "nibabel": {
+        "available": false,
+        "version": null
+      },
+      "SimpleITK": {
+        "available": false,
+        "version": null
+      },
+      "dipy": {
+        "available": false,
+        "version": null
+      },
+      "pytest": {
+        "available": false,
+        "version": null
+      },
+      "pip": {
+        "available": true,
+        "version": "26.2.1"
+      }
+    }
+  },
+  "build_tools": {
+    "swift": "Apple Swift version 6.3.3 (swiftlang-6.3.3.1.3 clang-2100.1.1.101)\nTarget: arm64-apple-macosx26.0",
+    "developer_directory": "/Library/Developer/CommandLineTools",
+    "full_xcode_selected": false,
+    "uv_on_path": false,
+    "node_on_path": false,
+    "gh_on_path": false,
+    "slicer_in_applications": false
+  }
+}
