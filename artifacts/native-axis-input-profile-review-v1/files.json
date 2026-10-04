@@ -1,0 +1,102 @@
+{
+  "README.md": {
+    "bytes": 3742,
+    "sha256": "98acb2b78e890f92c53801cc5bb6161adb6925ba17a34583ae63c2af2989d66a"
+  },
+  "source-after.json": {
+    "bytes": 982,
+    "sha256": "463525aee13925bec3fe9ed258e1982a45c1b5230b3c3d833db3bef65723d692"
+  },
+  "source-before-final.json": {
+    "bytes": 985,
+    "sha256": "37caf3500385918d1f19f45d1042c2615dd9f5fda48c72005d9251a509004053"
+  },
+  "source-before.json": {
+    "bytes": 991,
+    "sha256": "bab541bf73019fdb86678df40dbd4176030fac1a3e080135363846ce3e320a0f"
+  },
+  "source/docs/native-axis-accounting.md": {
+    "bytes": 6299,
+    "sha256": "15d5a97304b5c47bd31c48331bb5fadf9737670de7b87be71289610f56e8d295"
+  },
+  "source/docs/native-axis-input-profiles.md": {
+    "bytes": 4317,
+    "sha256": "89d554db109288b6a69e298f257ab93ed520bd47e9668baed03e881781d31d8d"
+  },
+  "source/src/resectionlab/learning.py": {
+    "bytes": 51223,
+    "sha256": "23ed946d9fee0d1402b4aa89cd3c5dabcb27ab7e57cd824dc38baa98dce08e94"
+  },
+  "source/src/resectionlab/learning_ppo.py": {
+    "bytes": 25232,
+    "sha256": "a3814bc5da4837b66ae20496c38e17edd0edf73ef7863a920924cd7ec2a42d88"
+  },
+  "source/src/resectionlab/native_axis_accounting.py": {
+    "bytes": 32191,
+    "sha256": "c75eea141a636072465d6c88fc113c4bf53d8901428f1a1511623539ee541ce8"
+  },
+  "source/src/resectionlab/native_axis_policy_schema.py": {
+    "bytes": 4443,
+    "sha256": "672a5dfd8ba7981bf6bc7a81746b15b094001145c0db942f16599f24a72dcafe"
+  },
+  "source/src/resectionlab/native_axis_simulation.py": {
+    "bytes": 23439,
+    "sha256": "e1b8306050b53e636e1d602290720655d1f06fe72bf8309ba80afb2025122b70"
+  },
+  "source/src/resectionlab/policy_inputs.py": {
+    "bytes": 3294,
+    "sha256": "1366cdabceae5eeee9ad44667be7d8c44de2c9ab8f551c4cf05b053f5b1b8b47"
+  },
+  "source/src/resectionlab/procedural_learning.py": {
+    "bytes": 39874,
+    "sha256": "d4666701930d2baa1f438b2a1bed4819e895ec6161c38a78b6ef4d68331ac2d1"
+  },
+  "source/test_native_axis_input_profiles_review.final.py.txt": {
+    "bytes": 17317,
+    "sha256": "a994028c74e93a194ac33e10f56dd293a287082cd4824565c64403213d9c1124"
+  },
+  "source/tests/test_native_axis_input_profiles_review.py": {
+    "bytes": 14230,
+    "sha256": "29eb07b79a180ec88ad1c0a311400a00e8fb86bf0e0820bd1d8184d813ae821c"
+  },
+  "test-attempt-01.log": {
+    "bytes": 5123,
+    "sha256": "a7bd824f517a806e69cb1b02b024a04ea2e876f804f3b42ada553018755857a5"
+  },
+  "test-attempt-01.xml": {
+    "bytes": 7812,
+    "sha256": "1eba0e590ca767f5153d69eeb4aa61fef48f9d2418115d73884685ef8c7dbe3f"
+  },
+  "test-attempt-02.log": {
+    "bytes": 99,
+    "sha256": "00ef0e01eb3c30458801818b137d0865321b8ef909942d4584332a2b1ad807f9"
+  },
+  "test-attempt-02.xml": {
+    "bytes": 2562,
+    "sha256": "ed3832ad4d0ef6a4e96371ce53d05e02b107ca655aabec8d772c85347a3b5f89"
+  },
+  "test-attempt-03.log": {
+    "bytes": 100,
+    "sha256": "c2d935132a9598cba0bb1f5fdb151ca445149343b8eb0173c15e1502bb5c480c"
+  },
+  "test-attempt-03.xml": {
+    "bytes": 4301,
+    "sha256": "3c1fff087bb953c3ac4924872253f17b322ab63378b248168239573c6bc6d466"
+  },
+  "tiny-update/accounting.json.gz": {
+    "bytes": 28379,
+    "sha256": "657fc5eadc6d2c4dc210e5202137f370aaecf5500867f7c62a356991fede56e6"
+  },
+  "tiny-update/learner/contract.json.gz": {
+    "bytes": 3916,
+    "sha256": "27ebbcd4af9a81138a745be2f5b3b250816735490dc3299d4d786627e8be9c5c"
+  },
+  "tiny-update/learner/result.json.gz": {
+    "bytes": 1834,
+    "sha256": "9316bf9e483dbaa8399b798e9b8051c3a4bbc820b89dcc9752bfc481b101de08"
+  },
+  "verification.json": {
+    "bytes": 6281,
+    "sha256": "a3f39c607d635bfa33715557fbd1f9362f9b3f8c54c151d6614fbcf3fc1ba722"
+  }
+}

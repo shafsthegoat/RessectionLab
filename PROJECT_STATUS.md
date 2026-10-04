@@ -472,6 +472,20 @@ invent unsaved full key bytes or raw payload sizes. Entry-only hit bounds requir
 unchanged no-bypass admission; byte-capacity predictions remain unknown.
 See `docs/native-cache-query-reconstruction.md`.
 
+## Expanded-axis policy input profiles
+
+The scratch learner now accepts explicit RAW or FEATURE_UNITS profiles through
+a closed axis observation contract. Accounting version 2 distinguishes raw
+simulator features from the policy's actual transformed inputs; physical models,
+registered divisors and six critic inputs remain unchanged. One hundred owner
+regression tests and 25 independent checks pass, including real tiny updates and
+profile/transfer rejection before optimization. The independent tiny update
+changed actor weights but tied initial selection return; this is integration
+evidence, not learning improvement. Original timing-assertion and test setup
+failures remain retained. Full integrated regression and a new frozen paired
+public declaration remain prerequisites. No new public training occurred.
+See `docs/native-axis-input-profiles.md` and the two focused review directories.
+
 ## Completion gates still open
 
 Native-resolution geometric simulation now works under explicit hypothetical

@@ -1,0 +1,79 @@
+..........EEEEE                                                          [100%]
+==================================== ERRORS ====================================
+___ ERROR at setup of test_wrapper_profile_mismatch_refused_before_optimizer ___
+
+self = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-input-profile-review-v1/attempt-01')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [Errno 2] No such file or directory: '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-input-profile-review-v1/attempt-01'
+
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1311: FileNotFoundError
+_ ERROR at setup of test_coherently_resealed_accounting_profile_refused_before_optimizer _
+
+self = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-input-profile-review-v1/attempt-01')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [Errno 2] No such file or directory: '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-input-profile-review-v1/attempt-01'
+
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1311: FileNotFoundError
+_ ERROR at setup of test_fixed_native_procedural_gate_still_rejects_axis_and_recorded_axis _
+
+self = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-input-profile-review-v1/attempt-01')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [Errno 2] No such file or directory: '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-input-profile-review-v1/attempt-01'
+
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1311: FileNotFoundError
+________ ERROR at setup of test_ppo_cannot_accept_new_profile_argument _________
+
+self = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-input-profile-review-v1/attempt-01')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [Errno 2] No such file or directory: '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-input-profile-review-v1/attempt-01'
+
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1311: FileNotFoundError
+_ ERROR at setup of test_one_tiny_update_records_actual_transform_and_unchanged_raw_model _
+
+self = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-input-profile-review-v1/attempt-01')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+>           os.mkdir(self, mode)
+E           FileNotFoundError: [Errno 2] No such file or directory: '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-input-profile-review-v1/attempt-01'
+
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:1311: FileNotFoundError
+=========================== short test summary info ============================
+ERROR tests/test_native_axis_input_profiles_review.py::test_wrapper_profile_mismatch_refused_before_optimizer
+ERROR tests/test_native_axis_input_profiles_review.py::test_coherently_resealed_accounting_profile_refused_before_optimizer
+ERROR tests/test_native_axis_input_profiles_review.py::test_fixed_native_procedural_gate_still_rejects_axis_and_recorded_axis
+ERROR tests/test_native_axis_input_profiles_review.py::test_ppo_cannot_accept_new_profile_argument
+ERROR tests/test_native_axis_input_profiles_review.py::test_one_tiny_update_records_actual_transform_and_unchanged_raw_model
+10 passed, 5 errors in 3.82s

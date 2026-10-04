@@ -1229,3 +1229,23 @@ preserved four failures involving duplicate accepted IDs and unchecked runtime
 authorities, plus a later wording-only assertion. Final source and evidence are
 hash-bound in `artifacts/native-cache-query-review-v1/` and the independent review.
 Public reconstruction has not run; commit precedes a separate execution release.
+
+## October 4, 2026 — expanded-axis RAW and fixed-unit compatibility
+
+The exact axis backend and accounting wrapper now expose a source-bound raw
+15-action/6-state schema to scratch training. The policy may use RAW or the
+unchanged registered FEATURE_UNITS divisor vector; the critic, geometry, rewards,
+proposal inventory and procedural/population restrictions remain unchanged.
+The same-forward journal verifies actual transformed actor arrays against the
+served raw observation without extra policy or simulator calls.
+
+One hundred owner regression checks pass in 54.38 seconds; 25 independent checks
+pass in 14.22 seconds on single-thread synthetic fixtures. Initial trainable
+tensors match across profiles and prescribed physical histories remain equal.
+The independent one-update fixture changes actor weights but retains its initial
+checkpoint after a selection tie at −152.98. No learning benefit or public-case
+validation follows. A test that incorrectly compared measured timing fields and
+an independent missing temporary-directory setup failure are retained. Final
+source/docs and compact actual receipts are frozen under
+`artifacts/native-axis-input-profile-prerequisites-v1/` and
+`artifacts/native-axis-input-profile-review-v1/`; full integrated validation is pending.
