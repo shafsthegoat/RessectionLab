@@ -40,8 +40,9 @@ def test_prospective_controls_pin_all_files_but_cannot_build(monkeypatch):
     declaration=json.loads((HERE/'control-declaration.json').read_bytes())
     for item in declaration['pins'].values():d.pin(item)
     spec,v1=d.load_declaration(d.rt.sha(d.DECLARATION),require_controls=False)
-    assert spec['adapter_control_validation'] is None
-    with pytest.raises(ValueError,match='adapter controls'):d.require_adapter_controls(spec)
+    prospective=json.loads((d.ROOT/'artifacts/febio-accelerate-csc-runtime-preparation-v3/prospective-runtime-declaration.json').read_bytes())
+    assert prospective['adapter_control_validation'] is None
+    with pytest.raises(ValueError,match='adapter controls'):d.require_adapter_controls(prospective)
     assert v1['patch']['file']['sha256']==d.PATCH_SHA
     assert v1['tools']==json.loads((d.ROOT/'manifests/experiments/febio-accelerate-csc-runtime-v1.json').read_bytes())['tools']
 

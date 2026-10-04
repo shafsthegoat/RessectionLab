@@ -311,6 +311,13 @@ The runtime-v3 driver refuses configure/build until the accepted result and
 independent review are bound. Original runtime, declarations and failed
 diagnostics remain unchanged. See `artifacts/febio-accelerate-lifecycle-v1/`.
 
+Independent saved-result review verified both instrumented arm64 binaries,
+all eighteen control inputs and exact expected logs without rerunning them.
+The final runtime-v3 declaration now binds that accepted evidence; nine narrow
+binding checks pass, including rejection of failed or mismatched receipts.
+The original prospective declaration is preserved. Configure and build are
+the next separately bounded stages; neither has executed at this checkpoint.
+
 The optional backend comparison/access integration passed 127 focused checks
 including 14 independent controls. It now verifies the actual accepted build,
 complete library inventory and saved eight-control execution/checker evidence,

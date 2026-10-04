@@ -9,33 +9,7 @@
     "Publish final runtime identity only after successful worker/supervisor/preservation/artifact acceptance. Bind complete source/install/linkage/build receipts, patched source and original dependency identity.",
     "Final runtime status is isolated_patched_runtime_built_pending_numerical_controls. runtime_version4.13.0 is pinned-source metadata, not an executed version probe. Eight explicit same-runtime numerical controls remain a separate release."
   ],
-  "adapter_control_validation": {
-    "acceptance": {
-      "bytes": 378,
-      "path": "artifacts/febio-accelerate-lifecycle-v1/control-acceptance.json",
-      "sha256": "eb2e390574896c175a1f240a6aa43e03737e2201b9c9823f243d9ef3da935757"
-    },
-    "declaration": {
-      "bytes": 8583,
-      "path": "artifacts/febio-accelerate-lifecycle-v1/control-declaration.json",
-      "sha256": "d45883853df0516efeba4e0f7d21f78b91899d47f3cd1743db58b61ec66334c9"
-    },
-    "independent_review": {
-      "bytes": 9481,
-      "path": "artifacts/febio-accelerate-lifecycle-independent-review-v1/saved-control-review.json",
-      "sha256": "a0e377ac4ea8d8fc380afb2efe1045993b4ada90cb262f61b83414be5a2e62d2"
-    },
-    "result": {
-      "bytes": 3602,
-      "path": "artifacts/febio-accelerate-lifecycle-v1/control-01/result.json",
-      "sha256": "245e48859244fa93ab51ce03db73cb78e128d9f3bdf6a187f91fa3980767b74d"
-    },
-    "supervision": {
-      "bytes": 933,
-      "path": "artifacts/febio-accelerate-lifecycle-v1/supervision-01/supervision.json",
-      "sha256": "3ecf797d197caa537834f73ac4c6d46d58eb9423490c152b735e6f621b1fff54"
-    }
-  },
+  "adapter_control_validation": null,
   "basis": {
     "bytes": 12334,
     "path": "manifests/experiments/febio-accelerate-csc-runtime-v1.json",
@@ -112,11 +86,6 @@
     "sha256": "aa9edec10aa9a2dfe79929c21ead8ce3a3554b496cc00c36dd20dcdcab34b1b3"
   },
   "patch_tool_version_observed": "patch 2.0-12u11-Apple (read-only version inspection)",
-  "preserved_prospective_v3": {
-    "bytes": 10401,
-    "path": "artifacts/febio-accelerate-csc-runtime-preparation-v3/prospective-runtime-declaration.json",
-    "sha256": "4f24c624808a7077e2a02a6350e85efd2b86d407180c1a5599e4e456d94dcedd"
-  },
   "preserved_v2": {
     "bytes": 8727,
     "path": "manifests/experiments/febio-accelerate-csc-runtime-v2.json",
@@ -211,10 +180,10 @@
   },
   "schema_version": 3,
   "scope": "One isolated local configure and one combined build/install of exact reviewed patched FEBio; no compiler fixture execution, downloads, solver/version launch, models or patient data.",
-  "status": "prepared_with_accepted_repaired_only_controls_pending_commit_and_separate_root_stage_release",
+  "status": "prospective_unexecuted_build_blocked_until_repaired_only_adapter_controls_and_independent_review",
   "validation_scope": {
     "history": "Original cassert compile failure before executable creation and reported automatic cybersecurity-screen interruption remain preserved. v1 is unchanged; v2 binds successful reduced positive-only scope. No proven v1 manifest divergence is claimed. V2 preparation was committed and intentionally never executed after SMS initialization and resource ownership defects were found. Its declaration/evidence remain unchanged.",
     "original_defect": "Static allocator/loop/API mismatch evidence only; original faulty fixture must never be executed by this driver.",
-    "successful_evidence": "Original six source-extracted CSC conversion controls remain byte-identical and accepted. Additional actual-SDK matrix initialization (4 profiles) and literal patched adapter lifecycle with defined mock SDK allocation/refcount semantics (14 scenarios) passed once under ASan/UBSan; saved results independently verified. This is not real Accelerate factorization/solve or numerical mechanics validation."
+    "successful_evidence": "Six repaired-code-only offset conversion/zero-row controls with ASan+UBSan; no full adapter/factorization or numerical physics validation. This does not yet validate the added SMS/lifecycle repair; repaired-only new controls are prospective."
   }
 }

@@ -22,8 +22,11 @@ def write(path, value):
 def test_declaration_loads_saved_positive_only_evidence_without_execution(monkeypatch):
     monkeypatch.setattr(d.subprocess, 'run', lambda *a, **kw: pytest.fail('No subprocess expected'))
     spec, original = d.load_declaration(d.rt.sha(d.DECLARATION), require_controls=False)
-    with pytest.raises(ValueError, match='adapter controls'):
+    if spec['adapter_control_validation'] is not None:
         d.load_declaration(d.rt.sha(d.DECLARATION))
+    blocked = {**spec, 'adapter_control_validation': None}
+    with pytest.raises(ValueError, match='adapter controls'):
+        d.require_adapter_controls(blocked)
     assert spec['basis']['sha256'] == d.V1_SHA
     assert original['patch']['patched_sha256'] == d.PATCHED_SHA
     assert original['caps']['configure_seconds'] == 120
