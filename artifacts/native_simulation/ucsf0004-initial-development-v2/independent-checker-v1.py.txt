@@ -733,7 +733,6 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
                                      history: Sequence[Mapping[str, Any]], *,
                                      tissue_mask: np.ndarray, access: Any,
                                      hard_exclusion: np.ndarray | None = None,
-                                     geometry_frame: str = "RAS+",
                                      cancelled: Callable[[], bool] | None = None) -> NativeRemovalAudit:
     """Independent source-cell audit of the native contained-cell cutting model.
 
@@ -744,9 +743,6 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
     contact with partially contained cells is the declared cutting abstraction:
     those cells must be recorded as contacted and remain occupied. This distinction
     is explicit and does not assert quantitatively validated tissue mechanics.
-    Tool poses and access use ``geometry_frame`` (RAS+ by default); source cells
-    are never resampled. Each recorded entry is checked on the same access plane
-    and the complete tool must fit the aperture throughout its stroke.
     """
     from collections import deque
     from itertools import product
@@ -761,11 +757,7 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
     if hard.shape != original.shape or hard.dtype != np.bool_:
         raise ValueError("Native hard exclusions must be boolean and source-aligned")
     remaining = original.copy()
-    if geometry_frame not in {"RAS+", "LPS+"} or case.frame not in {"RAS+", "LPS+"}:
-        raise ValueError("Independent native geometry needs an explicit RAS+ or LPS+ frame")
     matrix = np.asarray(case.affine, float)
-    if case.frame != geometry_frame:
-        matrix = np.diag([-1., -1., 1., 1.]) @ matrix
     spacing = np.linalg.norm(matrix[:3, :3], axis=0)
     if not np.allclose(matrix[:3, :3].T @ matrix[:3, :3], np.diag(spacing**2), atol=1e-7):
         raise ValueError("Independent native tool check does not support sheared source cells")
@@ -795,8 +787,8 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
         physical = None if voxel is None else tuple(float(v) for v in matrix[:3, :3] @ voxel + matrix[:3, 3])
         return NativeRemovalAudit(reason is None, () if reason is None else (reason,), action, voxel, physical,
             len(declared) * volume, len(accepted) * volume, len(declared - accepted) * volume,
-            case.semantic_hash, volume, count, checker_version="independent-native-sequence-v2",
-            interpretation=f"Source-grid prefix audit in {geometry_frame}: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+            case.semantic_hash, volume, count, checker_version="independent-native-sequence-v1",
+            interpretation="Source-grid prefix audit: contained connected cell removal, shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
             complete_tool_checked=reason is None, frontier_checked=reason is None)
 
     def indices(value: Any) -> np.ndarray:
@@ -840,13 +832,7 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
         axis = np.asarray(record.get("axis_unit"), float)
         if axis.shape != (3,) or not np.isfinite(axis).all() or not np.isclose(np.linalg.norm(axis), 1, atol=1e-7):
             raise ValueError("Native history needs a unit tool axis")
-        previous = np.asarray(record.get("entry_mm", access.center_mm), float)
-        if previous.shape != (3,) or not np.isfinite(previous).all():
-            raise ValueError("Native stroke entry must be a finite physical three-vector")
-        normal = np.asarray(access.normal_inward, float)
-        normal = normal / np.linalg.norm(normal)
-        if abs(float((previous - access.center_mm) @ normal)) > 1e-7:
-            return report("native_entry_outside_access_plane", action_id)
+        previous = np.asarray(access.center_mm, float)
         macro_removed: set[tuple[int, int, int]] = set()
         microsteps = record.get("microsteps", ())
         if not microsteps:
@@ -932,8 +918,4 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
         declared_macro = {tuple(int(v) for v in index) for index in indices(record.get("removed_indices_native", ()))}
         if declared_macro != macro_removed:
             return report("native_macro_removal_accounting_mismatch", action_id)
-        if "tip_mm" in record and not np.allclose(record["tip_mm"], previous, atol=1e-7, rtol=0):
-            return report("native_macro_tip_mismatch", action_id)
-        if "removed_volume_mm3" in record and not np.isclose(record["removed_volume_mm3"], len(macro_removed) * volume, atol=1e-7, rtol=0):
-            return report("native_macro_volume_accounting_mismatch", action_id)
     return report()

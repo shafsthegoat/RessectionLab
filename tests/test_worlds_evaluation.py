@@ -464,3 +464,49 @@ def test_native_shaft_cannot_borrow_removal_from_the_microstep_endpoint():
     checked = independent_check_native_history(case, (tool,), history, tissue_mask=tissue, access=access)
     assert not checked.feasible
     assert checked.failures == ("native_shaft_collides_with_remaining_tissue",)
+
+
+def test_native_recorded_entry_can_move_within_the_same_checked_aperture():
+    case, tool, access, tissue, history = native_history_fixture()
+    tool = replace(tool, tip_radius_mm=1.3)
+    record = history[0]
+    record["entry_mm"] = (3.25, 3, 2)
+    record["tip_mm"] = (3.25, 3, 3)
+    record["removed_volume_mm3"] = 1.0
+    for micro in record["microsteps"]:
+        for field in ("tip_start_mm", "tip_end_mm", "active_stroke_start_mm", "active_stroke_end_mm"):
+            micro[field] = (3.25, *micro[field][1:])
+        micro["active_radius_mm"] = 1.3
+    checked = independent_check_native_history(case, (tool,), history, tissue_mask=tissue, access=access)
+    assert checked.feasible
+    assert checked.checker_version == "independent-native-sequence-v2"
+    # The center lies inside this smaller disk, but the complete tool cannot fit.
+    narrow = replace(access, radius_mm=1.4)
+    assert not independent_check_native_history(case, (tool,), history, tissue_mask=tissue, access=narrow).feasible
+    record["entry_mm"] = (3.25, 3, 2.1)
+    outside = independent_check_native_history(case, (tool,), history, tissue_mask=tissue, access=access)
+    assert outside.failures == ("native_entry_outside_access_plane",)
+
+
+def test_native_lps_source_is_checked_in_explicit_ras_geometry_without_resampling():
+    case, tool, access, tissue, history = native_history_fixture()
+    lps = replace(case, affine=np.diag([-1., -1., 1., 1.]), frame="LPS+")
+    history[0]["source_hash"] = lps.semantic_hash
+    checked = independent_check_native_history(lps, (tool,), history, tissue_mask=tissue, access=access,
+                                               geometry_frame="RAS+")
+    assert checked.feasible
+    assert "RAS+" in checked.interpretation
+    with pytest.raises(ValueError, match="affine mismatch"):
+        independent_check_native_history(lps, (tool,), history, tissue_mask=tissue, access=access,
+                                         geometry_frame="LPS+")
+
+
+def test_native_macro_display_coordinates_and_volume_must_match_checked_history():
+    case, tool, access, tissue, history = native_history_fixture()
+    history[0]["removed_volume_mm3"] = 1000.0
+    checked = independent_check_native_history(case, (tool,), history, tissue_mask=tissue, access=access)
+    assert checked.failures == ("native_macro_volume_accounting_mismatch",)
+    history[0]["removed_volume_mm3"] = 1.0
+    history[0]["tip_mm"] = (99, 99, 99)
+    checked = independent_check_native_history(case, (tool,), history, tissue_mask=tissue, access=access)
+    assert checked.failures == ("native_macro_tip_mismatch",)

@@ -1,0 +1,65 @@
+{
+  "phase": "independent_development_history_audit",
+  "final_evaluation_used": false,
+  "result_sha256": "2897761ed2842fa5c32ff0e2cefacf9d3351cd034e094f3680e935b96e4d36cb",
+  "checker_sha256": "923e1f523a3b63ae2086ef56fe011f7a565dc9a59421bb8f3261968a054f4ca1",
+  "native_config_hash": "sha256:0924b7d0a4ab4310f319372fbfc6dd84919c16ffff7070030494cf8a5acc72cd",
+  "saved_native_config_hash": "sha256:0924b7d0a4ab4310f319372fbfc6dd84919c16ffff7070030494cf8a5acc72cd",
+  "config_matches": true,
+  "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+  "saved_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+  "frame": "RAS+",
+  "access": {
+    "center_mm": [
+      -181.5,
+      85.0,
+      105.0
+    ],
+    "normal_inward": [
+      1.0,
+      0.0,
+      -0.0
+    ],
+    "radius_mm": 6.0
+  },
+  "tools": [
+    {
+      "tool_id": "native-fine-aspiration",
+      "tip_radius_mm": 1.25,
+      "shaft_radius_mm": 0.45,
+      "working_length_mm": 120.0,
+      "max_access_angle_deg": 35.0,
+      "tip_length_mm": 2.0,
+      "parameter_source": "generic research geometry; not a verified commercial device"
+    },
+    {
+      "tool_id": "native-wide-aspiration",
+      "tip_radius_mm": 2.25,
+      "shaft_radius_mm": 1.1,
+      "working_length_mm": 120.0,
+      "max_access_angle_deg": 35.0,
+      "tip_length_mm": 3.0,
+      "parameter_source": "generic research geometry; not a verified commercial device"
+    }
+  ],
+  "elapsed_seconds": 10.117022958002053,
+  "audit": {
+    "feasible": false,
+    "failures": [
+      "noncontiguous_or_nonaxial_native_stroke"
+    ],
+    "first_failed_action": "NATIVE:native-wide-aspiration:3",
+    "first_unsupported_source_voxel": null,
+    "first_unsupported_position_mm": null,
+    "claimed_source_tissue_volume_mm3": 185.0,
+    "contained_source_tissue_volume_mm3": 185.0,
+    "unsupported_source_tissue_volume_mm3": 0.0,
+    "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "source_voxel_volume_mm3": 1.0,
+    "action_count": 2,
+    "checker_version": "independent-native-sequence-v1",
+    "interpretation": "Source-grid prefix audit: contained connected cell removal, shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+    "complete_tool_checked": false,
+    "frontier_checked": false
+  }
+}

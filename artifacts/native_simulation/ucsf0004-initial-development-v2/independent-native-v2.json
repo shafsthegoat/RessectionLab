@@ -1,0 +1,156 @@
+{
+  "recorded_at": "2026-10-04T07:33:19.787929+00:00",
+  "phase": "independent_saved_development_history_audit",
+  "final_evaluation_used": false,
+  "candidate_altered": false,
+  "source_files_changed_during_check": [],
+  "result_sha256": "2897761ed2842fa5c32ff0e2cefacf9d3351cd034e094f3680e935b96e4d36cb",
+  "result_unchanged": true,
+  "checker_sha256": "594d5c7234ada881f89e734ec29ddd2533d3e6f12f2229cb001d86589c7f8776",
+  "software_sha256": {
+    "src/resectionlab/evaluation.py": "594d5c7234ada881f89e734ec29ddd2533d3e6f12f2229cb001d86589c7f8776",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/core.py": "ca8760f1f5b4ac7dcf765ec51e47e858758b33940643dfa0c12e40b1fdc6d4fd",
+    "src/resectionlab/imaging.py": "c28b2be5f4acf5cd2023c889c3d02fb30a6902298b46602844c5317e41e2da17",
+    "src/resectionlab/native_resection.py": "e40b0855526e1e7cff6575f54273e899480fed0b6c117c18b049ef2ff0d8696a",
+    "src/resectionlab/native_simulation.py": "3f16f73da9991e4d3f483f1aade80dddee5dab4bfd613b049bfa28ba48443803"
+  },
+  "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+  "native_config_hash": "sha256:0924b7d0a4ab4310f319372fbfc6dd84919c16ffff7070030494cf8a5acc72cd",
+  "tools": [
+    {
+      "tool_id": "native-fine-aspiration",
+      "tip_radius_mm": 1.25,
+      "shaft_radius_mm": 0.45,
+      "working_length_mm": 120.0,
+      "max_access_angle_deg": 35.0,
+      "tip_length_mm": 2.0,
+      "parameter_source": "generic research geometry; not a verified commercial device"
+    },
+    {
+      "tool_id": "native-wide-aspiration",
+      "tip_radius_mm": 2.25,
+      "shaft_radius_mm": 1.1,
+      "working_length_mm": 120.0,
+      "max_access_angle_deg": 35.0,
+      "tip_length_mm": 3.0,
+      "parameter_source": "generic research geometry; not a verified commercial device"
+    }
+  ],
+  "access": {
+    "center_mm": [
+      -181.5,
+      85.0,
+      105.0
+    ],
+    "normal_inward": [
+      1.0,
+      0.0,
+      -0.0
+    ],
+    "radius_mm": 6.0
+  },
+  "audit": {
+    "feasible": true,
+    "failures": [],
+    "first_failed_action": null,
+    "first_unsupported_source_voxel": null,
+    "first_unsupported_position_mm": null,
+    "claimed_source_tissue_volume_mm3": 266.0,
+    "contained_source_tissue_volume_mm3": 266.0,
+    "unsupported_source_tissue_volume_mm3": 0.0,
+    "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "source_voxel_volume_mm3": 1.0,
+    "action_count": 2,
+    "checker_version": "independent-native-sequence-v2",
+    "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+    "complete_tool_checked": true,
+    "frontier_checked": true
+  },
+  "elapsed_seconds": 17.638021667022258,
+  "microsteps_checked": 142,
+  "per_action": [
+    {
+      "action_id": "NATIVE:native-wide-aspiration:0",
+      "entry_mm": [
+        -181.5,
+        85.0,
+        105.0
+      ],
+      "tip_mm": [
+        -162.0,
+        85.0,
+        105.0
+      ],
+      "microstep_count": 79,
+      "removed_target_mm3": 174.0,
+      "removed_normal_mm3": 11.0,
+      "reported_volume_mm3": 185.0
+    },
+    {
+      "action_id": "NATIVE:native-wide-aspiration:3",
+      "entry_mm": [
+        -181.5,
+        86.0,
+        106.0
+      ],
+      "tip_mm": [
+        -166.0,
+        86.0,
+        106.0
+      ],
+      "microstep_count": 63,
+      "removed_target_mm3": 75.0,
+      "removed_normal_mm3": 6.0,
+      "reported_volume_mm3": 81.0
+    }
+  ],
+  "source_accounting": {
+    "source_grid_shape": [
+      240,
+      240,
+      155
+    ],
+    "source_frame": "RAS+",
+    "simulation_frame": "RAS+",
+    "brain_mask_supplied": false,
+    "tissue_support_provenance": "estimated_hole_filled_nonzero_UCSF_or_declared_skull_stripped_MRI_support; brain_surface_unreviewed; source_frame=RAS+; simulation_frame=RAS+",
+    "source_tissue_sha256": "24d2f2f56cf8fe93a6ac47712e810cf33afbfa71baa2c37b9d18ef3c1eef8175",
+    "hard_exclusion_sha256": "2c34b25c4e60322966923daa20e8f2ecbcc4494e73125aeb817f7eb5134538d9",
+    "source_target_voxels": 41919,
+    "removed_target_mm3": 249.0,
+    "removed_normal_mm3": 17.0,
+    "residual_target_mm3": 41670.0,
+    "removed_by_compartment_mm3": {
+      "FLAIR_abnormality": 0.0,
+      "enhancing_target": 47.0,
+      "nonenhancing_or_necrotic_core": 202.0
+    },
+    "residual_by_compartment_mm3": {
+      "FLAIR_abnormality": 18654.0,
+      "enhancing_target": 15625.0,
+      "nonenhancing_or_necrotic_core": 7391.0
+    },
+    "contacted_source_tissue_mm3": 700.0,
+    "contacted_retained_tissue_mm3": 434.0,
+    "cumulative_partial_normal_contact_mm3": 32.0,
+    "partial_contact_still_retained_normal_mm3": 26.0
+  },
+  "saved_metric_matches": {
+    "removed_target": true,
+    "removed_normal": true,
+    "residual_target": true,
+    "removed_compartments": true,
+    "residual_compartments": true,
+    "partial_normal": true,
+    "contacted_retained": true
+  },
+  "all_saved_metric_matches": true,
+  "clinical_deficit_probability": null,
+  "limitations": [
+    "Supplied anatomy only; motor/language/vessels remain unassessed",
+    "MRI-support surface remains an estimated unreviewed skull-strip assumption",
+    "Declared active-cutting geometry; tissue mechanics unvalidated",
+    "One development patient and one fixed candidate sequence; no held-out clinical or population claim"
+  ]
+}
