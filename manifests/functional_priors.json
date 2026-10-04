@@ -1,0 +1,371 @@
+{
+  "schema_version": 1,
+  "verified_at": "2026-10-04",
+  "evidence_type": "prior",
+  "template_frame": "FSL_MNI152_RAS_mm",
+  "records": [
+    {
+      "record_id": 10439149,
+      "url": "https://zenodo.org/records/10439149",
+      "download_url": "https://zenodo.org/api/records/10439149/files/data.zip/content",
+      "archive_file": "10439149-data.zip",
+      "bytes": 8413614,
+      "sha256": "b1d3f39719a36344c620e09248a10c8b32b317c4c24d5a9ff8556275caeba0fd",
+      "license": "CC-BY-4.0"
+    },
+    {
+      "record_id": 16418628,
+      "url": "https://zenodo.org/records/16418628",
+      "download_url": "https://zenodo.org/api/records/16418628/files/pub_release.zip/content",
+      "archive_file": "16418628-pub_release.zip",
+      "bytes": 19149132,
+      "sha256": "ea7967a34b8feba8983443afdfbdcbb9103cdf4b09708c110b0d2f271ab48d41",
+      "license": "CC-BY-4.0"
+    }
+  ],
+  "maps": [
+    {
+      "map_id": "motor_functional_concordance",
+      "component": "motor",
+      "map_kind": "functional_concordance",
+      "record_id": 10439149,
+      "archive_member": "data/netw_no_thr/MOTOR_POSITIVE_no_thr_N_599_seeds.nii.gz",
+      "cache_file": "MOTOR_POSITIVE_no_thr_N_599_seeds.nii.gz",
+      "sha256": "da250c63ff449bded9dc9a362c130ed39378f9612ff080b85acee92511e88b60",
+      "license": "CC-BY-4.0",
+      "template_frame": "FSL_MNI152_RAS_mm",
+      "qc_state": "unregistered_prior",
+      "verified_shape": [
+        91,
+        109,
+        91
+      ],
+      "verified_affine_ras_mm": [
+        [
+          -2.0,
+          0.0,
+          0.0,
+          90.0
+        ],
+        [
+          0.0,
+          2.0,
+          0.0,
+          -126.0
+        ],
+        [
+          0.0,
+          0.0,
+          2.0,
+          -72.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "qform_code": 1,
+      "sform_code": 0,
+      "observed_value_range": [
+        0.0,
+        0.9983305335044861
+      ]
+    },
+    {
+      "map_id": "phonology_functional_concordance",
+      "component": "phonology",
+      "map_kind": "functional_concordance",
+      "record_id": 16418628,
+      "archive_member": "pub_release/maps_paper_release/brain_maps/functional/PHONOLOGICAL_union_randomise.nii.gz",
+      "cache_file": "PHONOLOGICAL_union_randomise.nii.gz",
+      "sha256": "d2189deb89c2243d127f66a914f3b6d3fd2ced61acc1f75c65a0b57b7d0bc3fd",
+      "license": "CC-BY-4.0",
+      "template_frame": "FSL_MNI152_RAS_mm",
+      "qc_state": "unregistered_prior",
+      "verified_shape": [
+        91,
+        109,
+        91
+      ],
+      "verified_affine_ras_mm": [
+        [
+          -2.0,
+          -0.0,
+          -0.0,
+          90.0
+        ],
+        [
+          -0.0,
+          2.0,
+          -0.0,
+          -126.0
+        ],
+        [
+          0.0,
+          0.0,
+          2.0,
+          -72.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "qform_code": 1,
+      "sform_code": 1,
+      "observed_value_range": [
+        0.0,
+        0.9433962106704712
+      ]
+    },
+    {
+      "map_id": "semantics_functional_concordance",
+      "component": "semantics",
+      "map_kind": "functional_concordance",
+      "record_id": 16418628,
+      "archive_member": "pub_release/maps_paper_release/brain_maps/functional/SEMANTIC_union_randomise.nii.gz",
+      "cache_file": "SEMANTIC_union_randomise.nii.gz",
+      "sha256": "c51311aa042996118d51301503f35d614ea5bb7be37269c1354a1bd7fe5b8cad",
+      "license": "CC-BY-4.0",
+      "template_frame": "FSL_MNI152_RAS_mm",
+      "qc_state": "unregistered_prior",
+      "verified_shape": [
+        91,
+        109,
+        91
+      ],
+      "verified_affine_ras_mm": [
+        [
+          -2.0,
+          -0.0,
+          -0.0,
+          90.0
+        ],
+        [
+          -0.0,
+          2.0,
+          -0.0,
+          -126.0
+        ],
+        [
+          0.0,
+          0.0,
+          2.0,
+          -72.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "qform_code": 1,
+      "sform_code": 1,
+      "observed_value_range": [
+        0.0,
+        0.8888888955116272
+      ]
+    },
+    {
+      "map_id": "speech_articulation_functional_concordance",
+      "component": "speech_articulation",
+      "map_kind": "functional_concordance",
+      "record_id": 16418628,
+      "archive_member": "pub_release/maps_paper_release/brain_maps/functional/SPEECH_ARREST_union_randomise.nii.gz",
+      "cache_file": "SPEECH_ARREST_union_randomise.nii.gz",
+      "sha256": "4a68a5814c9eeb37fe846b4e7f9e3d7be8146ac65e4de964b125e8c20c0809d5",
+      "license": "CC-BY-4.0",
+      "template_frame": "FSL_MNI152_RAS_mm",
+      "qc_state": "unregistered_prior",
+      "verified_shape": [
+        91,
+        109,
+        91
+      ],
+      "verified_affine_ras_mm": [
+        [
+          -2.0,
+          -0.0,
+          -0.0,
+          90.0
+        ],
+        [
+          -0.0,
+          2.0,
+          -0.0,
+          -126.0
+        ],
+        [
+          0.0,
+          0.0,
+          2.0,
+          -72.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "qform_code": 1,
+      "sform_code": 1,
+      "observed_value_range": [
+        0.0,
+        0.9399999976158142
+      ]
+    },
+    {
+      "map_id": "phonology_structural_mask",
+      "component": "phonology",
+      "map_kind": "structural_mask",
+      "record_id": 16418628,
+      "archive_member": "pub_release/maps_paper_release/brain_maps/structural/PHONOLOGICAL_union_norm_thr_bin.nii.gz",
+      "cache_file": "PHONOLOGICAL_union_norm_thr_bin.nii.gz",
+      "sha256": "2c1e0273dfba2efb349f39c643c58a0db4f1ea01107ac458597b956868352d6a",
+      "license": "CC-BY-4.0",
+      "template_frame": "FSL_MNI152_RAS_mm",
+      "qc_state": "unregistered_prior",
+      "verified_shape": [
+        182,
+        218,
+        182
+      ],
+      "verified_affine_ras_mm": [
+        [
+          -1.0,
+          0.0,
+          0.0,
+          90.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -126.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          -72.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "qform_code": 1,
+      "sform_code": 1,
+      "observed_value_range": [
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "map_id": "semantics_structural_mask",
+      "component": "semantics",
+      "map_kind": "structural_mask",
+      "record_id": 16418628,
+      "archive_member": "pub_release/maps_paper_release/brain_maps/structural/SEMANTIC_union_norm_thr_bin.nii.gz",
+      "cache_file": "SEMANTIC_union_norm_thr_bin.nii.gz",
+      "sha256": "0c0e38b3d97f7c9bd4165a47666d3cdd88dbd8c48ddf1a2acd120e9dec727aea",
+      "license": "CC-BY-4.0",
+      "template_frame": "FSL_MNI152_RAS_mm",
+      "qc_state": "unregistered_prior",
+      "verified_shape": [
+        182,
+        218,
+        182
+      ],
+      "verified_affine_ras_mm": [
+        [
+          -1.0,
+          0.0,
+          0.0,
+          90.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -126.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          -72.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "qform_code": 1,
+      "sform_code": 1,
+      "observed_value_range": [
+        0.0,
+        1.0
+      ]
+    },
+    {
+      "map_id": "speech_articulation_structural_mask",
+      "component": "speech_articulation",
+      "map_kind": "structural_mask",
+      "record_id": 16418628,
+      "archive_member": "pub_release/maps_paper_release/brain_maps/structural/SPEECH_ARREST_union_norm_thr_bin.nii.gz",
+      "cache_file": "SPEECH_ARREST_union_norm_thr_bin.nii.gz",
+      "sha256": "3408a912dc47934277fd9985caa4943f1cd67ad32b6fc30f23d8516ba27c4096",
+      "license": "CC-BY-4.0",
+      "template_frame": "FSL_MNI152_RAS_mm",
+      "qc_state": "unregistered_prior",
+      "verified_shape": [
+        182,
+        218,
+        182
+      ],
+      "verified_affine_ras_mm": [
+        [
+          -1.0,
+          0.0,
+          0.0,
+          90.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -126.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          -72.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "qform_code": 1,
+      "sform_code": 1,
+      "observed_value_range": [
+        0.0,
+        1.0
+      ]
+    }
+  ]
+}
