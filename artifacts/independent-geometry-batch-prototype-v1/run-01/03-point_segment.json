@@ -1,0 +1,72 @@
+{
+  "bitwise_distance_matches": 1024,
+  "boxes": 1024,
+  "contact_checks": [
+    {
+      "contacts": 3,
+      "first_witness": 40,
+      "includes_near_threshold_scalar_fallback": true,
+      "indices_sha256": "90c2bc1482309098d23764ac16f6cde177cb96a4040238dccfcba728d3dea63e",
+      "one_contact_call_seconds": 0.0016792500391602516,
+      "ordered_indices_match": true,
+      "tolerance_mm2": 0.0
+    },
+    {
+      "contacts": 3,
+      "first_witness": 40,
+      "includes_near_threshold_scalar_fallback": true,
+      "indices_sha256": "90c2bc1482309098d23764ac16f6cde177cb96a4040238dccfcba728d3dea63e",
+      "one_contact_call_seconds": 0.00162191700655967,
+      "ordered_indices_match": true,
+      "tolerance_mm2": 1e-10
+    },
+    {
+      "contacts": 3,
+      "first_witness": 40,
+      "includes_near_threshold_scalar_fallback": true,
+      "indices_sha256": "90c2bc1482309098d23764ac16f6cde177cb96a4040238dccfcba728d3dea63e",
+      "one_contact_call_seconds": 0.0015916249249130487,
+      "ordered_indices_match": true,
+      "tolerance_mm2": 1e-09
+    }
+  ],
+  "distance_sha256": {
+    "batch": "4c8ae9b9679a6b2be60bbcf1ca968fd14edbc33b938cbe49324a35394ad9313c",
+    "scalar_after": "4c8ae9b9679a6b2be60bbcf1ca968fd14edbc33b938cbe49324a35394ad9313c",
+    "scalar_before": "4c8ae9b9679a6b2be60bbcf1ca968fd14edbc33b938cbe49324a35394ad9313c"
+  },
+  "distance_tolerance_passed": true,
+  "input_sha256": {
+    "end": "69c80785289aeea5ef902aa863ea8f83c2c80e64f8be042c36a3abe41c87c3bd",
+    "lower": "fd71b9b47d99444b049d6888e9387b685871b966a9c332a406a405778a742c44",
+    "start": "69c80785289aeea5ef902aa863ea8f83c2c80e64f8be042c36a3abe41c87c3bd",
+    "upper": "2184878990e26dc8b02c87fa41547d392db653a55ac8d72bfd4d79856e84a4a5"
+  },
+  "interpretation": "Distance-kernel timings only; source transforms, occupancy, native history, and independent full-tool audit are excluded",
+  "max_absolute_distance_difference_mm2": 0.0,
+  "phases": {
+    "batch": {
+      "median_seconds": 0.0015745419659651816,
+      "seconds": [
+        0.0015739590162411332,
+        0.00157512491568923
+      ]
+    },
+    "scalar_after": {
+      "median_seconds": 0.017862812499515712,
+      "seconds": [
+        0.01789137499872595,
+        0.017834250000305474
+      ]
+    },
+    "scalar_before": {
+      "median_seconds": 0.017908499983604997,
+      "seconds": [
+        0.01801795803476125,
+        0.017799041932448745
+      ]
+    }
+  },
+  "scalar_reversal_identical": true,
+  "workload": "point_segment"
+}

@@ -1,0 +1,19 @@
+{
+  "sources": {
+    "scripts/independent_geometry_batch_prototype.py": "16de2480f97cc723fee8192e93be78a3936cc4e18b6104ddbdf3ed36da250707",
+    "scripts/probe_independent_geometry_batch.py": "6c071019c9fb3b2198859320820a98e363ee3615c892dbdf2f60a9b44533f99e",
+    "tests/test_independent_geometry_batch.py": "b38457162b144f0c15b3b7ec0b3fc8401b8304dd733f159f895b572528cdd32d",
+    "tests/test_independent_geometry_batch_review.py": "1fa32e1b26d2eec5bb987861591fd7e8ab180192eccae4c38bae54a6839bebe1",
+    "src/resectionlab/evaluation.py": "baaa2f3d6b4e41c4621dc22872da9300d649bc91dfeb923e2ad35f66aadad3b7"
+  },
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_independent_geometry_batch.py",
+    "tests/test_independent_geometry_batch_review.py"
+  ],
+  "release": "Root explicitly released combined tiny controls then one declared <=45-second kernel probe; no production wiring or patient runs",
+  "git_head": "8aeb3bece63db9064d8d9bec658c04ce3f0d8ab5"
+}

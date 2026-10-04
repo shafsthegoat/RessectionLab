@@ -1,0 +1,72 @@
+{
+  "bitwise_distance_matches": 1024,
+  "boxes": 1024,
+  "contact_checks": [
+    {
+      "contacts": 23,
+      "first_witness": 22,
+      "includes_near_threshold_scalar_fallback": true,
+      "indices_sha256": "dceb3075d2be5b4175bcd0bf77fd8c7f162aabf8de0ca8261a2096552df1e03f",
+      "one_contact_call_seconds": 0.060141957947053015,
+      "ordered_indices_match": true,
+      "tolerance_mm2": 0.0
+    },
+    {
+      "contacts": 23,
+      "first_witness": 22,
+      "includes_near_threshold_scalar_fallback": true,
+      "indices_sha256": "dceb3075d2be5b4175bcd0bf77fd8c7f162aabf8de0ca8261a2096552df1e03f",
+      "one_contact_call_seconds": 0.06069704191759229,
+      "ordered_indices_match": true,
+      "tolerance_mm2": 1e-10
+    },
+    {
+      "contacts": 23,
+      "first_witness": 22,
+      "includes_near_threshold_scalar_fallback": true,
+      "indices_sha256": "dceb3075d2be5b4175bcd0bf77fd8c7f162aabf8de0ca8261a2096552df1e03f",
+      "one_contact_call_seconds": 0.06077175005339086,
+      "ordered_indices_match": true,
+      "tolerance_mm2": 1e-09
+    }
+  ],
+  "distance_sha256": {
+    "batch": "d763f838d104f5fce9ac75aee89bd191a36121a8c408327971416689092678e4",
+    "scalar_after": "d763f838d104f5fce9ac75aee89bd191a36121a8c408327971416689092678e4",
+    "scalar_before": "d763f838d104f5fce9ac75aee89bd191a36121a8c408327971416689092678e4"
+  },
+  "distance_tolerance_passed": true,
+  "input_sha256": {
+    "end": "707f809d5aee73ac47f197f358d78e87e5dd115d60d859e3da1f79f255e56ef4",
+    "lower": "3a3c1791804b97c0a0bec2ef71f83af0c2d1591fc362a88a895b5037543e119e",
+    "start": "e332eb3a60439d10465eb1778e3a2791692d866cbab69eaf2c5a5edc9bc7bb17",
+    "upper": "98d4d4f8458fd6d097398a28168417a70355c82687dfae00b955d49a76e81640"
+  },
+  "interpretation": "Distance-kernel timings only; source transforms, occupancy, native history, and independent full-tool audit are excluded",
+  "max_absolute_distance_difference_mm2": 0.0,
+  "phases": {
+    "batch": {
+      "median_seconds": 0.003992166952230036,
+      "seconds": [
+        0.004129583947360516,
+        0.003854749957099557
+      ]
+    },
+    "scalar_after": {
+      "median_seconds": 0.055491562467068434,
+      "seconds": [
+        0.05581954098306596,
+        0.055163583951070905
+      ]
+    },
+    "scalar_before": {
+      "median_seconds": 0.055410958477295935,
+      "seconds": [
+        0.05507316696457565,
+        0.05574874999001622
+      ]
+    }
+  },
+  "scalar_reversal_identical": true,
+  "workload": "large_translation"
+}
