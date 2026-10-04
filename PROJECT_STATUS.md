@@ -255,6 +255,19 @@ not available from a preoperative scan alone. Automatic motion extraction and
 the timing/uncertainty of such deployment observations remain separate work;
 the manual correspondences must not become hidden inputs to a preoperative policy.
 
+The first baseline alignment worker produced all six declared views and the
+15-pair proper rigid fit, but its supervisor failed with `RSS_MONITOR_FAILED`
+after 2.536 s. The cause is unconfirmed because the failed monitoring query's
+details were not retained. This remains a failed attempt despite worker exit
+zero and 627.9 MB maximum sampled combined memory. Independent saved-output
+review reproduces raw/fitted/leave-one-out RMS distances of
+3.112/1.164/1.295 mm and verifies the original source/frame/view hashes.
+Nonexpert inspection of all six views grants no anatomical acceptance.
+The original failure and preparation chronology are preserved in
+`artifacts/mechanics/resect-case4-baseline-alignment-v1/`; no retry or change
+to the fit, landmarks or thresholds has occurred. All B/V motion destinations
+and the during-resection ultrasound remain closed.
+
 The first real TRAIN PAT22 inference profile completed all four declared cells
 in 6.247 seconds with unchanged model parameters. One CPU call took 28–30 ms
 for a 32³ crop and 256–269 ms for a 64³ crop, with highest observed memory about

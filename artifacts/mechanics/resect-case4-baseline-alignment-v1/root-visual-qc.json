@@ -1,0 +1,23 @@
+{
+  "scope": "Root nonexpert visual inspection of all six saved baseline display derivatives using view_image; no additional patient data access",
+  "attempt_status": "supervisor_failed_RSS_MONITOR_FAILED; worker_exit_zero_and_saved_diagnostics_do_not_override_failure",
+  "image_sha256": {
+    "MRI-native-axis0.png": "92f5863c837c8e6390ce7684c544f9750bd85c500e7d020b19659672d985a997",
+    "MRI-native-axis1.png": "ad44a9d1ef3adb72960b20c34b2d53dc6bb875cddaabd637c0055d3ce7c15bb4",
+    "MRI-native-axis2.png": "f1febbbd647fe2a1505bc31a0f07337688e94e3230fb6242a7c1233154e48bc1",
+    "US-native-axis0.png": "bf32d28ac60bb8254095a6358cb98a6a29913292cf74971890da87c628028441",
+    "US-native-axis1.png": "b930c8971887bdc4a11879a2f02d5fd7a0628775da3e79efeb8c7ca53e7de7dd",
+    "US-native-axis2.png": "75b9973c67232cde0e6e962227943eecff451793839dee31779e32f959c3ac1f"
+  },
+  "observations": [
+    "Three MRI panels show broadly corresponding outer head and brain structures between native FLAIR and T1 sampled through original affines. No gross axis swap is apparent at these displayed planes; modality contrast and residual edge differences remain.",
+    "The displayed MRI fields include source cropping/defacing and sampling boundaries. No source volume or affine was altered for this inspection.",
+    "Three ultrasound panels show a partial oblique field overlaid within the MRI region. Ultrasound speckle and differing contrast prevent this inspection from verifying individual anatomical correspondences or local physical accuracy.",
+    "Native-axis labels are not standard axial/coronal/sagittal orientation labels. The cropped title on the third ultrasound figure is a display issue and does not alter pixel or coordinate evidence."
+  ],
+  "anatomical_alignment_accepted": false,
+  "clinical_accuracy_validated": false,
+  "landmark_destination_motion_accessed": false,
+  "fit_or_threshold_changed_after_inspection": false,
+  "next_step": "Independent saved numerical audit and separately reviewed supervisor repair; preserve this failed attempt."
+}

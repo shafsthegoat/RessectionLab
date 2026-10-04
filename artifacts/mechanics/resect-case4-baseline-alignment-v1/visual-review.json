@@ -1,0 +1,46 @@
+{
+  "status": "saved_diagnostics_from_failed_supervision_only",
+  "supervisor_status": "failed",
+  "failure": "RSS_MONITOR_FAILED",
+  "reviewer": "imaging agent, engineering visual check, not expert anatomical approval",
+  "reviewed_at_utc": "2026-10-04T20:37:16.127082+00:00",
+  "images": [
+    {
+      "path": "MRI-native-axis0.png",
+      "sha256": "92f5863c837c8e6390ce7684c544f9750bd85c500e7d020b19659672d985a997"
+    },
+    {
+      "path": "MRI-native-axis1.png",
+      "sha256": "ad44a9d1ef3adb72960b20c34b2d53dc6bb875cddaabd637c0055d3ce7c15bb4"
+    },
+    {
+      "path": "MRI-native-axis2.png",
+      "sha256": "f1febbbd647fe2a1505bc31a0f07337688e94e3230fb6242a7c1233154e48bc1"
+    },
+    {
+      "path": "US-native-axis0.png",
+      "sha256": "bf32d28ac60bb8254095a6358cb98a6a29913292cf74971890da87c628028441"
+    },
+    {
+      "path": "US-native-axis1.png",
+      "sha256": "b930c8971887bdc4a11879a2f02d5fd7a0628775da3e79efeb8c7ca53e7de7dd"
+    },
+    {
+      "path": "US-native-axis2.png",
+      "sha256": "75b9973c67232cde0e6e962227943eecff451793839dee31779e32f959c3ac1f"
+    }
+  ],
+  "MRI_native_findings": "Three panels show broadly corresponding cranial outline and internal gross features using original affines; residual outline offsets and modality-dependent contrast remain. No gross reflection obvious in these selected views; no whole-volume or anatomical accuracy conclusion.",
+  "US_native_findings": "Three small oblique ultrasound fields overlap the structural volume. Raw-to-fitted structural placement changes modestly; contrast and speckle make exact feature correspondence uncertain. Composite has substantial unmatched structures. Images alone do not establish registration accuracy.",
+  "limitations": [
+    "Three source-selected planes per group only; no full-volume sweep or expert review.",
+    "Native-axis displays omit explicit anatomical direction markers; no left/right anatomical claims.",
+    "No supplied or reviewed brain/cavity segmentation.",
+    "No during-US or before/during motion values accessed.",
+    "The monitor failure remains a failed attempt despite complete worker diagnostics; raw failed ps details unavailable, cause unresolved."
+  ],
+  "anatomical_alignment_accepted": false,
+  "clinical_accuracy_validated": false,
+  "B_or_V_motion_accessed": false,
+  "new_patient_run": false
+}

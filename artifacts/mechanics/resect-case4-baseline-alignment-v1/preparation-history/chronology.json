@@ -1,0 +1,22 @@
+{
+  "created_at_utc": "2026-10-04T20:37:16.126304+00:00",
+  "source_commit": "324741158b343d734e650bd61e9fbbf55ea792b8",
+  "committed_owner_run": "16 checks in0.42s",
+  "independent_final_run": "18 checks in0.39s; separate independent receipt",
+  "metadata_refresh": "README and verification updated before root-release creation and before actual execution to cite independent18 checks. Numerical script/declaration/coordinate justification unchanged and verified against committed bytes. No metadata file changes during execution.",
+  "history_policy": "Preserve current during-execution files unchanged; retain committed16-check originals as separate byte copies.",
+  "files": [
+    {
+      "name": "verification.json",
+      "committed_sha256": "74743b55151326e1a0f6cb9bd3310d2bbe26015cb596c184532ec38c9b786197",
+      "during_execution_sha256": "9e80a10149e3d3e6ec9a9f2459cb7f369a7fe6dc49e1f4c3928be607ccf27862",
+      "committed_copy": "artifacts/mechanics/resect-case4-baseline-alignment-v1/preparation-history/verification.json.committed-3247411"
+    },
+    {
+      "name": "README.md",
+      "committed_sha256": "401c95d286882536097772ef7dd60fa57884c38d1d492befa025823dbc1b1184",
+      "during_execution_sha256": "a92e21f95c73810fd1d766f8307893b27beab75a09fddb543dc59ee00e413074",
+      "committed_copy": "artifacts/mechanics/resect-case4-baseline-alignment-v1/preparation-history/README.md.committed-3247411"
+    }
+  ]
+}

@@ -46,7 +46,7 @@ alone; automatic motion extraction, observation timing and uncertainty remain
 future work. Neither these baseline measurements nor future withheld motion
 may become hidden policy inputs.
 
-Eighteen small independent and owner checks passed in 0.39 seconds. They cover
+Sixteen small independent and owner checks passed in 0.42 seconds. They cover
 proper rigid recovery, reflection handling, rank rejection, held-pair isolation,
 physical slice sampling, control authentication, read-only access and failed
 resource monitoring. Five initial execution-boundary failures are preserved in
