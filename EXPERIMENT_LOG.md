@@ -586,3 +586,22 @@ in-bounds cases are unaffected; a reusable implementation must correct both.
 Production numerical code and the completed learning study remain unchanged.
 Evidence: `artifacts/native-frontier-expansion-v1/`, including lossless compressed
 histories and the independent audit. Raw histories remain unchanged locally.
+
+## October 4, 2026 — fixed feature-unit implementation, before registered training
+
+The separately committed `procedural-native-feature-units-v1` declaration changes
+only actor input units. Physical rewards, critic inputs and outputs, loss weights,
+clipping, optimizer and the original proposal set remain unchanged. The shared
+learner now carries an immutable named profile, a nontrainable divisor buffer for
+FEATURE_UNITS, and separate full-policy versus trainable-tensor identities. RAW
+retains its exact arithmetic and parameter state keys. Checkpoint loading,
+adaptation and resume reject mismatched profiles before optimizer construction;
+the analytic population guards remain separate.
+
+Implementation checks passed: 43 focused tests, 58 broader regressions, five
+final edge checks and 24 independently written adversarial tests (these sets
+overlap). The independent tests cover exact RAW initialization/forward/gradient
+parity, paired trainable tensors, hidden buffer keys, rehashed metadata/buffer
+attacks, masked gradients and cross-profile resume/adaptation. Tiny constructed
+fixtures exercised actual updates; the registered patient comparison has not
+run. Its separate runner and integrated pre-execution validation remain pending.

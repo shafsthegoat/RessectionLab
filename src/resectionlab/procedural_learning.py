@@ -22,6 +22,7 @@ import numpy as np
 import torch
 
 from . import learning
+from .policy_inputs import policy_input_profile
 from .geometry import AccessWindow, ToolGeometry
 from .native_resection import NATIVE_RESECTION_VERSION, NativeResectionConfig
 from .native_simulation import NATIVE_ACTION_FEATURE_NAMES, NATIVE_ADAPTER_VERSION, NativeSequentialSimulator
@@ -33,6 +34,8 @@ SCOPE = "procedural_native_to_patient_development"
 TEST_SCOPE = "procedural_native_contract_test_only"
 DECLARATION_HASH = "sha256:3abf10162ed9d096a7e21ec84a87c1a88ebf12bb074345a78040dfdebb828ac9"
 DECLARATION_PATH = Path(__file__).resolve().parents[2] / "manifests/experiments/procedural-native-to-ucsf-v1.json"
+FEATURE_STUDY_ID = "procedural-native-feature-units-v1"
+FEATURE_DECLARATION_HASH = "sha256:b19aac85f9241e37b98ae53d539ad923f3258bf42a106d67e520f37abcf6a237"
 
 
 def _plain(value: Any) -> Any:
@@ -46,6 +49,31 @@ def _declaration() -> dict[str, Any]:
             or content_hash({key: value for key, value in record.items() if key != "declaration_content_hash"}) != DECLARATION_HASH):
         raise ValueError("Procedural preregistration changed; declare a separate study")
     return record
+
+
+def _study_binding(input_profile: str = "RAW", study_id: str | None = None) -> dict[str, Any]:
+    """Bind a named input intervention separately from physical anatomy/worlds."""
+    profile = policy_input_profile(input_profile)
+    if study_id is None or study_id == "procedural-native-to-ucsf-v1":
+        if input_profile != "RAW":
+            raise ValueError("Original procedural study requires RAW inputs; declare the feature-unit study")
+        identifier, digest, scope = "procedural-native-to-ucsf-v1", DECLARATION_HASH, SCOPE
+    elif study_id == FEATURE_STUDY_ID:
+        path = DECLARATION_PATH.with_name(FEATURE_STUDY_ID + ".json")
+        record = json.loads(path.read_text())
+        digest = content_hash({key: value for key, value in record.items() if key != "declaration_content_hash"})
+        if record.get("declaration_content_hash") != FEATURE_DECLARATION_HASH or digest != FEATURE_DECLARATION_HASH:
+            raise ValueError("Feature-unit study declaration changed")
+        if record["reference_design"]["declaration_content_hash"] != DECLARATION_HASH:
+            raise ValueError("Feature-unit physical source declaration differs")
+        expected = {**profile.to_dict(), "profile_content_hash": profile.fingerprint}
+        if record["profiles"].get(input_profile) != expected:
+            raise ValueError("Feature-unit registry differs from the registered profile")
+        identifier, scope = study_id, record["scope"]
+    else:
+        raise ValueError("Unknown procedural transfer study")
+    return {"study_id": identifier, "study_declaration_hash": digest, "study_scope": scope,
+            "input_profile": profile.to_dict(), "input_profile_hash": profile.fingerprint}
 
 
 @dataclass(frozen=True)
@@ -166,7 +194,9 @@ def _partition(record: dict[str, Any]) -> WorldPartitionManifest:
         WorldGeneratorConfig(**record["generator"]), tuple(record["seeds"]), record.get("planning_hash"))
 
 
-def make_native_procedural_fixture(target: TransferTarget) -> tuple[ProceduralMember, ...]:
+def make_native_procedural_fixture(target: TransferTarget, *, input_profile: str = "RAW",
+                                  study_id: str | None = None) -> tuple[ProceduralMember, ...]:
+    _study_binding(input_profile, study_id)
     _target_scope(target)
     result = []
     for record in _declaration()["procedural_training"]["members"]:
@@ -249,7 +279,9 @@ def _runtime() -> dict[str, str]:
             "torch": str(torch.__version__), "device": "cpu"}
 
 
-def _validate_budget(config: learning.TrainingConfig, target: TransferTarget, *, online: bool) -> None:
+def _validate_budget(config: learning.TrainingConfig, target: TransferTarget, *, online: bool,
+                     input_profile: str = "RAW", study_id: str | None = None) -> None:
+    _study_binding(input_profile, study_id)
     if _target_scope(target) == SCOPE:
         declaration = _declaration()
         key = "online_scratch_and_adapted_each_seed" if online else "offline_training"
@@ -310,12 +342,14 @@ class _ProceduralPool:
 
 @learning._record_failures
 def train_procedural_native_policy(members: Sequence[ProceduralMember], *, excluded_targets: Sequence[TransferTarget],
-        config: learning.TrainingConfig, output_dir: str | Path, cancelled=None, progress=None) -> dict[str, Any]:
+        config: learning.TrainingConfig, output_dir: str | Path, cancelled=None, progress=None,
+        input_profile: str = "RAW", study_id: str | None = None) -> dict[str, Any]:
     started = time.perf_counter()
+    study = _study_binding(input_profile, study_id)
     members, targets = tuple(members), tuple(excluded_targets)
     records, schema = _validate_members(members, targets)
     target = targets[0]
-    _validate_budget(config, target, online=False)
+    _validate_budget(config, target, online=False, input_profile=input_profile, study_id=study_id)
     directory = Path(output_dir)
     directory.mkdir(parents=True, exist_ok=False)
     sources = learning.numerical_source_hashes()
@@ -327,6 +361,8 @@ def train_procedural_native_policy(members: Sequence[ProceduralMember], *, exclu
     for name, payload in source_bytes.items():
         (source_dir / name).write_text(payload)
     learning._atomic_json(directory / "declaration.json", _declaration())
+    if study_id == FEATURE_STUDY_ID:
+        (directory / "input-study-declaration.json").write_bytes(DECLARATION_PATH.with_name(FEATURE_STUDY_ID + ".json").read_bytes())
     lookup, opt, sel = _pool_layout(members)
     scope = _target_scope(target)
     pool_hash = content_hash({"members": records, "excluded_targets": [asdict(target)], "scope": scope})
@@ -335,14 +371,14 @@ def train_procedural_native_policy(members: Sequence[ProceduralMember], *, exclu
     optimization = WorldPartitionManifest(WorldRole.OPTIMIZATION, pool_hash, generator, tuple(opt))
     selection = WorldPartitionManifest(WorldRole.SELECTION, pool_hash, generator, tuple(sel))
     factory = lambda: _ProceduralPool(members, records, lookup, pool_hash, model_hash)
-    design = _plain({"scope": scope, "members": records, "excluded_targets": [asdict(target)],
+    design = _plain({"scope": scope, **study, "members": records, "excluded_targets": [asdict(target)],
         "training_config": asdict(config), "world_map": lookup, "observation_schema": schema,
         "declaration_hash": DECLARATION_HASH, "checkpoint_rule": "fixed_budget_latest",
         "source_sha256": sources, "runtime": _runtime(), "final_worlds_used": False})
     learning._atomic_json(directory / "procedural-design.json", design)
     preparation_seconds = time.perf_counter() - started
     result = learning.train_patient_policy(factory, optimization, selection, config=config,
-        output_dir=directory / "training", cancelled=cancelled, progress=progress)
+        output_dir=directory / "training", cancelled=cancelled, progress=progress, input_profile=input_profile)
     after_training = time.perf_counter()
     training = json.loads((directory / "training/result.json").read_text())
     if learning.numerical_source_hashes() != sources:
@@ -359,13 +395,16 @@ def train_procedural_native_policy(members: Sequence[ProceduralMember], *, exclu
             exposures[source] = exposures.get(source, 0) + 1
     if any(exposures.get(record["generator_manifest"]["source_hash"], 0) < 1 for record in records):
         raise ValueError("Every procedural family must contribute actual completed gradient batches")
-    policy = learning.load_policy(directory / "training/checkpoint.pt", selected=False)
+    policy = learning.load_policy(directory / "training/checkpoint.pt", selected=False,
+                                  expected_input_profile=input_profile)
     policy_hash = learning.policy_hash(policy)
     provenance = {**design, "human_patients_in_pretraining": 0, "clinical_population_training": False,
         "training_gradient_steps": result.gradient_steps, "actor_parameters_changed": True,
         "gradient_episode_sources": exposures, "training_run_hash": content_hash(training),
         "training_record": training, "policy_hash": policy_hash,
         "initial_policy_hash": result.initial_checkpoint_hash, "source_snapshot": source_bytes,
+        "initial_trainable_parameter_hash": training["initial_trainable_parameter_hash"],
+        "trainable_parameter_hash": learning.trainable_parameter_hash(policy),
         "offline_pretraining": {"gradient_steps": result.gradient_steps,
             "optimization_environment_steps": result.optimization_environment_steps,
             "selection_environment_steps": result.selection_environment_steps,
@@ -377,6 +416,7 @@ def train_procedural_native_policy(members: Sequence[ProceduralMember], *, exclu
     checkpoint = directory / "procedural.pt"
     export_started = time.perf_counter()
     learning._atomic_checkpoint(checkpoint, {"kind": KIND, "schema_version": 1,
+        **policy.checkpoint_profile(), "trainable_parameter_hash": learning.trainable_parameter_hash(policy),
         "dimensions": list(policy.dimensions), "policy": copy.deepcopy(policy.state_dict()),
         "policy_hash": policy_hash, "procedural_provenance": provenance, "provenance_hash": content_hash(provenance)})
     record = {"status": "completed", "checkpoint_path": str(checkpoint.resolve()), "scope": scope,
@@ -405,16 +445,25 @@ def _validate_target_simulator(target: TransferTarget, simulator: NativeSequenti
 
 
 def validate_procedural_checkpoint(checkpoint: str | Path, *, target: TransferTarget,
-        simulator: NativeSequentialSimulator, hidden_features: int) -> dict[str, Any]:
+        simulator: NativeSequentialSimulator, hidden_features: int, input_profile: str = "RAW",
+        study_id: str | None = None) -> dict[str, Any]:
+    study = _study_binding(input_profile, study_id)
     _validate_target_simulator(target, simulator)
     path = Path(checkpoint)
     payload = path.read_bytes()
     source = torch.load(path, map_location="cpu", weights_only=True)
     if source.get("kind") != KIND or source.get("schema_version") != 1:
         raise ValueError("Procedural transfer requires its distinct provenance-bearing checkpoint kind")
+    learning.checkpoint_input_profile(source, expected_input_profile=input_profile)
     provenance = source.get("procedural_provenance", {})
     if source.get("provenance_hash") != content_hash(provenance):
         raise ValueError("Procedural provenance hash changed")
+    if any(provenance.get(key) != value for key, value in study.items()):
+        # Pre-intervention RAW exports lack these fields. They remain subject
+        # to the existing exact source/runtime provenance check below.
+        legacy = input_profile == "RAW" and study_id is None and all(key not in provenance for key in study)
+        if not legacy:
+            raise ValueError("Procedural input profile or study provenance differs")
     if (provenance.get("scope") != _target_scope(target) or provenance.get("declaration_hash") != DECLARATION_HASH
             or provenance.get("excluded_targets") != [_plain(asdict(target))]
             or type(provenance.get("human_patients_in_pretraining")) is not int
@@ -436,7 +485,7 @@ def validate_procedural_checkpoint(checkpoint: str | Path, *, target: TransferTa
     if not isinstance(settings, dict) or set(settings) != set(asdict(learning.TrainingConfig())):
         raise ValueError("Procedural training settings must be explicit and complete")
     config = learning.TrainingConfig(**settings)
-    _validate_budget(config, target, online=False)
+    _validate_budget(config, target, online=False, input_profile=input_profile, study_id=study_id)
     if source.get("dimensions") != [15, 6, hidden_features] or config.hidden_features != hidden_features:
         raise ValueError("Procedural checkpoint dimensions or actor width differ")
     if provenance.get("runtime") != _runtime():
@@ -494,13 +543,21 @@ def validate_procedural_checkpoint(checkpoint: str | Path, *, target: TransferTa
     if (set(exposures) != expected_sources or any(value < 1 for value in exposures.values())
             or provenance.get("gradient_episode_sources") != exposures):
         raise ValueError("Procedural updates used an undeclared source or missed a required family")
-    policy = learning.load_policy(path)
+    policy = learning.load_policy(path, expected_input_profile=input_profile)
     policy_hash = learning.policy_hash(policy)
     if (policy_hash != source.get("policy_hash") or policy_hash != provenance.get("policy_hash")
             or policy_hash != training.get("latest_checkpoint_hash")
             or policy_hash == provenance.get("initial_policy_hash")
             or provenance.get("initial_policy_hash") != training.get("initial_checkpoint_hash")):
         raise ValueError("Procedural latest-checkpoint selection or weight binding changed")
+    if "input_profile" in provenance:
+        if (training.get("input_profile") != study["input_profile"]
+                or training.get("input_profile_hash") != study["input_profile_hash"]
+                or provenance.get("trainable_parameter_hash") != learning.trainable_parameter_hash(policy)
+                or source.get("trainable_parameter_hash") != learning.trainable_parameter_hash(policy)
+                or training.get("latest_trainable_parameter_hash") != learning.trainable_parameter_hash(policy)
+                or provenance.get("initial_trainable_parameter_hash") != training.get("initial_trainable_parameter_hash")):
+            raise ValueError("Procedural input profile or paired tensor accounting changed")
     selection_history = training.get("selection_history", [])
     if (not selection_history or selection_history[0].get("gradient_steps") != 0
             or any(record.get("world_count") != len(sel) or record.get("gradient_steps", -1) > offline["gradient_steps"]
@@ -509,6 +566,7 @@ def validate_procedural_checkpoint(checkpoint: str | Path, *, target: TransferTa
     if path.read_bytes() != payload:
         raise ValueError("Procedural checkpoint bytes changed during validation")
     return {"checkpoint_file_sha256": hashlib.sha256(payload).hexdigest(), "policy_hash": policy_hash,
+        **study, "trainable_parameter_hash": learning.trainable_parameter_hash(policy),
         "provenance_hash": source["provenance_hash"], "scope": provenance["scope"],
         "provenance": {key: value for key, value in provenance.items() if key != "source_snapshot"},
         "offline_pretraining": offline}
@@ -549,27 +607,34 @@ def validate_procedural_world_panels(target: TransferTarget, optimization: World
             "selection_partition_hash": selection.partition_hash, "final_worlds_used": False}
 
 
-def validate_procedural_target_worlds(target, simulator, optimization, selection, config) -> dict[str, Any]:
+def validate_procedural_target_worlds(target, simulator, optimization, selection, config, *,
+        input_profile: str = "RAW", study_id: str | None = None) -> dict[str, Any]:
     """Public-model preflight before any offline/online optimization or Adam."""
     _validate_target_simulator(target, simulator)
-    _validate_budget(config, target, online=True)
+    study = _study_binding(input_profile, study_id)
+    learning._validate_simulator_profile(simulator, input_profile)
+    _validate_budget(config, target, online=True, input_profile=input_profile, study_id=study_id)
     learning._assert_partition_binding(simulator, optimization)
     learning._assert_partition_binding(simulator, selection)
     receipt = validate_procedural_world_panels(target, optimization, selection)
-    return {**receipt, "decision_model_hash": simulator.decision_model_hash,
+    return {**receipt, **study, "decision_model_hash": simulator.decision_model_hash,
             "training_config_hash": content_hash(asdict(config))}
 
 
-def validate_procedural_adaptation(checkpoint, target, simulator, optimization, selection, config):
+def validate_procedural_adaptation(checkpoint, target, simulator, optimization, selection, config, *,
+        input_profile: str = "RAW", study_id: str | None = None):
     """The shared learner calls this gate itself, before constructing Adam."""
-    validate_procedural_target_worlds(target, simulator, optimization, selection, config)
+    validate_procedural_target_worlds(target, simulator, optimization, selection, config,
+        input_profile=input_profile, study_id=study_id)
     validation = validate_procedural_checkpoint(checkpoint, target=target,
-        simulator=simulator, hidden_features=config.hidden_features)
+        simulator=simulator, hidden_features=config.hidden_features, input_profile=input_profile, study_id=study_id)
     return validation
 
 
 def train_procedural_adapted_policy(factory, optimization, selection, *, checkpoint, target,
-        config, output_dir, cancelled=None, progress=None, resume=False):
+        config, output_dir, cancelled=None, progress=None, resume=False,
+        input_profile: str = "RAW", study_id: str | None = None):
     return learning.train_patient_policy(factory, optimization, selection, config=config,
         output_dir=output_dir, cancelled=cancelled, progress=progress, resume=resume,
-        procedural_checkpoint=None if resume else checkpoint, procedural_target=target)
+        procedural_checkpoint=None if resume else checkpoint, procedural_target=target,
+        input_profile=input_profile, procedural_study_id=study_id)

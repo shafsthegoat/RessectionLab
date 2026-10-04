@@ -29,6 +29,8 @@ import numpy as np
 import torch
 from torch import nn
 
+from .policy_inputs import policy_input_profile
+
 
 class Observation(Protocol):
     action_features: np.ndarray
@@ -124,12 +126,38 @@ class RolloutInterrupted(RuntimeError):
 class MaskedPatientPolicy(nn.Module):
     """A shared candidate scorer permits variable action counts across cases."""
 
-    def __init__(self, action_features: int, state_features: int, hidden: int = 32):
+    def __init__(self, action_features: int, state_features: int, hidden: int = 32, *,
+                 input_profile: str = "RAW"):
         super().__init__()
         self.dimensions = (action_features, state_features, hidden)
+        self._input_profile = policy_input_profile(input_profile, action_features=action_features,
+                                                  state_features=state_features)
         self.actor = nn.Sequential(nn.Linear(action_features + state_features, hidden),
                                    nn.Tanh(), nn.Linear(hidden, 1))
         self.value = nn.Sequential(nn.Linear(state_features, hidden), nn.Tanh(), nn.Linear(hidden, 1))
+        if input_profile == "FEATURE_UNITS":
+            self.register_buffer("action_divisors", torch.tensor(self._input_profile.action_divisors,
+                                                                 dtype=torch.float32))
+
+    @property
+    def input_profile(self):
+        return self._input_profile
+
+    def checkpoint_profile(self) -> dict[str, Any]:
+        return {"input_profile": self.input_profile.to_dict(),
+                "input_profile_hash": self.input_profile.fingerprint}
+
+    def actor_inputs(self, actions: torch.Tensor) -> torch.Tensor:
+        """Fixed units only; identity mode performs no arithmetic at all."""
+        if self.input_profile.profile_id == "RAW":
+            if "action_divisors" in self._buffers:
+                raise ValueError("RAW policy unexpectedly contains a feature transform")
+            return actions
+        expected = torch.tensor(self.input_profile.action_divisors, dtype=torch.float32,
+                                device=self.action_divisors.device)
+        if self.action_divisors.requires_grad or not torch.equal(self.action_divisors, expected):
+            raise ValueError("Policy input divisor buffer changed")
+        return actions / self.action_divisors
 
     def forward(self, observation: Observation) -> tuple[torch.Tensor, torch.Tensor]:
         actions = torch.as_tensor(np.array(observation.action_features, copy=True), dtype=torch.float32)
@@ -143,7 +171,7 @@ class MaskedPatientPolicy(nn.Module):
             raise ValueError("nonfinite policy observation")
         if len(mask) == 0 or not bool(mask[0]) or observation.action_ids[0] != "STOP":
             raise ValueError("STOP must remain action zero and available")
-        logits = self.actor(torch.cat((actions, state.expand(len(actions), -1)), dim=1)).squeeze(-1)
+        logits = self.actor(torch.cat((self.actor_inputs(actions), state.expand(len(actions), -1)), dim=1)).squeeze(-1)
         return logits.masked_fill(~mask, -torch.inf), self.value(state).squeeze(-1)
 
 
@@ -157,6 +185,61 @@ def policy_hash(policy_or_state: nn.Module | Mapping[str, torch.Tensor]) -> str:
         digest.update(str(array.shape).encode())
         digest.update(array.tobytes())
     return "sha256:" + digest.hexdigest()
+
+
+def trainable_parameter_hash(policy: nn.Module) -> str:
+    """Compare paired initialization tensors, not behavioral policy identity."""
+    return policy_hash(dict(policy.named_parameters()))
+
+
+def checkpoint_input_profile(state: Mapping[str, Any], *, expected_input_profile: str | None = None):
+    """Validate registry metadata and every saved policy buffer before loading.
+
+    Legacy checkpoints without profile metadata are identity-only. A coherent
+    tensor checksum does not authorize arbitrary divisors or schema changes.
+    """
+    dimensions = state["dimensions"]
+    metadata = state.get("input_profile")
+    if metadata is not None and not isinstance(metadata, dict):
+        raise ValueError("Checkpoint input profile metadata must be a registry record")
+    profile_id = "RAW" if metadata is None else metadata.get("profile_id")
+    profile = policy_input_profile(profile_id, action_features=dimensions[0], state_features=dimensions[1])
+    if expected_input_profile is not None and profile_id != expected_input_profile:
+        raise ValueError("Checkpoint policy input profile differs from requested profile")
+    if metadata is None:
+        if state.get("input_profile_hash") is not None:
+            raise ValueError("Checkpoint input profile metadata is incomplete")
+    elif metadata != profile.to_dict() or state.get("input_profile_hash") != profile.fingerprint:
+        raise ValueError("Checkpoint input profile metadata differs from immutable registry")
+    for key in ("policy", "selected_policy"):
+        if key not in state:
+            continue
+        weights = state[key]
+        buffer = weights.get("action_divisors")
+        if profile_id == "RAW":
+            if "action_divisors" in weights:
+                raise ValueError("RAW checkpoint contains a divisor buffer")
+        elif (not isinstance(buffer, torch.Tensor) or buffer.dtype != torch.float32
+              or buffer.requires_grad or not torch.equal(buffer.cpu(), torch.tensor(profile.action_divisors, dtype=torch.float32))):
+            raise ValueError("Checkpoint input divisor buffer differs from registered profile")
+    return profile
+
+
+def _validate_simulator_profile(simulator: Simulator, profile_id: str) -> None:
+    if profile_id == "RAW":
+        return
+    from .native_simulation import NATIVE_ACTION_FEATURE_NAMES, NativeSequentialSimulator
+    from .procedural_learning import _ProceduralPool, native_observation_schema
+    if type(simulator) is _ProceduralPool:
+        simulator = simulator.active
+    if type(simulator) is not NativeSequentialSimulator:
+        raise ValueError("FEATURE_UNITS requires actual native observation semantics")
+    schema = native_observation_schema(simulator)
+    profile = policy_input_profile(profile_id)
+    if (tuple(NATIVE_ACTION_FEATURE_NAMES) != profile.action_feature_names
+            or tuple(schema["action_feature_names"]) != profile.action_feature_names
+            or tuple(schema["state_feature_names"]) != profile.state_feature_names):
+        raise ValueError("Policy input profile native feature order or semantics changed")
 
 
 def _json_hash(value: Any) -> str:
@@ -224,10 +307,12 @@ def _atomic_checkpoint(path: Path, value: Any) -> None:
     os.replace(temporary, path)
 
 
-def load_policy(checkpoint: str | Path, *, selected: bool = True) -> MaskedPatientPolicy:
+def load_policy(checkpoint: str | Path, *, selected: bool = True,
+                expected_input_profile: str | None = None) -> MaskedPatientPolicy:
     """Load only tensor/primitive checkpoints, never arbitrary pickled classes."""
     state = torch.load(checkpoint, map_location="cpu", weights_only=True)
-    policy = MaskedPatientPolicy(*state["dimensions"])
+    profile = checkpoint_input_profile(state, expected_input_profile=expected_input_profile)
+    policy = MaskedPatientPolicy(*state["dimensions"], input_profile=profile.profile_id)
     weights = state["selected_policy"] if selected and "selected_policy" in state else state["policy"]
     policy.load_state_dict(weights)
     expected = state.get("selected_hash" if selected and "selected_policy" in state else "policy_hash")
@@ -237,9 +322,9 @@ def load_policy(checkpoint: str | Path, *, selected: bool = True) -> MaskedPatie
     return policy
 
 
-def clone_checkpoint_policy(checkpoint: str | Path) -> MaskedPatientPolicy:
+def clone_checkpoint_policy(checkpoint: str | Path, *, expected_input_profile: str | None = None) -> MaskedPatientPolicy:
     """Independent weights for a future adaptation caller; no evaluation claim."""
-    return copy.deepcopy(load_policy(checkpoint))
+    return copy.deepcopy(load_policy(checkpoint, expected_input_profile=expected_input_profile))
 
 
 def rollout_policy(policy: MaskedPatientPolicy | None, simulator: Simulator, *, seed: int,
@@ -312,6 +397,8 @@ def train_patient_policy(
     population_case_aliases: tuple[str, ...] = (),
     procedural_checkpoint: str | Path | None = None,
     procedural_target: Any = None,
+    input_profile: str = "RAW",
+    procedural_study_id: str | None = None,
 ) -> TrainingResult:
     """Train a fresh policy or isolated clone, with selection-world-only ranking.
 
@@ -343,14 +430,16 @@ def train_patient_policy(
     first = simulator.reset(optimization_manifest.seeds[0])
     dimensions = (np.asarray(first.action_features).shape[1], np.asarray(first.state_features).size,
                   config.hidden_features)
+    _validate_simulator_profile(simulator, input_profile)
     with torch.random.fork_rng(devices=[]):
         torch.manual_seed(config.seed)
-        policy = MaskedPatientPolicy(*dimensions)
+        policy = MaskedPatientPolicy(*dimensions, input_profile=input_profile)
     shared_hash = None
     population_context = None
     procedural_context = None
     if resume:
         initialization = torch.load(checkpoint_path, map_location="cpu", weights_only=True)
+        checkpoint_input_profile(initialization, expected_input_profile=input_profile)
         saved_population = initialization.get("population_initialization")
         if saved_population is not None:
             shared_checkpoint = directory / "population-source.pt"
@@ -365,7 +454,11 @@ def train_patient_policy(
             procedural_checkpoint = directory / "procedural-source.pt"
             if procedural_target is None:
                 procedural_target = TransferTarget(**saved_procedural["target"])
+            if procedural_study_id is None:
+                procedural_study_id = saved_procedural.get("study_id")
     if shared_checkpoint is not None:
+        if input_profile != "RAW":
+            raise ValueError("Analytic population initialization requires its original RAW profile")
         from .population_learning import feature_schema, validate_population_checkpoint
         source = torch.load(shared_checkpoint, map_location="cpu", weights_only=True)
         if source.get("kind") != "population_checkpoint":
@@ -384,13 +477,14 @@ def train_patient_policy(
             "target_group": population_case_group, "target_aliases": list(population_case_aliases),
             "checkpoint_file_sha256": validation["checkpoint_file_sha256"],
             "provenance_hash": validation["provenance_hash"], "scope": validation["scope"]}
-        shared = clone_checkpoint_policy(copied)
+        shared = clone_checkpoint_policy(copied, expected_input_profile=input_profile)
         policy.load_state_dict(copy.deepcopy(shared.state_dict()))
         shared_hash = policy_hash(shared)
     if procedural_checkpoint is not None:
         from .procedural_learning import validate_procedural_adaptation
         validation = validate_procedural_adaptation(procedural_checkpoint, procedural_target,
-            simulator, optimization_manifest, selection_manifest, config)
+            simulator, optimization_manifest, selection_manifest, config,
+            input_profile=input_profile, study_id=procedural_study_id)
         copied = directory / "procedural-source.pt"
         if not resume:
             copied.write_bytes(Path(procedural_checkpoint).read_bytes())
@@ -399,14 +493,17 @@ def train_patient_policy(
         procedural_context = {"target": asdict(procedural_target),
             "checkpoint_file_sha256": validation["checkpoint_file_sha256"],
             "provenance_hash": validation["provenance_hash"], "scope": validation["scope"]}
-        shared = clone_checkpoint_policy(copied)
+        if procedural_study_id is not None:
+            procedural_context["study_id"] = procedural_study_id
+        procedural_context.update(policy.checkpoint_profile())
+        shared = clone_checkpoint_policy(copied, expected_input_profile=input_profile)
         if policy_hash(shared) != validation["policy_hash"]:
             raise ValueError("Procedural actor changed after provenance validation")
         policy.load_state_dict(copy.deepcopy(shared.state_dict()))
         shared_hash = policy_hash(shared)
-    optimizer = torch.optim.Adam(policy.parameters(), lr=config.learning_rate)
     generator = torch.Generator(device="cpu").manual_seed(config.seed)
     initial_hash = policy_hash(policy)
+    initial_trainable_hash = trainable_parameter_hash(policy)
     state: dict[str, Any] = {
         "gradient_steps": 0, "optimization_environment_steps": 0,
         "selection_environment_steps": 0, "episode_index": 0,
@@ -414,12 +511,14 @@ def train_patient_policy(
         "elapsed_seconds": 0.0, "selection_seconds": 0.0,
         "initial_selection_return": None, "selected_selection_return": None,
         "initial_actor_hash": policy_hash(policy.actor),
+        "initial_trainable_parameter_hash": initial_trainable_hash,
         "selection_history": [], "optimization_history": [],
     }
     selected_weights = copy.deepcopy(policy.state_dict())
     selected_hash = initial_hash
     simulator_source = Path(inspect.getfile(type(simulator)))
     contract = {"schema_version": 1, "algorithm": "masked_reinforce_state_value_v2",
+                **policy.checkpoint_profile(),
                 "implementation_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                 "simulator_implementation_sha256": hashlib.sha256(simulator_source.read_bytes()).hexdigest(),
                 "numerical_source_sha256": numerical_source_hashes(),
@@ -436,6 +535,8 @@ def train_patient_policy(
         saved = torch.load(checkpoint_path, map_location="cpu", weights_only=True)
         if saved["contract_hash"] != contract_hash:
             raise ValueError("resume contract changed: model, worlds or optimization settings differ")
+    optimizer = torch.optim.Adam(policy.parameters(), lr=config.learning_rate)
+    if resume:
         policy.load_state_dict(saved["policy"])
         if policy_hash(policy) != saved["policy_hash"]:
             raise ValueError("latest checkpoint weight hash mismatch")
@@ -448,6 +549,7 @@ def train_patient_policy(
             raise ValueError("selected checkpoint weight hash mismatch")
     else:
         _atomic_checkpoint(directory / "initial.pt", {"dimensions": list(dimensions),
+                           **policy.checkpoint_profile(), "trainable_parameter_hash": initial_trainable_hash,
                            "policy": copy.deepcopy(policy.state_dict()), "policy_hash": initial_hash})
         _atomic_json(directory / "contract.json", {**contract, "contract_hash": contract_hash,
                      "initial_checkpoint_hash": initial_hash, "shared_checkpoint_hash": shared_hash,
@@ -473,8 +575,10 @@ def train_patient_policy(
     def save(status: str) -> TrainingResult:
         state["elapsed_seconds"] = elapsed()
         latest_hash = policy_hash(policy)
+        checkpoint_export_started = time.perf_counter()
         _atomic_checkpoint(checkpoint_path, {
             "contract_hash": contract_hash, "dimensions": list(dimensions),
+            **policy.checkpoint_profile(), "trainable_parameter_hash": trainable_parameter_hash(policy),
             "policy": policy.state_dict(), "policy_hash": latest_hash,
             "selected_policy": selected_weights, "selected_hash": selected_hash,
             "optimizer": optimizer.state_dict(), "random_state": generator.get_state(),
@@ -482,6 +586,7 @@ def train_patient_policy(
             "population_initialization": population_context,
             "procedural_initialization": procedural_context,
         })
+        checkpoint_export_seconds = time.perf_counter() - checkpoint_export_started
         optimizer_mode = ("PROCEDURAL_PRETRAINED_ADAPTED" if procedural_context is not None
                           else "POPULATION_ADAPTED" if shared_hash else "PATIENT_SCRATCH_RL")
         result = TrainingResult(status, optimizer_mode,
@@ -491,6 +596,10 @@ def train_patient_policy(
                                 state["initial_selection_return"], state["selected_selection_return"],
                                 str(directory), shared_hash, state["initialization_seconds"])
         _atomic_json(directory / "result.json", {**asdict(result), **state,
+                     **policy.checkpoint_profile(),
+                     "latest_trainable_parameter_hash": trainable_parameter_hash(policy),
+                     "final_checkpoint_export_seconds": checkpoint_export_seconds if status != "running" else None,
+                     "final_checkpoint_export_seconds_scope": "last atomic checkpoint write only; result JSON write and return are outside this measurement",
                      "latest_actor_hash": policy_hash(policy.actor),
                      "actor_parameters_changed": policy_hash(policy.actor) != state["initial_actor_hash"],
                      "selection_rule": "maximum mean deterministic selection return; earliest wins ties",
@@ -521,10 +630,12 @@ def train_patient_policy(
                 return False
             rewards.append(replay.total_reward)
             state["selection_environment_steps"] += replay.environment_steps
-        state["selection_seconds"] += time.perf_counter() - selection_started
+        panel_elapsed_seconds = time.perf_counter() - selection_started
+        state["selection_seconds"] += panel_elapsed_seconds
         mean = float(np.mean(rewards))
         state["selection_history"].append({"gradient_steps": state["gradient_steps"],
             "optimization_environment_steps": state["optimization_environment_steps"],
+            "panel_elapsed_seconds": panel_elapsed_seconds,
             "mean_return": mean, "world_count": len(rewards), "checkpoint_hash": policy_hash(policy)})
         if state["initial_selection_return"] is None:
             state["initial_selection_return"] = mean
