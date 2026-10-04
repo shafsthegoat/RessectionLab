@@ -1,0 +1,245 @@
+{
+  "schema_version": 1,
+  "scope": "Independent read-only source-header and saved affine diagnosis; no voxel data/model/patient-task execution or source mutation",
+  "source_path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT05/ses-preop/anat/sub-PAT05_ses-preop_T1w.nii.gz",
+  "source_sha256": "016779173394c3a3e07fc53f927d37c3c1cb5df04bcbdc398fcfbdc23b40085e",
+  "structural_source_ref_sha256": "016779173394c3a3e07fc53f927d37c3c1cb5df04bcbdc398fcfbdc23b40085e",
+  "source_hash_matches_bundle_reference": true,
+  "bundle_path": "outputs/cases/BTC-sub-PAT05-structural-evidence.ressectionlab",
+  "bundle_sha256": "c1af712957dc4902343995bd828eb0c3662438f8445c5cb7401e6dd50f7a4e12",
+  "bundle_case_semantic_hash": "sha256:2fd887043fc6c7d657e83cadd9f55f0f585940a82c0eefb50da8baa0b3c989ef",
+  "bundle_affine_dtype": "float64",
+  "bundle_affine_equals_source_selected_sform_exactly": true,
+  "source_shape_xyz": [
+    160,
+    256,
+    256
+  ],
+  "source_data_dtype": "int16",
+  "units": [
+    "mm",
+    "sec"
+  ],
+  "qform_code": 1,
+  "sform_code": 1,
+  "selected_form": "sform",
+  "qform_ras_mm": [
+    [
+      0.9991456195481114,
+      0.036700106207954865,
+      0.019190451907799794,
+      -83.10478973388672
+    ],
+    [
+      -0.03669346903097173,
+      0.999326324182608,
+      -0.0007048094622226994,
+      -110.23243713378906
+    ],
+    [
+      -0.019203459023220237,
+      4.303387276502523e-08,
+      0.9998155978975305,
+      -141.11172485351562
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "sform_ras_mm": [
+    [
+      0.9991455674171448,
+      0.03670010715723038,
+      0.019190452992916107,
+      -83.10478973388672
+    ],
+    [
+      -0.03669346868991852,
+      0.9993262887001038,
+      -0.0007048094994388521,
+      -110.23243713378906
+    ],
+    [
+      -0.019203459843993187,
+      4.299106848293377e-08,
+      0.9998155832290649,
+      -141.11172485351562
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "source_header_fields": {
+    "pixdim": {
+      "dtype": "float32",
+      "value": [
+        1.0,
+        1.0000035762786865,
+        1.0,
+        1.0,
+        1.7000000476837158,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "quatern_b": {
+      "dtype": "float32",
+      "value": 0.00017625093460083008
+    },
+    "quatern_c": {
+      "dtype": "float32",
+      "value": 0.009600520133972168
+    },
+    "quatern_d": {
+      "dtype": "float32",
+      "value": -0.018352298066020012
+    },
+    "qoffset_x": {
+      "dtype": "float32",
+      "value": -83.10478973388672
+    },
+    "qoffset_y": {
+      "dtype": "float32",
+      "value": -110.23243713378906
+    },
+    "qoffset_z": {
+      "dtype": "float32",
+      "value": -141.11172485351562
+    },
+    "srow_x": {
+      "dtype": "float32",
+      "value": [
+        0.9991455674171448,
+        0.03670010715723038,
+        0.019190452992916107,
+        -83.10478973388672
+      ]
+    },
+    "srow_y": {
+      "dtype": "float32",
+      "value": [
+        -0.03669346868991852,
+        0.9993262887001038,
+        -0.0007048094994388521,
+        -110.23243713378906
+      ]
+    },
+    "srow_z": {
+      "dtype": "float32",
+      "value": [
+        -0.019203459843993187,
+        4.299106848293377e-08,
+        0.9998155832290649,
+        -141.11172485351562
+      ]
+    }
+  },
+  "sform_column_norms_mm": [
+    1.000003524195693,
+    0.999999964576238,
+    0.9999999853550895
+  ],
+  "qform_column_norms_mm": [
+    1.0000035762786865,
+    1.0,
+    1.0
+  ],
+  "sform_normalized_column_gram": [
+    [
+      1.0,
+      6.788716003576174e-10,
+      -4.540371600086609e-10
+    ],
+    [
+      6.788716003576174e-10,
+      1.0,
+      3.0612167484345755e-12
+    ],
+    [
+      -4.540371600086609e-10,
+      3.0612167484345755e-12,
+      1.0
+    ]
+  ],
+  "sform_normalized_gram_max_off_diagonal": 6.788716003576174e-10,
+  "sform_normalized_gram_max_difference_from_identity": 6.788716003576174e-10,
+  "qform_normalized_gram_max_difference_from_identity": 2.7430307549569215e-18,
+  "qform_minus_sform_column_norms_mm": [
+    5.208299347359002e-08,
+    3.542376203480302e-08,
+    1.4644910506511621e-08
+  ],
+  "qform_sform_origin_equal": true,
+  "full_cell_corner_domain": [
+    [
+      -0.5,
+      159.5
+    ],
+    [
+      -0.5,
+      255.5
+    ],
+    [
+      -0.5,
+      255.5
+    ]
+  ],
+  "qform_vs_sform_max_full_cell_corner_displacement_mm": 1.2540709856039636e-05,
+  "polar_method": "SVD of normalized sform columns: U @ Vt; multiply each original column norm; retain origin/homogeneous row",
+  "polar_candidate_ras_mm": [
+    [
+      0.9991455674090443,
+      0.03670010681805703,
+      0.019190453219683344,
+      -83.10478973388672
+    ],
+    [
+      -0.036693469029287086,
+      0.9993262887125605,
+      -0.0007048095092985703,
+      -110.23243713378906
+    ],
+    [
+      -0.019203459617015493,
+      4.299605653764695e-08,
+      0.9998155832247058,
+      -141.11172485351562
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "polar_vs_source_max_full_cell_corner_displacement_mm": 1.0842083020239977e-07,
+  "polar_worst_full_cell_corner": [
+    159.5,
+    255.5,
+    -0.5
+  ],
+  "polar_vs_source_origin_equal": true,
+  "polar_vs_source_max_column_norm_difference_mm": 6.661338147750939e-16,
+  "source_handedness_sign": 1.0,
+  "polar_handedness_sign": 1.0,
+  "float32_epsilon": 1.1920928955078125e-07,
+  "proposed_reconciliation_full_cell_bound_mm": 1e-06,
+  "polar_within_proposed_bound": true,
+  "qform_replacement_within_proposed_bound": false,
+  "interpretation": "The recorded sform departure from orthogonality is consistent with float32 header serialization roundoff and is physically negligible under the independently evaluated full-cell-corner bound. The pre-serialization affine is unavailable, so a specific generating cause cannot be proven. This is not permission to accept larger or clinically meaningful shear.",
+  "qform_replacement_reason": "Although orthogonal, qform reconstruction changes original column scales and exceeds the proposed 1e-6 mm physical bound. It is not an equivalent silent substitute for the source-bound sform.",
+  "case_or_source_modified": false,
+  "patient_task_executed": false,
+  "registration_or_clinical_acceptance": false,
+  "runtime": {
+    "nibabel": "5.4.2",
+    "numpy": "2.5.3"
+  }
+}
