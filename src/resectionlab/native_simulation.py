@@ -406,6 +406,8 @@ def make_native_patient_simulator(case: Any, *, access: AccessWindow | None = No
                                   tools: tuple[ToolGeometry, ...] | None = None,
                                   access_frame: str = "RAS+",
                                   entry_mode: str = "parallel",
+                                  selected_entry_mm: Iterable[float] | None = None,
+                                  selected_target_mm: Iterable[float] | None = None,
                                   cancelled: Callable[[], bool] | None = None) -> NativeSequentialSimulator:
     """Preserve the exact source grid for a restricted annotation-assisted run.
 
@@ -414,6 +416,11 @@ def make_native_patient_simulator(case: Any, *, access: AccessWindow | None = No
     MRI support may be used as an estimated envelope only for a declared
     skull-stripped source. Full-head BTC or an unknown upload needs a reviewed
     brain mask. Functional evidence remains unavailable unless explicitly given.
+
+    Paired selected_entry_mm/selected_target_mm are always canonical RAS+ and
+    restrict proposals to that exact ray. They require the selected access and
+    explicit tool catalog; no centroid alternatives or replacement tools are
+    added. candidate_count and entry_mode then do not change the selected ray.
     """
     from .native_resection import NATIVE_GENERIC_TOOLS, NativeResectionConfig
     if cancelled is not None and cancelled():
@@ -424,6 +431,17 @@ def make_native_patient_simulator(case: Any, *, access: AccessWindow | None = No
         raise ValueError("Entry mode must be parallel or central")
     if candidate_count < 1:
         raise ValueError("At least one target candidate is required")
+    if (selected_entry_mm is None) != (selected_target_mm is None):
+        raise ValueError("Selected entry and target must be supplied together")
+    selected_ray = None
+    if selected_entry_mm is not None:
+        if access is None or tools is None or not tools:
+            raise ValueError("A selected ray requires its explicit access window and tool catalog")
+        selected_ray = np.asarray((tuple(selected_entry_mm), tuple(selected_target_mm)), dtype=float)
+        if selected_ray.shape != (2, 3) or not np.isfinite(selected_ray).all():
+            raise ValueError("Selected entry and target must be finite RAS+ three-vectors")
+        if np.linalg.norm(selected_ray[1] - selected_ray[0]) <= 1e-9:
+            raise ValueError("Selected entry and target must define a nonzero ray")
     names = tuple(sorted(case.compartments))
     if not names:
         raise ValueError("Native planning requires source target compartments")
@@ -475,32 +493,36 @@ def make_native_patient_simulator(case: Any, *, access: AccessWindow | None = No
                 options.append((depth, axis, side, center, direction))
         _, _, _, center, direction = min(options, key=lambda item: item[:3])
         access = AccessWindow(center, direction, 6., "native_hypothetical_nearest_envelope_axis")
-    entry = np.asarray(access.center_mm)
-    center_point = affine[:3, :3] @ centroid + affine[:3, 3]
-    points: list[tuple[float, float, float]] = [tuple(float(v) for v in center_point)]
-    # Include an axis-aligned paid opening before oblique alternatives. The
-    # entrance and all tool dimensions remain in the versioned native model.
-    # A few fixed physical target samples define the common action proposal set.
-    # Prioritize every radiological compartment before adding depth alternatives.
-    alternatives = []
-    for label in range(1, len(names) + 1):
-        cells = np.argwhere(labels == label)
-        if not len(cells):
-            continue
-        center = cells.mean(axis=0)
-        representative = cells[np.argmin(np.sum(((cells - center) * spacing) ** 2, axis=1))]
-        physical = cells @ affine[:3, :3].T + affine[:3, 3]
-        representative_mm = affine[:3, :3] @ representative + affine[:3, 3]
-        points.append(tuple(float(v) for v in representative_mm))
-        distance = np.linalg.norm(physical - entry, axis=1)
-        alternatives.extend(tuple(float(v) for v in physical[i]) for i in (np.argmin(distance), np.argmax(distance)))
-    for point in alternatives:
-        if point not in points:
-            points.append(point)
-    points = points[:candidate_count]
-    normal = np.asarray(access.normal_inward)
-    entries = [np.asarray(point) - normal * np.dot(np.asarray(point) - entry, normal) for point in points] if entry_mode == "parallel" else [entry for _ in points]
-    native = NativeResectionConfig(tissue, labels, affine, access, tools or NATIVE_GENERIC_TOOLS,
+    if selected_ray is not None:
+        points = [tuple(float(v) for v in selected_ray[1])]
+        entries = [selected_ray[0]]
+    else:
+        entry = np.asarray(access.center_mm)
+        center_point = affine[:3, :3] @ centroid + affine[:3, 3]
+        points: list[tuple[float, float, float]] = [tuple(float(v) for v in center_point)]
+        # Include an axis-aligned paid opening before oblique alternatives. The
+        # entrance and all tool dimensions remain in the versioned native model.
+        # A few fixed physical target samples define the common action proposal set.
+        # Prioritize every radiological compartment before adding depth alternatives.
+        alternatives = []
+        for label in range(1, len(names) + 1):
+            cells = np.argwhere(labels == label)
+            if not len(cells):
+                continue
+            center = cells.mean(axis=0)
+            representative = cells[np.argmin(np.sum(((cells - center) * spacing) ** 2, axis=1))]
+            physical = cells @ affine[:3, :3].T + affine[:3, 3]
+            representative_mm = affine[:3, :3] @ representative + affine[:3, 3]
+            points.append(tuple(float(v) for v in representative_mm))
+            distance = np.linalg.norm(physical - entry, axis=1)
+            alternatives.extend(tuple(float(v) for v in physical[i]) for i in (np.argmin(distance), np.argmax(distance)))
+        for point in alternatives:
+            if point not in points:
+                points.append(point)
+        points = points[:candidate_count]
+        normal = np.asarray(access.normal_inward)
+        entries = [np.asarray(point) - normal * np.dot(np.asarray(point) - entry, normal) for point in points] if entry_mode == "parallel" else [entry for _ in points]
+    native = NativeResectionConfig(tissue, labels, affine, access, NATIVE_GENERIC_TOOLS if tools is None else tools,
                                    source_hash=case.semantic_hash, tissue_support_provenance=provenance,
                                    case_id=case.case_id, max_tip_step_mm=min(.25, float(spacing.min()) / 4))
     return NativeSequentialSimulator(native, points, candidate_entries_mm=entries, nominal_motor=nominal_motor,
