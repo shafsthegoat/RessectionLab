@@ -1,4 +1,5 @@
 import { maskSurface } from "./surface";
+import { surfaceNormals } from "./surfaceNormals";
 import type { Shape3 } from "./coordinates";
 
 self.onmessage = (
@@ -7,7 +8,11 @@ self.onmessage = (
   const { name, mask, shape } = event.data;
   try {
     const positions = maskSurface(mask, shape);
-    self.postMessage({ name, positions }, { transfer: [positions.buffer] });
+    const normals = surfaceNormals(positions);
+    self.postMessage(
+      { name, positions, normals },
+      { transfer: [positions.buffer, normals.buffer] },
+    );
   } catch (error) {
     self.postMessage({
       name,

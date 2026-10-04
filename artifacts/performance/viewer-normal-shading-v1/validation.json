@@ -1,0 +1,173 @@
+{
+  "schema": "ressectionlab.viewer-normal-validation.v1",
+  "recordedAt": "2026-10-04T09:32:06.433Z",
+  "probe": "Single fresh Node process; first invocation per source compartment, in manifest order.",
+  "environment": {
+    "node": "v24.19.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "cpu": "Apple M5"
+  },
+  "code": {
+    "gitHead": "1b16f453a610c1d4b2d37e615f1322975e97510f",
+    "status": "Relevant working-tree files identified by exact content hashes; this is not a claim that all edits are committed.",
+    "sha256": {
+      "desktop/src/viewer/surface.ts": "c6f14b69af5d479166c19ba0e468b6f18f702a9d9eb4f5d8ae8a85cbc1af801c",
+      "desktop/src/viewer/surfaceNormals.ts": "a6da5e8651b8bbf376cfe9c260f1b1a6ae3e80702ef26a5127924456523d4a83",
+      "desktop/src/viewer/surface.worker.ts": "a525261e9bb2a658b229078d4ea3472b54af3c7961b43992bbd060b0fe0595a2",
+      "desktop/src/viewer/VolumeRenderer.ts": "b35969cfe24f2dcd140ae67b4823bc727eecbafb849438ab5ade24ccaac4ca66",
+      "desktop/src/viewer/coordinates.test.mjs": "0fb385965dafb15e72f6b3f04b75ae785ac34465aff210396c5d06ba9cebc004",
+      "artifacts/performance/viewer-normal-shading-v1/probe.mjs": "e6124e4649fe971f2cab7606b93ef6180097c2343f4779e5fa1a55fb8b82e9fc"
+    }
+  },
+  "source": {
+    "caseId": "UCSF-PDGM-0004",
+    "caseHash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "frame": "RAS+",
+    "shape": [
+      240,
+      240,
+      155
+    ],
+    "affine": [
+      [
+        -1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        -1,
+        0,
+        239
+      ],
+      [
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        1
+      ]
+    ]
+  },
+  "change": "Area-weighted lighting normals at exactly coincident vertices; no positional smoothing, resampling or decimation.",
+  "unchanged": [
+    "MRI",
+    "source masks",
+    "triangle positions and order",
+    "cell-based metrics",
+    "lighting",
+    "material transparency",
+    "camera"
+  ],
+  "compartments": [
+    {
+      "name": "FLAIR_abnormality",
+      "sourceMaskSha256": "763f10ae7416e193305bc20c9a82a1c68bac7412639299e14b58f20fd0681c3e",
+      "sourceAnnotationVolumeMm3": 18654,
+      "triangles": 86508,
+      "positionsSha256Before": "4ec05b135e70f48a5ac4ef08bf06ac6a578565a0b9de210f830331a810b4237a",
+      "positionsSha256After": "4ec05b135e70f48a5ac4ef08bf06ac6a578565a0b9de210f830331a810b4237a",
+      "normalsSha256": "fdeb353af48acd9e9de1895c6f9058725e262b5e5858615593fa20bb3dd2286d",
+      "checks": {
+        "positionsUnchanged": true,
+        "maskUnchanged": true,
+        "normalCountMatchesVertices": true,
+        "nonfiniteNormals": 0,
+        "nonunitNormals": 0,
+        "maximumUnitLengthError": 3.639176715530823e-8,
+        "unitTolerance": 0.000001
+      },
+      "meshPreparationMs": 147.773,
+      "normalPreparationMs": 33.92275000000001
+    },
+    {
+      "name": "enhancing_target",
+      "sourceMaskSha256": "5082807c92644df349436d94f29b129242bd45995065cf5e341ea7b8fe37c0ae",
+      "sourceAnnotationVolumeMm3": 15672,
+      "triangles": 70204,
+      "positionsSha256Before": "801bc66c8280da638eabfd3afdccc7ae5e899d29e9d97684a217423771ce3f3f",
+      "positionsSha256After": "801bc66c8280da638eabfd3afdccc7ae5e899d29e9d97684a217423771ce3f3f",
+      "normalsSha256": "a305f8e43924bd135ee4d49843455a1504fbba6dc6d67e1af99e3ce39d25664d",
+      "checks": {
+        "positionsUnchanged": true,
+        "maskUnchanged": true,
+        "normalCountMatchesVertices": true,
+        "nonfiniteNormals": 0,
+        "nonunitNormals": 0,
+        "maximumUnitLengthError": 3.639176715530823e-8,
+        "unitTolerance": 0.000001
+      },
+      "meshPreparationMs": 121.96754200000004,
+      "normalPreparationMs": 28.64945899999998
+    },
+    {
+      "name": "nonenhancing_or_necrotic_core",
+      "sourceMaskSha256": "b2be253d65b0cee3b7ec85d4a0fd960a85bfa7c0ce460308bb8fbaf3f3a5615f",
+      "sourceAnnotationVolumeMm3": 7593,
+      "triangles": 29484,
+      "positionsSha256Before": "d17c116d81b9fb93cb482d22ac3c5b1b38420691be0512b4c6fb9d4a3a7c69e6",
+      "positionsSha256After": "d17c116d81b9fb93cb482d22ac3c5b1b38420691be0512b4c6fb9d4a3a7c69e6",
+      "normalsSha256": "c7f68b5bc9a582a6137dadf3bd593f14d569973ed04db773a7007cd1d82fb24d",
+      "checks": {
+        "positionsUnchanged": true,
+        "maskUnchanged": true,
+        "normalCountMatchesVertices": true,
+        "nonfiniteNormals": 0,
+        "nonunitNormals": 0,
+        "maximumUnitLengthError": 3.639176715530823e-8,
+        "unitTolerance": 0.000001
+      },
+      "meshPreparationMs": 62.26608299999998,
+      "normalPreparationMs": 12.96058400000004
+    }
+  ],
+  "timing": {
+    "sourceMeshPreparationMs": 332.006625,
+    "additionalNormalPreparationMs": 75.53279300000003,
+    "combinedPreparationMs": 407.539418,
+    "additionalNormalCostRelativeToFullMesh": 0.2275038728519349,
+    "productionExecution": "Mesh and normal preparation both execute in surface.worker.ts; buffers are transferred to the renderer.",
+    "exclusions": "Node CPU preparation probe only. Excludes UI asset loading, worker startup/IPC, GPU upload, frame submission and GPU latency. One-run timings are not a throughput benchmark."
+  },
+  "visualEvidence": {
+    "comparison": "Qualitative native app comparison reviewed by root and viewer agent: reduced triangle lighting discontinuities; original voxel contour and source MRI retained.",
+    "controls": {
+      "caseId": "UCSF-PDGM-0004",
+      "allSourceLayersVisible": true,
+      "sourcePlaneVisible": false,
+      "overlayOpacity": 0.32,
+      "cursorRasMm": [
+        -161.9,
+        84.9,
+        104.6
+      ],
+      "cameraPreset": "anatomy",
+      "selectedRoutes": 0
+    },
+    "screenshots": [
+      {
+        "path": "artifacts/electron-refinement-v2/source-baseline.jpg",
+        "sha256": "4f92c9e6564963628620db6ebfef7585907e658bd04e6f9be9beb23a2a32b5a7",
+        "dimensions": [
+          2920,
+          1736
+        ]
+      },
+      {
+        "path": "artifacts/electron-refinement-v2/source-normals-after.jpg",
+        "sha256": "9119d75c23a2ca62011e98484981fa2e1073f17c9d8b688eb181007b44c932b7",
+        "dimensions": [
+          2920,
+          1736
+        ]
+      }
+    ]
+  }
+}

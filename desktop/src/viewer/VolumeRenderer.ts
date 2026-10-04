@@ -319,6 +319,7 @@ export class VolumeRenderer {
       event: MessageEvent<{
         name: string;
         positions?: Float32Array;
+        normals?: Float32Array;
         error?: string;
       }>,
     ) => {
@@ -332,14 +333,19 @@ export class VolumeRenderer {
       const layer = volume.compartments.find(
           (item) => item.name === event.data.name,
         ),
-        positions = event.data.positions;
+        positions = event.data.positions,
+        normals = event.data.normals;
       if (!layer || !positions?.length) return;
+      if (!normals || normals.length !== positions.length) {
+        onError("Source surface normals do not match its unchanged geometry.");
+        return;
+      }
       const geometry = new THREE.BufferGeometry();
       geometry.setAttribute(
         "position",
         new THREE.BufferAttribute(positions, 3),
       );
-      geometry.computeVertexNormals();
+      geometry.setAttribute("normal", new THREE.BufferAttribute(normals, 3));
       const mesh = new THREE.Mesh(
         geometry,
         new THREE.MeshStandardMaterial({
@@ -508,6 +514,7 @@ export class VolumeRenderer {
       event: MessageEvent<{
         name: string;
         positions?: Float32Array;
+        normals?: Float32Array;
         error?: string;
       }>,
     ) => {
@@ -527,13 +534,18 @@ export class VolumeRenderer {
         failed("missing source-grid surface");
         return;
       }
+      const normals = event.data.normals;
+      if (!normals || normals.length !== positions.length) {
+        failed("surface normals do not match source-grid geometry");
+        return;
+      }
       if (positions.length) {
         const geometry = new THREE.BufferGeometry();
         geometry.setAttribute(
           "position",
           new THREE.BufferAttribute(positions, 3),
         );
-        geometry.computeVertexNormals();
+        geometry.setAttribute("normal", new THREE.BufferAttribute(normals, 3));
         const mesh = new THREE.Mesh(
           geometry,
           new THREE.MeshStandardMaterial({

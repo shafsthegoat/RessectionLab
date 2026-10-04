@@ -4,6 +4,8 @@ One WebGL2 context shares original MRI and annotation textures across the 3D sce
 
 Source binary annotations produce display surfaces in a worker. The 0.5 isosurface rounds voxel corners; quantitative volumes always come from native voxel cells, never mesh volume. No generic brain surface is substituted for missing patient anatomy. The optional MRI plane starts hidden in 3D to expose the annotation surfaces; the linked MRI views remain visible.
 
+Surface lighting uses area-weighted normals shared only at exactly coincident vertices. This removes the artificial discontinuity of independent triangle normals without moving a vertex, changing triangles, or smoothing patient anatomy. Exact half-voxel coordinates use an injective integer key; arbitrary coordinates use exact identities rather than rounding. Normal preparation stays in the surface worker. A fresh-process UCSF-PDGM-0004 check measured 93 ms for all three normal buffers alongside 377 ms for the source meshes; position-buffer SHA-256 values were unchanged and all output normals were finite unit vectors. These preparation timings exclude UI loading and GPU submission. Material transparency, lighting, and camera settings are unchanged by this display adjustment.
+
 ## Modeled removal
 
 The host first verifies the independent native replay certificate. `validateReplay` then checks the accepted effect's case version, grid, RAS affine, binary cells, and target/normal/residual cell accounting. It is a display integrity gate, not an independent trajectory checker.

@@ -11,6 +11,7 @@ import {
   volumeBounds,
 } from "./coordinates.ts";
 import { maskSurface } from "./surface.ts";
+import { surfaceNormals } from "./surfaceNormals.ts";
 import * as THREE from "three";
 import { physicalBounds, placeInSourceFrame } from "./sceneGeometry.ts";
 import { residualMask, validateReplay } from "./replay.ts";
@@ -20,6 +21,7 @@ import {
   routeAppearance,
 } from "./routeAppearance.ts";
 import { selectComparisonRoutes } from "../route-selection.ts";
+import { createHash } from "node:crypto";
 
 const close = (actual, expected) =>
   actual.forEach((value, index) =>
@@ -28,6 +30,69 @@ const close = (actual, expected) =>
       `${actual} != ${expected}`,
     ),
   );
+
+test("Display normal averaging preserves every source triangle position exactly", () => {
+  const positions = maskSurface(new Uint8Array(125).fill(1), [5, 5, 5]);
+  const digest = () =>
+    createHash("sha256").update(new Uint8Array(positions.buffer)).digest("hex");
+  const before = digest(),
+    normals = surfaceNormals(positions);
+  assert.equal(digest(), before);
+  assert.equal(normals.length, positions.length);
+  const shared = new Map();
+  for (let i = 0; i < positions.length; i += 3) {
+    const id = [...positions.slice(i, i + 3)].join(","),
+      normal = [...normals.slice(i, i + 3)];
+    assert.ok(Math.abs(Math.hypot(...normal) - 1) < 1e-7);
+    if (shared.has(id)) assert.deepEqual(normal, shared.get(id));
+    else shared.set(id, normal);
+  }
+  assert.ok(
+    shared.size < positions.length / 3,
+    "Fixture has duplicated triangle vertices",
+  );
+  const original = new THREE.BufferGeometry().setAttribute(
+    "position",
+    new THREE.BufferAttribute(positions, 3),
+  );
+  original.computeBoundingBox();
+  const bounds = original.boundingBox.clone();
+  original.setAttribute("normal", new THREE.BufferAttribute(normals, 3));
+  original.computeBoundingBox();
+  assert.ok(original.boundingBox.equals(bounds));
+  assert.equal(original.getAttribute("position").array, positions);
+});
+
+test("Only exactly coincident vertices share display normals", () => {
+  const positions = new Float32Array([
+    0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0,
+  ]);
+  const normals = surfaceNormals(positions);
+  const expected = Math.SQRT1_2;
+  assert.ok(Math.abs(normals[1] - expected) < 1e-7);
+  assert.ok(Math.abs(normals[2] - expected) < 1e-7);
+  close([...normals.slice(6, 9)], [0, 0, 1]);
+  positions[9] = 0.000001;
+  const unjoined = surfaceNormals(positions);
+  close([...unjoined.slice(0, 3)], [0, 0, 1]);
+  assert.throws(
+    () => surfaceNormals(new Float32Array(8)),
+    /complete triangles/,
+  );
+  assert.throws(() => surfaceNormals(new Float32Array(9)), /degenerate/);
+});
+
+test("Packed source-grid normal keys preserve separated and negative coordinates", () => {
+  const first = [0, 0, 0, 1, 0, 0, 0, 1, 0];
+  const second = [-4, -2, -1, -4, -2, 0, -3, -2, -1];
+  const positions = new Float32Array([...first, ...second]);
+  const normals = surfaceNormals(positions);
+  for (let i = 0; i < 9; i += 3) close([...normals.slice(i, i + 3)], [0, 0, 1]);
+  for (let i = 9; i < 18; i += 3)
+    close([...normals.slice(i, i + 3)], [0, 1, 0]);
+  const translated = new Float32Array(positions.map((value) => value + 100000));
+  assert.deepEqual(surfaceNormals(translated), normals);
+});
 
 test("Clearing route A retains B's amber comparison identity in the viewer", () => {
   const routes = [
