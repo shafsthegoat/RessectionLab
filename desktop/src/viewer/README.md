@@ -6,6 +6,10 @@ Source binary annotations produce display surfaces in a worker. The 0.5 isosurfa
 
 Surface lighting uses area-weighted normals shared only at exactly coincident vertices. This removes the artificial discontinuity of independent triangle normals without moving a vertex, changing triangles, or smoothing patient anatomy. Exact half-voxel coordinates use an injective integer key; arbitrary coordinates use exact identities rather than rounding. Normal preparation stays in the surface worker. A fresh-process UCSF-PDGM-0004 check measured 93 ms for all three normal buffers alongside 377 ms for the source meshes; position-buffer SHA-256 values were unchanged and all output normals were finite unit vectors. These preparation timings exclude UI loading and GPU submission. Material transparency, lighting, and camera settings are unchanged by this display adjustment.
 
+## Estimated envelope inspection
+
+A selected structural proposal uses a separate texture and a lavender dashed contour on the three original MRI planes. It never enters the target compartment list, removed-tissue mask, working brain mask, 3D anatomy, or planning metrics. The display gate requires an estimated, view-only record bound to the exact case version, native dimensions, binary cells, and canonical RAS affine. LPS conversion preserves source voxel indexing. Review-required, accepted, and rejected estimates retain distinct status labels; a free-form description cannot change those labels or permit cortical access. Clearing/changing evidence disposes the previous texture before validation; replay suppresses the contour. Source-coordinate sampling determines the contour's physical alignment without resampling the stored mask.
+
 ## Modeled removal
 
 The host first verifies the independent native replay certificate. `validateReplay` then checks the accepted effect's case version, grid, RAS affine, binary cells, and target/normal/residual cell accounting. It is a display integrity gate, not an independent trajectory checker.

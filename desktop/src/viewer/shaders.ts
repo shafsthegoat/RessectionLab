@@ -19,6 +19,9 @@ uniform sampler3D uMri;
 uniform sampler3D uLabels;
 uniform sampler3D uRemoved;
 uniform int uReplayActive;
+uniform sampler3D uProposal;
+uniform int uProposalActive;
+uniform vec3 uProposalColor;
 uniform mat4 uWorldToVoxel;
 uniform vec3 uShape;
 uniform vec3 uLow;
@@ -61,6 +64,11 @@ float capsuleDistance(vec3 p,vec3 a,vec3 b) {
   vec3 v=b-a; float along=clamp(dot(p-a,v)/max(dot(v,v),0.00001),0.0,1.0);
   return length(p-a-v*along);
 }
+bool proposalAt(vec3 voxel) {
+  ivec3 index=ivec3(floor(voxel+0.5));
+  if(any(lessThan(index,ivec3(0)))||any(greaterThanEqual(index,ivec3(uShape)))) return false;
+  return texelFetch(uProposal,index.zyx,0).r>0.0;
+}
 void main() {
   vec3 world=vWorld;
   vec2 point=(vUv-uRect.xy)/uRect.zw;
@@ -80,6 +88,19 @@ void main() {
   if (uThreeD==1 && abs(signal)<0.000001) discard;
   float gray=clamp((signal-uWindow.x)/max(uWindow.y-uWindow.x,0.000001),0.0,1.0);
   vec3 color=vec3(gray);
+  // Display-only estimate contour in the physical MPR plane. Neighbours are
+  // one screen pixel apart in RAS, transformed into the unchanged source grid.
+  // Tumor label colors are composited afterwards and retain their own identity.
+  if(uThreeD==0 && uProposalActive==1 && uReplayActive==0 && proposalAt(voxel)) {
+    vec3 stepA=vec3(0.0),stepB=vec3(0.0);
+    stepA[uAxes.x]=(uHigh[uAxes.x]-uLow[uAxes.x])/max(uRect.z*uResolution.x,1.0)*1.25;
+    stepB[uAxes.y]=(uHigh[uAxes.y]-uLow[uAxes.y])/max(uRect.w*uResolution.y,1.0)*1.25;
+    vec3 a=(uWorldToVoxel*vec4(stepA,0.0)).xyz;
+    vec3 b=(uWorldToVoxel*vec4(stepB,0.0)).xyz;
+    bool edge=!proposalAt(voxel+a)||!proposalAt(voxel-a)||!proposalAt(voxel+b)||!proposalAt(voxel-b);
+    bool dash=mod(floor(gl_FragCoord.x)+floor(gl_FragCoord.y),9.0)<6.0;
+    if(edge && dash) color=mix(color,uProposalColor,0.94);
+  }
   ivec3 nearest=ivec3(floor(voxel+0.5));
   int bits=labels(nearest)&uVisibleBits;
   bool removed=uReplayActive==1 && texelFetch(uRemoved,nearest.zyx,0).r>0.0;

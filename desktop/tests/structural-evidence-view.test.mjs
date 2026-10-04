@@ -95,3 +95,39 @@ test("zero-action replay is a labeled disabled timeline", () => {
   assert.match(html, /disabled=""/);
   assert.doesNotMatch(html, /Updating to step/);
 });
+
+test("proposal controls explicitly view an estimate without accepting anatomy", () => {
+  const item = evidence("review_required", true);
+  const html = renderToStaticMarkup(
+    React.createElement(Inventory, {
+      evidence: [item],
+      inspection: {
+        onSelect: () => {},
+        onClear: () => {},
+        selectedId: undefined,
+      },
+    }),
+  );
+  assert.match(html, /View on MRI/);
+  assert.match(html, /aria-pressed="false"/);
+  assert.match(html, /Review required/);
+  assert.doesNotMatch(html, />Accept|>Approve|Use as anatomy/);
+});
+test("selected proposal can clear and jump to a computed outside-annotation point", () => {
+  const item = evidence("review_required", true);
+  const html = renderToStaticMarkup(
+    React.createElement(Inventory, {
+      evidence: [item],
+      inspection: {
+        onSelect: () => {},
+        onClear: () => {},
+        selectedId: item.evidenceId,
+        onOutside: () => {},
+        outsideCount: 214,
+      },
+    }),
+  );
+  assert.match(html, /Hide estimate/);
+  assert.match(html, /aria-pressed="true"/);
+  assert.match(html, /Inspect annotation outside \(214\)/);
+});

@@ -20,15 +20,32 @@ export interface StructuralEvidence {
   corticalAccessPermitted: false;
   sourceHash: string;
   sourceFrameHash: string;
-  sourceFileHash: string;
+  sourceFileHash: string | null;
   maskHash: string;
-  modelHash: string;
+  modelHash: string | null;
   runHash: string;
   evidenceHash: string;
   method: string;
   array: ArrayDescriptor;
   metadata: Record<string, unknown>;
   review: unknown;
+}
+
+export interface StructuralProposalView {
+  caseHash: string;
+  evidenceId: string;
+  mask: Uint8Array;
+  shape: Vec3;
+  affine: Mat4;
+  frame: "RAS+";
+  reviewStatus: string;
+  provenance: "estimated";
+  scope: "display-only-estimate";
+  label: string;
+  annotationOutsideVoxelCount: number;
+  outsideAnnotationPointMm: Vec3 | null;
+  voxelBounds: { min: Vec3; max: Vec3 };
+  estimatedVoxelCount: number;
 }
 
 export interface CasePayload {

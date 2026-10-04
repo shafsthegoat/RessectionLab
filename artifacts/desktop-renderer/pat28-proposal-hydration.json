@@ -1,0 +1,55 @@
+{
+  "caseId": "BTC-ds001226-sub-PAT28-preop",
+  "results": [
+    {
+      "evidenceId": "synthstrip_main_f59f40dea254",
+      "caseHash": "sha256:69e57559a86b00a55c3b8b5e2b5e8cc7312d0170af6ba4496a951b76e7213228",
+      "scope": "display-only-estimate",
+      "frame": "RAS+",
+      "reviewStatus": "review_required",
+      "estimatedVoxelCount": 1529553,
+      "outsideAnnotationVoxelCount": 0,
+      "outsideAnnotationPointMm": null,
+      "voxelBounds": {
+        "min": [
+          10,
+          28,
+          60
+        ],
+        "max": [
+          146,
+          203,
+          205
+        ]
+      },
+      "elapsedMs": 299.38645800000006
+    },
+    {
+      "evidenceId": "synthstrip_nocsf_f59f40dea254",
+      "caseHash": "sha256:69e57559a86b00a55c3b8b5e2b5e8cc7312d0170af6ba4496a951b76e7213228",
+      "scope": "display-only-estimate",
+      "frame": "RAS+",
+      "reviewStatus": "review_required",
+      "estimatedVoxelCount": 1337642,
+      "outsideAnnotationVoxelCount": 214,
+      "outsideAnnotationPointMm": [
+        -13.999932285631076,
+        9.317959476313263,
+        64.3339069030313
+      ],
+      "voxelBounds": {
+        "min": [
+          12,
+          28,
+          68
+        ],
+        "max": [
+          145,
+          202,
+          201
+        ]
+      },
+      "elapsedMs": 244.64041700000007
+    }
+  ]
+}

@@ -14,6 +14,10 @@ import {
 import type { Point3, SlicePlane } from "./coordinates";
 import type { ViewerWorkspaceProps } from "./contracts";
 import { FAILURE_COLOR, routeAppearance } from "./routeAppearance";
+import {
+  STRUCTURAL_PROPOSAL_COLOR,
+  structuralProposalReviewLabel,
+} from "./structuralProposal";
 import "./viewer.css";
 
 const PLANES: SlicePlane[] = ["axial", "coronal", "sagittal"];
@@ -33,6 +37,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     routes,
     cameraMode,
     replay,
+    structuralProposal,
   } = props;
   const container = useRef<HTMLDivElement>(null),
     canvas = useRef<HTMLCanvasElement>(null),
@@ -49,7 +54,11 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const [activePlane, setActivePlane] = useState<SlicePlane>("axial"),
     [contrast, setContrast] = useState(1),
     [showPlane, setShowPlane] = useState(false),
-    [replayError, setReplayError] = useState<string | null>(null);
+    [replayError, setReplayError] = useState<string | null>(null),
+    [proposalError, setProposalError] = useState<string | null>(null),
+    [proposalReviewLabel, setProposalReviewLabel] = useState<string | null>(
+      null,
+    );
   const [paneSizes, setPaneSizes] = useState<
     Record<SlicePlane, [number, number]>
   >({ axial: [1, 1], coronal: [1, 1], sagittal: [1, 1] });
@@ -172,6 +181,35 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
       width = (high - low) * contrast;
     renderer.setWindow(centre - width / 2, centre + width / 2);
   }, [contrast, ready]);
+
+  useEffect(() => {
+    if (!engine.current) return;
+    setProposalError(null);
+    setProposalReviewLabel(null);
+    try {
+      const proposal = replay ? null : (structuralProposal ?? null);
+      engine.current.setStructuralProposal(proposal);
+      if (proposal)
+        setProposalReviewLabel(
+          structuralProposalReviewLabel(proposal.reviewStatus),
+        );
+    } catch (cause) {
+      setProposalError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }, [
+    ready,
+    caseData,
+    Boolean(replay),
+    structuralProposal?.caseHash,
+    structuralProposal?.evidenceId,
+    structuralProposal?.mask,
+    structuralProposal?.shape,
+    structuralProposal?.affine,
+    structuralProposal?.frame,
+    structuralProposal?.scope,
+    structuralProposal?.provenance,
+    structuralProposal?.reviewStatus,
+  ]);
 
   useEffect(() => {
     const refs = { axial, coronal, sagittal };
@@ -375,6 +413,15 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               Preparing {remaining} {remaining === 1 ? "surface" : "surfaces"}…
             </span>
           )}
+          {proposalReviewLabel && (
+            <span
+              className="rl-viewer-proposal-key"
+              style={{ color: STRUCTURAL_PROPOSAL_COLOR }}
+            >
+              <span aria-hidden="true">┄</span> Estimated envelope on MRI ·{" "}
+              {proposalReviewLabel}
+            </span>
+          )}
         </div>
         <div
           className="rl-viewer-compass"
@@ -411,7 +458,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             ref={refs[plane]}
             className={`rl-viewer-pane rl-viewer-slice rl-viewer-${plane}`}
             tabIndex={0}
-            aria-label={`${TITLES[plane]} source MRI, neurological convention, slice position ${currentCursor[axis].toFixed(1)} millimeters. Click to set cursor; scroll or arrow keys change slice.`}
+            aria-label={`${TITLES[plane]} source MRI, neurological convention, slice position ${currentCursor[axis].toFixed(1)} millimeters. ${proposalReviewLabel ? `Estimated envelope contour, view only: ${proposalReviewLabel}. ` : ""}Click to set cursor; scroll or arrow keys change slice.`}
             onPointerDown={(event) => {
               if (event.button === 0) {
                 event.currentTarget.focus({ preventScroll: true });
@@ -444,7 +491,9 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               <i />
               {scaleMm} mm
             </span>
-            <span className="rl-viewer-slice-note">SOURCE MRI</span>
+            <span className="rl-viewer-slice-note">
+              SOURCE MRI{proposalReviewLabel ? " · ESTIMATE" : ""}
+            </span>
           </div>
         );
       })}
@@ -470,10 +519,10 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         </label>
         <span>Neurological convention</span>
       </div>
-      {(error || replayError) && (
+      {(error || replayError || proposalError) && (
         <div className="rl-viewer-error" role="alert">
           <strong>Imaging view needs attention</strong>
-          <p>{error || replayError}</p>
+          <p>{error || replayError || proposalError}</p>
         </div>
       )}
     </div>

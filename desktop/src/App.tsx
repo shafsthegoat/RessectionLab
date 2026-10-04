@@ -33,6 +33,7 @@ import {
 } from "./case-data";
 import { readOnlyPreview } from "./preview-api";
 import { RefinementPanel } from "./RefinementPanel";
+import { hydrateStructuralProposal } from "./structural-proposal-data";
 import { isOperationCancelled, operationMessage } from "./operation-feedback";
 import { StructuralEvidenceInventory } from "./StructuralEvidenceInventory";
 import { StructuralImportDialog } from "./StructuralImportDialog";
@@ -45,6 +46,7 @@ import type {
   CertifiedReplay,
   ResectionApi,
   RouteCandidate,
+  StructuralProposalView,
   SearchResult,
   Vec3,
   ViewerCase,
@@ -437,6 +439,26 @@ export default function App() {
   const [routes, setRoutes] = useState<RouteCandidate[]>([]);
   const [certifiedReplay, setCertifiedReplay] =
     useState<CertifiedReplay | null>(null);
+  const [proposalView, setProposalView] =
+    useState<StructuralProposalView | null>(null);
+  const [proposalLoadingId, setProposalLoadingId] = useState<string | null>(
+    null,
+  );
+  const proposalRequest = useRef<AbortController | null>(null);
+  const clearProposal = useCallback(() => {
+    proposalRequest.current?.abort();
+    proposalRequest.current = null;
+    setProposalLoadingId(null);
+    setProposalView(null);
+  }, []);
+  const receiveReplay = useCallback(
+    (replay: CertifiedReplay | null) => {
+      if (replay) clearProposal();
+      setCertifiedReplay(replay);
+    },
+    [clearProposal],
+  );
+  useEffect(() => () => proposalRequest.current?.abort(), []);
   const [category, setCategory] = useState<"pareto" | "dominated" | "rejected">(
     "pareto",
   );
@@ -508,6 +530,7 @@ export default function App() {
         if (!mounted.current || generation !== caseGeneration.current)
           return false;
         activeCaseHash.current = source.caseHash;
+        clearProposal();
         setPayload(source);
         setCaseData(loaded);
         setCertifiedReplay(null);
@@ -649,6 +672,7 @@ export default function App() {
     if (!api) return;
     return api.onEvent((event: BridgeEvent) => {
       if (event.event === "engineStopped") {
+        clearProposal();
         stoppedEngine.current = true;
         setEngineStopped(true);
         setEngineOperations(new Set());
@@ -726,6 +750,42 @@ export default function App() {
       const source = await api[kind]();
       if (source) await installCase(source, api);
     });
+  const viewProposal = async (evidenceId: string) => {
+    if (!payload || !caseData || !api || certifiedReplay || controlsBlocked)
+      return;
+    clearProposal();
+    const controller = new AbortController();
+    proposalRequest.current = controller;
+    setProposalLoadingId(evidenceId);
+    setError(null);
+    try {
+      const view = await hydrateStructuralProposal(
+        payload,
+        caseData,
+        evidenceId,
+        api,
+        controller.signal,
+      );
+      if (
+        controller.signal.aborted ||
+        proposalRequest.current !== controller ||
+        activeCaseHash.current !== view.caseHash
+      )
+        return;
+      setProposalView(view);
+      setMessage(
+        "Estimated envelope shown on source MRI · display only · no working anatomy changed",
+      );
+    } catch (failure) {
+      if (!controller.signal.aborted && proposalRequest.current === controller)
+        reportError(failure);
+    } finally {
+      if (proposalRequest.current === controller) {
+        proposalRequest.current = null;
+        setProposalLoadingId(null);
+      }
+    }
+  };
   const importStructural = (variant: "main" | "nocsf") =>
     act(async () => {
       if (!api?.importStructuralEvidence || !payload) return;
@@ -1086,7 +1146,23 @@ export default function App() {
         </section>
         <StructuralEvidenceInventory
           evidence={payload?.structuralEvidence ?? []}
+          inspection={{
+            selectedId: proposalView?.evidenceId,
+            loadingId: proposalLoadingId ?? undefined,
+            disabled: controlsBlocked || !!certifiedReplay,
+            onSelect: (id) => void viewProposal(id),
+            onClear: clearProposal,
+            outsideCount: proposalView?.annotationOutsideVoxelCount,
+            onOutside: proposalView?.outsideAnnotationPointMm
+              ? () => setCursor(proposalView.outsideAnnotationPointMm)
+              : undefined,
+          }}
         />
+        {!!payload?.structuralEvidence?.length && certifiedReplay && (
+          <p className="proposal-mode-hint">
+            Return to source view to inspect structural estimates.
+          </p>
+        )}
         <section className="case-section functional-section">
           <h2>Functional evidence</h2>
           <div className="evidence-line">
@@ -1153,6 +1229,25 @@ export default function App() {
             </button>
           </div>
         </div>
+        {proposalView && (
+          <div className="proposal-view-notice" role="status">
+            <span className="proposal-contour-key" />
+            <div>
+              <strong>{proposalView.label}</strong>
+              <span>
+                {proposalView.reviewStatus === "review_required"
+                  ? "Review required"
+                  : proposalView.reviewStatus === "rejected"
+                    ? "Rejected estimate"
+                    : "Reviewed envelope"}{" "}
+                · view only · cortical access not certified
+              </span>
+            </div>
+            <button className="text-button" onClick={clearProposal}>
+              Source view <X size={12} />
+            </button>
+          </div>
+        )}
         {certifiedReplay && (
           <div className="modeled-replay-notice">
             <span>
@@ -1178,6 +1273,7 @@ export default function App() {
             routes={viewerRoutes}
             cameraMode={cameraMode}
             replay={viewerReplay}
+            structuralProposal={proposalView}
           />
           {!caseData && (
             <div className="welcome-overlay">
@@ -1420,7 +1516,7 @@ export default function App() {
               caseData={payload}
               route={routes.find((route) => route.route_id === routeA)}
               busy={controlsBlocked}
-              onReplay={setCertifiedReplay}
+              onReplay={receiveReplay}
               replayVisible={certifiedReplay !== null}
               onError={reportError}
               routeLabel={

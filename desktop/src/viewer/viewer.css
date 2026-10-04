@@ -163,6 +163,14 @@
   white-space: nowrap;
   margin-left: 4px;
 }
+.rl-viewer-proposal-key {
+  flex-basis: 100%;
+  line-height: 1.6;
+}
+.rl-viewer-proposal-key > span {
+  font-size: 14px;
+  margin-right: 3px;
+}
 .rl-viewer-reset:focus-visible,
 .rl-viewer-segment button:focus-visible {
   outline: 1px solid #9ed6c0;

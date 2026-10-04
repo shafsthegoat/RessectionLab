@@ -9,10 +9,19 @@ import {
   volumeBounds,
 } from "./coordinates";
 import type { Affine, Bounds3, Point3, SlicePlane } from "./coordinates";
-import type { ViewerReplay, ViewerRoute, ViewerVolume } from "./contracts";
+import type {
+  ViewerReplay,
+  ViewerRoute,
+  ViewerStructuralProposal,
+  ViewerVolume,
+} from "./contracts";
 import { fragmentShader, vertexShader } from "./shaders";
 import { physicalBounds, placeInSourceFrame } from "./sceneGeometry";
 import { residualMask, validateReplay } from "./replay";
+import {
+  STRUCTURAL_PROPOSAL_COLOR,
+  validateStructuralProposal,
+} from "./structuralProposal";
 import {
   COMPARISON_COLORS,
   FAILURE_COLOR,
@@ -109,6 +118,7 @@ export class VolumeRenderer {
   private replayActive = false;
   private activeRouteCount = 0;
   private removedTexture: THREE.Data3DTexture;
+  private proposalTexture: THREE.Data3DTexture;
   private readonly surfaces = new Map<string, THREE.Mesh>();
   private readonly mriTexture: THREE.Data3DTexture;
   private readonly labelTexture: THREE.Data3DTexture;
@@ -200,6 +210,7 @@ export class VolumeRenderer {
     });
     this.labelTexture = dataTexture(packed, volume.shape);
     this.removedTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
+    this.proposalTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
     const material = (threeD: boolean, plane: SlicePlane) =>
       new THREE.ShaderMaterial({
         vertexShader,
@@ -214,6 +225,13 @@ export class VolumeRenderer {
           uLabels: { value: this.labelTexture },
           uRemoved: { value: this.removedTexture },
           uReplayActive: { value: 0 },
+          uProposal: { value: this.proposalTexture },
+          uProposalActive: { value: 0 },
+          uProposalColor: {
+            value: new THREE.Color(
+              STRUCTURAL_PROPOSAL_COLOR,
+            ).convertLinearToSRGB(),
+          },
           uWorldToVoxel: { value: matrix(inverse) },
           uShape: { value: new THREE.Vector3(...volume.shape) },
           uLow: { value: new THREE.Vector3(...this.bounds[0]) },
@@ -464,6 +482,7 @@ export class VolumeRenderer {
     this.requestRender();
     if (!replay) return;
     validateReplay(this.volume, replay);
+    this.setStructuralProposal(null);
 
     // Snapshot the accepted effect so later UI updates cannot mutate this replay.
     const removed = replay.removedMask.slice();
@@ -580,6 +599,30 @@ export class VolumeRenderer {
         shape: this.volume.shape,
       });
     }
+    this.requestRender();
+  }
+
+  /** Estimates are isolated MRI contour textures, never source or target masks. */
+  setStructuralProposal(proposal: ViewerStructuralProposal | null): void {
+    // Clear first so rejected or superseded evidence cannot leave a stale contour.
+    this.materials().forEach((shader) => {
+      shader.uniforms.uProposalActive.value = 0;
+    });
+    this.proposalTexture.dispose();
+    this.proposalTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
+    this.materials().forEach((shader) => {
+      shader.uniforms.uProposal.value = this.proposalTexture;
+    });
+    this.requestRender();
+    if (!proposal || this.replayActive) return;
+    validateStructuralProposal(this.volume, proposal);
+    const snapshot = proposal.mask.slice();
+    this.proposalTexture.dispose();
+    this.proposalTexture = dataTexture(snapshot, this.volume.shape);
+    this.materials().forEach((shader) => {
+      shader.uniforms.uProposal.value = this.proposalTexture;
+      shader.uniforms.uProposalActive.value = 1;
+    });
     this.requestRender();
   }
 
@@ -869,6 +912,7 @@ export class VolumeRenderer {
     this.mriTexture.dispose();
     this.labelTexture.dispose();
     this.removedTexture.dispose();
+    this.proposalTexture.dispose();
     this.renderer.dispose();
   }
 }

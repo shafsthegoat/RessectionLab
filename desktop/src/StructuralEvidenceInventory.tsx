@@ -1,12 +1,22 @@
-import { Brain, CircleDot } from "lucide-react";
+import { Brain, CircleDot, Eye, X, LoaderCircle } from "lucide-react";
 import type { StructuralEvidence } from "./types";
 
 export function StructuralEvidenceInventory({
   evidence,
   detailed = false,
+  inspection,
 }: {
   evidence: StructuralEvidence[];
   detailed?: boolean;
+  inspection?: {
+    selectedId?: string;
+    loadingId?: string;
+    disabled?: boolean;
+    onSelect: (id: string) => void;
+    onClear: () => void;
+    outsideCount?: number;
+    onOutside?: () => void;
+  };
 }) {
   if (!evidence.length) return null;
   return (
@@ -59,14 +69,55 @@ export function StructuralEvidenceInventory({
                 outside this estimate.
               </p>
             )}
+            {inspection && item.provenance === "estimated" && (
+              <div className="proposal-view-actions">
+                <button
+                  className="quiet-button"
+                  aria-pressed={inspection.selectedId === item.evidenceId}
+                  disabled={inspection.disabled}
+                  onClick={() =>
+                    inspection.selectedId === item.evidenceId ||
+                    inspection.loadingId === item.evidenceId
+                      ? inspection.onClear()
+                      : inspection.onSelect(item.evidenceId)
+                  }
+                >
+                  {inspection.loadingId === item.evidenceId ? (
+                    <LoaderCircle size={13} className="spin" />
+                  ) : inspection.selectedId === item.evidenceId ? (
+                    <X size={13} />
+                  ) : (
+                    <Eye size={13} />
+                  )}
+                  {inspection.loadingId === item.evidenceId
+                    ? "Cancel loading"
+                    : inspection.selectedId === item.evidenceId
+                      ? "Hide estimate"
+                      : "View on MRI"}
+                </button>
+                {inspection.selectedId === item.evidenceId &&
+                  inspection.onOutside && (
+                    <button
+                      className="text-button"
+                      onClick={inspection.onOutside}
+                    >
+                      <CircleDot size={12} />
+                      Inspect annotation outside (
+                      {inspection.outsideCount?.toLocaleString()})
+                    </button>
+                  )}
+              </div>
+            )}
             {detailed && (
               <>
                 <p className="structural-method">{item.method}</p>
                 <dl>
                   <dt>Model identity</dt>
                   <dd>
-                    <code title={item.modelHash}>
-                      {item.modelHash.slice(0, 22)}…
+                    <code title={item.modelHash ?? undefined}>
+                      {item.modelHash
+                        ? `${item.modelHash.slice(0, 22)}…`
+                        : "Unrecorded"}
                     </code>
                   </dd>
                   <dt>Source identity</dt>

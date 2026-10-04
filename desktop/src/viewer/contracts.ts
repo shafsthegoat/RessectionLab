@@ -40,6 +40,20 @@ export interface ViewerWorkspaceProps {
   routes: ViewerRoute[];
   cameraMode: "anatomy" | "instruments";
   replay?: ViewerReplay | null;
+  structuralProposal?: ViewerStructuralProposal | null;
+}
+
+export interface ViewerStructuralProposal {
+  caseHash: string;
+  evidenceId: string;
+  mask: Uint8Array;
+  shape: Shape3;
+  affine: Affine;
+  frame: "RAS+";
+  reviewStatus: string;
+  provenance: "estimated";
+  label: string;
+  scope: "display-only-estimate";
 }
 
 export interface ViewerReplay {
