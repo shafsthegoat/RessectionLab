@@ -1,0 +1,199 @@
+{
+  "schema_version": 1,
+  "declaration_id": "febio-4.13-local-runtime-proposal-v1",
+  "date": "2026-10-04",
+  "status": "prospective_pending_root_freeze_and_execution_release",
+  "scope": "Acquire, inspect and build one isolated source runtime; no specimen fitting or patient simulation.",
+  "execution_state": {
+    "configured": false,
+    "compiled": false,
+    "installed": false,
+    "solver_executed": false,
+    "mechanical_model_approved": false
+  },
+  "source": {
+    "repository": "https://github.com/febiosoftware/FEBio",
+    "release_url": "https://github.com/febiosoftware/FEBio/releases/tag/v4.13",
+    "release_published_at": "2026-08-04T02:04:08Z",
+    "tag": "v4.13",
+    "annotated_tag_object": "9184ff860ca560bec32980ee05ce04724881c64c",
+    "commit": "32ae206ff4881dfb54f62296cd1558e58ed9fcc6",
+    "tag_signature_status": "unsigned",
+    "declared_version": "4.13.0",
+    "archive_url": "https://codeload.github.com/febiosoftware/FEBio/tar.gz/32ae206ff4881dfb54f62296cd1558e58ed9fcc6",
+    "archive_sha256": null,
+    "archive_state": "Not verified or available at expected local review path; acquisition/hash/inventory required before configure.",
+    "source_inspection_receipt": "source-inspection.json",
+    "source_inspection_receipt_sha256": "0c580f46ce75deb59feb3a78d9fefd41fa583a631b038703a174bc97f292deb2",
+    "license": "MIT",
+    "license_path": "upstream-LICENSE",
+    "license_sha256": "82c4d113462cdd34a9f9f8be170f14ddf312cbba1e319d1fd197df0257754e0f",
+    "copyright_notice_path": "upstream-Documentation__Copyright-FEBio.txt",
+    "copyright_notice_sha256": "4bb04ca4d77260db0ab3041cc22d57ea8ffe3a0bdbfc29eb25685f12c224cdd4",
+    "website_binary_distribution_selected": false
+  },
+  "local_prerequisites": {
+    "receipt": "prerequisites.json",
+    "sha256": "36248a1d7a0b80dd5629c79a8e9414c234529733017a48438179a4a88fc9fe45",
+    "architecture": "arm64",
+    "macos": "26.6",
+    "compiler": "Apple clang 21.0.0",
+    "cmake_preinstalled": false,
+    "ninja_required": false
+  },
+  "dependencies": [
+    {
+      "name": "cmake",
+      "version": "3.31.6",
+      "role": "private build tool",
+      "filename": "cmake-3.31.6-py3-none-macosx_10_10_universal2.whl",
+      "url": "https://files.pythonhosted.org/packages/7f/09/516b0d709672bc430eb13278f0316acd34869269447744f5d136daeef689/cmake-3.31.6-py3-none-macosx_10_10_universal2.whl",
+      "bytes": 47224338,
+      "sha256": "da9d4fd9abd571fd016ddb27da0428b10277010b23bb21e3678f8b9e96e1686e",
+      "metadata_url": "https://pypi.org/pypi/cmake/3.31.6/json",
+      "metadata_receipt_sha256": "d38fb49173594e03b7c4eafdc084eaa0fe2af8a12899925f02a97d9bfaec9a61",
+      "license_evidence": "Apache-2.0 for Python distributor; bundled CMake notices require payload inspection",
+      "payload_acquired": false
+    },
+    {
+      "name": "llvm-openmp",
+      "version": "21.1.8",
+      "build": "hc225544_2",
+      "role": "private arm64 runtime dependency",
+      "filename": "llvm-openmp-21.1.8-hc225544_2.conda",
+      "url": "https://api.anaconda.org/download/conda-forge/llvm-openmp/21.1.8/osx-arm64/llvm-openmp-21.1.8-hc225544_2.conda",
+      "bytes": 286338,
+      "sha256": "74093c0f1169da8d16f1cf722062f388ad9bc9a5b0c3f43cdaf54763a2fa6a70",
+      "metadata_url": "https://api.anaconda.org/release/conda-forge/llvm-openmp/21.1.8",
+      "metadata_receipt_sha256": "a65acf5006d1d7e16241d78b2539b4a3dba91caa8157f7ab1787434132a8fa48",
+      "license_evidence": "Apache-2.0 WITH LLVM-exception",
+      "declared_dependencies": [
+        "__osx >=11.0"
+      ],
+      "payload_acquired": false
+    },
+    {
+      "name": "zstandard",
+      "version": "0.25.0",
+      "role": "private archive extraction helper",
+      "filename": "zstandard-0.25.0-cp312-cp312-macosx_11_0_arm64.whl",
+      "url": "https://files.pythonhosted.org/packages/aa/1c/d920d64b22f8dd028a8b90e2d756e431a5d86194caa78e3819c7bf53b4b3/zstandard-0.25.0-cp312-cp312-macosx_11_0_arm64.whl",
+      "bytes": 640436,
+      "sha256": "913cbd31a400febff93b564a23e17c3ed2d56c064006f54efec210d586171c00",
+      "metadata_url": "https://pypi.org/pypi/zstandard/0.25.0/json",
+      "metadata_receipt_sha256": "75d535731fddb02f75693ab85944cb7a2480373231a4f75b970d279548947d0d",
+      "license_evidence": "BSD-3-Clause metadata; payload notices must be preserved",
+      "payload_acquired": false
+    }
+  ],
+  "private_layout": {
+    "prefix": "{repository}/data/optional-runtimes/febio-4.13",
+    "directories": [
+      "downloads",
+      "source",
+      "tools",
+      "openmp",
+      "build",
+      "install"
+    ],
+    "repository_dependencies_changed": false,
+    "global_install_or_shell_profile_change": false,
+    "global_environment_modified": false
+  },
+  "configure": {
+    "generator": "Unix Makefiles",
+    "cmake_executable": "{repository}/data/optional-runtimes/febio-4.13/tools/cmake/data/bin/cmake",
+    "source": "{repository}/data/optional-runtimes/febio-4.13/source",
+    "build": "{repository}/data/optional-runtimes/febio-4.13/build",
+    "cache_options": {
+      "CMAKE_BUILD_TYPE": "Release",
+      "CMAKE_C_COMPILER": "/Library/Developer/CommandLineTools/usr/bin/clang",
+      "CMAKE_CXX_COMPILER": "/Library/Developer/CommandLineTools/usr/bin/clang++",
+      "CMAKE_OSX_ARCHITECTURES": "arm64",
+      "CMAKE_OSX_SYSROOT": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "CMAKE_INSTALL_PREFIX": "{repository}/data/optional-runtimes/febio-4.13/install",
+      "CMAKE_FIND_USE_PACKAGE_REGISTRY": "OFF",
+      "CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY": "OFF",
+      "CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH": "OFF",
+      "SET_DEVCOMMIT": "OFF",
+      "OpenMP_C_FLAGS": "-Xpreprocessor -fopenmp -I{repository}/data/optional-runtimes/febio-4.13/openmp/include",
+      "OpenMP_CXX_FLAGS": "-Xpreprocessor -fopenmp -I{repository}/data/optional-runtimes/febio-4.13/openmp/include",
+      "OpenMP_C_LIB_NAMES": "omp",
+      "OpenMP_CXX_LIB_NAMES": "omp",
+      "OpenMP_omp_LIBRARY": "{repository}/data/optional-runtimes/febio-4.13/openmp/lib/libomp.dylib",
+      "OpenMP_C_INCLUDE_DIR": "{repository}/data/optional-runtimes/febio-4.13/openmp/include",
+      "OpenMP_CXX_INCLUDE_DIR": "{repository}/data/optional-runtimes/febio-4.13/openmp/include",
+      "OMP_INC": "{repository}/data/optional-runtimes/febio-4.13/openmp/include",
+      "CMAKE_C_FLAGS": "-I{repository}/data/optional-runtimes/febio-4.13/openmp/include",
+      "CMAKE_CXX_FLAGS": "-I{repository}/data/optional-runtimes/febio-4.13/openmp/include",
+      "CMAKE_INSTALL_RPATH": "@loader_path;@executable_path/../lib;{repository}/data/optional-runtimes/febio-4.13/openmp/lib",
+      "USE_MKL": "OFF",
+      "USE_PDL": "OFF",
+      "USE_HYPRE": "OFF",
+      "USE_SUPERLU_MT": "OFF",
+      "USE_MMG": "OFF",
+      "USE_LEVMAR": "OFF",
+      "USE_NLOPT": "OFF",
+      "USE_FFTW": "OFF",
+      "USE_ZLIB": "OFF"
+    },
+    "environment_notes": [
+      "Use absolute compiler/tool paths; preserve system HOME and CODEX_HOME unchanged.",
+      "Do not inherit arbitrary CFLAGS/CXXFLAGS/LDFLAGS/CPATH/LIBRARY_PATH/DYLD_LIBRARY_PATH/CMAKE_PREFIX_PATH/MKLROOT into the isolated build subprocess.",
+      "Upstream dependency search still contains explicit ambient paths; cache and final linkage audit must verify no disallowed dependency was enabled."
+    ],
+    "source_patches_allowed": false
+  },
+  "build": {
+    "target": "febio4",
+    "parallel_jobs": 2,
+    "install_command": [
+      "{cmake}",
+      "--install",
+      "{build}",
+      "--prefix",
+      "{install}"
+    ],
+    "solver_choice": "skyline",
+    "solver_constraints": [
+      "REAL_SYMMETRIC matrices only in tagged SkylineSolver::CreateSparseMatrix.",
+      "No implicit symmetrization of an unsupported problem; first analytic model must use a supported symmetric tangent.",
+      "Apple Accelerate is linked by tagged macOS CMake but is not the selected solver.",
+      "No assumed no-OpenMP fallback; private libomp must be verified."
+    ]
+  },
+  "caps": {
+    "aggregate_acquisition_bytes": 134217728,
+    "source_archive_compressed_bytes": 67108864,
+    "source_archive_expanded_bytes": 536870912,
+    "configure_seconds": 120,
+    "build_and_install_seconds": 900,
+    "process_family_sampled_rss_bytes": 3221225472,
+    "analytic_smoke_seconds": 60,
+    "runtime_threads": 1,
+    "thread_environment": {
+      "OMP_NUM_THREADS": "1",
+      "OMP_DYNAMIC": "FALSE",
+      "VECLIB_MAXIMUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1"
+    },
+    "on_limit_or_failure": "Stop, kill and reap child process group, retain logs and partial receipt; no automatic retry, dependency addition, source patch or cap increase."
+  },
+  "acceptance_gates": [
+    "Root commits/freezes this declaration and separately releases execution after active regression.",
+    "Verify each dependency hash, safe archive member paths, bounded expanded size, original license/notice contents and arm64 binaries before using it.",
+    "Acquire exact source commit archive, retain archive SHA256 and member inventory; compare inspected source file hashes; reject unsafe members.",
+    "Record complete command arrays, sanitized subprocess environment, compiler and SDK identities, logs, wall time and sampled process-family memory.",
+    "Verify CMake cache enables private OpenMP and none of the nine disabled optional dependencies.",
+    "Inspect produced Mach-O architecture, install names, RPATH and all non-system dependencies; retain binary/library SHA256.",
+    "Mac upstream uses -undefined dynamic_lookup: successful compilation is insufficient; runtime must resolve actual symbols and private OpenMP without an ambient paid or unrelated library.",
+    "Confirm exact version and explicitly selected Skyline; run only separately frozen tiny analytic verification, never infer physical validation from solver success."
+  ],
+  "not_authorized_by_this_artifact": [
+    "Open HBE calibration or held-out force/torque values.",
+    "Select or fit material parameters, change specimen roles, or assess measured response.",
+    "Patient retraction, cavity/cutting validation, RL training or policy comparison.",
+    "Package or redistribute this runtime; dependency payload notice audit remains pending."
+  ]
+}

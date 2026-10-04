@@ -4,6 +4,9 @@ Primary sources checked October 4, 2026. This is a scoped framework review,
 not an installation, completed validation or change to the geometric engine.
 Suitability judgments below are engineering recommendations; no candidate was
 installed or tested for this review.
+See the separate [measurement inventory](tissue-mechanics-measurements.md),
+[validation contract](tissue-mechanics-validation.md), and
+[prospective local runtime](febio-local-runtime.md).
 
 **Recommend FEBio for the first measured, finite-strain specimen deformation
 experiment.** The measurement review found the creators' [Hyperelastic Human
