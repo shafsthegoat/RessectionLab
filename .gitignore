@@ -74,3 +74,8 @@ outputs/
 # Tiny descriptor sources are retained in verified archives instead of duplicate trees.
 /artifacts/native-spatial-feature-v2/frozen-source/
 /artifacts/native-spatial-feature-v2/repair-01/frozen-source/
+
+# Original transport receipts contain temporary CDN query credentials.
+# Public acquisition summaries retain payload hashes and original receipt hashes.
+/artifacts/febio-runtime-build-v1/acquire-01/acquisition.json
+/artifacts/febio-runtime-build-v1/acquire-01/worker-progress.json

@@ -219,7 +219,11 @@ The measured-specimen protocol now fixes one finite-strain material law, one
 positive stiffness fit, three mesh levels and withheld torsion prediction.
 Analytical FEBio deck/output checks pass 43 controls, and the isolated runtime
 driver passes 19 controls; these are software checks, not executed solver or
-measurement agreement. The pinned source runtime is being built separately.
+measurement agreement. The isolated FEBio 4.13 source build completed in 386.7 s
+at 664.7 MB sampled process-group peak, with verified private/system linkage and
+unchanged inputs. Its version probe reported 4.13.0; analytical solver execution
+is a separate next gate. Gmsh 4.15.2 also passed private payload/version checks;
+its original checksum-format extraction failure and exact repair are retained.
 See `docs/hbe-specimen-mechanics-poc.md` and `docs/mechanics-febio-verification.md`.
 
 For the real-anatomy displacement proof of concept, six official RESECT Case4

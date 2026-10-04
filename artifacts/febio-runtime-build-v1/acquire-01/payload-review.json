@@ -1,0 +1,162 @@
+{
+  "status": "payload_identity_architecture_and_notice_presence_reviewed_for_local_build",
+  "declaration_sha256": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48",
+  "acquisition_acceptance_sha256": "c3efbef7ee7237d757c642fc3b77a0ca826c4f0ea443a6e103cbc2b82293fcf3",
+  "notices": {
+    "source/LICENSE": {
+      "bytes": 1149,
+      "sha256": "82c4d113462cdd34a9f9f8be170f14ddf312cbba1e319d1fd197df0257754e0f",
+      "first_lines": [
+        "MIT License",
+        "",
+        "Copyright (c) 2020 University of Utah, The Trustees of Columbia University in  the City of New York, and others"
+      ]
+    },
+    "source/Documentation/Copyright-FEBio.txt": {
+      "bytes": 2644,
+      "sha256": "4bb04ca4d77260db0ab3041cc22d57ea8ffe3a0bdbfc29eb25685f12c224cdd4",
+      "first_lines": [
+        "1. Introduction to FEBio licenses",
+        "=================================",
+        "Prior to FEBio 2.9, FEBio (including the source code, SDK, and binaries) were distributed under a custom license that limited the use of FEBio and its derived products to academic users only. Commercial users were required to obtain a separate commercial license. "
+      ]
+    },
+    "openmp/info/licenses/openmp/LICENSE.TXT": {
+      "bytes": 19741,
+      "sha256": "fdad1758a9e1f9d5a81e18879b3406772115edc92c24bfa36b70c654f325e8e4",
+      "first_lines": [
+        "==============================================================================",
+        "The LLVM Project is under the Apache License v2.0 with LLVM Exceptions:",
+        "=============================================================================="
+      ]
+    },
+    "openmp/info/recipe/parent/LICENSE": {
+      "bytes": 1508,
+      "sha256": "344c439ba60e5db75f0c894fdd22e3445db089b3bd936806bdf128c0016c12c7",
+      "first_lines": [
+        "BSD 3-clause license",
+        "Copyright (c) 2015-2019, conda-forge",
+        "All rights reserved."
+      ]
+    },
+    "tools/cmake-3.31.6.dist-info/licenses/LICENSE_Apache_20": {
+      "bytes": 10273,
+      "sha256": "73ba74dfaa520b49a401b5d21459a8523a146f3b7518a833eea5efa85130bf68",
+      "first_lines": [
+        "Apache License",
+        "Version 2.0, January 2004",
+        "http://www.apache.org/licenses/"
+      ]
+    },
+    "tools/cmake-3.31.6.dist-info/licenses/LICENSE_BSD_3": {
+      "bytes": 1668,
+      "sha256": "a39f63ec8a8e9d63ee8fd85eac9eda615995216eff43c500f68c08d4c922bf3f",
+      "first_lines": [
+        "CMake is distributed under the OSI-approved BSD 3-clause License:",
+        "",
+        "CMake - Cross Platform Makefile Generator"
+      ]
+    },
+    "tools/cmake/data/doc/cmake/Copyright.txt": {
+      "bytes": 5477,
+      "sha256": "0676e30827684487aa0ea8f72f01e9460a6320fa34a2888df0ad1dd3e8a06eb8",
+      "first_lines": [
+        "CMake - Cross Platform Makefile Generator",
+        "Copyright 2000-2024 Kitware, Inc. and Contributors",
+        "All rights reserved."
+      ]
+    },
+    "zstandard-helper/zstandard-0.25.0.dist-info/licenses/LICENSE": {
+      "bytes": 1484,
+      "sha256": "788fe85e53724a40b299051c4abc9cf74d42b27e7968325b80891c25f79adb4b",
+      "first_lines": [
+        "Copyright (c) 2016, Gregory Szorc",
+        "All rights reserved.",
+        ""
+      ]
+    }
+  },
+  "commands": [
+    {
+      "argv": [
+        "/usr/bin/file",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib/libomp.dylib"
+      ],
+      "exit_code": 0,
+      "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib/libomp.dylib: Mach-O 64-bit dynamically linked shared library arm64\n",
+      "stderr": "",
+      "sha256": "38f6afed27bf1d3bd52779547c7ab53aeda9c06c3473263b5cd11ed4f04b41f8"
+    },
+    {
+      "argv": [
+        "/usr/bin/otool",
+        "-L",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib/libomp.dylib"
+      ],
+      "exit_code": 0,
+      "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib/libomp.dylib:\n\t@rpath/libomp.dylib (compatibility version 5.0.0, current version 5.0.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1292.0.0)\n",
+      "stderr": "",
+      "sha256": "38f6afed27bf1d3bd52779547c7ab53aeda9c06c3473263b5cd11ed4f04b41f8"
+    },
+    {
+      "argv": [
+        "/usr/bin/file",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/tools/cmake/data/bin/cmake"
+      ],
+      "exit_code": 0,
+      "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/tools/cmake/data/bin/cmake: Mach-O universal binary with 2 architectures: [x86_64:Mach-O 64-bit executable x86_64] [arm64]\n/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/tools/cmake/data/bin/cmake (for architecture x86_64):\tMach-O 64-bit executable x86_64\n/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/tools/cmake/data/bin/cmake (for architecture arm64):\tMach-O 64-bit executable arm64\n",
+      "stderr": "",
+      "sha256": "cb2cbe87f7a7914bec020cf4afcda9c0e64ded2c69ed70a75cd46a2b45674c80"
+    },
+    {
+      "argv": [
+        "/usr/bin/otool",
+        "-L",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/tools/cmake/data/bin/cmake"
+      ],
+      "exit_code": 0,
+      "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/tools/cmake/data/bin/cmake (architecture x86_64):\n\t/usr/lib/libcurl.4.dylib (compatibility version 7.0.0, current version 9.0.0)\n\t/usr/lib/libz.1.dylib (compatibility version 1.0.0, current version 1.2.12)\n\t/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation (compatibility version 150.0.0, current version 3208.0.0)\n\t/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices (compatibility version 1.0.0, current version 1226.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 1800.105.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1351.0.0)\n/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/tools/cmake/data/bin/cmake (architecture arm64):\n\t/usr/lib/libcurl.4.dylib (compatibility version 7.0.0, current version 9.0.0)\n\t/usr/lib/libz.1.dylib (compatibility version 1.0.0, current version 1.2.12)\n\t/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation (compatibility version 150.0.0, current version 3208.0.0)\n\t/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices (compatibility version 1.0.0, current version 1226.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 1800.105.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1351.0.0)\n",
+      "stderr": "",
+      "sha256": "cb2cbe87f7a7914bec020cf4afcda9c0e64ded2c69ed70a75cd46a2b45674c80"
+    },
+    {
+      "argv": [
+        "/usr/bin/file",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/zstandard-helper/zstandard/backend_c.cpython-312-darwin.so"
+      ],
+      "exit_code": 0,
+      "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/zstandard-helper/zstandard/backend_c.cpython-312-darwin.so: Mach-O 64-bit bundle arm64\n",
+      "stderr": "",
+      "sha256": "b5a59cf2ff46dd1fc9e7959ccae934136a4c128c7ab747dfdbfcc16fd1f755b5"
+    },
+    {
+      "argv": [
+        "/usr/bin/otool",
+        "-L",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/zstandard-helper/zstandard/backend_c.cpython-312-darwin.so"
+      ],
+      "exit_code": 0,
+      "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/zstandard-helper/zstandard/backend_c.cpython-312-darwin.so:\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1345.120.2)\n",
+      "stderr": "",
+      "sha256": "b5a59cf2ff46dd1fc9e7959ccae934136a4c128c7ab747dfdbfcc16fd1f755b5"
+    }
+  ],
+  "openmp_index": {
+    "name": "llvm-openmp",
+    "version": "21.1.8",
+    "build": "hc225544_2",
+    "subdir": "osx-arm64",
+    "license": "Apache-2.0 WITH LLVM-exception",
+    "depends": [
+      "__osx >=11.0"
+    ]
+  },
+  "source_commit": "32ae206ff4881dfb54f62296cd1558e58ed9fcc6",
+  "private_tools_only": true,
+  "configure_ready": true,
+  "redistribution_compliance_claim": false,
+  "limitations": [
+    "Build/linkage/symbol resolution and solver model execution remain unverified.",
+    "Original payload notices remain under isolated runtime; this is not a new app packaging audit."
+  ]
+}
