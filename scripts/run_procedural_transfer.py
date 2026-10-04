@@ -217,13 +217,17 @@ def run_target_comparison(base: NativeSequentialSimulator, case: Any, target: An
         assert_declaration(declaration)
         assert_declared_sources(declaration)
         from resectionlab.procedural_learning import (validate_procedural_checkpoint,
-            load_frozen_procedural_policy, train_procedural_adapted_policy)
+            load_frozen_procedural_policy, train_procedural_adapted_policy,
+            validate_procedural_target_worlds)
         snapshot = transfer_source_snapshot()
         write_json(output / "source.json", snapshot)
         preserve_source(snapshot, output / "source-snapshot")
         preserve_declaration_inputs(declaration, output / "source-snapshot")
         panels = assert_declared_target(case, base, declaration)
         config = TrainingConfig(**declaration["budgets"]["online_scratch_and_adapted_each_seed"])
+        for seed in declaration["policy"]["optimization_seeds_online"]:
+            validate_procedural_target_worlds(target, base, panels.optimization, panels.selection,
+                                               replace(config, seed=seed))
         if config.max_episode_steps != base.config.max_steps + 1:
             raise ValueError("Policy and search must share the declared non-STOP horizon")
         initialization_started = time.perf_counter()
@@ -416,7 +420,7 @@ def worker(output: Path, bundle: Path, *, execute: bool,
            cancelled: Callable[[], bool]) -> dict[str, Any]:
     from resectionlab.imaging import load_case
     from resectionlab.procedural_learning import (TransferTarget, make_native_procedural_fixture,
-                                                 train_procedural_native_policy)
+        train_procedural_native_policy, validate_procedural_target_worlds)
     started = time.perf_counter()
     declaration = load_declaration(ROOT / DECLARATION_PATH)
     assert_declared_sources(declaration)
@@ -428,11 +432,17 @@ def worker(output: Path, bundle: Path, *, execute: bool,
     case = load_case(bundle)
     base = make_native_patient_simulator(case, candidate_count=4, max_steps=3, max_actions=7,
                                          cancelled=cancelled)
-    assert_declared_target(case, base, declaration)
+    panels = assert_declared_target(case, base, declaration)
     target_data = declaration["target"]
     target = TransferTarget(case_hash=case.semantic_hash, planning_hash=case.planning_hash,
         group_id=target_data["group_id"], aliases=tuple(target_data["aliases"]),
         source_kind=target_data["source_kind"], outer_split="development", excluded_from_pretraining=True)
+    online = TrainingConfig(**declaration["budgets"]["online_scratch_and_adapted_each_seed"])
+    public_checks = [validate_procedural_target_worlds(target, base, panels.optimization,
+        panels.selection, replace(online, seed=seed))
+        for seed in declaration["policy"]["optimization_seeds_online"]]
+    write_json(output / "public-world-preflight.json", {"checks": public_checks,
+        "gradient_steps": 0, "before_offline_pretraining": True, "final_worlds_used": False})
     target_preparation_seconds = time.perf_counter() - preparation_started
     fixture_started = time.perf_counter()
     members = tuple(make_native_procedural_fixture(target))

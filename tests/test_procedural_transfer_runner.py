@@ -80,14 +80,26 @@ def test_incomplete_first_selection_cannot_be_ranked_but_evaluated_stop_can():
 
 
 def test_available_public_bundle_matches_declared_inventory_without_stepping():
+    from dataclasses import replace
     from resectionlab.imaging import load_case
+    from resectionlab.learning import TrainingConfig
+    from resectionlab.procedural_learning import TransferTarget, validate_procedural_target_worlds
     declaration = runner.load_declaration(ROOT / runner.DECLARATION_PATH)
     bundle = ROOT / declaration["target"]["bundle_path"]
     if not bundle.is_file():
         pytest.skip("Pinned public development bundle is not installed")
     case = load_case(bundle)
     sim = runner.make_native_patient_simulator(case, candidate_count=4, max_steps=3, max_actions=7)
-    runner.assert_declared_target(case, sim, declaration)
+    panels = runner.assert_declared_target(case, sim, declaration)
+    identity = declaration["target"]
+    target = TransferTarget(case.semantic_hash, case.planning_hash, identity["group_id"],
+        tuple(identity["aliases"]), identity["source_kind"])
+    settings = TrainingConfig(seed=11, **declaration["budgets"]["online_scratch_and_adapted_each_seed"])
+    receipt = validate_procedural_target_worlds(target, sim, panels.optimization, panels.selection, settings)
+    assert receipt["final_worlds_used"] is False
+    with pytest.raises(ValueError, match="(?i)(world|partition|planning)"):
+        validate_procedural_target_worlds(target, sim,
+            replace(panels.optimization, planning_hash="postoperative-replacement"), panels.selection, settings)
     assert not sim.removed_mask.any()
     assert sim.metrics()["history"] == []
 

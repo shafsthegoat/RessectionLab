@@ -26,6 +26,10 @@ def test_comparison_retains_incomplete_initial_selection_without_promoting_check
     checkpoint = tmp_path / "test-only-initialization.pt"
     checkpoint.write_bytes(b"orchestration-only-stub-never-loaded-as-torch")
     shared = {"policy_hash": "test-only-policy", "checkpoint_file_sha256": hashlib.sha256(checkpoint.read_bytes()).hexdigest()}
+    # This test injects an intentionally incomplete trainer result; the real
+    # patient preflight has separate identity/world tests and must be bypassed
+    # only here to reach the candidate-selection failure being exercised.
+    monkeypatch.setattr(procedural_learning, "validate_procedural_target_worlds", lambda *args, **kwargs: {})
     monkeypatch.setattr(procedural_learning, "validate_procedural_checkpoint", lambda *args, **kwargs: shared)
     monkeypatch.setattr(procedural_learning, "load_frozen_procedural_policy", lambda *args, **kwargs: object())
     monkeypatch.setattr(runner, "policy_hash", lambda actor: shared["policy_hash"])

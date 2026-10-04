@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "attempt_id": "procedural-native-to-ucsf-v2",
+  "scope": "procedural_native_to_patient_development",
+  "status": "declared_not_executed",
+  "base_design_declaration": "manifests/experiments/procedural-native-to-ucsf-v1.json",
+  "base_design_hash": "sha256:3abf10162ed9d096a7e21ec84a87c1a88ebf12bb074345a78040dfdebb828ac9",
+  "prior_failed_attempt": "artifacts/learning/procedural-native-to-ucsf-v1",
+  "failure_reason": "Typed generator tuples were compared directly with identical JSON lists at the first public-patient adaptation validator",
+  "change_basis": "Exception stack and complete-panel representation diff; no comparative scores used to select settings",
+  "implementation_repairs": [
+    "Compare canonical complete world dictionaries while retaining exact case, planning hash, role, generator, seed and disjointness checks",
+    "Validate actual public target/model/worlds and each declared online seed/config before any offline or online policy update",
+    "Exercise the serialized public-patient declaration boundary in a no-gradient regression"
+  ],
+  "scientific_design_changed": false,
+  "geometry_actions_tools_rewards_worlds_unchanged": true,
+  "architecture_optimizer_seeds_budgets_unchanged": true,
+  "reuse_prior_weights_or_training_state": false,
+  "repeat_fresh_offline_pretraining_and_all_arms": true,
+  "output_directory": "artifacts/learning/procedural-native-to-ucsf-v2",
+  "implementation_revision_rule": "Record the tested committed source and all numerical hashes before execution",
+  "preexecution_gates": [
+    "Implementation-only repair and this attempt record committed",
+    "Actual public no-gradient preflight plus isolated all-arm and adversarial regressions pass",
+    "Root explicitly releases execution after reviewing evidence"
+  ],
+  "final_and_stress_worlds_must_remain_unopened": true,
+  "preserve_all_prior_and_new_failures": true,
+  "training_has_executed": false,
+  "clinical_deficit_probability": null,
+  "declared_at_utc": "2026-10-04T10:14:50.023249+00:00",
+  "attempt_declaration_hash": "sha256:8ff3686f4c3c9ab3a0efa1ef5b6317f04084f1453f719c72892d406b2cfd6da9"
+}

@@ -1,0 +1,104 @@
+{
+  "diagnosis": "JSON arrays compared directly with typed generator tuples",
+  "differences": [
+    {
+      "role": "optimization",
+      "path": "generator.translation_scale_mm",
+      "actual_type": "tuple",
+      "declared_type": "list",
+      "actual": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "declared": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "role": "optimization",
+      "path": "generator.rotation_scale_deg",
+      "actual_type": "tuple",
+      "declared_type": "list",
+      "actual": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "declared": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "role": "optimization",
+      "path": "generator.rotation_center_mm",
+      "actual_type": "tuple",
+      "declared_type": "list",
+      "actual": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "declared": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "role": "selection",
+      "path": "generator.translation_scale_mm",
+      "actual_type": "tuple",
+      "declared_type": "list",
+      "actual": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "declared": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "role": "selection",
+      "path": "generator.rotation_scale_deg",
+      "actual_type": "tuple",
+      "declared_type": "list",
+      "actual": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "declared": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "role": "selection",
+      "path": "generator.rotation_center_mm",
+      "actual_type": "tuple",
+      "declared_type": "list",
+      "actual": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "declared": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    }
+  ],
+  "registered_adapted_gradients": 0,
+  "retry_executed": false,
+  "final_worlds_used": false
+}

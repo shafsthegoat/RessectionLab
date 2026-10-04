@@ -403,3 +403,34 @@ tests, checkpoint/source exclusions and corrected timing/selection contracts.
 Registered execution was released from exact commit `dfab4c4`, independently
 matched to the tested numerical snapshot; heavy background tests were paused.
 Results will be recorded after all declared arms and independent audits finish.
+
+## October 4, 2026 — retained procedural-transfer execution failure
+
+Attempt v1 stopped after 158.44 seconds at the first public-patient adaptation
+validator. Offline training and three scratch runs completed; adapted seed 11
+was rejected before optimizer creation, and seeds 23/47 were not attempted.
+There was no final candidate freeze or independent candidate audit, so the
+partial records are not a validated comparison. All final/stress worlds stayed
+closed. Diagnosis found three generator vectors represented as Python tuples
+versus JSON lists in each panel; their values, ordered seeds, identities and
+complete canonical hashes match exactly. The test-only path had constructed
+both sides in Python and missed this serialized public-data boundary.
+
+The repair compares complete canonical panels without omitting fields or
+relaxing values and checks the actual public target/worlds/config before any
+offline or online update. A separately declared v2 repeats fresh pretraining
+and all arms with unchanged scientific settings. Failure evidence is retained
+in `artifacts/learning/procedural-native-to-ucsf-v1/`; the attempt declaration is
+`manifests/experiments/procedural-native-to-ucsf-v2-attempt.json`.
+
+The integrated Python sweep passed 743 tests and exposed one orchestration-test
+fixture that still bypassed the older checkpoint gate but not the new earlier
+preflight. Its deliberately fake target was correctly rejected before the
+intended incomplete-selection test. The isolated fixture now explicitly stubs
+that upstream check to exercise its intended downstream boundary; the production
+gate stays intact. The corrected orchestration and complete procedural runner
+suite pass 13 checks in 23.79 seconds, and nine real-public-panel/tamper checks
+pass in 1.30 seconds. The original full-sweep failure remains recorded; this is
+a focused rerun, not a claim of a second complete-suite pass. Exact repair/test
+hashes and results are in
+`artifacts/validation/procedural-transfer-repair-v2/test-results.json`.

@@ -9,11 +9,12 @@ import pytest
 import torch
 
 from resectionlab import learning
-from resectionlab.procedural_learning import (TEST_SCOPE, TransferTarget,
+from resectionlab.procedural_learning import (DECLARATION_PATH, TEST_SCOPE, TransferTarget,
     make_procedural_test_target, make_native_procedural_fixture, native_observation_schema,
     train_procedural_native_policy, validate_procedural_checkpoint,
-    load_frozen_procedural_policy, train_procedural_adapted_policy)
-from resectionlab.worlds import WorldRole, content_hash, generate_partitions
+    load_frozen_procedural_policy, train_procedural_adapted_policy,
+    validate_procedural_world_panels, validate_procedural_target_worlds)
+from resectionlab.worlds import WorldGeneratorConfig, WorldRole, content_hash, generate_partitions
 
 
 def settings(**changes):
@@ -215,3 +216,72 @@ def test_test_target_cannot_be_relabeled_public_patient(pretrained):
             **args(replace(target, source_kind="public_patient_structural_mirror"), factory))
     with pytest.raises(ValueError, match="declared exclusion"):
         validate_procedural_checkpoint(shared["checkpoint_path"], **args(replace(target, aliases=()), factory))
+
+
+def registered_public_panels():
+    declaration = json.loads(DECLARATION_PATH.read_text())
+    row = declaration["target"]
+    target = TransferTarget(row["semantic_hash"], row["planning_hash"], row["group_id"],
+                            tuple(row["aliases"]), row["source_kind"])
+    generator = WorldGeneratorConfig(**row["world_partitions"]["optimization"]["generator"])
+    panels = generate_partitions(target.case_hash, generator, 20261004,
+        optimization=3, selection=2, final_evaluation=3, stress=2, planning_hash=target.planning_hash)
+    return target, panels, row["world_partitions"]
+
+
+def test_registered_public_json_world_panels_validate_before_any_gradient(monkeypatch):
+    target, worlds, declared = registered_public_panels()
+    def forbidden(*args, **kwargs):
+        raise AssertionError("World-panel preflight must never create a policy, checkpoint or optimizer")
+    monkeypatch.setattr(learning.torch.optim, "Adam", forbidden)
+    monkeypatch.setattr(learning, "load_policy", forbidden)
+    # Reproduce the actual failed-run defect: JSON arrays versus typed tuples.
+    assert worlds.optimization.to_dict() != declared["optimization"]
+    assert worlds.selection.to_dict() != declared["selection"]
+    assert content_hash(worlds.optimization.to_dict()) == content_hash(declared["optimization"])
+    receipt = validate_procedural_world_panels(target, worlds.optimization, worlds.selection)
+    assert receipt["optimization_partition_hash"] == content_hash(declared["optimization"])
+    assert receipt["selection_partition_hash"] == content_hash(declared["selection"])
+    assert receipt["final_worlds_used"] is False
+
+
+@pytest.mark.parametrize("mutation", ["role", "seed", "seed_order", "case_hash", "planning_hash", "generator", "extra_field"])
+def test_registered_public_panel_canonicalization_preserves_all_semantic_checks(mutation):
+    target, worlds, _declared = registered_public_panels()
+    optimization, selection = worlds.optimization, worlds.selection
+    if mutation == "role":
+        selection = replace(selection, role=WorldRole.FINAL_EVALUATION)
+    elif mutation == "seed":
+        selection = replace(selection, seeds=(selection.seeds[0] + 1, *selection.seeds[1:]))
+    elif mutation == "seed_order":
+        selection = replace(selection, seeds=tuple(reversed(selection.seeds)))
+    elif mutation == "case_hash":
+        optimization = replace(optimization, case_hash="sha256:changed-case")
+        selection = replace(selection, case_hash="sha256:changed-case")
+    elif mutation == "planning_hash":
+        selection = replace(selection, planning_hash="sha256:changed-planning-inputs")
+    elif mutation == "generator":
+        generator = replace(selection.generator, translation_scale_mm=(.1, 0., 0.))
+        optimization = replace(optimization, generator=generator)
+        selection = replace(selection, generator=generator)
+    else:
+        class ExtraFieldPanel(type(selection)):
+            def to_dict(self):
+                return {**super().to_dict(), "unregistered_assumption": True}
+        selection = ExtraFieldPanel(selection.role, selection.case_hash, selection.generator,
+                                    selection.seeds, selection.planning_hash)
+    with pytest.raises(ValueError):
+        validate_procedural_world_panels(target, optimization, selection)
+
+
+def test_full_target_preflight_requires_no_shared_checkpoint_or_optimizer(monkeypatch):
+    target, factory = make_procedural_test_target()
+    worlds = panels(target, factory)
+    def forbidden(*args, **kwargs):
+        raise AssertionError("Full target preflight must run before any shared training")
+    monkeypatch.setattr(learning, "train_patient_policy", forbidden)
+    monkeypatch.setattr(learning, "load_policy", forbidden)
+    monkeypatch.setattr(learning.torch.optim, "Adam", forbidden)
+    receipt = validate_procedural_target_worlds(target, factory(), worlds.optimization,
+                                              worlds.selection, settings())
+    assert receipt["decision_model_hash"] == factory().decision_model_hash

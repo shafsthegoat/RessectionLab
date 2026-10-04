@@ -524,23 +524,47 @@ def load_frozen_procedural_policy(checkpoint: str | Path, **validation: Any) -> 
     return policy
 
 
-def validate_procedural_adaptation(checkpoint, target, simulator, optimization, selection, config):
-    """The shared learner calls this gate itself, before constructing Adam."""
-    validation = validate_procedural_checkpoint(checkpoint, target=target,
-        simulator=simulator, hidden_features=config.hidden_features)
-    _validate_budget(config, target, online=True)
+def validate_procedural_world_panels(target: TransferTarget, optimization: WorldPartitionManifest,
+                                     selection: WorldPartitionManifest) -> dict[str, Any]:
+    """Check whole declared panels before training, independent of a checkpoint.
+
+    JSON stores immutable generator vectors as arrays, while typed manifests
+    retain tuples. Canonical serialization preserves every key and exact value
+    while making those two representations comparable. Nothing is rounded or
+    omitted: roles, ordered seeds, identities and generator fields all bind.
+    """
     learning._validate_partitions(optimization, selection)
-    learning._assert_partition_binding(simulator, optimization)
-    learning._assert_partition_binding(simulator, selection)
     if _target_scope(target) == SCOPE:
         expected = _declaration()["target"]["world_partitions"]
     else:
-        panels = generate_partitions(target.case_hash, simulator.config.world_generator,
+        panels = generate_partitions(target.case_hash, WorldGeneratorConfig(),
             20261004, optimization=3, selection=2, final_evaluation=3, stress=2,
             planning_hash=target.planning_hash)
         expected = panels.to_dict()
-    if optimization.to_dict() != expected["optimization"] or selection.to_dict() != expected["selection"]:
-        raise ValueError("Procedural adaptation worlds differ from registered optimization/selection panels")
+    for role, panel in (("optimization", optimization), ("selection", selection)):
+        if content_hash(panel.to_dict()) != content_hash(expected[role]):
+            raise ValueError(f"Procedural {role} worlds differ from the complete registered panel")
+    return {"declaration_hash": DECLARATION_HASH, "target_case_hash": target.case_hash,
+            "optimization_partition_hash": optimization.partition_hash,
+            "selection_partition_hash": selection.partition_hash, "final_worlds_used": False}
+
+
+def validate_procedural_target_worlds(target, simulator, optimization, selection, config) -> dict[str, Any]:
+    """Public-model preflight before any offline/online optimization or Adam."""
+    _validate_target_simulator(target, simulator)
+    _validate_budget(config, target, online=True)
+    learning._assert_partition_binding(simulator, optimization)
+    learning._assert_partition_binding(simulator, selection)
+    receipt = validate_procedural_world_panels(target, optimization, selection)
+    return {**receipt, "decision_model_hash": simulator.decision_model_hash,
+            "training_config_hash": content_hash(asdict(config))}
+
+
+def validate_procedural_adaptation(checkpoint, target, simulator, optimization, selection, config):
+    """The shared learner calls this gate itself, before constructing Adam."""
+    validate_procedural_target_worlds(target, simulator, optimization, selection, config)
+    validation = validate_procedural_checkpoint(checkpoint, target=target,
+        simulator=simulator, hidden_features=config.hidden_features)
     return validation
 
 

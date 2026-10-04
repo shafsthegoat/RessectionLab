@@ -32,6 +32,13 @@ with separate values and atlas coverage, exact T1 registration/T1c display sourc
 bindings, and unchanged planning inputs. They remain view-only population
 evidence requiring alignment review. Their desktop controls are in progress.
 
+The first declared procedural-to-patient comparison stopped before adaptation
+updates because equivalent typed and JSON world vectors compared differently.
+Its raw records and failure are retained; it produced no validated comparison.
+The implementation repair preserves every declared world field and adds a
+public-case preflight before any training. A second fresh attempt is declared
+separately, with the original geometry, rewards, seeds and budgets unchanged.
+
 ## Verified starting state
 
 - Repository initially contained only the three specifications and two commits.
