@@ -1,0 +1,319 @@
+{
+  "schema_version": 1,
+  "preflight_id": "native-axis-public-preflight-v2",
+  "status": "declared_not_executed",
+  "scope": "one_previously_studied_structural_development_patient_resource_preflight",
+  "question": "What are the complete inventory, transition, integrity, selection and independent geometry costs of this distinct native action model before any training budget is chosen?",
+  "source_reference": {
+    "path": "manifests/experiments/procedural-native-to-ucsf-v1.json",
+    "declaration_content_hash": "sha256:3abf10162ed9d096a7e21ec84a87c1a88ebf12bb074345a78040dfdebb828ac9",
+    "case_id": "UCSF-PDGM-0004",
+    "reuse": "Exact bundle, source cells, native geometry/tools/access/reward/partial-contact weight and deterministic optimization/selection manifests; not the old fixed action inventory"
+  },
+  "action_model": {
+    "adapter_version": "experimental-native-axis-column-policy-v1",
+    "input_profile": "RAW",
+    "proposal_rule": {
+      "offsets_source_voxels": [
+        [
+          0,
+          0
+        ],
+        [
+          -2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          -2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          -2,
+          -2
+        ],
+        [
+          -2,
+          2
+        ],
+        [
+          2,
+          -2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          -3,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          -3
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "max_primary_rays": 26,
+      "version": "experimental-residual-axis-columns-v1"
+    },
+    "max_cuts": 3,
+    "max_actions_including_stop": 27,
+    "primary_policy": "distal_remaining_target_in_each_source_column",
+    "fallback_policy": "proximal_only_after_primary_preview_rejection",
+    "feasibility": "complete native tool preview required; no uncertified proposal is an action",
+    "identity": "new decision-model and proposal-model hashes persisted before greedy episode",
+    "constructor_initialization": {
+      "seed": 0,
+      "gradient_steps": 0,
+      "transitions": 0,
+      "interpretation": "deterministic initial inventory preparation only; no optimization or selection score"
+    }
+  },
+  "resource_budget": {
+    "worker_wall_seconds": 600.0,
+    "process_peak_rss_bytes": 6442450944,
+    "hard_termination_grace_seconds": 15.0
+  },
+  "budget_scope": {
+    "worker": "case load + native preparation + cold adapter/full inventory + initial clone probe + greedy + two frozen-sequence replays + initial RAW policy construction/freeze + two unchanged-policy rollouts + independent audits + receipts",
+    "launcher": "source snapshot/copy/import startup reported separately; parent enforces wall timeout from subprocess launch",
+    "memory": "cooperative process peak RSS; no hard OS reservation or whole-system memory guarantee",
+    "future_training_budget": "undecided; no inherited 30-second training budget",
+    "timing_covariates": "Record background load; normal desktop and OS activity uncontrolled",
+    "panel_cost_limit": "Panels reset one existing simulator; initial clone is measured separately. These are not exact generic-learner selection/update costs, and do not resolve postcommit learning cancellation/resume."
+  },
+  "sequence": [
+    "preserve exact executable source before worker",
+    "load and hash-bind exact source bundle and V2 direct-native configuration; verify all declared physical components match historical configuration",
+    "cold construct RAW axis adapter and inspect complete 26-slot inventory",
+    "measure one integrity-checked initial clone separately; episode panel resets reuse one simulator",
+    "reset to first optimization seed and run one complete nominal greedy episode",
+    "freeze complete action IDs before selection",
+    "replay same fixed sequence on each of two selection seeds; no new decisions",
+    "initialize and freeze unchanged RAW policy seed11 hidden16; record imports/initialization/checkpoint costs",
+    "run the unchanged masked-argmax policy on both selection worlds with no optimizer or gradients",
+    "deduplicate independent geometry only within exact source/model/native-history identities; certify all five complete episodes",
+    "measure cancellation before cached inventory without changing committed state",
+    "publish eligible development candidate only after all complete-panel/source/geometry gates"
+  ],
+  "greedy_rule": "stable argmax nominal action value across entire certified inventory; STOP first wins zero ties; terminal max3cuts or STOP",
+  "expected_denominators": {
+    "greedy_optimization_episodes": 1,
+    "frozen_sequence_selection_replays": 2,
+    "untrained_policy_selection_rollouts": 2,
+    "eligible_development_records": 2,
+    "unique_native_audits_maximum": 2,
+    "gradient_steps": 0,
+    "final_worlds": 0,
+    "stress_worlds": 0
+  },
+  "failure_policy": "Fresh output required. Retain all failed attempts, partial inventory receipts and any committed transition after interruption. No partial panel or failed geometry candidate publication, no automatic retry or setting change.",
+  "interpretation": {
+    "motor_language_assessed": false,
+    "clinical_probability": null,
+    "independent_human_patients": 1,
+    "approved_anatomy": false,
+    "clinical_efficacy_or_safety": false,
+    "selection_uncertainty": "zero-perturbation deterministic replay; not a Monte Carlo interval",
+    "anatomy": "existing unreviewed structural mirror-derived brain support and hypothetical access remain unreviewed"
+  },
+  "source_binding": "Exact source files and runtime versions preserved by launcher; tested commit recorded externally at execution release.",
+  "untrained_policy": {
+    "profile": "RAW",
+    "seed": 11,
+    "action_features": 15,
+    "state_features": 6,
+    "hidden_features": 16,
+    "optimizer_constructed": false,
+    "requires_grad": false,
+    "rule": "deterministic masked argmax until STOP or three cuts",
+    "interpretation": "unchanged initial-policy cost probe; not checkpoint selection or a model-comparison experiment"
+  },
+  "publication": "candidate-records.json is diagnostic payload only. Both final worker and launcher status must be completed, candidate count2, and worker status must hash-bind that payload. Failed exports or timeouts remain ineligible.",
+  "configuration_repair": {
+    "prior_preflight_id": "native-axis-public-preflight-v1",
+    "prior_declaration_content_hash": "sha256:ae12468ad89898ba997cea2d4576fd65ecff9ea49a8fcc35f6d3e7850255d341",
+    "prior_attempt_path": "artifacts/preflight/native-axis-v1",
+    "failure": "The first attempt compared native configuration identities from two truthful builders with different tissue-support provenance wording. Configuration-only inspection of the actual source arrays found no physical anatomy/tool/access change. The native fingerprint correctly rejected the wording identity mismatch.",
+    "diagnosis": "artifacts/validation/native-axis-config-diagnosis-v1/comparison.json",
+    "changed_component_names": [
+      "tissue_support_provenance"
+    ],
+    "behavior": "Keep native_config_from_case and its truthful direct provenance unchanged; explicitly pin its full configuration. Never force its hash or copy the old provenance string.",
+    "unchanged": "Source bundle and cells, affine, labels, support/exclusion masks, tools, access, microsteps, rewards, worlds, action rule, episode counts, and resource caps. No model-score outcome was observed in failed V1."
+  },
+  "native_configuration": {
+    "fingerprint": "sha256:6d817c5c7441cc7d6c6bcaeac4542cfd3266f2474c9c1904a2d6279870b3143b",
+    "components": {
+      "access": {
+        "center_mm": [
+          -181.5,
+          85.0,
+          105.0
+        ],
+        "normal_inward": [
+          1.0,
+          0.0,
+          -0.0
+        ],
+        "radius_mm": 6.0,
+        "window_id": "native_hypothetical_nearest_envelope_axis"
+      },
+      "affine": {
+        "array_digest": "sha256:5a52792ccc572d29932e785f6dbe96d45b4a7ae6582374aae411115e9d7ccc0d",
+        "dtype": "float64",
+        "shape": [
+          4,
+          4
+        ]
+      },
+      "case_id": "UCSF-PDGM-0004",
+      "hard_exclusion": {
+        "array_digest": "sha256:5e2f98f6f90ab523b8812e70e784b4ec0a590ae06fdbd265e10d55a97b6c76a7",
+        "dtype": "bool",
+        "shape": [
+          240,
+          240,
+          155
+        ]
+      },
+      "max_microsteps": 4096,
+      "max_tip_step_mm": 0.25,
+      "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "target_labels": {
+        "array_digest": "sha256:7c84ec31360491d227e2052e19a84588208d30013f873e904972ec36b43a774c",
+        "dtype": "int16",
+        "shape": [
+          240,
+          240,
+          155
+        ]
+      },
+      "tissue_mask": {
+        "array_digest": "sha256:224e03eaca7df7b6739120a1ee129e8c841755b33769a3c895704a5cd224947f",
+        "dtype": "bool",
+        "shape": [
+          240,
+          240,
+          155
+        ]
+      },
+      "tissue_support_provenance": "hole_filled_nonzero_native_MRI_support; unreviewed skull_strip_assumption; source targets retained; source_frame=RAS+; simulation_frame=RAS+",
+      "tools": [
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 0.45,
+          "tip_length_mm": 2.0,
+          "tip_radius_mm": 1.25,
+          "tool_id": "native-fine-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.1,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 2.25,
+          "tool_id": "native-wide-aspiration",
+          "working_length_mm": 120.0
+        }
+      ]
+    }
+  },
+  "historical_native_configuration": {
+    "fingerprint": "sha256:0924b7d0a4ab4310f319372fbfc6dd84919c16ffff7070030494cf8a5acc72cd",
+    "components": {
+      "access": {
+        "center_mm": [
+          -181.5,
+          85.0,
+          105.0
+        ],
+        "normal_inward": [
+          1.0,
+          0.0,
+          -0.0
+        ],
+        "radius_mm": 6.0,
+        "window_id": "native_hypothetical_nearest_envelope_axis"
+      },
+      "affine": {
+        "array_digest": "sha256:5a52792ccc572d29932e785f6dbe96d45b4a7ae6582374aae411115e9d7ccc0d",
+        "dtype": "float64",
+        "shape": [
+          4,
+          4
+        ]
+      },
+      "case_id": "UCSF-PDGM-0004",
+      "hard_exclusion": {
+        "array_digest": "sha256:5e2f98f6f90ab523b8812e70e784b4ec0a590ae06fdbd265e10d55a97b6c76a7",
+        "dtype": "bool",
+        "shape": [
+          240,
+          240,
+          155
+        ]
+      },
+      "max_microsteps": 4096,
+      "max_tip_step_mm": 0.25,
+      "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "target_labels": {
+        "array_digest": "sha256:7c84ec31360491d227e2052e19a84588208d30013f873e904972ec36b43a774c",
+        "dtype": "int16",
+        "shape": [
+          240,
+          240,
+          155
+        ]
+      },
+      "tissue_mask": {
+        "array_digest": "sha256:224e03eaca7df7b6739120a1ee129e8c841755b33769a3c895704a5cd224947f",
+        "dtype": "bool",
+        "shape": [
+          240,
+          240,
+          155
+        ]
+      },
+      "tissue_support_provenance": "estimated_hole_filled_nonzero_UCSF_or_declared_skull_stripped_MRI_support; brain_surface_unreviewed; source_frame=RAS+; simulation_frame=RAS+",
+      "tools": [
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 0.45,
+          "tip_length_mm": 2.0,
+          "tip_radius_mm": 1.25,
+          "tool_id": "native-fine-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.1,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 2.25,
+          "tool_id": "native-wide-aspiration",
+          "working_length_mm": 120.0
+        }
+      ]
+    }
+  },
+  "declaration_content_hash": "sha256:089dca680b992a5808c104a559ab562a034de9bea91de6df939da40d87650fe3"
+}
