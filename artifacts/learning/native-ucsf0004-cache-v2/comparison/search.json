@@ -1,0 +1,32 @@
+[
+  {
+    "actions": [
+      "NATIVE:native-wide-aspiration:0",
+      "NATIVE:native-wide-aspiration:3",
+      "STOP"
+    ],
+    "elapsed_seconds": 0.7532242089509964,
+    "environment_steps": 2,
+    "method": "GREEDY",
+    "nominal_score": 245.24,
+    "observability": "nominal_evidence_only",
+    "optimizer_mode": "SEARCH",
+    "preparation_seconds": 1.9049398750066757,
+    "termination": "greedy_stop"
+  },
+  {
+    "actions": [
+      "NATIVE:native-wide-aspiration:0",
+      "NATIVE:native-wide-aspiration:3",
+      "STOP"
+    ],
+    "elapsed_seconds": 6.215443957946263,
+    "environment_steps": 21,
+    "method": "SEARCH",
+    "nominal_score": 245.24,
+    "observability": "nominal_evidence_only",
+    "optimizer_mode": "SEARCH",
+    "preparation_seconds": 1.9631795000750571,
+    "termination": "search_exhausted"
+  }
+]
