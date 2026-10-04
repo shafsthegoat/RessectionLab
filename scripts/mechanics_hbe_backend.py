@@ -15,8 +15,10 @@ import xml.etree.ElementTree as ET
 PROFILE_ID = 'accelerate_csc_v1'
 PREFIX = 'data/optional-runtimes/febio-4.13-accelerate-csc-v1'
 UPSTREAM_COMMIT = '32ae206ff4881dfb54f62296cd1558e58ed9fcc6'
-PATCH_SHA = 'c3c6b068ed8e7b2480a64308099fa57d8b02fdbe04076f1497b0b2fdd3b7c3e0'
-PATCHED_SOURCE_SHA = '60e5a3f2350826af1b95376ab93c8a476f2312158763d63d82eb80ec54af79c2'
+PATCH_SHA = '67a1858f2d55046796d7ccb46758ca06e5bfb673e75a539d158b1a17652f3340'
+PATCHED_SOURCE_SHA = '476ac8471ea681a99c298352a50aba2a7a5baa71635e1678155a7f58b72ba04a'
+PATCH_IDENTITY = {'path': 'artifacts/febio-accelerate-lifecycle-v1/patch-identity.json',
+                  'sha256': '54198366eccb90a9fcdf4fcbf2a5055919a5658a1db0fdd7db8cfeede3b49eee'}
 REUSED_OPENMP = 'data/optional-runtimes/febio-4.13/openmp/lib/libomp.dylib'
 REUSED_OPENMP_SHA = '38f6afed27bf1d3bd52779547c7ab53aeda9c06c3473263b5cd11ed4f04b41f8'
 SKYLINE_XML = '<linear_solver type="skyline" />'
@@ -94,6 +96,11 @@ def _accepted_build(root, identity, bound):
                                                     'build_acceptance_path', 'receipts_sha256')})
     if candidate != identity:
         raise ValueError('Final runtime identity changed accepted candidate contents')
+    adapter_controls = identity.get('adapter_controls', {})
+    if set(adapter_controls) != {'declaration', 'acceptance', 'result', 'supervision', 'independent_review'}:
+        raise ValueError('Accepted runtime must retain its repaired-only adapter evidence')
+    for record in adapter_controls.values():
+        bound({'path': record['path'], 'sha256': record['sha256']}, json_value=False)
     for key, filename in [('installed_inventory', 'installed-inventory.json'), ('linkage', 'linkage.json')]:
         record = internal(identity[key])
         if record != {'path': str((accepted_path.parent/filename).relative_to(root)),
@@ -283,6 +290,20 @@ def _verify_controls(root, profile, groups, runtime, bound):
         raise ValueError('Original stiffness-scaling check did not reproduce')
 
 
+def _verify_patch_identity(binding, bound):
+    """Bind the committed combined repair; this is not a runtime pass receipt."""
+    if binding != PATCH_IDENTITY:
+        raise ValueError('Exact committed combined repair identity required')
+    patch = bound(binding)
+    if (patch.get('one_source_file_only') != 'NumCore/AccelerateSparseSolver.cpp'
+            or patch.get('patched_source', {}).get('sha256') != PATCHED_SOURCE_SHA
+            or patch.get('patch', {}).get('sha256') != PATCH_SHA):
+        raise ValueError('Combined repair source or patch differs')
+    for key in ('patch', 'patched_source'):
+        record = patch[key]
+        bound({'path': record['path'], 'sha256': record['sha256']}, json_value=False)
+
+
 def verify_profile(root, binding):
     """Verify actual same-runtime controls, repair provenance and private bytes."""
     from scripts import mechanics_hbe_access as access
@@ -299,11 +320,7 @@ def verify_profile(root, binding):
         raise ValueError('Explicit complete repaired-Accelerate profile required')
     runtime = verify_runtime_binding(root, profile['runtime_identity'])
     inputs.update(runtime['inputs'])
-    patch = bound(profile['patch_identity'])
-    if (patch.get('source_commit') != UPSTREAM_COMMIT or patch.get('patched_sha256') != PATCHED_SOURCE_SHA
-            or patch.get('patch_sha256') != PATCH_SHA or patch.get('changed_source_files') != 1
-            or patch.get('other_changes') is not False or patch.get('iterative_mode_allowed') is not False):
-        raise ValueError('Actual runtime repair differs from reviewed narrow source change')
+    _verify_patch_identity(profile['patch_identity'], bound)
     groups = []
     for key, status, field, cases in (
             ('hex8_controls', 'passed_all_five_fixed_patch_controls', 'rows', HEX_CASES),

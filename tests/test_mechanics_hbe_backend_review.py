@@ -2,6 +2,7 @@
 import hashlib
 import copy
 import json
+from pathlib import Path
 import pytest
 
 from scripts import mechanics_hbe_access as access
@@ -55,11 +56,14 @@ def test_control_pass_labels_without_execution_and_raw_evidence_are_rejected(tmp
     })
     profile = {"schema": "hbe-solver-backend-v1", "profile_id": backend.PROFILE_ID,
                "runtime_identity": runtime_binding}
-    profile["patch_identity"] = save(tmp_path, "patch.json", {
-        "source_commit": backend.UPSTREAM_COMMIT, "patched_sha256": backend.PATCHED_SOURCE_SHA,
-        "patch_sha256": backend.PATCH_SHA, "changed_source_files": 1,
-        "other_changes": False, "iterative_mode_allowed": False,
-    })
+    # Traverse the genuine committed nested repair schema before challenging
+    # controls; an obsolete flat patch fixture must not mask this regression.
+    repository = Path(__file__).resolve().parents[1]
+    patch = json.loads((repository / backend.PATCH_IDENTITY["path"]).read_bytes())
+    for record in (backend.PATCH_IDENTITY, patch["patch"], patch["patched_source"]):
+        copied = save(tmp_path, record["path"], (repository / record["path"]).read_bytes())
+        assert copied["sha256"] == record["sha256"]
+    profile["patch_identity"] = backend.PATCH_IDENTITY.copy()
     for name, status, field, cases in (
         ("hex8_controls", "passed_all_five_fixed_patch_controls", "rows", backend.HEX_CASES),
         ("tet10_mpc_controls", "three_actual_fixed_software_controls_passed", "case_rows", backend.TET_CASES),
@@ -72,7 +76,7 @@ def test_control_pass_labels_without_execution_and_raw_evidence_are_rejected(tmp
             "stiffness_scaling": {"passed": True},
         })
     binding = save(tmp_path, "profile.json", profile)
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="actual eight-case attempt"):
         backend.verify_profile(tmp_path, binding)
 
 

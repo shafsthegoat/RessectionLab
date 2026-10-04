@@ -55,6 +55,10 @@ def profile_fixture(root,monkeypatch):
     omp=save(root,b.PREFIX+'/openmp/lib/libomp.dylib',b'synthetic omp')
     patched=save(root,b.PREFIX+'/source/NumCore/AccelerateSparseSolver.cpp',b'synthetic patched source')
     monkeypatch.setattr(b,'PATCHED_SOURCE_SHA',patched['sha256'])
+    patch_file=save(root,'constructed-combined.patch',b'synthetic combined patch, not applied')
+    monkeypatch.setattr(b,'PATCH_SHA',patch_file['sha256'])
+    adapter_controls={key:save(root,'adapter-controls/'+key+'.json',{'synthetic_fixture_only':True})
+                      for key in ('declaration','acceptance','result','supervision','independent_review')}
     def absolute(record):return {'path':str(root/record['path']),'sha256':record['sha256']}
     directory='build-fixture/build-01/'
     source=save(root,'build-fixture/configure-01/source-inventory.json',
@@ -71,7 +75,7 @@ def profile_fixture(root,monkeypatch):
         'driver_sha256':'1'*64,'declaration_sha256':'2'*64,
         'source_inventory':absolute(source),'source_inventory_sha256':source['sha256'],
         'source_inventory_path':str(root/source['path']),'installed_inventory':absolute(installed),
-        'linkage':absolute(linkage),'synthetic_fixture_only':True}
+        'linkage':absolute(linkage),'adapter_controls':adapter_controls,'synthetic_fixture_only':True}
     preservation={'synthetic_original_preserved':True}
     records={'installed-inventory.json':installed,'linkage.json':linkage,
         'runtime-identity-candidate.json':save(root,directory+'runtime-identity-candidate.json',candidate),
@@ -93,8 +97,9 @@ def profile_fixture(root,monkeypatch):
                'solver_invocations':len(cases),field:[{'case':c,'passed':True} for c in sorted(cases)],
                'stiffness_scaling':{'passed':True},'synthetic_fixture_only':True}
         controls[key]=save(root,key+'.json',value)
-    patch=save(root,'patch.json',{'source_commit':b.UPSTREAM_COMMIT,'patched_sha256':patched['sha256'],
-                               'patch_sha256':b.PATCH_SHA,'changed_source_files':1,'other_changes':False,'iterative_mode_allowed':False})
+    patch=save(root,'patch.json',{'one_source_file_only':'NumCore/AccelerateSparseSolver.cpp',
+                               'patch':patch_file,'patched_source':patched})
+    monkeypatch.setattr(b,'PATCH_IDENTITY',patch)
     profile={'schema':'hbe-solver-backend-v1','profile_id':b.PROFILE_ID,'runtime_identity':runtime_binding,
              **controls,'patch_identity':patch}
     return profile,save(root,'profile.json',profile)
@@ -106,6 +111,32 @@ def test_profile_binding_collection_with_control_replay_explicitly_isolated(tmp_
     context=b.verify_profile(tmp_path,record)
     assert context['runtime_identity']==profile['runtime_identity'] and context['prefix']==str(tmp_path/b.PREFIX)
     assert len(context['inputs'])>=20 and str(tmp_path/b.PREFIX/'install/bin/febio4') in context['inputs']
+
+
+def test_committed_combined_patch_identity_and_bytes_are_bound():
+    root=Path(__file__).resolve().parents[1]
+    seen={}
+    def bound(record,*,json_value=True):
+        value=access.verify_binding(root,record,read_json=json_value)
+        seen[record['path']]=record['sha256']
+        return value
+    assert b.PATCH_SHA=='67a1858f2d55046796d7ccb46758ca06e5bfb673e75a539d158b1a17652f3340'
+    assert b.PATCHED_SOURCE_SHA=='476ac8471ea681a99c298352a50aba2a7a5baa71635e1678155a7f58b72ba04a'
+    b._verify_patch_identity(b.PATCH_IDENTITY,bound)
+    assert len(seen)==3 and b.PATCH_SHA in seen.values() and b.PATCHED_SOURCE_SHA in seen.values()
+
+
+@pytest.mark.parametrize('change',['old_identity','changed_patch','changed_source','missing_adapter_receipt'])
+def test_combined_profile_rejects_old_or_stale_repair_dependencies(tmp_path,monkeypatch,change):
+    profile,record=profile_fixture(tmp_path,monkeypatch)
+    monkeypatch.setattr(b,'_verify_controls',lambda *args:None)
+    if change=='old_identity':
+        profile['patch_identity']={'path':'artifacts/febio-accelerate-csc-repair-v1/patch-identity.json','sha256':'0'*64}
+        record=save(tmp_path,'profile.json',profile)
+    elif change=='changed_patch':(tmp_path/'constructed-combined.patch').write_bytes(b'changed')
+    elif change=='changed_source':(tmp_path/b.PREFIX/'source/NumCore/AccelerateSparseSolver.cpp').write_bytes(b'changed')
+    else:(tmp_path/'adapter-controls/independent_review.json').unlink()
+    with pytest.raises((ValueError,FileNotFoundError)):b.verify_profile(tmp_path,record)
 
 
 @pytest.mark.parametrize('bad',['missing','skyline','wrong_runtime','missing_case','failed_scale','failed_mpc','source_changed','missing_binary'])

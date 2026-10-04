@@ -328,6 +328,13 @@ remain provisional until the combined adapter repair is verified and built.
 No replacement solver, specimen measurement or patient outcome was accessed.
 See `docs/hbe-backend-comparison.md` and its independent review.
 
+The comparison integration is now pinned to the final combined adapter repair,
+including its nested patch/source identities and five accepted adapter-control
+records. Fifty-four focused checks pass in 1.15 s; scientific XML, access rules,
+profile name and original specimen experiment remain unchanged. Actual runtime
+identity and numerical evidence are still required before a new specimen run.
+See `artifacts/mechanics/hbe-backend-combined-repin-review-v1/`.
+
 The separate eight-case numerical-control runner passed 31 software checks in
 0.38 s, including independent rejection and evidence-preservation controls.
 Its eight prepared decks change only the linear solver; original physics,

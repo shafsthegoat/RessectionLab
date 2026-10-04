@@ -1,0 +1,20 @@
+{
+  "actual_runtime_created": false,
+  "actual_solver_runs": 0,
+  "actual_specimen_decks_prepared": 0,
+  "bindings": {
+    "artifacts/mechanics/hbe-backend-combined-repin-review-v1/verification.json": "34f32924b4c276dca566f04eec0e30a02bf75a1c99729acc68a877f5bebd403f",
+    "docs/hbe-backend-comparison.md": "e17ac70bcea7494301eea8556640dfa5032e1f1aaf07195280b5624ef4d59c61",
+    "scripts/mechanics_hbe_backend.py": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+    "tests/test_mechanics_hbe_backend.py": "0bf731adb184c8d305ca8f82af0086497d6983122bbaeded2bad5bb6a4b0ea9e",
+    "tests/test_mechanics_hbe_backend_review.py": "5adb943cac4330f7c755b08d0d22db91e5688f3ededeecdccaf1b043e0239215"
+  },
+  "focused_checks": 54,
+  "measured_response_reads": 0,
+  "next_dependency": "Source-only checkpoint. Parent holds any active numerical-control declaration until repaired runtime acceptance; no declaration or profile was created by this slice.",
+  "prefix": "data/optional-runtimes/febio-4.13-accelerate-csc-v1",
+  "profile_id": "accelerate_csc_v1",
+  "pytest_seconds": 1.15,
+  "runtime_build_or_control_execution_released": false,
+  "status": "combined_repin_independently_reviewed_source_ready"
+}
