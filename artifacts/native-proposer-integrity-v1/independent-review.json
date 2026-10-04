@@ -1,0 +1,40 @@
+{
+  "reviewer": "independent sequential_simulation subagent",
+  "status": "passed",
+  "command": ".venv/bin/python -m pytest -q tests/test_native_proposals_review.py",
+  "result": "15 passed in 0.29s",
+  "file_sha256": {
+    "src/resectionlab/native_proposals.py": "6a173851ad383c32b84121cd0d8871535fffa9174d95aa27bdb08ca4b8a7e5f9",
+    "tests/test_native_proposals.py": "4692d692e4e395cf59d7502270f9615b66bdfd74f7a4e11e9e49d073ce5c2b3d",
+    "tests/test_native_proposals_review.py": "aadd0a480b9bf8838e0d3f52b5df57b0d17a47e45daf4c5dc48749b4b0b862d5",
+    "docs/experimental-native-proposals.md": "1231ac92b63d6c412f7b25c04c2af54d90ff11fa9ac2ae2f1e539ddf8a69f73b",
+    "artifacts/native-proposer-integrity-v1/initial-native_proposals.py": "9b24cc32d0eca969cbc0c941eea99bfbcc84204495bf2ac0840a66624a042bc1",
+    "artifacts/native-proposer-integrity-v1/initial-review-tests.txt": "ac58e46fa92f31d47799838a2ca7522e228c31c466ae090f932c12eee1b2c55e"
+  },
+  "initial_negative_regressions_preserved": {
+    "failed": 8,
+    "passed": 4,
+    "seconds": 0.31
+  },
+  "verified": [
+    "source content revalidation rejects immutable replacements made before preparation",
+    "source and array descriptors stay immutable after preparation",
+    "same-shaped legitimate masks with the same declared source ID yield distinct model hashes",
+    "live remaining/removed/contact/exterior masks authenticate against committed history",
+    "coordinated external mask edits cannot fabricate a committed cavity",
+    "current clones validate while altered rays/ledgers and stale batches reject",
+    "component-wise zero-relative-tolerance alignment and complete capped/omitted slot ledger reviewed with owner focused tests"
+  ],
+  "execution_scope": {
+    "patient_simulations": 0,
+    "training": 0,
+    "performance_benchmarks": 0,
+    "analytic_short_paid_stroke": 1
+  },
+  "limitations": [
+    "standalone module not integrated into policy or desktop",
+    "whole-grid integrity checks intentionally uncached; patient-scale cost not measured in this review",
+    "native V2 history descriptor schema coupling must be preserved/versioned",
+    "a validated proposal batch is not a geometry certificate"
+  ]
+}

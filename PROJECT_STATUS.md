@@ -58,13 +58,14 @@ development patient with zero human pretraining patients. Final/stress worlds
 remain closed. The best sequence removes only 249 of 41,919 target mm³ under
 hypothetical access; this is not a complete resection plan.
 
-The separately declared actor feature-unit comparison is now running from the
+The separately declared actor feature-unit comparison completed from the
 immutable `0bffeaa` archive after all 794 tests and the real-case preflight
 passed. It compares raw inputs with fixed physical reference units while
 preserving the old action inventory, rewards, critic, seeds and budgets. Other
-heavy work is paused for timing comparability; ordinary desktop/OS load is not
-controlled. No outcome is claimed while the run is in progress. Exact launch
-identities are in `artifacts/validation/native-feature-units-runner-v1/`.
+heavy work was paused for timing comparability; ordinary desktop/OS load was not
+controlled. All 23 frozen candidates passed native checking; the independent
+artifact audit and result interpretation are pending. Exact launch identities
+are in `artifacts/validation/native-feature-units-runner-v1/`.
 
 A separate post hoc geometry probe expands the proposal inventory while keeping
 the native checker, source, tools and access assumptions fixed. Under the same
@@ -72,6 +73,14 @@ three-cut cap, it removes 1,113 target and 62 normal mm³, with 177 mm³ of part
 normal contact. Both native and independent artifact audits pass. Coverage is
 still only 2.655%, and this new, restricted parallel-column model is not yet part
 of the desktop planner or the frozen learning comparisons.
+
+The proposal rule now has a separate source- and cavity-bound implementation.
+Independent review caught changed arrays and live cavity edits that retained
+cached identities; all eight original failures are preserved. Repairs now verify
+source contents, committed history and all four cavity masks before emitting
+proposals. All 66 focused checks and a separate 15-case review pass. This module
+does not certify tool clearance or integrate with learning yet; patient-scale
+integrity cost remains to be measured.
 
 ## Verified starting state
 

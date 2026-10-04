@@ -1,0 +1,15 @@
+{
+  "command": ".venv/bin/python -m pytest tests/test_native_proposals.py tests/test_native_proposals_review.py tests/test_native_resection.py tests/test_native_adversarial.py -q",
+  "exit_code": 0,
+  "summary": "66 passed in 0.98s",
+  "scope": "Focused proposer identity, independent mutation review, native engine and adversarial regression tests. No full-suite or patient performance claim.",
+  "tested_files_sha256": {
+    "src/resectionlab/native_proposals.py": "6a173851ad383c32b84121cd0d8871535fffa9174d95aa27bdb08ca4b8a7e5f9",
+    "tests/test_native_proposals.py": "4692d692e4e395cf59d7502270f9615b66bdfd74f7a4e11e9e49d073ce5c2b3d",
+    "tests/test_native_proposals_review.py": "aadd0a480b9bf8838e0d3f52b5df57b0d17a47e45daf4c5dc48749b4b0b862d5"
+  },
+  "retained_negative_evidence_sha256": {
+    "initial-native_proposals.py": "9b24cc32d0eca969cbc0c941eea99bfbcc84204495bf2ac0840a66624a042bc1",
+    "initial-review-tests.txt": "ac58e46fa92f31d47799838a2ca7522e228c31c466ae090f932c12eee1b2c55e"
+  }
+}
