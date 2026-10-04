@@ -1,0 +1,37 @@
+{
+  "schema": "mechanics-accelerate-controls-preparation-v1",
+  "status": "generic_software_checkpoint_ready_for_joint_review_no_execution_declaration",
+  "solver_invocations": 0,
+  "scope": "Eight existing numerical-control deck copies and mocked orchestration only; no runtime/model or patient/measured-curve execution",
+  "owner_tests": {
+    "passed": 20,
+    "pytest_seconds": 0.22,
+    "log": "owner-tests-03.txt"
+  },
+  "files": {
+    "scripts/mechanics_accelerate_controls.py": "f2ad929648b2804fa047a0d0840a693cfd16302268c5e1b76342f85293b499ec",
+    "tests/test_mechanics_accelerate_controls.py": "775ff809d9bd2289b19d1a70f8c460c53ed171adc8400497f877f8416b2973d2",
+    "docs/mechanics-accelerate-controls.md": "02aa32646a815cd677f97f665073bec2fb38c024fa7e74ecfd73f7d23cfdbcf7"
+  },
+  "declaration_source_inventory_status": "Generic source/deck commit is authorized now; no active declaration exists. Final runtime/profile and declaration hashes remain separately gated after combined repair controls/build acceptance.",
+  "fixed_execution_caps": {
+    "aggregate_seconds": 60,
+    "process_group_rss_bytes": 3221225472,
+    "numerical_threads": 1,
+    "maximum_solver_calls": 8,
+    "time_steps": 4,
+    "retries": 0
+  },
+  "release_status": "Not authorized; actual repaired runtime identity missing at preparation start; root will release only after build acceptance and reviewed commit",
+  "independent_initial_findings": {
+    "receipt": "../mechanics-accelerate-controls-independent-review-v1/initial-negatives.json",
+    "sha256": "fd82304031344ad29e8676ae57a6b9d4e5e1128d9dacfda50574fec8c45b065b",
+    "failed_controls": 3,
+    "repairs": [
+      "Preflight refuses source archives outside repository before worker work",
+      "Both group summaries derive checker-integrity field from actual hash rechecks"
+    ]
+  },
+  "runtime_hold": "No actual runtime accepted for this checkpoint. Combined CSC/SMS/ownership repair pins remain pending root notice; no executable runtime declaration or model release.",
+  "software_manifest_sha256": "78a916a7dbf7ec2b4f5c67526aaa53a6b67076a29d8ab648d82802e64acfcd15"
+}

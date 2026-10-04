@@ -1,0 +1,33 @@
+{
+  "schema": "mechanics-accelerate-controls-independent-initial-negatives-v1",
+  "scope": "Temporary constructed files and mocked runtime only; no solver, patient, curve, or installed runtime was executed/read.",
+  "result": "3 failed in 0.06s",
+  "findings": [
+    {
+      "id": "external-archive-publication",
+      "cases": 1,
+      "observed": "baseline accepts an external source archive although successful evidence paths cannot represent it",
+      "required": "refuse archive outside bound repository before runtime/solver work"
+    },
+    {
+      "id": "failed-checker-identity-reporting",
+      "cases": 2,
+      "observed": "failed summaries label changed HEX8 or tet10 numerical checker unchanged",
+      "required": "report actual pinned checker integrity, including failure"
+    }
+  ],
+  "files": {
+    "scripts/mechanics_accelerate_controls.py": {
+      "sha256": "56a5fec968a962c61cdf5a538980693762265056134fa6269104185ef6e60d24",
+      "bytes": 22775
+    },
+    "tests/test_mechanics_accelerate_controls_review.py": {
+      "sha256": "20e05b66357d3bd99f88278ff6d47e2315a701ce21b752159660605a1cc29a88",
+      "bytes": 3200
+    },
+    "artifacts/mechanics-accelerate-controls-independent-review-v1/initial-negatives.log": {
+      "sha256": "f5a436c2928bcb52ddaee10712c1e2d4c59220d726c36d53682c92cc74f6b47d",
+      "bytes": 6406
+    }
+  }
+}

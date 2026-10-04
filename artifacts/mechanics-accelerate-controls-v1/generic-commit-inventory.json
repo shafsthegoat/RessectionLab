@@ -1,0 +1,149 @@
+{
+  "schema": "mechanics-accelerate-generic-commit-inventory-v1",
+  "status": "software_only_reviewed_not_execution_ready",
+  "combined_tests": {
+    "passed": 31,
+    "pytest_seconds": 0.38,
+    "independent_receipt_sha256": "5ebfae49d6e53075da9e3698c83c974242a3c959ed2c721ea8159216b88638f1"
+  },
+  "active_execution_declaration_present": false,
+  "runtime_profile_pinned": false,
+  "solver_executions": 0,
+  "files": [
+    {
+      "path": "artifacts/mechanics-accelerate-controls-independent-review-v1/commit-files.txt",
+      "sha256": "c55c84e2807c5d92b2bcaf6476cf30b99b549ac50ee23d1a8c76c822d48a359b",
+      "bytes": 1883
+    },
+    {
+      "path": "artifacts/mechanics-accelerate-controls-independent-review-v1/final-controls.log",
+      "sha256": "218b86b46ec6a8263727a71701cebf3814e3f5a9d2705f5129aefd4d19f5a746",
+      "bytes": 99
+    },
+    {
+      "path": "artifacts/mechanics-accelerate-controls-independent-review-v1/initial-negatives.json",
+      "sha256": "fd82304031344ad29e8676ae57a6b9d4e5e1128d9dacfda50574fec8c45b065b",
+      "bytes": 1356
+    },
+    {
+      "path": "artifacts/mechanics-accelerate-controls-independent-review-v1/initial-negatives.log",
+      "sha256": "f5a436c2928bcb52ddaee10712c1e2d4c59220d726c36d53682c92cc74f6b47d",
+      "bytes": 6406
+    },
+    {
+      "path": "artifacts/mechanics-accelerate-controls-independent-review-v1/mechanics_accelerate_controls.py.initial.gz",
+      "sha256": "921f4f0df9146b674edd86744d657c69b77aea56382e637ddb529e1f1abc053e",
+      "bytes": 6617
+    },
+    {
+      "path": "artifacts/mechanics-accelerate-controls-independent-review-v1/review-status.json",
+      "sha256": "77160522d8259d707ee64e21bb29238b0af5623d9c33610841c0dc359f6eaadb",
+      "bytes": 1025
+    },
+    {
+      "path": "artifacts/mechanics-accelerate-controls-independent-review-v1/test_mechanics_accelerate_controls_review.py.initial.gz",
+      "sha256": "190dab7ec1cf804120f0991f7e905182d0e914e814f5f7c2eb46946e804425fe",
+      "bytes": 1380
+    },
+    {
+      "path": "artifacts/mechanics-accelerate-controls-independent-review-v1/verification.json",
+      "sha256": "5ebfae49d6e53075da9e3698c83c974242a3c959ed2c721ea8159216b88638f1",
+      "bytes": 9800
+    },
+    {
+      "path": "artifacts/mechanics-accelerate-controls-v1/decks/finite_stretch.feb",
+      "sha256": "0d72a0ee80fb6a8ad88f8bae84c3771321345ef43fa2311786b488ad67c58b22",
+      "bytes": 17087
+    },
+    {
+      "path": "artifacts/mechanics-accelerate-controls-v1/decks/mpc_nonrigid.feb",
+      "sha256": "771f3a99d7a428d84b737c21bccf5c22a60ede8542d82a31310aaa0b074e66f8",
+      "bytes": 6170
+    },
+    {
+      "path": "artifacts/mechanics-accelerate-controls-v1/decks/mpc_translation.feb",
+      "sha256": "956b66dc6cae4904e3a124a8b5e81bec66128d015e1ce85d6b96e533f76d996b",
+      "bytes": 6279
+    },
+    {
+      "path": "artifacts/mechanics-accelerate-controls-v1/decks/shear.feb",
+      "sha256": "fa8c1c1f5bac69cb310c72c3fa590e83a87576ac62a99cbd0a6201f029b9c593",
+      "bytes": 16591
+    },
+    {
+      "path": "artifacts/mechanics-accelerate-controls-v1/decks/shear_double_stiffness.feb",
+      "sha256": "7e8e6c73909f544ef1cce49f1d83aea2a9050ae2db467c913a027c405ea56dba",
+      "bytes": 16642
+    },
+    {
+      "path": "artifacts/mechanics-accelerate-controls-v1/decks/tet10_affine.feb",
+      "sha256": "dfafcfde8075aacb36e2014d6abe755470e04667bcbfd69c6857edfb63833d50",
+      "bytes": 17680
+    },
+    {
+      "path": "artifacts/mechanics-accelerate-controls-v1/decks/translation.feb",
+      "sha256": "1b5fa399cc71e2561647b3f9a6baf2f18b5428e62650898fc8e330fc146fe93d",
+      "bytes": 17876
+    },
+    {
+      "path": "artifacts/mechanics-accelerate-controls-v1/decks/zero.feb",
+      "sha256": "a20221e487f4a192924d28791aa077fbf268756f42367e48db6b6990d8cace9d",
+      "bytes": 16335
+    },
+    {
+      "path": "artifacts/mechanics-accelerate-controls-v1/initial-unreleased-declaration.json",
+      "sha256": "c45d623ab5f843b7accafd87c9fd25b3f9cf5d9b880ef5d6c0598da7499a01a2",
+      "bytes": 5401
+    },
+    {
+      "path": "artifacts/mechanics-accelerate-controls-v1/owner-tests-01.txt",
+      "sha256": "b327f075efdbb6fed4625a31d0794723851a13d0ff55c440c94fe2d97de93c18",
+      "bytes": 99
+    },
+    {
+      "path": "artifacts/mechanics-accelerate-controls-v1/owner-tests-02.txt",
+      "sha256": "40bb1e628d90ebba027bc7f9515cbae1790cf48863c2cdcff35db0907a6234f5",
+      "bytes": 99
+    },
+    {
+      "path": "artifacts/mechanics-accelerate-controls-v1/owner-tests-03.txt",
+      "sha256": "69641c993313ce2ba07b76ec74753dfb56dd5c9c445e13219b5bc03139c22332",
+      "bytes": 99
+    },
+    {
+      "path": "artifacts/mechanics-accelerate-controls-v1/preparation.json",
+      "sha256": "b16e5859efab7aa38d7a175d38b5df6c60cb45a45effe0099084f911e1588375",
+      "bytes": 2120
+    },
+    {
+      "path": "artifacts/mechanics-accelerate-controls-v1/release-template.json",
+      "sha256": "14fb997e4e6c0ef3c4ef9f98299be5a6eaa8efc00c61354ad58dfe14cf3441bd",
+      "bytes": 623
+    },
+    {
+      "path": "artifacts/mechanics-accelerate-controls-v1/software-preparation-manifest.json",
+      "sha256": "78a916a7dbf7ec2b4f5c67526aaa53a6b67076a29d8ab648d82802e64acfcd15",
+      "bytes": 4609
+    },
+    {
+      "path": "docs/mechanics-accelerate-controls.md",
+      "sha256": "02aa32646a815cd677f97f665073bec2fb38c024fa7e74ecfd73f7d23cfdbcf7",
+      "bytes": 5669
+    },
+    {
+      "path": "scripts/mechanics_accelerate_controls.py",
+      "sha256": "f2ad929648b2804fa047a0d0840a693cfd16302268c5e1b76342f85293b499ec",
+      "bytes": 23124
+    },
+    {
+      "path": "tests/test_mechanics_accelerate_controls.py",
+      "sha256": "775ff809d9bd2289b19d1a70f8c460c53ed171adc8400497f877f8416b2973d2",
+      "bytes": 9506
+    },
+    {
+      "path": "tests/test_mechanics_accelerate_controls_review.py",
+      "sha256": "c90a017fb0c9ab6bd1304765a1034b0fec4852e2e6f21935d28705ec8ce942a6",
+      "bytes": 11503
+    }
+  ]
+}

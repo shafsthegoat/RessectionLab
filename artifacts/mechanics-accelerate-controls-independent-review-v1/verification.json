@@ -1,0 +1,109 @@
+{
+  "schema": "mechanics-accelerate-controls-independent-verification-v1",
+  "status": "software_preparation_passed_runtime_declaration_and_execution_not_accepted",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_mechanics_accelerate_controls.py",
+    "tests/test_mechanics_accelerate_controls_review.py"
+  ],
+  "exit_code": 0,
+  "process_elapsed_seconds": 0.5660994170466438,
+  "result": "31 passed in 0.38s",
+  "source_before": {
+    "scripts/mechanics_accelerate_controls.py": "f2ad929648b2804fa047a0d0840a693cfd16302268c5e1b76342f85293b499ec",
+    "tests/test_mechanics_accelerate_controls.py": "775ff809d9bd2289b19d1a70f8c460c53ed171adc8400497f877f8416b2973d2",
+    "tests/test_mechanics_accelerate_controls_review.py": "c90a017fb0c9ab6bd1304765a1034b0fec4852e2e6f21935d28705ec8ce942a6",
+    "docs/mechanics-accelerate-controls.md": "02aa32646a815cd677f97f665073bec2fb38c024fa7e74ecfd73f7d23cfdbcf7",
+    "artifacts/mechanics-accelerate-controls-v1/decks/finite_stretch.feb": "0d72a0ee80fb6a8ad88f8bae84c3771321345ef43fa2311786b488ad67c58b22",
+    "artifacts/mechanics-accelerate-controls-v1/decks/mpc_nonrigid.feb": "771f3a99d7a428d84b737c21bccf5c22a60ede8542d82a31310aaa0b074e66f8",
+    "artifacts/mechanics-accelerate-controls-v1/decks/mpc_translation.feb": "956b66dc6cae4904e3a124a8b5e81bec66128d015e1ce85d6b96e533f76d996b",
+    "artifacts/mechanics-accelerate-controls-v1/decks/shear.feb": "fa8c1c1f5bac69cb310c72c3fa590e83a87576ac62a99cbd0a6201f029b9c593",
+    "artifacts/mechanics-accelerate-controls-v1/decks/shear_double_stiffness.feb": "7e8e6c73909f544ef1cce49f1d83aea2a9050ae2db467c913a027c405ea56dba",
+    "artifacts/mechanics-accelerate-controls-v1/decks/tet10_affine.feb": "dfafcfde8075aacb36e2014d6abe755470e04667bcbfd69c6857edfb63833d50",
+    "artifacts/mechanics-accelerate-controls-v1/decks/translation.feb": "1b5fa399cc71e2561647b3f9a6baf2f18b5428e62650898fc8e330fc146fe93d",
+    "artifacts/mechanics-accelerate-controls-v1/decks/zero.feb": "a20221e487f4a192924d28791aa077fbf268756f42367e48db6b6990d8cace9d",
+    "artifacts/mechanics-accelerate-controls-v1/initial-unreleased-declaration.json": "c45d623ab5f843b7accafd87c9fd25b3f9cf5d9b880ef5d6c0598da7499a01a2",
+    "artifacts/mechanics-accelerate-controls-v1/owner-tests-01.txt": "b327f075efdbb6fed4625a31d0794723851a13d0ff55c440c94fe2d97de93c18",
+    "artifacts/mechanics-accelerate-controls-v1/owner-tests-02.txt": "40bb1e628d90ebba027bc7f9515cbae1790cf48863c2cdcff35db0907a6234f5",
+    "artifacts/mechanics-accelerate-controls-v1/owner-tests-03.txt": "69641c993313ce2ba07b76ec74753dfb56dd5c9c445e13219b5bc03139c22332",
+    "artifacts/mechanics-accelerate-controls-v1/preparation.json": "b16e5859efab7aa38d7a175d38b5df6c60cb45a45effe0099084f911e1588375",
+    "artifacts/mechanics-accelerate-controls-v1/release-template.json": "14fb997e4e6c0ef3c4ef9f98299be5a6eaa8efc00c61354ad58dfe14cf3441bd",
+    "artifacts/mechanics-accelerate-controls-v1/software-preparation-manifest.json": "78a916a7dbf7ec2b4f5c67526aaa53a6b67076a29d8ab648d82802e64acfcd15"
+  },
+  "source_after": {
+    "scripts/mechanics_accelerate_controls.py": "f2ad929648b2804fa047a0d0840a693cfd16302268c5e1b76342f85293b499ec",
+    "tests/test_mechanics_accelerate_controls.py": "775ff809d9bd2289b19d1a70f8c460c53ed171adc8400497f877f8416b2973d2",
+    "tests/test_mechanics_accelerate_controls_review.py": "c90a017fb0c9ab6bd1304765a1034b0fec4852e2e6f21935d28705ec8ce942a6",
+    "docs/mechanics-accelerate-controls.md": "02aa32646a815cd677f97f665073bec2fb38c024fa7e74ecfd73f7d23cfdbcf7",
+    "artifacts/mechanics-accelerate-controls-v1/decks/finite_stretch.feb": "0d72a0ee80fb6a8ad88f8bae84c3771321345ef43fa2311786b488ad67c58b22",
+    "artifacts/mechanics-accelerate-controls-v1/decks/mpc_nonrigid.feb": "771f3a99d7a428d84b737c21bccf5c22a60ede8542d82a31310aaa0b074e66f8",
+    "artifacts/mechanics-accelerate-controls-v1/decks/mpc_translation.feb": "956b66dc6cae4904e3a124a8b5e81bec66128d015e1ce85d6b96e533f76d996b",
+    "artifacts/mechanics-accelerate-controls-v1/decks/shear.feb": "fa8c1c1f5bac69cb310c72c3fa590e83a87576ac62a99cbd0a6201f029b9c593",
+    "artifacts/mechanics-accelerate-controls-v1/decks/shear_double_stiffness.feb": "7e8e6c73909f544ef1cce49f1d83aea2a9050ae2db467c913a027c405ea56dba",
+    "artifacts/mechanics-accelerate-controls-v1/decks/tet10_affine.feb": "dfafcfde8075aacb36e2014d6abe755470e04667bcbfd69c6857edfb63833d50",
+    "artifacts/mechanics-accelerate-controls-v1/decks/translation.feb": "1b5fa399cc71e2561647b3f9a6baf2f18b5428e62650898fc8e330fc146fe93d",
+    "artifacts/mechanics-accelerate-controls-v1/decks/zero.feb": "a20221e487f4a192924d28791aa077fbf268756f42367e48db6b6990d8cace9d",
+    "artifacts/mechanics-accelerate-controls-v1/initial-unreleased-declaration.json": "c45d623ab5f843b7accafd87c9fd25b3f9cf5d9b880ef5d6c0598da7499a01a2",
+    "artifacts/mechanics-accelerate-controls-v1/owner-tests-01.txt": "b327f075efdbb6fed4625a31d0794723851a13d0ff55c440c94fe2d97de93c18",
+    "artifacts/mechanics-accelerate-controls-v1/owner-tests-02.txt": "40bb1e628d90ebba027bc7f9515cbae1790cf48863c2cdcff35db0907a6234f5",
+    "artifacts/mechanics-accelerate-controls-v1/owner-tests-03.txt": "69641c993313ce2ba07b76ec74753dfb56dd5c9c445e13219b5bc03139c22332",
+    "artifacts/mechanics-accelerate-controls-v1/preparation.json": "b16e5859efab7aa38d7a175d38b5df6c60cb45a45effe0099084f911e1588375",
+    "artifacts/mechanics-accelerate-controls-v1/release-template.json": "14fb997e4e6c0ef3c4ef9f98299be5a6eaa8efc00c61354ad58dfe14cf3441bd",
+    "artifacts/mechanics-accelerate-controls-v1/software-preparation-manifest.json": "78a916a7dbf7ec2b4f5c67526aaa53a6b67076a29d8ab648d82802e64acfcd15"
+  },
+  "sources_unchanged": true,
+  "shared_helper_observations_before": {
+    "scripts/mechanics_hbe_backend.py": "e98a51a58a006c1a55fce6b5c428ad349311104b626ed52cdafa7ec22cd8d5a3",
+    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "scripts/mechanics_patient_constraints_run.py": "8ca55cf54730c91ae47e573999041cb0c8b84fb4676842e0d1c0e7407ee8843f",
+    "scripts/mechanics_patient_constraints.py": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66",
+    "scripts/mechanics_febio_verification.py": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+  },
+  "shared_helper_observations_after": {
+    "scripts/mechanics_hbe_backend.py": "e98a51a58a006c1a55fce6b5c428ad349311104b626ed52cdafa7ec22cd8d5a3",
+    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "scripts/mechanics_patient_constraints_run.py": "8ca55cf54730c91ae47e573999041cb0c8b84fb4676842e0d1c0e7407ee8843f",
+    "scripts/mechanics_patient_constraints.py": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66",
+    "scripts/mechanics_febio_verification.py": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+  },
+  "shared_helpers_unchanged_during_tests": true,
+  "initial_negatives": {
+    "path": "artifacts/mechanics-accelerate-controls-independent-review-v1/initial-negatives.json",
+    "sha256": "fd82304031344ad29e8676ae57a6b9d4e5e1128d9dacfda50574fec8c45b065b",
+    "failure_count": 3,
+    "issues": [
+      "external source archive could pass preflight despite incompatible evidence paths",
+      "failed summaries falsely marked changed numerical checkers unchanged"
+    ]
+  },
+  "coverage": [
+    "Eight original HEX8/tet10/MPC deck physics and four-step grids unchanged outside exact Accelerate solver subtree",
+    "factorization=4, order_method=0, iterative=0; actual selection required, default announcement insufficient",
+    "Original numerical checker and manifest pins retained",
+    "Eight sequential calls, remaining aggregate allowance, 60 seconds / 3 GiB / one thread fixed supervisor inputs",
+    "First solver/checker/backend/budget/scaling failure halts additional calls; no automatic retries",
+    "Input changes reject acceptance; existing attempt bytes preserved",
+    "Saved execution/result/baseline and per-row artifact binding; partial publication makes earlier success summary stale",
+    "Repaired preflight archive scope and truthful failed-run checker integrity"
+  ],
+  "scope": "Owner20 + independent11 analytical/mocked controls only. No actual FEBio or other solver invocation; no patient coordinates/images or measured specimen curves opened. No repaired runtime identity/build accepted by these checks.",
+  "execution_gate": {
+    "active_declaration_present": false,
+    "software_manifest_only": true,
+    "root_execution_release": false,
+    "pending": "Reviewed combined matrix-storage and matrix-attribute runtime repair, actual accepted runtime identity, active source-frozen declaration, exact committed archive and separate root release."
+  },
+  "evidence_limits": [
+    "Mocked cap/control wiring does not measure actual solver walltime or memory; existing process supervisor remains separate dependency.",
+    "Deck/checker identity and synthetic software checks do not validate tissue properties, material calibration, anatomy, surgical safety or clinical performance.",
+    "Shared backend/runtime consumer is under a separate review; observed helper hashes are traceability, not acceptance of that runtime."
+  ],
+  "log_sha256": "218b86b46ec6a8263727a71701cebf3814e3f5a9d2705f5129aefd4d19f5a746"
+}

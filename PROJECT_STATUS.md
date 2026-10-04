@@ -309,6 +309,15 @@ remain provisional until the combined adapter repair is verified and built.
 No replacement solver, specimen measurement or patient outcome was accessed.
 See `docs/hbe-backend-comparison.md` and its independent review.
 
+The separate eight-case numerical-control runner passed 31 software checks in
+0.38 s, including independent rejection and evidence-preservation controls.
+Its eight prepared decks change only the linear solver; original physics,
+time grids and numerical checkers are retained. The initial unreleased draft
+declaration is preserved, and no active execution declaration exists yet.
+These are runner checks, not new FEM results. The repaired runtime must be
+built and accepted before the actual eight controls can run. See
+`docs/mechanics-accelerate-controls.md` and its independent review.
+
 One bounded Gmsh preparation generated the three measured-specimen meshes
 (96/768/2,592 hex elements) and 18 fixed loading decks in 3.43 s, with
 140.2 MB maximum sampled memory. Independent native-mesh and deck review
