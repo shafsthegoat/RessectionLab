@@ -1,0 +1,69 @@
+...............................FFF........F..                            [100%]
+=================================== FAILURES ===================================
+____ test_contradictory_completed_launcher_is_rejected[worker_returncode-1] ____
+
+authorities = ({'source_runtime_content_hash': 'runtime', 'geometry_sha256': 'geometry', 'runtime_versions': {'numpy': 'n', 'scipy':..., 'parent_timeout_requested': False, 'hard_killed': False}, {'status': 'completed', 'runtime_content_hash': 'runtime'})
+field = 'worker_returncode', value = 1
+
+    @pytest.mark.parametrize("field,value", [("worker_returncode",1),("parent_timeout_requested",True),("hard_killed",True)])
+    def test_contradictory_completed_launcher_is_rejected(authorities,field,value):
+        authorities[3][field] = value
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_native_cache_payload_review.py:99: Failed
+_ test_contradictory_completed_launcher_is_rejected[parent_timeout_requested-True] _
+
+authorities = ({'source_runtime_content_hash': 'runtime', 'geometry_sha256': 'geometry', 'runtime_versions': {'numpy': 'n', 'scipy':...0, 'parent_timeout_requested': True, 'hard_killed': False}, {'status': 'completed', 'runtime_content_hash': 'runtime'})
+field = 'parent_timeout_requested', value = True
+
+    @pytest.mark.parametrize("field,value", [("worker_returncode",1),("parent_timeout_requested",True),("hard_killed",True)])
+    def test_contradictory_completed_launcher_is_rejected(authorities,field,value):
+        authorities[3][field] = value
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_native_cache_payload_review.py:99: Failed
+_____ test_contradictory_completed_launcher_is_rejected[hard_killed-True] ______
+
+authorities = ({'source_runtime_content_hash': 'runtime', 'geometry_sha256': 'geometry', 'runtime_versions': {'numpy': 'n', 'scipy':...0, 'parent_timeout_requested': False, 'hard_killed': True}, {'status': 'completed', 'runtime_content_hash': 'runtime'})
+field = 'hard_killed', value = True
+
+    @pytest.mark.parametrize("field,value", [("worker_returncode",1),("parent_timeout_requested",True),("hard_killed",True)])
+    def test_contradictory_completed_launcher_is_rejected(authorities,field,value):
+        authorities[3][field] = value
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_native_cache_payload_review.py:99: Failed
+___________ test_baseline_output_mutation_cannot_be_bound_as_success ___________
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-313/test_baseline_output_mutation_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b5de4e0>
+tiny_queries = (<module 'resectionlab.geometry' from '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549...0000000000000000', 'key_projection_hash': 'sha256:ebafbbb0f3e21fd1267a79ef32e9338babe1129ae30de2b0577fc791659437cc'}]})
+
+    def test_baseline_output_mutation_cannot_be_bound_as_success(tmp_path,monkeypatch,tiny_queries):
+        _,output,_=private_cli(tmp_path,monkeypatch,tiny_queries)
+        original=MOD.paired_lru
+        count=0
+        def mutate_during_capacity_replay(*args,**kwargs):
+            nonlocal count
+            count+=1
+            if count==2:
+                (output/"baseline-reproduction.json").write_text(json.dumps({"status":"failed","differences":["tampered"]}))
+            return original(*args,**kwargs)
+        monkeypatch.setattr(MOD,"paired_lru",mutate_during_capacity_replay)
+>       with pytest.raises(ValueError,match="(?i)(output|baseline|artifact|changed)"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_native_cache_payload_review.py:243: Failed
+=========================== short test summary info ============================
+FAILED tests/test_native_cache_payload_review.py::test_contradictory_completed_launcher_is_rejected[worker_returncode-1]
+FAILED tests/test_native_cache_payload_review.py::test_contradictory_completed_launcher_is_rejected[parent_timeout_requested-True]
+FAILED tests/test_native_cache_payload_review.py::test_contradictory_completed_launcher_is_rejected[hard_killed-True]
+FAILED tests/test_native_cache_payload_review.py::test_baseline_output_mutation_cannot_be_bound_as_success
+4 failed, 41 passed in 0.32s

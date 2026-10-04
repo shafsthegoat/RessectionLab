@@ -1,0 +1,249 @@
+"""Tiny exact pure-cover and real-cache checks; never opens a public case."""
+import ast
+import gzip
+import importlib.metadata
+import importlib.util
+import json
+from pathlib import Path
+import struct
+import subprocess
+import sys
+
+import numpy as np
+import pytest
+
+from resectionlab import geometry
+from resectionlab.experimental_capsule_cache import ExactCapsuleCoverCache
+from resectionlab.native_resection import NativeResectionConfig, NATIVE_GENERIC_TOOLS
+
+ROOT = Path(__file__).resolve().parents[1]
+spec = importlib.util.spec_from_file_location("payload_owner", ROOT / "scripts/measure_native_cache_payloads.py")
+payload = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(payload)
+
+
+def config(affine=None):
+    affine = np.eye(4) if affine is None else affine
+    tissue = np.zeros((7, 7, 7), dtype=bool)
+    tissue[1:6, 1:6, 1:6] = True
+    labels = np.zeros(tissue.shape, dtype=np.int16)
+    labels[3, 3, 3] = 1
+    return NativeResectionConfig(tissue, labels, affine,
+        geometry.AccessWindow([3., 3., .5], [0., 0., 1.], 5.),
+        NATIVE_GENERIC_TOOLS, "synthetic-payload-only", "explicit tiny cube")
+
+
+def reconstruction(cfg, points=None, *, cache_limits=None):
+    # Exact bytes are independent of projection-hash spelling and coordinate
+    # equality: +0 and -0 are intentionally distinct cache arguments.
+    points = points or [([3., 3., 1.], [3., 3., 4.], .45),
+        ([2., 2., 2.], [2., 2., 3.], 1.25),
+        ([20., 20., 20.], [20., 20., 21.], .1),
+        ([3., 3., 1.], [3., 3., 4.], .45),
+        ([0., 0., 0.], [0., 0., 0.], 0.),
+        ([-0., 0., 0.], [0., 0., 0.], 0.),
+        ([2., 2., 2.], [2., 2., 3.], 1.25)]
+    binding = {**ExactCapsuleCoverCache(cfg, **(cache_limits or {})).stats(), "float64_byte_order": "little",
+        "source_shape": list(cfg.tissue_mask.shape),
+        "native_affine_float64_le_hex": cfg.affine.tobytes().hex()}
+    binding_hash = payload.content_hash(binding)
+    rows = []
+    for index, (start, end, radius) in enumerate(points):
+        key = struct.pack("<7d", *start, *end, radius).hex()
+        rows.append({"index": index, "argument_float64_le_hex": key,
+            "key_projection_hash": payload.content_hash({"binding": binding_hash, "arguments": key})})
+    return {"binding": binding, "binding_hash": binding_hash, "queries": rows}
+
+
+@pytest.mark.parametrize("byte_cap,entry_cap", [(0, 16), (1024, 0), (24, 16), (240, 2), (1024, 1), (1024**2, 16)])
+def test_integer_replay_matches_real_cache_cold_warm_and_raw_sizes(byte_cap, entry_cap):
+    cfg = config()
+    saved = reconstruction(cfg)
+    measured = payload.collect_cover_sizes(saved, geometry)
+    sequence, unique = payload.validate_arguments(saved, 100, 100)
+    sizes = {row["argument_float64_le_hex"]: row["array_nbytes"] for row in measured["covers"]}
+    cache = ExactCapsuleCoverCache(cfg, max_payload_bytes=byte_cap, max_entries=entry_cap)
+    scene = geometry.GeometryScene(np.zeros(cfg.tissue_mask.shape, dtype=bool), cfg.affine)
+    receipts = []
+    for _ in range(2):
+        before = cache.stats()
+        for key in sequence:
+            values = struct.unpack("<7d", bytes.fromhex(key))
+            cells = cache.query(scene, values[:3], values[3:6], values[-1])
+            assert cells.nbytes == sizes[key]
+            assert cells.dtype == np.int64 and cells.flags.c_contiguous and not cells.flags.writeable
+        receipts.append({"cache_before": before, "cache_after": cache.stats()})
+    replay = payload.paired_lru(sequence, sizes, byte_cap, entry_cap)
+    assert payload.compare_baseline(replay, *receipts)["status"] == "passed"
+    assert len(unique) == 5 and any(row["array_nbytes"] == 0 for row in measured["covers"])
+
+
+@pytest.mark.parametrize("linear", [np.eye(3), np.diag([-1., -1., 1.]), np.diag([.5, 2., 1.5]),
+    np.asarray([[0., -1., 0.], [1., 0., 0.], [0., 0., 1.]]),
+    np.asarray([[np.cos(.3), -np.sin(.3), 0.], [np.sin(.3), np.cos(.3), 0.], [0., 0., 1.]])])
+def test_ras_affine_frame_matches_independent_frozen_constructor_and_arrays(linear):
+    affine = np.eye(4)
+    affine[:3, :3] = linear
+    affine[:3, 3] = [-5.25, 4.5, 1.]
+    cfg = config(affine)
+    saved = reconstruction(cfg)
+    expected_scene = geometry.GeometryScene(np.zeros((7, 7, 7), bool), affine)
+    calls = []
+    measured = payload.collect_cover_sizes(saved, geometry, on_query_started=lambda i, key: calls.append(key))
+    assert len(calls) == len(set(calls)) == measured["pure_cover_calls"] == 5
+    assert measured["frame"]["inverse_float64_le_hex"] == expected_scene._inverse.tobytes().hex()
+    assert measured["frame"]["orthogonal_spacing_float64_le_hex"] == expected_scene._orthogonal_spacing.tobytes().hex()
+    assert "original inverse/derived-frame bytes were not saved" in measured["frame"]["derivation"]
+    for record in measured["covers"]:
+        values = struct.unpack("<7d", bytes.fromhex(record["argument_float64_le_hex"]))
+        expected = geometry.capsule_voxel_indices(expected_scene, values[:3], values[3:6], values[-1])
+        assert record["array_shape"] == list(expected.shape)
+        assert record["array_nbytes"] == expected.nbytes == len(expected) * 24
+
+
+def test_exact_argument_bits_distinguish_signed_zero_and_one_ulp():
+    cfg = config()
+    points = [([value, 0., 0.], [0., 0., 0.], 0.) for value in (0., -0., 1., np.nextafter(1., 2.))]
+    saved = reconstruction(cfg, points)
+    sequence, unique = payload.validate_arguments(saved, 4, 4)
+    assert len(unique) == len(sequence) == 4
+    assert payload.collect_cover_sizes(saved, geometry)["pure_cover_calls"] == 4
+
+
+def test_zero_payload_admission_consumes_entries_and_oversize_does_not_evict():
+    actual = payload.paired_lru(["empty", "small", "huge", "empty", "small"],
+        {"empty": 0, "small": 24, "huge": 240}, 24, 2)
+    assert actual["cold"]["after"] == {"calls": 5, "hits": 2, "misses": 3,
+        "evictions": 0, "bypasses": 1, "entries": 2, "retained_payload_bytes": 24}
+    assert actual["warm"]["increment"] == {"calls": 5, "hits": 4, "misses": 1, "evictions": 0, "bypasses": 1}
+
+
+@pytest.mark.parametrize("point", ["before", "after"])
+@pytest.mark.parametrize("field", payload.COUNTERS)
+def test_every_cumulative_baseline_field_is_required(point, field):
+    actual = payload.paired_lru(["a", "b", "a"], {"a": 24, "b": 48}, 48, 2)
+    receipts = [{"cache_before": dict(actual[phase]["before"]), "cache_after": dict(actual[phase]["after"])}
+                for phase in ("cold", "warm")]
+    receipts[1]["cache_" + point][field] += 1
+    gate = payload.compare_baseline(actual, *receipts)
+    assert gate["status"] == "failed"
+    assert any(row["point"] == point and row["field"] == field for row in gate["differences"])
+
+
+def test_partial_progress_survives_budget_stop_before_next_geometry_call():
+    saved = reconstruction(config())
+    calls, completed = [], []
+    def guard():
+        if len(completed) == 2:
+            raise InterruptedError("synthetic budget")
+    with pytest.raises(InterruptedError, match="synthetic budget"):
+        payload.collect_cover_sizes(saved, geometry, check_budget=guard,
+            on_query_started=lambda index, key: calls.append(key), on_cover=completed.append)
+    assert len(calls) == len(completed) == 2
+
+
+def test_frozen_loader_checks_hash_and_runtime_before_loading(tmp_path):
+    path = tmp_path / "forbidden.py"
+    path.write_text("raise AssertionError('must not import')\n")
+    with pytest.raises(ValueError, match="source changed"):
+        payload.load_verified_geometry(path, "wrong", {})
+    with pytest.raises(ValueError, match="dependency version"):
+        payload.load_verified_geometry(path, payload.file_hash(path), {"numpy": "wrong", "scipy": "wrong"})
+
+
+def test_default_is_declaration_only_and_refuses_overwrite(monkeypatch, tmp_path):
+    declaration = {"input_sha256": {"missing": "not-read"}}
+    declaration["declaration_content_hash"] = payload.content_hash(declaration)
+    path = tmp_path / payload.DECLARATION
+    path.parent.mkdir(parents=True)
+    path.write_text(json.dumps(declaration))
+    output = tmp_path / "new-output"
+    monkeypatch.setattr(payload, "ROOT", tmp_path)
+    monkeypatch.setattr(sys, "argv", ["payload", "--output", str(output)])
+    monkeypatch.setattr(payload, "load_verified_geometry", lambda *args: pytest.fail("No geometry import without execution"))
+    monkeypatch.setattr(payload, "file_hash", lambda *args: pytest.fail("No input hashing without execution"))
+    payload.main()
+    assert json.loads((output / "status.json").read_text())["status"] == "declared_not_executed"
+    with pytest.raises(FileExistsError):
+        payload.main()
+
+
+def test_diagnostic_imports_only_stdlib_and_never_constructs_simulators():
+    tree = ast.parse((ROOT / "scripts/measure_native_cache_payloads.py").read_text())
+    dependencies = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            dependencies.update(alias.name.split(".")[0] for alias in node.names)
+        elif isinstance(node, ast.ImportFrom):
+            dependencies.add(node.module.split(".")[0])
+    assert dependencies <= sys.stdlib_module_names
+    assert not any(isinstance(node, ast.Attribute) and node.attr in
+        {"NativeResectionEngine", "NativeSequentialSimulator", "AxisColumnNativeSimulator", "load_case_bundle"}
+        for node in ast.walk(tree))
+
+
+def test_fresh_process_runs_full_synthetic_pipeline_with_real_geometry(tmp_path):
+    """Actual dependency import/RSS checks run in a fresh child, not pytest RSS."""
+    root = tmp_path / "isolated-source"
+    query, source = root / "query", root / "source-cache"
+    query.mkdir(parents=True)
+    source.mkdir()
+    def write(path, value):
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(value))
+    cfg = config()
+    saved = reconstruction(cfg, cache_limits={"max_payload_bytes": 240, "max_entries": 2})
+    sequence, unique = payload.validate_arguments(saved, 100, 100)
+    with gzip.open(query / "ordered-query-arguments.json.gz", "wt") as stream:
+        json.dump(saved, stream)
+    summary = {"query_artifact_sha256": payload.file_hash(query / "ordered-query-arguments.json.gz"),
+        "binding_hash": saved["binding_hash"]}
+    write(query / "summary.json", summary)
+    write(query / "status.json", {"status": "completed", "summary_sha256": payload.file_hash(query / "summary.json")})
+    scene = geometry.GeometryScene(np.zeros((7, 7, 7), bool), cfg.affine)
+    cache = ExactCapsuleCoverCache(cfg, max_payload_bytes=240, max_entries=2)
+    for phase in ("cold", "warm"):
+        receipt = {"cache_before": cache.stats()}
+        for key in sequence:
+            args = struct.unpack("<7d", bytes.fromhex(key))
+            cache.query(scene, args[:3], args[3:6], args[-1])
+        receipt["cache_after"] = cache.stats()
+        write(source / ("cached_" + phase) / "receipt.json", receipt)
+    runtime_hash = "synthetic-source-only"
+    geometry_path = root / "frozen-geometry.py"
+    geometry_path.write_bytes(Path(geometry.__file__).read_bytes())
+    runtime_versions = {name: importlib.metadata.version(name) for name in ("numpy", "scipy")}
+    geometry_hash = payload.file_hash(geometry_path)
+    frozen = {"src/resectionlab/geometry.py": geometry_hash}
+    write(source / "launch-source.json", {"runtime_content_hash": runtime_hash,
+        "file_sha256": frozen, "runtime_versions": runtime_versions, "python": sys.version})
+    result = {"status": "completed", "runtime_content_hash": runtime_hash}
+    write(source / "result.json", result)
+    write(source / "worker-status.json", {**result, "result_hash": payload.content_hash(result)})
+    write(source / "launcher-status.json", {"status": "completed", "worker_returncode": 0,
+        "hard_killed": False, "parent_timeout_requested": False})
+    inputs = {str(path.relative_to(root)): payload.file_hash(path) for path in root.rglob("*") if path.is_file()}
+    declaration = {"input_sha256": inputs, "query_run": "query", "source_cache_run": "source-cache",
+        "geometry_path": "frozen-geometry.py", "geometry_sha256": geometry_hash,
+        "frozen_source_sha256": frozen, "source_runtime_content_hash": runtime_hash,
+        "runtime_versions": runtime_versions, "baseline_cache": {"max_payload_bytes": 240, "max_entries": 2},
+        "expected_ordered_queries": len(sequence), "expected_unique_queries": len(unique),
+        "maximum_wall_seconds": 60, "maximum_process_peak_rss_bytes": 512 * 1024**2,
+        "maximum_uncompressed_query_bytes": 1024**2, "maximum_grid_voxels": 343,
+        "candidate_payload_bytes": [240, 1024]}
+    declaration["declaration_content_hash"] = payload.content_hash(declaration)
+    write(root / payload.DECLARATION, declaration)
+    script = root / "scripts/measure_native_cache_payloads.py"
+    script.parent.mkdir()
+    script.write_bytes((ROOT / "scripts/measure_native_cache_payloads.py").read_bytes())
+    output = tmp_path / "child-output"
+    child = subprocess.run([sys.executable, "-I", "-B", str(script), "--output", str(output), "--execute"],
+        cwd=root, text=True, capture_output=True, timeout=30)
+    assert child.returncode == 0, child.stdout + child.stderr
+    report = json.loads((output / "summary.json").read_text())
+    assert report["baseline_reproduction"] == "passed"
+    assert report["attempted_unique_queries"] == report["completed_unique_queries"] == len(unique)
+    assert report["actual_process_cumulative_peak_rss_bytes"] <= 512 * 1024**2
+    assert report["patient_loads"] == report["simulator_steps"] == report["policy_or_gradient_updates"] == 0
+    assert report["minimum_payload_bytes_for_zero_warm_misses_when_all_entries_fit"] is None
+    assert json.loads((output / "status.json").read_text())["summary_sha256"] == payload.file_hash(output / "summary.json")

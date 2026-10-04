@@ -1,0 +1,349 @@
+"""Independent prospective sizing checks; tiny synthetic inputs only."""
+import copy
+import gzip
+import importlib.metadata
+import importlib.util
+import itertools
+import json
+from pathlib import Path
+import struct
+import sys
+from types import SimpleNamespace
+
+import pytest
+
+ROOT = Path(__file__).resolve().parents[1]
+SPEC = importlib.util.spec_from_file_location("independent_payload_review", ROOT / "scripts/measure_native_cache_payloads.py")
+MOD = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(MOD)
+
+
+def reference_lru(sequence, sizes, payload, entries):
+    # A simple MRU-first list, deliberately separate from production's
+    # OrderedDict, checks all counters including empty/oversized admission.
+    state, values = [], {field: 0 for field in MOD.COUNTERS}
+    answer = {}
+    for phase in ("cold", "warm"):
+        before = dict(values)
+        for key in sequence:
+            values["calls"] += 1
+            if key in state:
+                values["hits"] += 1
+                state.remove(key)
+                state.insert(0, key)
+                continue
+            values["misses"] += 1
+            if not payload or not entries or sizes[key] > payload:
+                values["bypasses"] += 1
+                continue
+            while state and (sum(sizes[item] for item in state) + sizes[key] > payload or len(state) >= entries):
+                state.pop()
+                values["evictions"] += 1
+            state.insert(0,key)
+            values["entries"] = len(state)
+            values["retained_payload_bytes"] = sum(sizes[item] for item in state)
+        answer[phase] = {"before":before, "after":dict(values), "increment":{
+            field:values[field]-before[field] for field in ("calls","hits","misses","evictions","bypasses")}}
+    return answer
+
+
+def test_exhaustive_small_lru_matches_independent_admission_and_eviction():
+    sizes = {"a":0, "b":24, "c":48}
+    for length in range(1,5):
+        for sequence in itertools.product(sizes, repeat=length):
+            for payload, entries in itertools.product((0,1,24,48,72), range(4)):
+                assert MOD.paired_lru(sequence,sizes,payload,entries) == reference_lru(sequence,sizes,payload,entries)
+
+
+def test_oversized_bypass_does_not_evict_small_cached_key():
+    result = MOD.paired_lru(["small","large","small"],{"small":24,"large":96},48,1)
+    assert result["cold"]["after"] == {"calls":3,"hits":1,"misses":2,"evictions":0,"bypasses":1,"entries":1,"retained_payload_bytes":24}
+    assert result["warm"]["increment"] == {"calls":3,"hits":2,"misses":1,"evictions":0,"bypasses":1}
+
+
+def test_empty_cover_occupies_entry_but_zero_payload_limit_bypasses_it():
+    admitted = MOD.paired_lru(["empty","full","empty"],{"empty":0,"full":24},24,1)
+    assert admitted["cold"]["after"]["evictions"] == 2
+    assert admitted["cold"]["after"]["entries"] == 1
+    assert admitted["cold"]["after"]["retained_payload_bytes"] == 0
+    denied = MOD.paired_lru(["empty","empty"],{"empty":0},0,4)
+    assert denied["cold"]["after"]["bypasses"] == 2
+    assert denied["cold"]["after"]["entries"] == 0
+
+
+@pytest.mark.parametrize("phase,point,field", list(itertools.product(("cold","warm"),("before","after"),MOD.COUNTERS)))
+def test_every_baseline_counter_is_required(phase,point,field):
+    baseline = reference_lru(["a","b","a"],{"a":24,"b":48},48,2)
+    receipts = {part:{"cache_before":copy.deepcopy(value["before"]),"cache_after":copy.deepcopy(value["after"])} for part,value in baseline.items()}
+    receipts[phase]["cache_"+point][field] += 1
+    result = MOD.compare_baseline(baseline,receipts["cold"],receipts["warm"])
+    assert result["status"] == "failed"
+    assert any(row["phase"] == phase and row["point"] == point and row["field"] == field for row in result["differences"])
+
+
+@pytest.fixture
+def authorities():
+    declaration = {"source_runtime_content_hash":"runtime", "geometry_sha256":"geometry", "runtime_versions":{"numpy":"n","scipy":"s"},
+        "frozen_source_sha256":{"src/resectionlab/geometry.py":"geometry"}}
+    source = {"runtime_content_hash":"runtime", "runtime_versions":declaration["runtime_versions"], "python":sys.version,
+        "file_sha256":declaration["frozen_source_sha256"]}
+    result = {"status":"completed","runtime_content_hash":"runtime"}
+    worker = {"status":"completed","runtime_content_hash":"runtime","result_hash":MOD.content_hash(result)}
+    launcher = {"status":"completed","worker_returncode":0,"parent_timeout_requested":False,"hard_killed":False}
+    return declaration,source,worker,launcher,result
+
+
+@pytest.mark.parametrize("field,value", [("worker_returncode",1),("parent_timeout_requested",True),("hard_killed",True)])
+def test_contradictory_completed_launcher_is_rejected(authorities,field,value):
+    authorities[3][field] = value
+    with pytest.raises(ValueError):
+        MOD.validate_source_authorities(*authorities)
+
+
+def test_runtime_or_model_drift_rejects_before_geometry(authorities):
+    authorities[1]["runtime_content_hash"] = "different"
+    with pytest.raises(ValueError):
+        MOD.validate_source_authorities(*authorities)
+
+
+@pytest.fixture
+def tiny_queries():
+    # Imported only for two tiny synthetic pure covers; no native engine exists.
+    from resectionlab import geometry
+    binding = {"geometry_version":geometry.GEOMETRY_VERSION,"geometry_epsilon":geometry._EPS,
+        "geometry_source_sha256":MOD.file_hash(geometry.__file__),"float64_byte_order":"little",
+        "source_shape":[3,3,3],"mode":"exact_orthogonal_cells",
+        "native_affine_float64_le_hex":struct.pack("<16d",1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1).hex()}
+    bh = MOD.content_hash(binding)
+    arguments = [[0.,0.,0.,0.,0.,0.,0.],[1.,1.,1.,1.,1.,1.,0.],[0.,0.,0.,0.,0.,0.,0.]]
+    rows=[]
+    for index,values in enumerate(arguments):
+        key=struct.pack("<7d",*values).hex()
+        rows.append({"index":index,"argument_float64_le_hex":key,"key_projection_hash":MOD.content_hash({"binding":bh,"arguments":key})})
+    return geometry,{"binding":binding,"binding_hash":bh,"queries":rows}
+
+
+def test_exact_unfiltered_payload_and_new_frame_are_measured_once(tiny_queries):
+    geometry, reconstruction = tiny_queries
+    calls=[]
+    def cover(scene,start,end,radius):
+        assert scene.shape == (3,3,3) and not scene.forbidden_mask.any()
+        result=geometry.capsule_voxel_indices(scene,start,end,radius)
+        calls.append(result)
+        return result
+    proxy=SimpleNamespace(**{key:getattr(geometry,key) for key in ("GEOMETRY_VERSION","_EPS","__file__","np","GeometryScene")},capsule_voxel_indices=cover)
+    result=MOD.collect_cover_sizes(reconstruction,proxy,maximum_queries=3,maximum_unique_queries=2,maximum_grid_voxels=27)
+    assert len(calls)==result["pure_cover_calls"]==2
+    assert result["ordered_query_count"]==3 and result["exact_unique_payload_bytes"]==48
+    assert [row["array_nbytes"] for row in result["covers"]]==[24,24]
+    assert all(row["cell_count"]==1 for row in result["covers"])
+    assert "Newly computed" in result["frame"]["derivation"] and "not claimed" in result["frame"]["derivation"]
+
+
+@pytest.mark.parametrize("kind",["writeable","noncontiguous","wrong_dtype","wrong_shape"])
+def test_wrong_array_contract_rejects_before_counting(tiny_queries,kind):
+    geometry,reconstruction=tiny_queries
+    np=geometry.np
+    if kind=="writeable": cells=np.zeros((1,3),dtype=np.int64)
+    elif kind=="noncontiguous":
+        cells=np.zeros((3,6),dtype=np.int64)[:,::2]
+        cells.flags.writeable=False
+    elif kind=="wrong_dtype": cells=np.zeros((1,3),dtype=np.int32)
+    else: cells=np.zeros((1,2),dtype=np.int64)
+    proxy=SimpleNamespace(**{key:getattr(geometry,key) for key in ("GEOMETRY_VERSION","_EPS","__file__","np","GeometryScene")},capsule_voxel_indices=lambda *args:cells)
+    with pytest.raises(ValueError,match="ndarray"):
+        MOD.collect_cover_sizes(reconstruction,proxy)
+
+
+def test_query_and_grid_caps_precede_geometry(tiny_queries):
+    geometry,reconstruction=tiny_queries
+    class CannotConstruct:
+        def __init__(self,*args): pytest.fail("cap must reject before frame construction")
+    proxy=SimpleNamespace(**{key:getattr(geometry,key) for key in ("GEOMETRY_VERSION","_EPS","__file__","np")},GeometryScene=CannotConstruct)
+    for options in ({"maximum_queries":2},{"maximum_unique_queries":1},{"maximum_grid_voxels":26}):
+        with pytest.raises(ValueError): MOD.collect_cover_sizes(reconstruction,proxy,**options)
+
+
+def test_default_opens_no_inputs_or_geometry(tmp_path,monkeypatch):
+    declaration={"input_sha256":{"forbidden-public-input":"not-opened"}}
+    declaration["declaration_content_hash"]=MOD.content_hash(declaration)
+    p=tmp_path/MOD.DECLARATION;p.parent.mkdir(parents=True);p.write_text(json.dumps(declaration))
+    output=tmp_path/"output"
+    monkeypatch.setattr(MOD,"ROOT",tmp_path)
+    monkeypatch.setattr(sys,"argv",["measure","--output",str(output)])
+    monkeypatch.setattr(MOD,"file_hash",lambda *args:pytest.fail("default cannot hash inputs"))
+    monkeypatch.setattr(MOD,"load_verified_geometry",lambda *args:pytest.fail("default cannot load geometry"))
+    MOD.main()
+    assert json.loads((output/"status.json").read_text())["status"]=="declared_not_executed"
+
+
+def private_cli(tmp_path,monkeypatch,tiny_queries,*,baseline_mismatch=False,cell_bytes=24,max_entries=8):
+    geometry,reconstruction=tiny_queries
+    reconstruction=copy.deepcopy(reconstruction)
+    root=tmp_path/"private-synthetic-payload"
+    root.mkdir()
+    output=root/"output"
+    binding=reconstruction["binding"]
+    for key in ("namespace","cache_version","native_config_hash","source_hash","source_guard_sha256","native_version"):
+        binding[key]="synthetic-"+key
+    reconstruction["binding_hash"]=MOD.content_hash(binding)
+    for row in reconstruction["queries"]:
+        row["key_projection_hash"]=MOD.content_hash({"binding":reconstruction["binding_hash"],"arguments":row["argument_float64_le_hex"]})
+    def write(relative,value):
+        path=root/relative;path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(value))
+    geometry_path=root/"frozen/geometry.py";geometry_path.parent.mkdir();geometry_path.write_bytes(Path(geometry.__file__).read_bytes())
+    arguments=root/"queries/ordered-query-arguments.json.gz";arguments.parent.mkdir()
+    arguments.write_bytes(gzip.compress(json.dumps(reconstruction).encode(),mtime=0))
+    write("queries/summary.json",{"binding_hash":reconstruction["binding_hash"],"query_artifact_sha256":MOD.file_hash(arguments)})
+    write("queries/status.json",{"status":"completed","summary_sha256":MOD.file_hash(root/"queries/summary.json")})
+    versions={name:importlib.metadata.version(name) for name in ("numpy","scipy")}
+    source={"runtime_content_hash":"synthetic-runtime","runtime_versions":versions,"python":sys.version,
+        "file_sha256":{"src/resectionlab/geometry.py":binding["geometry_source_sha256"]}}
+    write("source/launch-source.json",source)
+    result={"status":"completed","runtime_content_hash":"synthetic-runtime"}
+    write("source/result.json",result)
+    write("source/worker-status.json",{"status":"completed","runtime_content_hash":"synthetic-runtime","result_hash":MOD.content_hash(result)})
+    write("source/launcher-status.json",{"status":"completed","worker_returncode":0,"parent_timeout_requested":False,"hard_killed":False})
+    limits={"max_payload_bytes":48,"max_entries":max_entries}
+    sequence=[row["argument_float64_le_hex"] for row in reconstruction["queries"]]
+    expected=reference_lru(sequence,{key:cell_bytes for key in sequence},48,max_entries)
+    for phase in ("cold","warm"):
+        receipt={"cache_"+point:{**binding,**limits,**expected[phase][point]} for point in ("before","after")}
+        if baseline_mismatch and phase=="warm":receipt["cache_after"]["hits"]+=1
+        write("source/cached_"+phase+"/receipt.json",receipt)
+    declaration={"input_sha256":{str(path.relative_to(root)):MOD.file_hash(path) for path in root.rglob("*") if path.is_file()},
+        "query_run":"queries","source_cache_run":"source","source_runtime_content_hash":"synthetic-runtime",
+        "geometry_path":"frozen/geometry.py","geometry_sha256":binding["geometry_source_sha256"],
+        "frozen_source_sha256":source["file_sha256"],"runtime_versions":versions,
+        "expected_ordered_queries":3,"expected_unique_queries":2,"maximum_grid_voxels":27,
+        "maximum_uncompressed_query_bytes":1024**2,"maximum_wall_seconds":60,"maximum_process_peak_rss_bytes":512*1024**2,
+        "baseline_cache":limits,"candidate_payload_bytes":[48,96]}
+    declaration["declaration_content_hash"]=MOD.content_hash(declaration)
+    write(str(MOD.DECLARATION),declaration)
+    monkeypatch.setattr(MOD,"ROOT",root)
+    monkeypatch.setattr(MOD,"peak_rss_bytes",lambda:64*1024**2)
+    # Controlled in-process guard tests use the same loaded geometry source;
+    # the separate real-child test exercises its loader and real process RSS.
+    monkeypatch.setattr(MOD,"load_verified_geometry",lambda *args:geometry)
+    monkeypatch.setattr(sys,"argv",["payload","--output",str(output),"--execute"])
+    return root,output,declaration
+
+
+@pytest.mark.parametrize("artifact",["baseline-reproduction.json","measured-frame.json","cover-sizes.jsonl.gz"])
+def test_output_mutation_cannot_be_bound_as_success(tmp_path,monkeypatch,tiny_queries,artifact):
+    _,output,_=private_cli(tmp_path,monkeypatch,tiny_queries)
+    original=MOD.paired_lru
+    count=0
+    def mutate_during_capacity_replay(*args,**kwargs):
+        nonlocal count
+        count+=1
+        if count==2:
+            (output/artifact).write_text(json.dumps({"status":"failed","differences":["tampered"]}))
+        return original(*args,**kwargs)
+    monkeypatch.setattr(MOD,"paired_lru",mutate_during_capacity_replay)
+    with pytest.raises(ValueError,match="(?i)(output|baseline|artifact|changed)"):
+        MOD.main()
+    assert json.loads((output/"status.json").read_text())["status"]=="failed"
+    assert not (output/"summary.json").exists()
+
+
+def test_actual_baseline_mismatch_blocks_capacity_interpretation(tmp_path,monkeypatch,tiny_queries):
+    _,output,_=private_cli(tmp_path,monkeypatch,tiny_queries,baseline_mismatch=True)
+    original=MOD.paired_lru
+    calls=[]
+    def one_baseline_only(*args,**kwargs):
+        calls.append(args[2])
+        assert len(calls)==1,"capacity replay cannot run after baseline rejection"
+        return original(*args,**kwargs)
+    monkeypatch.setattr(MOD,"paired_lru",one_baseline_only)
+    with pytest.raises(ValueError,match="reproduction failed"):
+        MOD.main()
+    status=json.loads((output/"status.json").read_text())
+    assert status["status"]=="failed" and status["eligible_capacity_interpretations"]==0
+    assert status["completed_unique_queries"]==2
+    assert json.loads((output/"baseline-reproduction.json").read_text())["status"]=="failed"
+    assert not (output/"summary.json").exists()
+
+
+def test_operator_interrupt_retains_completed_rows_and_attempt_denominator(tmp_path,monkeypatch,tiny_queries):
+    _,output,_=private_cli(tmp_path,monkeypatch,tiny_queries)
+    from resectionlab import geometry
+    original=geometry.capsule_voxel_indices
+    calls=0
+    def stop_on_second(*args,**kwargs):
+        nonlocal calls
+        calls+=1
+        if calls==2:raise KeyboardInterrupt("synthetic operator cancellation")
+        return original(*args,**kwargs)
+    monkeypatch.setattr(geometry,"capsule_voxel_indices",stop_on_second)
+    with pytest.raises(KeyboardInterrupt):MOD.main()
+    status=json.loads((output/"status.json").read_text())
+    assert status["status"]=="failed" and status["error_type"]=="KeyboardInterrupt"
+    assert status["attempted_unique_queries"]==2 and status["completed_unique_queries"]==1
+    with gzip.open(output/"cover-sizes.jsonl.gz","rt") as stream:rows=[json.loads(line) for line in stream]
+    assert len(rows)==1 and rows[0]["array_nbytes"]==24
+    assert not (output/"summary.json").exists()
+
+
+@pytest.mark.parametrize("budget",["wall","RSS"])
+def test_initial_budget_failure_records_zero_attempts(tmp_path,monkeypatch,tiny_queries,budget):
+    _,output,_=private_cli(tmp_path,monkeypatch,tiny_queries)
+    if budget=="wall":
+        monkeypatch.setattr(MOD,"time",SimpleNamespace(perf_counter=iter([0.,61.,62.]).__next__))
+    else:
+        monkeypatch.setattr(MOD,"peak_rss_bytes",lambda:1024**3)
+    with pytest.raises(InterruptedError,match=budget):MOD.main()
+    status=json.loads((output/"status.json").read_text())
+    assert status["status"]=="failed" and status["eligible_capacity_interpretations"]==0
+    assert status["attempted_unique_queries"]==status["completed_unique_queries"]==0
+    assert not (output/"cover-sizes.jsonl.gz").exists()
+
+
+def test_late_source_change_rejects_after_measurement(tmp_path,monkeypatch,tiny_queries):
+    root,output,_=private_cli(tmp_path,monkeypatch,tiny_queries)
+    original=MOD.paired_lru
+    count=0
+    def mutate_input(*args,**kwargs):
+        nonlocal count
+        count+=1
+        if count==2:(root/"source/result.json").write_text("{}")
+        return original(*args,**kwargs)
+    monkeypatch.setattr(MOD,"paired_lru",mutate_input)
+    with pytest.raises(ValueError,match="Bound input changed during payload sizing"):MOD.main()
+    status=json.loads((output/"status.json").read_text())
+    assert status["status"]=="failed" and status["completed_unique_queries"]==2
+    assert not (output/"summary.json").exists()
+
+
+def test_complete_private_cli_binds_all_output_certificates(tmp_path,monkeypatch,tiny_queries):
+    _,output,_=private_cli(tmp_path,monkeypatch,tiny_queries)
+    MOD.main()
+    summary=json.loads((output/"summary.json").read_text())
+    status=json.loads((output/"status.json").read_text())
+    assert status["status"]=="completed" and status["summary_sha256"]==MOD.file_hash(output/"summary.json")
+    for key,filename in (("cover_sizes_sha256","cover-sizes.jsonl.gz"),("measured_frame_sha256","measured-frame.json"),
+                         ("baseline_reproduction_sha256","baseline-reproduction.json")):
+        assert summary[key]==MOD.file_hash(output/filename)
+    assert summary["minimum_payload_bytes_for_zero_warm_misses_when_all_entries_fit"]==48
+    assert summary["attempted_unique_queries"]==summary["completed_unique_queries"]==2
+    assert all(summary[key]==0 for key in ("patient_loads","patient_tissue_arrays_loaded","simulator_steps","policy_or_gradient_updates"))
+    assert summary["final_worlds_used"] is False and summary["stress_worlds_used"] is False
+
+
+def test_all_empty_covers_need_positive_admission_limit(tmp_path,monkeypatch,tiny_queries):
+    geometry,reconstruction=tiny_queries
+    changed=copy.deepcopy(reconstruction)
+    for row,value in zip(changed["queries"],[20.,21.,20.]):
+        row["argument_float64_le_hex"]=struct.pack("<7d",value,value,value,value,value,value,0.).hex()
+    _,output,_=private_cli(tmp_path,monkeypatch,(geometry,changed),cell_bytes=0)
+    MOD.main()
+    summary=json.loads((output/"summary.json").read_text())
+    assert summary["exact_unique_array_payload_bytes"]==0
+    assert summary["minimum_payload_bytes_for_zero_warm_misses_when_all_entries_fit"]==1
+
+
+def test_insufficient_entries_has_no_zero_warm_miss_payload_solution(tmp_path,monkeypatch,tiny_queries):
+    _,output,_=private_cli(tmp_path,monkeypatch,tiny_queries,max_entries=1)
+    MOD.main()
+    summary=json.loads((output/"summary.json").read_text())
+    assert summary["minimum_payload_bytes_for_zero_warm_misses_when_all_entries_fit"] is None

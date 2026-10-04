@@ -1,0 +1,82 @@
+{
+  "declaration_content_hash": "sha256:bbfd679b5cc1988c05056d1ae603967735c87b320db9499b8d3d9e0dc11e8e1c",
+  "file_sha256": {
+    "artifacts/validation/native-cache-payload-independent-v1/final-script.py.txt": "5c5ccb618ce16e1b87b1df0c8a7ebbb6418909b103245a17f9f9d446746f68b7",
+    "artifacts/validation/native-cache-payload-independent-v1/final-tests.py.txt": "0ed23c1cf0e9f902e097ac230210f9b5c62f9d24082df9b8c5019cb25f6ba1a0",
+    "artifacts/validation/native-cache-payload-independent-v1/first-run.txt": "dc91a53e139d2f95c588772bca93999534a6e1faa0d9871904157579857a488b",
+    "artifacts/validation/native-cache-payload-independent-v1/initial-script.py.txt": "a1928bd0177b6c52c0700be6fa0ca8b09a53eadb198860d296194f171c322feb",
+    "artifacts/validation/native-cache-payload-independent-v1/initial-tests.py.txt": "fae14ee6afa835a906e6f4aa0553ac13515acab1aa0462206fbe7ede97fe6d51",
+    "artifacts/validation/native-cache-payload-independent-v1/second-run.txt": "2cd3ada3ddaab3b39a9c305cb3202a5ea1052a2d3dbda39976bf66a58bd005b2",
+    "artifacts/validation/native-cache-payload-independent-v1/second-tests.py.txt": "5f4786e52449b3c4e82e19900e5cf758bf5845d51a999d9c14e846ec725e6219",
+    "artifacts/validation/native-cache-payload-owner-v1/final-combined-tests.txt": "2050956a6886b3da500afec42ec5569406d26a8b5b9c23cab1c90974d60f849b",
+    "artifacts/validation/native-cache-payload-owner-v1/first-combined-harness-failure.txt": "a57c46105eb5a65c8f55fe61a2c858b6e0b9cf064e3e78afc64f5882fdad29a9",
+    "artifacts/validation/native-cache-payload-owner-v1/pre-fixture-repair-test.py.txt": "3d48d3e04e1de68c49cb1ffc4cedcc651c2138f5b2c6196183c51aee1058b654",
+    "docs/native-cache-payload-sizing.md": "7df01fd96281886f2b3829c8d749d3eec62bb6ec2180035dd0f033d65f658232",
+    "manifests/experiments/native-cache-payload-v1.json": "a66b1b10dd3a5e23987e29e8cd0d2c5ba73f89be164015db827a798638679037",
+    "scripts/measure_native_cache_payloads.py": "5c5ccb618ce16e1b87b1df0c8a7ebbb6418909b103245a17f9f9d446746f68b7",
+    "tests/test_native_cache_payload_review.py": "0ed23c1cf0e9f902e097ac230210f9b5c62f9d24082df9b8c5019cb25f6ba1a0",
+    "tests/test_native_cache_payloads.py": "2d478456ed66f0bbd1ad828598af3def204e366d46fe404d2b0ccf1078c29ad4"
+  },
+  "final_validation": {
+    "executed_by": "Owner ran both stable test files together; independent reviewer verified exact output and source/test hashes without duplicate execution.",
+    "failed": 0,
+    "independent_cases": 53,
+    "log": "artifacts/validation/native-cache-payload-owner-v1/final-combined-tests.txt",
+    "owner_cases": 32,
+    "passed": 85,
+    "seconds": 1.03
+  },
+  "final_worlds_used": false,
+  "fixes_verified": [
+    "Require integer zero launcher return code and explicit false timeout/kill flags before geometry.",
+    "Capture compressed cover-size, measured-frame, and baseline-reproduction hashes at write time, recheck them before publication, and bind all three in the completed summary.",
+    "Require immutable contiguous int64 N-by-3 cover arrays; retain actual nbytes, full-array hash and shape, not tissue-filtered contacts.",
+    "Preserve failed authority and completed/attempted query counts on KeyboardInterrupt, wall/RSS failure, source change, baseline mismatch, and artifact change.",
+    "Require every cold/warm cumulative counter, increment, retained entry count and payload byte count; baseline failure prevents all larger-capacity interpretations.",
+    "For all-empty covers, positive1-byte admission is required for zero warm misses; if unique entries exceed the entry cap, no such payload-only solution is claimed."
+  ],
+  "independent_checks": [
+    "Exhaustive small key streams compare production byte/entry LRU to a separate MRU-list implementation including empty covers, oversized bypass without eviction, zero capacities, hits and cold-to-warm state.",
+    "All28 cold/warm before/after baseline counter fields are adversarially changed and rejected.",
+    "Two distinct pure queries on an empty3-by-3-by-3 frame produce one full native cell each and24 bytes each; a repeated argument triggers no extra geometry call.",
+    "Malformed array descriptors, query/grid caps, runtime drift and default no-input/no-geometry behavior are checked.",
+    "Operator cancellation after the second attempted cover retains one completed compressed row and an ineligible failed receipt.",
+    "The owner suite compares against the actual frozen cache on tiny7-by-7-by-7 cases, including reflected/anisotropic/rotated affine frames, and executes a complete tiny CLI in a fresh process with real dependency loading and RSS guard."
+  ],
+  "limits": [
+    "No public8812-query cover sizing has executed; this receipt supports a separate root execution decision after commit.",
+    "Inverse affine, cell radius and spacing are newly derived by pinned GeometryScene/NumPy/SciPy versions, not original unsaved byte records.",
+    "Payload accounting counts raw returned ndarray buffers. It excludes Python keys/bookkeeping and total cache RAM.",
+    "Worker60s/512MiB checks are cooperative; one atomic cover call can overshoot before its next guard. The declared external timeout is a separate launch responsibility.",
+    "Successful hypothetical byte-LRU counts do not establish runtime speedup, clinical benefit, or any automatic change in cache defaults."
+  ],
+  "policy_or_gradient_updates": 0,
+  "preserved_negative_evidence": [
+    {
+      "failed": 3,
+      "finding": "Completed launcher could contradict its return code, timeout, or kill flags. One unrelated pytest iterable-parameter warning was removed in the test source.",
+      "log": "artifacts/validation/native-cache-payload-independent-v1/first-run.txt",
+      "passed": 39,
+      "seconds": 0.38
+    },
+    {
+      "failed": 4,
+      "finding": "Launcher contradictions plus baseline receipt mutation during capacity replay could still publish completed success.",
+      "log": "artifacts/validation/native-cache-payload-independent-v1/second-run.txt",
+      "passed": 41,
+      "seconds": 0.32
+    },
+    {
+      "failed": 1,
+      "finding": "Owner synthetic CLI fixture used default cache namespace but different240-byte/2-entry receipts. Production correctly rejected it; fixture alone was corrected.",
+      "log": "artifacts/validation/native-cache-payload-owner-v1/first-combined-harness-failure.txt",
+      "passed": 84,
+      "seconds": 0.7
+    }
+  ],
+  "public_patient_or_simulator_execution": false,
+  "public_payload_execution": false,
+  "schema_version": 1,
+  "status": "independent_prospective_review_passed_public_execution_not_performed",
+  "stress_worlds_used": false
+}
