@@ -1,0 +1,48 @@
+{
+  "caseHash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+  "caseId": "UCSF-PDGM-0004",
+  "shape": [
+    240,
+    240,
+    155
+  ],
+  "sourceBytes": 62496000,
+  "runtime": "v24.19.0",
+  "scope": "Local Node/V8 CPU and filesystem microbenchmark, three warm-cache sequential runs; not browser responsiveness or GPU latency.",
+  "samples": [
+    {
+      "run": 1,
+      "hydrateMilliseconds": 333.599209,
+      "targetCursorMilliseconds": 41.68324999999999,
+      "totalMilliseconds": 375.282459,
+      "cursorRasMm": [
+        -161.89188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ]
+    },
+    {
+      "run": 2,
+      "hydrateMilliseconds": 320.815875,
+      "targetCursorMilliseconds": 30.831665999999927,
+      "totalMilliseconds": 351.64754099999993,
+      "cursorRasMm": [
+        -161.89188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ]
+    },
+    {
+      "run": 3,
+      "hydrateMilliseconds": 310.0569170000001,
+      "targetCursorMilliseconds": 31.07399999999984,
+      "totalMilliseconds": 341.13091699999995,
+      "cursorRasMm": [
+        -161.89188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ]
+    }
+  ],
+  "medianTotalMilliseconds": 351.64754099999993
+}

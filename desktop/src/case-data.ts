@@ -178,8 +178,12 @@ export async function hydrateCase(
   if (mriBytes.byteLength !== payload.mri.byteLength)
     throw new Error("MRI transfer is incomplete.");
   const mri = new Float32Array(mriBytes.slice().buffer);
-  if (mri.some((value) => !Number.isFinite(value)))
-    throw new Error("MRI contains non-finite voxel values.");
+  // Indexed typed-array loops avoid per-voxel iterator/callback overhead on
+  // large source grids. The same finite-value and binary-mask gates remain.
+  for (let index = 0; index < mri.length; index++) {
+    if (!Number.isFinite(mri[index]))
+      throw new Error("MRI contains non-finite voxel values.");
+  }
   const affine = payload.affine.map((row) => [...row]);
   if (payload.frame === "LPS+") {
     affine[0] = affine[0].map((value) => -value);
@@ -199,7 +203,8 @@ export async function hydrateCase(
       if (mask.byteLength !== layer.array.byteLength)
         throw new Error(`Incomplete ${layer.name} transfer.`);
       let selected = 0;
-      for (const value of mask) {
+      for (let index = 0; index < mask.length; index++) {
+        const value = mask[index];
         if (value !== 0 && value !== 1)
           throw new Error(`${layer.name} is not a binary mask.`);
         selected += value;
