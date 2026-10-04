@@ -172,6 +172,11 @@ class BridgeSession:
         request.check()
         if case.mri.size * 4 > MAX_ARRAY_BYTES:
             raise BridgeError("ARRAY_SIZE_LIMIT", "Selected MRI is too large for this desktop view")
+        arrays = [case.mri, case.affine, *case.compartments.values(), *case.source_compartments.values()]
+        if case.brain_mask is not None:
+            arrays.append(case.brain_mask)
+        if len(case.compartments) > 32 or sum(array.nbytes for array in arrays) > MAX_CASE_BYTES:
+            raise BridgeError("CASE_SIZE_LIMIT", "Expanded case arrays exceed the desktop cache limit")
         if case.semantic_hash in self.cases:
             entry = self.cases[case.semantic_hash]
             request.begin_commit()
@@ -285,11 +290,14 @@ class BridgeSession:
                 unique = set()
                 for z in range(0, annotation.shape[2], 8):
                     request.check()
-                    unique.update(np.unique(np.asarray(annotation.dataobj[:, :, z:z + 8])).tolist())
-                    if len(unique) > 33:
+                    block = np.asarray(annotation.dataobj[:, :, z:z + 8])
+                    if not np.all(np.isfinite(block)) or np.any(block < 0) or np.any(block != np.floor(block)):
+                        raise BridgeError("INVALID_ANNOTATION", "Target annotation must contain finite nonnegative integer labels")
+                    unique.update(np.unique(block).tolist())
+                    if sum(value > 0 for value in unique) > 32:
                         raise BridgeError("LABEL_COUNT_LIMIT", "Annotation has more than 32 labels or fractional values; use a reviewed annotation importer")
                 count = math.prod(annotation.shape)
-                if count * (4 + 2 * max(0, len(unique) - 1) + (2 if brain else 0)) > MAX_CASE_BYTES:
+                if count * (4 + 2 * sum(value > 0 for value in unique) + (2 if brain else 0)) > MAX_CASE_BYTES:
                     raise BridgeError("CASE_SIZE_LIMIT", "Expanded target masks exceed the desktop cache limit")
             progress(0.1, "Validating NIfTI coordinates and supplied annotations")
             case = load_nifti_case(structural, tumor, case_id=case_id, brain_mask_path=brain, label_map=label_map)
@@ -377,8 +385,13 @@ class BridgeSession:
 class BridgeRuntime:
     """One numerical worker; cancellation, timeouts and ping never wait on it."""
 
-    def __init__(self, transfer_dir: Path, emit: Callable[[dict], None], *, max_cases: int = 2):
+    def __init__(self, transfer_dir: Path, emit: Callable[[dict], None], *, max_cases: int = 2, run_dir: Path | None = None):
         self.session = BridgeSession(transfer_dir, max_cases=max_cases)
+        self.run_dir = None if run_dir is None else Path(run_dir)
+        if self.run_dir is not None:
+            if self.run_dir.is_symlink():
+                raise BridgeError("INVALID_RUN_DIR", "Run directory cannot be a symbolic link")
+            self.run_dir.mkdir(parents=True, exist_ok=True)
         self.emit = emit
         self._lock = threading.RLock()
         self._requests: dict[str, _Request] = {}
@@ -507,6 +520,7 @@ class BridgeRuntime:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--transfer-dir", required=True, type=Path)
+    parser.add_argument("--run-dir", type=Path, help="Persistent local checkpoint directory supplied by Electron main")
     args = parser.parse_args()
     logging.basicConfig(stream=sys.stderr, level=logging.WARNING)
     protocol_output = sys.stdout
@@ -519,7 +533,7 @@ def main() -> int:
         with output_lock:
             protocol_output.write(encoded + "\n")
             protocol_output.flush()
-    runtime = BridgeRuntime(args.transfer_dir, emit)
+    runtime = BridgeRuntime(args.transfer_dir, emit, run_dir=args.run_dir)
     try:
         while not runtime._closed:
             line = sys.stdin.buffer.readline(MAX_REQUEST_BYTES + 1)
