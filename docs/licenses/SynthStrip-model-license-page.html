@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="FreeSurfer - Software Suite for Brain MRI Analysis">
+    <meta name="authors" content="Andrew Hoopes">
+    <meta name="keywords" content="FreeSurfer, Brain, MRI, Neuroimaging, FSL, Cortex, Segmentation, Registration, Skullstrip, Talairach, fMRI, Diffusion, DWI, Tractography, Freeview, Longitudinal Processing, Cortical, ">
+    <meta name="robots" content="all, index, follow">
+
+    <meta property="og:site_name" content="FreeSurfer">
+    <meta property="og:site" content="https://surfer.nmr.mgh.harvard.edu">
+    <meta property="og:title" content="FreeSurfer">
+    <meta property="og:description" content="Software Package for Brain MRI Analysis">
+    <meta property="og:url" content="https://surfer.nmr.mgh.harvard.edu">
+    <meta property="og:image" content="https://surfer.nmr.mgh.harvard.edu/landing/images/og_brain.png">
+
+    <title>synthstrip.io</title>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5ZX3RPBTZ2"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-5ZX3RPBTZ2');
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://surfer.nmr.mgh.harvard.edu/docs/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://surfer.nmr.mgh.harvard.edu/docs/css/fontawesome-all.min.css" rel="stylesheet">
+    <link href="https://surfer.nmr.mgh.harvard.edu/docs/css/styles.css" rel="stylesheet">
+    <link href="resources/favicon.png" rel="icon">
+</head>
+
+<body data-bs-spy="scroll" data-bs-target="#navbarExample">
+
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand logo-text" href="https://surfer.nmr.mgh.harvard.edu">FreeSurfer</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="navbar-nav ms-auto navbar-nav-scroll">
+                    <li class="nav-item"><a class="nav-link" href="https://surfer.nmr.mgh.harvard.edu/fswiki">Wiki</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://surfer.nmr.mgh.harvard.edu/fswiki/DownloadAndInstall">Download</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://surfer.nmr.mgh.harvard.edu/fswiki/FreeSurferSupport">Support</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://freesurfer.net/fswiki/CourseDescription">Course</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://github.com/freesurfer/freesurfer">GitHub</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://www.nmr.mgh.harvard.edu/lab/lcn/people">People</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <main class="container">
+
+        <h1 class="mt-5" style="text-align: center;"><a id="SynthStrip"></a>SynthStrip: Skull-Stripping for Any Brain Image</h1>
+        <p style="text-align: center;">
+            <a href="https://ahoopes.github.io/">Andrew Hoopes</a>, Jocelyn S. Mora, <a href="https://www.mit.edu/~adalca/">Adrian V. Dalca</a>, Bruce Fischl, <a href="https://malte.cz">Malte Hoffmann</a>
+        </p>
+
+        <div class="mt-4" style="text-align: center;">
+            <a style="padding-left: 1ex; padding-right: 1ex;" href="#code" class="link-button">Code/Weights</a>
+            <a style="padding-left: 1ex; padding-right: 1ex;" href="#video" class="link-button">Video</a>
+            <a style="padding-left: 1ex; padding-right: 1ex;" href="#dataset" class="link-button">Dataset</a>
+            <a style="padding-left: 1ex; padding-right: 1ex;" href="#tool" class="link-button">Tool</a>
+            <a style="padding-left: 1ex; padding-right: 1ex;" href="#papers" class="link-button">Papers</a>
+            <a style="padding-left: 1ex; padding-right: 1ex;" href="resources/synthstrip.bib" class="link-button">Cite</a>
+        </div>
+
+
+        <img class="img-fluid mt-5" src="resources/examples.png" alt="SynthStrip brain extraction examples">
+
+	<!--
+	<div style="margin:5em 0 4em 0;background-color:#f7cccc;padding:2em;text-align:center;">
+		Join our team in Boston, USA! We are <a href="https://nmr.mgh.harvard.edu/~mu40/postdoc.pdf">seeking postdocs</a> in machine learning and medical image analysis.
+	</div>
+	-->
+
+        <p>SynthStrip is a skull-stripping tool that extracts brain voxels from a landscape of image types, ranging across imaging modalities, resolutions, and subject populations. It leverages a deep learning strategy to synthesize arbitrary training images from segmentation maps, yielding a robust model agnostic to acquisition specifics.</p>
+
+
+        <h3 id="papers" class="mt-5">Publications</h3>
+
+        <p>If you find this work useful, please cite the relevant papers below (<a href="resources/synthstrip.bib">BibTeX</a>).</p>
+
+        <p>Main method, toolbox, and dataset:</p>
+
+        <div style="text-indent:3em;">
+            <p style="margin-bottom: 0; line-height: 1.5;"><a href="https://doi.org/10.1016/j.neuroimage.2022.119474">SynthStrip: Skull-Stripping for Any Brain Image</a></p>
+            <p style="margin-bottom: 0; padding-top: 0; line-height: 1.5;">Andrew Hoopes, Jocelyn S. Mora, Adrian V. Dalca, Bruce Fischl*, Malte Hoffmann* (*equal contribution)</p>
+            <p style="margin-bottom: 0; padding-top: 0; line-height: 1.5;">NeuroImage, 260, p 119474, 2022</p>
+            <p style="margin-bottom: 0; padding-top: 0; line-height: 1.5;"><a href="https://arxiv.org/abs/2203.09974">arXiv:2203.09974</a></p>
+        </div>
+
+        <p></p>
+        <p>Pediatric model:</p>
+
+        <div style="text-indent:3em;">
+            <p style="margin-bottom: 0; line-height: 1.5;"><a href="https://doi.org/10.1109/ISBI56570.2024.10635307">Boosting Skull-Stripping Performance for Pediatric Brain Images</a></p>
+            <p style="margin-bottom: 0; padding-top: 0; line-height: 1.5;">William Kelley, Nathan Ngo, Adrian V. Dalca, Bruce Fischl, Lilla Z&ouml;llei*, Malte Hoffmann* (*equal contribution)</p>
+            <p style="margin-bottom: 0; padding-top: 0; line-height: 1.5;">IEEE International Symposium on Biomedical Imaging (ISBI), pp 1-5, 2024</p>
+            <p style="margin-bottom: 0; padding-top: 0; line-height: 1.5;"><a href="https://arxiv.org/abs/2402.16634">arXiv:2402.16634</a></p>
+        </div>
+
+        <p></p>
+        <p>Synthesis-driven training and domain randomization:</p>
+
+        <div style="text-indent:3em;">
+            <p style="margin-bottom: 0; line-height: 1.5;"><a href="https://doi.org/10.1109/MSP.2025.3590806">Domain-Randomized Deep Learning for Neuroimage Analysis</a></p>
+            <p style="margin-bottom: 0; padding-top: 0; line-height: 1.5;">Malte Hoffmann</p>
+            <p style="margin-bottom: 0; padding-top: 0; line-height: 1.5;">IEEE Signal Processing Magazine (SPM), 42 (4), pp 78-90, 2025</p>
+            <p style="margin-bottom: 0; padding-top: 0; line-height: 1.5;"><a href="https://arxiv.org/abs/2507.13458">arXiv:2507.13458</a></p>
+        </div>
+
+
+
+        <img class="img-fluid mt-5" src="resources/dataset.jpg" alt="SynthStrip dataset with full-head images, binary brain masks, and label maps">
+
+
+        <h3 id="dataset" class="mt-5">SynthStrip Dataset</h3>
+
+	<p>The <a href="data">SynthStrip dataset</a> is a collection of full-head images with associated ground-truth brain masks from 622 MRI, CT, and PET scans. We include label maps for 131 adult MPRAGE scans, with standard FreeSurfer brain labels and additional non-brain labels. The images span various MRI contrasts, resolutions, and populations ranging from infants to glioblastoma patients. While we cannot redistribute the CT and PET data, we provide information on how to obtain these. The 2D subset consists of sagittal slices extracted from each file in the 3D dataset.</p>
+
+	<p><a href="data/README">See README for dataset information and license</a></p>
+	<p><a href="data/synthstrip_data_v1.5.tar">Download the 3D SynthStrip dataset (v1.5, 6.9 GB)</a></p>
+	<p><a href="data/synthstrip_data_v1.5_2d.tar">Download the 2D SynthStrip dataset (v1.5, 39 MB)</a></p>
+
+	<p><a href="data/SHA256">Verify download integrity with SHA-256 checksums</a></p>
+
+        <p>Download, verify, and extract the data with:</p>
+        <pre><code>curl -O https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/data/SHA256
+curl -O https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/data/synthstrip_data_v1.5.tar
+curl -O https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/data/synthstrip_data_v1.5_2d.tar
+shasum -c SHA256
+tar -xf synthstrip_data_v1.5.tar
+tar -xf synthstrip_data_v1.5_2d.tar</code></pre>
+
+        <p>If you use these data, please <a href="resources/synthstrip.bib">cite SynthStrip (BibTeX)</a>.</p>
+	<!-- <p><b>We are currently updating the dataset. Check back soon!</b></p> -->
+
+
+        <h3 id="tool" class="mt-5">SynthStrip Tool</h3>
+
+        <p>We ship SynthStrip as a command-line tool with FreeSurfer and as a standalone utility using Docker or Singularity containers. Both versions are functionally identical and use the same <a href="#usage">command-line syntax</a>.</p>
+
+        <p><b>Within FreeSurfer:</b> The <code>mri_synthstrip</code> utility has been included in FreeSurfer since the v7.3.0 release. For the most up-to-date version of SynthStrip, please <a href="https://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/dev/">download a build of the FreeSurfer development branch</a>.</p>
+
+        <p><b>Container image:</b> If you do not want to install FreeSurfer, you can run SynthStrip in a container. We provide a wrapper script, so you do not need to mount input and output directories. The image is available on <a href="https://hub.docker.com/r/freesurfer/synthstrip">Docker Hub</a>.</p>
+
+        <p><b>Apptainer or Singularity:</b> Download the Singularity-based wrapper script with:</p>
+
+        <pre><code>curl -O https://raw.githubusercontent.com/freesurfer/freesurfer/dev/mri_synthstrip/synthstrip-singularity &amp;&amp; chmod +x synthstrip-singularity</code></pre>
+
+        <p><b>Docker:</b> Download the Docker-based wrapper script with:</p>
+
+        <pre><code>curl -O https://raw.githubusercontent.com/freesurfer/freesurfer/dev/mri_synthstrip/synthstrip-docker &amp;&amp; chmod +x synthstrip-docker</code></pre>
+
+        <p>Please read the instructions at the top of the downloaded script. Singularity requires simple one-time configuration.</p>
+
+
+        <h3 id="usage" class="mt-5">Usage</h3>
+
+        <p>Once installed, run SynthStrip as follows, where "stripped.nii.gz" is a skull-stripped version of the image "input.nii.gz".</p>
+
+        <pre><code>mri_synthstrip -i input.nii.gz -o stripped.nii.gz</code></pre>
+
+        <p><b>Note:</b> For the container version, replace <code>mri_synthstrip</code> with the wrapper script name (e.g. <code>synthstrip-singularity</code>).</p>
+
+        <p>Use the <code>-m</code> flag to save a binary brain mask:
+
+        <pre><code>mri_synthstrip -i input.mgz -o stripped.mgz -m mask.mgz</code></pre>
+
+        <p>If you would like to compute the immediate boundary of the brain excluding surrounding CSF, use the <code>--no-csf</code> flag. You may also want to explore the <code>-b</code> option, which controls the boundary distance from the brain.</p>
+
+        <pre><code>mri_synthstrip -i input.nii -o stripped.nii --no-csf</code></pre>
+
+        <p>Display additional options with the <code>--help</code> flag. SynthStrip should take less than 1 minute on the CPU for most images with voxel sizes near 1 mm<sup>3</sup>. As image size or resolution increases, the runtime might increase as well.</p>
+
+
+        <h3 id="video" class="mt-5">Video (5 minutes)</h3>
+
+        <div class="mt-4" style="position: relative; padding-bottom: 56.25%; height: 0;">
+            <iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;" src="https://www.youtube.com/embed/xTRKTn8IQWw" allowfullscreen></iframe>
+        </div>
+
+
+        <h3 id="code" class="mt-5">Code and Weights</h3>
+
+	<p>For a custom Python setup, download the <a href="https://github.com/freesurfer/freesurfer/tree/dev/mri_synthstrip">SynthStrip script from FreeSurfer's GitHub repository</a>. You can choose to access the weight files under either the <a href="https://choosealicense.com/licenses/mit/">MIT license</a> or the <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0 license</a>:</p>
+        <ul>
+            <li>the <a href="requirements/synthstrip.1.pt">main SynthStrip model</a> (version 1, 29 MB)</li>
+            <li>a <a href="requirements/synthstrip.nocsf.1.pt">model for predicting brain masks without CSF</a> (version 1, 29 MB)</li>
+            <li>a <a href="requirements/synthstrip.infant.1.pt">pediatric SynthStrip model for brain masks without CSF</a> (version 1, 29 MB)</li>
+        </ul>
+        <p>We also export the <a href="requirements">Python requirements </a>used to build the latest SynthStrip container.</p>
+
+
+        <h3 id="bugs" class="mt-5">Changes</h3>
+
+	<p>A list of changes and bug fixes is available on <a href="https://hub.docker.com/r/freesurfer/synthstrip">Docker Hub</a>. For ease of use, download a recent FreeSurfer version or update the top of the wrapper script when using the container image.
+
+
+        <h3 id="acknowledgments" class="mt-5">Acknowledgments</h3>
+
+        <p>The authors thank Douglas Greve and David Salat for sharing data. This research project benefitted from computational hardware generously provided by the <a href="https://www.masslifesciences.com/">Massachusetts Life Sciences Center</a>.</p>
+    </main>
+
+    <script src="https://surfer.nmr.mgh.harvard.edu/docs/js/bootstrap.min.js"></script>
+    <script src="https://surfer.nmr.mgh.harvard.edu/docs/js/scripts.js"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+{
+  "retrieved_at": "2026-10-04T07:28:47.995544+00:00",
+  "upstream_code_commit": "cf4bccf24875a47245b4df9fc9372d0f1c3d784f",
+  "code_license": "FreeSurfer Software License Agreement v1.0, February2011",
+  "weights_license_choice": "MIT per official source page; CC-BY4.0 also offered",
+  "files": {
+    "mri_synthstrip": {
+      "url": "https://raw.githubusercontent.com/freesurfer/freesurfer/cf4bccf24875a47245b4df9fc9372d0f1c3d784f/mri_synthstrip/mri_synthstrip",
+      "bytes": 12238,
+      "sha256": "291c253ab2f7c0cbcb84afa769ae10909549537e727db5b92d268754b7cc7871"
+    },
+    "LICENSE_FreeSurfer.txt": {
+      "url": "https://raw.githubusercontent.com/freesurfer/freesurfer/cf4bccf24875a47245b4df9fc9372d0f1c3d784f/LICENSE.txt",
+      "bytes": 10297,
+      "sha256": "632d404ea17b9101d9ac87cf8f09e651d18eb20d2cc0ba8dbee77e85b8516307"
+    },
+    "upstream_page.html": {
+      "url": "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/",
+      "bytes": 14419,
+      "sha256": "5f7bfb6357312aa9ef01961b2ebd24e1874c79deb0c04a5dadac68c9d6fddafb"
+    },
+    "synthstrip.nocsf.1.pt": {
+      "url": "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/requirements/synthstrip.nocsf.1.pt",
+      "bytes": 30851709,
+      "sha256": "62bf01137c45b5f0cc04d59dbaed5b9ac138b3f25b766c062a7c1a0d696ecb28"
+    },
+    "synthstrip.1.pt": {
+      "url": "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/requirements/synthstrip.1.pt",
+      "bytes": 30851709,
+      "sha256": "37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33"
+    }
+  },
+  "local_runtime_dependencies": {
+    "surfa": "0.6.3",
+    "xxhash": "4.0.1",
+    "isolated_numpy": "2.2.6",
+    "torch": "2.14.1",
+    "scipy": "1.18.1",
+    "nibabel": "5.4.2"
+  },
+  "runtime_licenses": {
+    "surfa": "MIT; package metadata",
+    "xxhash": "BSD-2-Clause; package metadata"
+  },
+  "license_evidence_snapshot": "docs/licenses/SynthStrip-model-license-page.html",
+  "code_license_copy": "docs/licenses/FreeSurfer-SynthStrip.txt"
+}

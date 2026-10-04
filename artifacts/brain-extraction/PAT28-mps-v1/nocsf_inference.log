@@ -1,0 +1,16 @@
+Configuring model on the Apple Metal (RessectionLab modified device adapter)
+Using custom model weights
+Input image read from: data/diffusion_source/ds001226-v5.0.1/sub-PAT28/ses-preop/anat/sub-PAT28_ses-preop_T1w.nii.gz
+Processing frame (of 1): 1 done
+Binary brain mask saved to: artifacts/brain-extraction/PAT28-mps-v1/nocsf_mask.nii.gz
+Distance transform saved to: artifacts/brain-extraction/PAT28-mps-v1/nocsf_distance_mm.nii.gz
+
+If you use SynthStrip in your analysis, please cite:
+----------------------------------------------------
+SynthStrip: Skull-Stripping for Any Brain Image
+A Hoopes, JS Mora, AV Dalca, B Fischl, M Hoffmann
+NeuroImage 206 (2022), 119474
+https://doi.org/10.1016/j.neuroimage.2022.119474
+
+Website: https://synthstrip.io
+

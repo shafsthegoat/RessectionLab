@@ -1,0 +1,170 @@
+{
+  "model": {
+    "name": "SynthStrip",
+    "variant": "nocsf",
+    "weights_version": 1,
+    "upstream_code_commit": "cf4bccf24875a47245b4df9fc9372d0f1c3d784f",
+    "files": {
+      "mri_synthstrip": {
+        "url": "https://raw.githubusercontent.com/freesurfer/freesurfer/cf4bccf24875a47245b4df9fc9372d0f1c3d784f/mri_synthstrip/mri_synthstrip",
+        "sha256": "291c253ab2f7c0cbcb84afa769ae10909549537e727db5b92d268754b7cc7871",
+        "bytes": 12238
+      },
+      "LICENSE_FreeSurfer.txt": {
+        "url": "https://raw.githubusercontent.com/freesurfer/freesurfer/cf4bccf24875a47245b4df9fc9372d0f1c3d784f/LICENSE.txt",
+        "sha256": "632d404ea17b9101d9ac87cf8f09e651d18eb20d2cc0ba8dbee77e85b8516307",
+        "bytes": 10297
+      },
+      "synthstrip.nocsf.1.pt": {
+        "url": "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/requirements/synthstrip.nocsf.1.pt",
+        "sha256": "62bf01137c45b5f0cc04d59dbaed5b9ac138b3f25b766c062a7c1a0d696ecb28",
+        "bytes": 30851709
+      }
+    },
+    "code_license": "FreeSurfer Software License Agreement 1.0, February 2011",
+    "weights_license_choice": "MIT, explicitly offered by official SynthStrip page",
+    "weights_license_source": "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/"
+  },
+  "input_sha256": "70c5c1e4e28143318d2820788343e239efdc205344204f8f50497b81281b32c6",
+  "input_qc": {
+    "file": "sub-PAT28_ses-preop_T1w.nii.gz",
+    "shape": [
+      160,
+      256,
+      256
+    ],
+    "affine_ras_mm": [
+      [
+        0.9997712969779968,
+        0.02100319229066372,
+        0.003500532591715455,
+        -80.1395034790039
+      ],
+      [
+        -0.02100302278995514,
+        0.9997794032096863,
+        -7.354327681241557e-05,
+        -106.31840515136719
+      ],
+      [
+        -0.0035012979060411453,
+        4.689304944349715e-09,
+        0.9999938607215881,
+        -134.4442901611328
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "source_units": "mm",
+    "physical_units": "mm",
+    "unit_scale_to_mm": 1.0,
+    "qform_code": 1,
+    "sform_code": 1,
+    "qform_native": [
+      [
+        0.9997713138694039,
+        0.02100319300951191,
+        0.003500532552138133,
+        -80.1395034790039
+      ],
+      [
+        -0.021003022940148143,
+        0.9997794086114222,
+        -7.35432732034985e-05,
+        -106.31840515136719
+      ],
+      [
+        -0.003501298121459978,
+        4.68939084951643e-09,
+        0.9999938704128333,
+        -134.4442901611328
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "sform_native": [
+      [
+        0.9997712969779968,
+        0.02100319229066372,
+        0.003500532591715455,
+        -80.1395034790039
+      ],
+      [
+        -0.02100302278995514,
+        0.9997794032096863,
+        -7.354327681241557e-05,
+        -106.31840515136719
+      ],
+      [
+        -0.0035012979060411453,
+        4.689304944349715e-09,
+        0.9999938607215881,
+        -134.4442901611328
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "orientation": [
+      "R",
+      "A",
+      "S"
+    ],
+    "spacing_mm": [
+      0.9999980161552362,
+      0.9999999945843575,
+      0.999999990308953
+    ],
+    "voxel_volume_mm3": 0.9999980010485767,
+    "handedness": "right",
+    "anisotropic": false,
+    "obliquity_degrees": [
+      1.220085863066466,
+      1.2034827750156092,
+      0.20061041386885015
+    ],
+    "status": "passed_header_checks",
+    "visual_alignment_review": "pending",
+    "frame": "RAS+",
+    "simulation_frame": "source_coded_frame_native_status_requires_source_provenance"
+  },
+  "elapsed_seconds": 8.081792000099085,
+  "sampled_process_peak_rss_bytes": 676118528,
+  "memory_measurement": "child-process RSS sampled with ps approximately every 0.25 s; may miss brief peaks",
+  "configuration": {
+    "cpu_threads": 2,
+    "border_mm": 1,
+    "device": "mps",
+    "timeout_seconds": 300,
+    "maximum_rss_bytes": 6442450944,
+    "weights_only_load": true
+  },
+  "runtime_versions": {
+    "python": "3.12.14",
+    "numpy": "2.2.6",
+    "torch": "2.14.1",
+    "surfa": "0.6.3"
+  },
+  "executed_runner_sha256": "aa329675643f42aaa2f70a4639e2cb51cc59cbc98215cbd65fdc1a2c40462b7c",
+  "upstream_modified": true,
+  "exit_code": 0,
+  "failure": null,
+  "provenance": "estimated",
+  "brain_reviewed": false,
+  "cortical_access_permitted": false,
+  "artifact_hashes": {
+    "nocsf_mask.nii.gz": "e99c49ba6d180e03389e756f8b0a5b224e069488a5c72b97cc9f84075ac6410e",
+    "nocsf_distance_mm.nii.gz": "92a0b275c49d86d5d47db4662e10c707d196c0290a5f7486e143e80aab27326f"
+  }
+}

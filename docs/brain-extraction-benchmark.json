@@ -1,0 +1,327 @@
+{
+  "case_id": "BTC sub-PAT28",
+  "source_t1_sha256": "70c5c1e4e28143318d2820788343e239efdc205344204f8f50497b81281b32c6",
+  "primary_report": "artifacts/brain-extraction/PAT28-mps-v4/brain_extraction_report.json",
+  "brain_reviewed": false,
+  "cortex_localized": false,
+  "cortical_access_permitted": false,
+  "model_licenses": "docs/synthstrip-model-manifest.json",
+  "expert_review_status": "pending",
+  "engineering_visual_inspection": {
+    "planes": "native X79,Y109,Z138 and tumor-centre X70,Y116,Z186",
+    "finding": "model envelopes broadly follow intracranial boundary in sampled planes; no-CSF excludes214 source annotation voxels; intensitybaseline includes extracranial/necksupport",
+    "whole_volume_coverage_certified": false
+  },
+  "variants": {
+    "nocsf": {
+      "qc": {
+        "mask_voxels": 1337642,
+        "mask_volume_ml": 1337.6393261186204,
+        "connected_components": 1,
+        "boundary_face_voxels": 0,
+        "sanity_volume_range_ml": [
+          400,
+          2200
+        ],
+        "sanity_range_meaning": "broad engineering alert, not clinical acceptance",
+        "flags": [
+          "SOURCE_ANNOTATION_EXTENDS_OUTSIDE_EXTRACTION"
+        ],
+        "brain_reviewed": false,
+        "cortex_localized": false,
+        "cortical_access_permitted": false,
+        "clinical_deficit_probability": null,
+        "source_annotation_inclusion_fraction": 0.9791605803875743,
+        "source_annotation_voxels": 10269,
+        "source_annotation_outside_voxels": 214,
+        "annotation_fraction_meaning": "overlap of threshold-derived source annotation; not extraction accuracy or removal",
+        "baseline_dice_agreement": 0.7479388238972409,
+        "baseline_agreement_meaning": "agreement with an erosive intensity core, not measured segmentation accuracy",
+        "baseline_volume_ml": 1540.9299197497864
+      },
+      "distance_map_qc": {
+        "native_geometry": {
+          "file": "nocsf_distance_mm.nii.gz",
+          "shape": [
+            160,
+            256,
+            256
+          ],
+          "affine_ras_mm": [
+            [
+              0.9997712969779968,
+              0.02100319229066372,
+              0.003500532591715455,
+              -80.1395034790039
+            ],
+            [
+              -0.02100302278995514,
+              0.9997794032096863,
+              -7.354327681241557e-05,
+              -106.31840515136719
+            ],
+            [
+              -0.0035012979060411453,
+              4.689304944349715e-09,
+              0.9999938607215881,
+              -134.4442901611328
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "source_units": "mm",
+          "physical_units": "mm",
+          "unit_scale_to_mm": 1.0,
+          "qform_code": 1,
+          "sform_code": 1,
+          "qform_native": [
+            [
+              0.9997713138694039,
+              0.02100319300951191,
+              0.003500532552138133,
+              -80.1395034790039
+            ],
+            [
+              -0.021003022940148143,
+              0.9997794086114222,
+              -7.35432732034985e-05,
+              -106.31840515136719
+            ],
+            [
+              -0.003501298121459978,
+              4.68939084951643e-09,
+              0.9999938704128333,
+              -134.4442901611328
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "sform_native": [
+            [
+              0.9997712969779968,
+              0.02100319229066372,
+              0.003500532591715455,
+              -80.1395034790039
+            ],
+            [
+              -0.02100302278995514,
+              0.9997794032096863,
+              -7.354327681241557e-05,
+              -106.31840515136719
+            ],
+            [
+              -0.0035012979060411453,
+              4.689304944349715e-09,
+              0.9999938607215881,
+              -134.4442901611328
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "orientation": [
+            "R",
+            "A",
+            "S"
+          ],
+          "spacing_mm": [
+            0.9999980161552362,
+            0.9999999945843575,
+            0.999999990308953
+          ],
+          "voxel_volume_mm3": 0.9999980010485767,
+          "handedness": "right",
+          "anisotropic": false,
+          "obliquity_degrees": [
+            1.220085863066466,
+            1.2034827750156092,
+            0.20061041386885015
+          ],
+          "status": "passed_header_checks",
+          "visual_alignment_review": "pending",
+          "frame": "RAS+",
+          "simulation_frame": "source_coded_frame_native_status_requires_source_provenance"
+        },
+        "finite_values": true,
+        "minimum_mm": -4.111861228942871,
+        "maximum_mm": 100.0,
+        "meaning": "predicted signed distance with upstream extension; not a clinical probability or reviewed surface"
+      },
+      "inference_seconds": 7.317436250043102,
+      "sampled_process_rss_bytes": 677183488,
+      "mps_allocator": {
+        "tensor_bytes_max_sampled": 4117935104,
+        "driver_bytes_max_sampled": 5948243968
+      },
+      "output_hashes": {
+        "nocsf_mask.nii.gz": "e99c49ba6d180e03389e756f8b0a5b224e069488a5c72b97cc9f84075ac6410e",
+        "nocsf_distance_mm.nii.gz": "92a0b275c49d86d5d47db4662e10c707d196c0290a5f7486e143e80aab27326f"
+      }
+    },
+    "main": {
+      "qc": {
+        "mask_voxels": 1529553,
+        "mask_volume_ml": 1529.5499424978536,
+        "connected_components": 1,
+        "boundary_face_voxels": 0,
+        "sanity_volume_range_ml": [
+          400,
+          2200
+        ],
+        "sanity_range_meaning": "broad engineering alert, not clinical acceptance",
+        "flags": [],
+        "brain_reviewed": false,
+        "cortex_localized": false,
+        "cortical_access_permitted": false,
+        "clinical_deficit_probability": null,
+        "source_annotation_inclusion_fraction": 1.0,
+        "source_annotation_voxels": 10269,
+        "source_annotation_outside_voxels": 0,
+        "annotation_fraction_meaning": "overlap of threshold-derived source annotation; not extraction accuracy or removal",
+        "baseline_dice_agreement": 0.7064601499567169,
+        "baseline_agreement_meaning": "agreement with an erosive intensity core, not measured segmentation accuracy",
+        "baseline_volume_ml": 1540.9299197497864
+      },
+      "distance_map_qc": {
+        "native_geometry": {
+          "file": "main_distance_mm.nii.gz",
+          "shape": [
+            160,
+            256,
+            256
+          ],
+          "affine_ras_mm": [
+            [
+              0.9997712969779968,
+              0.02100319229066372,
+              0.003500532591715455,
+              -80.1395034790039
+            ],
+            [
+              -0.02100302278995514,
+              0.9997794032096863,
+              -7.354327681241557e-05,
+              -106.31840515136719
+            ],
+            [
+              -0.0035012979060411453,
+              4.689304944349715e-09,
+              0.9999938607215881,
+              -134.4442901611328
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "source_units": "mm",
+          "physical_units": "mm",
+          "unit_scale_to_mm": 1.0,
+          "qform_code": 1,
+          "sform_code": 1,
+          "qform_native": [
+            [
+              0.9997713138694039,
+              0.02100319300951191,
+              0.003500532552138133,
+              -80.1395034790039
+            ],
+            [
+              -0.021003022940148143,
+              0.9997794086114222,
+              -7.35432732034985e-05,
+              -106.31840515136719
+            ],
+            [
+              -0.003501298121459978,
+              4.68939084951643e-09,
+              0.9999938704128333,
+              -134.4442901611328
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "sform_native": [
+            [
+              0.9997712969779968,
+              0.02100319229066372,
+              0.003500532591715455,
+              -80.1395034790039
+            ],
+            [
+              -0.02100302278995514,
+              0.9997794032096863,
+              -7.354327681241557e-05,
+              -106.31840515136719
+            ],
+            [
+              -0.0035012979060411453,
+              4.689304944349715e-09,
+              0.9999938607215881,
+              -134.4442901611328
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "orientation": [
+            "R",
+            "A",
+            "S"
+          ],
+          "spacing_mm": [
+            0.9999980161552362,
+            0.9999999945843575,
+            0.999999990308953
+          ],
+          "voxel_volume_mm3": 0.9999980010485767,
+          "handedness": "right",
+          "anisotropic": false,
+          "obliquity_degrees": [
+            1.220085863066466,
+            1.2034827750156092,
+            0.20061041386885015
+          ],
+          "status": "passed_header_checks",
+          "visual_alignment_review": "pending",
+          "frame": "RAS+",
+          "simulation_frame": "source_coded_frame_native_status_requires_source_provenance"
+        },
+        "finite_values": true,
+        "minimum_mm": -5.227794170379639,
+        "maximum_mm": 100.0,
+        "meaning": "predicted signed distance with upstream extension; not a clinical probability or reviewed surface"
+      },
+      "inference_seconds": 6.3013937920331955,
+      "sampled_process_rss_bytes": 676544512,
+      "mps_allocator": {
+        "tensor_bytes_max_sampled": 4117935104,
+        "driver_bytes_max_sampled": 5948243968
+      },
+      "output_hashes": {
+        "main_mask.nii.gz": "f0df2a6c3531ee5949dc496047a6c9f3f67542a4613ce71728f8f19597c09428",
+        "main_distance_mm.nii.gz": "bd0570faa6ce2c273ca81d101930097283ca42b7f1f1edc29092ec0324cd6019"
+      }
+    }
+  }
+}
