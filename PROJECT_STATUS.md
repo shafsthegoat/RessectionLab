@@ -12,7 +12,8 @@ communicates through a narrow local sidecar interface. The first standalone
 Electron package has passed real MRI, route comparison and native-save checks.
 The full training package has passed actual updates, cancellation/resume and
 restart checks; its native patient UI has passed honest STOP replay and export.
-The selected-route-to-native-cutting connection is the current integration slice.
+Exact selected-route binding and preflight now pass the real-patient protocol;
+the refreshed packaged UI is undergoing its own end-to-end checks.
 
 ## Verified starting state
 
@@ -88,8 +89,14 @@ The selected-route-to-native-cutting connection is the current integration slice
   could cut their own corridor with the declared generic instruments. Merely
   substituting the two named native profiles did not fix those original rays.
   Two explicitly different, source-grid-aligned research tool/access candidates
-  pass independent checks. Their addition and exact selection pass-through are
-  in progress; original negative results are preserved.
+  pass independent checks. Exact selection pass-through now freezes the complete
+  entry, target, window and tool. Actionless routes perform zero updates. Original
+  routes remain alongside two explicitly different native-action alternatives.
+  A real UCSF bridge run made 32 updates, changed the actor and improved nominal
+  selection return from 0 to 171.58: 174 target + 11 normal mm³ removed in one
+  independently checked stroke. Export, save and restart/recheck passed. This is
+  fixed stroke-versus-STOP refinement, not free-form route learning or a controlled
+  efficacy benchmark; final worlds remained unopened.
 - Raw BTC diagnostic tensor fitting ran on 101,311 voxels; bounded CSA tracking
   produced 176 unlabeled diagnostic paths. Uncorrected DWI is correctly refused
   for tract-aware planning. Correction and alignment are current work.
@@ -97,6 +104,11 @@ The selected-route-to-native-cutting connection is the current integration slice
   per variant with identical outputs in four runs. No-CSF excludes 214
   source tumor-annotation voxels; main includes them all. Neither is reviewed
   brain/cortex or an accepted cortical-access mask. CPU failure is preserved.
+- The same frozen extraction settings ran on preregistered PAT05 in 7.69/6.01
+  seconds for no-CSF/main. Independent source/model/output hashes, native geometry
+  and distance-map reconstruction passed. No-CSF excludes 538 of 11,437 source
+  annotation voxels; main excludes none. Both remain unreviewed proposals, and
+  annotation inclusion is not an accuracy metric.
 - Structural proposals now save/reopen separately from working anatomy, with
   immutable source/model/run provenance and review-required status. Adding unused
   proposals leaves planning seeds unchanged. Explicit anatomy prohibitions take
@@ -110,10 +122,10 @@ The selected-route-to-native-cutting connection is the current integration slice
 
 ## Validation record
 
-The latest root integrated run passed **518 tests in 52.35 seconds**, with four
-existing DIPY basis-deprecation warnings. Subsequent structural adversarial
-checks found and fixed metadata precedence, mask-enlargement and provenance
-problems; their focused checks passed before each incremental commit. Native
+The latest root integrated run passed **598 tests in 58.55 seconds**, with four
+existing DIPY basis-deprecation warnings. Structural adversarial checks found
+and fixed metadata precedence, mask-enlargement and provenance problems;
+their focused checks passed before each incremental commit. Native
 adversaries also caught temporal shaft borrowing, mutable preview descriptors
 and checkpoint-resume tampering. Test counts describe their recorded snapshots.
 The independent native checker improved from 17.638 to 4.310 seconds on the same
@@ -127,8 +139,8 @@ selected score. SEARCH remained best. Renderer hydration decreased from a
 See `EXPERIMENT_LOG.md` for executed experiments, including negative results.
 The Qt prototype passed its initial standalone runtime and GUI checks. Its next
 build was stopped following the user's Electron decision. The React/Electron
-package passed its own imaging/search checks and 23 main-process boundary and
-lifecycle tests. Renderer and viewer tests cover source hydration, evidence
+package passed its own imaging/search checks and 26 main-process boundary and
+lifecycle tests. The 29 renderer tests and separate viewer tests cover source hydration, evidence
 status, A/B identity and independently accepted removal overlays. The complete
 training bundle has its own source-bound verification receipts. Qt results do
 not certify Electron. No second-Mac test is claimed.

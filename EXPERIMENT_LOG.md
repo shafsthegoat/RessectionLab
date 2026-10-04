@@ -279,3 +279,38 @@ Zero-distortion internal solver failure and BTC's unsupported transported PE
 direction remain blockers. A rotated negative control also had low image error,
 showing why similarity alone cannot approve unsupported geometry. No patient
 correction or FSL execution occurred. Records: `artifacts/pyhysco-phantom-v1/`.
+
+## October 4, 2026 — exact selected-route workflow and second-case extraction
+
+The corrected desktop bridge preserves all 54 original routes and appends two
+explicitly separate native-action candidates, retaining their distinct model
+receipts. The original generic aspirator is refused before optimization because
+its shaft intersects retained tissue. The separate native-wide profile and 6-mm
+hypothetical window admit one declared stroke. With a 30-second learning budget,
+seed 11 completed 32 actual updates; actor parameters changed and nominal
+selection return increased from 0 to 171.58. The selected checkpoint differs
+from initialization. Its one stroke removes 174 target and 11 normal mm³;
+independent checking found zero unsupported source cells. Export, save and
+fresh-process rechecking preserve the exact geometry binding. All source hashes
+stayed unchanged during the run.
+
+This is a protocol/workflow test of STOP versus a fixed stroke. Optimization
+and selection seeds are separate but use nominal zero-shift anatomy; this does
+not measure robustness to anatomical uncertainty or broad route-policy learning.
+Concurrent integrated tests and app packaging prevent interpreting its elapsed
+time as a comparative benchmark. Final worlds were not used. The complete
+receipt is `artifacts/desktop-native-bridge/ucsf0004-exact-selected-route-v1.json`.
+Independent adversaries verified complete requested-versus-actual tool/window
+identity, no optimizer for actionless routes, unchanged saved runs after refused
+resume, and separate search cohorts. The root integrated suite passed 598 tests.
+
+PAT05 extraction used the previously frozen models and settings, with no case
+tuning: no-CSF/main child wall times were 7.692/6.015 seconds. Both native masks
+and signed distance maps have zero physical corner discrepancy. Independent
+threshold, connected-component and hole-fill reconstruction reproduces both
+masks exactly. No-CSF excludes 538 of 11,437 threshold-scenario annotation voxels
+(4.704%); main excludes none. Inclusion measures overlap, not segmentation
+accuracy. Both proposals remain review-required and confer no cortical access.
+The six-plane QC was inspected, and source/model/output/runner hashes match.
+Frozen records: `artifacts/brain-extraction/PAT05-mps-v1/`; independent audit:
+`docs/brain-extraction-pat05-independent-review.md`.
