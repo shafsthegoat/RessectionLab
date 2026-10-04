@@ -1,0 +1,14 @@
+{
+  "prior_runs": [
+    {
+      "path": "outputs/pyhysco_phantom/v1",
+      "result": "Zero-distortion solver completed; evaluator failed serializing numpy.float32 intensity scale. Fixed with explicit JSON-native conversion and regression test."
+    },
+    {
+      "path": "outputs/pyhysco_phantom/v1-r1",
+      "result": "Zero and known-distortion evaluated. Rotated negative-control solver completed; evaluator rejected negative cubic-interpolation intensity floor. Fixed exact normalization inverse with floor times Jacobian, without clipping input or changing solver hyperparameters. Regression test added."
+    }
+  ],
+  "completed_run": "outputs/pyhysco_phantom/v1-r2",
+  "solver_hyperparameters_tuned_from_truth": false
+}
