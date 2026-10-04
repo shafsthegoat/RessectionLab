@@ -1,0 +1,9 @@
+{
+  "scope": "stdlib redirect-request construction only; no opener/socket/network invoked",
+  "status": 302,
+  "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT22/ses-preop/anat/sub-PAT22_ses-preop_T1w.nii.gz?versionId=fake-review-version",
+  "redirect_target": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT29/ses-preop/anat/sub-PAT29_ses-preop_T1w.nii.gz?versionId=fake-review-version",
+  "constructed_followup_method": "GET",
+  "constructed_followup_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT29/ses-preop/anat/sub-PAT29_ses-preop_T1w.nii.gz?versionId=fake-review-version",
+  "source_downloads": 0
+}

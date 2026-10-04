@@ -23,7 +23,7 @@ import shutil
 import sys
 from typing import Callable
 from urllib.parse import parse_qs, quote, urlparse
-from urllib.request import HTTPRedirectHandler, Request, build_opener
+from urllib.request import Request, urlopen
 
 # Keep transport, resumable partials and corruption handling identical to the
 # other public-data fetcher; BTC adds its own source and annex provenance gates.
@@ -303,22 +303,8 @@ def verify_file(path: Path, entry: dict) -> None:
             raise AcquisitionError(f"Source annex MD5 mismatch: {path}")
 
 
-class RejectRedirects(HTTPRedirectHandler):
-    """Reject before urllib issues a follow-up GET to an undeclared object."""
-
-    def redirect_request(self, request, response, code, message, headers, new_url):
-        raise AcquisitionError("BTC source redirects are not permitted")
-
-
-def open_without_redirect(request: Request, *, timeout: int):
-    return build_opener(RejectRedirects()).open(request, timeout=timeout)
-
-
-def acquire_file(entry: dict, output_root: Path, *, opener: Callable | None = None) -> str:
-    opener = open_without_redirect if opener is None else opener
-    # Measured SHA-256 never relaxes the pinned URL/version contract. Both
-    # first acquisition and reacquisition use the same guarded image path.
-    if entry["path"].endswith((".nii", ".nii.gz")):
+def acquire_file(entry: dict, output_root: Path, *, opener: Callable = urlopen) -> str:
+    if entry.get("sha256") is None:
         return _acquire_annex_file(entry, output_root, opener=opener)
     state = _acquire_file(transfer_entry(entry), output_root, opener=opener)
     verify_file(checked_path(output_root, entry["path"]), entry)

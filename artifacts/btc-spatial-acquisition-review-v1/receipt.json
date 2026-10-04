@@ -1,0 +1,62 @@
+{
+  "attempts": [
+    {
+      "attempt": 1,
+      "errors": 0,
+      "failures": 3,
+      "log_sha256": "03387061ab74e9e94dc54e461263eaa726f8299fbd8ae0dd5d6ca5338067776d",
+      "seconds": 0.095,
+      "tests": 16
+    },
+    {
+      "attempt": 2,
+      "errors": 0,
+      "failures": 0,
+      "log_sha256": "c3501712bd4a41be469ad95787136227043c648a64eee2a680aa5fdbe968b761",
+      "seconds": 0.064,
+      "tests": 29
+    }
+  ],
+  "cohort_bytes_match_frozen_commit": true,
+  "final_source_sha256": {
+    "manifests/experiments/btc-spatial-development-cohort-v1.json": "962d964e1d71427f3625cdbebc0f7e4759e5d2345d8f95cb211ed45810ed2985",
+    "scripts/acquire_btc_case.py": "2978b5c7756f46aac9dc8aa9f308fdf6f84a054326a48bd704fe3addc5bca0bf",
+    "scripts/acquire_public_case.py": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb",
+    "tests/test_btc_acquisition.py": "f4ccbe7c621443a34e73a5d644b5cec92ec08fb0b798567dcc6d5e41d854b9af",
+    "tests/test_btc_spatial_acquisition.py": "77d1615f67eb9678e0664b2d64a09fb0c8a4f9c2bd2288352acb36051e552b52",
+    "tests/test_btc_spatial_acquisition_review.py": "e38c39c51e61e38f0ec9cb2dd48e827760b8c98f0bb08302982d3f5022da6dad"
+  },
+  "findings": [
+    {
+      "initial": "Known-SHA image reacquisition accepted incorrect or missing S3version and changed returnedURL, including sealedPAT29. Three independent tests failed.",
+      "resolution": "All image acquisitions now use the same exact responseURL/version/length gate before body read and SHA/annexMD5 before atomic publication."
+    },
+    {
+      "initial": "Default urllib redirect handler constructs a follow-up GET before post-response identity checks; reproduced only by constructing stdlib requests offline.",
+      "resolution": "BTC default opener installs RejectRedirects; tests cover301/302/303/307/308 to eachsealedPAT29/PAT31 and both image SHA states plus metadata default transport."
+    }
+  ],
+  "frozen_cohort_commit": "9881c17",
+  "frozen_manifest_sha256": "962d964e1d71427f3625cdbebc0f7e4759e5d2345d8f95cb211ed45810ed2985",
+  "historical_four_manifest_sha256": {
+    "manifests/btc_acquisition.json": "f88d3a01a06e4e21c29de6ba49aff4a54bd230c9fdba4787170b10e19bdd18c4",
+    "manifests/btc_pat05_acquisition.json": "09df59d9ac8b1c8d8d555f0e165148c79c0a2d1a404180451d0b9e90b814badf",
+    "manifests/btc_pat16_acquisition.json": "86f251909381a22f339b05bb01fdb0297e7929515cc5486cc53a9dce516e251f",
+    "manifests/btc_pat20_acquisition.json": "d6bf19700a3e3e1108b98a5b0eb5c794d68576e2770c42d9967f450e14bb1118"
+  },
+  "network_scope": {
+    "image_GET_count": 0,
+    "live_socket_connections": 0,
+    "metadata_GET_count": 0,
+    "test_transport": "constructed in-memory byte responses and direct redirect-request construction only"
+  },
+  "remaining_blocking_findings": [],
+  "scope_limits": [
+    "Independent offline pipeline review only; no new anatomy or acquisition completed by reviewer.",
+    "Metadata eligibility remains an archival split criterion, not a preoperative policy input.",
+    "Downloaded bytes would require separate geometry and anatomy review; downloader never grants brain/cortical support.",
+    "Complete regression execution reported by owner separately; this receipt records only reviewer commands."
+  ],
+  "source_unchanged_during_independent_run": true,
+  "version": "btc-spatial-acquisition-independent-review-v1"
+}

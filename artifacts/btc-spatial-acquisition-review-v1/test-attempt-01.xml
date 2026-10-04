@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="3" skipped="0" tests="16" time="0.095" timestamp="2026-10-04T11:25:49.274859-04:00" hostname="Sayems-MacBook-Pro-5.local"><testcase classname="tests.test_btc_spatial_acquisition_review" name="test_frozen_roles_and_original_four_manifest_bytes_are_independent_constants" time="0.002" /><testcase classname="tests.test_btc_spatial_acquisition_review" name="test_sealed_subject_cannot_reenter_through_supplied_verified_manifest[sub-PAT29]" time="0.003" /><testcase classname="tests.test_btc_spatial_acquisition_review" name="test_sealed_subject_cannot_reenter_through_supplied_verified_manifest[sub-PAT31]" time="0.002" /><testcase classname="tests.test_btc_spatial_acquisition_review" name="test_both_image_hash_states_require_exact_transport_identity_before_body_read[version-False]" time="0.002" /><testcase classname="tests.test_btc_spatial_acquisition_review" name="test_both_image_hash_states_require_exact_transport_identity_before_body_read[version-True]" time="0.002"><failure message="Failed: DID NOT RAISE AcquisitionError">tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-323/test_both_image_hash_states_re1')
+known_sha = True, attack = 'version'
+
+    @pytest.mark.parametrize("known_sha", [False, True])
+    @pytest.mark.parametrize("attack", ["version", "missing_version", "redirect", "length"])
+    def test_both_image_hash_states_require_exact_transport_identity_before_body_read(tmp_path, known_sha, attack):
+        entry, payload = fake_image(known_sha=known_sha)
+        response = Response(entry, payload, attack=attack)
+&gt;       with pytest.raises(acquisition.AcquisitionError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE AcquisitionError
+
+tests/test_btc_spatial_acquisition_review.py:95: Failed</failure></testcase><testcase classname="tests.test_btc_spatial_acquisition_review" name="test_both_image_hash_states_require_exact_transport_identity_before_body_read[missing_version-False]" time="0.002" /><testcase classname="tests.test_btc_spatial_acquisition_review" name="test_both_image_hash_states_require_exact_transport_identity_before_body_read[missing_version-True]" time="0.002"><failure message="Failed: DID NOT RAISE AcquisitionError">tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-323/test_both_image_hash_states_re3')
+known_sha = True, attack = 'missing_version'
+
+    @pytest.mark.parametrize("known_sha", [False, True])
+    @pytest.mark.parametrize("attack", ["version", "missing_version", "redirect", "length"])
+    def test_both_image_hash_states_require_exact_transport_identity_before_body_read(tmp_path, known_sha, attack):
+        entry, payload = fake_image(known_sha=known_sha)
+        response = Response(entry, payload, attack=attack)
+&gt;       with pytest.raises(acquisition.AcquisitionError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE AcquisitionError
+
+tests/test_btc_spatial_acquisition_review.py:95: Failed</failure></testcase><testcase classname="tests.test_btc_spatial_acquisition_review" name="test_both_image_hash_states_require_exact_transport_identity_before_body_read[redirect-False]" time="0.001" /><testcase classname="tests.test_btc_spatial_acquisition_review" name="test_both_image_hash_states_require_exact_transport_identity_before_body_read[redirect-True]" time="0.002"><failure message="Failed: DID NOT RAISE AcquisitionError">tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-323/test_both_image_hash_states_re5')
+known_sha = True, attack = 'redirect'
+
+    @pytest.mark.parametrize("known_sha", [False, True])
+    @pytest.mark.parametrize("attack", ["version", "missing_version", "redirect", "length"])
+    def test_both_image_hash_states_require_exact_transport_identity_before_body_read(tmp_path, known_sha, attack):
+        entry, payload = fake_image(known_sha=known_sha)
+        response = Response(entry, payload, attack=attack)
+&gt;       with pytest.raises(acquisition.AcquisitionError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE AcquisitionError
+
+tests/test_btc_spatial_acquisition_review.py:95: Failed</failure></testcase><testcase classname="tests.test_btc_spatial_acquisition_review" name="test_both_image_hash_states_require_exact_transport_identity_before_body_read[length-False]" time="0.002" /><testcase classname="tests.test_btc_spatial_acquisition_review" name="test_both_image_hash_states_require_exact_transport_identity_before_body_read[length-True]" time="0.002" /><testcase classname="tests.test_btc_spatial_acquisition_review" name="test_valid_constructed_transport_and_existing_file_are_both_immutable[False]" time="0.002" /><testcase classname="tests.test_btc_spatial_acquisition_review" name="test_valid_constructed_transport_and_existing_file_are_both_immutable[True]" time="0.002" /><testcase classname="tests.test_btc_spatial_acquisition_review" name="test_constructed_annex_failure_does_not_publish_image_or_sha[md5]" time="0.001" /><testcase classname="tests.test_btc_spatial_acquisition_review" name="test_constructed_annex_failure_does_not_publish_image_or_sha[oversized_body]" time="0.001" /><testcase classname="tests.test_btc_spatial_acquisition_review" name="test_constructed_annex_failure_does_not_publish_image_or_sha[truncated_body]" time="0.001" /></testsuite></testsuites>
