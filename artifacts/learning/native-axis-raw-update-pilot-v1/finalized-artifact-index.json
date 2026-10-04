@@ -1,0 +1,175 @@
+{
+  "execution_baseline_sha256": "848028f7fd0d4fb0fa0dcf040f13184f6f374ab42fedde62222f4756e2711bdd",
+  "independent_audit": {
+    "path": "artifacts/native-axis-pilot-result-audit/audit-02.json",
+    "sha256": "37b9bec653545486446cd78f845615867654838938a7f9a69ba07c0451d0eb21",
+    "verification_sha256": "be358865623f33eeb7cc79402e421e82f110f03f8d57ece97ae8e2321afb415b"
+  },
+  "original_execution_receipts_modified": false,
+  "public_pilot_reexecuted_for_reporting": false,
+  "raw_evidence": [
+    {
+      "byte_roundtrip_equal": true,
+      "decompressed_sha256": "dc3da53529062d10ee0eeb199ec4216d74250ec5b9b9c093bd6803b5abeab846",
+      "gzip_bytes": 214895,
+      "gzip_path": "pilot/accounting.json.gz",
+      "gzip_sha256": "5ecc57a08a33a481deba9e5b54102134378c92685222a97490f5a7c7d3735d3f",
+      "json_roundtrip_equal": true,
+      "raw_bytes": 6088797,
+      "raw_original_retained_unchanged": true,
+      "raw_path": "pilot/accounting.json",
+      "raw_sha256": "dc3da53529062d10ee0eeb199ec4216d74250ec5b9b9c093bd6803b5abeab846"
+    },
+    {
+      "byte_roundtrip_equal": true,
+      "decompressed_sha256": "d3703cf0f1ab8580c820ecf4642a6b55d76aa91d513488c9007f5fe85cfba4c9",
+      "gzip_bytes": 505184,
+      "gzip_path": "pilot/history-freeze.json.gz",
+      "gzip_sha256": "03b87d8f631b2a583b793248353fcb10576e0270b912febffe6db31b91fafb7a",
+      "json_roundtrip_equal": true,
+      "raw_bytes": 32795940,
+      "raw_original_retained_unchanged": true,
+      "raw_path": "pilot/history-freeze.json",
+      "raw_sha256": "d3703cf0f1ab8580c820ecf4642a6b55d76aa91d513488c9007f5fe85cfba4c9"
+    },
+    {
+      "byte_roundtrip_equal": true,
+      "decompressed_sha256": "c045f1fcd4a3deaec2457cf861b78eabdd5bbec1e01072cf8d0dae5d049900f6",
+      "gzip_bytes": 528187,
+      "gzip_path": "pilot/candidate-record.json.gz",
+      "gzip_sha256": "222ba71065b2bbae39f0dff1a5809f5d23419120551561c360a92059edc2c3cb",
+      "json_roundtrip_equal": true,
+      "raw_bytes": 35921292,
+      "raw_original_retained_unchanged": true,
+      "raw_path": "pilot/candidate-record.json",
+      "raw_sha256": "c045f1fcd4a3deaec2457cf861b78eabdd5bbec1e01072cf8d0dae5d049900f6"
+    }
+  ],
+  "raw_originals_retained": true,
+  "reporter_tests": {
+    "passed": 3,
+    "scope": "stdlib reader, no-growing-evidence and exact compression guards; no model or environment execution",
+    "seconds": 0.03
+  },
+  "source_commit": "f3a05910bc142e44c253cae7b747da3fb315d3ea",
+  "status": "finalized_completed_pilot_evidence",
+  "supporting_files": {
+    "scripts/pack_native_axis_pilot.py": "23c393f8425b9b6a6f5c305ecd9870767d9fe1e7115b10dbeef2d53da6edc63b",
+    "scripts/report_native_axis_pilot.py": "c53868349eba10870a15727bb61a2604ebed9047823c5e495b3d67925c37df8d",
+    "tests/test_native_axis_pilot_report.py": "79c19d74c5a0a163ad2560aaa90961083abee4c7db25df53f8a8c71b751feda8"
+  },
+  "versionable_bytes_excluding_this_index": 1332579,
+  "versionable_file_count_excluding_this_index": 22,
+  "versionable_files": [
+    {
+      "bytes": 2546,
+      "path": "README.md",
+      "sha256": "456f2bddb6691ad1fb9d4f3878991db1a0f6fafa3eedeb0b0b451c87d96c3bb3"
+    },
+    {
+      "bytes": 2076,
+      "path": "compression-roundtrip.json",
+      "sha256": "4dd821449a702cd77f2efbfd4ac013be92703fb391128696cf0b2b04cf29782e"
+    },
+    {
+      "bytes": 15983,
+      "path": "declaration.json",
+      "sha256": "afab17c97ff225692d881e07a6cf2eb1d93e586ff0f77b09e1a0b24fa05da13e"
+    },
+    {
+      "bytes": 922,
+      "path": "gzip-only-report-verification.json",
+      "sha256": "008f0c9a10437c08a6f6cc99098343c61646aa7b452b21e48758cc4be8f80990"
+    },
+    {
+      "bytes": 5957,
+      "path": "launch-source.json",
+      "sha256": "0dc3e16cb2725761ad1f1127134f5c22967089c9d86b2557bcd95396025823e9"
+    },
+    {
+      "bytes": 1398,
+      "path": "launcher-status.json",
+      "sha256": "031f43b0a7e1872cefbd8b459013f320c2a4825605c832f1a25e7a2d9d18bb7f"
+    },
+    {
+      "bytes": 2716,
+      "path": "native-configuration.json",
+      "sha256": "524a2d1b47ac740733ff57d99705e6a06f56c2c4611d56b8089a81bbe3542f17"
+    },
+    {
+      "bytes": 214895,
+      "path": "pilot/accounting.json.gz",
+      "sha256": "5ecc57a08a33a481deba9e5b54102134378c92685222a97490f5a7c7d3735d3f"
+    },
+    {
+      "bytes": 528187,
+      "path": "pilot/candidate-record.json.gz",
+      "sha256": "222ba71065b2bbae39f0dff1a5809f5d23419120551561c360a92059edc2c3cb"
+    },
+    {
+      "bytes": 505184,
+      "path": "pilot/history-freeze.json.gz",
+      "sha256": "03b87d8f631b2a583b793248353fcb10576e0270b912febffe6db31b91fafb7a"
+    },
+    {
+      "bytes": 7899,
+      "path": "pilot/learner/contract.json",
+      "sha256": "1a547a9b4036fe2fcfc3fa2cfb4972de4f7cbd89744668499daf66bbc839bed7"
+    },
+    {
+      "bytes": 4756,
+      "path": "pilot/learner/result.json",
+      "sha256": "27842b81846ce1bdcdf202a5cb4d94d9277e92f2f696e80b225cb096e8cbdc9b"
+    },
+    {
+      "bytes": 8018,
+      "path": "pilot/native-audits.json",
+      "sha256": "5d29256a62bff77e6f952c4fe156f37620a2d700536a4f91b43b3b63324eb084"
+    },
+    {
+      "bytes": 896,
+      "path": "pilot/status.json",
+      "sha256": "aa038d39f9a1aea3808e7cf049853c7c8fbd9f857a10afa09ffcef3888e927af"
+    },
+    {
+      "bytes": 856,
+      "path": "preparation.json",
+      "sha256": "ea514461c0068999942cea9f0d0b82bc953ba4a9f4e4196245053df4b5d72383"
+    },
+    {
+      "bytes": 4732,
+      "path": "report-v1/RESULT.md",
+      "sha256": "3dac7df311466d4a5b9bbe85ccb954b447b0f9ca70e3e2a43d6e04bce2d8bfd5"
+    },
+    {
+      "bytes": 18877,
+      "path": "report-v1/cost-summary.json",
+      "sha256": "47ac0277620f98dc1e737fbd14ddf57de75e0463e44367547bf7afedeba97261"
+    },
+    {
+      "bytes": 5251,
+      "path": "report-v1/report-source.json",
+      "sha256": "d2fb38139898d842961220d19aec7f481a9a8567bdb288737ffc627cd2450ea0"
+    },
+    {
+      "bytes": 485,
+      "path": "worker-resource.json",
+      "sha256": "263703dafe07756ad6ec1369f7af70825935d436271b3b148f46c2672733060e"
+    },
+    {
+      "bytes": 41,
+      "path": "worker-start.json",
+      "sha256": "14204c9336e9503162a620ad13fdcc44428bf8f3022d90ade4772b5850bf8ae1"
+    },
+    {
+      "bytes": 904,
+      "path": "worker-status.json",
+      "sha256": "6b6077d74ef5ddb1b6d884721bf1311a51609a2ea628d2198e101ecda0eaf324"
+    },
+    {
+      "bytes": 0,
+      "path": "worker.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

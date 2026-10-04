@@ -1,0 +1,127 @@
+{
+  "actor_parameters_changed": true,
+  "clinical_deficit_probability": null,
+  "completed_episodes": 2,
+  "decision_model_hash": "sha256:1d06e7792ce78ecf7ef461ba5ff2b6f78e2367d3b3bc030a80d70b49e6e747f5",
+  "discarded_partial_batches": 0,
+  "elapsed_seconds": 169.59038816695102,
+  "elapsed_seconds_scope": "cumulative optimization and selection, including initial selection; initialization excluded",
+  "episode_index": 2,
+  "final_checkpoint_export_seconds": 0.0010827910155057907,
+  "final_checkpoint_export_seconds_scope": "last atomic checkpoint write only; result JSON write and return are outside this measurement",
+  "gradient_steps": 1,
+  "initial_actor_hash": "sha256:6cc690991370666e4cb7266712aeb95804940dbea629565a1407dec1db728269",
+  "initial_checkpoint_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322",
+  "initial_selection_return": 441.6,
+  "initial_trainable_parameter_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322",
+  "initialization_seconds": 8.291727915988304,
+  "initialization_seconds_scope": "cumulative model/policy/provenance/optimizer/contract setup across invocations; excluded from learner budget",
+  "initialization_seconds_this_invocation": 8.291727915988304,
+  "input_profile": {
+    "action_divisors": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "action_feature_names": [
+      "stop",
+      "target_benefit",
+      "normal_volume",
+      "motor_evidence",
+      "language_evidence",
+      "insertion_distance",
+      "tip_radius",
+      "shaft_radius",
+      "tool_change",
+      "depth",
+      "remaining_target_fraction",
+      "adjacent_target_fraction",
+      "partial_normal_contact_volume",
+      "partial_motor_contact_surrogate",
+      "partial_language_contact_surrogate"
+    ],
+    "centering": false,
+    "clipping": false,
+    "critic_output_divisor": 1.0,
+    "profile_id": "RAW",
+    "return_divisor": 1.0,
+    "running_statistics": false,
+    "state_divisors": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "state_feature_names": [
+      "remaining_target_fraction",
+      "action_budget_fraction_used",
+      "removed_tissue_fraction",
+      "nominal_severed_edge_fraction",
+      "motor_evidence_available",
+      "language_evidence_available"
+    ],
+    "version": "native-fixed-action-units-v1"
+  },
+  "input_profile_hash": "sha256:b0ae5e34b7fbd206ca7e690fc29c5283ab4be69af25ba45b67f4f5d858b27e12",
+  "latest_actor_hash": "sha256:8003bc0fc950bc78ef257ea6240751b15e6474f6ed038fce8a47826f7eb76fca",
+  "latest_checkpoint_hash": "sha256:8f0a9ff65513c3ef9e1e4ecb1454385341d7616e0485d4c2942f90718feaa376",
+  "latest_trainable_parameter_hash": "sha256:8f0a9ff65513c3ef9e1e4ecb1454385341d7616e0485d4c2942f90718feaa376",
+  "learning_improvement_guaranteed": false,
+  "optimization_environment_steps": 6,
+  "optimization_history": [
+    {
+      "actor_gradient_norm_after_clip": 4.576793069841643,
+      "episode_source_case_hashes": [
+        "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+      ],
+      "gradient_norm_before_clip": 5117.16552734375,
+      "gradient_steps": 1,
+      "loss": 325281.625,
+      "mean_return": 447.1,
+      "optimization_environment_steps": 6
+    }
+  ],
+  "optimizer_mode": "PATIENT_SCRATCH_RL",
+  "output_dir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/native-axis-raw-update-pilot-v1/pilot/learner",
+  "selected_checkpoint_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322",
+  "selected_selection_return": 441.6,
+  "selection_environment_steps": 12,
+  "selection_history": [
+    {
+      "checkpoint_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322",
+      "gradient_steps": 0,
+      "mean_return": 441.6,
+      "optimization_environment_steps": 0,
+      "panel_elapsed_seconds": 51.88916749996133,
+      "world_count": 2
+    },
+    {
+      "checkpoint_hash": "sha256:8f0a9ff65513c3ef9e1e4ecb1454385341d7616e0485d4c2942f90718feaa376",
+      "gradient_steps": 1,
+      "mean_return": 441.6,
+      "optimization_environment_steps": 6,
+      "panel_elapsed_seconds": 63.423907582997344,
+      "world_count": 2
+    }
+  ],
+  "selection_rule": "maximum mean deterministic selection return; earliest wins ties",
+  "selection_seconds": 115.31307508295868,
+  "shared_checkpoint_hash": null,
+  "status": "gradient_budget",
+  "wall_limit_semantics": "cooperative; a simulator/gradient call may overrun the deadline"
+}

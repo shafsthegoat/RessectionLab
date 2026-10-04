@@ -1,0 +1,26 @@
+{
+  "candidate_record_sha256": "c045f1fcd4a3deaec2457cf861b78eabdd5bbec1e01072cf8d0dae5d049900f6",
+  "completed_episode_audit_receipts": 6,
+  "eligible_candidate_count": 1,
+  "expected_complete_episodes": 6,
+  "final_worlds_used": false,
+  "gradient_steps": 1,
+  "resource": {
+    "budget": {
+      "hard_termination_grace_seconds": 15.0,
+      "process_peak_rss_bytes": 6442450944,
+      "worker_wall_seconds": 600.0
+    },
+    "budget_request_to_receipt_seconds": null,
+    "cancellation_callback_calls": 2707,
+    "cancellation_callback_seconds": 0.012733906041830778,
+    "cancellation_reason": null,
+    "elapsed_seconds": 220.30919095897116,
+    "observed_peak_rss_bytes": 2382168064,
+    "scope": "worker process RSS; cooperative callback CPU cost; no OS memory reservation"
+  },
+  "stage": "complete",
+  "status": "completed",
+  "stress_worlds_used": false,
+  "unique_native_audits": 3
+}

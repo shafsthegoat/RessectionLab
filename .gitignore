@@ -61,3 +61,9 @@ outputs/
 /artifacts/preflight/native-axis-v2/profile/selection-2/episode.json
 /artifacts/preflight/native-axis-v2/profile/untrained-selection-1/episode.json
 /artifacts/preflight/native-axis-v2/profile/untrained-selection-2/episode.json
+
+# Exact one-update source and raw receipts remain local; lossless gzip is versioned.
+/artifacts/learning/native-axis-raw-update-pilot-v1/frozen-source/
+/artifacts/learning/native-axis-raw-update-pilot-v1/pilot/accounting.json
+/artifacts/learning/native-axis-raw-update-pilot-v1/pilot/history-freeze.json
+/artifacts/learning/native-axis-raw-update-pilot-v1/pilot/candidate-record.json

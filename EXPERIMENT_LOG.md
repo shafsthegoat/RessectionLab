@@ -1010,3 +1010,36 @@ worker time and a cooperative 6-GiB process RSS ceiling. Other agent computation
 is held; ordinary Mac activity and OS caches remain uncontrolled. Cache reuse is
 disabled. This release is not an execution result; failures or completion will be
 preserved separately. No final/stress worlds are permitted.
+
+## October 4, 2026 — one patient update completes without selection improvement
+
+The prospectively released seed-11 RAW pilot ran once from immutable `f3a0591`.
+It completed two optimization episodes, both complete selection panels and one
+actual actor update. Initial and updated selection both returned 441.60; the
+earliest-tie rule correctly retained the initial checkpoint. Optimization returns
+were 122.65 and 771.55. All six episodes contain three real cuts, for 18 executed
+and returned transitions. A separate zero-transition dimension probe is not a
+scored episode. Six accepted certificates cover three unique native histories.
+
+Full launcher time was 221.139 seconds, with 169.590 seconds online and 2.219 GiB
+peak worker RSS. Initial and updated panels took 51.889 and 63.424 seconds.
+The available timers do not isolate why identical selected actions took different
+times. Final-transition counter prefixes record 432 previews in 98.248 seconds
+and 66 integrity checks in 19.607 seconds; these are not whole-process totals.
+No cache, final worlds or stress worlds were used. Other agent computation was
+held, while ordinary desktop load and file caches were uncontrolled.
+
+An independent audit reconstructs all 18 actual saved forward passes directly
+from tensors with NumPy. Maximum logit/value discrepancies are 1.19e-7/2.98e-8
+within pre-fixed tolerances; all 12 deterministic choices match earliest-row
+argmax. Six stochastic choices were eligible, without replaying random draws.
+Source-cell rewards, selected/latest checkpoint distinction, publication
+authorities and hashes verify. Thirty-five audit tests and three report tests
+pass; a test fixture mismatch is preserved. This audit adds no simulation or
+gradient execution. Three original JSON payloads remain unchanged locally;
+lossless gzip reduces 74,806,029 bytes to 1,248,266 bytes and both report and
+audit reproduce from gzip alone. The finalized index binds 22 versionable files.
+This is integration evidence and a negative learning result on one reused
+development patient, with unreviewed anatomy and hypothetical access.
+See `artifacts/learning/native-axis-raw-update-pilot-v1/` and the separate
+`artifacts/native-axis-pilot-result-audit/`.

@@ -126,8 +126,8 @@ A separate artifact audit and 25 adversarial checks reproduce all source-cell
 counts and rewards. The run took 149.38 seconds and 1.314-GiB peak worker RSS.
 Its 48.19-second initial policy panel exceeds the older 30-second allowance,
 though it is not an exact generic-learner cost. No gradients or final/stress
-worlds were used. Later decision features/logits were not retained; the next
-bounded update pilot must record them. The adapter remains outside the desktop,
+worlds were used. Later decision features/logits were not retained in that
+preflight; the completed bounded update pilot records them. The adapter remains outside the desktop,
 and existing procedural checkpoints and feature-unit gates remain unchanged.
 See `artifacts/preflight/native-axis-v2/RESULT.md`.
 
@@ -136,9 +136,21 @@ policy inputs, logits, value and action before execution. Fifty-four focused
 compatibility checks and 30 independent checks pass; recording preserves exact
 weights, Adam state, RNG and environment behavior. Its native journal binds to
 served observations and distinguishes attempted, executed and returned steps.
-A separately declared one-update seed-11 pilot has a 300-second online allowance
-and is released after 53 focused runner checks and the immutable integrated sweep;
-its public execution results remain pending.
+A separately declared one-update seed-11 pilot completed from immutable
+`f3a0591` after 53 focused runner checks and the 1,150-test integrated sweep.
+One actual actor update used two complete optimization episodes; initial and
+updated two-world selection both returned 441.60, correctly retaining the
+initial checkpoint. Six complete histories have accepted certificates covering
+three unique native histories. A separate 35-test artifact audit reconstructs
+all 18 saved forwards and verifies all 12 deterministic choices without rerunning
+patient simulation or gradients. Six stochastic choices are eligibility-checked,
+not RNG-replayed. The full launcher took 221.14 seconds, online work 169.59
+seconds, and peak worker RSS was 2.219 GiB. This verifies the update pipeline,
+not a learning improvement. No cache or final/stress worlds were used.
+Original receipts remain unchanged; lossless gzip and gzip-only report/audit
+reproduction pass. See the actual report in
+`artifacts/learning/native-axis-raw-update-pilot-v1/report-v1/RESULT.md` and
+`artifacts/native-axis-pilot-result-audit/`.
 An isolated exact capsule-cover cache prototype passes 78 focused checks and
 26 independent checks, with its actual invalidation failures preserved. Synthetic
 reference/cached/reference outputs agree, including independent native histories;

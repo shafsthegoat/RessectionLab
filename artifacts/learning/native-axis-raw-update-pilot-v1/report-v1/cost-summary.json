@@ -1,0 +1,478 @@
+{
+  "actor_parameters_changed": true,
+  "clinical_deficit_probability": null,
+  "costs": {
+    "audit_receipts": 6,
+    "cancellation_callback_calls": 2708,
+    "cancellation_callback_seconds": 0.012744573061354458,
+    "cold_axis_construction_seconds": 8.084368415991776,
+    "final_checkpoint_export_seconds": 0.0010827910155057907,
+    "full_independent_validation_seconds": 29.388877374934964,
+    "full_training_call_seconds": 179.1151364579564,
+    "initial_selection_panel_seconds": 51.88916749996133,
+    "initial_shape_probe_clone_seconds": 0.2975995000451803,
+    "launcher_seconds": 221.1391212909948,
+    "learner_initialization_seconds": 8.291727915988304,
+    "online_budget_overshoot_seconds": 0.0,
+    "online_budget_seconds": 300.0,
+    "online_optimization_selection_seconds": 169.59038816695102,
+    "optimization_plus_online_export_and_bookkeeping_seconds": 54.27731308399234,
+    "partial_panel_seconds": 0.0,
+    "peak_process_rss_bytes": 2382168064,
+    "preparation_seconds": 9.50353412493132,
+    "scope": "Nested measured phases are not additive. Logging/accounting persistence was enabled inside online and initialization phases, but its isolated cost was not measured. Factory values are actual seven clones; resets are included in panels/batch and not independently timed.",
+    "selection_seconds_including_partial_panels": 115.31307508295868,
+    "six_online_clone_seconds": [
+      0.28890024998690933,
+      0.29657691600732505,
+      0.29707962495740503,
+      0.2932469170773402,
+      0.29303241590969265,
+      0.2917316670063883
+    ],
+    "trainer_call_residual_scope": "Final result export, accounting finalization and return overhead not separately instrumented; this is arithmetic residual, not a direct timer.",
+    "trainer_call_residual_seconds": 1.231937584001571,
+    "unique_native_audits": 3,
+    "unique_native_checker_seconds": 29.334109249874018,
+    "updated_selection_panel_seconds": 63.423907582997344,
+    "worker_seconds": 220.33499779098202
+  },
+  "counts": {
+    "initial_selection": {
+      "episodes": 2,
+      "native_cuts": 6,
+      "transitions": 6
+    },
+    "optimization": {
+      "episodes": 2,
+      "native_cuts": 6,
+      "transitions": 6
+    },
+    "updated_selection": {
+      "episodes": 2,
+      "native_cuts": 6,
+      "transitions": 6
+    }
+  },
+  "decision_trace": {
+    "actual_forwards": 18,
+    "records": 18,
+    "rule_counts": {
+      "deterministic_argmax": 12,
+      "sampled_categorical": 6
+    },
+    "source": "Recorded same-forward detached outputs; report performs no new forward or random draw."
+  },
+  "declaration_hash": "sha256:7783126ab41fab01be6b148131c23fdd305c1e3276d27edb2971a734b644e385",
+  "episodes": [
+    {
+      "actions": [
+        "AXISv1:7d80490201dfefa87afa5c64",
+        "AXISv1:bca90d31b5ab2bcce504efeb",
+        "AXISv1:33a4dac583612edc37d059f8"
+      ],
+      "actual_forward_count": 3,
+      "decision_inventory_sizes": [
+        27,
+        25,
+        23
+      ],
+      "episode": 1,
+      "history_hash": "sha256:6173f430dfc684ffc006606f3a11a49fc1bebd46a665ba046a34b035d6d25aa7",
+      "native_cuts": 3,
+      "normal_removed_mm3": 13.0,
+      "partial_normal_contact_mm3": 72.0,
+      "phase": "initial_selection",
+      "policy_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322",
+      "proposal_accounting_prefix": {
+        "integrity_calls": 11,
+        "integrity_seconds": 3.284503625938669,
+        "preview_calls": 72,
+        "preview_seconds": 16.515132002532482
+      },
+      "return": 441.6,
+      "stop_transitions": 0,
+      "target_removed_mm3": 445.0,
+      "termination_reason": "step_budget",
+      "transitions": 3,
+      "world_seed": 8109736527858856845
+    },
+    {
+      "actions": [
+        "AXISv1:7d80490201dfefa87afa5c64",
+        "AXISv1:bca90d31b5ab2bcce504efeb",
+        "AXISv1:33a4dac583612edc37d059f8"
+      ],
+      "actual_forward_count": 3,
+      "decision_inventory_sizes": [
+        27,
+        25,
+        23
+      ],
+      "episode": 2,
+      "history_hash": "sha256:6173f430dfc684ffc006606f3a11a49fc1bebd46a665ba046a34b035d6d25aa7",
+      "native_cuts": 3,
+      "normal_removed_mm3": 13.0,
+      "partial_normal_contact_mm3": 72.0,
+      "phase": "initial_selection",
+      "policy_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322",
+      "proposal_accounting_prefix": {
+        "integrity_calls": 11,
+        "integrity_seconds": 3.2830616681603715,
+        "preview_calls": 72,
+        "preview_seconds": 16.34147999342531
+      },
+      "return": 441.6,
+      "stop_transitions": 0,
+      "target_removed_mm3": 445.0,
+      "termination_reason": "step_budget",
+      "transitions": 3,
+      "world_seed": 8342823306791655420
+    },
+    {
+      "actions": [
+        "AXISv1:b7f59baad7d451b5419f63be",
+        "AXISv1:ee33808eab9c88179be6e633",
+        "AXISv1:c06d38510765ef41e9ed708b"
+      ],
+      "actual_forward_count": 3,
+      "decision_inventory_sizes": [
+        27,
+        25,
+        23
+      ],
+      "episode": 3,
+      "history_hash": "sha256:9a4ace80eac84a01b257beea9600162c648cf19b4f08c4b049d465b2e410990f",
+      "native_cuts": 3,
+      "normal_removed_mm3": 4.0,
+      "partial_normal_contact_mm3": 49.0,
+      "phase": "optimization",
+      "policy_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322",
+      "proposal_accounting_prefix": {
+        "integrity_calls": 11,
+        "integrity_seconds": 3.1802803749451414,
+        "preview_calls": 72,
+        "preview_seconds": 16.48762970371172
+      },
+      "return": 122.64999999999998,
+      "stop_transitions": 0,
+      "target_removed_mm3": 124.0,
+      "termination_reason": "step_budget",
+      "transitions": 3,
+      "world_seed": 17944101631498118750
+    },
+    {
+      "actions": [
+        "AXISv1:248b4424d3b1724558819f9c",
+        "AXISv1:4fdb89a0fe703b7ff5b45cd6",
+        "AXISv1:5eb01b564f1b89b9719264f0"
+      ],
+      "actual_forward_count": 3,
+      "decision_inventory_sizes": [
+        27,
+        25,
+        23
+      ],
+      "episode": 4,
+      "history_hash": "sha256:bfe23378225ccdd0eb8f2597b76e2666b360250030821b186c123638f82a181c",
+      "native_cuts": 3,
+      "normal_removed_mm3": 45.0,
+      "partial_normal_contact_mm3": 137.0,
+      "phase": "optimization",
+      "policy_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322",
+      "proposal_accounting_prefix": {
+        "integrity_calls": 11,
+        "integrity_seconds": 3.2781695418525487,
+        "preview_calls": 72,
+        "preview_seconds": 16.416329870466143
+      },
+      "return": 771.55,
+      "stop_transitions": 0,
+      "target_removed_mm3": 782.0,
+      "termination_reason": "step_budget",
+      "transitions": 3,
+      "world_seed": 16050408593453808557
+    },
+    {
+      "actions": [
+        "AXISv1:7d80490201dfefa87afa5c64",
+        "AXISv1:bca90d31b5ab2bcce504efeb",
+        "AXISv1:33a4dac583612edc37d059f8"
+      ],
+      "actual_forward_count": 3,
+      "decision_inventory_sizes": [
+        27,
+        25,
+        23
+      ],
+      "episode": 5,
+      "history_hash": "sha256:6173f430dfc684ffc006606f3a11a49fc1bebd46a665ba046a34b035d6d25aa7",
+      "native_cuts": 3,
+      "normal_removed_mm3": 13.0,
+      "partial_normal_contact_mm3": 72.0,
+      "phase": "updated_selection",
+      "policy_hash": "sha256:8f0a9ff65513c3ef9e1e4ecb1454385341d7616e0485d4c2942f90718feaa376",
+      "proposal_accounting_prefix": {
+        "integrity_calls": 11,
+        "integrity_seconds": 3.306365917203948,
+        "preview_calls": 72,
+        "preview_seconds": 16.210127331782132
+      },
+      "return": 441.6,
+      "stop_transitions": 0,
+      "target_removed_mm3": 445.0,
+      "termination_reason": "step_budget",
+      "transitions": 3,
+      "world_seed": 8109736527858856845
+    },
+    {
+      "actions": [
+        "AXISv1:7d80490201dfefa87afa5c64",
+        "AXISv1:bca90d31b5ab2bcce504efeb",
+        "AXISv1:33a4dac583612edc37d059f8"
+      ],
+      "actual_forward_count": 3,
+      "decision_inventory_sizes": [
+        27,
+        25,
+        23
+      ],
+      "episode": 6,
+      "history_hash": "sha256:6173f430dfc684ffc006606f3a11a49fc1bebd46a665ba046a34b035d6d25aa7",
+      "native_cuts": 3,
+      "normal_removed_mm3": 13.0,
+      "partial_normal_contact_mm3": 72.0,
+      "phase": "updated_selection",
+      "policy_hash": "sha256:8f0a9ff65513c3ef9e1e4ecb1454385341d7616e0485d4c2942f90718feaa376",
+      "proposal_accounting_prefix": {
+        "integrity_calls": 11,
+        "integrity_seconds": 3.274748290074058,
+        "preview_calls": 72,
+        "preview_seconds": 16.277199505013414
+      },
+      "return": 441.6,
+      "stop_transitions": 0,
+      "target_removed_mm3": 445.0,
+      "termination_reason": "step_budget",
+      "transitions": 3,
+      "world_seed": 8342823306791655420
+    }
+  ],
+  "final_worlds_used": false,
+  "frozen_source_verified_files": 49,
+  "gradient": {
+    "actor_gradient_norm_after_clip": 4.576793069841643,
+    "episode_source_case_hashes": [
+      "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+    ],
+    "gradient_norm_before_clip": 5117.16552734375,
+    "gradient_steps": 1,
+    "loss": 325281.625,
+    "mean_return": 447.1,
+    "optimization_environment_steps": 6
+  },
+  "independent_audit": null,
+  "initial_actor_hash": "sha256:6cc690991370666e4cb7266712aeb95804940dbea629565a1407dec1db728269",
+  "initial_checkpoint_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322",
+  "initial_selection_return": 441.6,
+  "interpretation": {
+    "brain_support_reviewed": false,
+    "clinical_deficit_probability": null,
+    "clinical_use_validated": false,
+    "cortical_access_approved": false,
+    "deterministic_worlds_are_uncertainty_samples": false,
+    "efficacy_comparison": false,
+    "independent_human_patients": 1,
+    "motor_language_assessed": false,
+    "next_experiment_settings_selected_by_this_pilot": false,
+    "previously_studied_development_case": true
+  },
+  "latest_actor_hash": "sha256:8003bc0fc950bc78ef257ea6240751b15e6474f6ed038fce8a47826f7eb76fca",
+  "latest_checkpoint_hash": "sha256:8f0a9ff65513c3ef9e1e4ecb1454385341d7616e0485d4c2942f90718feaa376",
+  "launcher": {
+    "consumer_authority": "Require completed launcher + hash-bound worker + pilot status; payload presence alone is not eligibility.",
+    "eligible_candidate_count": 1,
+    "final_worlds_used": false,
+    "full_launcher_seconds": 221.1391212909948,
+    "gradient_steps": 1,
+    "hard_killed": false,
+    "launch_preparation_seconds": 0.046079833060503006,
+    "parent_timeout_requested": false,
+    "resource_budget": {
+      "hard_termination_grace_seconds": 15.0,
+      "process_peak_rss_bytes": 6442450944,
+      "worker_wall_seconds": 600.0
+    },
+    "status": "completed",
+    "stress_worlds_used": false,
+    "worker_command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/native-axis-raw-update-pilot-v1/frozen-source/scripts/run_native_axis_pilot.py",
+      "--worker",
+      "--output",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/native-axis-raw-update-pilot-v1",
+      "--case-bundle",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-pilot-v1-full-01/f3a05910bc142e44c253cae7b747da3fb315d3ea/source/outputs/cases/UCSF-PDGM-0004.ressectionlab"
+    ],
+    "worker_returncode": 0
+  },
+  "new_gradient_steps": 0,
+  "new_policy_forwards": 0,
+  "new_simulator_calls": 0,
+  "observed_proposal_accounting_prefix_totals": {
+    "integrity_calls": 66,
+    "integrity_seconds": 19.607129418174736,
+    "preview_calls": 432,
+    "preview_seconds": 98.2478984069312
+  },
+  "pilot": {
+    "candidate_record_sha256": "c045f1fcd4a3deaec2457cf861b78eabdd5bbec1e01072cf8d0dae5d049900f6",
+    "completed_episode_audit_receipts": 6,
+    "eligible_candidate_count": 1,
+    "expected_complete_episodes": 6,
+    "final_worlds_used": false,
+    "gradient_steps": 1,
+    "resource": {
+      "budget": {
+        "hard_termination_grace_seconds": 15.0,
+        "process_peak_rss_bytes": 6442450944,
+        "worker_wall_seconds": 600.0
+      },
+      "budget_request_to_receipt_seconds": null,
+      "cancellation_callback_calls": 2707,
+      "cancellation_callback_seconds": 0.012733906041830778,
+      "cancellation_reason": null,
+      "elapsed_seconds": 220.30919095897116,
+      "observed_peak_rss_bytes": 2382168064,
+      "scope": "worker process RSS; cooperative callback CPU cost; no OS memory reservation"
+    },
+    "stage": "complete",
+    "status": "completed",
+    "stress_worlds_used": false,
+    "unique_native_audits": 3
+  },
+  "pilot_id": "native-axis-raw-update-pilot-v1",
+  "preparation": {
+    "cold_axis_construction_seconds": 8.084368415991776,
+    "initializer_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322",
+    "model_hash": "sha256:1d06e7792ce78ecf7ef461ba5ff2b6f78e2367d3b3bc030a80d70b49e6e747f5",
+    "resource": {
+      "budget": {
+        "hard_termination_grace_seconds": 15.0,
+        "process_peak_rss_bytes": 6442450944,
+        "worker_wall_seconds": 600.0
+      },
+      "budget_request_to_receipt_seconds": null,
+      "cancellation_callback_calls": 64,
+      "cancellation_callback_seconds": 0.00044033455196768045,
+      "cancellation_reason": null,
+      "elapsed_seconds": 9.503615959081799,
+      "observed_peak_rss_bytes": 1473871872,
+      "scope": "worker process RSS; cooperative callback CPU cost; no OS memory reservation"
+    },
+    "seconds": 9.50353412493132,
+    "zero_gradients": true,
+    "zero_transitions": true
+  },
+  "proposal_accounting_scope": "Sum of the final recorded transition's reset-local counters across six episodes. Subsequent learner model checks/metrics, setup and clone checks may fall outside these prefixes; do not call this a global count or add it to enclosing timing.",
+  "runtime_content_hash": "sha256:1c4ada428d4d00003c39bb9c25ddc370c19eac3eb1d53706c4789618003e4035",
+  "runtime_versions": {
+    "nibabel": "5.4.2",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "torch": "2.14.1"
+  },
+  "schema_version": 1,
+  "scope": "Post-completion arithmetic and byte/JSON checks of recorded evidence only; independent geometry and actual-forward reconstruction have separate receipts.",
+  "selected_checkpoint_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322",
+  "selected_panel": 0,
+  "selection_delta": 0.0,
+  "shape_probe": {
+    "decisions": 0,
+    "receipt": {
+      "episode": 0,
+      "instance": 0,
+      "role": "optimization",
+      "seed": 17944101631498118750,
+      "status": "unfinished_at_learner_return"
+    },
+    "scope": "One setup reset for dimensions; intentionally unscored and excluded from six complete episodes",
+    "transitions": 0
+  },
+  "source_baseline": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/validation/native-axis-pilot-public-v1/execution-baseline.json",
+    "record": {
+      "background_scope": "Other agent numerical/tests/probe work held. Packaged Electron app left open on source MRI; ordinary desktop/macOS activity and OS page caches uncontrolled. No cache prototype injected.",
+      "cache_enabled": false,
+      "case_bundle_sha256": "11cca797ad0216e5c8d940e7354f2dd23fb6954dc2aed7e4b0423f6adc6cefcf",
+      "complete_optimization_episodes_required": 2,
+      "complete_selection_panels_required": 2,
+      "created_utc": "2026-10-04T13:21:19.666488+00:00",
+      "declaration_content_hash": "sha256:7783126ab41fab01be6b148131c23fdd305c1e3276d27edb2971a734b644e385",
+      "declaration_sha256": "057fe7cf5d2e770c34314ed081db129452f451067891a37bc3e6e9b5f6e9bc61",
+      "final_or_stress_worlds_permitted": false,
+      "full_suite": {
+        "errors": 0,
+        "failures": 0,
+        "launcher_seconds": 217.4575734169921,
+        "pytest_seconds": 215.95,
+        "receipt_sha256": "0925d7205b11d1954c208413bf14523267c22bb1d94e348bd9c2f9f5b045d7ef",
+        "skipped": 0,
+        "tests": 1150,
+        "warning_scope": "10 intentional ndarray-metadata adversary warnings and four existing DIPY basis warnings",
+        "warnings": 14
+      },
+      "gradient_steps_permitted": 1,
+      "immutable_source_root": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-pilot-v1-full-01/f3a05910bc142e44c253cae7b747da3fb315d3ea/source",
+      "load_average_before_launch": [
+        1.42578125,
+        1.6435546875,
+        1.63671875
+      ],
+      "online_wall_seconds": 300,
+      "output_namespace": "artifacts/learning/native-axis-raw-update-pilot-v1",
+      "resource_budget": {
+        "hard_termination_grace_seconds": 15.0,
+        "process_peak_rss_bytes": 6442450944,
+        "worker_wall_seconds": 600.0
+      },
+      "runner_sha256": "e10dd2aa01a0ccf148f877b0e37b2bd0e7453048e68e507a0656847264f6da86",
+      "schema_version": 1,
+      "selection_worlds_per_panel": 2,
+      "source_archive_sha256": "e2db9dbdca4e30eeacc9cc914deb9d535c4e913cc588e200793fee9d974caec6",
+      "source_commit": "f3a05910bc142e44c253cae7b747da3fb315d3ea",
+      "source_file_count": 2904,
+      "source_manifest_sha256": "cee95ed3d4fc18a0c1320758e49a6495b194cc13fabe3264ec0709fa9f000ed7",
+      "status": "released_not_started"
+    },
+    "sha256": "848028f7fd0d4fb0fa0dcf040f13184f6f374ab42fedde62222f4756e2711bdd"
+  },
+  "status": "completed",
+  "stress_worlds_used": false,
+  "updated_selection_return": 441.6,
+  "worker": {
+    "candidate_record_sha256": "c045f1fcd4a3deaec2457cf861b78eabdd5bbec1e01072cf8d0dae5d049900f6",
+    "eligible_candidate_count": 1,
+    "final_worlds_used": false,
+    "full_worker_seconds": 220.33499779098202,
+    "pilot_status_sha256": "aa038d39f9a1aea3808e7cf049853c7c8fbd9f857a10afa09ffcef3888e927af",
+    "resource": {
+      "budget": {
+        "hard_termination_grace_seconds": 15.0,
+        "process_peak_rss_bytes": 6442450944,
+        "worker_wall_seconds": 600.0
+      },
+      "budget_request_to_receipt_seconds": null,
+      "cancellation_callback_calls": 2708,
+      "cancellation_callback_seconds": 0.012744573061354458,
+      "cancellation_reason": null,
+      "elapsed_seconds": 220.335014124983,
+      "observed_peak_rss_bytes": 2382168064,
+      "scope": "worker process RSS; cooperative callback CPU cost; no OS memory reservation"
+    },
+    "stage": "complete",
+    "status": "completed",
+    "stress_worlds_used": false
+  }
+}
