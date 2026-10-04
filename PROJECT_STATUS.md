@@ -8,8 +8,8 @@ executed work and open gates, not a replacement plan.
 The user supplied `docs/CODEX_STEERING_PROMPT.md` and
 `docs/DATASET_ACQUISITION_ADDENDUM.md`; both were read completely and copied
 unchanged from the supplied files. They supersede the proposed procedural
-training screen. No synthetic population screen, opening-learning run or scale
-experiment was executed. Existing analytical fixtures remain software checks,
+training screen. No synthetic population screen or opening-learning run was
+executed. Existing analytical fixtures remain software checks,
 not human training data. The immediate milestone is one real patient with
 independently checked alternative plans and nonzero, evidence-bound functional
 uncertainty. Population training must use existing real patients, preserve the
@@ -17,13 +17,49 @@ BTC TRAIN/SELECT/unopened roles, and assess transfer on separate patients.
 
 Annotation-assisted and inference-only tracks stay distinct. Reviewable supplied
 segmentations are valid inputs in the former; private references cannot influence
-inputs or proposals in the latter. Current blockers are the functional-evidence
-handoff through native refinement/evaluation, missing approved or explicitly
-provisional support/access for additional cases, and the scan-based policy's
-integration with native geometry. Search may remain the strongest research mode;
+inputs or proposals in the latter. Remaining gates are the executed real-case
+functional comparison, its final-evaluation export integration, explicitly
+provisional support/access for additional cases, and actual real-patient spatial
+learning. Search may remain the strongest research mode;
 no learned-policy superiority is established. The unrun procedural runner also
 exposed a weak teacher on its development fixture; that negative finding is
 preserved and will not be used to justify an RL advantage.
+
+**Latest executed results.** Source-bound functional evidence now persists through
+native refinement, bridge run configuration, checkpoints and replay. The real
+UCSF-PDGM-0004 prior bundle was attached, saved and reopened in 9.12 seconds;
+the original case and seven prior proposals remain unchanged. This derivative
+uses unreviewed population priors with uniform ±2 mm / ±1° sensitivity only.
+Atlas sampling covers 1,431,949 of 1,432,027 modeled tissue cells, with 78 unknown;
+this does not establish patient functional coverage or registration accuracy.
+The structural mirror's equivalence to official TCIA bytes is still unverified.
+See `artifacts/functional-evidence-integration-v1/real-case-roundtrip.json`.
+
+The independent full-tool event evaluator is implemented and passes 68 combined
+controls. It samples complete shaft/active contact across coherent worlds,
+retains missing coverage, and reports conditional encounter counts, intervals
+and tail surrogate costs. Review caught and repaired two footprint-integrity
+defects before patient execution. Real alternatives have not yet been evaluated
+with this evaluator; no postoperative deficit probability is available.
+
+The first real TRAIN PAT22 inference profile completed all four declared cells
+in 6.247 seconds with unchanged model parameters. One CPU call took 28–30 ms
+for a 32³ crop and 256–269 ms for a 64³ crop, with highest observed memory about
+1,180 MiB. These are single cold calls, not accuracy, training-fit or complete
+planning timings. The image encoder dominated these calls. An optional critic
+now also observes legal tool/candidate context; its default preserves the old
+model exactly. It has no measured learning advantage yet. See
+`docs/real-spatial-policy-scale.md` and the compact execution receipts.
+
+One official ReMIND development case is acquired: 386 preoperative DICOM files,
+59,163,552 bytes, with verified object identities and native pixel roundtrips.
+The T1 and T2 have different frame identifiers; their automatic cerebrum and
+manual tumor annotations do not establish a common planning frame. Independent
+native-coordinate checks passed. A bounded rigid-registration attempt worsened
+the separate similarity diagnostic and remains unaccepted. No joint planner
+case or training result is claimed. Official UCSF v5 access was also retried:
+the provider reported missing server files and listing/transfer errors. No
+directional diffusion or matching exam-specific gradients were downloaded.
 
 **Current user priority (October 4): spatial RL and surgical decision learning.**
 Interface development, packaging, the pending cache-sizing execution and the
