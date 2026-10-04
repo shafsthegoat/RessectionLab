@@ -39,7 +39,7 @@ MAX_ARRAY_BYTES = 512 * 1024 * 1024
 MAX_CASE_BYTES = 1024 * 1024 * 1024
 MAX_WORKSPACE_BYTES = 512 * 1024
 MAX_PENDING = 8
-OPERATIONS = frozenset({"ping", "loadCase", "importNifti", "saveCase", "generateRoutes", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "exportCandidate", "shutdown"})
+OPERATIONS = frozenset({"ping", "loadCase", "importNifti", "importStructuralEvidence", "saveCase", "generateRoutes", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "exportCandidate", "shutdown"})
 MAX_RUN_JSON_BYTES = 32 * 1024 * 1024
 
 
@@ -198,9 +198,10 @@ class BridgeSession:
         if case.mri.size * 4 > MAX_ARRAY_BYTES:
             raise BridgeError("ARRAY_SIZE_LIMIT", "Selected MRI is too large for this desktop view")
         arrays = [case.mri, case.affine, *case.compartments.values(), *case.source_compartments.values()]
+        arrays.extend(item.mask for item in case.structural_evidence.values())
         if case.brain_mask is not None:
             arrays.append(case.brain_mask)
-        if len(case.compartments) > 32 or sum(array.nbytes for array in arrays) > MAX_CASE_BYTES:
+        if len(case.compartments) > 32 or len(case.structural_evidence) > 8 or sum(array.nbytes for array in arrays) > MAX_CASE_BYTES:
             raise BridgeError("CASE_SIZE_LIMIT", "Expanded case arrays exceed the desktop cache limit")
         if case.semantic_hash in self.cases:
             entry = self.cases[case.semantic_hash]
@@ -210,6 +211,15 @@ class BridgeSession:
             return {**entry.descriptor, "artifacts": self._display_artifacts(entry)}
         # Native voxels stay unchanged. The affine explicitly declares RAS or
         # LPS physical coordinates; renderers must respect that declaration.
+        from .structural_evidence import planning_brain_support
+        brain_support = {"usableForResearchSimulation": False, "reviewStatus": "unassessed",
+                         "corticalAccessPermitted": False}
+        if case.brain_mask is not None:
+            try:
+                _, support = planning_brain_support(case)
+                brain_support.update(usableForResearchSimulation=True, reviewStatus=support["review_status"], provenance=support)
+            except ValueError as error:
+                brain_support.update(reviewStatus="supplied_unverified", reason=str(error))
         descriptor = {
             "caseId": case.case_id, "caseHash": case.semantic_hash, "planningHash": case.planning_hash,
             "revision": case.revision, "frame": case.frame, "physicalUnits": "mm",
@@ -221,6 +231,17 @@ class BridgeSession:
                               "sourceArray": self.transfers.array(case.source_compartments.get(name, mask), "uint8")}
                              for name, mask in case.compartments.items()],
             "brainMask": None if case.brain_mask is None else self.transfers.array(case.brain_mask, "uint8"),
+            "brainSupport": brain_support,
+            "structuralEvidence": [{"evidenceId": item.evidence_id, "kind": "whole_brain_envelope",
+                "provenance": item.provenance, "reviewStatus": item.review_status,
+                "reviewRequired": item.review is None, "corticalAccessPermitted": False,
+                "sourceHash": item.source_image_hash, "sourceFrameHash": item.source_frame_hash,
+                "sourceFileHash": item.source_file_sha256, "maskHash": item.mask_hash,
+                "modelHash": item.model_sha256, "runHash": item.run_sha256,
+                "evidenceHash": item.evidence_hash, "method": item.method,
+                "array": self.transfers.array(item.mask, "uint8"), "metadata": thaw_json(item.metadata),
+                "review": None if item.review is None else item.review.to_manifest()}
+                for item in case.structural_evidence.values()],
             "unknowns": list(case.unknowns), "metadata": thaw_json(case.metadata),
             "context": None if case.context is None else case.context.planning_view(),
             "planningAsOf": None if case.context is None else case.context.planning_as_of.isoformat(),
@@ -245,6 +266,8 @@ class BridgeSession:
                 retained.add(cached.descriptor["brainMask"]["path"])
             for compartment in cached.descriptor["compartments"]:
                 retained.update((compartment["array"]["path"], compartment["sourceArray"]["path"]))
+            for proposal in cached.descriptor["structuralEvidence"]:
+                retained.add(proposal["array"]["path"])
         for key, descriptor in list(self.replay_transfers.items()):
             if key[0] in self.cases:
                 retained.add(descriptor["path"])
@@ -536,7 +559,28 @@ class BridgeSession:
             return {"caseHash": case.semantic_hash, "sourceRefs": [source.to_dict() for source in case.source_refs],
                     "metadata": thaw_json(case.metadata), "unknowns": list(case.unknowns),
                     "patientContext": None if case.context is None else case.context.planning_view(),
+                    "structuralEvidence": [item.to_manifest() for item in case.structural_evidence.values()],
                     "clinicalDeficitProbability": None, "clinicalRiskReason": "no_validated_clinical_outcome_model"}
+        if operation == "importStructuralEvidence":
+            _keys(args, {"caseHash", "sourceImagePath", "maskPath", "reportPath", "variant"})
+            entry = self._get_case(args.get("caseHash"))
+            if len(entry.case.structural_evidence) >= 8:
+                raise BridgeError("CASE_SIZE_LIMIT", "Structural proposal limit reached")
+            source = _path(args.get("sourceImagePath"), kind="NIfTI")
+            mask = _path(args.get("maskPath"), kind="NIfTI")
+            report = _path(args.get("reportPath"), kind="json")
+            if report.stat().st_size > MAX_RUN_JSON_BYTES:
+                raise BridgeError("REPORT_SIZE_LIMIT", "Structural extraction report is too large")
+            if args.get("variant") not in {"nocsf", "main"}:
+                raise BridgeError("INVALID_ARGUMENT", "Select the recorded main or nocsf model variant")
+            for selected in (source, mask):
+                if math.prod(inspect_nifti(selected)["shape"]) * 4 > MAX_ARRAY_BYTES:
+                    raise BridgeError("ARRAY_SIZE_LIMIT", "Structural extraction grid exceeds the desktop limit")
+            from .imaging import import_brain_extraction_evidence
+            progress(.1, "Checking extraction source, model, output hashes and native frame")
+            case = import_brain_extraction_evidence(entry.case, source_image_path=source, mask_path=mask,
+                                                    report_path=report, variant=args["variant"])
+            return self._install_case(case, thaw_json(entry.artifacts), request)
         if operation == "generateRoutes":
             _keys(args, {"caseHash", "toolIds", "allowEstimatedSupport", "config"})
             entry = self._get_case(args.get("caseHash"))

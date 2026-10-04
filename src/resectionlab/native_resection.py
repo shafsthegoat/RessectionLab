@@ -488,10 +488,12 @@ def native_config_from_case(case: Any, *, access: AccessWindow,
         tissue = binary_fill_holes(np.asarray(case.mri) != 0)
         provenance = "hole_filled_nonzero_native_MRI_support; unreviewed skull_strip_assumption; source targets retained"
     else:
-        tissue = np.asarray(case.brain_mask, bool)
+        from .structural_evidence import planning_brain_support
+        tissue, support_record = planning_brain_support(case)
+        tissue = np.asarray(tissue, bool)
         if np.any((labels > 0) & ~tissue):
             raise ValueError("Source target lies outside the supplied brain mask; review the conflicting anatomy")
-        provenance = "source_case_brain_mask; source targets retained"
+        provenance = support_record["method"] + "; source targets retained; cortical_access_unverified"
     tissue = tissue | (labels > 0)
     affine = np.asarray(case.affine)
     frame = getattr(case, "frame", "RAS+")

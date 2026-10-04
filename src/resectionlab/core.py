@@ -15,10 +15,13 @@ import hashlib
 import json
 import math
 from types import MappingProxyType
-from typing import Any
+from typing import Any, TYPE_CHECKING
 
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
+
+if TYPE_CHECKING:
+    from .structural_evidence import StructuralEvidence
 
 
 CLINICAL_RISK_UNAVAILABLE = "no_validated_clinical_outcome_model"
@@ -289,6 +292,7 @@ class CaseData:
     metadata: Mapping[str, Any] = field(default_factory=dict)
     source_compartments: Mapping[str, NDArray[np.bool_]] | None = None
     brain_mask: NDArray[np.bool_] | None = None
+    structural_evidence: Mapping[str, StructuralEvidence] = field(default_factory=dict)
     _semantic_hash: str = field(init=False, repr=False)
     _planning_hash: str = field(init=False, repr=False)
     _array_state: tuple[Any, ...] = field(init=False, repr=False)
@@ -333,6 +337,15 @@ class CaseData:
         for item in unknowns:
             _nonempty(item, "unknown factor")
         object.__setattr__(self, "unknowns", tuple(sorted(set(unknowns))))
+        from .structural_evidence import StructuralEvidence
+        if not isinstance(self.structural_evidence, Mapping):
+            raise ValueError("structural_evidence must map IDs to StructuralEvidence")
+        evidence = dict(self.structural_evidence)
+        for identity, proposal in evidence.items():
+            if not isinstance(proposal, StructuralEvidence) or identity != proposal.evidence_id:
+                raise ValueError("Structural evidence IDs and typed records must agree")
+            proposal.assert_matches(self)
+        object.__setattr__(self, "structural_evidence", MappingProxyType(evidence))
         manifest = self.to_manifest(include_hash=False)
         object.__setattr__(self, "_semantic_hash", semantic_digest(manifest))
         object.__setattr__(self, "_planning_hash", semantic_digest(self._planning_manifest(manifest)))
@@ -361,11 +374,15 @@ class CaseData:
         arrays = [self.mri, self.affine, *self.compartments.values(), *self.source_compartments.values()]
         if self.brain_mask is not None:
             arrays.append(self.brain_mask)
+        arrays.extend(item.mask for item in self.structural_evidence.values())
         return tuple((array.shape, array.dtype.str, array.strides, array.__array_interface__["data"][0]) for array in arrays)
 
     def _planning_manifest(self, manifest: Mapping[str, Any]) -> dict[str, Any]:
         result = dict(manifest)
         result.pop("revision", None)
+        # Unselected structural proposals cannot perturb optimization seeds.
+        # An explicitly selected working brain_mask remains in this identity.
+        result.pop("structural_evidence", None)
         if self.context is not None:
             result["context"] = {
                 "planning_as_of": self.context.planning_as_of.isoformat(),
@@ -412,6 +429,8 @@ class CaseData:
             "context": None if self.context is None else self.context.to_dict(),
             "unknowns": list(self.unknowns), "metadata": thaw_json(self.metadata),
         }
+        if self.structural_evidence:
+            result["structural_evidence"] = {key: value.to_manifest() for key, value in self.structural_evidence.items()}
         if include_hash:
             result["semantic_hash"] = self.semantic_hash
         return result

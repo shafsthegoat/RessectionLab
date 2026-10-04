@@ -21,7 +21,7 @@ import nibabel as nib
 import numpy as np
 from scipy.ndimage import affine_transform
 
-from .core import CaseData, PatientContext, SourceRef
+from .core import CaseData, PatientContext, SourceRef, array_digest
 
 
 BUNDLE_SCHEMA = "resectionlab.case/1"
@@ -87,8 +87,10 @@ def inspect_nifti(path: str | Path, *, dimensions: int = 3) -> dict[str, Any]:
         raise ImagingError("INVALID_TRANSFORM", f"Invalid coded transform: {exc}") from exc
     if not qcode and not scode:
         raise ImagingError("TRANSFORM_UNRESOLVED", "Neither qform nor sform declares an anatomical frame.")
-    if qcode and scode and not np.allclose(qform * factor, sform * factor, atol=0.01, rtol=1e-5):
-        raise ImagingError("QFORM_SFORM_DISAGREEMENT", "Active qform and sform differ; review the source transform.")
+    if qcode and scode:
+        scale_to_mm = np.diag([factor, factor, factor, 1.0])
+        if _maximum_corner_displacement(scale_to_mm @ qform, scale_to_mm @ sform, image.shape[:3]) > 0.01:
+            raise ImagingError("QFORM_SFORM_DISAGREEMENT", "Active qform and sform differ across the image extent; review the source transform.")
     affine = np.array(sform if scode else qform, dtype=float, copy=True)
     affine[:3, :] *= factor
     if (not np.isfinite(affine).all() or not np.allclose(affine[3], [0, 0, 0, 1])
@@ -131,11 +133,18 @@ def _read_finite(path: str | Path) -> np.ndarray:
     return data
 
 
+def _maximum_corner_displacement(first: np.ndarray, second: np.ndarray, shape: tuple | list) -> float:
+    """Maximum grid-corner displacement in the transforms' output coordinate units."""
+    corners = np.array(np.meshgrid(*[(0, size - 1) for size in shape], indexing="ij")).reshape(3, -1).T
+    delta = nib.affines.apply_affine(first, corners) - nib.affines.apply_affine(second, corners)
+    return float(np.max(np.linalg.norm(delta, axis=1))) if np.isfinite(delta).all() else float("inf")
+
+
 def _aligned_mask(path: str | Path, reference_qc: Mapping[str, Any]) -> tuple[np.ndarray, dict]:
     qc = inspect_nifti(path)
     if qc["shape"] != reference_qc["shape"]:
         raise ImagingError("MASK_SHAPE_MISMATCH", f"{Path(path).name} does not share the structural image grid.")
-    if not np.allclose(qc["affine_ras_mm"], reference_qc["affine_ras_mm"], atol=0.01, rtol=1e-5):
+    if _maximum_corner_displacement(np.asarray(qc["affine_ras_mm"]), np.asarray(reference_qc["affine_ras_mm"]), qc["shape"]) > 0.01:
         raise ImagingError("MASK_AFFINE_MISMATCH", f"{Path(path).name} is not aligned to the structural image.")
     data = _read_finite(path)
     if (data < 0).any() or not np.equal(data, np.rint(data)).all():
@@ -316,6 +325,9 @@ def load_fractional_annotation_case(
             or not np.all(np.sum(np.abs(linear), axis=0) == 1)
             or not np.all(np.sum(np.abs(linear), axis=1) == 1)):
         raise ImagingError("ANNOTATION_REGISTRATION_REQUIRED", "Annotation differs by more than a physical grid-axis reindexing.")
+    maximum_rounding_error = _maximum_corner_displacement(transform, rounded, base.mri.shape)
+    if maximum_rounding_error > 1e-3:
+        raise ImagingError("ANNOTATION_REGISTRATION_REQUIRED", "Annotation grid drift exceeds 0.001 voxel across the image extent.")
     corners = np.array(np.meshgrid(*[(0, size - 1) for size in base.mri.shape], indexing="ij")).reshape(3, -1).T
     mapped = corners @ linear.T + rounded[:3, 3]
     if not (np.array_equal(mapped.min(axis=0), [0, 0, 0])
@@ -336,7 +348,8 @@ def load_fractional_annotation_case(
                         "source_shape": list(source.shape), "source_affine_ras_mm": source_qc["affine_ras_mm"],
                         "target_voxel_to_source_voxel": transform.tolist(),
                         "applied_integer_reindex": rounded.tolist(),
-                        "max_grid_rounding_error_voxels": float(np.max(np.abs(transform - rounded))),
+                        "max_grid_rounding_error_voxels": maximum_rounding_error,
+                        "grid_rounding_error_definition": "maximum Euclidean source-voxel displacement at the eight structural-grid corners",
                         "threshold": float(threshold), "threshold_rule": "source_intensity >= threshold",
                         "threshold_evidence": "declared_research_assumption", "derived_provenance": "estimated",
                         "source_compartments_meaning": "initial threshold-derived binary annotation, not original fractional values",
@@ -383,6 +396,11 @@ def save_case(case: CaseData, path: str | Path, *, artifacts: Mapping[str, Any] 
             index[group][name] = key
     if case.brain_mask is not None:
         arrays["brain_mask"] = case.brain_mask
+    structural_records = {}
+    for position, (name, evidence) in enumerate(getattr(case, "structural_evidence", {}).items()):
+        key = f"structural_evidence_{position}"
+        arrays[key] = evidence.mask
+        structural_records[name] = {"array_key": key, "manifest": evidence.to_manifest()}
     buffer = BytesIO()
     np.savez_compressed(buffer, **arrays)
     payload = buffer.getvalue()
@@ -393,6 +411,8 @@ def save_case(case: CaseData, path: str | Path, *, artifacts: Mapping[str, Any] 
         "metadata": _jsonable(case.metadata), "unknowns": list(case.unknowns), "array_index": index,
         "array_sha256": sha256(payload).hexdigest(), "artifacts": _jsonable(artifacts or {}),
     }
+    if structural_records:
+        manifest["structural_evidence"] = structural_records
     encoded_manifest = json.dumps(manifest, indent=2, sort_keys=True, allow_nan=False).encode("utf-8")
     temporary: Path | None = None
     try:
@@ -440,13 +460,21 @@ def load_case(path: str | Path) -> CaseData:
         with np.load(BytesIO(payload), allow_pickle=False) as arrays:
             groups = {group: {name: arrays[key] for name, key in manifest["array_index"][group].items()}
                       for group in ("compartments", "source_compartments")}
+            structural = {}
+            if manifest.get("structural_evidence"):
+                from .structural_evidence import StructuralEvidence
+                structural = {
+                    name: StructuralEvidence.from_manifest(record["manifest"], mask=arrays[record["array_key"]])
+                    for name, record in manifest["structural_evidence"].items()
+                }
+            extra = {"structural_evidence": structural} if structural else {}
             case = CaseData(case_id=manifest["case_id"], mri=arrays["mri"], affine=arrays["affine"],
                             compartments=groups["compartments"], source_compartments=groups["source_compartments"],
                             brain_mask=arrays["brain_mask"] if "brain_mask" in arrays.files else None,
                             source_refs=tuple(SourceRef(**reference) for reference in manifest["source_refs"]),
                             context=PatientContext.from_dict(manifest["context"]) if manifest["context"] is not None else None,
                             frame=manifest["frame"], revision=manifest["revision"], unknowns=tuple(manifest["unknowns"]),
-                            metadata=manifest["metadata"])
+                            metadata=manifest["metadata"], **extra)
         if case.semantic_hash != manifest["case_semantic_hash"]:
             raise ImagingError("CASE_HASH_MISMATCH", "Reopened case differs from its saved semantic identity.")
         return case
@@ -459,6 +487,103 @@ def load_case(path: str | Path) -> CaseData:
 def read_case_artifacts(path: str | Path) -> dict[str, Any]:
     """Read saved plan/settings JSON; callers must verify each plan's case hash."""
     return _read_bundle(path)[0]["artifacts"]
+
+
+def import_brain_extraction_evidence(
+    case: CaseData, *, source_image_path: str | Path, mask_path: str | Path,
+    report_path: str | Path, variant: str, evidence_id: str | None = None,
+) -> CaseData:
+    """Attach a pinned, unreviewed extraction artifact as separate display evidence.
+
+    Source-file bytes, current MRI values/frame, report identity, checkpoint and
+    mask bytes/grid must agree. The operation never sets ``brain_mask``, accepts
+    an anatomical review, or enables cortical access. Current target inclusion is
+    recomputed; a source QC report is not silently reused after target edits.
+    """
+    from .brain_extraction import ASSETS
+    from .structural_evidence import StructuralEvidence, structural_frame_hash
+
+    if variant not in {"main", "nocsf"}:
+        raise ImagingError("UNKNOWN_EXTRACTION_VARIANT", "Choose the recorded main or no-CSF extraction variant.")
+    source_image_path, mask_path, report_path = map(Path, (source_image_path, mask_path, report_path))
+    try:
+        report = json.loads(report_path.read_text(encoding="utf-8"))
+        if not isinstance(report, dict):
+            raise ValueError("Report must be a JSON object")
+    except (OSError, ValueError) as exc:
+        raise ImagingError("UNREADABLE_EXTRACTION_REPORT", f"Cannot read extraction report: {exc}") from exc
+    source_hash, mask_file_hash, report_hash = map(file_sha256, (source_image_path, mask_path, report_path))
+    source_refs = [item for item in case.source_refs if item.source_id == "structural"]
+    if len(source_refs) != 1 or source_refs[0].sha256 != source_hash:
+        raise ImagingError("EXTRACTION_SOURCE_MISMATCH", "Extraction source does not match the case's hashed structural input.")
+    if report.get("source_t1_sha256") != source_hash:
+        raise ImagingError("EXTRACTION_SOURCE_MISMATCH", "Extraction report belongs to another source image.")
+    source_qc = inspect_nifti(source_image_path)
+    source_data = _read_finite(source_image_path)
+    source_affine = np.asarray(source_qc["affine_ras_mm"])
+    if case.frame == "LPS+":
+        source_affine = np.diag([-1, -1, 1, 1]) @ source_affine
+    if (not np.array_equal(source_data, case.mri) or not np.allclose(source_affine, case.affine, rtol=0, atol=1e-5)):
+        raise ImagingError("EXTRACTION_CASE_IMAGE_CHANGED", "Case MRI values or physical frame changed since the extracted source.")
+    try:
+        variant_record = report["variants"][variant]
+        inference = variant_record["inference"]
+        model = inference["model"]
+        checkpoint_name = "synthstrip.1.pt" if variant == "main" else "synthstrip.nocsf.1.pt"
+        checkpoint_hash = model["files"][checkpoint_name]["sha256"]
+        expected_mask_hash = inference["artifact_hashes"][f"{variant}_mask.nii.gz"]
+    except (KeyError, TypeError) as exc:
+        raise ImagingError("EXTRACTION_REPORT_INCOMPLETE", "Report lacks the selected source/model/output identity.") from exc
+    if inference.get("input_sha256") != source_hash or inference.get("failure") is not None or inference.get("exit_code") != 0:
+        raise ImagingError("EXTRACTION_INFERENCE_UNVERIFIED", "Only a successful inference on this exact source may be attached.")
+    if (model.get("name") != "SynthStrip" or model.get("variant") != variant
+            or checkpoint_hash != ASSETS[checkpoint_name][1]):
+        raise ImagingError("EXTRACTION_MODEL_MISMATCH", "Report checkpoint is not the declared pinned extraction model.")
+    if expected_mask_hash != mask_file_hash:
+        raise ImagingError("EXTRACTION_MASK_HASH_MISMATCH", "Mask bytes differ from the extraction report.")
+    if any(inference.get(key) is not False for key in ("brain_reviewed", "cortical_access_permitted")):
+        raise ImagingError("EXTRACTION_REPORT_REVIEW_CLAIM", "An inference report cannot supply an accepted anatomical or cortical review.")
+    for scope in (report, variant_record.get("qc", {})):
+        if not isinstance(scope, Mapping) or any(scope.get(key, False) is not False
+                                                 for key in ("brain_reviewed", "cortex_localized", "cortical_access_permitted")):
+            raise ImagingError("EXTRACTION_REPORT_REVIEW_CLAIM", "Extraction metadata cannot grant anatomical or cortical acceptance.")
+    mask_data, _ = _aligned_mask(mask_path, source_qc)
+    if not np.isin(mask_data, [0, 1]).all() or not mask_data.any():
+        raise ImagingError("INVALID_EXTRACTION_MASK", "Extraction mask must be a nonempty binary native-grid array.")
+    mask = mask_data.astype(bool)
+    target = np.zeros(case.mri.shape, dtype=bool)
+    for compartment in case.compartments.values():
+        target |= compartment
+    outside = int(np.count_nonzero(target & ~mask))
+    flags = list(variant_record.get("qc", {}).get("flags", []))
+    if outside:
+        flags.append("CURRENT_TARGET_ANNOTATION_OUTSIDE_ESTIMATED_ENVELOPE")
+    evidence = StructuralEvidence(
+        evidence_id=evidence_id or f"synthstrip_{variant}_{report_hash[:12]}", mask=mask,
+        source_image_hash=array_digest(case.mri), source_frame_hash=structural_frame_hash(case),
+        source_file_sha256=source_hash, model_sha256=checkpoint_hash, run_sha256=report_hash,
+        method=f"SynthStrip version 1 {variant}; native-grid model-estimated whole-brain envelope",
+        provenance="estimated", metadata={
+            "evidence_kind": "whole_brain_envelope", "variant": variant,
+            "mask_source_uri": mask_path.resolve().as_uri(), "mask_file_sha256": mask_file_hash,
+            "report_source_uri": report_path.resolve().as_uri(), "model": model,
+            "inference_configuration": inference.get("configuration", {}),
+            "runtime_versions": inference.get("runtime_versions", {}),
+            "executed_runner_sha256": inference.get("executed_runner_sha256"),
+            "source_qc": variant_record.get("qc", {}), "qc_flags": sorted(set(flags)),
+            "current_target_union_hash": array_digest(target), "current_target_voxels": int(target.sum()),
+            "current_target_annotation_outside_voxels": outside,
+            "current_target_inclusion_meaning": "annotation inclusion only; not extraction accuracy or removal",
+            "cortex_localized": False, "clinical_deficit_probability": None,
+        },
+    )
+    existing = dict(case.structural_evidence)
+    if evidence.evidence_id in existing:
+        if existing[evidence.evidence_id].to_manifest() == evidence.to_manifest():
+            return case
+        raise ImagingError("EXTRACTION_EVIDENCE_ID_EXISTS", "Evidence ID already identifies different data or review; retain a separate version.")
+    existing[evidence.evidence_id] = evidence
+    return case.revised(structural_evidence=existing)
 
 
 def create_synthetic_case(shape: tuple[int, int, int] = (64, 64, 64)) -> CaseData:

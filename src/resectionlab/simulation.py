@@ -657,6 +657,7 @@ def make_patient_simulator(case: Any, *, block_size: int = 6, max_steps: int = 4
     overlap = np.sum(np.stack([np.asarray(case.compartments[name], bool) for name in names]), axis=0)
     if np.any(overlap > 1):
         raise ValueError("Patient sequential experiment requires nonoverlapping target compartments")
+    support_record = None
     if case.brain_mask is None:
         collection = case.metadata.get("source_collection", {})
         skull_stripped_declared = case.metadata.get("skull_stripped") is True or collection.get("name") == "UCSF-PDGM"
@@ -665,7 +666,9 @@ def make_patient_simulator(case: Any, *, block_size: int = 6, max_steps: int = 4
         native_tissue = binary_fill_holes(np.asarray(case.mri) != 0)
         envelope_source = "hole_filled_nonzero_MRI_support_unreviewed_skull_strip_assumption"
     else:
-        native_tissue = np.asarray(case.brain_mask, bool)
+        from .structural_evidence import planning_brain_support
+        native_tissue, support_record = planning_brain_support(case)
+        native_tissue = np.asarray(native_tissue, bool)
         envelope_source = "case_brain_mask"
     native_tissue = native_tissue | (overlap > 0)
     tissue = pool(native_tissue).astype(bool)
@@ -707,6 +710,7 @@ def make_patient_simulator(case: Any, *, block_size: int = 6, max_steps: int = 4
         "block_size_native_voxels": block_size, "native_shape": native_shape,
         "grid_spacing_mm": tuple(float(v) for v in spacing),
         "tissue_envelope_source": envelope_source,
+        "tissue_support_provenance": support_record,
         "pooling": "any_tissue_any_target_then_dominant_target_compartment",
         "target_volume_interpretation": "exact_source_fraction_accounting_inside_coarse_removal_cells",
         "removal_primitive": "indivisible_coarse_cell_on_terminal_tip_contact",

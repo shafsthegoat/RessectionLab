@@ -303,3 +303,29 @@ def test_fractional_annotation_never_hides_registration_requirement(tmp_path):
     with pytest.raises(ImagingError, match="ANNOTATION_REGISTRATION_REQUIRED"):
         load_fractional_annotation_case(structural, annotation, threshold=0.5,
                                         annotation_interpretation="Source annotation")
+
+
+def test_small_matrix_scale_drift_cannot_hide_large_native_grid_misalignment(inputs, tmp_path):
+    structural, _ = inputs
+    affine = np.eye(4)
+    affine[0, 0] = 1.009  # Every matrix entry is within the former 0.01 tolerance.
+    mask = write_image(tmp_path / "scaled_mask.nii", np.ones((8, 9, 10)), affine)
+    with pytest.raises(ImagingError, match="MASK_AFFINE_MISMATCH"):
+        load_nifti_case(structural, mask)
+    affine[0, 0] = 1.0005  # Matrix residual <0.001, but accumulated grid error exceeds it.
+    fractional = write_image(tmp_path / "scaled_fractional.nii", np.ones((8, 9, 10)) * 0.8, affine)
+    with pytest.raises(ImagingError, match="ANNOTATION_REGISTRATION_REQUIRED"):
+        load_fractional_annotation_case(structural, fractional, threshold=0.5,
+                                        annotation_interpretation="Fractional source annotation")
+
+
+def test_subdegree_qform_rotation_is_checked_across_the_image_extent(tmp_path):
+    path = write_image(tmp_path / "qform_rotation.nii", np.ones((8, 9, 10)))
+    image = nib.load(path)
+    angle = np.deg2rad(0.5)
+    rotation = np.eye(4)
+    rotation[:2, :2] = [[np.cos(angle), -np.sin(angle)], [np.sin(angle), np.cos(angle)]]
+    image.set_qform(rotation, 1)
+    nib.save(image, path)
+    with pytest.raises(ImagingError, match="QFORM_SFORM_DISAGREEMENT"):
+        inspect_nifti(path)

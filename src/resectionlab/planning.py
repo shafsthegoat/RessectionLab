@@ -249,14 +249,14 @@ def sample_target_points(
 def generate_hypothetical_windows(
     case: CaseData, config: SearchConfig | None = None,
     *, support_mask: np.ndarray | None = None,
-    support_provenance: Mapping[str, str] | None = None,
+    support_provenance: Mapping[str, Any] | None = None,
 ) -> tuple[AccessWindow, ...]:
     """Propose three explicitly hypothetical brain-envelope access windows.
 
     Requires a supplied/derived brain mask or an explicitly passed support mask
     with provenance. Estimated MRI support is never treated as verified tissue.
-    The outer mask boundary is only a
-    cortical-envelope surrogate: sulci, vessels, scalp and skull are not inferred.
+    The outer mask boundary is a hypothetical tissue envelope; it does not
+    identify the cortex, sulci, vessels, scalp or skull.
     User-reviewed windows should be passed to ``generate_candidate_routes``.
     """
     config = config or SearchConfig()
@@ -308,8 +308,12 @@ def _access_support(case, support_mask, support_provenance):
     if support_mask is None:
         if support_provenance:
             raise ValueError("support_provenance requires a support_mask")
-        return case.brain_mask, {"source": "case.brain_mask", "method": "outer mask envelope", "evidence_type": "case_record"} if case.brain_mask is not None else {}
+        from .structural_evidence import planning_brain_support
+        return planning_brain_support(case)
     support = np.asarray(support_mask)
+    if case.brain_mask is not None:
+        from .structural_evidence import planning_brain_support
+        planning_brain_support(case)
     if support.shape != case.mri.shape or support.dtype != np.bool_ or not np.any(support):
         raise ValueError("support_mask must be a nonempty boolean mask in the case grid")
     record = dict(support_provenance or {})
@@ -317,11 +321,17 @@ def _access_support(case, support_mask, support_provenance):
         raise ValueError("Explicit support requires source, method and evidence_type provenance")
     if record["evidence_type"] not in {"estimated", "observed", "simulated"}:
         raise ValueError("Support evidence_type must be estimated, observed or simulated")
-    if case.metadata.get("allow_nonzero_mri_access_support") is False and (
+    for proposal in getattr(case, "structural_evidence", {}).values():
+        proposal._assert_mask_layout()
+        if np.array_equal(support, proposal.mask) and proposal.review_status != "accepted":
+            raise ValueError("BRAIN_MASK_REVIEW_REQUIRED: an extraction proposal cannot define working access support")
+    if (case.metadata.get("allow_nonzero_mri_access_support") is False or case.metadata.get("structural_coverage") == "full_head") and (
         "nonzero" in record["method"].lower().replace("-", "")
         or np.array_equal(support, case.mri != 0)
     ):
         raise ValueError("FULL_HEAD_SUPPORT_NOT_CORTEX: nonzero whole-head MRI cannot define an intracranial access window; use a reviewed brain mask or explicit hypothetical window")
+    from .structural_evidence import validate_explicit_support
+    record = validate_explicit_support(case, support, record)
     record["mask_sha256"] = sha256(np.ascontiguousarray(support).tobytes()).hexdigest()
     return support, record
 
@@ -400,7 +410,7 @@ def generate_candidate_routes(
     tools: Sequence[ToolGeometry] | None = None,
     critical_masks: Mapping[str, np.ndarray | None] | None = None,
     support_mask: np.ndarray | None = None,
-    support_provenance: Mapping[str, str] | None = None,
+    support_provenance: Mapping[str, Any] | None = None,
     config: SearchConfig | None = None,
     cancel: Callable[[], bool] | None = None,
     progress: Callable[[int, int], None] | None = None,

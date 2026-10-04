@@ -192,10 +192,12 @@ def test_shifted_entry_requires_declared_plane_and_full_aperture_clearance():
 
 
 def test_native_case_helper_respects_explicit_anatomy_conflicts_and_source_frame():
+    from resectionlab.core import SourceRef
     cfg = config()
     case = SimpleNamespace(mri=cfg.tissue_mask.astype(float), compartments={"target": cfg.target_labels > 0},
                            brain_mask=cfg.tissue_mask, affine=cfg.affine, metadata={},
-                           case_id="analytic", semantic_hash="source-hash", frame="LPS+")
+                           case_id="analytic", semantic_hash="source-hash", frame="LPS+",
+                           source_refs=(SourceRef("fixture", "synthetic://native-helper", provenance="simulated"),))
     converted = native_config_from_case(case, access=cfg.access)
     np.testing.assert_array_equal(converted.affine, np.diag([-1., -1., 1., 1.]))
     np.testing.assert_array_equal(converted.access.center_mm, [-10, -10, 4.5])

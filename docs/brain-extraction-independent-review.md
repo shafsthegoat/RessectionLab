@@ -63,3 +63,18 @@ invalidate that review. A whole-brain-envelope review does not establish cortex
 or permit a cortical window: retain `cortex_localized=false` and
 `cortical_access_permitted=false` until the separate access contract is satisfied.
 Keep the full-head nonzero-intensity shortcut disabled.
+
+The separate evidence contract and portable bundle support are implemented. The
+tested import below creates two `review_required` proposals while retaining the
+existing MRI, annotations, empty working brain mask, planning-input hash and
+source files. It checks the source file against both case provenance and current
+MRI values/frame; mask bytes/grid and the pinned checkpoint against the report;
+and case identity after saving and reopening.
+
+```sh
+.venv/bin/python scripts/attach_brain_evidence.py \
+  --case outputs/cases/BTC-sub-PAT28.ressectionlab \
+  --source-image data/diffusion_source/ds001226-v5.0.1/sub-PAT28/ses-preop/anat/sub-PAT28_ses-preop_T1w.nii.gz \
+  --report artifacts/brain-extraction/PAT28-mps-v4/brain_extraction_report.json \
+  --output outputs/cases/BTC-sub-PAT28-structural-evidence.ressectionlab
+```

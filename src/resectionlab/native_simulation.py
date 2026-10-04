@@ -444,10 +444,12 @@ def make_native_patient_simulator(case: Any, *, access: AccessWindow | None = No
         tissue = binary_fill_holes(np.asarray(case.mri) != 0) | union
         provenance = "estimated_hole_filled_nonzero_UCSF_or_declared_skull_stripped_MRI_support; brain_surface_unreviewed"
     else:
-        tissue = np.asarray(case.brain_mask, bool)
+        from .structural_evidence import planning_brain_support
+        tissue, support_record = planning_brain_support(case)
+        tissue = np.asarray(tissue, bool)
         if np.any(union & ~tissue):
             raise ValueError("Target annotation lies outside the supplied brain mask; review the conflicting anatomy before planning")
-        provenance = "supplied_case_brain_mask"
+        provenance = support_record["method"] + "; cortical_access_unverified"
     if cancelled is not None and cancelled():
         raise InterruptedError("Native planning cancelled")
     frame_conversion = np.diag([-1., -1., 1., 1.])
