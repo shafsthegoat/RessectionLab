@@ -9,7 +9,9 @@
     "start": "electron .",
     "build": "tsc --noEmit && vite build",
     "package:mac": "node electron/package-macos.cjs",
+    "test": "pnpm test:main && pnpm test:renderer && pnpm test:viewer",
     "test:main": "node --test electron/*.test.cjs",
+    "test:viewer": "node --experimental-strip-types --test src/viewer/*.test.mjs",
     "test:renderer": "node --experimental-strip-types --test tests/*.test.mjs"
   },
   "dependencies": {

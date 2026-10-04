@@ -26,8 +26,7 @@ without downloading imaging. Then, from the repository root:
 cd desktop
 pnpm install --frozen-lockfile
 pnpm exec electron --version
-pnpm test:main
-pnpm test:renderer
+pnpm test
 pnpm build
 cd ..
 .venv/bin/python scripts/build_electron_sidecar.py

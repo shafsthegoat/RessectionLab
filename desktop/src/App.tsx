@@ -37,6 +37,7 @@ import { hydratePriorProposal } from "./prior-data";
 import { PriorInventory, PriorProvenance } from "./PriorInventory";
 import { hydrateStructuralProposal } from "./structural-proposal-data";
 import { isOperationCancelled, operationMessage } from "./operation-feedback";
+import { routeComparisonPrompt } from "./route-comparison-prompt";
 import { StructuralEvidenceInventory } from "./StructuralEvidenceInventory";
 import { StructuralImportDialog } from "./StructuralImportDialog";
 import { researchSupportGate } from "./case-support";
@@ -288,21 +289,20 @@ function EvidenceDrawer({
 function RouteComparison({
   selected,
   all,
+  emptyPrompt,
   onFailure,
 }: {
   selected: SelectedRoute[];
   all: RouteCandidate[];
+  emptyPrompt: ReturnType<typeof routeComparisonPrompt>;
   onFailure: (point: Vec3) => void;
 }) {
   if (!selected.length)
     return (
       <div className="empty-comparison">
         <Waypoints size={28} strokeWidth={1.1} />
-        <h3>A route starts with the case</h3>
-        <p>
-          Review the anatomy, choose an instrument, then generate alternatives
-          to compare.
-        </p>
+        <h3>{emptyPrompt.title}</h3>
+        <p>{emptyPrompt.description}</p>
       </div>
     );
   const metrics: { label: string; get: (route: RouteCandidate) => string }[] = [
@@ -1593,6 +1593,19 @@ export default function App() {
             <RouteComparison
               selected={selected}
               all={routes}
+              emptyPrompt={routeComparisonPrompt({
+                hasCase: !!payload,
+                hasTargetAnnotations: !!caseData?.compartments.length,
+                candidateCount: routes.length,
+                availableCount: available.length,
+                support: supportGate,
+                estimatedSupportChosen: allowEstimatedSupport,
+                readOnly: readonly,
+                engineStopped,
+                generating:
+                  operation?.op === "generateRoutes" ||
+                  operation?.op === "generateNativeRoutes",
+              })}
               onFailure={(point) => {
                 setCursor(rasPoint(point, payload?.frame ?? "RAS+"));
                 setCameraMode("anatomy");

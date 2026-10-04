@@ -1,0 +1,32 @@
+{
+  "scope": "Context-aware route comparison empty-state guidance and complete default desktop test entry point",
+  "source_sha256": {
+    "desktop/src/App.tsx": "21d6c211a1d81cb9312262ed4ce586f3db291839fdad2cbffd8915bb1d368ae9",
+    "desktop/src/route-comparison-prompt.ts": "74932a9b09593579853be740cc24fbb25e881dbcada7505902a8dd61cfb98868",
+    "desktop/tests/route-comparison-prompt.test.mjs": "33931ac751df3eea143d036b97b557456ce1078b33131009ef7175ac5ba303bb",
+    "desktop/package.json": "85a5de6b50a9cfa326ade817cd65e0ad9f69a7775f237ebe0247eb913fcf5450"
+  },
+  "checks": {
+    "main": 31,
+    "renderer": 73,
+    "viewer": 31,
+    "total": 135,
+    "failed": 0
+  },
+  "production_build_passed": true,
+  "commands": [
+    "pnpm test",
+    "pnpm build"
+  ],
+  "native_screenshot_verification": "pending_after_packaging",
+  "scientific_behavior_changed": false,
+  "source_viewer_sampling_changed": false,
+  "existing_installed_app_changed": false,
+  "build_log_storage": {
+    "path": "build.log.gz",
+    "raw_bytes": 837,
+    "raw_sha256": "fd1cc0a4940cff868ca1f3319a761bfdcfe29c97c889d09dfc7bbf0705f338c4",
+    "gzip_sha256": "03dcfe9e004d695beb90de1e436a053ef143b779459c33007ca00f2eaa5fa564",
+    "byte_roundtrip_passed": true
+  }
+}

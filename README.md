@@ -57,8 +57,7 @@ For the current desktop interface, install Node and pnpm, then run:
 ```sh
 cd desktop
 pnpm install --frozen-lockfile
-pnpm test:main
-pnpm test:renderer
+pnpm test
 pnpm build
 pnpm start
 ```
