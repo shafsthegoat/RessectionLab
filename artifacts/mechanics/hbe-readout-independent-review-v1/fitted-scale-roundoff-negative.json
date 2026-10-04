@@ -1,0 +1,12 @@
+{
+  "kind": "analytical_contract_regression_no_measured_data",
+  "source_sha256": "75ad1bcc60de1bc470ccb45eac0837e5c0fdd5340ef70f3525d0e10b24593e3d",
+  "test": "test_arbitrary_positive_fitted_scale_uses_declared_residual_arithmetic",
+  "result": "1 failed in 0.14s",
+  "error": "ValueError: Declared residual floor differs",
+  "mu_Pa": 123.456,
+  "radius_m": 0.004,
+  "deck_arithmetic": 3.901794287616e-26,
+  "previous_readout_arithmetic": 3.9017942876160003e-26,
+  "repair": "Use the existing mesh declaration arithmetic ordering, with unchanged tolerance."
+}

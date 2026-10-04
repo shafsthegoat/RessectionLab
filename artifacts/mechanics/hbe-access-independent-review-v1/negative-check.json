@@ -1,0 +1,26 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_mechanics_hbe_access_review.py",
+    "--basetemp=build/validation/mechanics-hbe-access-review-v1-negative"
+  ],
+  "exit_code": 1,
+  "wall_seconds": 0.481700833,
+  "source_before_sha256": {
+    "scripts/mechanics_hbe_access.py": "6405e074628b05382e2fd949e11bd4c32af36e286abcf42c3de2c3fda4825244",
+    "scripts/mechanics_hbe_readout.py": "3a48858d3e89a38dab5c1ea6694159be253435f77609efe4009355849bcb93bc",
+    "tests/test_mechanics_hbe_access.py": "cf80389bdeb456c405127063fc59f2c7914df5560c54af91ce0d988b24afa414",
+    "tests/test_mechanics_hbe_access_review.py": "15658ac58efc4a2813c6ef7a9b8eeef1176b48f82bec2a6bfec87f53a170ff2a"
+  },
+  "source_after_sha256": {
+    "scripts/mechanics_hbe_access.py": "6405e074628b05382e2fd949e11bd4c32af36e286abcf42c3de2c3fda4825244",
+    "scripts/mechanics_hbe_readout.py": "3a48858d3e89a38dab5c1ea6694159be253435f77609efe4009355849bcb93bc",
+    "tests/test_mechanics_hbe_access.py": "cf80389bdeb456c405127063fc59f2c7914df5560c54af91ce0d988b24afa414",
+    "tests/test_mechanics_hbe_access_review.py": "15658ac58efc4a2813c6ef7a9b8eeef1176b48f82bec2a6bfec87f53a170ff2a"
+  },
+  "all_tested_files_unchanged": true,
+  "fixture_change": "Only copied analytical helper schema repaired to include run_readout source binding and fitted_confirmation. All dummy evidence remains explicitly fake. Initial run rejected stale fixture shape before three intended lifecycle controls, so those initial errors are harness failures, not reproduced product findings."
+}

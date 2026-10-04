@@ -1,0 +1,158 @@
+FFFFFF.                                                                  [100%]
+=================================== FAILURES ===================================
+_ test_twenty_claimed_rows_with_dummy_primitive_blobs_are_not_numerical_evidence _
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-hbe-access-review-v1-negative/test_twenty_claimed_rows_with_0')
+
+    def test_twenty_claimed_rows_with_dummy_primitive_blobs_are_not_numerical_evidence(tmp_path):
+        study = f.study_fixture(tmp_path)
+        report = f.numerical_fixture(tmp_path, study, 2000)
+        assert len(report["runs"]) == 20
+        binding = f.save(tmp_path, "invented-numerical.json", report)
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_mechanics_hbe_access_review.py:46: Failed
+____ test_claimed_large_limits_and_wrong_units_cannot_pass_frozen_protocol _____
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-hbe-access-review-v1-negative/test_claimed_large_limits_and_0')
+
+    def test_claimed_large_limits_and_wrong_units_cannot_pass_frozen_protocol(tmp_path):
+        study = f.study_fixture(tmp_path)
+        report = f.numerical_fixture(tmp_path, study, 2000)
+        key = next(iter(report["runs"]))
+        report["runs"][key]["criteria"]["force_balance"] = {
+            "actual": 100., "limit": 1000., "units": "arbitrary"}
+        binding = f.save(tmp_path, "loose-numerical.json", report)
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_mechanics_hbe_access_review.py:58: Failed
+__ test_rehashing_prediction_and_freeze_does_not_make_a_new_authorized_freeze __
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-hbe-access-review-v1-negative/test_rehashing_prediction_and_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109444290>
+
+    def test_rehashing_prediction_and_freeze_does_not_make_a_new_authorized_freeze(tmp_path, monkeypatch):
+        study = f.study_fixture(tmp_path)
+        freeze, _, prediction_binding, _ = f.frozen_fixture(tmp_path, study)
+        prediction = json.loads((tmp_path / prediction_binding["path"]).read_text())
+        prediction["fitted"]["torsion_pos"]["response"][-1] += 1
+        replacement = f.save(tmp_path, "changed-prediction.json", prediction)
+        record = json.loads((tmp_path / freeze["path"]).read_text())
+        record["predictions"] = replacement
+        record["calibration_member_sha256"] = {"compression": "0" * 64, "tension": "0" * 64}
+        resealed = f.save(tmp_path, "hand-authored-freeze.json", record)
+        forbid_member_reads(monkeypatch)
+        with pytest.raises(ValueError):
+>           study.evaluate_held_out(freeze_binding=resealed,
+                schemas=f.schemas(("torsion_neg", "torsion_pos")))
+
+tests/test_mechanics_hbe_access_review.py:75: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/mechanics_hbe_access.py:272: in evaluate_held_out
+    observed=self._read_selected(roles,roles['held_out_validation']['members'],('torsion_neg','torsion_pos'),schemas,'held_out')
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/mechanics_hbe_access.py:221: in _read_selected
+    data=archive.read(info)
+         ^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (<zipfile.ZipFile [closed]>, <ZipInfo filename='fixture/torsion_neg.csv' filemode='?rw-------' file_size=21>)
+kwargs = {}
+
+    def fail(*args, **kwargs):
+>       raise AssertionError("Rejected evidence must not open any selected archive member")
+E       AssertionError: Rejected evidence must not open any selected archive member
+
+tests/test_mechanics_hbe_access_review.py:37: AssertionError
+__ test_holdout_attempt_permanently_closes_calibration_even_for_new_instance ___
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-hbe-access-review-v1-negative/test_holdout_attempt_permanent0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109416bd0>
+
+    def test_holdout_attempt_permanently_closes_calibration_even_for_new_instance(tmp_path, monkeypatch):
+        study = f.study_fixture(tmp_path)
+        freeze, *_ = f.frozen_fixture(tmp_path, study)
+        study.evaluate_held_out(freeze_binding=freeze,
+            schemas=f.schemas(("torsion_neg", "torsion_pos")))
+        restarted = a.ReleasedStudy(tmp_path, study.protocol_binding, study.release_binding,
+            ledger_path="access.jsonl")
+        forbid_member_reads(monkeypatch)
+        with pytest.raises(ValueError):
+>           restarted.read_calibration(f.schemas(("compression", "tension")))
+
+tests/test_mechanics_hbe_access_review.py:88: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/mechanics_hbe_access.py:229: in read_calibration
+    self._calibration=self._read_selected(roles,roles['calibration']['members'],('compression','tension'),schemas,'calibration')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/mechanics_hbe_access.py:221: in _read_selected
+    data=archive.read(info)
+         ^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (<zipfile.ZipFile [closed]>, <ZipInfo filename='fixture/compression.csv' filemode='?rw-------' file_size=22>)
+kwargs = {}
+
+    def fail(*args, **kwargs):
+>       raise AssertionError("Rejected evidence must not open any selected archive member")
+E       AssertionError: Rejected evidence must not open any selected archive member
+
+tests/test_mechanics_hbe_access_review.py:37: AssertionError
+_______________ test_holdout_attempt_permanently_closes_refreeze _______________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-hbe-access-review-v1-negative/test_holdout_attempt_permanent1')
+
+    def test_holdout_attempt_permanently_closes_refreeze(tmp_path):
+        study = f.study_fixture(tmp_path)
+        freeze, fit_binding, prediction_binding, numerical_binding = f.frozen_fixture(tmp_path, study)
+        study.evaluate_held_out(freeze_binding=freeze,
+            schemas=f.schemas(("torsion_neg", "torsion_pos")))
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_mechanics_hbe_access_review.py:96: Failed
+__ test_calibration_release_needs_actual_replayable_source_and_prerequisites ___
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-hbe-access-review-v1-negative/test_calibration_release_needs0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109416ae0>
+
+    def test_calibration_release_needs_actual_replayable_source_and_prerequisites(tmp_path, monkeypatch):
+        study = f.study_fixture(tmp_path)
+        # The original fixture has only hash-shaped source labels and one dummy prerequisite blob.
+        release = json.loads((tmp_path / study.release_binding["path"]).read_text())
+        assert "source_archive" not in release
+        forbid_member_reads(monkeypatch)
+        with pytest.raises(ValueError):
+>           study.read_calibration(f.schemas(("compression", "tension")))
+
+tests/test_mechanics_hbe_access_review.py:108: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/mechanics_hbe_access.py:229: in read_calibration
+    self._calibration=self._read_selected(roles,roles['calibration']['members'],('compression','tension'),schemas,'calibration')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/mechanics_hbe_access.py:221: in _read_selected
+    data=archive.read(info)
+         ^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (<zipfile.ZipFile [closed]>, <ZipInfo filename='fixture/compression.csv' filemode='?rw-------' file_size=22>)
+kwargs = {}
+
+    def fail(*args, **kwargs):
+>       raise AssertionError("Rejected evidence must not open any selected archive member")
+E       AssertionError: Rejected evidence must not open any selected archive member
+
+tests/test_mechanics_hbe_access_review.py:37: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_mechanics_hbe_access_review.py::test_twenty_claimed_rows_with_dummy_primitive_blobs_are_not_numerical_evidence
+FAILED tests/test_mechanics_hbe_access_review.py::test_claimed_large_limits_and_wrong_units_cannot_pass_frozen_protocol
+FAILED tests/test_mechanics_hbe_access_review.py::test_rehashing_prediction_and_freeze_does_not_make_a_new_authorized_freeze
+FAILED tests/test_mechanics_hbe_access_review.py::test_holdout_attempt_permanently_closes_calibration_even_for_new_instance
+FAILED tests/test_mechanics_hbe_access_review.py::test_holdout_attempt_permanently_closes_refreeze
+FAILED tests/test_mechanics_hbe_access_review.py::test_calibration_release_needs_actual_replayable_source_and_prerequisites
+6 failed, 1 passed in 0.33s

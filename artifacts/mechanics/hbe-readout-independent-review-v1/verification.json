@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "status": "readout_checks_pass_access_integration_pending",
+  "tested_source_sha256": {
+    "scripts/mechanics_hbe_readout.py": "75ad1bcc60de1bc470ccb45eac0837e5c0fdd5340ef70f3525d0e10b24593e3d",
+    "scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "scripts/mechanics_hbe_outputs.py": "a86191769ee71e79596d9f3871da575dd7e2b2d62e1a9c919162242a335fa65d",
+    "tests/test_mechanics_hbe_readout.py": "bfe4d9dd3829aa5aedd81e1226a463888926c255944a00c3e963ffb4f9505447",
+    "tests/test_mechanics_hbe_readout_review.py": "e479ae9e25e67d69ed91220335053f7654542ae1d4a88e0a8c5cd4cf86c0e74f",
+    "scripts/mechanics_hbe_access.py": "6405e074628b05382e2fd949e11bd4c32af36e286abcf42c3de2c3fda4825244"
+  },
+  "tests": {
+    "independent": 7,
+    "owner": 3,
+    "passed": 10,
+    "pytest_seconds": 0.34,
+    "isolated_process_wall_seconds": 0.498061708,
+    "all_tested_files_unchanged": true,
+    "isolated_receipt_sha256": "15b5eca4773c0a8750bd69c2c2988fbd5bc7d9cc86a39d3245d213b0fced8b74",
+    "log_sha256": "4c12680b7195cf3e11923341f3ac88a496c51276562bd07096689c28694261bf"
+  },
+  "negative": {
+    "passed": 6,
+    "failed": 1,
+    "source_sha256": "3a48858d3e89a38dab5c1ea6694159be253435f77609efe4009355849bcb93bc",
+    "pytest_seconds": 0.24,
+    "finding": "Strictly negative logged element J allowed passed=true when independently reconstructed nodal J remained positive.",
+    "repair": "Any logged J<=0 rejects with an explicit conflicting deformation error. No exact average-J equivalence or logged-sed energy assumption introduced.",
+    "initial_receipt_sha256": "f8417aa8a09c6d35819ff61f9a5697a42e22044cc43cba81d08f96fd32f6a383"
+  },
+  "verified": [
+    "Rehashed missing initial state, missing final element state and duplicate node ID reject; the streaming readers are exhausted together.",
+    "Wrong loading units reject before primitive iteration; source/deck drift during readout is detected by final hashes.",
+    "Existing constructed reaction/work-energy controls reject sign reversal and inconsistent displacement columns; real output sign verification is still separate.",
+    "Mesh comparison retains strict decreasing trend when differences exceed the absolute floor; step comparison samples exactly the61common declared states from121frames. Odd120-step samples are outside that declared comparison and are not silently described as all-state convergence.",
+    "A known constitutive kinematic fixture produces61frames and75probe displacements per frame; this is an analytical unit check, not FEM output."
+  ],
+  "dependency_caveat": "Readout imports utility functions from uncommitted mechanics_hbe_access.py. Because that owner is actively repairing it, final isolated check pins the preserved6405e074 utility source. No release/evidence/freeze APIs from that source are exercised or approved. Final integrated access/readout check is still required before measured data release.",
+  "actions": {
+    "measured_curve_values_read": 0,
+    "patient_arrays_or_images_read": 0,
+    "actual_solver_runs": 0,
+    "network_requests": 0,
+    "analytical_primitive_fixtures_only": true,
+    "thread_environment_limit": 1
+  },
+  "remaining_limits": [
+    "Actual solver output precision/header/zero-state emission still needs a bounded runtime check.",
+    "Source/runtime/deck/execution and genuine20-run convergence evidence remain future access/runner integration obligations.",
+    "Sampled positive Jacobians are not a proof of positivity everywhere; no physical fidelity, donor or patient validation is claimed."
+  ],
+  "blocking_readout_findings": []
+}
