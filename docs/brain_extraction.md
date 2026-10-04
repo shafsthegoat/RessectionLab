@@ -72,6 +72,14 @@ have the native shape/physical affine and entirely finite values before a run ca
 record successful artifacts. Distance values remain model predictions, not
 reviewed geometry or probabilities.
 
+Native-grid agreement is bounded by the maximum physical displacement of the
+eight voxel-centre corners, with a 0.01-mm tolerance. This replaces entrywise
+affine tolerance, which could admit small scale/rotation errors that accumulate
+across a full image. Synthetic scale-drift regressions cover both mask and
+distance outputs. Existing PAT28 v4 outputs pass the stronger check with exactly
+0.0-mm corner displacement; this later revalidation is recorded separately in
+`PAT28-physical-corner-revalidation.json`, without rewriting historical reports.
+
 Early compatibility testing failed with the project's NumPy and Surfa 0.6.3:
 Surfa attempted to assign a one-element array as an integer during orientation
 conversion. The same native T1 passed with NumPy 2.2.6 in a separate interpreter;
@@ -184,3 +192,51 @@ and distance arrays identical to v3. Both distance maps pass geometry and finite
 value checks; their ranges are −4.112 to 100 mm and −5.228 to 100 mm respectively.
 The 100-mm value includes upstream out-of-support fill and must not be interpreted
 as a calibrated boundary distance throughout the image.
+
+## Frozen portability check: PAT05
+
+The second case was assigned to development before acquisition under
+`manifests/btc_pat05_selection.json`; see `docs/data_acquisition_pat05.md` for the
+source-selection and rights audit. Its T1 SHA-256 is
+`016779173394c3a3e07fc53f927d37c3c1cb5df04bcbdc398fcfbdc23b40085e` and fractional
+annotation SHA-256 is
+`497505a1354f075955290f4395217112715ab73242fa10fd2a0f519ca51b8bdc`.
+All seven pinned acquisition checksums were verified before inference.
+
+`artifacts/brain-extraction/PAT05-frozen-experiment.json` records the unchanged
+model checkpoints, variant order, threshold 0.5, 1-mm border, 2 CPU helper threads,
+MPS allocator/RSS limits, 300-second child budget, and baseline method before the
+case run. The tested corner-displacement fix was frozen before execution; it
+changes output validation, not inference. The implementation SHA-256 is
+`702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917`.
+No model parameter or preprocessing setting was tuned on PAT05.
+
+| PAT05 measurement | No-CSF | Main |
+| --- | ---: | ---: |
+| Child wall time, seconds | 7.692 | 6.015 |
+| Sampled process RSS, GiB | 0.630 | 0.635 |
+| Sampled Metal tensor/driver allocations, GiB | 3.835 / 5.540 | 3.835 / 5.540 |
+| Estimated mask volume, mL | 1240.898 | 1402.140 |
+| Source annotation outside mask, voxels | 538 | 0 |
+| Source annotation inclusion | 95.296% | 100% |
+| Native mask/distance maximum corner drift, mm | 0 / 0 | 0 / 0 |
+| Dice agreement with intensity baseline | 0.88499 | 0.82665 |
+
+The native shape is 160 × 256 × 256. Both masks are binary, connected, and clear
+of the acquisition-grid faces; both distance arrays are finite. All source,
+model, executed-runner, implementation, and output hashes were checked. The
+threshold-derived annotation contains 11,437 voxels, consistent with independent
+case preparation. The 538 excluded voxels trigger the explicit annotation QC
+flag; the output is not patched by adding the annotation. Main-model inclusion
+does not validate its anatomical boundary. Child wall time excludes the outer
+baseline calculation and report/QC rendering.
+
+Six native-plane overlays were inspected at brain-envelope and annotation
+centres. They show differing CSF boundaries and undercoverage in the intensity
+baseline, including support extending inferiorly beyond the model envelopes.
+These are engineering observations on sampled planes, not expert whole-volume
+acceptance. `PAT05-mps-v1` retains reports, logs, source snapshot, the original
+license, model outputs, and the QC image. `docs/brain-extraction-PAT05-benchmark.json`
+contains the compact measurements. The 21-test validator suite passes. There is
+no PAT05 diffusion acquisition, reviewed cortex, motor/language localization,
+or authorization of cortical access, and no claim of clinical generalization.

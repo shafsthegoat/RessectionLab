@@ -1,0 +1,85 @@
+{
+  "declared_at": "2026-10-04T08:44:11.228622+00:00",
+  "subject": "sub-PAT05",
+  "cohort_role": "predeclared development; not final evaluation",
+  "source_acquisition_manifest": "manifests/btc_pat05_acquisition.json",
+  "source_acquisition_manifest_sha256": "09df59d9ac8b1c8d8d555f0e165148c79c0a2d1a404180451d0b9e90b814badf",
+  "selection_manifest_sha256": "edd2d5ace4db04615ac948f339beb058eb5f637a7a588325fb714e360fd887f3",
+  "implementation_sha256": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917",
+  "variant_order": [
+    "nocsf",
+    "main"
+  ],
+  "models": {
+    "nocsf": {
+      "name": "SynthStrip",
+      "variant": "nocsf",
+      "weights_version": 1,
+      "upstream_code_commit": "cf4bccf24875a47245b4df9fc9372d0f1c3d784f",
+      "files": {
+        "mri_synthstrip": {
+          "url": "https://raw.githubusercontent.com/freesurfer/freesurfer/cf4bccf24875a47245b4df9fc9372d0f1c3d784f/mri_synthstrip/mri_synthstrip",
+          "sha256": "291c253ab2f7c0cbcb84afa769ae10909549537e727db5b92d268754b7cc7871",
+          "bytes": 12238
+        },
+        "LICENSE_FreeSurfer.txt": {
+          "url": "https://raw.githubusercontent.com/freesurfer/freesurfer/cf4bccf24875a47245b4df9fc9372d0f1c3d784f/LICENSE.txt",
+          "sha256": "632d404ea17b9101d9ac87cf8f09e651d18eb20d2cc0ba8dbee77e85b8516307",
+          "bytes": 10297
+        },
+        "synthstrip.nocsf.1.pt": {
+          "url": "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/requirements/synthstrip.nocsf.1.pt",
+          "sha256": "62bf01137c45b5f0cc04d59dbaed5b9ac138b3f25b766c062a7c1a0d696ecb28",
+          "bytes": 30851709
+        }
+      },
+      "code_license": "FreeSurfer Software License Agreement 1.0, February 2011",
+      "weights_license_choice": "MIT, explicitly offered by official SynthStrip page",
+      "weights_license_source": "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/"
+    },
+    "main": {
+      "name": "SynthStrip",
+      "variant": "main",
+      "weights_version": 1,
+      "upstream_code_commit": "cf4bccf24875a47245b4df9fc9372d0f1c3d784f",
+      "files": {
+        "mri_synthstrip": {
+          "url": "https://raw.githubusercontent.com/freesurfer/freesurfer/cf4bccf24875a47245b4df9fc9372d0f1c3d784f/mri_synthstrip/mri_synthstrip",
+          "sha256": "291c253ab2f7c0cbcb84afa769ae10909549537e727db5b92d268754b7cc7871",
+          "bytes": 12238
+        },
+        "LICENSE_FreeSurfer.txt": {
+          "url": "https://raw.githubusercontent.com/freesurfer/freesurfer/cf4bccf24875a47245b4df9fc9372d0f1c3d784f/LICENSE.txt",
+          "sha256": "632d404ea17b9101d9ac87cf8f09e651d18eb20d2cc0ba8dbee77e85b8516307",
+          "bytes": 10297
+        },
+        "synthstrip.1.pt": {
+          "url": "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/requirements/synthstrip.1.pt",
+          "sha256": "37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33",
+          "bytes": 30851709
+        }
+      },
+      "code_license": "FreeSurfer Software License Agreement 1.0, February 2011",
+      "weights_license_choice": "MIT, explicitly offered by official SynthStrip page",
+      "weights_license_source": "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/"
+    }
+  },
+  "frozen_configuration": {
+    "device": "mps",
+    "cpu_threads": 2,
+    "border_mm": 1,
+    "timeout_seconds": 300,
+    "maximum_rss_bytes": 6442450944,
+    "MPS_allocator_maximum_bytes": 6442450944,
+    "MPS_allocator_maximum_fraction_of_recommended": 0.7,
+    "MPS_fallback_enabled": false,
+    "annotation_threshold": 0.5,
+    "baseline": "positive-intensity Otsu;2.5mmopening;largestcomponent;holefill;1mmerosion",
+    "native_corner_displacement_tolerance_mm": 0.01
+  },
+  "changes_allowed_during_case_run": false,
+  "brain_reviewed": false,
+  "cortical_access_permitted": false,
+  "diffusion_available": false,
+  "hyperparameters_tuned_on_PAT05": false
+}

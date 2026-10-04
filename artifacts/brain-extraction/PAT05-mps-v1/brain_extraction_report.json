@@ -1,0 +1,762 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-04T08:44:33.359782+00:00",
+  "implementation_sha256": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917",
+  "source_t1_sha256": "016779173394c3a3e07fc53f927d37c3c1cb5df04bcbdc398fcfbdc23b40085e",
+  "source_annotation": {
+    "sha256": "497505a1354f075955290f4395217112715ab73242fa10fd2a0f519ca51b8bdc",
+    "geometry_and_threshold": {
+      "interpretation": "source fractional annotation; threshold research scenario, not probability",
+      "provenance": "observed",
+      "intensity_meaning": "source annotation intensity; not a calibrated probability",
+      "source_min": 0.0,
+      "source_max": 1.0,
+      "source_shape": [
+        160,
+        256,
+        256
+      ],
+      "source_affine_ras_mm": [
+        [
+          -0.999142050743103,
+          0.03670012950897217,
+          0.019190430641174316,
+          75.75935363769531
+        ],
+        [
+          0.03669333457946777,
+          0.9993263483047485,
+          -0.0007047653198242188,
+          -116.06671142578125
+        ],
+        [
+          0.019203364849090576,
+          5.960464477539063e-08,
+          0.9998155832290649,
+          -144.1650848388672
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "target_voxel_to_source_voxel": [
+        [
+          -1.0000035204020687,
+          1.9826433668435062e-08,
+          -2.395366343126116e-08,
+          159.0005585558955
+        ],
+        [
+          -4.9578076505296664e-09,
+          0.9999999396152,
+          -4.332953961719201e-08,
+          1.361779558184395e-05
+        ],
+        [
+          -2.7396389328971792e-08,
+          -1.699744154551753e-08,
+          1.0000000004600782,
+          1.4250820811412268e-05
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "applied_integer_reindex": [
+        [
+          -1.0,
+          0.0,
+          -0.0,
+          159.0
+        ],
+        [
+          -0.0,
+          1.0,
+          -0.0,
+          0.0
+        ],
+        [
+          -0.0,
+          -0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "max_grid_rounding_error_voxels": 0.0005637016785085006,
+      "grid_rounding_error_definition": "maximum Euclidean source-voxel displacement at the eight structural-grid corners",
+      "threshold": 0.5,
+      "threshold_rule": "source_intensity >= threshold",
+      "threshold_evidence": "declared_research_assumption",
+      "derived_provenance": "estimated",
+      "source_compartments_meaning": "initial threshold-derived binary annotation, not original fractional values",
+      "raw_source_retention": "immutable external source file referenced by SHA256; not embedded in compact bundle"
+    }
+  },
+  "baseline": {
+    "method": "positive-intensity Otsu, 2.5 mm opening, largest component, hole fill, 1 mm erosion",
+    "otsu_threshold": 116.287109375,
+    "meaning": "erosive T1 intensity core; not anatomical truth or complete brain",
+    "whole_brain_coverage": "unknown",
+    "reviewed": false
+  },
+  "variants": {
+    "nocsf": {
+      "inference": {
+        "model": {
+          "name": "SynthStrip",
+          "variant": "nocsf",
+          "weights_version": 1,
+          "upstream_code_commit": "cf4bccf24875a47245b4df9fc9372d0f1c3d784f",
+          "files": {
+            "mri_synthstrip": {
+              "url": "https://raw.githubusercontent.com/freesurfer/freesurfer/cf4bccf24875a47245b4df9fc9372d0f1c3d784f/mri_synthstrip/mri_synthstrip",
+              "sha256": "291c253ab2f7c0cbcb84afa769ae10909549537e727db5b92d268754b7cc7871",
+              "bytes": 12238
+            },
+            "LICENSE_FreeSurfer.txt": {
+              "url": "https://raw.githubusercontent.com/freesurfer/freesurfer/cf4bccf24875a47245b4df9fc9372d0f1c3d784f/LICENSE.txt",
+              "sha256": "632d404ea17b9101d9ac87cf8f09e651d18eb20d2cc0ba8dbee77e85b8516307",
+              "bytes": 10297
+            },
+            "synthstrip.nocsf.1.pt": {
+              "url": "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/requirements/synthstrip.nocsf.1.pt",
+              "sha256": "62bf01137c45b5f0cc04d59dbaed5b9ac138b3f25b766c062a7c1a0d696ecb28",
+              "bytes": 30851709
+            }
+          },
+          "code_license": "FreeSurfer Software License Agreement 1.0, February 2011",
+          "weights_license_choice": "MIT, explicitly offered by official SynthStrip page",
+          "weights_license_source": "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/"
+        },
+        "input_sha256": "016779173394c3a3e07fc53f927d37c3c1cb5df04bcbdc398fcfbdc23b40085e",
+        "input_qc": {
+          "file": "sub-PAT05_ses-preop_T1w.nii.gz",
+          "shape": [
+            160,
+            256,
+            256
+          ],
+          "affine_ras_mm": [
+            [
+              0.9991455674171448,
+              0.03670010715723038,
+              0.019190452992916107,
+              -83.10478973388672
+            ],
+            [
+              -0.03669346868991852,
+              0.9993262887001038,
+              -0.0007048094994388521,
+              -110.23243713378906
+            ],
+            [
+              -0.019203459843993187,
+              4.299106848293377e-08,
+              0.9998155832290649,
+              -141.11172485351562
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "source_units": "mm",
+          "physical_units": "mm",
+          "unit_scale_to_mm": 1.0,
+          "qform_code": 1,
+          "sform_code": 1,
+          "qform_native": [
+            [
+              0.9991456195481114,
+              0.036700106207954865,
+              0.019190451907799794,
+              -83.10478973388672
+            ],
+            [
+              -0.03669346903097173,
+              0.999326324182608,
+              -0.0007048094622226994,
+              -110.23243713378906
+            ],
+            [
+              -0.019203459023220237,
+              4.303387276502523e-08,
+              0.9998155978975305,
+              -141.11172485351562
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "sform_native": [
+            [
+              0.9991455674171448,
+              0.03670010715723038,
+              0.019190452992916107,
+              -83.10478973388672
+            ],
+            [
+              -0.03669346868991852,
+              0.9993262887001038,
+              -0.0007048094994388521,
+              -110.23243713378906
+            ],
+            [
+              -0.019203459843993187,
+              4.299106848293377e-08,
+              0.9998155832290649,
+              -141.11172485351562
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "orientation": [
+            "R",
+            "A",
+            "S"
+          ],
+          "spacing_mm": [
+            1.000003524195693,
+            0.999999964576238,
+            0.9999999853550895
+          ],
+          "voxel_volume_mm3": 1.0000034741268442,
+          "handedness": "right",
+          "anisotropic": false,
+          "obliquity_degrees": [
+            2.3735622444596784,
+            2.1032336427639136,
+            1.1003409334260574
+          ],
+          "status": "passed_header_checks",
+          "visual_alignment_review": "pending",
+          "frame": "RAS+",
+          "simulation_frame": "source_coded_frame_native_status_requires_source_provenance"
+        },
+        "elapsed_seconds": 7.691569250077009,
+        "sampled_process_peak_rss_bytes": 676397056,
+        "memory_measurement": "child-process RSS sampled with ps approximately every 0.25 s; may miss brief peaks",
+        "configuration": {
+          "cpu_threads": 2,
+          "border_mm": 1,
+          "device": "mps",
+          "timeout_seconds": 300,
+          "maximum_rss_bytes": 6442450944,
+          "weights_only_load": true
+        },
+        "runtime_versions": {
+          "python": "3.12.14",
+          "numpy": "2.2.6",
+          "torch": "2.14.1",
+          "surfa": "0.6.3"
+        },
+        "executed_runner_sha256": "d39cbcba9c5303ba74eaf0bb53d9105762f8a01a7de7bae2740958242f8f6cf8",
+        "upstream_modified": true,
+        "exit_code": 0,
+        "failure": null,
+        "provenance": "estimated",
+        "brain_reviewed": false,
+        "cortical_access_permitted": false,
+        "mps_memory_samples": {
+          "tensor_bytes_max_sampled": 4117935104,
+          "driver_bytes_max_sampled": 5948243968
+        },
+        "mps_memory_measurement": "allocator samples after module forwards, not exact peak; driver includes cached allocations; process RSS alone excludes GPU accounting",
+        "distance_map_qc": {
+          "native_geometry": {
+            "file": "nocsf_distance_mm.nii.gz",
+            "shape": [
+              160,
+              256,
+              256
+            ],
+            "affine_ras_mm": [
+              [
+                0.9991455674171448,
+                0.03670010715723038,
+                0.019190452992916107,
+                -83.10478973388672
+              ],
+              [
+                -0.03669346868991852,
+                0.9993262887001038,
+                -0.0007048094994388521,
+                -110.23243713378906
+              ],
+              [
+                -0.019203459843993187,
+                4.299106848293377e-08,
+                0.9998155832290649,
+                -141.11172485351562
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "source_units": "mm",
+            "physical_units": "mm",
+            "unit_scale_to_mm": 1.0,
+            "qform_code": 1,
+            "sform_code": 1,
+            "qform_native": [
+              [
+                0.9991456193756109,
+                0.03670010993119106,
+                0.019190453768560548,
+                -83.10478973388672
+              ],
+              [
+                -0.03669347275356465,
+                0.9993263240458727,
+                -0.0007048095321560416,
+                -110.23243713378906
+              ],
+              [
+                -0.01920346088530082,
+                4.2963909013165116e-08,
+                0.9998155978617658,
+                -141.11172485351562
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "sform_native": [
+              [
+                0.9991455674171448,
+                0.03670010715723038,
+                0.019190452992916107,
+                -83.10478973388672
+              ],
+              [
+                -0.03669346868991852,
+                0.9993262887001038,
+                -0.0007048094994388521,
+                -110.23243713378906
+              ],
+              [
+                -0.019203459843993187,
+                4.299106848293377e-08,
+                0.9998155832290649,
+                -141.11172485351562
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "orientation": [
+              "R",
+              "A",
+              "S"
+            ],
+            "spacing_mm": [
+              1.000003524195693,
+              0.999999964576238,
+              0.9999999853550895
+            ],
+            "voxel_volume_mm3": 1.0000034741268442,
+            "handedness": "right",
+            "anisotropic": false,
+            "obliquity_degrees": [
+              2.3735622444596784,
+              2.1032336427639136,
+              1.1003409334260574
+            ],
+            "status": "passed_header_checks",
+            "visual_alignment_review": "pending",
+            "frame": "RAS+",
+            "simulation_frame": "source_coded_frame_native_status_requires_source_provenance",
+            "maximum_native_corner_displacement_mm": 0.0
+          },
+          "finite_values": true,
+          "minimum_mm": -4.115878105163574,
+          "maximum_mm": 100.0,
+          "meaning": "predicted signed distance with upstream extension; not a clinical probability or reviewed surface"
+        },
+        "artifact_hashes": {
+          "nocsf_mask.nii.gz": "cae2a9f0a12936eff5fb476fb8eb7e12b90caf42ce2093df1b15be4c0328a7d5",
+          "nocsf_distance_mm.nii.gz": "4985be975881a037fd2a049edfaab9983ca1a9598177eba998fc4dca61e62077"
+        }
+      },
+      "qc": {
+        "mask_voxels": 1240894,
+        "mask_volume_ml": 1240.898311023156,
+        "connected_components": 1,
+        "boundary_face_voxels": 0,
+        "sanity_volume_range_ml": [
+          400,
+          2200
+        ],
+        "sanity_range_meaning": "broad engineering alert, not clinical acceptance",
+        "flags": [
+          "SOURCE_ANNOTATION_EXTENDS_OUTSIDE_EXTRACTION"
+        ],
+        "brain_reviewed": false,
+        "cortex_localized": false,
+        "cortical_access_permitted": false,
+        "clinical_deficit_probability": null,
+        "source_annotation_inclusion_fraction": 0.9529596922269826,
+        "source_annotation_voxels": 11437,
+        "source_annotation_outside_voxels": 538,
+        "annotation_fraction_meaning": "overlap of threshold-derived source annotation; not extraction accuracy or removal",
+        "baseline_dice_agreement": 0.8849872315502282,
+        "baseline_agreement_meaning": "agreement with an erosive intensity core, not measured segmentation accuracy",
+        "baseline_volume_ml": 992.3484475324032
+      }
+    },
+    "main": {
+      "inference": {
+        "model": {
+          "name": "SynthStrip",
+          "variant": "main",
+          "weights_version": 1,
+          "upstream_code_commit": "cf4bccf24875a47245b4df9fc9372d0f1c3d784f",
+          "files": {
+            "mri_synthstrip": {
+              "url": "https://raw.githubusercontent.com/freesurfer/freesurfer/cf4bccf24875a47245b4df9fc9372d0f1c3d784f/mri_synthstrip/mri_synthstrip",
+              "sha256": "291c253ab2f7c0cbcb84afa769ae10909549537e727db5b92d268754b7cc7871",
+              "bytes": 12238
+            },
+            "LICENSE_FreeSurfer.txt": {
+              "url": "https://raw.githubusercontent.com/freesurfer/freesurfer/cf4bccf24875a47245b4df9fc9372d0f1c3d784f/LICENSE.txt",
+              "sha256": "632d404ea17b9101d9ac87cf8f09e651d18eb20d2cc0ba8dbee77e85b8516307",
+              "bytes": 10297
+            },
+            "synthstrip.1.pt": {
+              "url": "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/requirements/synthstrip.1.pt",
+              "sha256": "37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33",
+              "bytes": 30851709
+            }
+          },
+          "code_license": "FreeSurfer Software License Agreement 1.0, February 2011",
+          "weights_license_choice": "MIT, explicitly offered by official SynthStrip page",
+          "weights_license_source": "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/"
+        },
+        "input_sha256": "016779173394c3a3e07fc53f927d37c3c1cb5df04bcbdc398fcfbdc23b40085e",
+        "input_qc": {
+          "file": "sub-PAT05_ses-preop_T1w.nii.gz",
+          "shape": [
+            160,
+            256,
+            256
+          ],
+          "affine_ras_mm": [
+            [
+              0.9991455674171448,
+              0.03670010715723038,
+              0.019190452992916107,
+              -83.10478973388672
+            ],
+            [
+              -0.03669346868991852,
+              0.9993262887001038,
+              -0.0007048094994388521,
+              -110.23243713378906
+            ],
+            [
+              -0.019203459843993187,
+              4.299106848293377e-08,
+              0.9998155832290649,
+              -141.11172485351562
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "source_units": "mm",
+          "physical_units": "mm",
+          "unit_scale_to_mm": 1.0,
+          "qform_code": 1,
+          "sform_code": 1,
+          "qform_native": [
+            [
+              0.9991456195481114,
+              0.036700106207954865,
+              0.019190451907799794,
+              -83.10478973388672
+            ],
+            [
+              -0.03669346903097173,
+              0.999326324182608,
+              -0.0007048094622226994,
+              -110.23243713378906
+            ],
+            [
+              -0.019203459023220237,
+              4.303387276502523e-08,
+              0.9998155978975305,
+              -141.11172485351562
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "sform_native": [
+            [
+              0.9991455674171448,
+              0.03670010715723038,
+              0.019190452992916107,
+              -83.10478973388672
+            ],
+            [
+              -0.03669346868991852,
+              0.9993262887001038,
+              -0.0007048094994388521,
+              -110.23243713378906
+            ],
+            [
+              -0.019203459843993187,
+              4.299106848293377e-08,
+              0.9998155832290649,
+              -141.11172485351562
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "orientation": [
+            "R",
+            "A",
+            "S"
+          ],
+          "spacing_mm": [
+            1.000003524195693,
+            0.999999964576238,
+            0.9999999853550895
+          ],
+          "voxel_volume_mm3": 1.0000034741268442,
+          "handedness": "right",
+          "anisotropic": false,
+          "obliquity_degrees": [
+            2.3735622444596784,
+            2.1032336427639136,
+            1.1003409334260574
+          ],
+          "status": "passed_header_checks",
+          "visual_alignment_review": "pending",
+          "frame": "RAS+",
+          "simulation_frame": "source_coded_frame_native_status_requires_source_provenance"
+        },
+        "elapsed_seconds": 6.01478966709692,
+        "sampled_process_peak_rss_bytes": 682180608,
+        "memory_measurement": "child-process RSS sampled with ps approximately every 0.25 s; may miss brief peaks",
+        "configuration": {
+          "cpu_threads": 2,
+          "border_mm": 1,
+          "device": "mps",
+          "timeout_seconds": 300,
+          "maximum_rss_bytes": 6442450944,
+          "weights_only_load": true
+        },
+        "runtime_versions": {
+          "python": "3.12.14",
+          "numpy": "2.2.6",
+          "torch": "2.14.1",
+          "surfa": "0.6.3"
+        },
+        "executed_runner_sha256": "d39cbcba9c5303ba74eaf0bb53d9105762f8a01a7de7bae2740958242f8f6cf8",
+        "upstream_modified": true,
+        "exit_code": 0,
+        "failure": null,
+        "provenance": "estimated",
+        "brain_reviewed": false,
+        "cortical_access_permitted": false,
+        "mps_memory_samples": {
+          "tensor_bytes_max_sampled": 4117935104,
+          "driver_bytes_max_sampled": 5948243968
+        },
+        "mps_memory_measurement": "allocator samples after module forwards, not exact peak; driver includes cached allocations; process RSS alone excludes GPU accounting",
+        "distance_map_qc": {
+          "native_geometry": {
+            "file": "main_distance_mm.nii.gz",
+            "shape": [
+              160,
+              256,
+              256
+            ],
+            "affine_ras_mm": [
+              [
+                0.9991455674171448,
+                0.03670010715723038,
+                0.019190452992916107,
+                -83.10478973388672
+              ],
+              [
+                -0.03669346868991852,
+                0.9993262887001038,
+                -0.0007048094994388521,
+                -110.23243713378906
+              ],
+              [
+                -0.019203459843993187,
+                4.299106848293377e-08,
+                0.9998155832290649,
+                -141.11172485351562
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "source_units": "mm",
+            "physical_units": "mm",
+            "unit_scale_to_mm": 1.0,
+            "qform_code": 1,
+            "sform_code": 1,
+            "qform_native": [
+              [
+                0.9991456193756109,
+                0.03670010993119106,
+                0.019190453768560548,
+                -83.10478973388672
+              ],
+              [
+                -0.03669347275356465,
+                0.9993263240458727,
+                -0.0007048095321560416,
+                -110.23243713378906
+              ],
+              [
+                -0.01920346088530082,
+                4.2963909013165116e-08,
+                0.9998155978617658,
+                -141.11172485351562
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "sform_native": [
+              [
+                0.9991455674171448,
+                0.03670010715723038,
+                0.019190452992916107,
+                -83.10478973388672
+              ],
+              [
+                -0.03669346868991852,
+                0.9993262887001038,
+                -0.0007048094994388521,
+                -110.23243713378906
+              ],
+              [
+                -0.019203459843993187,
+                4.299106848293377e-08,
+                0.9998155832290649,
+                -141.11172485351562
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "orientation": [
+              "R",
+              "A",
+              "S"
+            ],
+            "spacing_mm": [
+              1.000003524195693,
+              0.999999964576238,
+              0.9999999853550895
+            ],
+            "voxel_volume_mm3": 1.0000034741268442,
+            "handedness": "right",
+            "anisotropic": false,
+            "obliquity_degrees": [
+              2.3735622444596784,
+              2.1032336427639136,
+              1.1003409334260574
+            ],
+            "status": "passed_header_checks",
+            "visual_alignment_review": "pending",
+            "frame": "RAS+",
+            "simulation_frame": "source_coded_frame_native_status_requires_source_provenance",
+            "maximum_native_corner_displacement_mm": 0.0
+          },
+          "finite_values": true,
+          "minimum_mm": -5.17395544052124,
+          "maximum_mm": 100.0,
+          "meaning": "predicted signed distance with upstream extension; not a clinical probability or reviewed surface"
+        },
+        "artifact_hashes": {
+          "main_mask.nii.gz": "a8a950310f039aa2f7db7e233e123a2fa35340f9944d8596c0ca846a9d9b1836",
+          "main_distance_mm.nii.gz": "11ac6e7d50c8938dc0112d28d95756530ed24571b9927bd508ceaffe29da14ee"
+        }
+      },
+      "qc": {
+        "mask_voxels": 1402135,
+        "mask_volume_ml": 1402.1398711948427,
+        "connected_components": 1,
+        "boundary_face_voxels": 0,
+        "sanity_volume_range_ml": [
+          400,
+          2200
+        ],
+        "sanity_range_meaning": "broad engineering alert, not clinical acceptance",
+        "flags": [],
+        "brain_reviewed": false,
+        "cortex_localized": false,
+        "cortical_access_permitted": false,
+        "clinical_deficit_probability": null,
+        "source_annotation_inclusion_fraction": 1.0,
+        "source_annotation_voxels": 11437,
+        "source_annotation_outside_voxels": 0,
+        "annotation_fraction_meaning": "overlap of threshold-derived source annotation; not extraction accuracy or removal",
+        "baseline_dice_agreement": 0.8266462864588554,
+        "baseline_agreement_meaning": "agreement with an erosive intensity core, not measured segmentation accuracy",
+        "baseline_volume_ml": 992.3484475324032
+      }
+    }
+  },
+  "clinical_use_status": "research_only",
+  "brain_reviewed": false,
+  "cortical_access_permitted": false,
+  "training_overlap_audit": "see docs/brain_extraction.md; patient-level disjointness not certified"
+}

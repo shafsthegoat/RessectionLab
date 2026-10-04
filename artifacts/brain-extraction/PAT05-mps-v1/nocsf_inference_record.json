@@ -1,0 +1,295 @@
+{
+  "model": {
+    "name": "SynthStrip",
+    "variant": "nocsf",
+    "weights_version": 1,
+    "upstream_code_commit": "cf4bccf24875a47245b4df9fc9372d0f1c3d784f",
+    "files": {
+      "mri_synthstrip": {
+        "url": "https://raw.githubusercontent.com/freesurfer/freesurfer/cf4bccf24875a47245b4df9fc9372d0f1c3d784f/mri_synthstrip/mri_synthstrip",
+        "sha256": "291c253ab2f7c0cbcb84afa769ae10909549537e727db5b92d268754b7cc7871",
+        "bytes": 12238
+      },
+      "LICENSE_FreeSurfer.txt": {
+        "url": "https://raw.githubusercontent.com/freesurfer/freesurfer/cf4bccf24875a47245b4df9fc9372d0f1c3d784f/LICENSE.txt",
+        "sha256": "632d404ea17b9101d9ac87cf8f09e651d18eb20d2cc0ba8dbee77e85b8516307",
+        "bytes": 10297
+      },
+      "synthstrip.nocsf.1.pt": {
+        "url": "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/requirements/synthstrip.nocsf.1.pt",
+        "sha256": "62bf01137c45b5f0cc04d59dbaed5b9ac138b3f25b766c062a7c1a0d696ecb28",
+        "bytes": 30851709
+      }
+    },
+    "code_license": "FreeSurfer Software License Agreement 1.0, February 2011",
+    "weights_license_choice": "MIT, explicitly offered by official SynthStrip page",
+    "weights_license_source": "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/"
+  },
+  "input_sha256": "016779173394c3a3e07fc53f927d37c3c1cb5df04bcbdc398fcfbdc23b40085e",
+  "input_qc": {
+    "file": "sub-PAT05_ses-preop_T1w.nii.gz",
+    "shape": [
+      160,
+      256,
+      256
+    ],
+    "affine_ras_mm": [
+      [
+        0.9991455674171448,
+        0.03670010715723038,
+        0.019190452992916107,
+        -83.10478973388672
+      ],
+      [
+        -0.03669346868991852,
+        0.9993262887001038,
+        -0.0007048094994388521,
+        -110.23243713378906
+      ],
+      [
+        -0.019203459843993187,
+        4.299106848293377e-08,
+        0.9998155832290649,
+        -141.11172485351562
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "source_units": "mm",
+    "physical_units": "mm",
+    "unit_scale_to_mm": 1.0,
+    "qform_code": 1,
+    "sform_code": 1,
+    "qform_native": [
+      [
+        0.9991456195481114,
+        0.036700106207954865,
+        0.019190451907799794,
+        -83.10478973388672
+      ],
+      [
+        -0.03669346903097173,
+        0.999326324182608,
+        -0.0007048094622226994,
+        -110.23243713378906
+      ],
+      [
+        -0.019203459023220237,
+        4.303387276502523e-08,
+        0.9998155978975305,
+        -141.11172485351562
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "sform_native": [
+      [
+        0.9991455674171448,
+        0.03670010715723038,
+        0.019190452992916107,
+        -83.10478973388672
+      ],
+      [
+        -0.03669346868991852,
+        0.9993262887001038,
+        -0.0007048094994388521,
+        -110.23243713378906
+      ],
+      [
+        -0.019203459843993187,
+        4.299106848293377e-08,
+        0.9998155832290649,
+        -141.11172485351562
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "orientation": [
+      "R",
+      "A",
+      "S"
+    ],
+    "spacing_mm": [
+      1.000003524195693,
+      0.999999964576238,
+      0.9999999853550895
+    ],
+    "voxel_volume_mm3": 1.0000034741268442,
+    "handedness": "right",
+    "anisotropic": false,
+    "obliquity_degrees": [
+      2.3735622444596784,
+      2.1032336427639136,
+      1.1003409334260574
+    ],
+    "status": "passed_header_checks",
+    "visual_alignment_review": "pending",
+    "frame": "RAS+",
+    "simulation_frame": "source_coded_frame_native_status_requires_source_provenance"
+  },
+  "elapsed_seconds": 7.691569250077009,
+  "sampled_process_peak_rss_bytes": 676397056,
+  "memory_measurement": "child-process RSS sampled with ps approximately every 0.25 s; may miss brief peaks",
+  "configuration": {
+    "cpu_threads": 2,
+    "border_mm": 1,
+    "device": "mps",
+    "timeout_seconds": 300,
+    "maximum_rss_bytes": 6442450944,
+    "weights_only_load": true
+  },
+  "runtime_versions": {
+    "python": "3.12.14",
+    "numpy": "2.2.6",
+    "torch": "2.14.1",
+    "surfa": "0.6.3"
+  },
+  "executed_runner_sha256": "d39cbcba9c5303ba74eaf0bb53d9105762f8a01a7de7bae2740958242f8f6cf8",
+  "upstream_modified": true,
+  "exit_code": 0,
+  "failure": null,
+  "provenance": "estimated",
+  "brain_reviewed": false,
+  "cortical_access_permitted": false,
+  "mps_memory_samples": {
+    "tensor_bytes_max_sampled": 4117935104,
+    "driver_bytes_max_sampled": 5948243968
+  },
+  "mps_memory_measurement": "allocator samples after module forwards, not exact peak; driver includes cached allocations; process RSS alone excludes GPU accounting",
+  "distance_map_qc": {
+    "native_geometry": {
+      "file": "nocsf_distance_mm.nii.gz",
+      "shape": [
+        160,
+        256,
+        256
+      ],
+      "affine_ras_mm": [
+        [
+          0.9991455674171448,
+          0.03670010715723038,
+          0.019190452992916107,
+          -83.10478973388672
+        ],
+        [
+          -0.03669346868991852,
+          0.9993262887001038,
+          -0.0007048094994388521,
+          -110.23243713378906
+        ],
+        [
+          -0.019203459843993187,
+          4.299106848293377e-08,
+          0.9998155832290649,
+          -141.11172485351562
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_units": "mm",
+      "physical_units": "mm",
+      "unit_scale_to_mm": 1.0,
+      "qform_code": 1,
+      "sform_code": 1,
+      "qform_native": [
+        [
+          0.9991456193756109,
+          0.03670010993119106,
+          0.019190453768560548,
+          -83.10478973388672
+        ],
+        [
+          -0.03669347275356465,
+          0.9993263240458727,
+          -0.0007048095321560416,
+          -110.23243713378906
+        ],
+        [
+          -0.01920346088530082,
+          4.2963909013165116e-08,
+          0.9998155978617658,
+          -141.11172485351562
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "sform_native": [
+        [
+          0.9991455674171448,
+          0.03670010715723038,
+          0.019190452992916107,
+          -83.10478973388672
+        ],
+        [
+          -0.03669346868991852,
+          0.9993262887001038,
+          -0.0007048094994388521,
+          -110.23243713378906
+        ],
+        [
+          -0.019203459843993187,
+          4.299106848293377e-08,
+          0.9998155832290649,
+          -141.11172485351562
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "orientation": [
+        "R",
+        "A",
+        "S"
+      ],
+      "spacing_mm": [
+        1.000003524195693,
+        0.999999964576238,
+        0.9999999853550895
+      ],
+      "voxel_volume_mm3": 1.0000034741268442,
+      "handedness": "right",
+      "anisotropic": false,
+      "obliquity_degrees": [
+        2.3735622444596784,
+        2.1032336427639136,
+        1.1003409334260574
+      ],
+      "status": "passed_header_checks",
+      "visual_alignment_review": "pending",
+      "frame": "RAS+",
+      "simulation_frame": "source_coded_frame_native_status_requires_source_provenance",
+      "maximum_native_corner_displacement_mm": 0.0
+    },
+    "finite_values": true,
+    "minimum_mm": -4.115878105163574,
+    "maximum_mm": 100.0,
+    "meaning": "predicted signed distance with upstream extension; not a clinical probability or reviewed surface"
+  },
+  "artifact_hashes": {
+    "nocsf_mask.nii.gz": "cae2a9f0a12936eff5fb476fb8eb7e12b90caf42ce2093df1b15be4c0328a7d5",
+    "nocsf_distance_mm.nii.gz": "4985be975881a037fd2a049edfaab9983ca1a9598177eba998fc4dca61e62077"
+  }
+}
