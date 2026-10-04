@@ -1,0 +1,13 @@
+# Case4 fixed mesh feasibility result
+
+The sole released attempt from `a49e70ac2a4df747e75fc7bec57c3a887898a6b5` failed the fixed **coarse node-count gate**. Target 24 mm returned 2,065 tet10 nodes against a 2,000-node maximum (65 nodes / 3.25% excess), and 1,052 volume elements against a 2,000-element maximum. The Gmsh log's 1,861 total elements include lower-dimensional entities; it is not the volume-tet count. Medium (20 mm) and fine (16 mm) remained unexecuted. No retry, changed cap, mask modification, solver or B/V landmark access occurred.
+
+The unchanged mask produced a closed, connected native surface with 91,951 vertices, 183,902 triangles, Euler characteristic 0 / genus 1, and volume 0.0011858776244957961 m³ (1,185.878 mL). These describe the estimated computational envelope, whose inferior/cerebellar exclusions remain documented. They do not establish whole-brain coverage or anatomical truth. No surface repair was applied.
+
+The worker stopped before volume-mesh quality, overlap, surface-distance or volume-fidelity checks. Those outcomes are **unassessed**, not passing or failing. Under the reviewed v1 sequence, count excess occurs before native volume-mesh persistence: counts, Gmsh IDs, logs and the extracted native surface survive, but the rejected tet10 coordinates/connectivity do not. No claim about its geometry can be recovered retrospectively. This limitation is preserved rather than repaired by rerunning.
+
+The supervised attempt took 7.789334958 seconds, with 658,358,272 bytes sampled group peak RSS, under 180 seconds and 3 GiB. It exited 1 due to the count rejection; no cap kill occurred. Numerical thread limits were one. Memory peaks between samples may be missed; concurrent tasks make this a resource observation rather than a benchmark.
+
+All 19 independently bound original-source, immutable-archive, mask/runtime, release, QC and context files remained unchanged. The worker and launcher each confirmed their 12 input bindings; the launcher also rehashed the saved native surface. Exact raw records are copied in `saved-records/`, with the complete ignored raw-output inventory in `raw-output-index.json`. The original output is `outputs/mechanics/resect-case4-patient-mesh-v1`.
+
+The prior analytic cube's 8.499% volume-fidelity failure against the unchanged 3% gate remains part of `release.json`; it was never treated as validated fidelity. This real-domain feasibility experiment produced no accepted patient mesh, mechanics validation, clinical/anatomical registration approval, material calibration, displacement comparison or RL update. A future cap or diagnostic redesign requires its own source review and release; this failed attempt remains terminal.

@@ -1,0 +1,108 @@
+{
+  "schema": "case4-mesh-post-execution-verification-v1",
+  "created_utc": "2026-10-04T21:55:41.489732+00:00",
+  "original_archive_context_bindings": {
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-source-a49e70ac/scripts/mechanics_patient_mesh.py": {
+      "expected_sha256": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+      "actual_sha256": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-source-a49e70ac/scripts/febio_runtime.py": {
+      "expected_sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+      "actual_sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-source-a49e70ac/manifests/experiments/resect-case4-patient-mesh-v1.json": {
+      "expected_sha256": "b6b3fd278df85fb0ea89c72dcff37cc5f229644602f5288c81e8ce6e7653173c",
+      "actual_sha256": "b6b3fd278df85fb0ea89c72dcff37cc5f229644602f5288c81e8ce6e7653173c",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-source-a49e70ac/artifacts/febio-runtime-investigation-v1/prospective-runtime.json": {
+      "expected_sha256": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48",
+      "actual_sha256": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/mechanics_patient_mesh.py": {
+      "expected_sha256": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+      "actual_sha256": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/febio_runtime.py": {
+      "expected_sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+      "actual_sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/manifests/experiments/resect-case4-patient-mesh-v1.json": {
+      "expected_sha256": "b6b3fd278df85fb0ea89c72dcff37cc5f229644602f5288c81e8ce6e7653173c",
+      "actual_sha256": "b6b3fd278df85fb0ea89c72dcff37cc5f229644602f5288c81e8ce6e7653173c",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-runtime-investigation-v1/prospective-runtime.json": {
+      "expected_sha256": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48",
+      "actual_sha256": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/qc-receipt.json": {
+      "expected_sha256": "f1a3ad984233fd121af37cb463e1d88ebb443f0506a0d183f0acb298116f6c23",
+      "actual_sha256": "f1a3ad984233fd121af37cb463e1d88ebb443f0506a0d183f0acb298116f6c23",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-baseline-alignment-v3/comparison-and-outcome.json": {
+      "expected_sha256": "605f3cdc54c6163b449d638da6ba4e9c10823727a102f333f92d1b213c05f7e1",
+      "actual_sha256": "605f3cdc54c6163b449d638da6ba4e9c10823727a102f333f92d1b213c05f7e1",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/root-visual-decision.json": {
+      "expected_sha256": "5ed4158a8247eb731175b70d8194ac290731455cc6ce34ed08056dc3f715a2c2",
+      "actual_sha256": "5ed4158a8247eb731175b70d8194ac290731455cc6ce34ed08056dc3f715a2c2",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics-patient-mesh-independent-review-v1/receipt.json": {
+      "expected_sha256": "e043316fbc5d3c1fc9342f8a3b0aa45cc0ca6f231cdd7e356e254af40a01461c",
+      "actual_sha256": "e043316fbc5d3c1fc9342f8a3b0aa45cc0ca6f231cdd7e356e254af40a01461c",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics-patient-mesh-independent-review-v1/native-raw-index.json": {
+      "expected_sha256": "2341ce38b2a549ebcd562c0ab1b86ea340c481993ae646f08ed5f4a2866e932e",
+      "actual_sha256": "2341ce38b2a549ebcd562c0ab1b86ea340c481993ae646f08ed5f4a2866e932e",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-brain-envelope-v1/main_mask.nii.gz": {
+      "expected_sha256": "7902cfbcb5fad15144181c06883bac7f4800e842f7ff05a540f56bac4eb38759",
+      "actual_sha256": "7902cfbcb5fad15144181c06883bac7f4800e842f7ff05a540f56bac4eb38759",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-baseline-header-qc-v1/header-receipt.json": {
+      "expected_sha256": "18d6e6306e38f409a314ba180d7d0a21e9a7ee02677f34a1d1fd28ea1294d692",
+      "actual_sha256": "18d6e6306e38f409a314ba180d7d0a21e9a7ee02677f34a1d1fd28ea1294d692",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/gmsh-4.15.2-runtime-v1/runtime-receipt.json": {
+      "expected_sha256": "705056d13e78f98fda0ab04884c0c6e3b31ead73f88d01b6dcf3bd99d5417137",
+      "actual_sha256": "705056d13e78f98fda0ab04884c0c6e3b31ead73f88d01b6dcf3bd99d5417137",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/gmsh-4.15.2/runtime/gmsh.py": {
+      "expected_sha256": "f4b0935cebde899750293d87a643090e5ea33c9b18d249267f507db68a0e01c3",
+      "actual_sha256": "f4b0935cebde899750293d87a643090e5ea33c9b18d249267f507db68a0e01c3",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/gmsh-4.15.2/runtime/lib/libgmsh.4.15.dylib": {
+      "expected_sha256": "def0f5c10988a986e5e879b3db9669d8fe016a81e2d994bbaf2b8497c6b8a58a",
+      "actual_sha256": "def0f5c10988a986e5e879b3db9669d8fe016a81e2d994bbaf2b8497c6b8a58a",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-v1/release.json": {
+      "expected_sha256": "b3190326e7b9c208742f5b2362e3bb41f47d3044a8d901429911c10089a0d641",
+      "actual_sha256": "b3190326e7b9c208742f5b2362e3bb41f47d3044a8d901429911c10089a0d641",
+      "unchanged": true
+    }
+  },
+  "all19_unchanged": true,
+  "launcher_native_surface_digest_matches": true,
+  "solver_calls": 0,
+  "B_or_V_landmark_access": false,
+  "retries": 0,
+  "worker_all12_input_checks_unchanged": true,
+  "launcher_all12_input_checks_unchanged": true
+}

@@ -369,9 +369,19 @@ One actual library control on a small cube completed in 1.537 s with 157.4 MB
 sampled memory, but lost 8.499% volume against the fixed 3% limit. Both surface
 distance bounds passed; this confirms that distance alone misses an important
 fidelity error. The failure and raw output remain preserved. The patient mask,
-24/20/16 mm target sizes and all rejection limits stay unchanged; no patient
-mesh or equilibrium solve has run. See `docs/mechanics-patient-mesh.md` and
-`artifacts/mechanics-patient-mesh-independent-review-v1/`.
+24/20/16 mm target sizes and all rejection limits stayed unchanged for the
+separately released patient attempt below. See `docs/mechanics-patient-mesh.md`
+and `artifacts/mechanics-patient-mesh-independent-review-v1/`.
+
+The single real Case4 meshing attempt then failed its fixed coarse count cap:
+2,065 nodes versus 2,000, with 1,052 volume elements. It took 7.789 s and
+658.4 MB sampled group RSS; medium/fine remained unexecuted. All 19 broader
+source/input/context bindings stayed unchanged. Quality and fidelity checks did
+not run. The v1 sequence retained the native source surface, logs and returned
+counts/IDs, but rejected before saving the over-cap volume geometry. This
+limitation prevents retrospective fidelity analysis; no retry, mask change,
+solver or B/V access occurred. No accepted patient mesh exists. See
+`artifacts/mechanics/resect-case4-patient-mesh-v1/RESULT.md` and its saved audit.
 
 The first baseline alignment worker produced all six declared views and the
 15-pair proper rigid fit, but its supervisor failed with `RSS_MONITOR_FAILED`

@@ -1,0 +1,7 @@
+{
+  "scope": "saved-only audit, no data/native execution",
+  "failure": "Assertion worker input count==13 failed; actual count12. Owner post-execution metadata labels usedall13 and reviewer initially copied that count. All19 broader before/after bindings remain consistent.",
+  "repair_requested": "Owner corrects worker/launcher metadata labels and refreezes index; reviewer asserts12.",
+  "image_reads": 0,
+  "mesh_or_solver_runs": 0
+}

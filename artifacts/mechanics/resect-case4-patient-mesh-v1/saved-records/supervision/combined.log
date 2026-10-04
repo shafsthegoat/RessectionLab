@@ -1,0 +1,220 @@
+/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-source-a49e70ac/scripts/mechanics_patient_mesh.py:185: DeprecationWarning: Call to deprecated method SetCells. (Use ImportLegacyFormat or SetData instead.) -- Deprecated since version 9.6.0.
+  cells = vtkCellArray(); cells.SetCells(len(faces), numpy_to_vtkIdTypeArray(np.column_stack((np.full(len(faces), 3), faces)).astype(np.int64).reshape(-1), deep=True))
+Info    : Clearing all models and views...
+Info    : Done clearing all models and views
+Info    : Classifying surfaces (angle: 180)...
+Info    : Splitting triangulations to make them parametrizable:
+Info    :  - Level 0 partition with 183902 triangles split in 2 parts because poincare characteristic 2 is not 0
+Info    :  - Level 1 partition with 91940 triangles split in 2 parts because poincare characteristic 4 is not 0
+Info    :  - Level 2 partition with 45996 triangles split in 2 parts because poincare characteristic 4 is not 0
+Info    :  - Level 3 partition with 22996 triangles split in 2 parts because poincare characteristic 4 is not 0
+Info    :  - Level 4 partition with 11508 triangles split in 2 parts because poincare characteristic 4 is not 0
+Info    :  - Level 5 partition with 5830 triangles split in 2 parts because poincare characteristic 4 is not 0
+Info    :  - Level 6 partition with 2920 triangles split in 2 parts because poincare characteristic 4 is not 0
+Info    :  - Level 7 partition with 1465 triangles split in 2 parts because poincare characteristic 4 is not 0
+Info    :  - Level 8 partition with 725 triangles split in 2 parts because poincare characteristic 4 is not 0
+Info    :  - Level 9 partition with 369 triangles split in 2 parts because poincare characteristic 4 is not 0
+Info    :  - Level 10 partition with 184 triangles split in 2 parts because poincare characteristic 4 is not 0
+Info    :  - Level 11 partition with 91 triangles split in 2 parts because poincare characteristic 4 is not 0
+Info    :  - Level 12 partition with 45 triangles split in 2 parts because poincare characteristic 4 is not 0
+Info    :  - Level 13 partition with 23 triangles split in 2 parts because boundary not manifold
+Info    :  - Level 13 partition with 17 triangles split in 2 parts because parametrized triangles are too small (9.75782e-19)
+Info    : Found 18 model surfaces
+Info    : Found 46 model curves
+Info    : Done classifying surfaces (Wall 3.69193s, CPU 3.48443s)
+Info    : Creating geometry of discrete curves...
+Info    : Done creating geometry of discrete curves (Wall 7.24578e-05s, CPU 6.8e-05s)
+Info    : Creating geometry of discrete surfaces...
+Info    : [ 70%] Discrete surface 14 is planar, simplifying parametrization
+Info    : Done creating geometry of discrete surfaces (Wall 1.49389s, CPU 1.33649s)
+Info    : Meshing 1D...
+Info    : [  0%] Meshing curve 48 (Discrete curve)
+Info    : [ 10%] Meshing curve 49 (Discrete curve)
+Info    : [ 10%] Meshing curve 50 (Discrete curve)
+Info    : [ 10%] Meshing curve 51 (Discrete curve)
+Info    : [ 10%] Meshing curve 52 (Discrete curve)
+Info    : [ 20%] Meshing curve 53 (Discrete curve)
+Info    : [ 20%] Meshing curve 54 (Discrete curve)
+Info    : [ 20%] Meshing curve 55 (Discrete curve)
+Info    : [ 20%] Meshing curve 56 (Discrete curve)
+Info    : [ 20%] Meshing curve 57 (Discrete curve)
+Info    : [ 30%] Meshing curve 58 (Discrete curve)
+Info    : [ 30%] Meshing curve 59 (Discrete curve)
+Info    : [ 30%] Meshing curve 60 (Discrete curve)
+Info    : [ 30%] Meshing curve 61 (Discrete curve)
+Info    : [ 30%] Meshing curve 62 (Discrete curve)
+Info    : [ 40%] Meshing curve 63 (Discrete curve)
+Info    : [ 40%] Meshing curve 64 (Discrete curve)
+Info    : [ 40%] Meshing curve 65 (Discrete curve)
+Info    : [ 40%] Meshing curve 66 (Discrete curve)
+Info    : [ 40%] Meshing curve 67 (Discrete curve)
+Info    : [ 50%] Meshing curve 68 (Discrete curve)
+Info    : [ 50%] Meshing curve 69 (Discrete curve)
+Info    : [ 50%] Meshing curve 70 (Discrete curve)
+Info    : [ 50%] Meshing curve 71 (Discrete curve)
+Info    : [ 60%] Meshing curve 72 (Discrete curve)
+Info    : [ 60%] Meshing curve 73 (Discrete curve)
+Info    : [ 60%] Meshing curve 74 (Discrete curve)
+Info    : [ 60%] Meshing curve 75 (Discrete curve)
+Info    : [ 60%] Meshing curve 76 (Discrete curve)
+Info    : [ 70%] Meshing curve 77 (Discrete curve)
+Info    : [ 70%] Meshing curve 78 (Discrete curve)
+Info    : [ 70%] Meshing curve 79 (Discrete curve)
+Info    : [ 70%] Meshing curve 80 (Discrete curve)
+Info    : [ 70%] Meshing curve 81 (Discrete curve)
+Info    : [ 80%] Meshing curve 82 (Discrete curve)
+Info    : [ 80%] Meshing curve 83 (Discrete curve)
+Info    : [ 80%] Meshing curve 84 (Discrete curve)
+Info    : [ 80%] Meshing curve 85 (Discrete curve)
+Info    : [ 80%] Meshing curve 86 (Discrete curve)
+Info    : [ 90%] Meshing curve 87 (Discrete curve)
+Info    : [ 90%] Meshing curve 88 (Discrete curve)
+Info    : [ 90%] Meshing curve 89 (Discrete curve)
+Info    : [ 90%] Meshing curve 90 (Discrete curve)
+Info    : [ 90%] Meshing curve 91 (Discrete curve)
+Info    : [100%] Meshing curve 92 (Discrete curve)
+Info    : [100%] Meshing curve 93 (Discrete curve)
+Info    : [100%] Meshing curve 94 (Discrete curve)
+Info    : [100%] Meshing curve 95 (Discrete curve)
+Info    : Done meshing 1D (Wall 0.00644125s, CPU 0.006198s)
+Info    : Meshing 2D...
+Info    : [  0%] Meshing surface 2 (Discrete surface, Frontal-Delaunay)
+Info    : [ 10%] Meshing surface 3 (Discrete surface, Frontal-Delaunay)
+Info    : [ 20%] Meshing surface 4 (Discrete surface, Frontal-Delaunay)
+Info    : [ 20%] Meshing surface 5 (Discrete surface, Frontal-Delaunay)
+Info    : [ 30%] Meshing surface 6 (Discrete surface, Frontal-Delaunay)
+Info    : [ 30%] Meshing surface 7 (Discrete surface, Frontal-Delaunay)
+Info    : [ 30%] Meshing surface 7 (Discrete surface, MeshAdapt)
+Info    : [ 40%] Meshing surface 8 (Discrete surface, Frontal-Delaunay)
+Info    : [ 40%] Meshing surface 9 (Discrete surface, Frontal-Delaunay)
+Info    : [ 50%] Meshing surface 10 (Discrete surface, Frontal-Delaunay)
+Info    : [ 60%] Meshing surface 11 (Discrete surface, Frontal-Delaunay)
+Info    : [ 60%] Meshing surface 12 (Discrete surface, Frontal-Delaunay)
+Info    : [ 60%] Meshing surface 12 (Discrete surface, MeshAdapt)
+Info    : [ 70%] Meshing surface 13 (Discrete surface, Frontal-Delaunay)
+Info    : [ 70%] Meshing surface 14 (Discrete surface, Frontal-Delaunay)
+Info    : [ 80%] Meshing surface 15 (Discrete surface, Frontal-Delaunay)
+Info    : [ 80%] Meshing surface 15 (Discrete surface, MeshAdapt)
+Info    : [ 80%] Meshing surface 16 (Discrete surface, Frontal-Delaunay)
+Info    : [ 80%] Meshing surface 16 (Discrete surface, MeshAdapt)
+Info    : [ 90%] Meshing surface 17 (Discrete surface, Frontal-Delaunay)
+Info    : [ 90%] Meshing surface 18 (Discrete surface, Frontal-Delaunay)
+Info    : [100%] Meshing surface 19 (Discrete surface, Frontal-Delaunay)
+Info    : Done meshing 2D (Wall 0.201305s, CPU 0.198768s)
+Info    : Meshing 3D...
+Info    : 3D Meshing 1 volume with 1 connected component
+Info    : Tetrahedrizing 309 nodes...
+Info    : Done tetrahedrizing 317 nodes (Wall 0.00202046s, CPU 0.001926s)
+Info    : Reconstructing mesh...
+Info    :  - Creating surface mesh
+Info    :  - Identifying boundary edges
+Info    :  - Recovering boundary
+Info    :  - Added 1 Steiner point
+Info    : Done reconstructing mesh (Wall 0.00515817s, CPU 0.004849s)
+Info    : Found volume 1
+Info    : It. 0 - 0 nodes created - worst tet radius 20.6066 (nodes removed 0 0)
+Info    : 3D refinement terminated (352 nodes total):
+Info    :  - 7 Delaunay cavities modified for star shapeness
+Info    :  - 16 nodes could not be inserted
+Info    :  - 1125 tetrahedra created in 0.00263238 sec. (427370 tets/s)
+Info    : 3 node relocations
+Info    : Done meshing 3D (Wall 0.0163222s, CPU 0.01565s)
+Info    : Optimizing mesh...
+Info    : Optimizing volume 1
+Info    : Optimization starts (volume = 0.00113442) with worst = 0.000279337 / average = 0.555646:
+Info    : 0.00 < quality < 0.10 :        39 elements
+Info    : 0.10 < quality < 0.20 :        88 elements
+Info    : 0.20 < quality < 0.30 :        87 elements
+Info    : 0.30 < quality < 0.40 :       105 elements
+Info    : 0.40 < quality < 0.50 :       111 elements
+Info    : 0.50 < quality < 0.60 :       139 elements
+Info    : 0.60 < quality < 0.70 :       159 elements
+Info    : 0.70 < quality < 0.80 :       191 elements
+Info    : 0.80 < quality < 0.90 :       173 elements
+Info    : 0.90 < quality < 1.00 :        33 elements
+Info    : 85 edge swaps, 12 node relocations (volume = 0.00113442): worst = 0.000805691 / average = 0.582002 (Wall 0.00318904s, CPU 0.003148s)
+Info    : 111 edge swaps, 16 node relocations (volume = 0.00113442): worst = 0.00201816 / average = 0.589369 (Wall 0.00642542s, CPU 0.006358s)
+Info    : 124 edge swaps, 19 node relocations (volume = 0.00113442): worst = 0.0515337 / average = 0.591101 (Wall 0.00947804s, CPU 0.009404s)
+Info    : 128 edge swaps, 19 node relocations (volume = 0.00113442): worst = 0.0515337 / average = 0.591902 (Wall 0.012267s, CPU 0.01219s)
+Info    : No ill-shaped tets in the mesh :-)
+Info    : 0.00 < quality < 0.10 :         5 elements
+Info    : 0.10 < quality < 0.20 :        43 elements
+Info    : 0.20 < quality < 0.30 :        80 elements
+Info    : 0.30 < quality < 0.40 :       107 elements
+Info    : 0.40 < quality < 0.50 :       103 elements
+Info    : 0.50 < quality < 0.60 :       135 elements
+Info    : 0.60 < quality < 0.70 :       166 elements
+Info    : 0.70 < quality < 0.80 :       190 elements
+Info    : 0.80 < quality < 0.90 :       182 elements
+Info    : 0.90 < quality < 1.00 :        32 elements
+Info    : Done optimizing mesh (Wall 0.0128954s, CPU 0.012795s)
+Info    : Meshing order 2 (curvilinear off)...
+Info    : [  0%] Meshing curve 48 order 2
+Info    : [ 10%] Meshing curve 49 order 2
+Info    : [ 10%] Meshing curve 50 order 2
+Info    : [ 10%] Meshing curve 51 order 2
+Info    : [ 10%] Meshing curve 52 order 2
+Info    : [ 10%] Meshing curve 53 order 2
+Info    : [ 10%] Meshing curve 54 order 2
+Info    : [ 20%] Meshing curve 55 order 2
+Info    : [ 20%] Meshing curve 56 order 2
+Info    : [ 20%] Meshing curve 57 order 2
+Info    : [ 20%] Meshing curve 58 order 2
+Info    : [ 20%] Meshing curve 59 order 2
+Info    : [ 20%] Meshing curve 60 order 2
+Info    : [ 20%] Meshing curve 61 order 2
+Info    : [ 30%] Meshing curve 62 order 2
+Info    : [ 30%] Meshing curve 63 order 2
+Info    : [ 30%] Meshing curve 64 order 2
+Info    : [ 30%] Meshing curve 65 order 2
+Info    : [ 30%] Meshing curve 66 order 2
+Info    : [ 30%] Meshing curve 67 order 2
+Info    : [ 30%] Meshing curve 68 order 2
+Info    : [ 40%] Meshing curve 69 order 2
+Info    : [ 40%] Meshing curve 70 order 2
+Info    : [ 40%] Meshing curve 71 order 2
+Info    : [ 40%] Meshing curve 72 order 2
+Info    : [ 40%] Meshing curve 73 order 2
+Info    : [ 40%] Meshing curve 74 order 2
+Info    : [ 50%] Meshing curve 75 order 2
+Info    : [ 50%] Meshing curve 76 order 2
+Info    : [ 50%] Meshing curve 77 order 2
+Info    : [ 50%] Meshing curve 78 order 2
+Info    : [ 50%] Meshing curve 79 order 2
+Info    : [ 50%] Meshing curve 80 order 2
+Info    : [ 50%] Meshing curve 81 order 2
+Info    : [ 60%] Meshing curve 82 order 2
+Info    : [ 60%] Meshing curve 83 order 2
+Info    : [ 60%] Meshing curve 84 order 2
+Info    : [ 60%] Meshing curve 85 order 2
+Info    : [ 60%] Meshing curve 86 order 2
+Info    : [ 60%] Meshing curve 87 order 2
+Info    : [ 60%] Meshing curve 88 order 2
+Info    : [ 70%] Meshing curve 89 order 2
+Info    : [ 70%] Meshing curve 90 order 2
+Info    : [ 70%] Meshing curve 91 order 2
+Info    : [ 70%] Meshing curve 92 order 2
+Info    : [ 70%] Meshing curve 93 order 2
+Info    : [ 70%] Meshing curve 94 order 2
+Info    : [ 80%] Meshing curve 95 order 2
+Info    : [ 80%] Meshing surface 2 order 2
+Info    : [ 80%] Meshing surface 3 order 2
+Info    : [ 80%] Meshing surface 4 order 2
+Info    : [ 80%] Meshing surface 5 order 2
+Info    : [ 80%] Meshing surface 6 order 2
+Info    : [ 80%] Meshing surface 7 order 2
+Info    : [ 90%] Meshing surface 8 order 2
+Info    : [ 90%] Meshing surface 9 order 2
+Info    : [ 90%] Meshing surface 10 order 2
+Info    : [ 90%] Meshing surface 11 order 2
+Info    : [ 90%] Meshing surface 12 order 2
+Info    : [ 90%] Meshing surface 13 order 2
+Info    : [ 90%] Meshing surface 14 order 2
+Info    : [100%] Meshing surface 15 order 2
+Info    : [100%] Meshing surface 16 order 2
+Info    : [100%] Meshing surface 17 order 2
+Info    : [100%] Meshing surface 18 order 2
+Info    : [100%] Meshing surface 19 order 2
+Info    : [100%] Meshing volume 1 order 2
+Info    : Done meshing order 2 (Wall 0.00401329s, CPU 0.003738s)
+Info    : 2065 nodes 1861 elements
