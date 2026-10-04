@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "checked_on": "2026-10-04",
-  "scope": "Explicit source identity and outer cohort registry. Only two acquired development records are instantiated. Dataset release counts describe source resources and are never summed into training or final-evaluation counts.",
+  "scope": "Explicit source identity and outer cohort registry. Two acquired development records plus one predeclared additional development case; no final subjects. Release counts are not sample counts.",
   "collections": [
     {
       "collection_id": "UCSF-PDGM",
@@ -166,6 +166,23 @@
       "source_verification": "SHA256 plus pinned Git annex MD5 and exact S3 object version previously verified by acquisition",
       "supports_identities": [
         "BTC:sub-PAT28"
+      ]
+    },
+    {
+      "id": "btc-pat05-identity",
+      "path": "data/diffusion_source/ds001226-v5.0.1/participants.tsv",
+      "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d",
+      "kind": "delimited_row",
+      "delimiter": "\t",
+      "match": {
+        "participant_id": "sub-PAT05"
+      },
+      "expect": {
+        "tumor type & grade": "Oligo-astrocytoma II"
+      },
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/participants.tsv",
+      "supports_identities": [
+        "BTC:sub-PAT05"
       ]
     }
   ],
@@ -396,6 +413,28 @@
           "used_by_primary_optimizer": false
         }
       ]
+    },
+    {
+      "record_id": "btc-pat05-preop-development",
+      "collection_id": "BTC_preop",
+      "identity": "BTC:sub-PAT05",
+      "identity_status": "unknown",
+      "identity_evidence_ids": [
+        "btc-pat05-identity",
+        "btc-release"
+      ],
+      "visit_id": "ses-preop",
+      "derivative_of": null,
+      "outer_split": "development",
+      "uses": [
+        "global_development",
+        "viewer_qc"
+      ],
+      "source_manifest": "manifests/btc_pat05_acquisition.json",
+      "selection_manifest": "manifests/btc_pat05_selection.json",
+      "acquisition_status": "selected_before_images_not_yet_acquired",
+      "planning_as_of": null,
+      "inputs": []
     }
   ],
   "preoperative_policy": {
