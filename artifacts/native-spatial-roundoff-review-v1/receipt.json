@@ -1,0 +1,52 @@
+{
+  "schema": "native-spatial-roundoff-independent-review-v1",
+  "status": "core_delta_clear_diagnostics_integration_separately_pending",
+  "focused_tests": {
+    "passed": 9,
+    "failed": 0,
+    "pytest_seconds": 0.64,
+    "source_unchanged": true
+  },
+  "tested_checkout_head": "b4ba4e4e4ab3643113b5566cc42227a1b5cc73bb",
+  "source_and_tests_sha256": {
+    "src/resectionlab/native_spatial_task.py": "137d89a8ec6c1d538c3ebf69aed87be9eefa4d3fddc1f6631ed887ba3e650475",
+    "tests/test_native_spatial_task.py": "fd683ce5fe0a7960dbf34d2a8014f0b3a72aeefb14c33da7a23ade607139b45f",
+    "tests/test_native_spatial_roundoff_review.py": "3cf53a8aff6f026cc9054bc15e877fd8fd5d43bb33f68d8b4f4334cfe43444f3",
+    "docs/native-spatial-task.md": "5be680d99b635705014fb87664fc8a462096d81c3fa6ccf34d3afde67028a64c",
+    "src/resectionlab/native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/evaluation.py": "baaa2f3d6b4e41c4621dc22872da9300d649bc91dfeb923e2ad35f66aadad3b7"
+  },
+  "shared_geometry_guards_unchanged_from_commit_8aeb3be": {
+    "src/resectionlab/native_resection.py": true,
+    "src/resectionlab/geometry.py": true,
+    "src/resectionlab/evaluation.py": true
+  },
+  "initial_test_only_negative": {
+    "passed": 7,
+    "failed": 1,
+    "reason": "Test expected later RuntimeError but writable affine replacement correctly refused earlier with ValueError. Test now uses immutable replacement to reach source identity comparison. No production change followed.",
+    "source_sha256": "137d89a8ec6c1d538c3ebf69aed87be9eefa4d3fddc1f6631ed887ba3e650475",
+    "retained_test_source": "initial-review-test.py"
+  },
+  "checks": [
+    "Full-cell extent corners reject a transform that would pass all voxel-center corners.",
+    "Fixed normalized-Gram gate rejects meaningful relative shear even with tiny physical voxel lengths.",
+    "Rotated/reflected anisotropic frame retains original matrix bytes, source-axis lengths, handedness and translation.",
+    "Original source case unchanged; explicit option required; default source identity unchanged.",
+    "Derived actor crop, native config, action tip and committed-history independent checker use the same matrix.",
+    "Metadata source/support/affine hashes bound; report detached; immutable affine, method and report substitution refused."
+  ],
+  "integration_finding": "Prior diagnostics used original frame for physical depth and inverse crop coordinates; owner training_screen is fixing and separately testing derived-frame reporting before v2 release.",
+  "evidence_sha256": {
+    "core-test-receipt.json": "86e2fe35f2800aee2dc57c02cabc14254f83ac0e82bd1fc8211ccddd280c1fd0",
+    "core-test.log": "8acc35ac78c82d826177b91e4fbaea659d4086ba858206733c2b4d4397e0eb42",
+    "initial-core-test-receipt.json": "d61b59ccca29687c1d87303094796cb8f78d28cfdab38b261fea1e2289359695",
+    "initial-core-test.log": "0821f9554879f0f04efaaedea7171ac8e7041f3103d0662670f7cdacf955ad06",
+    "initial-review-test.py": "0b0512c618e03f5c0418ea3ed23bbfce5be95a8879e638048ef40a83f7c00fd8"
+  },
+  "patient_case_opened": false,
+  "patient_task_preview_or_learning_run": false,
+  "scope": "Artificial contract arrays and one tiny analytic native transition only; no synthetic learning, no patient anatomy review or clinical claim.",
+  "new_final_source_archives_created": false
+}

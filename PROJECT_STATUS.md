@@ -111,15 +111,15 @@ of observed estimates from hidden reference anatomy, and sequential opening /
 removal decisions across varied anatomies. Existing clinical and data-provenance
 limits remain in force; more simulator training cannot establish surgical safety.
 
-The current 15+6-feature actor is annotation-assisted: exact supplied labels and
+The earlier 15+6-feature actor is annotation-assisted: exact supplied labels and
 simulated cavity state affect both its features and candidate inventory. It has
 no image encoder. Missing motor/language flags identify array presence; they do
 not establish adequate functional evidence or compel abstention. Completed
 procedural pretraining used zero human training patients. Unseen-patient,
-scan-only and unfamiliar-tool generalization are unproved. The next spatial
-experiment must label procedural scans as synthetic, keep reference truth out
-of proposals as well as tensors, and compare learned inference with search under
-the same observation contract.
+scan-only and unfamiliar-tool generalization are unproved. The latest steering
+replaces the proposed procedural training screen with real-patient learning.
+Private reference truth must stay out of proposals as well as tensors; learned
+inference and search must use the same permitted observation contract.
 
 The new scan-conditioned spatial policy is implemented: a 24,331-parameter 3D
 encoder scores tool rays and STOP, with a spatial value baseline. Its observation,
@@ -129,15 +129,17 @@ corrected loss of valid image-edge samples. The separate synthetic opening task
 passes 16 owner and 19 independent checks. Exhaustive enumeration of its smallest
 fixture gives a unique return of 0.503158 after two costly openings; one-step
 greedy stops at zero. This verifies a sequential learning opportunity, not that
-the learned policy has solved it. The population screen has not yet run.
+the learned policy has solved it. No procedural population screen will run under
+the current real-data-only training instruction.
 
-The first spatial screen uses scan intensities, observed support/cavity, tool
+The deferred procedural spatial screen uses scan intensities, observed support/cavity, tool
 geometry and procedure state. Private target and functional labels cannot enter
 proposals, policy tensors or search lookahead. Its primary reward is explicitly
 geometric: functional exposure remains unassessed. The small task removes
 tip-intersected cells, distinct from native contained-cell execution. Native
-integration, vessel/function evidence, realistic image scale and held-out human
-generalization remain open requirements. See `docs/spatial-policy-research.md`,
+integration is now implemented separately in the real native adapter described
+above; vessel/function integration and held-out human generalization remain
+open requirements. See `docs/spatial-policy-research.md`,
 `docs/spatial-task.md` and their linked negative-result receipts.
 
 The frozen BTC expansion acquired PAT22/PAT25 for population training and
