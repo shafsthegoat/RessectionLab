@@ -1332,3 +1332,21 @@ historical pilot/audit files remain unchanged. No public experiment was rerun.
 The original integrated failure and intermediate/final repair evidence are
 retained in `artifacts/native-axis-pilot-contract-repair-v1/`. A new immutable
 full-suite attempt is still required before release.
+
+## October 4, 2026 — isolated React neighboring-path inspection panel
+
+A controlled Electron/React panel now displays the complete declared column/tool
+inventory with separate omitted, rejected and preview-passed records. It requires
+explicit tools and two distinct model/support acknowledgments, binds geometry to
+current source/window/tool context, and does not start work from rendering or
+setting changes. Preview counts are not removed tissue. Independent review found
+additional uncertainties were hidden and an unavailable engine could retain an
+old result; both display regressions are repaired and tested.
+
+Fourteen owner and two independent checks pass, as do strict scoped TypeScript
+and all 100 renderer checks. A parallel SSR test-server port warning was removed
+from the new harness. The coordinated production build passed at that source;
+a subsequent separate viewer repair requires a new final build. This component
+is not yet mounted in App and is not native patient-workflow validation. Host
+cancellation/source-switch handling and passive tool display are separate slices.
+See `docs/neighboring-paths-panel.md`.

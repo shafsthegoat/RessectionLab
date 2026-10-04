@@ -1,0 +1,137 @@
+.neighboring-paths-panel {
+  min-width: 0;
+  color: #a5b4be;
+  font-size: 11px;
+  line-height: 1.5;
+}
+.neighboring-paths-panel p {
+  margin: 8px 0;
+}
+.neighboring-paths-panel .eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.neighboring-paths-panel .planning-title h2 {
+  margin: 8px 0;
+}
+.neighboring-anchor {
+  padding: 10px 0;
+  border-bottom: 1px solid #2c3942;
+}
+.neighboring-anchor strong {
+  color: #d0dce3;
+  overflow-wrap: anywhere;
+}
+.neighboring-tools {
+  border: 0;
+  margin: 16px 0;
+  padding: 0;
+}
+.neighboring-tools legend {
+  font-weight: 600;
+  color: #c9d5de;
+}
+.neighboring-tools label,
+.neighboring-ack {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 10px 0;
+}
+.neighboring-tools input,
+.neighboring-ack input {
+  flex: none;
+  margin-top: 3px;
+}
+.neighboring-ack {
+  padding: 8px 0;
+}
+.neighboring-inspect {
+  margin: 8px 0;
+}
+.neighboring-status {
+  color: #b9cbd4;
+}
+.neighboring-results {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #30404a;
+}
+.neighboring-results h3 {
+  font-size: 13px;
+  color: #d1dfe6;
+}
+.neighboring-counts {
+  display: grid;
+  gap: 6px;
+  margin: 14px 0;
+}
+.neighboring-counts > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.neighboring-counts dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  color: #d4e2e9;
+}
+.neighboring-path-row,
+.neighboring-binding {
+  border-top: 1px solid #2a3741;
+  padding: 10px 0;
+}
+.neighboring-path-row summary,
+.neighboring-binding summary {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.neighboring-path-row summary > span:first-child {
+  flex: 1;
+  min-width: 0;
+  color: #ccd9e1;
+}
+.neighboring-path-row summary > span:nth-child(2) {
+  max-width: 82px;
+  color: #b7c2cf;
+  font-size: 10px;
+}
+.neighboring-path-row summary svg,
+.neighboring-binding summary svg {
+  flex: none;
+}
+.neighboring-coordinates {
+  font-variant-numeric: tabular-nums;
+  color: #c4d4de;
+}
+.neighboring-attempt {
+  border-left: 2px solid #455561;
+  padding-left: 9px;
+  margin-top: 12px;
+}
+.neighboring-attempt strong {
+  font-size: 10px;
+  font-weight: 500;
+}
+.neighboring-binding pre {
+  max-height: 240px;
+  overflow: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-size: 9px;
+  padding: 10px;
+  background: #10181e;
+}
+.neighboring-limits {
+  border: 1px solid #3b4350;
+  border-radius: 6px;
+  padding: 11px;
+  margin-top: 18px;
+  color: #a6b4c0;
+}
+.neighboring-limits strong {
+  color: #bdcad5;
+}

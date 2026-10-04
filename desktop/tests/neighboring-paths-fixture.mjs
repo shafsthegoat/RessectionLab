@@ -1,0 +1,251 @@
+// Synthetic wire-contract fixture only; never generated or displayed as patient evidence.
+export const digest = (letter) => `sha256:${letter.repeat(64)}`;
+export function neighboringFixture() {
+  const tool = {
+    tool_id: "native-fine-aspiration",
+    tip_radius_mm: 1.25,
+    shaft_radius_mm: 0.45,
+    working_length_mm: 120,
+    max_access_angle_deg: 35,
+    tip_length_mm: 2,
+    parameter_source:
+      "generic research geometry; not a verified commercial device",
+  };
+  const window = {
+    center_mm: [3, 3, -0.5],
+    normal_inward: [0, 0, 1],
+    radius_mm: 4,
+    window_id: "synthetic-window",
+  };
+  const context = {
+    caseHash: digest("a"),
+    planningHash: digest("b"),
+    routeId: "synthetic-route",
+    routePlanningModelHash: "c".repeat(64),
+    routeLabel: "Synthetic route",
+    support: "acknowledgment_required",
+    anchorWindowRas: structuredClone(window),
+    toolCatalog: [structuredClone(tool)],
+  };
+  const choices = {
+    toolIds: [tool.tool_id],
+    neighboringColumns: true,
+    estimatedSupport: true,
+  };
+  const offsets = [
+    [0, 0],
+    [-2, 0],
+    [2, 0],
+    [0, -2],
+    [0, 2],
+    [-2, -2],
+    [-2, 2],
+    [2, -2],
+    [2, 2],
+    [-3, 0],
+    [3, 0],
+    [0, -3],
+    [0, 3],
+  ];
+  const proposals = [
+    {
+      proposal_id: "synthetic-proposal-0",
+      column_index: 0,
+      offset_source_voxels: offsets[0],
+      tool_id: tool.tool_id,
+      entry_mm: [3, 3, -0.5],
+      primary_target_mm: [3, 3, 6],
+      fallback_target_mm: [3, 3, 2],
+      fallback_condition: "primary_preview_rejected",
+    },
+    {
+      proposal_id: "synthetic-proposal-1",
+      column_index: 1,
+      offset_source_voxels: offsets[1],
+      tool_id: tool.tool_id,
+      entry_mm: [1, 3, -0.5],
+      primary_target_mm: [1, 3, 2],
+      fallback_target_mm: null,
+      fallback_condition: "primary_preview_rejected",
+    },
+  ];
+  const attempt = (p, phase, feasible, reason) => ({
+    proposal_id: p.proposal_id,
+    phase,
+    tool_id: p.tool_id,
+    tip_mm: phase === "primary" ? p.primary_target_mm : p.fallback_target_mm,
+    entry_mm: p.entry_mm,
+    feasible,
+    reason,
+    status: "complete",
+    elapsed_seconds: 0.001,
+  });
+  const attempts = [
+    attempt(
+      proposals[0],
+      "primary",
+      false,
+      "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+    ),
+    attempt(proposals[0], "fallback", true, "NATIVE_CONNECTED_STROKE"),
+    attempt(
+      proposals[1],
+      "primary",
+      false,
+      "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS",
+    ),
+  ];
+  const unknowns = [
+    "motor_function_unassessed",
+    "language_function_unassessed",
+    "vascular_anatomy_unassessed",
+    "cortical_access_unverified",
+    "tool_geometry_outside_image_unassessed",
+  ];
+  const binding = {
+    version: "native-axis-inspection-v1",
+    mode: "experimental_axis_columns",
+    case_hash: context.caseHash,
+    planning_hash: context.planningHash,
+    case_id: "synthetic-contract-only",
+    source_frame: "RAS+",
+    geometry_frame: "RAS+",
+    source_shape: [7, 7, 8],
+    native_affine_ras_mm: [
+      [1, 0, 0, 0],
+      [0, 1, 0, 0],
+      [0, 0, 1, 0],
+      [0, 0, 0, 1],
+    ],
+    neighboring_columns_acknowledged: true,
+    access: structuredClone(window),
+    requested_access_ras: structuredClone(window),
+    access_status: "hypothetical_unverified_cortical_access",
+    access_conversion: {
+      source_frame: "RAS+",
+      normal_absolute_tolerance: 0,
+      normal_maximum_absolute_difference: 0,
+    },
+    source_support: {
+      cortical_access_permitted: false,
+      estimated_support_acknowledged: true,
+      evidence_type: "estimated",
+      review_status: "declared_skull_strip_assumption",
+    },
+    tools: [structuredClone(tool)],
+    native_config_hash: digest("d"),
+    proposal_model_hash: digest("e"),
+    proposal_rule_hash: digest("f"),
+    proposal_rule: {
+      offsets_source_voxels: offsets,
+      max_primary_rays: 26,
+      version: "experimental-residual-axis-columns-v1",
+    },
+    max_steps: 3,
+    max_actions: 27,
+    input_profile: "RAW",
+    max_tip_step_mm: 0.25,
+    partial_contact_weight: 0.05,
+    functional_evidence_available: { motor: false, language: false },
+    vascular_evidence_status: "unassessed",
+    population_priors_used: false,
+    world_partitions_created: false,
+    world_role: null,
+    ordering: "STOP_then_provider_column_tool_order",
+    fallback_policy: "only_after_primary_preview_rejection",
+    binding_hash: digest("1"),
+  };
+  const batch = {
+    source_hash: context.caseHash,
+    engine_model_hash: binding.native_config_hash,
+    rule_hash: binding.proposal_rule_hash,
+    proposal_model_hash: binding.proposal_model_hash,
+    cavity_state_hash: digest("2"),
+    proposals,
+    ledger: offsets.map((offset, index) => ({
+      column_index: index,
+      offset_source_voxels: offset,
+      tool_id: tool.tool_id,
+      reason:
+        index < 2 ? "PROPOSED_UNCERTIFIED" : "NO_REMAINING_TARGET_IN_COLUMN",
+      proposal_id: index < 2 ? proposals[index].proposal_id : null,
+    })),
+    unsupported_reason: null,
+    slot_count: 13,
+    geometry_certified: false,
+    removal_authorized: false,
+    counts: { PROPOSED_UNCERTIFIED: 2, NO_REMAINING_TARGET_IN_COLUMN: 11 },
+  };
+  const inspection = {
+    version: "native-axis-inspection-v1",
+    role: "inspection",
+    binding,
+    status: "ready",
+    inventory_complete: true,
+    initial_cavity_state_hash: batch.cavity_state_hash,
+    inventory: {
+      status: "complete",
+      terminated: false,
+      batch,
+      attempts,
+      certified_action_ids: ["synthetic-action"],
+    },
+    actions: [
+      { action_id: "STOP", kind: "stop", geometry: null, native_preview: null },
+      {
+        action_id: "synthetic-action",
+        kind: "native_stroke",
+        geometry: {
+          frame: "RAS+",
+          tool_id: tool.tool_id,
+          entry_mm: [3, 3, -0.5],
+          tip_mm: [3, 3, 2],
+          axis_unit: [0, 0, 1],
+          insertion_distance_mm: 2.5,
+        },
+        native_preview: {
+          scope: "native_engine_preview_only",
+          independent_history_checked: false,
+          proposal_id: proposals[0].proposal_id,
+          phase: "fallback",
+          reason: "NATIVE_CONNECTED_STROKE",
+          source_hash: context.caseHash,
+          source_state_hash: batch.cavity_state_hash,
+          native_config_hash: binding.native_config_hash,
+          geometry_unknowns: ["tool_geometry_outside_image_unassessed"],
+          unexecuted_contained_cell_count: 2,
+          unexecuted_contact_cell_count: 4,
+        },
+      },
+    ],
+    legal_non_stop_actions: 1,
+    accounting: {
+      gradient_steps: 0,
+      executed_transitions: 0,
+      native_commits: 0,
+      simulated_removed_volume_mm3: 0,
+    },
+    proposal_accounting: { preview_calls: 3 },
+    candidate_eligible: false,
+    removal_authorized: false,
+    clinical_deficit_probability: null,
+    unknowns,
+    inspection_hash: digest("3"),
+  };
+  const result = {
+    schemaVersion: 1,
+    caseHash: context.caseHash,
+    planningHash: context.planningHash,
+    routeId: context.routeId,
+    routePlanningModelHash: context.routePlanningModelHash,
+    accessSource: "selected_route_window_only",
+    requestedToolIds: [...choices.toolIds],
+    anchorWindowRas: structuredClone(window),
+    anchorWindowNormalization: {
+      normalAbsoluteTolerance: 4 * Number.EPSILON,
+      normalMaximumDifference: 0,
+    },
+    inspection,
+  };
+  return { context, choices, result };
+}
