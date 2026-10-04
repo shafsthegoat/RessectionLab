@@ -158,6 +158,30 @@ class NativeSequentialSimulator(SequentialSimulator):
         self._hidden_world_hash = "sha256:" + hashlib.sha256((self._hidden_world_hash + self.decision_model_hash).encode()).hexdigest()
         return self.observation()
 
+    def fresh(self, *, max_steps: int | None = None,
+              world_generator: WorldGeneratorConfig | None = None) -> NativeSequentialSimulator:
+        """Rebuild this exact backend with independent proposal/certificate state.
+
+        Native anatomy remains the same immutable source model. Construction
+        includes fresh engine preparation and initial proposals, so callers must
+        account for that setup cost. Missing functional arrays remain missing.
+        """
+        if type(self) is not NativeSequentialSimulator:
+            raise TypeError("A native simulator subclass must explicitly implement fresh()")
+        if max_steps is not None and (not isinstance(max_steps, int) or isinstance(max_steps, bool) or max_steps < 1):
+            raise ValueError("Native episode horizon must be a positive integer")
+        return NativeSequentialSimulator(
+            self.native_config, self.candidate_tips_mm,
+            candidate_entries_mm=self.candidate_entries_mm,
+            nominal_motor=self.config.nominal_motor if self.config.evidence_available[0] else None,
+            nominal_language=self.config.nominal_language if self.config.evidence_available[1] else None,
+            reward=self.config.reward,
+            world_generator=self.config.world_generator if world_generator is None else world_generator,
+            max_steps=self.config.max_steps if max_steps is None else max_steps,
+            max_actions=self.config.max_actions,
+            partial_contact_weight=self.partial_contact_weight,
+            compartment_names=dict(self.config.compartment_names), cancelled=self._cancelled)
+
     def clone(self) -> NativeSequentialSimulator:
         result = super().clone()
         result.engine = self.engine.clone()

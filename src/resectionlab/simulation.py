@@ -8,7 +8,7 @@ not a calibrated tissue mechanics or surgical outcome model.
 """
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, replace
 import copy
 import hashlib
 import json
@@ -259,6 +259,19 @@ class SequentialSimulator:
             self._hidden_graph = {k: resample(v, order=0, outside=0).astype(bool) for k, v in self.config.graph_edges.items()}
         self._hidden_world_hash = "sha256:" + hashlib.sha256((self._frozen_hash + str(self.seed)).encode() + latent.anatomy_transform_mm.tobytes()).hexdigest()
         return self.observation()
+
+    def fresh(self, *, max_steps: int | None = None,
+              world_generator: WorldGeneratorConfig | None = None) -> SequentialSimulator:
+        """Create an isolated arm with empty dynamic caches and explicit changes."""
+        if type(self) is not SequentialSimulator:
+            raise TypeError("A simulator subclass must implement fresh() without dropping its backend")
+        if max_steps is not None and (not isinstance(max_steps, int) or isinstance(max_steps, bool) or max_steps < 1):
+            raise ValueError("Episode horizon must be a positive integer")
+        config = replace(self.config,
+                         max_steps=self.config.max_steps if max_steps is None else max_steps,
+                         world_generator=self.config.world_generator if world_generator is None else world_generator,
+                         world_translation_voxels=0)
+        return SequentialSimulator(config)
 
     def clone(self) -> SequentialSimulator:
         """Copy rollout state while sharing immutable anatomy and cached geometry."""

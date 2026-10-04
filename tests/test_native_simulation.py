@@ -153,3 +153,20 @@ def test_fast_native_freeze_guard_detects_array_reinterpretation_and_reward_chan
     object.__setattr__(sim.config, "reward", RewardSpec(target_per_mm3=100))
     with pytest.raises(RuntimeError, match="Decision model changed"):
         sim.step("STOP")
+
+
+def test_fresh_native_arm_preserves_backend_evidence_and_model_identity():
+    sim = NativeSequentialSimulator(fixture(), [(3, 3, 4)])
+    sim.step(1)
+    fresh = sim.fresh()
+    assert type(fresh) is NativeSequentialSimulator
+    assert not fresh.removed_mask.any()
+    assert fresh.decision_model_hash == sim.decision_model_hash
+    assert fresh.config.evidence_available == (False, False)
+    assert fresh.metrics()["motor_surrogate"] is None
+    assert fresh.engine is not sim.engine
+    assert fresh._previews is not sim._previews
+    changed = sim.fresh(max_steps=3, world_generator=WorldGeneratorConfig(family="rigid_uniform", translation_scale_mm=(.1, .1, .1)))
+    assert changed.config.max_steps == 3
+    assert changed.world_generator_fingerprint != sim.world_generator_fingerprint
+    assert changed.decision_model_hash != sim.decision_model_hash

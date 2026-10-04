@@ -209,3 +209,16 @@ def test_deterministic_world_preserves_oblique_grid_fields_exactly():
     sim = SequentialSimulator(replace(original.config, affine=affine, nominal_motor=evidence))
     np.testing.assert_array_equal(sim._hidden_motor, evidence)
     assert sim._hidden_known_coverage.all()
+
+
+def test_fresh_coarse_arm_does_not_share_dynamic_caches():
+    sim = make_synthetic_simulator()
+    sim.step(1)
+    fresh = sim.fresh()
+    assert type(fresh) is SequentialSimulator
+    assert fresh.decision_model_hash == sim.decision_model_hash
+    assert not fresh.removed_mask.any()
+    assert fresh._geometry_cache is not sim._geometry_cache
+    changed = sim.fresh(max_steps=2, world_generator=WorldGeneratorConfig(family="rigid_uniform"))
+    assert changed.config.max_steps == 2
+    assert changed.decision_model_hash != sim.decision_model_hash
