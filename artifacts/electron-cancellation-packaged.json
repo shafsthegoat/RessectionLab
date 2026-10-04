@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "frozen": true,
+  "packaged": true,
+  "passed": true,
+  "checks": {
+    "trainingCancelledAfterRealUpdates": true,
+    "cancelledCheckpointSignedAndListed": true,
+    "cancelledRunRestoredAfterEngineRestart": true,
+    "resumeContinuedActorUpdatesUnderOriginalContract": true,
+    "independentSelectionAcceptedWithoutFinalEvaluation": true,
+    "resumedCheckpointSignedAndListed": true,
+    "runtimeBuildIdentityUnchanged": true
+  },
+  "verificationStartedUtc": "2026-10-04T08:38:37.488Z",
+  "executable": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/research-engine/ressectionlab-engine",
+  "scope": "synthetic_native_training_cancellation_restart_resume_selection",
+  "finalEvaluation": false,
+  "shape": [
+    24,
+    24,
+    24
+  ],
+  "budgetSeconds": 10,
+  "seed": 11,
+  "buildIdentity": {
+    "executable": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/research-engine/ressectionlab-engine",
+      "sha256": "673b1ef62f8d8fa17cfd5ffa45c753bc7953c2f6aa39ebc817e3c07b8412c31a"
+    },
+    "engineSource": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/research-engine/_internal/build_info/BUILD_INPUT_MANIFEST.json",
+      "manifestSha256": "710d14fd82c8cf8fc26de6e97b23c95282ce0162e522b4919c7bb7ac20ef09bf",
+      "sourceDigest": "ddec6f6f60465cd7d41b6445a87480af2e2bca293c4ff502f5f004e3a50a99ab",
+      "revision": "eed0e227245a232f9e1674cd3d1ea1cfa77ec9ea",
+      "createdUtc": "2026-10-04T07:57:47.320678+00:00"
+    },
+    "renderer": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar",
+      "sha256": "98acd274aadb918c632d9c024b9de37d78bb413e01bb929c49ebab6d7dbb146d"
+    }
+  },
+  "executableSha256": "673b1ef62f8d8fa17cfd5ffa45c753bc7953c2f6aa39ebc817e3c07b8412c31a",
+  "cancellationAcknowledgementSeconds": 0.0019834579999997003,
+  "cancelledTrainingSeconds": 2.4071555420000004,
+  "observedGradientStepsBeforeCancel": 2,
+  "cancelledCheckpointSnapshotStatus": "running",
+  "cancelledGradientSteps": 2,
+  "cancelledOptimizationEnvironmentSteps": 5,
+  "cancelledSelectionEnvironmentSteps": 6,
+  "resumeSeconds": 9.801196916999999,
+  "resumedGradientSteps": 16,
+  "additionalGradientSteps": 14,
+  "resumedOptimizationEnvironmentSteps": 80,
+  "resumedSelectionEnvironmentSteps": 32,
+  "finalStatus": "wall_time_budget",
+  "selectionReplayStatus": "accepted_independent_geometry",
+  "cancelledTerminalEvents": 1,
+  "elapsedSeconds": 13.933107125
+}

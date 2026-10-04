@@ -118,8 +118,11 @@ independently enforce imaging dtype, shape, coordinate and volume contracts.
 and writes `artifacts/electron-cancellation-packaged.json`. Both modes record
 the executable and embedded source identities; packaged mode also records the
 renderer archive hash. The verifier rejects changes to these identities between
-cancellation and restart. This option does not imply a new run has passed;
-check the matching artifact and its build identity.
+cancellation and restart. The first packaged run passed in 13.93 seconds:
+cancellation after two real updates was acknowledged in 1.98 ms; restart and
+resume performed 14 additional updates under the original contract. Its receipt
+identifies Python source digest `ddec6f6f…` and renderer archive `98acd274…`.
+These results do not apply automatically to later builds.
 
 `artifacts/electron-full-native-validation.json` preserves the complete app's
 negative UCSF route-conditioned training result: 32 updates left the actor
