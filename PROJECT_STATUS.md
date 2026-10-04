@@ -119,6 +119,12 @@ the refreshed packaged UI is undergoing its own end-to-end checks.
   9.68% to 0.40%, with 0.395-mm displacement error. The zero-distortion solver
   failure and unsupported BTC phase-encoding geometry remain explicit blockers;
   no patient correction or FSL execution was performed.
+- A separate experimental physical-vector solver passes a bounded rotated-pair
+  phantom and an independently certified identical-input branch. Image error
+  falls from 9.68% to 1.07%, with 0.315-mm field error; coordinate-invariance
+  failures in two earlier revisions are retained. All nonzero runs reach their
+  40-iteration limit. Thirty-four focused checks and independent artifact/error
+  verification passed. This does not promote any patient preprocessing gate.
 
 ## Validation record
 

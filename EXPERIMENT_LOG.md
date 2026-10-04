@@ -314,3 +314,23 @@ accuracy. Both proposals remain review-required and confer no cortical access.
 The six-plane QC was inspected, and source/model/output/runner hashes match.
 Frozen records: `artifacts/brain-extraction/PAT05-mps-v1/`; independent audit:
 `docs/brain-extraction-pat05-independent-review.md`.
+
+## October 4, 2026 — physical-vector correction feasibility
+
+An isolated, independently written susceptibility prototype represents both
+native image affines and physical phase-encoding directions. Five final phantoms
+pass their frozen numerical thresholds. On the 0.8-degree native pair, image
+relative RMSE improves from 9.6792% to 1.0682%, with 0.3154-mm field error. Every
+nonzero solve hits its fixed 40-iteration cap. An exact-identical-input branch
+separately certifies zero objective and unit Jacobians before optimization.
+
+Two earlier frame-invariance failures (0.2498 and 0.1044 mm maximum field
+differences) are preserved. Using exact reference indices, relative affines and
+directions derived from stored headers lowers the final difference to 0.000570
+mm, below the unchanged 0.02-mm bound. Three revisions consumed 91.84 seconds
+total worker wall time; sampled peak RSS stayed below 500 MiB. Thirty-four
+focused tests pass; an independent auditor verifies all 51 generated-file hashes
+and reproduces final errors. This one smooth, equal-scaling phantom does not
+establish patient performance, solver convergence or a complete diffusion
+correction chain. Production gates remain unchanged. Records and limitations:
+`docs/vector-susceptibility-phantom.md`, `artifacts/vector-susceptibility-v1/`.
