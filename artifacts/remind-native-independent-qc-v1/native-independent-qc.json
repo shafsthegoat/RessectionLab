@@ -1,0 +1,227 @@
+{
+  "schema_version": 1,
+  "status": "direct_source_samples_and_native_geometry_verified",
+  "audit_script_sha256": "59fa3cf7298386bbaed7f33ce4540760bd9ab7b16739fc00c22f77a75f59c1ad",
+  "manifest_sha256": "3dad212f49655937d8ef3d0dff998eb796de9f885c4328e9f4202503157ac08f",
+  "acquisition_receipt_sha256": "de45eca13fe96fe7ce031c23fae46aecde3dad3995a92884cb45088fcb92130f",
+  "conversion_record_sha256": "0c047a4691b63d0e31441fafa27d656184a1efd03e050518f0577a45ae38b7a6",
+  "source_instances_verified": 386,
+  "source_bytes_verified": 59163552,
+  "native_series": [
+    {
+      "role": "cerebrum_annotation",
+      "native_sha256": "301b331c35e7e6eda20fb475a7456941c78497a2dd0db7960b12dfaedf2cfcc3",
+      "source_instances": 1,
+      "source_planes": 357,
+      "all_source_pixels_equal": true,
+      "direct_source_corner_max_error_mm": 1.0886911872153516e-05,
+      "qform_sform_max_corner_difference_mm": 0.000414250539600503,
+      "frame_of_reference_uid": "1.3.6.1.4.1.14519.5.2.1.15406225903043740751527022288377871160",
+      "shape_xyz": [
+        459,
+        576,
+        357
+      ],
+      "spacing_mm": [
+        0.2999999934239325,
+        0.2999999946922899,
+        0.29984301753742976
+      ],
+      "explicit_source_sop_references": [],
+      "affine_ras_mm": [
+        [
+          0.2256585955619812,
+          0.19467028975486755,
+          0.03435748815536499,
+          -83.71346282958984
+        ],
+        [
+          0.19565626978874207,
+          -0.22739264369010925,
+          0.0033457642421126366,
+          106.42790222167969
+        ],
+        [
+          0.028227971866726875,
+          0.019901273772120476,
+          -0.29784929752349854,
+          43.78684616088867
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "positive_voxels": 39161902,
+      "positive_volume_mm3": 1056818.016273357,
+      "algorithm_type": "AUTOMATIC",
+      "annotation_accuracy_reviewed": false
+    },
+    {
+      "role": "structural_t1ce",
+      "native_sha256": "a84f860cb64aa7ca5cf6ad01bc94ccf7a30fdca16a92d6c94c83fed0467c0996",
+      "source_instances": 192,
+      "source_planes": 192,
+      "all_source_pixels_equal": true,
+      "direct_source_corner_max_error_mm": 0.000782746336053068,
+      "qform_sform_max_corner_difference_mm": 0.0008685253797048461,
+      "frame_of_reference_uid": "1.3.6.1.4.1.14519.5.2.1.15406225903043740751527022288377871160",
+      "shape_xyz": [
+        216,
+        256,
+        192
+      ],
+      "spacing_mm": [
+        0.9765625997978149,
+        0.9765622181154923,
+        1.0000000096605244
+      ],
+      "explicit_source_sop_references": [],
+      "affine_ras_mm": [
+        [
+          0.7345654964447021,
+          0.6336924433708191,
+          0.11458485573530197,
+          -150.24835205078125
+        ],
+        [
+          0.636902391910553,
+          -0.7402099967002869,
+          0.011158433742821217,
+          123.12290954589844
+        ],
+        [
+          0.09188789874315262,
+          0.06478282064199448,
+          -0.9933508038520813,
+          68.32349395751953
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "role": "structural_t2",
+      "native_sha256": "01b2432582adc9af4af3f26e99aee50140a3676271496127da6a1a7dca29084a",
+      "source_instances": 192,
+      "source_planes": 192,
+      "all_source_pixels_equal": true,
+      "direct_source_corner_max_error_mm": 0.0006366815534486754,
+      "qform_sform_max_corner_difference_mm": 8.111872341035615e-05,
+      "frame_of_reference_uid": "1.3.6.1.4.1.14519.5.2.1.166083500149434168454317341807079310691",
+      "shape_xyz": [
+        256,
+        256,
+        192
+      ],
+      "spacing_mm": [
+        0.9765624445649146,
+        0.9765622496221349,
+        1.0000000488773984
+      ],
+      "explicit_source_sop_references": [],
+      "affine_ras_mm": [
+        [
+          0.634286105632782,
+          0.1091943308711052,
+          0.752087414264679,
+          -142.44998168945312
+        ],
+        [
+          -0.7398564219474792,
+          0.010996874421834946,
+          0.6526068449020386,
+          127.8503189086914
+        ],
+        [
+          0.06299062818288803,
+          -0.9703759551048279,
+          0.09202676266431808,
+          85.96118927001953
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "role": "tumor_annotation",
+      "native_sha256": "0a4aca8499d8aa65ba15453a357aa4135b79cbfaa25b95f02fe797de89e83da4",
+      "source_instances": 1,
+      "source_planes": 59,
+      "all_source_pixels_equal": true,
+      "direct_source_corner_max_error_mm": 9.639330413074751e-06,
+      "qform_sform_max_corner_difference_mm": 0.00012191561130411254,
+      "frame_of_reference_uid": "1.3.6.1.4.1.14519.5.2.1.166083500149434168454317341807079310691",
+      "shape_xyz": [
+        61,
+        63,
+        59
+      ],
+      "spacing_mm": [
+        0.7000000023976771,
+        0.7000000075845916,
+        0.7000000297626218
+      ],
+      "explicit_source_sop_references": [],
+      "affine_ras_mm": [
+        [
+          0.5265367031097412,
+          0.4542306959629059,
+          0.08020944893360138,
+          15.02862548828125
+        ],
+        [
+          0.4565313458442688,
+          -0.530582845211029,
+          0.0078108604066073895,
+          131.630859375
+        ],
+        [
+          0.06586527079343796,
+          0.04643629863858223,
+          -0.6953455805778503,
+          0.10256961733102798
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "positive_voxels": 79529,
+      "positive_volume_mm3": 27278.448548826946,
+      "algorithm_type": "MANUAL",
+      "annotation_accuracy_reviewed": false
+    }
+  ],
+  "segmentation_same_frame_as_named_mri": {
+    "cerebrum_annotation": true,
+    "tumor_annotation": true
+  },
+  "t1_t2_same_frame": false,
+  "cross_frame_identity_accepted": false,
+  "registration_performed": false,
+  "expert_anatomical_review": false,
+  "cortical_access_permitted": false,
+  "outside_segmentation_native_grid": "unassessed, not verified absence",
+  "limitation": "Both SEG files have no explicit referenced source SOP links. Matching frame and release description are evidence of correspondence, not expert alignment approval.",
+  "elapsed_seconds": 1.4739185830112547,
+  "peak_rss_bytes": 461963264,
+  "runtime": {
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "numpy": "2.5.3",
+    "nibabel": "5.4.2",
+    "pydicom": "3.0.1"
+  }
+}

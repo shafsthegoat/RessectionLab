@@ -1,0 +1,78 @@
+{
+  "overlays": [
+    {
+      "mri": "structural_t1ce",
+      "segmentation": "cerebrum_annotation",
+      "annotation_centroid_ras_mm": [
+        33.04959526563147,
+        84.30261570494291,
+        3.490038443179465
+      ],
+      "annotation_centroid_mri_voxel": [
+        109.0122696280511,
+        147.52384890059946,
+        84.9723729261681
+      ],
+      "planes": [
+        {
+          "axis": 0,
+          "index": 109,
+          "seg_grid_covered_pixels": 18939,
+          "positive_overlay_pixels": 7030
+        },
+        {
+          "axis": 1,
+          "index": 148,
+          "seg_grid_covered_pixels": 15087,
+          "positive_overlay_pixels": 8966
+        },
+        {
+          "axis": 2,
+          "index": 85,
+          "seg_grid_covered_pixels": 24957,
+          "positive_overlay_pixels": 15541
+        }
+      ],
+      "png": "structural_t1ce-native-annotation-overlay.png",
+      "sha256": "3bca8b4c41fb77f8d851cd0f87c72be01263dc5126ed329d9ab780b1419a068b"
+    },
+    {
+      "mri": "structural_t2",
+      "segmentation": "tumor_annotation",
+      "annotation_centroid_ras_mm": [
+        48.29338716181604,
+        129.0874053700103,
+        -18.9077552968087
+      ],
+      "annotation_centroid_mri_voxel": [
+        118.9765493726515,
+        128.5597441081154,
+        134.6122798135117
+      ],
+      "planes": [
+        {
+          "axis": 0,
+          "index": 119,
+          "seg_grid_covered_pixels": 1722,
+          "positive_overlay_pixels": 1054
+        },
+        {
+          "axis": 1,
+          "index": 129,
+          "seg_grid_covered_pixels": 1848,
+          "positive_overlay_pixels": 1081
+        },
+        {
+          "axis": 2,
+          "index": 135,
+          "seg_grid_covered_pixels": 1804,
+          "positive_overlay_pixels": 676
+        }
+      ],
+      "png": "structural_t2-native-annotation-overlay.png",
+      "sha256": "38f49b4e22237cc6cea27814f00f89e286c10b730fcd6f1bece561224f1dcba4"
+    }
+  ],
+  "cross_frame_registration": false,
+  "expert_anatomical_review": false
+}

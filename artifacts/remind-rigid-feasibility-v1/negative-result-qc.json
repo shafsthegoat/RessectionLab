@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "finding": "fitted_rigid_proposal_unselected_diagnostic_metric_worsened",
+  "result_sha256": "4b199141f035876bce6f1a471633ee4517f5f50907ee020fa056a02e648eaae9",
+  "supervision_sha256": "375ce004d76ed58496f83d3cef3113ecbc9c98a0a12585c3471079fd077198b5",
+  "all_source_mri_unchanged": true,
+  "actual_saved_transform_ras_matrix_max_point_error_mm": 2.0097183471152322e-14,
+  "forward_inverse_max_matrix_error": 1.8431436932253575e-18,
+  "rotation_determinant": 1.0,
+  "translation_vector_norm_mm": 0.9887749279127788,
+  "rotation_angle_degrees": 0.08854073755099669,
+  "visual_planes_inspected": 9,
+  "visual_conclusion": "Sampled coarse planes do not establish an anatomical accuracy improvement; no gross orientation swap was apparent. Do not select the fitted transform from this evidence.",
+  "metric_before": {
+    "mutual_information_nats": 0.6986135248503436,
+    "normalized_mutual_information": 1.2343300939832336,
+    "sample_count": 169524
+  },
+  "metric_after": {
+    "mutual_information_nats": 0.6831095333470132,
+    "normalized_mutual_information": 1.2277654702079361,
+    "sample_count": 169524
+  },
+  "diagnostic_independence_limit": "Checkerboard centers are excluded from the optimizer fixed mask, but preprocessing statistics, smoothing and interpolation share image information and adjacent voxels are spatially correlated. This is a diagnostic comparator, not a strict independent test set.",
+  "attempt_count": 1,
+  "further_tuning_performed": false,
+  "identity_registration_accepted": false,
+  "fitted_registration_accepted": false,
+  "expert_registration_review": false,
+  "cortical_access_permitted": false,
+  "image_sha256": "b90049ec645d10d8c9cb4af6995836bb732afc597570209d6508dffed0261c6e"
+}

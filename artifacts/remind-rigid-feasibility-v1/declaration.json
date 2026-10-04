@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "declared_utc": "2026-10-04T17:26:22.201386+00:00",
+  "role": "ReMIND:001 development registration feasibility only",
+  "source_conversion_sha256": "0c047a4691b63d0e31441fafa27d656184a1efd03e050518f0577a45ae38b7a6",
+  "script_sha256": "016381bd679d8bbe977160a901124aab4bffe41853666fdfb4c2e20d6c4d5946",
+  "images": {
+    "fixed_T1": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/remind_source/converted-native/ReMIND-001/structural_t1ce.nii.gz",
+      "sha256": "a84f860cb64aa7ca5cf6ad01bc94ccf7a30fdca16a92d6c94c83fed0467c0996",
+      "frame_of_reference_uid": "1.3.6.1.4.1.14519.5.2.1.15406225903043740751527022288377871160"
+    },
+    "moving_T2": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/remind_source/converted-native/ReMIND-001/structural_t2.nii.gz",
+      "sha256": "01b2432582adc9af4af3f26e99aee50140a3676271496127da6a1a7dca29084a",
+      "frame_of_reference_uid": "1.3.6.1.4.1.14519.5.2.1.166083500149434168454317341807079310691"
+    }
+  },
+  "algorithm": {
+    "transform": "Euler3D rigid, fixed T1 to moving T2 sampling",
+    "initialization": "Physical identity about fixed FOV center, unaccepted control",
+    "normalization": "Separate per-image 1st/99.5th percentiles, clip to [0,1]; no label/statistics sharing",
+    "grid": "Native qform orthogonal grid; reject >.001mm qform/sform corner disagreement;3mm native-axis spacing",
+    "metric": "Mattes mutual information32bins; fixed mask checkerboard parity0",
+    "sampling": "Random20%,seed2718",
+    "optimizer": "RegularStepGradientDescent lr2,minStep.001,100iterations/level,relaxation.5,gradienttol1e-6,physical shift scales",
+    "levels": "shrink2,1;smoothing1,0 physicalmm",
+    "diagnostic": "Parity1 common before/after FOV;32bin MI/NMI; spatial correlation acknowledged"
+  },
+  "cpu_threads": 1,
+  "total_wall_cap_seconds": 120,
+  "sampled_rss_stop_bytes": 1610612736,
+  "rss_limit_bytes": 2147483648,
+  "attempts": 1,
+  "retry_permitted": false,
+  "source_annotations_used_in_optimization": false,
+  "clinical_or_cortical_acceptance": false,
+  "expert_registration_review_required": true,
+  "python_executable": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python"
+}
