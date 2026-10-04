@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "status": "pass_after_repairs_code_review_not_measurement_release",
+  "source_and_test_sha256": {
+    "scripts/mechanics_hbe_access.py": "b1e4f90b2ec84c39949ee02c1088bc0404f34904e24c2d4f328d503d96f76fe0",
+    "scripts/mechanics_hbe_readout.py": "21700558e5cb614a11a7cc62dbd5ec8118fabb11b4fbfc88f89cb8aa02012963",
+    "scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "scripts/mechanics_hbe_outputs.py": "a86191769ee71e79596d9f3871da575dd7e2b2d62e1a9c919162242a335fa65d",
+    "tests/test_mechanics_hbe_access.py": "dcf68dac14a076b963bede1b06ff1964cf69f4cd4f421e3a5ad8e5f1b8c8f58e",
+    "tests/test_mechanics_hbe_access_review.py": "4d44bbd0ff801c426b9c80f588e1d89a0302ce6bf5adbc957e8e2a0e8badc4ae",
+    "tests/test_mechanics_hbe_readout.py": "b1638d2b6b1d2dca0788340603763c0dbd8b55b4f47eb8c01bf6acb3a5c57b09",
+    "tests/test_mechanics_hbe_readout_review.py": "e479ae9e25e67d69ed91220335053f7654542ae1d4a88e0a8c5cd4cf86c0e74f"
+  },
+  "integrated_tests": {
+    "passed": 34,
+    "independent_access": 12,
+    "independent_readout": 7,
+    "owner_access_and_readout": 15,
+    "pytest_seconds": 0.78,
+    "process_wall_seconds": 1.0464557079999999,
+    "all_nine_bound_files_unchanged": true,
+    "receipt_sha256": "9e583ea6cd2bc48b8d2c8edc15ee7752b1a726f9e5171e3726b9c46eff4c5cc6",
+    "log_sha256": "3c24e22c761f37c7646f87897d93660c8774388c30fbeb14686e5b14c27f124e"
+  },
+  "initial_negative_evidence": {
+    "negative_receipt_sha256": "95e9de512df2f5fef39b6a0a1fa079928d30a285ec868334f719d4ff17c06761",
+    "passed": 1,
+    "failed": 6,
+    "source_sha256": "6405e074628b05382e2fd949e11bd4c32af36e286abcf42c3de2c3fda4825244",
+    "pytest_seconds": 0.33,
+    "preserved_sources": "Compact .initial.gz files and fixture-shape-repair test snapshot; no production files replaced by reviewer.",
+    "fixture_setup_truth": "Earlier initial-check had three intended lifecycle checks blocked by stale fixture source/group metadata. Copied constructed helper shape corrected only; those earlier setup failures are not claimed as independent production findings."
+  },
+  "repairs_reviewed": [
+    "Numerical evidence binds executing helper origins/hashes and actual per-run runtime/executable/command/cwd/output receipts. All20 bound primitive sets are independently reread before freezing; rebuilt numerical groups must exactly equal supplied report. Claimed passing booleans, arbitrary units/limits or dummy JSON blobs do not authorize disclosure.",
+    "Readout computes numerical comparisons under fixed protocol rules, including mesh/step/scale and two fitted confirmations; exact raw-file inventory is sealed after replay and reverified before torque access.",
+    "Source release binds actual Git-source tar bytes and PAX commit identity, plus each expected executing source member. Historical preparation source is bound separately from current fitted-deck builder; runner-level historical preparation record verification remains part of experiment review.",
+    "CSV interpretation and ledger location are release-bound. Only exact selected ZIP members are read; changed archive bytes and duplicate names reject before payload access.",
+    "A durable freeze_saved event binds exact freeze path/hash. Altered/rehashed prediction+freeze cannot replace it. Calibration and refreezing close after saved freeze, and held_out_attempt closes them even when parsing fails; restart or fresh ledger path does not reset that state.",
+    "Per-run successful int exit status, elapsed cap, runtime identity, executable, command and working directory are checked. Constructed wrong-cwd control confirms identical command text cannot attach to a different folder.",
+    "Final readout retains nonpositive logged-J rejection and uses the exact existing deck residual-floor arithmetic for arbitrary fitted modulus, with unchanged tolerance."
+  ],
+  "test_isolation": {
+    "lifecycle_controls": "Owner analytical_prerequisite_stubs replaces actual release provenance and complete numerical replay solely to exercise ledger/freeze/ZIP behavior. These tests do not establish authentic20-run fidelity.",
+    "unmocked_rejection_controls": "Real validators reject dummy source/numerical proof and changed archive. Tar-member corruption runs real tar/path/hash code with a constructed module-origin path.",
+    "isolated_replay_comparison": "Only source-origin prerequisite and replay producer are stubbed to compare a known rebuilt report against an altered rehashed claim; this tests exact comparison separately from raw physics/replay.",
+    "cwd_control": "Only expected runtime identity constant is set to constructed runtime digest. verify_run_execution, path checks and hashes run normally; constructed executable is never run.",
+    "readout_controls": "Closed-form61-frame primitive fixtures and small comparison arrays exercise real parsing/physics/readout; no FEM execution."
+  },
+  "actions": {
+    "actual_measured_curve_values_opened": 0,
+    "patient_images_or_values_opened": 0,
+    "actual_solver_runs": 0,
+    "network_requests": 0,
+    "training_or_empirical_benchmarks": 0,
+    "thread_environment_limit": 1
+  },
+  "remaining_requirements": [
+    "Root must commit/freeze the complete source and separately release actual experiment access; passing these checks grants no measurement authorization.",
+    "The orchestrator and real release must bind preserved historical preparation, current builder, actual runtime/control receipts, numerical resource caps and the exact completed-run evidence. Independent orchestrator review is separate.",
+    "Actual20-run positive replay, real CSV schema validation, numerical convergence and empirical torsion agreement have not been performed here. Genuine measurements may fail and must remain failures without baseline tuning.",
+    "The ledger is a reproducibility/accidental-drift boundary, not security against an authorized host rewriting all history.",
+    "No donor transfer, patient material, clinical force/retraction/cutting or patient-accuracy claim follows from these constructed tests."
+  ],
+  "blocking_findings": []
+}

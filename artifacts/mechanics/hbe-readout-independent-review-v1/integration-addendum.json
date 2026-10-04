@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "supersedes_readout_current_source_and_integration_pending_only": true,
+  "prior_verification_sha256": "b1c6edecb7ae8dece99ac6eac8bce1ab2847a897129246de38a5108457e734cf",
+  "new_readout_sha256": "21700558e5cb614a11a7cc62dbd5ec8118fabb11b4fbfc88f89cb8aa02012963",
+  "new_access_sha256": "b1e4f90b2ec84c39949ee02c1088bc0404f34904e24c2d4f328d503d96f76fe0",
+  "integrated_final_receipt": "../hbe-access-independent-review-v1/integrated-final-check.json",
+  "integrated_final_receipt_sha256": "9e583ea6cd2bc48b8d2c8edc15ee7752b1a726f9e5171e3726b9c46eff4c5cc6",
+  "integrated_passed": 34,
+  "pytest_seconds": 0.78,
+  "owner_fitted_scale_negative_receipt_sha256": "03d78f5f12dd6d2e6e3b1af652e6423f262cbdcd47b96f9e54d8167f1d5c8406",
+  "fitted_scale_repair": "Owner added mu123.456 control, which failed on75ad1bcc due a one-ULP arithmetic-order difference in residual floor.21700558 uses exact existing deck arithmetic(1e-10*mu*R**2)**2; tolerance unchanged. That regression passed in integrated owner tests.",
+  "historical_receipt_unchanged": true,
+  "actual_measurements_or_solver_runs": 0
+}
