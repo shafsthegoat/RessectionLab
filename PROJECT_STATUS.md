@@ -311,11 +311,23 @@ One frozen main-v1/MPS estimate of the Case4 T1 brain envelope completed in
 7.305 s (11.644 s supervised), with no retry, fallback or download. All 59
 archived sources, 33 provenance bindings and the original image stayed unchanged.
 The wrapper accepted finite native-grid mask/SDT outputs with zero voxel-centre
-corner discrepancy. Independent mask reconstruction, full-cell corner checks
-and three-plane visual QC remain pending. This estimated envelope supplies no
+corner discrepancy. Independent reconstruction and visual checks are recorded
+separately below. This estimated envelope supplies no
 reviewed pial surface, cavity, cortical access or patient material properties.
 No later motion measurements or ultrasound were used. See
 `artifacts/mechanics/resect-case4-brain-envelope-v1/completed-inference.md`.
+
+Independent saved-array QC completed once in 16.420 s with 510.0 MB sampled
+process-group RSS. Reconstruction matched every voxel; native affine and full
+cell corners matched exactly, and save/reopen checks passed. The mask has one
+component of 1,186,021 voxels (1186.021 mL) and touches no image-volume face.
+Root inspected all three fixed native planes: the contour broadly follows the
+cerebral region, but visible inferior/cerebellar structures are excluded. This
+is not a verified whole-brain or pial boundary. Root permits preparation of a
+bounded mesh of this unchanged estimated domain only; anatomical acceptance,
+cortical access, later motion data and actual meshing remain separate gates.
+No mask enlargement or landmark-guided correction is permitted. See
+`artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/`.
 
 The first baseline alignment worker produced all six declared views and the
 15-pair proper rigid fit, but its supervisor failed with `RSS_MONITOR_FAILED`

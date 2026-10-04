@@ -1,0 +1,46 @@
+{
+  "bound_native_image_count": 3,
+  "bound_nonimage_file_count": 19,
+  "brain_reviewed": false,
+  "completed_at": "2026-10-04T21:18:10.138334+00:00",
+  "figure_sha256": "70a64cb177e1151eb3716bd49fd2a4b1bfd16e419fe820df828c69bd0e949546",
+  "inference_attempts": 0,
+  "native_roundtrips": {
+    "SDT": {
+      "bytes": 50332080,
+      "native_array_dtype_values_affine_geometry_exact": true,
+      "path": "outputs/mechanics/resect-case4-brain-envelope-independent-qc-v1/native-roundtrip/SDT-native-roundtrip.nii",
+      "sha256": "fc1c5318e9ed9f36fd52b74047ce64cd4689669b6ee52e39f37ab15d95c46618"
+    },
+    "T1": {
+      "bytes": 50332000,
+      "native_array_dtype_values_affine_geometry_exact": true,
+      "path": "outputs/mechanics/resect-case4-brain-envelope-independent-qc-v1/native-roundtrip/T1-native-roundtrip.nii",
+      "sha256": "29519162ed7740b7b0123592559c4b9adad032e7477ef32d9eddb706b169bbe3"
+    },
+    "mask": {
+      "bytes": 12583344,
+      "native_array_dtype_values_affine_geometry_exact": true,
+      "path": "outputs/mechanics/resect-case4-brain-envelope-independent-qc-v1/native-roundtrip/mask-native-roundtrip.nii",
+      "sha256": "99430af4cbe2cba6af804167f7790b57d34e5f9b74e1c584b077ba9a9b3ffed9"
+    }
+  },
+  "no_further_array_reads_for_closeout": true,
+  "optimizer_updates": 0,
+  "original_array_files_unchanged": true,
+  "other_data_access": false,
+  "prospective_sha256": "0c20523874370b9738cb3ceeb9e00c271e701fcfb5dcc9ba211093b6bb83f025",
+  "qc_receipt_sha256": "f1a3ad984233fd121af37cb463e1d88ebb443f0506a0d183f0acb298116f6c23",
+  "resource_caveat": "Group RSS sampled; worker ru_maxrss separately reported. One-CPU numeric thread limits, no claim of exact CPU-affinity enforcement.",
+  "retry_count": 0,
+  "root_visual_review": "separate_pending_record",
+  "sampled_process_group_peak_rss_bytes": 510017536,
+  "script_sha256": "d3a30e4bea65f718da84dac76487ecc71d632a43aa099d6121d42a3fdf4351a2",
+  "status": "single_saved_array_QC_complete",
+  "supervision_sha256": "bc9bf4c33c6ceda4f7c0267fe029ccd204f70213132c14223ad43c58ee5a970b",
+  "visual_observation": "At fixed native k=96 the outline excludes visible posterior-inferior tissue including cerebellar region. No anatomical or domain acceptance is supplied by this QC.",
+  "wall_seconds": 16.419758207979612,
+  "worker_self_peak_rss_bytes": 510459904,
+  "worker_verified_all_bound_files_before_and_after": true,
+  "world_transform_accepted": false
+}
