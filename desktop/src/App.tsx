@@ -34,6 +34,7 @@ import {
 import { readOnlyPreview } from "./preview-api";
 import { RefinementPanel } from "./RefinementPanel";
 import { StructuralEvidenceInventory } from "./StructuralEvidenceInventory";
+import { StructuralImportDialog } from "./StructuralImportDialog";
 import { researchSupportGate } from "./case-support";
 import { selectComparisonRoutes } from "./route-selection";
 import type { SelectedRoute } from "./route-selection";
@@ -85,9 +86,13 @@ function Logo() {
 function EvidenceDrawer({
   caseData,
   routes,
+  canImport,
+  onImport,
 }: {
   caseData: CasePayload | null;
   routes: RouteCandidate[];
+  canImport: boolean;
+  onImport: (variant: "main" | "nocsf") => Promise<void>;
 }) {
   const [advanced, setAdvanced] = useState(false);
   const collection = (caseData?.metadata.source_collection ?? {}) as Record<
@@ -150,6 +155,10 @@ function EvidenceDrawer({
                   </dd>
                 </dl>
               </section>
+              <StructuralImportDialog
+                disabled={!canImport}
+                onImport={onImport}
+              />
               <section className="record-section">
                 <h3>Physical frame</h3>
                 <dl>
@@ -441,7 +450,11 @@ export default function App() {
     "Local workspace · Open imaging to begin",
   );
   const [searchSeconds, setSearchSeconds] = useState<number | null>(null);
+  const [combinedModels, setCombinedModels] = useState(false);
   const [casePanel, setCasePanel] = useState(true);
+  const [engineOperations, setEngineOperations] = useState<Set<string>>(
+    new Set(),
+  );
   const mounted = useRef(true);
   const caseGeneration = useRef(0);
   const activeCaseHash = useRef<string | null>(null);
@@ -458,6 +471,7 @@ export default function App() {
     }
     setRoutes(result.candidates);
     setSearchSeconds(result.elapsed_seconds);
+    setCombinedModels(result.combined_models === true);
     setAllowEstimatedSupport(
       result.assumptions.some((value) =>
         value.includes("Hypothetical window support: estimated"),
@@ -557,6 +571,11 @@ export default function App() {
             : (choices[1]?.route_id ?? ""),
         );
         setSearchSeconds(null);
+        setCombinedModels(
+          new Set(
+            checked.map((route) => route.planning_model_hash).filter(Boolean),
+          ).size > 1,
+        );
         setAllowEstimatedSupport(
           checked.some((route) =>
             route.assumptions.some((value) =>
@@ -652,6 +671,32 @@ export default function App() {
     });
   }, [api]);
 
+  useEffect(() => {
+    let disposed = false;
+    setEngineOperations(new Set());
+    if (api && !api.readOnly)
+      api
+        .ping()
+        .then((value) => {
+          if (!disposed) {
+            const operations = (value as { operations?: unknown }).operations;
+            setEngineOperations(
+              new Set(
+                Array.isArray(operations)
+                  ? operations.filter(
+                      (value): value is string => typeof value === "string",
+                    )
+                  : [],
+              ),
+            );
+          }
+        })
+        .catch(() => {});
+    return () => {
+      disposed = true;
+    };
+  }, [api]);
+
   const act = async (work: () => Promise<unknown>) => {
     setError(null);
     try {
@@ -665,6 +710,50 @@ export default function App() {
       if (!api) return;
       const source = await api[kind]();
       if (source) await installCase(source, api);
+    });
+  const importStructural = (variant: "main" | "nocsf") =>
+    act(async () => {
+      if (!api?.importStructuralEvidence || !payload) return;
+      const source = await api.importStructuralEvidence({
+        caseHash: payload.caseHash,
+        variant,
+      });
+      if (source && (await installCase(source, api)))
+        setMessage(
+          "Structural proposal added locally · review required · working anatomy unchanged",
+        );
+    });
+  const generateNativeAlternatives = () =>
+    act(async () => {
+      if (!api?.generateNativeRoutes || !payload) return;
+      const oldIds = new Set(routes.map((route) => route.route_id));
+      const previous = routes.find((route) => route.route_id === routeA);
+      const result = await api.generateNativeRoutes({
+        caseHash: payload.caseHash,
+      });
+      if (result.case_hash !== activeCaseHash.current) return;
+      installSearch(result);
+      const added = result.candidates.filter(
+        (route) => !oldIds.has(route.route_id),
+      );
+      const chosen =
+        added.find((route) => route.category === "pareto") ?? added[0];
+      if (chosen) {
+        setCategory(chosen.category);
+        setRouteA(chosen.route_id);
+        setRouteB(
+          previous?.category === chosen.category
+            ? previous.route_id
+            : (added.find(
+                (route) =>
+                  route.route_id !== chosen.route_id &&
+                  route.category === chosen.category,
+              )?.route_id ?? ""),
+        );
+      }
+      setMessage(
+        `${added.length} native action alternatives added · original routes preserved · review the new geometry`,
+      );
     });
   const save = () =>
     act(async () => {
@@ -997,7 +1086,17 @@ export default function App() {
           </p>
         </section>
         <div className="case-panel-bottom">
-          <EvidenceDrawer caseData={payload} routes={selected} />
+          <EvidenceDrawer
+            caseData={payload}
+            routes={selected}
+            canImport={
+              !!api?.importStructuralEvidence &&
+              engineOperations.has("importStructuralEvidence") &&
+              !busy &&
+              !readonly
+            }
+            onImport={importStructural}
+          />
           <div className="local-note">
             <span className="status-dot" />
             {readonly
@@ -1269,6 +1368,12 @@ export default function App() {
                 </label>
               ))}
             </div>
+            {combinedModels && (
+              <div className="model-scope-note">
+                Separate tool/access models are shown together. Retained sets
+                are evaluated within each declared model.
+              </div>
+            )}
             <RouteComparison
               selected={selected}
               all={routes}
@@ -1280,8 +1385,9 @@ export default function App() {
             {searchSeconds != null && (
               <div className="search-provenance">
                 <Check size={12} />
-                {routes.length} evaluations · {searchSeconds.toFixed(2)} s ·
-                Search
+                {combinedModels
+                  ? `${routes.length} candidates across separate search models`
+                  : `${routes.length} evaluations · ${searchSeconds.toFixed(2)} s · Search`}
               </div>
             )}
           </Tabs.Content>
@@ -1297,6 +1403,22 @@ export default function App() {
               busy={busy}
               onReplay={setCertifiedReplay}
               onError={setError}
+              routeLabel={
+                routes.find((route) => route.route_id === routeA)
+                  ? routeName(
+                      routes.find((route) => route.route_id === routeA)!,
+                      routes,
+                    )
+                  : "Choose route A"
+              }
+              canInspect={engineOperations.has("inspectRefinement")}
+              canGenerateNative={
+                engineOperations.has("generateNativeRoutes") &&
+                !supportGate.blocked &&
+                routes.length > 0 &&
+                !readonly
+              }
+              onGenerateNative={generateNativeAlternatives}
             />
           </Tabs.Content>
         </Tabs.Root>

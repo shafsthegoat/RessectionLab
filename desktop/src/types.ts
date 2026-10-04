@@ -94,6 +94,7 @@ export interface ViewerCase {
 
 export interface RouteCandidate {
   route_id: string;
+  planning_model_hash?: string;
   case_hash: string;
   entry_mm: Vec3;
   target_mm: Vec3;
@@ -131,7 +132,22 @@ export interface RouteCandidate {
   clinical_deficit_probability: null;
 }
 
+export interface RefinementReadiness {
+  caseHash: string;
+  routeId: string;
+  status: "ready" | "no_actionable_moves";
+  legalNonStopActions: number;
+  reasons: string[];
+  decision_model_hash: string;
+  route_binding: Record<string, unknown>;
+  optimizationChoiceScope: "STOP_or_declared_native_stroke";
+}
+
 export interface SearchResult {
+  combined_models?: boolean;
+  planning_model_hash?: string | null;
+  planning_model_hashes?: string[];
+  search_models?: Record<string, unknown>[];
   candidates: RouteCandidate[];
   elapsed_seconds: number;
   cancelled: boolean;
@@ -157,6 +173,8 @@ export interface BridgeEvent {
 }
 
 export interface TrainingStats {
+  status?: string;
+  readiness?: RefinementReadiness;
   gradient_steps?: number;
   optimization_environment_steps?: number;
   selection_environment_steps?: number;
@@ -181,7 +199,12 @@ export interface TrainingRun {
   createdAt?: number;
   hasCheckpoint?: boolean;
   hasAcceptedReplay?: boolean;
-  config: { budgetSeconds: number; seed: number; routeId?: string };
+  config: {
+    budgetSeconds: number;
+    seed: number;
+    routeId?: string;
+    optimizationChoiceScope?: string;
+  };
   training?: TrainingStats;
 }
 export interface ReplayResult {
@@ -233,11 +256,20 @@ export interface ResectionApi extends TrainingApi {
   createSyntheticCase(): Promise<CasePayload>;
   openCase(): Promise<CasePayload | null>;
   importNifti(): Promise<CasePayload | null>;
+  importStructuralEvidence?(args: {
+    caseHash: string;
+    variant: "main" | "nocsf";
+  }): Promise<CasePayload | null>;
   saveCase(args: {
     caseHash: string;
     workspace?: Record<string, unknown>;
   }): Promise<{ saved?: boolean } | null>;
   generateRoutes(args?: Record<string, unknown>): Promise<SearchResult>;
+  generateNativeRoutes?(args: { caseHash: string }): Promise<SearchResult>;
+  inspectRefinement?(args: {
+    caseHash: string;
+    routeId: string;
+  }): Promise<RefinementReadiness>;
   inspectEvidence(args?: Record<string, unknown>): Promise<unknown>;
   cancel(requestId: string): Promise<unknown>;
   readAsset(assetId: string): Promise<Uint8Array>;

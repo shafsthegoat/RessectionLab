@@ -14,8 +14,13 @@ import type {
   CasePayload,
   ResectionApi,
   RouteCandidate,
+  RefinementReadiness,
 } from "./types";
 
+import {
+  validateRefinementReadiness,
+  readinessReason,
+} from "./refinement-readiness";
 import { hydrateCertifiedReplay } from "./training-data";
 import type { CertifiedReplay, TrainingRun, TrainingStats } from "./types";
 
@@ -89,6 +94,10 @@ export function RefinementPanel({
   api,
   caseData,
   route,
+  routeLabel,
+  canInspect,
+  canGenerateNative,
+  onGenerateNative,
   busy,
   onReplay,
   onError,
@@ -96,6 +105,10 @@ export function RefinementPanel({
   api: ResectionApi | null;
   caseData: CasePayload | null;
   route: RouteCandidate | undefined;
+  routeLabel: string;
+  canInspect: boolean;
+  canGenerateNative: boolean;
+  onGenerateNative: () => Promise<void>;
   busy: boolean;
   onReplay: (replay: CertifiedReplay | null) => void;
   onError: (error: string) => void;
@@ -110,10 +123,16 @@ export function RefinementPanel({
     [note, setNote] = useState(""),
     [step, setStep] = useState(0),
     [replay, setReplay] = useState<CertifiedReplay | null>(null);
+  const [readiness, setReadiness] = useState<RefinementReadiness | null>(null);
+  const [inspecting, setInspecting] = useState(false);
+  const [runGeometryLabel, setRunGeometryLabel] = useState("");
+  const currentRoute = useRef(route?.route_id);
+  currentRoute.current = route?.route_id;
+  const readinessGeneration = useRef(0);
   const currentHash = useRef(caseData?.caseHash);
   currentHash.current = caseData?.caseHash;
   const replayGeneration = useRef(0);
-  const blocked = busy || working,
+  const blocked = busy || working || inspecting,
     readonly = !!api?.readOnly;
   const stats = run?.training ?? live;
   const accepted =
@@ -165,6 +184,35 @@ export function RefinementPanel({
         setNote("Cancelled. Any available checkpoint stays on this Mac.");
     });
   }, [api]);
+  useEffect(() => {
+    readinessGeneration.current++;
+    setReadiness(null);
+    setInspecting(false);
+  }, [caseData?.caseHash, route?.route_id]);
+  async function inspect() {
+    if (!api?.inspectRefinement || !caseData || !route) return;
+    const generation = ++readinessGeneration.current;
+    setInspecting(true);
+    setReadiness(null);
+    try {
+      const result = await api.inspectRefinement({
+        caseHash: caseData.caseHash,
+        routeId: route.route_id,
+      });
+      if (
+        generation !== readinessGeneration.current ||
+        result.caseHash !== currentHash.current ||
+        result.routeId !== currentRoute.current
+      )
+        return;
+      setReadiness(validateRefinementReadiness(result, caseData, route));
+    } catch (error) {
+      if (generation === readinessGeneration.current)
+        onError(error instanceof Error ? error.message : String(error));
+    } finally {
+      if (generation === readinessGeneration.current) setInspecting(false);
+    }
+  }
   async function refresh() {
     if (!api || !caseData) return;
     const result = await api.listRuns({ caseHash: caseData.caseHash });
@@ -172,6 +220,17 @@ export function RefinementPanel({
   }
   async function train(resume?: TrainingRun) {
     if (!api || !caseData) return;
+    if (
+      !resume &&
+      (!route ||
+        readiness?.status !== "ready" ||
+        readiness.caseHash !== caseData.caseHash ||
+        readiness.routeId !== route.route_id)
+    )
+      return;
+    setRunGeometryLabel(
+      resume ? "Saved run · original frozen geometry" : routeLabel,
+    );
     setWorking(true);
     if (resume) {
       setBudget(resume.config.budgetSeconds);
@@ -199,9 +258,12 @@ export function RefinementPanel({
         );
       setRun(result);
       setNote(
-        result.status === "cancelled"
-          ? "Cancelled checkpoint retained locally."
-          : "Run completed. Inspect the actual update counts and independent replay status.",
+        result.status === "no_actionable_moves" ||
+          result.training?.status === "no_actionable_moves"
+          ? "No updates performed: the frozen route has no legal initial cutting actions."
+          : result.status === "cancelled"
+            ? "Cancelled checkpoint retained locally."
+            : "Run completed. Inspect the actual update counts and independent replay status.",
       );
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
@@ -230,6 +292,8 @@ export function RefinementPanel({
       )
         return;
       setRun({ ...selectedRun, training: result.training });
+      if (selectedRun.runId !== run?.runId)
+        setRunGeometryLabel("Saved run · original frozen geometry");
       setReplay(checked);
       setStep(result.step);
       onReplay(checked);
@@ -272,6 +336,84 @@ export function RefinementPanel({
           Partial contact stays retained.
         </p>
       </details>
+      <section
+        className="refinement-readiness"
+        aria-label="Selected route readiness"
+      >
+        <div className="readiness-heading">
+          <span className="eyebrow">SELECTED GEOMETRY</span>
+          <strong>{route ? routeLabel : "Choose route A"}</strong>
+        </div>
+        <p>
+          This prototype learns STOP versus the declared fixed native stroke.
+          The entry, target, window and tool stay fixed; this run does not
+          optimize a free-form trajectory.
+        </p>
+        <button
+          className="outline-button"
+          disabled={
+            !canInspect || readonly || blocked || !route?.geometry.feasible
+          }
+          onClick={() => void inspect()}
+        >
+          {inspecting ? (
+            <LoaderCircle className="spin" size={14} />
+          ) : (
+            <Check size={14} />
+          )}
+          {inspecting
+            ? "Inspecting initial actions…"
+            : "Check cutting-action readiness"}
+        </button>
+        {readiness && (
+          <div
+            className={`readiness-result ${readiness.status === "ready" ? "ready" : "unavailable"}`}
+            role="status"
+          >
+            <strong>
+              {readiness.status === "ready"
+                ? `${readiness.legalNonStopActions} legal initial cutting action${readiness.legalNonStopActions === 1 ? "" : "s"}`
+                : "No legal initial cutting actions"}
+            </strong>
+            {readiness.status === "ready" ? (
+              <p>
+                Available in the declared source-cell model. Clinical and
+                functional suitability remains unassessed.
+              </p>
+            ) : (
+              <>
+                <p>
+                  No optimizer will run for this geometry. The original route
+                  remains available for inspection.
+                </p>
+                {readiness.reasons.map((reason) => (
+                  <p key={reason}>{readinessReason(reason)}</p>
+                ))}
+              </>
+            )}
+          </div>
+        )}
+        {!readiness && route?.geometry.feasible && (
+          <p className="refinement-hint">
+            Check the actual source-cell actions before starting a run.
+          </p>
+        )}
+        <details className="native-alternatives">
+          <summary>Need another research geometry?</summary>
+          <p>
+            Generate separate native-action alternatives with explicitly new
+            hypothetical access windows, rays and instruments. Existing search
+            routes stay available.
+          </p>
+          <button
+            className="outline-button"
+            disabled={!canGenerateNative || blocked}
+            onClick={() => void onGenerateNative()}
+          >
+            <FlaskConical size={14} /> Generate native action alternatives
+          </button>
+        </details>
+      </section>
       <div className="refinement-fields">
         <label>
           Learning budget
@@ -306,6 +448,8 @@ export function RefinementPanel({
         className="primary-button"
         disabled={
           !supported ||
+          readiness?.status !== "ready" ||
+          readiness.routeId !== route?.route_id ||
           readonly ||
           blocked ||
           !caseData ||
@@ -341,6 +485,10 @@ export function RefinementPanel({
       )}
       {stats && (
         <>
+          <p className="run-geometry-label">
+            Run geometry: {runGeometryLabel || "Saved frozen route"}. Policy
+            choice: STOP or the declared fixed stroke.
+          </p>
           <div className="training-metrics">
             <div>
               <strong>{stats.gradient_steps ?? 0}</strong>

@@ -8,10 +8,14 @@ The React shell owns case review, source visibility, route comparison, and local
 - `case-support.ts` and `StructuralEvidenceInventory.tsx`: keep estimated whole-brain proposals separate from usable research tissue support. Only the sidecar's explicit, source-bound support status can unlock hypothetical route generation; cortical access is never inferred.
 - `viewer/`: linked WebGL MRI planes, source-derived annotation surfaces, complete instrument geometry and physical camera framing. Display meshes approximate voxel boundaries; quantitative volume uses original source cells. The viewer has its own geometry and surface tests.
 - `RefinementPanel.tsx`: actual optimization/selection counters, selection-return history, local cancellation/resume and independently accepted replay. Search choices stay in parent state throughout refinement.
+- `StructuralImportDialog.tsx`: imports the original image, native-grid proposed mask and extraction report through three main-owned file dialogs. Cancellation at any stage leaves the case unchanged. Import does not accept a proposal or grant cortical access.
+- `refinement-readiness.ts`: checks engine preflight identity against the exact selected route entry, target, access window and complete tool, including LPS-to-RAS conversion. No legal initial cutting actions disables new optimization; the original route remains inspectable.
 - `training-data.ts`: checks replay identity, independent certificate, source frame, binary mask and volume accounting before allowing a modeled removal overlay. It does not approve imported simulation artifacts.
 - `preview-api.ts`: explicitly read-only development adapter for an ignored local export of a real public case. It cannot train, search, save or substitute invented results. Patient preview assets are excluded from production packaging.
 
 For fractional source annotations, the binary target is labeled threshold-derived and the recorded threshold is shown in the evidence inspector. Structural proposal inventories display review status and annotation-exclusion flags without presenting those metrics as segmentation accuracy.
+
+The current route-conditioned prototype learns STOP versus the declared fixed native stroke. It does not optimize a free-form trajectory or entry. Native-action alternatives are generated only through an explicit action, with their new hypothetical geometry visible and their search models recorded separately. Mixed-model retained sets do not constitute one shared Pareto front.
 
 Source annotations and modeled removal remain separate. Static route accessibility is not removal. A replay is selection evidence, never final evaluation. Clinical deficit probability is unavailable. Unknown functional and vascular anatomy stays unknown.
 
