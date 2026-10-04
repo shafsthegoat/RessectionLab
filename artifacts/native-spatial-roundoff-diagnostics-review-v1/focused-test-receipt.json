@@ -1,0 +1,30 @@
+{
+  "git_head": "ea501a8991e9a4ec6a6154f117c48a8b6ff1e390",
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_spatial_policy_diagnostics_review.py",
+    "-q",
+    "--basetemp=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-spatial-roundoff-diagnostics-review-v1/pytest-tmp"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 1.9631640419829637,
+  "before": {
+    "scripts/preflight_real_spatial_policy.py": "1ed1ac591afe4996b82609842622c8ea2bdfbc2a6a439b0af0c22c767eb742cf",
+    "src/resectionlab/spatial_policy_diagnostics.py": "77bda1bc2a222ef7a823cda5b9a03214717dce6776efa234418024ffb8a0a883",
+    "src/resectionlab/native_spatial_task.py": "137d89a8ec6c1d538c3ebf69aed87be9eefa4d3fddc1f6631ed887ba3e650475",
+    "tests/test_spatial_policy_diagnostics_review.py": "65c48ac981a87f4fdb7952cad6ac38dfc1f2bfaebf10fea012fe372131ed1f5f",
+    "tests/test_spatial_policy_diagnostics.py": "88cd5218a1d6c82f8edce296f6591b2c7445257caa920c31b88f95b74b0f0e38",
+    "tests/test_real_spatial_preflight.py": "d26d8720c1a9e2617e601921310f0f98f8082af242120ef5d0fa9e72b53fbccb"
+  },
+  "after": {
+    "scripts/preflight_real_spatial_policy.py": "1ed1ac591afe4996b82609842622c8ea2bdfbc2a6a439b0af0c22c767eb742cf",
+    "src/resectionlab/spatial_policy_diagnostics.py": "77bda1bc2a222ef7a823cda5b9a03214717dce6776efa234418024ffb8a0a883",
+    "src/resectionlab/native_spatial_task.py": "137d89a8ec6c1d538c3ebf69aed87be9eefa4d3fddc1f6631ed887ba3e650475",
+    "tests/test_spatial_policy_diagnostics_review.py": "65c48ac981a87f4fdb7952cad6ac38dfc1f2bfaebf10fea012fe372131ed1f5f",
+    "tests/test_spatial_policy_diagnostics.py": "88cd5218a1d6c82f8edce296f6591b2c7445257caa920c31b88f95b74b0f0e38",
+    "tests/test_real_spatial_preflight.py": "d26d8720c1a9e2617e601921310f0f98f8082af242120ef5d0fa9e72b53fbccb"
+  },
+  "patient_case_model_or_learning_run": false
+}

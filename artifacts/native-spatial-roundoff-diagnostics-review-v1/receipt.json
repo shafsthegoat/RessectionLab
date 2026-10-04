@@ -1,0 +1,38 @@
+{
+  "schema": "native-spatial-roundoff-diagnostics-independent-review-v1",
+  "status": "source_delta_clear_final_declaration_source_freeze_pending",
+  "focused_tests": {
+    "passed": 9,
+    "failed": 0,
+    "pytest_seconds": 1.45,
+    "source_unchanged": true
+  },
+  "tested_checkout_head": "ea501a8991e9a4ec6a6154f117c48a8b6ff1e390",
+  "source_and_tests_sha256": {
+    "scripts/preflight_real_spatial_policy.py": "1ed1ac591afe4996b82609842622c8ea2bdfbc2a6a439b0af0c22c767eb742cf",
+    "src/resectionlab/spatial_policy_diagnostics.py": "77bda1bc2a222ef7a823cda5b9a03214717dce6776efa234418024ffb8a0a883",
+    "src/resectionlab/native_spatial_task.py": "137d89a8ec6c1d538c3ebf69aed87be9eefa4d3fddc1f6631ed887ba3e650475",
+    "tests/test_spatial_policy_diagnostics_review.py": "65c48ac981a87f4fdb7952cad6ac38dfc1f2bfaebf10fea012fe372131ed1f5f",
+    "tests/test_spatial_policy_diagnostics.py": "88cd5218a1d6c82f8edce296f6591b2c7445257caa920c31b88f95b74b0f0e38",
+    "tests/test_real_spatial_preflight.py": "d26d8720c1a9e2617e601921310f0f98f8082af242120ef5d0fa9e72b53fbccb"
+  },
+  "reviewed_delta": [
+    "Original frame remains discrete proposal-axis/offset authority.",
+    "Explicit derived frame used for physical depths and inverse crop coordinates; both matrices reported.",
+    "Default behavior matches explicitly passing original frame.",
+    "Actual accepted tiny roundoff source recovers crop origin within1e-14 source voxels.",
+    "Runner reads public reconciliation metrics once; expected-grid mismatch refuses before diagnostics/episode.",
+    "Fake profile worker forwards exact derived matrix to initial depth/coverage diagnostics and episode while gradient/optimizer/checkpoint paths remain forbidden."
+  ],
+  "draft_declaration_review": "Eight JSON/matrix consistency checks passed; original patient, access, support, tools, reward, crop and profile limits unchanged. Expected reconciliation subset exactly matches pure4x4 helper calculation from saved header JSON. Empty source map still correctly refuses execution.",
+  "evidence_sha256": {
+    "draft-declaration-review.json": "1c20f0a634ddf54128b5ee724203db3f4c57ae70a8cf69868ad051fcc31c1689",
+    "focused-test-receipt.json": "3612be1a777be99d496fb6ae9387f1acc5d8197b89661d102b85d841567c6740",
+    "focused-test.log": "5e31c39dad277f7264b1e56d0a0af28cc15e8198d722c5d979f245b3f1bc07a2"
+  },
+  "source_integrity_and_release": "Root must commit production/tests, fill exact numerical source map, verify final declaration bytes and separately release v2. No actual patient profile has been authorized by this review itself.",
+  "patient_bundle_header_image_opened": false,
+  "patient_task_preview_policy_learning_run": false,
+  "scope": "Focused analytic and mocked IO contract tests; source and saved JSON matrices only. No broad suite rerun, source-case acceptance or shared-engine tolerance change.",
+  "new_source_archives_created": false
+}

@@ -1,0 +1,82 @@
+{
+  "schema": "roundoff-draft-declaration-review-v1",
+  "draft_sha256": "e966cbdf53d6cb0abcd3dd7d7e1f0671583b824ee41feb36d4326b533102fb79",
+  "status": "draft_inputs_consistent_source_freeze_and_root_release_still_required",
+  "checks": {
+    "all_original_patient_action_profile_inputs_unchanged": true,
+    "header_diagnosis_hash_matches": true,
+    "adapter_options_single_explicit_grid_delta": true,
+    "expected_grid_exactly_matches_pure_header_calculation": true,
+    "no_images_resampled": true,
+    "within_both_fixed_limits": true,
+    "unfrozen_source_map_intentionally_empty": true,
+    "draft_refuses_before_case_access": true
+  },
+  "expected_grid_binding": {
+    "derived_affine_ras_mm": [
+      [
+        0.9991455674090443,
+        0.03670010681805703,
+        0.019190453219683344,
+        -83.10478973388672
+      ],
+      [
+        -0.036693469029287086,
+        0.9993262887125605,
+        -0.0007048095092985703,
+        -110.23243713378906
+      ],
+      [
+        -0.019203459617015493,
+        4.299605653764695e-08,
+        0.9998155832247058,
+        -141.11172485351562
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "maximum_corner_displacement_mm": 1.0842083020239977e-07,
+    "method": "orthogonal_roundoff_1e-6mm",
+    "native_and_actor_physical_grid": "derived_affine_ras_mm",
+    "original_affine_ras_mm": [
+      [
+        0.9991455674171448,
+        0.03670010715723038,
+        0.019190452992916107,
+        -83.10478973388672
+      ],
+      [
+        -0.03669346868991852,
+        0.9993262887001038,
+        -0.0007048094994388521,
+        -110.23243713378906
+      ],
+      [
+        -0.019203459843993187,
+        4.299106848293377e-08,
+        0.9998155832290649,
+        -141.11172485351562
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "proposal_and_crop_indices_basis": "original_source_affine",
+    "resampled": false,
+    "shape": [
+      160,
+      256,
+      256
+    ]
+  },
+  "reconciliation_hash": "137d89a8ec6c1d538c3ebf69aed87be9eefa4d3fddc1f6631ed887ba3e650475",
+  "patient_header_or_image_opened": false,
+  "method": "Only previously saved JSON/header matrices were read; pure4x4 reconciliation, no task/config/preview/model construction."
+}
