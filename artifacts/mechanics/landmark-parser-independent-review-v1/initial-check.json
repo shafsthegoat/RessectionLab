@@ -1,0 +1,28 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_mechanics_landmarks_review.py",
+    "--basetemp=build/validation/mechanics-landmark-review-v1"
+  ],
+  "exit_code": 0,
+  "wall_seconds": 0.304346625,
+  "source_before_sha256": {
+    "src/resectionlab/mechanics_landmarks.py": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc",
+    "src/resectionlab/core.py": "f1f0b8ae334cabc864c3ec85d4f6b49e4842de2b580edaadd7562276ea0c92db",
+    "tests/test_mechanics_landmarks_review.py": "9db625edc554170db1dead3b533312c8cf0dc2b977d91bb2b7c3d6a3908d0971",
+    "tests/test_mechanics_landmarks.py": "62b345a693524329e53f9d2f49fcb029f97d604747e310b68f7830fee4165e1e",
+    "pyproject.toml": "7b2ea11f08bcba66915eac703244a2e07c4de38c2c364aadf26830f6c35bb053"
+  },
+  "source_after_sha256": {
+    "src/resectionlab/mechanics_landmarks.py": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc",
+    "src/resectionlab/core.py": "f1f0b8ae334cabc864c3ec85d4f6b49e4842de2b580edaadd7562276ea0c92db",
+    "tests/test_mechanics_landmarks_review.py": "9db625edc554170db1dead3b533312c8cf0dc2b977d91bb2b7c3d6a3908d0971",
+    "tests/test_mechanics_landmarks.py": "62b345a693524329e53f9d2f49fcb029f97d604747e310b68f7830fee4165e1e",
+    "pyproject.toml": "7b2ea11f08bcba66915eac703244a2e07c4de38c2c364aadf26830f6c35bb053"
+  },
+  "all_tested_files_unchanged": true,
+  "scope": "Constructed tag bytes only; no patient files or solver runs. Single-thread environment."
+}

@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "status": "pass_at_declared_module_boundary",
+  "review_kind": "independent_static_and_constructed_record_controls",
+  "git_head_during_receipt": "cc9aec46a21dcc80cae7ee25c56cb19d407609ce",
+  "source_sha256": {
+    "src/resectionlab/mechanics_landmarks.py": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc",
+    "src/resectionlab/core.py": "f1f0b8ae334cabc864c3ec85d4f6b49e4842de2b580edaadd7562276ea0c92db",
+    "tests/test_mechanics_landmarks_review.py": "9db625edc554170db1dead3b533312c8cf0dc2b977d91bb2b7c3d6a3908d0971",
+    "tests/test_mechanics_landmarks.py": "62b345a693524329e53f9d2f49fcb029f97d604747e310b68f7830fee4165e1e",
+    "pyproject.toml": "7b2ea11f08bcba66915eac703244a2e07c4de38c2c364aadf26830f6c35bb053"
+  },
+  "tests": {
+    "independent_passed": 14,
+    "pytest_seconds": 0.12,
+    "process_wall_seconds": 0.304346625,
+    "owner_reported_separately_not_rerun_here": {
+      "passed": 29,
+      "pytest_seconds": 0.17
+    },
+    "initial_failures": 0,
+    "source_changed_during_controls": false,
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/test_mechanics_landmarks_review.py",
+      "--basetemp=build/validation/mechanics-landmark-review-v1"
+    ],
+    "log_sha256": "a3a035c0a1954d50955063c38f419bc95528dad397e611a442da2a0ee0beafea",
+    "initial_check_sha256": "224dec90aba553eef7366a9e24f6f0ea46cc3e6097569ca7a0b88caabac14ca5"
+  },
+  "actions": {
+    "patient_payloads_opened": 0,
+    "image_or_header_loads": 0,
+    "real_landmark_values_read": 0,
+    "solver_runs": 0,
+    "training_or_benchmarks": 0,
+    "network_requests": 0,
+    "constructed_record_tests_only": true,
+    "thread_environment_limit": 1
+  },
+  "verified_controls": [
+    "Independent scalar FPS oracle reproduces exact original row-order ties; 12 rows gives six B/six V; 13 rows gives six B/seven V; 11 rows rejects. Actual centered rank ratio independently agrees with Gram eigenvalues.",
+    "Exactly 1e-6 and the adjacent lower floating value reject; adjacent upper value passes in an explicitly mocked singular-value comparison control. This does not claim actual near-singular geometry accuracy.",
+    "Changing only withheld destination coordinates and the later-image identity preserves the source identity, source-only partition and six-B forward manifest. Full source audit identity changes and old reveal freeze rejects.",
+    "Constructed nonnumeric/nonfinite V tokens remain unconverted while constructing sources/B. Changed model/prediction/source-audit freeze fields, forged partition order and changed patient pair reject before V conversion.",
+    "Valid reveal returns exactly the complement V source/destination pairs, bound to the same model/prediction freeze; no B/V overlap.",
+    "Distinct declared source/destination transforms determine physical displacement correctly. Raw mm sources remain explicitly unverified; nonrigid scale, missing frame QC and mismatched roles cannot grant displacement access.",
+    "Separate MRI-before registration reader returns all allowed baseline pairs as a different DTO; it cannot enter the displacement partition/model-freeze path.",
+    "Forward numeric arrays cannot be made writable. Changed V source positions invalidate the old partition; duplicate and nonfinite source coordinates reject. Forward manifest excludes raw paired payload, V identities/coordinates, later-image identity and anatomy boundaries.",
+    "Static module imports contain no filesystem/image/network/solver library; the API accepts caller-provided immutable tag bytes and provides no patient-data acquisition or clinical-access authorization."
+  ],
+  "module_imports": [
+    "__future__",
+    "dataclasses",
+    "hashlib",
+    "re",
+    "numpy",
+    ".core"
+  ],
+  "blocking_findings": [],
+  "unchanged_production_source": true,
+  "required_execution_gates": [
+    "Verify actual source file, native image frame and pair direction; caller-supplied frame declarations are not independently measured frame evidence.",
+    "Persist source-only partition and baseline alignment/QC before B destination access. This module does not implement or prove workflow persistence.",
+    "Verify and persist actual model/prediction artifacts before V reveal; hash-shaped supplied values alone do not prove their bytes exist or that an external solver respected the forward allowlist.",
+    "Keep evaluator V data and later image payloads out of fitting; no automatic anatomy domain, skull/cavity boundary, measured force, material or clinical validation follows from parser success."
+  ],
+  "acquisition_status_addendum": "../resect-access-contract-independent-review-v1/acquisition-status-addendum.json"
+}
