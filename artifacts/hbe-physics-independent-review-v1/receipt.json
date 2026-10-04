@@ -1,0 +1,28 @@
+{
+  "status": "passed_analytic_software_review_after_scalar_guard_repair",
+  "source_sha256": {
+    "scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "tests/test_mechanics_hbe_physics.py": "7109711910764f14281dd770c1335d999aa8df6162e49da02c71e30921298e4e",
+    "tests/test_mechanics_hbe_physics_review.py": "61708ef8606649d415311620abbb7a1f09710a94cfca488a171c220645769801"
+  },
+  "command": ".venv/bin/python -m pytest -q tests/test_mechanics_hbe_physics_review.py tests/test_mechanics_hbe_physics.py",
+  "observed_result": "18 passed in 0.16s",
+  "preserved_failure": "initial-scalar-bound-failure.json",
+  "repaired_defect": "Nonfinite or nonpositive physical scales and overflowed physical products must reject before constructing tolerance gates; otherwise infinite limits could accept opposite signed work or gross refinement error.",
+  "independent_controls": [
+    "Analytic nonaffine polynomial rest/current hex mappings create nonuniform reference weights. Independently differentiated mappings and principal stretches verify weighted deviatoric integration plus reference volume times U(weighted mean J). Equal Gauss weights and pointwise volumetric energy give detectably different results.",
+    "Inverse rest mapping and displacement interpolation recover a trilinear polynomial and constant translation inside a warped hex; a point inside its bounding box but outside the actual element rejects.",
+    "Infinity, NaN, zero and negative scale parameters reject in work, refinement and stiffness-scaling checks; overflow of finite work-scale factors rejects."
+  ],
+  "static_findings": [
+    "Tagged FE3FieldElasticSolidDomain computes volume ratio v/V and applies UJ of that cell ratio with zero augmentation. The helper correctly reconstructs its energy instead of integrating the arithmetic sed diagnostic.",
+    "Applied axial force and torsional torque are negative raw top reaction sums; moments use current coordinates about the fixed origin. Known-couple and signed-work owner controls cover these conventions.",
+    "Refinement compares response and 75 physical probe displacements; scale checks compare complete current nodes, raw reactions and current-coordinate torque. Load-coordinate alignment is a caller obligation, not inferred from array shape.",
+    "Current and rest Jacobians are sampled at eight Gauss sites, corners and center; outside/failed inverse maps and sampled inversion reject."
+  ],
+  "limits": [
+    "No equilibrium solve, real curve access, measured tissue fit or patient run occurred.",
+    "Mesh generator topology/side geometry quality, actual solver residuals, log/source binding and common-load alignment are separate upstream gates.",
+    "Positive sampled Jacobians do not establish positivity everywhere in arbitrary warped elements."
+  ]
+}
