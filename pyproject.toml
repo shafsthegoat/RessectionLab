@@ -23,6 +23,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8,<10", "pyinstaller>=6,<7"]
+diffusion = ["dipy>=1.12,<1.13"]
 
 [project.scripts]
 resectionlab = "resectionlab.app:main"
@@ -33,4 +34,3 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
-
