@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "status": "independent_initial_negative",
+  "created_at_utc": "2026-10-04T20:29:13.850812+00:00",
+  "command": ".venv/bin/python -m pytest -q tests/test_resect_baseline_alignment_review.py",
+  "result": {
+    "passed": 3,
+    "failed": 5,
+    "pytest_seconds": 0.39,
+    "process_seconds": 0.452630834
+  },
+  "failures": {
+    "tampered_declaration": "withheld temporary fixture path hashed before mismatching declaration hash refused",
+    "tampered_snapshot": "withheld temporary fixture path hashed before mismatching source manifest hash refused",
+    "monitor_timeout": "mock worker not killed when RSS ps query raises TimeoutExpired",
+    "monitor_failed_query": "mock worker not killed; exit0 falsely recorded as passed after RSS query returncode1 and empty output",
+    "monitor_empty_query": "mock worker not killed; exit0 falsely recorded as passed after empty successful RSS query"
+  },
+  "positive_controls": [
+    "proper world-frame rigid equivariance and no scaling",
+    "every LOO residual matches independent omitted-pair fit",
+    "full oblique/reflected source affine and inverse fit used for plane sampling, source affine unchanged"
+  ],
+  "source_sha256": {
+    "artifacts/mechanics/resect-case4-baseline-alignment-v1/align.py": "dccdcfcf4cb8b16b00b81020973bac9c8bc0e1433574b9f780a57ba88a504d2b",
+    "artifacts/mechanics/resect-case4-baseline-alignment-v1/declaration.json": "56e30a05c7d748bab2cde6d3f5d5cbe8bafe8962ebcca2045f8a028a8ad7ca02",
+    "artifacts/mechanics/resect-case4-baseline-alignment-v1/coordinate-justification.json": "f293613dd1ca5adf58bfd768c2fe2b4d50e352fe0534ee28264225739f88c2ec",
+    "tests/test_resect_baseline_alignment_review.py": "abe86471e5d7f838e47adea84c8560b3ce74ad057b41374bea82c34ce6c428d0"
+  },
+  "patient_tag_values_read": false,
+  "patient_arrays_read": false,
+  "actual_child_process_spawned": false,
+  "fixtures": "temporary constructed byte files and mocked processes only",
+  "production_edits_by_reviewer": false
+}

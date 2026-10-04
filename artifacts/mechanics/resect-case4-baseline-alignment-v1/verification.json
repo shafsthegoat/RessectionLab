@@ -1,0 +1,17 @@
+{
+  "status": "prepared_unrun",
+  "tests": "16 passed in 0.42s",
+  "test_command": ".venv/bin/python -m pytest -q artifacts/mechanics/resect-case4-baseline-alignment-v1/test_alignment.py tests/test_resect_baseline_alignment_review.py",
+  "files": {
+    "align.py": "a213174801a27ffcdcd32c924678cd8e63d7f02b512db139df855b683516add4",
+    "test_alignment.py": "0ff0c76d8227e51d59c29de05ea0ebb8dbde2039255ffe80a0f3d41cc442819f",
+    "declaration.json": "56e30a05c7d748bab2cde6d3f5d5cbe8bafe8962ebcca2045f8a028a8ad7ca02",
+    "coordinate-justification.json": "f293613dd1ca5adf58bfd768c2fe2b4d50e352fe0534ee28264225739f88c2ec",
+    "README.md": "401c95d286882536097772ef7dd60fa57884c38d1d492befa025823dbc1b1184"
+  },
+  "patient_pairs_or_arrays_opened": false,
+  "root_release_present": false,
+  "independent_test_sha256": "4a56bedc128b87fa992a3a8f9d6012f0a7c3e8dd0787d4962baea245582749a1",
+  "pre_repair_script_sha256": "dccdcfcf4cb8b16b00b81020973bac9c8bc0e1433574b9f780a57ba88a504d2b",
+  "initial_negative_receipt": "artifacts/mechanics/resect-baseline-alignment-independent-review-v1/initial-negative.json"
+}
