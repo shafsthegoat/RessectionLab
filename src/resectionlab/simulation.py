@@ -80,6 +80,8 @@ class SimulationConfig:
     evidence_available: tuple[bool, bool] = (True, True)
     derivation: Mapping[str, Any] = field(default_factory=dict)
     compartment_names: Mapping[int, str] = field(default_factory=lambda: {1: "enhancing", 2: "nonenhancing_core", 3: "flair_abnormality"})
+    nominal_motor_coverage: np.ndarray | None = None
+    nominal_language_coverage: np.ndarray | None = None
 
     def __post_init__(self) -> None:
         tissue = _readonly(self.tissue_mask, bool)
@@ -108,6 +110,17 @@ class SimulationConfig:
             if array.shape != tissue.shape or not np.isfinite(array).all() or np.any(array < 0):
                 raise ValueError(f"{name} must be finite, nonnegative, and aligned")
             object.__setattr__(self, name, array)
+        for name in ("nominal_motor_coverage", "nominal_language_coverage"):
+            value = getattr(self, name)
+            if value is not None:
+                array = np.asarray(value)
+                if array.shape != tissue.shape or not np.isin(array, (0, 1)).all():
+                    raise ValueError("Functional sampling coverage must be binary and aligned")
+                object.__setattr__(self, name, _readonly(array, bool))
+                field_name = name.removesuffix("_coverage")
+                nominal = getattr(self, field_name)
+                object.__setattr__(self, field_name, _readonly(np.where(array, nominal,
+                    max(1., float(nominal.max()))), float))
         edges = {str(k): _readonly(v, bool) for k, v in sorted(self.graph_edges.items())}
         if any(v.shape != tissue.shape for v in edges.values()):
             raise ValueError("Graph edge masks must align with the simulation grid")
@@ -147,6 +160,11 @@ class SimulationConfig:
             "derivation": thaw_json(self.derivation),
             "target_fractions": {k: _array_hash(v) for k, v in self.target_fractions.items()},
         }
+        # Omit absent new fields so legacy structural fixtures retain identity.
+        coverage = {name: _array_hash(getattr(self, name)) for name in
+                    ("nominal_motor_coverage", "nominal_language_coverage") if getattr(self, name) is not None}
+        if coverage:
+            fields["functional_sampling_coverage"] = coverage
         return "sha256:" + hashlib.sha256(json.dumps(fields, sort_keys=True, default=lambda x: np.asarray(x).tolist()).encode()).hexdigest()
 
 
@@ -237,11 +255,15 @@ class SequentialSimulator:
         self.termination_reason = None
         self._proposals: tuple[MacroAction, ...] | None = None
         latent = WorldGenerator(self.config.world_generator).sample_seed(self.seed)
+        coverages = [getattr(self.config, "nominal_" + name + "_coverage") for name in ("motor", "language")]
+        supplied_coverage = [value for value in coverages if value is not None]
+        nominal_known = (np.logical_and.reduce(supplied_coverage) if supplied_coverage
+                         else np.ones(self.remaining_mask.shape, dtype=bool))
         if self.config.world_generator.deterministic:
             # Identity worlds must preserve the source grid exactly. Inverting
             # and reapplying an oblique affine can otherwise move a boundary a
             # few ulps outside support and manufacture missing coverage.
-            self._hidden_known_coverage = np.ones(self.remaining_mask.shape, dtype=bool)
+            self._hidden_known_coverage = nominal_known
             self._hidden_motor = self.config.nominal_motor
             self._hidden_language = self.config.nominal_language
             self._hidden_graph = dict(self.config.graph_edges)
@@ -250,7 +272,8 @@ class SequentialSimulator:
             def resample(array: np.ndarray, *, order: int, outside: float) -> np.ndarray:
                 return affine_transform(array, transform[:3, :3], transform[:3, 3], output_shape=array.shape,
                                         order=order, mode="constant", cval=outside, prefilter=False)
-            self._hidden_known_coverage = resample(np.ones(self.remaining_mask.shape), order=0, outside=0).astype(bool)
+            self._hidden_known_coverage = (resample(nominal_known.astype(float), order=1, outside=0) >= 1. - 1e-8
+                if supplied_coverage else resample(np.ones(self.remaining_mask.shape), order=0, outside=0).astype(bool))
             # Moving sampled anatomy outside the supplied field creates unknown
             # coverage. A declared conservative surrogate bound prevents those
             # missing cells from becoming an artificial zero-hazard opportunity.

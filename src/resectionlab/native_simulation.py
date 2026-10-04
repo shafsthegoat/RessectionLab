@@ -70,10 +70,17 @@ class NativeSequentialSimulator(SequentialSimulator):
                  max_steps: int = 8, max_actions: int = 8,
                  partial_contact_weight: float = .05,
                  compartment_names: dict[int, str] | None = None,
+                 nominal_motor_coverage: np.ndarray | None = None,
+                 nominal_language_coverage: np.ndarray | None = None,
+                 functional_evidence_record: Mapping[str, Any] | None = None,
                  cancelled: Callable[[], bool] | None = None):
         from .native_resection import NativeResectionEngine
         self._cancelled = cancelled
         self._check_cancelled()
+        if functional_evidence_record is not None:
+            generator = world_generator or WorldGeneratorConfig()
+            if functional_evidence_record.get("world_generator_hash") != generator.fingerprint:
+                raise ValueError("Uncertainty differs from the frozen functional evidence record")
         if not np.isfinite(partial_contact_weight) or partial_contact_weight < 0:
             raise ValueError("Partial-contact surrogate weight must be finite and nonnegative")
         tips = np.asarray(tuple(tuple(v) for v in candidate_tips_mm), dtype=float)
@@ -104,13 +111,16 @@ class NativeSequentialSimulator(SequentialSimulator):
             max_actions=max_actions, case_id=native_config.case_id,
             source_hash=native_config.source_hash,
             evidence_available=(nominal_motor is not None, nominal_language is not None),
+            nominal_motor_coverage=nominal_motor_coverage,
+            nominal_language_coverage=nominal_language_coverage,
             compartment_names=compartment_names or {1: "radiological_target"},
             derivation={"track": "annotation_assisted_native_contained_cell_simulation",
                         "tissue_support_provenance": native_config.tissue_support_provenance,
                         "removal_primitive": "full_affine_cells_contained_by_continuous_active_brush",
                         "partial_contact_policy": "retained_tissue_exposure_not_removed",
                         "partial_contact_weight": self.partial_contact_weight,
-                        "candidate_sampling": "fixed_physical_tip_and_entry_points_shared_by_all_methods"})
+                        "candidate_sampling": "fixed_physical_tip_and_entry_points_shared_by_all_methods",
+                        **({"functional_evidence": functional_evidence_record} if functional_evidence_record is not None else {})})
         self._native_decision_hash = "sha256:" + hashlib.sha256(json.dumps({
             "adapter": NATIVE_ADAPTER_VERSION, "native_config": self._native_config_hash,
             "simulation_config": config.decision_model_hash, "tips_mm": tips.tolist(), "entries_mm": entries.tolist(),
@@ -192,6 +202,9 @@ class NativeSequentialSimulator(SequentialSimulator):
             candidate_entries_mm=self.candidate_entries_mm,
             nominal_motor=self.config.nominal_motor if self.config.evidence_available[0] else None,
             nominal_language=self.config.nominal_language if self.config.evidence_available[1] else None,
+            nominal_motor_coverage=self.config.nominal_motor_coverage,
+            nominal_language_coverage=self.config.nominal_language_coverage,
+            functional_evidence_record=self.config.derivation.get("functional_evidence"),
             reward=self.config.reward,
             world_generator=self.config.world_generator if world_generator is None else world_generator,
             max_steps=self.config.max_steps if max_steps is None else max_steps,
@@ -408,6 +421,8 @@ def make_native_patient_simulator(case: Any, *, access: AccessWindow | None = No
                                   entry_mode: str = "parallel",
                                   selected_entry_mm: Iterable[float] | None = None,
                                   selected_target_mm: Iterable[float] | None = None,
+                                  hard_exclusion: np.ndarray | None = None,
+                                  functional_evidence: Any = None,
                                   cancelled: Callable[[], bool] | None = None) -> NativeSequentialSimulator:
     """Preserve the exact source grid for a restricted annotation-assisted run.
 
@@ -423,6 +438,21 @@ def make_native_patient_simulator(case: Any, *, access: AccessWindow | None = No
     added. candidate_count and entry_mode then do not change the selected ray.
     """
     from .native_resection import NATIVE_GENERIC_TOOLS, NativeResectionConfig
+    evidence = functional_evidence if functional_evidence is not None else getattr(case, "functional_evidence", None)
+    evidence_record = None
+    motor_coverage = language_coverage = None
+    if evidence is not None:
+        from .functional_evidence import FunctionalEvidence
+        if not isinstance(evidence, FunctionalEvidence):
+            raise TypeError("Functional evidence must be source-bound FunctionalEvidence")
+        evidence.assert_matches(case)
+        if nominal_motor is not None or nominal_language is not None:
+            raise ValueError("Do not override source-bound evidence with untracked functional arrays")
+        if world_generator is not None and world_generator.fingerprint != evidence.uncertainty.fingerprint:
+            raise ValueError("Uncertainty differs from the frozen functional evidence; create a new evidence version")
+        nominal_motor, nominal_language = evidence.planning_arrays()
+        motor_coverage, language_coverage = evidence.motor_coverage, evidence.language_coverage
+        world_generator, evidence_record = evidence.uncertainty, evidence.to_manifest()
     if cancelled is not None and cancelled():
         raise InterruptedError("Native planning cancelled")
     if access_frame not in {"RAS+", "LPS+"}:
@@ -523,10 +553,13 @@ def make_native_patient_simulator(case: Any, *, access: AccessWindow | None = No
         normal = np.asarray(access.normal_inward)
         entries = [np.asarray(point) - normal * np.dot(np.asarray(point) - entry, normal) for point in points] if entry_mode == "parallel" else [entry for _ in points]
     native = NativeResectionConfig(tissue, labels, affine, access, NATIVE_GENERIC_TOOLS if tools is None else tools,
+                                   hard_exclusion=hard_exclusion,
                                    source_hash=case.semantic_hash, tissue_support_provenance=provenance,
                                    case_id=case.case_id, max_tip_step_mm=min(.25, float(spacing.min()) / 4))
     return NativeSequentialSimulator(native, points, candidate_entries_mm=entries, nominal_motor=nominal_motor,
                                      nominal_language=nominal_language, world_generator=world_generator,
+                                     nominal_motor_coverage=motor_coverage, nominal_language_coverage=language_coverage,
+                                     functional_evidence_record=evidence_record,
                                      max_steps=max_steps, max_actions=max_actions,
                                      compartment_names={i + 1: name for i, name in enumerate(names)},
                                      cancelled=cancelled)

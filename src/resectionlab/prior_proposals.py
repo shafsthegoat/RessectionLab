@@ -232,7 +232,7 @@ class RegisteredPriorProposal:
         self._assert_array_layout()
         if (self.data.shape != case.mri.shape or self.source_image_hash != array_digest(case.mri)
                 or self.source_frame_hash != structural_frame_hash(case)
-                or self.source_case_planning_hash != case.planning_hash
+                or self.source_case_planning_hash != case.prior_registration_input_hash
                 or not _same_physical_grid(self.affine_ras_mm, _ras_affine(case), case.mri.shape)):
             raise ValueError("Prior proposal belongs to different case inputs, image or physical frame")
         if not any(source.sha256 and _hash(source.sha256, "source SHA") == self.source_file_sha256

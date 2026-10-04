@@ -407,6 +407,14 @@ def save_case(case: CaseData, path: str | Path, *, artifacts: Mapping[str, Any] 
         arrays[data_key], arrays[coverage_key] = proposal.data, proposal.sampling_coverage
         prior_records[name] = {"data_key": data_key, "coverage_key": coverage_key,
                                "manifest": proposal.to_manifest()}
+    functional = getattr(case, "functional_evidence", None)
+    functional_keys = {}
+    if functional is not None:
+        for name in ("motor", "language", "motor_coverage", "language_coverage"):
+            value = getattr(functional, name)
+            functional_keys[name] = None if value is None else "functional_" + name
+            if value is not None:
+                arrays[functional_keys[name]] = value
     buffer = BytesIO()
     np.savez_compressed(buffer, **arrays)
     payload = buffer.getvalue()
@@ -421,6 +429,8 @@ def save_case(case: CaseData, path: str | Path, *, artifacts: Mapping[str, Any] 
         manifest["structural_evidence"] = structural_records
     if prior_records:
         manifest["prior_proposals"] = prior_records
+    if functional is not None:
+        manifest["functional_evidence"] = {"array_keys": functional_keys, "manifest": functional.to_manifest()}
     encoded_manifest = json.dumps(manifest, indent=2, sort_keys=True, allow_nan=False).encode("utf-8")
     temporary: Path | None = None
     try:
@@ -483,6 +493,11 @@ def load_case(path: str | Path) -> CaseData:
                         data=arrays[record["data_key"]], sampling_coverage=arrays[record["coverage_key"]])
                     for name, record in manifest["prior_proposals"].items()
                 }
+            if manifest.get("functional_evidence"):
+                from .functional_evidence import FunctionalEvidence
+                record = manifest["functional_evidence"]
+                extra["functional_evidence"] = FunctionalEvidence.from_manifest(record["manifest"],
+                    **{name: None if key is None else arrays[key] for name, key in record["array_keys"].items()})
             case = CaseData(case_id=manifest["case_id"], mri=arrays["mri"], affine=arrays["affine"],
                             compartments=groups["compartments"], source_compartments=groups["source_compartments"],
                             brain_mask=arrays["brain_mask"] if "brain_mask" in arrays.files else None,

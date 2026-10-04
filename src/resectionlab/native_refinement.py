@@ -72,16 +72,20 @@ def _geometry_request(*, access, tools, selected_entry_mm, selected_target_mm,
 
 
 def _prepare_native(case: Any, *, access, tools, selected_entry_mm, selected_target_mm,
-                    candidate_count: int, max_steps: int, max_actions: int, cancelled):
+                    candidate_count: int, max_steps: int, max_actions: int, cancelled,
+                    world_generator=None, hard_exclusion=None, hard_exclusion_provenance=None):
     from .native_simulation import make_native_patient_simulator
     from .route_native_diagnostics import initial_native_action_diagnostic
 
+    evidence_request = _evidence_request(case, world_generator=world_generator,
+        hard_exclusion=hard_exclusion, hard_exclusion_provenance=hard_exclusion_provenance)
     requested = _geometry_request(access=access, tools=tools, selected_entry_mm=selected_entry_mm,
         selected_target_mm=selected_target_mm, candidate_count=candidate_count, max_steps=max_steps,
         max_actions=max_actions)
     template = make_native_patient_simulator(case, access=access, tools=tools,
         selected_entry_mm=requested["selected_entry_mm"], selected_target_mm=requested["selected_target_mm"],
-        candidate_count=candidate_count, max_steps=max_steps, max_actions=max_actions, cancelled=cancelled)
+        candidate_count=candidate_count, max_steps=max_steps, max_actions=max_actions, cancelled=cancelled,
+        world_generator=world_generator, hard_exclusion=hard_exclusion)
     actual_access = _access_record(template.native_config.access)
     actual_tools = [asdict(tool) for tool in template.native_config.tools]
     if requested["selected_entry_mm"] is not None:
@@ -99,6 +103,8 @@ def _prepare_native(case: Any, *, access, tools, selected_entry_mm, selected_tar
         "candidate_entries_mm": template.candidate_entries_mm.tolist(),
         "candidate_targets_mm": template.candidate_tips_mm.tolist(),
         "decision_model_hash": template.decision_model_hash}
+    if evidence_request:
+        binding["evidence_and_constraints"] = evidence_request
     binding["binding_hash"] = content_hash(binding)
     diagnostic = initial_native_action_diagnostic(template)
     legal = diagnostic["non_stop_action_count"]
@@ -111,14 +117,45 @@ def _prepare_native(case: Any, *, access, tools, selected_entry_mm, selected_tar
     return template, readiness
 
 
+def _evidence_request(case, *, world_generator, hard_exclusion, hard_exclusion_provenance):
+    from .core import array_digest
+    from .worlds import WorldGeneratorConfig
+    if world_generator is not None and not isinstance(world_generator, WorldGeneratorConfig):
+        raise TypeError("World assumptions must be a frozen WorldGeneratorConfig")
+    if (hard_exclusion is None) != (hard_exclusion_provenance is None):
+        raise ValueError("Hard exclusions require both a source-grid mask and provenance")
+    result = {}
+    if hard_exclusion is not None:
+        array = np.asarray(hard_exclusion)
+        if (array.shape != case.mri.shape or not np.isin(array, (0, 1)).all()
+                or not isinstance(hard_exclusion_provenance, str) or not hard_exclusion_provenance.strip()):
+            raise ValueError("Hard exclusions must be aligned binary anatomy with explicit provenance")
+        result["hard_exclusion"] = {"mask_hash": array_digest(array.astype(bool)),
+                                    "provenance": hard_exclusion_provenance}
+    evidence = getattr(case, "functional_evidence", None)
+    if evidence is not None:
+        evidence.assert_matches(case)
+        result["functional_evidence"] = evidence.to_manifest()
+        if world_generator is not None and world_generator.fingerprint != evidence.uncertainty.fingerprint:
+            raise ValueError("Uncertainty differs from selected functional evidence")
+        world_generator = evidence.uncertainty
+    if world_generator is not None:
+        result["world_generator"] = world_generator.to_dict()
+        result["world_generator_hash"] = world_generator.fingerprint
+    from .core import freeze_json, thaw_json
+    return thaw_json(freeze_json(result))
+
+
 def inspect_native_refinement(case: Any, *, access=None, tools=None, selected_entry_mm=None,
                               selected_target_mm=None, candidate_count: int = 4, max_steps: int = 3,
-                              max_actions: int = 7, cancelled=None) -> dict[str, Any]:
+                              max_actions: int = 7, cancelled=None, world_generator=None,
+                              hard_exclusion=None, hard_exclusion_provenance=None) -> dict[str, Any]:
     """Geometry-only preflight; no optimizer, checkpoint, policy rollout or removal."""
     started = time.perf_counter()
     _, readiness = _prepare_native(case, access=access, tools=tools, selected_entry_mm=selected_entry_mm,
         selected_target_mm=selected_target_mm, candidate_count=candidate_count, max_steps=max_steps,
-        max_actions=max_actions, cancelled=cancelled)
+        max_actions=max_actions, cancelled=cancelled, world_generator=world_generator,
+        hard_exclusion=hard_exclusion, hard_exclusion_provenance=hard_exclusion_provenance)
     readiness["preparation_seconds"] = time.perf_counter() - started
     return readiness
 
@@ -181,6 +218,13 @@ def validate_native_replay(case: Any, replay: dict[str, Any]) -> bool:
             raise ValueError("Native route binding changed after preparation")
         if binding.get("decision_model_hash") != replay.get("decision_model_hash"):
             raise ValueError("Native route binding belongs to a different decision model")
+        evidence_record = binding.get("evidence_and_constraints", {})
+        if replay.get("evidence_and_constraints", {}) != evidence_record:
+            raise ValueError("Native replay evidence or constraints differ from its route binding")
+        current_evidence = getattr(case, "functional_evidence", None)
+        expected_evidence = None if current_evidence is None else current_evidence.to_manifest()
+        if evidence_record.get("functional_evidence") != expected_evidence:
+            raise ValueError("Native replay functional evidence differs from the current case")
         entries = np.asarray(binding["candidate_entries_mm"], float)
         targets = np.asarray(binding["candidate_targets_mm"], float)
         allowed_tools = {tool["tool_id"] for tool in binding["tools"]}
@@ -215,7 +259,8 @@ def validate_native_replay(case: Any, replay: dict[str, Any]) -> bool:
 def recheck_native_replay(case: Any, replay: dict[str, Any], *, access=None, tools=None,
                          cancelled=None, candidate_count: int = 4, max_steps: int = 3,
                          max_actions: int = 7, selected_entry_mm=None,
-                         selected_target_mm=None) -> dict[str, Any]:
+                         selected_target_mm=None, world_generator=None, hard_exclusion=None,
+                         hard_exclusion_provenance=None) -> dict[str, Any]:
     """Reopen disk artifacts without trusting their claimed certificate or digest.
 
     Fresh model replay must reproduce the saved native removal history. The
@@ -231,7 +276,9 @@ def recheck_native_replay(case: Any, replay: dict[str, Any], *, access=None, too
         raise ValueError("Saved native replay requires its selection seed")
     template, readiness = _prepare_native(case, access=access, tools=tools,
         selected_entry_mm=selected_entry_mm, selected_target_mm=selected_target_mm,
-        candidate_count=candidate_count, max_steps=max_steps, max_actions=max_actions, cancelled=cancelled)
+        candidate_count=candidate_count, max_steps=max_steps, max_actions=max_actions, cancelled=cancelled,
+        world_generator=world_generator, hard_exclusion=hard_exclusion,
+        hard_exclusion_provenance=hard_exclusion_provenance)
     if replay.get("route_binding") is not None:
         if replay["route_binding"] != readiness["route_binding"]:
             raise ValueError("Saved native replay route binding differs from the selected entry, target, window or tool")
@@ -258,7 +305,8 @@ def run_native_refinement(case: Any, output_dir: str | Path, *, budget_seconds: 
                           seed: int = 0, resume: bool = False, cancelled=None, progress=None,
                           access=None, tools=None, candidate_count: int = 4,
                           max_steps: int = 3, max_actions: int = 7, selected_entry_mm=None,
-                          selected_target_mm=None) -> dict[str, Any]:
+                          selected_target_mm=None, world_generator=None, hard_exclusion=None,
+                          hard_exclusion_provenance=None) -> dict[str, Any]:
     """Train within fixed assumptions; only independently accepted replay is exposed.
 
     The budget covers optimization and selection; learner initialization, native
@@ -277,6 +325,10 @@ def run_native_refinement(case: Any, output_dir: str | Path, *, budget_seconds: 
         "geometry": _geometry_request(access=access, tools=tools, selected_entry_mm=selected_entry_mm,
             selected_target_mm=selected_target_mm, candidate_count=candidate_count, max_steps=max_steps,
             max_actions=max_actions)}
+    evidence_request = _evidence_request(case, world_generator=world_generator,
+        hard_exclusion=hard_exclusion, hard_exclusion_provenance=hard_exclusion_provenance)
+    if evidence_request:
+        request["evidence_and_constraints"] = evidence_request
     previous = None
     if resume:
         if not request_path.is_file() or not (directory / "checkpoint.pt").is_file():
@@ -293,7 +345,9 @@ def run_native_refinement(case: Any, output_dir: str | Path, *, budget_seconds: 
     started = time.perf_counter()
     template, readiness = _prepare_native(case, access=access, tools=tools,
         selected_entry_mm=selected_entry_mm, selected_target_mm=selected_target_mm,
-        candidate_count=candidate_count, max_steps=max_steps, max_actions=max_actions, cancelled=cancelled)
+        candidate_count=candidate_count, max_steps=max_steps, max_actions=max_actions, cancelled=cancelled,
+        world_generator=world_generator, hard_exclusion=hard_exclusion,
+        hard_exclusion_provenance=hard_exclusion_provenance)
     preparation_seconds = time.perf_counter() - started
     if previous is not None and previous.get("route_binding") != readiness["route_binding"]:
         raise ValueError("Resume native route model changed; retained source geometry cannot be substituted")
@@ -356,6 +410,10 @@ def run_native_refinement(case: Any, output_dir: str | Path, *, budget_seconds: 
         "metrics": selected.metrics, "shape": list(case.mri.shape), "affine": template.config.affine.tolist(),
         "final_evaluation": False, "scope": "native_contained_cell_structural_research",
         "interpretation": "Independent geometric checks within rigid modeled anatomy; tissue mechanics and clinical consequences unvalidated"}
+    if evidence_request:
+        replay["evidence_and_constraints"] = evidence_request
+        replay["scope"] = ("native_contained_cell_population_prior_sensitivity_research"
+            if getattr(case, "functional_evidence", None) is not None else "native_contained_cell_structural_research")
     # Freeze the exact candidate before any independent outcome is available.
     _write(directory / "native-candidate-freeze.json", {**replay, "candidate_hash": content_hash(replay)})
     native = template.native_config

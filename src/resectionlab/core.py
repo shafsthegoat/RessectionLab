@@ -21,6 +21,7 @@ import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
 if TYPE_CHECKING:
+    from .functional_evidence import FunctionalEvidence
     from .prior_proposals import RegisteredPriorProposal
     from .structural_evidence import StructuralEvidence
 
@@ -295,8 +296,10 @@ class CaseData:
     brain_mask: NDArray[np.bool_] | None = None
     structural_evidence: Mapping[str, StructuralEvidence] = field(default_factory=dict)
     prior_proposals: Mapping[str, RegisteredPriorProposal] = field(default_factory=dict)
+    functional_evidence: FunctionalEvidence | None = None
     _semantic_hash: str = field(init=False, repr=False)
     _planning_hash: str = field(init=False, repr=False)
+    _prior_registration_input_hash: str = field(init=False, repr=False)
     _array_state: tuple[Any, ...] = field(init=False, repr=False)
 
     def __post_init__(self) -> None:
@@ -357,9 +360,17 @@ class CaseData:
                 if not isinstance(proposal, RegisteredPriorProposal) or identity != proposal.proposal_id:
                     raise ValueError("Prior proposal IDs and typed records must agree")
         object.__setattr__(self, "prior_proposals", MappingProxyType(proposals))
+        if self.functional_evidence is not None:
+            from .functional_evidence import FunctionalEvidence
+            if not isinstance(self.functional_evidence, FunctionalEvidence):
+                raise TypeError("functional_evidence must be typed FunctionalEvidence or None")
+            self.functional_evidence.assert_matches(self)
         manifest = self.to_manifest(include_hash=False)
         object.__setattr__(self, "_semantic_hash", semantic_digest(manifest))
         object.__setattr__(self, "_planning_hash", semantic_digest(self._planning_manifest(manifest)))
+        registration_manifest = self._planning_manifest(manifest)
+        registration_manifest.pop("functional_evidence", None)
+        object.__setattr__(self, "_prior_registration_input_hash", semantic_digest(registration_manifest))
         object.__setattr__(self, "_array_state", self._array_signature())
         # A registered preview refers to the historical registration case, while
         # current eligibility binds the unchanged image/frame/anatomy inputs.
@@ -394,7 +405,25 @@ class CaseData:
         for item in self.prior_proposals.values():
             arrays.extend((item.data, item.sampling_coverage, item.affine_ras_mm,
                            item.source_prior_affine_ras_mm, item.mni_ras_to_patient_ras_mm))
+        if self.functional_evidence is not None:
+            arrays.extend(value for value in (self.functional_evidence.motor,
+                self.functional_evidence.language, self.functional_evidence.motor_coverage,
+                self.functional_evidence.language_coverage, self.functional_evidence.affine_ras_mm)
+                if value is not None)
         return tuple((array.shape, array.dtype.str, array.strides, array.__array_interface__["data"][0]) for array in arrays)
+
+    @property
+    def prior_registration_input_hash(self) -> str:
+        """Original registration inputs, unaffected by selecting copied evidence.
+
+        The ordinary planning identity includes selected functional evidence.
+        Historical view-only proposals bind their unchanged parent inputs.
+        """
+        if self._array_signature() == self._array_state:
+            return self._prior_registration_input_hash
+        manifest = self._planning_manifest(self.to_manifest(include_hash=False))
+        manifest.pop("functional_evidence", None)
+        return semantic_digest(manifest)
 
     def _planning_manifest(self, manifest: Mapping[str, Any]) -> dict[str, Any]:
         result = dict(manifest)
@@ -454,6 +483,8 @@ class CaseData:
             result["structural_evidence"] = {key: value.to_manifest() for key, value in self.structural_evidence.items()}
         if self.prior_proposals:
             result["prior_proposals"] = {key: value.to_manifest() for key, value in self.prior_proposals.items()}
+        if self.functional_evidence is not None:
+            result["functional_evidence"] = self.functional_evidence.to_manifest()
         if include_hash:
             result["semantic_hash"] = self.semantic_hash
         return result
