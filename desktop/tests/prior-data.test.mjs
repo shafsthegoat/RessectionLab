@@ -359,3 +359,18 @@ for (const mode of ["in-place", "replacement"]) {
     assert.equal(f.reads(), 2);
   });
 }
+
+test("physical cursor delegates both sides of an outer atlas face to the shared precision convention", async () => {
+  const f = fixture(),
+    view = await hydratePriorProposal(f.source, f.viewer, "prior", f.api);
+  for (const x of [13 - 1e-7, 13, 13 + 1e-7]) {
+    const sample = samplePriorAtCursor(view, [x, -5, 7]);
+    assert.equal(sample.covered, false);
+    assert.equal(sample.value, null);
+    assert.equal(sample.reason, "numerical-boundary-uncertainty");
+  }
+  assert.equal(
+    samplePriorAtCursor(view, [13.1, -5, 7]).reason,
+    "outside-atlas-coverage",
+  );
+});

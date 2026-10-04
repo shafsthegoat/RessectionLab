@@ -296,15 +296,14 @@ export function samplePriorAtCursor(
       reason: "outside-atlas-coverage",
     };
   const position = transformPoint(inverseAffine(layer.affine), cursor);
-  if (position.some((n, i) => n < -0.5 || n >= layer.shape[i] - 0.5))
-    return {
-      covered: false,
-      value: null,
-      voxel: null,
-      reason: "outside-atlas-coverage",
-    };
-  const voxel = position.map((n, i) =>
-    Math.max(0, Math.min(layer.shape[i] - 1, Math.round(n))),
-  ) as Vec3;
-  return { ...samplePriorVoxel(layer, position), voxel };
+  const sample = samplePriorVoxel(layer, position);
+  const outside = position.some(
+    (n, i) => n < -0.5 || n >= layer.shape[i] - 0.5,
+  );
+  const voxel = outside
+    ? null
+    : (position.map((n, i) =>
+        Math.max(0, Math.min(layer.shape[i] - 1, Math.round(n))),
+      ) as Vec3);
+  return { ...sample, voxel };
 }

@@ -28,6 +28,7 @@ uniform int uPriorActive;
 uniform int uPriorKind;
 uniform mat4 uWorldToPrior;
 uniform vec3 uPriorShape;
+uniform vec3 uPriorVoxelTolerance;
 uniform vec3 uPriorColors[3];
 uniform mat4 uWorldToVoxel;
 uniform vec3 uShape;
@@ -79,7 +80,12 @@ bool proposalAt(vec3 voxel) {
 bool priorAt(vec3 world,out float result) {
   vec3 voxel=(uWorldToPrior*vec4(world,1.0)).xyz;
   result=0.0;
+  // Abstain at numerically ambiguous outer faces instead of extending coverage.
+  if(any(lessThanEqual(abs(voxel+0.5),uPriorVoxelTolerance))||any(lessThanEqual(abs(voxel-(uPriorShape-0.5)),uPriorVoxelTolerance)))return false;
   if(any(lessThan(voxel,vec3(-0.5)))||any(greaterThanEqual(voxel,uPriorShape-0.5)))return false;
+  float grid=uPriorKind==1?2.0:1.0;
+  vec3 anchor=floor(voxel*grid+0.5)/grid;
+  voxel=mix(voxel,anchor,lessThanEqual(abs(voxel-anchor),uPriorVoxelTolerance));
   voxel=clamp(voxel,vec3(0.0),uPriorShape-1.0);
   if(uPriorKind==1) {
     ivec3 index=ivec3(floor(voxel+0.5));
@@ -89,7 +95,7 @@ bool priorAt(vec3 world,out float result) {
   ivec3 base=ivec3(floor(voxel));vec3 f=fract(voxel);
   for(int x=0;x<=1;x++)for(int y=0;y<=1;y++)for(int z=0;z<=1;z++) {
     float weight=(x==1?f.x:1.0-f.x)*(y==1?f.y:1.0-f.y)*(z==1?f.z:1.0-f.z);
-    if(weight<=0.0000001)continue;
+    if(weight<=0.0)continue;
     ivec3 index=min(base+ivec3(x,y,z),ivec3(uPriorShape)-1);
     if(texelFetch(uPriorCoverage,index.zyx,0).r<=0.0)return false;
     result+=weight*texelFetch(uPrior,index.zyx,0).r;

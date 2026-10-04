@@ -228,3 +228,32 @@ test("tiny positive concordance cannot be displayed as a covered zero", () => {
   assert.match(html, /1.00e-5/);
   assert.doesNotMatch(html, /0.0000|No signal in this released map/);
 });
+
+test("atlas boundary precision abstention stays unknown in the shell readout", () => {
+  const html = renderToStaticMarkup(
+    React.createElement(PriorCursorReadout, {
+      layer: priorView(),
+      cursor: [-0.5, 0, 0],
+    }),
+  );
+  assert.match(html, /Atlas field boundary — display precision unknown/);
+  assert.doesNotMatch(
+    html,
+    /0.0000|prior-cursor-value|Outside atlas field of view/,
+  );
+});
+test("excessive coordinate precision error cannot appear as a mapped value", () => {
+  const layer = priorView();
+  layer.affine[0][3] = 1e7;
+  const html = renderToStaticMarkup(
+    React.createElement(PriorCursorReadout, {
+      layer,
+      cursor: [1e7, 0, 0],
+    }),
+  );
+  assert.match(html, /Atlas coordinates exceed display precision — unknown/);
+  assert.doesNotMatch(
+    html,
+    /0.0000|prior-cursor-value|Outside atlas field of view/,
+  );
+});

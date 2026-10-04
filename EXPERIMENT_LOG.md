@@ -534,3 +534,20 @@ checks and the production build pass. A descriptive seven-map hydration pass
 changed from 1,412.5 to 1,523.6 ms total (median 198.9 to 212.9 ms); this is not an
 isolated hash-cost or visible-latency benchmark. The corrected renderer is
 being packaged separately from the initial seven-map build.
+
+Independent actual WebGL testing then exposed 18 false-unavailable samples among
+64 oblique coverage-boundary landmarks. Float32 inverse-transform residue
+introduced a spurious uncovered interpolation corner. The corrected sampler
+shares an affine-derived numerical tolerance between CPU and GPU, snaps only
+within that band, abstains at ambiguous outer faces and rejects grids requiring
+more than 0.001 voxel tolerance. Every positive uncovered contribution beyond
+the band remains unavailable; binary ties follow the same convention. Cached
+tolerances bind all shape/affine values and refresh after mutation.
+
+The production build and 131 desktop checks pass. An independent real WebGL2
+probe passes 487 coverage/value cases on the local Apple M5. Maximum scalar
+error is 4.9055e-7; the test uses a documented float32 forward-error bound.
+The initial coverage failure and an intermediate overly strict, ad hoc scalar
+threshold failure remain recorded, with their exact source and outputs, in
+`artifacts/desktop-renderer/prior-gpu-sampling-v1/`. These are numerical display
+checks, not clinical atlas-alignment validation.

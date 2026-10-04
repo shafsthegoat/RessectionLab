@@ -27,9 +27,13 @@ export function PriorCursorReadout({
       <strong>
         {sample.covered
           ? "Within atlas field of view"
-          : sample.reason === "incomplete-interpolation-support"
-            ? "Incomplete atlas sampling support — unknown"
-            : "Outside atlas field of view — unknown"}
+          : sample.reason === "numerical-boundary-uncertainty"
+            ? "Atlas field boundary — display precision unknown"
+            : sample.reason === "numerical-precision-unavailable"
+              ? "Atlas coordinates exceed display precision — unknown"
+              : sample.reason === "incomplete-interpolation-support"
+                ? "Incomplete atlas sampling support — unknown"
+                : "Outside atlas field of view — unknown"}
       </strong>
       {sample.covered && (
         <>

@@ -5,6 +5,7 @@ import {
   validatePriorLayer,
   samplePriorVoxel,
   formatPriorValue,
+  priorSamplingTolerance,
 } from "./priorLayer.ts";
 import { inverseAffine, rasAffine, transformPoint } from "./coordinates.ts";
 
@@ -95,9 +96,109 @@ test("covered zero, interpolated atlas value and unavailable atlas support remai
   assert.deepEqual(samplePriorVoxel(layer, [0, 0, 1.5]), {
     covered: false,
     value: null,
-    reason: "outside-atlas-coverage",
+    reason: "numerical-boundary-uncertainty",
   });
   assert.equal(samplePriorVoxel(layer, [NaN, 0, 0]).covered, false);
+});
+
+test("bounded float32 residue snaps to source centers without concealing genuinely missing support", () => {
+  const { layer } = fixture();
+  layer.coverage.set([1, 1, 1, 1, 0, 0, 0, 0]);
+  const tolerance = priorSamplingTolerance(layer);
+  assert.ok(
+    tolerance.every(
+      (value) => value > 0 && value <= 0.001 && Math.fround(value) === value,
+    ),
+  );
+  assert.equal(
+    priorSamplingTolerance(layer),
+    tolerance,
+    "Precision preparation is cached per immutable installed grid",
+  );
+  for (const x of [-tolerance[0] / 2, 0, tolerance[0] / 2]) {
+    const sample = samplePriorVoxel(layer, [x, 0.3, 0.25]);
+    assert.equal(sample.covered, true);
+    assert.ok(Math.abs(sample.value - 0.25) < 1e-7);
+  }
+  assert.equal(
+    samplePriorVoxel(layer, [2 * tolerance[0], 0.3, 0.25]).covered,
+    false,
+  );
+  assert.equal(samplePriorVoxel(layer, [0.001, 0.3, 0.25]).covered, false);
+  layer.coverage.fill(1);
+  layer.coverage[6] = 0;
+  // Positive diagonal support remains unknown even when its product is <1e-7.
+  const point = [2 * tolerance[0], 2 * tolerance[1], 0];
+  assert.ok(point[0] * point[1] < 1e-7);
+  assert.equal(samplePriorVoxel(layer, point).covered, false);
+});
+
+test("binary half-cell ties are stable and outer-field precision bands abstain", () => {
+  const { layer } = fixture();
+  layer.mapKind = "structural_mask";
+  const tolerance = priorSamplingTolerance(layer);
+  for (const z of [0.5 - tolerance[2] / 2, 0.5, 0.5 + tolerance[2] / 2])
+    assert.equal(samplePriorVoxel(layer, [0, 0, z]).value, 1);
+  assert.equal(
+    samplePriorVoxel(layer, [0, 0, 0.5 - 2 * tolerance[2]]).value,
+    0,
+  );
+  for (const z of [
+    -0.5 - tolerance[2] / 2,
+    -0.5,
+    -0.5 + tolerance[2] / 2,
+    1.5 - tolerance[2] / 2,
+    1.5,
+    1.5 + tolerance[2] / 2,
+  ])
+    assert.deepEqual(samplePriorVoxel(layer, [0, 0, z]), {
+      covered: false,
+      value: null,
+      reason: "numerical-boundary-uncertainty",
+    });
+  assert.equal(
+    samplePriorVoxel(layer, [0, 0, -0.5 - 2 * tolerance[2]]).reason,
+    "outside-atlas-coverage",
+  );
+  assert.equal(
+    samplePriorVoxel(layer, [0, 0, -0.5 + 2 * tolerance[2]]).covered,
+    true,
+  );
+});
+
+test("precision budgets above the bound withhold the prior instead of increasing the snap band", () => {
+  const { volume, layer } = fixture();
+  layer.affine[0][3] = volume.affine[0][3] = 1e8;
+  assert.equal(priorSamplingTolerance(layer), null);
+  assert.throws(() => validatePriorLayer(volume, layer), /precision limit/);
+  assert.deepEqual(samplePriorVoxel(layer, [0, 0, 0]), {
+    covered: false,
+    value: null,
+    reason: "numerical-precision-unavailable",
+  });
+});
+
+test("precision cache detects affine replacement, in-place edits and shape changes", () => {
+  const { layer } = fixture();
+  const original = layer.affine.map((row) => [...row]);
+  assert.ok(priorSamplingTolerance(layer));
+  layer.affine = original.map((row) => [...row]);
+  layer.affine[0][3] = 1e8;
+  assert.equal(
+    samplePriorVoxel(layer, [0, 0, 0]).reason,
+    "numerical-precision-unavailable",
+  );
+  layer.affine = original.map((row) => [...row]);
+  assert.equal(samplePriorVoxel(layer, [0, 0, 0]).covered, true);
+  layer.affine[0][3] = 1e8;
+  assert.equal(
+    samplePriorVoxel(layer, [0, 0, 0]).reason,
+    "numerical-precision-unavailable",
+  );
+  layer.affine = original;
+  assert.ok(priorSamplingTolerance(layer));
+  layer.shape[0] = 1e6;
+  assert.equal(priorSamplingTolerance(layer), null);
 });
 
 test("released binary atlas masks use nearest cells without creating fractional membership", () => {

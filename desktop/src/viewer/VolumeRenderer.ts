@@ -19,7 +19,11 @@ import type {
 import { fragmentShader, vertexShader } from "./shaders";
 import { physicalBounds, placeInSourceFrame } from "./sceneGeometry";
 import { paneViewport } from "./layout";
-import { PRIOR_COLORS, validatePriorLayer } from "./priorLayer";
+import {
+  PRIOR_COLORS,
+  priorSamplingTolerance,
+  validatePriorLayer,
+} from "./priorLayer";
 import { residualMask, validateReplay } from "./replay";
 import {
   STRUCTURAL_PROPOSAL_COLOR,
@@ -246,6 +250,7 @@ export class VolumeRenderer {
           uPriorKind: { value: 0 },
           uWorldToPrior: { value: new THREE.Matrix4() },
           uPriorShape: { value: new THREE.Vector3(1, 1, 1) },
+          uPriorVoxelTolerance: { value: new THREE.Vector3() },
           uPriorColors: {
             value: PRIOR_COLORS.map((color) =>
               new THREE.Color(color).convertLinearToSRGB(),
@@ -677,6 +682,7 @@ export class VolumeRenderer {
     this.priorTexture = dataTexture(snapshot.values, snapshot.shape);
     this.priorCoverageTexture = dataTexture(snapshot.coverage, snapshot.shape);
     const inverse = inverseAffine(snapshot.affine);
+    const tolerance = priorSamplingTolerance(snapshot)!;
     this.materials().forEach((shader) => {
       shader.uniforms.uPrior.value = this.priorTexture;
       shader.uniforms.uPriorCoverage.value = this.priorCoverageTexture;
@@ -685,6 +691,7 @@ export class VolumeRenderer {
         snapshot.mapKind === "structural_mask" ? 1 : 0;
       shader.uniforms.uWorldToPrior.value.copy(matrix(inverse));
       shader.uniforms.uPriorShape.value.set(...snapshot.shape);
+      shader.uniforms.uPriorVoxelTolerance.value.set(...tolerance);
     });
     this.requestRender();
     return snapshot;

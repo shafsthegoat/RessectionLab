@@ -1,6 +1,71 @@
 import type { ViewerPriorLayer, ViewerVolume } from "./contracts";
+import { inverseAffine, transformPoint } from "./coordinates.ts";
 
 export const PRIOR_COLORS = ["#415577", "#749daf", "#e1bc82"] as const;
+
+type PriorGrid = Pick<ViewerPriorLayer, "affine" | "shape">;
+type VoxelTolerance = readonly [number, number, number];
+const precisionCache = new WeakMap<
+  PriorGrid,
+  {
+    gridSignature: string;
+    tolerance: VoxelTolerance | null;
+  }
+>();
+const MAX_VOXEL_TOLERANCE = 0.001;
+
+function gridSignature(layer: PriorGrid): string {
+  return [...layer.shape, ...layer.affine.flat()].join(",");
+}
+
+function computeSamplingTolerance(layer: PriorGrid): VoxelTolerance | null {
+  const inverse = inverseAffine(layer.affine);
+  const maxWorld = [0, 0, 0];
+  for (const x of [-0.5, layer.shape[0] - 0.5])
+    for (const y of [-0.5, layer.shape[1] - 0.5])
+      for (const z of [-0.5, layer.shape[2] - 0.5]) {
+        const world = transformPoint(layer.affine, [x, y, z]);
+        world.forEach((value, axis) => {
+          maxWorld[axis] = Math.max(maxWorld[axis], Math.abs(value));
+        });
+      }
+  // Allowance for float32 world/coefficient quantization and matrix products.
+  // Store float32 values so the CPU and uniform use the same boundary band.
+  const tolerance = inverse
+    .slice(0, 3)
+    .map((row) =>
+      Math.fround(
+        Math.max(
+          2 ** -20,
+          16 *
+            2 ** -24 *
+            (1 +
+              Math.abs(row[3]) +
+              maxWorld.reduce(
+                (sum, value, axis) => sum + value * Math.abs(row[axis]),
+                0,
+              )),
+        ),
+      ),
+    );
+  return tolerance.some(
+    (value) => !Number.isFinite(value) || value > MAX_VOXEL_TOLERANCE,
+  )
+    ? null
+    : (Object.freeze(tolerance) as VoxelTolerance);
+}
+
+/** Reuse precision preparation while all 19 grid numbers match; null means abstain. */
+export function priorSamplingTolerance(
+  layer: PriorGrid,
+): VoxelTolerance | null {
+  const signature = gridSignature(layer),
+    cached = precisionCache.get(layer);
+  if (cached?.gridSignature === signature) return cached.tolerance;
+  const tolerance = computeSamplingTolerance(layer);
+  precisionCache.set(layer, { gridSignature: signature, tolerance });
+  return tolerance;
+}
 
 /** A positive atlas sample must never be rounded into a displayed zero. */
 export function formatPriorValue(value: number): string {
@@ -99,6 +164,13 @@ export function validatePriorLayer(
     if (coverage !== 0 && coverage !== 1)
       throw new Error("Population prior coverage must be binary.");
   }
+  // Revalidating a proposal refreshes its budget even if a caller replaced its grid.
+  const tolerance = computeSamplingTolerance(layer);
+  precisionCache.set(layer, { gridSignature: gridSignature(layer), tolerance });
+  if (!tolerance)
+    throw new Error(
+      "Population prior coordinates exceed the 0.001-voxel display precision limit.",
+    );
 }
 
 /** CPU reference for the rendered sample. Missing support is never a zero value. */
@@ -111,19 +183,32 @@ export function samplePriorVoxel(
     value: null,
     reason: "outside-atlas-coverage",
   };
+  if (point.length !== 3 || point.some((value) => !Number.isFinite(value)))
+    return absent;
+  const tolerance = priorSamplingTolerance(layer);
+  if (!tolerance)
+    return { ...absent, reason: "numerical-precision-unavailable" };
   if (
-    point.length !== 3 ||
     point.some(
       (value, axis) =>
-        !Number.isFinite(value) ||
-        value < -0.5 ||
-        value >= layer.shape[axis] - 0.5,
+        Math.abs(value + 0.5) <= tolerance[axis] ||
+        Math.abs(value - (layer.shape[axis] - 0.5)) <= tolerance[axis],
+    )
+  )
+    return { ...absent, reason: "numerical-boundary-uncertainty" };
+  if (
+    point.some(
+      (value, axis) => value < -0.5 || value >= layer.shape[axis] - 0.5,
     )
   )
     return absent;
-  const voxel = point.map((value, axis) =>
-    Math.max(0, Math.min(layer.shape[axis] - 1, value)),
-  );
+  const voxel = point.map((value, axis) => {
+    const grid = layer.mapKind === "structural_mask" ? 2 : 1;
+    const anchor = Math.floor(value * grid + 0.5) / grid;
+    const snapped =
+      Math.abs(value - anchor) <= tolerance[axis] ? anchor : value;
+    return Math.max(0, Math.min(layer.shape[axis] - 1, snapped));
+  });
   const index = (x: number, y: number, z: number) =>
     (x * layer.shape[1] + y) * layer.shape[2] + z;
   if (layer.mapKind === "structural_mask") {
@@ -143,7 +228,7 @@ export function samplePriorVoxel(
           (dx ? fraction[0] : 1 - fraction[0]) *
           (dy ? fraction[1] : 1 - fraction[1]) *
           (dz ? fraction[2] : 1 - fraction[2]);
-        if (weight <= 1e-7) continue;
+        if (weight <= 0) continue;
         const i = index(
           Math.min(base[0] + dx, layer.shape[0] - 1),
           Math.min(base[1] + dy, layer.shape[1] - 1),

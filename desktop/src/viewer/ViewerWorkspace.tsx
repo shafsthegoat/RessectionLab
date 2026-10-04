@@ -28,6 +28,15 @@ const TITLES: Record<SlicePlane, string> = {
   coronal: "Coronal",
   sagittal: "Sagittal",
 };
+const PRIOR_UNAVAILABLE_LABELS: Record<string, string> = {
+  "outside-atlas-coverage": "Outside sampled atlas · no value",
+  "incomplete-interpolation-support":
+    "Interpolation support unavailable · no value",
+  "numerical-boundary-uncertainty":
+    "Atlas field boundary · display precision unknown",
+  "numerical-precision-unavailable":
+    "Atlas coordinates exceed display precision · no value",
+};
 
 export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const {
@@ -466,9 +475,8 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             <span className="rl-viewer-prior-value">
               {priorSample.covered
                 ? `${displayedPrior.mapKind === "functional_concordance" ? "Interpolated atlas sample" : "Nearest released-mask cell"}: ${priorSample.value === 0 ? "covered zero · " : ""}${formatPriorValue(priorSample.value!)} · unitless`
-                : priorSample.reason === "incomplete-interpolation-support"
-                  ? "Interpolation support unavailable · no value"
-                  : "Outside sampled atlas · no value"}
+                : (PRIOR_UNAVAILABLE_LABELS[priorSample.reason ?? ""] ??
+                  "Atlas sample unavailable · no value")}
             </span>
             <span className="rl-viewer-prior-note">
               Patient function unknown · hatching marks unavailable atlas
