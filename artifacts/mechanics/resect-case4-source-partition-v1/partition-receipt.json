@@ -1,0 +1,326 @@
+{
+  "status": "partition_frozen_source_only_frame_still_unverified",
+  "created_at_utc": "2026-10-04T19:51:16.100859+00:00",
+  "wrapper_sha256": "dbe672caa60af24a5ea37e0a8b701b60bf55922309fe3e6d1ae79988319e2c8f",
+  "release_sha256": "a0248c617ae152a7cf1b24ddf62cd35d3eb2becc905e825b7b47a51ef68c5120",
+  "source_snapshot_sha256": "7e5d7853952b6ce86890ff046f2890b8ef44feb2ddd15a7fc2da48cdd3cf008b",
+  "source_and_input_hashes_before": {
+    "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/Landmarks/Case4-beforeUS-duringUS-full.tag": "9e2c3c2765bffd2914f8113f8b2e223c06b2f0640e561f03a94049752e8ddec1",
+    "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/US/Case4-US-before.nii.gz": "62f6b6217774653267702acd4a55b16ad5c8cc4980237afaa39e92b102240379",
+    "artifacts/mechanics/resect-case4-acquisition-v1/acquisition-receipt.json": "54c39954cefd2200935d2225bad457ae4aee191690a65d27f8c92cfdd1cbc38b",
+    "artifacts/mechanics/resect-case4-baseline-header-qc-v1/header-receipt.json": "18d6e6306e38f409a314ba180d7d0a21e9a7ee02677f34a1d1fd28ea1294d692",
+    "artifacts/mechanics/resect-case4-source-partition-v1/partition.py": "dbe672caa60af24a5ea37e0a8b701b60bf55922309fe3e6d1ae79988319e2c8f",
+    "artifacts/mechanics/resect-case4-source-partition-v1/source-snapshot.json": "7e5d7853952b6ce86890ff046f2890b8ef44feb2ddd15a7fc2da48cdd3cf008b",
+    "build/resect-source-partition-6766a2a/src/resectionlab/__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "build/resect-source-partition-6766a2a/src/resectionlab/core.py": "f1f0b8ae334cabc864c3ec85d4f6b49e4842de2b580edaadd7562276ea0c92db",
+    "build/resect-source-partition-6766a2a/src/resectionlab/mechanics_landmarks.py": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc"
+  },
+  "source_and_input_hashes_after": {
+    "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/Landmarks/Case4-beforeUS-duringUS-full.tag": "9e2c3c2765bffd2914f8113f8b2e223c06b2f0640e561f03a94049752e8ddec1",
+    "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/US/Case4-US-before.nii.gz": "62f6b6217774653267702acd4a55b16ad5c8cc4980237afaa39e92b102240379",
+    "artifacts/mechanics/resect-case4-acquisition-v1/acquisition-receipt.json": "54c39954cefd2200935d2225bad457ae4aee191690a65d27f8c92cfdd1cbc38b",
+    "artifacts/mechanics/resect-case4-baseline-header-qc-v1/header-receipt.json": "18d6e6306e38f409a314ba180d7d0a21e9a7ee02677f34a1d1fd28ea1294d692",
+    "artifacts/mechanics/resect-case4-source-partition-v1/partition.py": "dbe672caa60af24a5ea37e0a8b701b60bf55922309fe3e6d1ae79988319e2c8f",
+    "artifacts/mechanics/resect-case4-source-partition-v1/source-snapshot.json": "7e5d7853952b6ce86890ff046f2890b8ef44feb2ddd15a7fc2da48cdd3cf008b",
+    "build/resect-source-partition-6766a2a/src/resectionlab/__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "build/resect-source-partition-6766a2a/src/resectionlab/core.py": "f1f0b8ae334cabc864c3ec85d4f6b49e4842de2b580edaadd7562276ea0c92db",
+    "build/resect-source-partition-6766a2a/src/resectionlab/mechanics_landmarks.py": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc"
+  },
+  "binding": {
+    "patient_group": "RESECT:Case4",
+    "role": "before_us_to_during_us",
+    "tag_sha256": "sha256:9e2c3c2765bffd2914f8113f8b2e223c06b2f0640e561f03a94049752e8ddec1",
+    "source_image_sha256": "sha256:62f6b6217774653267702acd4a55b16ad5c8cc4980237afaa39e92b102240379",
+    "destination_image_sha256_from_acquisition_metadata_only": "sha256:90fd3e82fbf99f7d45ed25108829f8e61a632ecf6d9a8706b5e4ac6866760a8a",
+    "audit_hash": "sha256:6e3ba9e2212eae018911c56cb27d6b0d800e78fb4845663dd82cb39ce731916f",
+    "frame_qc": null
+  },
+  "source_hash": "sha256:9e05f31fdce60776d41ffa9269e508ea174e836820dbb2876370a493d949203c",
+  "source_frame": "world_mm_unverified",
+  "source_row_ids": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+  ],
+  "source_world_mm": [
+    [
+      38.829018,
+      8.186083,
+      -4.601652
+    ],
+    [
+      48.007931,
+      7.316612,
+      -9.61003
+    ],
+    [
+      40.576977,
+      3.767663,
+      -1.20726
+    ],
+    [
+      46.687168,
+      23.032818,
+      -23.396431
+    ],
+    [
+      39.911716,
+      11.829591,
+      -1.234281
+    ],
+    [
+      41.644726,
+      0.521484,
+      -12.791658
+    ],
+    [
+      50.355251,
+      10.096829,
+      -8.044087
+    ],
+    [
+      48.59494,
+      26.117413,
+      -15.545999
+    ],
+    [
+      48.001373,
+      25.22146,
+      -18.618963
+    ],
+    [
+      51.435596,
+      23.146484,
+      -11.324409
+    ],
+    [
+      41.097092,
+      29.977308,
+      -8.725097
+    ],
+    [
+      44.809734,
+      8.445333,
+      -9.442419
+    ],
+    [
+      48.786499,
+      20.700005,
+      -16.399775
+    ],
+    [
+      51.69672,
+      11.08402,
+      -32.170658
+    ],
+    [
+      48.8806,
+      12.184183,
+      -28.491198
+    ],
+    [
+      51.337494,
+      3.329111,
+      -14.415065
+    ],
+    [
+      46.798889,
+      -4.644383,
+      -12.213633
+    ],
+    [
+      46.803478,
+      4.008276,
+      -21.831179
+    ],
+    [
+      49.412739,
+      -0.052127,
+      -25.288019
+    ]
+  ],
+  "N": 19,
+  "B_ids_in_FPS_order": [
+    1,
+    14,
+    8,
+    17,
+    19,
+    7
+  ],
+  "V_ids_original_order": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    9,
+    10,
+    11,
+    12,
+    13,
+    15,
+    16,
+    18
+  ],
+  "partition_rule": "source_fps_six_rank3_v1",
+  "partition_hash": "sha256:cc9d7776cbb4bb6ba745519e24f008c53e556bfe60d3c0509917377c9db02982",
+  "B_rank_ratio": 0.289608142874653,
+  "B_centered_singular_values_mm": [
+    24.67464888670142,
+    23.808878409714964,
+    7.145979240161722
+  ],
+  "source_extent_mm": [
+    12.867702000000001,
+    34.621691,
+    30.963398
+  ],
+  "header_bounds_diagnostic": {
+    "interpretation": "Assuming tag world matches original NIfTI sform world as creator describes; not independent frame acceptance",
+    "source_voxel_coordinates": [
+      [
+        140.63743733281797,
+        86.03493498836198,
+        139.0000049987321
+      ],
+      [
+        115.03345002003451,
+        88.68670710056526,
+        180.99999635823661
+      ],
+      [
+        142.8275493891525,
+        59.08868593760097,
+        143.55086087128365
+      ],
+      [
+        91.26883266544897,
+        184.09330031470978,
+        183.19131331787804
+      ],
+      [
+        122.9999721674271,
+        84.18115320044784,
+        123.06710165983397
+      ],
+      [
+        160.3967021941592,
+        87.19256396393824,
+        189.55975426713098
+      ],
+      [
+        97.12070988368771,
+        88.73047139349633,
+        175.99999396022264
+      ],
+      [
+        67.34172148921942,
+        164.34870900438565,
+        156.99999364266364
+      ],
+      [
+        75.2894447852818,
+        172.8156572568791,
+        166.93697226399783
+      ],
+      [
+        60.663876731582974,
+        137.54972764294604,
+        158.5643985197342
+      ],
+      [
+        76.61101282664072,
+        162.3845770380252,
+        106.96793243328497
+      ],
+      [
+        123.37278115478964,
+        95.57321132450214,
+        169.28750507180416
+      ],
+      [
+        82.5347885783469,
+        150.7621597471867,
+        172.75853962233964
+      ],
+      [
+        115.51244717540175,
+        171.59845293337816,
+        251.40510505736478
+      ],
+      [
+        118.7554494277417,
+        166.03265941339558,
+        229.99505823764034
+      ],
+      [
+        119.11361556636126,
+        88.7558770560512,
+        213.97063681402867
+      ],
+      [
+        155.29151861623157,
+        63.197830084202295,
+        213.62835832576877
+      ],
+      [
+        141.72967840707088,
+        121.65129527004899,
+        223.02266761232656
+      ],
+      [
+        147.17967353250248,
+        117.85826889432708,
+        250.09218713206505
+      ]
+    ],
+    "full_cell_bounds": [
+      [
+        -0.5,
+        -0.5,
+        -0.5
+      ],
+      [
+        336.5,
+        302.5,
+        292.5
+      ]
+    ],
+    "inside_count": 19,
+    "outside_row_ids": [],
+    "minimum_signed_margin_voxels": 41.09489494263522
+  },
+  "source_only_eligibility_passed": true,
+  "destination_coordinates_converted_or_displayed": false,
+  "during_image_opened": false,
+  "MRI_before_landmarks_opened": false,
+  "patient_image_arrays_opened": false,
+  "frame_qc_accepted": false,
+  "forward_DTO_created": false,
+  "replacement_or_rule_relaxation": false,
+  "runtime": {
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "numpy": "2.5.3",
+    "helper_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/resect-source-partition-6766a2a/src/resectionlab/mechanics_landmarks.py",
+    "core_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/resect-source-partition-6766a2a/src/resectionlab/core.py"
+  },
+  "elapsed_seconds": 0.08022258407436311,
+  "child_peak_RSS_bytes": 39419904
+}

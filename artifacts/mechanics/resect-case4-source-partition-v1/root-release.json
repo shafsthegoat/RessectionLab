@@ -1,0 +1,18 @@
+{
+  "recorded_at_utc": "2026-10-04T19:51:15.990760+00:00",
+  "authorizer": "/root",
+  "helper_commit": "6766a2a3efd03858bf16634cb6776e2af1f48e38",
+  "header_QC_commit": "77f41c8",
+  "access_contract_commit": "cb9f71b",
+  "allowed": "First-triplet source coordinates only, fixed sixB partition, header bounds",
+  "closed": [
+    "all destination coordinates includingB",
+    "during image",
+    "MRI-before pair",
+    "all image arrays"
+  ],
+  "wall_seconds": 55,
+  "sampled_parent_child_RSS_limit_bytes": 1073741824,
+  "source_snapshot_sha256": "7e5d7853952b6ce86890ff046f2890b8ef44feb2ddd15a7fc2da48cdd3cf008b",
+  "wrapper_sha256": "dbe672caa60af24a5ea37e0a8b701b60bf55922309fe3e6d1ae79988319e2c8f"
+}
