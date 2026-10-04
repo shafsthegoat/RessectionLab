@@ -1,0 +1,21 @@
+{
+  "status": "released_repaired_code_only",
+  "pins": {
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/febio-accelerate-csc-bounds-v1/patched/NumCore/AccelerateSparseSolver.cpp": "60e5a3f2350826af1b95376ab93c8a476f2312158763d63d82eb80ec54af79c2",
+    "/Library/Developer/CommandLineTools/usr/bin/clang++": "f30550eab15fdf5ab8c0dc54c52679711241e5d4b636b027e18c09fef531775d",
+    "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/SDKSettings.json": "f8d005f09381389167f9e0aeaa169bc9e7dff162ef22ca2fd8e98df7ff1acafe",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-repair-v1/positive-control.py": "927cbcfe58cde972ec4bc51f350cb86556f24f5f73100ea049fa64a386c78268",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/febio-accelerate-csc-positive-v1/positive.cpp": "a3bc8fd50e43806be662f9084b9c0c749a9ee213cdd0ed97db2681afcd9765dd"
+  },
+  "fragment_sha256": "88315d2f9d1499688c66c202ad600d963f89e158c99c3ef6170dd71754fefa1b",
+  "limits": {
+    "seconds": 60,
+    "rss_bytes": 1073741824,
+    "cpu_threads": 1
+  },
+  "scope": "Six positive source-extracted offset-copy controls; no original faulty code, full adapter, factorization, model, or patient execution.",
+  "original_setup_failure_preserved": "bounds-controls/summary.json",
+  "worker_interruption": "Previous preparation agent stopped by automatic cybersecurity screening before the SDK-corrected diagnostic; no corrected attempt was executed.",
+  "old_defect_dynamic_reproduction": false
+}

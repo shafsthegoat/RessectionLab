@@ -1,0 +1,23 @@
+{
+  "status": "unexpected_failure_stop_no_retry",
+  "error": "AssertionError()",
+  "rows": [
+    {
+      "operation": "original-compile",
+      "command": [
+        "/Library/Developer/CommandLineTools/usr/bin/clang++",
+        "-std=c++17",
+        "-O1",
+        "-g",
+        "-fsanitize=address,undefined",
+        "-fno-omit-frame-pointer",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/febio-accelerate-csc-bounds-v1/original.cpp",
+        "-o",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/febio-accelerate-csc-bounds-v1/original-bounds"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 0.07795741700101644,
+      "log_sha256": "6110ab34b884fc68b40b2e3c45f39d416a26c98a8fcf396d9faf4c95cfb74ed3"
+    }
+  ]
+}

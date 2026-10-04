@@ -1,0 +1,23 @@
+{
+  "cleanup_error": null,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-S",
+    "-B",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-repair-v1/bounds-regression.py",
+    "control-worker"
+  ],
+  "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/febio-accelerate-csc-bounds-v1",
+  "elapsed_seconds": 0.4039904170203954,
+  "error": null,
+  "exit_code": 1,
+  "kill_reason": null,
+  "no_retry": true,
+  "pid": 38517,
+  "rss_cap_bytes": 1073741824,
+  "sampled_peak_process_group_rss_bytes": 57917440,
+  "sampling_note": "Group RSS is sampled; brief between-sample peaks may be missed.",
+  "status": "failed_or_incomplete",
+  "wall_cap_seconds": 60
+}

@@ -1,0 +1,32 @@
+{
+  "accepted_scope": [
+    "Compile and execute only the reviewed patched60e5a3f2350826af1b95376ab93c8a476f2312158763d63d82eb80ec54af79c2 conversion fragment.",
+    "Use explicit source array length==Columns()+1 and destination-size assertions before terminal access, then verify every copied long offset and terminal==nnz.",
+    "Keep six positive profiles: dense3/9, diagonal3/3, empty-columns4/2, one-column1/1, created zero and null zero. Zero cases must return through the base no-work branch without pointer access.",
+    "Use the separately reviewed toolchain/sysroot and a separately released one-attempt supervised diagnostic; no full FEBio runtime build or models.",
+    "Retain the original loop/allocator mismatch as static source evidence only. Do not claim dynamic reproduction of original memory corruption or a negative sanitizer baseline."
+  ],
+  "authority": "Root directed the safer positive-only route after reporting an automatic cybersecurity screen stopped preparation before the SDK-corrected diagnostic.",
+  "excluded_scope": [
+    "Any original faulty fixture execution or original-variant run branch.",
+    "Actual SparseFactor/SparseSolve, matrix assembly, iterative mode, mechanics, speed, patient data or measured response validation."
+  ],
+  "original_compile_failure_retained": {
+    "controls": "artifacts/febio-accelerate-csc-repair-v1/bounds-controls/",
+    "stage": "compiler could not locate cassert; no original or repaired fixture executable ran",
+    "supervision": "artifacts/febio-accelerate-csc-repair-v1/bounds-supervised/"
+  },
+  "preserved_static_review": {
+    "path": "static-review.json",
+    "sha256": "66fcd978d91327d77ac62a6626e7e5e4a8533a335ec8039968ec544445fc062b"
+  },
+  "reviewer_runs": 0,
+  "screen_interruption": {
+    "detailed_screen_reason": "Not supplied to this reviewer",
+    "effect": "Stopped preparation before corrected diagnostic",
+    "reported_by": "root",
+    "response": "Do not run original faulty implementation; preserve the interruption and use only repaired implementation checks.",
+    "type": "automatic cybersecurity screen"
+  },
+  "status": "positive_only_repaired_fixture_scope_accepted_pending_execution"
+}

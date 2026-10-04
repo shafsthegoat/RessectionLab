@@ -1,0 +1,43 @@
+{
+  "checks": [
+    "Exact source diff contains only zero-row early base PreProcess return and Columns()+1 allocation/copy count. Original installed runtime/source untouched.",
+    "CCSSparseMatrix::Create initializes exactly nc+1 offsets and asserts terminal offset==nonzero count; empty created0x0 gets offset[0]=0. Constructor/Clear zero matrix instead has null pointers.",
+    "Accelerate SDK uses long columnStarts and consumes consecutive j/j+1 offsets. Values/nonzero count does not determine column-offset length.",
+    "Base LinearSolver::PreProcess returns true, and existing Accelerate Factor/BackSolve already return true for zero rows. Early zero-row guard avoids touching null/empty storage without invoking factorization.",
+    "Both fixture code fragments are literal exact original/patched extraction; rest of C++ fixture is identical. Source arrays are exactly allocated; volatile terminal destination read occurs before destination-size assertion.",
+    "Dense3/9 exercises old source overread. Diagonal3/3 exercises old missing terminal destination entry. Empty-column4/2 and one-column1/1 check terminal offsets; both created and null zero representations are checked in repaired fixture."
+  ],
+  "fixtures": {
+    "original": {
+      "fixture": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/febio-accelerate-csc-bounds-v1/original.cpp",
+      "fixture_sha256": "9de7e16aa026bff5075d3826c64564401f889d09af375aea7af5e0daf8635cec",
+      "fragment_sha256": "72ba3876984f924487d9cf3fb3c8102da218a9a04787bbb5f0d350789f1cc54e",
+      "source_sha256": "f5432e79ab73dd11d4a0550691480edd7fd5f00c392ae2f78eddf9c4b5da51c9"
+    },
+    "patched": {
+      "fixture": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/febio-accelerate-csc-bounds-v1/patched.cpp",
+      "fixture_sha256": "2ebf76a9f59e52d8aa240232023203aea16ff2b94b50ec1bb9df56b451c24deb",
+      "fragment_sha256": "88315d2f9d1499688c66c202ad600d963f89e158c99c3ef6170dd71754fefa1b",
+      "source_sha256": "60e5a3f2350826af1b95376ab93c8a476f2312158763d63d82eb80ec54af79c2"
+    }
+  },
+  "interpretation_limits": [
+    "This fixture checks integer buffer conversion and zero-row branch, not Apple SparseFactor/SparseSolve, matrix assembly, numerical residuals, full adapter state reuse or mechanics.",
+    "Some low-density profiles are structurally valid CSC but singular as linear systems; no successful factorization is claimed.",
+    "Existing iterative-mode behavior and other adapter branches are outside this repair.",
+    "First diagnostic compiler invocation failed to locate cassert before fixture execution. That is a retained SDK/toolchain setup failure, not sanitizer evidence for or against the patch.",
+    "Full runtime build/execution still needs root release after successful bounded sanitizer controls."
+  ],
+  "original_source_sha256": "f5432e79ab73dd11d4a0550691480edd7fd5f00c392ae2f78eddf9c4b5da51c9",
+  "patch_sha256": "c3c6b068ed8e7b2480a64308099fa57d8b02fdbe04076f1497b0b2fdd3b7c3e0",
+  "patched_source_sha256": "60e5a3f2350826af1b95376ab93c8a476f2312158763d63d82eb80ec54af79c2",
+  "reference_source_hashes": {
+    "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers/Sparse/Solve.h": "8d2a7b44d05f1ff67cb1688ab8bb6573b021b88c758baa37e10a8aea1c46811a",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/source/FECore/CompactMatrix.cpp": "59de4ad32a85e673e6ea5016325b4ff459831abec777acb3d2b9fac8bf7410e8",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/source/FECore/CompactUnSymmMatrix.cpp": "a6863aa736948516348abee435a1d81cd88119925b73ade30aec993b41ebdcca",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/source/FECore/LinearSolver.cpp": "3b35ed3e6acb4a15333e63ed503beb3cc77e0bc8de19e662ce549ca60d7521aa",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/source/FECore/SparseMatrix.cpp": "e2d588ce65de2503bbe5bbc56663a1e0bb3636ed3d236d6f44c87292ac106261"
+  },
+  "reviewer_compiler_or_solver_invocations": 0,
+  "status": "static_patch_and_extracted_fixture_review_passed_pending_actual_sanitizer_evidence"
+}

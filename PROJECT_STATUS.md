@@ -270,6 +270,15 @@ caps remain unchanged. A separate local framework repair is documented but has
 not been built or released. See
 `artifacts/febio-sparse-backend-static-review-v1/REVIEW.md`.
 
+The narrow sparse-adapter patch passed six repaired-code memory checks under
+ASan/UBSan in 2.203 s, with 157.4 MB sampled group memory. Independent saved-file
+review confirms exact patched fragment, source/binary identity and all results.
+The original diagnostic compile failure and subsequent automatic worker-screening
+interruption are preserved; no original faulty binary was run. Full adapter,
+factorization, numerical and physical validation are still pending. A new isolated
+runtime declaration will bind this reduced positive-only scope. See
+`artifacts/febio-accelerate-csc-repair-v1/README.md` and its independent review.
+
 One bounded Gmsh preparation generated the three measured-specimen meshes
 (96/768/2,592 hex elements) and 18 fixed loading decks in 3.43 s, with
 140.2 MB maximum sampled memory. Independent native-mesh and deck review

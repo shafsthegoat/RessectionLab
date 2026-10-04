@@ -1,0 +1,246 @@
+{
+  "schema_version": 1,
+  "declaration_id": "febio-accelerate-csc-runtime-v1",
+  "created_at": "2026-10-04T21:34:11.407478+00:00",
+  "status": "prospective_pending_independent_patch_and_bounds_review_root_commit_and_build_release",
+  "scope": "One isolated local rebuild of pinned FEBio with exact CSC-pointer allocation/copy-length fix and zero-equation early return only. No scientific model or patient execution.",
+  "upstream": {
+    "commit": "32ae206ff4881dfb54f62296cd1558e58ed9fcc6",
+    "archive": {
+      "path": "data/optional-runtimes/febio-4.13/downloads/32ae206ff4881dfb54f62296cd1558e58ed9fcc6.tar.gz",
+      "bytes": 53891813,
+      "sha256": "a1c4f65597c9b3f89a02daeeee6c3ae00d9f4bf64a85824b33e817043fd1ac66"
+    },
+    "original_input_inventory": {
+      "path": "artifacts/febio-runtime-build-v1/acquire-01/input-inventory.json",
+      "bytes": 1051451,
+      "sha256": "fab8804506c3698c60b17d3f3beabbadcb776af7b55cf5cce8b914807270b363"
+    },
+    "original_runtime_identity": {
+      "path": "artifacts/febio-runtime-build-v1/runtime-identity.json",
+      "bytes": 5109,
+      "sha256": "f560f386726d13b399bcfb0c781a4b78104deecf41aa977e0efe205f18fabfc4"
+    },
+    "license": "MIT",
+    "license_file": {
+      "path": "data/optional-runtimes/febio-4.13/source/LICENSE",
+      "bytes": 1149,
+      "sha256": "82c4d113462cdd34a9f9f8be170f14ddf312cbba1e319d1fd197df0257754e0f"
+    },
+    "notice_file": {
+      "path": "data/optional-runtimes/febio-4.13/source/Documentation/Copyright-FEBio.txt",
+      "bytes": 2644,
+      "sha256": "4bb04ca4d77260db0ab3041cc22d57ea8ffe3a0bdbfc29eb25685f12c224cdd4"
+    }
+  },
+  "patch": {
+    "file": {
+      "path": "artifacts/febio-accelerate-csc-repair-v1/accelerate-csc-pointer-count.patch",
+      "bytes": 718,
+      "sha256": "c3c6b068ed8e7b2480a64308099fa57d8b02fdbe04076f1497b0b2fdd3b7c3e0"
+    },
+    "identity": {
+      "path": "artifacts/febio-accelerate-csc-repair-v1/patch-identity.json",
+      "bytes": 1021,
+      "sha256": "ffa642079bdd29837ec0d49bef7402bf9f9d31719168d39d31373e63ee696294"
+    },
+    "relative_source": "NumCore/AccelerateSparseSolver.cpp",
+    "original_sha256": "f5432e79ab73dd11d4a0550691480edd7fd5f00c392ae2f78eddf9c4b5da51c9",
+    "patched_sha256": "60e5a3f2350826af1b95376ab93c8a476f2312158763d63d82eb80ec54af79c2",
+    "zero_equation_behavior": "Existing Factor and BackSolve already return true for Rows()==0; new PreProcess guard avoids accessing null offsets from uncreated/cleared zero matrices. Base LinearSolver::PreProcess returns true.",
+    "other_source_changes_permitted": false,
+    "iterative_mode_permitted": false
+  },
+  "bounds_regression": {
+    "driver": {
+      "path": "artifacts/febio-accelerate-csc-repair-v1/bounds-regression.py",
+      "bytes": 8376,
+      "sha256": "2dce058c3cc5db3edebc941300cd97c85413beefc30d34ccf631f1eeb85f61e5"
+    },
+    "preparation": {
+      "path": "artifacts/febio-accelerate-csc-repair-v1/fixture-preparation.json",
+      "bytes": 1548,
+      "sha256": "8cc65fed0e93746c7cd17c5209eb1cce6fbe7d8e74577c44311fb04bea2cacef"
+    },
+    "scope": "Exact source-extracted offset conversion fragment and guarded zero-row path under ASan+UBSan, mock exact-size CSC arrays; not a full adapter/factorization/physical validation.",
+    "compiler_seconds_per_fixture": 30,
+    "compiler_rss_bytes": 1073741824,
+    "case_seconds": 5,
+    "case_rss_bytes": 536870912,
+    "original_controls": [
+      "dense3/9 expected overread",
+      "diagonal3/3 expected terminal destination overread",
+      "zero-null expected undefined access"
+    ],
+    "patched_controls": [
+      "dense3/9",
+      "diagonal3/3",
+      "empty-columns4/2",
+      "single1/1",
+      "zero-created",
+      "zero-null"
+    ],
+    "passed_receipt_must_be_bound_by_execution_release": true,
+    "aggregate_supervised_seconds": 60,
+    "aggregate_process_group_rss_bytes": 1073741824,
+    "cpu_threads": 1
+  },
+  "private_layout": {
+    "new_prefix": "data/optional-runtimes/febio-4.13-accelerate-csc-v1",
+    "source": "source",
+    "build": "build",
+    "install": "install",
+    "existing_prefix_preserved": "data/optional-runtimes/febio-4.13",
+    "dependencies_reused_read_only": true,
+    "global_or_app_environment_changes": false
+  },
+  "tools": {
+    "cmake": {
+      "path": "data/optional-runtimes/febio-4.13/tools/cmake/data/bin/cmake",
+      "bytes": 23762288,
+      "sha256": "cb2cbe87f7a7914bec020cf4afcda9c0e64ded2c69ed70a75cd46a2b45674c80"
+    },
+    "clang": {
+      "path": "/Library/Developer/CommandLineTools/usr/bin/clang",
+      "bytes": 290664032,
+      "sha256": "f30550eab15fdf5ab8c0dc54c52679711241e5d4b636b027e18c09fef531775d"
+    },
+    "clangxx": {
+      "path": "/Library/Developer/CommandLineTools/usr/bin/clang++",
+      "bytes": 290664032,
+      "sha256": "f30550eab15fdf5ab8c0dc54c52679711241e5d4b636b027e18c09fef531775d"
+    },
+    "sdk_settings": {
+      "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/SDKSettings.json",
+      "bytes": 7774,
+      "sha256": "f8d005f09381389167f9e0aeaa169bc9e7dff162ef22ca2fd8e98df7ff1acafe"
+    },
+    "openmp_library": {
+      "path": "data/optional-runtimes/febio-4.13/openmp/lib/libomp.dylib",
+      "bytes": 844016,
+      "sha256": "38f6afed27bf1d3bd52779547c7ab53aeda9c06c3473263b5cd11ed4f04b41f8"
+    },
+    "openmp_header": {
+      "path": "data/optional-runtimes/febio-4.13/openmp/include/omp.h",
+      "bytes": 25839,
+      "sha256": "3f9f6217b1edfdfd7487e84b2f62ee7742793e56cf447b54ee20bb5930b35ed3"
+    },
+    "openmp_license": {
+      "path": "data/optional-runtimes/febio-4.13/openmp/info/licenses/openmp/LICENSE.TXT",
+      "bytes": 19741,
+      "sha256": "fdad1758a9e1f9d5a81e18879b3406772115edc92c24bfa36b70c654f325e8e4"
+    },
+    "supervisor": {
+      "path": "scripts/febio_runtime.py",
+      "bytes": 24801,
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+    }
+  },
+  "configure": {
+    "generator": "Unix Makefiles",
+    "source": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/source",
+    "build": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/build",
+    "cache_options": {
+      "CMAKE_BUILD_TYPE": "Release",
+      "CMAKE_CXX_COMPILER": "/Library/Developer/CommandLineTools/usr/bin/clang++",
+      "CMAKE_CXX_FLAGS": "-I/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/include",
+      "CMAKE_C_COMPILER": "/Library/Developer/CommandLineTools/usr/bin/clang",
+      "CMAKE_C_FLAGS": "-I/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/include",
+      "CMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH": "OFF",
+      "CMAKE_FIND_USE_PACKAGE_REGISTRY": "OFF",
+      "CMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY": "OFF",
+      "CMAKE_INSTALL_PREFIX": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install",
+      "CMAKE_INSTALL_RPATH": "@loader_path;@executable_path/../lib;/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib",
+      "CMAKE_OSX_ARCHITECTURES": "arm64",
+      "CMAKE_OSX_SYSROOT": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "OMP_INC": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/include",
+      "OpenMP_CXX_FLAGS": "-Xpreprocessor -fopenmp -I/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/include",
+      "OpenMP_CXX_INCLUDE_DIR": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/include",
+      "OpenMP_CXX_LIB_NAMES": "omp",
+      "OpenMP_C_FLAGS": "-Xpreprocessor -fopenmp -I/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/include",
+      "OpenMP_C_INCLUDE_DIR": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/include",
+      "OpenMP_C_LIB_NAMES": "omp",
+      "OpenMP_omp_LIBRARY": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib/libomp.dylib",
+      "SET_DEVCOMMIT": "OFF",
+      "USE_FFTW": "OFF",
+      "USE_HYPRE": "OFF",
+      "USE_LEVMAR": "OFF",
+      "USE_MKL": "OFF",
+      "USE_MMG": "OFF",
+      "USE_NLOPT": "OFF",
+      "USE_PDL": "OFF",
+      "USE_SUPERLU_MT": "OFF",
+      "USE_ZLIB": "OFF"
+    },
+    "expected_dependency_flags": {
+      "USE_FFTW": "OFF",
+      "USE_HYPRE": "OFF",
+      "USE_LEVMAR": "OFF",
+      "USE_MKL": "OFF",
+      "USE_MMG": "OFF",
+      "USE_NLOPT": "OFF",
+      "USE_PDL": "OFF",
+      "USE_SUPERLU_MT": "OFF",
+      "USE_ZLIB": "OFF"
+    },
+    "existing_environment_sanitizer": "scripts/febio_runtime.py:private_environment"
+  },
+  "build": {
+    "target": "febio4",
+    "parallel_jobs": 2,
+    "install_prefix": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install",
+    "configure_attempts": 1,
+    "build_and_install_attempts": 1
+  },
+  "caps": {
+    "configure_seconds": 120,
+    "build_and_install_seconds": 900,
+    "process_family_sampled_rss_bytes": 3221225472,
+    "source_expanded_bytes": 536870912,
+    "thread_environment": {
+      "OMP_NUM_THREADS": "1",
+      "OMP_DYNAMIC": "FALSE",
+      "VECLIB_MAXIMUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1"
+    },
+    "sampled_limits_not_exact_peak": true
+  },
+  "preservation_and_acceptance": [
+    "Verify all original source/tool acquisition entries and original installed runtime hashes before and after; do not mutate original prefix.",
+    "Extract only already-verified local source archive into fresh new prefix, apply exact patch once, reject every unexpected source difference.",
+    "Retain all original FEBio/OpenMP/CMake notices. System Accelerate is a separate dependency, not covered by FEBio MIT; no app bundling or redistribution approval.",
+    "Record exact sanitized command arrays, pinned compiler/SDK/CMake/OpenMP, timings, RSS and failures.",
+    "Verify cache matches all declared options; inspect installed arm64 architecture, library identities, RPATH and only declared non-system dependency.",
+    "Create new runtime identity including upstream commit, patch SHA, source inventory, build commands, executable/library SHA; never reuse old runtime identity.",
+    "A successful build is not numerical validation. No solver launch or numerical control is authorized by this declaration."
+  ],
+  "next_validation_not_released": {
+    "original_five_hex8_material_controls": {
+      "path": "artifacts/mechanics-febio-verification-v1/decks/manifest.json",
+      "bytes": 3238,
+      "sha256": "2492e1d20c25a3d0adfc34faf51d88206fe43c4d6897e63db4cf7ea26c96c3d7"
+    },
+    "original_three_tet10_MPC_controls": {
+      "path": "artifacts/mechanics-patient-constraints-runtime-v1/decks/manifest.json",
+      "bytes": 4076,
+      "sha256": "73a20d14551742159f05145bfd39444fde4d8bc81415d6139d85e8d890d0c330"
+    },
+    "allowed_change": "Linear-solver subtree only, with newly bound runtime/backend identity; retain original decks, mesh/material/loads/constraints/timegrid/tolerances/checkers.",
+    "solver": "accelerate",
+    "iterative": 0,
+    "factorization": 4,
+    "order_method": 0,
+    "print_condition_number": 0,
+    "independent_physics_checks_required": true
+  },
+  "forbidden": [
+    "downloads or package installations",
+    "modifying original source/runtime/dependencies",
+    "changing material/geometry/physics",
+    "iterative backend selection",
+    "curves or patient-data access",
+    "control solve before separate declaration and root release",
+    "automatic retry or cap increase"
+  ]
+}

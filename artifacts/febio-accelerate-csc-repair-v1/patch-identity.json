@@ -1,0 +1,14 @@
+{
+  "source_commit": "32ae206ff4881dfb54f62296cd1558e58ed9fcc6",
+  "relative_source": "NumCore/AccelerateSparseSolver.cpp",
+  "original_source_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/source/NumCore/AccelerateSparseSolver.cpp",
+  "original_sha256": "f5432e79ab73dd11d4a0550691480edd7fd5f00c392ae2f78eddf9c4b5da51c9",
+  "patched_sha256": "60e5a3f2350826af1b95376ab93c8a476f2312158763d63d82eb80ec54af79c2",
+  "patch_sha256": "c3c6b068ed8e7b2480a64308099fa57d8b02fdbe04076f1497b0b2fdd3b7c3e0",
+  "changed_source_files": 1,
+  "zero_equation_guard": "Existing Factor and BackSolve already return true for Rows()==0; new PreProcess guard avoids accessing null offsets from uncreated/cleared zero matrices. Base LinearSolver::PreProcess returns true.",
+  "other_changes": false,
+  "iterative_mode_allowed": false,
+  "source_or_runtime_modified": false,
+  "new_private_prefix": "data/optional-runtimes/febio-4.13-accelerate-csc-v1"
+}
