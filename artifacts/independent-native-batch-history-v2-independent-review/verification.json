@@ -1,0 +1,88 @@
+{
+  "status": "saved_evidence_consistent_no_findings",
+  "source_commit": "ba437632417b2df7a42481f6fc4314c03fbd0d6b",
+  "declaration_sha256": "a65509aa64bfcc04c796f143b22aaca16868e78ea904e1b84efa1169c1f5b2ad",
+  "artifact_index_sha256": "d3f2335a0bb606ba3cb2e5b114333b54b99b1ea6ec6fb3ce079c5b773cd6b732",
+  "indexed_files_verified": 16,
+  "source_archive_sha256": "17fc8696538133c960fbea9d11fded7e96341e2fbcc42fb57840a2101f1aeaeb",
+  "declared_and_runtime_source_files_verified_in_archive_before_manifest_and_current_snapshot": 66,
+  "full_archive_baseline_file_count": 3804,
+  "history_sha256": "sha256:e75a4f7a5d19240766fa0c19f97276a1b60f4733078aedee58e0eba90b40d8fa",
+  "history_uncompressed_bytes": 8234293,
+  "phases": [
+    {
+      "phase": "scalar_before",
+      "backend": "scalar",
+      "canonical_certificate_matches": true,
+      "trace_uncompressed_bytes": 2821971,
+      "trace_sha256": "d788412fd4a6d046bbdab1d30b0e2968c7737b01ec0eaf4dbfd8e36244a8f1da",
+      "contact_sets": 97,
+      "ordered_queries_and_witnesses": 679,
+      "remaining_connected_prefixes": 97
+    },
+    {
+      "phase": "batch",
+      "backend": "batch",
+      "canonical_certificate_matches": true,
+      "trace_uncompressed_bytes": 2821971,
+      "trace_sha256": "d788412fd4a6d046bbdab1d30b0e2968c7737b01ec0eaf4dbfd8e36244a8f1da",
+      "contact_sets": 97,
+      "ordered_queries_and_witnesses": 679,
+      "remaining_connected_prefixes": 97
+    },
+    {
+      "phase": "scalar_after",
+      "backend": "scalar",
+      "canonical_certificate_matches": true,
+      "trace_uncompressed_bytes": 2821971,
+      "trace_sha256": "d788412fd4a6d046bbdab1d30b0e2968c7737b01ec0eaf4dbfd8e36244a8f1da",
+      "contact_sets": 97,
+      "ordered_queries_and_witnesses": 679,
+      "remaining_connected_prefixes": 97
+    }
+  ],
+  "timing": {
+    "audit_seconds": [
+      43.00706908397842,
+      4.015642667072825,
+      43.175503834034316
+    ],
+    "scalar_bracket_to_batch_ratios": [
+      10.709884481660847,
+      10.751829137602725
+    ],
+    "scalar_midpoint_to_batch_ratio": 10.730856809631785,
+    "scalar_bracket_relative_difference": 0.003908789082361923,
+    "worker_seconds": 100.22615916701034,
+    "parent_seconds": 101.09954691701569,
+    "outer_wrapper_seconds": 101.14700466697104,
+    "peak_rss_bytes": 303218688
+  },
+  "v1_preserved": {
+    "status": "failed_or_incomplete",
+    "completed_phases": [
+      "scalar_before"
+    ],
+    "all_prior_fixed_source_hashes_unchanged": true,
+    "v2_declared_changes_only": [
+      "version",
+      "equality",
+      "harness_revision",
+      "fixed_files_sha256"
+    ]
+  },
+  "resource_and_claim_review": [
+    "Cooperative140s, parent150s,3GiB caps unchanged and respected; one worker, thread environment1, no affinity guarantee.",
+    "Audit timing includes trace capture; gzip export is separate. Nested capture/native-setup durations are not added twice or subtracted to inflate a ratio.",
+    "Three ordered measurements on one fixed analytic history are not repeated-sample statistics, universal speedup, patient performance or learning evidence.",
+    "Saved certificates retain20.539062499999986mm3 contained tissue; no resolution-convergence or tissue-mechanics claim.",
+    "Default evaluator backend remains scalar in the frozen source.",
+    "Prior failed V1 remains failed and provides no scalar/batch ratio."
+  ],
+  "limits": [
+    "Standard-library JSON, gzip, AST and hashes only; no NumPy/SciPy/PyTorch import, simulation, policy, training, geometry replay or patient array loading.",
+    "Full tar hash and all66 source receipt files were rechecked. The3804 full-tree post-run claim is retained from the prior verification; this compact independent audit did not reopen every unrelated frozen artifact.",
+    "Import origin assurance is source-asserted by the recorded worker, not independently captured process memory.",
+    "Peak memory sampling can miss transient excursions."
+  ]
+}

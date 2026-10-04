@@ -1,6 +1,6 @@
 # Prospective single-history comparison
 
-**V2 prepared, not executed; V1 failed in its harness.** This numerical control compares the opt-in batch
+**V2 completed once; V1 remains a preserved harness failure.** This numerical control compares the opt-in batch
 backend with the unchanged scalar default on one previously certified analytic
 history. It loads no patients and performs no learning or full matrix rerun.
 
@@ -18,6 +18,13 @@ The actual `NativeRemovalAudit.to_dict()` serialization roundtrip is now tested;
 one-ULP numerical, source-identity, rejection, and integer/float representation
 changes remain rejected. No numerical tolerance, model code, scene, trace logic,
 workload or resource cap changes. The V2 declaration pins V1's failed receipts.
+
+The released V2 run from immutable commit `ba43763` completed with exact
+certificate and full prefix/contact/witness trace parity. Complete instrumented
+audits took 43.007 s scalar, 4.016 s batch, and 43.176 s scalar, within the
+original caps. This is one fixed numerical history and runtime, with no patient
+or learning timing claim. The scalar production default remains unchanged.
+See the [V2 result and original receipts](../artifacts/independent-native-batch-history-v2/RESULT.md).
 
 The only scene is the saved `tilted_20_degrees-0.125mm` row: the same physical
 half-space, tool, entry, target, and 0.0625 mm microsteps. One native stroke is

@@ -136,7 +136,7 @@ unique ray. Endpoints are no longer clipped to the actor crop; visibility and
 bounded-family coverage remain separate from geometry acceptance. Seven
 independent controls pass, including hidden-reference swaps and paid-opening
 sequences. Three legacy states/two transitions match the original default
-exactly. Real-patient coverage has not yet been measured with this generator.
+exactly. The matched PAT05 profiles below measure its initial proposal bounds.
 See `artifacts/nominal-cavity-independent-review-v1/provider-receipt.json`.
 
 Optional lazy planning transitions now defer successor inventories until a
@@ -156,6 +156,17 @@ representation caused an exact certificate comparison to fail. Batch and the
 second scalar phase never started; no speedup result follows. Original limits
 and failed receipts are retained, with no retry. See
 `artifacts/independent-native-batch-history-v1/RESULT.md`.
+
+The separately declared V2 repaired only tuple/list certificate serialization
+and completed one scalar/batch/scalar comparison: 43.007 / 4.016 / 43.176 s.
+All certificates match the historical result and complete trace payloads are
+byte-identical (97 prefixes and 679 ordered geometry queries per phase). The
+observed audit-time ratio is 10.71–10.75 on this one analytic history, with
+303.2 MB peak memory; this is not a patient or universal speedup estimate.
+All 3,804 archived files remained unchanged; independent saved-output review
+found no discrepancy. The production default remains scalar. This neither
+resolves the source-grid removal deficit nor validates tissue mechanics. See
+`artifacts/independent-native-batch-history-v2/RESULT.md` and its independent review.
 
 The matched 64³ PAT05 proposal profiles completed in 16.35 s (fixed lattice)
 and 31.58 s (nominal/cavity). Both crops contain all 11,437 supplied target

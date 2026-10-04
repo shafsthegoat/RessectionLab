@@ -1,0 +1,37 @@
+{
+  "scope": "One prospective ordered comparison on the fixed analytic history; complete instrumented audits include capture overhead; no patient/training/universal speed claim",
+  "audit_seconds": {
+    "scalar_before": 43.00706908397842,
+    "batch": 4.015642667072825,
+    "scalar_after": 43.175503834034316
+  },
+  "scalar_bracket_seconds": [
+    43.00706908397842,
+    43.175503834034316
+  ],
+  "scalar_arithmetic_midpoint_seconds": 43.09128645900637,
+  "scalar_bracket_to_batch_ratios": [
+    10.709884481660847,
+    10.751829137602725
+  ],
+  "scalar_midpoint_to_batch_ratio": 10.730856809631785,
+  "scalar_bracket_relative_difference": 0.003908789082361923,
+  "setup_seconds_before_first_audit": 6.594207084039226,
+  "setup_native_and_binding_seconds_nested_in_setup": 3.349983499967493,
+  "trace_capture_seconds_nested_in_audits": {
+    "scalar_before": 0.588107627001591,
+    "batch": 0.5805310002760962,
+    "scalar_after": 0.683464425499551
+  },
+  "trace_export_seconds_outside_audits": {
+    "scalar_before": 0.9224496660754085,
+    "batch": 0.9159847919363528,
+    "scalar_after": 0.9161259590182453
+  },
+  "worker_seconds": 100.22615916701034,
+  "parent_seconds": 101.09954691701569,
+  "peak_worker_rss_bytes": 303218688,
+  "peak_sampled_worker_rss_bytes": 303218688,
+  "default_backend_remains_scalar": true,
+  "no_retry": true
+}

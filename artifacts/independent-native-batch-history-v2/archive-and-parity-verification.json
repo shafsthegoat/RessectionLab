@@ -1,0 +1,79 @@
+{
+  "scope": "Read-only completed artifacts and source archive verification; no scene construction or geometry audit replay",
+  "commit": "ba437632417b2df7a42481f6fc4314c03fbd0d6b",
+  "tracked_archive_files_checked": 3804,
+  "changed_or_missing_tracked_files": [],
+  "archive_sha256_matches": true,
+  "new_runtime_files": [
+    "scripts/__pycache__/compare_independent_native_batch.cpython-312.pyc",
+    "scripts/__pycache__/probe_native_discretization.cpython-312.pyc",
+    "src/resectionlab/__pycache__/__init__.cpython-312.pyc",
+    "src/resectionlab/__pycache__/evaluation.cpython-312.pyc",
+    "src/resectionlab/__pycache__/geometry.cpython-312.pyc",
+    "src/resectionlab/__pycache__/independent_geometry_batch.cpython-312.pyc",
+    "src/resectionlab/__pycache__/native_resection.cpython-312.pyc",
+    "src/resectionlab/__pycache__/worlds.cpython-312.pyc"
+  ],
+  "new_files_only_python_bytecode": true,
+  "worker_source_receipt_unchanged": true,
+  "all_saved_source_receipt_hashes_match_archive": true,
+  "source_receipt_files_checked": 66,
+  "enforced_archive_import_paths": {
+    "evaluation.py": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/independent-native-batch-history-v2/ba437632417b2df7a42481f6fc4314c03fbd0d6b/src/resectionlab/evaluation.py",
+    "independent_geometry_batch.py": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/independent-native-batch-history-v2/ba437632417b2df7a42481f6fc4314c03fbd0d6b/src/resectionlab/independent_geometry_batch.py"
+  },
+  "import_verification_scope": "Frozen worker load_runtime asserts numerical module.__file__ paths before scene setup; successful setup/history binding and source receipt are preserved. No independent process-memory import capture.",
+  "saved_history_hash": "sha256:e75a4f7a5d19240766fa0c19f97276a1b60f4733078aedee58e0eba90b40d8fa",
+  "history_hash_matches_declared": true,
+  "source_config_history_binding_matches": true,
+  "all_certificate_canonical_bytes_match_historical": true,
+  "all_three_uncompressed_trace_payloads_byte_identical": true,
+  "trace_digest": "sha256:d788412fd4a6d046bbdab1d30b0e2968c7737b01ec0eaf4dbfd8e36244a8f1da",
+  "all_trace_digests_match_saved_phase": true,
+  "trace_counts": [
+    {
+      "phase": "scalar_before",
+      "contacts": 97,
+      "cell_queries": 679,
+      "prefixes": 97
+    },
+    {
+      "phase": "batch",
+      "contacts": 97,
+      "cell_queries": 679,
+      "prefixes": 97
+    },
+    {
+      "phase": "scalar_after",
+      "contacts": 97,
+      "cell_queries": 679,
+      "prefixes": 97
+    }
+  ],
+  "ordered_backend_evidence": [
+    {
+      "phase": "scalar_before",
+      "backend": "scalar",
+      "scalar_cell_queries": 679,
+      "batch_cell_queries": 0,
+      "hooks_restored": true
+    },
+    {
+      "phase": "batch",
+      "backend": "batch",
+      "scalar_cell_queries": 582,
+      "batch_cell_queries": 97,
+      "hooks_restored": true
+    },
+    {
+      "phase": "scalar_after",
+      "backend": "scalar",
+      "scalar_cell_queries": 679,
+      "batch_cell_queries": 0,
+      "hooks_restored": true
+    }
+  ],
+  "launcher_status": "completed",
+  "launcher_complete_history_parity_verified": true,
+  "geometry_audits_in_this_verification": 0
+}
