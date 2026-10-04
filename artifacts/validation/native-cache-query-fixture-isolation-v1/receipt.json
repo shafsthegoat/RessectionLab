@@ -1,0 +1,36 @@
+{
+  "changes": [
+    "The real saved-synthetic CLI now executes a byte-identical script copy in a fresh -I -S -B subprocess with its real unmocked resource guard. Parent RSS is deliberately reported as1GiB in the regression; the child still succeeds without changing the512MiB cap.",
+    "In-process unit guard fixtures receive a private64MiB resource facade confined to the loaded test module. Global resource is unchanged outside explicit adversarial monkeypatch scopes.",
+    "The existing injected1GiB RSS-negative test still requires a failed receipt; a new test emulates an earlier1GiB pytest peak and verifies the intended runtime-source guard remains the actual rejection."
+  ],
+  "file_sha256": {
+    "artifacts/validation/native-cache-query-fixture-isolation-v1/tests-01.txt": "13d4b2fa952701b01edf822f2977ea768c0ccd869349deb467d6cdb7c4c5d596",
+    "build/validation/axis-profile-full-01/523a72bf3c12a9575184024c13ed31525c33645a/pytest.log": "a6eae570a35904cc8fe20c1bcf10984f4322aadad5e90cf7a69ef81ea8987d8d",
+    "scripts/reconstruct_native_cache_queries.py": "3d4659cadeb33027b2d889bef068591aaa6b10491037e0795224e8d352e4c2ff",
+    "tests/test_native_cache_query_reconstruction.py": "97078cc26edea2ba9cbd008a36e94557eee2dc2338591e07c057706911814bad",
+    "tests/test_native_cache_query_reconstruction_review.py": "53418b649c5692c59b8fa03c49ddfbc1ec58a69996e9ad3c8675dbc7d8dadc8f"
+  },
+  "historical_failure": {
+    "cause": "In-process CLI tests inherited pytest process lifetime peak RSS from earlier imaging/torch tests; the production512MiB guard correctly rejected them before their intended assertions. Two unrelated pilot audit failures are handled separately.",
+    "full_suite_failed": 12,
+    "full_suite_passed": 1470,
+    "full_suite_seconds": 243.45,
+    "log": "build/validation/axis-profile-full-01/523a72bf3c12a9575184024c13ed31525c33645a/pytest.log",
+    "query_tests_affected": 10
+  },
+  "model_updates": 0,
+  "old_receipts_changed": false,
+  "patient_simulation": false,
+  "production_peak_rss_cap_bytes": 536870912,
+  "production_source_unchanged": true,
+  "public_diagnostic_rerun": false,
+  "status": "fixture_isolation_repaired",
+  "validation": {
+    "failed": 0,
+    "first_repair_run_passed": true,
+    "log": "artifacts/validation/native-cache-query-fixture-isolation-v1/tests-01.txt",
+    "passed": 54,
+    "seconds": 1.36
+  }
+}

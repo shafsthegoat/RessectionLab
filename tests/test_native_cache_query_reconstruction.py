@@ -8,8 +8,11 @@ import importlib.util
 import json
 import math
 import random
+import resource
 import struct
+import subprocess
 import sys
+from types import SimpleNamespace
 
 import numpy as np
 import pytest
@@ -233,14 +236,19 @@ def test_executed_synthetic_saved_fixture_never_calls_geometry(monkeypatch, tmp_
     path = root / reconstruct.DECLARATION
     path.parent.mkdir(parents=True)
     path.write_text(json.dumps(declaration))
-    monkeypatch.setattr(reconstruct, "ROOT", root)
     output = root / "output"
-    monkeypatch.setattr(sys, "argv", ["reconstruct", "--output", str(output), "--execute"])
-    def forbidden(*args, **kwargs):
-        raise AssertionError("saved-artifact reconstruction cannot call cover geometry")
-    monkeypatch.setattr(geometry, "capsule_voxel_indices", forbidden)
-    monkeypatch.setattr(native, "capsule_voxel_indices", forbidden)
-    reconstruct.main()
+    isolated_script = root / "scripts/reconstruct_native_cache_queries.py"
+    isolated_script.parent.mkdir()
+    isolated_script.write_bytes((ROOT / "scripts/reconstruct_native_cache_queries.py").read_bytes())
+    # Earlier imaging/torch tests can raise this pytest process's lifetime peak
+    # above the real 512 MiB limit. The real CLI owns a fresh process, so test
+    # that boundary directly without loosening its cap or mocking child RSS.
+    units = 1 if sys.platform == "darwin" else 1024
+    monkeypatch.setattr(resource, "getrusage", lambda *args: SimpleNamespace(ru_maxrss=(1024**3)//units))
+    assert resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * units > declaration["maximum_process_peak_rss_bytes"]
+    child = subprocess.run([sys.executable, "-I", "-S", "-B", str(isolated_script),
+        "--output", str(output), "--execute"], text=True, capture_output=True, timeout=20)
+    assert child.returncode == 0, child.stderr
     assert json.loads((output / "status.json").read_text())["status"] == "completed"
     summary = json.loads((output / "summary.json").read_text())
     assert summary["queries_per_phase"] == count and summary["cover_geometry_calls"] == 0

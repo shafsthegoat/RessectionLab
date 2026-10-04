@@ -9,6 +9,7 @@ import itertools
 import json
 import math
 from pathlib import Path
+import resource
 import sys
 from types import SimpleNamespace
 
@@ -84,6 +85,13 @@ def private_cli(tmp_path, monkeypatch, saved, *, runtime_mismatch=None):
     path.write_text(json.dumps(declaration))
     output = root / "output"
     monkeypatch.setattr(MOD, "ROOT", root)
+    # These in-process tests target one guard at a time. Lifetime pytest RSS
+    # includes unrelated earlier imaging/model tests, unlike the isolated CLI.
+    # Give only this module a private resource facade; the explicit RSS-negative
+    # test overrides it and the owner suite exercises the actual child process.
+    units = 1 if sys.platform == "darwin" else 1024
+    monkeypatch.setattr(MOD, "resource", SimpleNamespace(RUSAGE_SELF=resource.RUSAGE_SELF,
+        getrusage=lambda *args: SimpleNamespace(ru_maxrss=(64 * 1024**2)//units)))
     monkeypatch.setattr(sys, "argv", ["reconstruct", "--output", str(output), "--execute"])
     return root, output, declaration
 
@@ -353,6 +361,18 @@ def test_process_rss_limit_preserves_failed_receipt(tmp_path, monkeypatch, saved
     receipt = json.loads((output / "status.json").read_text())
     assert receipt["status"] == "failed" and receipt["error_type"] == "InterruptedError"
     assert not (output / "ordered-query-arguments.json.gz").exists()
+
+
+def test_in_process_runtime_guard_is_independent_of_earlier_pytest_peak(tmp_path, monkeypatch, saved):
+    units = 1 if sys.platform == "darwin" else 1024
+    monkeypatch.setattr(resource, "getrusage", lambda *args: SimpleNamespace(ru_maxrss=(1024**3)//units))
+    _, output, declaration = private_cli(tmp_path, monkeypatch, saved, runtime_mismatch="source")
+    assert resource.getrusage(resource.RUSAGE_SELF).ru_maxrss * units > declaration["maximum_process_peak_rss_bytes"]
+    assert MOD.resource is not resource
+    with pytest.raises(ValueError, match="runtime"):
+        MOD.main()
+    receipt = json.loads((output / "status.json").read_text())
+    assert receipt["status"] == "failed" and receipt["error_type"] == "ValueError"
 
 
 def test_late_input_mutation_keeps_diagnostic_payload_ineligible(tmp_path, monkeypatch, saved):

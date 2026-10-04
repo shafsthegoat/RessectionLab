@@ -1304,3 +1304,14 @@ changing the production cap, and explicitly validate both historical and current
 contract forms without discarding nested hashes or changing original experiment
 artifacts. No public training or packaging release follows this failed attempt.
 See `artifacts/validation/axis-profile-integrated-v1/attempt-01/`.
+
+## October 4, 2026 — isolate diagnostic tests from earlier memory peaks
+
+The ten resource-order failures now have a test-only repair. The actual synthetic
+CLI runs a byte-identical script in a fresh isolated subprocess with its real
+512-MiB guard; deliberately high parent-process usage does not affect it.
+In-process unit checks use a scoped resource fixture to reach their intended
+validation paths, while the explicit over-limit test still rejects. All 54 query
+checks pass in 1.36 seconds. Production code, limits and completed public output
+are unchanged; no public diagnostic was rerun. The initial full-suite failure
+and the repair receipt remain separate in `artifacts/validation/`.
