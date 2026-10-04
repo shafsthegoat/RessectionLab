@@ -7,6 +7,17 @@ the pial surface, individual cerebral structures, safe cortical entry, or a
 clinical injury probability. Source annotation overlap measures inclusion of that
 annotation only; there is no reviewed brain ground truth for this experiment.
 
+Imported masks are separate structural-evidence proposals, bound to exact source
+image and frame identities, source-file/mask/model hashes, the run/report hash,
+model variant, parameters and QC. Their default status is `review_required`.
+Import does not automatically attach a proposal to the working `brain_mask`;
+unselected proposals leave the planning-input hash unchanged. A deliberate
+review records reviewer identity, timestamp, decision, scope and evidence hash.
+A corrected mask is a new version requiring a new review. Even an accepted
+whole-brain-envelope review does not identify cortex or grant cortical access.
+The [independent review contract](brain-extraction-independent-review.md) describes
+the tested import/save/reopen workflow.
+
 ## Model and rights
 
 We tested official SynthStrip version-1 no-CSF weights as a parenchymal-envelope
