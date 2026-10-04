@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "kind": "static_figure_from_saved_results_no_new_simulation",
+  "inputs_sha256": {
+    "gaussian_1mm_1deg_support_0.5.json": "9e54b34298e0e93dc96729d42174e6d6bcd3606724944d4855aca38471247666",
+    "gaussian_2mm_2deg_support_0.5.json": "cda1910aa631536e621dabff1f4f2d2cff6244354fcdf7aff5c3e88702d65716",
+    "geometry.json": "6833c2403d0f6fe67db29cfa3c26fdbadfbd996fd83be0d7245226d414e553bf",
+    "declaration.json": "11d60ef2157f9a5f6b09a32dd466bb33dc935c740578d33ea73e41b0305f1b5a"
+  },
+  "script_sha256": "b07104be64e8a70192e8dffae1c1281b086445947644c180588bae4434232191",
+  "rows": [
+    {
+      "scale_mm_and_deg": 1,
+      "tool": "Fine tool",
+      "plan_id": "native_native-fine-aspiration",
+      "encounter_count": 51,
+      "world_count": 64,
+      "frequency": 0.796875,
+      "conditional_95_wilson": [
+        0.6828636426898583,
+        0.8772658218081634
+      ],
+      "mean_contact_surrogate": 50.00681386888027,
+      "worst_5_percent_contact_surrogate": 105.0885944366455,
+      "tool_geometry": {
+        "max_access_angle_deg": 35.0,
+        "parameter_source": "generic research geometry; not a verified commercial device",
+        "shaft_radius_mm": 0.45,
+        "tip_length_mm": 2.0,
+        "tip_radius_mm": 1.25,
+        "tool_id": "native-fine-aspiration",
+        "working_length_mm": 120.0
+      },
+      "source_panel": "gaussian_1mm_1deg_support_0.5.json",
+      "world_partition_hash": "sha256:0db3565fbc48329c48f36ee190c4197d218c674d47c1d181c3fdf1f01d7f9931"
+    },
+    {
+      "scale_mm_and_deg": 1,
+      "tool": "Wide tool",
+      "plan_id": "native_native-wide-aspiration",
+      "encounter_count": 64,
+      "world_count": 64,
+      "frequency": 1.0,
+      "conditional_95_wilson": [
+        0.9433759402071946,
+        1.0
+      ],
+      "mean_contact_surrogate": 146.11627966165543,
+      "worst_5_percent_contact_surrogate": 280.79217529296875,
+      "tool_geometry": {
+        "max_access_angle_deg": 35.0,
+        "parameter_source": "generic research geometry; not a verified commercial device",
+        "shaft_radius_mm": 1.1,
+        "tip_length_mm": 3.0,
+        "tip_radius_mm": 2.25,
+        "tool_id": "native-wide-aspiration",
+        "working_length_mm": 120.0
+      },
+      "source_panel": "gaussian_1mm_1deg_support_0.5.json",
+      "world_partition_hash": "sha256:0db3565fbc48329c48f36ee190c4197d218c674d47c1d181c3fdf1f01d7f9931"
+    },
+    {
+      "scale_mm_and_deg": 2,
+      "tool": "Fine tool",
+      "plan_id": "native_native-fine-aspiration",
+      "encounter_count": 43,
+      "world_count": 64,
+      "frequency": 0.671875,
+      "conditional_95_wilson": [
+        0.549991058490915,
+        0.7742944209553081
+      ],
+      "mean_contact_surrogate": 54.73896083235741,
+      "worst_5_percent_contact_surrogate": 133.7088804244995,
+      "tool_geometry": {
+        "max_access_angle_deg": 35.0,
+        "parameter_source": "generic research geometry; not a verified commercial device",
+        "shaft_radius_mm": 0.45,
+        "tip_length_mm": 2.0,
+        "tip_radius_mm": 1.25,
+        "tool_id": "native-fine-aspiration",
+        "working_length_mm": 120.0
+      },
+      "source_panel": "gaussian_2mm_2deg_support_0.5.json",
+      "world_partition_hash": "sha256:fd242f96e6714cebfd2d6329aa867f77f4197f88a1e5539e027304740e100e78"
+    },
+    {
+      "scale_mm_and_deg": 2,
+      "tool": "Wide tool",
+      "plan_id": "native_native-wide-aspiration",
+      "encounter_count": 53,
+      "world_count": 64,
+      "frequency": 0.828125,
+      "conditional_95_wilson": [
+        0.717867883773418,
+        0.9012225769875535
+      ],
+      "mean_contact_surrogate": 153.909370303154,
+      "worst_5_percent_contact_surrogate": 357.7184085845947,
+      "tool_geometry": {
+        "max_access_angle_deg": 35.0,
+        "parameter_source": "generic research geometry; not a verified commercial device",
+        "shaft_radius_mm": 1.1,
+        "tip_length_mm": 3.0,
+        "tip_radius_mm": 2.25,
+        "tool_id": "native-wide-aspiration",
+        "working_length_mm": 120.0
+      },
+      "source_panel": "gaussian_2mm_2deg_support_0.5.json",
+      "world_partition_hash": "sha256:fd242f96e6714cebfd2d6329aa867f77f4197f88a1e5539e027304740e100e78"
+    }
+  ],
+  "human_patients": 1,
+  "worlds_per_setting": 64,
+  "same_fixed_axis_verified": true,
+  "source_threshold": 0.5,
+  "interval": "conditional95%Wilson; finite Monte Carlo error only",
+  "tail_definition": "Top5%empirical probability mass; for64equal worlds, top3 +0.2of4th, divided by3.2.",
+  "source_count_interval_mean_tail_recomputed_and_verified": true,
+  "no_new_patient_or_simulation_run": true,
+  "clinical_injury_probability": null,
+  "patient_function_assessed": false,
+  "population_prior_alignment_reviewed": false,
+  "interpretation": "Broader assumed registration error reduces these binary encounter counts while increasing mean/tail motor contact surrogates; a lower count is not a better-plan claim.",
+  "matplotlib": "3.11.2",
+  "numpy": "2.5.3",
+  "outputs_sha256": {
+    "motor-prior-sensitivity.png": "3e355ba8f12a518b1557905777ce07415356dce1563e9f62d236ad3a70deb507",
+    "motor-prior-sensitivity.svg": "bf26dc288bcb46801fea03ecec67abb96effc430fe2e6e1f7391d0cff2ed0058"
+  }
+}
