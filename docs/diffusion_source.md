@@ -47,6 +47,14 @@ The default output is `data/diffusion_source/ds001226-v5.0.1`; `--output-root PA
 
 Verification on October 4, 2026: all 15 acquired files passed both maintained verification and an idempotent second acquisition. The 31 BTC/shared acquisition tests passed offline, covering interrupted/resumed transfers, corrupt source bytes, immutable existing files, missing gradients, wrong source identity and unpinned URLs. A real S3 transfer resumed the PA reference after 1,024 bytes with HTTP 206 and `Content-Range: bytes 1024-1106183/1106184`, then passed both SHA-256 and source MD5 checks. The temporary transfer-test copy was removed; authoritative source files were preserved.
 
+To prepare the annotation-assisted desktop case, declare the threshold explicitly:
+
+```sh
+.venv/bin/python scripts/prepare_btc_case.py --annotation-threshold 0.5
+```
+
+This separate preparation operation writes `outputs/cases/BTC-sub-PAT28.ressectionlab` and `outputs/qc/BTC-sub-PAT28.json`. It retains the original fractional source annotation and its physical frame, and records the derived threshold choice. The threshold is a research assumption, not a tumor-probability cutoff. Automatic cortical access remains blocked for this full-head source until an intracranial representation is reviewed. An optional `--planning-as-of` timestamp defines a research replay cutoff; it does not establish the historical availability of pathology, which remains withheld when timing is unknown.
+
 ## Initial QC findings
 
 | Input | Observed shape | Voxel spacing | Orientation |
