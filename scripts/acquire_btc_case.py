@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
-"""Acquire the pinned, source-verified BTC_preop development case.
+"""Acquire one of the pinned, source-verified BTC_preop development cases.
 
-Downloads only 15 files (64.81 MB) from official OpenNeuro storage. Original
-images, orientations and fractional annotations remain unchanged. Tract-aware
-planning still requires preprocessing and independent anatomical QC.
+PAT28 defaults to 15 files with diffusion; the separately predeclared PAT05
+manifest contains 7 structural files. Original images, orientations and source
+annotations remain unchanged. Neither case is held-out final evaluation.
 """
 
 from __future__ import annotations
 
 import argparse
+import csv
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -40,18 +41,36 @@ SUBJECT = "sub-PAT28"
 RAW_BASE = f"https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/{COMMIT}/"
 S3_BASE = "https://s3.amazonaws.com/openneuro.org/ds001226/"
 MAX_DOWNLOAD_BYTES = 64_808_763
+REVIEWED_MODES = {"sub-PAT28": "diffusion", "sub-PAT05": "structural"}
+DOWNLOAD_LIMITS = {"sub-PAT28": MAX_DOWNLOAD_BYTES, "sub-PAT05": 100_000_000}
+STRUCTURAL_SELECTION = REPO_ROOT / "manifests/btc_pat05_selection.json"
 
 
-def expected_paths() -> set[str]:
+def select_additional_structural_subject(metadata: str) -> str:
+    """Reproduce the locked metadata-only selection, without viewing images."""
+    rows = csv.DictReader(metadata.splitlines(), delimiter="\t")
+    candidates = sorted(row["participant_id"] for row in rows
+                        if row["participant_id"] != SUBJECT
+                        and any(term in row.get("tumor type & grade", "").lower()
+                                for term in ("glioma", "glioblastoma", "astrocytoma")))
+    if not candidates:
+        raise AcquisitionError("No eligible additional glioma subject in the source metadata")
+    return candidates[0]
+
+
+def expected_paths(subject: str = SUBJECT) -> set[str]:
     """Closed acquisition scope: one case, without fMRI or postoperative data."""
     paths = {"README", "CHANGES", "dataset_description.json", "participants.tsv"}
-    prefix = f"{SUBJECT}/ses-preop"
-    paths |= {f"{prefix}/anat/{SUBJECT}_ses-preop_T1w.{ext}" for ext in ("json", "nii.gz")}
-    paths |= {
-        f"{prefix}/dwi/{SUBJECT}_ses-preop_acq-{phase}_dwi.{ext}"
-        for phase in ("AP", "PA") for ext in ("bval", "bvec", "json", "nii.gz")
-    }
-    paths.add(f"derivatives/tumor_masks/{SUBJECT}/anat/{SUBJECT}_space_T1_label-tumor.nii")
+    if subject not in REVIEWED_MODES:
+        raise AcquisitionError("BTC subject is outside the reviewed source scope")
+    prefix = f"{subject}/ses-preop"
+    paths |= {f"{prefix}/anat/{subject}_ses-preop_T1w.{ext}" for ext in ("json", "nii.gz")}
+    if REVIEWED_MODES[subject] == "diffusion":
+        paths |= {
+            f"{prefix}/dwi/{subject}_ses-preop_acq-{phase}_dwi.{ext}"
+            for phase in ("AP", "PA") for ext in ("bval", "bvec", "json", "nii.gz")
+        }
+    paths.add(f"derivatives/tumor_masks/{subject}/anat/{subject}_space_T1_label-tumor.nii")
     return paths
 
 
@@ -61,12 +80,24 @@ def transfer_entry(entry: dict) -> dict:
 
 def validate_manifest(manifest: dict, output_root: Path) -> list[dict]:
     required = {"dataset": "BTC_preop", "accession": "ds001226", "release": "5.0.1",
-                "git_commit": COMMIT, "license": "CC0", "subject": SUBJECT}
-    if any(manifest.get(key) != value for key, value in required.items()):
+                "git_commit": COMMIT, "license": "CC0"}
+    subject = manifest.get("subject")
+    if any(manifest.get(key) != value for key, value in required.items()) or subject not in REVIEWED_MODES:
         raise AcquisitionError("BTC manifest does not identify the reviewed source snapshot")
     files = manifest.get("files", [])
-    if len(files) != 15 or {entry["path"] for entry in files} != expected_paths():
-        raise AcquisitionError("BTC manifest must contain exactly the 15 reviewed case files")
+    paths = expected_paths(subject)
+    if len(files) != len(paths) or {entry["path"] for entry in files} != paths:
+        raise AcquisitionError(f"BTC manifest must contain exactly the {len(paths)} reviewed case files")
+    if subject == "sub-PAT05":
+        selection = json.loads(STRUCTURAL_SELECTION.read_text())
+        if (manifest.get("selection_manifest_sha256") != sha256_file(STRUCTURAL_SELECTION)
+                or selection.get("selected_subject") != subject
+                or selection.get("role") != "development"
+                or selection.get("selection_used_imaging_or_planning_results") is not False):
+            raise AcquisitionError("Structural acquisition requires the unchanged predeclared selection")
+        participants = next(entry for entry in files if entry["path"] == "participants.tsv")
+        if participants["sha256"] != selection["source_metadata_sha256"]:
+            raise AcquisitionError("Structural selection metadata differs from its predeclared source")
     for entry in files:
         if type(entry["bytes"]) is not int:
             raise AcquisitionError("Every file requires an integer pinned size")
@@ -87,7 +118,7 @@ def validate_manifest(manifest: dict, output_root: Path) -> list[dict]:
         elif entry["source_url"] != entry["git_url"]:
             raise AcquisitionError("Metadata must come from the pinned official Git snapshot")
     normalized = {"files": [transfer_entry(entry) for entry in files],
-                  "storage_forecast": {"max_download_bytes": MAX_DOWNLOAD_BYTES}}
+                  "storage_forecast": {"max_download_bytes": DOWNLOAD_LIMITS[subject]}}
     _validate_transfer_manifest(normalized, output_root)
     return files
 
@@ -121,7 +152,7 @@ def main(argv: list[str] | None = None) -> int:
         total = sum(entry["bytes"] for entry in entries)
         if args.dry_run:
             print(json.dumps({"accession": manifest["accession"], "release": manifest["release"],
-                              "subject": SUBJECT, "files": len(entries), "bytes": total,
+                              "subject": manifest["subject"], "files": len(entries), "bytes": total,
                               "license": manifest["license"], "output_root": str(args.output_root),
                               "role": manifest["role"]}, indent=2))
             return 0
@@ -137,15 +168,20 @@ def main(argv: list[str] | None = None) -> int:
                 state = "verified"
             else:
                 state = acquire_file(entry, args.output_root)
+            if entry["path"] == "participants.tsv" and manifest["subject"] == "sub-PAT05":
+                selected = select_additional_structural_subject(checked_path(args.output_root, entry["path"]).read_text())
+                if selected != manifest["subject"]:
+                    raise AcquisitionError("Downloaded metadata does not reproduce the predeclared selection")
             results.append({"path": entry["path"], "status": state, "sha256": entry["sha256"],
                             "source_annex_md5": entry.get("expected_md5")})
             print(f"{state}: {Path(entry['path']).name}", flush=True)
         report = {"accession": manifest["accession"], "release": manifest["release"],
-                  "subject": SUBJECT, "source_manifest_sha256": sha256_file(args.manifest),
+                  "subject": manifest["subject"], "source_manifest_sha256": sha256_file(args.manifest),
                   "checked_at": datetime.now(timezone.utc).isoformat(), "files": results,
                   "source_content_status": "matches_pinned_official_release_checksums",
                   "anatomical_qc_status": "not_assessed_by_download_verification"}
-        report_path = checked_path(args.output_root, "btc_acquisition_report.json")
+        report_name = "btc_acquisition_report.json" if manifest["subject"] == SUBJECT else f"btc_{manifest['subject']}_acquisition_report.json"
+        report_path = checked_path(args.output_root, report_name)
         report_path.write_text(json.dumps(report, indent=2) + "\n")
         print(f"Report: {report_path}")
         return 0

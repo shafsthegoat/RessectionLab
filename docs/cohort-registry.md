@@ -1,6 +1,6 @@
 # Cohort identity and eligibility registry
 
-`manifests/cohort_registry.json` records **two development cases and no final
+`manifests/cohort_registry.json` records **three development cases and no final
 evaluation patients**. It also records collection-level future roles. A release
 total is not an eligible, acquired, or evaluated patient count. All eligible
 collection counts remain null until individual screening is performed.
@@ -10,7 +10,7 @@ collection counts remain null until individual screening is performed.
 | Source | Checked release and intended role | Current status |
 | --- | --- | --- |
 | [UCSF-PDGM](https://www.cancerimagingarchive.net/collection/ucsf-pdgm/) | v5, May 30, 2025; primary development source | Official imaging transfer unavailable; one structural mirror used for development |
-| [BTC_preop](https://openneuro.org/datasets/ds001226/versions/5.0.1) | v5.0.1, Git `359d372c5e972a161966312128adb365870df949`; diffusion development fallback | Creator-linked `sub-PAT28` source images and gradients acquired |
+| [BTC_preop](https://openneuro.org/datasets/ds001226/versions/5.0.1) | v5.0.1, Git `359d372c5e972a161966312128adb365870df949`; development fallback | Creator-linked `sub-PAT28` imaging and gradients; predeclared `sub-PAT05` structural images |
 | [UPENN-GBM](https://www.cancerimagingarchive.net/collection/upenn-gbm/) | v2, October 24, 2022; reserved external final candidate | Collection description only; no patient data or availability tables opened or downloaded |
 | [UTSW-Glioma](https://www.cancerimagingarchive.net/collection/utsw-glioma/) | v1, March 18, 2026; future structural validation | Collection description only; no patient records instantiated |
 
@@ -52,11 +52,12 @@ an identity asserted against another patient's evidence cannot establish
 independence. A fresh clone without downloaded evidence reports that evidence
 as unavailable; it does not trust a cached success flag.
 
-The current local audit passed all five evidence checks. It reports two
-registered development groups, **one with verified primary-source image
+The current local audit passed all seven evidence checks. It reports three
+registered development groups, **two with verified primary-source image
 identity**, and zero final groups. The UCSF mirror remains an explicit
 limitation. These are bookkeeping results, not anatomical acceptance or a
-between-patient statistical result.
+between-patient statistical result. PAT05 was registered as development before
+opening its images, using the selection in `manifests/btc_pat05_selection.json`.
 
 Each acquired record has a namespaced identity, visit, optional derivative
 parent, outer split, declared uses, and evidence references. Repeated visits,

@@ -177,3 +177,38 @@ def test_cli_report_cannot_overwrite_manifest_or_bundle(source_tree, tmp_path, a
     assert result.returncode == 2
     assert manifest.read_bytes() == before_manifest
     assert output.read_bytes() == before_output
+
+
+def test_pat05_structural_preparation_preserves_source_and_missingness(source_tree, tmp_path, monkeypatch):
+    root, manifest_path, manifest = source_tree
+    t1, annotation, _, _, names = preparation.source_layout("sub-PAT05")
+    for name in names:
+        if "sub-PAT05" in name:
+            source = root / name.replace("sub-PAT05", "sub-PAT28")
+            target = root / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(source.read_bytes())
+    participants = root / "participants.tsv"
+    participants.write_text(participants.read_text() + "sub-PAT05\t50\tOligo-astrocytoma II\t8\tFrontal\t1\n")
+    manifest["subject"] = "sub-PAT05"
+    manifest["files"] = []
+    for name in sorted(names):
+        payload = (root / name).read_bytes()
+        manifest["files"].append({"path": name, "bytes": len(payload), "sha256": sha256(payload).hexdigest(),
+                                  "expected_md5": md5(payload, usedforsecurity=False).hexdigest(),
+                                  "expected_bytes": len(payload), "source_url": "synthetic://" + name})
+    manifest_path.write_text(json.dumps(manifest))
+    original_annotation = (root / annotation).read_bytes()
+    monkeypatch.setattr(preparation, "audit_diffusion", lambda *a, **k: pytest.fail("Structural mode must not invent DWI"))
+    output = tmp_path / "pat05.rslcase"
+    report = preparation.prepare(manifest_path, root, output, planning_as_of=datetime(2026, 10, 4, tzinfo=timezone.utc))
+    case = load_case(output)
+    assert report["source_hashes_checked"] == 7
+    assert report["case_id"] == "BTC-ds001226-sub-PAT05-preop"
+    assert report["reopened_identical"]
+    assert report["diffusion_input_audit"]["issues"] == ["MISSING_DIRECTIONAL_DIFFUSION"]
+    assert case.brain_mask is None and case.metadata["allow_nonzero_mri_access_support"] is False
+    assert case.metadata["split"]["external_holdout_eligible"] is False
+    assert case.context.planner_values() == {}
+    assert (root / annotation).read_bytes() == original_annotation
+    assert read_case_artifacts(output)["plans"] == []

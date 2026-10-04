@@ -212,6 +212,6 @@ def test_checked_in_registry_has_only_explicit_development_records():
     root = Path(__file__).resolve().parents[1]
     data = json.loads((root / "manifests/cohort_registry.json").read_text())
     assert {r["outer_split"] for r in data["records"]} == {"development"}
-    assert len(data["records"]) == 2
+    assert len(data["records"]) == 3
     assert all(c["eligible_patient_count"] is None for c in data["collections"])
     assert next(c for c in data["collections"] if c["collection_id"] == "UPENN-GBM")["role"] == "reserved_final_candidate"

@@ -167,3 +167,34 @@ def test_dry_run_does_not_create_output_or_fetch(tmp_path, capsys, monkeypatch):
     assert acquisition.main(["--dry-run", "--output-root", str(output)]) == 0
     assert not output.exists()
     assert json.loads(capsys.readouterr().out)["bytes"] == 64_808_763
+
+
+def test_predeclared_structural_case_has_only_seven_files(tmp_path):
+    path = SCRIPT_DIR.parent / "manifests/btc_pat05_acquisition.json"
+    manifest = json.loads(path.read_text())
+    files = acquisition.validate_manifest(manifest, tmp_path)
+    assert len(files) == 7
+    assert sum(entry["bytes"] for entry in files) == 17_862_831
+    assert sum("expected_md5" in entry for entry in files) == 2
+    assert all("/dwi/" not in entry["path"] and "postop" not in entry["path"] for entry in files)
+    assert manifest["clinical_context"]["eligible_as_preoperative_policy_input"] is False
+
+
+def test_structural_selection_is_reproducible_without_images():
+    metadata = "participant_id\ttumor type & grade\nsub-PAT28\tOligodendroglioma II\nsub-PAT16\tAnaplastic astrocytoma II-III\nsub-PAT01\tMeningioma I\nsub-PAT05\tOligo-astrocytoma II\n"
+    assert acquisition.select_additional_structural_subject(metadata) == "sub-PAT05"
+    with pytest.raises(acquisition.AcquisitionError, match="No eligible"):
+        acquisition.select_additional_structural_subject("participant_id\ttumor type & grade\nsub-PAT28\tGlioma II\n")
+
+
+def test_changed_structural_selection_cannot_relabel_case(tmp_path):
+    manifest = json.loads((SCRIPT_DIR.parent / "manifests/btc_pat05_acquisition.json").read_text())
+    manifest["selection_manifest_sha256"] = "0" * 64
+    with pytest.raises(acquisition.AcquisitionError, match="unchanged predeclared"):
+        acquisition.validate_manifest(manifest, tmp_path)
+
+
+def test_pat28_diffusion_cannot_be_silently_dropped(manifest, tmp_path):
+    manifest["subject"] = "sub-PAT05"
+    with pytest.raises(acquisition.AcquisitionError, match="7 reviewed"):
+        acquisition.validate_manifest(manifest, tmp_path)

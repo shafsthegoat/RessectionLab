@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "checked_on": "2026-10-04",
-  "scope": "Explicit source identity and outer cohort registry. Two acquired development records plus one predeclared additional development case; no final subjects. Release counts are not sample counts.",
+  "scope": "Explicit source identity and outer cohort registry. Three acquired development records, two with verified primary-source image identity; no final subjects. Collection release counts are not sample counts.",
   "collections": [
     {
       "collection_id": "UCSF-PDGM",
@@ -36,7 +36,7 @@
       "published_unique_patients": null,
       "eligible_patient_count": null,
       "access": "public_creator_linked_OpenNeuro_git_and_S3",
-      "acquisition_status": "one_primary_source_subject_acquired",
+      "acquisition_status": "two_primary_source_development_subjects_acquired_PAT28_diffusion_and_PAT05_structural",
       "required_gates": [
         "glioma_subject_filter",
         "native_mask_affine_and_fractional_annotation_QC",
@@ -184,6 +184,17 @@
       "supports_identities": [
         "BTC:sub-PAT05"
       ]
+    },
+    {
+      "id": "btc-pat05-primary-image",
+      "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT05/ses-preop/anat/sub-PAT05_ses-preop_T1w.nii.gz",
+      "sha256": "016779173394c3a3e07fc53f927d37c3c1cb5df04bcbdc398fcfbdc23b40085e",
+      "kind": "sha256",
+      "supports_identities": [
+        "BTC:sub-PAT05"
+      ],
+      "source_manifest": "manifests/btc_pat05_acquisition.json",
+      "source_verification": "Exact pinned OpenNeuro Git annex MD5 and S3 object version verified during acquisition"
     }
   ],
   "identity_links": [
@@ -418,10 +429,11 @@
       "record_id": "btc-pat05-preop-development",
       "collection_id": "BTC_preop",
       "identity": "BTC:sub-PAT05",
-      "identity_status": "unknown",
+      "identity_status": "verified_primary",
       "identity_evidence_ids": [
         "btc-pat05-identity",
-        "btc-release"
+        "btc-release",
+        "btc-pat05-primary-image"
       ],
       "visit_id": "ses-preop",
       "derivative_of": null,
@@ -432,9 +444,54 @@
       ],
       "source_manifest": "manifests/btc_pat05_acquisition.json",
       "selection_manifest": "manifests/btc_pat05_selection.json",
-      "acquisition_status": "selected_before_images_not_yet_acquired",
+      "acquisition_status": "primary_source_structural_bytes_verified",
       "planning_as_of": null,
-      "inputs": []
+      "inputs": [
+        {
+          "input_id": "preoperative_T1",
+          "kind": "imaging",
+          "source_evidence_ids": [
+            "btc-pat05-identity",
+            "btc-release",
+            "btc-pat05-primary-image"
+          ],
+          "operative_phase": "preoperative",
+          "availability_basis": "source_declares_preoperative_images",
+          "available_at": null,
+          "measurement_at": null,
+          "evidence_type": "observed",
+          "used_by_primary_optimizer": false
+        },
+        {
+          "input_id": "source_tumor_annotation",
+          "kind": "source_annotation",
+          "source_evidence_ids": [
+            "btc-pat05-identity",
+            "btc-release",
+            "btc-pat05-primary-image"
+          ],
+          "operative_phase": "preoperative",
+          "availability_basis": "source_declares_preoperative_images",
+          "available_at": null,
+          "measurement_at": null,
+          "evidence_type": "observed",
+          "track": "annotation_assisted",
+          "used_by_primary_optimizer": false
+        },
+        {
+          "input_id": "retrospective_diagnosis",
+          "kind": "molecular",
+          "source_evidence_ids": [
+            "btc-pat05-identity"
+          ],
+          "operative_phase": "unknown",
+          "availability_basis": "unknown",
+          "available_at": null,
+          "measurement_at": null,
+          "evidence_type": "observed",
+          "used_by_primary_optimizer": false
+        }
+      ]
     }
   ],
   "preoperative_policy": {
