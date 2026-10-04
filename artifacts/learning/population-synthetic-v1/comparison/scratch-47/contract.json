@@ -1,0 +1,135 @@
+{
+  "algorithm": "masked_reinforce_state_value_v2",
+  "clinical_deficit_probability": null,
+  "code_sha256": "cd2a05c3eb6426e95190470e1e06096399e52cbd8672c6669b5a4f1106e27b42",
+  "config": {
+    "checkpoint_interval": 2,
+    "entropy_weight": 0.01,
+    "episodes_per_update": 2,
+    "gamma": 1.0,
+    "hidden_features": 16,
+    "learning_rate": 0.003,
+    "max_environment_steps": 128,
+    "max_episode_steps": 8,
+    "max_gradient_norm": 5.0,
+    "max_gradient_steps": 8,
+    "max_wall_seconds": 20.0,
+    "seed": 47,
+    "value_weight": 0.5
+  },
+  "contract_hash": "sha256:8e8f9e7848d20a36fd07986440c42d06576e1e520b05d7d4703d2ef8dae95069",
+  "decision_model_hash": "sha256:d1ab7b03040e5cfb2cff4c48ef1d8d1f0b796620f621c0d9d2596b6b393c112c",
+  "dimensions": [
+    12,
+    6,
+    16
+  ],
+  "final_evaluation_used_for_optimization": false,
+  "hardware": {
+    "device": "cpu",
+    "machine": "arm64",
+    "platform": "macOS-26.6-arm64-arm-64bit",
+    "processor": "arm",
+    "torch": "2.14.1",
+    "torch_threads": 4
+  },
+  "implementation_sha256": "cd2a05c3eb6426e95190470e1e06096399e52cbd8672c6669b5a4f1106e27b42",
+  "initial_checkpoint_hash": "sha256:1b950505190cfef3b8181127d7f85fd9f0a6691e3184b4a1c422189cbadf4d34",
+  "numerical_source_sha256": {
+    "__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "anatomy.py": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37",
+    "brain_extraction.py": "0582745cc01eabce87046d5e9c4063c72f7f95279504bc6e517b8747fb9d44fe",
+    "cohort.py": "d69538f80af8b318068af70dbc963b7a9ca6c3a4f62d6e8e542d6e43548fa874",
+    "core.py": "d4c7622535ff2be5a94109d1ee9406154a85406405ae39b1c15047ad483b27b1",
+    "desktop_bridge.py": "84e3821ab065ff2ee775a82b19da3d311a8ee7935d75225fa6ed873988e6f3d2",
+    "diffusion.py": "e7f57bf7467fb3cb5d6b9b3f1c80e4665710713124d0720aa84d31ccc03b8e21",
+    "evaluation.py": "baaa2f3d6b4e41c4621dc22872da9300d649bc91dfeb923e2ad35f66aadad3b7",
+    "geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "imaging.py": "a5dccbfe49e550e38c7a79aa147c7b6cff110922c08bc1dc589b713be0dcc08c",
+    "learning.py": "cd2a05c3eb6426e95190470e1e06096399e52cbd8672c6669b5a4f1106e27b42",
+    "learning_ppo.py": "a3814bc5da4837b66ae20496c38e17edd0edf73ef7863a920924cd7ec2a42d88",
+    "native_refinement.py": "0931deba8950f2e01e8786d9a8a6fa57f1d2ffc78ab8cc58e74409b1579a630f",
+    "native_resection.py": "fd66c0612fe9a024a4e47e8c185680be7c7ef57dc6626c2b56ba0e6406016955",
+    "native_simulation.py": "8be3276893b1acc4c50b4ce53c80e0a5bacb323d1157a17537206f8e8a4725e4",
+    "planning.py": "923e91f4c9d72d3b53bdb631cabf16e5bc3432a9f7e140783f13400dfc80bbeb",
+    "population_learning.py": "98edfb04b837a0d618344d3c72258e5554a70708ae5236266f5801e44a842b94",
+    "preprocessing.py": "dbd2c4ba9551e2aa0d454b638e256ad8bc6cdf45dcdc8ec08e091e43c3eb14e5",
+    "prior_registration.py": "9828e76ed3e29e232c39dd16ece7d5fefa4cd366d1cab7899121e929ef34a703",
+    "simulation.py": "2276944f42b29066b66877ea41d9ca47b49a64d9d427192dcbc3d34c2d7e16b1",
+    "structural_evidence.py": "30584b1f763d833d438cd977cf2bf5ae47b67c7202fd1171b10e53281d7723e8",
+    "worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
+  },
+  "partitions": {
+    "optimization": {
+      "case_hash": "synthetic-branching-v1",
+      "generator": {
+        "family": "rigid_gaussian",
+        "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+        "rotation_center_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_scale_deg": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "translation_scale_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "version": "rigid-registration-v1"
+      },
+      "partition_hash": "sha256:7ed173cff0fd219cfaf8608088e90d1f386f78815d22a0fbf2a096b3d43014be",
+      "planning_hash": null,
+      "role": "optimization",
+      "seeds": [
+        2715039868682679005,
+        430575957431541021,
+        6787750360569902804
+      ]
+    },
+    "selection": {
+      "case_hash": "synthetic-branching-v1",
+      "generator": {
+        "family": "rigid_gaussian",
+        "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+        "rotation_center_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_scale_deg": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "translation_scale_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "version": "rigid-registration-v1"
+      },
+      "partition_hash": "sha256:7a2ef6f48a3bf7b9445c89c0a031fbc6f6bdd655485f2382225b006b7db45c7b",
+      "planning_hash": null,
+      "role": "selection",
+      "seeds": [
+        13570732548748017305,
+        8866893344993779307
+      ]
+    }
+  },
+  "population_initialization": null,
+  "runtime": {
+    "device": "cpu",
+    "numpy": "2.5.3",
+    "python": "3.12.14",
+    "torch": "2.14.1"
+  },
+  "schema_version": 1,
+  "shared_checkpoint_hash": null,
+  "simulator_implementation_sha256": "2276944f42b29066b66877ea41d9ca47b49a64d9d427192dcbc3d34c2d7e16b1"
+}

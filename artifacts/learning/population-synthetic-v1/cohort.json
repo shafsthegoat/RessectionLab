@@ -1,0 +1,37 @@
+{
+  "development": [
+    {
+      "aliases": [
+        "analytic:corridor-v1"
+      ],
+      "case_hash": "synthetic-population-corridor-v1",
+      "group_id": "synthetic:corridor-family",
+      "outer_split": "development",
+      "source_kind": "analytic_synthetic"
+    },
+    {
+      "aliases": [
+        "analytic:layer-v1"
+      ],
+      "case_hash": "synthetic-population-layer-v1",
+      "group_id": "synthetic:shallow-layer-family",
+      "outer_split": "development",
+      "source_kind": "analytic_synthetic"
+    }
+  ],
+  "excluded_target": {
+    "aliases": [
+      "analytic:branching-v1"
+    ],
+    "case_hash": "synthetic-branching-v1",
+    "group_id": "synthetic:branching-family",
+    "outer_split": "excluded",
+    "source_kind": "analytic_synthetic"
+  },
+  "independent_patient_count": 0,
+  "limits": [
+    "Analytic tasks only",
+    "Target excluded from this shared checkpoint",
+    "Target remains an algorithm-development fixture, not a locked test patient"
+  ]
+}
