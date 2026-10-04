@@ -1,0 +1,17 @@
+{
+  "pytest_output": "initial-tests.txt",
+  "pytest_output_sha256": "63fcddb547d5795e38814afa9b2fa771a977747c285a67fa439ccfd80a802623",
+  "returncode": 1,
+  "scope": "Constructed analytical records only; no patient records/images/curves or solver access",
+  "source_after": {
+    "scripts/mechanics_patient_comparison.py": "0325e7d0ec34b5f9c335913d7f7e33d017dd4d28ce69d32eaa00f2004defacb9",
+    "src/resectionlab/mechanics_landmarks.py": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc",
+    "tests/test_mechanics_patient_comparison_review.py": "47213b970dda8e3f09c1745b82b09aca4aff27a7b825aa6894536c29b28a175b"
+  },
+  "source_before": {
+    "scripts/mechanics_patient_comparison.py": "0325e7d0ec34b5f9c335913d7f7e33d017dd4d28ce69d32eaa00f2004defacb9",
+    "src/resectionlab/mechanics_landmarks.py": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc",
+    "tests/test_mechanics_patient_comparison_review.py": "47213b970dda8e3f09c1745b82b09aca4aff27a7b825aa6894536c29b28a175b"
+  },
+  "timestamp_utc": "2026-10-04T21:27:51.449606+00:00"
+}

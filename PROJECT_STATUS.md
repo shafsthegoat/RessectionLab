@@ -361,6 +361,18 @@ during-US access occurred. See
 `artifacts/mechanics/resect-case4-baseline-alignment-v3/comparison-and-outcome.json`
 and its independent saved-result review.
 
+The conditional-displacement comparison helper now freezes three fields from
+exactly the same six observed B motions: no shift, proper rigid motion and fixed
+inverse-distance-squared interpolation. Complete baseline/FEM artifacts and
+source identities must be frozen before the existing joint V source/destination
+reveal. Reports distinguish global baseline coverage, common supported points
+and explicit exclusions, with millimetre errors and no invented clinical
+probabilities. Thirty analytical controls pass, including independent checks
+that exposed and repaired sampler-entrypoint, bounded-read and undeclared-input
+problems. No actual B/V motion was accessed and no patient comparison exists yet;
+FEM location/interpolation and mechanics gates remain separate. See
+`docs/patient-displacement-comparison.md`.
+
 The first real TRAIN PAT22 inference profile completed all four declared cells
 in 6.247 seconds with unchanged model parameters. One CPU call took 28–30 ms
 for a 32³ crop and 256–269 ms for a 64³ crop, with highest observed memory about

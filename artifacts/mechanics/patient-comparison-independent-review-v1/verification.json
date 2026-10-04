@@ -1,0 +1,70 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_mechanics_patient_comparison.py",
+    "tests/test_mechanics_patient_comparison_review.py"
+  ],
+  "commits_by_reviewer": false,
+  "git_head_at_review": "a9f2783adb9ad4dbc41d9eafc29e4c11f0313388",
+  "independent_cases": 16,
+  "independent_reviewer": "core_contracts",
+  "limitations": [
+    "This verifies comparison arithmetic and cooperative-host data-flow contracts; it is not independent numerical verification of an external FEM solve, mesh locator or unit/frame conversion.",
+    "No real validation outcome has been read or estimated in this review; no medical accuracy threshold, calibrated confidence interval or clinical probability is asserted.",
+    "Actual access authorization, prospective experiment/directory freeze, original image-frame QC, full sampler-dependency audit and independent mechanics gates remain outer runner obligations.",
+    "Pinned Python source and entrypoint are reproducibility checks, not a sandbox against arbitrary hostile Python, mutable global state or an adversarial host."
+  ],
+  "owner_cases": 14,
+  "process_elapsed_seconds": 0.42858416598755866,
+  "production_edits_by_reviewer": false,
+  "production_implementation_owner": "probability_evaluation",
+  "pytest_output": "final-tests.txt",
+  "pytest_output_sha256": "ca6ac17841d13fb16657c5e4a7d5979fbf77588500ae576f2c7e699f6be15fab",
+  "retained_negatives": [
+    {
+      "receipt": "initial-review.json",
+      "result": "2 failures, 9 passes; exact-file alternate entrypoint reached reveal; stale stat admitted oversized read",
+      "sha256": "69deb4203c8730e5405f65d583a203db501e56bfe6e21e52da03a08a91d25a7e"
+    },
+    {
+      "receipt": "schema-negative-review.json",
+      "result": "2 failures, 13 passes; undeclared later-image path and interpolation setting admitted",
+      "sha256": "e6ae8556a57fc3bf043c480c717e8312bfc3bcdf1156047f38b225ec9b73beed"
+    }
+  ],
+  "returncode": 0,
+  "schema": "patient-comparison-independent-review-v1",
+  "scope": "Constructed analytical landmark records and temporary artifact files only; no original patient B/V coordinates, images, material curves, FEM solver, or patient execution.",
+  "source_after": {
+    "docs/patient-displacement-comparison.md": "207b75e79564d88c7550fa116d3bc9cb152733fa6a3a5f90d69210fa9e974587",
+    "scripts/mechanics_patient_comparison.py": "cacd557107fa7bca3d83873faa776f16c70864366e89c096f9f1ae09ac402587",
+    "src/resectionlab/mechanics_landmarks.py": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc",
+    "tests/test_mechanics_patient_comparison.py": "8223455a2e9771e155015cf5607ceb1aecd48c914696b4145c3d62be3aad08e8",
+    "tests/test_mechanics_patient_comparison_review.py": "153d84db1ecab8d2ca9d4a407e021c25a0b442ef7fbb6ba3bf65480fc59eb1e8"
+  },
+  "source_before": {
+    "docs/patient-displacement-comparison.md": "207b75e79564d88c7550fa116d3bc9cb152733fa6a3a5f90d69210fa9e974587",
+    "scripts/mechanics_patient_comparison.py": "cacd557107fa7bca3d83873faa776f16c70864366e89c096f9f1ae09ac402587",
+    "src/resectionlab/mechanics_landmarks.py": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc",
+    "tests/test_mechanics_patient_comparison.py": "8223455a2e9771e155015cf5607ceb1aecd48c914696b4145c3d62be3aad08e8",
+    "tests/test_mechanics_patient_comparison_review.py": "153d84db1ecab8d2ca9d4a407e021c25a0b442ef7fbb6ba3bf65480fc59eb1e8"
+  },
+  "source_unchanged_during_controls": true,
+  "status": "PASS",
+  "timestamp_utc": "2026-10-04T21:32:16.147070+00:00",
+  "verified_controls": [
+    "V destination changes leave six-B forward, baseline model and complete prediction hashes unchanged; only separate sealed-source audit/freeze changes.",
+    "Malformed V destination remains unparsed through fit and durable freeze; failed reveal leaves one-shot attempt marker with no report.",
+    "Wrong same-file interpolation function, executing-source drift and external artifact drift refuse before V reveal.",
+    "External top-level schema rejects undeclared later-image paths and interpolation settings; source-only sampler query contains row IDs and physical source coordinates only.",
+    "Actual content read bound holds with stale size metadata; root-escaping symlink is refused.",
+    "Independent direct formulas reproduce nonconstant Euclidean errors, RMS/median/max, all-method support, common support, and each pair-specific support/difference.",
+    "Unavailable/ambiguous/nonconforming samples stay null with explicit reasons; global baseline support is retained independently of FEM exclusions.",
+    "Canonical but altered rigid coefficients cannot replace the six-B fit at freeze.",
+    "Query IDs/order/coordinates bind samples; invalid IDs and nonfinite samples refuse.",
+    "Prediction bytes changed after reveal withhold publication and preserve the durable attempt marker."
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "schema": "patient-comparison-preparation-v1",
+  "status": "source_only_analytical_controls_passed_pending_independent_review",
+  "source_bindings": {
+    "scripts/mechanics_patient_comparison.py": "0325e7d0ec34b5f9c335913d7f7e33d017dd4d28ce69d32eaa00f2004defacb9",
+    "tests/test_mechanics_patient_comparison.py": "139ce767b767b27933a7cae2d6bdf7be1bc6bb4bdb91b11f5e5d73887c815cca",
+    "docs/patient-displacement-comparison.md": "0622daa99a8db3cbfe8c102e25ac122da062205c416bb5959a597f2f7d0480dd",
+    "src/resectionlab/mechanics_landmarks.py": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc"
+  },
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_mechanics_patient_comparison.py",
+    "-q"
+  ],
+  "result": "13 passed in 0.19s",
+  "initial_harness_correction": "The planned rank-three negative fixture flattened existing points and created duplicates, so the duplicate guard rejected first. Replaced only that analytical fixture with six unique planar points; no production guard or tolerance changed. Initial result1failed12passed0.20s.",
+  "real_patient_coordinates_read": false,
+  "solver_invocations": 0,
+  "observed_material_data_read": false,
+  "external_FEM_fixture": "Explicitly constructed sampler and dummy artifacts validate only field handoff/coverage; no physics claim."
+}

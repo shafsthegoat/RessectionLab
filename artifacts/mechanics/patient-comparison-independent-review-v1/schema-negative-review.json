@@ -1,0 +1,17 @@
+{
+  "pytest_output": "schema-negative-tests.txt",
+  "pytest_output_sha256": "0e4250ecfbae6c4f6f3b212a77c7bae80752382cfb2f89244b670d9b5f810e3b",
+  "returncode": 1,
+  "scope": "Additional undeclared external-input schema controls; analytic records only",
+  "source_after": {
+    "scripts/mechanics_patient_comparison.py": "bb322a575e3a56bd4f9d7d9aaad7f7c09e65ab1c1f1b907337481bcf7d5b0736",
+    "src/resectionlab/mechanics_landmarks.py": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc",
+    "tests/test_mechanics_patient_comparison_review.py": "a388cda5801ba1e3e356194de992248502be4495f9e9b827cb07ee663f382e3e"
+  },
+  "source_before": {
+    "scripts/mechanics_patient_comparison.py": "bb322a575e3a56bd4f9d7d9aaad7f7c09e65ab1c1f1b907337481bcf7d5b0736",
+    "src/resectionlab/mechanics_landmarks.py": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc",
+    "tests/test_mechanics_patient_comparison_review.py": "a388cda5801ba1e3e356194de992248502be4495f9e9b827cb07ee663f382e3e"
+  },
+  "timestamp_utc": "2026-10-04T21:29:57.709035+00:00"
+}
