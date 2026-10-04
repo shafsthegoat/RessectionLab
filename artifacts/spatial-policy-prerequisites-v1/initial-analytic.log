@@ -1,0 +1,42 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+____________ test_analytic_variable_length_expected_return_gradient ____________
+
+    def test_analytic_variable_length_expected_return_gradient():
+        model = AnalyticPolicy()
+        obs = SimpleNamespace(action_ids=("STOP", "cut"), action_mask=(True, True))
+        episodes = [[SpatialTransition(obs, "cut", 1., True)],
+                    [SpatialTransition(obs, "cut", 0., False), SpatialTransition(obs, "cut", 2., True)]]
+        loss, _ = reinforce_loss(model, episodes, entropy_weight=0., value_weight=0.)
+        loss.backward()
+        # At theta0, dlogpi(cut)/dtheta=.5. Mean trajectory sums:
+        # -(1*.5 + (2*.5+2*.5))/2 = -1.25, not mean-per-transition -.75.
+>       assert model.theta.grad.item() == pytest.approx(-1.25)
+E       assert -0.75 == -1.25 ± 1.2e-06
+E         
+E         comparison failed
+E         Obtained: -0.75
+E         Expected: -1.25 ± 1.2e-06
+
+tests/test_spatial_policy.py:162: AssertionError
+_____________ test_analytic_discounted_start_state_return_gradient _____________
+
+    def test_analytic_discounted_start_state_return_gradient():
+        model = AnalyticPolicy()
+        obs = SimpleNamespace(action_ids=("STOP", "cut"), action_mask=(True, True))
+        episode = [SpatialTransition(obs, "cut", 0., False), SpatialTransition(obs, "cut", 2., True)]
+        loss, _ = reinforce_loss(model, [episode], gamma=.5, entropy_weight=0., value_weight=0.)
+        loss.backward()
+        # Returns[1,2] at steps[0,1]: -(.5*1 + .5*.5*2) = -1.
+>       assert model.theta.grad.item() == pytest.approx(-1.)
+E       assert -0.75 == -1.0 ± 1.0e-06
+E         
+E         comparison failed
+E         Obtained: -0.75
+E         Expected: -1.0 ± 1.0e-06
+
+tests/test_spatial_policy.py:172: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_spatial_policy.py::test_analytic_variable_length_expected_return_gradient
+FAILED tests/test_spatial_policy.py::test_analytic_discounted_start_state_return_gradient
+2 failed, 12 deselected in 1.59s

@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "scope": "Independent synthetic physical-coordinate and permitted-observation boundary review",
+  "public_cases_executed": false,
+  "pretrained_weights_imported": false,
+  "initial_policy_sha256": "5aaabeaeabffb16c63037b3a393764b86290a7ef1c2b7a4d32c89288d05541ef",
+  "initial_helper_validation": {
+    "passed": 23,
+    "failed": 0,
+    "seconds": 1.05
+  },
+  "boundary_regression": {
+    "passed": 1,
+    "failed": 2,
+    "deselected": 23,
+    "seconds": 1.11,
+    "tests": "test_exact_physical_grid_corners_are_not_lost_to_inverse_roundoff",
+    "problem": "Exact source-grid corners transformed to physical mm and back are spuriously outside strict normalized bounds due to inverse-affine roundoff.",
+    "oblique_max_absolute_normalized_coordinate": 1.0000000000000036,
+    "oblique_accepted_corners": 3,
+    "reflected_max_absolute_normalized_coordinate": 1.0000000000000027,
+    "reflected_accepted_corners": 4,
+    "total_corners": 8,
+    "status": "resolved_and_independently_retested",
+    "resolution": "Policy world-to-grid conversion canonicalizes only values within 64 float64 eps of normalized +1 or -1; all larger outside samples remain outside. The numerical band is recorded in the architecture contract."
+  },
+  "padding_probe": {
+    "torch": "2.14.1",
+    "shape_xyz": [
+      4,
+      5,
+      6
+    ],
+    "encoded_value": "x+10*y+100*z",
+    "outside_voxel_coordinate": [
+      3.25,
+      2,
+      3
+    ],
+    "zeros_padding_value_without_explicit_mask": 242.2500762939453,
+    "required_strict_outside_value": 0,
+    "owner_explicit_outside_mask_present": true
+  },
+  "final_validation": {
+    "command": ".venv/bin/python -m pytest tests/test_spatial_observations_review.py -q",
+    "passed": 45,
+    "failed": 0,
+    "elapsed_seconds": 1.25,
+    "source_sha256": {
+      "src/resectionlab/spatial_observations.py": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711",
+      "src/resectionlab/spatial_policy.py": "a346b2e187d943238f2676ce2cb90ef609f4655dc7e798e21b247fae41778cb5",
+      "tests/test_spatial_observations_review.py": "4e59b11ceb0114d47fd07f05f80b3130599408a055d7a248d52cdfbe787a1690"
+    },
+    "device": "CPU",
+    "maximum_encoded_fixture_shape_xyz": [
+      4,
+      5,
+      6
+    ]
+  },
+  "integrated_precision_probe": {
+    "before_fix": {
+      "physical_affine": "oblique anisotropic basis with translation [17,-31,8], spacing [1.5,2.75,4]",
+      "exact_source_boundary_ray": "x=3,y=2,z=.5 to 4.5 on shape 4x5x6",
+      "dto_physical_geometry_dtype": "float32",
+      "inside_flags": [
+        1,
+        1,
+        1,
+        0,
+        0
+      ],
+      "maximum_float32_grid_x": 1.0000001192092896
+    },
+    "resolution": "Owner preserves action_geometry and state_features as float64 through DTO and inverse-affine conversion, casting only normalized model inputs to float32. Forward ray features also multiply the authoritative pre-cast inbounds flags.",
+    "regression_result": "Four end-to-end tests passed 1.03 s after repair; no prior pytest failure is claimed for this diagnostic probe."
+  },
+  "coverage": [
+    "Analytic noncubic phantom detects stored XYZ versus torch grid ZYX ordering.",
+    "Exact and fractional points preserve known scalar fields under anisotropic, oblique and reflected physical affines.",
+    "Five path points retain entry-to-tip order and nonzero finite image gradients.",
+    "Material outside samples are exact zero rather than partial border interpolation; nonfinite points/frames fail.",
+    "Exact physical corners and complete boundary rays remain covered after float64 inverse transforms.",
+    "Outside status is retained even when normalized model coordinates round to a float32 boundary.",
+    "Missing nominal target remains distinct from known-zero target in actual actor value/coverage/availability tensors.",
+    "Synthetic-scan and inference-only tracks reject supplied target/motor/language annotations, including direct DTO replacement.",
+    "Direct DTO forgery of missingness, coverage, spacing or source provenance is rejected; mutable tensor replacement is refused.",
+    "Input intensities remain case-local and unchanged by adapter; no implicit population normalization occurs."
+  ],
+  "limitations": [
+    "Tiny synthetic algebra/contract tests establish no patient transfer, clinical risk, anatomy approval, throughput or 16-GiB training-memory fit.",
+    "Observation adapter performs no intensity normalization; case-only preprocessing still belongs to its declared caller.",
+    "Source declarations cannot prove an upstream estimator did not use hidden labels; task-level hidden-truth invariance is separately required.",
+    "Observation fingerprint binds tensor/provenance content; source_id is separately joined in source receipts.",
+    "These checks do not assert CNN invariance to voxel-axis permutations or certify tool feasibility."
+  ]
+}

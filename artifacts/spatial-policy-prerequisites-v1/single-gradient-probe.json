@@ -1,0 +1,84 @@
+{
+  "architecture": {
+    "action_geometry": "stop,entry3,tip3,axis3,tip_radius,shaft_radius,working_length,tip_length,max_access_angle_deg,tool_change",
+    "align_corners": true,
+    "channels": 6,
+    "config": {
+      "encoder_channels": [
+        8,
+        16
+      ],
+      "hidden_features": 32,
+      "physical_reference_mm": 10.0,
+      "ray_samples": 5
+    },
+    "grid_roundoff_band": 1.4210854715202004e-14,
+    "grid_sample_order": "ZYX",
+    "image_input": "masked_values+coverage+availability",
+    "image_layout": "CXYZ",
+    "inference_ties": "argmax_first_in_inventory; STOP is index0",
+    "normalization": "source-grid entry/tip/access; normalized source-axis direction; physical dimensions/reference_mm; angle/90; budget fraction; spacing/reference_mm",
+    "padding": "zeros_with_inbounds_flags",
+    "procedure_state": "steps_taken,max_steps,current_tool_present,access_center3,access_normal3,access_radius",
+    "return_transform": "none",
+    "spatial_pool": [
+      2,
+      2,
+      2
+    ],
+    "version": "spatial-scan-ray-conv-policy-v1"
+  },
+  "architecture_hash": "sha256:10ad4b9b95a2e257d83625516b70aa27908789d644d239cb6a67f660ce49bbde",
+  "created_utc": "2026-10-04T15:27:14.927219+00:00",
+  "full_script_seconds_excluding_interpreter_start": 1.785663416958414,
+  "gradient_receipt": {
+    "actor_gradient_norm_before_clip": 1.2347493171691895,
+    "critic_gradient_norm_before_clip": 3.2612998485565186,
+    "encoder_gradient_norm_before_clip": 1.6956889629364014,
+    "gradient_norm_after_clip": 3.970071792602539,
+    "gradient_norm_before_clip": 3.970071792602539,
+    "initial_parameter_hash": "sha256:7d89fb1c0d24497383b210968c0e7f6b5fbb40072a0adeea350c3891d50e72ad",
+    "optimizer_steps": 1,
+    "parameters_changed": true,
+    "stop_gradient_norm_before_clip": 0.8517208695411682,
+    "updated_parameter_hash": "sha256:450159bb4bb51688a812766d317b5e1701525f9b9029e9bae823680b98482cbf"
+  },
+  "initial_logits": [
+    -0.1307247281074524,
+    0.11876408010721207,
+    0.12976068258285522
+  ],
+  "initial_value": -0.1348547488451004,
+  "observation_fingerprint": "sha256:51f448871554d077c063854881ba55b317cd901d849a8bff7fda790f8c81e9fc",
+  "one_forward_seconds": 0.0038307920331135392,
+  "one_loss_backward_optimizer_seconds": 0.019656000076793134,
+  "optimizer_parameters": "Adam defaults with lr0.001, clip5",
+  "parameter_hash_after": "sha256:450159bb4bb51688a812766d317b5e1701525f9b9029e9bae823680b98482cbf",
+  "parameter_hash_before": "sha256:7d89fb1c0d24497383b210968c0e7f6b5fbb40072a0adeea350c3891d50e72ad",
+  "parameters": 24331,
+  "reference_label_inputs": false,
+  "scope": "single-gradient engineering probe, no anatomy-generalization study or public patient",
+  "seed": 11,
+  "setup_seconds": 0.8157740420429036,
+  "source_changed": false,
+  "source_sha256": {
+    "src/resectionlab/spatial_observations.py": "68cda641bd987edf1d37b45942106aec141ed0826a82ca6c7fef5a059f0bf5fe",
+    "src/resectionlab/spatial_policy.py": "8794fd1c6d5b04304099181cceac588ba4e9af9eca282b1f25ee61a148757788",
+    "tests/test_spatial_policy.py": "7bd99b5642f2b62d081be5e462f299380bef70f6cb2c8db830eb0d4ed64d4ecc"
+  },
+  "statistics": {
+    "actor_reduction": "mean_episodes_sum_discounted_score_terms",
+    "completed_episodes": 1,
+    "entropy": 1.091820240020752,
+    "kind": "masked_reinforce_spatial_value_v1",
+    "loss": 4.458529949188232,
+    "loss_forward_calls": 1,
+    "mean_return": 2.0,
+    "policy_loss": 2.190645933151245,
+    "regularizer_reduction": "mean_episodes_mean_actions",
+    "value_loss": 4.557604789733887
+  },
+  "thread_count": 1,
+  "unit_reward": 2.0,
+  "unit_reward_note": "prescribed algebra/gradient fixture reward, not a simulated patient outcome"
+}
