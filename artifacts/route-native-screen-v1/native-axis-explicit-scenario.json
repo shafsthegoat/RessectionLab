@@ -1,0 +1,286 @@
+{
+  "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+  "case_id": "UCSF-PDGM-0004",
+  "scenario": "explicit_native_grid_aligned_hypothetical_access_and_axial_union_centroid",
+  "entry_mm": [
+    -181.5,
+    85.0,
+    105.0
+  ],
+  "target_mm": [
+    -162.0,
+    85.0,
+    105.0
+  ],
+  "source_target_label": 3,
+  "tissue_support_provenance": "estimated_hole_filled_nonzero_UCSF_or_declared_skull_stripped_MRI_support; brain_surface_unreviewed; source_frame=RAS+; simulation_frame=RAS+",
+  "gradient_steps": 0,
+  "model_assumptions_changed_during_rollout": false,
+  "elapsed_seconds": 7.6030531249707565,
+  "tool_results": [
+    {
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -181.5,
+        85.0,
+        105.0
+      ],
+      "target_mm": [
+        -162.0,
+        85.0,
+        105.0
+      ],
+      "access": {
+        "center_mm": [
+          -181.5,
+          85.0,
+          105.0
+        ],
+        "normal_inward": [
+          1.0,
+          0.0,
+          -0.0
+        ],
+        "radius_mm": 6.0,
+        "window_id": "native_hypothetical_nearest_envelope_axis"
+      },
+      "decision_model_hash": "sha256:a5fd3dcafc7d5bdbef7b1f4cd3d5da786502a753a0fb1599b3ff00069be7ab80",
+      "static_route_feasible": true,
+      "native_stroke_feasible": false,
+      "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "contained_tissue_mm3": 0.0,
+      "failure_tip_mm": [
+        -180.75,
+        85.0,
+        105.0
+      ]
+    },
+    {
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -181.5,
+        85.0,
+        105.0
+      ],
+      "target_mm": [
+        -162.0,
+        85.0,
+        105.0
+      ],
+      "access": {
+        "center_mm": [
+          -181.5,
+          85.0,
+          105.0
+        ],
+        "normal_inward": [
+          1.0,
+          0.0,
+          -0.0
+        ],
+        "radius_mm": 6.0,
+        "window_id": "native_hypothetical_nearest_envelope_axis"
+      },
+      "decision_model_hash": "sha256:f270933507d0f6309de6918f35002091d4a9c3369baa63c736d7bf9f2d4b082d",
+      "static_route_feasible": true,
+      "native_stroke_feasible": false,
+      "native_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "contained_tissue_mm3": 0.0,
+      "failure_tip_mm": [
+        -181.0,
+        85.0,
+        105.0
+      ]
+    },
+    {
+      "tool": {
+        "tool_id": "native-fine-aspiration",
+        "tip_radius_mm": 1.25,
+        "shaft_radius_mm": 0.45,
+        "working_length_mm": 120.0,
+        "max_access_angle_deg": 35.0,
+        "tip_length_mm": 2.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -181.5,
+        85.0,
+        105.0
+      ],
+      "target_mm": [
+        -162.0,
+        85.0,
+        105.0
+      ],
+      "access": {
+        "center_mm": [
+          -181.5,
+          85.0,
+          105.0
+        ],
+        "normal_inward": [
+          1.0,
+          0.0,
+          -0.0
+        ],
+        "radius_mm": 6.0,
+        "window_id": "native_hypothetical_nearest_envelope_axis"
+      },
+      "decision_model_hash": "sha256:3a9d67b1c637847940fe675c5fd1b79e5053b9feb71b9730adf8e45afab25355",
+      "static_route_feasible": true,
+      "native_stroke_feasible": true,
+      "native_reason": "NATIVE_CONNECTED_STROKE",
+      "contained_tissue_mm3": 20.0,
+      "failure_tip_mm": null,
+      "independent_native_audit": {
+        "feasible": true,
+        "failures": [],
+        "first_failed_action": null,
+        "first_unsupported_source_voxel": null,
+        "first_unsupported_position_mm": null,
+        "claimed_source_tissue_volume_mm3": 20.0,
+        "contained_source_tissue_volume_mm3": 20.0,
+        "unsupported_source_tissue_volume_mm3": 0.0,
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "action_count": 1,
+        "checker_version": "independent-native-sequence-v2",
+        "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+        "complete_tool_checked": true,
+        "frontier_checked": true
+      },
+      "independent_seconds": 1.0767505000112578,
+      "candidate_hash": "sha256:f4924adfbcde38058e2ceabcd974f430e05a8d244860d55089c7939d05731758",
+      "candidate_file": "artifacts/route-native-screen-v1/aligned-native-fine-aspiration-candidate.json",
+      "metrics": {
+        "native_resection_version": "contained-native-cell-connected-suction-v2",
+        "decision_model_hash": "sha256:3a9d67b1c637847940fe675c5fd1b79e5053b9feb71b9730adf8e45afab25355",
+        "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "native_grid_shape": [
+          240,
+          240,
+          155
+        ],
+        "native_voxel_volume_mm3": 1.0,
+        "simulated_removed_target_mm3": 19.0,
+        "simulated_removed_normal_mm3": 1.0,
+        "modeled_residual_target_mm3": 41900.0,
+        "contacted_tissue_upper_bound_mm3": 189.0,
+        "contacted_but_not_removed_upper_bound_mm3": 169.0,
+        "removed_by_label_mm3": {
+          "1": 0.0,
+          "2": 3.0,
+          "3": 16.0
+        },
+        "tissue_support_provenance": "estimated_hole_filled_nonzero_UCSF_or_declared_skull_stripped_MRI_support; brain_surface_unreviewed; source_frame=RAS+; simulation_frame=RAS+",
+        "removal_definition": "fully_contained_connected_native_cells; boundary partial volumes uncredited",
+        "completed_strokes": 1,
+        "clinical_deficit_probability": null
+      }
+    },
+    {
+      "tool": {
+        "tool_id": "native-wide-aspiration",
+        "tip_radius_mm": 2.25,
+        "shaft_radius_mm": 1.1,
+        "working_length_mm": 120.0,
+        "max_access_angle_deg": 35.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -181.5,
+        85.0,
+        105.0
+      ],
+      "target_mm": [
+        -162.0,
+        85.0,
+        105.0
+      ],
+      "access": {
+        "center_mm": [
+          -181.5,
+          85.0,
+          105.0
+        ],
+        "normal_inward": [
+          1.0,
+          0.0,
+          -0.0
+        ],
+        "radius_mm": 6.0,
+        "window_id": "native_hypothetical_nearest_envelope_axis"
+      },
+      "decision_model_hash": "sha256:a6295c4c853acaae0805afc72357853d6dedca0d620c7b2d61ff9be7a751d31a",
+      "static_route_feasible": true,
+      "native_stroke_feasible": true,
+      "native_reason": "NATIVE_CONNECTED_STROKE",
+      "contained_tissue_mm3": 185.0,
+      "failure_tip_mm": null,
+      "independent_native_audit": {
+        "feasible": true,
+        "failures": [],
+        "first_failed_action": null,
+        "first_unsupported_source_voxel": null,
+        "first_unsupported_position_mm": null,
+        "claimed_source_tissue_volume_mm3": 185.0,
+        "contained_source_tissue_volume_mm3": 185.0,
+        "unsupported_source_tissue_volume_mm3": 0.0,
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "action_count": 1,
+        "checker_version": "independent-native-sequence-v2",
+        "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+        "complete_tool_checked": true,
+        "frontier_checked": true
+      },
+      "independent_seconds": 1.972446916042827,
+      "candidate_hash": "sha256:f9e7c576529c83a30b682aa6f15195b378e2e992bc272b4fc566374c111903b6",
+      "candidate_file": "artifacts/route-native-screen-v1/aligned-native-wide-aspiration-candidate.json",
+      "metrics": {
+        "native_resection_version": "contained-native-cell-connected-suction-v2",
+        "decision_model_hash": "sha256:a6295c4c853acaae0805afc72357853d6dedca0d620c7b2d61ff9be7a751d31a",
+        "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "native_grid_shape": [
+          240,
+          240,
+          155
+        ],
+        "native_voxel_volume_mm3": 1.0,
+        "simulated_removed_target_mm3": 174.0,
+        "simulated_removed_normal_mm3": 11.0,
+        "modeled_residual_target_mm3": 41745.0,
+        "contacted_tissue_upper_bound_mm3": 543.0,
+        "contacted_but_not_removed_upper_bound_mm3": 358.0,
+        "removed_by_label_mm3": {
+          "1": 0.0,
+          "2": 33.0,
+          "3": 141.0
+        },
+        "tissue_support_provenance": "estimated_hole_filled_nonzero_UCSF_or_declared_skull_stripped_MRI_support; brain_surface_unreviewed; source_frame=RAS+; simulation_frame=RAS+",
+        "removal_definition": "fully_contained_connected_native_cells; boundary partial volumes uncredited",
+        "completed_strokes": 1,
+        "clinical_deficit_probability": null
+      }
+    }
+  ],
+  "clinical_deficit_probability": null,
+  "interpretation": "Separate explicit access/tool research scenario; original search routes remain rejected for native cutting."
+}
