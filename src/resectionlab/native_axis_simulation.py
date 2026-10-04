@@ -12,7 +12,7 @@ from dataclasses import asdict
 import hashlib
 import json
 import time
-from typing import Any, Callable
+from typing import Any, Callable, Mapping
 
 import numpy as np
 
@@ -55,6 +55,9 @@ class AxisColumnNativeSimulator(NativeSequentialSimulator):
                  proposal_config: AxisColumnProposalConfig | None = None,
                  nominal_motor: np.ndarray | None = None,
                  nominal_language: np.ndarray | None = None,
+                 nominal_motor_coverage: np.ndarray | None = None,
+                 nominal_language_coverage: np.ndarray | None = None,
+                 functional_evidence_record: Mapping[str, Any] | None = None,
                  reward: RewardSpec = RewardSpec(),
                  world_generator: WorldGeneratorConfig | None = None,
                  max_steps: int = 8, partial_contact_weight: float = .05,
@@ -63,6 +66,10 @@ class AxisColumnNativeSimulator(NativeSequentialSimulator):
         initialization_started = time.perf_counter()
         self._cancelled = cancelled
         self._check_cancelled()
+        if (functional_evidence_record is not None
+                and functional_evidence_record.get("world_generator_hash")
+                != (world_generator or WorldGeneratorConfig()).fingerprint):
+            raise ValueError("World generator differs from the frozen functional evidence record")
         if not np.isfinite(partial_contact_weight) or partial_contact_weight < 0:
             raise ValueError("Partial-contact surrogate weight must be finite and nonnegative")
         if type(max_steps) is not int or max_steps < 1:
@@ -108,6 +115,8 @@ class AxisColumnNativeSimulator(NativeSequentialSimulator):
             max_actions=self.proposal_config.max_primary_rays + 1,
             case_id=native_config.case_id, source_hash=native_config.source_hash,
             evidence_available=(nominal_motor is not None, nominal_language is not None),
+            nominal_motor_coverage=nominal_motor_coverage,
+            nominal_language_coverage=nominal_language_coverage,
             compartment_names=compartment_names or {1: "radiological_target"},
             derivation={"track": AXIS_ADAPTER_VERSION,
                         "candidate_sampling": "current_residual_axis_columns_shared_by_all_methods",
@@ -115,7 +124,9 @@ class AxisColumnNativeSimulator(NativeSequentialSimulator):
                         "tissue_support_provenance": native_config.tissue_support_provenance,
                         "removal_primitive": "full_affine_cells_contained_by_continuous_active_brush",
                         "partial_contact_policy": "retained_tissue_exposure_not_removed",
-                        "partial_contact_weight": self.partial_contact_weight})
+                        "partial_contact_weight": self.partial_contact_weight,
+                        **({"functional_evidence": functional_evidence_record}
+                           if functional_evidence_record is not None else {})})
         self.config = config
         self._native_decision_hash = _digest({
             "adapter": AXIS_ADAPTER_VERSION, "native_config": self._native_config_hash,
@@ -377,6 +388,9 @@ class AxisColumnNativeSimulator(NativeSequentialSimulator):
         return type(self)(self.native_config, proposal_config=self.proposal_config,
             nominal_motor=self.config.nominal_motor if self.config.evidence_available[0] else None,
             nominal_language=self.config.nominal_language if self.config.evidence_available[1] else None,
+            nominal_motor_coverage=self.config.nominal_motor_coverage,
+            nominal_language_coverage=self.config.nominal_language_coverage,
+            functional_evidence_record=self.config.derivation.get("functional_evidence"),
             reward=self.config.reward,
             world_generator=self.config.world_generator if world_generator is None else world_generator,
             max_steps=self.config.max_steps if max_steps is None else max_steps,

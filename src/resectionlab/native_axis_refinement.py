@@ -1,7 +1,7 @@
 """Read-only inspection of the experimental native axis inventory.
 
 This facade is intentionally separate from selected-route refinement. It creates
-one fresh structural-only RAW model, previews its complete initial inventory and
+one fresh source-bound RAW model, previews its complete initial inventory and
 returns a detached record. It never executes an action or grants replay authority.
 """
 from __future__ import annotations
@@ -120,6 +120,15 @@ def inspect_axis_planning(
     if _source_identity(case) != expected_source:
         raise ValueError("Stale source case or planning identity")
     support = _support_record(case, acknowledge_estimated_support)
+    evidence = case.functional_evidence
+    motor = language = motor_coverage = language_coverage = evidence_record = None
+    if evidence is not None:
+        evidence.assert_matches(case)
+        if world_generator.fingerprint != evidence.uncertainty.fingerprint:
+            raise ValueError("Uncertainty differs from the frozen functional evidence")
+        motor, language = evidence.planning_arrays()
+        motor_coverage, language_coverage = evidence.motor_coverage, evidence.language_coverage
+        evidence_record = evidence.to_manifest()
     if (hard_exclusion is None) != (hard_exclusion_provenance is None):
         raise ValueError("A supplied hard-exclusion mask requires its own provenance")
     if hard_exclusion_provenance is not None and (not isinstance(hard_exclusion_provenance, str) or not hard_exclusion_provenance.strip()):
@@ -137,6 +146,9 @@ def inspect_axis_planning(
     check()
     source_preparation_seconds = time.perf_counter() - started
     simulator = AxisColumnNativeSimulator(native, proposal_config=proposal_config,
+        nominal_motor=motor, nominal_language=language,
+        nominal_motor_coverage=motor_coverage, nominal_language_coverage=language_coverage,
+        functional_evidence_record=evidence_record,
         reward=reward, world_generator=world_generator, max_steps=max_steps,
         partial_contact_weight=partial_contact_weight,
         compartment_names={index: name for index, name in enumerate(sorted(case.compartments), 1)},
@@ -189,12 +201,14 @@ def inspect_axis_planning(
         "world_generator": simulator.config.world_generator.to_dict(),
         "world_generator_hash": simulator.world_generator_fingerprint,
         "world_role": None, "world_partitions_created": False,
-        "functional_evidence_available": {"motor": False, "language": False},
-        "vascular_evidence_status": "unassessed", "population_priors_used": False,
+        "functional_evidence_available": {"motor": motor is not None, "language": language is not None},
+        "vascular_evidence_status": "unassessed", "population_priors_used": evidence is not None,
         "partial_contact_policy": "retained_tissue_exposure_not_removed",
         "fallback_policy": "only_after_primary_preview_rejection",
         "ordering": "STOP_then_provider_column_tool_order",
     }
+    if evidence_record is not None:
+        binding["functional_evidence"] = evidence_record
     binding = json.loads(_json(binding))
     binding["binding_hash"] = content_hash(binding)
     if expected_binding_hash is not None and binding["binding_hash"] != expected_binding_hash:

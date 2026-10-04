@@ -1,0 +1,1172 @@
+{
+  "schema_version": 1,
+  "operation": "explicit_unreviewed_population_prior_attachment_and_roundtrip",
+  "source_bundle": "outputs/cases/UCSF-PDGM-0004-prior-proposals.ressectionlab",
+  "source_bundle_sha256": "59c213b82af205516491058145ad3581a4d1832e1126fb5559118f250ea1bacc",
+  "source_case_hash": "sha256:2dd4c1ccc72a3ee6f821cf8f23a8c32996ec74fe1d616411863d5197bf3d2547",
+  "case_hash": "sha256:be539db3b596e4982dc2fbf43c5aae7b40560243330b8f3bc4a3b64dbc8d1258",
+  "source_planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+  "planning_hash": "sha256:efbc16788caf625c46459bd31521f375968b45f945e407522b06f87e629a5586",
+  "output_bundle": "outputs/cases/UCSF-PDGM-0004-functional-sensitivity-v1.ressectionlab",
+  "output_bundle_sha256": "76dacc9f68d030cdbab4d4884d9cfca46e90a7ba06a045a1c23660a5ca5bfdfd",
+  "evidence": {
+    "schema_version": 1,
+    "evidence_id": "registered-population-prior-sensitivity-v1",
+    "mode": "population_prior_sensitivity",
+    "provenance": "prior",
+    "review_status": "alignment_review_required",
+    "language_aggregation": "maximum_of_declared_components",
+    "source_image_hash": "sha256:88666f74a0aa1e7e83b8b555605f2c6408a7ce88b11d49c0705717838d5b5c74",
+    "case_anatomy_hash": "sha256:c38a0f7aaced9f79a59a77d785d6b4e804ef2e8b81b60240fe1fda9307de29ac",
+    "affine_ras_mm": [
+      [
+        -1.0,
+        -0.0,
+        -0.0,
+        0.0
+      ],
+      [
+        -0.0,
+        -1.0,
+        -0.0,
+        239.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "array_hashes": {
+      "motor": "sha256:7ff809ab85bceb4019a1069df2ef8173bd3eb70d8c5149352e3030824fc108f3",
+      "language": "sha256:fb2897929cc35f280dd15140780e83a0468b9f780eb6663593ddb1e690e4d95c",
+      "motor_coverage": "sha256:e5a02c1f4e15c9fd083eefd5538c8e9e63827623ce2d54a5059dc1ab378f6418",
+      "language_coverage": "sha256:e5a02c1f4e15c9fd083eefd5538c8e9e63827623ce2d54a5059dc1ab378f6418"
+    },
+    "source_records": {
+      "motor_functional_concordance": {
+        "proposal_id": "motor_functional_concordance_851c3e8fac7c",
+        "map_id": "motor_functional_concordance",
+        "component": "motor",
+        "map_kind": "functional_concordance",
+        "source_prior_hash": "sha256:0455dd4f920505e3505408bb2cca9cba75c8427bc466da49be567f99a48e5e35",
+        "source_image_hash": "sha256:88666f74a0aa1e7e83b8b555605f2c6408a7ce88b11d49c0705717838d5b5c74",
+        "source_frame_hash": "sha256:8f3dba204e861a0c5b714729a78da92768137c122d04b45ffde4f69728b1f8f7",
+        "source_file_sha256": "sha256:398e7a6ec44e795aaf717fbf0fee6b3a11a671c5bc944c13a308ccaf02419176",
+        "source_case_planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+        "registration_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "registration_image_sha256": "sha256:519c83d1cac08d15b299707403e94e90b4a9fe6369cf77acf01b754b276147e5",
+        "registration_lesion_sha256": "sha256:54e51eb6ae60d8985ed5379a4267438017e2682255418833fac1b704813b483e",
+        "registration_compartments_hash": "sha256:91bc9db35a9054dc7327c0dedd001de16a61bc23ae707f1e918792c26aed97e4",
+        "registration_hash": "sha256:c3acc3e426b3784c3fcf265a5ac39af456bc738c4919a0be14c6851c3e8fac7c",
+        "registration_method": "SimpleITK_masked_rigid_then_affine",
+        "registration_version": "simpleitk-linear-prior-v3",
+        "registration_report_sha256": "sha256:32dea3154c63bda4a1ff75e343ce45dc1d9cbe7f1d60afd2ef7ef385d9606ca3",
+        "registration_inventory_sha256": "sha256:977589b88fbfe045613ad7c04bae77a111f5a6d53e80f1197dbb4301cc0b8321",
+        "preview_sha256": "sha256:401b2a22895a35c6a83d48e0403fb8105882d73b5943edbb1d0f2df2453db252",
+        "prior_manifest_sha256": "sha256:5058f629102e290ba7120797ccb4c4b8d73886a6932491636e648a45c8f8a37d",
+        "template_identity": "FSL_MNI152NLin6Asym_2mm_from_Zenodo_16418628",
+        "template_sha256": "sha256:09c925ad165dfbe6b41b572876d67e9bbf8c5e26517e7817f9b43a8256227f53",
+        "schema_version": 1,
+        "kind": "registered_population_prior_proposal",
+        "source": {
+          "source_id": "zenodo:10439149:data/netw_no_thr/MOTOR_POSITIVE_no_thr_N_599_seeds.nii.gz",
+          "uri": "https://zenodo.org/records/10439149",
+          "sha256": "da250c63ff449bded9dc9a362c130ed39378f9612ff080b85acee92511e88b60",
+          "license": "CC-BY-4.0",
+          "native_frame": "FSL_MNI152_RAS_mm",
+          "provenance": "prior"
+        },
+        "source_prior_shape": [
+          91,
+          109,
+          91
+        ],
+        "source_prior_affine_ras_mm": [
+          [
+            -2.0,
+            0.0,
+            0.0,
+            90.0
+          ],
+          [
+            0.0,
+            2.0,
+            0.0,
+            -126.0
+          ],
+          [
+            0.0,
+            0.0,
+            2.0,
+            -72.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "shape": [
+          240,
+          240,
+          155
+        ],
+        "affine_ras_mm": [
+          [
+            -1.0,
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          [
+            -0.0,
+            -1.0,
+            -0.0,
+            239.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "data_hash": "sha256:7ff809ab85bceb4019a1069df2ef8173bd3eb70d8c5149352e3030824fc108f3",
+        "sampling_coverage_hash": "sha256:e5a02c1f4e15c9fd083eefd5538c8e9e63827623ce2d54a5059dc1ab378f6418",
+        "sampling_coverage_fraction": 0.4924369399641577,
+        "mni_ras_to_patient_ras_mm": [
+          [
+            0.8998003062277471,
+            -0.0771502925107438,
+            -0.007512150334590812,
+            -122.97943553028415
+          ],
+          [
+            0.03491021036371106,
+            0.9630992705135126,
+            -0.10202542229185459,
+            132.7412119782
+          ],
+          [
+            0.009056306227382417,
+            0.0818698902716705,
+            0.7994027485228425,
+            84.85945418625833
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "metadata": {
+          "candidate_id": "affine_from_best_rigid",
+          "intensity_meaning": "Atlas concordance (unitless, 0\u20131): fraction of DES-seeded normative connectivity maps supporting this location; no patient deficit probability.",
+          "registration_limitations": [
+            "no_independent_landmark_ground_truth",
+            "population_prior_only",
+            "linear_transform_does_not_model_lesion_mass_effect",
+            "no_expert_alignment_review",
+            "template_commercial_redistribution_rights_unresolved"
+          ],
+          "seed_origin": "cortical DES",
+          "source_category": "MOTOR",
+          "source_header_qc": {
+            "affine_ras_mm": [
+              [
+                -2.0,
+                0.0,
+                0.0,
+                90.0
+              ],
+              [
+                0.0,
+                2.0,
+                0.0,
+                -126.0
+              ],
+              [
+                0.0,
+                0.0,
+                2.0,
+                -72.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "anisotropic": false,
+            "file": "MOTOR_POSITIVE_no_thr_N_599_seeds.nii.gz",
+            "frame": "RAS+",
+            "handedness": "left",
+            "obliquity_degrees": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "orientation": [
+              "L",
+              "A",
+              "S"
+            ],
+            "physical_units": "mm",
+            "qform_code": 1,
+            "qform_native": [
+              [
+                -2.0,
+                0.0,
+                0.0,
+                90.0
+              ],
+              [
+                0.0,
+                2.0,
+                0.0,
+                -126.0
+              ],
+              [
+                0.0,
+                0.0,
+                2.0,
+                -72.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "sform_code": 0,
+            "sform_native": null,
+            "shape": [
+              91,
+              109,
+              91
+            ],
+            "simulation_frame": "source_coded_frame_native_status_requires_source_provenance",
+            "source_units": "mm",
+            "spacing_mm": [
+              2.0,
+              2.0,
+              2.0
+            ],
+            "status": "passed_header_checks",
+            "unit_scale_to_mm": 1.0,
+            "visual_alignment_review": "pending",
+            "voxel_volume_mm3": 7.999999999999998
+          },
+          "template_redistribution": "unresolved; template image bytes remain external local research inputs",
+          "title": "Motor \u00b7 functional network",
+          "verification": "exact saved preview equals pinned source map resampled with saved transform; no transform refitting",
+          "zero_meaning": "zero concordance or mask exclusion is not evidence of absent patient function"
+        },
+        "interpolation": "linear",
+        "provenance": "prior",
+        "physical_units": "mm",
+        "map_value_units": "unitless",
+        "template_frame": "FSL_MNI152_RAS_mm",
+        "coverage_meaning": "atlas field of view, not patient functional coverage",
+        "evidence_hash": "sha256:de1490e682050abe22d8f6ec5eed704499f6b4f6f17771ef6514f37d14f84813",
+        "review_status": "alignment_review_required",
+        "view_only": true,
+        "planning_eligible": false,
+        "patient_specific_function": false,
+        "clinical_deficit_probability": null,
+        "review": null,
+        "template_arrays_embedded": false
+      },
+      "phonology_functional_concordance": {
+        "proposal_id": "phonology_functional_concordance_aa00f5de1df2",
+        "map_id": "phonology_functional_concordance",
+        "component": "phonology",
+        "map_kind": "functional_concordance",
+        "source_prior_hash": "sha256:6ff76b43d2c987b0e7806e2ff5313ed2bd95d8b0414285fe0f1cf51dadde67ac",
+        "source_image_hash": "sha256:88666f74a0aa1e7e83b8b555605f2c6408a7ce88b11d49c0705717838d5b5c74",
+        "source_frame_hash": "sha256:8f3dba204e861a0c5b714729a78da92768137c122d04b45ffde4f69728b1f8f7",
+        "source_file_sha256": "sha256:398e7a6ec44e795aaf717fbf0fee6b3a11a671c5bc944c13a308ccaf02419176",
+        "source_case_planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+        "registration_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "registration_image_sha256": "sha256:519c83d1cac08d15b299707403e94e90b4a9fe6369cf77acf01b754b276147e5",
+        "registration_lesion_sha256": "sha256:54e51eb6ae60d8985ed5379a4267438017e2682255418833fac1b704813b483e",
+        "registration_compartments_hash": "sha256:91bc9db35a9054dc7327c0dedd001de16a61bc23ae707f1e918792c26aed97e4",
+        "registration_hash": "sha256:ce3a9e09d5956fa174d92a74423708a502a6e4efd8d6382532f1aa00f5de1df2",
+        "registration_method": "SimpleITK_masked_rigid_then_affine",
+        "registration_version": "simpleitk-linear-prior-v3",
+        "registration_report_sha256": "sha256:32dea3154c63bda4a1ff75e343ce45dc1d9cbe7f1d60afd2ef7ef385d9606ca3",
+        "registration_inventory_sha256": "sha256:977589b88fbfe045613ad7c04bae77a111f5a6d53e80f1197dbb4301cc0b8321",
+        "preview_sha256": "sha256:a6b21aa19a5d53820e49de07119ff93d3702fc7248c13249b1921103ce574bbc",
+        "prior_manifest_sha256": "sha256:5058f629102e290ba7120797ccb4c4b8d73886a6932491636e648a45c8f8a37d",
+        "template_identity": "FSL_MNI152NLin6Asym_2mm_from_Zenodo_16418628",
+        "template_sha256": "sha256:09c925ad165dfbe6b41b572876d67e9bbf8c5e26517e7817f9b43a8256227f53",
+        "schema_version": 1,
+        "kind": "registered_population_prior_proposal",
+        "source": {
+          "source_id": "zenodo:16418628:pub_release/maps_paper_release/brain_maps/functional/PHONOLOGICAL_union_randomise.nii.gz",
+          "uri": "https://zenodo.org/records/16418628",
+          "sha256": "d2189deb89c2243d127f66a914f3b6d3fd2ced61acc1f75c65a0b57b7d0bc3fd",
+          "license": "CC-BY-4.0",
+          "native_frame": "FSL_MNI152_RAS_mm",
+          "provenance": "prior"
+        },
+        "source_prior_shape": [
+          91,
+          109,
+          91
+        ],
+        "source_prior_affine_ras_mm": [
+          [
+            -2.0,
+            -0.0,
+            -0.0,
+            90.0
+          ],
+          [
+            -0.0,
+            2.0,
+            -0.0,
+            -126.0
+          ],
+          [
+            0.0,
+            0.0,
+            2.0,
+            -72.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "shape": [
+          240,
+          240,
+          155
+        ],
+        "affine_ras_mm": [
+          [
+            -1.0,
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          [
+            -0.0,
+            -1.0,
+            -0.0,
+            239.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "data_hash": "sha256:c2536cda4eb089b46d3ed8669ea81a7c6d4bf1ff5a8c84e7c431974d40b56081",
+        "sampling_coverage_hash": "sha256:e5a02c1f4e15c9fd083eefd5538c8e9e63827623ce2d54a5059dc1ab378f6418",
+        "sampling_coverage_fraction": 0.4924369399641577,
+        "mni_ras_to_patient_ras_mm": [
+          [
+            0.8998003062277471,
+            -0.0771502925107438,
+            -0.007512150334590812,
+            -122.97943553028415
+          ],
+          [
+            0.03491021036371106,
+            0.9630992705135126,
+            -0.10202542229185459,
+            132.7412119782
+          ],
+          [
+            0.009056306227382417,
+            0.0818698902716705,
+            0.7994027485228425,
+            84.85945418625833
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "metadata": {
+          "candidate_id": "affine_from_best_rigid",
+          "intensity_meaning": "Atlas concordance (unitless, 0\u20131): fraction of DES-seeded normative connectivity maps supporting this location; no patient deficit probability.",
+          "registration_limitations": [
+            "no_independent_landmark_ground_truth",
+            "population_prior_only",
+            "linear_transform_does_not_model_lesion_mass_effect",
+            "no_expert_alignment_review",
+            "template_commercial_redistribution_rights_unresolved"
+          ],
+          "seed_origin": "subcortical/white-matter DES",
+          "source_category": "PHONOLOGY",
+          "source_header_qc": {
+            "affine_ras_mm": [
+              [
+                -2.0,
+                -0.0,
+                -0.0,
+                90.0
+              ],
+              [
+                -0.0,
+                2.0,
+                -0.0,
+                -126.0
+              ],
+              [
+                0.0,
+                0.0,
+                2.0,
+                -72.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "anisotropic": false,
+            "file": "PHONOLOGICAL_union_randomise.nii.gz",
+            "frame": "RAS+",
+            "handedness": "left",
+            "obliquity_degrees": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "orientation": [
+              "L",
+              "A",
+              "S"
+            ],
+            "physical_units": "mm",
+            "qform_code": 1,
+            "qform_native": [
+              [
+                -2.0,
+                0.0,
+                0.0,
+                90.0
+              ],
+              [
+                0.0,
+                2.0,
+                0.0,
+                -126.0
+              ],
+              [
+                0.0,
+                0.0,
+                2.0,
+                -72.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "sform_code": 1,
+            "sform_native": [
+              [
+                -2.0,
+                -0.0,
+                -0.0,
+                90.0
+              ],
+              [
+                -0.0,
+                2.0,
+                -0.0,
+                -126.0
+              ],
+              [
+                0.0,
+                0.0,
+                2.0,
+                -72.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "shape": [
+              91,
+              109,
+              91
+            ],
+            "simulation_frame": "source_coded_frame_native_status_requires_source_provenance",
+            "source_units": "mm",
+            "spacing_mm": [
+              2.0,
+              2.0,
+              2.0
+            ],
+            "status": "passed_header_checks",
+            "unit_scale_to_mm": 1.0,
+            "visual_alignment_review": "pending",
+            "voxel_volume_mm3": 7.999999999999998
+          },
+          "template_redistribution": "unresolved; template image bytes remain external local research inputs",
+          "title": "Phonology \u00b7 functional network",
+          "verification": "exact saved preview equals pinned source map resampled with saved transform; no transform refitting",
+          "zero_meaning": "zero concordance or mask exclusion is not evidence of absent patient function"
+        },
+        "interpolation": "linear",
+        "provenance": "prior",
+        "physical_units": "mm",
+        "map_value_units": "unitless",
+        "template_frame": "FSL_MNI152_RAS_mm",
+        "coverage_meaning": "atlas field of view, not patient functional coverage",
+        "evidence_hash": "sha256:18d95b0657cc4bc26b62cdb775aaa0b9d89b836f95f1eb18c0ef2448bc3a2b1e",
+        "review_status": "alignment_review_required",
+        "view_only": true,
+        "planning_eligible": false,
+        "patient_specific_function": false,
+        "clinical_deficit_probability": null,
+        "review": null,
+        "template_arrays_embedded": false
+      },
+      "semantics_functional_concordance": {
+        "proposal_id": "semantics_functional_concordance_e8527c2c7da1",
+        "map_id": "semantics_functional_concordance",
+        "component": "semantics",
+        "map_kind": "functional_concordance",
+        "source_prior_hash": "sha256:2c0425947f771398ac0cda06daa4771eafb9361fcc4d4c15a003b8be928c97db",
+        "source_image_hash": "sha256:88666f74a0aa1e7e83b8b555605f2c6408a7ce88b11d49c0705717838d5b5c74",
+        "source_frame_hash": "sha256:8f3dba204e861a0c5b714729a78da92768137c122d04b45ffde4f69728b1f8f7",
+        "source_file_sha256": "sha256:398e7a6ec44e795aaf717fbf0fee6b3a11a671c5bc944c13a308ccaf02419176",
+        "source_case_planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+        "registration_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "registration_image_sha256": "sha256:519c83d1cac08d15b299707403e94e90b4a9fe6369cf77acf01b754b276147e5",
+        "registration_lesion_sha256": "sha256:54e51eb6ae60d8985ed5379a4267438017e2682255418833fac1b704813b483e",
+        "registration_compartments_hash": "sha256:91bc9db35a9054dc7327c0dedd001de16a61bc23ae707f1e918792c26aed97e4",
+        "registration_hash": "sha256:31dfcb8d10b33fe80ae6242e58345e101240cdb6dde0c5ae9414e8527c2c7da1",
+        "registration_method": "SimpleITK_masked_rigid_then_affine",
+        "registration_version": "simpleitk-linear-prior-v3",
+        "registration_report_sha256": "sha256:32dea3154c63bda4a1ff75e343ce45dc1d9cbe7f1d60afd2ef7ef385d9606ca3",
+        "registration_inventory_sha256": "sha256:977589b88fbfe045613ad7c04bae77a111f5a6d53e80f1197dbb4301cc0b8321",
+        "preview_sha256": "sha256:f7353dadbfb19ae77b17a86f729010567f210f40277ab10b9220f5baba4aa288",
+        "prior_manifest_sha256": "sha256:5058f629102e290ba7120797ccb4c4b8d73886a6932491636e648a45c8f8a37d",
+        "template_identity": "FSL_MNI152NLin6Asym_2mm_from_Zenodo_16418628",
+        "template_sha256": "sha256:09c925ad165dfbe6b41b572876d67e9bbf8c5e26517e7817f9b43a8256227f53",
+        "schema_version": 1,
+        "kind": "registered_population_prior_proposal",
+        "source": {
+          "source_id": "zenodo:16418628:pub_release/maps_paper_release/brain_maps/functional/SEMANTIC_union_randomise.nii.gz",
+          "uri": "https://zenodo.org/records/16418628",
+          "sha256": "c51311aa042996118d51301503f35d614ea5bb7be37269c1354a1bd7fe5b8cad",
+          "license": "CC-BY-4.0",
+          "native_frame": "FSL_MNI152_RAS_mm",
+          "provenance": "prior"
+        },
+        "source_prior_shape": [
+          91,
+          109,
+          91
+        ],
+        "source_prior_affine_ras_mm": [
+          [
+            -2.0,
+            -0.0,
+            -0.0,
+            90.0
+          ],
+          [
+            -0.0,
+            2.0,
+            -0.0,
+            -126.0
+          ],
+          [
+            0.0,
+            0.0,
+            2.0,
+            -72.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "shape": [
+          240,
+          240,
+          155
+        ],
+        "affine_ras_mm": [
+          [
+            -1.0,
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          [
+            -0.0,
+            -1.0,
+            -0.0,
+            239.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "data_hash": "sha256:66f74f925b41e8b088641a6d5aab58a5b2b4c005cddd462dd419b2a7eedc4da1",
+        "sampling_coverage_hash": "sha256:e5a02c1f4e15c9fd083eefd5538c8e9e63827623ce2d54a5059dc1ab378f6418",
+        "sampling_coverage_fraction": 0.4924369399641577,
+        "mni_ras_to_patient_ras_mm": [
+          [
+            0.8998003062277471,
+            -0.0771502925107438,
+            -0.007512150334590812,
+            -122.97943553028415
+          ],
+          [
+            0.03491021036371106,
+            0.9630992705135126,
+            -0.10202542229185459,
+            132.7412119782
+          ],
+          [
+            0.009056306227382417,
+            0.0818698902716705,
+            0.7994027485228425,
+            84.85945418625833
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "metadata": {
+          "candidate_id": "affine_from_best_rigid",
+          "intensity_meaning": "Atlas concordance (unitless, 0\u20131): fraction of DES-seeded normative connectivity maps supporting this location; no patient deficit probability.",
+          "registration_limitations": [
+            "no_independent_landmark_ground_truth",
+            "population_prior_only",
+            "linear_transform_does_not_model_lesion_mass_effect",
+            "no_expert_alignment_review",
+            "template_commercial_redistribution_rights_unresolved"
+          ],
+          "seed_origin": "subcortical/white-matter DES",
+          "source_category": "SEMANTICS",
+          "source_header_qc": {
+            "affine_ras_mm": [
+              [
+                -2.0,
+                -0.0,
+                -0.0,
+                90.0
+              ],
+              [
+                -0.0,
+                2.0,
+                -0.0,
+                -126.0
+              ],
+              [
+                0.0,
+                0.0,
+                2.0,
+                -72.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "anisotropic": false,
+            "file": "SEMANTIC_union_randomise.nii.gz",
+            "frame": "RAS+",
+            "handedness": "left",
+            "obliquity_degrees": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "orientation": [
+              "L",
+              "A",
+              "S"
+            ],
+            "physical_units": "mm",
+            "qform_code": 1,
+            "qform_native": [
+              [
+                -2.0,
+                0.0,
+                0.0,
+                90.0
+              ],
+              [
+                0.0,
+                2.0,
+                0.0,
+                -126.0
+              ],
+              [
+                0.0,
+                0.0,
+                2.0,
+                -72.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "sform_code": 1,
+            "sform_native": [
+              [
+                -2.0,
+                -0.0,
+                -0.0,
+                90.0
+              ],
+              [
+                -0.0,
+                2.0,
+                -0.0,
+                -126.0
+              ],
+              [
+                0.0,
+                0.0,
+                2.0,
+                -72.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "shape": [
+              91,
+              109,
+              91
+            ],
+            "simulation_frame": "source_coded_frame_native_status_requires_source_provenance",
+            "source_units": "mm",
+            "spacing_mm": [
+              2.0,
+              2.0,
+              2.0
+            ],
+            "status": "passed_header_checks",
+            "unit_scale_to_mm": 1.0,
+            "visual_alignment_review": "pending",
+            "voxel_volume_mm3": 7.999999999999998
+          },
+          "template_redistribution": "unresolved; template image bytes remain external local research inputs",
+          "title": "Semantics \u00b7 functional network",
+          "verification": "exact saved preview equals pinned source map resampled with saved transform; no transform refitting",
+          "zero_meaning": "zero concordance or mask exclusion is not evidence of absent patient function"
+        },
+        "interpolation": "linear",
+        "provenance": "prior",
+        "physical_units": "mm",
+        "map_value_units": "unitless",
+        "template_frame": "FSL_MNI152_RAS_mm",
+        "coverage_meaning": "atlas field of view, not patient functional coverage",
+        "evidence_hash": "sha256:2a6b573b6f7d60351f3a2c0ee93ecad32db1e6e92ce338bb7b971963de1fe5dd",
+        "review_status": "alignment_review_required",
+        "view_only": true,
+        "planning_eligible": false,
+        "patient_specific_function": false,
+        "clinical_deficit_probability": null,
+        "review": null,
+        "template_arrays_embedded": false
+      },
+      "speech_articulation_functional_concordance": {
+        "proposal_id": "speech_articulation_functional_concordance_27125b9db140",
+        "map_id": "speech_articulation_functional_concordance",
+        "component": "speech_articulation",
+        "map_kind": "functional_concordance",
+        "source_prior_hash": "sha256:1a0dfe45ba2456c3056518a5fe74ef2bab57b01c91bd3639c81fbc5dbdb40e53",
+        "source_image_hash": "sha256:88666f74a0aa1e7e83b8b555605f2c6408a7ce88b11d49c0705717838d5b5c74",
+        "source_frame_hash": "sha256:8f3dba204e861a0c5b714729a78da92768137c122d04b45ffde4f69728b1f8f7",
+        "source_file_sha256": "sha256:398e7a6ec44e795aaf717fbf0fee6b3a11a671c5bc944c13a308ccaf02419176",
+        "source_case_planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+        "registration_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "registration_image_sha256": "sha256:519c83d1cac08d15b299707403e94e90b4a9fe6369cf77acf01b754b276147e5",
+        "registration_lesion_sha256": "sha256:54e51eb6ae60d8985ed5379a4267438017e2682255418833fac1b704813b483e",
+        "registration_compartments_hash": "sha256:91bc9db35a9054dc7327c0dedd001de16a61bc23ae707f1e918792c26aed97e4",
+        "registration_hash": "sha256:a25178c56fb8a926cd57501508a38c0bbbd4dd711e38245e46e827125b9db140",
+        "registration_method": "SimpleITK_masked_rigid_then_affine",
+        "registration_version": "simpleitk-linear-prior-v3",
+        "registration_report_sha256": "sha256:32dea3154c63bda4a1ff75e343ce45dc1d9cbe7f1d60afd2ef7ef385d9606ca3",
+        "registration_inventory_sha256": "sha256:977589b88fbfe045613ad7c04bae77a111f5a6d53e80f1197dbb4301cc0b8321",
+        "preview_sha256": "sha256:e4420518666587dc12a34ab423ef9df6e6f848e11e791a2d55286a6a1a0ed772",
+        "prior_manifest_sha256": "sha256:5058f629102e290ba7120797ccb4c4b8d73886a6932491636e648a45c8f8a37d",
+        "template_identity": "FSL_MNI152NLin6Asym_2mm_from_Zenodo_16418628",
+        "template_sha256": "sha256:09c925ad165dfbe6b41b572876d67e9bbf8c5e26517e7817f9b43a8256227f53",
+        "schema_version": 1,
+        "kind": "registered_population_prior_proposal",
+        "source": {
+          "source_id": "zenodo:16418628:pub_release/maps_paper_release/brain_maps/functional/SPEECH_ARREST_union_randomise.nii.gz",
+          "uri": "https://zenodo.org/records/16418628",
+          "sha256": "4a68a5814c9eeb37fe846b4e7f9e3d7be8146ac65e4de964b125e8c20c0809d5",
+          "license": "CC-BY-4.0",
+          "native_frame": "FSL_MNI152_RAS_mm",
+          "provenance": "prior"
+        },
+        "source_prior_shape": [
+          91,
+          109,
+          91
+        ],
+        "source_prior_affine_ras_mm": [
+          [
+            -2.0,
+            -0.0,
+            -0.0,
+            90.0
+          ],
+          [
+            -0.0,
+            2.0,
+            -0.0,
+            -126.0
+          ],
+          [
+            0.0,
+            0.0,
+            2.0,
+            -72.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "shape": [
+          240,
+          240,
+          155
+        ],
+        "affine_ras_mm": [
+          [
+            -1.0,
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          [
+            -0.0,
+            -1.0,
+            -0.0,
+            239.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "data_hash": "sha256:5ff1ffef211988c65100dbe2bad2c0d38a0d14f33d9bc57aa6837579b21c55fb",
+        "sampling_coverage_hash": "sha256:e5a02c1f4e15c9fd083eefd5538c8e9e63827623ce2d54a5059dc1ab378f6418",
+        "sampling_coverage_fraction": 0.4924369399641577,
+        "mni_ras_to_patient_ras_mm": [
+          [
+            0.8998003062277471,
+            -0.0771502925107438,
+            -0.007512150334590812,
+            -122.97943553028415
+          ],
+          [
+            0.03491021036371106,
+            0.9630992705135126,
+            -0.10202542229185459,
+            132.7412119782
+          ],
+          [
+            0.009056306227382417,
+            0.0818698902716705,
+            0.7994027485228425,
+            84.85945418625833
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "metadata": {
+          "candidate_id": "affine_from_best_rigid",
+          "intensity_meaning": "Atlas concordance (unitless, 0\u20131): fraction of DES-seeded normative connectivity maps supporting this location; no patient deficit probability.",
+          "registration_limitations": [
+            "no_independent_landmark_ground_truth",
+            "population_prior_only",
+            "linear_transform_does_not_model_lesion_mass_effect",
+            "no_expert_alignment_review",
+            "template_commercial_redistribution_rights_unresolved"
+          ],
+          "seed_origin": "subcortical/white-matter DES",
+          "source_category": "SPEECH_ARREST",
+          "source_header_qc": {
+            "affine_ras_mm": [
+              [
+                -2.0,
+                -0.0,
+                -0.0,
+                90.0
+              ],
+              [
+                -0.0,
+                2.0,
+                -0.0,
+                -126.0
+              ],
+              [
+                0.0,
+                0.0,
+                2.0,
+                -72.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "anisotropic": false,
+            "file": "SPEECH_ARREST_union_randomise.nii.gz",
+            "frame": "RAS+",
+            "handedness": "left",
+            "obliquity_degrees": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "orientation": [
+              "L",
+              "A",
+              "S"
+            ],
+            "physical_units": "mm",
+            "qform_code": 1,
+            "qform_native": [
+              [
+                -2.0,
+                0.0,
+                0.0,
+                90.0
+              ],
+              [
+                0.0,
+                2.0,
+                0.0,
+                -126.0
+              ],
+              [
+                0.0,
+                0.0,
+                2.0,
+                -72.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "sform_code": 1,
+            "sform_native": [
+              [
+                -2.0,
+                -0.0,
+                -0.0,
+                90.0
+              ],
+              [
+                -0.0,
+                2.0,
+                -0.0,
+                -126.0
+              ],
+              [
+                0.0,
+                0.0,
+                2.0,
+                -72.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "shape": [
+              91,
+              109,
+              91
+            ],
+            "simulation_frame": "source_coded_frame_native_status_requires_source_provenance",
+            "source_units": "mm",
+            "spacing_mm": [
+              2.0,
+              2.0,
+              2.0
+            ],
+            "status": "passed_header_checks",
+            "unit_scale_to_mm": 1.0,
+            "visual_alignment_review": "pending",
+            "voxel_volume_mm3": 7.999999999999998
+          },
+          "template_redistribution": "unresolved; template image bytes remain external local research inputs",
+          "title": "Speech arrest / articulation \u00b7 functional network",
+          "verification": "exact saved preview equals pinned source map resampled with saved transform; no transform refitting",
+          "zero_meaning": "zero concordance or mask exclusion is not evidence of absent patient function"
+        },
+        "interpolation": "linear",
+        "provenance": "prior",
+        "physical_units": "mm",
+        "map_value_units": "unitless",
+        "template_frame": "FSL_MNI152_RAS_mm",
+        "coverage_meaning": "atlas field of view, not patient functional coverage",
+        "evidence_hash": "sha256:c09c84c12b1f3171ed82d35d5d465e310e56a672814ecfccf3f2529886ea4962",
+        "review_status": "alignment_review_required",
+        "view_only": true,
+        "planning_eligible": false,
+        "patient_specific_function": false,
+        "clinical_deficit_probability": null,
+        "review": null,
+        "template_arrays_embedded": false
+      }
+    },
+    "uncertainty": {
+      "family": "rigid_uniform",
+      "translation_scale_mm": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "rotation_scale_deg": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "rotation_center_mm": [
+        -119.5,
+        119.5,
+        77.0
+      ],
+      "version": "rigid-registration-v1",
+      "parameter_basis": "declared_uncalibrated_population_prior_registration_sensitivity"
+    },
+    "world_generator_hash": "sha256:62a3b2dabd5d90dada5d377ab11421ad95a7324f4e173ea55608845582f2f5f9",
+    "coverage_meaning": "released_atlas_sampling_support_not_patient_functional_coverage",
+    "zero_meaning": "no_signal_in_released_map_patient_function_unknown",
+    "unknown_cost_policy": "unit_upper_bound_surrogate_outside_supplied_map_coverage",
+    "patient_specific_function": false,
+    "expert_approval": false,
+    "clinical_deficit_probability": null,
+    "physical_units": "mm",
+    "value_units": "unitless_surrogate",
+    "evidence_hash": "sha256:ccb1cac8c554747a9d71f588b2421c9781680ee13e0a2850e5d459fe0895910a"
+  },
+  "atlas_sampling_coverage_within_declared_tissue": {
+    "motor": {
+      "tissue_cells": 1432027,
+      "covered_tissue_cells": 1431949,
+      "covered_tissue_fraction": 0.9999455317532421
+    },
+    "language": {
+      "tissue_cells": 1432027,
+      "covered_tissue_cells": 1431949,
+      "covered_tissue_fraction": 0.9999455317532421
+    }
+  },
+  "tissue_support": "estimated_skull_stripped_nonzero_MRI_envelope_unreviewed",
+  "original_proposals_unchanged_view_only": true,
+  "expert_approval": false,
+  "patient_specific_function": false,
+  "clinical_deficit_probability": null,
+  "policy_updates": 0,
+  "source_registration_refitted": false,
+  "elapsed_seconds": 9.121643458027393,
+  "limitations": [
+    "population_priors_uncalibrated",
+    "alignment_review_required",
+    "patient_tracts_unavailable",
+    "vascular_anatomy_unassessed",
+    "official_UCSF_source_equivalence_not_established_by_this_operation"
+  ],
+  "source_sha256": {
+    "scripts/prepare_functional_sensitivity.py": "1546da823ad7d9361d4a375aa4fdcecb592647023915c82e1273149c9c0f9ec4",
+    "src/resectionlab/functional_evidence.py": "58ca24b6b0d63ef3860b33a247301a2f210857eec9719ad14ac5cab8517d5426",
+    "src/resectionlab/core.py": "f1f0b8ae334cabc864c3ec85d4f6b49e4842de2b580edaadd7562276ea0c92db",
+    "src/resectionlab/imaging.py": "26928ec3eb948924b961d7d70289014ee243c1cf6ea6e3f9ba60e8bf96e8d866",
+    "src/resectionlab/prior_proposals.py": "8d0f40aa3690845465f024708d19c68b3441d0d19cd356b900566fb074730f5f",
+    "src/resectionlab/worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
+  }
+}

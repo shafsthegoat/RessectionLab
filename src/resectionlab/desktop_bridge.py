@@ -262,6 +262,11 @@ class BridgeSession:
         for item in case.prior_proposals.values():
             arrays.extend((item.data, item.sampling_coverage, item.affine_ras_mm,
                            item.source_prior_affine_ras_mm, item.mni_ras_to_patient_ras_mm))
+        if case.functional_evidence is not None:
+            evidence = case.functional_evidence
+            arrays.extend(value for value in (evidence.motor, evidence.language,
+                evidence.motor_coverage, evidence.language_coverage, evidence.affine_ras_mm)
+                if value is not None)
         return sum(array.nbytes for array in arrays)
 
     def _prior_descriptor(self, item: Any) -> dict:
@@ -332,6 +337,8 @@ class BridgeSession:
                 "review": None if item.review is None else item.review.to_manifest()}
                 for item in case.structural_evidence.values()],
             "priorProposals": [self._prior_descriptor(item) for _, item in sorted(case.prior_proposals.items())],
+            "functionalEvidence": (None if case.functional_evidence is None
+                                   else case.functional_evidence.to_manifest()),
             "unknowns": list(case.unknowns), "metadata": thaw_json(case.metadata),
             "context": None if case.context is None else case.context.planning_view(),
             "planningAsOf": None if case.context is None else case.context.planning_as_of.isoformat(),
@@ -458,20 +465,37 @@ class BridgeSession:
         return True
 
     @staticmethod
-    def _run_options(config: dict) -> dict:
+    def _run_options(config: dict, case: CaseData) -> dict:
         access = None if config.get("access") is None else AccessWindow(**config["access"])
         ids = config.get("toolIds")
         tools = None if ids is None else tuple(tool for tool in RESEARCH_TOOLS if tool.tool_id in ids)
         if ids is not None and len(tools) != len(ids):
             raise BridgeError("TOOL_UNAVAILABLE", "Frozen run references an unknown research tool")
-        return {"access": access, "tools": tools, "selected_entry_mm": config.get("selectedEntryMm"),
-                "selected_target_mm": config.get("selectedTargetMm")}
+        result = {"access": access, "tools": tools, "selected_entry_mm": config.get("selectedEntryMm"),
+                  "selected_target_mm": config.get("selectedTargetMm")}
+        evidence = case.functional_evidence
+        if evidence is not None:
+            from .worlds import content_hash
+            evidence.assert_matches(case)
+            if (config.get("functionalEvidenceHash") != evidence.fingerprint
+                    or config.get("worldGeneratorHash") != evidence.uncertainty.fingerprint
+                    or content_hash(config.get("worldGenerator")) != evidence.uncertainty.fingerprint):
+                raise BridgeError("EVIDENCE_VERSION_MISMATCH", "Run evidence or uncertainty differs from the current case")
+            result["world_generator"] = evidence.uncertainty
+        elif any(key in config for key in ("functionalEvidenceHash", "worldGeneratorHash", "worldGenerator")):
+            raise BridgeError("EVIDENCE_VERSION_MISMATCH", "Run requires functional evidence absent from this case")
+        return result
 
     @staticmethod
     def _route_config(entry: _CaseEntry, route_id: Any) -> dict:
         config = {"routeId": route_id, "access": None, "toolIds": None,
                   "selectedEntryMm": None, "selectedTargetMm": None, "coordinateFrame": "RAS+",
                   "scope": "default_native_candidate_search", "optimizationChoiceScope": "finite_native_candidate_actions"}
+        if entry.case.functional_evidence is not None:
+            evidence = entry.case.functional_evidence
+            evidence.assert_matches(entry.case)
+            config.update(functionalEvidenceHash=evidence.fingerprint,
+                worldGenerator=evidence.uncertainty.to_dict(), worldGeneratorHash=evidence.uncertainty.fingerprint)
         if route_id is None:
             return config
         route_id = _string(route_id, "routeId", maximum=128)
@@ -566,15 +590,21 @@ class BridgeSession:
         from .simulation import RewardSpec
         from .worlds import WorldGeneratorConfig, content_hash
         reward, world_generator, proposal = RewardSpec(), WorldGeneratorConfig(), AxisColumnProposalConfig()
+        evidence = entry.case.functional_evidence
+        if evidence is not None:
+            evidence.assert_matches(entry.case)
+            world_generator = evidence.uncertainty
         preset = json.loads(json.dumps({"input_profile": "RAW", "max_steps": 3,
             "neighboring_columns_acknowledged": True,
             "world_role": None, "world_partitions_created": False,
-            "population_priors_used": False,
+            "population_priors_used": evidence is not None,
             "max_tip_step_mm": .25, "partial_contact_weight": .05,
             "max_actions": proposal.max_primary_rays + 1,
             "proposal_rule": asdict(proposal), "proposal_rule_hash": proposal.fingerprint,
             "reward": asdict(reward), "world_generator": world_generator.to_dict(),
             "world_generator_hash": world_generator.fingerprint}, allow_nan=False))
+        if evidence is not None:
+            preset["functional_evidence"] = json.loads(json.dumps(evidence.to_manifest(), allow_nan=False))
         progress(0., "Inspecting neighboring paths within the selected window; no tissue is removed")
         try:
             snapshot = inspect_axis_planning(entry.case, access_ras=access, tools=tools,
@@ -687,7 +717,7 @@ class BridgeSession:
             if policy_hash(load_policy(directory / "checkpoint.pt")) != replay.get("checkpoint_hash"):
                 raise BridgeError("RUN_INTEGRITY_FAILED", "Selected replay does not match the saved policy")
             report["replay"] = recheck_native_replay(case, replay, cancelled=request.cancelled.is_set,
-                                                    **self._run_options(manifest["config"]))
+                                                    **self._run_options(manifest["config"], case))
         self.run_reports[run_id] = freeze_json(json.loads(self._json_bytes(report)))
         while len(self.run_reports) > 4:
             self.run_reports.popitem(last=False)
@@ -753,7 +783,8 @@ class BridgeSession:
             progress(0., "Preparing native patient simulation", {"runId": manifest["runId"], "phase": "preparing"})
             from .native_refinement import run_native_refinement
             report = run_native_refinement(entry.case, directory, budget_seconds=config["budgetSeconds"], seed=config["seed"],
-                resume=resume, cancelled=request.cancelled.is_set, progress=training_progress, **self._run_options(config))
+                resume=resume, cancelled=request.cancelled.is_set, progress=training_progress,
+                **self._run_options(config, entry.case))
             manifest["status"] = "cancelled" if request.cancelled.is_set() else report["status"]
             report_path = directory / "native-refinement.json"
             report_bytes = report_path.read_bytes()
@@ -961,7 +992,8 @@ class BridgeSession:
             config = self._route_config(entry, route_id)
             from .native_refinement import inspect_native_refinement
             progress(0., "Checking initial cutting actions for the selected entry, target and instrument")
-            readiness = inspect_native_refinement(entry.case, cancelled=request.cancelled.is_set, **self._run_options(config))
+            readiness = inspect_native_refinement(entry.case, cancelled=request.cancelled.is_set,
+                                                 **self._run_options(config, entry.case))
             request.check()
             return {**readiness, "caseHash": entry.case.semantic_hash, "routeId": route_id,
                     "optimizationChoiceScope": config["optimizationChoiceScope"],
