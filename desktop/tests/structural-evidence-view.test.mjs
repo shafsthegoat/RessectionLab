@@ -12,6 +12,7 @@ let server,
   ReplayStepControl,
   PriorInventory,
   PriorCursorReadout,
+  App,
   cacheDir;
 before(async () => {
   cacheDir = await fs.mkdtemp(
@@ -33,10 +34,17 @@ before(async () => {
   const priorModule = await server.ssrLoadModule("/src/PriorInventory.tsx");
   PriorInventory = priorModule.PriorInventory;
   PriorCursorReadout = priorModule.PriorCursorReadout;
+  App = (await server.ssrLoadModule("/src/App.tsx")).default;
 });
 after(async () => {
   await server?.close();
-  if (cacheDir) await fs.rm(cacheDir, { recursive: true, force: true });
+  if (cacheDir)
+    await fs.rm(cacheDir, {
+      recursive: true,
+      force: true,
+      maxRetries: 3,
+      retryDelay: 30,
+    });
 });
 function evidence(reviewStatus, reviewRequired) {
   return {
@@ -256,4 +264,20 @@ test("excessive coordinate precision error cannot appear as a mapped value", () 
     html,
     /0.0000|prior-cursor-value|Outside atlas field of view/,
   );
+});
+
+test("the unloaded app owns one welcome message without mounting the viewer placeholder beneath it", () => {
+  const previousWindow = globalThis.window;
+  globalThis.window = { resectionApi: {} };
+  try {
+    const html = renderToStaticMarkup(React.createElement(App));
+    assert.equal((html.match(/class="welcome-overlay"/g) ?? []).length, 1);
+    assert.match(html, /From source imaging/);
+    assert.match(html, /Open a case/);
+    assert.match(html, /Local workspace · Open imaging to begin/);
+    assert.doesNotMatch(html, /rl-viewer-empty|Your case, in perspective/);
+  } finally {
+    if (previousWindow === undefined) delete globalThis.window;
+    else globalThis.window = previousWindow;
+  }
 });

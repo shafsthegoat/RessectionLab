@@ -1364,18 +1364,20 @@ export default function App() {
           </div>
         )}
         <div className="viewer-shell">
-          <ViewerWorkspace
-            caseData={caseData}
-            visibleLayers={visibleLayers}
-            overlayOpacity={overlayOpacity}
-            cursor={cursor}
-            onCursorChange={setCursor}
-            routes={viewerRoutes}
-            cameraMode={cameraMode}
-            replay={viewerReplay}
-            structuralProposal={proposalView}
-            priorLayer={priorView}
-          />
+          {caseData && (
+            <ViewerWorkspace
+              caseData={caseData}
+              visibleLayers={visibleLayers}
+              overlayOpacity={overlayOpacity}
+              cursor={cursor}
+              onCursorChange={setCursor}
+              routes={viewerRoutes}
+              cameraMode={cameraMode}
+              replay={viewerReplay}
+              structuralProposal={proposalView}
+              priorLayer={priorView}
+            />
+          )}
           {!caseData && (
             <div className="welcome-overlay">
               <div className="welcome-symbol">
