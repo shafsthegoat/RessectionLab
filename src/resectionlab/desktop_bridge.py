@@ -40,7 +40,8 @@ MAX_ARRAY_BYTES = 512 * 1024 * 1024
 MAX_CASE_BYTES = 1024 * 1024 * 1024
 MAX_WORKSPACE_BYTES = 512 * 1024
 MAX_PENDING = 8
-OPERATIONS = frozenset({"ping", "loadCase", "importNifti", "importStructuralEvidence", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "exportCandidate", "shutdown"})
+MAX_PRIOR_PROPOSALS = 16
+OPERATIONS = frozenset({"ping", "loadCase", "importNifti", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "exportCandidate", "shutdown"})
 MAX_RUN_JSON_BYTES = 32 * 1024 * 1024
 RESEARCH_TOOLS = GENERIC_TOOLS + NATIVE_GENERIC_TOOLS
 RUN_INTEGRITY_FILES = {"checkpointSha256": "checkpoint.pt", "contractSha256": "contract.json",
@@ -80,6 +81,13 @@ def _path(value: Any, *, kind: str, output: bool = False) -> Path:
     if output and (not path.parent.is_dir() or (path.exists() and not path.is_file())):
         raise BridgeError("INVALID_PATH", "Save location must have an existing directory")
     return path
+
+
+def _directory(value: Any) -> Path:
+    path = Path(_string(value, "directory")).expanduser()
+    if not path.is_absolute() or path.is_symlink() or not path.is_dir():
+        raise BridgeError("INVALID_PATH", "Select an existing original directory with the native file dialog")
+    return path.resolve()
 
 
 class BinaryTransfers:
@@ -197,15 +205,44 @@ class BridgeSession:
             raise BridgeError("CASE_VERSION_MISMATCH", "Cached case has changed")
         return entry
 
-    def _install_case(self, case: CaseData, artifacts: dict, request: _Request) -> dict:
-        request.check()
-        if case.mri.size * 4 > MAX_ARRAY_BYTES:
-            raise BridgeError("ARRAY_SIZE_LIMIT", "Selected MRI is too large for this desktop view")
+    @staticmethod
+    def _case_array_bytes(case: CaseData) -> int:
         arrays = [case.mri, case.affine, *case.compartments.values(), *case.source_compartments.values()]
         arrays.extend(item.mask for item in case.structural_evidence.values())
         if case.brain_mask is not None:
             arrays.append(case.brain_mask)
-        if len(case.compartments) > 32 or len(case.structural_evidence) > 8 or sum(array.nbytes for array in arrays) > MAX_CASE_BYTES:
+        for item in case.prior_proposals.values():
+            arrays.extend((item.data, item.sampling_coverage, item.affine_ras_mm,
+                           item.source_prior_affine_ras_mm, item.mni_ras_to_patient_ras_mm))
+        return sum(array.nbytes for array in arrays)
+
+    def _prior_descriptor(self, item: Any) -> dict:
+        manifest = item.to_manifest()
+        return {"proposalId": item.proposal_id, "mapId": item.map_id,
+                "component": item.component, "mapKind": item.map_kind,
+                "title": item.metadata.get("title", item.map_id.replace("_", " ")),
+                "provenance": "prior", "reviewStatus": "alignment_review_required",
+                "viewOnly": True, "planningEligible": False, "patientSpecificFunction": False,
+                "clinicalDeficitProbability": None, "clinicalRiskReason": "no_validated_clinical_outcome_model",
+                "frame": "RAS+", "spatialUnits": "mm", "valueUnits": "unitless",
+                "affine": item.affine_ras_mm.tolist(), "shape": list(item.data.shape),
+                "data": self.transfers.array(item.data, "float32"),
+                "samplingCoverage": self.transfers.array(item.sampling_coverage, "uint8"),
+                "samplingCoverageFraction": manifest["sampling_coverage_fraction"],
+                "coverageMeaning": manifest["coverage_meaning"], "interpolation": item.interpolation,
+                "evidenceHash": manifest["evidence_hash"], "registrationHash": item.registration_hash,
+                "sourceImageHash": item.source_image_hash, "sourceFrameHash": item.source_frame_hash,
+                "sourcePlanningHash": item.source_case_planning_hash,
+                "registrationCaseHash": item.registration_case_hash,
+                "source": item.source.to_dict(), "metadata": thaw_json(item.metadata),
+                "provenanceRecord": manifest}
+
+    def _install_case(self, case: CaseData, artifacts: dict, request: _Request) -> dict:
+        request.check()
+        if case.mri.size * 4 > MAX_ARRAY_BYTES:
+            raise BridgeError("ARRAY_SIZE_LIMIT", "Selected MRI is too large for this desktop view")
+        if (len(case.compartments) > 32 or len(case.structural_evidence) > 8
+                or len(case.prior_proposals) > MAX_PRIOR_PROPOSALS or self._case_array_bytes(case) > MAX_CASE_BYTES):
             raise BridgeError("CASE_SIZE_LIMIT", "Expanded case arrays exceed the desktop cache limit")
         if case.semantic_hash in self.cases:
             entry = self.cases[case.semantic_hash]
@@ -246,6 +283,7 @@ class BridgeSession:
                 "array": self.transfers.array(item.mask, "uint8"), "metadata": thaw_json(item.metadata),
                 "review": None if item.review is None else item.review.to_manifest()}
                 for item in case.structural_evidence.values()],
+            "priorProposals": [self._prior_descriptor(item) for _, item in sorted(case.prior_proposals.items())],
             "unknowns": list(case.unknowns), "metadata": thaw_json(case.metadata),
             "context": None if case.context is None else case.context.planning_view(),
             "planningAsOf": None if case.context is None else case.context.planning_as_of.isoformat(),
@@ -272,6 +310,8 @@ class BridgeSession:
                 retained.update((compartment["array"]["path"], compartment["sourceArray"]["path"]))
             for proposal in cached.descriptor["structuralEvidence"]:
                 retained.add(proposal["array"]["path"])
+            for proposal in cached.descriptor["priorProposals"]:
+                retained.update((proposal["data"]["path"], proposal["samplingCoverage"]["path"]))
         for key, descriptor in list(self.replay_transfers.items()):
             if key[0] in self.cases:
                 retained.add(descriptor["path"])
@@ -456,12 +496,15 @@ class BridgeSession:
             raise BridgeError("RUN_INTEGRITY_FAILED", "Saved training report changed after completion")
         if run_id in self.run_reports:
             self.run_reports.move_to_end(run_id)
-            return directory, manifest, thaw_json(self.run_reports[run_id])
+            report = thaw_json(self.run_reports[run_id])
+            self._require_selected_replay(directory, report)
+            return directory, manifest, report
         report = json.loads(contents)
         if report.get("case_hash") != case.semantic_hash or report.get("final_evaluation") is not False:
             raise BridgeError("CASE_VERSION_MISMATCH", "Saved report has an invalid case or partition")
         replay = report.get("replay")
         if replay is not None:
+            self._require_selected_replay(directory, report)
             from .native_refinement import recheck_native_replay
             from .learning import load_policy, policy_hash
             request.check()
@@ -473,6 +516,17 @@ class BridgeSession:
         while len(self.run_reports) > 4:
             self.run_reports.popitem(last=False)
         return directory, manifest, report
+
+    @staticmethod
+    def _require_selected_replay(directory: Path, report: dict) -> None:
+        if report.get("replay") is None:
+            return
+        from .native_refinement import require_completed_selection_replay
+        try:
+            contract = json.loads((directory / "contract.json").read_text())
+            require_completed_selection_replay(report, contract)
+        except (ValueError, OSError, TypeError) as error:
+            raise BridgeError("REPLAY_UNAVAILABLE", "This checkpoint has no completed matching selection panel") from error
 
     def _train_patient(self, args: dict, request: _Request, progress: Callable) -> dict:
         _keys(args, {"caseHash", "budgetSeconds", "seed", "routeId", "resumeRunId"})
@@ -528,6 +582,7 @@ class BridgeSession:
             report_path = directory / "native-refinement.json"
             report_bytes = report_path.read_bytes()
             report = json.loads(report_bytes)
+            self._require_selected_replay(directory, report)
             manifest["reportSha256"] = hashlib.sha256(report_bytes).hexdigest()
             if report["status"] != "no_actionable_moves":
                 manifest["checkpointSha256"] = hashlib.sha256((directory / "checkpoint.pt").read_bytes()).hexdigest()
@@ -620,6 +675,7 @@ class BridgeSession:
                     "metadata": thaw_json(case.metadata), "unknowns": list(case.unknowns),
                     "patientContext": None if case.context is None else case.context.planning_view(),
                     "structuralEvidence": [item.to_manifest() for item in case.structural_evidence.values()],
+                    "priorProposals": [item.to_manifest() for _, item in sorted(case.prior_proposals.items())],
                     "clinicalDeficitProbability": None, "clinicalRiskReason": "no_validated_clinical_outcome_model"}
         if operation == "importStructuralEvidence":
             _keys(args, {"caseHash", "sourceImagePath", "maskPath", "reportPath", "variant"})
@@ -640,6 +696,39 @@ class BridgeSession:
             progress(.1, "Checking extraction source, model, output hashes and native frame")
             case = import_brain_extraction_evidence(entry.case, source_image_path=source, mask_path=mask,
                                                     report_path=report, variant=args["variant"])
+            return self._install_case(case, thaw_json(entry.artifacts), request)
+        if operation == "importPriorProposals":
+            _keys(args, {"caseHash", "registrationDirectory", "sourceCacheDirectory", "priorManifestPath",
+                         "sourceImagePath", "registrationImagePath", "lesionPath"})
+            entry = self._get_case(args.get("caseHash"))
+            directory = _directory(args.get("registrationDirectory"))
+            cache = _directory(args.get("sourceCacheDirectory"))
+            manifest = _path(args.get("priorManifestPath"), kind="json")
+            source = _path(args.get("sourceImagePath"), kind="NIfTI")
+            registration_image = _path(args.get("registrationImagePath"), kind="NIfTI")
+            lesion = _path(args.get("lesionPath"), kind="NIfTI")
+            inventory = _path(str(directory / "functional_overlay_inventory.json"), kind="json")
+            report = _path(str(directory / "registration_comparison.json"), kind="json")
+            if any(path.stat().st_size > 16 * 1024**2 for path in (inventory, report, manifest)):
+                raise BridgeError("REPORT_SIZE_LIMIT", "Prior proposal metadata exceeds the local import limit")
+            layers = json.loads(inventory.read_text())
+            if not isinstance(layers, list) or not 0 < len(layers) <= MAX_PRIOR_PROPOSALS:
+                raise BridgeError("CASE_SIZE_LIMIT", "Prior proposal inventory exceeds the desktop layer limit")
+            # Reserve the whole requested collection before any resampling. This
+            # conservative bound includes already cached alternative proposals.
+            if (len(entry.case.prior_proposals) + len(layers) > MAX_PRIOR_PROPOSALS
+                    or self._case_array_bytes(entry.case) + len(layers) * (entry.case.mri.size * 5 + 384) > MAX_CASE_BYTES):
+                raise BridgeError("CASE_SIZE_LIMIT", "Registered prior arrays exceed the desktop cache limit")
+            for selected in (source, registration_image, lesion):
+                if math.prod(inspect_nifti(selected)["shape"]) * 4 > MAX_ARRAY_BYTES:
+                    raise BridgeError("ARRAY_SIZE_LIMIT", "Prior registration source grid exceeds the desktop limit")
+            request.check()
+            from .prior_proposals import import_registered_prior_proposals
+            progress(.1, "Verifying saved population maps, source anatomy, transforms and atlas coverage")
+            case = import_registered_prior_proposals(entry.case, registration_directory=directory,
+                source_cache_directory=cache, prior_manifest_path=manifest, source_image_path=source,
+                registration_image_path=registration_image, lesion_path=lesion,
+                cancelled=request.cancelled.is_set)
             return self._install_case(case, thaw_json(entry.artifacts), request)
         if operation == "generateRoutes":
             _keys(args, {"caseHash", "toolIds", "allowEstimatedSupport", "config"})
@@ -749,6 +838,13 @@ class BridgeSession:
                     summary = self._report_summary(manifest)
                     summary["hasCheckpoint"] = (directory / "checkpoint.pt").is_file()
                     summary["hasAcceptedReplay"] = manifest.get("replayStatus") == "accepted_independent_geometry"
+                    if summary["hasAcceptedReplay"]:
+                        try:
+                            retained = json.loads((directory / "native-refinement.json").read_text())
+                            self._require_selected_replay(directory, retained)
+                            summary["hasAcceptedReplay"] = retained.get("replay") is not None
+                        except (BridgeError, ValueError, OSError):
+                            summary["hasAcceptedReplay"] = False
                     runs.append(summary)
             return {"caseHash": case.semantic_hash, "runs": sorted(runs, key=lambda value: value["createdAt"], reverse=True)}
         if operation in {"replayTraining", "exportCandidate"}:

@@ -394,6 +394,66 @@ def test_cancellation_keeps_real_checkpoint_but_exposes_no_replay(native_runtime
     assert terminal(events, "cancelled-replay")[0]["error"]["code"] == "REPLAY_UNAVAILABLE"
 
 
+def test_incomplete_initial_selection_is_retained_but_never_installed(native_runtime, monkeypatch):
+    from resectionlab import learning
+    instance, events, case = native_runtime
+
+    def interrupted(*args, **kwargs):
+        raise learning.RolloutInterrupted(1)
+
+    def forbidden(*args, **kwargs):
+        raise AssertionError("Incomplete selection must not load a replay checkpoint")
+
+    monkeypatch.setattr(learning, "rollout_policy", interrupted)
+    monkeypatch.setattr(learning, "load_policy", forbidden)
+    outcome = bridge_request(instance, events, "incomplete-native", "trainPatient",
+        {"caseHash": case.semantic_hash, "budgetSeconds": 5, "seed": 11})
+    assert outcome["event"] == "result", outcome
+    run = outcome["result"]
+    assert run["training"]["status"] == "incomplete_selection"
+    assert run["training"]["selection_panel_complete"] is False
+    assert run["training"]["replay"] is None
+    directory = instance.session.run_dir / run["runId"]
+    assert (directory / "checkpoint.pt").is_file()
+    assert json.loads((directory / "result.json").read_text())["status"] == "wall_time_budget"
+    replay = bridge_request(instance, events, "incomplete-replay", "replayTraining",
+        {"caseHash": case.semantic_hash, "runId": run["runId"]})
+    assert replay["error"]["code"] == "REPLAY_UNAVAILABLE"
+    assert not (directory / "native-candidate-freeze.json").exists()
+
+
+def test_historical_unselected_fallback_replay_is_rejected_before_checkpoint_load(native_runtime, monkeypatch):
+    import hashlib
+    from resectionlab import learning
+    instance, events, case = native_runtime
+    run = train_native(native_runtime)
+    directory = instance.session.run_dir / run["runId"]
+    report_path = directory / "native-refinement.json"
+    historical = json.loads(report_path.read_text())
+    historical.update(selected_selection_return=None, selection_history=[], status="wall_time_budget")
+    # Reproduce a receipt created by the former consumer bug in this private
+    # fixture: its bytes are intact and signed, but it never completed selection.
+    contents = json.dumps(historical).encode()
+    report_path.write_bytes(contents)
+    manifest = json.loads((directory / "bridge-run.json").read_text())
+    manifest["reportSha256"] = hashlib.sha256(contents).hexdigest()
+    instance.session._write_run(directory, manifest)
+    instance.session.run_reports.clear()
+
+    def forbidden(*args, **kwargs):
+        raise AssertionError("Historical incomplete selection must be rejected before checkpoint load")
+
+    monkeypatch.setattr(learning, "load_policy", forbidden)
+    replay = bridge_request(instance, events, "historical-incomplete", "replayTraining",
+        {"caseHash": case.semantic_hash, "runId": run["runId"]})
+    assert replay["error"]["code"] == "REPLAY_UNAVAILABLE", replay
+    assert report_path.read_bytes() == contents
+    assert run["runId"] not in instance.session.run_reports
+    listing = bridge_request(instance, events, "historical-listing", "listRuns", {"caseHash": case.semantic_hash})
+    assert listing["result"]["runs"][0]["hasAcceptedReplay"] is False
+    assert listing["result"]["runs"][0]["hasCheckpoint"] is True
+
+
 def test_native_export_and_timeline_share_certified_source_cell_accounting(native_runtime, tmp_path):
     instance, events, case = native_runtime
     run = train_native(native_runtime)
