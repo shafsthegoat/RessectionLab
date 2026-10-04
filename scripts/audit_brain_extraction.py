@@ -8,6 +8,7 @@ It does not rerun the network and does not measure segmentation accuracy.
 from __future__ import annotations
 
 import argparse
+from datetime import datetime
 from hashlib import sha256
 import itertools
 import json
@@ -45,9 +46,11 @@ def read_native(path: Path, reference: nib.Nifti1Image, *, binary: bool) -> tupl
     sform, scode = volume.get_sform(coded=True)
     if not (qcode or scode):
         raise ValueError("Native artifact has no coded spatial transform")
-    if qcode and scode and not np.allclose(qform, sform, rtol=0, atol=0.01):
-        raise ValueError("Native artifact qform/sform conflict")
     points = _corners(reference.shape)
+    if qcode and scode:
+        form_delta = nib.affines.apply_affine(qform, points) - nib.affines.apply_affine(sform, points)
+        if not np.isfinite(form_delta).all() or np.max(np.linalg.norm(form_delta, axis=1)) > 0.01:
+            raise ValueError("Native artifact qform/sform physical corner conflict")
     discrepancy = nib.affines.apply_affine(volume.affine, points) - nib.affines.apply_affine(reference.affine, points)
     maximum_error = float(np.max(np.linalg.norm(discrepancy, axis=1)))
     if not np.isfinite(maximum_error) or maximum_error > 0.01:
@@ -123,32 +126,95 @@ def measure(mask: np.ndarray, distance: np.ndarray, tumor: np.ndarray, affine: n
     }
 
 
-def audit(repository: Path, experiment: Path) -> dict:
-    source_manifest = json.loads((repository / "manifests/btc_acquisition.json").read_text())
+def check_frozen_configuration(frozen: dict, report: dict, *, subject: str) -> dict:
+    """Compare saved run declarations against the predeclared experiment.
+
+    This does not establish when a file was first created or prove that no other
+    runs occurred. It checks the retained declarations and reported settings.
+    """
+    if frozen["subject"] != subject or frozen["implementation_sha256"] != report["implementation_sha256"]:
+        raise ValueError("Frozen subject or implementation differs from saved run")
+    declared_at = datetime.fromisoformat(frozen["declared_at"])
+    created_at = datetime.fromisoformat(report["created_at"])
+    if declared_at.tzinfo is None or created_at.tzinfo is None or declared_at >= created_at:
+        raise ValueError("Frozen declaration must precede reported run completion with explicit time zones")
+    if (frozen["changes_allowed_during_case_run"] or frozen["brain_reviewed"]
+            or frozen["cortical_access_permitted"]):
+        raise ValueError("Frozen experiment must remain unreviewed with changes disallowed")
+    if list(report["variants"]) != frozen["variant_order"]:
+        raise ValueError("Reported variant order differs from frozen declaration")
+    config = frozen["frozen_configuration"]
+    if report["source_annotation"]["geometry_and_threshold"]["threshold"] != config["annotation_threshold"]:
+        raise ValueError("Annotation threshold differs from frozen declaration")
+    compared = ("device", "cpu_threads", "border_mm", "timeout_seconds", "maximum_rss_bytes")
+    for variant, item in report["variants"].items():
+        record = item["inference"]
+        if record["model"] != frozen["models"][variant]:
+            raise ValueError("Run model differs from frozen declaration")
+        for key in compared:
+            if record["configuration"][key] != config[key]:
+                raise ValueError(f"Run configuration differs from frozen declaration: {key}")
+    return {
+        "declared_subject": subject, "cohort_role": frozen["cohort_role"],
+        "recorded_declaration_precedes_recorded_completion": True,
+        "models_and_implementation_match": True, "annotation_threshold_matches": True,
+        "reported_configuration_fields_matched": list(compared),
+        "recorded_variant_order": list(report["variants"]),
+        "limitations": "Saved declarations checked; external timestamp attestation and absence of other runs are not established.",
+    }
+
+
+def audit(repository: Path, experiment: Path, *, subject: str = "sub-PAT28",
+          source_manifest_path: Path | None = None, frozen_path: Path | None = None,
+          repeats: tuple[str, ...] | None = None) -> dict:
+    if subject not in ("sub-PAT28", "sub-PAT05"):
+        raise ValueError("Choose a subject with a retained creator-source manifest")
+    if source_manifest_path is None:
+        filename = "btc_acquisition.json" if subject == "sub-PAT28" else "btc_pat05_acquisition.json"
+        source_manifest_path = repository / "manifests" / filename
+    source_manifest = json.loads(source_manifest_path.read_text())
     source_root = repository / "data/diffusion_source/ds001226-v5.0.1"
     source_files = {item["path"]: item for item in source_manifest["files"]}
-    t1_relative = "sub-PAT28/ses-preop/anat/sub-PAT28_ses-preop_T1w.nii.gz"
-    annotation_relative = "derivatives/tumor_masks/sub-PAT28/anat/sub-PAT28_space_T1_label-tumor.nii"
+    t1_relative = f"{subject}/ses-preop/anat/{subject}_ses-preop_T1w.nii.gz"
+    annotation_relative = f"derivatives/tumor_masks/{subject}/anat/{subject}_space_T1_label-tumor.nii"
     t1_path, annotation_path = source_root / t1_relative, source_root / annotation_relative
     for relative in (t1_relative, annotation_relative):
         verify_file(source_root / relative, source_files[relative]["sha256"])
     report_path = experiment / "brain_extraction_report.json"
     report = json.loads(report_path.read_text())
+    if report["brain_reviewed"] or report["cortical_access_permitted"]:
+        raise ValueError("Extraction report must remain unreviewed without cortical access")
     if report["source_t1_sha256"] != source_files[t1_relative]["sha256"]:
         raise ValueError("Extraction report belongs to a different source image")
     if report["source_annotation"]["sha256"] != source_files[annotation_relative]["sha256"]:
         raise ValueError("Extraction report belongs to a different source annotation")
     verify_file(experiment / "implementation_snapshot.py", report["implementation_sha256"])
+    frozen_check = None
+    if frozen_path is not None:
+        frozen = json.loads(frozen_path.read_text())
+        verify_file(source_manifest_path, frozen["source_acquisition_manifest_sha256"])
+        frozen_check = check_frozen_configuration(frozen, report, subject=subject)
+        frozen_check["manifest_sha256"] = digest(frozen_path)
+        snapshot = experiment.parent / f"{subject.removeprefix('sub-')}-source-snapshot" / "brain_extraction.py"
+        verify_file(snapshot, frozen["implementation_sha256"])
+        verify_file(repository / source_manifest["selection_manifest"], frozen["selection_manifest_sha256"])
+        frozen_check["predeclared_source_snapshot_sha256"] = digest(snapshot)
+        frozen_check["selection_manifest_sha256"] = frozen["selection_manifest_sha256"]
     reference = nib.load(t1_path)
+    _, source_geometry = read_native(t1_path, reference, binary=False)
     threshold = report["source_annotation"]["geometry_and_threshold"]["threshold"]
     tumor = source_annotation(annotation_path, reference, threshold=threshold)
     model_manifest = json.loads((repository / "docs/synthstrip-model-manifest.json").read_text())
     variants = {}
+    if repeats is None:
+        repeats = ("PAT28-mps-v1", "PAT28-mps-v2", "PAT28-mps-v3") if subject == "sub-PAT28" else ()
     for name in ("main", "nocsf"):
         record = report["variants"][name]["inference"]
         if record["failure"] is not None or record["exit_code"] != 0 or record["input_sha256"] != digest(t1_path):
             raise ValueError("Inference failed or used a different input")
-        if record["brain_reviewed"] or record["cortical_access_permitted"]:
+        qc = report["variants"][name]["qc"]
+        if (record["brain_reviewed"] or record["cortical_access_permitted"] or qc["brain_reviewed"]
+                or qc["cortex_localized"] or qc["cortical_access_permitted"]):
             raise ValueError("Inference output must remain unreviewed and unavailable for cortical access")
         for filename, stated in record["model"]["files"].items():
             pinned = model_manifest["files"][filename]
@@ -159,22 +225,35 @@ def audit(repository: Path, experiment: Path) -> dict:
         for filename, expected in record["artifact_hashes"].items():
             verify_file(experiment / filename, expected)
         mask, geometry = read_native(experiment / f"{name}_mask.nii.gz", reference, binary=True)
-        distance, _ = read_native(experiment / f"{name}_distance_mm.nii.gz", reference, binary=False)
+        distance, distance_geometry = read_native(experiment / f"{name}_distance_mm.nii.gz", reference, binary=False)
         values = measure(mask, distance, tumor, reference.affine, border_mm=record["configuration"]["border_mm"])
+        for key in ("mask_voxels", "connected_components", "source_annotation_voxels", "source_annotation_outside_voxels"):
+            if qc[key] != values[key]:
+                raise ValueError(f"Reported QC differs from independent arrays: {name}/{key}")
+        if not np.isclose(qc["mask_volume_ml"], values["volume_ml"], rtol=0, atol=1e-6):
+            raise ValueError("Reported physical mask volume differs from independent arrays")
+        if bool(values["flags"]) != ("SOURCE_ANNOTATION_EXTENDS_OUTSIDE_EXTRACTION" in qc["flags"]):
+            raise ValueError("Source annotation omission is not faithfully flagged")
         repeated = []
-        for run in ("PAT28-mps-v1", "PAT28-mps-v2", "PAT28-mps-v3"):
+        for run in repeats:
             if run == experiment.name:
                 continue
             repeat_mask, _ = read_native(experiment.parent / run / f"{name}_mask.nii.gz", reference, binary=True)
             repeat_distance, _ = read_native(experiment.parent / run / f"{name}_distance_mm.nii.gz", reference, binary=False)
             repeated.append({"run": run, "identical_native_mask": bool(np.array_equal(mask, repeat_mask)),
                              "maximum_predicted_distance_difference_mm": float(np.max(np.abs(distance - repeat_distance)))})
-        variants[name] = {"geometry": geometry, "independent_measurements": values, "repeats": repeated,
+        variants[name] = {"geometry": geometry, "distance_geometry": distance_geometry,
+                          "independent_measurements": values, "repeats": repeated,
+                          "model_hashes": {key: value["sha256"] for key, value in record["model"]["files"].items()},
+                          "executed_runner_sha256": record["executed_runner_sha256"],
                           "output_hashes": record["artifact_hashes"], "source_model_and_runner_hashes_verified": True,
                           "review_status": "review_required", "brain_reviewed": False,
                           "cortex_localized": False, "cortical_access_permitted": False}
     return {
         "schema_version": 1, "audit_kind": "independent_saved_artifact_engineering_qc",
+        "subject": subject, "source_geometry": source_geometry, "frozen_declaration_check": frozen_check,
+        "source_manifest_sha256": digest(source_manifest_path),
+        "frozen_implementation_sha256": report["implementation_sha256"],
         "auditor_implementation_sha256": digest(Path(__file__)), "source_report_sha256": digest(report_path),
         "source_t1_sha256": digest(t1_path), "source_annotation_sha256": digest(annotation_path),
         "source_annotation_threshold": threshold, "variants": variants,
@@ -192,12 +271,23 @@ def audit(repository: Path, experiment: Path) -> dict:
 def main() -> None:
     repository = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--experiment", type=Path, default=repository / "artifacts/brain-extraction/PAT28-mps-v4")
-    parser.add_argument("--report", type=Path, default=repository / "docs/brain-extraction-independent-qc.json")
+    parser.add_argument("--experiment", type=Path)
+    parser.add_argument("--subject", choices=("sub-PAT28", "sub-PAT05"), default="sub-PAT28")
+    parser.add_argument("--source-manifest", type=Path)
+    parser.add_argument("--frozen-config", type=Path)
+    parser.add_argument("--report", type=Path)
     args = parser.parse_args()
-    result = audit(repository, args.experiment.resolve())
-    if args.report.resolve().is_relative_to(args.experiment.resolve()) or args.report.resolve().is_relative_to(repository / "data"):
-        parser.error("Write the independent audit outside immutable source and experiment directories")
+    if args.experiment is None:
+        args.experiment = repository / "artifacts/brain-extraction" / ("PAT28-mps-v4" if args.subject == "sub-PAT28" else "PAT05-mps-v1")
+    if args.report is None:
+        args.report = repository / "docs" / ("brain-extraction-independent-qc.json" if args.subject == "sub-PAT28" else "brain-extraction-pat05-independent-qc.json")
+    protected = (repository / "data", repository / "artifacts", repository / "manifests", args.experiment.resolve())
+    exact_inputs = [repository / "docs/synthstrip-model-manifest.json", Path(__file__).resolve()]
+    exact_inputs.extend(path.resolve() for path in (args.source_manifest, args.frozen_config) if path is not None)
+    if any(args.report.resolve().is_relative_to(path) for path in protected) or args.report.resolve() in exact_inputs:
+        parser.error("Write the independent audit outside immutable source, manifest and experiment paths")
+    result = audit(repository, args.experiment.resolve(), subject=args.subject,
+                   source_manifest_path=args.source_manifest, frozen_path=args.frozen_config)
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
     print(json.dumps({"report": str(args.report), "review_status": "review_required",

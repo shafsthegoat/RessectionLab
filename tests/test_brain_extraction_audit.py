@@ -1,5 +1,6 @@
 """Independent auditor rejects source/frame/derivation defects on analytic grids."""
 import importlib.util
+from copy import deepcopy
 from pathlib import Path
 
 import nibabel as nib
@@ -93,3 +94,58 @@ def test_mask_cannot_disagree_with_declared_distance_derivation():
     with pytest.raises(ValueError, match="no positive mask support"):
         audit.measure(np.ones_like(mask), np.ones_like(distance) * 10,
                       mask.copy(), np.eye(4), border_mm=1)
+
+
+def test_qform_sform_comparison_uses_accumulated_physical_corner_error(tmp_path):
+    shape = (8, 9, 160)
+    reference = save(tmp_path / "reference.nii", np.ones(shape))
+    path = tmp_path / "mask.nii"
+    volume = save(path, np.ones(shape))
+    qform = np.eye(4)
+    qform[2, 2] = 1.001
+    volume.set_qform(qform, code=1)
+    volume.set_sform(np.eye(4), code=1)
+    nib.save(volume, path)
+    # Every matrix entry is within the old 0.01 tolerance, but its last voxel is
+    # displaced 0.159 mm between the two transforms.
+    with pytest.raises(ValueError, match="qform/sform physical corner conflict"):
+        audit.read_native(path, reference, binary=True)
+
+
+@pytest.fixture
+def frozen_record():
+    config = {"device": "mps", "cpu_threads": 2, "border_mm": 1, "timeout_seconds": 300,
+              "maximum_rss_bytes": 6442450944, "annotation_threshold": 0.5}
+    model = {"model": "fixed synthetic audit fixture"}
+    frozen = {"subject": "sub-PAT05", "implementation_sha256": "fixture",
+              "declared_at": "2026-10-04T01:00:00+00:00", "changes_allowed_during_case_run": False,
+              "brain_reviewed": False, "cortical_access_permitted": False, "variant_order": ["main"],
+              "frozen_configuration": config, "models": {"main": model}, "cohort_role": "development"}
+    report = {"implementation_sha256": "fixture", "created_at": "2026-10-04T01:01:00+00:00",
+              "source_annotation": {"geometry_and_threshold": {"threshold": 0.5}},
+              "variants": {"main": {"inference": {"configuration": deepcopy(config), "model": deepcopy(model)}}}}
+    return frozen, report
+
+
+@pytest.mark.parametrize("defect", ["subject", "implementation", "timestamp", "timezone", "review", "threshold", "model", "setting"])
+def test_frozen_experiment_check_rejects_drift(frozen_record, defect):
+    frozen, report = frozen_record
+    audit.check_frozen_configuration(frozen, report, subject="sub-PAT05")
+    if defect == "subject":
+        frozen["subject"] = "sub-PAT28"
+    elif defect == "implementation":
+        report["implementation_sha256"] = "changed"
+    elif defect == "timestamp":
+        frozen["declared_at"] = "2026-10-04T01:02:00+00:00"
+    elif defect == "timezone":
+        frozen["declared_at"] = "2026-10-04T01:00:00"
+    elif defect == "review":
+        frozen["brain_reviewed"] = True
+    elif defect == "threshold":
+        report["source_annotation"]["geometry_and_threshold"]["threshold"] = 0.4
+    elif defect == "model":
+        report["variants"]["main"]["inference"]["model"] = {"model": "different"}
+    else:
+        report["variants"]["main"]["inference"]["configuration"]["border_mm"] = 2
+    with pytest.raises(ValueError):
+        audit.check_frozen_configuration(frozen, report, subject="sub-PAT05")
