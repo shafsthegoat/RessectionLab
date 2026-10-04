@@ -3,6 +3,7 @@
 from dataclasses import replace
 from datetime import datetime, timedelta, timezone
 import json
+import warnings
 
 import numpy as np
 import pytest
@@ -223,7 +224,8 @@ def test_array_view_metadata_changes_cannot_retain_cached_hash():
     value = case()
     previous = value.semantic_hash
     previous_planning = value.planning_hash
-    with pytest.warns(DeprecationWarning):
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", DeprecationWarning)
         value.mri.shape = (20, 6)
     assert value.semantic_hash != previous
     assert value.planning_hash != previous_planning

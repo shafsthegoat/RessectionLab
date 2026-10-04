@@ -458,6 +458,8 @@ class Plan:
             value = getattr(self, name)
             if value is not None and (isinstance(value, bool) or not math.isfinite(value) or value < 0):
                 raise ValueError(f"{name} must be finite, nonnegative, or null")
+            if value is not None:
+                object.__setattr__(self, name, float(value))
         if self.plan_type == "route_only" and self.simulated_removed_target_volume_mm3 is not None:
             raise ValueError("route-only accessibility cannot be reported as simulated tissue removal")
         if self.simulated_removed_target_volume_mm3 is not None:
@@ -501,6 +503,6 @@ class Plan:
         data = dict(value)
         if data.pop("clinical_use_status", "research_only") != "research_only":
             raise ValueError("only research_only plans are supported")
-        if data.get("route_points_mm") == []:
+        if isinstance(data.get("route_points_mm"), list) and not data["route_points_mm"]:
             data["route_points_mm"] = np.empty((0, 3), dtype=np.float64)
         return cls(**data)
