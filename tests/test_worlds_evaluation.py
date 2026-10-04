@@ -10,7 +10,9 @@ from scipy.optimize import minimize_scalar
 from resectionlab.evaluation import (
     EvaluationLedger, IndependentGeometryResult, WorldOutcome,
     evaluate_frozen_candidates, freeze_candidates, independent_check_motion,
-    independent_check_pose, segment_box_distance_sq, summarize_event,
+    independent_check_pose, independent_check_sequence, independent_native_removal_check,
+    independent_check_native_history,
+    segment_box_distance_sq, summarize_event,
     upper_tail_cvar, wilson_interval,
 )
 from resectionlab.geometry import (
@@ -163,6 +165,7 @@ def test_ensemble_support_preserves_missing_world_coverage():
     first = np.zeros((3, 3, 3), bool)
     first[1, 1, 1] = True
     second = np.zeros_like(first)
+    second[2, 2, 2] = True
     ensemble = anatomical_ensemble_support([first, second], source="two supplied structural realizations")
     assert ensemble.support[1, 1, 1] == 0.5
     missing = anatomical_ensemble_support([first, None], source="one failed realization")
@@ -171,6 +174,11 @@ def test_ensemble_support_preserves_missing_world_coverage():
     assert missing.total_worlds == 2
     all_missing = anatomical_ensemble_support([None], source="missing reconstruction", shape=first.shape)
     assert np.isnan(all_missing.support).all()
+    failed_empty = anatomical_ensemble_support([np.zeros_like(first)], source="empty unverified tract fit")
+    assert np.isnan(failed_empty.support).all()
+    verified_absence = anatomical_ensemble_support([np.zeros_like(first)],
+        source="explicitly verified absent structure", empty_is_verified_absence=True)
+    assert np.all(verified_absence.support == 0)
 
 
 def test_event_counts_monte_carlo_error_and_unknowns():
@@ -333,3 +341,126 @@ def test_access_window_and_missing_proximal_coverage_are_explicit():
     assert "proximal_tool_outside_image_coverage_unassessed" in result.unknowns
     access = AccessWindow((0, 12, 12), (1, 0, 0), 0.9)
     assert not independent_check_pose(tool, pose, scene, access).feasible
+
+
+def test_independent_sequence_checks_real_replay_accounting_and_termination():
+    from resectionlab.simulation import greedy_search, make_synthetic_simulator
+
+    sequence = greedy_search(make_synthetic_simulator()).actions
+    checked = independent_check_sequence(make_synthetic_simulator, sequence)
+    assert checked.feasible
+    assert "native_resolution_removal_not_independently_verified" in checked.unknowns
+    assert not independent_check_sequence(make_synthetic_simulator, ("STOP", "STOP")).feasible
+    assert not independent_check_sequence(make_synthetic_simulator, ()).feasible
+    assert not independent_check_sequence(make_synthetic_simulator, sequence, cancelled=lambda: True).feasible
+
+
+def test_axial_motion_catches_obstacle_even_after_whole_tool_has_passed():
+    scene = scene_with_voxel((12, 10, 10))
+    tool = ToolGeometry("fixture", .2, .2, 4, tip_length_mm=1)
+    start = ToolPose((5, 10, 10), (1, 0, 0))
+    end = ToolPose((20, 10, 10), (1, 0, 0))
+    assert independent_check_pose(tool, start, scene).feasible
+    assert independent_check_pose(tool, end, scene).feasible
+    assert not independent_check_motion(tool, start, end, scene).feasible
+
+
+def test_native_source_footprint_rejects_coarse_cell_erasure_beyond_tip():
+    from resectionlab.core import CaseData, SourceRef
+
+    tissue = np.ones((4, 4, 4), bool)
+    case = CaseData("native-fixture", np.ones(tissue.shape), {"target": tissue}, np.eye(4),
+                    (SourceRef("fixture", "synthetic://native-audit", provenance="simulated"),),
+                    brain_mask=tissue)
+    affine = np.diag([2., 2., 2., 1.])
+    affine[:3, 3] = .5
+    tool = ToolGeometry("native-tip", .8, .8, 10, tip_length_mm=1)
+    config = SimpleNamespace(source_hash=case.semantic_hash,
+        derivation={"block_size_native_voxels": 2, "native_shape": tissue.shape,
+                    "tissue_envelope_source": "case_brain_mask"},
+        tissue_mask=np.ones((2, 2, 2), bool), affine=affine, tools=(tool,))
+    action = {"action_id": "REMOVE:native-tip:0,0,0", "tip_mm": (.5, .5, .5),
+              "axis_unit": (0, 0, 1), "removed_indices": [[0, 0, 0]]}
+    rejected = independent_native_removal_check(case, config, [action])
+    assert not rejected.feasible
+    assert rejected.failures == ("unsupported_coarse_removal_footprint",)
+    assert rejected.claimed_source_tissue_volume_mm3 == 8
+    assert rejected.unsupported_source_tissue_volume_mm3 == 8
+    assert rejected.first_unsupported_source_voxel == (0, 0, 0)
+    config.tools = (replace(tool, tip_radius_mm=2),)
+    supported = independent_native_removal_check(case, config, [action])
+    assert supported.feasible
+    assert supported.contained_source_tissue_volume_mm3 == 8
+    assert not independent_native_removal_check(case, config, [action, action]).feasible
+
+
+def native_history_fixture():
+    from resectionlab.core import CaseData, SourceRef
+
+    tissue = np.zeros((7, 7, 7), bool)
+    tissue[3, 3, 3] = True
+    case = CaseData("native-stroke", tissue.astype(float), {"target": tissue}, np.eye(4),
+                    (SourceRef("fixture", "synthetic://native-stroke", provenance="simulated"),),
+                    brain_mask=tissue)
+    tool = ToolGeometry("native-tool", 1.0, .2, 6, tip_length_mm=1)
+    access = AccessWindow((3, 3, 2), (0, 0, 1), 3)
+    history = [{"action_id": "native-1", "source_hash": case.semantic_hash,
+        "source_shape": tissue.shape, "native_affine": np.eye(4).tolist(),
+        "native_footprint": "fully_contained_connected_cells_v1", "tool_id": tool.tool_id,
+        "axis_unit": (0, 0, 1), "removed_indices_native": [[3, 3, 3]],
+        "microsteps": [
+            {"tip_start_mm": (3, 3, 2), "tip_end_mm": (3, 3, 2),
+             "active_stroke_start_mm": (3, 3, 1), "active_stroke_end_mm": (3, 3, 2),
+             "active_radius_mm": 1.0, "removed_indices_native": [], "contact_indices_native": [[3, 3, 3]]},
+            {"tip_start_mm": (3, 3, 2), "tip_end_mm": (3, 3, 3),
+             "active_stroke_start_mm": (3, 3, 1), "active_stroke_end_mm": (3, 3, 3),
+             "active_radius_mm": 1.0, "removed_indices_native": [[3, 3, 3]], "contact_indices_native": [[3, 3, 3]]},
+        ]}]
+    return case, tool, access, tissue, history
+
+
+def test_native_microsteps_pass_independent_containment_frontier_and_shaft_checks():
+    case, tool, access, tissue, history = native_history_fixture()
+    checked = independent_check_native_history(case, (tool,), history, tissue_mask=tissue, access=access)
+    assert checked.feasible
+    assert checked.complete_tool_checked and checked.frontier_checked
+    assert checked.contained_source_tissue_volume_mm3 == 1
+    assert checked.unsupported_source_tissue_volume_mm3 == 0
+
+
+@pytest.mark.parametrize("failure", ["missing_contact", "premature_removal", "enlarged_tip", "macro_accounting"])
+def test_native_microstep_audit_rejects_geometry_and_accounting_exploits(failure):
+    case, tool, access, tissue, history = native_history_fixture()
+    if failure == "missing_contact":
+        history[0]["microsteps"][0]["contact_indices_native"] = []
+        expected = "unrecorded_partial_active_tissue_contact"
+    elif failure == "premature_removal":
+        history[0]["microsteps"][0]["removed_indices_native"] = [[3, 3, 3]]
+        expected = "native_removed_cell_not_fully_contained"
+    elif failure == "enlarged_tip":
+        history[0]["microsteps"][0]["active_radius_mm"] = 3.0
+        expected = "native_active_envelope_differs_from_frozen_tool"
+    else:
+        history[0]["removed_indices_native"] = []
+        expected = "native_macro_removal_accounting_mismatch"
+    checked = independent_check_native_history(case, (tool,), history, tissue_mask=tissue, access=access)
+    assert not checked.feasible
+    assert checked.failures == (expected,)
+
+
+def test_native_shaft_cannot_borrow_removal_from_the_microstep_endpoint():
+    case, tool, _, tissue, history = native_history_fixture()
+    tool = replace(tool, tip_radius_mm=.9, shaft_radius_mm=.1, tip_length_mm=.1)
+    access = AccessWindow((3, 3, 2.49), (0, 0, 1), 2)
+    initial, cutting = history[0]["microsteps"]
+    initial.update(tip_start_mm=(3, 3, 2.49), tip_end_mm=(3, 3, 2.49),
+                   active_stroke_start_mm=(3, 3, 2.39), active_stroke_end_mm=(3, 3, 2.49),
+                   active_radius_mm=.9)
+    cutting.update(tip_start_mm=(3, 3, 2.49), tip_end_mm=(3, 3, 2.99),
+                   active_stroke_start_mm=(3, 3, 2.39), active_stroke_end_mm=(3, 3, 2.99),
+                   active_radius_mm=.9)
+    # At the endpoint the active capsule contains the entire source cell, but
+    # the shaft entered that still-occupied cell earlier in the same interval.
+    checked = independent_check_native_history(case, (tool,), history, tissue_mask=tissue, access=access)
+    assert not checked.feasible
+    assert checked.failures == ("native_shaft_collides_with_remaining_tissue",)

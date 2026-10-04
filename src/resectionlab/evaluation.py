@@ -445,7 +445,7 @@ def independent_check_pose(tool: Any, pose: Any, scene: Any,
     _tool_dimensions(tool)
     inverse = np.linalg.inv(np.asarray(scene.affine, float))
     index = inverse[:3, :3] @ tip + inverse[:3, 3]
-    if np.any(index < -0.5) or np.any(index > np.asarray(scene.forbidden_mask.shape) - 0.5):
+    if getattr(scene, "enforce_tip_in_bounds", True) and (np.any(index < -0.5) or np.any(index > np.asarray(scene.forbidden_mask.shape) - 0.5)):
         return IndependentGeometryResult(False, ("tip_outside_image_coverage",), tuple(tip))
     if access is not None:
         failure = _access_failure(tool, tip, axis, access)
@@ -538,3 +538,384 @@ def independent_check_route(candidate: Any, scene: Any) -> IndependentGeometryRe
     checked = independent_check_motion(candidate.tool, start, end, scene, candidate.window)
     return IndependentGeometryResult(checked.feasible, checked.failures, checked.collision_position_mm,
                                      unknowns=tuple(sorted(set(checked.unknowns) | set(candidate.unknowns))))
+
+
+def independent_check_sequence(factory: Callable[[], Any], actions: Sequence[str], *,
+                                seed: int = 0,
+                                cancelled: Callable[[], bool] | None = None) -> IndependentGeometryResult:
+    """Independently inspect a fixed sequence on its declared simulation grid.
+
+    The simulator supplies macro-action proposals, while separate direct tests
+    check exposed removal, swept geometry and exact occupancy accounting. This
+    verifies the discrete model, not the realism of an indivisible coarse-cell
+    suction footprint. Native-resolution removal remains explicitly unverified.
+    The actor/checkpoint is never updated, including on a failed certificate.
+    """
+    from .geometry import GeometryScene, ToolPose
+
+    simulator = factory()
+    simulator.reset(seed)
+    unknowns = {"discrete_suction_footprint_is_model_assumption",
+                "geometry_checked_on_declared_simulation_grid",
+                "native_resolution_removal_not_independently_verified",
+                "vascular_anatomy_and_tissue_mechanics_unassessed"}
+    for position, action_id in enumerate(actions):
+        if cancelled is not None and cancelled():
+            return IndependentGeometryResult(False, ("independent_validation_cancelled",))
+        if action_id == "STOP":
+            if position != len(actions) - 1:
+                return IndependentGeometryResult(False, ("action_after_stop",))
+            simulator.step("STOP")
+            continue
+        if simulator.terminated:
+            return IndependentGeometryResult(False, ("action_after_termination",))
+        action = next((a for a in simulator.proposed_actions() if a.action_id == action_id), None)
+        if action is None:
+            return IndependentGeometryResult(False, ("action_not_legal_in_current_cavity",))
+        before = simulator.remaining_mask.copy()
+        footprint = np.asarray(action.removal_indices)
+        if footprint.ndim != 2 or footprint.shape[1] != 3 or footprint.dtype.kind not in "iu" or np.any(footprint < 0) or np.any(footprint >= np.array(before.shape)):
+            return IndependentGeometryResult(False, ("invalid_removal_footprint",))
+        if len(np.unique(footprint, axis=0)) != len(footprint):
+            return IndependentGeometryResult(False, ("duplicate_removal_voxels",))
+        occupied = footprint[before[tuple(footprint.T)]]
+        if not len(occupied):
+            return IndependentGeometryResult(False, ("repeated_or_empty_removal",))
+        for index in occupied:
+            exposed = False
+            for axis in range(3):
+                for delta in (-1, 1):
+                    neighbor = index.copy()
+                    neighbor[axis] += delta
+                    if np.any(neighbor < 0) or np.any(neighbor >= before.shape) or not before[tuple(neighbor)]:
+                        exposed = True
+            if not exposed:
+                return IndependentGeometryResult(False, ("enclosed_nonfrontier_removal",))
+        forbidden = before.copy()
+        forbidden[tuple(footprint.T)] = False
+        forbidden |= simulator.config.hard_exclusion
+        tool = next(tool for tool in simulator.config.tools if tool.tool_id == action.tool_id)
+        checked = independent_check_motion(
+            tool, ToolPose(simulator.config.access.center_mm, action.axis_unit),
+            ToolPose(action.tip_mm, action.axis_unit),
+            GeometryScene(forbidden, simulator.config.affine, enforce_tip_in_bounds=False),
+            simulator.config.access)
+        if not checked.feasible:
+            return checked
+        unknowns.update(checked.unknowns)
+        simulator.step(action_id)
+        expected = before.copy()
+        expected[tuple(occupied.T)] = False
+        if not np.array_equal(expected, simulator.remaining_mask):
+            return IndependentGeometryResult(False, ("removal_accounting_mismatch",))
+    if not simulator.terminated:
+        return IndependentGeometryResult(False, ("unterminated_sequence",))
+    return IndependentGeometryResult(True, checker_version="independent-sequence-cell-capsule-v1",
+                                     unknowns=tuple(sorted(unknowns)))
+
+
+@dataclass(frozen=True)
+class NativeRemovalAudit:
+    feasible: bool
+    failures: tuple[str, ...]
+    first_failed_action: str | None
+    first_unsupported_source_voxel: tuple[int, int, int] | None
+    first_unsupported_position_mm: tuple[float, float, float] | None
+    claimed_source_tissue_volume_mm3: float
+    contained_source_tissue_volume_mm3: float
+    unsupported_source_tissue_volume_mm3: float
+    source_case_hash: str
+    source_voxel_volume_mm3: float
+    action_count: int
+    checker_version: str = "independent-native-footprint-v1"
+    interpretation: str = "All eight source-cell corners must lie within the modeled active-tip capsule; tissue mechanics unvalidated"
+    complete_tool_checked: bool = False
+    frontier_checked: bool = False
+
+    def to_dict(self) -> dict[str, Any]:
+        return asdict(self)
+
+
+def independent_native_removal_check(case: Any, config: Any,
+                                     history: Sequence[Mapping[str, Any]]) -> NativeRemovalAudit:
+    """Audit source-space tissue allegedly erased by coarse terminal contact.
+
+    A coarse voxel touching a tip does not establish that its underlying source
+    cells were removed. This check maps the exact declared block derivation back
+    to original source cells and requires full-cell containment in the active
+    capsule, a sufficient condition under the declared geometric removal model.
+    Negative results preserve the first failing source location and union volumes.
+    This gate does not validate tissue forces or turn a passing footprint into a
+    clinical procedure; native complete-tool replay remains a separate check.
+    """
+    from itertools import product
+    from scipy.ndimage import binary_fill_holes
+
+    if config.source_hash != case.semantic_hash:
+        raise ValueError("Native removal audit source differs from simulation provenance")
+    derivation = config.derivation
+    block = derivation.get("block_size_native_voxels")
+    if not isinstance(block, int) or isinstance(block, bool) or block < 1:
+        raise ValueError("Native audit requires an explicit integer source-block derivation")
+    if tuple(derivation.get("native_shape", ())) != tuple(case.mri.shape):
+        raise ValueError("Native audit source grid does not match recorded derivation")
+    expected = np.array(case.affine, float)
+    expected[:3, 3] += expected[:3, :3] @ np.full(3, (block - 1) / 2)
+    expected[:3, :3] *= block
+    if not np.allclose(expected, config.affine, atol=1e-7, rtol=0):
+        raise ValueError("Coarse-to-source affine mapping is not the declared block derivation")
+    targets = np.zeros(case.mri.shape, bool)
+    for mask in case.compartments.values():
+        targets |= mask
+    if case.brain_mask is not None:
+        source_tissue = np.asarray(case.brain_mask, bool) | targets
+    elif derivation.get("tissue_envelope_source") == "hole_filled_nonzero_MRI_support_unreviewed_skull_strip_assumption":
+        source_tissue = binary_fill_holes(np.asarray(case.mri) != 0) | targets
+    else:
+        raise ValueError("Native audit cannot reconstruct the declared tissue envelope")
+    corner_offsets_mm = np.array(list(product((-.5, .5), repeat=3))) @ np.asarray(case.affine)[:3, :3].T
+    claimed: set[tuple[int, int, int]] = set()
+    unsupported: set[tuple[int, int, int]] = set()
+    first_action = None
+    first_voxel = None
+    first_position = None
+    failure_reasons = set()
+    action_count = 0
+    for record in history:
+        if record.get("action_id") == "STOP":
+            continue
+        action_count += 1
+        action_id = str(record.get("action_id", ""))
+        tool_id = record.get("tool_id") or (action_id.split(":", 2)[1] if action_id.startswith("REMOVE:") else None)
+        tool = next((tool for tool in config.tools if tool.tool_id == tool_id), None)
+        if tool is None:
+            raise ValueError("Native removal record does not identify a configured tool")
+        tip = np.asarray(record.get("tip_mm"), float)
+        axis = np.asarray(record.get("axis_unit"), float)
+        if tip.shape != (3,) or axis.shape != (3,) or not np.isfinite(tip).all() or not np.isfinite(axis).all() or not np.isclose(np.linalg.norm(axis), 1, atol=1e-7):
+            raise ValueError("Native removal record needs a finite physical tip and unit axis")
+        footprint = np.asarray(record.get("removed_indices", ()))
+        if footprint.ndim != 2 or footprint.shape[1] != 3 or footprint.dtype.kind not in "iu" or np.any(footprint < 0) or np.any(footprint >= np.array(config.tissue_mask.shape)):
+            raise ValueError("Native removal record has invalid coarse cell indices")
+        for coarse_index in footprint:
+            low = coarse_index * block
+            high = np.minimum(low + block, source_tissue.shape)
+            indices = np.stack(np.meshgrid(*(np.arange(lo, hi) for lo, hi in zip(low, high)), indexing="ij"), axis=-1).reshape(-1, 3)
+            indices = indices[source_tissue[tuple(indices.T)]]
+            if not len(indices):
+                continue
+            centers = indices @ np.asarray(case.affine)[:3, :3].T + np.asarray(case.affine)[:3, 3]
+            corners = centers[:, None, :] + corner_offsets_mm[None, :, :]
+            proximal_tip = tip - float(tool.tip_length_mm) * axis
+            segment = tip - proximal_tip
+            fractions = np.clip(np.sum((corners - proximal_tip) * segment, axis=-1) / np.dot(segment, segment), 0, 1)
+            nearest = proximal_tip + fractions[..., None] * segment
+            contained = np.all(np.sum((corners - nearest)**2, axis=-1) <= float(tool.tip_radius_mm)**2 + 1e-10, axis=1)
+            for index, center, supported in zip(indices, centers, contained):
+                key = tuple(int(v) for v in index)
+                if key in claimed:
+                    failure_reasons.add("repeated_source_tissue_removal")
+                claimed.add(key)
+                if not supported:
+                    unsupported.add(key)
+                    failure_reasons.add("unsupported_coarse_removal_footprint")
+                    if first_voxel is None:
+                        first_action, first_voxel = action_id, key
+                        first_position = tuple(float(v) for v in center)
+    volume = float(abs(np.linalg.det(np.asarray(case.affine)[:3, :3])))
+    return NativeRemovalAudit(not failure_reasons, tuple(sorted(failure_reasons)), first_action,
+                              first_voxel, first_position, len(claimed) * volume,
+                              (len(claimed) - len(unsupported)) * volume, len(unsupported) * volume,
+                              case.semantic_hash, volume, action_count)
+
+
+def independent_check_native_history(case: Any, tools: Sequence[Any],
+                                     history: Sequence[Mapping[str, Any]], *,
+                                     tissue_mask: np.ndarray, access: Any,
+                                     hard_exclusion: np.ndarray | None = None,
+                                     cancelled: Callable[[], bool] | None = None) -> NativeRemovalAudit:
+    """Independent source-cell audit of the native contained-cell cutting model.
+
+    All tissue removed in a microstep must be fully inside its active capsule and
+    connected to exterior/cavity by six-face adjacency. The swept shaft must avoid
+    tissue remaining before each microstep, preventing it from borrowing removal
+    that occurs only at the step endpoint. The whole tool avoids hard exclusions. Active
+    contact with partially contained cells is the declared cutting abstraction:
+    those cells must be recorded as contacted and remain occupied. This distinction
+    is explicit and does not assert quantitatively validated tissue mechanics.
+    """
+    from collections import deque
+    from itertools import product
+    from scipy.ndimage import binary_propagation, generate_binary_structure
+    from types import SimpleNamespace
+    from .geometry import ToolPose
+
+    original = np.asarray(tissue_mask)
+    if original.shape != case.mri.shape or original.dtype != np.bool_:
+        raise ValueError("Native tissue support must be an explicit boolean mask on the source grid")
+    hard = np.zeros_like(original) if hard_exclusion is None else np.asarray(hard_exclusion)
+    if hard.shape != original.shape or hard.dtype != np.bool_:
+        raise ValueError("Native hard exclusions must be boolean and source-aligned")
+    remaining = original.copy()
+    matrix = np.asarray(case.affine, float)
+    spacing = np.linalg.norm(matrix[:3, :3], axis=0)
+    if not np.allclose(matrix[:3, :3].T @ matrix[:3, :3], np.diag(spacing**2), atol=1e-7):
+        raise ValueError("Independent native tool check does not support sheared source cells")
+    rotation = matrix[:3, :3] / spacing
+    corners = np.array(list(product((-.5, .5), repeat=3))) @ matrix[:3, :3].T
+    catalog = {tool.tool_id: tool for tool in tools}
+    if len(catalog) != len(tools):
+        raise ValueError("Native tool IDs must be unique")
+    connectivity = generate_binary_structure(3, 1)
+    hard_scene = SimpleNamespace(forbidden_mask=hard, affine=matrix,
+                                 sphere_obstacles=(), enforce_tip_in_bounds=False)
+    border = np.zeros_like(remaining)
+    for axis in range(3):
+        selector = [slice(None)] * 3
+        selector[axis] = 0
+        border[tuple(selector)] = True
+        selector[axis] = -1
+        border[tuple(selector)] = True
+    free = binary_propagation(border & ~remaining, structure=connectivity, mask=~remaining)
+    declared: set[tuple[int, int, int]] = set()
+    accepted: set[tuple[int, int, int]] = set()
+    volume = float(abs(np.linalg.det(matrix[:3, :3])))
+    count = 0
+
+    def report(reason: str | None = None, action: str | None = None,
+               voxel: tuple[int, int, int] | None = None) -> NativeRemovalAudit:
+        physical = None if voxel is None else tuple(float(v) for v in matrix[:3, :3] @ voxel + matrix[:3, 3])
+        return NativeRemovalAudit(reason is None, () if reason is None else (reason,), action, voxel, physical,
+            len(declared) * volume, len(accepted) * volume, len(declared - accepted) * volume,
+            case.semantic_hash, volume, count, checker_version="independent-native-sequence-v1",
+            interpretation="Source-grid prefix audit: contained connected cell removal, shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+            complete_tool_checked=reason is None, frontier_checked=reason is None)
+
+    def indices(value: Any) -> np.ndarray:
+        array = np.asarray(value)
+        if array.size == 0:
+            return np.empty((0, 3), dtype=int)
+        if array.ndim != 2 or array.shape[1] != 3 or array.dtype.kind not in "iu" or np.any(array < 0) or np.any(array >= remaining.shape):
+            raise ValueError("Invalid source-cell indices in native microstep")
+        if len(np.unique(array, axis=0)) != len(array):
+            raise ValueError("Duplicate source-cell indices in native microstep")
+        return array
+
+    def actual_contacts(start: np.ndarray, end: np.ndarray, radius: float) -> set[tuple[int, int, int]]:
+        start_local = rotation.T @ (start - matrix[:3, 3])
+        end_local = rotation.T @ (end - matrix[:3, 3])
+        low = np.maximum(np.floor((np.minimum(start_local, end_local) - radius) / spacing - .5).astype(int), 0)
+        high = np.minimum(np.ceil((np.maximum(start_local, end_local) + radius) / spacing + .5).astype(int), np.asarray(remaining.shape) - 1)
+        result = set()
+        if np.any(high < low):
+            return result
+        region = tuple(slice(int(a), int(b) + 1) for a, b in zip(low, high))
+        for index in np.argwhere(remaining[region]) + low:
+            center = index * spacing
+            if segment_box_distance_sq(start_local, end_local, center - spacing / 2, center + spacing / 2) <= radius**2 + 1e-9:
+                result.add(tuple(int(v) for v in index))
+        return result
+
+    for record in history:
+        if record.get("action_id") == "STOP":
+            continue
+        count += 1
+        action_id = str(record.get("action_id", f"native-action-{count}"))
+        if record.get("source_hash") != case.semantic_hash or tuple(record.get("source_shape", ())) != remaining.shape or not np.allclose(record.get("native_affine"), matrix):
+            raise ValueError("Native history source identity or affine mismatch")
+        if record.get("native_footprint") != "fully_contained_connected_cells_v1":
+            return report("unsupported_native_footprint_model", action_id)
+        tool = catalog.get(record.get("tool_id"))
+        if tool is None:
+            return report("unknown_native_tool_configuration", action_id)
+        length, tip_length, shaft_radius, tip_radius = _tool_dimensions(tool)
+        axis = np.asarray(record.get("axis_unit"), float)
+        if axis.shape != (3,) or not np.isfinite(axis).all() or not np.isclose(np.linalg.norm(axis), 1, atol=1e-7):
+            raise ValueError("Native history needs a unit tool axis")
+        previous = np.asarray(access.center_mm, float)
+        macro_removed: set[tuple[int, int, int]] = set()
+        microsteps = record.get("microsteps", ())
+        if not microsteps:
+            return report("native_action_missing_microsteps", action_id)
+        for micro in microsteps:
+            if cancelled is not None and cancelled():
+                return report("independent_validation_cancelled", action_id)
+            tip_start = np.asarray(micro.get("tip_start_mm"), float)
+            tip_end = np.asarray(micro.get("tip_end_mm"), float)
+            start = np.asarray(micro.get("active_stroke_start_mm"), float)
+            end = np.asarray(micro.get("active_stroke_end_mm"), float)
+            if any(v.shape != (3,) or not np.isfinite(v).all() for v in (tip_start, tip_end, start, end)):
+                raise ValueError("Native microsteps require finite physical coordinates")
+            displacement = tip_end - tip_start
+            if not np.allclose(previous, tip_start, atol=1e-7) or np.linalg.norm(displacement - (displacement @ axis) * axis) > 1e-7 or displacement @ axis < -1e-7:
+                return report("noncontiguous_or_nonaxial_native_stroke", action_id)
+            if not np.allclose(start, tip_start - tip_length * axis, atol=1e-7) or not np.allclose(end, tip_end, atol=1e-7) or not np.isclose(micro.get("active_radius_mm", -1), tip_radius, atol=1e-9):
+                return report("native_active_envelope_differs_from_frozen_tool", action_id)
+            removed = indices(micro.get("removed_indices_native", ()))
+            keys = {tuple(int(v) for v in index) for index in removed}
+            declared.update(keys)
+            if any(not remaining[key] for key in keys):
+                return report("repeated_or_non_tissue_native_removal", action_id, next(key for key in keys if not remaining[key]))
+            if len(removed):
+                vertices = removed @ matrix[:3, :3].T + matrix[:3, 3]
+                vertices = vertices[:, None, :] + corners[None, :, :]
+                segment = end - start
+                fractions = np.clip(np.sum((vertices - start) * segment, axis=-1) / np.dot(segment, segment), 0, 1)
+                contained = np.all(np.sum((vertices - (start + fractions[..., None] * segment))**2, axis=-1) <= tip_radius**2 + 1e-9, axis=1)
+                if not contained.all():
+                    return report("native_removed_cell_not_fully_contained", action_id, tuple(int(v) for v in removed[np.flatnonzero(~contained)[0]]))
+                # Reachability is checked by an independent explicit graph walk.
+                queue = deque()
+                reached = set()
+                for key in keys:
+                    for dimension in range(3):
+                        for sign in (-1, 1):
+                            neighbor = list(key)
+                            neighbor[dimension] += sign
+                            if any(v < 0 or v >= n for v, n in zip(neighbor, remaining.shape)) or free[tuple(neighbor)]:
+                                reached.add(key)
+                                queue.append(key)
+                                break
+                        if key in reached:
+                            break
+                while queue:
+                    key = queue.popleft()
+                    for dimension in range(3):
+                        for sign in (-1, 1):
+                            neighbor = list(key)
+                            neighbor[dimension] += sign
+                            neighbor = tuple(neighbor)
+                            if neighbor in keys and neighbor not in reached:
+                                reached.add(neighbor)
+                                queue.append(neighbor)
+                if reached != keys:
+                    return report("disconnected_native_removal", action_id, next(iter(keys - reached)))
+            contacts = {tuple(int(v) for v in index) for index in indices(micro.get("contact_indices_native", ()))}
+            omitted = actual_contacts(start, end, tip_radius) - contacts - keys
+            if omitted:
+                return report("unrecorded_partial_active_tissue_contact", action_id, next(iter(omitted)))
+            after = remaining.copy()
+            if keys:
+                after[tuple(removed.T)] = False
+            certificate = independent_check_motion(tool, ToolPose(tip_start, axis), ToolPose(tip_end, axis),
+                hard_scene, access)
+            if not certificate.feasible:
+                return report("native_full_tool_hard_constraint_failure", action_id)
+            # The shaft cannot use tissue clearance produced only at this
+            # microstep's endpoint. Testing ``after`` would permit temporal
+            # borrowing, which an optimizer could exploit by using long steps.
+            tissue_scene = SimpleNamespace(forbidden_mask=remaining, affine=matrix,
+                                           sphere_obstacles=(), enforce_tip_in_bounds=False)
+            shaft_collision = _cell_collision(tissue_scene,
+                tip_start - length * axis, tip_end - tip_length * axis, shaft_radius)
+            if shaft_collision is not None:
+                return report("native_shaft_collides_with_remaining_tissue", action_id)
+            remaining = after
+            accepted.update(keys)
+            macro_removed.update(keys)
+            free = binary_propagation(free | ~remaining & border, structure=connectivity, mask=~remaining)
+            previous = tip_end
+        declared_macro = {tuple(int(v) for v in index) for index in indices(record.get("removed_indices_native", ()))}
+        if declared_macro != macro_removed:
+            return report("native_macro_removal_accounting_mismatch", action_id)
+    return report()
