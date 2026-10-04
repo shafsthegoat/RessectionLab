@@ -490,3 +490,28 @@ engine for native GPU, cursor, source restoration and case/replay checks.
 Previously packaged MRI review/expanded-plane layouts passed on PAT28/PAT05 at
 1460- and 1050-point window widths, with exact one-millimeter keyboard movement.
 Screenshots and source-bound receipts are in `artifacts/electron-mri-layout-v1/`.
+
+## October 4, 2026 — read-only transfer failure analysis
+
+A post hoc diagnostic compared 21 saved policies on seven common states using
+the exact v2 runtime. Four optimization-world transitions reproduced fixed
+source-family cuts and the saved patient SEARCH sequence; there were zero new
+gradients, searches, checkpoint selections or final/stress samples. All saved
+checkpoint bytes remained unchanged. The diagnostic ran in 5.09 s and its five
+focused integrity/statistics checks passed.
+
+The shared actor is not collapsed to STOP: its initial patient STOP probability
+is 0.083 and entropy is 1.518 of 1.609 nats. It ranks a fine action above a wide
+action despite much lower immediate modeled reward. Raw feature scales differ
+between procedural and patient anatomy; 87.5–93.75% of hidden units saturate for
+the patient wide actions. All initial critic inputs are identical despite
+different physical returns, and every online gradient exceeds the clipping
+threshold, though actor gradients are nonzero and weights change. These are
+conditioning observations, not proof that a proposed normalization will improve
+performance. Separately, the saved SEARCH sequence leaves only STOP legal before
+the horizon expires: fixed proposal coverage is a distinct planning limit.
+
+The next experiments must separate action-set expansion from model scaling and
+retain fresh comparisons. Measurements, immutable policy/source bindings and
+executed diagnostic source are in
+`artifacts/learning/procedural-native-to-ucsf-v2/diagnostics-v1/`.
