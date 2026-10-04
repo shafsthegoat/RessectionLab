@@ -481,9 +481,8 @@ def native_config_from_case(case: Any, *, access: AccessWindow,
             raise ValueError("Native target compartments must be nonoverlapping")
         labels[np.asarray(mask, bool)] = label
     if case.brain_mask is None:
-        collection = case.metadata.get("source_collection", {})
-        stripped = case.metadata.get("skull_stripped")
-        if stripped is False or (stripped is not True and collection.get("name") != "UCSF-PDGM"):
+        from .structural_evidence import declared_mri_support_allowed
+        if not declared_mri_support_allowed(case):
             raise ValueError("Reviewed brain support is required for a case without declared skull stripping")
         tissue = binary_fill_holes(np.asarray(case.mri) != 0)
         provenance = "hole_filled_nonzero_native_MRI_support; unreviewed skull_strip_assumption; source targets retained"

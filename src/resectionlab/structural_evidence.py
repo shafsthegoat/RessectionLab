@@ -42,6 +42,16 @@ def structural_frame_hash(case: Any) -> str:
                             "frame": case.frame, "physical_units": "mm"})
 
 
+def declared_mri_support_allowed(case: Any) -> bool:
+    """Explicit exclusions override collection-level skull-strip assumptions."""
+    metadata = case.metadata
+    if (metadata.get("skull_stripped") is False or metadata.get("structural_coverage") == "full_head"
+            or metadata.get("allow_nonzero_mri_access_support") is False):
+        return False
+    collection = metadata.get("source_collection", {})
+    return metadata.get("skull_stripped") is True or (isinstance(collection, Mapping) and collection.get("name") == "UCSF-PDGM")
+
+
 @dataclass(frozen=True, slots=True)
 class BrainEnvelopeReview:
     """Named attestation bound to the exact proposal, not a clinical clearance."""
@@ -202,10 +212,7 @@ def validate_explicit_support(case: Any, support: np.ndarray, record: dict) -> d
     refs = getattr(case, "source_refs", ())
     if refs and all(source.provenance == "simulated" for source in refs):
         return {**record, "cortical_access_permitted": False}
-    declared = case.metadata.get("skull_stripped")
-    stripped = declared is True or (declared is not False and case.metadata.get("source_collection", {}).get("name") == "UCSF-PDGM")
-    if (stripped and case.metadata.get("structural_coverage") != "full_head"
-            and case.metadata.get("allow_nonzero_mri_access_support") is not False
+    if (declared_mri_support_allowed(case)
             and np.array_equal(support, case.mri != 0) and record.get("source") == case.semantic_hash
             and record.get("evidence_type") == "estimated"):
         return {**record, "review_status": "declared_skull_strip_assumption", "cortical_access_permitted": False}

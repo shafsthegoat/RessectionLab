@@ -659,9 +659,8 @@ def make_patient_simulator(case: Any, *, block_size: int = 6, max_steps: int = 4
         raise ValueError("Patient sequential experiment requires nonoverlapping target compartments")
     support_record = None
     if case.brain_mask is None:
-        collection = case.metadata.get("source_collection", {})
-        skull_stripped_declared = case.metadata.get("skull_stripped") is True or collection.get("name") == "UCSF-PDGM"
-        if not skull_stripped_declared:
+        from .structural_evidence import declared_mri_support_allowed
+        if not declared_mri_support_allowed(case):
             raise ValueError("A reviewed brain mask is required: full-head or unknown MRI support cannot define an intracranial tissue envelope")
         native_tissue = binary_fill_holes(np.asarray(case.mri) != 0)
         envelope_source = "hole_filled_nonzero_MRI_support_unreviewed_skull_strip_assumption"
@@ -669,6 +668,8 @@ def make_patient_simulator(case: Any, *, block_size: int = 6, max_steps: int = 4
         from .structural_evidence import planning_brain_support
         native_tissue, support_record = planning_brain_support(case)
         native_tissue = np.asarray(native_tissue, bool)
+        if np.any((overlap > 0) & ~native_tissue):
+            raise ValueError("Source target lies outside the supplied brain mask; review the conflicting anatomy")
         envelope_source = "case_brain_mask"
     native_tissue = native_tissue | (overlap > 0)
     tissue = pool(native_tissue).astype(bool)

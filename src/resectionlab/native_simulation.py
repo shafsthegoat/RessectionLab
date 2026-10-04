@@ -437,9 +437,8 @@ def make_native_patient_simulator(case: Any, *, access: AccessWindow | None = No
     if not union.any():
         raise ValueError("Native planning requires nonempty source target compartments")
     if case.brain_mask is None:
-        collection = case.metadata.get("source_collection", {})
-        declared = case.metadata.get("skull_stripped")
-        if declared is False or (declared is not True and collection.get("name") != "UCSF-PDGM"):
+        from .structural_evidence import declared_mri_support_allowed
+        if not declared_mri_support_allowed(case):
             raise ValueError("A reviewed brain mask is required for full-head or unknown source imaging")
         tissue = binary_fill_holes(np.asarray(case.mri) != 0) | union
         provenance = "estimated_hole_filled_nonzero_UCSF_or_declared_skull_stripped_MRI_support; brain_surface_unreviewed"
