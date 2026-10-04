@@ -1,0 +1,165 @@
+{
+  "descriptor_source_sha256": "b412a0f38ff4c33edae29be41ee6368430812ccd0ab6ea0a6d897db8e9434ef4",
+  "descriptor_version": "synthetic-access-coordinate-centroid-probe-v1",
+  "near_parallel_normal_sensitivity": {
+    "interpretation": "These are different but nearby normals, not identical geometry; the first-axis tangent gauge is ill-conditioned near parallelism.",
+    "max_coordinate_change_mm": 2.0,
+    "normal_a": [
+      1.0,
+      2e-08,
+      0.0
+    ],
+    "normal_b": [
+      1.0,
+      -2e-08,
+      0.0
+    ],
+    "normal_max_abs_change": 4e-08,
+    "point_mm": [
+      [
+        0.0,
+        1.0,
+        1.0
+      ]
+    ]
+  },
+  "numpy_version": "2.5.3",
+  "reproducer_sha256": "f2ea4459579204fd63fbbb4f5771bd0675bd80d50ef6ee933c7c4337a8df5324",
+  "scope": "Numerical descriptor-conditioning counterexample only; no simulator, policy, patient or gradient",
+  "threshold_rotation_counterexample": {
+    "affine": [
+      [
+        1.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        1.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "center_mm": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "changed_coordinates_mm": [
+      [
+        -1.0000000003436784,
+        -0.9999999996563215,
+        1.0000000175791105e-08
+      ]
+    ],
+    "changed_frame": {
+      "basis_columns": [
+        [
+          -0.7490924578784376,
+          0.619116257817194,
+          -0.23570225290459135
+        ],
+        [
+          0.33076807853066675,
+          0.04127441705697188,
+          -0.9428090448897443
+        ],
+        [
+          -0.5739799367353984,
+          -0.7842139260450817,
+          -0.23570225465571648
+        ]
+      ],
+      "orientation": "right_handed",
+      "origin_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_tangent_axis": 0,
+      "units": "millimetres",
+      "version": "synthetic-access-coordinate-centroid-probe-v1"
+    },
+    "interpretation": "At the declared tangent cutoff, floating-point rotation can change which source axis is selected; regular-fixture invariance does not establish unconditional numerical invariance.",
+    "max_abs_change_mm": 2.0000000003436784,
+    "normal": [
+      1.0,
+      1e-08,
+      0.0
+    ],
+    "original_coordinates_mm": [
+      [
+        1.0,
+        1.0,
+        1e-08
+      ]
+    ],
+    "original_frame": {
+      "basis_columns": [
+        [
+          -1.0000000000000002e-08,
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          -0.0,
+          1e-08
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "orientation": "right_handed",
+      "origin_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_tangent_axis": 1,
+      "units": "millimetres",
+      "version": "synthetic-access-coordinate-centroid-probe-v1"
+    },
+    "points_mm": [
+      [
+        0.0,
+        1.0,
+        1.0
+      ]
+    ],
+    "rotation": [
+      [
+        -0.2357022603955159,
+        0.749092453619483,
+        -0.6191162575597471
+      ],
+      [
+        -0.9428090415820632,
+        -0.3307680964034083,
+        -0.041274417170649697
+      ],
+      [
+        -0.2357022603955158,
+        0.5739799319941493,
+        0.7842139262423462
+      ]
+    ],
+    "rotation_determinant": 0.9999999999999999,
+    "rotation_orthogonality_max_abs_error": 2.220446049250313e-16
+  }
+}

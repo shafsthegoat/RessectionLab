@@ -1,0 +1,48 @@
+{
+  "archive_verified_file_count": 37,
+  "best_second_cut_new_partial_normal_cells": [
+    66,
+    41
+  ],
+  "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=src .venv/bin/python -m pytest -q tests/test_native_spatial_features_adversarial.py",
+  "final_test_invocation": {
+    "gradient_updates": 0,
+    "optimizers_constructed": 0,
+    "patients_loaded": 0,
+    "policies_evaluated": 0,
+    "tiny_synthetic_native_transitions": 8
+  },
+  "fixture_best_conditional_two_step_returns": [
+    39.43,
+    39.68
+  ],
+  "fixture_first_rewards": [
+    4.33,
+    4.33
+  ],
+  "numerical_prototype_changed": false,
+  "pending_documentation_recommendation": "Owner should qualify frame invariance by the tested regular fixtures and retain the near-parallel conditioning counterexample.",
+  "python": "3.12.14",
+  "recorded_at": "2026-10-04T13:43:00.841359+00:00",
+  "result": {
+    "failed": 0,
+    "passed": 7,
+    "seconds": 0.61
+  },
+  "retained_limitations": [
+    "Summary is lossy and does not establish Markov state",
+    "Source-axis reindexing changes the declared tangent gauge",
+    "Near-parallel source/access axes are ill-conditioned; floating-point rotation at the threshold can change selected tangent axis",
+    "Critic summaries omit partial-contact history/current tool/budget unless retained separately",
+    "No efficacy, trained-policy, population-generalization or clinical claim"
+  ],
+  "scope": "Independent synthetic descriptor review, no production/patient/training change",
+  "source_sha256": {
+    "artifacts/native-spatial-feature-independent-v1/conditioning-counterexample.json": "109c1b89e57a16898ea3cae3e1ed3feb6439ac23230fc99c83cf8f2e76adc5ef",
+    "artifacts/native-spatial-feature-independent-v1/reproduce_conditioning.py": "f2ea4459579204fd63fbbb4f5771bd0675bd80d50ef6ee933c7c4337a8df5324",
+    "artifacts/native-spatial-feature-probe-v1/probe/report.json": "f7ac523a033e7b9dbfb8119c0a78916d0ef3dc420d7156d8459f25d21bd0c79c",
+    "research/native_spatial_features.py": "b412a0f38ff4c33edae29be41ee6368430812ccd0ab6ea0a6d897db8e9434ef4",
+    "scripts/probe_native_spatial_features.py": "9dc18d8e875cf9662ca6b51a0bdad3ce63f8feb616e9c6dbb6388a7297a135ca",
+    "tests/test_native_spatial_features_adversarial.py": "20144ff09175258edac61e7e79d1e691908dcdef4fc1c9613b365f10003d5ca7"
+  }
+}

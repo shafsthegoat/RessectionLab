@@ -166,6 +166,17 @@ An isolated exact capsule-cover cache prototype passes 78 focused checks and
 reference/cached/reference outputs agree, including independent native histories;
 no patient speedup is established and production geometry stays unchanged.
 
+An isolated synthetic descriptor probe reproduces a known RAW action/state
+alias: identical first reward 4.33 but best two-cut returns 39.43 and 39.68.
+Access-relative coordinates and cavity/residual centroids distinguish that
+pair. Eight owner checks and seven independent checks pass. This is nine tiny
+probe transitions, no patient or policy execution and no production profile
+change. Independent review retains a roughly 2-mm rotation-rounding failure at
+the tangent-selection cutoff. Different masks can still share the summaries;
+contact history, tool and remaining budget are omitted unless supplied separately.
+The proposed summary is not a complete state or an established learning gain.
+See `docs/synthetic-spatial-feature-probe.md` and both independent artifact sets.
+
 The frozen extraction procedure has now run on PAT16 and PAT20, with two
 repetitions of both model variants per case. All eight child inferences completed
 without failures or tuning; repeated masks and distance arrays were identical.

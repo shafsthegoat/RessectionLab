@@ -1062,3 +1062,28 @@ Root inspected the minimum-width UCSF and wide PAT20 MRI screenshots. Exact
 build, native, screenshot and capture records are preserved in
 `artifacts/electron-case-identity-v1/`. Environment and desktop workflow guides
 now distinguish this package from separate experimental learning results.
+
+## October 4, 2026 — synthetic spatial information distinguishes one RAW alias
+
+A separate 7×7×8 native fixture probe completes nine transitions in 0.363 seconds,
+with no policies, gradients or patient inputs. Eight owner checks pass. The two
+first cuts have identical existing action features and reward 4.33, yet their
+best two-cut returns are 39.43 and 39.68. Six proposed access-relative coordinates
+distinguish the actions; eight cavity/residual volume-and-centroid values
+distinguish the resulting states. Translation, RAS/LPS and row permutation
+errors are zero on the regular fixture; rotation plus translation is within
+1.11e-15 mm. Thirty-seven archived source files verify unchanged.
+
+Seven independent checks reproduce physical units, sheared affine centroids,
+the archive and exact cell-based rewards. The 0.25 return gap follows from
+66 versus 41 newly contacted normal cells on the final cuts. An additional
+counterexample finds a 2.00000000034-mm descriptor change when rotation roundoff
+switches tangent-axis choice near its 1e-8 cutoff. This later finding is retained
+separately, and documentation qualifies the original fixture-only invariance.
+Different abstract masks also share the proposed summary; their native
+reachability is unverified. Source reindexing changes the chosen basis, and
+partial-contact history, current tool and remaining budget are omitted unless
+retained separately. No Markov, learning or clinical benefit is established.
+The prototype remains outside the production package. See
+`artifacts/native-spatial-feature-probe-v1/` and
+`artifacts/native-spatial-feature-independent-v1/`.
