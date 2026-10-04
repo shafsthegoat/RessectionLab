@@ -1,0 +1,443 @@
+diff --git a/src/resectionlab/app/desktop.py b/src/resectionlab/app/desktop.py
+index 5cf36c9..a47aced 100644
+--- a/src/resectionlab/app/desktop.py
++++ b/src/resectionlab/app/desktop.py
+@@ -247,7 +247,8 @@ class MainWindow(QMainWindow):
+         top = QHBoxLayout()
+         top.addWidget(label("Anatomy workspace", "title"))
+         top.addStretch()
+-        top.addWidget(button("Reset camera", lambda: self.scene.reset_camera()))
++        top.addWidget(button("Focus anatomy", self.focus_anatomy))
++        top.addWidget(button("Fit full instruments", self.fit_instruments))
+         layout.addLayout(top)
+         self.mode_label = label("Linked physical MRI views · RAS+ · neurological orientation", "muted")
+         layout.addWidget(self.mode_label)
+@@ -328,12 +329,22 @@ class MainWindow(QMainWindow):
+         self.compare_a.setAccessibleName("Primary route")
+         self.compare_a.setObjectName("compare_a")
+         self.compare_a.currentIndexChanged.connect(self.route_selection_changed)
+-        layout.addWidget(self.compare_a)
++        row_a = QHBoxLayout()
++        swatch_a = label("● A")
++        swatch_a.setStyleSheet("color:#82debd;font-weight:600;")
++        row_a.addWidget(swatch_a)
++        row_a.addWidget(self.compare_a, 1)
++        layout.addLayout(row_a)
+         self.compare_b = QComboBox()
+         self.compare_b.setAccessibleName("Comparison route")
+         self.compare_b.setObjectName("compare_b")
+         self.compare_b.currentIndexChanged.connect(self.route_selection_changed)
+-        layout.addWidget(self.compare_b)
++        row_b = QHBoxLayout()
++        swatch_b = label("● B")
++        swatch_b.setStyleSheet("color:#a6b0f5;font-weight:600;")
++        row_b.addWidget(swatch_b)
++        row_b.addWidget(self.compare_b, 1)
++        layout.addLayout(row_b)
+         self.route_list = QListWidget()
+         self.route_list.setSelectionMode(QListWidget.SelectionMode.ExtendedSelection)
+         self.route_list.setMinimumHeight(125)
+@@ -345,6 +356,10 @@ class MainWindow(QMainWindow):
+         self.metrics.setMaximumHeight(340)
+         self.metrics.setHtml("<p style='color:#91a1a6'>Generate routes after reviewing the case. Accessible target volume will be reported separately from simulated removed volume.</p>")
+         layout.addWidget(self.metrics, 1)
++        self.failure_focus_button = button("Inspect first failed constraint", self.focus_failure)
++        self.failure_focus_button.hide()
++        self.failure_point = None
++        layout.addWidget(self.failure_focus_button)
+         self.unknown_label = label("Clinical outcomes are not predicted. Functional and vascular anatomy remain unassessed.", "warning", True)
+         layout.addWidget(self.unknown_label)
+         return panel
+@@ -761,7 +776,8 @@ class MainWindow(QMainWindow):
+             index = combo.currentData()
+             if isinstance(index, int) and index >= 0 and index < len(self.routes) and index not in selected:
+                 selected.append(index)
+-        visible, sections = [], []
++        visible, summaries = [], []
++        self.failure_point = None
+         for route_index in selected:
+             route = self.routes[route_index]
+             geometry = route.get("geometry", {})
+@@ -774,7 +790,13 @@ class MainWindow(QMainWindow):
+                 entry, target = entry * [-1, -1, 1], target * [-1, -1, 1]
+                 if point is not None:
+                     point = np.asarray(point) * [-1, -1, 1]
+-            visible.append((entry, target, radius, length, route.get("category") == "rejected", point))
++            access = dict(route.get("window", {}))
++            if access and self.case and self.case.frame == "LPS+":
++                access["center_mm"] = (np.asarray(access["center_mm"]) * [-1, -1, 1]).tolist()
++                access["normal_inward"] = (np.asarray(access["normal_inward"]) * [-1, -1, 1]).tolist()
++            visible.append((entry, target, radius, length, route.get("category") == "rejected", point, access))
++            if point is not None and self.failure_point is None:
++                self.failure_point = point
+             volume = route.get("accessible_target_volume_mm3", 0) / 1000
+             failure = "; ".join(f"{item.get('reason', '')}: {item.get('detail', '')}" for item in failures)
+             exposure = route.get("normal_tissue_exposure_mm3")
+@@ -783,20 +805,36 @@ class MainWindow(QMainWindow):
+             clearance = geometry.get("clearance_mm")
+             clearance_text = "Not available" if clearance is None else f"{clearance:.2f} mm (lower bound)"
+             compartment_text = "<br>".join(f"{html.escape(name.replace('_', ' '))}: {amount / 1000:.3f} mL" for name, amount in route.get("accessible_target_volume_mm3_by_compartment", {}).items())
+-            sections.append(f"<h3>{html.escape(self.route_name(route_index, route))}</h3>"
+-                f"<p><b>Accessible target</b> {volume:.3f} mL<br>"
+-                f"<b>Simulated removed volume</b> Not computed<br>"
+-                f"<b>Route length</b> {length_text}<br>"
+-                f"<b>Normal exposure</b> {exposure_text}<br>"
+-                f"<b>Clearance</b> {clearance_text}<br>"
+-                f"<b>Assessment</b> {html.escape(str(route.get('assessment', 'Incomplete anatomy')))}<br>"
+-                "</p>"
+-                f"<p>{compartment_text}</p>"
+-                f"<p>{html.escape(str(failure))}</p>"
+-                )
++            summaries.append({"name": f"Route {route_index + 1:02d}", "accessible": f"{volume:.3f} mL",
++                              "length": length_text, "normal": "Unknown" if exposure is None else f"{exposure / 1000:.3f} mL",
++                              "clearance": "Unknown" if clearance is None else f"{clearance:.2f} mm",
++                              "status": "Rejected" if route.get("category") == "rejected" else str(route.get("assessment", "Incomplete")).title(),
++                              "failure": failure})
+         self.scene.set_routes(visible)
+-        if sections:
+-            self.metrics.setHtml("<hr>".join(sections))
++        self.failure_focus_button.setVisible(self.failure_point is not None)
++        if summaries:
++            rows = [("Accessible target", "accessible"), ("Route length", "length"), ("Clearance¹", "clearance"), ("Normal exposure²", "normal"), ("Assessment", "status")]
++            table = "<table width='100%' cellspacing='0' cellpadding='5'><tr><td></td>" + "".join(f"<th align='left' style='color:{color}'>{item['name']}</th>" for item, color in zip(summaries, ("#82debd", "#a6b0f5"))) + "</tr>"
++            for title, key in rows:
++                table += f"<tr><td style='color:#a8b9bc'>{title}</td>" + "".join(f"<td>{html.escape(item[key])}</td>" for item in summaries) + "</tr>"
++            table += "</table><p style='color:#91a1a6'>¹ Conservative lower bound<br>² Exposure, not tissue removal<br>Removed volume: not simulated</p>"
++            for item in summaries:
++                if item["failure"]:
++                    table += f"<p><b>{item['name']}</b> {html.escape(item['failure'])}</p>"
++            self.metrics.setHtml(table)
++
++    def focus_anatomy(self):
++        self.scene.focus_anatomy()
++        self.mode_label.setText("Anatomy focus · some instruments may extend beyond view · RAS+ mm")
++
++    def fit_instruments(self):
++        self.scene.fit_instruments()
++        self.mode_label.setText("Full instrument view · complete rendered tools and source MRI · RAS+ mm")
++
++    def focus_failure(self):
++        if self.failure_point is not None:
++            self.set_cursor(self.failure_point)
++            self.focus_anatomy()
+ 
+     def tool_changed(self, *_):
+         from resectionlab.geometry import GENERIC_TOOLS
+@@ -826,7 +864,7 @@ class MainWindow(QMainWindow):
+         self.training_dialog.show()
+         self.training_dialog.raise_()
+ 
+-    def start_refinement(self, budget_seconds):
++    def start_refinement(self, budget_seconds, backend="native"):
+         if self.current_job is not None or self.case is None:
+             return
+         if self.case.brain_mask is None and not self.support_checkbox.isChecked():
+@@ -837,7 +875,7 @@ class MainWindow(QMainWindow):
+             return
+         destination = Path(QStandardPaths.writableLocation(QStandardPaths.StandardLocation.AppLocalDataLocation)) / "runs" / uuid.uuid4().hex
+         self.training_run = {"case_hash": self.case.semantic_hash, "output_dir": str(destination),
+-                             "budget_seconds": float(budget_seconds), "seed": 0, "block_size": 6}
++                             "budget_seconds": float(budget_seconds), "seed": 0, "block_size": 6, "backend": backend}
+         self._run_refinement(resume=False)
+ 
+     def resume_refinement(self):
+@@ -853,14 +891,14 @@ class MainWindow(QMainWindow):
+         self.training_dialog.set_running(True)
+         def operation(cancel, progress, update):
+             from .refinement import run_refinement
+-            progress(0, "Preparing frozen coarse patient simulation…")
++            progress(0, f"Preparing frozen {settings.get('backend', 'coarse')} patient simulation…")
+             def notify(report):
+                 update(report)
+                 progress(min(98, int(100 * report.get("elapsed_seconds", 0) / settings["budget_seconds"])),
+                     f"PATIENT_SCRATCH_RL · {report.get('gradient_steps', 0)} actual updates · {report.get('optimization_environment_steps', 0)} optimization transitions")
+             return run_refinement(case, settings["output_dir"], budget_seconds=settings["budget_seconds"],
+                 seed=settings["seed"], block_size=settings["block_size"], resume=resume,
+-                cancelled=cancel.is_set, progress=notify)
++                backend=settings.get("backend", "coarse"), cancelled=cancel.is_set, progress=notify)
+         self.start_job(operation, self.install_refinement, "Training policy inside this case…", structured_update=self.training_progress)
+ 
+     def training_progress(self, report):
+@@ -898,9 +936,10 @@ class MainWindow(QMainWindow):
+         from .refinement import replay_mask, replay_volumes
+         self.replay_overlay = replay_mask(self.replay, step)
+         metrics = replay_volumes(self.replay, step)
+-        self.timeline_label.setText(f"COARSE SELECTION REPLAY · step {step}/{len(self.replay['metrics']['history'])} · "
++        native = self.replay.get("backend") == "native"
++        self.timeline_label.setText(f"{'NATIVE' if native else 'COARSE'} SELECTION REPLAY · step {step}/{len(self.replay['metrics']['history'])} · "
+             f"modeled removed target {metrics['removed_target_mm3'] / 1000:.3f} mL · residual {metrics['residual_target_mm3'] / 1000:.3f} mL\n"
+-            "Blue = simulated coarse-cell footprint. Source MRI unchanged; native-resolution removal is not certified.")
++            + ("Blue = contained source cells removed in simulation. Partial contact retains tissue; source MRI is unchanged." if native else "Blue = simulated coarse-cell footprint. Source MRI unchanged; native-resolution removal is not certified."))
+         self.scene.set_replay_surface(self.replay_overlay, ras_affine(np.asarray(self.replay["affine"]), self.case.frame))
+         self.refresh_views()
+ 
+diff --git a/src/resectionlab/app/refinement.py b/src/resectionlab/app/refinement.py
+index 85712df..5722822 100644
+--- a/src/resectionlab/app/refinement.py
++++ b/src/resectionlab/app/refinement.py
+@@ -13,7 +13,7 @@ import time
+ import numpy as np
+ 
+ 
+-def run_refinement(case, output_dir, *, budget_seconds=60., seed=0, block_size=6,
++def run_refinement(case, output_dir, *, budget_seconds=60., seed=0, block_size=6, backend="coarse",
+                    resume=False, cancelled=None, progress=None):
+     """Freeze a coarse structural scenario, train, and certify selection replay."""
+     # Keep PyTorch out of application launch and ordinary imaging workflows.
+@@ -27,29 +27,52 @@ def run_refinement(case, output_dir, *, budget_seconds=60., seed=0, block_size=6
+     directory.mkdir(parents=True, exist_ok=True)
+     started = time.perf_counter()
+     world = WorldGeneratorConfig()
+-    simulator = make_patient_simulator(case, block_size=block_size, max_steps=24,
+-        max_actions=8, proposal_scan_limit=64, world_generator=world)
++    if backend == "native":
++        from resectionlab.native_simulation import make_native_patient_simulator
++        simulator = make_native_patient_simulator(case, max_steps=6, max_actions=8, candidate_count=6, world_generator=world)
++        source_block_size = 1
++        episode_steps = 6
++    elif backend == "coarse":
++        simulator = make_patient_simulator(case, block_size=block_size, max_steps=24,
++            max_actions=8, proposal_scan_limit=64, world_generator=world)
++        source_block_size = block_size
++        episode_steps = 24
++    else:
++        raise ValueError("Unknown refinement backend")
+     partitions = generate_partitions(case.semantic_hash, world, seed,
+         optimization=8, selection=2, final_evaluation=8, stress=4,
+         planning_hash=getattr(case, "planning_hash", case.semantic_hash))
+     config = TrainingConfig(seed=seed, max_environment_steps=2048,
+         max_gradient_steps=32, max_wall_seconds=float(budget_seconds),
+-        max_episode_steps=24, episodes_per_update=2, checkpoint_interval=4)
++        max_episode_steps=episode_steps, episodes_per_update=2, checkpoint_interval=4)
+     if not resume:
+         (directory / "world-partitions.json").write_text(json.dumps(partitions.to_dict(), indent=2))
+         (directory / "desktop-run.json").write_text(json.dumps({
+             "case_hash": case.semantic_hash, "case_id": case.case_id, "budget_seconds": budget_seconds,
+-            "seed": seed, "block_size": block_size, "mode": "PATIENT_SCRATCH_RL",
+-            "scope": "coarse_annotation_assisted_structural_research",
++            "seed": seed, "block_size": source_block_size, "mode": "PATIENT_SCRATCH_RL", "backend": backend,
++            "scope": f"{backend}_annotation_assisted_structural_research",
+             "interpretation": "deterministic optimization; different seeds are not anatomical uncertainty",
+             "clinical_deficit_probability": None,
+             "final_evaluation_used_for_selection": False}, indent=2))
++    if cancelled():
++        return {"status": "cancelled", "gradient_steps": 0, "case_hash": case.semantic_hash, "output_dir": str(directory), "replay": None}
++    if backend == "native" and len(simulator.observation().action_ids) <= 1:
++        report = {"status": "abstained_no_legal_native_action", "optimizer_mode": "PATIENT_SCRATCH_RL",
++                  "gradient_steps": 0, "optimization_environment_steps": 0, "selection_environment_steps": 0,
++                  "elapsed_seconds": time.perf_counter() - started, "output_dir": str(directory),
++                  "case_hash": case.semantic_hash, "backend": backend, "replay": None,
++                  "reason": "Only STOP is legal under the current source-grid geometry; no trainable actor choice exists.",
++                  "proposal_failures": simulator.metrics().get("proposal_failures", []),
++                  "clinical_deficit_probability": None}
++        (directory / "result.json").write_text(json.dumps(report, indent=2))
++        return report
+     result = train_patient_policy(simulator.clone, partitions.optimization, partitions.selection,
+         config=config, output_dir=directory, cancelled=cancelled, progress=progress, resume=resume)
+     report = json.loads((directory / "result.json").read_text())
+     report["preparation_and_training_seconds"] = time.perf_counter() - started
+     report["case_hash"] = case.semantic_hash
+     report["block_size"] = block_size
++    report["backend"] = backend
+     report["replay"] = None
+     if cancelled() or result.status == "cancelled":
+         return report
+@@ -59,29 +82,29 @@ def run_refinement(case, output_dir, *, budget_seconds=60., seed=0, block_size=6
+     replay = rollout_policy(policy, simulator.clone(), seed=selected_seed,
+         max_steps=config.max_episode_steps, expected_model_hash=simulator.decision_model_hash,
+         interrupt=cancelled)
+-    certificate = {"valid": False, "reason": "independent_sequence_checker_unavailable"}
+-    try:
+-        from resectionlab.evaluation import independent_check_sequence
+-        certificate = independent_check_sequence(simulator.clone, replay.actions, seed=selected_seed, cancelled=cancelled)
+-        if hasattr(certificate, "to_dict"):
+-            certificate = certificate.to_dict()
+-        elif not isinstance(certificate, dict):
+-            certificate = asdict(certificate)
+-    except ImportError:
+-        pass
+-    from resectionlab.evaluation import independent_native_removal_check
+-    native_audit = independent_native_removal_check(case, simulator.config, replay.metrics["history"])
++    if backend == "native":
++        from resectionlab.evaluation import independent_check_native_history
++        checked = independent_check_native_history(case, simulator.config.tools, replay.metrics["history"],
++            tissue_mask=simulator.config.tissue_mask, access=simulator.config.access, hard_exclusion=simulator.config.hard_exclusion)
++        certificate = checked.to_dict() if hasattr(checked, "to_dict") else asdict(checked)
++        native_audit = certificate
++    else:
++        from resectionlab.evaluation import independent_check_sequence, independent_native_removal_check
++        checked = independent_check_sequence(simulator.clone, replay.actions, seed=selected_seed, cancelled=cancelled)
++        certificate = checked.to_dict() if hasattr(checked, "to_dict") else asdict(checked)
++        audited = independent_native_removal_check(case, simulator.config, replay.metrics["history"])
++        native_audit = audited.to_dict() if hasattr(audited, "to_dict") else asdict(audited)
+     replay_report = {
+         "role": "selection", "case_hash": case.semantic_hash,
+         "decision_model_hash": simulator.decision_model_hash,
+         "checkpoint_hash": result.selected_checkpoint_hash,
+         "actions": list(replay.actions), "metrics": replay.metrics,
+         "independent_certificate": certificate,
+-        "native_removal_audit": native_audit.to_dict() if hasattr(native_audit, "to_dict") else asdict(native_audit),
++        "native_removal_audit": native_audit,
+         "affine": simulator.config.affine.tolist(),
+         "shape": list(simulator.config.tissue_mask.shape),
+-        "source_block_size": block_size,
+-        "interpretation": "coarse cell removal footprint with exact source-fraction volume accounting; not native-resolution removal certification",
++        "source_block_size": source_block_size, "backend": backend,
++        "interpretation": ("contained source cells with independent temporal whole-tool check; partial contact remains retained tissue" if backend == "native" else "coarse cell removal footprint with exact source-fraction volume accounting; not native-resolution removal certification"),
+         "final_evaluation": False,
+     }
+     replay_report["artifact_hash"] = replay_artifact_hash(replay_report)
+@@ -101,7 +124,7 @@ def replay_mask(replay, step):
+     """Accumulate only retained removal history, never route accessibility."""
+     result = np.zeros(tuple(replay["shape"]), dtype=bool)
+     for item in replay["metrics"]["history"][:step]:
+-        indices = np.asarray(item.get("removed_indices", []), dtype=int)
++        indices = np.asarray(item.get("removed_indices_native", item.get("removed_indices", [])), dtype=int)
+         if len(indices):
+             result[tuple(indices.T)] = True
+     return result
+@@ -140,7 +163,7 @@ def validate_replay(case, replay):
+     seen = set()
+     total_target, total_normal = 0., 0.
+     for item in replay["metrics"]["history"]:
+-        indices = np.asarray(item.get("removed_indices", []))
++        indices = np.asarray(item.get("removed_indices_native", item.get("removed_indices", [])))
+         if not len(indices):
+             continue
+         if indices.ndim != 2 or indices.shape[1] != 3 or indices.dtype.kind not in "iu" or np.any(indices < 0) or np.any(indices >= np.asarray(expected_shape)):
+diff --git a/src/resectionlab/app/scene.py b/src/resectionlab/app/scene.py
+index 5d6124c..5bcfd46 100644
+--- a/src/resectionlab/app/scene.py
++++ b/src/resectionlab/app/scene.py
+@@ -6,7 +6,7 @@ from vtkmodules.vtkCommonCore import vtkPoints
+ from vtkmodules.vtkCommonDataModel import vtkImageData, vtkPolyData, vtkCellArray
+ from vtkmodules.vtkCommonMath import vtkMatrix4x4
+ from vtkmodules.vtkFiltersCore import vtkFlyingEdges3D, vtkTubeFilter
+-from vtkmodules.vtkFiltersSources import vtkSphereSource
++from vtkmodules.vtkFiltersSources import vtkSphereSource, vtkRegularPolygonSource
+ from vtkmodules.vtkRenderingCore import vtkActor, vtkPolyDataMapper, vtkRenderer, vtkImageActor, vtkWindowToImageFilter
+ from vtkmodules.vtkRenderingAnnotation import vtkAxesActor
+ from vtkmodules.vtkInteractionWidgets import vtkOrientationMarkerWidget
+@@ -126,6 +126,29 @@ class AnatomyScene(QVTKRenderWindowInteractor):
+         camera.Zoom(1.2)
+         self.render()
+ 
++    def focus_anatomy(self):
++        """Camera-only target focus with surrounding source-image context."""
++        bounds = [actor.GetBounds() for name, actor in self.actors.items() if name != "brain"]
++        if not bounds:
++            self.reset_camera()
++            return
++        values = np.asarray(bounds).reshape(-1, 3, 2)
++        low = values[:, :, 0].min(axis=0) - 30.
++        high = values[:, :, 1].max(axis=0) + 30.
++        camera = self.renderer.GetActiveCamera()
++        center = (low + high) / 2
++        direction = np.asarray(camera.GetPosition()) - np.asarray(camera.GetFocalPoint())
++        camera.SetFocalPoint(*center)
++        camera.SetPosition(*(center + direction))
++        self.renderer.ResetCamera(*np.stack([low, high], axis=1).ravel())
++        camera.Zoom(1.12)
++        self.render()
++
++    def fit_instruments(self):
++        """Fit all currently rendered complete tools and source-image context."""
++        self.renderer.ResetCamera()
++        self.render()
++
+     def set_visibility(self, name, visible):
+         if name in self.actors:
+             self.actors[name].SetVisibility(visible)
+@@ -165,7 +188,9 @@ class AnatomyScene(QVTKRenderWindowInteractor):
+             self.renderer.RemoveActor(actor)
+         self.route_actors.clear()
+         palette = [(.51, .87, .74), (.65, .69, .96)]
+-        for index, (entry, target, radius, length, rejected, failure_point) in enumerate(routes):
++        for index, route in enumerate(routes):
++            entry, target, radius, length, rejected, failure_point = route[:6]
++            window = route[6] if len(route) > 6 else None
+             entry, target = np.asarray(entry), np.asarray(target)
+             direction = target - entry
+             direction /= max(np.linalg.norm(direction), 1e-12)
+@@ -194,6 +219,21 @@ class AnatomyScene(QVTKRenderWindowInteractor):
+             actor.GetProperty().SetOpacity(.85)
+             self.renderer.AddActor(actor)
+             self.route_actors.append(actor)
++            if window:
++                ring = vtkRegularPolygonSource()
++                ring.SetCenter(*window["center_mm"])
++                ring.SetNormal(*window["normal_inward"])
++                ring.SetRadius(window["radius_mm"])
++                ring.SetNumberOfSides(64)
++                ring.GeneratePolygonOff()
++                ring_mapper = vtkPolyDataMapper()
++                ring_mapper.SetInputConnection(ring.GetOutputPort())
++                ring_actor = vtkActor()
++                ring_actor.SetMapper(ring_mapper)
++                ring_actor.GetProperty().SetColor(*palette[index % 2])
++                ring_actor.GetProperty().SetLineWidth(2)
++                self.renderer.AddActor(ring_actor)
++                self.route_actors.append(ring_actor)
+             if failure_point is not None:
+                 sphere = vtkSphereSource()
+                 sphere.SetCenter(*failure_point)
+diff --git a/src/resectionlab/app/training_view.py b/src/resectionlab/app/training_view.py
+index 234dac6..0131d4e 100644
+--- a/src/resectionlab/app/training_view.py
++++ b/src/resectionlab/app/training_view.py
+@@ -51,22 +51,26 @@ class SelectionCurve(QWidget):
+ 
+ 
+ class TrainingDialog(QDialog):
+-    start_requested = Signal(float)
++    start_requested = Signal(float, str)
+     resume_requested = Signal()
+     cancel_requested = Signal()
+ 
+     def __init__(self, parent=None):
+         super().__init__(parent)
+-        self.setWindowTitle("Refine for this case · coarse research simulation")
++        self.setWindowTitle("Refine for this case · research simulation")
+         self.resize(560, 580)
+         layout = QVBoxLayout(self)
+         title = QLabel("Patient-specific policy refinement")
+         title.setObjectName("title")
+         layout.addWidget(title)
+-        info = QLabel("Actual gradient updates inside a frozen, coarse structural simulation. Initial search routes remain available. Function and vessels are unassessed; this deterministic scenario is not uncertainty validation.")
++        info = QLabel("Actual gradient updates inside a frozen structural simulation. Initial search routes remain available. Function and vessels are unassessed; this deterministic scenario is not uncertainty validation.")
+         info.setWordWrap(True)
+         info.setObjectName("muted")
+         layout.addWidget(info)
++        self.backend = QComboBox()
++        self.backend.addItem("Native source grid · independently checked contained-cell brush", "native")
++        self.backend.addItem("Coarse development model · unsupported removal is rejected", "coarse")
++        layout.addWidget(self.backend)
+         controls = QHBoxLayout()
+         self.budget = QComboBox()
+         for seconds in (30, 60, 120):
+@@ -75,7 +79,7 @@ class TrainingDialog(QDialog):
+         controls.addWidget(self.budget)
+         self.start_button = QPushButton("Start scratch training")
+         self.start_button.setObjectName("primary")
+-        self.start_button.clicked.connect(lambda: self.start_requested.emit(self.budget.currentData()))
++        self.start_button.clicked.connect(lambda: self.start_requested.emit(self.budget.currentData(), self.backend.currentData()))
+         controls.addWidget(self.start_button)
+         self.resume_button = QPushButton("Resume")
+         self.resume_button.clicked.connect(self.resume_requested.emit)
+@@ -99,6 +103,7 @@ class TrainingDialog(QDialog):
+         self.start_button.setEnabled(not running)
+         self.resume_button.setEnabled(False)
+         self.budget.setEnabled(not running)
++        self.backend.setEnabled(not running)
+         self.cancel_button.setEnabled(running)
+ 
+     def set_report(self, report):
+@@ -111,6 +116,8 @@ class TrainingDialog(QDialog):
+         self.details.setPlainText(values + "\n\nMode: PATIENT_SCRATCH_RL\nCheckpoint selection uses surrogate returns. An unchanged or worse learned policy is retained as a measured negative result.\n\n"
+                                  + f"Checkpoint: {report.get('selected_checkpoint_hash', 'pending')}\nOutput: {report.get('output_dir', 'pending')}\n\nFinal evaluation is not read by this view.")
+         replay = report.get("replay") or {}
++        if report.get("status") == "abstained_no_legal_native_action":
++            self.details.setPlainText("NATIVE GEOMETRY ABSTENTION\n\nOnly STOP is legal under this model. No gradient updates were run because no actor choice exists.\n\n" + "\n".join(sorted({item.get("reason", "unknown") for item in report.get("proposal_failures", [])})))
+         native = replay.get("native_removal_audit") or {}
+         if native and not native.get("feasible"):
+             self.details.append("\nNATIVE REMOVAL AUDIT: REJECTED\n" + ", ".join(native.get("failures", ()))
