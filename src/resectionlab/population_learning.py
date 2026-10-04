@@ -140,13 +140,13 @@ def validate_population_checkpoint(checkpoint: str | Path, *, target_case_hash: 
             or offline["gradient_steps"] > settings.max_gradient_steps
             or not 0 < offline["optimization_environment_steps"] <= settings.max_environment_steps):
         raise ValueError("Population offline counters contradict recorded training budget or updates")
-    durations = ("elapsed_seconds", "preparation_seconds", "postprocessing_seconds_before_export",
+    durations = ("elapsed_seconds", "preparation_seconds", "initialization_seconds", "postprocessing_seconds_before_export",
                  "total_offline_seconds_before_checkpoint_write")
     for key in durations:
         value = offline.get(key)
         if type(value) not in (int, float) or not math.isfinite(value) or value < 0:
             raise ValueError("Population offline costs must be finite and nonnegative")
-    if offline["total_offline_seconds_before_checkpoint_write"] + 1e-6 < offline["elapsed_seconds"] + offline["preparation_seconds"]:
+    if offline["total_offline_seconds_before_checkpoint_write"] + 1e-6 < offline["elapsed_seconds"] + offline["preparation_seconds"] + offline["initialization_seconds"]:
         raise ValueError("Population total offline cost omits preparation or learning")
     if provenance.get("final_worlds_used") is not False or provenance.get("checkpoint_rule") != "fixed_budget_latest":
         raise ValueError("Population checkpoint declares final-world exposure or an unsupported checkpoint rule")
@@ -346,10 +346,11 @@ def train_population_policy(members: Sequence[PopulationMember], *, exclusions: 
             "optimization_environment_steps": result.optimization_environment_steps,
             "selection_environment_steps": result.selection_environment_steps,
             "elapsed_seconds": result.elapsed_seconds,
+            "initialization_seconds": result.initialization_seconds,
+            "elapsed_seconds_scope": "optimization and selection including initial selection; initialization and preparation separately measured",
             "preparation_seconds": preparation_seconds,
             "postprocessing_seconds_before_export": time.perf_counter() - after_training,
-            "total_offline_seconds_before_checkpoint_write": time.perf_counter() - started,
-            "elapsed_seconds_scope": "Learner initialization, optimization and selection; preparation and export costs reported separately"},
+            "total_offline_seconds_before_checkpoint_write": time.perf_counter() - started},
         "limits": ["No clinical population training", "Procedural groups are not independent patients",
                    "Known declared identity overlap only; no assurance about undiscovered relationships"]}
     checkpoint = directory / "population.pt"

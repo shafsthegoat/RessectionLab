@@ -49,7 +49,7 @@ class Simulator(Protocol):
 
 @dataclass(frozen=True)
 class TrainingConfig:
-    """Optimization-step and total-wall limits, preserved across resume.
+    """Optimization-step and learner-wall limits, preserved across resume.
 
     Selection transitions are counted separately; ``max_environment_steps``
     limits optimization transitions, not a combined search/selection budget.
@@ -110,6 +110,7 @@ class TrainingResult:
     selected_selection_return: float | None
     output_dir: str
     shared_checkpoint_hash: str | None = None
+    initialization_seconds: float | None = None
 
 
 class RolloutInterrupted(RuntimeError):
@@ -309,6 +310,8 @@ def train_patient_policy(
     shared_checkpoint: str | Path | None = None,
     population_case_group: str | None = None,
     population_case_aliases: tuple[str, ...] = (),
+    procedural_checkpoint: str | Path | None = None,
+    procedural_target: Any = None,
 ) -> TrainingResult:
     """Train a fresh policy or isolated clone, with selection-world-only ranking.
 
@@ -316,8 +319,10 @@ def train_patient_policy(
     batch is discarded, its executed transitions remain counted, and the latest
     optimizer/RNG state is saved. Resume preserves *total* limits; it cannot
     silently extend a run. This function never opens final-evaluation manifests.
+    Initialization is measured separately; initial selection and subsequent
+    optimization/selection share the cumulative learner wall-time budget.
     """
-    started = time.perf_counter()
+    initialization_started = time.perf_counter()
     partitions = _validate_partitions(optimization_manifest, selection_manifest)
     directory = Path(output_dir).resolve()
     directory.mkdir(parents=True, exist_ok=True)
@@ -326,8 +331,12 @@ def train_patient_policy(
         raise FileExistsError("run exists; use resume or a new output directory")
     if resume and not checkpoint_path.exists():
         raise FileNotFoundError("no checkpoint to resume")
-    if resume and shared_checkpoint is not None:
+    if resume and (shared_checkpoint is not None or procedural_checkpoint is not None):
         raise ValueError("resume uses the saved initialization, not a new shared checkpoint")
+    if shared_checkpoint is not None and (procedural_checkpoint is not None or procedural_target is not None):
+        raise ValueError("A run cannot mix population and procedural initializations")
+    if procedural_target is not None and procedural_checkpoint is None and not resume:
+        raise ValueError("Procedural target requires its validated initialization checkpoint")
     simulator = simulator_factory()
     _assert_partition_binding(simulator, optimization_manifest)
     frozen_hash = simulator.decision_model_hash
@@ -339,13 +348,23 @@ def train_patient_policy(
         policy = MaskedPatientPolicy(*dimensions)
     shared_hash = None
     population_context = None
+    procedural_context = None
     if resume:
-        saved_population = torch.load(checkpoint_path, map_location="cpu", weights_only=True).get("population_initialization")
+        initialization = torch.load(checkpoint_path, map_location="cpu", weights_only=True)
+        saved_population = initialization.get("population_initialization")
         if saved_population is not None:
             shared_checkpoint = directory / "population-source.pt"
             if population_case_group is None:
                 population_case_group = saved_population["target_group"]
                 population_case_aliases = tuple(saved_population["target_aliases"])
+        saved_procedural = initialization.get("procedural_initialization")
+        if saved_procedural is not None:
+            from .procedural_learning import TransferTarget
+            if saved_population is not None:
+                raise ValueError("Saved run mixes incompatible initialization domains")
+            procedural_checkpoint = directory / "procedural-source.pt"
+            if procedural_target is None:
+                procedural_target = TransferTarget(**saved_procedural["target"])
     if shared_checkpoint is not None:
         from .population_learning import feature_schema, validate_population_checkpoint
         source = torch.load(shared_checkpoint, map_location="cpu", weights_only=True)
@@ -366,6 +385,23 @@ def train_patient_policy(
             "checkpoint_file_sha256": validation["checkpoint_file_sha256"],
             "provenance_hash": validation["provenance_hash"], "scope": validation["scope"]}
         shared = clone_checkpoint_policy(copied)
+        policy.load_state_dict(copy.deepcopy(shared.state_dict()))
+        shared_hash = policy_hash(shared)
+    if procedural_checkpoint is not None:
+        from .procedural_learning import validate_procedural_adaptation
+        validation = validate_procedural_adaptation(procedural_checkpoint, procedural_target,
+            simulator, optimization_manifest, selection_manifest, config)
+        copied = directory / "procedural-source.pt"
+        if not resume:
+            copied.write_bytes(Path(procedural_checkpoint).read_bytes())
+        if hashlib.sha256(copied.read_bytes()).hexdigest() != validation["checkpoint_file_sha256"]:
+            raise ValueError("Procedural checkpoint changed while copying or resuming")
+        procedural_context = {"target": asdict(procedural_target),
+            "checkpoint_file_sha256": validation["checkpoint_file_sha256"],
+            "provenance_hash": validation["provenance_hash"], "scope": validation["scope"]}
+        shared = clone_checkpoint_policy(copied)
+        if policy_hash(shared) != validation["policy_hash"]:
+            raise ValueError("Procedural actor changed after provenance validation")
         policy.load_state_dict(copy.deepcopy(shared.state_dict()))
         shared_hash = policy_hash(shared)
     optimizer = torch.optim.Adam(policy.parameters(), lr=config.learning_rate)
@@ -391,6 +427,9 @@ def train_patient_policy(
                             "python": platform.python_version(), "device": "cpu"},
                 "config": asdict(config), "partitions": partitions,
                 "population_initialization": population_context,
+                "procedural_initialization": procedural_context,
+                "timing_contract": "optimization_selection_budget_v2_initialization_separate",
+                "elapsed_seconds_scope": "cumulative optimization and selection, including initial selection; initialization excluded",
                 "decision_model_hash": frozen_hash, "dimensions": list(dimensions)}
     contract_hash = _json_hash(contract)
     if resume:
@@ -418,6 +457,13 @@ def train_patient_policy(
                                   "device": "cpu", "torch_threads": torch.get_num_threads()},
                      "clinical_deficit_probability": None,
                      "final_evaluation_used_for_optimization": False})
+    # Each invocation measures setup independently. Resume retains only the
+    # already consumed optimization/selection budget from this same contract.
+    # Initial selection below is part of the learner budget, not preparation.
+    started = time.perf_counter()
+    initialization_seconds = started - initialization_started
+    state["initialization_seconds"] = state.get("initialization_seconds", 0.0) + initialization_seconds
+    state["initialization_seconds_this_invocation"] = initialization_seconds
     elapsed_before = state["elapsed_seconds"]
     cancelled = cancelled or (lambda: False)
 
@@ -434,18 +480,23 @@ def train_patient_policy(
             "optimizer": optimizer.state_dict(), "random_state": generator.get_state(),
             "initial_hash": initial_hash, "shared_hash": shared_hash, "state": state,
             "population_initialization": population_context,
+            "procedural_initialization": procedural_context,
         })
-        result = TrainingResult(status, "POPULATION_ADAPTED" if shared_hash else "PATIENT_SCRATCH_RL",
+        optimizer_mode = ("PROCEDURAL_PRETRAINED_ADAPTED" if procedural_context is not None
+                          else "POPULATION_ADAPTED" if shared_hash else "PATIENT_SCRATCH_RL")
+        result = TrainingResult(status, optimizer_mode,
                                 initial_hash, selected_hash, latest_hash, frozen_hash,
                                 state["gradient_steps"], state["optimization_environment_steps"],
                                 state["selection_environment_steps"], state["elapsed_seconds"],
                                 state["initial_selection_return"], state["selected_selection_return"],
-                                str(directory), shared_hash)
+                                str(directory), shared_hash, state["initialization_seconds"])
         _atomic_json(directory / "result.json", {**asdict(result), **state,
                      "latest_actor_hash": policy_hash(policy.actor),
                      "actor_parameters_changed": policy_hash(policy.actor) != state["initial_actor_hash"],
                      "selection_rule": "maximum mean deterministic selection return; earliest wins ties",
                      "wall_limit_semantics": "cooperative; a simulator/gradient call may overrun the deadline",
+                     "elapsed_seconds_scope": contract["elapsed_seconds_scope"],
+                     "initialization_seconds_scope": "cumulative model/policy/provenance/optimizer/contract setup across invocations; excluded from learner budget",
                      "clinical_deficit_probability": None, "learning_improvement_guaranteed": False})
         return result
 
