@@ -51,3 +51,6 @@ outputs/
 
 # Full feature-unit native replay is retained locally; lossless gzip is versioned.
 /artifacts/learning/procedural-native-feature-units-v1/study/development-geometry-825d1885-6d54-4d69-963c-b5c585fb6d8c/native-history-replay.json
+
+# New action-model preflights retain exact executable copies locally.
+/artifacts/preflight/native-axis-*/frozen-source/

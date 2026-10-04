@@ -1,0 +1,77 @@
+{
+  "created_at_utc": "2026-10-04T12:08:58.164148+00:00",
+  "declaration_content_hash": "sha256:ae12468ad89898ba997cea2d4576fd65ecff9ea49a8fcc35f6d3e7850255d341",
+  "final_worlds_executed": 0,
+  "fixed_source_review_findings": [
+    {
+      "issue": "Publication could retain eligible_candidate_count2 when second payload or completed-status export failed.",
+      "observation": "Original block set status.update(status=\"completed\", eligible_candidate_count=2) before two candidate exports and the final status write; exception handler did not reset count.",
+      "repair": "One atomic diagnostic candidate-records file; final atomic status binds file SHA256, sets count2 only after exports, resource/source/policy gates; exception resets count0. Both completed launcher and worker statuses are required for consumer eligibility."
+    },
+    {
+      "issue": "Parent wall timeout could be hidden if worker completed during SIGTERM grace.",
+      "observation": "Original hard_timeout flag only recorded forced kill; worker return0 and completed status could still yield completed launcher status after timeout.",
+      "repair": "Explicit parent_timeout_requested latched on deadline, failed launcher/count0 even if worker returns0 during grace; separate forced-kill field."
+    },
+    {
+      "issue": "Case/native preparation cancellation occurred outside the orchestration failure-receipt boundary.",
+      "repair": "Public worker wrapper preserves worker-failure stage/resource and unconditional worker-resource receipt; source mismatch is checked before case load."
+    },
+    {
+      "issue": "Default constructor values were not explicitly checked against the declared action model.",
+      "repair": "Exact actual proposal rule, adapter version, caps, RAW profile, missing-evidence flags and reward/partial-contact settings must match frozen declarations."
+    }
+  ],
+  "gradient_steps_performed": 0,
+  "independent_test_count": 17,
+  "limitations": [
+    "This clears implementation and tiny synthetic orchestration tests only; public resource cost remains unmeasured until separate execution release.",
+    "Memory enforcement is cooperative process peak RSS, not a hard reservation; one native operation may delay a callback, and parent timeout supplies a separate wall bound.",
+    "The declared public case has unreviewed structural support/hypothetical access and missing motor/language evidence; no clinical outcome or safety claim follows."
+  ],
+  "negative_evidence_limit": "Findings were source-review observations fixed before their regressions ran. The original whole-file bytes were not snapshotted. No pre-fix failing execution or reconstructed old-run result is claimed.",
+  "public_execution_performed": false,
+  "schema_version": 1,
+  "source_sha256": {
+    "manifests/experiments/native-axis-preflight-v1.json": "5299b25533e0701ca96ee99e2f50a048a205768f416e49e0275390a81e1cef71",
+    "scripts/preflight_native_axis.py": "3edeed6e2bf2349a4aa17235f1edd50c7c4d923741179da4a6d35064348f66b4",
+    "tests/test_native_axis_preflight.py": "5db3562bbdb46f63e229afea370a86f16cb39d33e40336b4dae9e1f03bfef750",
+    "tests/test_native_axis_preflight_adversarial.py": "74d7f57615664fab27f7fd751523cf904d7c2d6f8cc6d725961bb317b04db653"
+  },
+  "status": "independent_source_and_synthetic_orchestration_review_passed",
+  "stress_worlds_executed": 0,
+  "tests": [
+    {
+      "evidence": "directly observed pytest process90580; earlier source revision",
+      "exit_code": 0,
+      "passed": 10,
+      "scope": "first independent publication/cancellation/certificate/freezing attacks",
+      "seconds": 8.82
+    },
+    {
+      "evidence": "directly observed pytest process26966; before final declaration-binding gate and final two attacks",
+      "exit_code": 0,
+      "passed": 31,
+      "scope": "independent15 plus author16, including launcher grace and preparation resource receipts",
+      "seconds": 11.61
+    },
+    {
+      "evidence": "research_protocol reported final combined pytest process43854; full final source/test hashes captured here after stable-source confirmation",
+      "exit_code": 0,
+      "passed": 37,
+      "scope": "final independent17 plus author20",
+      "seconds": 13.53
+    }
+  ],
+  "unresolved_blockers": [],
+  "verified_scopes": [
+    "Complete initial ordered slot ledger and action/observation IDs; unchanged native adapter tests cover subsequent inventory integrity.",
+    "Greedy sequence freezes before two fixed-action replays; separate seed11 hidden16 RAW initial policy freezes before two actual unchanged-policy rollouts.",
+    "Policy uses no optimizer, no gradients, requires_grad false; weights and checkpoint bytes remain unchanged.",
+    "Only declared optimization/selection roles; disjoint deterministic panels bind source/planning/generator identity; no final or stress execution.",
+    "Partial panels and each missing independent geometry/frontier/certificate component remain ineligible.",
+    "Wall/RSS/parent cancellation during publication and initial preparation preserve zero eligibility and resource receipts.",
+    "Late source mutation and frozen-worker mismatch fail; final publication hash binds both diagnostic records.",
+    "Episode and clone/setup costs remain explicitly distinct; one-instance reset panels are not exact generic-learner update/selection costs."
+  ]
+}
