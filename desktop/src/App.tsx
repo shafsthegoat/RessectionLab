@@ -33,6 +33,10 @@ import {
 } from "./case-data";
 import { readOnlyPreview } from "./preview-api";
 import { RefinementPanel } from "./RefinementPanel";
+import { StructuralEvidenceInventory } from "./StructuralEvidenceInventory";
+import { researchSupportGate } from "./case-support";
+import { selectComparisonRoutes } from "./route-selection";
+import type { SelectedRoute } from "./route-selection";
 import type {
   BridgeEvent,
   CasePayload,
@@ -125,6 +129,7 @@ function EvidenceDrawer({
                   <dd>
                     {String(
                       collection.name ??
+                        collection.accession ??
                         (caseData.metadata.is_synthetic
                           ? "Synthetic geometry fixture"
                           : "Imported source"),
@@ -171,6 +176,61 @@ function EvidenceDrawer({
                   ))}
                 </div>
               </section>
+              {!!caseData.sourceRefs?.length && (
+                <section className="record-section">
+                  <h3>Recorded source inputs</h3>
+                  <div className="source-inputs">
+                    {caseData.sourceRefs.map((source) => (
+                      <div key={source.source_id}>
+                        <strong>{readableName(source.source_id)}</strong>
+                        <span>{source.uri.split("/").pop() ?? source.uri}</span>
+                        <small>
+                          {source.license ?? "License not recorded"} ·{" "}
+                          {source.provenance ?? "Provenance unassessed"}
+                        </small>
+                        {source.sha256 && (
+                          <code title={source.sha256}>
+                            SHA256 {source.sha256.slice(0, 16)}…
+                          </code>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
+              {caseData.metadata.fractional_annotation != null && (
+                <section className="record-section">
+                  <h3>Annotation derivation</h3>
+                  <p className="structural-method">
+                    The binary target is derived from the creator-supplied
+                    fractional annotation using an explicit research threshold.
+                    The source intensities are not calibrated probabilities.
+                  </p>
+                  <dl>
+                    <dt>Threshold</dt>
+                    <dd>
+                      {String(
+                        (
+                          caseData.metadata.fractional_annotation as Record<
+                            string,
+                            unknown
+                          >
+                        ).threshold ?? "unrecorded",
+                      )}
+                    </dd>
+                    <dt>Review</dt>
+                    <dd>
+                      {String(
+                        caseData.metadata.annotation_review ?? "unassessed",
+                      )}
+                    </dd>
+                  </dl>
+                </section>
+              )}
+              <StructuralEvidenceInventory
+                detailed
+                evidence={caseData.structuralEvidence ?? []}
+              />
               <section className="record-section">
                 <h3>Unresolved inputs</h3>
                 <ul className="unknown-list">
@@ -212,7 +272,7 @@ function RouteComparison({
   all,
   onFailure,
 }: {
-  selected: RouteCandidate[];
+  selected: SelectedRoute[];
   all: RouteCandidate[];
   onFailure: (point: Vec3) => void;
 }) {
@@ -263,9 +323,9 @@ function RouteComparison({
             {selected.map((route, index) => (
               <th key={route.route_id}>
                 <span
-                  className={`route-letter ${index ? "route-b" : "route-a"}`}
+                  className={`route-letter ${route.comparisonSlot === "B" ? "route-b" : "route-a"}`}
                 >
-                  {index ? "B" : "A"}
+                  {route.comparisonSlot}
                 </span>
                 <span>{routeName(route, all).split(" · ")[0]}</span>
               </th>
@@ -303,9 +363,9 @@ function RouteComparison({
             <div className="failure-card" key={route.route_id}>
               <div>
                 <span
-                  className={`route-letter ${index ? "route-b" : "route-a"}`}
+                  className={`route-letter ${route.comparisonSlot === "B" ? "route-b" : "route-a"}`}
                 >
-                  {index ? "B" : "A"}
+                  {route.comparisonSlot}
                 </span>
                 <strong>
                   {readableName(route.geometry.failures[0].reason)}
@@ -648,11 +708,7 @@ export default function App() {
     [routes, category],
   );
   const selected = useMemo(
-    () =>
-      [routeA, routeB]
-        .filter((id, index, list) => id && list.indexOf(id) === index)
-        .map((id) => routes.find((route) => route.route_id === id))
-        .filter((route): route is RouteCandidate => !!route),
+    () => selectComparisonRoutes(routes, routeA, routeB),
     [routes, routeA, routeB],
   );
   const viewerRoutes = useMemo(
@@ -706,18 +762,22 @@ export default function App() {
     [certifiedReplay, caseData],
   );
   const synthetic = !!payload?.metadata.is_synthetic;
-  const fullHead =
-    !payload?.brainMask &&
-    (payload?.metadata.structural_coverage === "full_head" ||
-      payload?.metadata.allow_nonzero_mri_access_support === false);
-  const needsSupport = !!payload && !payload.brainMask;
+  const supportGate = researchSupportGate(payload);
+  const needsSupport = supportGate.requiresEstimatedSupport;
   const canGenerate =
     !!payload &&
     !!caseData?.compartments.length &&
     !busy &&
     !readonly &&
-    !fullHead &&
+    !supportGate.blocked &&
     (!needsSupport || allowEstimatedSupport);
+  const fractionalAnnotation = payload?.metadata.fractional_annotation as
+    | Record<string, unknown>
+    | undefined;
+  const annotationDescription =
+    fractionalAnnotation?.derived_provenance === "estimated"
+      ? "Threshold-derived annotation"
+      : "Supplied annotation";
   const title = synthetic
     ? "Synthetic access fixture"
     : (payload?.caseId ?? "No case open");
@@ -889,7 +949,8 @@ export default function App() {
               <div>
                 <strong>{readableName(layer.name)}</strong>
                 <span>
-                  {(layer.volumeMm3 / 1000).toFixed(2)} mL · supplied annotation
+                  {(layer.volumeMm3 / 1000).toFixed(2)} mL ·{" "}
+                  {annotationDescription.toLowerCase()}
                 </span>
               </div>
             </label>
@@ -917,6 +978,9 @@ export default function App() {
             />
           </div>
         </section>
+        <StructuralEvidenceInventory
+          evidence={payload?.structuralEvidence ?? []}
+        />
         <section className="case-section functional-section">
           <h2>Functional evidence</h2>
           <div className="evidence-line">
@@ -1098,7 +1162,7 @@ export default function App() {
               <p className="instrument-note">
                 Generic research geometry · whole shaft and active tip
               </p>
-              {needsSupport && !fullHead && (
+              {needsSupport && !supportGate.blocked && (
                 <label className="support-choice">
                   <input
                     type="checkbox"
@@ -1114,11 +1178,8 @@ export default function App() {
                   </span>
                 </label>
               )}
-              {fullHead && (
-                <div className="capability-note">
-                  Full-head MRI needs a reviewed brain mask or explicit access
-                  window.
-                </div>
+              {supportGate.reason && (
+                <div className="capability-note">{supportGate.reason}</div>
               )}
               <button
                 className="primary-button generate-button"

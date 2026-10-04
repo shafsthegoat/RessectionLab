@@ -159,6 +159,10 @@
   color: #b7e7d3;
   line-height: 1.5;
 }
+.rl-viewer-route-key {
+  white-space: nowrap;
+  margin-left: 4px;
+}
 .rl-viewer-reset:focus-visible,
 .rl-viewer-segment button:focus-visible {
   outline: 1px solid #9ed6c0;

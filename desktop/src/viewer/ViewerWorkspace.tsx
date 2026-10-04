@@ -13,6 +13,7 @@ import {
 } from "./coordinates";
 import type { Point3, SlicePlane } from "./coordinates";
 import type { ViewerWorkspaceProps } from "./contracts";
+import { FAILURE_COLOR, routeAppearance } from "./routeAppearance";
 import "./viewer.css";
 
 const PLANES: SlicePlane[] = ["axial", "coronal", "sagittal"];
@@ -346,6 +347,29 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               Mint mesh: modeled removal · source MRI unchanged
             </span>
           )}
+          {!modeled &&
+            routes.slice(0, 2).map((route, index) => {
+              const { slot, color } = routeAppearance(route, index);
+              return (
+                <span
+                  key={route.route_id}
+                  className="rl-viewer-route-key"
+                  style={{ color }}
+                >
+                  ● Route {slot}
+                  {route.category === "rejected" ? " · rejected" : ""}
+                </span>
+              );
+            })}
+          {!modeled &&
+            routes.some((route) => route.geometry?.failures?.length) && (
+              <span
+                className="rl-viewer-route-key"
+                style={{ color: FAILURE_COLOR }}
+              >
+                ● Constraint failure
+              </span>
+            )}
           {remaining > 0 && (
             <span className="rl-viewer-preparing" role="status">
               Preparing {remaining} {remaining === 1 ? "surface" : "surfaces"}…

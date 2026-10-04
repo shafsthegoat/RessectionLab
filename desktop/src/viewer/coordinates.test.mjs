@@ -14,6 +14,12 @@ import { maskSurface } from "./surface.ts";
 import * as THREE from "three";
 import { physicalBounds, placeInSourceFrame } from "./sceneGeometry.ts";
 import { residualMask, validateReplay } from "./replay.ts";
+import {
+  COMPARISON_COLORS,
+  FAILURE_COLOR,
+  routeAppearance,
+} from "./routeAppearance.ts";
+import { selectComparisonRoutes } from "../route-selection.ts";
 
 const close = (actual, expected) =>
   actual.forEach((value, index) =>
@@ -22,6 +28,34 @@ const close = (actual, expected) =>
       `${actual} != ${expected}`,
     ),
   );
+
+test("Clearing route A retains B's amber comparison identity in the viewer", () => {
+  const routes = [
+    { route_id: "one" },
+    { route_id: "two", category: "rejected" },
+  ];
+  const both = selectComparisonRoutes(routes, "one", "two");
+  const onlyB = selectComparisonRoutes(routes, "", "two");
+  assert.deepEqual(routeAppearance(both[1], 1), {
+    slot: "B",
+    color: COMPARISON_COLORS.B,
+  });
+  assert.deepEqual(routeAppearance(onlyB[0], 0), routeAppearance(both[1], 1));
+  assert.equal(routeAppearance(onlyB[0], 0).color, "#e5c598");
+  assert.notEqual(
+    routeAppearance(onlyB[0], 0).color,
+    FAILURE_COLOR,
+    "Failure markers have separate semantics from route identity",
+  );
+  assert.deepEqual(routeAppearance({}, 0), {
+    slot: "A",
+    color: COMPARISON_COLORS.A,
+  });
+  assert.deepEqual(routeAppearance({}, 1), {
+    slot: "B",
+    color: COMPARISON_COLORS.B,
+  });
+});
 
 function replayFixture() {
   const volume = {

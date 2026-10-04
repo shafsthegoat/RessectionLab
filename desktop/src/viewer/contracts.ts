@@ -17,6 +17,7 @@ export interface ViewerVolume {
 
 export interface ViewerRoute {
   route_id: string;
+  comparisonSlot?: "A" | "B";
   entry_mm: number[];
   target_mm: number[];
   category?: string;

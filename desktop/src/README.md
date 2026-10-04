@@ -4,10 +4,14 @@ The React shell owns case review, source visibility, route comparison, and local
 
 - `App.tsx`: workspace state, operation status, native menu actions, case lifecycle and A/B route choices. A newer case load invalidates older hydration; route results must match the active source fingerprint.
 - `case-data.ts`: validates array encoding, shape, physical affine, source volumes and finite values before exposing typed arrays to the viewer. It converts LPS+ physical coordinates to RAS+ without resampling source voxels.
+- `route-selection.ts`: preserves A/B comparison identity when one slot is empty; compacting visible routes never changes their labels or colors.
+- `case-support.ts` and `StructuralEvidenceInventory.tsx`: keep estimated whole-brain proposals separate from usable research tissue support. Only the sidecar's explicit, source-bound support status can unlock hypothetical route generation; cortical access is never inferred.
 - `viewer/`: linked WebGL MRI planes, source-derived annotation surfaces, complete instrument geometry and physical camera framing. Display meshes approximate voxel boundaries; quantitative volume uses original source cells. The viewer has its own geometry and surface tests.
 - `RefinementPanel.tsx`: actual optimization/selection counters, selection-return history, local cancellation/resume and independently accepted replay. Search choices stay in parent state throughout refinement.
 - `training-data.ts`: checks replay identity, independent certificate, source frame, binary mask and volume accounting before allowing a modeled removal overlay. It does not approve imported simulation artifacts.
 - `preview-api.ts`: explicitly read-only development adapter for an ignored local export of a real public case. It cannot train, search, save or substitute invented results. Patient preview assets are excluded from production packaging.
+
+For fractional source annotations, the binary target is labeled threshold-derived and the recorded threshold is shown in the evidence inspector. Structural proposal inventories display review status and annotation-exclusion flags without presenting those metrics as segmentation accuracy.
 
 Source annotations and modeled removal remain separate. Static route accessibility is not removal. A replay is selection evidence, never final evaluation. Clinical deficit probability is unavailable. Unknown functional and vascular anatomy stays unknown.
 

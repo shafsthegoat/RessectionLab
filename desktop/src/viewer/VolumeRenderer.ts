@@ -13,10 +13,14 @@ import type { ViewerReplay, ViewerRoute, ViewerVolume } from "./contracts";
 import { fragmentShader, vertexShader } from "./shaders";
 import { physicalBounds, placeInSourceFrame } from "./sceneGeometry";
 import { residualMask, validateReplay } from "./replay";
+import {
+  COMPARISON_COLORS,
+  FAILURE_COLOR,
+  routeAppearance,
+} from "./routeAppearance";
 
 type Panes = { anatomy: HTMLElement } & Record<SlicePlane, HTMLElement>;
 const SLICE_PLANES: SlicePlane[] = ["axial", "coronal", "sagittal"];
-const ROUTE_COLORS = ["#8ae0c8", "#a7a1f3"];
 
 function matrix(affine: Affine): THREE.Matrix4 {
   return new THREE.Matrix4().set(
@@ -235,7 +239,7 @@ export class VolumeRenderer {
           uTipEnd: { value: [new THREE.Vector3(), new THREE.Vector3()] },
           uRadii: { value: [new THREE.Vector2(), new THREE.Vector2()] },
           uRouteColors: {
-            value: ROUTE_COLORS.map((color) =>
+            value: Object.values(COMPARISON_COLORS).map((color) =>
               new THREE.Color(color).convertLinearToSRGB(),
             ),
           },
@@ -612,8 +616,12 @@ export class VolumeRenderer {
           .clone()
           .addScaledVector(axis, -route.tool.working_length_mm),
         shaftEnd = tip.clone().addScaledVector(axis, -route.tool.tip_length_mm);
-      const color =
-        route.category === "rejected" ? "#ed9290" : ROUTE_COLORS[index];
+      const { color, slot } = routeAppearance(route, index);
+      const addPart = (part: THREE.Object3D) => {
+        part.userData.comparisonSlot = slot;
+        part.userData.routeId = route.route_id;
+        this.tools.add(part);
+      };
       const capsule = (
         a: THREE.Vector3,
         b: THREE.Vector3,
@@ -635,7 +643,7 @@ export class VolumeRenderer {
           new THREE.Vector3(0, 1, 0),
           b.clone().sub(a).normalize(),
         );
-        this.tools.add(mesh);
+        addPart(mesh);
       };
       capsule(shaftStart, shaftEnd, route.tool.shaft_radius_mm, false);
       capsule(shaftEnd, tip, route.tool.tip_radius_mm, true);
@@ -652,7 +660,7 @@ export class VolumeRenderer {
       );
       line.computeLineDistances();
       line.renderOrder = 4;
-      this.tools.add(line);
+      addPart(line);
       if (route.window) {
         const ring = new THREE.Mesh(
           new THREE.RingGeometry(
@@ -672,17 +680,21 @@ export class VolumeRenderer {
           new THREE.Vector3(0, 0, 1),
           this.sourceToRas(route.window.normal_inward).normalize(),
         );
-        this.tools.add(ring);
+        addPart(ring);
       }
       const failure = route.geometry?.failures?.[0];
       if (failure) {
         const marker = new THREE.Mesh(
           new THREE.SphereGeometry(1.5, 16, 12),
-          new THREE.MeshBasicMaterial({ color: 0xff8580, depthTest: false }),
+          new THREE.MeshBasicMaterial({
+            color: FAILURE_COLOR,
+            depthTest: false,
+          }),
         );
         marker.position.copy(this.sourceToRas(failure.position_mm));
         marker.renderOrder = 6;
-        this.tools.add(marker);
+        marker.userData.failure = failure.reason;
+        addPart(marker);
       }
       this.materials().forEach((shader) => {
         shader.uniforms.uShaftStart.value[index].copy(shaftStart);

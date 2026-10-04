@@ -11,6 +11,26 @@ export interface ArrayDescriptor {
   byteLength: number;
 }
 
+export interface StructuralEvidence {
+  evidenceId: string;
+  kind: string;
+  provenance: string;
+  reviewStatus: string;
+  reviewRequired: boolean;
+  corticalAccessPermitted: false;
+  sourceHash: string;
+  sourceFrameHash: string;
+  sourceFileHash: string;
+  maskHash: string;
+  modelHash: string;
+  runHash: string;
+  evidenceHash: string;
+  method: string;
+  array: ArrayDescriptor;
+  metadata: Record<string, unknown>;
+  review: unknown;
+}
+
 export interface CasePayload {
   caseId: string;
   caseHash: string;
@@ -21,6 +41,13 @@ export interface CasePayload {
   spacingMm: Vec3;
   mri: ArrayDescriptor;
   brainMask?: ArrayDescriptor | null;
+  brainSupport?: {
+    usableForResearchSimulation: boolean;
+    reviewStatus: string;
+    corticalAccessPermitted: false;
+    reason?: string;
+  };
+  structuralEvidence?: StructuralEvidence[];
   compartments: {
     name: string;
     volumeMm3: number;
