@@ -170,6 +170,100 @@ def test_unknown_adapter_cannot_silently_become_coarse(tmp_path, stable_sources)
     assert not (output / "training.json").exists()
 
 
+def test_frozen_population_inference_rejects_final_worlds_and_incomplete_panels():
+    from resectionlab.learning import MaskedPatientPolicy, policy_hash
+    from resectionlab.worlds import generate_partitions
+    simulator = make_synthetic_simulator()
+    observation = simulator.observation()
+    policy = MaskedPatientPolicy(observation.action_features.shape[1], observation.state_features.size, 16)
+    partitions = generate_partitions(simulator.case_hash, simulator.config.world_generator,
+        42, optimization=1, selection=2, final_evaluation=1, stress=1)
+    config = TrainingConfig(hidden_features=16, max_wall_seconds=10)
+    with pytest.raises(ValueError, match="selection worlds only"):
+        runner.frozen_population_rollouts(make_synthetic_simulator, policy,
+            partitions.final_evaluation, config, cancelled=lambda: False)
+    original = policy_hash(policy)
+    interrupted, actions = runner.frozen_population_rollouts(make_synthetic_simulator,
+        policy, partitions.selection, config, cancelled=lambda: True)
+    assert interrupted["status"] == "cancelled"
+    assert interrupted["selection_return"] is None
+    assert interrupted["gradient_steps"] == interrupted["optimization_environment_steps"] == 0
+    assert actions == ()
+    complete, actions = runner.frozen_population_rollouts(make_synthetic_simulator,
+        policy, partitions.selection, config, cancelled=lambda: False)
+    assert complete["selection_panel_complete"]
+    assert len(complete["selection_returns"]) == 2
+    assert complete["selection_environment_steps"] > 0
+    assert actions
+    assert policy_hash(policy) == original
+
+
+@pytest.fixture
+def analytic_population(tmp_path):
+    from resectionlab.population_learning import make_analytic_population_fixture, train_population_policy
+    members, target_factory, target = make_analytic_population_fixture()
+    result = train_population_policy(members, exclusions=(target,),
+        config=TrainingConfig(hidden_features=16, max_gradient_steps=4,
+            max_environment_steps=64, max_wall_seconds=15, episodes_per_update=2,
+            max_episode_steps=8, checkpoint_interval=2), output_dir=tmp_path / "population")
+    return Path(result["checkpoint_path"]), members, target_factory, target
+
+
+def test_population_runner_keeps_all_arms_isolated_and_final_worlds_closed(tmp_path, stable_sources, analytic_population, monkeypatch):
+    import hashlib
+    checkpoint, members, target_factory, target = analytic_population
+    original_bytes = checkpoint.read_bytes()
+    def forbidden(*args, **kwargs):
+        raise AssertionError("Synthetic population development must not inspect final worlds")
+    monkeypatch.setattr(runner, "evaluate_frozen_candidates", forbidden)
+    output = tmp_path / "all-arms"
+    result = runner.run_experiment(target_factory, output,
+        config=TrainingConfig(hidden_features=16, max_gradient_steps=4,
+            max_environment_steps=64, max_wall_seconds=15, episodes_per_update=2,
+            max_episode_steps=8, checkpoint_interval=2),
+        seeds=(11, 23, 47), counts=(2, 2, 2, 2), evaluate=False,
+        population_checkpoint=checkpoint, population_case_group=target.group_id,
+        population_case_aliases=target.aliases)
+    assert result["status"] == "completed"
+    assert checkpoint.read_bytes() == original_bytes
+    assert (output / "population-source.pt").read_bytes() == original_bytes
+    frozen = json.loads((output / "population-frozen.json").read_text())
+    assert frozen["gradient_steps"] == frozen["optimization_environment_steps"] == 0
+    assert frozen["selection_panel_complete"]
+    provenance = json.loads((output / "population-provenance.json").read_text())
+    assert provenance["checkpoint_file_sha256"] == hashlib.sha256(original_bytes).hexdigest()
+    for seed in (11, 23, 47):
+        scratch = json.loads((output / f"scratch-{seed}/contract.json").read_text())
+        adapted = json.loads((output / f"adapted-{seed}/contract.json").read_text())
+        assert scratch["config"] == adapted["config"]
+        assert scratch["partitions"] == adapted["partitions"]
+        assert scratch["shared_checkpoint_hash"] is None
+        assert adapted["initial_checkpoint_hash"] == frozen["shared_checkpoint_hash"]
+        report = json.loads((output / f"adapted-{seed}/result.json").read_text())
+        assert report["optimizer_mode"] == "POPULATION_ADAPTED"
+        assert 0 < report["gradient_steps"] <= 4
+    freeze = json.loads((output / "candidate-freeze.json").read_text())
+    modes = {candidate["optimizer_mode"] for candidate in freeze["candidates"]}
+    assert {"SEARCH", "PATIENT_SCRATCH_RL", "POPULATION_FROZEN", "POPULATION_ADAPTED"} <= modes
+    audit = output / result["geometry_validation_run_id"]
+    assert not (audit / "ledger.json").exists()
+    assert not (audit / "final_evaluation.json").exists()
+
+
+def test_population_overlap_fails_before_any_online_optimization(tmp_path, stable_sources, analytic_population):
+    checkpoint, members, target_factory, target = analytic_population
+    member = members[0]
+    output = tmp_path / "overlap"
+    with pytest.raises(ValueError, match="overlap|development|excluded"):
+        runner.run_experiment(member.simulator_factory, output,
+            config=TrainingConfig(hidden_features=16), seeds=(11,), evaluate=False,
+            population_checkpoint=checkpoint,
+            population_case_group=member.identity.group_id,
+            population_case_aliases=member.identity.aliases)
+    assert not (output / "search.json").exists()
+    assert not (output / "training.json").exists()
+
+
 @pytest.mark.parametrize("evaluate", [False, True])
 def test_native_backend_preserved_through_horizon_training_audit_and_worlds(tmp_path, stable_sources, monkeypatch, evaluate):
     from resectionlab.geometry import AccessWindow

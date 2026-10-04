@@ -33,7 +33,7 @@ from resectionlab.evaluation import (EvaluationLedger, IndependentGeometryResult
     WorldOutcome, evaluate_frozen_candidates, freeze_candidates,
     independent_check_sequence, independent_native_removal_check, independent_check_native_history)
 from resectionlab.learning import (TrainingConfig, load_policy, policy_hash,
-    rollout_policy, train_patient_policy)
+    rollout_policy, train_patient_policy, RolloutInterrupted)
 from resectionlab.simulation import (SequentialSimulator, beam_search,
     greedy_search, make_synthetic_simulator)
 from resectionlab.native_simulation import (NativeSequentialSimulator,
@@ -68,7 +68,8 @@ def source_snapshot(root: Path = ROOT) -> dict[str, Any]:
               for path in files if path.is_file()}
     runtime = {name: digest for name, digest in hashes.items()
                if (name.startswith("src/resectionlab/") and "/app/" not in name)
-               or name in {"scripts/run_patient_learning.py", "scripts/run_native_learning.py"}
+               or name in {"scripts/run_patient_learning.py", "scripts/run_native_learning.py",
+                           "scripts/run_population_smoke.py"}
                or name in {"pyproject.toml", "requirements-lock.txt"}}
     def git(*args: str) -> str | None:
         result = subprocess.run(["git", *args], cwd=root, capture_output=True, text=True)
@@ -105,6 +106,7 @@ class FrozenSequence:
     optimizer_mode: str
     selected_checkpoint_hash: str | None = None
     plan_type: str = "simulated_resection_sequence"
+    shared_checkpoint_hash: str | None = None
 
     @property
     def semantic_hash(self) -> str:
@@ -117,6 +119,50 @@ def independent_sequence_check(factory: Callable[[], SequentialSimulator],
     return independent_check_sequence(factory, candidate.actions)
 
 
+def frozen_population_rollouts(factory: Callable[[], SequentialSimulator], policy: Any,
+                               selection: Any, config: TrainingConfig, *,
+                               cancelled: Callable[[], bool]) -> tuple[dict[str, Any], tuple[str, ...]]:
+    """Measure one unchanged shared policy on selection worlds, with no optimizer."""
+    from resectionlab.worlds import WorldRole
+    from resectionlab.learning import _assert_partition_binding
+    if selection.role != WorldRole.SELECTION:
+        raise ValueError("Frozen policy inspection accepts selection worlds only")
+    started = time.perf_counter()
+    checkpoint_hash = policy_hash(policy)
+    first_instance = factory()
+    _assert_partition_binding(first_instance, selection)
+    model_hash = first_instance.decision_model_hash
+    returns, steps, first_actions = [], 0, None
+    status = "completed"
+    try:
+        for index, seed in enumerate(selection.seeds):
+            instance = first_instance if index == 0 else factory()
+            _assert_partition_binding(instance, selection)
+            result = rollout_policy(policy, instance, seed=seed,
+                max_steps=config.max_episode_steps,
+                expected_model_hash=model_hash,
+                interrupt=lambda: cancelled() or time.perf_counter() - started >= config.max_wall_seconds)
+            steps += result.environment_steps
+            returns.append(result.total_reward)
+            if first_actions is None:
+                first_actions = result.actions
+    except RolloutInterrupted as exc:
+        steps += exc.environment_steps
+        status = "cancelled" if cancelled() else "incomplete_selection_wall_budget"
+    if policy_hash(policy) != checkpoint_hash:
+        raise RuntimeError("Frozen population policy changed during inference")
+    record = {"optimizer_mode": "POPULATION_FROZEN", "status": status,
+        "shared_checkpoint_hash": checkpoint_hash, "selected_checkpoint_hash": checkpoint_hash,
+        "gradient_steps": 0, "optimization_environment_steps": 0,
+        "selection_environment_steps": steps, "selection_returns": returns,
+        "selection_return": float(np.mean(returns)) if status == "completed" else None,
+        "selection_panel_complete": status == "completed",
+        "elapsed_seconds": time.perf_counter() - started,
+        "selection_partition_hash": selection.partition_hash,
+        "pretraining_cost_accounted_separately": True}
+    return record, first_actions if status == "completed" and first_actions is not None else ()
+
+
 def run_experiment(factory: Callable[[], SequentialSimulator], output: Path, *,
                    config: TrainingConfig, seeds: tuple[int, ...] = (11, 23, 47),
                    counts: tuple[int, int, int, int] = (16, 8, 16, 8),
@@ -126,6 +172,9 @@ def run_experiment(factory: Callable[[], SequentialSimulator], output: Path, *,
                    planning_hash: str | None = None,
                    evaluate: bool = True,
                    trainer: Callable[..., Any] = train_patient_policy,
+                   population_checkpoint: Path | None = None,
+                   population_case_group: str | None = None,
+                   population_case_aliases: tuple[str, ...] = (),
                    cancelled: Callable[[], bool] = lambda: False) -> dict[str, Any]:
     if not seeds or len(set(seeds)) != len(seeds) or any(seed < 0 for seed in seeds):
         raise ValueError("Provide distinct nonnegative optimization seeds")
@@ -158,6 +207,42 @@ def run_experiment(factory: Callable[[], SequentialSimulator], output: Path, *,
             base = base.fresh(max_steps=effective_horizon)
         preprocessing_seconds = time.perf_counter() - preprocessing_started
         factory = base.clone
+        population_info = None
+        frozen_population = None
+        saved_population_path = None
+        if population_checkpoint is not None:
+            population_preparation_started = time.perf_counter()
+            from resectionlab.population_learning import (validate_population_checkpoint,
+                                                          load_frozen_population_policy, feature_schema)
+            if trainer is not train_patient_policy:
+                raise ValueError("Population adaptation currently uses the audited REINFORCE trainer")
+            if independent_patient_count > 0:
+                raise ValueError("This population comparison is restricted to analytic synthetic development tasks")
+            if not base.config.case_id.startswith("synthetic_"):
+                raise ValueError("Population target must carry an explicit analytic synthetic simulator identity")
+            if not population_case_group:
+                raise ValueError("Population application requires the target's predeclared patient group")
+            first = base.observation()
+            target = {"target_case_hash": base.case_hash, "target_group": population_case_group,
+                      "target_aliases": population_case_aliases,
+                      "expected_dimensions": (first.action_features.shape[1], first.state_features.size,
+                                              config.hidden_features),
+                      "expected_feature_schema": feature_schema(base)}
+            population_info = validate_population_checkpoint(population_checkpoint, **target)
+            saved_population_path = output / "population-source.pt"
+            checkpoint_bytes = Path(population_checkpoint).read_bytes()
+            saved_population_path.write_bytes(checkpoint_bytes)
+            # Validate the copied artifact too, rejecting any change during copy.
+            preserved_info = validate_population_checkpoint(saved_population_path, **target)
+            if preserved_info != population_info:
+                raise ValueError("Population checkpoint changed while preserving source bytes")
+            frozen_population = load_frozen_population_policy(saved_population_path, **target)
+            population_info = {**population_info, "target": target,
+                               "saved_checkpoint": saved_population_path.name,
+                               "scope": "analytic_synthetic_development_only",
+                               "initialization_seconds": time.perf_counter() - population_preparation_started,
+                               "initialization_scope": "target_validation_checkpoint_copy_and_frozen_policy_load_once_per_comparison"}
+            write_json(output / "population-provenance.json", population_info)
         generator = base.config.world_generator
         seed_identity = source_case.planning_hash if source_case is not None else planning_hash
         if independent_patient_count > 0 and not seed_identity:
@@ -181,6 +266,7 @@ def run_experiment(factory: Callable[[], SequentialSimulator], output: Path, *,
             "training_config": asdict(config), "optimization_seeds": seeds,
             "trainer": f"{trainer.__module__}.{trainer.__name__}",
             "simulator_backend": type(base).__name__, "preprocessing_seconds": preprocessing_seconds,
+            "population_initialization": population_info,
             "source": snapshot, "decision_model": model.to_dict(),
             "simulation_hash": base.decision_model_hash, "world_partitions": partitions.to_dict(),
             "preoperative_planning_hash": seed_identity,
@@ -191,7 +277,8 @@ def run_experiment(factory: Callable[[], SequentialSimulator], output: Path, *,
             "interpretation": "deterministic_optimization" if generator.deterministic else "registration_sensitivity_scenario",
             "clinical_deficit_probability": None,
             "benchmark_limitations": ["development_only_no_locked_cohort_claim",
-                "single_default_preference_not_a_pareto_frontier", "no_population_checkpoint",
+                "single_default_preference_not_a_pareto_frontier",
+                "no_population_checkpoint" if population_info is None else "analytic_population_only_no_clinical_population_claim",
                 "search_uses_nominal_scoring_not_world_ensemble_optimization"]})
         candidates = [FrozenSequence("STOP", base.case_hash, ("STOP",), "STOP")]
         search_records = []
@@ -209,8 +296,29 @@ def run_experiment(factory: Callable[[], SequentialSimulator], output: Path, *,
             search_records.append({"method": label, "preparation_seconds": preparation_seconds, **asdict(result)})
             candidates.append(FrozenSequence(label, base.case_hash, result.actions, label))
         write_json(output / "search.json", search_records)
+        if population_info is not None:
+            preparation_started = time.perf_counter()
+            frozen_arm = base.fresh()
+            preparation_seconds = time.perf_counter() - preparation_started
+            frozen_record, frozen_actions = frozen_population_rollouts(frozen_arm.clone,
+                frozen_population, partitions.selection, config, cancelled=cancelled)
+            frozen_record["preparation_seconds"] = preparation_seconds
+            frozen_record["shared_checkpoint_initialization_seconds"] = population_info["initialization_seconds"]
+            frozen_record["elapsed_seconds_scope"] = "selection_rollouts; arm_preparation_and_shared_checkpoint_initialization_reported_separately"
+            write_json(output / "population-frozen.json", frozen_record)
+            if not frozen_record["selection_panel_complete"]:
+                status.update(status="cancelled" if cancelled() else "failed",
+                              reason="Frozen population selection panel incomplete")
+                write_json(output / "status.json", status)
+                return status
+            candidates.append(FrozenSequence("POPULATION_FROZEN", base.case_hash, frozen_actions,
+                "POPULATION_FROZEN", population_info["policy_hash"],
+                shared_checkpoint_hash=population_info["policy_hash"]))
         training = []
-        for seed in seeds:
+        learning_arms = [("PATIENT_SCRATCH_RL", "scratch", seed) for seed in seeds]
+        if population_info is not None:
+            learning_arms.extend(("POPULATION_ADAPTED", "adapted", seed) for seed in seeds)
+        for mode, directory_prefix, seed in learning_arms:
             if cancelled():
                 status["status"] = "cancelled"
                 write_json(output / "status.json", status)
@@ -218,25 +326,32 @@ def run_experiment(factory: Callable[[], SequentialSimulator], output: Path, *,
             preparation_started = time.perf_counter()
             arm_template = base.fresh()
             preparation_seconds = time.perf_counter() - preparation_started
+            folder = output / f"{directory_prefix}-{seed}"
+            initialization = ({"shared_checkpoint": saved_population_path,
+                "population_case_group": population_case_group,
+                "population_case_aliases": population_case_aliases} if mode == "POPULATION_ADAPTED" else {})
             result = trainer(arm_template.clone, partitions.optimization, partitions.selection,
-                config=replace(config, seed=seed), output_dir=output / f"scratch-{seed}", cancelled=cancelled)
+                config=replace(config, seed=seed), output_dir=folder, cancelled=cancelled, **initialization)
+            if mode == "POPULATION_ADAPTED" and result.initial_checkpoint_hash != population_info["policy_hash"]:
+                raise ValueError("Adaptation did not start from the frozen shared policy")
             training.append({**asdict(result), "preparation_seconds": preparation_seconds})
             write_json(output / "training.json", training)
             if result.status in {"cancelled", "failed"}:
                 status["status"] = result.status
                 write_json(output / "status.json", status)
                 return status
-            policy = load_policy(output / f"scratch-{seed}" / "checkpoint.pt")
+            policy = load_policy(folder / "checkpoint.pt")
             if policy_hash(policy) != result.selected_checkpoint_hash:
                 raise ValueError("Selected checkpoint does not match reported checkpoint hash")
             # Extract the fixed sequence before evaluation; never select using final worlds.
             extraction_started = time.perf_counter()
             selected = rollout_policy(policy, factory(), seed=partitions.selection.seeds[0],
                                       max_steps=config.max_episode_steps, interrupt=cancelled)
-            candidates.append(FrozenSequence(f"PATIENT_SCRATCH_RL:{seed}", base.case_hash,
-                selected.actions, "PATIENT_SCRATCH_RL", result.selected_checkpoint_hash))
-            if native_backend:
-                initial_policy = load_policy(output / f"scratch-{seed}" / "initial.pt")
+            candidates.append(FrozenSequence(f"{mode}:{seed}", base.case_hash,
+                selected.actions, mode, result.selected_checkpoint_hash,
+                shared_checkpoint_hash=result.shared_checkpoint_hash))
+            if native_backend and mode == "PATIENT_SCRATCH_RL":
+                initial_policy = load_policy(folder / "initial.pt")
                 if policy_hash(initial_policy) != result.initial_checkpoint_hash:
                     raise ValueError("Initial checkpoint does not match reported checkpoint hash")
                 initial = rollout_policy(initial_policy, factory(), seed=partitions.selection.seeds[0],
@@ -246,12 +361,18 @@ def run_experiment(factory: Callable[[], SequentialSimulator], output: Path, *,
             training[-1]["candidate_extraction_seconds"] = time.perf_counter() - extraction_started
             write_json(output / "training.json", training)
         assert_source_unchanged(snapshot, runtime_only=True)
+        if population_info is not None:
+            if policy_hash(frozen_population) != population_info["policy_hash"]:
+                raise ValueError("Shared population actor changed during case adaptation")
+            copied_hash = hashlib.sha256(saved_population_path.read_bytes()).hexdigest()
+            if copied_hash != population_info["checkpoint_file_sha256"]:
+                raise ValueError("Shared population checkpoint bytes changed during case adaptation")
         freeze = freeze_candidates(candidates, model, partitions.selection,
             "all baseline sequences and one selected checkpoint per prespecified seed; native runs include initial policies; max selection mean, earliest tie",
             optimization_manifest=partitions.optimization)
         write_json(output / "candidate-freeze.json", {**freeze.to_dict(),
                    "candidates": [asdict(c) for c in candidates]})
-        if not evaluate and not native_backend:
+        if not evaluate and not native_backend and population_info is None:
             status.update(status="completed", evaluation_status="not_requested_development_selection_only",
                           finished_at=datetime.now(timezone.utc).isoformat())
             write_json(output / "status.json", status)
@@ -348,7 +469,7 @@ def run_experiment(factory: Callable[[], SequentialSimulator], output: Path, *,
             status.update(status="invalidated" if rejected else "completed",
                 evaluation_status="not_requested_development_selection_only",
                 geometry_validation_run_id=evaluation_id,
-                validation_status="rejected_candidates" if rejected else "passed_declared_native_checks",
+                validation_status="rejected_candidates" if rejected else "passed_declared_independent_geometry_checks",
                 rejected_candidate_ids=rejected,
                 full_validation_seconds=validation_timings["full_validation_seconds"],
                 finished_at=datetime.now(timezone.utc).isoformat())
@@ -431,6 +552,11 @@ def main() -> None:
     parser.add_argument("--development-only", action="store_true", help="Do not inspect final-evaluation or stress worlds")
     parser.add_argument("--algorithm", choices=("reinforce", "ppo"), default="reinforce",
                         help="Scratch learner; every Adam step counts against the gradient budget")
+    parser.add_argument("--population-checkpoint", type=Path,
+                        help="Audited synthetic-development checkpoint; adds frozen and adapted arms")
+    parser.add_argument("--population-case-group", help="Predeclared excluded synthetic target group")
+    parser.add_argument("--population-case-alias", action="append", default=[],
+                        help="Known target alias; repeat for multiple aliases")
     parser.add_argument("--master-seed", type=int, default=20261004)
     arguments = parser.parse_args()
     if arguments.backend == "native" and arguments.case_bundle is None:
@@ -465,7 +591,10 @@ def main() -> None:
                               max_episode_steps=arguments.episode_steps),
         seeds=tuple(arguments.seeds), counts=tuple(arguments.world_counts),
         master_seed=arguments.master_seed, independent_patient_count=count, source_case=case,
-        evaluate=not arguments.development_only, trainer=trainer, cancelled=stop.is_set)
+        evaluate=not arguments.development_only, trainer=trainer,
+        population_checkpoint=arguments.population_checkpoint,
+        population_case_group=arguments.population_case_group,
+        population_case_aliases=tuple(arguments.population_case_alias), cancelled=stop.is_set)
     print(json.dumps(result, indent=2))
 
 
