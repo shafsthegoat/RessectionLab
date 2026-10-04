@@ -29,6 +29,11 @@ def _hash(value: Any) -> str:
     return "sha256:" + hashlib.sha256(json.dumps(value, sort_keys=True, allow_nan=False).encode()).hexdigest()
 
 
+def _observation_array_identity(value: Any) -> tuple:
+    array = np.asarray(value)
+    return array.dtype.str, array.shape, hashlib.sha256(array.tobytes()).hexdigest()
+
+
 def _atomic_receipt(path: Path, value: dict[str, Any]) -> None:
     """Replace a complete JSON receipt; a failed export never truncates its predecessor."""
     descriptor, temporary = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent)
@@ -93,6 +98,9 @@ class AxisTrainingAccounting:
         self._failure: dict[str, Any] | None = None
         self._export_error: dict[str, Any] | None = None
         self._learner_result: dict[str, Any] | None = None
+        self._record_decisions = False
+        self._next_decision = 0
+        self._active_decision_instance: weakref.ReferenceType | None = None
         self._persist()
 
     def _require_running(self) -> None:
@@ -129,6 +137,54 @@ class AxisTrainingAccounting:
             self._fail(error, "factory")
             raise
 
+    def enable_decision_recording(self) -> None:
+        """Enable before factories run; no simulator read or policy call is made."""
+        self._require_running()
+        if self._events:
+            raise ValueError("Decision recording must be declared before constructing learner episodes")
+        self._record_decisions = True
+        self._persist()
+
+    def observe_decision(self, record: Any) -> None:
+        """Persist the learner's detached same-forward evidence before execution."""
+        self._require_running()
+        try:
+            if not self._record_decisions:
+                raise RuntimeError("Decision recording was not declared for this run")
+            instance = None if self._active_decision_instance is None else self._active_decision_instance()
+            if instance is None or instance._episode is None or instance._episode["status"] != "active":
+                raise RuntimeError("Decision has no active declared accounting episode")
+            payload = record.to_dict()
+            episode = instance._episode
+            for name, expected in instance._observation_bindings.items():
+                value = getattr(record.inputs, name)
+                if name in ("action_features", "state_features", "actor_action_features") and not record.forward_evaluated:
+                    if value is not None:
+                        raise ValueError("Unevaluated decision unexpectedly contains policy inputs")
+                elif value is None or _observation_array_identity(value) != expected:
+                    raise ValueError("Decision features or mask differ from the served native observation")
+            if (instance._pending_decision is not None or payload["role"] != episode["role"]
+                    or payload["seed"] != episode["seed"] or payload["step"] != instance._decision_count
+                    or tuple(payload["inputs"]["action_ids"]) != instance._action_ids):
+                raise ValueError("Decision does not bind the current declared episode and action inventory")
+            selected = payload["selected_index"]
+            if (type(selected) is not int or not 0 <= selected < len(instance._action_ids)
+                    or instance._action_ids[selected] != payload["selected_action_id"]
+                    or not payload["inputs"]["action_mask"]["values"][selected]):
+                raise ValueError("Decision selected an unavailable action")
+            event = {"kind": "decision", "decision_id": f"axis-decision-{self._next_decision:06d}",
+                     "instance": instance._instance, "episode": episode["episode"],
+                     "role": episode["role"], "seed": episode["seed"],
+                     "executed_transition": False, "status": "recorded_pre_step", "payload": payload}
+            self._next_decision += 1
+            instance._decision_count += 1
+            instance._pending_decision = event
+            self._events.append(event)
+            self._persist()
+        except Exception as error:
+            self._fail(error, "decision_observer")
+            raise
+
     def snapshot(self) -> dict[str, Any]:
         """Return a detached receipt, including truthful context after export failure."""
         totals = {}
@@ -154,6 +210,8 @@ class AxisTrainingAccounting:
                    "count_interpretation": "Verified transitions only; lower bounds whenever counts_complete is false.",
                    "failure": self._failure, "receipt_export_failure": self._export_error,
                    "learner_result": self._learner_result,
+                   "decision_recording_enabled": self._record_decisions,
+                   "decision_observer_version": "learner-decision-observer-v1" if self._record_decisions else None,
                    "candidate_eligible": False, "resume_supported": False,
                    "independent_geometry_evaluation": False,
                    "consumer_contract": "Read this receipt together with learner result/failures; generic counters remain unchanged. Accounting alone never authorizes a candidate."}
@@ -207,6 +265,22 @@ class _RecordedAxisSimulator:
         self._episode: dict[str, Any] | None = None
         self._action_ids: tuple[str, ...] = ()
         self._last_state = self._state()
+        self._pending_decision: dict[str, Any] | None = None
+        self._decision_count = 0
+        self._observation_bindings: dict[str, tuple] = {}
+
+    def _remember_observation(self, observation: Any) -> None:
+        """Bind the returned object, without another simulator observation call."""
+        actions, state = np.asarray(observation.action_features), np.asarray(observation.state_features)
+        actual_actions = np.asarray(actions, dtype=np.float32)
+        self._observation_bindings = {
+            "source_action_features": _observation_array_identity(actions),
+            "source_state_features": _observation_array_identity(state),
+            "action_mask": _observation_array_identity(np.asarray(observation.action_mask, dtype=bool)),
+            "action_features": _observation_array_identity(actual_actions),
+            "state_features": _observation_array_identity(np.asarray(state, dtype=np.float32).flatten()),
+            "actor_action_features": _observation_array_identity(actual_actions),
+        }
 
     @property
     def decision_model_hash(self):
@@ -247,6 +321,8 @@ class _RecordedAxisSimulator:
         attempt = None
         try:
             self.assert_model_frozen()
+            if self._pending_decision is not None:
+                raise RuntimeError("Cannot reset after a recorded decision without its transition")
             if isinstance(seed, (bool, np.bool_)) or not isinstance(seed, (int, np.integer)) or int(seed) not in owner._roles:
                 raise ValueError("Reset seed does not belong to a declared optimization or selection partition")
             if self._episode is not None and self._episode["status"] == "active":
@@ -257,8 +333,12 @@ class _RecordedAxisSimulator:
             owner._episodes.append(self._episode)
             observation = self._raw.reset(int(seed))
             self._action_ids = tuple(observation.action_ids)
+            if owner._record_decisions:
+                self._remember_observation(observation)
             self._episode["status"] = "active"
             self._last_state = self._state()
+            self._decision_count = 0
+            owner._active_decision_instance = weakref.ref(self)
             owner._persist()
             return observation
         except Exception as error:
@@ -323,6 +403,7 @@ class _RecordedAxisSimulator:
         return {"kind": "transition", "instance": self._instance,
                 "episode": self._episode["episode"], "role": self._episode["role"],
                 "seed": self._episode["seed"], "executed_transition": True,
+                "decision_id": None if self._pending_decision is None else self._pending_decision["decision_id"],
                 "returned_to_learner": returned, "native_commit": native_commit,
                 "action_id": selected, "reward": actual_reward, "info": actual_info,
                 "before_revision": before["revision"], "after_revision": after["revision"],
@@ -365,6 +446,11 @@ class _RecordedAxisSimulator:
         selected = (self._action_ids[int(action)] if isinstance(action, (int, np.integer))
                     and not isinstance(action, (bool, np.bool_)) and 0 <= action < len(self._action_ids)
                     else action if isinstance(action, str) and action in self._action_ids else None)
+        if owner._record_decisions and (self._pending_decision is None
+                or selected != self._pending_decision["payload"]["selected_action_id"]):
+            error = RuntimeError("Step has no matching persisted learner decision")
+            owner._fail(error, "decision_step_binding")
+            raise error
         event = None
         try:
             result = self._raw.step(action)
@@ -376,6 +462,7 @@ class _RecordedAxisSimulator:
             except Exception as verification_error:
                 owner._events.append({"kind": "unverified_step_failure", "instance": self._instance,
                     "episode": self._episode["episode"], "role": self._episode["role"],
+                    "decision_id": None if self._pending_decision is None else self._pending_decision["decision_id"],
                     "executed_transition": False, "counts_complete": False,
                     "error": str(verification_error), "before": before, "observed_after": self._state()})
                 error.add_note("Transition accounting could not authenticate state: " + str(verification_error))
@@ -390,8 +477,11 @@ class _RecordedAxisSimulator:
             else:
                 owner._events.append({"kind": "step_failure", "instance": self._instance,
                     "episode": self._episode["episode"], "role": self._episode["role"],
+                    "decision_id": None if self._pending_decision is None else self._pending_decision["decision_id"],
                     "executed_transition": False, "exception": type(error).__name__})
             self._episode["status"] = "failed"
+            if self._pending_decision is not None:
+                self._pending_decision["status"] = "executed_unreturned" if event is not None else "step_failed_unexecuted_or_unverified"
             owner._fail(error, "step", event=event)
             raise
         try:
@@ -403,15 +493,23 @@ class _RecordedAxisSimulator:
                 raise RuntimeError("Reported termination differs from authenticated state")
             self._last_state = self._state()
             self._action_ids = tuple(result.observation.action_ids)
+            if owner._record_decisions:
+                self._remember_observation(result.observation)
             if result.terminated:
                 self._episode["status"] = "complete"
+            if self._pending_decision is not None:
+                self._pending_decision["status"] = "step_returned"
             owner._persist()
+            self._pending_decision = None
             return result
         except Exception as error:
             self._episode["status"] = "failed"
+            if self._pending_decision is not None:
+                self._pending_decision["status"] = "executed_unreturned" if event is not None else "step_failed_unexecuted_or_unverified"
             if event is None:
                 owner._events.append({"kind": "unverified_returned_step", "instance": self._instance,
                     "episode": self._episode["episode"], "role": self._episode["role"],
+                    "decision_id": None if self._pending_decision is None else self._pending_decision["decision_id"],
                     "executed_transition": False, "counts_complete": False,
                     "before": before, "observed_after": self._state(), "error": str(error)})
             owner._fail(error, "step_verification_or_export", event=event)
@@ -428,7 +526,8 @@ class _RecordedAxisSimulator:
 
 def train_axis_policy(accounting: AxisTrainingAccounting, *, config: Any,
                       output_dir: str | Path, cancelled: Callable[[], bool] | None = None,
-                      progress: Callable[[dict[str, Any]], None] | None = None):
+                      progress: Callable[[dict[str, Any]], None] | None = None,
+                      record_decisions: bool = False):
     """Scratch RAW training only; return the unchanged result or re-raise failure.
 
     Consumers must read both the generic learner artifacts and ``accounting``'s
@@ -439,13 +538,16 @@ def train_axis_policy(accounting: AxisTrainingAccounting, *, config: Any,
 
     accounting._require_running()
     try:
+        if record_decisions:
+            accounting.enable_decision_recording()
         directory = Path(output_dir).resolve()
         reserved = {"checkpoint.pt", "initial.pt", "result.json", "contract.json", "failures.jsonl"}
         if accounting.receipt_path.parent == directory and accounting.receipt_path.name in reserved:
             raise ValueError("The separate accounting receipt cannot replace a learner artifact")
         result = train_patient_policy(accounting.recorded_factory, accounting.optimization_manifest,
             accounting.selection_manifest, config=config, output_dir=output_dir,
-            cancelled=cancelled, progress=progress, input_profile="RAW", resume=False)
+            cancelled=cancelled, progress=progress, input_profile="RAW", resume=False,
+            decision_observer=accounting.observe_decision if record_decisions else None)
         accounting.finish(result)
         return result
     except Exception as error:

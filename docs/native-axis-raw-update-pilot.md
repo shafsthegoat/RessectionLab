@@ -103,12 +103,18 @@ Propose an optional observer in the common optimization and deterministic rollou
 paths, invoked after the existing forward/action decision and before `step()`.
 Pass detached copies of the observation and already-computed outputs, never a
 live policy, simulator or autograd tensor. Persist role, panel/update/episode/step,
-seed, frozen model/profile/policy identities, ordered action IDs, full action
-features and state features, action mask, masked logits, probabilities, value,
-chosen row and ID, and whether STOP was forced. Use an explicit representation
-for masked negative infinity, such as null plus the mask. For a forced selection
+seed, ordered action IDs, source features, actual float32 policy inputs, transformed
+actor inputs, action mask, masked logits, value, chosen row and ID, and whether
+STOP was forced. The observer encodes masked negative infinity as the string
+`-inf` alongside the mask. For a forced selection
 STOP where existing code performs no forward pass, record outputs as absent with
 that reason; do not run another forward merely to fill the trace.
+
+The runner joins each record to the accounting model identity and the preserved
+initial or latest checkpoint/profile identity by its update index. Those are
+joined provenance, not fields captured inside the forward. If probabilities are
+calculated afterward from the recorded masked logits, label them as derived and
+state the calculation; do not describe them as captured distribution tensors.
 
 The observer must make no extra policy forward, random draw, simulator read,
 reset or transition. A durable trace entry precedes the attempted step and joins

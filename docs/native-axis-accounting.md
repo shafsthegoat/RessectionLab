@@ -2,9 +2,9 @@
 
 `native_axis_accounting.py` is a separate RAW scratch-training boundary for the
 [axis adapter](native-axis-adapter-design.md). It addresses the executed-transition
-loss identified in the [learner review](native-axis-learner-review.md). It does not
-change the shared learner, native engine, fixed-route experiments, preflight, or
-procedural profile gates. No public training is authorized by this slice.
+loss identified in the [learner review](native-axis-learner-review.md). It retains
+the shared learning algorithm, native engine, fixed-route experiments, preflight,
+and procedural profile gates. No public training is authorized by this slice.
 
 ## API and required receipts
 
@@ -15,6 +15,9 @@ unchanged generic learner with `accounting.recorded_factory`, scratch
 initialization and RAW inputs. Resume and transfer options are deliberately absent.
 Only the exact `AxisColumnNativeSimulator` is accepted. The wrapper also remains
 ineligible for existing exact-class FEATURE_UNITS/procedural contracts.
+Optional `record_decisions=True` uses the supported
+[decision observer](learner-decision-observer.md) to join exact pre-action inputs
+and already computed policy outputs to these transition receipts.
 
 Consumers must read **both** the generic learner directory (`contract.json`,
 `result.json` when present, checkpoints and `failures.jsonl`) **and** the separate

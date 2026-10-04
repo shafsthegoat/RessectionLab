@@ -27,6 +27,10 @@
     "independent_v2_artifact_audit": {
       "path": "artifacts/native-axis-v2-result-audit/audit-02.json",
       "file_sha256": "45b70f59083e2073320a332d78d727e1b7606740bca346bba5a96a7ef5db1bbb"
+    },
+    "preflight_initial_policy_freeze": {
+      "path": "artifacts/preflight/native-axis-v2/profile/untrained-policy-freeze.json",
+      "file_sha256": "03be2c438288b7dd617470327cf2d41c7cd836fbd68cb76dc3d21a2356dff736"
     }
   },
   "frozen_model": {
@@ -126,7 +130,67 @@
     },
     "partial_contact_weight": 0.05,
     "physical_configuration_reference": "preflight_declaration.native_configuration; exact source/support/tools/access retained",
-    "no_model_or_input_changes": true
+    "no_model_or_input_changes": true,
+    "input_profile_manifest": {
+      "action_divisors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "action_feature_names": [
+        "stop",
+        "target_benefit",
+        "normal_volume",
+        "motor_evidence",
+        "language_evidence",
+        "insertion_distance",
+        "tip_radius",
+        "shaft_radius",
+        "tool_change",
+        "depth",
+        "remaining_target_fraction",
+        "adjacent_target_fraction",
+        "partial_normal_contact_volume",
+        "partial_motor_contact_surrogate",
+        "partial_language_contact_surrogate"
+      ],
+      "centering": false,
+      "clipping": false,
+      "critic_output_divisor": 1.0,
+      "profile_id": "RAW",
+      "return_divisor": 1.0,
+      "running_statistics": false,
+      "state_divisors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "state_feature_names": [
+        "remaining_target_fraction",
+        "action_budget_fraction_used",
+        "removed_tissue_fraction",
+        "nominal_severed_edge_fraction",
+        "motor_evidence_available",
+        "language_evidence_available"
+      ],
+      "version": "native-fixed-action-units-v1"
+    },
+    "input_profile_hash": "sha256:b0ae5e34b7fbd206ca7e690fc29c5283ab4be69af25ba45b67f4f5d858b27e12"
   },
   "world_partitions": {
     "optimization": {
@@ -260,35 +324,45 @@
   "logging_implementation_gate": {
     "status": "separate supported observer and accounting implementation in progress; requires independent tests before execution",
     "seam": "optional common learner and rollout observer after already-computed forward/action, before step; copied primitive records only",
-    "required_fields": [
-      "role",
-      "phase",
-      "gradient_steps",
-      "panel_index",
-      "episode_index",
-      "step_index",
-      "seed",
-      "model_hash",
-      "profile_hash",
-      "policy_hash",
-      "ordered_action_ids",
-      "action_features",
-      "state_features",
-      "action_mask",
-      "masked_logits",
-      "probabilities",
-      "value",
-      "chosen_index",
-      "chosen_id",
-      "forced_stop",
-      "decision_id"
-    ],
     "no_extra_policy_forwards_or_random_draws": true,
     "no_extra_simulator_reads_or_transitions": true,
     "forced_no_forward": "record absent outputs with reason when the existing forced-STOP branch performs no policy forward",
-    "serialization": "finite legal logits; masked nonfinite entries explicitly represented with mask; never pass live autograd/model/simulator objects",
+    "serialization": "finite legal logits; masked negative infinity encoded as string -inf with mask; arrays retain dtype/shape/values; no live autograd/model/simulator objects",
     "join": "durable attempted decision precedes step and joins accounting by explicit episode/decision order; trace alone never proves execution",
-    "observer_export_failure": "fail before attempted transition; preserve previous trace and receipt"
+    "observer_export_failure": "fail before attempted transition; preserve previous trace and receipt",
+    "capture_schema_version": "learner-decision-observer-v1",
+    "actual_record_fields": [
+      "version",
+      "role",
+      "update",
+      "episode",
+      "panel",
+      "seed",
+      "step",
+      "inputs.action_ids",
+      "inputs.source_action_features",
+      "inputs.source_state_features",
+      "inputs.action_features",
+      "inputs.state_features",
+      "inputs.actor_action_features",
+      "inputs.action_mask",
+      "logits",
+      "value",
+      "selected_index",
+      "selected_action_id",
+      "decision_rule",
+      "forced_reason",
+      "forward_evaluated"
+    ],
+    "joined_provenance_fields": {
+      "decision_id": "accounting monotonic attempt identifier",
+      "model_hash": "accounting frozen model identity",
+      "policy_hash": "initial checkpoint at update0, latest checkpoint at update1; joined after freeze, not captured inside forward",
+      "profile_hash": "frozen checkpoint profile joined by update identity"
+    },
+    "optional_derived_fields": {
+      "probabilities": "may be calculated from saved masked logits afterward; label derived and preserve calculation, never label as captured distribution tensor"
+    }
   },
   "success_and_candidate_gates": [
     "successful worker and launcher final states with hash-bound final exports",
@@ -333,5 +407,5 @@
     "next_experiment_settings_selected_by_this_pilot": false
   },
   "source_binding": "Before execution record tested commit, exact executable source bytes and runtime/dependency versions in immutable snapshot; assert unchanged physical decision/native/proposal identities and declaration hashes before optimizer.",
-  "declaration_content_hash": "sha256:b4fb5e66912941938b6649a2cdc9ebb405e92619d36c4fc35426e8b58e850b60"
+  "declaration_content_hash": "sha256:7783126ab41fab01be6b148131c23fdd305c1e3276d27edb2971a734b644e385"
 }

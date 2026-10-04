@@ -21,7 +21,7 @@ import math
 import os
 import platform
 import time
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any, Callable, Mapping, Protocol
 
@@ -47,6 +47,118 @@ class Simulator(Protocol):
     def reset(self, seed: int = 0) -> Observation: ...
     def step(self, action: int) -> Any: ...
     def metrics(self) -> dict[str, Any]: ...
+
+
+def _decision_array(value: Any) -> np.ndarray:
+    """Detached, bytes-backed observation evidence; callbacks cannot edit inputs."""
+    array = value.detach().cpu().numpy() if isinstance(value, torch.Tensor) else np.asarray(value)
+    return np.frombuffer(array.tobytes(), dtype=array.dtype).reshape(array.shape)
+
+
+def _decision_array_identity(array: np.ndarray | None):
+    return None if array is None else (array.shape, array.dtype.str, array.strides,
+                                      hashlib.sha256(array.tobytes()).hexdigest())
+
+
+@dataclass(frozen=True)
+class DecisionContext:
+    """Caller labels only; recording never grants a world an evaluation role."""
+
+    role: str | None = None
+    update: int | None = None
+    episode: int | None = None
+    panel: int | None = None
+
+
+@dataclass(frozen=True)
+class DecisionInputs:
+    source_action_features: np.ndarray
+    source_state_features: np.ndarray
+    action_mask: np.ndarray
+    action_ids: tuple[str, ...]
+    action_features: np.ndarray | None
+    state_features: np.ndarray | None
+    actor_action_features: np.ndarray | None
+    _identity: tuple = field(init=False, repr=False)
+
+    def __post_init__(self):
+        object.__setattr__(self, "_identity", self._current_identity())
+
+    def _current_identity(self):
+        return tuple(_decision_array_identity(getattr(self, name)) for name in (
+            "source_action_features", "source_state_features", "action_mask",
+            "action_features", "state_features", "actor_action_features")) + (self.action_ids,)
+
+    def assert_unchanged(self):
+        if self._current_identity() != self._identity:
+            raise ValueError("Recorded decision input array layout or content changed")
+
+
+@dataclass(frozen=True)
+class DecisionRecord:
+    context: DecisionContext
+    seed: int
+    step: int
+    inputs: DecisionInputs
+    logits: np.ndarray | None
+    value: float | None
+    selected_index: int
+    selected_action_id: str
+    decision_rule: str
+    forced_reason: str | None
+    forward_evaluated: bool
+    _logits_identity: Any = field(init=False, repr=False)
+
+    def __post_init__(self):
+        object.__setattr__(self, "_logits_identity", _decision_array_identity(self.logits))
+
+    def to_dict(self) -> dict[str, Any]:
+        """Strict JSON; masked negative infinity is encoded as the string '-inf'."""
+        self.inputs.assert_unchanged()
+        if _decision_array_identity(self.logits) != self._logits_identity:
+            raise ValueError("Recorded decision logits layout or content changed")
+        inputs = {}
+        for name in ("source_action_features", "source_state_features", "action_mask",
+                     "action_features", "state_features", "actor_action_features"):
+            array = getattr(self.inputs, name)
+            inputs[name] = None if array is None else {
+                "dtype": array.dtype.str, "shape": list(array.shape), "values": array.tolist()}
+        inputs["action_ids"] = list(self.inputs.action_ids)
+        logits = None if self.logits is None else {
+            "dtype": self.logits.dtype.str, "shape": list(self.logits.shape),
+            "values": ["-inf" if np.isneginf(value) else float(value) for value in self.logits]}
+        return {"version": "learner-decision-observer-v1", **asdict(self.context),
+                "seed": self.seed, "step": self.step, "inputs": inputs,
+                "logits": logits, "value": self.value, "selected_index": self.selected_index,
+                "selected_action_id": self.selected_action_id, "decision_rule": self.decision_rule,
+                "forced_reason": self.forced_reason, "forward_evaluated": self.forward_evaluated}
+
+
+DecisionObserver = Callable[[DecisionRecord], None]
+
+
+def _emit_decision(observer: DecisionObserver, inputs: DecisionInputs,
+                   logits: torch.Tensor | None, value: torch.Tensor | None, *,
+                   context: DecisionContext, seed: int, step: int, action: int,
+                   rule: str, forced_reason: str | None = None) -> None:
+    copied_logits = None if logits is None else _decision_array(logits)
+    copied_value = None if value is None else float(value.detach())
+    if copied_logits is not None and (
+            copied_logits.shape != inputs.action_mask.shape
+            or not np.isfinite(copied_logits[inputs.action_mask]).all()
+            or not np.all(np.isfinite(copied_logits) | np.isneginf(copied_logits))
+            or copied_value is None or not math.isfinite(copied_value)):
+        raise ValueError("Decision record contains invalid policy outputs")
+    observer(DecisionRecord(copy.deepcopy(context), int(seed), step, inputs,
+        copied_logits, copied_value, action, inputs.action_ids[action],
+        rule, forced_reason, logits is not None))
+
+
+def _unevaluated_inputs(observation: Observation) -> DecisionInputs:
+    """A forced rollout STOP reads source evidence but performs no policy forward."""
+    return DecisionInputs(_decision_array(observation.action_features),
+        _decision_array(observation.state_features), _decision_array(observation.action_mask),
+        tuple(observation.action_ids), None, None, None)
 
 
 @dataclass(frozen=True)
@@ -159,20 +271,30 @@ class MaskedPatientPolicy(nn.Module):
             raise ValueError("Policy input divisor buffer changed")
         return actions / self.action_divisors
 
-    def forward(self, observation: Observation) -> tuple[torch.Tensor, torch.Tensor]:
-        actions = torch.as_tensor(np.array(observation.action_features, copy=True), dtype=torch.float32)
-        state = torch.as_tensor(np.array(observation.state_features, copy=True), dtype=torch.float32).flatten()
+    def forward(self, observation: Observation, *,
+                capture_inputs: Callable[[DecisionInputs], None] | None = None) -> tuple[torch.Tensor, torch.Tensor]:
+        source_actions = np.array(observation.action_features, copy=True)
+        actions = torch.as_tensor(source_actions, dtype=torch.float32)
+        source_state = np.array(observation.state_features, copy=True)
+        state = torch.as_tensor(source_state, dtype=torch.float32).flatten()
         mask = torch.as_tensor(np.array(observation.action_mask, copy=True), dtype=torch.bool)
+        action_ids = observation.action_ids
         if (actions.ndim != 2 or mask.shape != (len(actions),)
                 or actions.shape[1] != self.dimensions[0] or len(state) != self.dimensions[1]
-                or len(observation.action_ids) != len(actions)):
+                or len(action_ids) != len(actions)):
             raise ValueError("observation feature dimensions changed")
         if not torch.isfinite(actions).all() or not torch.isfinite(state).all():
             raise ValueError("nonfinite policy observation")
         if len(mask) == 0 or not bool(mask[0]) or observation.action_ids[0] != "STOP":
             raise ValueError("STOP must remain action zero and available")
-        logits = self.actor(torch.cat((self.actor_inputs(actions), state.expand(len(actions), -1)), dim=1)).squeeze(-1)
-        return logits.masked_fill(~mask, -torch.inf), self.value(state).squeeze(-1)
+        actor_actions = self.actor_inputs(actions)
+        logits = self.actor(torch.cat((actor_actions, state.expand(len(actions), -1)), dim=1)).squeeze(-1)
+        logits, value = logits.masked_fill(~mask, -torch.inf), self.value(state).squeeze(-1)
+        if capture_inputs is not None:
+            capture_inputs(DecisionInputs(_decision_array(source_actions), _decision_array(source_state),
+                _decision_array(mask), tuple(action_ids), _decision_array(actions),
+                _decision_array(state), _decision_array(actor_actions)))
+        return logits, value
 
 
 def policy_hash(policy_or_state: nn.Module | Mapping[str, torch.Tensor]) -> str:
@@ -329,7 +451,9 @@ def clone_checkpoint_policy(checkpoint: str | Path, *, expected_input_profile: s
 
 def rollout_policy(policy: MaskedPatientPolicy | None, simulator: Simulator, *, seed: int,
                    max_steps: int = 64, expected_model_hash: str | None = None,
-                   interrupt: Callable[[], bool] | None = None) -> PolicyRollout:
+                   interrupt: Callable[[], bool] | None = None,
+                   decision_observer: DecisionObserver | None = None,
+                   decision_context: DecisionContext = DecisionContext()) -> PolicyRollout:
     """Deterministic replay; ``None`` is the explicit immediate-STOP baseline.
 
     This does not independently certify geometry or grant an evaluation role.
@@ -346,8 +470,26 @@ def rollout_policy(policy: MaskedPatientPolicy | None, simulator: Simulator, *, 
         if interrupt is not None and interrupt():
             raise RolloutInterrupted(len(actions))
         with torch.no_grad():
-            action = 0 if policy is None or step == max_steps - 1 else int(policy(observation)[0].argmax())
+            if decision_observer is None:
+                action = 0 if policy is None or step == max_steps - 1 else int(policy(observation)[0].argmax())
+            elif policy is None or step == max_steps - 1:
+                action = 0
+                inputs = _unevaluated_inputs(observation)
+                logits, value = None, None
+                rule = "stop_baseline" if policy is None else "forced_stop"
+                forced_reason = None if policy is None else "episode_step_limit"
+            else:
+                captured: list[DecisionInputs] = []
+                logits, value = policy(observation, capture_inputs=captured.append)
+                action = int(logits.argmax())
+                inputs = captured[0]
+                rule, forced_reason = "deterministic_argmax", None
         actions.append(observation.action_ids[action])
+        if decision_observer is not None:
+            if actions[-1] != inputs.action_ids[action]:
+                raise ValueError("Observation action IDs changed during decision recording")
+            _emit_decision(decision_observer, inputs, logits, value, context=decision_context,
+                seed=seed, step=step, action=action, rule=rule, forced_reason=forced_reason)
         result = simulator.step(action)
         _assert_model(simulator, expected)
         if not math.isfinite(float(result.reward)):
@@ -399,6 +541,7 @@ def train_patient_policy(
     procedural_target: Any = None,
     input_profile: str = "RAW",
     procedural_study_id: str | None = None,
+    decision_observer: DecisionObserver | None = None,
 ) -> TrainingResult:
     """Train a fresh policy or isolated clone, with selection-world-only ranking.
 
@@ -613,7 +756,7 @@ def train_patient_policy(
         nonlocal selected_weights, selected_hash
         rewards: list[float] = []
         selection_started = time.perf_counter()
-        for seed in selection_manifest.seeds:
+        for selection_episode, seed in enumerate(selection_manifest.seeds):
             if cancelled() or elapsed() >= config.max_wall_seconds:
                 state["selection_seconds"] += time.perf_counter() - selection_started
                 return False
@@ -623,7 +766,10 @@ def train_patient_policy(
             try:
                 replay = rollout_policy(policy, instance, seed=seed, max_steps=config.max_episode_steps,
                                         expected_model_hash=frozen_hash,
-                                        interrupt=lambda: cancelled() or elapsed() >= config.max_wall_seconds)
+                                        interrupt=lambda: cancelled() or elapsed() >= config.max_wall_seconds,
+                                        decision_observer=decision_observer,
+                                        decision_context=DecisionContext("selection", state["gradient_steps"],
+                                            selection_episode, len(state["selection_history"])))
             except RolloutInterrupted as interrupted:
                 state["selection_environment_steps"] += interrupted.environment_steps
                 state["selection_seconds"] += time.perf_counter() - selection_started
@@ -681,10 +827,25 @@ def train_patient_policy(
                 remaining = config.max_environment_steps - state["optimization_environment_steps"]
                 if remaining <= 0:
                     break
-                logits, value = policy(observation)
+                if decision_observer is None:
+                    logits, value = policy(observation)
+                else:
+                    captured = []
+                    logits, value = policy(observation, capture_inputs=captured.append)
                 distribution = torch.distributions.Categorical(logits=logits)
                 forced_stop = step == config.max_episode_steps - 1 or remaining == 1
                 action = 0 if forced_stop else int(torch.multinomial(distribution.probs, 1, generator=generator))
+                if decision_observer is not None:
+                    reasons = []
+                    if step == config.max_episode_steps - 1:
+                        reasons.append("episode_step_limit")
+                    if remaining == 1:
+                        reasons.append("optimization_transition_budget")
+                    _emit_decision(decision_observer, captured[0], logits, value,
+                        context=DecisionContext("optimization", state["gradient_steps"], state["episode_index"] - 1),
+                        seed=seed, step=step, action=action,
+                        rule="forced_stop" if forced_stop else "sampled_categorical",
+                        forced_reason="+".join(reasons) if reasons else None)
                 transition = instance.step(action)
                 state["optimization_environment_steps"] += 1
                 _assert_model(instance, frozen_hash)
