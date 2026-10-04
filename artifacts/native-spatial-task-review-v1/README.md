@@ -42,6 +42,10 @@ source files remained unchanged during the final run. Root retains responsibilit
 for the committed immutable source and any real-patient release. The patient
 support/access declaration was not created or approved by this review.
 
+The final tested source is recoverable from commit `d4b506d` using the paths and
+hashes in `final-source-before.json`; its duplicate execution tree stays local.
+The earlier uncommitted failing source remains tracked to preserve counterexamples.
+
 Reproduce the focused checks:
 
 ```sh
