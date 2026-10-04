@@ -43,3 +43,8 @@ outputs/
 /artifacts/native-frontier-expansion-v1/experiment-2/patient-expanded-candidate.json
 /artifacts/native-frontier-expansion-v1/experiment-2/frontier-solid-candidate.json
 /artifacts/native-frontier-expansion-v1/experiment-2/frontier-barrier-candidate.json
+
+# Feature-unit experiments retain exact executable snapshots locally.
+/artifacts/learning/procedural-native-feature-units-*/frozen-source/
+/artifacts/learning/procedural-native-feature-units-*/study/source-snapshot/
+/artifacts/learning/procedural-native-feature-units-*/study/pretraining-*/source-snapshot/

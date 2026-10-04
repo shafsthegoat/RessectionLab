@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-04T11:03:06.309280+00:00",
+  "validation_scope": "constructed nonpatient fixtures and static runner review; registered feature-unit study unexecuted",
+  "git_head_before_runner_commit": "f6f4314b7d3033ba78e5f64b3acbd28297c0bfca",
+  "runner_suite": {
+    "command": ".venv/bin/python -m pytest -q tests/test_native_feature_units_runner.py",
+    "passed": 11,
+    "failed": 0,
+    "elapsed_seconds": 39.1,
+    "exit_code": 0
+  },
+  "independent_review": {
+    "agent": "worlds_evaluation",
+    "focused_orchestration_checks_passed": 5,
+    "failed": 0,
+    "elapsed_seconds": 13.88,
+    "remaining_findings": 0,
+    "checks": [
+      "actual preflight gates precede offline",
+      "incomplete initial selection never extracts",
+      "completed unchanged STOP zero remains eligible",
+      "all12 unfinished retained after first learning failure",
+      "raw attempted record retained before eligibility; no candidate freeze after failure"
+    ]
+  },
+  "real_tiny_fixture_coverage": {
+    "scope": "procedural_native_contract_test_only",
+    "offline_trainings": 2,
+    "online_trainings": 12,
+    "online_gradient_updates_per_run": 1,
+    "frozen_policies": 2,
+    "frozen_gradient_updates": 0,
+    "candidate_identities": 23,
+    "independent_geometry_rejected_candidates": 0,
+    "exact_declared_interleaved_order_checked": true
+  },
+  "actual_public_case_preflight_executed_for_this_runner": false,
+  "required_next_gate": "Full Python suite and actual public no-gradient preflight from exact committed archive; root explicit release before registered training",
+  "owned_file_sha256": {
+    "scripts/run_native_feature_units.py": "20b228819f9d29dbb26fd2f76a2e29e52981830416aba95937c274e9575f2f92",
+    "tests/test_native_feature_units_runner.py": "1643d2b0b3568b33a0b2cbdc6e822816862aa90ab1a8110b0ca51699d9f2209a",
+    "EXPERIMENT_PROTOCOL.md": "77910d8c1c83aa0774ecdca8d597cbba6807f28650b631cf02c5f72049d05017",
+    ".gitignore": "ceadf299b2cfcb36facfd36dedf3548ad3e056191b5384466b4fbacadaacc739"
+  },
+  "shared_module_and_declaration_sha256": {
+    "src/resectionlab/policy_inputs.py": "1366cdabceae5eeee9ad44667be7d8c44de2c9ab8f551c4cf05b053f5b1b8b47",
+    "src/resectionlab/learning.py": "f6c490beb563357599fa35bf1674eee47b02f28864a4128122c526e3c995cd48",
+    "src/resectionlab/procedural_learning.py": "d4666701930d2baa1f438b2a1bed4819e895ec6161c38a78b6ef4d68331ac2d1",
+    "scripts/run_procedural_transfer.py": "68800927714f00f35acba55bfcfacbfa12aca6b2827f33f423111c2d018af257",
+    "scripts/run_patient_learning.py": "3d9093b7cf8e4b1588925c7515faa0bb62a06adb4c39ba217b8d7c53767aa8b3",
+    "manifests/experiments/procedural-native-feature-units-v1.json": "df60f8331cb553b016feddf8401eba9b590e70e3fb7c8fb3097d3599601d07a1"
+  },
+  "final_worlds_used": false,
+  "registered_training_executed": false
+}
