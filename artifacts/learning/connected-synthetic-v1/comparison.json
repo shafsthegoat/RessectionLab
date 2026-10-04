@@ -1,0 +1,130 @@
+{
+  "fixture": "three_cell_connected_suction",
+  "independent_patient_count": 0,
+  "uncertainty_interpretation": "deterministic optimization and replay, no anatomical uncertainty validation",
+  "search": {
+    "mode": "exhaustive_deterministic_reference",
+    "return": 1.74,
+    "actions": [
+      "REMOVE:synthetic-cannula:1,1,0",
+      "REMOVE:synthetic-cannula:1,1,1",
+      "REMOVE:synthetic-cannula:1,1,2",
+      "STOP"
+    ],
+    "environment_steps": 7,
+    "elapsed_seconds": 0.002475083922035992
+  },
+  "stop_return": 0,
+  "runs": [
+    {
+      "seed": 11,
+      "status": "gradient_budget",
+      "initial_selection_return": 0.0,
+      "selected_selection_return": 1.74,
+      "final_returns": [
+        1.74,
+        1.74,
+        1.74
+      ],
+      "actions": [
+        [
+          "REMOVE:synthetic-cannula:1,1,0",
+          "REMOVE:synthetic-cannula:1,1,1",
+          "REMOVE:synthetic-cannula:1,1,2",
+          "STOP"
+        ],
+        [
+          "REMOVE:synthetic-cannula:1,1,0",
+          "REMOVE:synthetic-cannula:1,1,1",
+          "REMOVE:synthetic-cannula:1,1,2",
+          "STOP"
+        ],
+        [
+          "REMOVE:synthetic-cannula:1,1,0",
+          "REMOVE:synthetic-cannula:1,1,1",
+          "REMOVE:synthetic-cannula:1,1,2",
+          "STOP"
+        ]
+      ],
+      "gradient_steps": 80,
+      "optimization_environment_steps": 967,
+      "selection_environment_steps": 82,
+      "elapsed_seconds": 2.630503916996531,
+      "selected_checkpoint_hash": "sha256:39be6791dbdf1f4c172de3dd256d9db09b3adf8b1012218b33ddd322f84c0bcf"
+    },
+    {
+      "seed": 23,
+      "status": "gradient_budget",
+      "initial_selection_return": 1.74,
+      "selected_selection_return": 1.74,
+      "final_returns": [
+        1.74,
+        1.74,
+        1.74
+      ],
+      "actions": [
+        [
+          "REMOVE:synthetic-cannula:1,1,0",
+          "REMOVE:synthetic-cannula:1,1,1",
+          "REMOVE:synthetic-cannula:1,1,2",
+          "STOP"
+        ],
+        [
+          "REMOVE:synthetic-cannula:1,1,0",
+          "REMOVE:synthetic-cannula:1,1,1",
+          "REMOVE:synthetic-cannula:1,1,2",
+          "STOP"
+        ],
+        [
+          "REMOVE:synthetic-cannula:1,1,0",
+          "REMOVE:synthetic-cannula:1,1,1",
+          "REMOVE:synthetic-cannula:1,1,2",
+          "STOP"
+        ]
+      ],
+      "gradient_steps": 80,
+      "optimization_environment_steps": 963,
+      "selection_environment_steps": 88,
+      "elapsed_seconds": 1.8547692920546979,
+      "selected_checkpoint_hash": "sha256:d5c367f6678bd1deae26e7ac9aed6f9dfedc366684f15a0ac0f535cd58e8bd84"
+    },
+    {
+      "seed": 47,
+      "status": "gradient_budget",
+      "initial_selection_return": 1.74,
+      "selected_selection_return": 1.74,
+      "final_returns": [
+        1.74,
+        1.74,
+        1.74
+      ],
+      "actions": [
+        [
+          "REMOVE:synthetic-cannula:1,1,0",
+          "REMOVE:synthetic-cannula:1,1,1",
+          "REMOVE:synthetic-cannula:1,1,2",
+          "STOP"
+        ],
+        [
+          "REMOVE:synthetic-cannula:1,1,0",
+          "REMOVE:synthetic-cannula:1,1,1",
+          "REMOVE:synthetic-cannula:1,1,2",
+          "STOP"
+        ],
+        [
+          "REMOVE:synthetic-cannula:1,1,0",
+          "REMOVE:synthetic-cannula:1,1,1",
+          "REMOVE:synthetic-cannula:1,1,2",
+          "STOP"
+        ]
+      ],
+      "gradient_steps": 80,
+      "optimization_environment_steps": 986,
+      "selection_environment_steps": 88,
+      "elapsed_seconds": 1.720727666048333,
+      "selected_checkpoint_hash": "sha256:8579d6bb85f654615c537c9936ad158e71ecaa2b108a4a9499fa00dcc05b6ac5"
+    }
+  ],
+  "population_arms": "not implemented/evaluated; no shared development checkpoint",
+  "clinical_deficit_probability": null
+}

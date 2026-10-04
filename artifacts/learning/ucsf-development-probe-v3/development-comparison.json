@@ -1,0 +1,374 @@
+{
+  "analysis_role": "development_selection_only",
+  "search_nominal_score": 1473.0400000000004,
+  "search_environment_steps": 110,
+  "search_seconds": 0.5147321670083329,
+  "rl_selection_return": 1429.8200000000004,
+  "rl_actor_parameters_changed": true,
+  "rl_metrics": {
+    "case_id": "UCSF-PDGM-0004",
+    "decision_model_hash": "sha256:ea094d9c6765a2ec6831875859b0a3f0db38ce6db58fffbe186635f3659e7332",
+    "episode_world_hash": "sha256:4e337fa17f7d9c5ce843c28c4d0368f135c156af511b6731874ba58811e04f7d",
+    "seed": 7130800152825998054,
+    "world_generator": {
+      "family": "rigid_gaussian",
+      "translation_scale_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_scale_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_center_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "version": "rigid-registration-v1",
+      "parameter_basis": "declared_uncalibrated_sensitivity_scenario"
+    },
+    "world_generator_fingerprint": "sha256:65178826778d6f02e623f38390d72c121c9e2cd84e5c0b69f882353a64f09a48",
+    "removed_unknown_coverage_volume_mm3": 0.0,
+    "unknown_coverage_cost_policy": "conservative_maximum_nominal_or_one_surrogate_per_mm3",
+    "optimizer_observability": "nominal_evidence_only",
+    "simulation_version": "connected-suction-v1",
+    "total_reward": 1429.8200000000004,
+    "environment_steps": 9,
+    "actions": [
+      "REMOVE:patient-generic-wide-suction:30,25,17",
+      "REMOVE:patient-generic-wide-suction:29,25,17",
+      "REMOVE:patient-generic-wide-suction:28,25,17",
+      "REMOVE:patient-generic-wide-suction:27,25,17",
+      "REMOVE:patient-generic-wide-suction:26,25,17",
+      "REMOVE:patient-generic-wide-suction:25,25,17",
+      "REMOVE:patient-generic-wide-suction:24,25,17",
+      "REMOVE:patient-generic-wide-suction:23,25,17",
+      "REMOVE:patient-generic-wide-suction:22,25,17",
+      "STOP"
+    ],
+    "termination_reason": "explicit_stop",
+    "simulated_removed_target_volume_mm3": 1495.0000000000002,
+    "simulated_removed_normal_volume_mm3": 325.0000000000001,
+    "modeled_residual_target_volume_mm3": 40424.000000000015,
+    "removed_by_compartment_mm3": {
+      "FLAIR_abnormality": 358.0000000000001,
+      "enhancing_target": 333.00000000000006,
+      "nonenhancing_or_necrotic_core": 804.0000000000002
+    },
+    "residual_by_compartment_mm3": {
+      "FLAIR_abnormality": 18296.000000000004,
+      "enhancing_target": 15339.000000000004,
+      "nonenhancing_or_necrotic_core": 6789.000000000001
+    },
+    "motor_surrogate": null,
+    "language_surrogate": null,
+    "functional_evidence_available": {
+      "motor": false,
+      "language": false
+    },
+    "derivation": {
+      "track": "annotation_assisted_coarse_structural_simulation",
+      "block_size_native_voxels": 6,
+      "native_shape": [
+        240,
+        240,
+        155
+      ],
+      "grid_spacing_mm": [
+        6.0,
+        6.0,
+        6.0
+      ],
+      "tissue_envelope_source": "hole_filled_nonzero_MRI_support_unreviewed_skull_strip_assumption",
+      "pooling": "any_tissue_any_target_then_dominant_target_compartment",
+      "target_volume_interpretation": "exact_source_fraction_accounting_inside_coarse_removal_cells",
+      "removal_primitive": "indivisible_coarse_cell_on_terminal_tip_contact",
+      "source_compartment_volumes_mm3": {
+        "FLAIR_abnormality": 18654.0,
+        "enhancing_target": 15672.0,
+        "nonenhancing_or_necrotic_core": 7593.0
+      },
+      "requires_independent_finer_resolution_removal_check": true,
+      "functional_mode": "restricted_missing_functional_evidence"
+    },
+    "modeled_severed_edges": [],
+    "clinical_deficit_probability": null,
+    "clinical_probability_reason": "no_validated_clinical_outcome_model",
+    "assumptions": [
+      "discrete_exposed_tip_suction",
+      "full_retraction_before_reorientation",
+      "rigid_static_tissue_geometry",
+      "hypothetical_intracranial_access"
+    ],
+    "unassessed": [
+      "vascular_anatomy",
+      "tissue_forces",
+      "postoperative_function",
+      "microscopic_infiltration"
+    ],
+    "history": [
+      {
+        "action_id": "REMOVE:patient-generic-wide-suction:30,25,17",
+        "target_removed_mm3": 31.000000000000007,
+        "normal_removed_mm3": 61.00000000000002,
+        "motor_surrogate_delta": 0.0,
+        "language_surrogate_delta": 0.0,
+        "newly_severed_edges": [],
+        "removed_indices": [
+          [
+            30,
+            25,
+            17
+          ]
+        ],
+        "tip_mm": [
+          -182.5,
+          86.5,
+          104.5
+        ],
+        "axis_unit": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "termination_reason": null
+      },
+      {
+        "action_id": "REMOVE:patient-generic-wide-suction:29,25,17",
+        "target_removed_mm3": 216.00000000000006,
+        "normal_removed_mm3": 0.0,
+        "motor_surrogate_delta": 0.0,
+        "language_surrogate_delta": 0.0,
+        "newly_severed_edges": [],
+        "removed_indices": [
+          [
+            29,
+            25,
+            17
+          ]
+        ],
+        "tip_mm": [
+          -176.5,
+          86.5,
+          104.5
+        ],
+        "axis_unit": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "termination_reason": null
+      },
+      {
+        "action_id": "REMOVE:patient-generic-wide-suction:28,25,17",
+        "target_removed_mm3": 216.00000000000006,
+        "normal_removed_mm3": 0.0,
+        "motor_surrogate_delta": 0.0,
+        "language_surrogate_delta": 0.0,
+        "newly_severed_edges": [],
+        "removed_indices": [
+          [
+            28,
+            25,
+            17
+          ]
+        ],
+        "tip_mm": [
+          -170.5,
+          86.5,
+          104.5
+        ],
+        "axis_unit": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "termination_reason": null
+      },
+      {
+        "action_id": "REMOVE:patient-generic-wide-suction:27,25,17",
+        "target_removed_mm3": 216.00000000000006,
+        "normal_removed_mm3": 0.0,
+        "motor_surrogate_delta": 0.0,
+        "language_surrogate_delta": 0.0,
+        "newly_severed_edges": [],
+        "removed_indices": [
+          [
+            27,
+            25,
+            17
+          ]
+        ],
+        "tip_mm": [
+          -164.5,
+          86.5,
+          104.5
+        ],
+        "axis_unit": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "termination_reason": null
+      },
+      {
+        "action_id": "REMOVE:patient-generic-wide-suction:26,25,17",
+        "target_removed_mm3": 216.00000000000006,
+        "normal_removed_mm3": 0.0,
+        "motor_surrogate_delta": 0.0,
+        "language_surrogate_delta": 0.0,
+        "newly_severed_edges": [],
+        "removed_indices": [
+          [
+            26,
+            25,
+            17
+          ]
+        ],
+        "tip_mm": [
+          -158.5,
+          86.5,
+          104.5
+        ],
+        "axis_unit": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "termination_reason": null
+      },
+      {
+        "action_id": "REMOVE:patient-generic-wide-suction:25,25,17",
+        "target_removed_mm3": 216.00000000000006,
+        "normal_removed_mm3": 0.0,
+        "motor_surrogate_delta": 0.0,
+        "language_surrogate_delta": 0.0,
+        "newly_severed_edges": [],
+        "removed_indices": [
+          [
+            25,
+            25,
+            17
+          ]
+        ],
+        "tip_mm": [
+          -152.5,
+          86.5,
+          104.5
+        ],
+        "axis_unit": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "termination_reason": null
+      },
+      {
+        "action_id": "REMOVE:patient-generic-wide-suction:24,25,17",
+        "target_removed_mm3": 216.00000000000006,
+        "normal_removed_mm3": 0.0,
+        "motor_surrogate_delta": 0.0,
+        "language_surrogate_delta": 0.0,
+        "newly_severed_edges": [],
+        "removed_indices": [
+          [
+            24,
+            25,
+            17
+          ]
+        ],
+        "tip_mm": [
+          -146.5,
+          86.5,
+          104.5
+        ],
+        "axis_unit": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "termination_reason": null
+      },
+      {
+        "action_id": "REMOVE:patient-generic-wide-suction:23,25,17",
+        "target_removed_mm3": 168.00000000000006,
+        "normal_removed_mm3": 48.00000000000001,
+        "motor_surrogate_delta": 0.0,
+        "language_surrogate_delta": 0.0,
+        "newly_severed_edges": [],
+        "removed_indices": [
+          [
+            23,
+            25,
+            17
+          ]
+        ],
+        "tip_mm": [
+          -140.5,
+          86.5,
+          104.5
+        ],
+        "axis_unit": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "termination_reason": null
+      },
+      {
+        "action_id": "REMOVE:patient-generic-wide-suction:22,25,17",
+        "target_removed_mm3": 0.0,
+        "normal_removed_mm3": 216.00000000000006,
+        "motor_surrogate_delta": 0.0,
+        "language_surrogate_delta": 0.0,
+        "newly_severed_edges": [],
+        "removed_indices": [
+          [
+            22,
+            25,
+            17
+          ]
+        ],
+        "tip_mm": [
+          -134.5,
+          86.5,
+          104.5
+        ],
+        "axis_unit": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "termination_reason": null
+      }
+    ]
+  },
+  "rl_actions": [
+    "REMOVE:patient-generic-wide-suction:30,25,17",
+    "REMOVE:patient-generic-wide-suction:29,25,17",
+    "REMOVE:patient-generic-wide-suction:28,25,17",
+    "REMOVE:patient-generic-wide-suction:27,25,17",
+    "REMOVE:patient-generic-wide-suction:26,25,17",
+    "REMOVE:patient-generic-wide-suction:25,25,17",
+    "REMOVE:patient-generic-wide-suction:24,25,17",
+    "REMOVE:patient-generic-wide-suction:23,25,17",
+    "REMOVE:patient-generic-wide-suction:22,25,17",
+    "STOP"
+  ],
+  "search_actions": [
+    "REMOVE:patient-generic-suction:30,25,17",
+    "REMOVE:patient-generic-suction:29,25,17",
+    "REMOVE:patient-generic-suction:28,25,17",
+    "REMOVE:patient-generic-suction:27,25,17",
+    "REMOVE:patient-generic-suction:26,25,17",
+    "REMOVE:patient-generic-suction:25,25,17",
+    "REMOVE:patient-generic-suction:24,25,17",
+    "REMOVE:patient-generic-suction:23,25,17",
+    "STOP"
+  ],
+  "independent_geometry_evaluation": "not yet performed",
+  "clinical_deficit_probability": null
+}

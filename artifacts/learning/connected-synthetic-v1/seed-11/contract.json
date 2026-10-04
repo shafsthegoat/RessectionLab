@@ -1,0 +1,101 @@
+{
+  "algorithm": "masked_reinforce_state_value_v1",
+  "clinical_deficit_probability": null,
+  "code_sha256": "50567a869a7d1986c3c192340af9cbabe2be2023c821f2ed0ca42630b9f2761f",
+  "config": {
+    "checkpoint_interval": 8,
+    "entropy_weight": 0.01,
+    "episodes_per_update": 4,
+    "gamma": 1.0,
+    "hidden_features": 16,
+    "learning_rate": 0.003,
+    "max_environment_steps": 2000,
+    "max_episode_steps": 4,
+    "max_gradient_norm": 5.0,
+    "max_gradient_steps": 80,
+    "max_wall_seconds": 60,
+    "seed": 11,
+    "value_weight": 0.5
+  },
+  "contract_hash": "sha256:364c15f731b9cadb9b96ce38456fe22888ef386b83f13d3638ff74b5cb65f69d",
+  "decision_model_hash": "sha256:5535e778a354e48203adcffff9e5fc9beaed0f4f1c5a144f4a4cdb954083f1db",
+  "dimensions": [
+    12,
+    4,
+    16
+  ],
+  "final_evaluation_used_for_optimization": false,
+  "hardware": {
+    "device": "cpu",
+    "machine": "arm64",
+    "platform": "macOS-26.6-arm64-arm-64bit",
+    "processor": "arm",
+    "torch": "2.14.1",
+    "torch_threads": 4
+  },
+  "implementation_sha256": "50567a869a7d1986c3c192340af9cbabe2be2023c821f2ed0ca42630b9f2761f",
+  "initial_checkpoint_hash": "sha256:7387edfb9bd6fb35890f093531d24f8abd32708b1d23216da70808c6e5112e34",
+  "partitions": {
+    "optimization": {
+      "case_hash": "synthetic-fixture",
+      "generator": {
+        "family": "rigid_gaussian",
+        "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+        "rotation_center_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_scale_deg": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "translation_scale_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "version": "rigid-registration-v1"
+      },
+      "partition_hash": "sha256:e9b053ef5107e3f6f9fb76921bfad50e0fe272d897ee54994bbf24f64e2bbe61",
+      "role": "optimization",
+      "seeds": [
+        1686743316373715959,
+        3840622053618104004,
+        17829938427559027483
+      ]
+    },
+    "selection": {
+      "case_hash": "synthetic-fixture",
+      "generator": {
+        "family": "rigid_gaussian",
+        "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+        "rotation_center_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_scale_deg": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "translation_scale_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "version": "rigid-registration-v1"
+      },
+      "partition_hash": "sha256:14176c242ba2f7ef8ed5d672b5c3c89fbeaf74305cbae8140920386a7502b2c6",
+      "role": "selection",
+      "seeds": [
+        5434596875373682849,
+        16863571542725707652
+      ]
+    }
+  },
+  "schema_version": 1,
+  "shared_checkpoint_hash": null
+}

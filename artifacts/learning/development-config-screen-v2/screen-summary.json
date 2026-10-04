@@ -1,0 +1,305 @@
+{
+  "study_role": "development_only_no_final_worlds_used",
+  "independent_public_patient_count": 1,
+  "clinical_deficit_probability": null,
+  "rows": [
+    {
+      "fixture": "branching",
+      "config": "A",
+      "seed_order": [
+        11,
+        23,
+        47
+      ],
+      "selected_returns": [
+        0.0,
+        0.0,
+        1.26
+      ],
+      "mean_selection_return": 0.42,
+      "initial_returns": [
+        0.0,
+        0.0,
+        0.020000000000000018
+      ],
+      "actor_parameters_changed": [
+        true,
+        true,
+        true
+      ],
+      "gradient_steps": [
+        32,
+        32,
+        32
+      ],
+      "optimization_environment_steps": [
+        355,
+        301,
+        357
+      ],
+      "selection_environment_steps": [
+        10,
+        10,
+        26
+      ],
+      "training_seconds": [
+        1.7166098339948803,
+        0.6117934579961002,
+        0.5697394999442622
+      ],
+      "search_nominal_score": 1.3,
+      "search_seconds": 0.05708283302374184,
+      "search_environment_steps": 110
+    },
+    {
+      "fixture": "branching",
+      "config": "B",
+      "seed_order": [
+        11,
+        23,
+        47
+      ],
+      "selected_returns": [
+        0.07999999999999996,
+        1.24,
+        0.07999999999999996
+      ],
+      "mean_selection_return": 0.4666666666666666,
+      "initial_returns": [
+        -1.12,
+        0.020000000000000018,
+        0.07999999999999996
+      ],
+      "actor_parameters_changed": [
+        true,
+        true,
+        true
+      ],
+      "gradient_steps": [
+        32,
+        32,
+        32
+      ],
+      "optimization_environment_steps": [
+        378,
+        381,
+        369
+      ],
+      "selection_environment_steps": [
+        32,
+        34,
+        18
+      ],
+      "training_seconds": [
+        0.43485216703265905,
+        0.41935095796361566,
+        0.3950749170035124
+      ],
+      "search_nominal_score": 1.3,
+      "search_seconds": 0.05294212501030415,
+      "search_environment_steps": 110
+    },
+    {
+      "fixture": "branching",
+      "config": "C",
+      "seed_order": [
+        11,
+        23,
+        47
+      ],
+      "selected_returns": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mean_selection_return": 0.0,
+      "initial_returns": [
+        0.0,
+        -1.16,
+        -0.66
+      ],
+      "actor_parameters_changed": [
+        true,
+        true,
+        true
+      ],
+      "gradient_steps": [
+        32,
+        32,
+        32
+      ],
+      "optimization_environment_steps": [
+        302,
+        331,
+        301
+      ],
+      "selection_environment_steps": [
+        10,
+        18,
+        16
+      ],
+      "training_seconds": [
+        0.3390126669546589,
+        0.37155425001401454,
+        0.3406672499841079
+      ],
+      "search_nominal_score": 1.3,
+      "search_seconds": 0.04869262489955872,
+      "search_environment_steps": 110
+    },
+    {
+      "fixture": "ucsf",
+      "config": "A",
+      "seed_order": [
+        11,
+        23,
+        47
+      ],
+      "selected_returns": [
+        1429.8200000000004,
+        1429.8200000000004,
+        1429.7800000000004
+      ],
+      "mean_selection_return": 1429.806666666667,
+      "initial_returns": [
+        18.780000000000005,
+        0.0,
+        0.0
+      ],
+      "actor_parameters_changed": [
+        true,
+        true,
+        true
+      ],
+      "gradient_steps": [
+        32,
+        32,
+        32
+      ],
+      "optimization_environment_steps": [
+        675,
+        710,
+        766
+      ],
+      "selection_environment_steps": [
+        84,
+        82,
+        82
+      ],
+      "training_seconds": [
+        5.099949999945238,
+        5.317183000035584,
+        5.7180245000636205
+      ],
+      "search_nominal_score": 1473.0400000000004,
+      "search_seconds": 0.47733179200440645,
+      "search_environment_steps": 110
+    },
+    {
+      "fixture": "ucsf",
+      "config": "B",
+      "seed_order": [
+        11,
+        23,
+        47
+      ],
+      "selected_returns": [
+        1429.7800000000004,
+        1429.7800000000004,
+        1429.7800000000004
+      ],
+      "mean_selection_return": 1429.7800000000004,
+      "initial_returns": [
+        1429.7800000000004,
+        1429.7800000000004,
+        0.0
+      ],
+      "actor_parameters_changed": [
+        true,
+        true,
+        true
+      ],
+      "gradient_steps": [
+        32,
+        32,
+        32
+      ],
+      "optimization_environment_steps": [
+        660,
+        569,
+        668
+      ],
+      "selection_environment_steps": [
+        100,
+        100,
+        64
+      ],
+      "training_seconds": [
+        5.1300750829977915,
+        4.800028625060804,
+        4.9277032079407945
+      ],
+      "search_nominal_score": 1473.0400000000004,
+      "search_seconds": 0.4802984580164775,
+      "search_environment_steps": 110
+    },
+    {
+      "fixture": "ucsf",
+      "config": "C",
+      "seed_order": [
+        11,
+        23,
+        47
+      ],
+      "selected_returns": [
+        1473.0400000000004,
+        1429.7800000000004,
+        1429.8000000000004
+      ],
+      "mean_selection_return": 1444.2066666666672,
+      "initial_returns": [
+        0.0,
+        18.780000000000005,
+        18.780000000000005
+      ],
+      "actor_parameters_changed": [
+        true,
+        true,
+        true
+      ],
+      "gradient_steps": [
+        32,
+        32,
+        32
+      ],
+      "optimization_environment_steps": [
+        963,
+        1121,
+        995
+      ],
+      "selection_environment_steps": [
+        80,
+        84,
+        84
+      ],
+      "training_seconds": [
+        6.554030208964832,
+        7.381326916045509,
+        6.808746124967001
+      ],
+      "search_nominal_score": 1473.0400000000004,
+      "search_seconds": 0.4555743749951944,
+      "search_environment_steps": 110
+    }
+  ],
+  "interpretation": [
+    "All18 runs completed32 actual gradient updates.",
+    "Larger width did not consistently improve selection performance.",
+    "Branching geometry exposes universal STOP failure in several runs.",
+    "Search remains strongest and fastest in this bounded screen.",
+    "Bundles vary width/lr/entropy together so causal attribution to width alone is unsupported.",
+    "UCSF public structural mirror source equivalence remains unverified; no diffusion/function validated."
+  ],
+  "native_resolution_validation": "All non-STOP UCSF sequences failed independent source-cell footprint containment; coarse optimization scores cannot validate source-resolution tissue removal.",
+  "native_audit_artifact": "native-removal-audit.json"
+}

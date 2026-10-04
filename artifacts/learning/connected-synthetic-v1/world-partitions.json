@@ -1,0 +1,120 @@
+{
+  "optimization": {
+    "role": "optimization",
+    "case_hash": "synthetic-fixture",
+    "generator": {
+      "family": "rigid_gaussian",
+      "translation_scale_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_scale_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_center_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "version": "rigid-registration-v1",
+      "parameter_basis": "declared_uncalibrated_sensitivity_scenario"
+    },
+    "seeds": [
+      1686743316373715959,
+      3840622053618104004,
+      17829938427559027483
+    ],
+    "interpretation": "deterministic_optimization"
+  },
+  "selection": {
+    "role": "selection",
+    "case_hash": "synthetic-fixture",
+    "generator": {
+      "family": "rigid_gaussian",
+      "translation_scale_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_scale_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_center_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "version": "rigid-registration-v1",
+      "parameter_basis": "declared_uncalibrated_sensitivity_scenario"
+    },
+    "seeds": [
+      5434596875373682849,
+      16863571542725707652
+    ],
+    "interpretation": "deterministic_optimization"
+  },
+  "final_evaluation": {
+    "role": "final_evaluation",
+    "case_hash": "synthetic-fixture",
+    "generator": {
+      "family": "rigid_gaussian",
+      "translation_scale_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_scale_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_center_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "version": "rigid-registration-v1",
+      "parameter_basis": "declared_uncalibrated_sensitivity_scenario"
+    },
+    "seeds": [
+      1350196155421549841,
+      3833114704121457946,
+      15277639578926728545
+    ],
+    "interpretation": "deterministic_optimization"
+  },
+  "stress": {
+    "role": "stress",
+    "case_hash": "synthetic-fixture",
+    "generator": {
+      "family": "rigid_uniform",
+      "translation_scale_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_scale_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_center_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "version": "rigid-registration-v1",
+      "parameter_basis": "declared_uncalibrated_sensitivity_scenario"
+    },
+    "seeds": [
+      8033521596983323887,
+      13870851619708044536
+    ],
+    "interpretation": "deterministic_optimization"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "study_role": "development_only_configuration_screen",
+  "declared_at": "2026-10-04T06:56:35.231583+00:00",
+  "analysis_unit": "one UCSF structural mirror case and one analytic synthetic geometry; not population",
+  "seeds": [
+    11,
+    23,
+    47
+  ],
+  "configurations": [
+    {
+      "id": "A",
+      "hidden_features": 16,
+      "learning_rate": 0.003,
+      "entropy_weight": 0.01
+    },
+    {
+      "id": "B",
+      "hidden_features": 32,
+      "learning_rate": 0.001,
+      "entropy_weight": 0.01
+    },
+    {
+      "id": "C",
+      "hidden_features": 64,
+      "learning_rate": 0.003,
+      "entropy_weight": 0.03
+    }
+  ],
+  "fixed_budget": {
+    "max_gradient_steps": 32,
+    "max_environment_steps": 2048,
+    "max_wall_seconds": 60,
+    "max_episode_steps": 24,
+    "episodes_per_update": 4,
+    "checkpoint_interval": 8
+  },
+  "world_counts": [
+    3,
+    2,
+    3,
+    2
+  ],
+  "patient_derivation": {
+    "block_size": 6,
+    "max_steps": 24,
+    "max_actions": 6,
+    "proposal_scan_limit": 96
+  },
+  "final_evaluation_access": "none; selection-world-only exploratory screening",
+  "analysis_rule": "report all configurations/seeds, selected reward and total cost; bundled settings prevent independent width/lr attribution",
+  "search": "same observable action proposals;2048expansion60s cap,beam8;not a matched consumption claim"
+}

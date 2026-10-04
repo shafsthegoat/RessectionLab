@@ -1,0 +1,25 @@
+{
+  "track": "annotation_assisted_coarse_structural_simulation",
+  "block_size_native_voxels": 6,
+  "native_shape": [
+    240,
+    240,
+    155
+  ],
+  "grid_spacing_mm": [
+    6.0,
+    6.0,
+    6.0
+  ],
+  "tissue_envelope_source": "hole_filled_nonzero_MRI_support_unreviewed_skull_strip_assumption",
+  "pooling": "any_tissue_any_target_then_dominant_target_compartment",
+  "target_volume_interpretation": "exact_source_fraction_accounting_inside_coarse_removal_cells",
+  "removal_primitive": "indivisible_coarse_cell_on_terminal_tip_contact",
+  "source_compartment_volumes_mm3": {
+    "FLAIR_abnormality": 18654.0,
+    "enhancing_target": 15672.0,
+    "nonenhancing_or_necrotic_core": 7593.0
+  },
+  "requires_independent_finer_resolution_removal_check": true,
+  "functional_mode": "restricted_missing_functional_evidence"
+}
