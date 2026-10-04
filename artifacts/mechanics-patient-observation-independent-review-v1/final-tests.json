@@ -1,0 +1,23 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_mechanics_patient_observation_review.py",
+    "tests/test_mechanics_patient_observation.py",
+    "--basetemp=build/validation/mechanics-patient-observation-review-final"
+  ],
+  "exit_code": 0,
+  "wall_seconds": 8.117786624934524,
+  "source_and_test_sha256": {
+    "scripts/mechanics_patient_observation.py": "d085b114b7d38ec9ebc65e624137cea1c2d66140129be7a4b44e1f260e373a25",
+    "scripts/mechanics_patient_constraints.py": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66",
+    "scripts/mechanics_febio_verification.py": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5",
+    "tests/test_mechanics_patient_observation_review.py": "a0420de9043970e73f467f40e9380ed0a7b95d81785dd1b65498d57ee4ea23cc",
+    "tests/test_mechanics_patient_observation.py": "fb9bef69084e3c2559b3f128703a2e5b6d7c20eb4451974b171eadfc1a2f7db5"
+  },
+  "all_bound_files_unchanged": true,
+  "log_sha256": "4d3169205c5663514bb4c960d61cad860ec0d6563b498d3c778bfdc662ebe8f9",
+  "scope": "Analytical unit checks only; no patient data, meshing or solver execution"
+}

@@ -1,0 +1,40 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_________ test_report_evidence_mutation_invalidates_operator[support] __________
+
+change = 'support'
+
+    @pytest.mark.parametrize("change", ["support", "convergence"])
+    def test_report_evidence_mutation_invalidates_operator(change):
+        X, E = cube(.002)
+        op = m.integrate_tent_observations(X, E, [[.001, .001, .001]])
+        if change == "support":
+            op.reports[0]["weighted_support_fraction"] = 1.
+        else:
+            op.reports[0]["refinement_ledger"][-1]["higher_order_cross_check"]["passes"] = False
+>       with pytest.raises(m.ObservationRefusal, match="operator_content_changed"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ObservationRefusal
+
+tests/test_mechanics_patient_observation_review.py:83: Failed
+_______ test_report_evidence_mutation_invalidates_operator[convergence] ________
+
+change = 'convergence'
+
+    @pytest.mark.parametrize("change", ["support", "convergence"])
+    def test_report_evidence_mutation_invalidates_operator(change):
+        X, E = cube(.002)
+        op = m.integrate_tent_observations(X, E, [[.001, .001, .001]])
+        if change == "support":
+            op.reports[0]["weighted_support_fraction"] = 1.
+        else:
+            op.reports[0]["refinement_ledger"][-1]["higher_order_cross_check"]["passes"] = False
+>       with pytest.raises(m.ObservationRefusal, match="operator_content_changed"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ObservationRefusal
+
+tests/test_mechanics_patient_observation_review.py:83: Failed
+=========================== short test summary info ============================
+FAILED tests/test_mechanics_patient_observation_review.py::test_report_evidence_mutation_invalidates_operator[support]
+FAILED tests/test_mechanics_patient_observation_review.py::test_report_evidence_mutation_invalidates_operator[convergence]
+2 failed, 5 deselected in 0.34s

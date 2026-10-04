@@ -250,6 +250,17 @@ the patient volume-integral observation operator and anatomical mesh remain
 unvalidated. See `artifacts/mechanics-patient-constraints-run-v1/RESULT.md` and
 `artifacts/mechanics-patient-constraints-run-review-v1/REVIEW.md`.
 
+The fixed 5 mm reference-volume tent operator is implemented separately from
+the earlier nodal-average solver fixtures. It preserves negative quadratic
+weights and checks integration refinement, support, original constraint rows,
+rigid-mode rank and deterministic elimination without reading destinations.
+Thirty-six analytical controls pass, including independent octant integrals
+and exact nonzero constraint reproduction. Early sample-cap failures are
+preserved; independent review also caught and fixed mutable diagnostic evidence
+that was missing from the operator hash. Integration discrepancies are empirical
+convergence checks, not certified error bounds. No patient operator or mechanics
+solve has run. See `docs/mechanics-patient-observation.md`.
+
 A source/runtime audit found the optional Apple sparse backend is compiled and
 linked, but its adapter copies a nonzero-entry count from a column-pointer array
 allocated with only columns-plus-one entries. This concrete bounds defect blocks

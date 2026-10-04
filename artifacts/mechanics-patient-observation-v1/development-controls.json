@@ -1,0 +1,236 @@
+[
+  {
+    "center_m": [
+      0.005,
+      0.005,
+      0.005
+    ],
+    "observed_wall_seconds": 2.1196359581081197,
+    "status": "passed",
+    "report": {
+      "weighted_volume_m3": 1.3090207242303339e-07,
+      "full_tent_weighted_volume_m3": 1.3089969389957473e-07,
+      "weighted_support_fraction": 1.0000181705807538,
+      "geometric_support_volume_estimate_m3": 5.231323242187503e-07,
+      "geometric_support_lower_m3": 3.706054687500621e-07,
+      "geometric_support_upper_m3": 5.235987755982989e-07,
+      "full_sphere_volume_m3": 5.235987755982989e-07,
+      "kernel_first_moment_about_center_m4": [
+        -1.2407709188295415e-26,
+        -2.481541837659083e-26,
+        -5.892854070873376e-27
+      ],
+      "centroid_offset_m": [
+        -9.478619366848288e-20,
+        -1.8957238733696576e-19,
+        -4.501727101637908e-20
+      ],
+      "refinement_mass_error_estimate_m3": 1.8442107990118906e-11,
+      "refinement_coefficient_l1_error_estimate": 0.0005105935364067681,
+      "refinement_centroid_error_estimate_m": 1.200737115368354e-18,
+      "quadrature_points": 106014,
+      "final_leaf_count": 15780,
+      "max_depth": 4,
+      "discarded_disjoint_cells": 2118,
+      "candidate_elements": 6,
+      "refinement_ledger": [
+        {
+          "depth": 0,
+          "retained_cells": 6,
+          "weighted_volume_m3": 6.618367812516492e-08,
+          "h_refinement": null,
+          "higher_order_cross_check": null,
+          "quadrature_points_cumulative": 24
+        },
+        {
+          "depth": 1,
+          "retained_cells": 48,
+          "weighted_volume_m3": 1.2957158955063268e-07,
+          "h_refinement": {
+            "mass_difference_m3": 6.338791142546775e-08,
+            "coefficient_l1_difference": 0.39455020337222985,
+            "centroid_difference_m": 1.8101609154817882e-19,
+            "passes": false
+          },
+          "higher_order_cross_check": null,
+          "quadrature_points_cumulative": 216
+        },
+        {
+          "depth": 2,
+          "retained_cells": 324,
+          "weighted_volume_m3": 1.3074078194128944e-07,
+          "h_refinement": {
+            "mass_difference_m3": 1.1691923906567672e-09,
+            "coefficient_l1_difference": 0.08879604808343555,
+            "centroid_difference_m": 4.697592047598494e-19,
+            "passes": false
+          },
+          "higher_order_cross_check": null,
+          "quadrature_points_cumulative": 1512
+        },
+        {
+          "depth": 3,
+          "retained_cells": 2178,
+          "weighted_volume_m3": 1.3088363031504327e-07,
+          "h_refinement": {
+            "mass_difference_m3": 1.428483737538252e-10,
+            "coefficient_l1_difference": 0.010053808112108913,
+            "centroid_difference_m": 1.3164930918536573e-18,
+            "passes": false
+          },
+          "higher_order_cross_check": null,
+          "quadrature_points_cumulative": 10224
+        },
+        {
+          "depth": 4,
+          "retained_cells": 15780,
+          "weighted_volume_m3": 1.3090207242303339e-07,
+          "h_refinement": {
+            "mass_difference_m3": 1.8442107990118906e-11,
+            "coefficient_l1_difference": 0.0005105935364067681,
+            "centroid_difference_m": 1.200737115368354e-18,
+            "passes": true
+          },
+          "higher_order_cross_check": {
+            "mass_difference_m3": 2.24175938960416e-12,
+            "coefficient_l1_difference": 0.0001479768847214638,
+            "centroid_difference_m": 3.9561853151411e-19,
+            "passes": true
+          },
+          "quadrature_points_cumulative": 106014
+        }
+      ],
+      "error_scope": "Complete-level h-refinement and separate higher-order cubature agreement; empirical convergence, not a rigorous quadrature error bound.",
+      "support_scope": "Unweighted support estimate plus convex-cell inside/possible-volume bounds; mesh topology must be independently validated.",
+      "row": 0,
+      "minimum_nodal_weight": -0.07405465744889604,
+      "maximum_nodal_weight": 0.43712686199487377,
+      "row_sum": 0.9999999999999998,
+      "active_nodes": 27,
+      "maximum_linear_midpoint_error_m": 0.0,
+      "truncated_support_estimate": false,
+      "centroid_m": [
+        0.005,
+        0.005,
+        0.005
+      ]
+    }
+  },
+  {
+    "center_m": [
+      0,
+      0.005,
+      0.005
+    ],
+    "observed_wall_seconds": 0.8022869999986142,
+    "status": "passed",
+    "report": {
+      "weighted_volume_m3": 6.544465919022112e-08,
+      "full_tent_weighted_volume_m3": 1.3089969389957473e-07,
+      "weighted_support_fraction": 0.4999603684362301,
+      "geometric_support_volume_estimate_m3": 2.618509928385404e-07,
+      "geometric_support_lower_m3": 1.833089192708252e-07,
+      "geometric_support_upper_m3": 3.271484375000375e-07,
+      "full_sphere_volume_m3": 5.235987755982989e-07,
+      "kernel_first_moment_about_center_m4": [
+        9.815121169071111e-11,
+        -2.5602965507068713e-14,
+        -1.2366285087463034e-14
+      ],
+      "centroid_offset_m": [
+        0.00149975892464235,
+        -3.912155067176874e-07,
+        -1.88957895731709e-07
+      ],
+      "refinement_mass_error_estimate_m3": 5.1249427021689415e-11,
+      "refinement_coefficient_l1_error_estimate": 0.001297791933603971,
+      "refinement_centroid_error_estimate_m": 8.981408201243911e-07,
+      "quadrature_points": 54445,
+      "final_leaf_count": 8040,
+      "max_depth": 4,
+      "discarded_disjoint_cells": 1276,
+      "candidate_elements": 6,
+      "refinement_ledger": [
+        {
+          "depth": 0,
+          "retained_cells": 6,
+          "weighted_volume_m3": 6.09902032584564e-08,
+          "h_refinement": null,
+          "higher_order_cross_check": null,
+          "quadrature_points_cumulative": 24
+        },
+        {
+          "depth": 1,
+          "retained_cells": 26,
+          "weighted_volume_m3": 6.574937701801703e-08,
+          "h_refinement": {
+            "mass_difference_m3": 4.759173759560638e-09,
+            "coefficient_l1_difference": 0.3592544299995706,
+            "centroid_difference_m": 0.0008822334523763621,
+            "passes": false
+          },
+          "higher_order_cross_check": null,
+          "quadrature_points_cumulative": 128
+        },
+        {
+          "depth": 2,
+          "retained_cells": 167,
+          "weighted_volume_m3": 6.548176298579743e-08,
+          "h_refinement": {
+            "mass_difference_m3": 2.6761403221960024e-10,
+            "coefficient_l1_difference": 0.06586661598047566,
+            "centroid_difference_m": 7.848195434364661e-05,
+            "passes": false
+          },
+          "higher_order_cross_check": null,
+          "quadrature_points_cumulative": 796
+        },
+        {
+          "depth": 3,
+          "retained_cells": 1131,
+          "weighted_volume_m3": 6.549590861724281e-08,
+          "h_refinement": {
+            "mass_difference_m3": 1.4145631445379596e-11,
+            "coefficient_l1_difference": 0.010238489542710791,
+            "centroid_difference_m": 5.793906393139274e-06,
+            "passes": false
+          },
+          "higher_order_cross_check": null,
+          "quadrature_points_cumulative": 5320
+        },
+        {
+          "depth": 4,
+          "retained_cells": 8040,
+          "weighted_volume_m3": 6.544465919022112e-08,
+          "h_refinement": {
+            "mass_difference_m3": 5.1249427021689415e-11,
+            "coefficient_l1_difference": 0.001297791933603971,
+            "centroid_difference_m": 8.981408201243911e-07,
+            "passes": true
+          },
+          "higher_order_cross_check": {
+            "mass_difference_m3": 5.022465669881641e-12,
+            "coefficient_l1_difference": 0.0005012365027332224,
+            "centroid_difference_m": 7.970349160250599e-07,
+            "passes": true
+          },
+          "quadrature_points_cumulative": 54445
+        }
+      ],
+      "error_scope": "Complete-level h-refinement and separate higher-order cubature agreement; empirical convergence, not a rigorous quadrature error bound.",
+      "support_scope": "Unweighted support estimate plus convex-cell inside/possible-volume bounds; mesh topology must be independently validated.",
+      "row": 0,
+      "minimum_nodal_weight": -0.0832978009405056,
+      "maximum_nodal_weight": 0.3447432182545115,
+      "row_sum": 0.9999999999999988,
+      "active_nodes": 27,
+      "maximum_linear_midpoint_error_m": 0.0,
+      "truncated_support_estimate": true,
+      "centroid_m": [
+        0.00149975892464235,
+        0.004999608784493283,
+        0.004999811042104269
+      ]
+    }
+  }
+]

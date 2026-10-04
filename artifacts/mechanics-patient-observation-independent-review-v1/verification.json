@@ -1,0 +1,55 @@
+{
+  "schema": 1,
+  "status": "pass_after_report_evidence_hash_repair",
+  "production_and_test_sha256": {
+    "scripts/mechanics_patient_observation.py": "d085b114b7d38ec9ebc65e624137cea1c2d66140129be7a4b44e1f260e373a25",
+    "scripts/mechanics_patient_constraints.py": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66",
+    "scripts/mechanics_febio_verification.py": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5",
+    "tests/test_mechanics_patient_observation_review.py": "a0420de9043970e73f467f40e9380ed0a7b95d81785dd1b65498d57ee4ea23cc",
+    "tests/test_mechanics_patient_observation.py": "fb9bef69084e3c2559b3f128703a2e5b6d7c20eb4451974b171eadfc1a2f7db5"
+  },
+  "final_tests": {
+    "independent": 7,
+    "owner": 29,
+    "passed": 36,
+    "pytest_seconds": 7.94,
+    "process_wall_seconds": 8.117786624934524,
+    "all_five_bound_files_unchanged": true,
+    "receipt_sha256": "ce965fd78614a729357dc674663afbcdb3b42c9fbb5a852a921a887c869094b0",
+    "log_sha256": "4d3169205c5663514bb4c960d61cad860ec0d6563b498d3c778bfdc662ebe8f9"
+  },
+  "preserved_negative": {
+    "original_source_sha256": "a7e751535778614da1f7269ed4773cdd25b675156ef1c702694d29c0f0152be5",
+    "failed": 2,
+    "pytest_seconds": 0.34,
+    "problem": "Nested reports could be changed without invalidating the operator. Both support-fraction and cross-cubature pass-flag changes remained accepted by apply.",
+    "source_and_tests_preserved_as_gzip": true,
+    "receipt_sha256": "75de7a1b1a9548aaf32421dee60302e92d78f2642fe04b83964ef3c43cc86f84",
+    "repair_scope": "Include reports in generation and validation hashes; numerical integration, source parameters and array API unchanged.",
+    "diff_sha256": "0ade1c3ba552c365d2ff2925c03eb6a979320ed2202daa05fbe273c2be7c5ffa"
+  },
+  "independent_controls": [
+    "Six-tetrahedron Freudenthal cube with shared tet10 midsides constructed independently of owner mesh fixture.",
+    "Corner sphere octant exact tent mass pi*R^3/24, unweighted support volume pi*R^3/6, centroid components3R/10 and mixed quadratic moment R^2*(2/15+12/(15*pi)); tests retain declared1e-3 relative and5micrometer policy.",
+    "Lowering actual accepted sample budget by one refuses, accounting for cross-cubature samples.",
+    "Edited support and nested convergence evidence now refuse through apply and prepare_elimination.",
+    "Caller arrays can change after generation without changing snapshot; returned numerical storage cannot be made writable.",
+    "Deterministic parent selection and original-row reproduction for all three components of a nonzero constructed algebraic RHS; no parent chains.",
+    "Independent observation rows with collinear centroids refuse rank-six rigid-mode preparation."
+  ],
+  "static_findings": [
+    "API accepts source-node coordinates/connectivity/source centers only; no patient path, displacement destination, later image or solver.",
+    "Uses physical reference volume and the same kernel weights in numerator/normalization/first moment; tet10 negative nodal weights retained.",
+    "No sampled support triggers further refinement or refusal, not automatic empty support acceptance; insufficient weighted support threshold precedes row acceptance.",
+    "Explicit per-row candidates/sample/depth and total active-node limits; no partial operator on a refusal.",
+    "Reports are now hash-bound scientific evidence; raw nested containers remain mutable but validation rejects edits. This is accidental-drift detection, not defense against a caller recomputing every hash."
+  ],
+  "limits": [
+    "No patient data, measured destinations, meshing or solver runs. No new training or benchmark.",
+    "Mesh producer must separately establish conformity, nonoverlap and closed anatomy; positive linear element Jacobians plus connected node graph do not establish those properties. Geometric support interval assumes valid mesh and floating point geometry.",
+    "Full-level h refinement and preceding-level degree-five agreement are empirical convergence checks, not certified integration-error bounds. Weighted support fractions are not clinical probabilities.",
+    "Scalar-child cap is20000; corresponding three-component term count may reach60000. No candidate or row silently dropped.",
+    "This observation is a declared volume-smoothing approximation to point-picked motion, not a measured tissue-volume average or clinical boundary condition.",
+    "Frozen numerical source and separate patient/solver release are still required downstream."
+  ]
+}

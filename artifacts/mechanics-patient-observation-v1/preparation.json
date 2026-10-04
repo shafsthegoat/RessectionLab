@@ -1,0 +1,57 @@
+{
+  "status": "reviewed_software_control_slice_ready_for_commit",
+  "scope": "Analytic software fixtures only; no patient arrays, destinations, mesh generation or solver execution",
+  "files": {
+    "scripts/mechanics_patient_observation.py": "d085b114b7d38ec9ebc65e624137cea1c2d66140129be7a4b44e1f260e373a25",
+    "scripts/mechanics_patient_constraints.py": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66",
+    "tests/test_mechanics_patient_observation.py": "fb9bef69084e3c2559b3f128703a2e5b6d7c20eb4451974b171eadfc1a2f7db5",
+    "docs/mechanics-patient-observation.md": "bc35b8b8c3353b65eb7baca74d2c656bb8f899644ace8256eb502d5308e92f15"
+  },
+  "development_negatives": [
+    {
+      "design": "absolute local discrepancy, four-point",
+      "receipt": "initial-control.json",
+      "status": "cap refusal retained"
+    },
+    {
+      "design": "absolute local discrepancy, degree-five",
+      "status": "full sphere and half sphere capped at262140; observed mass discrepancies2.0086245205266851e-10 and7.324907148477029e-11 m3, respectively; no operator accepted",
+      "source": "local-absolute-discrepancy-draft.py"
+    },
+    {
+      "design": "two complete consecutive h-refinement levels",
+      "status": "full sphere and half sphere exhausted262144 sample cap with four-point rule; no operator accepted",
+      "source": "level-degree-five-draft.py",
+      "note": "Source snapshot retains degree-five variant; the subsequent four-point variant uses the same level logic; observed outcomes recorded, not a frozen benchmark."
+    }
+  ],
+  "owner_test_attempts": [
+    "owner-tests-01.txt",
+    "owner-tests-02.txt",
+    "owner-tests-03.txt"
+  ],
+  "first_test_failures": {
+    "shape": "4e-16 comparison used separately rounded barycentric coordinate; final test canonicalizes reference coordinate before comparing unchanged algebra",
+    "quadratic": "observed4.36809e-9 absolute discrepancy versus arbitrary4e-9 expectation; operator unchanged; test now uses declared1e-3 relative numerical policy"
+  },
+  "timings": "Development observations only; no isolated timing comparison or patient performance claim",
+  "initial_owner_pass_source_sha256": "a7e751535778614da1f7269ed4773cdd25b675156ef1c702694d29c0f0152be5",
+  "current_owner_result": {
+    "passed": 29,
+    "wall_seconds": 4.47,
+    "log": "owner-tests-03.txt"
+  },
+  "review_repair": {
+    "issue": "Nested support/convergence metadata could be edited without invalidating numerical operator hash",
+    "change": "Nested reports are now included in the checked operator digest; scientific integration algorithm/API unchanged",
+    "independent_initial_evidence": "../mechanics-patient-observation-independent-review-v1/",
+    "status": "Repaired; independent7 plus owner29 checks pass"
+  },
+  "independent_review": {
+    "receipt": "../mechanics-patient-observation-independent-review-v1/verification.json",
+    "sha256": "5a84644f63d66dcb529b93dc0369e4efefbce22f135c218ab9f78fa6f125b542",
+    "combined_passed": 36,
+    "combined_wall_seconds": 7.94,
+    "source_sha256": "d085b114b7d38ec9ebc65e624137cea1c2d66140129be7a4b44e1f260e373a25"
+  }
+}

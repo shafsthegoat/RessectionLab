@@ -1,0 +1,46 @@
+.F...F....................                                               [100%]
+=================================== FAILURES ===================================
+_______________________ test_shape_matches_frozen_order ________________________
+
+    def test_shape_matches_frozen_order():
+     bary=np.random.default_rng(6).dirichlet(np.ones(4),30)
+     expected=np.array([m.tet.shape(b[1:])[0] for b in bary])
+>    assert np.allclose(m._shape_values(bary),expected,rtol=0,atol=4e-16)
+E    assert False
+E     +  where False = <function allclose at 0x109641830>(array([[-1.07572938e-01, -7.45134432e-02, -1.20126284e-01,\n        -1.24477030e-01,  1.25141025e-01,  1.09110791e-01,\n... 3.94123438e-02,  2.32453568e-01,\n         2.06469586e-02,  5.47730708e-02,  6.16662047e-01,\n         3.23050966e-01]]), array([[-1.07572938e-01, -7.45134432e-02, -1.20126284e-01,\n        -1.24477030e-01,  1.25141025e-01,  1.09110791e-01,\n... 3.94123438e-02,  2.32453568e-01,\n         2.06469586e-02,  5.47730708e-02,  6.16662047e-01,\n         3.23050966e-01]]), rtol=0, atol=4e-16)
+E     +    where <function allclose at 0x109641830> = np.allclose
+E     +    and   array([[-1.07572938e-01, -7.45134432e-02, -1.20126284e-01,\n        -1.24477030e-01,  1.25141025e-01,  1.09110791e-01,\n... 3.94123438e-02,  2.32453568e-01,\n         2.06469586e-02,  5.47730708e-02,  6.16662047e-01,\n         3.23050966e-01]]) = <function _shape_values at 0x1098bcea0>(array([[0.3433463 , 0.09111867, 0.29936454, 0.2661705 ],\n       [0.21071682, 0.39958428, 0.31722007, 0.07247883],\n    ...82],\n       [0.22872448, 0.24503345, 0.08427465, 0.44196742],\n       [0.02958326, 0.33306286, 0.17448176, 0.46287213]]))
+E     +      where <function _shape_values at 0x1098bcea0> = m._shape_values
+
+tests/test_mechanics_patient_observation.py:49: AssertionError
+___________________ test_independent_tensor_cube_integration ___________________
+
+mesh = (array([[0.   , 0.   , 0.   ],
+       [0.01 , 0.   , 0.   ],
+       [0.01 , 0.01 , 0.   ],
+       [0.   , 0.01 , 0.   ...0, 21, 11, 19, 22],
+       [ 0,  4,  5,  6, 21, 23, 24, 11, 22, 25],
+       [ 0,  5,  1,  6, 24, 26,  8, 11, 25, 12]]))
+half = ObservationOperator(weights=array([[-3.95253798e-02, -7.67026977e-05, -1.83602645e-03,
+        -3.94914654e-02, -3.950...ow=2048, quadrature_points_per_row=262144, depth=8, active_nodes=4096, scalar_child_terms=20000), source_node_count=27)
+
+    def test_independent_tensor_cube_integration(mesh,half):
+     # Tensor Gauss integration in Cartesian cube, independent of mesh/tet rules.
+     X,_=mesh;g,w=np.polynomial.legendre.leggauss(60);g=(g+1)*.005;w=w*.005
+     xyz=np.stack(np.meshgrid(g,g,g,indexing='ij'),axis=-1).reshape(-1,3)
+     weight=np.prod(np.stack(np.meshgrid(w,w,w,indexing='ij'),axis=-1),axis=-1).ravel()
+     k=np.maximum(1-np.linalg.norm(xyz-[0,.005,.005],axis=1)/.005,0)
+     wk=weight*k;f=xyz[:,0]**2+xyz[:,1]*xyz[:,2]
+     expected=wk@f/wk.sum();actual=half.apply(X[:,0]**2+X[:,1]*X[:,2])[0]
+>    assert actual==pytest.approx(expected,abs=4e-9)
+E    assert np.float64(2....365229065e-05) == 2.83333654560...e-05 ± 4.0e-09
+E      
+E      comparison failed
+E      Obtained: 2.8328997365229065e-05
+E      Expected: 2.833336545600855e-05 ± 4.0e-09
+
+tests/test_mechanics_patient_observation.py:84: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_mechanics_patient_observation.py::test_shape_matches_frozen_order
+FAILED tests/test_mechanics_patient_observation.py::test_independent_tensor_cube_integration
+2 failed, 24 passed in 4.22s

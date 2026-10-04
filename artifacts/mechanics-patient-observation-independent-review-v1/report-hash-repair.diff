@@ -1,0 +1,20 @@
+--- original-a7e75153
++++ repaired-d085b114
+@@ -296,7 +296,7 @@
+         rows.append((nodes,weights));reports.append(report);centroids.append(centroid)
+     active=np.array(sorted(all_nodes),dtype=np.int64);H=np.zeros((len(rows),len(active)))
+     for i,(nodes,weights) in enumerate(rows):H[i,np.searchsorted(active,nodes)]=weights
+-    operator_hash=_digest(H,active,centers,np.array(centroids),metadata={'source':source_hash,'rule':rule_hash,'source_nodes':len(X),'limits':vars(limits)})
++    operator_hash=_digest(H,active,centers,np.array(centroids),metadata={'source':source_hash,'rule':rule_hash,'source_nodes':len(X),'limits':vars(limits),'reports':reports})
+     return ObservationOperator(_immutable(H),_immutable(active),_immutable(centers),_immutable(centroids),source_hash,rule_hash,operator_hash,tuple(reports),limits,len(X))
+ 
+ 
+@@ -304,7 +304,7 @@
+     if not isinstance(operator,ObservationOperator):raise TypeError('ObservationOperator required')
+     actual=_digest(operator.weights,operator.active_node_indices,operator.centers_m,operator.centroids_m,
+                    metadata={'source':operator.source_hash,'rule':operator.rule_hash,
+-                             'source_nodes':operator.source_node_count,'limits':vars(operator.limits)})
++                             'source_nodes':operator.source_node_count,'limits':vars(operator.limits),'reports':operator.reports})
+     if actual!=operator.operator_hash:raise ObservationRefusal('operator_content_changed')
+ 
+ 
