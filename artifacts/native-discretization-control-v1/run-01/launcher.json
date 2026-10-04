@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-discretization-control-v1/7abecf3426eb88fc9233be3d72332fa282a2c25a/scripts/probe_native_discretization.py",
+    "--worker",
+    "--output",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/native-discretization-control-v1/run-01"
+  ],
+  "worker_exit_code": 0,
+  "parent_stop_reason": null,
+  "parent_wall_seconds": 170.690081040957,
+  "peak_polled_worker_rss_bytes": 685096960,
+  "source_unchanged": true,
+  "worker_report_status": "completed_numerical_rows_audits_incomplete",
+  "numerical_rows_complete": true,
+  "independent_audits_complete": false,
+  "status": "completed_numerical_rows_audits_incomplete"
+}

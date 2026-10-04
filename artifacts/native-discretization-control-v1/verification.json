@@ -1,0 +1,27 @@
+{
+  "version": "native-discretization-completed-record-verification-v1",
+  "git_commit": "7abecf3426eb88fc9233be3d72332fa282a2c25a",
+  "archive_sha256": "304b788f019fe00cff20273580384eb36579fe53ccf948c2ba4f3a8860000667",
+  "archive_unchanged": true,
+  "all_archived_file_hashes_unchanged": true,
+  "archived_file_count": 52,
+  "worker_source_unchanged": true,
+  "launcher_source_unchanged": true,
+  "launcher_independent_audits_complete": false,
+  "rows": 16,
+  "accepted_native_histories": 11,
+  "independently_passed_histories": 10,
+  "not_independently_verified": [
+    "oblique_fractional_phase-0.125mm"
+  ],
+  "rejected_unchanged_transactions": 5,
+  "all_accepted_histories_independently_checked": false,
+  "artifact_sha256": {
+    "execution-baseline.json": "4e5b62a4f84281a7dc3894b3a4b37677747d62d0419314236dadbfd508464d24",
+    "run-01/prospective-source.json": "f978c39bd6afbfc73c47d352ffc0d83ebe88c9f8e02a346144dbb4a6f8dd32cc",
+    "run-01/report.json": "7bd2f98a721c33fee75f981db37e64f4b480057ae05530e417045c5d9bc836c4",
+    "run-01/launcher.json": "935c9494c4e8264532c5a1b8234312b1a6d1d8f64ad9d0e524b636c01b3b8ea4",
+    "run-01/worker.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "scope": "Read-only completed-record and original archive/source identity checks; no new simulation, geometry audit, patient or training run. Cancellation is not geometry rejection or acceptance."
+}
