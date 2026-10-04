@@ -8,6 +8,12 @@ has actually been run. The October 4, 2026 [master plan](MASTER_PLAN.md),
 [annotated references](ANNOTATED_REFERENCES.md), and
 [implementation handoff](IMPLEMENTING_AGENT_HANDOFF.md) define the project.
 
+The active Mac interface is being migrated to **Electron, React and TypeScript**
+at the user's request. The Python engine remains responsible for physical
+geometry, patient-specific training, evidence and independent validation. The
+earlier Qt prototype is retained as a tested historical reference; it is no
+longer the product interface target. See `desktop/` for the new application.
+
 ## Local development
 
 The initial tested dependency environment is Apple Silicon, macOS 26.6 and
@@ -22,7 +28,34 @@ python3.12 -m venv .venv
 
 `requirements-lock.txt` records exact versions installed on the development
 machine. It is not evidence that every dependency combination or platform is
-validated. Mac application packaging is a separate acceptance gate.
+validated. It includes historical Qt development dependencies, which are now a
+separate `legacy-qt` optional extra and are not required by the numerical engine.
+Mac application packaging is a separate acceptance gate for each interface.
+
+## Public development cases
+
+The creator-source BTC case can be acquired and prepared with:
+
+```sh
+.venv/bin/python scripts/acquire_btc_case.py
+.venv/bin/python scripts/prepare_btc_case.py --annotation-threshold 0.5
+```
+
+This writes `outputs/cases/BTC-sub-PAT28.ressectionlab`. Its T1 includes the full
+head, so automatic cortical access remains blocked until a suitable brain mask
+has been reviewed. The source annotation is fractional; 0.5 is a recorded
+research threshold, not a clinical probability. Unknown-timed context is withheld.
+
+For the limited UCSF structural mirror used in viewer/route development:
+
+```sh
+.venv/bin/python scripts/acquire_public_case.py --inspect-nifti
+.venv/bin/python scripts/prepare_case.py
+```
+
+The resulting bundle is `outputs/cases/UCSF-PDGM-0004.ressectionlab`. Its source
+equivalence remains unverified. See the acquisition guides in `docs/` for
+pinned releases, licenses, checksums, coordinates and missing evidence.
 
 ## Evidence and interpretation
 
