@@ -59,6 +59,8 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     [proposalReviewLabel, setProposalReviewLabel] = useState<string | null>(
       null,
     );
+  const [layout, setLayout] = useState<"3d-focus" | "mri-review">("3d-focus"),
+    [expanded, setExpanded] = useState<SlicePlane | null>(null);
   const [paneSizes, setPaneSizes] = useState<
     Record<SlicePlane, [number, number]>
   >({ axial: [1, 1], coronal: [1, 1], sagittal: [1, 1] });
@@ -317,31 +319,45 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const modeled = replay && !replayError;
   return (
     <div
-      className="rl-viewer"
+      className={`rl-viewer rl-layout-${layout}${expanded ? " has-expanded" : ""}`}
       ref={container}
+      data-layout={layout}
+      data-expanded={expanded ?? undefined}
       aria-label="Linked patient imaging workspace"
     >
       <canvas ref={canvas} className="rl-viewer-canvas" aria-hidden="true" />
       <div
-        className="rl-viewer-anatomy rl-viewer-pane"
-        ref={anatomy}
-        onDoubleClick={(event) => {
-          const point = engine.current?.pick(event.clientX, event.clientY);
-          if (point && geometry)
-            onCursorChange(clampCursor(point, geometry.bounds));
-        }}
-        aria-label="3-D source anatomy. Drag to rotate, scroll to zoom, double-click to set linked cursor."
+        className="rl-viewer-layoutbar"
+        role="toolbar"
+        aria-label="Imaging layout and 3D controls"
       >
-        <div className="rl-viewer-heading">
-          <span className="rl-viewer-tag">3D</span>
-          <span>Spatial workspace</span>
-          <span className="rl-viewer-frame">RAS · mm</span>
-        </div>
         <div
-          className="rl-viewer-toolbar"
-          onPointerDown={(event) => event.stopPropagation()}
-          onDoubleClick={(event) => event.stopPropagation()}
+          className="rl-viewer-segment"
+          role="group"
+          aria-label="View layout"
         >
+          <button
+            aria-pressed={layout === "3d-focus" && !expanded}
+            className={layout === "3d-focus" && !expanded ? "is-active" : ""}
+            onClick={() => {
+              setLayout("3d-focus");
+              setExpanded(null);
+            }}
+          >
+            3D focus
+          </button>
+          <button
+            aria-pressed={layout === "mri-review" && !expanded}
+            className={layout === "mri-review" && !expanded ? "is-active" : ""}
+            onClick={() => {
+              setLayout("mri-review");
+              setExpanded(null);
+            }}
+          >
+            MRI review
+          </button>
+        </div>
+        <div className="rl-viewer-toolbar" hidden={Boolean(expanded)}>
           <button
             className={`rl-viewer-reset rl-viewer-plane-toggle ${showPlane ? "is-active" : ""}`}
             aria-pressed={showPlane}
@@ -350,93 +366,116 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           >
             MRI plane {showPlane ? "on" : "off"}
           </button>
-          <div className="rl-viewer-segment" aria-label="Source MRI plane">
+          <select
+            className="rl-viewer-plane-select"
+            aria-label="MRI plane shown in 3D"
+            value={activePlane}
+            onChange={(event) => {
+              setActivePlane(event.target.value as SlicePlane);
+              setShowPlane(true);
+            }}
+          >
             {PLANES.map((plane) => (
-              <button
-                key={plane}
-                className={
-                  showPlane && activePlane === plane ? "is-active" : ""
-                }
-                onClick={() => {
-                  setActivePlane(plane);
-                  setShowPlane(true);
-                }}
-                title={`Show source ${plane} MRI plane`}
-              >
+              <option key={plane} value={plane}>
                 {TITLES[plane]}
-              </button>
+              </option>
             ))}
-          </div>
+          </select>
           <button
             className="rl-viewer-reset"
             onClick={() => engine.current?.fitCamera(cameraMode)}
-            title="Fit visible anatomy and selected camera preset"
+            aria-label="Fit 3D view"
+            title="Fit anatomy and the selected 3D camera preset"
           >
-            ↺ <span>Fit view</span>
+            ↺ <span>Fit 3D</span>
           </button>
         </div>
-        <div className="rl-viewer-annotations">
-          <span className="rl-viewer-dot" />{" "}
-          {modeled
-            ? `Modeled residual annotations · step ${replay.step}/${replay.stepCount}`
-            : "Source annotation surfaces"}
-          {modeled && (
-            <span className="rl-viewer-replay-key">
-              Mint mesh: modeled removal · source MRI unchanged
-            </span>
-          )}
-          {!modeled &&
-            routes.slice(0, 2).map((route, index) => {
-              const { slot, color } = routeAppearance(route, index);
-              return (
-                <span
-                  key={route.route_id}
-                  className="rl-viewer-route-key"
-                  style={{ color }}
-                >
-                  ● Route {slot}
-                  {route.category === "rejected" ? " · rejected" : ""}
-                </span>
-              );
-            })}
-          {!modeled &&
-            routes.some((route) => route.geometry?.failures?.length) && (
-              <span
-                className="rl-viewer-route-key"
-                style={{ color: FAILURE_COLOR }}
-              >
-                ● Constraint failure
-              </span>
-            )}
-          {remaining > 0 && (
-            <span className="rl-viewer-preparing" role="status">
-              Preparing {remaining} {remaining === 1 ? "surface" : "surfaces"}…
-            </span>
-          )}
-          {proposalReviewLabel && (
-            <span
-              className="rl-viewer-proposal-key"
-              style={{ color: STRUCTURAL_PROPOSAL_COLOR }}
-            >
-              <span aria-hidden="true">┄</span> Estimated envelope on MRI ·{" "}
-              {proposalReviewLabel}
-            </span>
-          )}
+        {expanded && (
+          <span className="rl-viewer-expanded-note">
+            {TITLES[expanded]} MRI expanded
+          </span>
+        )}
+      </div>
+      <div className="rl-viewer-anatomy rl-viewer-pane">
+        <div className="rl-viewer-heading">
+          <span className="rl-viewer-tag">3D</span>
+          <span>Spatial workspace</span>
+          <span className="rl-viewer-frame">RAS · mm</span>
         </div>
         <div
-          className="rl-viewer-compass"
-          aria-label="3-D patient coordinates: R is right, A anterior, S superior"
+          className="rl-viewer-anatomy-image"
+          ref={anatomy}
+          onDoubleClick={(event) => {
+            const point = engine.current?.pick(event.clientX, event.clientY);
+            if (point && geometry)
+              onCursorChange(clampCursor(point, geometry.bounds));
+          }}
+          aria-label="3-D source anatomy. Drag to rotate, scroll to zoom, double-click to set linked cursor."
         >
-          <span>R</span>
-          <span>A</span>
-          <span>S</span>
-          <small>Patient axes</small>
-        </div>
-        <div className="rl-viewer-scene-footer">
-          <span>
-            Drag to rotate <i>·</i> Scroll to zoom
-          </span>
-          <span>Double-click to link cursor</span>
+          <div className="rl-viewer-annotations">
+            <span className="rl-viewer-dot" />{" "}
+            {modeled
+              ? `Modeled residual annotations · step ${replay.step}/${replay.stepCount}`
+              : "Source annotation surfaces"}
+            {modeled && (
+              <span className="rl-viewer-replay-key">
+                Mint mesh: modeled removal · source MRI unchanged
+              </span>
+            )}
+            {!modeled &&
+              routes.slice(0, 2).map((route, index) => {
+                const { slot, color } = routeAppearance(route, index);
+                return (
+                  <span
+                    key={route.route_id}
+                    className="rl-viewer-route-key"
+                    style={{ color }}
+                  >
+                    ● Route {slot}
+                    {route.category === "rejected" ? " · rejected" : ""}
+                  </span>
+                );
+              })}
+            {!modeled &&
+              routes.some((route) => route.geometry?.failures?.length) && (
+                <span
+                  className="rl-viewer-route-key"
+                  style={{ color: FAILURE_COLOR }}
+                >
+                  ● Constraint failure
+                </span>
+              )}
+            {remaining > 0 && (
+              <span className="rl-viewer-preparing" role="status">
+                Preparing {remaining} {remaining === 1 ? "surface" : "surfaces"}
+                …
+              </span>
+            )}
+            {proposalReviewLabel && (
+              <span
+                className="rl-viewer-proposal-key"
+                style={{ color: STRUCTURAL_PROPOSAL_COLOR }}
+              >
+                <span aria-hidden="true">┄</span> Estimated envelope on MRI ·{" "}
+                {proposalReviewLabel}
+              </span>
+            )}
+          </div>
+          <div
+            className="rl-viewer-compass"
+            aria-label="3-D patient coordinates: R is right, A anterior, S superior"
+          >
+            <span>R</span>
+            <span>A</span>
+            <span>S</span>
+            <small>Patient axes</small>
+          </div>
+          <div className="rl-viewer-scene-footer">
+            <span>
+              Drag to rotate <i>·</i> Scroll to zoom
+            </span>
+            <span>Double-click to link cursor</span>
+          </div>
         </div>
       </div>
       {PLANES.map((plane) => {
@@ -455,21 +494,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         return (
           <div
             key={plane}
-            ref={refs[plane]}
-            className={`rl-viewer-pane rl-viewer-slice rl-viewer-${plane}`}
-            tabIndex={0}
-            aria-label={`${TITLES[plane]} source MRI, neurological convention, slice position ${currentCursor[axis].toFixed(1)} millimeters. ${proposalReviewLabel ? `Estimated envelope contour, view only: ${proposalReviewLabel}. ` : ""}Click to set cursor; scroll or arrow keys change slice.`}
-            onPointerDown={(event) => {
-              if (event.button === 0) {
-                event.currentTarget.focus({ preventScroll: true });
-                event.currentTarget.setPointerCapture(event.pointerId);
-                moveCursor(event, plane);
-              }
-            }}
-            onPointerMove={(event) => {
-              if (event.buttons === 1) moveCursor(event, plane);
-            }}
-            onKeyDown={(event) => keySlice(event, plane)}
+            className={`rl-viewer-pane rl-viewer-slice rl-viewer-${plane}${expanded === plane ? " is-expanded" : ""}`}
           >
             <div className="rl-viewer-heading">
               <span className={`rl-viewer-plane-dot ${plane}`} />
@@ -477,23 +502,60 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               <span className="rl-viewer-slice-position">
                 {currentCursor[axis].toFixed(1)} <small>mm</small>
               </span>
+              <button
+                className="rl-viewer-expand"
+                aria-label={
+                  expanded === plane
+                    ? "Restore linked views"
+                    : `Expand ${TITLES[plane]} MRI`
+                }
+                aria-pressed={expanded === plane}
+                title={
+                  expanded === plane
+                    ? "Restore linked views"
+                    : `Expand ${TITLES[plane]} MRI`
+                }
+                onClick={() => setExpanded(expanded === plane ? null : plane)}
+              >
+                {expanded === plane ? "↙" : "⤢"}
+              </button>
             </div>
-            <span className="rl-orientation rl-orientation-left">{left}</span>
-            <span className="rl-orientation rl-orientation-right">{right}</span>
-            <span className="rl-orientation rl-orientation-top">{top}</span>
-            <span className="rl-orientation rl-orientation-bottom">
-              {bottom}
-            </span>
-            <span
-              className="rl-viewer-scale"
-              style={{ width: Math.max(8, scaleMm * pxPerMm) }}
+            <div
+              ref={refs[plane]}
+              className="rl-viewer-slice-image"
+              tabIndex={0}
+              aria-label={`${TITLES[plane]} source MRI, neurological convention, slice position ${currentCursor[axis].toFixed(1)} millimeters. ${proposalReviewLabel ? `Estimated envelope contour, view only: ${proposalReviewLabel}. ` : ""}Click to set cursor; scroll or arrow keys change slice.`}
+              onPointerDown={(event) => {
+                if (event.button === 0) {
+                  event.currentTarget.focus({ preventScroll: true });
+                  event.currentTarget.setPointerCapture(event.pointerId);
+                  moveCursor(event, plane);
+                }
+              }}
+              onPointerMove={(event) => {
+                if (event.buttons === 1) moveCursor(event, plane);
+              }}
+              onKeyDown={(event) => keySlice(event, plane)}
             >
-              <i />
-              {scaleMm} mm
-            </span>
-            <span className="rl-viewer-slice-note">
-              SOURCE MRI{proposalReviewLabel ? " · ESTIMATE" : ""}
-            </span>
+              <span className="rl-orientation rl-orientation-left">{left}</span>
+              <span className="rl-orientation rl-orientation-right">
+                {right}
+              </span>
+              <span className="rl-orientation rl-orientation-top">{top}</span>
+              <span className="rl-orientation rl-orientation-bottom">
+                {bottom}
+              </span>
+              <span
+                className="rl-viewer-scale"
+                style={{ width: Math.max(8, scaleMm * pxPerMm) }}
+              >
+                <i />
+                {scaleMm} mm
+              </span>
+              <span className="rl-viewer-slice-note">
+                SOURCE MRI{proposalReviewLabel ? " · ESTIMATE" : ""}
+              </span>
+            </div>
           </div>
         );
       })}

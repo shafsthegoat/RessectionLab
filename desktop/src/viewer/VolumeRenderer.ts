@@ -17,6 +17,7 @@ import type {
 } from "./contracts";
 import { fragmentShader, vertexShader } from "./shaders";
 import { physicalBounds, placeInSourceFrame } from "./sceneGeometry";
+import { paneViewport } from "./layout";
 import { residualMask, validateReplay } from "./replay";
 import {
   STRUCTURAL_PROPOSAL_COLOR,
@@ -139,6 +140,7 @@ export class VolumeRenderer {
   private activePlane: SlicePlane = "axial";
   private routeSignature = "";
   private mode: "anatomy" | "instruments" = "anatomy";
+  private pendingFit: "anatomy" | "instruments" | null = null;
   private readonly pickRay = new THREE.Raycaster();
   private readonly onControlsChange = () => this.requestRender();
   private readonly onContextLost = (event: Event) => {
@@ -768,6 +770,12 @@ export class VolumeRenderer {
   }
 
   fitCamera(mode: "anatomy" | "instruments" = this.mode): void {
+    const pane = this.panes.anatomy.getBoundingClientRect();
+    if (pane.width < 1 || pane.height < 1) {
+      this.pendingFit = mode;
+      return;
+    }
+    this.pendingFit = null;
     let box = physicalBounds(this.anatomy);
     if (box.isEmpty())
       box = new THREE.Box3(
@@ -782,8 +790,7 @@ export class VolumeRenderer {
       box.union(new THREE.Box3().setFromObject(this.tools)).expandByScalar(8);
     const centre = box.getCenter(new THREE.Vector3()),
       size = box.getSize(new THREE.Vector3());
-    const pane = this.panes.anatomy.getBoundingClientRect(),
-      aspect = Math.max(0.2, pane.width / Math.max(pane.height, 1));
+    const aspect = Math.max(0.2, pane.width / Math.max(pane.height, 1));
     const vertical = THREE.MathUtils.degToRad(this.camera.fov),
       horizontal = 2 * Math.atan(Math.tan(vertical / 2) * aspect);
     const direction = new THREE.Vector3(0.88, -1.65, 0.8).normalize();
@@ -867,22 +874,28 @@ export class VolumeRenderer {
     this.renderer.clear();
     this.renderer.setScissorTest(true);
     const viewport = (element: HTMLElement) => {
-      const r = element.getBoundingClientRect();
-      const left = Math.round(r.left - root.left),
-        bottom = Math.round(height - (r.bottom - root.top)),
-        w = Math.max(1, Math.round(r.width)),
-        h = Math.max(1, Math.round(r.height));
-      this.renderer.setViewport(left, bottom, w, h);
-      this.renderer.setScissor(left, bottom, w, h);
-      return { w, h };
+      const rect = paneViewport(root, element.getBoundingClientRect());
+      if (!rect) return null;
+      this.renderer.setViewport(
+        rect.left,
+        rect.bottom,
+        rect.width,
+        rect.height,
+      );
+      this.renderer.setScissor(rect.left, rect.bottom, rect.width, rect.height);
+      return { w: rect.width, h: rect.height };
     };
     const main = viewport(this.panes.anatomy);
-    this.camera.aspect = main.w / main.h;
-    this.camera.updateProjectionMatrix();
-    this.renderer.render(this.scene, this.camera);
+    if (main) {
+      if (this.pendingFit) this.fitCamera(this.pendingFit);
+      this.camera.aspect = main.w / main.h;
+      this.camera.updateProjectionMatrix();
+      this.renderer.render(this.scene, this.camera);
+    }
     for (const plane of SLICE_PLANES) {
-      const size = viewport(this.panes[plane]),
-        slice = this.slices.get(plane)!,
+      const size = viewport(this.panes[plane]);
+      if (!size) continue;
+      const slice = this.slices.get(plane)!,
         rect = sliceRect(this.bounds, plane, size.w, size.h);
       slice.material.uniforms.uRect.value.set(
         rect.left / size.w,

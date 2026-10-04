@@ -2,7 +2,7 @@
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(210px, 34%);
-  grid-template-rows: repeat(3, minmax(0, 1fr)) 32px;
+  grid-template-rows: auto repeat(3, minmax(0, 1fr)) 32px;
   width: 100%;
   height: 100%;
   min-height: 360px;
@@ -33,30 +33,91 @@
 .rl-viewer-pane:focus-visible {
   box-shadow: inset 0 0 0 1px #7bbaa9;
 }
+.rl-viewer-layoutbar {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 12px;
+  padding: 7px 10px;
+  background: #0d1821;
+  border-bottom: 1px solid #26343d;
+}
+.rl-viewer-expanded-note {
+  font-size: 10px;
+  color: #94aaa9;
+}
 .rl-viewer-anatomy {
   grid-column: 1;
-  grid-row: 1/4;
-  cursor: grab;
+  grid-row: 2/5;
   border-right: 1px solid #1d2b35;
 }
-.rl-viewer-anatomy:active {
+.rl-viewer-anatomy-image {
+  position: absolute;
+  inset: 41px 0 0;
+  cursor: grab;
+}
+.rl-viewer-anatomy-image:active {
   cursor: grabbing;
 }
 .rl-viewer-slice {
   grid-column: 2;
-  cursor: crosshair;
-  touch-action: none;
   border-bottom: 1px solid #1a2731;
 }
-.rl-viewer-axial {
-  grid-row: 1;
+.rl-viewer-slice-image {
+  position: absolute;
+  inset: 29px 0 0;
+  cursor: crosshair;
+  touch-action: none;
+  outline: none;
 }
-.rl-viewer-coronal {
+.rl-viewer-slice-image:focus-visible {
+  box-shadow: inset 0 0 0 1px #7bbaa9;
+}
+.rl-viewer-axial {
   grid-row: 2;
 }
-.rl-viewer-sagittal {
+.rl-viewer-coronal {
   grid-row: 3;
+}
+.rl-viewer-sagittal {
+  grid-row: 4;
   border-bottom: 0;
+}
+.rl-viewer.rl-layout-mri-review {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: auto repeat(2, minmax(0, 1fr)) 32px;
+}
+.rl-layout-mri-review .rl-viewer-anatomy {
+  grid-column: 1;
+  grid-row: 2;
+  border-bottom: 1px solid #1a2731;
+}
+.rl-layout-mri-review .rl-viewer-axial {
+  grid-column: 2;
+  grid-row: 2;
+}
+.rl-layout-mri-review .rl-viewer-coronal {
+  grid-column: 1;
+  grid-row: 3;
+  border-right: 1px solid #1d2b35;
+  border-bottom: 0;
+}
+.rl-layout-mri-review .rl-viewer-sagittal {
+  grid-column: 2;
+  grid-row: 3;
+}
+.rl-viewer.has-expanded .rl-viewer-anatomy,
+.rl-viewer.has-expanded .rl-viewer-slice:not(.is-expanded) {
+  display: none;
+}
+.rl-viewer.has-expanded .rl-viewer-slice.is-expanded {
+  grid-column: 1 / -1;
+  grid-row: 2 / -2;
+  border: 0;
 }
 .rl-viewer-heading {
   height: 29px;
@@ -71,7 +132,7 @@
   padding: 0 12px;
   font-size: 10px;
   letter-spacing: 0.02em;
-  background: linear-gradient(#0a131dea, #0a131d9c);
+  background: #0b151e;
   pointer-events: none;
   color: #c4d0d8;
   font-weight: 500;
@@ -80,7 +141,7 @@
   height: 41px;
   padding: 0 16px;
   font-size: 11px;
-  background: linear-gradient(#101923ed, #10192355, transparent);
+  background: #0c1720;
 }
 .rl-viewer-tag {
   border: 1px solid #354853;
@@ -98,16 +159,41 @@
   letter-spacing: 0.09em;
 }
 .rl-viewer-toolbar {
-  position: absolute;
-  left: 14px;
-  right: 14px;
-  top: 48px;
   display: flex;
   align-items: center;
-  gap: 8px;
-  justify-content: space-between;
-  z-index: 4;
+  gap: 6px;
   cursor: default;
+}
+.rl-viewer-toolbar[hidden] {
+  display: none;
+}
+.rl-viewer-plane-select {
+  border: 1px solid #253945;
+  border-radius: 4px;
+  background: #0e1b23;
+  color: #a1b8c0;
+  font: inherit;
+  font-size: 10px;
+  padding: 4px 5px;
+  max-width: 88px;
+}
+.rl-viewer-expand {
+  pointer-events: auto;
+  border: 1px solid #263b46;
+  border-radius: 4px;
+  color: #a9c9c2;
+  background: #11232c;
+  width: 21px;
+  height: 21px;
+  padding: 0;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+}
+.rl-viewer-expand:focus-visible,
+.rl-viewer-plane-select:focus-visible {
+  outline: 1px solid #9ed6c0;
+  outline-offset: 2px;
 }
 .rl-viewer-segment {
   display: flex;
@@ -179,7 +265,7 @@
 .rl-viewer-annotations {
   position: absolute;
   left: 17px;
-  top: 91px;
+  top: 12px;
   font-size: 9px;
   color: #778e9c;
   display: flex;
@@ -243,7 +329,7 @@
 }
 .rl-orientation-top {
   left: 50%;
-  top: 30px;
+  top: 7px;
 }
 .rl-orientation-bottom {
   left: 50%;
@@ -324,7 +410,7 @@
 .rl-viewer-statusbar {
   z-index: 2;
   grid-column: 1/3;
-  grid-row: 4;
+  grid-row: -2 / -1;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -458,5 +544,17 @@
   }
   .rl-viewer-annotations {
     font-size: 8px;
+  }
+  .rl-viewer-anatomy > .rl-viewer-heading {
+    padding: 0 10px;
+    gap: 5px;
+    font-size: 10px;
+  }
+  .rl-viewer-frame {
+    display: none;
+  }
+  .rl-viewer-slice > .rl-viewer-heading {
+    padding: 0 7px;
+    gap: 5px;
   }
 }
