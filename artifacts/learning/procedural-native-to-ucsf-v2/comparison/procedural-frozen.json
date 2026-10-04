@@ -1,0 +1,41 @@
+{
+  "elapsed_seconds": 1.869632750051096,
+  "elapsed_seconds_scope": "selection_rollouts_only; cold preparation and shared checkpoint initialization separate",
+  "execution_context_after": {
+    "cpu_count": 10,
+    "load_average_1_5_15_minutes": [
+      2.3017578125,
+      2.43994140625,
+      2.41064453125
+    ],
+    "process_peak_rss_bytes": 3424911360,
+    "recorded_at": "2026-10-04T10:23:36.659951+00:00"
+  },
+  "execution_context_before": {
+    "cpu_count": 10,
+    "load_average_1_5_15_minutes": [
+      2.3017578125,
+      2.43994140625,
+      2.41064453125
+    ],
+    "process_peak_rss_bytes": 3424911360,
+    "recorded_at": "2026-10-04T10:23:34.787722+00:00"
+  },
+  "gradient_steps": 0,
+  "optimization_environment_steps": 0,
+  "optimizer_mode": "PROCEDURAL_PRETRAINED_FROZEN",
+  "preparation_seconds": 1.9735365000087768,
+  "pretraining_cost_accounted_separately": true,
+  "selected_checkpoint_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57",
+  "selection_environment_steps": 6,
+  "selection_panel_complete": true,
+  "selection_partition_hash": "sha256:62f80e45baec7c506272e1b04037c8551267969fdbd2fdb650a61bb720df8dc2",
+  "selection_return": 139.62,
+  "selection_returns": [
+    139.62,
+    139.62
+  ],
+  "shared_checkpoint_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57",
+  "shared_checkpoint_initialization_seconds": 1.0029022919479758,
+  "status": "completed"
+}

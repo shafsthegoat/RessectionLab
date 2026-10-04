@@ -37,3 +37,6 @@ outputs/
 /artifacts/learning/procedural-native-to-ucsf-*/frozen-source/
 /artifacts/learning/procedural-native-to-ucsf-*/comparison/source-snapshot/
 /artifacts/learning/procedural-native-to-ucsf-*/pretraining/source-snapshot/
+
+# Full native replay remains local; lossless gzip and roundtrip receipt are versioned.
+/artifacts/learning/procedural-native-to-ucsf-v2/comparison/development-geometry-e8a2cc46-0d88-4fc3-93be-176711ee19aa/native-history-replay.json

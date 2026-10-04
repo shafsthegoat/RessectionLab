@@ -1,0 +1,72 @@
+[
+  {
+    "actions": [
+      "NATIVE:native-wide-aspiration:0",
+      "NATIVE:native-wide-aspiration:3",
+      "STOP"
+    ],
+    "elapsed_seconds": 0.7817797909956425,
+    "environment_steps": 2,
+    "execution_context_after": {
+      "cpu_count": 10,
+      "load_average_1_5_15_minutes": [
+        2.2626953125,
+        2.43798828125,
+        2.40966796875
+      ],
+      "process_peak_rss_bytes": 2205319168,
+      "recorded_at": "2026-10-04T10:23:24.363838+00:00"
+    },
+    "execution_context_before": {
+      "cpu_count": 10,
+      "load_average_1_5_15_minutes": [
+        2.11181640625,
+        2.412109375,
+        2.400390625
+      ],
+      "process_peak_rss_bytes": 2150514688,
+      "recorded_at": "2026-10-04T10:23:23.580841+00:00"
+    },
+    "method": "GREEDY",
+    "nominal_score": 245.24,
+    "observability": "nominal_evidence_only",
+    "optimizer_mode": "SEARCH",
+    "preparation_seconds": 2.020565291051753,
+    "termination": "greedy_stop"
+  },
+  {
+    "actions": [
+      "NATIVE:native-wide-aspiration:0",
+      "NATIVE:native-wide-aspiration:3",
+      "STOP"
+    ],
+    "elapsed_seconds": 6.330166666069999,
+    "environment_steps": 21,
+    "execution_context_after": {
+      "cpu_count": 10,
+      "load_average_1_5_15_minutes": [
+        2.2412109375,
+        2.4306640625,
+        2.4072265625
+      ],
+      "process_peak_rss_bytes": 3424911360,
+      "recorded_at": "2026-10-04T10:23:32.813532+00:00"
+    },
+    "execution_context_before": {
+      "cpu_count": 10,
+      "load_average_1_5_15_minutes": [
+        2.2626953125,
+        2.43798828125,
+        2.40966796875
+      ],
+      "process_peak_rss_bytes": 2875375616,
+      "recorded_at": "2026-10-04T10:23:26.478882+00:00"
+    },
+    "method": "SEARCH",
+    "nominal_score": 245.24,
+    "observability": "nominal_evidence_only",
+    "optimizer_mode": "SEARCH",
+    "preparation_seconds": 2.030469625024125,
+    "termination": "search_exhausted"
+  }
+]

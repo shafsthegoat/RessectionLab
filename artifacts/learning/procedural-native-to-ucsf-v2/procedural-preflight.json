@@ -1,0 +1,60 @@
+[
+  {
+    "actions": [
+      "NATIVE:native-fine-aspiration:0",
+      "STOP"
+    ],
+    "audit": {
+      "action_count": 1,
+      "checker_version": "independent-native-sequence-v2",
+      "claimed_source_tissue_volume_mm3": 7.0,
+      "complete_tool_checked": true,
+      "contained_source_tissue_volume_mm3": 7.0,
+      "failures": [],
+      "feasible": true,
+      "first_failed_action": null,
+      "first_unsupported_position_mm": null,
+      "first_unsupported_source_voxel": null,
+      "frontier_checked": true,
+      "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+      "source_case_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+      "source_voxel_volume_mm3": 1.0,
+      "unsupported_source_tissue_volume_mm3": 0.0
+    },
+    "elapsed_seconds": 0.32935487502254546,
+    "family_id": "procedural:native-slab-v1",
+    "final_worlds_used": false,
+    "gradient_steps": 0,
+    "normal_removed_mm3": 4.0,
+    "target_removed_mm3": 3.0
+  },
+  {
+    "actions": [
+      "NATIVE:native-fine-aspiration:0",
+      "STOP"
+    ],
+    "audit": {
+      "action_count": 1,
+      "checker_version": "independent-native-sequence-v2",
+      "claimed_source_tissue_volume_mm3": 7.0,
+      "complete_tool_checked": true,
+      "contained_source_tissue_volume_mm3": 7.0,
+      "failures": [],
+      "feasible": true,
+      "first_failed_action": null,
+      "first_unsupported_position_mm": null,
+      "first_unsupported_source_voxel": null,
+      "frontier_checked": true,
+      "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+      "source_case_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+      "source_voxel_volume_mm3": 1.0,
+      "unsupported_source_tissue_volume_mm3": 0.0
+    },
+    "elapsed_seconds": 0.33125766599550843,
+    "family_id": "procedural:native-split_lobes-v1",
+    "final_worlds_used": false,
+    "gradient_steps": 0,
+    "normal_removed_mm3": 4.0,
+    "target_removed_mm3": 3.0
+  }
+]

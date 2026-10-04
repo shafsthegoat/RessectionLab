@@ -1,0 +1,28 @@
+{
+  "archive_commit": "68e4fde13b1fa13411e59af663bd17ae63885947",
+  "archive_directory": "/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/ressectionlab-procedural-registered-v2-68e4fde-fh183w9b",
+  "numerical_runtime_content_hash": "sha256:e1186e12e79263c41e3cdad06112012702b4126a73fd912c14fa1e41d6d8843f",
+  "tested_repair_file_hashes_match": true,
+  "protected_source_hashes_at_declaration": {
+    "src/resectionlab/native_simulation.py": "2461cc6c32eb25a3927bcc3a9379bb02417794c3a764c4b1e705a00bcac6493c",
+    "src/resectionlab/native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+    "src/resectionlab/simulation.py": "bc43c16643adf8495f969dcacacb770f5f6be7fdeff0831f2a92eb4aed52939f",
+    "src/resectionlab/evaluation.py": "baaa2f3d6b4e41c4621dc22872da9300d649bc91dfeb923e2ad35f66aadad3b7",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91",
+    "src/resectionlab/structural_evidence.py": "6a1b9e7aa5b13ea971a75d9416d96ab45de2b46901a036edd73ec58194fb7a33",
+    "manifests/cohort_registry.json": "18029c5d72d010ec5f8dd8f235af0441c63972e6a329ea9ffe0aa95fba64053f",
+    "manifests/data_acquisition_ucsf.json": "b05552355f2099058e9d25bc93faf9f2981fe1c00ffb4f24443edfabeda4c6f6"
+  },
+  "all_nine_protected_source_hashes_unchanged": true,
+  "git_metadata_in_archive": null,
+  "test_receipt": "artifacts/validation/procedural-transfer-repair-v2/test-results.json",
+  "attempt_declaration": "manifests/experiments/procedural-native-to-ucsf-v2-attempt.json",
+  "attempt_declaration_hash": "sha256:8ff3686f4c3c9ab3a0efa1ef5b6317f04084f1453f719c72892d406b2cfd6da9",
+  "attempt_file_sha256": "5db9c5cbce8630ff08ad53bdf2f7b8d3be50cddc1d92e2dbb34ea106509a5bb1",
+  "output": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-to-ucsf-v2",
+  "registered_manifest_unchanged": true,
+  "fresh_pretraining_and_all_arms": true,
+  "prior_weights_or_state_reused": false,
+  "final_worlds_will_be_used": false
+}

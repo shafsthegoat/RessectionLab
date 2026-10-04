@@ -16,7 +16,7 @@ preflight, exact-stroke training, replay/export, cancellation and full-app
 restart/resume. Accessible replay controls were fixed after a native regression
 and now keep the image, displayed step and quantities synchronized.
 
-The next committed renderer adds separate, explicitly unreviewed brain-envelope
+The Electron renderer adds separate, explicitly unreviewed brain-envelope
 contours on the original MRI planes. Source/frame/mask checks and lazy loading
 pass for both BTC cases: the no-CSF estimates exclude 214 PAT28 annotation voxels
 and 538 PAT05 annotation voxels. These are overlap checks, not accuracy scores.
@@ -30,14 +30,27 @@ are in `artifacts/electron-structural-proposals-v1/`.
 Seven registered motor/language prior proposals now persist in portable cases
 with separate values and atlas coverage, exact T1 registration/T1c display source
 bindings, and unchanged planning inputs. They remain view-only population
-evidence requiring alignment review. Their desktop controls are in progress.
+evidence requiring alignment review. Their Electron controls now display one
+selected layer with separate atlas coverage, scalar/binary sampling and cursor
+values. Source restoration, stale loads and case changes clear the layer.
+All 120 desktop checks and the production build pass; the new complete engine
+and renderer are undergoing native GPU and interaction verification. The current
+packaged MRI review layout already passed normal/minimum-width inspection on
+both BTC cases, including three expanded planes and physical cursor navigation.
 
 The first declared procedural-to-patient comparison stopped before adaptation
 updates because equivalent typed and JSON world vectors compared differently.
 Its raw records and failure are retained; it produced no validated comparison.
 The implementation repair preserves every declared world field and adds a
-public-case preflight before any training. A second fresh attempt is declared
-separately, with the original geometry, rewards, seeds and budgets unchanged.
+public-case preflight before any training. The separately declared fresh v2
+completed with original geometry, rewards, seeds and budgets unchanged. All six
+patient learners changed actor weights and all 13 frozen candidates passed
+independent native checking. SEARCH/GREEDY scored 245.24; scratch seeds scored
+[245.24, 171.42, 245.16], frozen procedural initialization 139.62, and adapted
+seeds [171.42, 171.42, 245.17]. This is a negative transfer result on one reused
+development patient with zero human pretraining patients. Final/stress worlds
+remain closed. The best sequence removes only 249 of 41,919 target mm³ under
+hypothetical access; this is not a complete resection plan.
 
 ## Verified starting state
 
@@ -102,11 +115,17 @@ separately, with the original geometry, rewards, seeds and budgets unchanged.
   seed. SEARCH scored 1.30, scratch [0, 0, 1.24], frozen 0 and adapted [0, 0, 0].
   All ten independent synthetic geometry checks passed; no final worlds opened.
   This is a negative analytic experiment, not a clinical population policy.
-- A separate procedural-native initialization transfer experiment is committed
-  before execution, with two nonpatient generating families, one already-studied
-  UCSF development simulation and matched online wall limits. Its implementation
-  and independent pre-execution checks are in progress; no registered training
-  result is claimed. This does not replace real patient-population evaluation.
+- A separately declared procedural-native comparison completed fresh pretraining
+  and all six scratch/adapted arms after a retained implementation-only failed
+  attempt. Offline training made 32 actual Adam updates across two nonpatient
+  families; online runs made 10–14 updates within matched 30-second cooperative
+  caps. All actors changed, though scratch seed 23 selected its initial policy.
+  No learned arm exceeded SEARCH. All 13 candidates passed eight distinct native
+  sequence audits, and a separate artifact audit recomputed scores from source
+  cells. Total launcher time was 288.87 seconds, including 33.12 seconds of
+  independent validation. These development results do not replace real
+  patient-population evaluation; full evidence is retained under
+  `artifacts/learning/procedural-native-to-ucsf-v2/`.
 - The Electron training bridge executes real updates, resumable cancellation,
   independently checked replay and export. A 30-second patient-learning budget
   yielded the two-stroke sequence in 37.77 seconds total including setup/checks;
@@ -157,8 +176,13 @@ separately, with the original geometry, rewards, seeds and budgets unchanged.
 
 ## Validation record
 
-The latest root integrated run passed **598 tests in 58.55 seconds**, with four
-existing DIPY basis-deprecation warnings. Structural adversarial checks found
+The latest root integrated run passed **743 tests and failed one test in 110.31
+seconds**, with four existing DIPY basis-deprecation warnings. The failure was an
+orchestration fixture that needed to isolate a newly added earlier preflight;
+production rejection was correct. After that test-only repair, 13 focused runner
+checks and nine public-panel/tamper checks passed. This records the initial
+failure and focused rerun, not a second all-green integrated invocation.
+Structural adversarial checks found
 and fixed metadata precedence, mask-enlargement and provenance problems;
 their focused checks passed before each incremental commit. Native
 adversaries also caught temporal shaft borrowing, mutable preview descriptors
@@ -175,12 +199,13 @@ See `EXPERIMENT_LOG.md` for executed experiments, including negative results.
 The Qt prototype passed its initial standalone runtime and GUI checks. Its next
 build was stopped following the user's Electron decision. The React/Electron
 package passed its own imaging/search checks and 31 main-process boundary and
-lifecycle tests. The 36 renderer tests and 15 viewer tests cover source hydration, evidence
-status, A/B identity and independently accepted removal overlays. The complete
+lifecycle tests. The current 62 renderer tests and 27 viewer tests cover source
+hydration, evidence status, A/B identity, independently accepted removal overlays
+and population-prior sampling. The complete
 training bundle has its own source-bound verification receipts. Qt results do
 not certify Electron. No second-Mac test is claimed.
 
-The final native shell (renderer digest `5fe94739…`, Python `377284f6…`)
+The previously verified refinement shell (renderer `5fe94739…`, Python `377284f6…`)
 recovers a six-update cancelled checkpoint after app restart and adds 26 updates
 under the original contract. Accessibility decrement/increment now changes the
 actual checked replay between 0/0/41,919 and 174/11/41,745 target-removed,
@@ -195,7 +220,8 @@ Native-resolution geometric simulation now works under explicit hypothetical
 access assumptions; reviewed anatomy and surgical validity remain open.
 Corrected/accepted functional reconstruction, fully integrated comparison and
 refinement interaction, broader cohort benchmark and release remain incomplete.
-Population frozen/adapted arms have only been tested on analytic fixtures;
+Frozen/adapted initialization has been tested on analytic and procedural-native
+fixtures, including transfer to one reused patient development simulation;
 patient-population training and external evaluation remain open. Developer ID
 signing/notarization and independent physical-Mac
 validation remain open. No locked final cohort has been opened. Clinical deficit

@@ -434,3 +434,59 @@ pass in 1.30 seconds. The original full-sweep failure remains recorded; this is
 a focused rerun, not a claim of a second complete-suite pass. Exact repair/test
 hashes and results are in
 `artifacts/validation/procedural-transfer-repair-v2/test-results.json`.
+
+## October 4, 2026 — completed procedural transfer and independent audit
+
+The fresh v2 attempt completed from committed source `68e4fde` and numerical
+snapshot `e1186e12…`, using the original registered scientific settings. Actual
+public-case preflight passed before any gradients. Fresh procedural training
+made 32 Adam updates, 169 optimization transitions and 188 selection transitions
+across two generated families. All six patient actors changed; online scratch
+runs made 11–14 updates and adapted runs made 10–12. Each had a 30-second
+optimization-plus-selection allowance; initialization and offline costs are
+separate, selection transitions additional, and atomic overshoot reached 0.226 s.
+
+SEARCH/GREEDY scored 245.24. Scratch seeds 11/23/47 selected returns
+[245.24, 171.42, 245.16]; frozen procedural initialization scored 139.62; adapted
+seeds selected [171.42, 171.42, 245.17]. Scratch seed 23 retained its initial
+checkpoint despite subsequent real updates. Adaptation shows no advantage over
+scratch in this comparison, and no learned method exceeded search. These seeds
+are repeated optimizers within one reused development patient, not independent
+patients. Pretraining contains zero human patients; functional evidence is
+missing and world perturbations are zero.
+
+All 13 frozen candidates passed independent native checks, using eight distinct
+sequence audits and zero unsupported removal. A separate artifact reviewer
+verified 138 frozen files, exact checkpoint tensors and earliest-best selection,
+then independently recomputed every score from source-native labels, removal,
+partial contact and tool costs. SEARCH removes 249 target and 17 modeled-normal
+mm³; cumulative partial normal contact is 32 mm³, recorded separately. Residual
+target is 41,670 mm³. Access and the estimated anatomy remain unreviewed, so this
+bounded result does not establish a complete resection or clinical safety.
+
+Launcher time was 288.87 s, with 33.12 s for independent validation and recorded
+peak process memory of 3.317 GiB. Heavy background tests were paused, but these
+sequential local runs are not controlled latency distributions. Final/stress
+worlds remain unopened. Raw results, source identities and the generated report
+are in `artifacts/learning/procedural-native-to-ucsf-v2/`; the independent receipt
+is in the adjacent `procedural-native-to-ucsf-v2-independent-audit/` directory.
+Failed v1 remains preserved and supplies no comparative result.
+
+## October 4, 2026 — seven population-prior controls in Electron
+
+The renderer now exposes seven distinct registered maps, loading one selected
+value/coverage pair at a time. Functional concordance uses trilinear sampling;
+released structural masks use nearest cells. Covered zero, positive values and
+missing interpolation support remain distinct. A neutral hatch marks unavailable
+atlas support; source anatomy, source annotations and planning inputs are
+unchanged. Population status, pending alignment review and unknown patient
+function remain visible. Actual seven-map hydration reads two assets per layer
+and preserves source arrays byte-for-byte; local timings were 172–222 ms,
+excluding GPU and visible interaction latency.
+
+Production TypeScript/Vite build and 120 checks pass: 62 renderer, 27 viewer and
+31 main-process. Source commit `0b4e334` is being packaged with the updated Python
+engine for native GPU, cursor, source restoration and case/replay checks.
+Previously packaged MRI review/expanded-plane layouts passed on PAT28/PAT05 at
+1460- and 1050-point window widths, with exact one-millimeter keyboard movement.
+Screenshots and source-bound receipts are in `artifacts/electron-mri-layout-v1/`.
