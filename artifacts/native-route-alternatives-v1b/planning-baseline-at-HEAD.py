@@ -13,7 +13,7 @@ from hashlib import sha256
 import json
 from time import perf_counter
 from types import MappingProxyType
-from typing import TYPE_CHECKING, Any, Callable, Mapping, Sequence
+from typing import TYPE_CHECKING, Callable, Mapping, Sequence
 
 import numpy as np
 
@@ -411,7 +411,6 @@ def generate_candidate_routes(
     critical_masks: Mapping[str, np.ndarray | None] | None = None,
     support_mask: np.ndarray | None = None,
     support_provenance: Mapping[str, Any] | None = None,
-    explicit_targets: Sequence[tuple[str, Sequence[float]]] | None = None,
     config: SearchConfig | None = None,
     cancel: Callable[[], bool] | None = None,
     progress: Callable[[int, int], None] | None = None,
@@ -420,9 +419,7 @@ def generate_candidate_routes(
 
     Cancellation returns the evaluated partial set; no completion is fabricated.
     All supplied masks share the case grid. Missing motor/language/vessels remain
-    unknown even when every tested geometric constraint passes. Explicit targets
-    replace sampling and must be native voxel centres in the named compartment;
-    their exact physical coordinates are part of the frozen search model.
+    unknown even when every tested geometric constraint passes.
     """
     started = perf_counter()
     config = config or SearchConfig()
@@ -448,24 +445,7 @@ def generate_candidate_routes(
         array = np.array(array, dtype=bool, copy=True)
         array.setflags(write=False)
         masks[name] = array
-    if explicit_targets is None:
-        proposals = sample_target_points(case, config)
-    else:
-        validated = []
-        for name, point in explicit_targets:
-            target = np.asarray(point, dtype=float)
-            if name not in case.compartments or target.shape != (3,) or not np.all(np.isfinite(target)):
-                raise ValueError("Explicit targets require a known compartment and three finite physical coordinates")
-            index_float = _world(target, np.linalg.inv(case.affine))
-            index = np.rint(index_float).astype(int)
-            if (not np.allclose(index_float, index, rtol=0, atol=1e-7)
-                    or np.any(index < 0) or np.any(index >= np.asarray(case.mri.shape))
-                    or not case.compartments[name][tuple(index)]):
-                raise ValueError("Explicit targets must be native voxel centres inside their named compartment")
-            validated.append((name, tuple(float(value) for value in target)))
-        if len({point for _, point in validated}) != len(validated):
-            raise ValueError("Explicit target coordinates must be unique")
-        proposals = tuple(validated)
+    proposals = sample_target_points(case, config)
     if not proposals:
         raise ValueError("EMPTY_TARGET: no radiological target voxels")
     compartment_points = {name: _world(np.argwhere(mask), case.affine) for name, mask in sorted(case.compartments.items())}
@@ -492,9 +472,6 @@ def generate_candidate_routes(
         "tools": [asdict(t) for t in tools], "critical_masks": mask_hashes,
         "access_support": support_record,
     }
-    if explicit_targets is not None:
-        # The default search receipt and original route IDs remain unchanged.
-        frozen["explicit_targets"] = proposals
     model_hash = sha256(json.dumps(_json_value(frozen), sort_keys=True, allow_nan=False).encode()).hexdigest()
     assumptions = (
         "Annotation-assisted static route enumeration; no tissue removal is simulated.",
