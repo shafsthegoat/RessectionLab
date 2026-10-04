@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "scope": "Independent tiny-fixture review of new inspectAxisPlanning Python bridge boundary only",
+  "initial_bridge_sha256": "c5acb5b35c63588a4e10fdbeb830f12601984c08bf36d82878b0d5bf46f1640c",
+  "initial_validation": {
+    "command": ".venv/bin/python -m pytest tests/test_desktop_axis_inspection_review.py -q",
+    "passed": 6,
+    "failed": 6,
+    "elapsed_seconds": 2.24,
+    "failure_classification": {
+      "confirmed_bridge_boundary_failures": 5,
+      "review_test_attribute_error_fixed_before_recheck": 1
+    }
+  },
+  "finding": {
+    "status": "resolved_by_owner_and_independently_retested",
+    "severity": "medium_defense_in_depth",
+    "title": "Rehashed facade snapshot can publish an inconsistent source/window binding",
+    "cases": [
+      "requested_access_ras.center_mm differs from requested cached window",
+      "access.radius_mm differs from requested cached window",
+      "source_frame differs from current cached case",
+      "source_shape differs from current cached case",
+      "native_affine_ras_mm differs from canonical current cached affine"
+    ],
+    "mechanism": "The bridge checks source identity strings and self-consistent hashes, but does not compare these returned binding fields to the actual current-session source/window. Fault-injected facade snapshots with changed binding fields and recomputed binding/report hashes are published as success.",
+    "scope_limit": "Internal facade fault-injection only; renderer-supplied reports are already rejected. No claim of an externally reachable patient-data exploit.",
+    "expected_remedy": "Check returned canonical source/frame/shape/access against the exact cached inputs, retaining only documented LPS unit-normal roundoff tolerance.",
+    "resolution": "The bridge now joins returned source ID/frame/shape/canonical affine, typed requested access and native access/conversion to its actual cached inputs; checks its fixed preset, reward/world/proposal contracts; and checks the returned hash against any explicit expectedBindingHash."
+  },
+  "public_patient_execution": false,
+  "native_benchmark_execution": false,
+  "desktop_build": false,
+  "production_edits_by_reviewer": false,
+  "final_validation": {
+    "command": ".venv/bin/python -m pytest tests/test_desktop_axis_inspection_review.py -q",
+    "passed": 20,
+    "failed": 0,
+    "elapsed_seconds": 3.74,
+    "bridge_sha256": "2d32d9d0f8b19701ff9ec9e008a8b0ae20a111dc9536b2e34a6474e38b939df8",
+    "test_file": "tests/test_desktop_axis_inspection_review.py",
+    "test_sha256": "130145eaff3d14f52a28af1f02fd826d0c48acd57b23a7225f82c5beb992524a",
+    "source_grid_shape": [
+      9,
+      9,
+      10
+    ],
+    "scope": "Tiny synthetic fixture boundary validation; no patient inference, public inspection, native benchmark, or packaging execution."
+  },
+  "additional_initial_validation": {
+    "bridge_sha256": "c5acb5b35c63588a4e10fdbeb830f12601984c08bf36d82878b0d5bf46f1640c",
+    "command": ".venv/bin/python -m pytest tests/test_desktop_axis_inspection_review.py -q -k returned_binding_must_match",
+    "failed": 1,
+    "deselected": 12,
+    "elapsed_seconds": 0.69,
+    "finding": "An internally resealed binding with changed max_steps was published despite a supplied expectedBindingHash that differed from the returned binding hash."
+  },
+  "confirmed_properties": [
+    "Returned source/window/frame and fixed-model mismatches are withheld even when the report is self-consistently rehashed.",
+    "Translated anisotropic LPS and RAS cases produce matching canonical window, native affine, source-grid hashes and action geometry.",
+    "Both acknowledgments fail to override full-head support prohibition or pending structural-envelope review.",
+    "Expanded case-byte admission occurs before numerical inspection.",
+    "A cached window changed after complete inventory construction withholds that inventory.",
+    "A timeout after complete inventory construction emits one terminal error and suppresses any late result.",
+    "Cancellation at the final progress boundary emits one terminal cancellation and no result.",
+    "Timeout and cancellation install no run/replay state; timeout preserves transfer files."
+  ],
+  "reviewed_owner_coverage": [
+    "Strict request-key and native catalog checks; one/two distinct declared instruments in server order.",
+    "Source-voxel, case-array, provenance metadata and complete-response size caps.",
+    "No preview action installation in current-session route IDs, candidate/run state or files.",
+    "Promoted/partial report refusal and source/route staleness checks."
+  ],
+  "limits": [
+    "The additional malformed-report tests inject faults inside the trusted Python facade, not through the renderer.",
+    "JSON self-consistency checks are not external cryptographic authentication or independent native geometry validation.",
+    "The input/output limits do not establish a peak-RSS cap; cancellation drains at cooperative boundaries.",
+    "No patient-scale latency, clinical safety, anatomical accuracy or cortical access approval is established."
+  ]
+}

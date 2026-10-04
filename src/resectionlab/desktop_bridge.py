@@ -41,7 +41,10 @@ MAX_CASE_BYTES = 1024 * 1024 * 1024
 MAX_WORKSPACE_BYTES = 512 * 1024
 MAX_PENDING = 8
 MAX_PRIOR_PROPOSALS = 16
-OPERATIONS = frozenset({"ping", "loadCase", "importNifti", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "exportCandidate", "shutdown"})
+MAX_AXIS_INSPECTION_VOXELS = 16_000_000
+MAX_AXIS_INSPECTION_METADATA_BYTES = 256 * 1024
+MAX_AXIS_INSPECTION_RESULT_BYTES = 2 * 1024 * 1024
+OPERATIONS = frozenset({"ping", "loadCase", "importNifti", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "exportCandidate", "shutdown"})
 MAX_RUN_JSON_BYTES = 32 * 1024 * 1024
 RESEARCH_TOOLS = GENERIC_TOOLS + NATIVE_GENERIC_TOOLS
 RUN_INTEGRITY_FILES = {"checkpointSha256": "checkpoint.pt", "contractSha256": "contract.json",
@@ -64,6 +67,51 @@ def _keys(args: dict, allowed: set[str]) -> None:
     extra = set(args) - allowed
     if extra:
         raise BridgeError("INVALID_ARGUMENT", "Unsupported argument(s): " + ", ".join(sorted(extra)))
+
+
+def _require_json_budget(value: Any, limit: int, code: str, message: str) -> None:
+    """Bound a new inspection payload without assembling a second full JSON string."""
+    size = 0
+    for chunk in json.JSONEncoder(separators=(",", ":"), allow_nan=False).iterencode(value):
+        size += len(chunk.encode("utf-8"))
+        if size > limit:
+            raise BridgeError(code, message)
+
+
+def _require_axis_output_binding(binding: dict, *, case: CaseData, access: AccessWindow,
+                                 preset: dict, expected_binding: str | None) -> None:
+    """Join a returned report to server inputs, not merely to its own hashes."""
+    requested = {"center_mm": access.center_mm.tolist(), "normal_inward": access.normal_inward.tolist(),
+                 "radius_mm": access.radius_mm, "window_id": access.window_id}
+    canonical_affine = (np.diag([-1., -1., 1., 1.]) @ case.affine
+                        if case.frame == "LPS+" else case.affine)
+    if (binding.get("case_id") != case.case_id or binding.get("source_frame") != case.frame
+            or binding.get("geometry_frame") != "RAS+" or binding.get("source_shape") != list(case.mri.shape)
+            or binding.get("native_affine_ras_mm") != canonical_affine.tolist()
+            or binding.get("requested_access_ras") != requested
+            or any(binding.get(key) != value for key, value in preset.items())):
+        raise BridgeError("AXIS_SOURCE_BINDING_MISMATCH", "Returned inspection does not match the source, window or declared preset")
+    native_access = binding.get("access")
+    if (not isinstance(native_access, dict) or set(native_access) != set(requested)
+            or any(native_access[key] != requested[key] for key in ("center_mm", "radius_mm", "window_id"))):
+        raise BridgeError("AXIS_SOURCE_BINDING_MISMATCH", "Returned native access differs from the requested window")
+    try:
+        normal = np.asarray(native_access["normal_inward"], dtype=float)
+    except (TypeError, ValueError) as error:
+        raise BridgeError("AXIS_SOURCE_BINDING_MISMATCH", "Returned native access has an invalid direction") from error
+    if normal.shape != (3,) or not np.isfinite(normal).all():
+        raise BridgeError("AXIS_SOURCE_BINDING_MISMATCH", "Returned native access has an invalid direction")
+    difference = float(np.max(np.abs(normal - access.normal_inward)))
+    tolerance = float(4 * np.finfo(np.float64).eps) if case.frame == "LPS+" else 0.
+    expected_conversion = {
+        "source_frame": case.frame, "normal_absolute_tolerance": tolerance,
+        "normal_maximum_absolute_difference": difference,
+        "policy": "LPS unit-direction renormalization roundoff only; center/radius/id exact",
+    }
+    if difference > tolerance or binding.get("access_conversion") != expected_conversion:
+        raise BridgeError("AXIS_SOURCE_BINDING_MISMATCH", "Returned native direction exceeds the declared normalization contract")
+    if expected_binding is not None and binding.get("binding_hash") != expected_binding:
+        raise BridgeError("AXIS_BINDING_CHANGED", "Returned inspection differs from the requested prior binding")
 
 
 def _path(value: Any, *, kind: str, output: bool = False) -> Path:
@@ -466,6 +514,134 @@ class BridgeSession:
                 "optimizer_version": current["optimizer_version"] if len(records) == 1 else "multiple_explicit_search_models",
                 "assumptions": list(dict.fromkeys(statement for item in records for statement in item["assumptions"]))}
 
+    def _inspect_axis_planning(self, args: dict, request: _Request, progress: Callable) -> dict:
+        """Read-only expansion of one cached window; never install new route IDs."""
+        _keys(args, {"caseHash", "planningHash", "routeId", "routePlanningModelHash", "toolIds",
+                     "acknowledgeNeighboringColumns", "acknowledgeEstimatedSupport", "expectedBindingHash"})
+        entry = self._get_case(args.get("caseHash"))
+        planning_hash = _string(args.get("planningHash"), "planningHash", maximum=128)
+        if planning_hash != entry.case.planning_hash:
+            raise BridgeError("CASE_VERSION_MISMATCH", "Planning identity changed; inspect the current case")
+        route_id = _string(args.get("routeId"), "routeId", maximum=128)
+        route_model = _string(args.get("routePlanningModelHash"), "routePlanningModelHash", maximum=128)
+        config = self._route_config(entry, route_id)
+        route = next(item for item in thaw_json(entry.routes)["candidates"] if item["route_id"] == route_id)
+        if route.get("case_hash") != args["caseHash"] or config.get("routePlanningModelHash") != route_model:
+            raise BridgeError("ROUTE_VERSION_MISMATCH", "Selected route belongs to another case or planning model")
+        selected = args.get("toolIds")
+        known = {tool.tool_id for tool in NATIVE_GENERIC_TOOLS}
+        if (not isinstance(selected, list) or not 1 <= len(selected) <= len(known)
+                or any(not isinstance(item, str) or item not in known for item in selected)
+                or len(selected) != len(set(selected))):
+            raise BridgeError("INVALID_ARGUMENT", "Choose one or two distinct declared native research instruments")
+        if args.get("acknowledgeNeighboringColumns") is not True:
+            raise BridgeError("AXIS_ACKNOWLEDGEMENT_REQUIRED", "Explicitly acknowledge neighboring entries and endpoints")
+        if type(args.get("acknowledgeEstimatedSupport")) is not bool:
+            raise BridgeError("INVALID_ARGUMENT", "acknowledgeEstimatedSupport must be an explicit boolean")
+        expected_binding = None
+        if "expectedBindingHash" in args:
+            expected_binding = _string(args["expectedBindingHash"], "expectedBindingHash", maximum=71)
+            if (len(expected_binding) != 71 or not expected_binding.startswith("sha256:")
+                    or any(character not in "0123456789abcdef" for character in expected_binding[7:])):
+                raise BridgeError("INVALID_ARGUMENT", "expectedBindingHash must be a canonical SHA-256 identity")
+        if (entry.case.mri.size > MAX_AXIS_INSPECTION_VOXELS
+                or self._case_array_bytes(entry.case) > MAX_CASE_BYTES):
+            raise BridgeError("AXIS_INPUT_SIZE_LIMIT", "Source grid exceeds the read-only inspection input limit")
+        _require_json_budget({"metadata": thaw_json(entry.case.metadata), "unknowns": entry.case.unknowns,
+            "structuralEvidence": [item.to_manifest() for item in entry.case.structural_evidence.values()]},
+            MAX_AXIS_INSPECTION_METADATA_BYTES, "AXIS_METADATA_SIZE_LIMIT",
+            "Source support/provenance exceeds the inspection metadata limit")
+        request.check()
+        tools = tuple(tool for tool in NATIVE_GENERIC_TOOLS if tool.tool_id in selected)
+        anchor = config["access"]  # Exact current-session route window, converted into RAS+.
+        access = AccessWindow(**anchor)
+        normalization_delta = float(np.max(np.abs(access.normal_inward - anchor["normal_inward"])))
+        normalization_atol = float(4 * np.finfo(np.float64).eps)
+        if (normalization_delta > normalization_atol
+                or not np.array_equal(access.center_mm, anchor["center_mm"])
+                or access.radius_mm != anchor["radius_mm"] or access.window_id != anchor["window_id"]):
+            raise BridgeError("ROUTE_VERSION_MISMATCH", "Cached window changed beyond unit-normal roundoff")
+        from .native_axis_refinement import inspect_axis_planning
+        from .native_proposals import AxisColumnProposalConfig
+        from .simulation import RewardSpec
+        from .worlds import WorldGeneratorConfig, content_hash
+        reward, world_generator, proposal = RewardSpec(), WorldGeneratorConfig(), AxisColumnProposalConfig()
+        preset = json.loads(json.dumps({"input_profile": "RAW", "max_steps": 3,
+            "neighboring_columns_acknowledged": True,
+            "world_role": None, "world_partitions_created": False,
+            "population_priors_used": False,
+            "max_tip_step_mm": .25, "partial_contact_weight": .05,
+            "max_actions": proposal.max_primary_rays + 1,
+            "proposal_rule": asdict(proposal), "proposal_rule_hash": proposal.fingerprint,
+            "reward": asdict(reward), "world_generator": world_generator.to_dict(),
+            "world_generator_hash": world_generator.fingerprint}, allow_nan=False))
+        progress(0., "Inspecting neighboring paths within the selected window; no tissue is removed")
+        try:
+            snapshot = inspect_axis_planning(entry.case, access_ras=access, tools=tools,
+                acknowledge_neighboring_columns=True,
+                acknowledge_estimated_support=args["acknowledgeEstimatedSupport"],
+                expected_case_hash=args["caseHash"], expected_planning_hash=planning_hash,
+                reward=reward, world_generator=world_generator, proposal_config=proposal, max_steps=3,
+                partial_contact_weight=.05, max_tip_step_mm=.25,
+                expected_binding_hash=expected_binding, cancelled=request.cancelled.is_set)
+        except InterruptedError as error:
+            raise BridgeError("CANCELLED", "Inspection cancelled; no inventory published") from error
+        except ValueError as error:
+            message = str(error)
+            code = ("AXIS_ACCESS_UNSUPPORTED" if message.startswith("UNSUPPORTED_") else
+                    "AXIS_SUPPORT_ACKNOWLEDGEMENT_REQUIRED" if "estimated-support acknowledgement" in message else
+                    "AXIS_SUPPORT_UNAVAILABLE" if "BRAIN_MASK_" in message or "Reviewed brain support" in message else
+                    "AXIS_BINDING_CHANGED" if "Stale axis inspection binding" in message else
+                    "CASE_VERSION_MISMATCH" if "Stale source" in message else "AXIS_INSPECTION_REJECTED")
+            raise BridgeError(code, message) from error
+        except RuntimeError as error:
+            raise BridgeError("AXIS_INSPECTION_INTEGRITY_FAILED", str(error)) from error
+        report = snapshot.to_dict()
+        binding, inventory = report.get("binding", {}), report.get("inventory", {})
+        _require_axis_output_binding(binding, case=entry.case, access=access,
+                                     preset=preset, expected_binding=expected_binding)
+        actions = report.get("actions", [])
+        batch = inventory.get("batch", {})
+        accounting = report.get("accounting", {})
+        ids = [action.get("action_id") for action in actions]
+        if (report.get("version") != "native-axis-inspection-v1" or report.get("role") != "inspection"
+                or report.get("inventory_complete") is not True or inventory.get("status") != "complete"
+                or batch.get("unsupported_reason") is not None
+                or report.get("status") not in {"ready", "no_actionable_moves"}
+                or ids != ["STOP", *inventory.get("certified_action_ids", [])]
+                or len(set(ids)) != len(ids) or report.get("legal_non_stop_actions") != len(ids) - 1
+                or (report["status"] == "ready") != (len(ids) > 1)
+                or batch.get("slot_count") != 13 * len(tools)
+                or len(batch.get("ledger", [])) != batch.get("slot_count")
+                or len(inventory.get("attempts", [])) > 52
+                or any(row.get("status") != "complete" for row in inventory.get("attempts", []))
+                or binding.get("case_hash") != args["caseHash"] or binding.get("planning_hash") != planning_hash
+                or binding.get("tools") != [asdict(tool) for tool in tools]
+                or report.get("candidate_eligible") is not False or report.get("removal_authorized") is not False
+                or report.get("clinical_deficit_probability", "missing") is not None
+                or any(type(accounting.get(key)) is not int or accounting[key] != 0 for key in
+                       ("gradient_steps", "executed_transitions", "native_commits"))
+                or type(accounting.get("simulated_removed_volume_mm3")) not in {int, float}
+                or accounting["simulated_removed_volume_mm3"] != 0.
+                or report.get("inspection_hash") != content_hash({k: v for k, v in report.items() if k != "inspection_hash"})
+                or binding.get("binding_hash") != content_hash({k: v for k, v in binding.items() if k != "binding_hash"})):
+            raise BridgeError("AXIS_INCOMPLETE_INSPECTION", "Inspection is incomplete or violates its read-only contract")
+        request.check()
+        if self._get_case(args["caseHash"]) is not entry or self._route_config(entry, route_id) != config:
+            raise BridgeError("ROUTE_VERSION_MISMATCH", "Selected source window changed during inspection")
+        result = {"schemaVersion": 1, "caseHash": args["caseHash"], "planningHash": planning_hash,
+            "routeId": route_id, "routePlanningModelHash": route_model,
+            "accessSource": "selected_route_window_only", "anchorWindowRas": anchor,
+            "anchorWindowNormalization": {"normalAbsoluteTolerance": normalization_atol,
+                                           "normalMaximumDifference": normalization_delta},
+            "requestedToolIds": [tool.tool_id for tool in tools], "inspection": report}
+        _require_json_budget(result, MAX_AXIS_INSPECTION_RESULT_BYTES, "AXIS_RESULT_SIZE_LIMIT",
+                             "Complete inspection exceeds the response limit; no partial inventory published")
+        request.check()
+        progress(1., "Complete initial path inventory inspected; no actions executed")
+        request.check()
+        return result
+
     @staticmethod
     def _report_summary(manifest: dict, report: dict | None = None) -> dict:
         summary = {key: manifest[key] for key in ("runId", "caseHash", "planningHash", "createdAt", "status", "config")}
@@ -791,6 +967,8 @@ class BridgeSession:
                     "optimizationChoiceScope": config["optimizationChoiceScope"],
                     "frozenRoute": config, "clinicalDeficitProbability": None,
                     "clinicalRiskReason": "no_validated_clinical_outcome_model"}
+        if operation == "inspectAxisPlanning":
+            return self._inspect_axis_planning(args, request, progress)
         if operation == "saveCase":
             _keys(args, {"caseHash", "path", "workspace", "overwrite"})
             entry = self._get_case(args.get("caseHash"))
