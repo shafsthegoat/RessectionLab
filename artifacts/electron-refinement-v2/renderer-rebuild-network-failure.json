@@ -1,0 +1,6 @@
+{
+  "status": "failed",
+  "error": "fetch failed",
+  "observed_utc": "2026-10-04T09:27:04.999700+00:00",
+  "diagnosis": "Electron downloader attempted remote checksum fetch despite a cached archive; use installed lockfile-selected electron package checksums to validate cache locally."
+}

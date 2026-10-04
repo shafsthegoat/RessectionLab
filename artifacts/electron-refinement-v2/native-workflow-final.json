@@ -1,0 +1,55 @@
+{
+  "tested_utc": "2026-10-04T09:32:28.158734+00:00",
+  "status": "passed_native_restart_resume_and_accessible_replay",
+  "architecture": "arm64",
+  "bundle_id": "org.ressectionlab.electron",
+  "app_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app",
+  "identity": {
+    "renderer_source_digest": "5fe94739e255a44b1df27eb642ec52234bfac83d0113b21d876092cb2d1ca98a",
+    "renderer_archive_sha256": "aaa72536ffc7e4ad4451d68660220dbc995395721c2c91436cdd0d1537dc452f",
+    "engine_executable_sha256": "d88dd33cbccfdeb512c17cf492614422d7d01d8f9b20fbe86f2bc9f63275cbb3",
+    "engine_source_manifest_sha256": "8698e1b952bcb6dc5dd84ed5e217a998c1a03d0e75ee076b3eac002562f43653",
+    "python_source_digest": "377284f6d80164a86ca69d6b8f9f606e4015266b8c5285070d12d1d147b2ef62"
+  },
+  "prior_scientific_workflow": "native-workflow-before-slider-fix.json",
+  "checks": {
+    "cancelled_run_recovered_after_full_app_restart": true,
+    "original_native_request_and_contract_preserved": true,
+    "checkpoint_bytes_changed_after_resume": true,
+    "actor_parameters_changed": true,
+    "independent_selection_geometry_accepted": true,
+    "accessibility_decrement_replays_step_zero": true,
+    "zero_step_quantities_mm3": {
+      "target": 0,
+      "normal": 0,
+      "residual_target": 41919
+    },
+    "accessibility_increment_replays_step_one": true,
+    "one_step_quantities_mm3": {
+      "target": 174,
+      "normal": 11,
+      "residual_target": 41745
+    },
+    "viewer_banner_and_slider_and_quantities_agree": true
+  },
+  "run_id": "38e17ad4-0d07-4973-8642-8669fab84cf6",
+  "cancelled_checkpoint_updates": 6,
+  "resumed_total_updates": 32,
+  "additional_updates": 26,
+  "contract_sha256": "90c57fc6ef846c56c72dec5b9505fa399d1abad9048c7e76481803077cbadea6",
+  "native_request_sha256": "6a770edea3d1db0933ace826e6cde78fd3faa496154f90dfc152136518cc04dc",
+  "selected_return": 171.58,
+  "selection_role": "selection",
+  "final_evaluation": false,
+  "clinical_deficit_probability": null,
+  "screenshots": [
+    "source-normals-after.jpg",
+    "replay-zero-checked.jpg",
+    "resumed-replay-final.jpg"
+  ],
+  "validation_limits": [
+    "Transient pending replay state resolved before screenshot; source tests cover queue and pending labels",
+    "Exact engine bytes match the separately recorded packaged protocol verification; final renderer is identified independently",
+    "Local ad hoc signing only; notarization and distribution signing not performed"
+  ]
+}
