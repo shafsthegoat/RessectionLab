@@ -1,0 +1,79 @@
+{
+  "status": "failed_attempt_accurately_preserved_no_reporting_blocker",
+  "source_commit": "b64d801676add06d479629c958a16b3faf27ce23",
+  "declaration_sha256": "c1203b8234554dbdff4775ee05de773ab727bb4b3ec374f456eb2ca4728f3c2d",
+  "outcome_sha256": "dbeda2cdd3a3754fc5ba1a3e1744b9b9a937df27bbd0c25d2647853e2177110b",
+  "evidence_manifest_sha256": "c2ce58885b3f0ebd71ea52c78ba9b49bcff6786467263d39189edcb92b99ff7a",
+  "indexed_evidence_files_verified": 17,
+  "integrity": {
+    "numerical_sources_rechecked_in_archive_and_frozen_source": 57,
+    "full_archive_hash_matches": true,
+    "before_after_origin_probes_identical": true,
+    "full3845_file_check": "owner-recorded; unrelated frozen artifacts not individually rehashed in this compact review",
+    "patient_bundle": "saved before/after hashes match original declaration; reviewer did not open bundle"
+  },
+  "failure": {
+    "type": "ObservedSearchLimit",
+    "cooperative_search_seconds": 180.68571058299858,
+    "search_cap_seconds": 180.0,
+    "whole_run_supervisor_seconds": 191.05183358408976,
+    "parent_cap_seconds": 300,
+    "parent_kill": false,
+    "worker_peak_rss_bytes": 1288077312,
+    "rss_cap_bytes": 6442450944
+  },
+  "methods": {
+    "SEARCH": "failed before replay and independent route audit",
+    "untrained_policy": "not_executed"
+  },
+  "partial_work": {
+    "transitions": 227,
+    "transition_cap": 512,
+    "completed_layers": 2,
+    "layer_calls": [
+      70,
+      124,
+      33
+    ],
+    "third_layer_complete": false,
+    "beam_width": 2,
+    "peak_next_layer_states": 3,
+    "negative_prefixes_evaluated_and_pruned": 44,
+    "partial_nominal_return": 410.312421263048,
+    "partial_action_ids": [
+      "nominal-cavity-417f590381bc98e52ed7bc77",
+      "nominal-cavity-563784d38bcd84f57f40246a",
+      "nominal-cavity-fd1777adffbf91c8e0f66b62"
+    ],
+    "validated_quality_metrics": null
+  },
+  "weights": {
+    "initial_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+    "matches_prior_initial_hash": true,
+    "final_hash_available": false,
+    "actor_forwards_recorded": 0,
+    "optimizer_updates_recorded": 0,
+    "measured_before_after_equality": false
+  },
+  "cost": {
+    "search_nested_native_preview_seconds": 15.676281081745401,
+    "search_total_seconds": 180.68571058299858,
+    "other_search_costs": "not individually attributed; no cloning/hashing bottleneck proved",
+    "previews_including_preparation": 280,
+    "preview_microsteps": 20584,
+    "replayed_route_actions": 0
+  },
+  "conclusions": [
+    "Search hit its own deadline before the512-transition cap and below the300s/6GiB outer caps; the nonzero exit is preserved accurately.",
+    "The partial planning score and three action IDs are neither an independently audited route nor a teacher, completed result, quality metric or clinical outcome.",
+    "No SEARCH-versus-policy efficacy or latency comparison is available because the untrained policy method did not execute.",
+    "The final weight guard was never reached; initial weight identity plus zero recorded forwards/updates is supported, measured final equality is not.",
+    "No retry, expanded cap, additional patient, optimizer or follow-on geometric comparison is authorized by this review."
+  ],
+  "initial_review_assumption_correction": {
+    "expected_status_literal": "passed",
+    "actual_owner_integrity_status": "pass",
+    "resolution": "Corrected the reviewer assertion to the actual saved schema; no artifact or production defect."
+  },
+  "scope": "Saved JSON/source text and standard-library hashes only. No patient reload, simulation, model forward, optimizer, replay or expanded comparison."
+}

@@ -1,5 +1,15 @@
 # First real-only comparison runner
 
+The single declared attempt from `b64d801` ended at SEARCH's internal 180-second
+limit after 227 transitions: two complete layers and a partial third. Its
+provisional incumbent was not replayed or independently audited, and the
+untrained policy remained unexecuted. The run used 1.29 GB peak memory with no
+optimizer updates or actor forwards. All source and patient-input hashes stayed
+unchanged; the early exit did not capture a final parameter hash. There is no
+completed efficacy/latency comparison or measured before/after weight equality.
+No retry or expanded run was made. See
+[`outcome.json`](../artifacts/pat05-real-spatial-search-comparison-v1/outcome.json).
+
 `scripts/compare_real_spatial_search.py` currently performs only a bounded PAT05
 SEARCH/untrained-policy comparison. Optimizer execution is absent. A declaration
 requesting nonzero updates, another method, another patient, a changed cohort or
@@ -11,8 +21,8 @@ closure without opening a patient bundle. Actual execution additionally requires
 `--execute`, the exact `--expected-declaration-sha256`, and a new output directory.
 The prospective `manifests/experiments/pat05-real-spatial-search-comparison-v1.json`
 binds the measured nominal64 configuration, lazy beam width 2, at most 512 search
-transitions, 180 seconds of search and a 300-second/6-GiB process limit. It remains
-unexecuted pending review, commit and explicit release. The supporting JSON
+transitions, 180 seconds of search and a 300-second/6-GiB process limit. It was
+reviewed and committed before the sole released attempt. The supporting JSON
 coverage receipt and source-profile declaration are both verified by path/hash.
 
 The declaration binds the original BTC cohort, exact PAT05 bundle and semantic

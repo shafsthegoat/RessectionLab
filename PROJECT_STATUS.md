@@ -180,6 +180,20 @@ policy efficacy. All source/input hashes and recorded weights stayed unchanged;
 the saved-result audit found no blocking discrepancy. See
 `artifacts/pat05-real-spatial-profile-v3/outcome.json` and its independent review.
 
+The ensuing bounded PAT05 SEARCH/untrained-policy comparison failed at SEARCH's
+180-second internal limit after 227 transitions, with two complete layers and
+a partial third. Its provisional nominal score was never replayed or audited;
+the untrained policy remained unexecuted. There is no completed method comparison
+or validated route from this run. Parent runtime was 191.05 s and sampled peak
+memory 1.287 GB, within the separate 300 s/6 GiB limits. All 3,845 archived files,
+57 numerical sources and patient bytes remained unchanged. Zero actor forwards
+and updates occurred; early failure prevented final parameter hashing, so no
+measured weight-equality claim is made. Only 15.68 s of planning was attributed
+to previews; the remaining time was not profiled and has no assigned cause.
+No retry or geometric sweep followed. The bounded lane is closed as a preserved
+negative result while mechanics takes priority. See
+`artifacts/pat05-real-spatial-search-comparison-v1/outcome.json`.
+
 The mechanics evidence review found public, measured human ex-vivo specimen
 force/displacement and torque/twist curves, plus separate patient image-landmark
 resources. FEBio is the recommended first finite-strain specimen framework;

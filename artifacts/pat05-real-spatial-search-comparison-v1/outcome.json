@@ -1,0 +1,134 @@
+{
+  "actor_forward_calls": 0,
+  "attempt_count": 1,
+  "automatic_retry": false,
+  "comparison_conclusion": "No completed SEARCH versus untrained-policy efficacy or latency comparison is available. The sole bounded attempt demonstrates a search time-budget failure with preserved partial work.",
+  "cost_interpretation": "SEARCH preview work consumed 15.676 seconds inside 180.686 seconds planning. Remaining time is uninstrumented here; cloning, hashing, accounting and other operations have not been individually attributed. No performance improvement is claimed from this single run.",
+  "declaration_sha256": "c1203b8234554dbdff4775ee05de773ab727bb4b3ec374f456eb2ca4728f3c2d",
+  "external_final_patients_opened": 0,
+  "limitations": [
+    "Real anatomy with annotation-assisted targets and provisional estimated support.",
+    "Declared nominal/cavity columns and horizon cover only a subset of possible paths.",
+    "Rigid-cell removal lacks validated tissue deformation, cutting, force and retraction mechanics.",
+    "Motor, language, vessel injury and clinical probabilities are not validated."
+  ],
+  "measured_preview_phases": {
+    "SEARCH:planning": {
+      "feasible": 180,
+      "raised": 0,
+      "rejected": 22,
+      "rejection_reasons": {
+        "HARD_GEOMETRY:WORKING_REACH": 22
+      },
+      "returned": 202,
+      "returned_microsteps": 15192,
+      "seconds": 15.676281081745401,
+      "started": 202
+    },
+    "shared_input_preparation": {
+      "feasible": 70,
+      "raised": 0,
+      "rejected": 8,
+      "rejection_reasons": {
+        "HARD_GEOMETRY:WORKING_REACH": 8
+      },
+      "returned": 78,
+      "returned_microsteps": 5392,
+      "seconds": 5.68408204393927,
+      "started": 78
+    }
+  },
+  "methods": {
+    "SEARCH": {
+      "completed_layers": 2,
+      "failure_type": "ObservedSearchLimit",
+      "independent_audit_status": "not_executed",
+      "layers": [
+        {
+          "completed": true,
+          "depth": 1,
+          "expanded_nodes": 1,
+          "model_transition_calls": 70,
+          "negative_prefixes_evaluated": 44,
+          "negative_prefixes_pending_at_cap": 0,
+          "negative_prefixes_pruned_by_beam": 44,
+          "negative_prefixes_retained": 0
+        },
+        {
+          "completed": true,
+          "depth": 2,
+          "expanded_nodes": 2,
+          "model_transition_calls": 124,
+          "negative_prefixes_evaluated": 0,
+          "negative_prefixes_pending_at_cap": 0,
+          "negative_prefixes_pruned_by_beam": 0,
+          "negative_prefixes_retained": 0
+        },
+        {
+          "completed": false,
+          "depth": 3,
+          "expanded_nodes": 1,
+          "model_transition_calls": 33,
+          "negative_prefixes_evaluated": 0,
+          "negative_prefixes_pending_at_cap": 0,
+          "negative_prefixes_pruned_by_beam": 0,
+          "negative_prefixes_retained": 0
+        }
+      ],
+      "model_transition_calls": 227,
+      "negative_prefixes_evaluated": 44,
+      "negative_prefixes_pruned_by_beam": 44,
+      "partial_model_incumbent": {
+        "action_ids": [
+          "nominal-cavity-417f590381bc98e52ed7bc77",
+          "nominal-cavity-563784d38bcd84f57f40246a",
+          "nominal-cavity-fd1777adffbf91c8e0f66b62"
+        ],
+        "estimated_incremental_return": 410.312421263048,
+        "interpretation": "Unaudited nominal planning score on a partial search; not a replayed route, teacher, complete search result, physical validation or clinical outcome."
+      },
+      "peak_next_layer_states": 3,
+      "planning_seconds": 180.68571058299858,
+      "reason": "Observed search exceeded its declared episode time",
+      "replay_status": "not_executed",
+      "status": "failed",
+      "time_cap_reached": true,
+      "time_cap_seconds": 180.0,
+      "transition_cap": 512,
+      "transition_cap_reached": false,
+      "transition_mode": "lazy_planning",
+      "validated_quality_metrics": null
+    },
+    "untrained_policy": {
+      "reason": "Declared stop-on-method-failure policy; no replacement attempt.",
+      "status": "not_executed"
+    }
+  },
+  "next_scope": "Stop this geometric comparison lane. No retry, policy sweep, optimizer or population training is authorized by this artifact; prioritize the separately coordinated validated mechanics proof of concept.",
+  "optimizer_updates": 0,
+  "other_patients_opened": 0,
+  "patient": "sub-PAT05",
+  "patient_input_unchanged": true,
+  "recorded_at": "2026-10-04T19:26:04.943608+00:00",
+  "runtime": {
+    "cpu_threads": 1,
+    "launcher_seconds": 191.18216266692616,
+    "parent_termination_reason": null,
+    "parent_wall_cap_reached": false,
+    "parent_wall_seconds": 300,
+    "rss_cap_bytes": 6442450944,
+    "sampled_peak_rss_bytes": 1287340032,
+    "supervisor_seconds": 191.05183358408976,
+    "worker_peak_rss_bytes": 1288077312,
+    "worker_seconds": 189.3713189580012
+  },
+  "source_commit": "b64d801676add06d479629c958a16b3faf27ce23",
+  "source_integrity": "pass; all 3845 archived files and 57 numerical sources unchanged; before/after origin probes identical",
+  "status": "bounded_comparison_incomplete_search_time_limit",
+  "weight_integrity": {
+    "final_parameter_hash": null,
+    "initial_parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+    "interpretation": "Early search failure preceded all policy forwards and final parameter verification; no optimizer branch exists and no optimizer executed. Do not claim a measured before/after weight equality.",
+    "runtime_final_hash_checked": false
+  }
+}
