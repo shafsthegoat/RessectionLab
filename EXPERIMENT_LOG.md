@@ -634,3 +634,22 @@ at the representative MRI review view. Population alignment and patient function
 remain unaccepted/unknown; distribution signing and second-Mac validation remain
 open. Later experimental learner changes are intentionally absent from this
 verified Mac app.
+
+## October 4, 2026 — feature-unit execution gates passed
+
+The full Python suite ran from an immutable archive of committed implementation
+`0bffeaa`, independent of concurrent working-tree additions: 794 passed in
+176.14 s, with four existing DIPY deprecation warnings and no source-byte change.
+The actual public-case preflight then passed both profiles and all three online
+seeds before any offline update. Paired initial trainable tensors and critic
+outputs agree, distinct profile behavior is explicitly identified, and the two
+constructed native source histories pass independent containment checks.
+No registered training or final/stress world execution occurred in preflight.
+
+The archive's numerical runtime is `850dab80…`; Git discovery is intentionally
+disabled for the preflight archive, while the separate baseline receipt binds
+the exact committed revision and archive bytes. Evidence is in
+`artifacts/validation/native-feature-units-runner-v1/` and
+`artifacts/learning/procedural-native-feature-units-v1-preflight/`. Registered
+execution must use these tested frozen bytes; the newer proposal module remains
+outside this learning comparison.

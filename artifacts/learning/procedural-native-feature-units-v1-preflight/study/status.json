@@ -1,0 +1,39 @@
+{
+  "attempted_operations": [],
+  "completed_frozen_runs": [],
+  "completed_learning_runs": [],
+  "completed_offline_runs": [],
+  "completed_operations": [],
+  "declaration_hash": "sha256:b19aac85f9241e37b98ae53d539ad923f3258bf42a106d67e520f37abcf6a237",
+  "expected_candidate_count": 23,
+  "final_worlds_used": false,
+  "planned_frozen_runs": [
+    "RAW",
+    "FEATURE_UNITS"
+  ],
+  "planned_learning_runs": [
+    "scratch:RAW:11",
+    "scratch:FEATURE_UNITS:11",
+    "adapted:RAW:11",
+    "adapted:FEATURE_UNITS:11",
+    "scratch:RAW:23",
+    "scratch:FEATURE_UNITS:23",
+    "adapted:RAW:23",
+    "adapted:FEATURE_UNITS:23",
+    "scratch:RAW:47",
+    "scratch:FEATURE_UNITS:47",
+    "adapted:RAW:47",
+    "adapted:FEATURE_UNITS:47"
+  ],
+  "planned_offline_runs": [
+    "RAW",
+    "FEATURE_UNITS"
+  ],
+  "preflight_seconds": 0.956961749936454,
+  "run_id": "feature-units-development-6530b157-8415-4931-aa87-b97da9eee1c0",
+  "scope": "procedural_native_feature_units_development",
+  "status": "preflight_passed_no_training",
+  "total_seconds": 0.9569635420339182,
+  "training_executed": false,
+  "training_requested": false
+}

@@ -189,12 +189,17 @@ of the desktop planner or the frozen learning comparisons.
 
 ## Validation record
 
-The latest root integrated run passed **749 tests in 107.54 seconds**, with four
-existing DIPY basis-deprecation warnings. Exact source identities are in
-`artifacts/validation/integrated-python-2026-10-04-v3.json`. The preceding
+The latest root integrated run passed **794 tests in 176.14 seconds**, with four
+existing DIPY basis-deprecation warnings, from an immutable archive of `0bffeaa`.
+Its bytes stayed unchanged throughout testing. The real public-case preflight
+also passed both policy profiles and all three seeds with zero gradients before
+registered feature-unit execution. Exact identities and results are in
+`artifacts/validation/native-feature-units-runner-v1/`. The preceding
 743-pass/one-failure sweep is retained: its orchestration fixture needed to
 isolate a newly added earlier preflight, while production rejection was correct.
-The test-only repair passed focused checks before this complete fresh sweep.
+The test-only repair passed focused checks before the earlier 749-pass sweep and
+this latest complete validation. The new standalone proposal module is outside
+this archived test snapshot and is being independently reviewed.
 Structural adversarial checks found
 and fixed metadata precedence, mask-enlargement and provenance problems;
 their focused checks passed before each incremental commit. Native
