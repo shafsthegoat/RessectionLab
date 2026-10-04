@@ -1,0 +1,67 @@
+{
+  "version": "independent-native-batch-history-v2",
+  "role": "fixed_analytic_numerical_control_not_training",
+  "historical_report": "artifacts/native-discretization-control-v1/run-01/report.json",
+  "row_id": "tilted_20_degrees-0.125mm",
+  "expected_source_hash": "sha256:b632809a84dbaf1dec4b8e3b5c0ada712926c8dfcb79c3a31e27da33917fcb0f",
+  "expected_config_hash": "sha256:5cf5a3f51eae01a5016604791cff4d89c12518339bf507624c1163daa24f4245",
+  "expected_history_hash": "sha256:e75a4f7a5d19240766fa0c19f97276a1b60f4733078aedee58e0eba90b40d8fa",
+  "expected_microsteps": 97,
+  "phase_order": [
+    "scalar_before",
+    "batch",
+    "scalar_after"
+  ],
+  "distance_batch_size": 256,
+  "max_histories": 1,
+  "max_native_strokes": 1,
+  "human_patients": 0,
+  "training_updates": 0,
+  "cpu_workers": 1,
+  "numerical_threads": 1,
+  "caps": {
+    "cooperative_seconds": 140,
+    "parent_wall_seconds": 150,
+    "worker_rss_bytes": 3221225472,
+    "poll_seconds": 0.05
+  },
+  "fixed_files_sha256": {
+    "artifacts/native-discretization-control-v1/run-01/report.json": "7bd2f98a721c33fee75f981db37e64f4b480057ae05530e417045c5d9bc836c4",
+    "scripts/probe_native_discretization.py": "6df8ade8e117667b77fef5285f99368b0d90ff8f04846caef77b213a53fa2eff",
+    "manifests/experiments/native-discretization-control-v1.json": "e0f528064ef68f0c4c54452318e72935a1e3f7b000951bb68b07a4ea9fb053b8",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+    "src/resectionlab/evaluation.py": "8fe1467d2dc53deb62f16c86c79eebc1596047bc58d52a8b7be3598f50334d18",
+    "src/resectionlab/independent_geometry_batch.py": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3",
+    "src/resectionlab/worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91",
+    "src/resectionlab/core.py": "f1f0b8ae334cabc864c3ec85d4f6b49e4842de2b580edaadd7562276ea0c92db",
+    "manifests/experiments/independent-native-batch-history-v1.json": "76533ab14eaa9d922e2c148e2b40d745804a0cee85fee397d1a1c4b50c11a5d6",
+    "artifacts/independent-native-batch-history-v1/attempt-01/report.json": "faa6a0717eb2f47a28727c3a22fb594ccbdb18e3b0520a05778fffe5bab81c86",
+    "artifacts/independent-native-batch-history-v1/attempt-01/launcher.json": "125e98f729b5cf75840b20b1ace179a62535833ee5b025bb7534e1943a508791",
+    "artifacts/independent-native-batch-history-v1/failure-diagnostic.json": "2e8c1386df530fb71760215420d44371dab28359fa597ef85b3f6b7dbc859843",
+    "artifacts/independent-native-batch-history-v1/artifact-index.json": "4715ba9e20e49da1ac14b0e689f3566b8dd15b948fcfd1d65e6827c4ccb5392d"
+  },
+  "timing_scope": "Identically instrumented complete audits including prefix capture; setup and gzip export separate; tracing overhead recorded, no subtraction-based speed claim",
+  "equality": "Exact canonical JSON bytes of the historical certificate (tuple/list representation normalized, no numerical tolerance), plus all per-microstep contact sets, cell-query witnesses and remaining/free mask digests; same recorded history before and after every phase",
+  "failure_policy": "One attempt; keep partial phases and failure/cancellation records; no retry, cap increase or matrix expansion; exit zero alone is insufficient",
+  "cpu_scope": "One worker and numerical library thread controls set to one; macOS CPU affinity not claimed",
+  "claims_excluded": [
+    "patient_performance",
+    "training_speedup",
+    "universal_speedup",
+    "clinical_safety",
+    "full_matrix_reexecution",
+    "voxel_resolution_convergence"
+  ],
+  "max_artifact_uncompressed_bytes": 67108864,
+  "harness_revision": {
+    "previous_version": "independent-native-batch-history-v1",
+    "previous_execution_status": "failed_or_incomplete",
+    "previous_execution_commit": "2e6ea98c60e0871f97efd1cfeb1414d7667bef50",
+    "previous_runner_sha256": "1a25bca8953467dba24228e411b6262ab627feb66661cdb5b40fd7d9b5b310e5",
+    "cause": "The first scalar audit passed, but Python dictionary equality rejected NativeRemovalAudit.to_dict() failures=() against historical JSON failures=[]; batch and final scalar did not start.",
+    "delta": "Certificate acceptance compares exact canonical JSON bytes; declaration version and provenance change only. No numerical implementation, scene, tool, anatomy, history, phase order, instrumentation, workload or cap changes.",
+    "previous_attempt": "artifacts/independent-native-batch-history-v1/attempt-01",
+    "execution_authorization": "Prepared only; separate immutable-archive review, commit and root release required; V1 is not rerun or reclassified."
+  }
+}

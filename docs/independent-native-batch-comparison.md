@@ -1,13 +1,23 @@
 # Prospective single-history comparison
 
-**Prepared, not executed.** This numerical control compares the opt-in batch
+**V2 prepared, not executed; V1 failed in its harness.** This numerical control compares the opt-in batch
 backend with the unchanged scalar default on one previously certified analytic
 history. It loads no patients and performs no learning or full matrix rerun.
 
 The declaration is
-`manifests/experiments/independent-native-batch-history-v1.json`; the runner is
+`manifests/experiments/independent-native-batch-history-v2.json`; the runner is
 `scripts/compare_independent_native_batch.py`. Root must commit/review these
-files and release an immutable source archive before execution.
+files and release an immutable source archive before execution. V1 remains
+failed and will not be rerun. Its [preserved result](../artifacts/independent-native-batch-history-v1/RESULT.md)
+records a successful first scalar audit followed by a tuple/list certificate
+comparison failure; batch and the final scalar phase did not start.
+
+V2 changes certificate equality to exact canonical JSON bytes so the real
+audit dataclass's tuple fields agree with their saved JSON list representation.
+The actual `NativeRemovalAudit.to_dict()` serialization roundtrip is now tested;
+one-ULP numerical, source-identity, rejection, and integer/float representation
+changes remain rejected. No numerical tolerance, model code, scene, trace logic,
+workload or resource cap changes. The V2 declaration pins V1's failed receipts.
 
 The only scene is the saved `tilted_20_degrees-0.125mm` row: the same physical
 half-space, tool, entry, target, and 0.0625 mm microsteps. One native stroke is

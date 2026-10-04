@@ -19,7 +19,7 @@ import sys
 import time
 
 ROOT = Path(__file__).resolve().parents[1]
-DECLARATION = Path("manifests/experiments/independent-native-batch-history-v1.json")
+DECLARATION = Path("manifests/experiments/independent-native-batch-history-v2.json")
 THREAD_KEYS = ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
                "VECLIB_MAXIMUM_THREADS", "NUMEXPR_NUM_THREADS", "BLIS_NUM_THREADS")
 _TRACING = False
@@ -51,7 +51,8 @@ def write_gzip(path, value):
 
 def declaration():
     spec = json.loads((ROOT / DECLARATION).read_text())
-    if (spec["phase_order"] != ["scalar_before", "batch", "scalar_after"]
+    if (spec["version"] != "independent-native-batch-history-v2"
+            or spec["phase_order"] != ["scalar_before", "batch", "scalar_after"]
             or spec["distance_batch_size"] != 256 or spec["max_histories"] != 1
             or spec["max_native_strokes"] != 1 or spec["human_patients"] != 0
             or spec["training_updates"] != 0 or spec["cpu_workers"] != 1
@@ -208,7 +209,10 @@ def validate_phase(row, reference, expected_microsteps):
     expected_backend = "batch" if row.get("phase") == "batch" else "scalar"
     expected_batch_queries = expected_microsteps if expected_backend == "batch" else 0
     if (row["error"] is not None or row["hooks_restored"] is not True
-            or row["certificate"] != reference or row["certificate"].get("feasible") is not True
+            # dataclasses.asdict retains tuples; saved JSON represents them as lists.
+            # Compare exact JSON bytes, preserving all numerical values and fields.
+            or canonical(row["certificate"]) != canonical(reference)
+            or row["certificate"].get("feasible") is not True
             or row.get("phase") not in {"scalar_before", "batch", "scalar_after"}
             or row.get("backend") != expected_backend
             or type(row.get("batch_cell_queries")) is not int

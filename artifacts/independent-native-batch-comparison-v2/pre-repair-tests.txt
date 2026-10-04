@@ -1,0 +1,124 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_ test_actual_audit_to_dict_json_roundtrip_has_exact_certificate_parity[scalar_before] _
+
+phase = 'scalar_before'
+
+    @pytest.mark.parametrize("phase", ["scalar_before", "batch", "scalar_after"])
+    def test_actual_audit_to_dict_json_roundtrip_has_exact_certificate_parity(phase):
+        row, historical, count = _actual_audit_phase(phase)
+        serialized = json.loads(json.dumps(row["certificate"], allow_nan=False))
+        assert isinstance(row["certificate"]["failures"], tuple)
+        assert isinstance(serialized["failures"], list)
+        assert row["certificate"] != serialized
+        assert serialized == historical
+        assert probe.canonical(row["certificate"]) == probe.canonical(serialized)
+>       probe.validate_phase(row, historical, count)
+
+tests/test_independent_native_batch_comparison.py:162: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+row = {'phase': 'scalar_before', 'backend': 'scalar', 'error': None, 'hooks_restored': True, ...}
+reference = {'feasible': True, 'failures': [], 'first_failed_action': None, 'first_unsupported_source_voxel': None, ...}
+expected_microsteps = 97
+
+    def validate_phase(row, reference, expected_microsteps):
+        expected_backend = "batch" if row.get("phase") == "batch" else "scalar"
+        expected_batch_queries = expected_microsteps if expected_backend == "batch" else 0
+        if (row["error"] is not None or row["hooks_restored"] is not True
+                or row["certificate"] != reference or row["certificate"].get("feasible") is not True
+                or row.get("phase") not in {"scalar_before", "batch", "scalar_after"}
+                or row.get("backend") != expected_backend
+                or type(row.get("batch_cell_queries")) is not int
+                or row["batch_cell_queries"] != expected_batch_queries
+                or type(row.get("scalar_cell_queries")) is not int
+                or row["scalar_cell_queries"] <= 0
+                or row["active_contact_scans"] != expected_microsteps
+                or row["committed_prefixes"] != expected_microsteps):
+>           raise ValueError("Phase is incomplete, rejected, unrestored, or differs from the historical certificate")
+E           ValueError: Phase is incomplete, rejected, unrestored, or differs from the historical certificate
+
+scripts/compare_independent_native_batch.py:220: ValueError
+_ test_actual_audit_to_dict_json_roundtrip_has_exact_certificate_parity[batch] _
+
+phase = 'batch'
+
+    @pytest.mark.parametrize("phase", ["scalar_before", "batch", "scalar_after"])
+    def test_actual_audit_to_dict_json_roundtrip_has_exact_certificate_parity(phase):
+        row, historical, count = _actual_audit_phase(phase)
+        serialized = json.loads(json.dumps(row["certificate"], allow_nan=False))
+        assert isinstance(row["certificate"]["failures"], tuple)
+        assert isinstance(serialized["failures"], list)
+        assert row["certificate"] != serialized
+        assert serialized == historical
+        assert probe.canonical(row["certificate"]) == probe.canonical(serialized)
+>       probe.validate_phase(row, historical, count)
+
+tests/test_independent_native_batch_comparison.py:162: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+row = {'phase': 'batch', 'backend': 'batch', 'error': None, 'hooks_restored': True, ...}
+reference = {'feasible': True, 'failures': [], 'first_failed_action': None, 'first_unsupported_source_voxel': None, ...}
+expected_microsteps = 97
+
+    def validate_phase(row, reference, expected_microsteps):
+        expected_backend = "batch" if row.get("phase") == "batch" else "scalar"
+        expected_batch_queries = expected_microsteps if expected_backend == "batch" else 0
+        if (row["error"] is not None or row["hooks_restored"] is not True
+                or row["certificate"] != reference or row["certificate"].get("feasible") is not True
+                or row.get("phase") not in {"scalar_before", "batch", "scalar_after"}
+                or row.get("backend") != expected_backend
+                or type(row.get("batch_cell_queries")) is not int
+                or row["batch_cell_queries"] != expected_batch_queries
+                or type(row.get("scalar_cell_queries")) is not int
+                or row["scalar_cell_queries"] <= 0
+                or row["active_contact_scans"] != expected_microsteps
+                or row["committed_prefixes"] != expected_microsteps):
+>           raise ValueError("Phase is incomplete, rejected, unrestored, or differs from the historical certificate")
+E           ValueError: Phase is incomplete, rejected, unrestored, or differs from the historical certificate
+
+scripts/compare_independent_native_batch.py:220: ValueError
+_ test_actual_audit_to_dict_json_roundtrip_has_exact_certificate_parity[scalar_after] _
+
+phase = 'scalar_after'
+
+    @pytest.mark.parametrize("phase", ["scalar_before", "batch", "scalar_after"])
+    def test_actual_audit_to_dict_json_roundtrip_has_exact_certificate_parity(phase):
+        row, historical, count = _actual_audit_phase(phase)
+        serialized = json.loads(json.dumps(row["certificate"], allow_nan=False))
+        assert isinstance(row["certificate"]["failures"], tuple)
+        assert isinstance(serialized["failures"], list)
+        assert row["certificate"] != serialized
+        assert serialized == historical
+        assert probe.canonical(row["certificate"]) == probe.canonical(serialized)
+>       probe.validate_phase(row, historical, count)
+
+tests/test_independent_native_batch_comparison.py:162: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+row = {'phase': 'scalar_after', 'backend': 'scalar', 'error': None, 'hooks_restored': True, ...}
+reference = {'feasible': True, 'failures': [], 'first_failed_action': None, 'first_unsupported_source_voxel': None, ...}
+expected_microsteps = 97
+
+    def validate_phase(row, reference, expected_microsteps):
+        expected_backend = "batch" if row.get("phase") == "batch" else "scalar"
+        expected_batch_queries = expected_microsteps if expected_backend == "batch" else 0
+        if (row["error"] is not None or row["hooks_restored"] is not True
+                or row["certificate"] != reference or row["certificate"].get("feasible") is not True
+                or row.get("phase") not in {"scalar_before", "batch", "scalar_after"}
+                or row.get("backend") != expected_backend
+                or type(row.get("batch_cell_queries")) is not int
+                or row["batch_cell_queries"] != expected_batch_queries
+                or type(row.get("scalar_cell_queries")) is not int
+                or row["scalar_cell_queries"] <= 0
+                or row["active_contact_scans"] != expected_microsteps
+                or row["committed_prefixes"] != expected_microsteps):
+>           raise ValueError("Phase is incomplete, rejected, unrestored, or differs from the historical certificate")
+E           ValueError: Phase is incomplete, rejected, unrestored, or differs from the historical certificate
+
+scripts/compare_independent_native_batch.py:220: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_independent_native_batch_comparison.py::test_actual_audit_to_dict_json_roundtrip_has_exact_certificate_parity[scalar_before]
+FAILED tests/test_independent_native_batch_comparison.py::test_actual_audit_to_dict_json_roundtrip_has_exact_certificate_parity[batch]
+FAILED tests/test_independent_native_batch_comparison.py::test_actual_audit_to_dict_json_roundtrip_has_exact_certificate_parity[scalar_after]
+3 failed, 25 deselected in 0.34s

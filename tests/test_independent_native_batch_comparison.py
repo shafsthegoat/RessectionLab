@@ -1,6 +1,8 @@
 """Static/mocked prospective runner gates; no native scene or history executed."""
 from copy import deepcopy
 import importlib.util
+import json
+import math
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -28,6 +30,27 @@ def test_declaration_pins_one_previously_certified_history_and_sources():
     receipt = probe.source_receipt(spec)
     assert "src/resectionlab/evaluation.py" in receipt
     assert "src/resectionlab/independent_geometry_batch.py" in receipt
+
+
+def test_v2_changes_only_certificate_representation_and_harness_provenance():
+    old = json.loads((ROOT / "manifests/experiments/independent-native-batch-history-v1.json").read_text())
+    current = probe.declaration()
+    assert current["version"] == "independent-native-batch-history-v2"
+    assert current["harness_revision"]["previous_execution_status"] == "failed_or_incomplete"
+    assert "no numerical tolerance" in current["equality"]
+    for key, value in old.items():
+        if key not in {"version", "equality", "fixed_files_sha256"}:
+            assert current[key] == value
+    for name, value in old["fixed_files_sha256"].items():
+        assert current["fixed_files_sha256"][name] == value
+    added = current["fixed_files_sha256"].keys() - old["fixed_files_sha256"].keys()
+    assert added == {
+        "manifests/experiments/independent-native-batch-history-v1.json",
+        "artifacts/independent-native-batch-history-v1/attempt-01/report.json",
+        "artifacts/independent-native-batch-history-v1/attempt-01/launcher.json",
+        "artifacts/independent-native-batch-history-v1/failure-diagnostic.json",
+        "artifacts/independent-native-batch-history-v1/artifact-index.json",
+    }
 
 
 def test_changed_declared_source_refused_before_runtime():
@@ -129,3 +152,51 @@ def test_existing_output_refused_without_launch(tmp_path, monkeypatch):
     monkeypatch.setattr(probe.subprocess, "Popen", forbidden)
     with pytest.raises(FileExistsError, match="fresh"):
         probe.launch(tmp_path)
+
+
+def _actual_audit_phase(phase="scalar_before"):
+    # Serialize the real audit dataclass without executing an audit or a scene.
+    from resectionlab.evaluation import NativeRemovalAudit
+
+    spec = probe.declaration()
+    historical = probe.reference_row(spec)["independent_audit"]["certificate"]
+    audit = NativeRemovalAudit(**{**historical, "failures": tuple(historical["failures"])})
+    certificate = audit.to_dict()
+    count = spec["expected_microsteps"]
+    row = dict(phase=phase, backend="batch" if phase == "batch" else "scalar",
+        error=None, hooks_restored=True, certificate=certificate,
+        active_contact_scans=count, committed_prefixes=count,
+        scalar_cell_queries=(6 if phase == "batch" else 7) * count,
+        batch_cell_queries=count if phase == "batch" else 0)
+    return row, historical, count
+
+
+@pytest.mark.parametrize("phase", ["scalar_before", "batch", "scalar_after"])
+def test_actual_audit_to_dict_json_roundtrip_has_exact_certificate_parity(phase):
+    row, historical, count = _actual_audit_phase(phase)
+    serialized = json.loads(json.dumps(row["certificate"], allow_nan=False))
+    assert isinstance(row["certificate"]["failures"], tuple)
+    assert isinstance(serialized["failures"], list)
+    assert row["certificate"] != serialized
+    assert serialized == historical
+    assert probe.canonical(row["certificate"]) == probe.canonical(serialized)
+    probe.validate_phase(row, historical, count)
+
+
+@pytest.mark.parametrize("fault", ["one_ulp_volume", "source_identity", "rejected", "integer_representation"])
+def test_actual_audit_normalization_does_not_relax_scientific_equality(fault):
+    row, historical, count = _actual_audit_phase()
+    certificate = row["certificate"]
+    if fault == "one_ulp_volume":
+        key = "contained_source_tissue_volume_mm3"
+        certificate[key] = math.nextafter(certificate[key], math.inf)
+    elif fault == "source_identity":
+        certificate["source_case_hash"] = "changed"
+    elif fault == "integer_representation":
+        # JSON canonical comparison retains the distinction between 1 and 1.0.
+        certificate["action_count"] = float(certificate["action_count"])
+    else:
+        certificate["feasible"] = False
+    assert probe.canonical(certificate) != probe.canonical(historical)
+    with pytest.raises(ValueError, match="historical certificate"):
+        probe.validate_phase(row, historical, count)

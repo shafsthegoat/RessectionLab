@@ -1,0 +1,24 @@
+{
+  "scope": "Static/mocked orchestration and real dataclass serialization controls only; no native scene or geometry audit",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_independent_native_batch_comparison.py",
+    "tests/test_independent_native_batch_comparison_review.py"
+  ],
+  "exit_code": 0,
+  "seconds": 0.495577875059098,
+  "sources": {
+    "scripts/compare_independent_native_batch.py": "14d7c9c8e8eb1dfec24b5bb9b6d709ec9d2a198e573fd8212d9bb271333edee1",
+    "manifests/experiments/independent-native-batch-history-v2.json": "a65509aa64bfcc04c796f143b22aaca16868e78ea904e1b84efa1169c1f5b2ad",
+    "tests/test_independent_native_batch_comparison.py": "1a3a44862c2258f6339265c009fd209ea6c37a01862eb12db2a6c1a525550fb9",
+    "tests/test_independent_native_batch_comparison_review.py": "2a454b02c8cb3b7eabbf7688264fff5e821bb2f949d2b93706b0e01af641ec4f",
+    "docs/independent-native-batch-comparison.md": "6133a1245ff608d82923774029d55250d64cb9061dcc14af46ec7cd980b6a0ef",
+    "src/resectionlab/evaluation.py": "8fe1467d2dc53deb62f16c86c79eebc1596047bc58d52a8b7be3598f50334d18",
+    "src/resectionlab/independent_geometry_batch.py": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3"
+  },
+  "source_unchanged": true,
+  "public_or_analytic_comparison_executed": false
+}
