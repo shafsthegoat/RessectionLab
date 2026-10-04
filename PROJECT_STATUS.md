@@ -178,6 +178,18 @@ surgical action/force response without suitable interaction measurements.
 See `docs/tissue-mechanics-frameworks.md`, `docs/tissue-mechanics-measurements.md`
 and `docs/tissue-mechanics-validation.md` for the bounded scope and held-out rules.
 
+The creator's CC BY 4.0 HBE release was acquired once: 12,985,030 bytes, with
+all provider lengths and MD5 checks verified and local SHA256 receipts retained.
+Metadata reconciles 182 specimens from seven donors. The first eligible specimen
+is HBE_01_03, with radius 4 mm and creator-inferred height 4.89159 mm. Its entire
+donor is permanently development. Third-cycle compression/tension are assigned
+to calibration and third-cycle low-amplitude torsion to withheld-mode validation;
+all other curves remain sealed. No measured curve values have been opened or
+fitted. Independent metadata review passed. These processed ex-vivo data do not
+establish patient stiffness, retractor forces or cutting response. See
+`docs/mechanics-hbe-acquisition.md` and
+`manifests/experiments/hbe-01-03-specimen-roles-v1.json`.
+
 The first real TRAIN PAT22 inference profile completed all four declared cells
 in 6.247 seconds with unchanged model parameters. One CPU call took 28–30 ms
 for a 32³ crop and 256–269 ms for a 64³ crop, with highest observed memory about

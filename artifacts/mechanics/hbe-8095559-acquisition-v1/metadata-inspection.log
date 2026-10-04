@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "source_manifest": "manifests/hbe_8095559_acquisition.json",
+  "source_manifest_sha256": "dd3ebc07046834d6ae002524bbdfa0073ab8c7fa7a1cea8239b497266078b6b4",
+  "archive_sha256": "be1459acf9cae0fdca5f2e0d462a4bc5bb43b1e5674b06346d1dcb46984e4e2c",
+  "lookup_sha256": "305197760608befc872844caec2e82dcf56532386497fdb8981b93ac9c7b0c51",
+  "inspection_scope": "ZIP names/lengths/CRC, geometry and lookup metadata only; no curve members opened",
+  "lookup_ranges": [
+    "Sample Overview!A1:D183",
+    "List of Abbreviations!A1:C33"
+  ],
+  "curve_content_schema_status": "Creator specifies two columns and units; CSV headers, delimiters and row counts unopened pending split.",
+  "geometry_height_provenance": "Creator says height determined from test data, not independently measured geometry or an uncertainty estimate.",
+  "geometry_schema": {
+    "height": "metres, positive number",
+    "radius": "metres, positive number",
+    "type": "Source has cylinder and Cylinder; original spelling retained."
+  },
+  "geometry_type_spellings": {
+    "cylinder": 81,
+    "Cylinder": 101
+  },
+  "donor_specimen_counts": {
+    "HBE_01": 21,
+    "HBE_02": 20,
+    "HBE_03": 40,
+    "HBE_04": 25,
+    "HBE_05": 27,
+    "HBE_06": 29,
+    "HBE_07": 20
+  },
+  "specimen_count": 182,
+  "curve_member_count": 2184,
+  "all_12_curve_members_present": true,
+  "extra_members": [
+    "HBE_06/HBE_06_07/HBE_06_07_proc.csv",
+    "HBE_06/HBE_06_07/HBE_06_07_raw.csv"
+  ],
+  "numeric_sorted_first_metadata_eligible": "HBE_01_03",
+  "required_c3_filenames": [
+    "compression_c3.csv",
+    "tension_c3.csv",
+    "torsion_l1_c3_neg.csv",
+    "torsion_l1_c3_pos.csv",
+    "torsion_l2_c3_neg.csv",
+    "torsion_l2_c3_pos.csv"
+  ],
+  "force_values_opened": false,
+  "role_assignments": "Pending validation declaration; this is an inventory, not a split.",
+  "metadata_inspection_failure_retained": "Initial exploratory assertion required literal lowercase cylinder and stopped at donor04. Source also uses Cylinder. No curve data opened; parser now preserves spelling and verifies case-insensitive shape only."
+}
+FIRST_METADATA_ELIGIBLE {
+  "specimen_id": "HBE_01_03",
+  "donor_id": "HBE_01",
+  "donor_numeric_id": 1,
+  "specimen_numeric_id": 3,
+  "governing_region": "C",
+  "region": "MC",
+  "geometry_member": "HBE_01/HBE_01_03/geometry.yaml",
+  "geometry_sha256": "87938ef85a5b554b671951acad8f363b9f027a966f095d5366eec81232679641",
+  "geometry_m": {
+    "height": 0.00489159,
+    "radius": 0.004,
+    "type": "cylinder"
+  },
+  "curve_members": [
+    {
+      "name": "HBE_01/HBE_01_03/compression_c1.csv",
+      "bytes": 1217,
+      "crc32": "a3663889"
+    },
+    {
+      "name": "HBE_01/HBE_01_03/compression_c3.csv",
+      "bytes": 1222,
+      "crc32": "c7b7a162"
+    },
+    {
+      "name": "HBE_01/HBE_01_03/tension_c1.csv",
+      "bytes": 1166,
+      "crc32": "cc09726e"
+    },
+    {
+      "name": "HBE_01/HBE_01_03/tension_c3.csv",
+      "bytes": 1170,
+      "crc32": "03927483"
+    },
+    {
+      "name": "HBE_01/HBE_01_03/torsion_l1_c1_neg.csv",
+      "bytes": 1223,
+      "crc32": "d3f681ec"
+    },
+    {
+      "name": "HBE_01/HBE_01_03/torsion_l1_c1_pos.csv",
+      "bytes": 1329,
+      "crc32": "7a4ee15f"
+    },
+    {
+      "name": "HBE_01/HBE_01_03/torsion_l1_c3_neg.csv",
+      "bytes": 1224,
+      "crc32": "f5259802"
+    },
+    {
+      "name": "HBE_01/HBE_01_03/torsion_l1_c3_pos.csv",
+      "bytes": 1332,
+      "crc32": "611776b4"
+    },
+    {
+      "name": "HBE_01/HBE_01_03/torsion_l2_c1_neg.csv",
+      "bytes": 1300,
+      "crc32": "af9c3bc5"
+    },
+    {
+      "name": "HBE_01/HBE_01_03/torsion_l2_c1_pos.csv",
+      "bytes": 1245,
+      "crc32": "a778acc9"
+    },
+    {
+      "name": "HBE_01/HBE_01_03/torsion_l2_c3_neg.csv",
+      "bytes": 1304,
+      "crc32": "3fbefa5f"
+    },
+    {
+      "name": "HBE_01/HBE_01_03/torsion_l2_c3_pos.csv",
+      "bytes": 1248,
+      "crc32": "5d4e3509"
+    }
+  ],
+  "missing_expected_curve_members": [],
+  "metadata_eligible_for_c3_poc": true
+}

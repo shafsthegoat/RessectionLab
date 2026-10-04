@@ -23,11 +23,11 @@ Immediate specimen-PoC selection rule, to resolve from actual schema before read
 1. Inventory exact donor/specimen IDs, region metadata, geometry, mode and cycle filenames. Eligibility requires usable declared geometry and the prospectively required files; do not inspect outcomes to exclude specimens.
 2. Sort metadata-eligible specimens by their actual numeric donor ID, then numeric specimen ID; if the released identifiers cannot be parsed this way, resolve the schema before proceeding. Select the first specimen, with no outcome-based replacement.
 3. Mark its entire donor DEVELOPMENT permanently; all sibling specimens, cycles, loading levels and signed branches share that donor role. Other donor values remain sealed. Never randomly split curve rows or treat processed samples as independent experiments.
-4. Fit only the selected specimen's third-cycle compression/tension. Keep its third-cycle torsion sealed as the within-specimen held-out-mode check until model and parameters are frozen; first-cycle curves are outside this first experiment.
+4. Fit only the selected specimen's third-cycle compression/tension. Keep its low-amplitude l1 third-cycle torsion (both signs) sealed as the within-specimen held-out-mode check until model and parameters are frozen; first-cycle and l2 curves are outside this first experiment.
 5. Freeze the exact ID, region, file hashes, geometry, loading modes, evaluation points, solver/model candidates, budgets and acceptance tolerances in a small experiment manifest before fitting. Schema-derived specimen height is an input with provenance, not independently validated geometry.
 6. Any later donor-transfer study needs a separate prospective donor-grouped split. The development donor cannot become a final-validation donor; region-matched selection is preferable, or regional heterogeneity must be explicit.
 
-No actual sample IDs or material parameters are invented here. This first PoC tests within-specimen cross-mode prediction, not donor transfer; held-out-mode results cannot reopen fitting under the same claim.
+Metadata resolves the first specimen as HBE_01_03; [the prospective role manifest](../manifests/experiments/hbe-01-03-specimen-roles-v1.json) binds exact archive/member identities without opening curves. This first PoC tests within-specimen cross-mode prediction, not donor transfer; held-out-mode results cannot reopen fitting under the same claim.
 The specimen step does not replace the subsequent real-patient anatomy displacement PoC and cannot establish patient forces.
 
 ## Patient measurement partitions

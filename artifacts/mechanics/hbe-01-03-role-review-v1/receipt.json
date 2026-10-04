@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "reviewed_at_utc": "2026-10-04T19:18:12.563917+00:00",
+  "role_manifest": "manifests/experiments/hbe-01-03-specimen-roles-v1.json",
+  "role_manifest_sha256": "c135a65eb14001e31a849197cc5650a15e2484022bee9f950a5c1759a033a432",
+  "archive_sha256": "be1459acf9cae0fdca5f2e0d462a4bc5bb43b1e5674b06346d1dcb46984e4e2c",
+  "checks": {
+    "acquisition_manifest_matches": true,
+    "metadata_inventory_matches": true,
+    "metadata_integrity_receipt_matches": true,
+    "archive_length_sha256_matches": true,
+    "duplicate_archive_paths_absent": true,
+    "actual_numeric_first_metadata_eligible": "HBE_01_03",
+    "eligible_specimens_without_measurement_access": 182,
+    "geometry_and_inferred_height_provenance_match": true,
+    "exact_calibration_members_match": true,
+    "exact_l1_validation_members_match": true,
+    "disjoint_roles": true,
+    "donor_permanently_development": true,
+    "all_remaining_csv_members_sealed": 2182,
+    "curve_members_opened": false
+  },
+  "status": "passed",
+  "scope_limit": "Metadata and geometry only. No force/torque values read; no runtime/constitutive/numerical-method approval."
+}
