@@ -334,3 +334,30 @@ and reproduces final errors. This one smooth, equal-scaling phantom does not
 establish patient performance, solver convergence or a complete diffusion
 correction chain. Production gates remain unchanged. Records and limitations:
 `docs/vector-susceptibility-phantom.md`, `artifacts/vector-susceptibility-v1/`.
+
+## October 4, 2026 — native Electron interaction verification
+
+The updated complete app executed the exact UCSF stroke workflow, saved all 56
+routes and comparison selections, exported the independently checked candidate,
+and restored source annotations. A cancelled native run persisted six updates
+(four were visible when cancellation was requested). After full app restart,
+resuming added 26 updates under unchanged request and contract hashes.
+
+Native accessibility testing caught a real defect: changing the timeline through
+an accessibility action updated its label without fetching the corresponding
+checked mask. The initial build evidence is preserved. The corrected renderer
+uses one active replay request and one replaceable latest request, with separate
+requested and displayed steps. Native decrement now shows checked step zero and
+0 target/0 normal/41,919 residual mm³; increment shows step one and 174/11/41,745.
+The banner, timeline, MRI overlay and quantities agree. Thirty-six renderer and
+15 viewer tests pass. Final renderer digest is `5fe94739…`, using the same
+verified `377284f6…` Python source snapshot. Receipts and matched screenshots:
+`artifacts/electron-refinement-v2/`.
+
+The source-surface display now averages normals only at exactly coincident
+vertices. All triangle-position hashes remain unchanged, with finite unit
+normals and no resampling or changes to tissue measurements. A fresh probe
+measured 332.0 ms source mesh preparation plus 75.5 ms additional worker normal
+preparation (+22.8%). It excludes GPU, IPC and visible latency. Matched native
+screenshots show improved shading; source voxel stair steps remain. Evidence:
+`artifacts/performance/viewer-normal-shading-v1/`.

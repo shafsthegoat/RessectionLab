@@ -11,9 +11,10 @@ learning, provenance and evaluation remain the shared backend. The new renderer
 communicates through a narrow local sidecar interface. The first standalone
 Electron package has passed real MRI, route comparison and native-save checks.
 The full training package has passed actual updates, cancellation/resume and
-restart checks; its native patient UI has passed honest STOP replay and export.
-Exact selected-route binding and preflight now pass the real-patient protocol;
-the refreshed packaged UI is undergoing its own end-to-end checks.
+restart checks. The refreshed native patient UI now passes blocked-route
+preflight, exact-stroke training, replay/export, cancellation and full-app
+restart/resume. Accessible replay controls were fixed after a native regression
+and now keep the image, displayed step and quantities synchronized.
 
 ## Verified starting state
 
@@ -78,6 +79,11 @@ the refreshed packaged UI is undergoing its own end-to-end checks.
   seed. SEARCH scored 1.30, scratch [0, 0, 1.24], frozen 0 and adapted [0, 0, 0].
   All ten independent synthetic geometry checks passed; no final worlds opened.
   This is a negative analytic experiment, not a clinical population policy.
+- A separate procedural-native initialization transfer experiment is committed
+  before execution, with two nonpatient generating families, one already-studied
+  UCSF development simulation and matched online wall limits. Its implementation
+  and independent pre-execution checks are in progress; no registered training
+  result is claimed. This does not replace real patient-population evaluation.
 - The Electron training bridge executes real updates, resumable cancellation,
   independently checked replay and export. A 30-second patient-learning budget
   yielded the two-stroke sequence in 37.77 seconds total including setup/checks;
@@ -146,10 +152,19 @@ See `EXPERIMENT_LOG.md` for executed experiments, including negative results.
 The Qt prototype passed its initial standalone runtime and GUI checks. Its next
 build was stopped following the user's Electron decision. The React/Electron
 package passed its own imaging/search checks and 26 main-process boundary and
-lifecycle tests. The 29 renderer tests and separate viewer tests cover source hydration, evidence
+lifecycle tests. The 36 renderer tests and 15 viewer tests cover source hydration, evidence
 status, A/B identity and independently accepted removal overlays. The complete
 training bundle has its own source-bound verification receipts. Qt results do
 not certify Electron. No second-Mac test is claimed.
+
+The final native shell (renderer digest `5fe94739…`, Python `377284f6…`)
+recovers a six-update cancelled checkpoint after app restart and adds 26 updates
+under the original contract. Accessibility decrement/increment now changes the
+actual checked replay between 0/0/41,919 and 174/11/41,745 target-removed,
+normal-removed and residual-target mm³. Matching screenshots document the fix.
+Display-normal averaging improves shading without moving any source triangles;
+a separate local probe adds 75.5 ms of worker preparation to 332.0 ms of source
+mesh preparation. This is a display tradeoff, not a GPU speedup claim.
 
 ## Completion gates still open
 
