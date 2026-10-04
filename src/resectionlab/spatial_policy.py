@@ -18,6 +18,7 @@ from torch import Tensor, nn
 from torch.nn import functional as F
 
 POLICY_VERSION = "spatial-scan-ray-conv-policy-v1"
+CANDIDATE_CRITIC_POLICY_VERSION = "spatial-scan-ray-conv-candidate-critic-v2"
 GRID_ROUNDOFF_BAND = 64 * np.finfo(np.float64).eps
 
 
@@ -27,6 +28,7 @@ class SpatialPolicyConfig:
     hidden_features: int = 32
     ray_samples: int = 5
     physical_reference_mm: float = 10.0
+    critic_candidate_context: bool = False
 
     def __post_init__(self):
         if (len(self.encoder_channels) != 2 or any(type(v) is not int or not 1 <= v <= 64
@@ -36,6 +38,8 @@ class SpatialPolicyConfig:
             raise ValueError("Invalid bounded spatial architecture")
         if not np.isfinite(self.physical_reference_mm) or self.physical_reference_mm <= 0:
             raise ValueError("Physical reference unit must be positive and finite")
+        if type(self.critic_candidate_context) is not bool:
+            raise ValueError("Candidate critic context requires an explicit boolean")
         object.__setattr__(self, "encoder_channels", tuple(self.encoder_channels))
 
 
@@ -90,6 +94,21 @@ def sample_ray_features(encoded: Tensor, grid_zyx: Tensor) -> Tensor:
     return sampled * (grid_zyx.abs() <= 1.).all(dim=-1, keepdim=True)
 
 
+def _candidate_critic_context(geometry: Tensor, rays: Tensor, mask: Tensor) -> Tensor:
+    """Mean/max permitted features over legal non-STOP rows and bounded count.
+
+    STOP placeholders and masked actions cannot contribute. This describes the
+    current inventory, not tools absent from it or future attainable return.
+    """
+    from .spatial_observations import MAX_ACTIONS
+
+    candidates = torch.cat((geometry, rays), dim=-1)[1:][mask[1:]]
+    if not len(candidates):
+        return geometry.new_zeros(2 * (geometry.shape[-1] + rays.shape[-1]) + 1)
+    count = candidates.new_tensor([len(candidates) / (MAX_ACTIONS - 1)])
+    return torch.cat((candidates.mean(dim=0), candidates.amax(dim=0), count))
+
+
 class SpatialPolicy(nn.Module):
     """Shared geometry-conditioned action scorer and spatial value baseline.
 
@@ -111,10 +130,18 @@ claimed equivariant to voxel reindexing or complete for partially observed tasks
         width = self.config.hidden_features
         self.actor = nn.Sequential(nn.Linear(action_count, width), nn.ReLU(), nn.Linear(width, 1))
         self.stop = nn.Sequential(nn.Linear(context_count, width), nn.ReLU(), nn.Linear(width, 1))
-        self.critic = nn.Sequential(nn.Linear(context_count, width), nn.ReLU(), nn.Linear(width, 1))
+        candidate_count = 2 * (16 + self.config.ray_samples * (b + 1)) + 1
+        critic_count = context_count + (candidate_count if self.config.critic_candidate_context else 0)
+        self.critic = nn.Sequential(nn.Linear(critic_count, width), nn.ReLU(), nn.Linear(width, 1))
 
     def architecture_record(self) -> dict:
-        return {"version": POLICY_VERSION, "config": asdict(self.config),
+        config_record = asdict(self.config)
+        if not self.config.critic_candidate_context:
+            # Preserve the exact v1 serialized architecture/hash, not just its
+            # layer shapes, when the new research variant is not requested.
+            del config_record["critic_candidate_context"]
+        record = {"version": CANDIDATE_CRITIC_POLICY_VERSION if self.config.critic_candidate_context else POLICY_VERSION,
+                "config": config_record,
                 "image_layout": "CXYZ", "channels": 6, "grid_sample_order": "ZYX",
                 "align_corners": True, "padding": "zeros_with_inbounds_flags",
                 "grid_roundoff_band": GRID_ROUNDOFF_BAND,
@@ -124,6 +151,14 @@ claimed equivariant to voxel reindexing or complete for partially observed tasks
                 "spatial_pool": [2, 2, 2], "return_transform": "none",
                 "inference_ties": "argmax_first_in_inventory; STOP is index0",
                 "normalization": "source-grid entry/tip/access; normalized source-axis direction; physical dimensions/reference_mm; angle/90; budget fraction; spacing/reference_mm"}
+        if self.config.critic_candidate_context:
+            from .spatial_observations import MAX_ACTIONS
+            record["critic_candidate_context"] = {
+                "rows": "legal_non_stop_only", "features": "normalized_geometry+masked_sampled_ray_features+inbounds",
+                "pooling": "mean_then_max", "count_divisor": MAX_ACTIONS - 1,
+                "empty_inventory": "zero_summary_and_count",
+                "tool_coverage": "current_legal_inventory_only_not_full_tool_catalog"}
+        return record
 
     @property
     def architecture_hash(self) -> str:
@@ -211,7 +246,9 @@ claimed equivariant to voxel reindexing or complete for partially observed tasks
         non_stop = self.actor(action_inputs).squeeze(-1)
         logits = torch.cat((self.stop(context).reshape(1), non_stop[1:]))
         logits = logits.masked_fill(~mask, -torch.inf)
-        value = self.critic(context).squeeze(-1)
+        critic_context = (torch.cat((context, _candidate_critic_context(geometry, rays, mask)))
+                          if self.config.critic_candidate_context else context)
+        value = self.critic(critic_context).squeeze(-1)
         if not torch.isfinite(logits[mask]).all() or not torch.isfinite(value):
             raise FloatingPointError("Nonfinite spatial policy output")
         return logits, value

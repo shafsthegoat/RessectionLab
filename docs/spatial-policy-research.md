@@ -36,3 +36,29 @@ An initial draft incorrectly averaged actor terms by each trajectory's length. R
 Rollout action selection and the loss-building autograd forward are separate calls and must both be counted. Search expansion, teacher generation, preprocessing, BC, RL, checkpoint selection, frozen inference and independent checks have separate costs. The runner must keep weights unchanged while collecting each on-policy batch and use a fresh optimizer for the BC-to-RL arm. Frozen evaluation uses no optimizer or gradient updates. Search uses only an observed-scan model on the same action set; withheld scoring truth must never become its lookahead oracle.
 
 The prospective screen, anatomy splits, budgets and release authority belong to the separate experiment declaration. Single-gradient unit checks establish differentiability and data flow only. Unknown vascular anatomy, continuous tool trajectories, tissue forces, deformation, retraction damage and clinical deficits remain unmodeled. See [the surgical realism evidence note](rl-surgical-realism-evidence.md) for the separate mechanics requirements.
+
+## Opt-in candidate context for the critic
+
+The real-patient development runner can explicitly request
+`SpatialPolicyConfig(critic_candidate_context=True)`. This version concatenates
+the mean and componentwise maximum of normalized geometry and sampled ray
+features across legal non-STOP candidates, followed by their count divided by
+the maximum non-STOP inventory size. A STOP-only inventory contributes zeros.
+Masked candidates and STOP placeholders contribute neither values nor gradients.
+The actor and its initialization are unchanged; value gradients can also train
+the shared image encoder through candidate ray features.
+
+The option defaults to false, preserving v1 layer shapes, initialization and
+architecture records/hashes exactly. The new architecture identifies itself as
+`spatial-scan-ray-conv-candidate-critic-v2`; v1 critic weights are shape-incompatible
+and cannot be silently reused. Default size grows from 24,331 to 30,827 parameters
+when enabled. No throughput or planning improvement has been measured for it.
+
+Controlled algebra tests demonstrate that changing permitted tool geometry can
+change the new critic while leaving the old critic input unchanged. This is an
+input-capacity check, not evidence of a learned return difference. Only current
+legal candidates are summarized: tools unavailable now but useful after an
+opening remain absent, so this does not prove a complete Markov observation.
+That limitation requires a separately versioned full-catalog observation if it
+affects actual patient decisions. No synthetic training or anatomy benchmark
+was run for this change; unit derivative checks make no parameter updates.
