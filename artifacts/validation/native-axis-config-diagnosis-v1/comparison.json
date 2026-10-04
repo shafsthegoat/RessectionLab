@@ -1,0 +1,237 @@
+{
+  "bundle_sha256": "11cca797ad0216e5c8d940e7354f2dd23fb6954dc2aed7e4b0423f6adc6cefcf",
+  "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+  "differing_fields": [
+    "tissue_support_provenance"
+  ],
+  "engine_constructors_executed": 0,
+  "expected_prototype_native_config_hash": "sha256:0924b7d0a4ab4310f319372fbfc6dd84919c16ffff7070030494cf8a5acc72cd",
+  "fields": {
+    "access": {
+      "direct": {
+        "center_mm": [
+          -181.5,
+          85.0,
+          105.0
+        ],
+        "normal_inward": [
+          1.0,
+          0.0,
+          -0.0
+        ],
+        "radius_mm": 6.0,
+        "window_id": "native_hypothetical_nearest_envelope_axis"
+      },
+      "equal": true,
+      "prototype": {
+        "center_mm": [
+          -181.5,
+          85.0,
+          105.0
+        ],
+        "normal_inward": [
+          1.0,
+          0.0,
+          -0.0
+        ],
+        "radius_mm": 6.0,
+        "window_id": "native_hypothetical_nearest_envelope_axis"
+      }
+    },
+    "affine": {
+      "different_element_count": 0,
+      "direct": {
+        "array_digest": "sha256:5a52792ccc572d29932e785f6dbe96d45b4a7ae6582374aae411115e9d7ccc0d",
+        "dtype": "float64",
+        "shape": [
+          4,
+          4
+        ]
+      },
+      "equal": true,
+      "prototype": {
+        "array_digest": "sha256:5a52792ccc572d29932e785f6dbe96d45b4a7ae6582374aae411115e9d7ccc0d",
+        "dtype": "float64",
+        "shape": [
+          4,
+          4
+        ]
+      }
+    },
+    "case_id": {
+      "direct": "UCSF-PDGM-0004",
+      "equal": true,
+      "prototype": "UCSF-PDGM-0004"
+    },
+    "hard_exclusion": {
+      "different_element_count": 0,
+      "direct": {
+        "array_digest": "sha256:5e2f98f6f90ab523b8812e70e784b4ec0a590ae06fdbd265e10d55a97b6c76a7",
+        "dtype": "bool",
+        "shape": [
+          240,
+          240,
+          155
+        ]
+      },
+      "equal": true,
+      "prototype": {
+        "array_digest": "sha256:5e2f98f6f90ab523b8812e70e784b4ec0a590ae06fdbd265e10d55a97b6c76a7",
+        "dtype": "bool",
+        "shape": [
+          240,
+          240,
+          155
+        ]
+      }
+    },
+    "max_microsteps": {
+      "direct": 4096,
+      "equal": true,
+      "prototype": 4096
+    },
+    "max_tip_step_mm": {
+      "direct": 0.25,
+      "equal": true,
+      "prototype": 0.25
+    },
+    "source_hash": {
+      "direct": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "equal": true,
+      "prototype": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+    },
+    "target_labels": {
+      "different_element_count": 0,
+      "direct": {
+        "array_digest": "sha256:7c84ec31360491d227e2052e19a84588208d30013f873e904972ec36b43a774c",
+        "dtype": "int16",
+        "shape": [
+          240,
+          240,
+          155
+        ]
+      },
+      "equal": true,
+      "prototype": {
+        "array_digest": "sha256:7c84ec31360491d227e2052e19a84588208d30013f873e904972ec36b43a774c",
+        "dtype": "int16",
+        "shape": [
+          240,
+          240,
+          155
+        ]
+      }
+    },
+    "tissue_mask": {
+      "different_element_count": 0,
+      "direct": {
+        "array_digest": "sha256:224e03eaca7df7b6739120a1ee129e8c841755b33769a3c895704a5cd224947f",
+        "dtype": "bool",
+        "shape": [
+          240,
+          240,
+          155
+        ]
+      },
+      "equal": true,
+      "prototype": {
+        "array_digest": "sha256:224e03eaca7df7b6739120a1ee129e8c841755b33769a3c895704a5cd224947f",
+        "dtype": "bool",
+        "shape": [
+          240,
+          240,
+          155
+        ]
+      }
+    },
+    "tissue_support_provenance": {
+      "direct": "hole_filled_nonzero_native_MRI_support; unreviewed skull_strip_assumption; source targets retained; source_frame=RAS+; simulation_frame=RAS+",
+      "equal": false,
+      "prototype": "estimated_hole_filled_nonzero_UCSF_or_declared_skull_stripped_MRI_support; brain_surface_unreviewed; source_frame=RAS+; simulation_frame=RAS+"
+    },
+    "tools": {
+      "direct": [
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 0.45,
+          "tip_length_mm": 2.0,
+          "tip_radius_mm": 1.25,
+          "tool_id": "native-fine-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.1,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 2.25,
+          "tool_id": "native-wide-aspiration",
+          "working_length_mm": 120.0
+        }
+      ],
+      "equal": true,
+      "prototype": [
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 0.45,
+          "tip_length_mm": 2.0,
+          "tip_radius_mm": 1.25,
+          "tool_id": "native-fine-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.1,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 2.25,
+          "tool_id": "native-wide-aspiration",
+          "working_length_mm": 120.0
+        }
+      ]
+    }
+  },
+  "gradient_steps": 0,
+  "method": "Execute both real configuration builders; intercept only the fixed simulator constructor to return its untouched actual config. No fingerprint is replaced.",
+  "numerical_source_sha256": {
+    "src/resectionlab/__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "src/resectionlab/anatomy.py": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37",
+    "src/resectionlab/brain_extraction.py": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917",
+    "src/resectionlab/cohort.py": "d69538f80af8b318068af70dbc963b7a9ca6c3a4f62d6e8e542d6e43548fa874",
+    "src/resectionlab/core.py": "0600667e8e8662c78e31a86d9060d53aec5ab5a4f2b14e747afd74800f11eeec",
+    "src/resectionlab/desktop_bridge.py": "b76b76e58cb1a6476cec57fc093184ab7ea8ff598b26ed66b3438e7720fdfbe8",
+    "src/resectionlab/diffusion.py": "e7f57bf7467fb3cb5d6b9b3f1c80e4665710713124d0720aa84d31ccc03b8e21",
+    "src/resectionlab/evaluation.py": "baaa2f3d6b4e41c4621dc22872da9300d649bc91dfeb923e2ad35f66aadad3b7",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/imaging.py": "ad921fb5cda6d3aed84893ad200cb846212311efa17c1996730a394e8474a95b",
+    "src/resectionlab/learning.py": "f6c490beb563357599fa35bf1674eee47b02f28864a4128122c526e3c995cd48",
+    "src/resectionlab/learning_ppo.py": "a3814bc5da4837b66ae20496c38e17edd0edf73ef7863a920924cd7ec2a42d88",
+    "src/resectionlab/native_axis_simulation.py": "e1b8306050b53e636e1d602290720655d1f06fe72bf8309ba80afb2025122b70",
+    "src/resectionlab/native_proposals.py": "6a173851ad383c32b84121cd0d8871535fffa9174d95aa27bdb08ca4b8a7e5f9",
+    "src/resectionlab/native_refinement.py": "02a1250d40d7129c77d16031e229c61c3d295139c002c9002f5a3eb78097a413",
+    "src/resectionlab/native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+    "src/resectionlab/native_routes.py": "97bb55a3bf2894f336a593bc3c3379b3c4dc291198af90b91d319bd0b9a824ea",
+    "src/resectionlab/native_simulation.py": "2461cc6c32eb25a3927bcc3a9379bb02417794c3a764c4b1e705a00bcac6493c",
+    "src/resectionlab/planning.py": "f113ce78b239f91a86c65d8add74227a9d9f3c0d718449c7968a983e76ea850d",
+    "src/resectionlab/policy_inputs.py": "1366cdabceae5eeee9ad44667be7d8c44de2c9ab8f551c4cf05b053f5b1b8b47",
+    "src/resectionlab/population_learning.py": "49899618825d08b50016f9b34f389b50ce67f6a3aa79a8f339665523e3ae8de2",
+    "src/resectionlab/preprocessing.py": "dbd2c4ba9551e2aa0d454b638e256ad8bc6cdf45dcdc8ec08e091e43c3eb14e5",
+    "src/resectionlab/prior_proposals.py": "05340a6911b0330175d606f84aa81c817a330a929a336fef18078d01e3d0bd55",
+    "src/resectionlab/prior_registration.py": "9828e76ed3e29e232c39dd16ece7d5fefa4cd366d1cab7899121e929ef34a703",
+    "src/resectionlab/procedural_learning.py": "d4666701930d2baa1f438b2a1bed4819e895ec6161c38a78b6ef4d68331ac2d1",
+    "src/resectionlab/route_native_diagnostics.py": "f2cf704da9e971f321dce707dadd9f0350ec7234ecc75c0ed0fc1242fd8c82cf",
+    "src/resectionlab/selection_contract.py": "bef00b486fb6f0f0465a8526080ae5c6e08a5f1922fcf93f4624aec86ec43d72",
+    "src/resectionlab/simulation.py": "bc43c16643adf8495f969dcacacb770f5f6be7fdeff0831f2a92eb4aed52939f",
+    "src/resectionlab/structural_evidence.py": "6a1b9e7aa5b13ea971a75d9416d96ab45de2b46901a036edd73ec58194fb7a33",
+    "src/resectionlab/worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
+  },
+  "observed_direct_native_config_hash": "sha256:6d817c5c7441cc7d6c6bcaeac4542cfd3266f2474c9c1904a2d6279870b3143b",
+  "observed_prototype_native_config_hash": "sha256:0924b7d0a4ab4310f319372fbfc6dd84919c16ffff7070030494cf8a5acc72cd",
+  "planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+  "simulator_constructors_executed": 0,
+  "source_root": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/preflight/native-axis-v1/frozen-source",
+  "status": "configuration_comparison_completed",
+  "transitions": 0
+}

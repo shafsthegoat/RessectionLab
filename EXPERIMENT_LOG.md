@@ -844,3 +844,16 @@ strict check was not bypassed and no automatic retry was made. Original failure
 records are in `artifacts/preflight/native-axis-v1/`, with root verification in
 `artifacts/validation/native-axis-public-v1/execution-result.json`. A later
 corrected attempt needs its own committed declaration and output namespace.
+
+Two subsequent configuration-only audits of the exact frozen V1 source agree:
+all 12 native configuration fields were compared, and only
+`tissue_support_provenance` differs. Tissue, target labels, affine and hard
+exclusions have identical dtype, shape and elements. Access, instruments, source,
+case identity, 0.25-mm microsteps and the 4,096-step cap are equal. Both complete
+hashes were reproduced; no engine, simulator, policy or transition was created.
+The direct helper's full configuration hash is `6d817c5c…`, while the historical
+factory remains `0924b7d0…`. Their distinct provenance remains truthful and
+unchanged. The independent diagnostic's first JSON export error is retained as
+a diagnostic failure, separately from the successfully checked numerical data.
+A fresh V2 declaration must bind the direct configuration and all unchanged
+physical components. Original V1 evidence is not relabeled.

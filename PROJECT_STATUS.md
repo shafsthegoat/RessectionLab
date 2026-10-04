@@ -256,8 +256,10 @@ The test-only repair passed 63 focused checks and retains a real production
 byte-drift rejection test. Both full attempts are in
 `artifacts/validation/integrated-axis-v1/`. The new zero-gradient public
 action-model preflight V1 stopped during configuration validation before
-adapter construction, simulated cuts or gradients. Its source stayed unchanged;
-exact component differences are being checked before any new attempt.
+adapter construction, simulated cuts or gradients. Its source stayed unchanged. Two actual configuration-only audits found
+identical physical inputs, with only the tissue-support provenance text
+differing between factories. A fresh declaration will bind the direct helper
+without rewriting either provenance description or bypassing identities.
 
 The preceding complete run passed **794 tests in 176.14 seconds**, with four
 existing DIPY basis-deprecation warnings, from an immutable archive of `0bffeaa`.

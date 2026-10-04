@@ -1,0 +1,322 @@
+{
+  "auditor_sha256": "a4e4491b147974f549e7e335b6fd485eb9c982b197976689e8217aba32127976",
+  "axis_constructions": 0,
+  "bundle_sha256": "11cca797ad0216e5c8d940e7354f2dd23fb6954dc2aed7e4b0423f6adc6cefcf",
+  "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+  "configuration_fields": {
+    "access": {
+      "equal": true,
+      "fixed_factory": {
+        "center_mm": {
+          "array_hash": "sha256:99a67bcd2470a763476baccd47b7eeb574d27ec89fe52e9fd2dfb9c9deb8b1ea",
+          "dtype": "float64",
+          "shape": [
+            3
+          ],
+          "values": [
+            -181.5,
+            85.0,
+            105.0
+          ]
+        },
+        "normal_inward": {
+          "array_hash": "sha256:05d1f7023c1574ed04de44273aac15e4e4dc18072bb761017f6a61d143519679",
+          "dtype": "float64",
+          "shape": [
+            3
+          ],
+          "values": [
+            1.0,
+            0.0,
+            -0.0
+          ]
+        },
+        "radius_mm": 6.0,
+        "window_id": "native_hypothetical_nearest_envelope_axis"
+      },
+      "native_config_helper": {
+        "center_mm": {
+          "array_hash": "sha256:99a67bcd2470a763476baccd47b7eeb574d27ec89fe52e9fd2dfb9c9deb8b1ea",
+          "dtype": "float64",
+          "shape": [
+            3
+          ],
+          "values": [
+            -181.5,
+            85.0,
+            105.0
+          ]
+        },
+        "normal_inward": {
+          "array_hash": "sha256:05d1f7023c1574ed04de44273aac15e4e4dc18072bb761017f6a61d143519679",
+          "dtype": "float64",
+          "shape": [
+            3
+          ],
+          "values": [
+            1.0,
+            0.0,
+            -0.0
+          ]
+        },
+        "radius_mm": 6.0,
+        "window_id": "native_hypothetical_nearest_envelope_axis"
+      }
+    },
+    "affine": {
+      "different_elements": 0,
+      "equal": true,
+      "exact_array_equal": true,
+      "fixed_factory": {
+        "array_hash": "sha256:5a52792ccc572d29932e785f6dbe96d45b4a7ae6582374aae411115e9d7ccc0d",
+        "dtype": "float64",
+        "shape": [
+          4,
+          4
+        ],
+        "values": [
+          [
+            -1.0,
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          [
+            -0.0,
+            -1.0,
+            -0.0,
+            239.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      },
+      "native_config_helper": {
+        "array_hash": "sha256:5a52792ccc572d29932e785f6dbe96d45b4a7ae6582374aae411115e9d7ccc0d",
+        "dtype": "float64",
+        "shape": [
+          4,
+          4
+        ],
+        "values": [
+          [
+            -1.0,
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          [
+            -0.0,
+            -1.0,
+            -0.0,
+            239.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ]
+      }
+    },
+    "case_id": {
+      "equal": true,
+      "fixed_factory": "UCSF-PDGM-0004",
+      "native_config_helper": "UCSF-PDGM-0004"
+    },
+    "hard_exclusion": {
+      "different_elements": 0,
+      "equal": true,
+      "exact_array_equal": true,
+      "fixed_factory": {
+        "array_hash": "sha256:5e2f98f6f90ab523b8812e70e784b4ec0a590ae06fdbd265e10d55a97b6c76a7",
+        "dtype": "bool",
+        "shape": [
+          240,
+          240,
+          155
+        ]
+      },
+      "native_config_helper": {
+        "array_hash": "sha256:5e2f98f6f90ab523b8812e70e784b4ec0a590ae06fdbd265e10d55a97b6c76a7",
+        "dtype": "bool",
+        "shape": [
+          240,
+          240,
+          155
+        ]
+      }
+    },
+    "max_microsteps": {
+      "equal": true,
+      "fixed_factory": 4096,
+      "native_config_helper": 4096
+    },
+    "max_tip_step_mm": {
+      "equal": true,
+      "fixed_factory": 0.25,
+      "native_config_helper": 0.25
+    },
+    "source_hash": {
+      "equal": true,
+      "fixed_factory": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "native_config_helper": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+    },
+    "target_labels": {
+      "different_elements": 0,
+      "equal": true,
+      "exact_array_equal": true,
+      "fixed_factory": {
+        "array_hash": "sha256:7c84ec31360491d227e2052e19a84588208d30013f873e904972ec36b43a774c",
+        "dtype": "int16",
+        "shape": [
+          240,
+          240,
+          155
+        ]
+      },
+      "native_config_helper": {
+        "array_hash": "sha256:7c84ec31360491d227e2052e19a84588208d30013f873e904972ec36b43a774c",
+        "dtype": "int16",
+        "shape": [
+          240,
+          240,
+          155
+        ]
+      }
+    },
+    "tissue_mask": {
+      "different_elements": 0,
+      "equal": true,
+      "exact_array_equal": true,
+      "fixed_factory": {
+        "array_hash": "sha256:224e03eaca7df7b6739120a1ee129e8c841755b33769a3c895704a5cd224947f",
+        "dtype": "bool",
+        "shape": [
+          240,
+          240,
+          155
+        ]
+      },
+      "native_config_helper": {
+        "array_hash": "sha256:224e03eaca7df7b6739120a1ee129e8c841755b33769a3c895704a5cd224947f",
+        "dtype": "bool",
+        "shape": [
+          240,
+          240,
+          155
+        ]
+      }
+    },
+    "tissue_support_provenance": {
+      "equal": false,
+      "fixed_factory": "estimated_hole_filled_nonzero_UCSF_or_declared_skull_stripped_MRI_support; brain_surface_unreviewed; source_frame=RAS+; simulation_frame=RAS+",
+      "native_config_helper": "hole_filled_nonzero_native_MRI_support; unreviewed skull_strip_assumption; source targets retained; source_frame=RAS+; simulation_frame=RAS+"
+    },
+    "tools": {
+      "equal": true,
+      "fixed_factory": [
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 0.45,
+          "tip_length_mm": 2.0,
+          "tip_radius_mm": 1.25,
+          "tool_id": "native-fine-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.1,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 2.25,
+          "tool_id": "native-wide-aspiration",
+          "working_length_mm": 120.0
+        }
+      ],
+      "native_config_helper": [
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 0.45,
+          "tip_length_mm": 2.0,
+          "tip_radius_mm": 1.25,
+          "tool_id": "native-fine-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.1,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 2.25,
+          "tool_id": "native-wide-aspiration",
+          "working_length_mm": 120.0
+        }
+      ]
+    }
+  },
+  "different_fields": [
+    "tissue_support_provenance"
+  ],
+  "engine_constructions": 0,
+  "final_worlds": 0,
+  "fixed_factory_native_fingerprint": "sha256:0924b7d0a4ab4310f319372fbfc6dd84919c16ffff7070030494cf8a5acc72cd",
+  "gradient_steps": 0,
+  "helper_native_fingerprint": "sha256:6d817c5c7441cc7d6c6bcaeac4542cfd3266f2474c9c1904a2d6279870b3143b",
+  "interpretation": "Every native config input field except descriptive tissue provenance is equal. Full fingerprints correctly differ because provenance remains a model input. No hash was weakened or replaced, and no simulation was constructed.",
+  "partial_contact_weight": 0.05,
+  "planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+  "reference_checks": {
+    "default_reward": true,
+    "fixed_candidate_tips_and_entries": true,
+    "fixed_factory_fingerprint": true,
+    "hard_exclusion": true,
+    "missing_functional_evidence": true,
+    "partial_contact_weight": true,
+    "tissue_mask": true,
+    "tools": true,
+    "world_generator": true
+  },
+  "reference_sha256": "6011ec40117f49653df4ab2fb0194c1e630bd2cf09870f87332f340fe3c6fde0",
+  "repair_constraint": "A fresh declaration must pin the helper's actual fingerprint/provenance separately from the historical fixed-factory reference; arrays/tools/limits/reward/world assumptions must remain explicitly checked.",
+  "reward": {
+    "action_cost": 0.02,
+    "graph_edge_cost": 1.0,
+    "language_per_mm3": 2.0,
+    "motion_per_mm": 0.0,
+    "motor_per_mm3": 2.0,
+    "normal_per_mm3": 0.2,
+    "target_per_mm3": 1.0,
+    "tool_change_cost": 0.02
+  },
+  "seconds": 1.0908537089126185,
+  "source_files": {
+    "scripts/preflight_native_axis.py": "3edeed6e2bf2349a4aa17235f1edd50c7c4d923741179da4a6d35064348f66b4",
+    "src/resectionlab/native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+    "src/resectionlab/native_simulation.py": "2461cc6c32eb25a3927bcc3a9379bb02417794c3a764c4b1e705a00bcac6493c",
+    "src/resectionlab/structural_evidence.py": "6a1b9e7aa5b13ea971a75d9416d96ab45de2b46901a036edd73ec58194fb7a33"
+  },
+  "source_root": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/preflight/native-axis-v1/frozen-source",
+  "status": "configuration_only_comparison_passed",
+  "stress_worlds": 0,
+  "transitions": 0
+}
