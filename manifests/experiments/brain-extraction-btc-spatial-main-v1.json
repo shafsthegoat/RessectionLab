@@ -1,0 +1,238 @@
+{
+  "schema_version": 1,
+  "kind": "prospective_four_case_main_structural_support_declaration",
+  "declared_at": "2026-10-04T18:13:36.829469+00:00",
+  "execution_status_at_declaration": "not_started; requires root commit and explicit release of inference timing slot",
+  "repo_head_observed": "d229248842c06932b54e99ff0f7cebd20be666b3",
+  "allowed_subjects": [
+    "sub-PAT22",
+    "sub-PAT25",
+    "sub-PAT26",
+    "sub-PAT27"
+  ],
+  "forbidden_subjects": [
+    "sub-PAT29",
+    "sub-PAT31"
+  ],
+  "external_final_cohorts_not_consulted": [
+    "UPenn-GBM"
+  ],
+  "cohort_manifest": "manifests/experiments/btc-spatial-development-cohort-v1.json",
+  "cohort_manifest_sha256": "962d964e1d71427f3625cdbebc0f7e4759e5d2345d8f95cb211ed45810ed2985",
+  "source_integrity_receipt": "artifacts/btc-spatial-acquisition-v1/integrity-review.json",
+  "source_integrity_receipt_sha256": "d31b5167d20c1ff1897cc77013c4eb48e62e9837557fdcd5da338e02a8edb3ac",
+  "preparation_receipt": "artifacts/btc-spatial-preparation-v1/batch-record.json",
+  "preparation_receipt_sha256": "a92ad03376373e12f3a23bc2cb002e3dbe47fa0c1a1a56ef0dd2f6b214aaed49",
+  "reference_PAT05_declaration": "artifacts/brain-extraction/PAT05-frozen-experiment.json",
+  "reference_PAT05_declaration_sha256": "1520350579a40c724379f0fdb11cdef42dc8dad8d8a8a40316661f4c549e4b3b",
+  "wrapper": {
+    "path": "src/resectionlab/brain_extraction.py",
+    "sha256": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917",
+    "same_bytes_as_PAT05": true,
+    "entry_point": "run_synthstrip(image_path, cache, output, model=\"main\", allow_download=False, timeout_seconds=300, maximum_rss_bytes=6442450944, inference_python=existing_compatible_interpreter, device=\"mps\")",
+    "execution_source": "Exact committed archive only; do not import mutable working checkout. No shared source module changes.",
+    "difference_from_PAT05_CLI": "Use the unchanged main inference function directly; omit unused no-CSF inference and intensity baseline comparison. Architecture, weights, preprocessing, border, native resampling and output validators are unchanged."
+  },
+  "model": {
+    "name": "SynthStrip",
+    "variant": "main",
+    "weights_version": 1,
+    "upstream_code_commit": "cf4bccf24875a47245b4df9fc9372d0f1c3d784f",
+    "files": {
+      "mri_synthstrip": {
+        "url": "https://raw.githubusercontent.com/freesurfer/freesurfer/cf4bccf24875a47245b4df9fc9372d0f1c3d784f/mri_synthstrip/mri_synthstrip",
+        "sha256": "291c253ab2f7c0cbcb84afa769ae10909549537e727db5b92d268754b7cc7871",
+        "bytes": 12238
+      },
+      "LICENSE_FreeSurfer.txt": {
+        "url": "https://raw.githubusercontent.com/freesurfer/freesurfer/cf4bccf24875a47245b4df9fc9372d0f1c3d784f/LICENSE.txt",
+        "sha256": "632d404ea17b9101d9ac87cf8f09e651d18eb20d2cc0ba8dbee77e85b8516307",
+        "bytes": 10297
+      },
+      "synthstrip.1.pt": {
+        "url": "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/requirements/synthstrip.1.pt",
+        "sha256": "37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33",
+        "bytes": 30851709
+      }
+    },
+    "code_license": "FreeSurfer Software License Agreement 1.0, February 2011",
+    "weights_license_choice": "MIT, explicitly offered by official SynthStrip page",
+    "weights_license_source": "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/"
+  },
+  "model_cache": "data/models/synthstrip-v1",
+  "expected_executed_MPS_runner_sha256": "d39cbcba9c5303ba74eaf0bb53d9105762f8a01a7de7bae2740958242f8f6cf8",
+  "inference_runtime": {
+    "interpreter": ".tools/synthstrip-runtime/bin/python",
+    "python": "3.12.14",
+    "numpy": "2.2.6",
+    "torch": "2.14.1",
+    "surfa": "0.6.3",
+    "scipy": "1.18.1",
+    "nibabel": "5.4.2",
+    "xxhash": "4.0.1",
+    "interpreter_sha256_measured_at_declaration": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a",
+    "project_runtime_pth_sha256": "697493922ca241ab62fc491c135c8ae111c05c74c44edc7357df28ac507bad16",
+    "historical_PAT05_runtime_binary_equivalence_attested": false,
+    "runtime_scope": "Version and current interpreter/path checks are not a historical installed-package byte attestation. Recheck versions, paths and executable hash before launch."
+  },
+  "frozen_configuration": {
+    "device": "mps",
+    "cpu_threads": 2,
+    "border_mm": 1,
+    "timeout_seconds": 300,
+    "maximum_rss_bytes": 6442450944,
+    "MPS_allocator_maximum_bytes": 6442450944,
+    "MPS_allocator_maximum_fraction_of_recommended": 0.7,
+    "MPS_fallback_enabled": false,
+    "native_corner_displacement_tolerance_mm": 0.01
+  },
+  "execution_limits": {
+    "maximum_concurrent_inference_children": 1,
+    "planned_repetitions_per_subject": 1,
+    "planned_child_inferences": 4,
+    "child_timeout_seconds": 300,
+    "runtime_probe_timeout_seconds": 30,
+    "maximum_sum_of_declared_child_timeout_seconds": 1200,
+    "scope": "Bounds apply per model inference child; outer source verification, post-inference QC, bundle persistence and independent review are separate. RSS/Metal measurements remain sampled peaks."
+  },
+  "changes_allowed_during_batch": false,
+  "automatic_CPU_fallback": false,
+  "model_downloads_permitted": false,
+  "model_training_permitted": false,
+  "source_files_mutable": false,
+  "selection_policy": {
+    "variant": "main",
+    "variant_selected_before_new_inference": true,
+    "settings_tuned_on_new_T1_or_target_or_reward": false,
+    "checkpoint_selection_cases_used_for_policy_training": false,
+    "all_four_inferences_fixed_before_annotation_overlap_QC": true,
+    "annotation_access_during_model_inference": false,
+    "annotation_postprocessing": "No target union, morphological rescue, threshold search, alternate variant, repeated inference, or access selection driven by annotation overlap/reward.",
+    "source_annotation_used_as_actor_input": false,
+    "run_order": [
+      "sub-PAT22",
+      "sub-PAT25",
+      "sub-PAT26",
+      "sub-PAT27"
+    ],
+    "failure_handling": "Preserve every log and partial output; stop on first inference or source-integrity failure with remaining cases marked not_run_after_failure. No retries/substitutions. Post-hoc target omissions are retained QC flags, not a reason to change or select a proposal."
+  },
+  "subjects": [
+    {
+      "subject": "sub-PAT22",
+      "patient_group": "BTC:sub-PAT22",
+      "outer_role": "development",
+      "outer_role_locked": true,
+      "development_role": "population_training",
+      "eligible_for_external_final": false,
+      "policy_training_allowed": true,
+      "source_manifest": "artifacts/btc-spatial-acquisition-v1/sub-PAT22-source-manifest.json",
+      "source_manifest_sha256": "e1f6fa5c82558bdbaa245223315fac6437b09bcc0938bfe61a3081845a9c72bb",
+      "source_t1": "data/diffusion_source/ds001226-v5.0.1/sub-PAT22/ses-preop/anat/sub-PAT22_ses-preop_T1w.nii.gz",
+      "source_t1_sha256": "6ac1bc950dc2b48709367550b1c740684457fce875e3e402d870d3356282334e",
+      "source_t1_bytes": 7549922,
+      "source_t1_annex_md5": "d0b4e260d84180ed35641855d8822f37",
+      "source_case": "outputs/cases/BTC-sub-PAT22.ressectionlab",
+      "source_case_sha256": "bbcfd3cc5ba817a15580900dcc70f50e155b9cb1a7bc04a90f048396d3a91db9",
+      "source_case_semantic_hash": "sha256:c7cc43e0f109a926c35cd08137d4eeaa035ae11bbcef79628094e7bd775a4c70",
+      "source_case_planning_hash": "sha256:f8af18c982bc786f02086b98bbd7c54498d8af0f8ed52d20e0f89ce32047104b",
+      "output_directory": "outputs/brain-extraction/BTC-spatial-main-v1/sub-PAT22",
+      "proposed_evidence_bundle": "outputs/cases/BTC-sub-PAT22-structural-evidence.ressectionlab",
+      "status_at_declaration": "source_and_bundle_integrity_verified; proposal_not_generated"
+    },
+    {
+      "subject": "sub-PAT25",
+      "patient_group": "BTC:sub-PAT25",
+      "outer_role": "development",
+      "outer_role_locked": true,
+      "development_role": "population_training",
+      "eligible_for_external_final": false,
+      "policy_training_allowed": true,
+      "source_manifest": "artifacts/btc-spatial-acquisition-v1/sub-PAT25-source-manifest.json",
+      "source_manifest_sha256": "1473ee1d337bce1d09bb0ee0bb9bf21e9d84231db83c753b1e5a5b9fcf238920",
+      "source_t1": "data/diffusion_source/ds001226-v5.0.1/sub-PAT25/ses-preop/anat/sub-PAT25_ses-preop_T1w.nii.gz",
+      "source_t1_sha256": "40f786e7fbdfdb036d6409ffe771ec9309d0c424fca88e44e8a42c43c8900562",
+      "source_t1_bytes": 7840879,
+      "source_t1_annex_md5": "5cef3000e15d0c715424d3c19ead5ceb",
+      "source_case": "outputs/cases/BTC-sub-PAT25.ressectionlab",
+      "source_case_sha256": "750087cab2fd80d6daf152147fbfadd562ff8e2c0be630265aeba1ff59250ecc",
+      "source_case_semantic_hash": "sha256:363c4217b6f97f8bd11dab426e83bd7f890639174a4b513ad3158de77868d803",
+      "source_case_planning_hash": "sha256:d0f47da3323e22c1d53d1e62da753aca88bacb099fdbedb956d9653a4a84261b",
+      "output_directory": "outputs/brain-extraction/BTC-spatial-main-v1/sub-PAT25",
+      "proposed_evidence_bundle": "outputs/cases/BTC-sub-PAT25-structural-evidence.ressectionlab",
+      "status_at_declaration": "source_and_bundle_integrity_verified; proposal_not_generated"
+    },
+    {
+      "subject": "sub-PAT26",
+      "patient_group": "BTC:sub-PAT26",
+      "outer_role": "development",
+      "outer_role_locked": true,
+      "development_role": "checkpoint_selection_development",
+      "eligible_for_external_final": false,
+      "policy_training_allowed": false,
+      "source_manifest": "artifacts/btc-spatial-acquisition-v1/sub-PAT26-source-manifest.json",
+      "source_manifest_sha256": "e33f8c6fc60997b93afd2920f4590c316a3bb2a5499d5529dd4eaede7102fc01",
+      "source_t1": "data/diffusion_source/ds001226-v5.0.1/sub-PAT26/ses-preop/anat/sub-PAT26_ses-preop_T1w.nii.gz",
+      "source_t1_sha256": "a27b46c82c4df0b4ebae97b5bea22bb4299abc5086577416c498edfa63879595",
+      "source_t1_bytes": 7679139,
+      "source_t1_annex_md5": "4096e06bea2c2eb8797e8830ea0fd7db",
+      "source_case": "outputs/cases/BTC-sub-PAT26.ressectionlab",
+      "source_case_sha256": "e9d0d9cc393b0cc5594b394fa7e4173c5bee53141ab85c7120eb373fbd8cba7b",
+      "source_case_semantic_hash": "sha256:5908baaf279a303cf79e193a58b7ad8e57d0f316f6159308e81c218d5d7499e0",
+      "source_case_planning_hash": "sha256:16535e752ae2207258b5114a8ce4c308b35530a2ea882ae495889ab5f56c9507",
+      "output_directory": "outputs/brain-extraction/BTC-spatial-main-v1/sub-PAT26",
+      "proposed_evidence_bundle": "outputs/cases/BTC-sub-PAT26-structural-evidence.ressectionlab",
+      "status_at_declaration": "source_and_bundle_integrity_verified; proposal_not_generated"
+    },
+    {
+      "subject": "sub-PAT27",
+      "patient_group": "BTC:sub-PAT27",
+      "outer_role": "development",
+      "outer_role_locked": true,
+      "development_role": "checkpoint_selection_development",
+      "eligible_for_external_final": false,
+      "policy_training_allowed": false,
+      "source_manifest": "artifacts/btc-spatial-acquisition-v1/sub-PAT27-source-manifest.json",
+      "source_manifest_sha256": "c95aaee50921dda1f8a5cb4ec5ea3349d9986e111c7e9be53d0dab208a9a8959",
+      "source_t1": "data/diffusion_source/ds001226-v5.0.1/sub-PAT27/ses-preop/anat/sub-PAT27_ses-preop_T1w.nii.gz",
+      "source_t1_sha256": "f12b9c898194467ef43da71d0f517b24cb57b494b2456acc559bf9473e6e75ab",
+      "source_t1_bytes": 7357615,
+      "source_t1_annex_md5": "42541d52e5940f049cf57fb8cb3f804c",
+      "source_case": "outputs/cases/BTC-sub-PAT27.ressectionlab",
+      "source_case_sha256": "7e4fbde8bcadb12f59dbe512e494cd0280d65981dbbaaa0a5e9995d5c095d6be",
+      "source_case_semantic_hash": "sha256:93c258353a18aa436210f1056ce55b0f85f692fc43d608b1269b02cb4836c53c",
+      "source_case_planning_hash": "sha256:756a7fbb3fc79075a0e036dc5aa3e9cd6e7073f1d8bbe456068319af7dc5cad8",
+      "output_directory": "outputs/brain-extraction/BTC-spatial-main-v1/sub-PAT27",
+      "proposed_evidence_bundle": "outputs/cases/BTC-sub-PAT27-structural-evidence.ressectionlab",
+      "status_at_declaration": "source_and_bundle_integrity_verified; proposal_not_generated"
+    }
+  ],
+  "proposal_integration": {
+    "variant": "main",
+    "working_brain_mask": null,
+    "review_status": "review_required",
+    "provenance": "estimated",
+    "source_bundle_overwrite_allowed": false,
+    "save_reopen_required": true,
+    "preserve_original_MRI_affine_annotations_metadata_and_planning_hash": true,
+    "proposal_ready_status_recorded_separately_from_anatomical_review": true,
+    "predicted_SDT": "Retain source output and exact hash externally; do not imply compact bundle embeds it or that exterior100mmfill is a calibrated clearance."
+  },
+  "required_QC": [
+    "All model/upstream/license/source/interpreter/runner hashes before and after.",
+    "Native shape/affine, maximum eight-corner displacement <=0.01mm, finite predicted SDT and binary nonempty mask.",
+    "Independent SDT<1mm -> largest component -> holefill reconstruction; components, FOV-face contacts and volume.",
+    "After all four model outputs are fixed, report every source-annotation omission using unchanged threshold0.5 as QC only.",
+    "Independent native-plane visual inspection and save/reopen/role/source/planning identity checks; engineering review only."
+  ],
+  "interpretation_limits": {
+    "brain_reviewed": false,
+    "cortex_localized": false,
+    "cortical_access_permitted": false,
+    "working_brain_mask_attached": false,
+    "clinical_deficit_probability": null,
+    "pretrained_segmentation_training_overlap": "Exact released-checkpoint patient membership unverified; no patient-level disjointness claim.",
+    "data_kind": "Estimated support derived from real public preoperative T1; not a synthetic patient.",
+    "readiness": "A retained unreviewed proposal does not establish anatomical approval, surgical safety, or unrestricted planning eligibility."
+  }
+}
