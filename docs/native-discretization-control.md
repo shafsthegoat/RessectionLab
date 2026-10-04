@@ -1,7 +1,9 @@
 # Fixed-scene native discretization control
 
-Prospective numerical unit control required by the October 4 steering; no matrix
-result yet. This is not synthetic training data. Existing native tests already
+Numerical unit control required by the October 4 steering. The
+[executed result](../artifacts/native-discretization-control-v1/RESULT.md) records
+all 16 numerical rows, ten independently passed histories, five rejected strokes
+and one audit cancelled at the declared cap. This is not synthetic training data. Existing native tests already
 cover joint rigid transforms, affine corners, partial-cell retention and causal
 shaft clearance. Jointly rotating cells and the instrument does not test the
 effect of changing how fixed physical anatomy is sampled.

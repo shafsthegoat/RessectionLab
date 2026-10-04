@@ -44,11 +44,13 @@ MAX_PRIOR_PROPOSALS = 16
 MAX_AXIS_INSPECTION_VOXELS = 16_000_000
 MAX_AXIS_INSPECTION_METADATA_BYTES = 256 * 1024
 MAX_AXIS_INSPECTION_RESULT_BYTES = 2 * 1024 * 1024
-OPERATIONS = frozenset({"ping", "loadCase", "importNifti", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "exportCandidate", "shutdown"})
+OPERATIONS = frozenset({"ping", "loadCase", "importNifti", "importStructuralEvidence", "importPriorProposals", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "inspectAxisPlanning", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "evaluateCandidate", "exportCandidate", "shutdown"})
 MAX_RUN_JSON_BYTES = 32 * 1024 * 1024
 RESEARCH_TOOLS = GENERIC_TOOLS + NATIVE_GENERIC_TOOLS
 RUN_INTEGRITY_FILES = {"checkpointSha256": "checkpoint.pt", "contractSha256": "contract.json",
-                       "nativeRequestSha256": "native-request.json", "reportSha256": "native-refinement.json"}
+                       "nativeRequestSha256": "native-request.json", "reportSha256": "native-refinement.json",
+                       "functionalFreezeSha256": "native-functional-freeze.json",
+                       "functionalReportSha256": "native-functional-events.json"}
 
 
 class BridgeError(ValueError):
@@ -677,6 +679,8 @@ class BridgeSession:
         summary = {key: manifest[key] for key in ("runId", "caseHash", "planningHash", "createdAt", "status", "config")}
         summary["clinicalDeficitProbability"] = None
         summary["clinicalRiskReason"] = "no_validated_clinical_outcome_model"
+        summary["evaluationSealed"] = manifest.get("evaluationSealed", False)
+        summary["functionalEvaluationStatus"] = manifest.get("functionalEvaluationStatus", "not_evaluated")
         if manifest.get("lastResumeAttempt") is not None:
             summary["lastResumeAttempt"] = manifest["lastResumeAttempt"]
         if report is not None:
@@ -687,6 +691,8 @@ class BridgeSession:
                 training["replay"].update(stepCount=len(replay["metrics"]["history"]),
                     metrics={key: value for key, value in replay["metrics"].items() if key != "history"},
                     native_certificate=replay["native_certificate"])
+                if replay.get("functional_assessment") is not None:
+                    training["replay"]["functional_assessment"] = replay["functional_assessment"]
             else:
                 training["replay"] = None
             summary["training"] = training
@@ -747,6 +753,8 @@ class BridgeSession:
         resume = args.get("resumeRunId") is not None
         if resume:
             directory, manifest = self._read_run(entry.case, args["resumeRunId"])
+            if manifest.get("evaluationSealed") or (directory / "native-functional-freeze.json").exists():
+                raise BridgeError("RUN_EVALUATION_SEALED", "Independent evaluation has sealed this candidate. Resume its evaluation or inspect the frozen result; optimizer training cannot resume after evaluation worlds are revealed.")
             if manifest.get("checkpointSha256") is None or manifest.get("contractSha256") is None:
                 raise BridgeError("RUN_NOT_RESUMABLE", "Run ended before a checkpoint could be integrity-checked; start a new run")
             for name in ("budgetSeconds", "seed", "routeId"):
@@ -1057,8 +1065,10 @@ class BridgeSession:
                             summary["hasAcceptedReplay"] = False
                     runs.append(summary)
             return {"caseHash": case.semantic_hash, "runs": sorted(runs, key=lambda value: value["createdAt"], reverse=True)}
-        if operation in {"replayTraining", "exportCandidate"}:
-            allowed = {"caseHash", "runId", "step"} if operation == "replayTraining" else {"caseHash", "runId", "path", "overwrite"}
+        if operation in {"replayTraining", "evaluateCandidate", "exportCandidate"}:
+            allowed = ({"caseHash", "runId", "step"} if operation == "replayTraining" else
+                       {"caseHash", "runId"} if operation == "evaluateCandidate" else
+                       {"caseHash", "runId", "path", "overwrite"})
             _keys(args, allowed)
             case = self._get_case(args.get("caseHash")).case
             directory, manifest, report = self._saved_report(case, args.get("runId"), request)
@@ -1067,6 +1077,38 @@ class BridgeSession:
                 raise BridgeError("REPLAY_UNAVAILABLE", "Run has no independently accepted native selection replay")
             from .native_refinement import native_replay_mask, validate_native_replay
             validate_native_replay(case, replay)
+            if operation == "evaluateCandidate":
+                if case.functional_evidence is None:
+                    raise BridgeError("FUNCTIONAL_EVIDENCE_UNAVAILABLE", "Select source-bound functional evidence before evaluating sensitivity; structural-only planning remains unassessed.")
+                from .native_refinement import evaluate_native_refinement_candidate
+                def sealed(_seal):
+                    manifest["evaluationSealed"] = True
+                    manifest["functionalEvaluationStatus"] = "sealed_pending_evaluation"
+                    manifest["functionalFreezeSha256"] = hashlib.sha256(
+                        (directory / "native-functional-freeze.json").read_bytes()).hexdigest()
+                    self._write_run(directory, manifest)
+                progress(0., "Sealing the selected sequence before independent functional sensitivity evaluation")
+                try:
+                    report = evaluate_native_refinement_candidate(case, directory, replay,
+                        cancelled=request.cancelled.is_set, on_seal=sealed,
+                        **self._run_options(manifest["config"], case))
+                except Exception as error:
+                    self.run_reports.pop(manifest["runId"], None)
+                    if manifest.get("evaluationSealed"):
+                        manifest["functionalEvaluationStatus"] = (
+                            "sealed_interrupted" if isinstance(error, InterruptedError) or request.cancelled.is_set()
+                            else "sealed_failed")
+                        self._write_run(directory, manifest)
+                    if isinstance(error, InterruptedError):
+                        raise BridgeError("CANCELLED", str(error)) from error
+                    raise
+                manifest["reportSha256"] = hashlib.sha256((directory / "native-refinement.json").read_bytes()).hexdigest()
+                manifest["functionalReportSha256"] = hashlib.sha256((directory / "native-functional-events.json").read_bytes()).hexdigest()
+                manifest["functionalEvaluationStatus"] = "complete"
+                self._write_run(directory, manifest)
+                self.run_reports[manifest["runId"]] = freeze_json(json.loads(self._json_bytes(report)))
+                return {**self._report_summary(manifest, report),
+                        "functionalAssessment": report["replay"]["functional_assessment"]}
             if operation == "exportCandidate":
                 destination = _path(args.get("path"), kind="json", output=True)
                 if destination.exists() and args.get("overwrite") is not True:
@@ -1104,6 +1146,8 @@ class BridgeSession:
                     "simulatedRemovedNormalVolumeMm3": float(np.count_nonzero(removed & ~target) * volume),
                     "modeledResidualTargetVolumeMm3": float(np.count_nonzero(target & ~removed) * volume),
                     "clinicalDeficitProbability": None, "clinicalRiskReason": "no_validated_clinical_outcome_model",
+                    "functionalAssessment": replay.get("functional_assessment"),
+                    "functionalAssessmentScope": "entire_frozen_sequence_not_current_replay_prefix" if replay.get("functional_assessment") else None,
                     "training": self._report_summary(manifest, report)["training"]}
         raise BridgeError("UNSUPPORTED_OPERATION", "Unknown sidecar operation")
 

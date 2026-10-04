@@ -50,6 +50,28 @@ unknown coverage, and missing patient functional assessment. Map integrals are
 surrogate costs; only explicit scenario-event counts have Monte Carlo intervals.
 Clinical probabilities remain null.
 
+The local bridge operation `evaluateCandidate` accepts `caseHash` and `runId`
+after a completed native checkpoint selection. It seals that exact full-tool
+history, source evidence, footprint and event definitions before revealing the
+run's originally declared final worlds. The current native facade has **three**
+final worlds; this small conditional sensitivity panel does not establish robust
+clinical accuracy. Optimization and selection worlds remain excluded.
+
+The immutable seal and a shared ledger are saved before event computation.
+Cancellation retains this state: repeating evaluation resumes the same frozen
+assessment, while optimizer resume is blocked. No replacement worlds are chosen
+automatically. A different candidate cannot reuse revealed worlds from another
+run in the same local run directory. Headless callers should keep related runs
+under one parent directory to retain this ledger scope.
+
+Replay and export include the complete-sequence report, counts, denominators,
+coverage unknowns, conditional intervals and surrogate mean/tail costs. These
+events describe the whole frozen sequence even when the displayed removal mask
+shows an earlier replay step. Reopening independently recomputes the same events;
+changing reported counts cannot pass merely by recomputing a content hash.
+The bridge signs the seal and report alongside its existing run artifacts.
+Structural-only runs remain unsealed and retain their previous resume behavior.
+
 The local preparation helper `scripts/prepare_functional_sensitivity.py` creates
 a new bundle and receipt from existing proposals with explicit sensitivity
 scales. It performs no new registration, acquisition, expert review or training.

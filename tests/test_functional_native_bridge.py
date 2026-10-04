@@ -154,7 +154,7 @@ def test_desktop_inspection_uses_case_evidence_and_accounts_for_array_memory(tmp
         runtime.close()
 
 
-def test_actual_desktop_checkpoint_disk_recheck_and_export_retain_same_evidence(tmp_path):
+def test_actual_desktop_checkpoint_disk_recheck_and_export_retain_same_evidence(tmp_path, monkeypatch):
     """A bounded analytic integration control, not a learning benchmark."""
     import torch
     torch.set_num_threads(1)
@@ -178,13 +178,44 @@ def test_actual_desktop_checkpoint_disk_recheck_and_export_retain_same_evidence(
         assert trained["training"]["gradient_steps"] > 0
         assert trained["training"]["replay_status"] == "accepted_independent_geometry"
         assert trained["config"]["functionalEvidenceHash"] == evidence_hash
-        runtime.session.run_reports.clear()  # Force actual persisted checkpoint/history checking.
         run = {"caseHash": case.semantic_hash, "runId": trained["runId"]}
+        from resectionlab import native_functional_evaluation as functional
+        original_evaluate = functional._evaluate
+        def interrupt_evaluation(*args, **kwargs):
+            runtime.submit({"id": "cancel-evaluation", "op": "cancel", "args": {
+                "requestId": "evaluate-interrupted"}})
+            raise InterruptedError("analytic cancellation after the durable seal")
+        monkeypatch.setattr(functional, "_evaluate", interrupt_evaluation)
+        runtime.submit({"id": "evaluate-interrupted", "op": "evaluateCandidate", "args": run})
+        assert runtime.wait_idle(10)
+        assert [row["event"] for row in events if row.get("id") == "evaluate-interrupted"
+                and row["event"] in {"result", "error", "cancelled"}] == ["cancelled"]
+        _, sealed_manifest = runtime.session._read_run(case, trained["runId"])
+        assert sealed_manifest["evaluationSealed"] is True
+        assert sealed_manifest["functionalEvaluationStatus"] == "sealed_interrupted"
+        monkeypatch.setattr(functional, "_evaluate", original_evaluate)
+        evaluated = send("evaluate", "evaluateCandidate", run)
+        assert evaluated["evaluationSealed"] is True
+        assessment = evaluated["functionalAssessment"]
+        assert assessment["functional_evidence_hash"] == evidence_hash
+        assert assessment["event_report"]["distinct_anatomy_transforms"] == 3
+        assert assessment["event_report"]["world_partition"]["role"] == "final_evaluation"
+        repeated = send("evaluate-again", "evaluateCandidate", run)
+        assert repeated["functionalAssessment"] == assessment
+        runtime.submit({"id": "cannot-train", "op": "trainPatient", "args": {
+            "caseHash": case.semantic_hash, "resumeRunId": trained["runId"]}})
+        assert runtime.wait_idle(5)
+        rejected = next(row for row in events if row.get("id") == "cannot-train" and row["event"] == "error")
+        assert rejected["error"]["code"] == "RUN_EVALUATION_SEALED"
+        runtime.session.run_reports.clear()  # Force actual persisted checkpoint/history/event checking.
         replayed = send("replay", "replayTraining", run)
         assert replayed["clinicalDeficitProbability"] is None
+        assert replayed["functionalAssessment"] == assessment
+        assert replayed["functionalAssessmentScope"] == "entire_frozen_sequence_not_current_replay_prefix"
         path = tmp_path / "candidate.json"
         send("export", "exportCandidate", {**run, "path": str(path)})
         exported = json.loads(path.read_text())["candidate"]
+        assert exported["functional_assessment"] == assessment
         binding = exported["evidence_and_constraints"]
         assert binding["functional_evidence"]["evidence_hash"] == evidence_hash
         assert binding["world_generator_hash"] == world_hash

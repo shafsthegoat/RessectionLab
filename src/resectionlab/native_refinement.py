@@ -253,14 +253,17 @@ def validate_native_replay(case: Any, replay: dict[str, Any]) -> bool:
         raise ValueError("Native partial-contact totals disagree with retained source history")
     if metrics.get("clinical_deficit_probability") is not None:
         raise ValueError("Clinical deficit probabilities are unsupported")
+    if replay.get("functional_assessment") is not None:
+        from .native_functional_evaluation import validate_assessment_binding
+        validate_assessment_binding(case, replay)
     return True
 
 
-def recheck_native_replay(case: Any, replay: dict[str, Any], *, access=None, tools=None,
+def _recheck_native_replay(case: Any, replay: dict[str, Any], *, access=None, tools=None,
                          cancelled=None, candidate_count: int = 4, max_steps: int = 3,
                          max_actions: int = 7, selected_entry_mm=None,
                          selected_target_mm=None, world_generator=None, hard_exclusion=None,
-                         hard_exclusion_provenance=None) -> dict[str, Any]:
+                         hard_exclusion_provenance=None) -> tuple[Any, dict[str, Any]]:
     """Reopen disk artifacts without trusting their claimed certificate or digest.
 
     Fresh model replay must reproduce the saved native removal history. The
@@ -298,7 +301,63 @@ def recheck_native_replay(case: Any, replay: dict[str, Any], *, access=None, too
     refreshed["native_certificate"] = certificate.to_dict()
     refreshed["artifact_hash"] = replay_artifact_hash(refreshed)
     validate_native_replay(case, refreshed)
-    return refreshed
+    if refreshed.get("functional_assessment") is not None:
+        from .native_functional_evaluation import verify_selected_native_assessment
+        verify_selected_native_assessment(case, refreshed, native, cancelled=cancelled)
+    return template, refreshed
+
+
+def recheck_native_replay(case: Any, replay: dict[str, Any], **options) -> dict[str, Any]:
+    """Reproduce native geometry and any sealed functional events on reopening."""
+    return _recheck_native_replay(case, replay, **options)[1]
+
+
+def evaluate_native_refinement_candidate(case: Any, output_dir: str | Path,
+                                        replay: dict[str, Any], *, cancelled=None,
+                                        on_seal=None, **options) -> dict[str, Any]:
+    """Seal and independently evaluate a fixed selected sequence, without training.
+
+    Use the run's original unused final partition. The optimizer cannot resume
+    after the seal exists, including when evaluation was interrupted.
+    """
+    from .native_functional_evaluation import (evaluate_selected_native_sequence,
+                                              partitions_from_record, replay_source_hash)
+    from .learning import load_policy, policy_hash
+    from .worlds import generate_partitions
+    started = time.perf_counter()
+    directory = Path(output_dir)
+    evidence = getattr(case, "functional_evidence", None)
+    if evidence is None:
+        raise ValueError("Select functional evidence before sealing sensitivity evaluation; structural-only anatomy remains unassessed")
+    request = json.loads((directory / "native-request.json").read_text())["request"]
+    if request.get("case_hash") != case.semantic_hash or request.get("planning_hash") != case.planning_hash:
+        raise ValueError("Native evaluation request belongs to a different case")
+    if policy_hash(load_policy(directory / "checkpoint.pt")) != replay.get("checkpoint_hash"):
+        raise ValueError("Native evaluation checkpoint differs from the selected candidate")
+    report = json.loads((directory / "native-refinement.json").read_text())
+    contract = json.loads((directory / "contract.json").read_text())
+    require_completed_selection_replay(report, contract)
+    if report.get("replay") is None or replay_source_hash(report["replay"]) != replay_source_hash(replay):
+        raise ValueError("Functional evaluation requires the retained selected native sequence")
+    partitions = partitions_from_record(json.loads((directory / "native-world-partitions.json").read_text()))
+    # These are the existing facade's prospective panel sizes, not new worlds
+    # selected after outcomes. An edited partition file cannot redirect them.
+    expected = generate_partitions(case.semantic_hash, evidence.uncertainty, request["seed"],
+        optimization=3, selection=2, final_evaluation=3, stress=2, planning_hash=case.planning_hash)
+    if content_hash(partitions.to_dict()) != content_hash(expected.to_dict()):
+        raise ValueError("Functional evaluation worlds differ from the predeclared native run")
+    template, refreshed = _recheck_native_replay(case, replay, cancelled=cancelled, **options)
+    assessment = evaluate_selected_native_sequence(case, refreshed, template.native_config,
+        partitions, directory, cancelled=cancelled, on_seal=on_seal)
+    refreshed["functional_assessment"] = assessment
+    refreshed["artifact_hash"] = replay_artifact_hash(refreshed)
+    validate_native_replay(case, refreshed)
+    report.update(replay=refreshed, functional_evaluation_status="complete",
+                  functional_evaluation_hash=assessment["assessment_hash"],
+                  functional_evaluation_seconds=time.perf_counter() - started)
+    _write(directory / "native-selection-replay.json", refreshed)
+    _write(directory / "native-refinement.json", report)
+    return report
 
 
 def run_native_refinement(case: Any, output_dir: str | Path, *, budget_seconds: float = 30.,
@@ -319,6 +378,8 @@ def run_native_refinement(case: Any, output_dir: str | Path, *, budget_seconds: 
         raise ValueError("Native refinement needs a nonnegative seed and positive finite budget")
     directory = Path(output_dir)
     directory.mkdir(parents=True, exist_ok=True)
+    if resume and (directory / "native-functional-freeze.json").exists():
+        raise ValueError("FUNCTIONAL_EVALUATION_SEALED: independent worlds have been sealed for this candidate; optimizer resume is unavailable. Resume the same evaluation or keep the frozen result.")
     request_path = directory / "native-request.json"
     request = {"schema_version": 1, "case_hash": case.semantic_hash, "planning_hash": case.planning_hash,
         "seed": seed, "budget_seconds": float(budget_seconds),
