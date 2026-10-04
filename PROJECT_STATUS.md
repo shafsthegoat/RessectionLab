@@ -315,8 +315,11 @@ Independent saved-result review verified both instrumented arm64 binaries,
 all eighteen control inputs and exact expected logs without rerunning them.
 The final runtime-v3 declaration now binds that accepted evidence; nine narrow
 binding checks pass, including rejection of failed or mismatched receipts.
-The original prospective declaration is preserved. Configure and build are
-the next separately bounded stages; neither has executed at this checkpoint.
+The original prospective declaration is preserved. Isolated configuration then
+passed in 8.050 s at 134.5 MB sampled group memory. All 6,164 original acquisition
+entries and 1,037 installed entries remained unchanged; the new 2,322-file source
+inventory differs only in the declared adapter. The separately bounded build
+is now running; no new runtime execution or numerical result is claimed.
 
 The optional backend comparison/access integration passed 127 focused checks
 including 14 independent controls. It now verifies the actual accepted build,

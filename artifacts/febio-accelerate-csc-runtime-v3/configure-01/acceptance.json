@@ -1,0 +1,22 @@
+{
+  "artifacts": {
+    "commands.json": "41c6d1ca374f2f9098197a1c82b6f3cf37e5b6b0f100cd943a5c7f9c27127dcc",
+    "result.json": "244f5e579773e55b47c12655df0c37083066317da4c03b4d9829a90b08285cdd",
+    "source-inventory.json": "4245a2b18b0e34188aa451bea3b5f568e01ade4ac6b20fcdcbcc855813f04b20",
+    "source-preparation.json": "8712f27b4806be9e833de332bc8f7edcf0dd764f49e0425f71b36087d54b1e28",
+    "supervision.json": "a7a8ff67ed8b14466a03239a38d11cae161cfba4ca2112c470f062a1040e3bc1",
+    "verified-cache.json": "ac4aab1227f303eebd8a9c720a33cbac8a7f4dc47f77401e41ec13f7ceba17e7"
+  },
+  "declaration_sha256": "273db5b32077017730bb8c2fafe9fb360d19439005ddfc977d84c45f7c379763",
+  "driver_sha256": "ba94376626a0c9a1a78b81368f60b752e2fcd320f822418934c75bfcd6d80a46",
+  "error": null,
+  "parent_original_after": {
+    "acquisition_entries_verified": 6164,
+    "input_inventory_sha256": "fab8804506c3698c60b17d3f3beabbadcb776af7b55cf5cce8b914807270b363",
+    "original_install_entries_verified": 1037,
+    "original_runtime_identity_sha256": "f560f386726d13b399bcfb0c781a4b78104deecf41aa977e0efe205f18fabfc4"
+  },
+  "solver_executed": false,
+  "stage": "configure",
+  "status": "completed"
+}

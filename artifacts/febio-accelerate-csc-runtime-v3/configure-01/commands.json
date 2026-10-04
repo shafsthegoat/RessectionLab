@@ -1,0 +1,52 @@
+{
+  "commands": [
+    [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/tools/cmake/data/bin/cmake",
+      "-S",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/source",
+      "-B",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/build",
+      "-G",
+      "Unix Makefiles",
+      "-DCMAKE_BUILD_TYPE=Release",
+      "-DCMAKE_CXX_COMPILER=/Library/Developer/CommandLineTools/usr/bin/clang++",
+      "-DCMAKE_CXX_FLAGS=-I/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/include",
+      "-DCMAKE_C_COMPILER=/Library/Developer/CommandLineTools/usr/bin/clang",
+      "-DCMAKE_C_FLAGS=-I/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/include",
+      "-DCMAKE_FIND_USE_CMAKE_ENVIRONMENT_PATH=OFF",
+      "-DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF",
+      "-DCMAKE_FIND_USE_SYSTEM_PACKAGE_REGISTRY=OFF",
+      "-DCMAKE_INSTALL_PREFIX=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install",
+      "-DCMAKE_INSTALL_RPATH=@loader_path;@executable_path/../lib;/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib",
+      "-DCMAKE_OSX_ARCHITECTURES=arm64",
+      "-DCMAKE_OSX_SYSROOT=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "-DOMP_INC=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/include",
+      "-DOpenMP_CXX_FLAGS=-Xpreprocessor -fopenmp -I/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/include",
+      "-DOpenMP_CXX_INCLUDE_DIR=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/include",
+      "-DOpenMP_CXX_LIB_NAMES=omp",
+      "-DOpenMP_C_FLAGS=-Xpreprocessor -fopenmp -I/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/include",
+      "-DOpenMP_C_INCLUDE_DIR=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/include",
+      "-DOpenMP_C_LIB_NAMES=omp",
+      "-DOpenMP_omp_LIBRARY=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib/libomp.dylib",
+      "-DSET_DEVCOMMIT=OFF",
+      "-DUSE_FFTW=OFF",
+      "-DUSE_HYPRE=OFF",
+      "-DUSE_LEVMAR=OFF",
+      "-DUSE_MKL=OFF",
+      "-DUSE_MMG=OFF",
+      "-DUSE_NLOPT=OFF",
+      "-DUSE_PDL=OFF",
+      "-DUSE_SUPERLU_MT=OFF",
+      "-DUSE_ZLIB=OFF"
+    ]
+  ],
+  "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+  "sanitizer": "reviewed private_environment plus isolated Python/LD startup removals",
+  "thread_environment": {
+    "MKL_NUM_THREADS": "1",
+    "OMP_DYNAMIC": "FALSE",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  }
+}
