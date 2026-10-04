@@ -18,3 +18,21 @@ Two prototype limitations must be corrected before reuse, without rewriting the 
 - Out-of-image columns are silently skipped. All thirteen offsets are in bounds in these runs, but reusable output should give explicit exclusion reasons and denominators.
 
 Run the lightweight audit from the repository root with `.venv/bin/python artifacts/native-frontier-expansion-v1/independent-audit/audit.py`. It reads compressed histories so it works with the versioned clean-clone files. The accompanying `report.json` is its machine-readable receipt. Production files and original results were not modified.
+
+## Reproducibility correction — October 4, 2026
+
+The preceding clean-clone claim is superseded. The original audit reads its
+three expanded-candidate gzip files correctly, but it reads the earlier fixed
+SEARCH replay only from
+`artifacts/learning/procedural-native-to-ucsf-v2/comparison/development-geometry-e8a2cc46-0d88-4fc3-93be-176711ee19aa/native-history-replay.json`.
+Git tracks that replay as `.json.gz`; the raw JSON is ignored. This audit also
+requires the ignored `artifacts/learning/procedural-native-to-ucsf-v2/frozen-source/`
+runtime and `source-case.ressectionlab` bundle. A fresh clone alone does not
+supply those inputs.
+
+The [current reconstruction guide](../../../docs/artifact-reproducibility.md)
+identifies recorded source commits, checksum requirements and the separate
+checkpoint prerequisites of the earlier learning audit. Its report generator
+already supports tracked gzip evidence. This correction comes from static
+inspection; the audit was not rerun, and its original `audit.py`, `report.json`
+and experiment records remain unchanged.

@@ -6,7 +6,21 @@ remains a reference artifact; it is not the current desktop architecture.
 ## Reproduce locally
 
 Use Python 3.12 with the repository's numerical dependencies and PyInstaller,
-and Node 24 with pnpm. From the repository root:
+and Node 24 with pnpm. First complete the Python environment setup in the
+[local development guide](../README.md#local-development). The real-imaging
+verifier below requires `outputs/cases/UCSF-PDGM-0004.ressectionlab`, which is
+excluded from Git. Prepare that public structural-mirror fixture from the
+repository root before running `verify-sidecar.cjs`:
+
+```sh
+.venv/bin/python scripts/acquire_public_case.py --inspect-nifti
+.venv/bin/python scripts/prepare_case.py
+```
+
+The [acquisition guide](data_acquisition.md) records its provenance and limits;
+equivalence to official TCIA bytes remains unverified. This fixture is required
+by the real-imaging verifier, while the app's synthetic fixture can be opened
+without downloading imaging. Then, from the repository root:
 
 ```sh
 cd desktop
@@ -36,6 +50,8 @@ The native launch accepts `--case /absolute/path/to/case.ressectionlab` or
 `--demo`. Omitting both starts an empty workspace. Developer ID signing and
 Apple notarization have not been performed; the build uses local ad-hoc signing.
 This is an Apple Silicon research build, not a clinically validated release.
+Historical scientific report regeneration and audit reconstruction have separate
+input requirements; see [artifact reproducibility](artifact-reproducibility.md).
 
 ## Build and scientific scope
 
