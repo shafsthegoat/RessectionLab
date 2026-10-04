@@ -1,0 +1,12 @@
+{
+  "case_hash": "sha256:4eb13b48fe3a10d3f9b3c4506eb1fffc37c733beb073cebddb4d8245a80a7378",
+  "case_id": "synthetic_geometry_demo",
+  "budget_seconds": 15,
+  "seed": 8,
+  "block_size": 4,
+  "mode": "PATIENT_SCRATCH_RL",
+  "scope": "coarse_annotation_assisted_structural_research",
+  "interpretation": "deterministic optimization; different seeds are not anatomical uncertainty",
+  "clinical_deficit_probability": null,
+  "final_evaluation_used_for_selection": false
+}

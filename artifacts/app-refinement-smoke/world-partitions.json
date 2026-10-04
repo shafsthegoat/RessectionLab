@@ -1,0 +1,136 @@
+{
+  "optimization": {
+    "role": "optimization",
+    "case_hash": "sha256:4eb13b48fe3a10d3f9b3c4506eb1fffc37c733beb073cebddb4d8245a80a7378",
+    "planning_hash": "sha256:f17fea628aa2fab55534af5097480a8c720aac132cac1eeabcef9dbbac18ccbb",
+    "generator": {
+      "family": "rigid_gaussian",
+      "translation_scale_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_scale_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_center_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "version": "rigid-registration-v1",
+      "parameter_basis": "declared_uncalibrated_sensitivity_scenario"
+    },
+    "seeds": [
+      17582688545676460574,
+      5662293076801920451,
+      1299796518808071937,
+      411361430556103354,
+      8840703982096520866,
+      1729252498986490795,
+      15177399738151434596,
+      11006559995984625155
+    ],
+    "interpretation": "deterministic_optimization"
+  },
+  "selection": {
+    "role": "selection",
+    "case_hash": "sha256:4eb13b48fe3a10d3f9b3c4506eb1fffc37c733beb073cebddb4d8245a80a7378",
+    "planning_hash": "sha256:f17fea628aa2fab55534af5097480a8c720aac132cac1eeabcef9dbbac18ccbb",
+    "generator": {
+      "family": "rigid_gaussian",
+      "translation_scale_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_scale_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_center_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "version": "rigid-registration-v1",
+      "parameter_basis": "declared_uncalibrated_sensitivity_scenario"
+    },
+    "seeds": [
+      16623924144324357905,
+      12026467346805742221
+    ],
+    "interpretation": "deterministic_optimization"
+  },
+  "final_evaluation": {
+    "role": "final_evaluation",
+    "case_hash": "sha256:4eb13b48fe3a10d3f9b3c4506eb1fffc37c733beb073cebddb4d8245a80a7378",
+    "planning_hash": "sha256:f17fea628aa2fab55534af5097480a8c720aac132cac1eeabcef9dbbac18ccbb",
+    "generator": {
+      "family": "rigid_gaussian",
+      "translation_scale_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_scale_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_center_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "version": "rigid-registration-v1",
+      "parameter_basis": "declared_uncalibrated_sensitivity_scenario"
+    },
+    "seeds": [
+      11994795330470303133,
+      16728967000154108603,
+      15683159048876222405,
+      12314506827120449734,
+      3423759662959618063,
+      13490215373239362395,
+      4280153141501320917,
+      15643427493136074930
+    ],
+    "interpretation": "deterministic_optimization"
+  },
+  "stress": {
+    "role": "stress",
+    "case_hash": "sha256:4eb13b48fe3a10d3f9b3c4506eb1fffc37c733beb073cebddb4d8245a80a7378",
+    "planning_hash": "sha256:f17fea628aa2fab55534af5097480a8c720aac132cac1eeabcef9dbbac18ccbb",
+    "generator": {
+      "family": "rigid_uniform",
+      "translation_scale_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_scale_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_center_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "version": "rigid-registration-v1",
+      "parameter_basis": "declared_uncalibrated_sensitivity_scenario"
+    },
+    "seeds": [
+      13750721699182182831,
+      2903289384720396832,
+      2539823578997615565,
+      17833911451776621786
+    ],
+    "interpretation": "deterministic_optimization"
+  }
+}

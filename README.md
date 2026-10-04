@@ -14,6 +14,12 @@ geometry, patient-specific training, evidence and independent validation. The
 earlier Qt prototype is retained as a tested historical reference; it is no
 longer the product interface target. See `desktop/` for the new application.
 
+The standalone Electron app has passed real MRI loading, full-tool route
+comparison and native workspace-save checks on this Mac. Its Python training
+bridge separately passes actual patient-update and independent native-replay
+checks. See [Electron packaging](docs/electron-packaging.md) for building and
+validating each complete app snapshot.
+
 ## Local development
 
 The initial tested dependency environment is Apple Silicon, macOS 26.6 and
@@ -31,6 +37,22 @@ machine. It is not evidence that every dependency combination or platform is
 validated. It includes historical Qt development dependencies, which are now a
 separate `legacy-qt` optional extra and are not required by the numerical engine.
 Mac application packaging is a separate acceptance gate for each interface.
+
+For the current desktop interface, install Node and pnpm, then run:
+
+```sh
+cd desktop
+pnpm install --frozen-lockfile
+pnpm test:main
+pnpm test:renderer
+pnpm build
+pnpm start
+```
+
+The development app uses the repository's isolated Python environment. The
+packaged app bundles its own numerical engine. `pnpm dev` serves an explicitly
+read-only browser preview when an ignored public-case export is available;
+native open/save and scientific operations run in Electron.
 
 ## Public development cases
 
