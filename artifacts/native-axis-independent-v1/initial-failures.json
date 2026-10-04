@@ -1,0 +1,13 @@
+{
+  "status": "failed",
+  "command": ".venv/bin/python -m pytest -q tests/test_native_axis_independent.py -k 'interrupted_reset or raising_preview'",
+  "observed_result": "4 failed, 13 deselected in 1.41s",
+  "source_snapshot_sha256": "80761dac150dc7bd1ee0342a00869d425c5e956d1d98f95481af4fddc2a8540e",
+  "tested_failure_cases": [
+    "interrupted reset permits partial-contact tamper under missing episode seal",
+    "interrupted reset permits total reward=999 under missing episode seal",
+    "interrupted reset permits replacement hidden-world array under missing hidden descriptor",
+    "raising native preview increments preview_calls but leaves attempts empty"
+  ],
+  "scope": "tiny synthetic only; no training/patient simulation/performance benchmark"
+}

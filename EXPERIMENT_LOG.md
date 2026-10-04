@@ -756,3 +756,25 @@ aliases and final reservations remain unchanged. This is not five UCSF cases,
 a tract-aware cohort or an independent clinical validation set. Source imaging
 and case bundles remain outside Git; acquisition, independent QC and registry
 receipts are linked from `docs/data_acquisition_pat16_pat20.md`.
+
+## October 4, 2026 — isolated dynamic-action adapter, analytic validation
+
+A separately versioned RAW-only axis-column simulator now presents the same
+ordered, certified action inventory to search and the shared learner interface.
+It retains native geometry/reward/feature semantics, owns reset/fresh/clone,
+accounts for every primary/fallback check, refuses partial cancelled inventories,
+and preserves existing fixed-route, procedural-checkpoint and feature-unit gates.
+Post-commit interruption carries the actual committed transition; resumable
+handling needs a separately reviewed runner, and generic learning currently
+regards that interruption as a failed run.
+
+Independent review found three defects before patient execution: interrupted
+reset left integrity checks uninitialized; a raising geometry call was missing
+from the attempt ledger; and a forged transient observation cache could pair
+false removal cells with a genuine certificate ID. Five failing cases and both
+pre-fix source versions are retained. The repaired adapter passed 29 new tiny
+analytic tests (including 19 independent adversaries) and 29 unchanged-native,
+selected-route and policy-profile compatibility tests. Independent native replay
+passed on the analytic fixture. No patient execution, training or throughput
+claim is made. Source, limits and review records are in
+`docs/native-axis-adapter-design.md` and `artifacts/native-axis-independent-v1/`.

@@ -1,11 +1,13 @@
 # Separate native axis-column adapter
 
-Status: design only; implementation has not started. Begin this isolated slice
-only after the [standalone proposer's](experimental-native-proposals.md) repair
-tests pass and the current registered study finishes. This document records the
-integration decision, not a replacement project plan.
+Status: the isolated adapter is implemented in `native_axis_simulation.py` after
+the [standalone proposer's](experimental-native-proposals.md) repair tests and
+the preceding registered study completed. Tiny analytic and independent
+adversarial tests exercise the adapter; patient training and desktop integration
+remain unstarted. This document records one integration slice, not a replacement
+project plan.
 
-Introduce a separately versioned, RAW-only `AxisColumnNativeSimulator` using the
+The separately versioned, RAW-only `AxisColumnNativeSimulator` uses the
 existing native engine and contained-cell reward/observation semantics. Preserve
 `NativeSequentialSimulator`, its fixed-route model, shared learners and existing
 study contracts. The new adapter needs its own constructor; passing dummy target
@@ -77,9 +79,50 @@ Keep this adapter outside the desktop and exact selected-route refinement: its
 neighboring columns deliberately broaden the action model. Use a separate
 experimental factory and output namespace.
 
-Before any new training, verify SEARCH/RL inventory equality, strict fallback
+Before any new training, retain checks for SEARCH/RL inventory equality, strict fallback
 eligibility, action/certificate caps, stale-ID and tampered-cavity rejection,
 clone isolation, reset/fresh replay, cancellation without partial publication,
 frozen model identity, and independent native replay of executed histories.
 Measure integrity and preview costs separately; no performance claim follows
-from this static review.
+from the implementation or tiny-fixture checks.
+
+## Experimental API and current limits
+
+Construct `AxisColumnNativeSimulator(native_config, proposal_config=rule, ...)`
+with an explicit native configuration and optional nominal evidence, frozen
+reward/world configuration, horizon and cancellation callback. It exposes the
+existing observation/step protocol and native search methods can consume its
+clones. `fresh()` preserves missing evidence and the dynamic backend; changing
+the horizon or world configuration creates a different model identity. No
+factory silently broadens a selected patient route.
+
+`metrics()` exports complete inventory receipts with the original provider
+ledger, attempted primary/fallback previews, accepted action IDs and interrupted
+status. Proposal accounting separates integrity calls/time from preview
+calls/time. Metrics reads themselves verify the cavity and therefore increment
+integrity accounting. Timings are diagnostics, not action identifiers or rewards.
+One observation validates its inventory once and reuses that tuple during the
+three synchronous inherited feature passes; subsequent public accesses validate
+again. Adapter history, partial-contact accounting, derived volume arrays and
+the sampled episode world are also guarded against mutation.
+
+An interrupted reset leaves the episode unavailable until an explicit successful
+reset. Observation, action, clone, fresh and metrics access cannot continue with
+partially initialized guards. The transient feature-pass inventory is usable
+only inside its guarded synchronous observation read; injecting it outside that
+context or executing a transition during the read is rejected.
+
+Cancellation before commit leaves tissue unchanged and publishes no incomplete
+inventory. If cancellation arrives after a native commit while the next
+observation is being prepared, `CommittedTransitionInterrupted` explicitly
+carries the committed transition and reward. The history and removal remain
+available; rollback is never implied. The unchanged generic learner treats this
+exception as a failed run, so resumable cancellation needs a separately reviewed
+experimental runner before patient training.
+
+Before declaring any patient budget, measure a complete initial inventory,
+complete episode and complete selection panel under this new model. Do not
+inherit the earlier 30-second study window or claim policy updates when its
+initial selection/episode cannot finish. The separate provider observation
+already found material whole-grid integrity cost; there is no patient-adapter
+throughput result yet.

@@ -95,6 +95,14 @@ per call; cumulative process peak RSS was 1.16 GiB. Initial and post-cut proposa
 inventories matched the frozen prototype. These are individual local timings,
 not a latency distribution or isolated allocation measurement.
 
+A separate RAW-only simulator adapter now supplies that inventory to the common
+search/learner interface while retaining the native cutting engine. Twenty-nine
+new analytic checks and 29 compatibility checks pass; the independent review's
+19 cases are included in the new checks. Failed-reset integrity, preview-error
+accounting and transient-cache defects were caught, repaired and preserved as
+negative evidence. This adapter has not run on a patient or entered the desktop,
+and existing procedural checkpoints and feature-unit gates remain unchanged.
+
 ## Verified starting state
 
 - Repository initially contained only the three specifications and two commits.
