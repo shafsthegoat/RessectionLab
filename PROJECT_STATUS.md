@@ -71,11 +71,16 @@ limitations, not patient training or clinical accuracy results. See
 `artifacts/native-discretization-control-v1/RESULT.md`.
 
 The real spatial adapter now accepts an explicitly bound, provisional research
-envelope without promoting expert-review status. PAT05 main SynthStrip support
-and hypothetical access are declared for the next zero-update native profile;
-scan normalization uses only permitted support intensities. Its fixed 32³ crop
-contains 24.36% of the supplied target, and also limits proposal reach. Profile
-execution and substantive real-patient training remain pending.
+envelope without promoting expert-review status. The first PAT05 profile from
+committed `8aeb3be` failed at the native orthogonal-affine guard in 3.148 seconds,
+before candidate previews, policy calls, transitions or optimizer updates.
+The original bundle and all 53 numerical source files stayed unchanged; there
+was no retry. Its fixed 32³ crop contains 24.36% of the supplied target and also
+limits proposal reach. A separately declared, bounded reconciliation of source
+header roundoff is under review; the failed profile remains negative evidence.
+Scan normalization uses only permitted support intensities. Substantive
+real-patient spatial training remains pending. See
+`artifacts/pat05-real-spatial-profile-v1/outcome.json`.
 
 The first real TRAIN PAT22 inference profile completed all four declared cells
 in 6.247 seconds with unchanged model parameters. One CPU call took 28–30 ms
