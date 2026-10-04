@@ -356,7 +356,8 @@ def _tool_dimensions(tool: Any) -> tuple[float, float, float, float]:
 
 
 def _cell_collision(scene: Any, a: np.ndarray, b: np.ndarray,
-                    radius: float) -> tuple[float, float, float] | None:
+                    radius: float, *, _batch_size: int | None = None,
+                    _cancelled: Callable[[], bool] | None = None) -> tuple[float, float, float] | None:
     mask = np.asarray(scene.forbidden_mask, bool)
     affine = np.asarray(scene.affine, float)
     if mask.ndim != 3 or affine.shape != (4, 4) or not np.isfinite(affine).all() or not np.allclose(affine[3], [0, 0, 0, 1]):
@@ -373,12 +374,78 @@ def _cell_collision(scene: Any, a: np.ndarray, b: np.ndarray,
     if np.any(hi < lo):
         return None
     slices = tuple(slice(int(l), int(h) + 1) for l, h in zip(lo, hi))
-    for index in np.argwhere(mask[slices]) + lo:
+    cell_indices = np.argwhere(mask[slices]) + lo
+    if _batch_size is not None:
+        for hits in _batch_cell_contacts(a_local, b_local, cell_indices, spacing, radius,
+                                        1e-10, _batch_size, _cancelled, first_only=True):
+            point = affine[:3, :3] @ hits[0] + affine[:3, 3]
+            return tuple(float(v) for v in point)
+        return None
+    for index in cell_indices:
         center = index * spacing
         if segment_box_distance_sq(a_local, b_local, center - spacing / 2, center + spacing / 2) <= radius * radius + 1e-10:
             point = affine[:3, :3] @ index + affine[:3, 3]
             return tuple(float(v) for v in point)
     return None
+
+
+def _batch_cell_contacts(start: np.ndarray, end: np.ndarray, cell_indices: np.ndarray,
+                         spacing: np.ndarray, radius: float, tolerance_sq: float,
+                         batch_size: int, cancelled: Callable[[], bool] | None, *,
+                         first_only: bool = False):
+    """Bound box construction, retaining the caller's current occupancy/order.
+
+    Voxel enumeration is unchanged from the scalar checker. No distance, scene,
+    contact, or feasibility result is retained between calls or microsteps.
+    """
+    from .independent_geometry_batch import (
+        IndependentBatchCancelled, first_segment_box_contact, segment_box_contact_indices,
+    )
+
+    if cancelled is not None and cancelled():
+        raise IndependentBatchCancelled("Independent geometry batch cancelled")
+    for offset in range(0, len(cell_indices), batch_size):
+        cells = cell_indices[offset:offset + batch_size]
+        centers = cells * spacing
+        lower, upper = centers - spacing / 2, centers + spacing / 2
+        if first_only:
+            row = first_segment_box_contact(start, end, lower, upper, radius,
+                tolerance_sq=tolerance_sq, batch_size=batch_size, cancelled=cancelled)
+            if row is not None:
+                yield cells[row:row + 1]
+                return
+        else:
+            rows = segment_box_contact_indices(start, end, lower, upper, radius,
+                tolerance_sq=tolerance_sq, batch_size=batch_size, cancelled=cancelled)
+            if len(rows):
+                yield cells[rows]
+
+
+def _native_active_contacts(remaining: np.ndarray, rotation: np.ndarray,
+                            spacing: np.ndarray, origin: np.ndarray,
+                            start: np.ndarray, end: np.ndarray, radius: float, *,
+                            distance_backend: str, distance_batch_size: int,
+                            cancelled: Callable[[], bool] | None) -> set[tuple[int, int, int]]:
+    """Exact active-contact set against the current pre-removal source mask."""
+    start_local = rotation.T @ (start - origin)
+    end_local = rotation.T @ (end - origin)
+    low = np.maximum(np.floor((np.minimum(start_local, end_local) - radius) / spacing - .5).astype(int), 0)
+    high = np.minimum(np.ceil((np.maximum(start_local, end_local) + radius) / spacing + .5).astype(int), np.asarray(remaining.shape) - 1)
+    result = set()
+    if np.any(high < low):
+        return result
+    region = tuple(slice(int(a), int(b) + 1) for a, b in zip(low, high))
+    cell_indices = np.argwhere(remaining[region]) + low
+    if distance_backend == "batch":
+        for hits in _batch_cell_contacts(start_local, end_local, cell_indices, spacing,
+                                        radius, 1e-9, distance_batch_size, cancelled):
+            result.update(tuple(int(v) for v in index) for index in hits)
+        return result
+    for index in cell_indices:
+        center = index * spacing
+        if segment_box_distance_sq(start_local, end_local, center - spacing / 2, center + spacing / 2) <= radius**2 + 1e-9:
+            result.add(tuple(int(v) for v in index))
+    return result
 
 
 def _sphere_collision(scene: Any, a: np.ndarray, b: np.ndarray,
@@ -777,7 +844,9 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
                                      tissue_mask: np.ndarray, access: Any,
                                      hard_exclusion: np.ndarray | None = None,
                                      geometry_frame: str = "RAS+",
-                                     cancelled: Callable[[], bool] | None = None) -> NativeRemovalAudit:
+                                     cancelled: Callable[[], bool] | None = None,
+                                     distance_backend: str = "scalar",
+                                     distance_batch_size: int = 256) -> NativeRemovalAudit:
     """Independent source-cell audit of the native contained-cell cutting model.
 
     All tissue removed in a microstep must be fully inside its active capsule and
@@ -790,12 +859,25 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
     Tool poses and access use ``geometry_frame`` (RAS+ by default); source cells
     are never resampled. Each recorded entry is checked on the same access plane
     and the complete tool must fit the aperture throughout its stroke.
+
+    ``distance_backend='batch'`` explicitly opts into bounded distance batches
+    for active contacts and the pre-removal shaft scan only. Scalar remains the
+    default and near-threshold oracle; hard-exclusion and general motion checks
+    remain scalar. The backend and batch size belong in experiment metadata;
+    scientific certificate fields are unchanged. No occupancy is cached.
     """
     from collections import deque
     from itertools import product
     from scipy.ndimage import binary_propagation, generate_binary_structure
     from types import SimpleNamespace
     from .geometry import ToolPose
+    from .independent_geometry_batch import IndependentBatchCancelled, MAX_BATCH_SIZE
+
+    if not isinstance(distance_backend, str) or distance_backend not in {"scalar", "batch"}:
+        raise ValueError("Native distance backend must be 'scalar' or 'batch'")
+    if isinstance(distance_batch_size, (bool, np.bool_)) or not isinstance(distance_batch_size, (int, np.integer)) or not 1 <= distance_batch_size <= MAX_BATCH_SIZE:
+        raise ValueError(f"Native distance_batch_size must be an integer in [1, {MAX_BATCH_SIZE}]")
+    distance_batch_size = int(distance_batch_size)
 
     original = np.asarray(tissue_mask)
     if original.shape != case.mri.shape or original.dtype != np.bool_:
@@ -851,21 +933,6 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
         if len(np.unique(array, axis=0)) != len(array):
             raise ValueError("Duplicate source-cell indices in native microstep")
         return array
-
-    def actual_contacts(start: np.ndarray, end: np.ndarray, radius: float) -> set[tuple[int, int, int]]:
-        start_local = rotation.T @ (start - matrix[:3, 3])
-        end_local = rotation.T @ (end - matrix[:3, 3])
-        low = np.maximum(np.floor((np.minimum(start_local, end_local) - radius) / spacing - .5).astype(int), 0)
-        high = np.minimum(np.ceil((np.maximum(start_local, end_local) + radius) / spacing + .5).astype(int), np.asarray(remaining.shape) - 1)
-        result = set()
-        if np.any(high < low):
-            return result
-        region = tuple(slice(int(a), int(b) + 1) for a, b in zip(low, high))
-        for index in np.argwhere(remaining[region]) + low:
-            center = index * spacing
-            if segment_box_distance_sq(start_local, end_local, center - spacing / 2, center + spacing / 2) <= radius**2 + 1e-9:
-                result.add(tuple(int(v) for v in index))
-        return result
 
     for record in history:
         if record.get("action_id") == "STOP":
@@ -948,7 +1015,12 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
                 if reached != keys:
                     return report("disconnected_native_removal", action_id, next(iter(keys - reached)))
             contacts = {tuple(int(v) for v in index) for index in indices(micro.get("contact_indices_native", ()))}
-            omitted = actual_contacts(start, end, tip_radius) - contacts - keys
+            try:
+                omitted = _native_active_contacts(remaining, rotation, spacing, matrix[:3, 3],
+                    start, end, tip_radius, distance_backend=distance_backend,
+                    distance_batch_size=distance_batch_size, cancelled=cancelled) - contacts - keys
+            except IndependentBatchCancelled:
+                return report("independent_validation_cancelled", action_id)
             if omitted:
                 return report("unrecorded_partial_active_tissue_contact", action_id, next(iter(omitted)))
             certificate = independent_check_motion(tool, ToolPose(tip_start, axis), ToolPose(tip_end, axis),
@@ -960,8 +1032,16 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
             # borrowing, which an optimizer could exploit by using long steps.
             tissue_scene = SimpleNamespace(forbidden_mask=remaining, affine=matrix,
                                            sphere_obstacles=(), enforce_tip_in_bounds=False)
-            shaft_collision = _cell_collision(tissue_scene,
-                tip_start - length * axis, tip_end - tip_length * axis, shaft_radius)
+            try:
+                if distance_backend == "batch":
+                    shaft_collision = _cell_collision(tissue_scene,
+                        tip_start - length * axis, tip_end - tip_length * axis, shaft_radius,
+                        _batch_size=distance_batch_size, _cancelled=cancelled)
+                else:
+                    shaft_collision = _cell_collision(tissue_scene,
+                        tip_start - length * axis, tip_end - tip_length * axis, shaft_radius)
+            except IndependentBatchCancelled:
+                return report("independent_validation_cancelled", action_id)
             if shaft_collision is not None:
                 return report("native_shaft_collides_with_remaining_tissue", action_id)
             if keys:

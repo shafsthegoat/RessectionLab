@@ -59,7 +59,12 @@ tissue, all-corner containment, aperture/hard exclusions, frontier connectivity,
 and prior-tissue swept-shaft checks. This prototype alone establishes none of
 those integration equivalences.
 
-## Narrow integration proposal — not implemented
+## Narrow integration proposal and subsequent opt-in implementation
+
+The proposal below led to the separately documented
+[opt-in native-history backend](independent-native-batch.md). Its default remains
+scalar; no full-size history timing has run. The original standalone prototype
+and its saved run are preserved.
 
 After the PAT05 v2 source archive is frozen, move the reviewed numerical kernel
 into `src/resectionlab/independent_geometry_batch.py`. Add an explicit opt-in

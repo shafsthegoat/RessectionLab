@@ -1,0 +1,52 @@
+{
+  "artifact_sha256": {
+    "artifacts/independent-native-batch-review-v1/attempt-01.json": "a7c6d00f17935b5c4f6d85161df76dcc57e6514fcfef744318e0d3eb74d8b69c",
+    "artifacts/independent-native-batch-review-v1/attempt-01.txt": "7306c451bb513ed5c35eb40b157366cc9a9a182e30217ba341db4d06d3380787",
+    "artifacts/independent-native-batch-review-v1/attempt-02-baseline.json": "75c969271ba46a63b2f540824a429ccc0090985d2f24abad316c4459add24462",
+    "artifacts/independent-native-batch-review-v1/attempt-02.json": "a7c6d00f17935b5c4f6d85161df76dcc57e6514fcfef744318e0d3eb74d8b69c",
+    "artifacts/independent-native-batch-review-v1/attempt-02.txt": "9c249ffb3daf6df5a851fc5ddddf040a38974a8ae6ea2224b1488f8b692f7606",
+    "artifacts/independent-native-batch-review-v1/baseline.json": "a26d0c0d470840fd28c7d7fc25e2942e8f7233962d85a0883cbccffeea75f4d7",
+    "artifacts/independent-native-batch-v1/owner-attempt-01/baseline.json": "8edf51e5e290f38f7781e3e5b21b95271b1a5f308b2946f876279aaa8ae68027",
+    "artifacts/independent-native-batch-v1/owner-attempt-01/receipt.json": "6a8f1cf531ed4831380d9c8e07359388f17dc3ed43c6a2b06eb51fdf0375df10",
+    "artifacts/independent-native-batch-v1/owner-attempt-01/tests.txt": "61e89c1c469b0a3f8fd92a34dca133ad4d89784aa842509f721e10e807c4f058"
+  },
+  "attempts": [
+    {
+      "file": "attempt-01.txt",
+      "outcome": "13 passed; production source unchanged"
+    },
+    {
+      "file": "attempt-02.txt",
+      "outcome": "14 passed after adding independent hand-calculated full-prefix control; production source unchanged"
+    }
+  ],
+  "blocking_defects_found": [],
+  "checks": [
+    "The production kernel matches the previously reviewed prototype executable mathematics; only module description and version differ.",
+    "Both backends match a manually constructed four-microstep, three-cell cut with exact independently specified contact sets, every remaining-tissue prefix, and exterior-connected free-space mask; lateral partial contact stays occupied.",
+    "Disconnected-frontier removal is rejected before any accepted cut and both complete certificates agree.",
+    "Multiple omitted contacts preserve the scalar failure and first unsupported source-cell witness across chunk sizes.",
+    "Shaft collision returns the identical first physical source-cell witness in reflected/oblique anisotropic frames and either segment direction; arbitrary supplied enumeration stays ordered.",
+    "Scalar default cannot call either batch contact API; hard-exclusion checks remain scalar even when active contact is explicitly batched.",
+    "Cancellation inside a later active-contact batch and a later shaft batch returns the existing incomplete reason, preserves one already certified cell, and does not certify the pending second cell; caller tissue/history remain unchanged.",
+    "Owner receipt additionally covers two complete generated cuts with exact per-microstep contacts, shaft masks/witnesses, remaining/free masks across identity, anisotropic-oblique and mirrored-LPS frames, plus short-tip borrowing and other rejection controls."
+  ],
+  "completed_utc": "2026-10-04T18:28:40.373324+00:00",
+  "independent_tests": 14,
+  "owner_and_existing_tests_receipted_separately": 59,
+  "production_default": "scalar",
+  "remaining_limits": [
+    "No observed full native-history speedup or patient result yet. Any timed comparison needs a separate prospective declaration and root release.",
+    "Previously retained kernel limits apply: raw batch distances are not universally bitwise identical; near-threshold scalar fallback has no formal error-bound proof and can remove the performance benefit.",
+    "Source-cell removal/contact/frontier equivalence is software-model validation, not validated cutting mechanics or clinical safety."
+  ],
+  "schema": "independent-native-batch-integration-review-v1",
+  "scope": "Root-authorized focused analytic unit and complete small-history integration controls. No patient cases, training, native-history timing benchmark or change to scalar default.",
+  "source_unchanged_during_tests": true,
+  "sources": {
+    "src/resectionlab/evaluation.py": "8fe1467d2dc53deb62f16c86c79eebc1596047bc58d52a8b7be3598f50334d18",
+    "src/resectionlab/independent_geometry_batch.py": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3",
+    "tests/test_independent_native_batch_review.py": "59fb60cd40f76983ae7a83f975457ee6c5941f3c3771a4f81a7c14e9d12a1474"
+  },
+  "status": "focused_analytic_review_passed"
+}

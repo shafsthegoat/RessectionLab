@@ -1,0 +1,15 @@
+{
+  "sources": {
+    "src/resectionlab/evaluation.py": "8fe1467d2dc53deb62f16c86c79eebc1596047bc58d52a8b7be3598f50334d18",
+    "src/resectionlab/independent_geometry_batch.py": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3",
+    "tests/test_independent_native_batch_review.py": "3379f1f61785287b94bf34070540f4effc3ba170e56969a971ca876375b9b712"
+  },
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_independent_native_batch_review.py"
+  ],
+  "scope": "Root-authorized focused analytic integration review; no patient runs or timed benchmarks."
+}
