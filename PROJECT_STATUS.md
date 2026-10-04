@@ -249,6 +249,10 @@ Brain/cavity boundaries are not supplied. The task
 is conditional displacement interpolation with declared mechanical assumptions,
 not a validated surgical action, retractor force or cutting response. See
 `docs/resect-conditional-displacement-poc.md` and the acquisition receipts.
+This is a retrospective intraoperative update: the supplied paired motions are
+not available from a preoperative scan alone. Automatic motion extraction and
+the timing/uncertainty of such deployment observations remain separate work;
+the manual correspondences must not become hidden inputs to a preoperative policy.
 
 The first real TRAIN PAT22 inference profile completed all four declared cells
 in 6.247 seconds with unchanged model parameters. One CPU call took 28–30 ms
