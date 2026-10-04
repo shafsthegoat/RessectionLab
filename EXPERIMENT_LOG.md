@@ -1288,3 +1288,19 @@ installers, inference, registry changes or support messages were involved.
 The remaining concrete route is provider-supplied case access or release-specific
 checksums. Evidence and primary links are in
 `docs/ucsf-primary-access-recheck-2026-10-04.md`; source equivalence remains unknown.
+
+## October 4, 2026 — integrated profile attempt preserves 12 failures
+
+A complete suite from immutable `523a72b` ran 1,482 tests: 1,470 passed and 12
+failed in 243.45 seconds, with 14 warnings. Source manifests before and after
+match exactly and contain no added files. Ten saved-query CLI tests hit the
+512-MiB process-peak guard because they execute inside the larger pytest process;
+their isolated focused run had passed. Two old pilot audit tests reject the new
+axis contract before checking captured forwards or optimizer state. These are
+real integration gaps, with all failures and the frozen source retained.
+
+Repairs are separately assigned: isolate resource-sensitive test fixtures without
+changing the production cap, and explicitly validate both historical and current
+contract forms without discarding nested hashes or changing original experiment
+artifacts. No public training or packaging release follows this failed attempt.
+See `artifacts/validation/axis-profile-integrated-v1/attempt-01/`.

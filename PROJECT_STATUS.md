@@ -487,6 +487,19 @@ failures remain retained. Full integrated regression and a new frozen paired
 public declaration remain prerequisites. No new public training occurred.
 See `docs/native-axis-input-profiles.md` and the two focused review directories.
 
+## Current integrated regression attempt
+
+The immutable `523a72b` attempt completed with **1,470 passing tests and 12
+failures in 243.45 seconds**, plus 14 warnings. All baseline files remained
+unchanged, with no added source files. Ten diagnostic CLI tests inherited the
+full pytest process's earlier peak memory and correctly hit the production
+512-MiB guard before reaching their intended assertions. Two historical pilot
+auditor tests encountered the newly added axis contract field. Scoped test
+isolation and explicit auditor contract-version repairs are in progress; public
+experiments and the next bundled engine remain gated. Original logs and source
+manifests are retained in `artifacts/validation/axis-profile-integrated-v1/attempt-01/`.
+This failed attempt does not replace the preceding 1,150-test passing snapshot.
+
 ## Completion gates still open
 
 Native-resolution geometric simulation now works under explicit hypothetical
