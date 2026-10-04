@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "checks": {
+    "axial": true,
+    "coronal": true,
+    "sagittal": true,
+    "three_dimensional_anatomy": true,
+    "aligned_axial_plane": true,
+    "nonempty_rendered_anatomy": true
+  },
+  "case_id": "UCSF-PDGM-0004",
+  "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+  "shape": [
+    240,
+    240,
+    155
+  ],
+  "frame": "RAS+",
+  "load_seconds": 0.32827837497461587,
+  "timestamp": "2026-10-04T07:08:09.146374+00:00",
+  "scope": "Native rendering smoke test; no clinical validity claim",
+  "screenshot_saved": true
+}

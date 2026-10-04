@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "checks": {
+    "axial": true,
+    "coronal": true,
+    "sagittal": true,
+    "three_dimensional_anatomy": true,
+    "aligned_axial_plane": true,
+    "nonempty_rendered_anatomy": true
+  },
+  "case_id": "synthetic_geometry_demo",
+  "case_hash": "sha256:4eb13b48fe3a10d3f9b3c4506eb1fffc37c733beb073cebddb4d8245a80a7378",
+  "shape": [
+    64,
+    64,
+    64
+  ],
+  "frame": "RAS+",
+  "load_seconds": 0.034331041970290244,
+  "timestamp": "2026-10-04T06:48:11.375476+00:00",
+  "scope": "Native rendering smoke test; no clinical validity claim",
+  "screenshot_saved": true
+}
