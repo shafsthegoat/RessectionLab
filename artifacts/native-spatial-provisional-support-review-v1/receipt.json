@@ -1,0 +1,45 @@
+{
+  "schema": "native-spatial-provisional-independent-review-v1",
+  "status": "no_blocking_findings_in_scoped_delta",
+  "base_source_commit": "d4b506d",
+  "tested_checkout_head": "4d15e692eff66a90d9f009343749da7edbe9b9a2",
+  "focused_checks": {
+    "passed": 13,
+    "failed": 0,
+    "pytest_seconds": 0.62,
+    "process_elapsed_seconds": 0.8145493749761954,
+    "source_unchanged_during_checks": true
+  },
+  "source_and_tests_sha256": {
+    "src/resectionlab/native_spatial_task.py": "3c572c4c2306cbc34702aa5174d60e8c57c0148c32eb24df54033005d3db44c0",
+    "tests/test_native_spatial_task.py": "ce46c3ae285b9c35f7da162ece88768a717fb0c0e56f25eafe020de1346680ee",
+    "tests/test_native_spatial_provisional_review.py": "016c3e0f385e2f083917296f46540ffd210cdbd48fe061cad215cdb0bbb00b08",
+    "docs/native-spatial-task.md": "9c1b203e7af1a8c989e3ab197bedde19ab678f4bb018b02af962cbf6c7eef5d8"
+  },
+  "artifact_sha256": {
+    "artifacts/native-spatial-provisional-support-review-v1/focused-test-receipt.json": "1bf996b81323bba992631bd186ada1ffc33b89b26f319b75b717358e46bb4ad1",
+    "artifacts/native-spatial-provisional-support-review-v1/focused-test.log": "bf4ef703a305069739bd8d881fc54574afc1fc9674995cac719c45266d3ca72c",
+    "artifacts/native-spatial-provisional-support-review-v1/initial-model-field-negative.json": "b812095819be548dbe54da8915981ace09eefd10a4da72970a67f4dcee259718"
+  },
+  "reviewed_behaviors": [
+    "existing accepted-model factory uses actual model_sha256 field",
+    "provisional selection leaves CaseData manifest, brain_mask and review untouched",
+    "policy and search use identical declared support and provenance",
+    "actual image, frame, source-file and proposal-mask replacements refuse stale acknowledgment",
+    "fresh case declarations cannot bypass accepted or rejected proposal review",
+    "identical masks from different model/run identities are not interchangeable",
+    "supplied target outside support refuses rather than expanding anatomy",
+    "manual whole-support 1st/99th linear quantiles match actor-only scaling",
+    "raw MRI and geometry preserved; reference labels and crop excluded from normalization statistics",
+    "normalization metadata immutable and included in source integrity",
+    "constant support intensity refuses opted-in normalization; raw default preserved"
+  ],
+  "negative_retained": "initial-model-field-negative.json records actual baseline AttributeError at d4b506d; fixed regression now passes",
+  "limitations": [
+    "Analytic IO and geometry contract arrays only; no real patient images opened, simulator profile, learning or evaluation run.",
+    "This is a focused delta review in the shared checkout, not a complete immutable-source full-suite rerun.",
+    "No clinical anatomical review, cortical access approval, segmentation accuracy or patient benefit is established.",
+    "The separate PAT05 input-binding JSON was read as documentation only; its source bundle was not independently reopened."
+  ],
+  "new_source_archives_created": false
+}

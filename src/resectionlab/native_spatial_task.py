@@ -11,10 +11,11 @@ import copy
 from dataclasses import asdict, dataclass, field
 from types import SimpleNamespace
 from typing import Callable
+from collections.abc import Mapping
 
 import numpy as np
 
-from .core import array_digest, immutable_array, semantic_digest
+from .core import array_digest, immutable_array, semantic_digest, freeze_json, thaw_json
 from .geometry import AccessWindow, ToolGeometry
 from .native_resection import NativeResectionConfig, NativeResectionEngine
 from .simulation import InvalidActionError, RewardSpec
@@ -94,6 +95,9 @@ class NativeSpatialCase:
     target_source_kind: str = "supplied_annotation"
     target_derivation: str = ""
     crop_shape: tuple[int, int, int] = (32, 32, 32)
+    support_provenance: Mapping = field(default_factory=dict)
+    intensity_normalization: str = "raw"
+    _normalization_record: Mapping = field(init=False, repr=False)
     _native_config: NativeResectionConfig = field(init=False, repr=False)
     _native_identity: tuple = field(init=False, repr=False)
     _source_hash: str = field(init=False, repr=False)
@@ -134,6 +138,24 @@ class NativeSpatialCase:
         crop_shape = tuple(self.crop_shape)
         if len(crop_shape) != 3 or any(type(v) is not int or not 3 <= v <= 64 for v in crop_shape):
             raise ValueError("The fixed source/access crop requires three dimensions in [3,64]")
+        if not isinstance(self.support_provenance, Mapping):
+            raise ValueError("Support provenance must be an immutable JSON object")
+        object.__setattr__(self, "support_provenance", freeze_json(self.support_provenance))
+        if self.intensity_normalization not in {"raw", "support_percentile_1_99"}:
+            raise ValueError("Unknown native spatial intensity normalization")
+        normalization = {"method": "raw"}
+        if self.intensity_normalization == "support_percentile_1_99":
+            lower, upper = np.percentile(image[support], [1., 99.], method="linear")
+            if not np.isfinite([lower, upper]).all() or upper <= lower:
+                raise ValueError("DEGENERATE_SCAN_INTENSITY_RANGE: support percentiles need distinct finite bounds")
+            normalization = {"method": self.intensity_normalization,
+                "percentiles": [1., 99.], "percentile_method": "linear",
+                "lower": float(lower), "upper": float(upper), "clip": [0., 1.],
+                "statistics_voxels": int(support.sum()), "statistics_scope": "entire_permitted_support",
+                "source_image_hash": array_digest(image), "support_hash": array_digest(support),
+                "reference_labels_used": False, "crop_used_for_statistics": False,
+                "raw_source_preserved": True}
+        object.__setattr__(self, "_normalization_record", freeze_json(normalization))
         for name, value in (("structural_intensity", image), ("observed_support", support),
                             ("reference_target", target), ("affine_ras_mm", immutable_array(affine, np.float64)),
                             ("tools", tools), ("nominal_target", nominal), ("crop_shape", crop_shape)):
@@ -179,7 +201,9 @@ class NativeSpatialCase:
             "access": _access_record(self.access), "tools": [asdict(tool) for tool in tools],
             "track": self.track, "crop_origin": self._crop_origin, "crop_shape": self._crop_shape,
             "proposal_scope": scope, "candidate_voxels": voxels,
-            "provenance": [self.support_source_kind, self.support_derivation, self.target_source_kind, self.target_derivation]})
+            "provenance": [self.support_source_kind, self.support_derivation, self.target_source_kind, self.target_derivation],
+            **({"support_provenance": self.support_provenance} if self.support_provenance else {}),
+            **({"intensity_normalization": self._normalization_record} if self.intensity_normalization != "raw" else {})})
         object.__setattr__(self, "_source_hash", source_hash)
         object.__setattr__(self, "_reference_hash", semantic_digest({"source": source_hash, "target": array_digest(target)}))
         config = NativeResectionConfig(support, np.zeros(image.shape, np.int16), self.affine_ras_mm,
@@ -208,7 +232,8 @@ class NativeSpatialCase:
             semantic_digest({"access": _access_record(self.access), "tools": [asdict(t) for t in self.tools]}),
             self.track, self.support_source_kind, self.support_derivation, self.target_source_kind,
             self.target_derivation, self.crop_shape, self._crop_origin, self._crop_shape,
-            self._candidate_voxels, self._candidate_scope)
+            self._candidate_voxels, self._candidate_scope, semantic_digest(self.support_provenance),
+            self.intensity_normalization, semantic_digest(self._normalization_record))
 
     def assert_intact(self):
         if (self._identity_record() != self._identity or (hasattr(self, "_native_identity")
@@ -219,9 +244,19 @@ class NativeSpatialCase:
         region = tuple(slice(origin, origin + size) for origin, size in zip(self._crop_origin, self._crop_shape))
         affine = np.array(self.affine_ras_mm, copy=True)
         affine[:3, 3] += affine[:3, :3] @ self._crop_origin
+        intensity = self.structural_intensity[region]
+        intensity_derivation = ""
+        if self.intensity_normalization != "raw":
+            lower, upper = self._normalization_record["lower"], self._normalization_record["upper"]
+            # Normalize only the small actor crop; native source bytes and
+            # geometry stay untouched. Float64 subtraction avoids overflow.
+            intensity = np.clip((intensity.astype(np.float64) - lower) / (upper - lower), 0., 1.).astype(np.float32)
+            intensity_derivation = (f"support_percentile_1_99 linear; lower={lower!r}; upper={upper!r}; "
+                f"clip=[0,1]; record={semantic_digest(self._normalization_record)}")
         channels = {
-            "structural_intensity": ObservedChannel(self.structural_intensity[region],
-                source_kind="synthetic_scan" if self.track == "synthetic_scan" else "observed_scan"),
+            "structural_intensity": ObservedChannel(intensity,
+                source_kind="synthetic_scan" if self.track == "synthetic_scan" else "observed_scan",
+                derivation=intensity_derivation),
             "nominal_tissue": ObservedChannel(self.observed_support[region], source_kind=self.support_source_kind,
                 derivation=self.support_derivation,
                 derived_from=("structural_intensity",) if self.support_source_kind == "derived_from_scan" else ()),
@@ -466,6 +501,8 @@ class NativeSpatialTask:
             "unknowns": ["motor_evidence_unavailable", "language_evidence_unavailable", "vascular_coverage_unassessed"],
             "planning_estimator_only": self._planning, "history": copy.deepcopy(self._history),
             "observation_track": self.case.track,
+            "support_provenance": thaw_json(self.case.support_provenance),
+            "intensity_normalization": thaw_json(self.case._normalization_record),
             "crop": {"origin_voxels": self.case._crop_origin, "shape": self.case._crop_shape,
                      "basis": "scan_frame_and_declared_access_only", "native_geometry_resampled": False},
             "assumptions": ["rigid_fully_contained_native_cell_removal",
@@ -501,20 +538,72 @@ def make_native_opening_task(*, tools=OPENING_TOOLS, max_steps=2, cancelled=None
     return NativeSpatialTask(case, max_steps=max_steps, cancelled=cancelled)
 
 
+def _provisional_proposal_support(case, acknowledgment):
+    """Opt in to one exact research proposal without changing its review state."""
+    from .structural_evidence import validate_support_assumption
+    if not isinstance(acknowledgment, Mapping):
+        raise ValueError("PROVISIONAL_SUPPORT_ACKNOWLEDGMENT_REQUIRED: expected a bound research declaration")
+    acknowledgment = thaw_json(freeze_json(acknowledgment))
+    fields = {"schema_version", "scope", "purpose", "case_hash", "planning_hash", "evidence_id",
+        "evidence_hash", "source_image_hash", "source_frame_hash", "mask_hash", "model_sha256",
+        "run_sha256", "declared_by", "declared_at", "rationale", "acknowledge_unreviewed",
+        "cortical_access_permitted", "clinical_use_permitted"}
+    if set(acknowledgment) != fields:
+        raise ValueError("PROVISIONAL_SUPPORT_ACKNOWLEDGMENT_FIELDS: exact declaration fields are required")
+    if (type(acknowledgment["schema_version"]) is not int or acknowledgment["schema_version"] != 1
+            or acknowledgment["purpose"] != "native_spatial_provisional_research"
+            or acknowledgment["acknowledge_unreviewed"] is not True
+            or acknowledgment["cortical_access_permitted"] is not False
+            or acknowledgment["clinical_use_permitted"] is not False):
+        raise ValueError("PROVISIONAL_SUPPORT_RESEARCH_ONLY: unreviewed research use must be explicit")
+    if any(not isinstance(acknowledgment[key], str) or not acknowledgment[key].strip()
+           or len(acknowledgment[key]) > 1024 for key in fields - {
+               "schema_version", "acknowledge_unreviewed", "cortical_access_permitted", "clinical_use_permitted"}):
+        raise ValueError("PROVISIONAL_SUPPORT_ACKNOWLEDGMENT_TEXT: expected bounded nonempty strings")
+    item = case.structural_evidence.get(acknowledgment["evidence_id"])
+    if item is None:
+        raise ValueError("PROVISIONAL_SUPPORT_UNKNOWN_PROPOSAL: select an existing source-bound proposal")
+    item.assert_matches(case)
+    if item.review_status != "review_required" or item.provenance != "estimated" or item.model_sha256 is None:
+        raise ValueError("PROVISIONAL_SUPPORT_INELIGIBLE: only an unreviewed model proposal can use this pathway")
+    expected = {"case_hash": case.semantic_hash, "planning_hash": case.planning_hash,
+        "evidence_hash": item.evidence_hash, "source_image_hash": item.source_image_hash,
+        "source_frame_hash": item.source_frame_hash, "mask_hash": item.mask_hash,
+        "model_sha256": item.model_sha256, "run_sha256": item.run_sha256}
+    if any(acknowledgment[key] != value for key, value in expected.items()):
+        raise ValueError("PROVISIONAL_SUPPORT_STALE: case, source, proposal, model or run identity changed")
+    # Reuse exact mask/image/frame binding and aware time validation. This is a
+    # research declaration, deliberately separate from BrainEnvelopeReview.
+    validate_support_assumption(case, item.mask, acknowledgment)
+    return item.mask, {"method": "explicitly_acknowledged_unreviewed_model_support",
+        "evidence_type": item.provenance, "evidence_hash": item.evidence_hash,
+        "review_status": item.review_status, "research_use": "provisional",
+        "cortical_access_permitted": False, "clinical_use_permitted": False,
+        "clinical_deficit_probability": None, "acknowledgment": acknowledgment}
+
+
 def native_spatial_task_from_case(case, *, access, tools, max_steps=3,
                                   track="annotation_assisted", nominal_target=None,
-                                  nominal_target_derivation="", crop_shape=(32, 32, 32), cancelled=None):
+                                  nominal_target_derivation="", crop_shape=(32, 32, 32), cancelled=None,
+                                  research_support_acknowledgment=None, intensity_normalization="raw"):
     """Load a real source case with existing support gates and explicit target role.
 
     ``access`` is canonical RAS+. Annotation-assisted defaults to the supplied
     active source compartments. Inference-only never substitutes those labels
     for a missing estimate; planning_clone then refuses a missing objective.
-    Imported unreviewed brain proposals remain ineligible working support.
+    An explicit source-bound provisional research acknowledgment can select one
+    unreviewed model proposal in annotation-assisted mode only. It never edits
+    working anatomy or grants cortical/clinical approval on the source case.
     """
     from .structural_evidence import planning_brain_support
     if track not in {"annotation_assisted", "inference_only"}:
         raise ValueError("Real cases require annotation_assisted or inference_only track")
-    support, record = planning_brain_support(case)
+    if research_support_acknowledgment is not None:
+        if track != "annotation_assisted":
+            raise ValueError("PROVISIONAL_SUPPORT_TRACK: this explicit pathway requires annotation_assisted mode")
+        support, record = _provisional_proposal_support(case, research_support_acknowledgment)
+    else:
+        support, record = planning_brain_support(case)
     if support is None:
         raise ValueError("ESSENTIAL_EVIDENCE_MISSING: explicit source-bound brain support; full-head intensity is not support")
     if not case.compartments:
@@ -527,10 +616,10 @@ def native_spatial_task_from_case(case, *, access, tools, max_steps=3,
         raise ValueError("An explicit target estimate needs recorded derivation/checkpoint provenance")
     # "Estimated" alone does not establish a scan-derived model: an explicit
     # research assumption may describe an arbitrary supplied mask. Only an
-    # exact reviewed model proposal (or simulated unit source) supports that
+    # exact source-bound model proposal (or simulated unit source) supports that
     # narrower provenance claim. Other working masks stay annotation-assisted.
     model_support = any(item.evidence_hash == record.get("evidence_hash")
-                        and item.provenance == "estimated" and item.model_hash
+                        and item.provenance == "estimated" and item.model_sha256
                         for item in getattr(case, "structural_evidence", {}).values())
     simulated_support = record.get("evidence_type") == "simulated"
     support_kind = "derived_from_scan" if model_support or simulated_support else "supplied_annotation"
@@ -542,5 +631,7 @@ def native_spatial_task_from_case(case, *, access, tools, max_steps=3,
     source = NativeSpatialCase(case.mri, support, reference, affine, access, tuple(tools), track=track,
         support_source_kind=support_kind, support_derivation=record["method"] + "; cortical access unverified",
         nominal_target=nominal_target, target_source_kind="supplied_annotation" if track == "annotation_assisted" else "derived_from_scan",
-        target_derivation=nominal_target_derivation, crop_shape=crop_shape)
+        target_derivation=nominal_target_derivation, crop_shape=crop_shape,
+        support_provenance=record if research_support_acknowledgment is not None else {},
+        intensity_normalization=intensity_normalization)
     return NativeSpatialTask(source, max_steps=max_steps, cancelled=cancelled)

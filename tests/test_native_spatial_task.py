@@ -255,3 +255,135 @@ def test_cancellation_distinguishes_before_commit_and_after_committed_transition
     assert error.value.committed and error.value.info["action_id"] == identifier
     assert task.metrics()["steps"] == 1 and task.metrics()["simulated_removed_volume_mm3"] == 3.
     assert task.independent_geometry_check().feasible
+
+
+def provisional_source():
+    from resectionlab.structural_evidence import StructuralEvidence
+    case = annotated_source(support=False)
+    item = StructuralEvidence("unit_model_proposal", make_native_opening_task().case.observed_support,
+        array_digest(case.mri), structural_frame_hash(case), None,
+        "sha256:" + "1" * 64, "sha256:" + "2" * 64, "explicit analytic model output")
+    case = case.revised(structural_evidence={item.evidence_id: item})
+    acknowledgment = {"schema_version": 1, "scope": "hypothetical_tissue_support",
+        "purpose": "native_spatial_provisional_research", "case_hash": case.semantic_hash,
+        "planning_hash": case.planning_hash, "evidence_id": item.evidence_id,
+        "evidence_hash": item.evidence_hash, "source_image_hash": item.source_image_hash,
+        "source_frame_hash": item.source_frame_hash, "mask_hash": item.mask_hash,
+        "model_sha256": item.model_sha256, "run_sha256": item.run_sha256,
+        "declared_by": "unit-test research declaration", "declared_at": "2026-10-04T12:00:00+00:00",
+        "rationale": "analytic provisional support boundary check; no expert review",
+        "acknowledge_unreviewed": True, "cortical_access_permitted": False, "clinical_use_permitted": False}
+    return case, acknowledgment
+
+
+def test_provisional_support_is_explicit_shared_with_teacher_and_does_not_promote_source():
+    case, acknowledgment = provisional_source()
+    original_hash, original_planning_hash = case.semantic_hash, case.planning_hash
+    task = native_spatial_task_from_case(case, access=make_native_opening_task().case.access,
+        tools=OPENING_TOOLS, research_support_acknowledgment=acknowledgment)
+    item = case.structural_evidence[acknowledgment["evidence_id"]]
+    np.testing.assert_array_equal(task.case.observed_support, item.mask)
+    assert task.case.support_source_kind == "derived_from_scan"
+    np.testing.assert_array_equal(task.planning_clone().case.observed_support, item.mask)
+    assert case.brain_mask is None and item.review is None and item.review_status == "review_required"
+    assert case.semantic_hash == original_hash and case.planning_hash == original_planning_hash
+    record = task.metrics()["support_provenance"]
+    assert record["research_use"] == "provisional" and record["review_status"] == "review_required"
+    assert not record["cortical_access_permitted"] and not record["clinical_use_permitted"]
+    assert task.metrics()["clinical_deficit_probability"] is None
+    acknowledgment["rationale"] = "mutated caller metadata"
+    assert task.metrics()["support_provenance"] == record
+    with pytest.raises(ValueError, match="ESSENTIAL_EVIDENCE_MISSING"):
+        native_spatial_task_from_case(case, access=task.case.access, tools=OPENING_TOOLS)
+
+
+@pytest.mark.parametrize("field", ["case_hash", "planning_hash", "evidence_hash", "source_image_hash",
+    "source_frame_hash", "mask_hash", "model_sha256", "run_sha256"])
+def test_provisional_support_rejects_every_stale_identity(field):
+    case, acknowledgment = provisional_source()
+    acknowledgment[field] = "sha256:" + "f" * 64
+    with pytest.raises(ValueError, match="PROVISIONAL_SUPPORT_STALE"):
+        native_spatial_task_from_case(case, access=make_native_opening_task().case.access,
+            tools=OPENING_TOOLS, research_support_acknowledgment=acknowledgment)
+
+
+@pytest.mark.parametrize("change", ["missing_field", "expert_claim", "clinical", "cortical", "unacknowledged", "naive_time", "track"])
+def test_provisional_support_refuses_missing_or_promotional_declarations(change):
+    case, acknowledgment = provisional_source()
+    if change == "missing_field":
+        acknowledgment.pop("purpose")
+    elif change == "expert_claim":
+        acknowledgment["brain_reviewed"] = True
+    elif change in {"clinical", "cortical"}:
+        acknowledgment[change + "_use_permitted" if change == "clinical" else "cortical_access_permitted"] = True
+    elif change == "unacknowledged":
+        acknowledgment["acknowledge_unreviewed"] = False
+    elif change == "naive_time":
+        acknowledgment["declared_at"] = "2026-10-04T12:00:00"
+    with pytest.raises(ValueError):
+        native_spatial_task_from_case(case, access=make_native_opening_task().case.access, tools=OPENING_TOOLS,
+            track="inference_only" if change == "track" else "annotation_assisted",
+            research_support_acknowledgment=acknowledgment)
+
+
+def test_rejected_model_proposal_cannot_be_bypassed_by_research_acknowledgment():
+    from resectionlab.structural_evidence import BrainEnvelopeReview
+    case, acknowledgment = provisional_source()
+    item = case.structural_evidence[acknowledgment["evidence_id"]]
+    rejected = replace(item, review=BrainEnvelopeReview(item.evidence_hash, "unit reviewer",
+        "2026-10-04T12:00:00+00:00", "rejected", "unit rejection"))
+    case = case.revised(structural_evidence={rejected.evidence_id: rejected})
+    acknowledgment["case_hash"], acknowledgment["planning_hash"] = case.semantic_hash, case.planning_hash
+    with pytest.raises(ValueError, match="PROVISIONAL_SUPPORT_INELIGIBLE"):
+        native_spatial_task_from_case(case, access=make_native_opening_task().case.access,
+            tools=OPENING_TOOLS, research_support_acknowledgment=acknowledgment)
+
+
+def test_opt_in_normalization_uses_whole_permitted_support_and_preserves_raw_scan():
+    source = make_native_opening_task().case
+    image = np.full(source.structural_intensity.shape, 1e6, np.float32)
+    image[source.observed_support] = np.array([100., 200., 300., 400., 500., 900.], np.float32)
+    normalized = replace(source, structural_intensity=image, intensity_normalization="support_percentile_1_99")
+    np.testing.assert_array_equal(normalized.structural_intensity, image)
+    record = NativeSpatialTask(normalized).metrics()["intensity_normalization"]
+    assert record["lower"] == pytest.approx(105.) and record["upper"] == pytest.approx(880.)
+    assert record["statistics_voxels"] == 6 and record["statistics_scope"] == "entire_permitted_support"
+    assert record["source_image_hash"] == array_digest(image) and record["support_hash"] == array_digest(source.observed_support)
+    assert record["reference_labels_used"] is False and record["crop_used_for_statistics"] is False
+    channel = normalized.spatial_inputs(np.zeros(image.shape, bool)).channels["structural_intensity"]
+    np.testing.assert_allclose(channel.data, np.clip((image.astype(float) - 105.) / 775., 0., 1.), atol=1e-7)
+    assert "support_percentile_1_99" in channel.derivation
+    assert normalized._native_config.voxel_volume_mm3 == source._native_config.voxel_volume_mm3
+    assert normalized._candidate_voxels == source._candidate_voxels
+
+
+def test_normalization_bounds_ignore_reference_labels_and_actor_crop():
+    source = make_native_opening_task().case
+    image = np.arange(source.structural_intensity.size, dtype=np.float32).reshape(source.structural_intensity.shape)
+    normalized = replace(source, structural_intensity=image, intensity_normalization="support_percentile_1_99")
+    changed = replace(normalized, reference_target=np.ones(image.shape), crop_shape=(5, 5, 5))
+    assert normalized._normalization_record == changed._normalization_record
+    private_changed = replace(normalized, reference_target=np.ones(image.shape))
+    assert normalized.source_hash == private_changed.source_hash
+    same_observations(NativeSpatialTask(normalized).observation(), NativeSpatialTask(private_changed).observation())
+
+
+def test_normalization_is_explicit_and_degenerate_bounds_are_refused():
+    source = make_native_opening_task().case
+    constant = np.full(source.structural_intensity.shape, 1500., np.float32)
+    raw = replace(source, structural_intensity=constant)
+    assert raw.intensity_normalization == "raw" and raw._normalization_record == {"method": "raw"}
+    assert np.all(raw.spatial_inputs(np.zeros(constant.shape, bool)).channels["structural_intensity"].data == 1500.)
+    with pytest.raises(ValueError, match="DEGENERATE_SCAN_INTENSITY_RANGE"):
+        replace(raw, intensity_normalization="support_percentile_1_99")
+    with pytest.raises(ValueError, match="Unknown native spatial"):
+        replace(raw, intensity_normalization="target_percentiles")
+
+
+def test_normalization_record_is_frozen_and_part_of_source_integrity():
+    source = replace(make_native_opening_task().case, intensity_normalization="support_percentile_1_99")
+    with pytest.raises(TypeError):
+        source._normalization_record["lower"] = -100.
+    object.__setattr__(source, "_normalization_record", {**source._normalization_record, "lower": -100.})
+    with pytest.raises(RuntimeError, match="interpretation was replaced"):
+        source.assert_intact()
