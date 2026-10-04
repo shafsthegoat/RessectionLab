@@ -1,0 +1,568 @@
+{
+  "run": "optimized_full_saved_history_profile",
+  "source_sha256": "baaa2f3d6b4e41c4621dc22872da9300d649bc91dfeb923e2ad35f66aadad3b7",
+  "result_sha256": "2897761ed2842fa5c32ff0e2cefacf9d3351cd034e094f3680e935b96e4d36cb",
+  "elapsed_seconds": 4.904293459025212,
+  "audit": {
+    "feasible": true,
+    "failures": [],
+    "first_failed_action": null,
+    "first_unsupported_source_voxel": null,
+    "first_unsupported_position_mm": null,
+    "claimed_source_tissue_volume_mm3": 266.0,
+    "contained_source_tissue_volume_mm3": 266.0,
+    "unsupported_source_tissue_volume_mm3": 0.0,
+    "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "source_voxel_volume_mm3": 1.0,
+    "action_count": 2,
+    "checker_version": "independent-native-sequence-v2",
+    "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+    "complete_tool_checked": true,
+    "frontier_checked": true
+  },
+  "audit_identical_to_baseline": true,
+  "hotspots_by_cumulative": [
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py",
+      "line": 775,
+      "function": "independent_check_native_history",
+      "primitive_calls": 1,
+      "calls": 1,
+      "self_seconds": 0.033145536,
+      "cumulative_seconds": 4.9032821250000005
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py",
+      "line": 302,
+      "function": "segment_box_distance_sq",
+      "primitive_calls": 68287,
+      "calls": 68287,
+      "self_seconds": 1.4528207020000001,
+      "cumulative_seconds": 3.9406598120000003
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py",
+      "line": 855,
+      "function": "actual_contacts",
+      "primitive_calls": 142,
+      "calls": 142,
+      "self_seconds": 0.23886230000000003,
+      "cumulative_seconds": 3.039843659
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py",
+      "line": 358,
+      "function": "_cell_collision",
+      "primitive_calls": 994,
+      "calls": 994,
+      "self_seconds": 0.10416158900000001,
+      "cumulative_seconds": 1.3795513140000002
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py",
+      "line": 323,
+      "function": "distance",
+      "primitive_calls": 278120,
+      "calls": 278120,
+      "self_seconds": 1.047326948,
+      "cumulative_seconds": 1.047326948
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method builtins.min>",
+      "primitive_calls": 158079,
+      "calls": 158079,
+      "self_seconds": 0.064778403,
+      "cumulative_seconds": 0.8361725350000001
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py",
+      "line": 328,
+      "function": "<genexpr>",
+      "primitive_calls": 257469,
+      "calls": 257469,
+      "self_seconds": 0.06998976900000001,
+      "cumulative_seconds": 0.7713941320000001
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method builtins.any>",
+      "primitive_calls": 69111,
+      "calls": 69111,
+      "self_seconds": 0.043799351,
+      "cumulative_seconds": 0.5143517590000001
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py",
+      "line": 311,
+      "function": "<genexpr>",
+      "primitive_calls": 341435,
+      "calls": 341435,
+      "self_seconds": 0.20498806300000003,
+      "cumulative_seconds": 0.46907808300000003
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py",
+      "line": 2245,
+      "function": "clip",
+      "primitive_calls": 89137,
+      "calls": 89137,
+      "self_seconds": 0.067113751,
+      "cumulative_seconds": 0.45629022300000005
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py",
+      "line": 48,
+      "function": "_wrapfunc",
+      "primitive_calls": 91409,
+      "calls": 91409,
+      "self_seconds": 0.073737095,
+      "cumulative_seconds": 0.41020094900000004
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py",
+      "line": 38,
+      "function": "_wrapit",
+      "primitive_calls": 90074,
+      "calls": 90074,
+      "self_seconds": 0.10438560000000001,
+      "cumulative_seconds": 0.309668885
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/scipy/ndimage/_morphology.py",
+      "line": 947,
+      "function": "binary_propagation",
+      "primitive_calls": 1,
+      "calls": 1,
+      "self_seconds": 3.791e-06,
+      "cumulative_seconds": 0.29046425000000003
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/scipy/ndimage/_morphology.py",
+      "line": 407,
+      "function": "binary_dilation",
+      "primitive_calls": 1,
+      "calls": 1,
+      "self_seconds": 3.096e-05,
+      "cumulative_seconds": 0.290460459
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/scipy/ndimage/_morphology.py",
+      "line": 216,
+      "function": "_binary_erosion",
+      "primitive_calls": 1,
+      "calls": 1,
+      "self_seconds": 5.6040000000000006e-05,
+      "cumulative_seconds": 0.29041408300000005
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'all' of 'numpy.ndarray' objects>",
+      "primitive_calls": 277329,
+      "calls": 277329,
+      "self_seconds": 0.076841301,
+      "cumulative_seconds": 0.26882226400000003
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py",
+      "line": 64,
+      "function": "_all",
+      "primitive_calls": 283595,
+      "calls": 283595,
+      "self_seconds": 0.05959159000000001,
+      "cumulative_seconds": 0.19719133900000002
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method scipy.ndimage._nd_image.binary_erosion2>",
+      "primitive_calls": 1,
+      "calls": 1,
+      "self_seconds": 0.197137416,
+      "cumulative_seconds": 0.197137416
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py",
+      "line": 469,
+      "function": "independent_check_motion",
+      "primitive_calls": 142,
+      "calls": 142,
+      "self_seconds": 0.003746418,
+      "cumulative_seconds": 0.182509839
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'reduce' of 'numpy.ufunc' objects>",
+      "primitive_calls": 359337,
+      "calls": 359337,
+      "self_seconds": 0.180940984,
+      "cumulative_seconds": 0.180940984
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'clip' of 'numpy.ndarray' objects>",
+      "primitive_calls": 88995,
+      "calls": 88995,
+      "self_seconds": 0.030249528,
+      "cumulative_seconds": 0.156765345
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py",
+      "line": 2474,
+      "function": "any",
+      "primitive_calls": 71387,
+      "calls": 71387,
+      "self_seconds": 0.037598461,
+      "cumulative_seconds": 0.150982464
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py",
+      "line": 86,
+      "function": "_wrapreduction_any_all",
+      "primitive_calls": 80697,
+      "calls": 80697,
+      "self_seconds": 0.073486798,
+      "cumulative_seconds": 0.138372339
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py",
+      "line": 96,
+      "function": "_clip",
+      "primitive_calls": 89137,
+      "calls": 89137,
+      "self_seconds": 0.126832526,
+      "cumulative_seconds": 0.126832526
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py",
+      "line": 442,
+      "function": "independent_check_pose",
+      "primitive_calls": 284,
+      "calls": 284,
+      "self_seconds": 0.00227667,
+      "cumulative_seconds": 0.125323544
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py",
+      "line": 310,
+      "function": "<genexpr>",
+      "primitive_calls": 341435,
+      "calls": 341435,
+      "self_seconds": 0.070008712,
+      "cumulative_seconds": 0.108226502
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py",
+      "line": 402,
+      "function": "_check_envelope",
+      "primitive_calls": 284,
+      "calls": 284,
+      "self_seconds": 0.005602997,
+      "cumulative_seconds": 0.09710062200000001
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method scipy.ndimage._nd_image.binary_erosion>",
+      "primitive_calls": 1,
+      "calls": 1,
+      "self_seconds": 0.09273141700000001,
+      "cumulative_seconds": 0.09273141700000001
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/_core/numeric.py",
+      "line": 2320,
+      "function": "isclose",
+      "primitive_calls": 3133,
+      "calls": 3133,
+      "self_seconds": 0.038674267000000005,
+      "cumulative_seconds": 0.082601385
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/_core/numeric.py",
+      "line": 2226,
+      "function": "allclose",
+      "primitive_calls": 2419,
+      "calls": 2419,
+      "self_seconds": 0.004161868,
+      "cumulative_seconds": 0.07605107600000001
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method numpy.asarray>",
+      "primitive_calls": 282970,
+      "calls": 282970,
+      "self_seconds": 0.047317285,
+      "cumulative_seconds": 0.047317285
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py",
+      "line": 845,
+      "function": "indices",
+      "primitive_calls": 286,
+      "calls": 286,
+      "self_seconds": 0.002937158,
+      "cumulative_seconds": 0.035476712
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py",
+      "line": 2586,
+      "function": "all",
+      "primitive_calls": 9310,
+      "calls": 9310,
+      "self_seconds": 0.004897829,
+      "cumulative_seconds": 0.029886165000000003
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method builtins.getattr>",
+      "primitive_calls": 196404,
+      "calls": 196404,
+      "self_seconds": 0.026195402000000003,
+      "cumulative_seconds": 0.026195402000000003
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/lib/_arraysetops_impl.py",
+      "line": 145,
+      "function": "unique",
+      "primitive_calls": 201,
+      "calls": 201,
+      "self_seconds": 0.002457407,
+      "cumulative_seconds": 0.025485174000000003
+    }
+  ],
+  "hotspots_by_self": [
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py",
+      "line": 302,
+      "function": "segment_box_distance_sq",
+      "primitive_calls": 68287,
+      "calls": 68287,
+      "self_seconds": 1.4528207020000001,
+      "cumulative_seconds": 3.9406598120000003
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py",
+      "line": 323,
+      "function": "distance",
+      "primitive_calls": 278120,
+      "calls": 278120,
+      "self_seconds": 1.047326948,
+      "cumulative_seconds": 1.047326948
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py",
+      "line": 855,
+      "function": "actual_contacts",
+      "primitive_calls": 142,
+      "calls": 142,
+      "self_seconds": 0.23886230000000003,
+      "cumulative_seconds": 3.039843659
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py",
+      "line": 311,
+      "function": "<genexpr>",
+      "primitive_calls": 341435,
+      "calls": 341435,
+      "self_seconds": 0.20498806300000003,
+      "cumulative_seconds": 0.46907808300000003
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method scipy.ndimage._nd_image.binary_erosion2>",
+      "primitive_calls": 1,
+      "calls": 1,
+      "self_seconds": 0.197137416,
+      "cumulative_seconds": 0.197137416
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'reduce' of 'numpy.ufunc' objects>",
+      "primitive_calls": 359337,
+      "calls": 359337,
+      "self_seconds": 0.180940984,
+      "cumulative_seconds": 0.180940984
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py",
+      "line": 96,
+      "function": "_clip",
+      "primitive_calls": 89137,
+      "calls": 89137,
+      "self_seconds": 0.126832526,
+      "cumulative_seconds": 0.126832526
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py",
+      "line": 38,
+      "function": "_wrapit",
+      "primitive_calls": 90074,
+      "calls": 90074,
+      "self_seconds": 0.10438560000000001,
+      "cumulative_seconds": 0.309668885
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py",
+      "line": 358,
+      "function": "_cell_collision",
+      "primitive_calls": 994,
+      "calls": 994,
+      "self_seconds": 0.10416158900000001,
+      "cumulative_seconds": 1.3795513140000002
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method scipy.ndimage._nd_image.binary_erosion>",
+      "primitive_calls": 1,
+      "calls": 1,
+      "self_seconds": 0.09273141700000001,
+      "cumulative_seconds": 0.09273141700000001
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'all' of 'numpy.ndarray' objects>",
+      "primitive_calls": 277329,
+      "calls": 277329,
+      "self_seconds": 0.076841301,
+      "cumulative_seconds": 0.26882226400000003
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py",
+      "line": 48,
+      "function": "_wrapfunc",
+      "primitive_calls": 91409,
+      "calls": 91409,
+      "self_seconds": 0.073737095,
+      "cumulative_seconds": 0.41020094900000004
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py",
+      "line": 86,
+      "function": "_wrapreduction_any_all",
+      "primitive_calls": 80697,
+      "calls": 80697,
+      "self_seconds": 0.073486798,
+      "cumulative_seconds": 0.138372339
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py",
+      "line": 310,
+      "function": "<genexpr>",
+      "primitive_calls": 341435,
+      "calls": 341435,
+      "self_seconds": 0.070008712,
+      "cumulative_seconds": 0.108226502
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py",
+      "line": 328,
+      "function": "<genexpr>",
+      "primitive_calls": 257469,
+      "calls": 257469,
+      "self_seconds": 0.06998976900000001,
+      "cumulative_seconds": 0.7713941320000001
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py",
+      "line": 2245,
+      "function": "clip",
+      "primitive_calls": 89137,
+      "calls": 89137,
+      "self_seconds": 0.067113751,
+      "cumulative_seconds": 0.45629022300000005
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method builtins.min>",
+      "primitive_calls": 158079,
+      "calls": 158079,
+      "self_seconds": 0.064778403,
+      "cumulative_seconds": 0.8361725350000001
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/_core/_methods.py",
+      "line": 64,
+      "function": "_all",
+      "primitive_calls": 283595,
+      "calls": 283595,
+      "self_seconds": 0.05959159000000001,
+      "cumulative_seconds": 0.19719133900000002
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method numpy.asarray>",
+      "primitive_calls": 282970,
+      "calls": 282970,
+      "self_seconds": 0.047317285,
+      "cumulative_seconds": 0.047317285
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method builtins.any>",
+      "primitive_calls": 69111,
+      "calls": 69111,
+      "self_seconds": 0.043799351,
+      "cumulative_seconds": 0.5143517590000001
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/_core/numeric.py",
+      "line": 2320,
+      "function": "isclose",
+      "primitive_calls": 3133,
+      "calls": 3133,
+      "self_seconds": 0.038674267000000005,
+      "cumulative_seconds": 0.082601385
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py",
+      "line": 2474,
+      "function": "any",
+      "primitive_calls": 71387,
+      "calls": 71387,
+      "self_seconds": 0.037598461,
+      "cumulative_seconds": 0.150982464
+    },
+    {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py",
+      "line": 775,
+      "function": "independent_check_native_history",
+      "primitive_calls": 1,
+      "calls": 1,
+      "self_seconds": 0.033145536,
+      "cumulative_seconds": 4.9032821250000005
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<method 'clip' of 'numpy.ndarray' objects>",
+      "primitive_calls": 88995,
+      "calls": 88995,
+      "self_seconds": 0.030249528,
+      "cumulative_seconds": 0.156765345
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "function": "<built-in method builtins.getattr>",
+      "primitive_calls": 196404,
+      "calls": 196404,
+      "self_seconds": 0.026195402000000003,
+      "cumulative_seconds": 0.026195402000000003
+    }
+  ]
+}

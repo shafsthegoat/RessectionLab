@@ -729,49 +729,6 @@ def independent_native_removal_check(case: Any, config: Any,
                               case.semantic_hash, volume, action_count)
 
 
-def _extend_independent_free_space(remaining: np.ndarray, connected: np.ndarray,
-                                   newly_removed: set[tuple[int, int, int]], *,
-                                   full_flood_threshold: int = 4096) -> None:
-    """Update the established exterior component after certified connected cuts.
-
-    Only a removed cell and a previously sealed air cavity it opens can newly join
-    the exterior component. Explore those cells, leaving the large unchanged air
-    volume untouched. A large opened cavity falls back to the same full six-face
-    propagation used for initialization. This changes work, not connectivity.
-    The caller has already independently verified that the removed cluster is
-    connected to the existing exterior/cavity and has applied the removal.
-    """
-    from collections import deque
-    from scipy.ndimage import binary_propagation, generate_binary_structure
-
-    if not newly_removed:
-        return
-    queue = deque(sorted(newly_removed))
-    for key in newly_removed:
-        if remaining[key]:
-            raise ValueError("Connected-free update precedes committed removal")
-        connected[key] = True
-    expanded = 0
-    while queue:
-        key = queue.popleft()
-        expanded += 1
-        if expanded > full_flood_threshold:
-            connected[:] = binary_propagation(connected, structure=generate_binary_structure(3, 1),
-                                               mask=~remaining)
-            return
-        for axis in range(3):
-            for direction in (-1, 1):
-                coordinate = key[axis] + direction
-                if coordinate < 0 or coordinate >= remaining.shape[axis]:
-                    continue
-                neighbor = list(key)
-                neighbor[axis] = coordinate
-                neighbor = tuple(neighbor)
-                if not remaining[neighbor] and not connected[neighbor]:
-                    connected[neighbor] = True
-                    queue.append(neighbor)
-
-
 def independent_check_native_history(case: Any, tools: Sequence[Any],
                                      history: Sequence[Mapping[str, Any]], *,
                                      tissue_mask: np.ndarray, access: Any,
@@ -951,6 +908,9 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
             omitted = actual_contacts(start, end, tip_radius) - contacts - keys
             if omitted:
                 return report("unrecorded_partial_active_tissue_contact", action_id, next(iter(omitted)))
+            after = remaining.copy()
+            if keys:
+                after[tuple(removed.T)] = False
             certificate = independent_check_motion(tool, ToolPose(tip_start, axis), ToolPose(tip_end, axis),
                 hard_scene, access)
             if not certificate.feasible:
@@ -964,11 +924,10 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
                 tip_start - length * axis, tip_end - tip_length * axis, shaft_radius)
             if shaft_collision is not None:
                 return report("native_shaft_collides_with_remaining_tissue", action_id)
-            if keys:
-                remaining[tuple(removed.T)] = False
+            remaining = after
             accepted.update(keys)
             macro_removed.update(keys)
-            _extend_independent_free_space(remaining, free, keys)
+            free = binary_propagation(free | ~remaining & border, structure=connectivity, mask=~remaining)
             previous = tip_end
         declared_macro = {tuple(int(v) for v in index) for index in indices(record.get("removed_indices_native", ()))}
         if declared_macro != macro_removed:

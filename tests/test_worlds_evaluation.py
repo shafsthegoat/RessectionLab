@@ -510,3 +510,70 @@ def test_native_macro_display_coordinates_and_volume_must_match_checked_history(
     history[0]["tip_mm"] = (99, 99, 99)
     checked = independent_check_native_history(case, (tool,), history, tissue_mask=tissue, access=access)
     assert checked.failures == ("native_macro_tip_mismatch",)
+
+
+@pytest.mark.parametrize("threshold", [1, 4096])
+def test_incremental_free_space_exactly_matches_full_flood_when_a_sealed_cavity_opens(threshold):
+    from scipy.ndimage import binary_propagation, generate_binary_structure
+    from resectionlab.evaluation import _extend_independent_free_space
+
+    remaining = np.zeros((26, 26, 26), bool)
+    remaining[1:-1, 1:-1, 1:-1] = True
+    remaining[3:-3, 3:-3, 3:-3] = False
+    seeds = np.zeros_like(remaining)
+    seeds[0] = True
+    structure = generate_binary_structure(3, 1)
+    connected = binary_propagation(seeds, structure=structure, mask=~remaining)
+    assert not connected[13, 13, 13]
+    for key in ((1, 13, 13), (2, 13, 13)):
+        remaining[key] = False
+        _extend_independent_free_space(remaining, connected, {key}, full_flood_threshold=threshold)
+        expected = binary_propagation(seeds, structure=structure, mask=~remaining)
+        np.testing.assert_array_equal(connected, expected)
+    assert connected[13, 13, 13]
+    assert not connected[13, 2, 13]  # Occupied wall stays occupied/ disconnected.
+
+
+def test_incremental_free_space_preserves_unopened_cavities_and_handles_boundary_cuts():
+    from scipy.ndimage import binary_propagation, generate_binary_structure
+    from resectionlab.evaluation import _extend_independent_free_space
+
+    remaining = np.ones((9, 9, 9), bool)
+    remaining[4, 4, 4] = False
+    remaining[1, 5, 5] = False  # Diagonal-only contact is not an exterior opening.
+    connected = np.zeros_like(remaining)
+    for key in ((0, 4, 4), (1, 4, 4), (2, 4, 4)):
+        remaining[key] = False
+        _extend_independent_free_space(remaining, connected, {key})
+        seeds = np.zeros_like(remaining)
+        seeds[0, 4, 4] = True
+        expected = binary_propagation(seeds, structure=generate_binary_structure(3, 1), mask=~remaining)
+        np.testing.assert_array_equal(connected, expected)
+        if key == (0, 4, 4):
+            assert not connected[1, 5, 5]
+    assert not connected[4, 4, 4]
+    with pytest.raises(ValueError, match="precedes"):
+        _extend_independent_free_space(remaining, connected, {(3, 4, 4)})
+
+
+def test_incremental_free_space_matches_full_flood_across_random_grids_and_multiple_entries():
+    from scipy.ndimage import binary_dilation, binary_propagation, generate_binary_structure
+    from resectionlab.evaluation import _extend_independent_free_space
+
+    structure = generate_binary_structure(3, 1)
+    for seed in range(10):
+        rng = np.random.default_rng(seed)
+        remaining = rng.random((8, 9, 10)) < .8
+        border = np.ones_like(remaining)
+        border[1:-1, 1:-1, 1:-1] = False
+        connected = binary_propagation(border & ~remaining, structure=structure, mask=~remaining)
+        for _ in range(6):
+            frontier = np.argwhere(remaining & (border | binary_dilation(connected, structure=structure)))
+            if not len(frontier):
+                break
+            selected = frontier[rng.choice(len(frontier), size=min(4, len(frontier)), replace=False)]
+            keys = {tuple(int(v) for v in key) for key in selected}
+            remaining[tuple(selected.T)] = False
+            _extend_independent_free_space(remaining, connected, keys)
+            expected = binary_propagation(border & ~remaining, structure=structure, mask=~remaining)
+            np.testing.assert_array_equal(connected, expected)

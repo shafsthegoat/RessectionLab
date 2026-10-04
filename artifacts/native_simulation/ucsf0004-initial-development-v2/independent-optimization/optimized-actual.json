@@ -1,0 +1,129 @@
+{
+  "recorded_at": "2026-10-04T07:42:16.716239+00:00",
+  "phase": "bounded_independent_checker_performance_probe",
+  "profile_runs": 2,
+  "optimized_actual_runs": 1,
+  "final_evaluation_used": false,
+  "candidate_changed": false,
+  "result_sha256": "2897761ed2842fa5c32ff0e2cefacf9d3351cd034e094f3680e935b96e4d36cb",
+  "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+  "native_config_hash": "sha256:0924b7d0a4ab4310f319372fbfc6dd84919c16ffff7070030494cf8a5acc72cd",
+  "source_sha256_before": "594d5c7234ada881f89e734ec29ddd2533d3e6f12f2229cb001d86589c7f8776",
+  "source_sha256_after": "baaa2f3d6b4e41c4621dc22872da9300d649bc91dfeb923e2ad35f66aadad3b7",
+  "baseline_actual_seconds": 17.638021667022258,
+  "optimized_actual_seconds": 4.310382334049791,
+  "actual_observed_speedup": 4.091985420339864,
+  "baseline_profiled_seconds": 18.76042166701518,
+  "optimized_profiled_seconds": 4.904293459025212,
+  "audit_identical": true,
+  "audit": {
+    "feasible": true,
+    "failures": [],
+    "first_failed_action": null,
+    "first_unsupported_source_voxel": null,
+    "first_unsupported_position_mm": null,
+    "claimed_source_tissue_volume_mm3": 266.0,
+    "contained_source_tissue_volume_mm3": 266.0,
+    "unsupported_source_tissue_volume_mm3": 0.0,
+    "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "source_voxel_volume_mm3": 1.0,
+    "action_count": 2,
+    "checker_version": "independent-native-sequence-v2",
+    "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+    "complete_tool_checked": true,
+    "frontier_checked": true
+  },
+  "unchanged_geometry_function_asts": {
+    "segment_box_distance_sq": true,
+    "_cell_collision": true,
+    "_sphere_collision": true,
+    "_check_envelope": true,
+    "_access_failure": true,
+    "independent_check_pose": true,
+    "independent_check_motion": true
+  },
+  "checked_actions": 2,
+  "checked_microsteps": 142,
+  "retained_source_metrics": {
+    "source_grid_shape": [
+      240,
+      240,
+      155
+    ],
+    "source_frame": "RAS+",
+    "simulation_frame": "RAS+",
+    "brain_mask_supplied": false,
+    "tissue_support_provenance": "estimated_hole_filled_nonzero_UCSF_or_declared_skull_stripped_MRI_support; brain_surface_unreviewed; source_frame=RAS+; simulation_frame=RAS+",
+    "source_tissue_sha256": "24d2f2f56cf8fe93a6ac47712e810cf33afbfa71baa2c37b9d18ef3c1eef8175",
+    "hard_exclusion_sha256": "2c34b25c4e60322966923daa20e8f2ecbcc4494e73125aeb817f7eb5134538d9",
+    "source_target_voxels": 41919,
+    "removed_target_mm3": 249.0,
+    "removed_normal_mm3": 17.0,
+    "residual_target_mm3": 41670.0,
+    "removed_by_compartment_mm3": {
+      "FLAIR_abnormality": 0.0,
+      "enhancing_target": 47.0,
+      "nonenhancing_or_necrotic_core": 202.0
+    },
+    "residual_by_compartment_mm3": {
+      "FLAIR_abnormality": 18654.0,
+      "enhancing_target": 15625.0,
+      "nonenhancing_or_necrotic_core": 7391.0
+    },
+    "contacted_source_tissue_mm3": 700.0,
+    "contacted_retained_tissue_mm3": 434.0,
+    "cumulative_partial_normal_contact_mm3": 32.0,
+    "partial_contact_still_retained_normal_mm3": 26.0
+  },
+  "optimization": "Replace repeated whole-grid connectivity propagation and remaining-mask copies with independent incremental six-face free-space update after certified removal; full-flood fallback after4096 expanded cells",
+  "unchanged_tolerances": {
+    "entry_plane_absolute_mm": 1e-07,
+    "source_corner_squared_distance_slack_mm2": 1e-09,
+    "active_contact_squared_distance_slack_mm2": 1e-09,
+    "shaft_cell_squared_distance_slack_mm2": 1e-10,
+    "microstep_endpoint_absolute_mm": 1e-07,
+    "tool_radius_absolute_mm": 1e-09,
+    "microstep_endpoint_relative": 1e-05,
+    "tool_radius_relative": 1e-05
+  },
+  "scope": "Single same-machine same-history development timing; no latency guarantee. Geometry and conservative thresholds unchanged. No optimizer collision routines reused.",
+  "regression_after_optimized_actual": {
+    "command": ".venv/bin/python -m pytest tests/test_worlds_evaluation.py tests/test_adversarial.py tests/test_native_resection.py tests/test_native_simulation.py -q",
+    "passed": 91,
+    "failed": 0,
+    "elapsed_seconds": 2.94,
+    "tests_sha256": {
+      "test_worlds_evaluation.py": "4c5cb6a28469617d81beb61f5de728703d0f9940f1127eec5deb16ad8f1a6e47",
+      "test_adversarial.py": "b651d3637b7800eaaa7308840692e4f2845e95db4b18b3f463b353db089467ed",
+      "test_native_resection.py": "9a452e3efba345837099ac7a5d9e91a3f67c91c27ef62454a62bd5466fe4e663",
+      "test_native_simulation.py": "1881226a1530b239727e56981e21e1d9388d192fc894592637fb0f2638ea1512"
+    },
+    "added_connectivity_checks": [
+      "matches full six-neighbor flood across10random grids and6cutbatches each",
+      "opening previously sealed cavity",
+      "diagonal-only free space stays disconnected",
+      "boundary cuts and multiple entries",
+      "large cavity full-flood fallback"
+    ]
+  },
+  "connectivity_profiles": {
+    "baseline": {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/scipy/ndimage/_morphology.py",
+      "line": 947,
+      "function": "binary_propagation",
+      "primitive_calls": 143,
+      "calls": 143,
+      "self_seconds": 0.000389491,
+      "cumulative_seconds": 14.310819332000001
+    },
+    "optimized": {
+      "file": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/scipy/ndimage/_morphology.py",
+      "line": 947,
+      "function": "binary_propagation",
+      "primitive_calls": 1,
+      "calls": 1,
+      "self_seconds": 3.791e-06,
+      "cumulative_seconds": 0.29046425000000003
+    }
+  }
+}
