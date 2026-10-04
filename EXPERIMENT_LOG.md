@@ -515,3 +515,22 @@ The next experiments must separate action-set expansion from model scaling and
 retain fresh comparisons. Measurements, immutable policy/source bindings and
 executed diagnostic source are in
 `artifacts/learning/procedural-native-to-ucsf-v2/diagnostics-v1/`.
+
+## October 4, 2026 — integrated validation and current-image integrity
+
+A fresh complete Python sweep passed 749 checks in 107.54 s with four existing
+DIPY basis-deprecation warnings. The earlier orchestration fixture failure and
+focused repair remain preserved. The new complete-suite receipt binds tracked
+Python and test sources at `5c57ddb` in
+`artifacts/validation/integrated-python-2026-10-04-v3.json`.
+
+Independent renderer review found a cache keyed by a mutable image container.
+After a first valid evidence load, replacing or changing its MRI array could
+reuse the stale source hash. The app had no observed mutation, but this weakened
+the integrity boundary. The cache was removed; each evidence inspection now
+hashes current bytes. Four adversarial tests reproduced the old acceptance and
+now reject before loading another prior or structural mask. All 66 renderer
+checks and the production build pass. A descriptive seven-map hydration pass
+changed from 1,412.5 to 1,523.6 ms total (median 198.9 to 212.9 ms); this is not an
+isolated hash-cost or visible-latency benchmark. The corrected renderer is
+being packaged separately from the initial seven-map build.

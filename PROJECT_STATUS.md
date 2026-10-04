@@ -33,7 +33,8 @@ bindings, and unchanged planning inputs. They remain view-only population
 evidence requiring alignment review. Their Electron controls now display one
 selected layer with separate atlas coverage, scalar/binary sampling and cursor
 values. Source restoration, stale loads and case changes clear the layer.
-All 120 desktop checks and the production build pass; the new complete engine
+All 124 desktop checks and the production build pass after removing an unsafe
+source-image hash cache; the new complete engine
 and renderer are undergoing native GPU and interaction verification. The current
 packaged MRI review layout already passed normal/minimum-width inspection on
 both BTC cases, including three expanded planes and physical cursor navigation.
@@ -176,12 +177,12 @@ hypothetical access; this is not a complete resection plan.
 
 ## Validation record
 
-The latest root integrated run passed **743 tests and failed one test in 110.31
-seconds**, with four existing DIPY basis-deprecation warnings. The failure was an
-orchestration fixture that needed to isolate a newly added earlier preflight;
-production rejection was correct. After that test-only repair, 13 focused runner
-checks and nine public-panel/tamper checks passed. This records the initial
-failure and focused rerun, not a second all-green integrated invocation.
+The latest root integrated run passed **749 tests in 107.54 seconds**, with four
+existing DIPY basis-deprecation warnings. Exact source identities are in
+`artifacts/validation/integrated-python-2026-10-04-v3.json`. The preceding
+743-pass/one-failure sweep is retained: its orchestration fixture needed to
+isolate a newly added earlier preflight, while production rejection was correct.
+The test-only repair passed focused checks before this complete fresh sweep.
 Structural adversarial checks found
 and fixed metadata precedence, mask-enlargement and provenance problems;
 their focused checks passed before each incremental commit. Native
@@ -199,7 +200,7 @@ See `EXPERIMENT_LOG.md` for executed experiments, including negative results.
 The Qt prototype passed its initial standalone runtime and GUI checks. Its next
 build was stopped following the user's Electron decision. The React/Electron
 package passed its own imaging/search checks and 31 main-process boundary and
-lifecycle tests. The current 62 renderer tests and 27 viewer tests cover source
+lifecycle tests. The current 66 renderer tests and 27 viewer tests cover source
 hydration, evidence status, A/B identity, independently accepted removal overlays
 and population-prior sampling. The complete
 training bundle has its own source-bound verification receipts. Qt results do
