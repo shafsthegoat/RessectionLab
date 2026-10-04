@@ -76,11 +76,24 @@ committed `8aeb3be` failed at the native orthogonal-affine guard in 3.148 second
 before candidate previews, policy calls, transitions or optimizer updates.
 The original bundle and all 53 numerical source files stayed unchanged; there
 was no retry. Its fixed 32³ crop contains 24.36% of the supplied target and also
-limits proposal reach. A separately declared, bounded reconciliation of source
-header roundoff is under review; the failed profile remains negative evidence.
-Scan normalization uses only permitted support intensities. Substantive
-real-patient spatial training remains pending. See
-`artifacts/pat05-real-spatial-profile-v1/outcome.json`.
+limits proposal reach. The independently checked, explicitly bounded correction
+preserves source images and moves full-cell corners by at most 1.0842e-7 mm.
+The separately frozen v2 profile completed in 9.311 seconds at 1.063 GB peak
+sampled RSS: 36 initial legal actions, three fixed test actions, three untrained
+forwards and no updates. Its full-history geometry audit passed. The shallow
+test sequence removed 26.00009 mm³ normal tissue and no target; its actions
+were chosen by inventory order, not the policy. Crucially, 10,558 of 11,437
+target centers (92.31%) exceed the fixed catalog's distal axial bound. Broader
+shared proposals and observed context must be checked before useful learning.
+The original v1 failure remains preserved. See
+`artifacts/pat05-real-spatial-profile-v2/outcome.json`.
+
+The same frozen SynthStrip main model completed all four additional BTC
+development estimates (TRAIN PAT22/PAT25 and SELECT PAT26/PAT27) in 35.024
+seconds, without retries, parameter changes or source mutation. All four outputs
+were fixed before annotation-overlap checks; independent QC and source-bound
+proposal attachment are in progress. No working support approval or training
+result follows from these inferences. PAT29/PAT31 and UPenn remain unopened.
 
 The first real TRAIN PAT22 inference profile completed all four declared cells
 in 6.247 seconds with unchanged model parameters. One CPU call took 28–30 ms
