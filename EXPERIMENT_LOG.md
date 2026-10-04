@@ -384,3 +384,22 @@ incomplete initial selection could be extracted as a selected candidate. Both
 are being corrected before execution, with separate setup accounting and a
 complete-selection gate. No registered training has run yet; construction-only
 preflight passed with zero gradients and final/stress worlds closed.
+
+Native follow-up now verifies both proposals on all three MRI planes for PAT28
+and PAT05, including the 214/538 outside-annotation jumps at the exact source
+cell coordinates (rounded only in display). Source clearing, case switching and
+native file-dialog cancellation pass. A stale footer was fixed in a separate
+renderer built from exact commit `e70edc1`; the final source digest is
+`75d7f69b…`, with the earlier verified numerical engine unchanged. Existing UCSF
+replay still independently checks 174/11/41,745 mm³ before source restoration.
+No training was needed for this native verification. A same-case BTC transition
+to an accepted replay was not exercised because its access gate remains closed.
+Initial and corrected receipts are retained in
+`artifacts/electron-structural-proposals-v1/`.
+
+The procedural transfer implementation subsequently passed 123 isolated tests,
+including actual-case construction without updates, all-arm tiny procedural
+tests, checkpoint/source exclusions and corrected timing/selection contracts.
+Registered execution was released from exact commit `dfab4c4`, independently
+matched to the tested numerical snapshot; heavy background tests were paused.
+Results will be recorded after all declared arms and independent audits finish.

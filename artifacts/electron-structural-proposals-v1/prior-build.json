@@ -1,0 +1,17 @@
+{
+  "engine_executable_sha256": "d88dd33cbccfdeb512c17cf492614422d7d01d8f9b20fbe86f2bc9f63275cbb3",
+  "prior_renderer_archive_sha256": "aaa72536ffc7e4ad4451d68660220dbc995395721c2c91436cdd0d1537dc452f",
+  "previous_build": {
+    "status": "built_unverified",
+    "appPath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app",
+    "architecture": "arm64",
+    "signing": "local_ad_hoc",
+    "notarized": false,
+    "internalSymlinks": 41,
+    "previousDirectory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/previous-1791106035553-f5431ed6",
+    "sourceDigest": "5fe94739e255a44b1df27eb642ec52234bfac83d0113b21d876092cb2d1ca98a",
+    "inputSnapshot": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/inputs-gSG6YP",
+    "elapsedSeconds": 10.371
+  },
+  "purpose": "Renderer-only structural proposal view validation. Existing verified numerical engine retained; no optimization or final evaluation requested."
+}

@@ -20,9 +20,17 @@ The next committed renderer adds separate, explicitly unreviewed brain-envelope
 contours on the original MRI planes. Source/frame/mask checks and lazy loading
 pass for both BTC cases: the no-CSF estimates exclude 214 PAT28 annotation voxels
 and 538 PAT05 annotation voxels. These are overlap checks, not accuracy scores.
-All 97 desktop checks and the production build pass; native visual verification
-of this new inspection slice is underway. Working anatomy and access gates stay
-unchanged.
+All 97 desktop checks and the production build pass. Native inspection now
+passes on both cases, including source restoration, case switching and the
+outside-annotation cursor jumps. A stale footer was caught and fixed; final
+renderer source `75d7f69b…` uses the previous verified numerical engine. Working
+anatomy and access gates stay unchanged. Screenshots and exact package identities
+are in `artifacts/electron-structural-proposals-v1/`.
+
+Seven registered motor/language prior proposals now persist in portable cases
+with separate values and atlas coverage, exact T1 registration/T1c display source
+bindings, and unchanged planning inputs. They remain view-only population
+evidence requiring alignment review. Their desktop controls are in progress.
 
 ## Verified starting state
 

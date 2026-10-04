@@ -204,3 +204,32 @@ after the final app capture; it independently accepted that exact capture's
 44.5.1 lockfile, and all 31 main-process tests passed. The validated app itself
 was not rebuilt for this build-tool-only change. Local ad hoc signing passed;
 distribution signing and notarization remain unperformed.
+
+
+`artifacts/electron-structural-proposals-v1/` records the next renderer-only
+slice. Both PAT28 and PAT05 display the main and no-CSF structural proposals as
+lavender contours on the three original MRI planes. The labels remain
+review-required and view-only; neither estimate enables route generation or
+certifies cortical access. Native inspection reproduces 214 and 538 source
+annotation voxels outside the no-CSF estimates. The respective linked cursors
+move to the source-derived RAS points, shown at one decimal place as
+(-14.0, 9.3, 64.3) and (-41.2, 27.3, 3.2) mm. Clearing and case switching remove
+the contour; cancelling the native case dialog preserves the existing view.
+
+That initial capture (`4aba8275…`, 11.33 seconds) exposed a stale footer after
+clearing, although its banner and MRI contour correctly disappeared. The
+correction was packaged from an isolated checkout of commit `e70edc1`, with all
+59 captured desktop inputs independently checked against that exact commit.
+The final capture `75d7f69b…` took 12.04 seconds, retained the same validated
+numerical engine, and archived the previous app before replacement. Native
+retesting confirmed the corrected source-restoration footer and reopened the
+existing signed UCSF selection replay: 174 mm³ modeled target removal,
+11 mm³ normal removal and 41,745 mm³ residual target. No new training or final
+evaluation ran. Initial and final renderer identities have separate receipts.
+
+The native BTC fixtures deliberately lack reviewed planning support and accepted
+runs, so a same-case proposal-to-accepted-replay transition was not exercised.
+The viewer explicitly suppresses estimates during replay; the native check
+confirmed that no estimate survived a case switch into the existing UCSF replay.
+These visual checks establish display behavior, not anatomical accuracy. Later
+population-prior and layout work is absent from this exact packaged snapshot.
