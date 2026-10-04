@@ -196,8 +196,9 @@ negative result while mechanics takes priority. See
 
 The mechanics evidence review found public, measured human ex-vivo specimen
 force/displacement and torque/twist curves, plus separate patient image-landmark
-resources. FEBio is the recommended first finite-strain specimen framework;
-no solver has yet been installed or validated. The specimen check must precede
+resources. FEBio is the selected first finite-strain specimen framework; its
+isolated source build and homogeneous numerical verification are recorded below.
+Measured specimen response remains unvalidated. The specimen check must precede
 a separate real-anatomy displacement proof of concept; neither can establish
 surgical action/force response without suitable interaction measurements.
 See `docs/tissue-mechanics-frameworks.md`, `docs/tissue-mechanics-measurements.md`
