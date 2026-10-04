@@ -126,3 +126,22 @@ reinterpretation. These are exploratory timings, not a cross-machine benchmark.
 Exactly deterministic worlds now preserve the source fields directly. This
 avoids unnecessary interpolation and prevents floating-point inverse-affine
 error from falsely creating unknown boundary coverage on oblique images.
+
+## Bounded initial-geometry cache
+
+The native adapter retains one prepared initial engine snapshot per factory
+instance. Episode resets clone its cavity state and its original in-memory
+geometry certificates, then sample the episode's hidden world independently.
+The cache contains no hidden costs and does not admit deserialized certificates.
+The frozen-model guard runs before reuse. An isolated `fresh()` arm performs its
+own cold preparation, so its setup cost remains visible to experiment budgets.
+
+The UCSF development profile in
+`artifacts/performance/native-reset-cache-v1/comparison.json` measured five
+resets before and after this change. Median profiled reset time fell from
+0.462 seconds to 0.0259 seconds (17.85×). Cold preparation stayed near 2.5 seconds;
+later cavity proposals and history-copy costs remain. All captured observations,
+rewards, removal records, source hashes, and metrics were byte-identical. The
+bounded snapshot raised peak process RSS from 1.168 GiB to 1.202 GiB on this
+16 GiB Mac. This is one development profile with uncontrolled concurrent load,
+not a general wall-time training benchmark or clinical result.

@@ -1,0 +1,63 @@
+{
+  "phase": "development_performance_only",
+  "final_worlds_opened": false,
+  "hardware": "macOS-26.6-arm64-arm-64bit",
+  "physical_memory_budget_gib": 16,
+  "profile_overhead_included": true,
+  "phases": {
+    "load_case": {
+      "elapsed_seconds": 0.18515091703739017,
+      "peak_rss_bytes": 275447808
+    },
+    "prepare": {
+      "elapsed_seconds": 2.55599283403717,
+      "peak_rss_bytes": 1207681024
+    },
+    "reset_0": {
+      "elapsed_seconds": 0.45540949993301183,
+      "peak_rss_bytes": 1207828480
+    },
+    "reset_1": {
+      "elapsed_seconds": 0.4705500000854954,
+      "peak_rss_bytes": 1207877632
+    },
+    "reset_2": {
+      "elapsed_seconds": 0.46369516605045646,
+      "peak_rss_bytes": 1207926784
+    },
+    "rollout_reset_0": {
+      "elapsed_seconds": 0.4616523339645937,
+      "peak_rss_bytes": 1207926784
+    },
+    "rollout_0_point_0": {
+      "elapsed_seconds": 0.4976618329528719,
+      "peak_rss_bytes": 1211711488
+    },
+    "rollout_0_point_3": {
+      "elapsed_seconds": 0.44620816700626165,
+      "peak_rss_bytes": 1215086592
+    },
+    "rollout_reset_1": {
+      "elapsed_seconds": 0.4604739580536261,
+      "peak_rss_bytes": 1217921024
+    },
+    "rollout_1_point_0": {
+      "elapsed_seconds": 0.5088982910383493,
+      "peak_rss_bytes": 1218412544
+    },
+    "rollout_1_point_3": {
+      "elapsed_seconds": 0.44808945793192834,
+      "peak_rss_bytes": 1220673536
+    },
+    "clone_after_rollout": {
+      "elapsed_seconds": 0.3057629580143839,
+      "peak_rss_bytes": 1229029376
+    },
+    "second_prepare": {
+      "elapsed_seconds": 2.331082500051707,
+      "peak_rss_bytes": 1229029376
+    }
+  },
+  "identity_digest": "0d645c4dd11c13c8bc23632891b9262e5235dfd186d76bc4d3c324b3e126dd53",
+  "peak_rss_bytes": 1254539264
+}

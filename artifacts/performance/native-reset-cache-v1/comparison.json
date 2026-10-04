@@ -1,0 +1,16 @@
+{
+  "phase": "development_performance_only",
+  "only_changed_source_files": [
+    "resectionlab/native_simulation.py"
+  ],
+  "source_cell_outputs_byte_identical": true,
+  "identity_digest": "0d645c4dd11c13c8bc23632891b9262e5235dfd186d76bc4d3c324b3e126dd53",
+  "baseline_reset_median_seconds": 0.4616523339645937,
+  "cached_reset_median_seconds": 0.02586108399555087,
+  "reset_speedup": 17.851236786672057,
+  "baseline_peak_rss_gib": 1.1683807373046875,
+  "cached_peak_rss_gib": 1.2021942138671875,
+  "profile_overhead_included": true,
+  "final_worlds_opened": false,
+  "limitations": "Single-process local development profile on a 16 GiB Mac; concurrent system load was uncontrolled. Cold preparation remains charged; no wall-time learning comparison inferred."
+}

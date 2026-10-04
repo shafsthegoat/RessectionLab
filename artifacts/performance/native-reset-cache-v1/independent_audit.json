@@ -1,0 +1,22 @@
+{
+  "phase": "development_geometry_audit",
+  "seconds": 3.0926460420014337,
+  "result_identity_digest": "0d645c4dd11c13c8bc23632891b9262e5235dfd186d76bc4d3c324b3e126dd53",
+  "audit": {
+    "feasible": true,
+    "failures": [],
+    "first_failed_action": null,
+    "first_unsupported_source_voxel": null,
+    "first_unsupported_position_mm": null,
+    "claimed_source_tissue_volume_mm3": 266.0,
+    "contained_source_tissue_volume_mm3": 266.0,
+    "unsupported_source_tissue_volume_mm3": 0.0,
+    "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "source_voxel_volume_mm3": 1.0,
+    "action_count": 2,
+    "checker_version": "independent-native-sequence-v2",
+    "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+    "complete_tool_checked": true,
+    "frontier_checked": true
+  }
+}

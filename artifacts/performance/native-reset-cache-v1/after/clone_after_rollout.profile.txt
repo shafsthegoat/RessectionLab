@@ -1,0 +1,40 @@
+         1468539 function calls (1206761 primitive calls) in 0.307 seconds
+
+   Ordered by: cumulative time
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.307    0.307 native_simulation.py:202(clone)
+ 210319/3    0.135    0.000    0.300    0.100 copy.py:118(deepcopy)
+  51181/3    0.061    0.000    0.300    0.100 copy.py:191(_deepcopy_list)
+    288/4    0.001    0.000    0.300    0.075 copy.py:217(_deepcopy_dict)
+        1    0.000    0.000    0.155    0.155 native_resection.py:309(clone)
+        1    0.000    0.000    0.152    0.152 simulation.py:276(clone)
+   420642    0.038    0.000    0.038    0.000 {method 'get' of 'dict' objects}
+    51469    0.015    0.000    0.023    0.000 copy.py:231(_keep_alive)
+   314416    0.022    0.000    0.022    0.000 {built-in method builtins.id}
+   254146    0.018    0.000    0.018    0.000 {method 'append' of 'list' objects}
+   154250    0.008    0.000    0.008    0.000 copy.py:172(_deepcopy_atomic)
+     1156    0.002    0.000    0.007    0.000 copy.py:200(_deepcopy_tuple)
+        8    0.006    0.001    0.006    0.001 {method 'copy' of 'numpy.ndarray' objects}
+     3444    0.000    0.000    0.000    0.000 {method '__deepcopy__' of 'numpy.generic' objects}
+     3451    0.000    0.000    0.000    0.000 {built-in method builtins.getattr}
+     3446    0.000    0.000    0.000    0.000 {built-in method builtins.issubclass}
+        2    0.000    0.000    0.000    0.000 copy.py:61(copy)
+        2    0.000    0.000    0.000    0.000 {method '__reduce_ex__' of 'object' objects}
+      288    0.000    0.000    0.000    0.000 {method 'items' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 copyreg.py:107(_slotnames)
+        2    0.000    0.000    0.000    0.000 copy.py:247(_reconstruct)
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        2    0.000    0.000    0.000    0.000 {method 'update' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 native_simulation.py:149(_bind_engine_masks)
+        2    0.000    0.000    0.000    0.000 copyreg.py:98(__newobj__)
+        3    0.000    0.000    0.000    0.000 {built-in method builtins.setattr}
+        2    0.000    0.000    0.000    0.000 {built-in method __new__ of type object at 0x1035be258}
+        4    0.000    0.000    0.000    0.000 {built-in method builtins.isinstance}
+        3    0.000    0.000    0.000    0.000 {built-in method builtins.hasattr}
+        3    0.000    0.000    0.000    0.000 {method 'copy' of 'dict' objects}
+        2    0.000    0.000    0.000    0.000 {method 'copy' of 'set' objects}
+        1    0.000    0.000    0.000    0.000 {method 'copy' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 {method 'get' of 'mappingproxy' objects}
+
+

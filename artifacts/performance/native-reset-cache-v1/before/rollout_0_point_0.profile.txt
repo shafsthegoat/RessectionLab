@@ -1,0 +1,43 @@
+         612316 function calls (537948 primitive calls) in 0.497 seconds
+
+   Ordered by: cumulative time
+   List reduced from 242 to 35 due to restriction <35>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.498    0.498 profile_native.py:56(<lambda>)
+        1    0.000    0.000    0.498    0.498 native_simulation.py:278(step)
+        1    0.000    0.000    0.390    0.390 native_simulation.py:235(observation)
+        1    0.004    0.004    0.390    0.390 simulation.py:378(observation)
+        4    0.000    0.000    0.380    0.095 native_simulation.py:194(proposed_actions)
+        8    0.010    0.001    0.379    0.047 native_resection.py:320(preview_stroke)
+      586    0.023    0.000    0.324    0.001 geometry.py:357(capsule_voxel_indices)
+      586    0.148    0.000    0.220    0.000 geometry.py:319(_segment_cell_distances)
+  59594/1    0.038    0.000    0.084    0.084 copy.py:118(deepcopy)
+     80/1    0.000    0.000    0.084    0.084 copy.py:217(_deepcopy_dict)
+  14508/4    0.017    0.000    0.083    0.021 copy.py:191(_deepcopy_list)
+     8886    0.057    0.000    0.057    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+     2355    0.002    0.000    0.045    0.000 fromnumeric.py:66(_wrapreduction)
+     1758    0.001    0.000    0.042    0.000 fromnumeric.py:2342(sum)
+      795    0.020    0.000    0.038    0.000 geometry.py:285(point_segment_distances)
+        1    0.000    0.000    0.021    0.021 native_resection.py:405(commit_preview)
+      603    0.000    0.000    0.019    0.000 {method 'sum' of 'numpy.ndarray' objects}
+      603    0.000    0.000    0.019    0.000 _methods.py:47(_sum)
+        8    0.000    0.000    0.019    0.002 geometry.py:511(check_motion)
+      586    0.003    0.000    0.017    0.000 _function_base_impl.py:5062(meshgrid)
+      285    0.004    0.000    0.017    0.000 native_resection.py:210(contained_capsule_cells)
+       16    0.001    0.000    0.015    0.001 geometry.py:411(_check_envelope)
+        4    0.000    0.000    0.013    0.003 native_resection.py:189(to_history_record)
+      597    0.013    0.000    0.013    0.000 {method 'sort' of 'numpy.ndarray' objects}
+      300    0.010    0.000    0.013    0.000 native_resection.py:152(to_dict)
+     1991    0.002    0.000    0.013    0.000 fromnumeric.py:2245(clip)
+      586    0.001    0.000    0.012    0.000 _stride_tricks_impl.py:588(broadcast_arrays)
+     1478    0.005    0.000    0.011    0.000 _linalg.py:2598(norm)
+     2023    0.001    0.000    0.011    0.000 fromnumeric.py:48(_wrapfunc)
+   119199    0.010    0.000    0.010    0.000 {method 'get' of 'dict' objects}
+        8    0.000    0.000    0.010    0.001 native_resection.py:345(finish)
+     1991    0.001    0.000    0.010    0.000 {method 'clip' of 'numpy.ndarray' objects}
+        2    0.000    0.000    0.010    0.005 native_resection.py:431(_result_digest)
+       18    0.005    0.000    0.009    0.001 native_resection.py:253(_extend_connected_free)
+     1758    0.006    0.000    0.009    0.000 _stride_tricks_impl.py:447(_broadcast_to)
+
+

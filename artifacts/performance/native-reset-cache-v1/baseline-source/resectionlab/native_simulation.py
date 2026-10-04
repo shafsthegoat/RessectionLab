@@ -91,11 +91,6 @@ class NativeSequentialSimulator(SequentialSimulator):
         self._native_config_hash = native_config.fingerprint
         self._previews: dict[str, Any] = {}
         self._proposal_failures: list[dict[str, Any]] = []
-        # One bounded, model-local cache of the certified initial geometry. The
-        # hidden world changes costs only, so initial tool legality is identical
-        # across episode seeds. No deserialized/foreign certificates enter here.
-        self._initial_geometry_snapshot: tuple[Any, tuple[MacroAction, ...], dict[str, Any], list[dict[str, Any]]] | None = None
-        self._restoring_initial_geometry = None
         config = SimulationConfig(
             native_config.tissue_mask, native_config.target_labels, native_config.affine,
             native_config.access, native_config.tools, nominal_motor=nominal_motor,
@@ -153,25 +148,13 @@ class NativeSequentialSimulator(SequentialSimulator):
 
     def reset(self, seed: int = 0) -> SimulationObservation:
         self._check_cancelled()
-        cached = self._initial_geometry_snapshot
-        if cached is not None:
-            self.assert_model_frozen()
-            self.engine = cached[0].clone()
-        else:
-            self.engine.reset()
+        self.engine.reset()
         self._previews = {}
         self._proposal_failures = []
         self._partial_contact_mask = np.zeros(self.config.tissue_mask.shape, bool)
         # Parent reset owns fixed-world sampling and the nominal actor contract.
-        self._restoring_initial_geometry = cached
-        try:
-            super().reset(seed)
-        finally:
-            self._restoring_initial_geometry = None
+        super().reset(seed)
         self._bind_engine_masks()
-        if cached is None:
-            self._initial_geometry_snapshot = (self.engine.clone(), self._proposals,
-                                               self._previews.copy(), copy.deepcopy(self._proposal_failures))
         self._hidden_world_hash = "sha256:" + hashlib.sha256((self._hidden_world_hash + self.decision_model_hash).encode()).hexdigest()
         return self.observation()
 
@@ -210,14 +193,6 @@ class NativeSequentialSimulator(SequentialSimulator):
 
     def proposed_actions(self) -> tuple[MacroAction, ...]:
         if self._proposals is not None:
-            return self._proposals
-        cached = self._restoring_initial_geometry
-        if cached is not None:
-            if self.engine.state_hash != cached[0].state_hash or self.engine.revision != 0:
-                raise RuntimeError("Initial native geometry cache does not match the reset engine")
-            self._proposals = cached[1]
-            self._previews = cached[2].copy()
-            self._proposal_failures = copy.deepcopy(cached[3])
             return self._proposals
         empty = _readonly(np.empty((0, 3)), int)
         actions = [MacroAction("STOP", None, None, None, None, empty, empty)]
