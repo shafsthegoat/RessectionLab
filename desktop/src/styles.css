@@ -491,6 +491,10 @@ h3 {
   margin-bottom: 16px;
   flex: none;
 }
+.workspace-heading > div:first-child {
+  flex: 1;
+  min-width: 0;
+}
 .workspace-breadcrumb {
   display: flex;
   gap: 5px;
@@ -498,9 +502,21 @@ h3 {
   color: #6d818f;
   font-size: 9px;
   margin-bottom: 7px;
+  min-width: 0;
+  white-space: nowrap;
 }
 .workspace-breadcrumb span {
   color: #9cb0ba;
+}
+.workspace-breadcrumb .workspace-context,
+.workspace-breadcrumb > svg {
+  flex-shrink: 0;
+  color: #6d818f;
+}
+.workspace-case-id {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .workspace-heading h2 {
   font-size: 17px;
@@ -509,6 +525,7 @@ h3 {
 }
 .view-presets {
   display: flex;
+  flex-shrink: 0;
   gap: 2px;
   background: #1a232b;
   border: 1px solid #2b3943;

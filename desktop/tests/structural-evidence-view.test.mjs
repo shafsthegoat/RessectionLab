@@ -14,6 +14,7 @@ let server,
   PriorCursorReadout,
   App,
   AnnotationCenterButton,
+  WorkspaceBreadcrumb,
   cacheDir;
 before(async () => {
   cacheDir = await fs.mkdtemp(
@@ -39,6 +40,9 @@ before(async () => {
   AnnotationCenterButton = (
     await server.ssrLoadModule("/src/AnnotationCenterButton.tsx")
   ).AnnotationCenterButton;
+  WorkspaceBreadcrumb = (
+    await server.ssrLoadModule("/src/WorkspaceBreadcrumb.tsx")
+  ).WorkspaceBreadcrumb;
 });
 after(async () => {
   await server?.close();
@@ -280,6 +284,7 @@ test("the unloaded app owns one welcome message without mounting the viewer plac
     assert.match(html, /Open a case/);
     assert.match(html, /Local workspace · Open imaging to begin/);
     assert.doesNotMatch(html, /rl-viewer-empty|Your case, in perspective/);
+    assert.doesNotMatch(html, /workspace-case-id|Current case:/);
     assert.match(
       html,
       /<button[^>]*annotation-center-button[^>]*disabled=""[^>]*>[\s\S]*?Center on annotations<\/button>/,
@@ -288,6 +293,36 @@ test("the unloaded app owns one welcome message without mounting the viewer plac
     if (previousWindow === undefined) delete globalThis.window;
     else globalThis.window = previousWindow;
   }
+});
+
+test("workspace breadcrumb identifies the loaded case and removes a previous case on replacement", () => {
+  const first = renderToStaticMarkup(
+    React.createElement(WorkspaceBreadcrumb, { caseId: "UCSF-PDGM-0004" }),
+  );
+  assert.match(first, /aria-label="Current case: UCSF-PDGM-0004"/);
+  assert.match(first, />UCSF-PDGM-0004<\/span>/);
+  assert.doesNotMatch(first, /Route comparison/);
+  const next = renderToStaticMarkup(
+    React.createElement(WorkspaceBreadcrumb, { caseId: "BTC-sub-PAT20" }),
+  );
+  assert.match(next, /aria-label="Current case: BTC-sub-PAT20"/);
+  assert.doesNotMatch(next, /UCSF-PDGM-0004/);
+  const unloaded = renderToStaticMarkup(
+    React.createElement(WorkspaceBreadcrumb, { caseId: null }),
+  );
+  assert.match(unloaded, /Route comparison/);
+  assert.doesNotMatch(unloaded, /workspace-case-id|Current case:/);
+});
+
+test("visually truncated case identifiers retain their complete accessible name and tooltip", () => {
+  const caseId = `subject-${"long-id-".repeat(40)}PAT20`;
+  const html = renderToStaticMarkup(
+    React.createElement(WorkspaceBreadcrumb, { caseId }),
+  );
+  assert.ok(html.includes(`aria-label="Current case: ${caseId}"`));
+  assert.ok(html.includes(`title="Current case: ${caseId}"`));
+  assert.ok(html.includes(`>${caseId}</span>`));
+  assert.match(html, /class="workspace-case-id" role="status"/);
 });
 
 test("centering annotations is an accessible navigation action that publishes only a copied MRI point", () => {

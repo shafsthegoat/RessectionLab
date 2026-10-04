@@ -33,6 +33,7 @@ import {
   rasPoint,
 } from "./case-data";
 import { AnnotationCenterButton } from "./AnnotationCenterButton";
+import { WorkspaceBreadcrumb } from "./WorkspaceBreadcrumb";
 import { readOnlyPreview } from "./preview-api";
 import { RefinementPanel } from "./RefinementPanel";
 import { hydratePriorProposal } from "./prior-data";
@@ -1300,10 +1301,7 @@ export default function App() {
       <main className="anatomy-panel">
         <div className="workspace-heading">
           <div>
-            <div className="workspace-breadcrumb">
-              Workspace <ChevronRight size={12} />
-              <span>Route comparison</span>
-            </div>
+            <WorkspaceBreadcrumb caseId={caseData?.caseId ?? null} />
             <h2>Anatomy, in context</h2>
           </div>
           <div
