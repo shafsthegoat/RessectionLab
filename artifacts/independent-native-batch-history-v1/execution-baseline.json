@@ -1,0 +1,28 @@
+{
+  "commit": "2e6ea98c60e0871f97efd1cfeb1414d7667bef50",
+  "archive": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/independent-native-batch-history-v1/2e6ea98c60e0871f97efd1cfeb1414d7667bef50.tar",
+  "archive_sha256": "ca9cd296c5d99371595665408b2928f0d1e4fd3e775b8175b965067a021b62bb",
+  "archive_bytes": 187330560,
+  "source_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/independent-native-batch-history-v1/2e6ea98c60e0871f97efd1cfeb1414d7667bef50",
+  "archive_file_count": 3762,
+  "archive_file_manifest": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/independent-native-batch-history-v1/archive-files-before.json.gz",
+  "archive_file_manifest_sha256": "2f3841495322e48b7ca6c9a7439b36e500eb26fe85da578c92312ad3d75fdb68",
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/independent-native-batch-history-v1/2e6ea98c60e0871f97efd1cfeb1414d7667bef50/scripts/compare_independent_native_batch.py",
+    "--output",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/independent-native-batch-history-v1/attempt-01"
+  ],
+  "working_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/independent-native-batch-history-v1/2e6ea98c60e0871f97efd1cfeb1414d7667bef50",
+  "source_import_root": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/independent-native-batch-history-v1/2e6ea98c60e0871f97efd1cfeb1414d7667bef50/src",
+  "declaration_sha256": "76533ab14eaa9d922e2c148e2b40d745804a0cee85fee397d1a1c4b50c11a5d6",
+  "release": "Root explicitly released one full-history comparison from exact2e6ea98; quiet slot; no retries or cap changes",
+  "caps": {
+    "cooperative_seconds": 140,
+    "parent_wall_seconds": 150,
+    "worker_rss_bytes": 3221225472,
+    "cpu_workers": 1,
+    "numerical_threads": 1
+  },
+  "preparation_only": true
+}

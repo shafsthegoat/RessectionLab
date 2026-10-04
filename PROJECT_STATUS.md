@@ -145,6 +145,15 @@ Fewer previews were measured on analytic code fixtures; patient latency and
 training benefits remain unmeasured. See
 `artifacts/native-lazy-planning-review-v1/receipt.json`.
 
+The first complete-history scalar/batch comparison ended as a harness failure
+after its initial scalar geometry audit passed. The source/configuration and
+97-microstep history matched the prior numerical control, and all 3,762 archived
+files stayed unchanged. An in-memory empty tuple and its JSON empty-list
+representation caused an exact certificate comparison to fail. Batch and the
+second scalar phase never started; no speedup result follows. Original limits
+and failed receipts are retained, with no retry. See
+`artifacts/independent-native-batch-history-v1/RESULT.md`.
+
 The first real TRAIN PAT22 inference profile completed all four declared cells
 in 6.247 seconds with unchanged model parameters. One CPU call took 28–30 ms
 for a 32³ crop and 256–269 ms for a 64³ crop, with highest observed memory about
