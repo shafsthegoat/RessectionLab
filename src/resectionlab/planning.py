@@ -317,6 +317,11 @@ def _access_support(case, support_mask, support_provenance):
         raise ValueError("Explicit support requires source, method and evidence_type provenance")
     if record["evidence_type"] not in {"estimated", "observed", "simulated"}:
         raise ValueError("Support evidence_type must be estimated, observed or simulated")
+    if case.metadata.get("allow_nonzero_mri_access_support") is False and (
+        "nonzero" in record["method"].lower().replace("-", "")
+        or np.array_equal(support, case.mri != 0)
+    ):
+        raise ValueError("FULL_HEAD_SUPPORT_NOT_CORTEX: nonzero whole-head MRI cannot define an intracranial access window; use a reviewed brain mask or explicit hypothetical window")
     record["mask_sha256"] = sha256(np.ascontiguousarray(support).tobytes()).hexdigest()
     return support, record
 
