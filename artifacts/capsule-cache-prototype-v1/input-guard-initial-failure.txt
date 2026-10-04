@@ -1,0 +1,62 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_input_conversion_cannot_change_source_after_guards_before_warm_hit[source] _
+
+changed = 'source'
+
+    @pytest.mark.parametrize("changed", ["source", "scene"])
+    def test_input_conversion_cannot_change_source_after_guards_before_warm_hit(changed):
+        config, _ = fixture()
+        cache = ExactCapsuleCoverCache(config)
+        scene = native.NativeResectionEngine(config)._cell_scene
+        cache.query(scene, [4, 4, 2], [4, 4, 5], 1.25)
+    
+        class MutatingStart:
+            def __array__(self, dtype=None, copy=None):
+                if changed == "source":
+                    labels = config.target_labels.copy()
+                    labels[4, 4, 4] = 0
+                    object.__setattr__(config, "target_labels", geometry._immutable(labels))
+                else:
+                    inverse = scene._inverse.copy()
+                    inverse[0, 3] += 1.
+                    object.__setattr__(scene, "_inverse", geometry._immutable(inverse))
+                return np.array([4., 4., 2.], dtype=dtype)
+    
+>       with pytest.raises(RuntimeError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE RuntimeError
+
+tests/test_capsule_cache.py:207: Failed
+_ test_input_conversion_cannot_change_source_after_guards_before_warm_hit[scene] _
+
+changed = 'scene'
+
+    @pytest.mark.parametrize("changed", ["source", "scene"])
+    def test_input_conversion_cannot_change_source_after_guards_before_warm_hit(changed):
+        config, _ = fixture()
+        cache = ExactCapsuleCoverCache(config)
+        scene = native.NativeResectionEngine(config)._cell_scene
+        cache.query(scene, [4, 4, 2], [4, 4, 5], 1.25)
+    
+        class MutatingStart:
+            def __array__(self, dtype=None, copy=None):
+                if changed == "source":
+                    labels = config.target_labels.copy()
+                    labels[4, 4, 4] = 0
+                    object.__setattr__(config, "target_labels", geometry._immutable(labels))
+                else:
+                    inverse = scene._inverse.copy()
+                    inverse[0, 3] += 1.
+                    object.__setattr__(scene, "_inverse", geometry._immutable(inverse))
+                return np.array([4., 4., 2.], dtype=dtype)
+    
+>       with pytest.raises(RuntimeError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE RuntimeError
+
+tests/test_capsule_cache.py:207: Failed
+=========================== short test summary info ============================
+FAILED tests/test_capsule_cache.py::test_input_conversion_cannot_change_source_after_guards_before_warm_hit[source]
+FAILED tests/test_capsule_cache.py::test_input_conversion_cannot_change_source_after_guards_before_warm_hit[scene]
+2 failed, 16 deselected in 0.31s

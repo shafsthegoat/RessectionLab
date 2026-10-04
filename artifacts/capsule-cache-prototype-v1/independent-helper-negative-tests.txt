@@ -1,0 +1,50 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_ test_direct_geometry_helper_replacement_invalidates_warm_cache[_segment_cell_distances] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10bf0e8a0>
+helper = '_segment_cell_distances'
+
+    @pytest.mark.parametrize("helper", ["_segment_cell_distances", "point_segment_distances"])
+    def test_direct_geometry_helper_replacement_invalidates_warm_cache(monkeypatch, helper):
+        _, config, scene = fixture()
+        cache = ExactCapsuleCoverCache(config)
+        assert len(cache.query(scene, (3, 3, 2), (3, 3, 4), .3))
+    
+        def changed(*args):
+            points = args[1] if helper == "_segment_cell_distances" else args[0]
+            return np.full(len(points), 1e6)
+    
+        monkeypatch.setattr(geometry, helper, changed)
+        assert not len(geometry.capsule_voxel_indices(scene, (3, 3, 2), (3, 3, 4), .3))
+>       with pytest.raises(RuntimeError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE RuntimeError
+
+tests/test_capsule_cache_review.py:118: Failed
+_ test_direct_geometry_helper_replacement_invalidates_warm_cache[point_segment_distances] _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10bf5d340>
+helper = 'point_segment_distances'
+
+    @pytest.mark.parametrize("helper", ["_segment_cell_distances", "point_segment_distances"])
+    def test_direct_geometry_helper_replacement_invalidates_warm_cache(monkeypatch, helper):
+        _, config, scene = fixture()
+        cache = ExactCapsuleCoverCache(config)
+        assert len(cache.query(scene, (3, 3, 2), (3, 3, 4), .3))
+    
+        def changed(*args):
+            points = args[1] if helper == "_segment_cell_distances" else args[0]
+            return np.full(len(points), 1e6)
+    
+        monkeypatch.setattr(geometry, helper, changed)
+        assert not len(geometry.capsule_voxel_indices(scene, (3, 3, 2), (3, 3, 4), .3))
+>       with pytest.raises(RuntimeError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE RuntimeError
+
+tests/test_capsule_cache_review.py:118: Failed
+=========================== short test summary info ============================
+FAILED tests/test_capsule_cache_review.py::test_direct_geometry_helper_replacement_invalidates_warm_cache[_segment_cell_distances]
+FAILED tests/test_capsule_cache_review.py::test_direct_geometry_helper_replacement_invalidates_warm_cache[point_segment_distances]
+2 failed, 24 deselected in 0.31s
