@@ -98,6 +98,24 @@ def test_development_only_never_opens_final_evaluator(tmp_path, monkeypatch, sta
     assert not list((tmp_path / "dev").glob("evaluation-*"))
 
 
+def test_ppo_runner_records_distinct_algorithm_and_actual_adam_steps(tmp_path, monkeypatch, stable_sources):
+    from resectionlab.learning_ppo import PPOConfig, train_patient_ppo
+    def forbidden(*args, **kwargs):
+        raise AssertionError("PPO development run must not inspect final worlds")
+    monkeypatch.setattr(runner, "evaluate_frozen_candidates", forbidden)
+    output = tmp_path / "ppo"
+    runner.run_experiment(make_synthetic_simulator, output,
+        config=PPOConfig(max_environment_steps=32, max_gradient_steps=4, max_wall_seconds=10),
+        trainer=train_patient_ppo, seeds=(11,), counts=(1, 1, 1, 1), evaluate=False)
+    manifest = json.loads((output / "manifest.json").read_text())
+    report = json.loads((output / "scratch-11/result.json").read_text())
+    assert manifest["trainer"] == "resectionlab.learning_ppo.train_patient_ppo"
+    assert report["algorithm"] == "masked_clipped_ppo_gae_v1"
+    assert report["gradient_steps"] == 4
+    assert report["rollout_batches"] == 1
+    assert report["optimization_sample_presentations"] == report["optimization_environment_steps"] * 4
+
+
 def test_native_footprint_failure_invalidates_coarse_pass(tmp_path, stable_sources):
     mask = np.ones((6, 6, 6), dtype=bool)
     case = CaseData(case_id="native-audit-fixture", mri=mask.astype(np.float32),
@@ -138,3 +156,63 @@ def test_search_and_rl_share_nonstop_horizon(tmp_path, stable_sources):
     frozen = json.loads((output / "candidate-freeze.json").read_text())
     assert all(sum(action != "STOP" for action in candidate["actions"]) <= 1
                for candidate in frozen["candidates"])
+
+
+def test_unknown_adapter_cannot_silently_become_coarse(tmp_path, stable_sources):
+    from resectionlab.simulation import SequentialSimulator
+    class UnregisteredAdapter(SequentialSimulator):
+        pass
+    output = tmp_path / "unsupported-adapter"
+    with pytest.raises(TypeError, match="must not reconstruct"):
+        runner.run_experiment(lambda: UnregisteredAdapter(make_synthetic_simulator().config),
+            output, config=TrainingConfig(), seeds=(11,), evaluate=False)
+    assert json.loads((output / "status.json").read_text())["status"] == "failed"
+    assert not (output / "training.json").exists()
+
+
+@pytest.mark.parametrize("evaluate", [False, True])
+def test_native_backend_preserved_through_horizon_training_audit_and_worlds(tmp_path, stable_sources, monkeypatch, evaluate):
+    from resectionlab.geometry import AccessWindow
+    from resectionlab.native_resection import NativeResectionConfig, NATIVE_GENERIC_TOOLS
+    from resectionlab.native_simulation import NativeSequentialSimulator
+    tissue = np.ones((5, 5, 3), bool)
+    case = CaseData(case_id="native-runner", mri=tissue.astype(np.float32),
+        compartments={"enhancing": tissue}, affine=np.eye(4), brain_mask=tissue,
+        source_refs=(SourceRef("fixture", "synthetic://native-runner", provenance="simulated"),))
+    native = NativeResectionConfig(tissue, tissue.astype(np.int16), np.eye(4),
+        AccessWindow((2, 2, -.5), (0, 0, 1), 3.), (NATIVE_GENERIC_TOOLS[0],),
+        case.semantic_hash, "synthetic solid cube", case_id=case.case_id)
+    def factory():
+        return NativeSequentialSimulator(native, [(2, 2, 1)], max_steps=3, max_actions=2)
+    if not evaluate:
+        def forbidden(*args, **kwargs):
+            raise AssertionError("Native development geometry must not inspect final worlds")
+        monkeypatch.setattr(runner, "evaluate_frozen_candidates", forbidden)
+    output = tmp_path / "native-run"
+    result = runner.run_experiment(factory, output,
+        config=TrainingConfig(max_environment_steps=8, max_gradient_steps=1,
+            max_wall_seconds=10, max_episode_steps=2, episodes_per_update=1),
+        seeds=(11,), counts=(1, 1, 1, 1), source_case=case, evaluate=evaluate)
+    assert result["status"] == "completed"
+    manifest = json.loads((output / "manifest.json").read_text())
+    assert manifest["simulator_backend"] == "NativeSequentialSimulator"
+    assert manifest["effective_shared_nonstop_horizon"] == 1
+    frozen = json.loads((output / "candidate-freeze.json").read_text())
+    assert any(c["plan_id"] == "INITIAL:11" for c in frozen["candidates"])
+    assert all(action == "STOP" or action.startswith("NATIVE:")
+               for c in frozen["candidates"] for action in c["actions"])
+    audit_dir = output / result["evaluation_run_id" if evaluate else "geometry_validation_run_id"]
+    audits = json.loads((audit_dir / "native-history-audit.json").read_text())
+    assert all(audit["feasible"] and audit["complete_tool_checked"] for audit in audits.values())
+    assert audits["SEARCH"]["shared_audit_reused"]
+    assert audits["SEARCH"]["audit_key"] == audits["GREEDY"]["audit_key"]
+    assert not json.loads((audit_dir / "coarse-sequence-audit.json").read_text())
+    if evaluate:
+        for role in ("final_evaluation", "stress"):
+            replay = json.loads((audit_dir / f"{role}-replay.json").read_text())
+            assert all(item["simulation_version"].startswith("native-") for item in replay)
+            report = json.loads((audit_dir / f"{role}.json").read_text())
+            assert report["geometry_scope"] == "independent_native_history_complete_tool_and_source_cell_removal"
+    else:
+        assert not (audit_dir / "ledger.json").exists()
+        assert not (audit_dir / "final_evaluation.json").exists()
