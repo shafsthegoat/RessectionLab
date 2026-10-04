@@ -1,0 +1,216 @@
+{
+  "schema_version": 1,
+  "case_id": "BTC-ds001226-sub-PAT20-preop",
+  "audited_at": "2026-10-04T11:40:16.054659+00:00",
+  "audit_kind": "independent_stored_source_and_structural_alignment_check",
+  "source_manifest": "data/diffusion_source/ds001226-v5.0.1/btc_sub-PAT20_verified_manifest.json",
+  "source_manifest_sha256": "d6bf19700a3e3e1108b98a5b0eb5c794d68576e2770c42d9967f450e14bb1118",
+  "source_files_verified": 7,
+  "verified_sources": [
+    {
+      "path": "dataset_description.json",
+      "bytes": 1209,
+      "sha256": "84185f9c387ae232ddbe87e20b329bacf82b9b5dafe9bde63b64c9bc78bed6f2"
+    },
+    {
+      "path": "participants.tsv",
+      "bytes": 10103,
+      "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d"
+    },
+    {
+      "path": "README",
+      "bytes": 3145,
+      "sha256": "fbb3e2e1b00d699835badc0bbda1296f9a90f2995117d93ba3123bd2f8e2d0bb"
+    },
+    {
+      "path": "CHANGES",
+      "bytes": 434,
+      "sha256": "8c766a15851db0823c661e0a3ec0ac14e2698711461a4f169cab30b3896461c9"
+    },
+    {
+      "path": "sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.nii.gz",
+      "bytes": 7044313,
+      "sha256": "f5234d82f87369ce22d05bd27b5788dd73d4ab782c9a89731ac7f6e39568126a",
+      "annex_md5": "5a773054340f6f84d68e93a676c9e389"
+    },
+    {
+      "path": "sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.json",
+      "bytes": 907,
+      "sha256": "42790d45fcbc3c06e447aaee965be0e1758488a86534597153cdec6eb7504ae9"
+    },
+    {
+      "path": "derivatives/tumor_masks/sub-PAT20/anat/sub-PAT20_space_T1_label-tumor.nii",
+      "bytes": 10486112,
+      "sha256": "cabae814fc653f845c1e0fa72441a4ab6fcca63e8fbe252e73e7a976e068dd36",
+      "annex_md5": "d126fda2aea36a594b966f2220716737"
+    }
+  ],
+  "selection_queue_sha256": "a768aaefd78146540cf20c13193e22268344206a4a396ffb654e7d40af7b8898",
+  "patient_group": "BTC:sub-PAT20",
+  "outer_role": "development",
+  "outer_role_locked": true,
+  "eligible_for_outer_final": false,
+  "source_headers": [
+    {
+      "role": "structural",
+      "shape": [
+        160,
+        256,
+        256
+      ],
+      "affine_ras_mm": [
+        [
+          0.9996641874313354,
+          -0.02437216229736805,
+          0.008733000606298447,
+          -77.58535766601562
+        ],
+        [
+          0.02437121793627739,
+          0.9997029304504395,
+          0.00021292745077516884,
+          -109.10276794433594
+        ],
+        [
+          -0.008735589683055878,
+          -2.208999205777218e-08,
+          0.9999618530273438,
+          -134.02352905273438
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "orientation": [
+        "R",
+        "A",
+        "S"
+      ],
+      "voxel_volume_mm3": 0.999999362008502,
+      "handedness": "right",
+      "qform_code": 1,
+      "sform_code": 1,
+      "maximum_qform_sform_corner_difference_mm": 7.793616286211347e-06,
+      "physical_units": "mm",
+      "stored_dtype": "int16"
+    },
+    {
+      "role": "source_annotation",
+      "shape": [
+        160,
+        256,
+        256
+      ],
+      "affine_ras_mm": [
+        [
+          -0.9996647834777832,
+          -0.024372220039367676,
+          0.008732974529266357,
+          81.36125946044922
+        ],
+        [
+          -0.02437126636505127,
+          0.9997029304504395,
+          0.0002129077911376953,
+          -105.22775268554688
+        ],
+        [
+          0.008735597133636475,
+          0.0,
+          0.9999618530273438,
+          -135.4124755859375
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "orientation": [
+        "L",
+        "A",
+        "S"
+      ],
+      "voxel_volume_mm3": 0.9999999602758886,
+      "handedness": "left",
+      "qform_code": 2,
+      "sform_code": 2,
+      "maximum_qform_sform_corner_difference_mm": 0.00020034566055244919,
+      "physical_units": "mm",
+      "stored_dtype": "uint8"
+    }
+  ],
+  "source_annotation_slope": 0.003921568859368563,
+  "source_annotation_intercept": 0.0,
+  "source_annotation_value_range": [
+    0.0,
+    1.0
+  ],
+  "source_annotation_unique_values": 256,
+  "source_annotation_meaning": "fractional source annotation intensity, not calibrated probability",
+  "threshold": 0.5,
+  "threshold_status": "declared_research_assumption",
+  "independent_axis_reindex": [
+    [
+      0.0,
+      -1.0
+    ],
+    [
+      1.0,
+      1.0
+    ],
+    [
+      2.0,
+      1.0
+    ]
+  ],
+  "maximum_reindexed_corner_difference_mm": 0.00010860692141547763,
+  "independent_annotation_voxel_count": 12451,
+  "threshold_scenario_volume_mm3": 12450.992056367859,
+  "independent_vs_case_mask_difference_voxels": 0,
+  "source_annotation_centroid_voxel": [
+    126.76789012930688,
+    78.5802746767328,
+    163.43329853023855
+  ],
+  "source_annotation_centroid_ras_mm": [
+    48.65205409984358,
+    -27.421549761114477,
+    28.296140982940045
+  ],
+  "bundle": "outputs/cases/BTC-sub-PAT20.ressectionlab",
+  "bundle_sha256": "42339757157a01ca1b57daa8ab81c5f9aae21807b41305454d27e49eb414da6a",
+  "case_semantic_hash": "sha256:ec7536ca27ab34f9c047e71323359a6712c479448d654ad9d9e4e774d3daebe9",
+  "planning_hash": "sha256:c9550931a6b76b97832b4ddf2e7e8914edd50773952dff889d5a321b3b50d46c",
+  "independent_save_reopen_identical": true,
+  "full_head_nonzero_support_rejected": "FULL_HEAD_SUPPORT_NOT_CORTEX: nonzero whole-head MRI cannot define an intracranial access window; use a reviewed brain mask or explicit hypothetical window",
+  "brain_mask": null,
+  "review_status": "review_required",
+  "cortical_access_permitted": false,
+  "diffusion_acquired": false,
+  "clinical_context_policy_input": null,
+  "clinical_deficit_probability": null,
+  "visual_qc_image": "outputs/btc-independent/PAT20-independent-overlay.png",
+  "visual_qc_sha256": "d2410ca330220d29f5440da82e450c4bcf46204ca73daa9e21185a2765d0855b",
+  "visual_planes_native_voxel": [
+    127,
+    79,
+    163
+  ],
+  "visual_inspection_status": "engineering_three_plane_inspection_completed",
+  "interpretation": "Verified bytes, physical grid and declared threshold derivation only; no independent annotation accuracy, reviewed brain or cortex, tract or clinical validation.",
+  "visual_inspected_at": "2026-10-04T11:41:07.183663+00:00",
+  "visual_engineering_observations": [
+    "Three native oblique planes through the source-annotation centroid were inspected.",
+    "The contour lies near the brain boundary in the displayed planes; no gross contour-to-image displacement is apparent in those selected views.",
+    "Bright superficial features and irregular outer-head contours are visible; their clinical cause and operative history were not determined by this engineering review."
+  ],
+  "expert_anatomical_review": false,
+  "whole_volume_anatomical_accuracy": "unverified",
+  "source_files_unchanged_after_audit": true,
+  "registry_changed_by_auditor": false
+}

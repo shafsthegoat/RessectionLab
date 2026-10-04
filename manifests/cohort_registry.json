@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "checked_on": "2026-10-04",
-  "scope": "Explicit source identity and outer cohort registry. Three acquired development records, two with verified primary-source image identity; no final subjects. Collection release counts are not sample counts.",
+  "scope": "Explicit source identity and outer cohort registry. Five acquired development representations, four with verified primary-source image identity; no final subjects. Counts do not establish five UCSF cases, tract-aware eligibility or anatomical approval. Collection release counts are not sample counts.",
   "collections": [
     {
       "collection_id": "UCSF-PDGM",
@@ -36,14 +36,16 @@
       "published_unique_patients": null,
       "eligible_patient_count": null,
       "access": "public_creator_linked_OpenNeuro_git_and_S3",
-      "acquisition_status": "two_primary_source_development_subjects_acquired_PAT28_diffusion_and_PAT05_structural",
+      "acquisition_status": "four_primary_source_development_subjects_acquired_PAT28_with_diffusion_and_PAT05_PAT16_PAT20_structural",
       "required_gates": [
         "glioma_subject_filter",
         "native_mask_affine_and_fractional_annotation_QC",
         "diffusion_preprocessing_and_gradient_frame_QC",
         "intracranial_representation_review"
       ],
-      "longitudinal_note": "BTC_postop ds002080 is a related longitudinal dataset, not an independent cohort. No postoperative files or subject-level matches were opened or acquired for this registry. A future record must obtain verified correspondence or be excluded from independence claims."
+      "longitudinal_note": "BTC_postop ds002080 is a related longitudinal dataset, not an independent cohort. No postoperative files or subject-level matches were opened or acquired for this registry. A future record must obtain verified correspondence or be excluded from independence claims.",
+      "acquired_development_representations": 4,
+      "evidence_note": "PAT16/PAT20 source bytes and structural coordinate handling passed independent engineering QC. Both remain full-head without a reviewed brain mask, without acquired DWI and without anatomical/tract/clinical approval. Eligible patient count remains unknown."
     },
     {
       "collection_id": "UPENN-GBM",
@@ -195,6 +197,160 @@
       ],
       "source_manifest": "manifests/btc_pat05_acquisition.json",
       "source_verification": "Exact pinned OpenNeuro Git annex MD5 and S3 object version verified during acquisition"
+    },
+    {
+      "id": "btc-pat16-pat20-frozen-selection",
+      "path": "manifests/development_acquisition_queue.json",
+      "sha256": "a768aaefd78146540cf20c13193e22268344206a4a396ffb654e7d40af7b8898",
+      "kind": "sha256",
+      "supports_identities": [],
+      "meaning": "Committed metadata-only selection permanently assigns PAT16/PAT20 and all visits/derivatives to development before image access."
+    },
+    {
+      "id": "btc-pat16-identity",
+      "path": "data/diffusion_source/ds001226-v5.0.1/participants.tsv",
+      "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d",
+      "kind": "delimited_row",
+      "delimiter": "\t",
+      "match": {
+        "participant_id": "sub-PAT16"
+      },
+      "expect": {
+        "tumor type & grade": "Anaplastic astrocytoma II-III"
+      },
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/participants.tsv",
+      "supports_identities": [
+        "BTC:sub-PAT16"
+      ]
+    },
+    {
+      "id": "btc-pat16-primary-image",
+      "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT16/ses-preop/anat/sub-PAT16_ses-preop_T1w.nii.gz",
+      "sha256": "709b3ea19596ff6a0cb963ebeaeede247b0ddd6c605f12aa350df2cb04500c3e",
+      "kind": "sha256",
+      "supports_identities": [
+        "BTC:sub-PAT16"
+      ],
+      "source_manifest": "manifests/btc_pat16_acquisition.json",
+      "source_manifest_sha256": "86f251909381a22f339b05bb01fdb0297e7929515cc5486cc53a9dce516e251f",
+      "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT16/ses-preop/anat/sub-PAT16_ses-preop_T1w.nii.gz?versionId=Dbm4LvlEQiJ3PtgfUP9Z.OHwmvEgaKLQ",
+      "source_annex_md5": "007ee49f198ff2fe3da375b21e3aa7fa",
+      "source_bytes": 7708650,
+      "source_verification": "Pinned creator annex MD5/size and exact S3 object version verified during acquisition; independently rehashed during structural QC."
+    },
+    {
+      "id": "btc-pat16-source-annotation",
+      "path": "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT16/anat/sub-PAT16_space_T1_label-tumor.nii",
+      "sha256": "89b610ce3cfa6acf3d23e59d42e3b04a593d7360b996ced10e0aaf060428b0c8",
+      "kind": "sha256",
+      "supports_identities": [
+        "BTC:sub-PAT16"
+      ],
+      "source_manifest": "manifests/btc_pat16_acquisition.json",
+      "source_manifest_sha256": "86f251909381a22f339b05bb01fdb0297e7929515cc5486cc53a9dce516e251f",
+      "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/derivatives/tumor_masks/sub-PAT16/anat/sub-PAT16_space_T1_label-tumor.nii?versionId=IDmVkLclbm3WeUJ_GG3sNeYvD3.s6RUl",
+      "source_annex_md5": "39460dac3ecad3304d6fd61d3dc3de5f",
+      "source_bytes": 10486112,
+      "source_verification": "Pinned creator annex MD5/size and exact S3 object version verified during acquisition; independently rehashed during structural QC."
+    },
+    {
+      "id": "btc-pat16-independent-geometry",
+      "path": "docs/btc-pat16-independent-qc.json",
+      "sha256": "033f4a07b39d1c886c945287059c1a7d8060d666ef94b1c2ab5c0039c5d3aebf",
+      "kind": "json_fields",
+      "supports_identities": [
+        "BTC:sub-PAT16"
+      ],
+      "expect": {
+        "case_id": "BTC-ds001226-sub-PAT16-preop",
+        "source_manifest_sha256": "86f251909381a22f339b05bb01fdb0297e7929515cc5486cc53a9dce516e251f",
+        "selection_queue_sha256": "a768aaefd78146540cf20c13193e22268344206a4a396ffb654e7d40af7b8898",
+        "source_files_verified": 7,
+        "independent_vs_case_mask_difference_voxels": 0,
+        "independent_save_reopen_identical": true,
+        "outer_role": "development",
+        "outer_role_locked": true,
+        "eligible_for_outer_final": false,
+        "brain_mask": null,
+        "cortical_access_permitted": false,
+        "diffusion_acquired": false,
+        "expert_anatomical_review": false,
+        "source_files_unchanged_after_audit": true
+      },
+      "scope": "Source integrity, physical grid, threshold derivation and persistence only; no cortical, tract or clinical anatomical approval."
+    },
+    {
+      "id": "btc-pat20-identity",
+      "path": "data/diffusion_source/ds001226-v5.0.1/participants.tsv",
+      "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d",
+      "kind": "delimited_row",
+      "delimiter": "\t",
+      "match": {
+        "participant_id": "sub-PAT20"
+      },
+      "expect": {
+        "tumor type & grade": "Anaplastic astrocytoma III"
+      },
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/participants.tsv",
+      "supports_identities": [
+        "BTC:sub-PAT20"
+      ]
+    },
+    {
+      "id": "btc-pat20-primary-image",
+      "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.nii.gz",
+      "sha256": "f5234d82f87369ce22d05bd27b5788dd73d4ab782c9a89731ac7f6e39568126a",
+      "kind": "sha256",
+      "supports_identities": [
+        "BTC:sub-PAT20"
+      ],
+      "source_manifest": "manifests/btc_pat20_acquisition.json",
+      "source_manifest_sha256": "d6bf19700a3e3e1108b98a5b0eb5c794d68576e2770c42d9967f450e14bb1118",
+      "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.nii.gz?versionId=GwT6HXksPRjidtHgRIIBZwwUCpXxJjWH",
+      "source_annex_md5": "5a773054340f6f84d68e93a676c9e389",
+      "source_bytes": 7044313,
+      "source_verification": "Pinned creator annex MD5/size and exact S3 object version verified during acquisition; independently rehashed during structural QC."
+    },
+    {
+      "id": "btc-pat20-source-annotation",
+      "path": "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT20/anat/sub-PAT20_space_T1_label-tumor.nii",
+      "sha256": "cabae814fc653f845c1e0fa72441a4ab6fcca63e8fbe252e73e7a976e068dd36",
+      "kind": "sha256",
+      "supports_identities": [
+        "BTC:sub-PAT20"
+      ],
+      "source_manifest": "manifests/btc_pat20_acquisition.json",
+      "source_manifest_sha256": "d6bf19700a3e3e1108b98a5b0eb5c794d68576e2770c42d9967f450e14bb1118",
+      "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/derivatives/tumor_masks/sub-PAT20/anat/sub-PAT20_space_T1_label-tumor.nii?versionId=dOJ3f23OM6ap.tRBlxmoevMp0_h.jyWL",
+      "source_annex_md5": "d126fda2aea36a594b966f2220716737",
+      "source_bytes": 10486112,
+      "source_verification": "Pinned creator annex MD5/size and exact S3 object version verified during acquisition; independently rehashed during structural QC."
+    },
+    {
+      "id": "btc-pat20-independent-geometry",
+      "path": "docs/btc-pat20-independent-qc.json",
+      "sha256": "e560390e47b213c83ecb697583cf8fafd760415754ba48bbbe5b3ff0dbbd5851",
+      "kind": "json_fields",
+      "supports_identities": [
+        "BTC:sub-PAT20"
+      ],
+      "expect": {
+        "case_id": "BTC-ds001226-sub-PAT20-preop",
+        "source_manifest_sha256": "d6bf19700a3e3e1108b98a5b0eb5c794d68576e2770c42d9967f450e14bb1118",
+        "selection_queue_sha256": "a768aaefd78146540cf20c13193e22268344206a4a396ffb654e7d40af7b8898",
+        "source_files_verified": 7,
+        "independent_vs_case_mask_difference_voxels": 0,
+        "independent_save_reopen_identical": true,
+        "outer_role": "development",
+        "outer_role_locked": true,
+        "eligible_for_outer_final": false,
+        "brain_mask": null,
+        "cortical_access_permitted": false,
+        "diffusion_acquired": false,
+        "expert_anatomical_review": false,
+        "source_files_unchanged_after_audit": true
+      },
+      "scope": "Source integrity, physical grid, threshold derivation and persistence only; no cortical, tract or clinical anatomical approval."
     }
   ],
   "identity_links": [
@@ -492,6 +648,184 @@
           "used_by_primary_optimizer": false
         }
       ]
+    },
+    {
+      "record_id": "btc-pat16-preop-development",
+      "collection_id": "BTC_preop",
+      "identity": "BTC:sub-PAT16",
+      "identity_status": "verified_primary",
+      "identity_evidence_ids": [
+        "btc-pat16-identity",
+        "btc-release",
+        "btc-pat16-primary-image",
+        "btc-pat16-source-annotation",
+        "btc-pat16-independent-geometry",
+        "btc-pat16-pat20-frozen-selection"
+      ],
+      "visit_id": "ses-preop",
+      "derivative_of": null,
+      "outer_split": "development",
+      "uses": [
+        "global_development",
+        "viewer_qc"
+      ],
+      "source_manifest": "manifests/btc_pat16_acquisition.json",
+      "selection_manifest": "manifests/development_acquisition_queue.json",
+      "acquisition_status": "primary_source_structural_bytes_and_independent_geometry_verified",
+      "planning_as_of": null,
+      "inputs": [
+        {
+          "input_id": "preoperative_T1",
+          "kind": "imaging",
+          "source_evidence_ids": [
+            "btc-pat16-identity",
+            "btc-release",
+            "btc-pat16-primary-image",
+            "btc-pat16-independent-geometry"
+          ],
+          "operative_phase": "preoperative",
+          "availability_basis": "source_declares_preoperative_images",
+          "available_at": null,
+          "measurement_at": null,
+          "evidence_type": "observed",
+          "used_by_primary_optimizer": false
+        },
+        {
+          "input_id": "source_tumor_annotation",
+          "kind": "source_annotation",
+          "source_evidence_ids": [
+            "btc-pat16-identity",
+            "btc-release",
+            "btc-pat16-source-annotation",
+            "btc-pat16-independent-geometry"
+          ],
+          "operative_phase": "preoperative",
+          "availability_basis": "source_declares_preoperative_images",
+          "available_at": null,
+          "measurement_at": null,
+          "evidence_type": "observed",
+          "track": "annotation_assisted",
+          "used_by_primary_optimizer": false
+        },
+        {
+          "input_id": "retrospective_diagnosis",
+          "kind": "clinical",
+          "source_evidence_ids": [
+            "btc-pat16-identity"
+          ],
+          "operative_phase": "unknown",
+          "availability_basis": "unknown",
+          "available_at": null,
+          "measurement_at": null,
+          "evidence_type": "observed",
+          "used_by_primary_optimizer": false
+        }
+      ],
+      "source_manifest_sha256": "86f251909381a22f339b05bb01fdb0297e7929515cc5486cc53a9dce516e251f",
+      "selection_manifest_sha256": "a768aaefd78146540cf20c13193e22268344206a4a396ffb654e7d40af7b8898",
+      "outer_role_locked": true,
+      "eligible_for_outer_final": false,
+      "grouping_rule": "All related visits, masks, reconstructions and simulated episodes remain in this development patient group; unknown cross-source correspondence cannot support independence.",
+      "cross_collection_independence_verified": false,
+      "independent_geometry_evidence_id": "btc-pat16-independent-geometry",
+      "anatomy_status": {
+        "full_head": true,
+        "reviewed_brain_mask": false,
+        "automatic_cortical_access_permitted": false,
+        "directional_diffusion_acquired": false,
+        "functional_localization": "unknown",
+        "expert_anatomical_review": false,
+        "tract_aware_eligibility": "not_established"
+      }
+    },
+    {
+      "record_id": "btc-pat20-preop-development",
+      "collection_id": "BTC_preop",
+      "identity": "BTC:sub-PAT20",
+      "identity_status": "verified_primary",
+      "identity_evidence_ids": [
+        "btc-pat20-identity",
+        "btc-release",
+        "btc-pat20-primary-image",
+        "btc-pat20-source-annotation",
+        "btc-pat20-independent-geometry",
+        "btc-pat16-pat20-frozen-selection"
+      ],
+      "visit_id": "ses-preop",
+      "derivative_of": null,
+      "outer_split": "development",
+      "uses": [
+        "global_development",
+        "viewer_qc"
+      ],
+      "source_manifest": "manifests/btc_pat20_acquisition.json",
+      "selection_manifest": "manifests/development_acquisition_queue.json",
+      "acquisition_status": "primary_source_structural_bytes_and_independent_geometry_verified",
+      "planning_as_of": null,
+      "inputs": [
+        {
+          "input_id": "preoperative_T1",
+          "kind": "imaging",
+          "source_evidence_ids": [
+            "btc-pat20-identity",
+            "btc-release",
+            "btc-pat20-primary-image",
+            "btc-pat20-independent-geometry"
+          ],
+          "operative_phase": "preoperative",
+          "availability_basis": "source_declares_preoperative_images",
+          "available_at": null,
+          "measurement_at": null,
+          "evidence_type": "observed",
+          "used_by_primary_optimizer": false
+        },
+        {
+          "input_id": "source_tumor_annotation",
+          "kind": "source_annotation",
+          "source_evidence_ids": [
+            "btc-pat20-identity",
+            "btc-release",
+            "btc-pat20-source-annotation",
+            "btc-pat20-independent-geometry"
+          ],
+          "operative_phase": "preoperative",
+          "availability_basis": "source_declares_preoperative_images",
+          "available_at": null,
+          "measurement_at": null,
+          "evidence_type": "observed",
+          "track": "annotation_assisted",
+          "used_by_primary_optimizer": false
+        },
+        {
+          "input_id": "retrospective_diagnosis",
+          "kind": "clinical",
+          "source_evidence_ids": [
+            "btc-pat20-identity"
+          ],
+          "operative_phase": "unknown",
+          "availability_basis": "unknown",
+          "available_at": null,
+          "measurement_at": null,
+          "evidence_type": "observed",
+          "used_by_primary_optimizer": false
+        }
+      ],
+      "source_manifest_sha256": "d6bf19700a3e3e1108b98a5b0eb5c794d68576e2770c42d9967f450e14bb1118",
+      "selection_manifest_sha256": "a768aaefd78146540cf20c13193e22268344206a4a396ffb654e7d40af7b8898",
+      "outer_role_locked": true,
+      "eligible_for_outer_final": false,
+      "grouping_rule": "All related visits, masks, reconstructions and simulated episodes remain in this development patient group; unknown cross-source correspondence cannot support independence.",
+      "cross_collection_independence_verified": false,
+      "independent_geometry_evidence_id": "btc-pat20-independent-geometry",
+      "anatomy_status": {
+        "full_head": true,
+        "reviewed_brain_mask": false,
+        "automatic_cortical_access_permitted": false,
+        "directional_diffusion_acquired": false,
+        "functional_localization": "unknown",
+        "expert_anatomical_review": false,
+        "tract_aware_eligibility": "not_established"
+      }
     }
   ],
   "preoperative_policy": {

@@ -1,0 +1,235 @@
+{
+  "registry_valid": true,
+  "record_count": 5,
+  "registered_patient_groups": 5,
+  "groups_with_verified_primary_identity": 4,
+  "final_patient_groups": 0,
+  "independence_claim_status": "no_final_patients_registered",
+  "groups": [
+    {
+      "record_ids": [
+        "btc-pat05-preop-development"
+      ],
+      "outer_splits": [
+        "development"
+      ],
+      "primary_identity_verified": true
+    },
+    {
+      "record_ids": [
+        "btc-pat16-preop-development"
+      ],
+      "outer_splits": [
+        "development"
+      ],
+      "primary_identity_verified": true
+    },
+    {
+      "record_ids": [
+        "btc-pat20-preop-development"
+      ],
+      "outer_splits": [
+        "development"
+      ],
+      "primary_identity_verified": true
+    },
+    {
+      "record_ids": [
+        "btc-pat28-preop-development"
+      ],
+      "outer_splits": [
+        "development"
+      ],
+      "primary_identity_verified": true
+    },
+    {
+      "record_ids": [
+        "ucsf0004-structural-mirror-development"
+      ],
+      "outer_splits": [
+        "development"
+      ],
+      "primary_identity_verified": false
+    }
+  ],
+  "evidence": {
+    "ucsf-0004-official-identity": {
+      "verified": true,
+      "reason": null
+    },
+    "ucsf-release-aliases": {
+      "verified": true,
+      "reason": null
+    },
+    "btc-pat28-identity": {
+      "verified": true,
+      "reason": null
+    },
+    "btc-release": {
+      "verified": true,
+      "reason": null
+    },
+    "btc-pat28-primary-image": {
+      "verified": true,
+      "reason": null
+    },
+    "btc-pat05-identity": {
+      "verified": true,
+      "reason": null
+    },
+    "btc-pat05-primary-image": {
+      "verified": true,
+      "reason": null
+    },
+    "btc-pat16-pat20-frozen-selection": {
+      "verified": true,
+      "reason": null
+    },
+    "btc-pat16-identity": {
+      "verified": true,
+      "reason": null
+    },
+    "btc-pat16-primary-image": {
+      "verified": true,
+      "reason": null
+    },
+    "btc-pat16-source-annotation": {
+      "verified": true,
+      "reason": null
+    },
+    "btc-pat16-independent-geometry": {
+      "verified": true,
+      "reason": null
+    },
+    "btc-pat20-identity": {
+      "verified": true,
+      "reason": null
+    },
+    "btc-pat20-primary-image": {
+      "verified": true,
+      "reason": null
+    },
+    "btc-pat20-source-annotation": {
+      "verified": true,
+      "reason": null
+    },
+    "btc-pat20-independent-geometry": {
+      "verified": true,
+      "reason": null
+    }
+  },
+  "inputs": [
+    {
+      "record_id": "ucsf0004-structural-mirror-development",
+      "input_id": "preoperative_structural_imaging",
+      "permitted_preoperative_input": true,
+      "exclusion_reason": null
+    },
+    {
+      "record_id": "ucsf0004-structural-mirror-development",
+      "input_id": "source_tumor_annotation",
+      "permitted_preoperative_input": true,
+      "exclusion_reason": null
+    },
+    {
+      "record_id": "ucsf0004-structural-mirror-development",
+      "input_id": "molecular_context",
+      "permitted_preoperative_input": false,
+      "exclusion_reason": "availability_time_unknown"
+    },
+    {
+      "record_id": "ucsf0004-structural-mirror-development",
+      "input_id": "survival_and_EOR",
+      "permitted_preoperative_input": false,
+      "exclusion_reason": "postoperative_information_excluded"
+    },
+    {
+      "record_id": "btc-pat28-preop-development",
+      "input_id": "preoperative_T1_and_DWI",
+      "permitted_preoperative_input": true,
+      "exclusion_reason": null
+    },
+    {
+      "record_id": "btc-pat28-preop-development",
+      "input_id": "source_tumor_annotation",
+      "permitted_preoperative_input": true,
+      "exclusion_reason": null
+    },
+    {
+      "record_id": "btc-pat28-preop-development",
+      "input_id": "retrospective_diagnosis",
+      "permitted_preoperative_input": false,
+      "exclusion_reason": "availability_time_unknown"
+    },
+    {
+      "record_id": "btc-pat05-preop-development",
+      "input_id": "preoperative_T1",
+      "permitted_preoperative_input": true,
+      "exclusion_reason": null
+    },
+    {
+      "record_id": "btc-pat05-preop-development",
+      "input_id": "source_tumor_annotation",
+      "permitted_preoperative_input": true,
+      "exclusion_reason": null
+    },
+    {
+      "record_id": "btc-pat05-preop-development",
+      "input_id": "retrospective_diagnosis",
+      "permitted_preoperative_input": false,
+      "exclusion_reason": "availability_time_unknown"
+    },
+    {
+      "record_id": "btc-pat16-preop-development",
+      "input_id": "preoperative_T1",
+      "permitted_preoperative_input": true,
+      "exclusion_reason": null
+    },
+    {
+      "record_id": "btc-pat16-preop-development",
+      "input_id": "source_tumor_annotation",
+      "permitted_preoperative_input": true,
+      "exclusion_reason": null
+    },
+    {
+      "record_id": "btc-pat16-preop-development",
+      "input_id": "retrospective_diagnosis",
+      "permitted_preoperative_input": false,
+      "exclusion_reason": "availability_time_unknown"
+    },
+    {
+      "record_id": "btc-pat20-preop-development",
+      "input_id": "preoperative_T1",
+      "permitted_preoperative_input": true,
+      "exclusion_reason": null
+    },
+    {
+      "record_id": "btc-pat20-preop-development",
+      "input_id": "source_tumor_annotation",
+      "permitted_preoperative_input": true,
+      "exclusion_reason": null
+    },
+    {
+      "record_id": "btc-pat20-preop-development",
+      "input_id": "retrospective_diagnosis",
+      "permitted_preoperative_input": false,
+      "exclusion_reason": "availability_time_unknown"
+    }
+  ],
+  "issues": [
+    {
+      "code": "PATIENT_IDENTITY_NOT_VERIFIED",
+      "record_ids": [
+        "ucsf0004-structural-mirror-development"
+      ],
+      "detail": "Source identity or source bytes are missing, mirror-attributed, or unverified; exclude independence claims.",
+      "severity": "limitation"
+    }
+  ],
+  "limits": [
+    "Release counts are not evaluated sample counts",
+    "No undeclared or undiscoverable cross-dataset identity overlap is ruled out",
+    "Source-byte equivalence and identity are separate from anatomical eligibility",
+    "Within-patient world isolation requires separate protocol checks"
+  ]
+}

@@ -212,6 +212,38 @@ def test_checked_in_registry_has_only_explicit_development_records():
     root = Path(__file__).resolve().parents[1]
     data = json.loads((root / "manifests/cohort_registry.json").read_text())
     assert {r["outer_split"] for r in data["records"]} == {"development"}
-    assert len(data["records"]) == 3
+    assert len(data["records"]) == 5
+    assert sum(r["identity_status"] == "verified_primary" for r in data["records"]) == 4
     assert all(c["eligible_patient_count"] is None for c in data["collections"])
     assert next(c for c in data["collections"] if c["collection_id"] == "UPENN-GBM")["role"] == "reserved_final_candidate"
+
+
+@pytest.mark.parametrize("suffix", ["16", "20"])
+def test_queued_development_record_binds_source_review_and_missingness(suffix):
+    root = Path(__file__).resolve().parents[1]
+    data = json.loads((root / "manifests/cohort_registry.json").read_text())
+    case = next(r for r in data["records"] if r["record_id"] == f"btc-pat{suffix}-preop-development")
+    evidence = {entry["id"]: entry for entry in data["evidence"]}
+    manifest_bytes = (root / case["source_manifest"]).read_bytes()
+    manifest = json.loads(manifest_bytes)
+    review = evidence[case["independent_geometry_evidence_id"]]
+    assert case["identity"] == f"BTC:sub-PAT{suffix}"
+    assert case["outer_split"] == "development" and "global_development" in case["uses"]
+    assert case["outer_role_locked"] is True and case["eligible_for_outer_final"] is False
+    assert manifest["selection_queue_sha256"] == case["selection_manifest_sha256"]
+    assert hashlib.sha256((root / case["selection_manifest"]).read_bytes()).hexdigest() == case["selection_manifest_sha256"]
+    assert hashlib.sha256(manifest_bytes).hexdigest() == case["source_manifest_sha256"]
+    assert review["expect"]["source_manifest_sha256"] == case["source_manifest_sha256"]
+    assert check_evidence(review, root)["verified"]
+    assert case["anatomy_status"]["reviewed_brain_mask"] is False
+    assert case["anatomy_status"]["directional_diffusion_acquired"] is False
+    assert case["anatomy_status"]["expert_anatomical_review"] is False
+    context = next(item for item in case["inputs"] if item["input_id"] == "retrospective_diagnosis")
+    assert context["used_by_primary_optimizer"] is False
+    assert input_exclusion_reason(context, case["planning_as_of"]) == "availability_time_unknown"
+    annotation = next(item for item in case["inputs"] if item["input_id"] == "source_tumor_annotation")
+    assert annotation["track"] == "annotation_assisted"
+    annotation_evidence = evidence[f"btc-pat{suffix}-source-annotation"]
+    source_annotation = next(item for item in manifest["files"] if item["path"].endswith("label-tumor.nii"))
+    assert annotation_evidence["sha256"] == source_annotation["sha256"]
+    assert annotation_evidence["source_annex_md5"] == source_annotation["expected_md5"]

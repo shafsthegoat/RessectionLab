@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-04T11:47:02.755201+00:00",
+  "phase": "independent_structural_QC_and_acquired_development_registry_append",
+  "acquisition_phase_receipt": "artifacts/validation/btc-queued-structural-v1/receipt.json",
+  "files": [
+    {
+      "path": "manifests/cohort_registry.json",
+      "sha256": "44e3efc609524b723a5640c93455363b0f6fe03903f2594c112cf57ea8ba6cc5"
+    },
+    {
+      "path": "src/resectionlab/cohort.py",
+      "sha256": "d69538f80af8b318068af70dbc963b7a9ca6c3a4f62d6e8e542d6e43548fa874"
+    },
+    {
+      "path": "tests/test_cohort.py",
+      "sha256": "64a8c5b9ac8b61f278aa144ff6ed0904903bb0614647f7543e6bcf6356459b74"
+    },
+    {
+      "path": "manifests/development_acquisition_queue.json",
+      "sha256": "a768aaefd78146540cf20c13193e22268344206a4a396ffb654e7d40af7b8898"
+    },
+    {
+      "path": "manifests/btc_pat16_acquisition.json",
+      "sha256": "86f251909381a22f339b05bb01fdb0297e7929515cc5486cc53a9dce516e251f"
+    },
+    {
+      "path": "manifests/btc_pat20_acquisition.json",
+      "sha256": "d6bf19700a3e3e1108b98a5b0eb5c794d68576e2770c42d9967f450e14bb1118"
+    },
+    {
+      "path": "docs/btc-pat16-independent-qc.json",
+      "sha256": "033f4a07b39d1c886c945287059c1a7d8060d666ef94b1c2ab5c0039c5d3aebf"
+    },
+    {
+      "path": "docs/btc-pat20-independent-qc.json",
+      "sha256": "e560390e47b213c83ecb697583cf8fafd760415754ba48bbbe5b3ff0dbbd5851"
+    },
+    {
+      "path": "artifacts/validation/btc-queued-structural-v1/cohort-audit.json",
+      "sha256": "4133bb38ea521c648b263525d11932aad60f39cd6ee51d128b6ef361837a43cf"
+    }
+  ],
+  "independent_review": {
+    "PAT16": {
+      "status": "source_and_geometry_checks_passed",
+      "report": "docs/btc-pat16-independent-qc.json",
+      "max_corner_residual_mm": 0.0003264755934352395
+    },
+    "PAT20": {
+      "status": "source_and_geometry_checks_passed",
+      "report": "docs/btc-pat20-independent-qc.json",
+      "max_corner_residual_mm": 0.00010860692141547763
+    },
+    "expert_anatomical_review": false,
+    "directional_diffusion_acquired_for_new_cases": false,
+    "working_reviewed_brain_masks_for_new_cases": false
+  },
+  "registry_result": {
+    "registry_valid": true,
+    "record_count": 5,
+    "registered_patient_groups": 5,
+    "groups_with_verified_primary_identity": 4,
+    "final_patient_groups": 0,
+    "independence_claim_status": "no_final_patients_registered"
+  },
+  "source_evidence_records_verified": 16,
+  "tests": {
+    "command": ".venv/bin/python -m pytest tests/test_cohort.py -q",
+    "exit_code": 0,
+    "passed": 26,
+    "elapsed_seconds": 0.11,
+    "captured_summary": "26 passed in 0.11s"
+  },
+  "registry_validation": {
+    "command": ".venv/bin/python -m resectionlab.cohort",
+    "exit_code": 0,
+    "output": "artifacts/validation/btc-queued-structural-v1/cohort-audit.json"
+  },
+  "source_reverification": {
+    "method": "acquire_btc_case.validate_manifest and verify_file applied offline to all seven entries in each new tracked source manifest",
+    "cases": [
+      "sub-PAT16",
+      "sub-PAT20"
+    ],
+    "files_per_case": 7,
+    "passed": true,
+    "checks": [
+      "pinned selection/source binding",
+      "length",
+      "SHA256",
+      "published image annex MD5"
+    ],
+    "network_requests": 0,
+    "source_writes": 0
+  },
+  "historical_preservation": {
+    "basis": "JSON equality against HEAD before registry append",
+    "prior_records_unchanged": true,
+    "prior_evidence_unchanged": true,
+    "all_identity_links_unchanged": true,
+    "non_BTC_collections_and_final_reservations_unchanged": true,
+    "preoperative_policy_unchanged": true,
+    "completion_state_unchanged": true
+  },
+  "claims_not_established": [
+    "five UCSF cases",
+    "five tract-aware cases",
+    "expert anatomical approval",
+    "independent final evaluation"
+  ],
+  "new_context_policy": "Unknown-timed retrospective diagnosis excluded; no molecular or clinical probability values introduced."
+}

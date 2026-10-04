@@ -123,7 +123,18 @@ not a latency distribution or isolated allocation measurement.
   metadata-only rule before image acquisition. Seven pinned files total 17.86 MB;
   independent checks agree on all 11,437 threshold-derived annotation voxels.
   The registry has three development groups, two primary-source identities and
-  zero final patients. Unknown clinical timing remains excluded from planning.
+  zero final patients at that checkpoint. Unknown clinical timing remains
+  excluded from planning.
+- Two further creator-source cases, PAT16 and PAT20, were selected and committed
+  from metadata before image access, then acquired with pinned source versions,
+  lengths and annex checksums. Their structural files total 35.73 MB excluding
+  shared release metadata. Independent source, native-frame, annotation and
+  save/reopen checks pass: threshold 0.5 derives 45,400 and 12,451 target voxels.
+  Full-head access gates remain enforced, with no reviewed brain masks or new
+  diffusion. The registry now has five development representations, four verified
+  primary-source identities and zero final groups; all 16 source-evidence checks
+  and 26 cohort tests pass. This does not complete a five-UCSF or tract-aware
+  pilot, and engineering QC is not expert anatomical approval.
 - Seven licensed motor/language population maps load with source hashes and
   explicit registration-review contracts. Patient alignment remains unaccepted.
 - Full-tip/shaft/swept-envelope route search retains feasible, dominated and

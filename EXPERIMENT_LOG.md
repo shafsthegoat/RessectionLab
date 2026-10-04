@@ -727,3 +727,32 @@ heavy jobs were paused briefly, but these single observations do not establish
 a performance distribution or a speedup. No learning or final/stress worlds ran.
 The module remains outside selected-route refinement and learning. Exact source,
 phase timings and limits are in `artifacts/native-proposer-integrity-v1/`.
+
+## October 4, 2026 — two prospectively selected structural development cases
+
+Metadata-only selection of BTC PAT16/PAT20 was committed as `069c962` before
+image access. Their roles and all derivatives are locked to development.
+The bounded acquisition implementation passed 77 offline checks and was
+committed as `ae1d36b` before either download. Exact pinned object versions,
+annex MD5/length checks and measured SHA256 verified 35,727,017 new subject
+bytes; 14,891 shared release-metadata bytes were reused. There were no acquisition
+or preparation failures, and no diffusion or postoperative data was downloaded.
+
+Independent review verified all seven source files per case, unchanged MRI and
+physical frames, exact annotation reindexing/threshold derivation, and identical
+case/planning identities after an independent save/reopen. Threshold 0.5 yields
+45,400 PAT16 and 12,451 PAT20 target voxels. Maximum reindex residuals were
+0.0003265 and 0.0001086 mm. Three-plane overlays were actually inspected;
+PAT20 superficial bright features/outer-head irregularities are retained as
+engineering observations, without diagnosis or expert anatomical acceptance.
+Both cases still refuse full-head nonzero support as cortical access. Working
+brain masks and preoperative context remain absent; unknown-timed diagnosis is
+retrospective cohort inclusion only.
+
+After independent QC, the registry was extended to five development
+representations, four verified primary identities and zero final groups.
+All 16 source-evidence checks and 26 cohort tests passed. Historical records,
+aliases and final reservations remain unchanged. This is not five UCSF cases,
+a tract-aware cohort or an independent clinical validation set. Source imaging
+and case bundles remain outside Git; acquisition, independent QC and registry
+receipts are linked from `docs/data_acquisition_pat16_pat20.md`.

@@ -1,0 +1,120 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-04T11:39:07.046221+00:00",
+  "source_selection_commit": "069c962",
+  "implementation_commit": "ae1d36b",
+  "queue_manifest": "manifests/development_acquisition_queue.json",
+  "queue_sha256": "a768aaefd78146540cf20c13193e22268344206a4a396ffb654e7d40af7b8898",
+  "source": {
+    "accession": "ds001226",
+    "release": "5.0.1",
+    "git_commit": "359d372c5e972a161966312128adb365870df949",
+    "doi": "10.18112/openneuro.ds001226.v5.0.1",
+    "license": "CC0"
+  },
+  "implementation_hashes": {
+    "scripts/acquire_btc_case.py": "e40697ce66236652a081d03d5c659997d1133bf6fc1085cac46cc53657685399",
+    "scripts/prepare_btc_case.py": "ebddbbabaf027115ca2609736b0256a40a6debc5a423370365793ae209b56ca1"
+  },
+  "image_scope": "T1 and supplied annotation only; no DWI/fMRI/postoperative image acquired",
+  "new_subject_source_bytes": 35727017,
+  "shared_release_bytes_reused": 14891,
+  "cases": [
+    {
+      "subject": "sub-PAT16",
+      "patient_group": "BTC:sub-PAT16",
+      "outer_role": "development",
+      "outer_role_locked": true,
+      "source_manifest": "manifests/btc_pat16_acquisition.json",
+      "source_manifest_sha256": "86f251909381a22f339b05bb01fdb0297e7929515cc5486cc53a9dce516e251f",
+      "source_bytes_including_shared_metadata": 18210576,
+      "new_subject_bytes": 18195685,
+      "source_files": 7,
+      "source_verification": "All seven files match pinned source metadata SHA256 or annex MD5+size, with measured image SHA256; image hashes are in the source manifest.",
+      "acquisition_receipt": "artifacts/validation/btc-queued-structural-v1/sub-PAT16-acquisition.json",
+      "acquisition_receipt_sha256": "407e7373a4e88c262445e6d53b3785d5dd73409247fd3e8b17a3fddd915f1af1",
+      "preparation_receipt": "artifacts/validation/btc-queued-structural-v1/sub-PAT16-preparation.json",
+      "preparation_receipt_sha256": "27753a914efd96630fadb34b28eef4d46d0fad60f289d4ffebde0687d1c699b8",
+      "commands": [
+        ".venv/bin/python scripts/acquire_btc_case.py --queued-subject sub-PAT16",
+        ".venv/bin/python scripts/prepare_btc_case.py --manifest data/diffusion_source/ds001226-v5.0.1/btc_sub-PAT16_verified_manifest.json --annotation-threshold 0.5"
+      ],
+      "command_exit_codes": [
+        0,
+        0
+      ],
+      "bundle": "outputs/cases/BTC-sub-PAT16.ressectionlab",
+      "bundle_bytes": 9615059,
+      "case_hash": "sha256:a3c3dee6205ef9da9c7589ec1eaaff168a26ea9ad1b8d7960e2a40cb292ce2cf",
+      "planning_hash": "sha256:1a9088e0fdee2f751e67c8778eba88fa4785dd267d76396b98082fe7933ccb05",
+      "save_reopen_identical": true,
+      "annotation_threshold": 0.5,
+      "threshold_evidence": "declared research assumption, not clinical probability",
+      "target_voxels": 45400,
+      "source_values_unchanged": true,
+      "independent_geometry_status": "pending",
+      "functional_evidence": "missing_patient_specific_function",
+      "reviewed_brain_mask": false,
+      "automatic_cortical_access": "blocked_without_reviewed_cerebral_mask",
+      "diffusion_input_status": {
+        "usable_for_reconstruction": false,
+        "issues": [
+          "MISSING_DIRECTIONAL_DIFFUSION"
+        ],
+        "reason": "This predeclared acquisition contains structural imaging only; diffusion was not acquired."
+      },
+      "clinical_context_eligible": false,
+      "clinical_probability": null
+    },
+    {
+      "subject": "sub-PAT20",
+      "patient_group": "BTC:sub-PAT20",
+      "outer_role": "development",
+      "outer_role_locked": true,
+      "source_manifest": "manifests/btc_pat20_acquisition.json",
+      "source_manifest_sha256": "d6bf19700a3e3e1108b98a5b0eb5c794d68576e2770c42d9967f450e14bb1118",
+      "source_bytes_including_shared_metadata": 17546223,
+      "new_subject_bytes": 17531332,
+      "source_files": 7,
+      "source_verification": "All seven files match pinned source metadata SHA256 or annex MD5+size, with measured image SHA256; image hashes are in the source manifest.",
+      "acquisition_receipt": "artifacts/validation/btc-queued-structural-v1/sub-PAT20-acquisition.json",
+      "acquisition_receipt_sha256": "1342d0d457d612c8820ef9d4da798c73a110ee7101f662cce849cde9eb48cdb4",
+      "preparation_receipt": "artifacts/validation/btc-queued-structural-v1/sub-PAT20-preparation.json",
+      "preparation_receipt_sha256": "d9274ec1c7745e746a114706b4408d5f0512760466211e9d98160535ed50695a",
+      "commands": [
+        ".venv/bin/python scripts/acquire_btc_case.py --queued-subject sub-PAT20",
+        ".venv/bin/python scripts/prepare_btc_case.py --manifest data/diffusion_source/ds001226-v5.0.1/btc_sub-PAT20_verified_manifest.json --annotation-threshold 0.5"
+      ],
+      "command_exit_codes": [
+        0,
+        0
+      ],
+      "bundle": "outputs/cases/BTC-sub-PAT20.ressectionlab",
+      "bundle_bytes": 8885710,
+      "case_hash": "sha256:ec7536ca27ab34f9c047e71323359a6712c479448d654ad9d9e4e774d3daebe9",
+      "planning_hash": "sha256:c9550931a6b76b97832b4ddf2e7e8914edd50773952dff889d5a321b3b50d46c",
+      "save_reopen_identical": true,
+      "annotation_threshold": 0.5,
+      "threshold_evidence": "declared research assumption, not clinical probability",
+      "target_voxels": 12451,
+      "source_values_unchanged": true,
+      "independent_geometry_status": "pending",
+      "functional_evidence": "missing_patient_specific_function",
+      "reviewed_brain_mask": false,
+      "automatic_cortical_access": "blocked_without_reviewed_cerebral_mask",
+      "diffusion_input_status": {
+        "usable_for_reconstruction": false,
+        "issues": [
+          "MISSING_DIRECTIONAL_DIFFUSION"
+        ],
+        "reason": "This predeclared acquisition contains structural imaging only; diffusion was not acquired."
+      },
+      "clinical_context_eligible": false,
+      "clinical_probability": null
+    }
+  ],
+  "acquisition_or_preparation_failures": [],
+  "independent_image_geometry_qc": "pending_imaging_agent_after_timed_study_hold",
+  "registry_changed": false,
+  "clinical_anatomical_review_passed": false
+}
