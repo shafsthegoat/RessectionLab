@@ -1275,3 +1275,16 @@ checks and 33 tamper tests, and records no discrepancies. Original output is und
 `artifacts/diagnostics/native-cache-query-keys-v1/`, execution evidence under
 `artifacts/validation/native-cache-query-keys-v1/`, and the separate audit under
 `artifacts/native-cache-query-result-audit-v1/`.
+
+## October 4, 2026 — official UCSF source access remains unresolved
+
+A metadata-only recheck found the TCIA collection page byte-identical to the
+previous capture, still pointing to the same public v5 package. DataCite confirms
+the release identity but supplies no per-file checksum or alternative case
+manifest. Creator-linked examples and third-party derivatives do not establish
+our mirror's source equivalence. The unchanged failed Aspera flow was not repeated;
+a read-only NBIA timeout was recorded as inconclusive. No images, accounts,
+installers, inference, registry changes or support messages were involved.
+The remaining concrete route is provider-supplied case access or release-specific
+checksums. Evidence and primary links are in
+`docs/ucsf-primary-access-recheck-2026-10-04.md`; source equivalence remains unknown.
