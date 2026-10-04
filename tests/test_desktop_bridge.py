@@ -144,10 +144,142 @@ def test_transfer_cleanup_preserves_parent_files(tmp_path):
 
 def test_jsonl_process_stdout_is_protocol_only_and_imports_no_gui(tmp_path):
     source = "\n".join(["not json", json.dumps({"id": "ping", "op": "ping", "args": {}}), json.dumps({"id": "stop", "op": "shutdown", "args": {}})]) + "\n"
-    process = subprocess.run([sys.executable, "-m", "resectionlab.desktop_bridge", "--transfer-dir", str(tmp_path / "wire")], input=source, capture_output=True, text=True, timeout=15)
+    probe = ("import sys; from resectionlab.desktop_bridge import main; code = main(); "
+             "assert not any(name.startswith(('PySide6', 'vtk')) for name in sys.modules), 'Sidecar imported a GUI toolkit'; "
+             "raise SystemExit(code)")
+    process = subprocess.run([sys.executable, "-c", probe, "--transfer-dir", str(tmp_path / "wire")], input=source, capture_output=True, text=True, timeout=15)
     assert process.returncode == 0, process.stderr
     events = [json.loads(line) for line in process.stdout.splitlines()]
     assert events[0]["error"]["code"] == "INVALID_JSON"
     assert events[1]["result"]["protocolVersion"] == 1
     assert events[2]["result"]["shutdown"] is True
-    assert not any(name.startswith(("PySide6", "vtk")) for name in sys.modules)
+
+
+def test_actual_native_training_replay_export_and_restart_recheck(tmp_path):
+    events = []
+    runtime = BridgeRuntime(tmp_path / "transfers", events.append, run_dir=tmp_path / "runs")
+    bridge = runtime, events
+    try:
+        case = synthetic(bridge)
+        trained = request(bridge, "train", "trainPatient", {"caseHash": case["caseHash"], "budgetSeconds": 5, "seed": 11})
+        assert trained["event"] == "result", trained
+        result = trained["result"]
+        training = result["training"]
+        assert training["gradient_steps"] > 0
+        assert training["actor_parameters_changed"] is True
+        assert training["replay_status"] == "accepted_independent_geometry"
+        assert training["replay"]["final_evaluation"] is False
+        assert training["replay"]["native_certificate"]["complete_tool_checked"] is True
+        assert "history" not in training["replay"]["metrics"]
+        assert any(event.get("progress", {}).get("runId") == result["runId"] for event in events)
+        selected = {"caseHash": case["caseHash"], "runId": result["runId"]}
+        first = request(bridge, "initial-mask", "replayTraining", {**selected, "step": 0})["result"]
+        assert not np.fromfile(first["removedMask"]["path"], dtype="uint8").any()
+        final = request(bridge, "final-mask", "replayTraining", selected)["result"]
+        removed = np.fromfile(final["removedMask"]["path"], dtype="uint8").reshape(case["shape"])
+        voxel_volume = abs(np.linalg.det(np.asarray(case["affine"])[:3, :3]))
+        assert removed.sum() * voxel_volume == pytest.approx(final["simulatedRemovedTargetVolumeMm3"] + final["simulatedRemovedNormalVolumeMm3"])
+        assert final["clinicalDeficitProbability"] is None
+        destination = tmp_path / "candidate.json"
+        exported = request(bridge, "export", "exportCandidate", {**selected, "path": str(destination)})
+        assert exported["event"] == "result", exported
+        artifact = json.loads(destination.read_text())
+        assert artifact["candidate"]["artifact_hash"] == training["replay"]["artifact_hash"]
+        assert artifact["clinical_deficit_probability"] is None and artifact["final_evaluation"] is False
+        runs = request(bridge, "runs", "listRuns", {"caseHash": case["caseHash"]})["result"]["runs"]
+        assert runs[0]["hasCheckpoint"] and runs[0]["hasAcceptedReplay"]
+        refused = request(bridge, "changed-budget", "trainPatient", {"caseHash": case["caseHash"], "resumeRunId": result["runId"], "budgetSeconds": 6})
+        assert refused["error"]["code"] == "RESUME_CONTRACT_CHANGED"
+    finally:
+        runtime.close()
+    # A new process/session must rebuild the model and recheck the exact native
+    # actions instead of trusting a supplied saved certificate.
+    events = []
+    runtime = BridgeRuntime(tmp_path / "transfers", events.append, run_dir=tmp_path / "runs")
+    bridge = runtime, events
+    try:
+        synthetic(bridge)
+        reopened = request(bridge, "restored-replay", "replayTraining", selected)
+        assert reopened["event"] == "result", reopened
+        assert reopened["result"]["simulatedRemovedTargetVolumeMm3"] == final["simulatedRemovedTargetVolumeMm3"]
+        path = tmp_path / "runs" / result["runId"] / "native-refinement.json"
+        saved = json.loads(path.read_text())
+        saved["replay"]["metrics"]["clinical_deficit_probability"] = .9
+        path.write_text(json.dumps(saved))
+        tampered = request(bridge, "tampered", "replayTraining", selected)
+        assert tampered["error"]["code"] == "RUN_INTEGRITY_FAILED"
+    finally:
+        runtime.close()
+
+
+def test_training_controls_reject_final_worlds_stale_case_and_raw_paths(tmp_path):
+    events = []
+    runtime = BridgeRuntime(tmp_path / "transfers", events.append, run_dir=tmp_path / "runs")
+    bridge = runtime, events
+    try:
+        case = synthetic(bridge)
+        for index, extra in enumerate(({"finalEvaluationSeeds": [1]}, {"checkpointPath": "/tmp/weights.pt"},
+                                       {"worlds": [1]}, {"rewardWeights": {"target": 100}})):
+            refused = request(bridge, f"bad-{index}", "trainPatient", {"caseHash": case["caseHash"], **extra})
+            assert refused["error"]["code"] == "INVALID_ARGUMENT"
+        refused = request(bridge, "path", "replayTraining", {"caseHash": case["caseHash"], "runId": "../../checkpoint"})
+        assert refused["error"]["code"] == "INVALID_RUN_ID"
+        refused = request(bridge, "unknown-route", "trainPatient", {"caseHash": case["caseHash"], "routeId": "forged"})
+        assert refused["error"]["code"] == "ROUTE_UNAVAILABLE"
+        assert not list((tmp_path / "runs").glob("*/bridge-run.json"))
+    finally:
+        runtime.close()
+
+
+def test_training_cancellation_keeps_checkpoint_and_original_resume_budget(tmp_path):
+    events = []
+    cancelled = False
+    def emit(event):
+        nonlocal cancelled
+        events.append(event)
+        if event.get("progress", {}).get("phase") == "training" and not cancelled:
+            cancelled = True
+            runtime.submit({"id": "cancel-training", "op": "cancel", "args": {"requestId": "train"}})
+    runtime = BridgeRuntime(tmp_path / "transfers", emit, run_dir=tmp_path / "runs")
+    bridge = runtime, events
+    try:
+        case = synthetic(bridge)
+        request(bridge, "train", "trainPatient", {"caseHash": case["caseHash"], "budgetSeconds": 5, "seed": 11})
+        assert cancelled
+        terminals = [event["event"] for event in events if event["id"] == "train" and event["event"] in {"result", "error", "cancelled"}]
+        assert terminals == ["cancelled"]
+        runs = request(bridge, "runs", "listRuns", {"caseHash": case["caseHash"]})["result"]["runs"]
+        assert runs[0]["status"] == "cancelled" and runs[0]["hasCheckpoint"]
+        assert runs[0]["hasAcceptedReplay"] is False
+        resumed = request(bridge, "resume", "trainPatient", {"caseHash": case["caseHash"], "resumeRunId": runs[0]["runId"]})
+        assert resumed["event"] == "result", resumed
+        assert resumed["result"]["config"]["budgetSeconds"] == 5
+        assert resumed["result"]["training"]["gradient_steps"] >= 2
+        assert resumed["result"]["training"]["replay_status"] == "accepted_independent_geometry"
+    finally:
+        runtime.close()
+
+
+def test_selected_route_access_is_converted_from_lps_before_native_training(tmp_path, monkeypatch):
+    from dataclasses import replace
+    case = replace(create_synthetic_case((24, 24, 24)), frame="LPS+")
+    path = save_case(case, tmp_path / "lps.ressectionlab")
+    events = []
+    runtime = BridgeRuntime(tmp_path / "transfers", events.append, run_dir=tmp_path / "runs")
+    bridge = runtime, events
+    captured = {}
+    def capture_native_options(case, directory, **options):
+        captured.update(options)
+        raise RuntimeError("stop after observing native coordinate contract")
+    monkeypatch.setattr("resectionlab.native_refinement.run_native_refinement", capture_native_options)
+    try:
+        loaded = request(bridge, "load", "loadCase", {"path": str(path)})["result"]
+        routes = request(bridge, "routes", "generateRoutes", {"caseHash": loaded["caseHash"]})["result"]["candidates"]
+        selected = next(route for route in routes if route["geometry"]["feasible"])
+        trained = request(bridge, "train", "trainPatient", {"caseHash": loaded["caseHash"], "routeId": selected["route_id"]})
+        assert trained["event"] == "error"
+        np.testing.assert_allclose(captured["access"].center_mm, np.asarray(selected["window"]["center_mm"]) * [-1, -1, 1])
+        np.testing.assert_allclose(captured["access"].normal_inward, np.asarray(selected["window"]["normal_inward"]) * [-1, -1, 1])
+        assert captured["tools"][0].tool_id == selected["tool"]["tool_id"]
+    finally:
+        runtime.close()

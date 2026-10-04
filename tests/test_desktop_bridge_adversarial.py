@@ -255,3 +255,260 @@ def test_cancelled_case_install_does_not_leave_unreferenced_binary_assets(runtim
     assert not instance.session.cases
     assert not list(instance.session.transfers.root.glob("*.bin")), (
         "Repeated cancelled imports can accumulate binary files outside the case cache bound")
+
+
+@pytest.fixture
+def native_runtime(tmp_path, monkeypatch):
+    """Small real native cutting model; only the patient factory is substituted."""
+    from resectionlab.core import CaseData, SourceRef
+    from resectionlab.geometry import AccessWindow
+    from resectionlab.native_resection import NATIVE_GENERIC_TOOLS, NativeResectionConfig
+    from resectionlab.native_simulation import NativeSequentialSimulator
+    tissue = np.ones((5, 5, 4), bool)
+    target = np.zeros(tissue.shape, bool)
+    target[2, 2, 2:] = True
+    case = CaseData(case_id="bridge-native-audit", mri=np.arange(tissue.size, dtype=np.float32).reshape(tissue.shape),
+        compartments={"target": target}, affine=np.eye(4), brain_mask=tissue,
+        source_refs=(SourceRef("fixture", "synthetic://bridge-native-audit", provenance="simulated"),))
+
+    def factory(source_case, **options):
+        native = NativeResectionConfig(tissue, target.astype(np.int16), np.eye(4),
+            AccessWindow((2, 2, -.5), (0, 0, 1), 3.), NATIVE_GENERIC_TOOLS,
+            source_case.semantic_hash, "synthetic solid tissue fixture")
+        return NativeSequentialSimulator(native, [(2, 2, 3)], max_steps=options["max_steps"],
+            max_actions=options["max_actions"], cancelled=options["cancelled"])
+
+    monkeypatch.setattr("resectionlab.native_simulation.make_native_patient_simulator", factory)
+    events = []
+    instance = bridge.BridgeRuntime(tmp_path / "native-transfer", events.append, run_dir=tmp_path / "runs")
+    source = save_case(case, tmp_path / "native.ressectionlab")
+    instance.submit({"id": "load-native", "op": "loadCase", "args": {"path": str(source)}})
+    assert instance.wait_idle(5)
+    assert terminal(events, "load-native")[0]["event"] == "result"
+    yield instance, events, case
+    instance.close()
+
+
+def train_native(native_runtime, identity="train"):
+    instance, events, case = native_runtime
+    instance.submit({"id": identity, "op": "trainPatient", "args": {
+        "caseHash": case.semantic_hash, "budgetSeconds": 5, "seed": 11}})
+    assert instance.wait_idle(20)
+    result = terminal(events, identity)
+    assert len(result) == 1 and result[0]["event"] == "result", result
+    training = result[0]["result"]
+    assert training["training"]["gradient_steps"] > 0
+    assert training["training"]["actor_parameters_changed"] is True
+    return training
+
+
+@pytest.mark.parametrize("changed_file", ["checkpoint.pt", "contract.json", "native-refinement.json"])
+def test_saved_training_integrity_includes_budget_counters_and_report(native_runtime, changed_file):
+    instance, events, case = native_runtime
+    run = train_native(native_runtime)
+    run_id = run["runId"]
+    directory = instance.session.run_dir / run_id
+    path = directory / changed_file
+    if changed_file == "checkpoint.pt":
+        import torch
+        checkpoint = torch.load(path, map_location="cpu", weights_only=True)
+        # Preserve policy weights and their hashes; attack only resumable budget state.
+        checkpoint["state"]["gradient_steps"] = 0
+        checkpoint["state"]["elapsed_seconds"] = 0.
+        torch.save(checkpoint, path)
+    else:
+        data = json.loads(path.read_text())
+        data["external_audit_mutation"] = True
+        path.write_text(json.dumps(data))
+    before = path.read_bytes()
+    operation = "replayTraining" if changed_file == "native-refinement.json" else "trainPatient"
+    args = {"caseHash": case.semantic_hash,
+            "runId" if operation == "replayTraining" else "resumeRunId": run_id}
+    instance.submit({"id": "tampered", "op": operation, "args": args})
+    assert instance.wait_idle(10)
+    outcome = terminal(events, "tampered")
+    assert len(outcome) == 1 and outcome[0]["event"] == "error"
+    assert outcome[0]["error"]["code"] == "RUN_INTEGRITY_FAILED"
+    assert path.read_bytes() == before, "An invalid saved artifact was overwritten instead of refused"
+
+
+def test_final_worlds_cannot_enter_desktop_training_configuration(native_runtime):
+    instance, events, case = native_runtime
+    for number, injected in enumerate(({"finalEvaluationSeeds": [123]}, {"optimization": {"role": "final_evaluation"}},
+                                        {"reward": {"target_per_mm3": 1000}}, {"outputDir": "/tmp/other-run"})):
+        instance.submit({"id": f"injection-{number}", "op": "trainPatient", "args": {
+            "caseHash": case.semantic_hash, **injected}})
+    assert instance.wait_idle(5)
+    for number in range(4):
+        outcome = terminal(events, f"injection-{number}")
+        assert len(outcome) == 1 and outcome[0]["event"] == "error"
+        assert outcome[0]["error"]["code"] == "INVALID_ARGUMENT"
+    assert not [path for path in instance.session.run_dir.iterdir() if path.is_dir()]
+
+
+def test_native_resume_rejects_budget_change_before_training_or_rewriting(native_runtime):
+    instance, events, case = native_runtime
+    run = train_native(native_runtime)
+    directory = instance.session.run_dir / run["runId"]
+    manifest_before = (directory / "bridge-run.json").read_bytes()
+    checkpoint_before = (directory / "checkpoint.pt").read_bytes()
+    instance.submit({"id": "changed-budget", "op": "trainPatient", "args": {
+        "caseHash": case.semantic_hash, "resumeRunId": run["runId"], "budgetSeconds": 120}})
+    assert instance.wait_idle(5)
+    outcome = terminal(events, "changed-budget")[0]
+    assert outcome["event"] == "error" and outcome["error"]["code"] == "RESUME_CONTRACT_CHANGED"
+    assert (directory / "bridge-run.json").read_bytes() == manifest_before
+    assert (directory / "checkpoint.pt").read_bytes() == checkpoint_before
+
+
+def test_cancellation_keeps_real_checkpoint_but_exposes_no_replay(native_runtime):
+    instance, events, case = native_runtime
+    original_emit = instance.emit
+    requested = threading.Event()
+
+    def emit(event):
+        original_emit(event)
+        progress = event.get("progress", {})
+        if (event.get("id") == "cancelled-training" and event["event"] == "progress"
+                and progress.get("phase") == "training" and not requested.is_set()):
+            requested.set()
+            instance.submit({"id": "cancel-training", "op": "cancel", "args": {"requestId": "cancelled-training"}})
+
+    instance.emit = emit
+    instance.submit({"id": "cancelled-training", "op": "trainPatient", "args": {
+        "caseHash": case.semantic_hash, "budgetSeconds": 5, "seed": 11}})
+    assert instance.wait_idle(20)
+    assert requested.is_set(), events
+    assert terminal(events, "cancelled-training")[0]["event"] == "cancelled"
+    instance.submit({"id": "runs", "op": "listRuns", "args": {"caseHash": case.semantic_hash}})
+    assert instance.wait_idle(5)
+    runs = terminal(events, "runs")[0]["result"]["runs"]
+    assert len(runs) == 1
+    assert runs[0]["hasCheckpoint"] is True
+    assert runs[0]["hasAcceptedReplay"] is False
+    directory = instance.session.run_dir / runs[0]["runId"]
+    assert (directory / "checkpoint.pt").is_file()
+    instance.submit({"id": "cancelled-replay", "op": "replayTraining", "args": {
+        "caseHash": case.semantic_hash, "runId": runs[0]["runId"]}})
+    assert instance.wait_idle(5)
+    assert terminal(events, "cancelled-replay")[0]["error"]["code"] == "REPLAY_UNAVAILABLE"
+
+
+def test_native_export_and_timeline_share_certified_source_cell_accounting(native_runtime, tmp_path):
+    instance, events, case = native_runtime
+    run = train_native(native_runtime)
+    assert run["training"]["replay_status"] == "accepted_independent_geometry"
+    run_id = run["runId"]
+    for identity, step in (("start", 0), ("end", None)):
+        args = {"caseHash": case.semantic_hash, "runId": run_id}
+        if step is not None:
+            args["step"] = step
+        instance.submit({"id": identity, "op": "replayTraining", "args": args})
+        assert instance.wait_idle(5)
+        outcome = terminal(events, identity)[0]
+        assert outcome["event"] == "result", outcome
+        replay = outcome["result"]
+        descriptor = replay["removedMask"]
+        removed = np.frombuffer(Path(descriptor["path"]).read_bytes(), dtype=np.uint8).reshape(case.mri.shape).astype(bool)
+        target = case.compartments["target"]
+        assert replay["role"] == "selection" and replay["finalEvaluation"] is False
+        assert replay["clinicalDeficitProbability"] is None
+        assert replay["simulatedRemovedTargetVolumeMm3"] == (removed & target).sum() * case.voxel_volume_mm3
+        assert replay["simulatedRemovedNormalVolumeMm3"] == (removed & ~target).sum() * case.voxel_volume_mm3
+        if step == 0:
+            assert not removed.any()
+        # STOP is a valid selected policy; native geometry tests separately
+        # establish positive cutting fixtures without assuming RL beats search.
+    destination = tmp_path / "candidate.json"
+    instance.submit({"id": "export", "op": "exportCandidate", "args": {
+        "caseHash": case.semantic_hash, "runId": run_id, "path": str(destination)}})
+    assert instance.wait_idle(5)
+    assert terminal(events, "export")[0]["event"] == "result"
+    exported = json.loads(destination.read_text())
+    candidate = exported["candidate"]
+    assert exported["final_evaluation"] is False and exported["clinical_deficit_probability"] is None
+    assert candidate["role"] == "selection" and candidate["case_hash"] == case.semantic_hash
+    assert candidate["metrics"]["simulated_removed_target_volume_mm3"] == replay["simulatedRemovedTargetVolumeMm3"]
+    assert candidate["metrics"]["simulated_removed_normal_volume_mm3"] == replay["simulatedRemovedNormalVolumeMm3"]
+
+
+def test_native_replay_resealed_wrong_shape_affine_case_or_probability_is_rejected(native_runtime):
+    import copy
+    from resectionlab.native_refinement import replay_artifact_hash, validate_native_replay
+    instance, _events, case = native_runtime
+    run = train_native(native_runtime)
+    path = instance.session.run_dir / run["runId"] / "native-refinement.json"
+    original = json.loads(path.read_text())["replay"]
+    assert original is not None
+    changes = [
+        lambda replay: replay.update(shape=[case.mri.shape[0] + 1, *case.mri.shape[1:]]),
+        lambda replay: replay["affine"][0].__setitem__(3, 10.),
+        lambda replay: replay["native_certificate"].update(source_case_hash="sha256:another-case"),
+        lambda replay: replay["metrics"].update(clinical_deficit_probability=.2),
+        lambda replay: replay.update(role="final_evaluation"),
+    ]
+    for change in changes:
+        altered = copy.deepcopy(original)
+        change(altered)
+        altered["artifact_hash"] = replay_artifact_hash(altered)
+        with pytest.raises(ValueError):
+            validate_native_replay(case, altered)
+
+
+def test_independent_rejection_never_becomes_an_accepted_desktop_run(native_runtime, monkeypatch, tmp_path):
+    from resectionlab.evaluation import NativeRemovalAudit
+    instance, events, case = native_runtime
+
+    def reject(*_args, **_kwargs):
+        return NativeRemovalAudit(False, ("independent_audit_failure_fixture",), None, None, None,
+                                  0., 0., 0., case.semantic_hash, case.voxel_volume_mm3, 0)
+
+    monkeypatch.setattr("resectionlab.evaluation.independent_check_native_history", reject)
+    run = train_native(native_runtime)
+    assert run["training"]["replay"] is None
+    assert run["training"]["replay_status"] == "rejected_independent_geometry"
+    instance.submit({"id": "rejected-list", "op": "listRuns", "args": {"caseHash": case.semantic_hash}})
+    assert instance.wait_idle(5)
+    listed = terminal(events, "rejected-list")[0]["result"]["runs"]
+    assert len(listed) == 1 and listed[0]["hasAcceptedReplay"] is False
+    assert listed[0]["hasCheckpoint"] is True
+    destination = tmp_path / "must-not-export.json"
+    instance.submit({"id": "rejected-export", "op": "exportCandidate", "args": {
+        "caseHash": case.semantic_hash, "runId": run["runId"], "path": str(destination)}})
+    assert instance.wait_idle(5)
+    outcome = terminal(events, "rejected-export")[0]
+    assert outcome["event"] == "error" and outcome["error"]["code"] == "REPLAY_UNAVAILABLE"
+    assert not destination.exists()
+
+
+def test_crash_stage_manifest_cannot_admit_an_unsigned_resumable_checkpoint(native_runtime):
+    import torch
+    instance, events, case = native_runtime
+    original_emit = instance.emit
+    snapshots = {}
+
+    def emit(event):
+        original_emit(event)
+        progress = event.get("progress", {})
+        if event.get("id") == "crash-stage" and progress.get("phase") == "preparing":
+            run_id = progress["runId"]
+            path = instance.session.run_dir / run_id / "bridge-run.json"
+            snapshots["manifest"] = path.read_bytes()
+
+    instance.emit = emit
+    run = train_native(native_runtime, identity="crash-stage")
+    directory = instance.session.run_dir / run["runId"]
+    assert snapshots, "Expected a signed preparing-stage run manifest"
+    # Reconstruct the artifact state possible after a process exit between a
+    # checkpoint write and the next signed metadata write; its hash is absent.
+    (directory / "bridge-run.json").write_bytes(snapshots["manifest"])
+    checkpoint = torch.load(directory / "checkpoint.pt", map_location="cpu", weights_only=True)
+    checkpoint["state"]["gradient_steps"] = 0
+    checkpoint["state"]["elapsed_seconds"] = 0.
+    torch.save(checkpoint, directory / "checkpoint.pt")
+    instance.submit({"id": "unsigned-resume", "op": "trainPatient", "args": {
+        "caseHash": case.semantic_hash, "resumeRunId": run["runId"]}})
+    assert instance.wait_idle(10)
+    outcome = terminal(events, "unsigned-resume")[0]
+    assert outcome["event"] == "error", "An unsigned checkpoint restored mutable training budget state"
+    assert outcome["error"]["code"] in {"RUN_INTEGRITY_FAILED", "CHECKPOINT_UNVERIFIED", "RUN_NOT_RESUMABLE"}

@@ -12,6 +12,7 @@ from collections import OrderedDict
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict, dataclass, field
 import hashlib
+import hmac
 import json
 import logging
 import math
@@ -22,12 +23,13 @@ import sys
 import tempfile
 import threading
 import time
+import uuid
 from typing import Any, Callable
 
 import numpy as np
 
 from .core import CaseData, freeze_json, thaw_json
-from .geometry import GENERIC_TOOLS
+from .geometry import AccessWindow, GENERIC_TOOLS
 from .imaging import create_synthetic_case, inspect_nifti, load_case, load_nifti_case, read_case_artifacts, save_case
 from .planning import SearchConfig, generate_candidate_routes
 
@@ -37,7 +39,8 @@ MAX_ARRAY_BYTES = 512 * 1024 * 1024
 MAX_CASE_BYTES = 1024 * 1024 * 1024
 MAX_WORKSPACE_BYTES = 512 * 1024
 MAX_PENDING = 8
-OPERATIONS = frozenset({"ping", "loadCase", "importNifti", "saveCase", "generateRoutes", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "shutdown"})
+OPERATIONS = frozenset({"ping", "loadCase", "importNifti", "saveCase", "generateRoutes", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "exportCandidate", "shutdown"})
+MAX_RUN_JSON_BYTES = 32 * 1024 * 1024
 
 
 class BridgeError(ValueError):
@@ -65,7 +68,7 @@ def _path(value: Any, *, kind: str, output: bool = False) -> Path:
     if path.is_symlink():
         raise BridgeError("INVALID_PATH", "Select the original file rather than a symbolic link")
     path = path.resolve()
-    endings = (".ressectionlab", ".rslab") if kind == "case" else (".nii", ".nii.gz")
+    endings = {"case": (".ressectionlab", ".rslab"), "json": (".json",), "NIfTI": (".nii", ".nii.gz")}[kind]
     if not any(path.name.lower().endswith(suffix) for suffix in endings):
         raise BridgeError("UNSUPPORTED_FILE_TYPE", f"Expected a {kind} file")
     if not output and (not path.is_file() or path.stat().st_size > MAX_CASE_BYTES):
@@ -151,12 +154,34 @@ class _Request:
 
 
 class BridgeSession:
-    def __init__(self, transfer_dir: Path, *, max_cases: int = 2):
+    def __init__(self, transfer_dir: Path, *, max_cases: int = 2, run_dir: Path | None = None):
         if not isinstance(max_cases, int) or not 1 <= max_cases <= 4:
             raise ValueError("max_cases must be between one and four")
         self.transfers = BinaryTransfers(transfer_dir)
         self.max_cases = max_cases
         self.cases: OrderedDict[str, _CaseEntry] = OrderedDict()
+        self.replay_transfers: OrderedDict[tuple, dict] = OrderedDict()
+        self.run_reports: OrderedDict[str, Any] = OrderedDict()
+        self.run_dir = None
+        self._run_key = None
+        if run_dir is not None:
+            run_dir = Path(run_dir)
+            if run_dir.is_symlink():
+                raise BridgeError("INVALID_RUN_DIR", "Run directory cannot be a symbolic link")
+            run_dir.mkdir(parents=True, exist_ok=True)
+            self.run_dir = run_dir.resolve()
+            key_path = self.run_dir / ".bridge-integrity-key"
+            if key_path.is_symlink():
+                raise BridgeError("INVALID_RUN_DIR", "Run integrity key cannot be a symbolic link")
+            if not key_path.exists():
+                descriptor = os.open(key_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+                with os.fdopen(descriptor, "wb") as output:
+                    output.write(os.urandom(32))
+            if key_path.stat().st_size != 32:
+                raise BridgeError("INVALID_RUN_DIR", "Run integrity key is invalid")
+            self._run_key = key_path.read_bytes()
+            if len(self._run_key) != 32:
+                raise BridgeError("INVALID_RUN_DIR", "Run integrity key is invalid")
 
     def _get_case(self, value: Any) -> _CaseEntry:
         case_hash = _string(value, "caseHash", maximum=128)
@@ -220,6 +245,11 @@ class BridgeSession:
                 retained.add(cached.descriptor["brainMask"]["path"])
             for compartment in cached.descriptor["compartments"]:
                 retained.update((compartment["array"]["path"], compartment["sourceArray"]["path"]))
+        for key, descriptor in list(self.replay_transfers.items()):
+            if key[0] in self.cases:
+                retained.add(descriptor["path"])
+            else:
+                self.replay_transfers.pop(key)
         self.transfers.prune(retained)
 
     @staticmethod
@@ -248,6 +278,204 @@ class BridgeSession:
                     result["withheldTrainingReason"] = "saved_training_requires_current_validation"
         result.pop("route_search", None)
         return result
+
+    @staticmethod
+    def _json_bytes(value: Any) -> bytes:
+        return json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
+
+    def _run_path(self, run_id: Any) -> Path:
+        if self.run_dir is None:
+            raise BridgeError("RUN_STORAGE_REQUIRED", "Configure a persistent local run directory before training")
+        run_id = _string(run_id, "runId", maximum=36)
+        try:
+            if str(uuid.UUID(run_id)) != run_id:
+                raise ValueError("Noncanonical run identifier")
+        except ValueError as error:
+            raise BridgeError("INVALID_RUN_ID", "Run ID must be issued by this desktop installation") from error
+        directory = self.run_dir / run_id
+        if directory.is_symlink() or directory.resolve().parent != self.run_dir:
+            raise BridgeError("INVALID_RUN_ID", "Run directory has changed")
+        return directory
+
+    def _write_run(self, directory: Path, manifest: dict) -> None:
+        # Local keyed integrity binds a run to the installation that created it.
+        # It is not a clinical signature and never authenticates imported files.
+        record = dict(manifest)
+        record.pop("integrity", None)
+        record["integrity"] = hmac.new(self._run_key, self._json_bytes(record), hashlib.sha256).hexdigest()
+        temporary = directory / ".bridge-run.tmp"
+        if temporary.is_symlink() or (directory / "bridge-run.json").is_symlink():
+            raise BridgeError("INVALID_RUN_ID", "Run metadata path has changed")
+        temporary.write_bytes(self._json_bytes(record))
+        os.replace(temporary, directory / "bridge-run.json")
+
+    def _read_run(self, case: CaseData, run_id: Any) -> tuple[Path, dict]:
+        directory = self._run_path(run_id)
+        path = directory / "bridge-run.json"
+        if not directory.is_dir() or path.is_symlink() or not path.is_file() or path.stat().st_size > MAX_WORKSPACE_BYTES:
+            raise BridgeError("RUN_UNAVAILABLE", "Run is missing or its metadata is invalid")
+        # Numerical writers use several fixed filenames. Never resume into a
+        # directory containing redirected files, even if its manifest is valid.
+        if any(child.is_symlink() for child in directory.rglob("*")):
+            raise BridgeError("INVALID_RUN_ID", "Run files cannot be symbolic links")
+        record = json.loads(path.read_bytes())
+        integrity = record.pop("integrity", None)
+        expected = hmac.new(self._run_key, self._json_bytes(record), hashlib.sha256).hexdigest()
+        if not isinstance(integrity, str) or not hmac.compare_digest(integrity, expected):
+            raise BridgeError("RUN_INTEGRITY_FAILED", "Saved run metadata changed outside this desktop")
+        if record.get("runId") != run_id or record.get("schema") != 1:
+            raise BridgeError("RUN_INTEGRITY_FAILED", "Saved run identity is invalid")
+        if record.get("caseHash") != case.semantic_hash or record.get("planningHash") != case.planning_hash:
+            raise BridgeError("CASE_VERSION_MISMATCH", "Training run belongs to another case version")
+        if record.get("checkpointSha256") is not None:
+            checkpoint = directory / "checkpoint.pt"
+            if (not checkpoint.is_file() or checkpoint.stat().st_size > MAX_RUN_JSON_BYTES
+                    or hashlib.sha256(checkpoint.read_bytes()).hexdigest() != record["checkpointSha256"]):
+                raise BridgeError("RUN_INTEGRITY_FAILED", "Checkpoint changed outside this desktop")
+        if record.get("contractSha256") is not None:
+            contract = directory / "contract.json"
+            if (not contract.is_file() or contract.stat().st_size > MAX_RUN_JSON_BYTES
+                    or hashlib.sha256(contract.read_bytes()).hexdigest() != record["contractSha256"]):
+                raise BridgeError("RUN_INTEGRITY_FAILED", "Training contract changed outside this desktop")
+        return directory, record
+
+    @staticmethod
+    def _run_options(config: dict) -> dict:
+        access = None if config.get("access") is None else AccessWindow(**config["access"])
+        ids = config.get("toolIds")
+        tools = None if ids is None else tuple(tool for tool in GENERIC_TOOLS if tool.tool_id in ids)
+        return {"access": access, "tools": tools}
+
+    @staticmethod
+    def _report_summary(manifest: dict, report: dict | None = None) -> dict:
+        summary = {key: manifest[key] for key in ("runId", "caseHash", "planningHash", "createdAt", "status", "config")}
+        summary["clinicalDeficitProbability"] = None
+        summary["clinicalRiskReason"] = "no_validated_clinical_outcome_model"
+        if report is not None:
+            training = {key: value for key, value in report.items() if key not in {"replay", "output_dir", "native_certificate"}}
+            replay = report.get("replay")
+            if replay is not None:
+                training["replay"] = {key: replay[key] for key in ("role", "case_hash", "decision_model_hash", "checkpoint_hash", "artifact_hash", "shape", "affine", "final_evaluation", "scope")}
+                training["replay"].update(stepCount=len(replay["metrics"]["history"]),
+                    metrics={key: value for key, value in replay["metrics"].items() if key != "history"},
+                    native_certificate=replay["native_certificate"])
+            else:
+                training["replay"] = None
+            summary["training"] = training
+        return summary
+
+    def _saved_report(self, case: CaseData, run_id: str, request: _Request) -> tuple[Path, dict, dict]:
+        directory, manifest = self._read_run(case, run_id)
+        path = directory / "native-refinement.json"
+        if not path.is_file() or path.stat().st_size > MAX_RUN_JSON_BYTES:
+            raise BridgeError("REPLAY_UNAVAILABLE", "This run has no completed selection report")
+        contents = path.read_bytes()
+        if hashlib.sha256(contents).hexdigest() != manifest.get("reportSha256"):
+            raise BridgeError("RUN_INTEGRITY_FAILED", "Saved training report changed after completion")
+        if run_id in self.run_reports:
+            self.run_reports.move_to_end(run_id)
+            return directory, manifest, thaw_json(self.run_reports[run_id])
+        report = json.loads(contents)
+        if report.get("case_hash") != case.semantic_hash or report.get("final_evaluation") is not False:
+            raise BridgeError("CASE_VERSION_MISMATCH", "Saved report has an invalid case or partition")
+        replay = report.get("replay")
+        if replay is not None:
+            from .native_refinement import recheck_native_replay
+            from .learning import load_policy, policy_hash
+            request.check()
+            if policy_hash(load_policy(directory / "checkpoint.pt")) != replay.get("checkpoint_hash"):
+                raise BridgeError("RUN_INTEGRITY_FAILED", "Selected replay does not match the saved policy")
+            report["replay"] = recheck_native_replay(case, replay, cancelled=request.cancelled.is_set,
+                                                    **self._run_options(manifest["config"]))
+        self.run_reports[run_id] = freeze_json(json.loads(self._json_bytes(report)))
+        while len(self.run_reports) > 4:
+            self.run_reports.popitem(last=False)
+        return directory, manifest, report
+
+    def _train_patient(self, args: dict, request: _Request, progress: Callable) -> dict:
+        _keys(args, {"caseHash", "budgetSeconds", "seed", "routeId", "resumeRunId"})
+        entry = self._get_case(args.get("caseHash"))
+        if self.run_dir is None:
+            raise BridgeError("RUN_STORAGE_REQUIRED", "Configure a persistent local run directory before training")
+        budget, seed = args.get("budgetSeconds", 30), args.get("seed", 0)
+        if type(budget) not in (int, float) or not math.isfinite(budget) or not 5 <= budget <= 120:
+            raise BridgeError("INVALID_ARGUMENT", "Training budget must be between 5 and 120 seconds")
+        if type(seed) is not int or not 0 <= seed < 2 ** 31:
+            raise BridgeError("INVALID_ARGUMENT", "seed must be a nonnegative 31-bit integer")
+        resume = args.get("resumeRunId") is not None
+        if resume:
+            directory, manifest = self._read_run(entry.case, args["resumeRunId"])
+            if manifest.get("checkpointSha256") is None or manifest.get("contractSha256") is None:
+                raise BridgeError("RUN_NOT_RESUMABLE", "Run ended before a checkpoint could be integrity-checked; start a new run")
+            for name in ("budgetSeconds", "seed", "routeId"):
+                if name in args and args[name] != manifest["config"].get(name):
+                    raise BridgeError("RESUME_CONTRACT_CHANGED", "Resume retains the original budget, seed, and access geometry")
+        else:
+            if sum(child.is_dir() for child in self.run_dir.iterdir()) >= 256:
+                raise BridgeError("RUN_STORAGE_LIMIT", "Local run limit reached; archive old runs before starting another")
+            config = {"budgetSeconds": float(budget), "seed": seed, "routeId": args.get("routeId"), "access": None, "toolIds": None}
+            if config["routeId"] is not None:
+                route_id = _string(config["routeId"], "routeId", maximum=128)
+                candidates = [] if entry.routes is None else thaw_json(entry.routes)["candidates"]
+                route = next((item for item in candidates if item["route_id"] == route_id), None)
+                if route is None or route["geometry"].get("feasible") is not True:
+                    raise BridgeError("ROUTE_UNAVAILABLE", "Choose a feasible route evaluated for this case in the current session")
+                access = dict(route["window"])
+                if entry.case.frame == "LPS+":
+                    for key in ("center_mm", "normal_inward"):
+                        access[key] = (np.asarray(access[key]) * [-1, -1, 1]).tolist()
+                config.update(access=access, toolIds=[route["tool"]["tool_id"]])
+            run_id = str(uuid.uuid4())
+            directory = self._run_path(run_id)
+            directory.mkdir(mode=0o700)
+            manifest = {"schema": 1, "runId": run_id, "caseHash": entry.case.semantic_hash,
+                        "planningHash": entry.case.planning_hash, "createdAt": time.time(), "status": "preparing", "config": config}
+        config = manifest["config"]
+        manifest["status"] = "running"
+        manifest.pop("reportSha256", None)
+        manifest.pop("replayStatus", None)
+        self.run_reports.pop(manifest["runId"], None)
+        self._write_run(directory, manifest)
+        def training_progress(snapshot: dict) -> None:
+            # The learner emits progress after atomically saving a checkpoint.
+            # Sign that exact checkpoint so an interrupted process can resume
+            # only from counters, optimizer state and weights we actually saw.
+            manifest["checkpointSha256"] = hashlib.sha256((directory / "checkpoint.pt").read_bytes()).hexdigest()
+            manifest["contractSha256"] = hashlib.sha256((directory / "contract.json").read_bytes()).hexdigest()
+            self._write_run(directory, manifest)
+            if not request.cancelled.is_set():
+                fraction = min(.9, float(snapshot.get("elapsed_seconds", 0)) / config["budgetSeconds"])
+                progress(fraction, "Updating and selecting patient-specific policy", {"runId": manifest["runId"], "phase": "training", "metrics": snapshot})
+        try:
+            progress(0., "Preparing native patient simulation", {"runId": manifest["runId"], "phase": "preparing"})
+            from .native_refinement import run_native_refinement
+            report = run_native_refinement(entry.case, directory, budget_seconds=config["budgetSeconds"], seed=config["seed"],
+                resume=resume, cancelled=request.cancelled.is_set, progress=training_progress, **self._run_options(config))
+            manifest["status"] = "cancelled" if request.cancelled.is_set() else report["status"]
+            report_path = directory / "native-refinement.json"
+            report_bytes = report_path.read_bytes()
+            report = json.loads(report_bytes)
+            manifest["reportSha256"] = hashlib.sha256(report_bytes).hexdigest()
+            manifest["checkpointSha256"] = hashlib.sha256((directory / "checkpoint.pt").read_bytes()).hexdigest()
+            manifest["contractSha256"] = hashlib.sha256((directory / "contract.json").read_bytes()).hexdigest()
+            manifest["replayStatus"] = report.get("replay_status")
+            self._write_run(directory, manifest)
+            request.begin_commit()
+            self.run_reports[manifest["runId"]] = freeze_json(report)
+            while len(self.run_reports) > 4:
+                self.run_reports.popitem(last=False)
+            return self._report_summary(manifest, report)
+        except Exception as error:
+            manifest["status"] = "cancelled" if request.cancelled.is_set() else "failed"
+            manifest["failure"] = str(error)[:1000]
+            checkpoint = directory / "checkpoint.pt"
+            if checkpoint.is_file() and not checkpoint.is_symlink() and checkpoint.stat().st_size <= MAX_RUN_JSON_BYTES:
+                manifest["checkpointSha256"] = hashlib.sha256(checkpoint.read_bytes()).hexdigest()
+            contract = directory / "contract.json"
+            if contract.is_file() and not contract.is_symlink() and contract.stat().st_size <= MAX_RUN_JSON_BYTES:
+                manifest["contractSha256"] = hashlib.sha256(contract.read_bytes()).hexdigest()
+            self._write_run(directory, manifest)
+            raise
 
     def execute(self, operation: str, args: dict, request: _Request, progress: Callable[[float, str], None]) -> Any:
         request.check()
@@ -373,8 +601,74 @@ class BridgeSession:
                 os.replace(staged, destination)
             entry.artifacts = freeze_json(artifacts)
             return {"caseHash": entry.case.semantic_hash, "path": str(destination), "saved": True}
-        if operation == "nativeTraining":
-            raise BridgeError("NOT_AVAILABLE", "Native training is not exposed through this bridge version")
+        if operation in {"nativeTraining", "trainPatient"}:
+            return self._train_patient(args, request, progress)
+        if operation == "listRuns":
+            _keys(args, {"caseHash"})
+            case = self._get_case(args.get("caseHash")).case
+            runs = []
+            if self.run_dir is not None:
+                for directory in self.run_dir.iterdir():
+                    request.check()
+                    if not directory.is_dir() or directory.name.startswith("."):
+                        continue
+                    try:
+                        _, manifest = self._read_run(case, directory.name)
+                    except (BridgeError, ValueError, OSError):
+                        continue
+                    summary = self._report_summary(manifest)
+                    summary["hasCheckpoint"] = (directory / "checkpoint.pt").is_file()
+                    summary["hasAcceptedReplay"] = manifest.get("replayStatus") == "accepted_independent_geometry"
+                    runs.append(summary)
+            return {"caseHash": case.semantic_hash, "runs": sorted(runs, key=lambda value: value["createdAt"], reverse=True)}
+        if operation in {"replayTraining", "exportCandidate"}:
+            allowed = {"caseHash", "runId", "step"} if operation == "replayTraining" else {"caseHash", "runId", "path", "overwrite"}
+            _keys(args, allowed)
+            case = self._get_case(args.get("caseHash")).case
+            directory, manifest, report = self._saved_report(case, args.get("runId"), request)
+            replay = report.get("replay")
+            if replay is None or report.get("replay_status") != "accepted_independent_geometry":
+                raise BridgeError("REPLAY_UNAVAILABLE", "Run has no independently accepted native selection replay")
+            from .native_refinement import native_replay_mask, validate_native_replay
+            validate_native_replay(case, replay)
+            if operation == "exportCandidate":
+                destination = _path(args.get("path"), kind="json", output=True)
+                if destination.exists() and args.get("overwrite") is not True:
+                    raise BridgeError("DESTINATION_EXISTS", "The native dialog must confirm replacement")
+                payload = {"schema": "ressectionlab.native-selection-candidate.v1", "run": self._report_summary(manifest, report),
+                           "candidate": replay, "clinical_deficit_probability": None,
+                           "clinical_risk_reason": "no_validated_clinical_outcome_model", "final_evaluation": False}
+                with tempfile.TemporaryDirectory(prefix=".resection-export-", dir=destination.parent) as temporary:
+                    staged = Path(temporary) / "candidate.json"
+                    staged.write_bytes(self._json_bytes(payload))
+                    request.begin_commit()
+                    os.replace(staged, destination)
+                return {"runId": manifest["runId"], "caseHash": case.semantic_hash, "path": str(destination), "exported": True}
+            history = replay["metrics"]["history"]
+            step = args.get("step", len(history))
+            if type(step) is not int or not 0 <= step <= len(history):
+                raise BridgeError("INVALID_ARGUMENT", "Replay step is outside the certified history")
+            removed = native_replay_mask(replay, step)
+            request.check()
+            descriptor = self.transfers.array(removed, "uint8")
+            request.begin_commit()
+            key = (case.semantic_hash, manifest["runId"], step)
+            self.replay_transfers[key] = descriptor
+            self.replay_transfers.move_to_end(key)
+            while len(self.replay_transfers) > 4:
+                self.replay_transfers.popitem(last=False)
+            target = np.zeros(case.mri.shape, bool)
+            for mask in case.compartments.values():
+                target |= mask
+            volume = case.voxel_volume_mm3
+            return {"runId": manifest["runId"], "caseHash": case.semantic_hash, "step": step,
+                    "stepCount": len(history), "role": "selection", "finalEvaluation": False,
+                    "frame": "RAS+", "affine": replay["affine"], "removedMask": descriptor,
+                    "simulatedRemovedTargetVolumeMm3": float(np.count_nonzero(removed & target) * volume),
+                    "simulatedRemovedNormalVolumeMm3": float(np.count_nonzero(removed & ~target) * volume),
+                    "modeledResidualTargetVolumeMm3": float(np.count_nonzero(target & ~removed) * volume),
+                    "clinicalDeficitProbability": None, "clinicalRiskReason": "no_validated_clinical_outcome_model",
+                    "training": self._report_summary(manifest, report)["training"]}
         raise BridgeError("UNSUPPORTED_OPERATION", "Unknown sidecar operation")
 
     def close(self) -> None:
@@ -386,12 +680,8 @@ class BridgeRuntime:
     """One numerical worker; cancellation, timeouts and ping never wait on it."""
 
     def __init__(self, transfer_dir: Path, emit: Callable[[dict], None], *, max_cases: int = 2, run_dir: Path | None = None):
-        self.session = BridgeSession(transfer_dir, max_cases=max_cases)
-        self.run_dir = None if run_dir is None else Path(run_dir)
-        if self.run_dir is not None:
-            if self.run_dir.is_symlink():
-                raise BridgeError("INVALID_RUN_DIR", "Run directory cannot be a symbolic link")
-            self.run_dir.mkdir(parents=True, exist_ok=True)
+        self.session = BridgeSession(transfer_dir, max_cases=max_cases, run_dir=run_dir)
+        self.run_dir = self.session.run_dir
         self.emit = emit
         self._lock = threading.RLock()
         self._requests: dict[str, _Request] = {}
@@ -479,11 +769,10 @@ class BridgeRuntime:
             self._terminal(request, "error", error={"code": "TIMEOUT", "message": "Operation exceeded its declared time budget"})
 
     def _work(self, operation: str, args: dict, request: _Request) -> None:
-        def progress(fraction: float, message: str) -> None:
-            request.check()
+        def progress(fraction: float, message: str, details: dict | None = None) -> None:
             with self._lock:
-                if not request.terminal:
-                    self.emit({"id": request.request_id, "event": "progress", "progress": {"fraction": float(fraction), "message": message}})
+                if not request.terminal and not request.cancelled.is_set():
+                    self.emit({"id": request.request_id, "event": "progress", "progress": {"fraction": float(fraction), "message": message, **(details or {})}})
         try:
             result = self.session.execute(operation, args, request, progress)
             request.check()
