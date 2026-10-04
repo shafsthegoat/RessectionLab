@@ -1,0 +1,63 @@
+{
+  "bytes": 2499660,
+  "file_count": 14,
+  "files": {
+    "baseline.json": {
+      "bytes": 51865,
+      "sha256": "65c8ed274d593811230c4d653cb1a4e443a58e785d632ca85b99cb8d07116410"
+    },
+    "output-watch.json": {
+      "bytes": 192,
+      "sha256": "5778ccb318b90edf188c53a9d3f53c9428529c0ba9852d98193bf15b7abdcad7"
+    },
+    "result.json": {
+      "bytes": 1681,
+      "sha256": "cb788089a37b292b717d86fd383f2323ca4c25514fa0098de8d050c9e650cc5e"
+    },
+    "runs/compression-N4-S60-reference/console.txt": {
+      "bytes": 159283,
+      "sha256": "090de81f20b686d9d6fc4c7205a96332ae004864e53f35d7bf51ab0e2f25a37b"
+    },
+    "runs/compression-N4-S60-reference/elements.log": {
+      "bytes": 696915,
+      "sha256": "80b12014881bb7e4ee1ac2fdac3d6dbd5b9b5310ffbb14a72a76ef0289ecefd3"
+    },
+    "runs/compression-N4-S60-reference/execution.json": {
+      "bytes": 2977,
+      "sha256": "32ab8a835a89589e605955fb8c86e7f6a3427616efb41d68292f73631e00fd77"
+    },
+    "runs/compression-N4-S60-reference/loading.json": {
+      "bytes": 3533,
+      "sha256": "3eae99b3963006e65246e49a834603789bdd029523bf3b61ad5415b51fab7498"
+    },
+    "runs/compression-N4-S60-reference/nodes.log": {
+      "bytes": 1296454,
+      "sha256": "a6f93397138cf170bd4e0eb28f95b7306b9bbd7724013a9a92e08dc4c4c7ad82"
+    },
+    "runs/compression-N4-S60-reference/solver-execution.json": {
+      "bytes": 679,
+      "sha256": "276a8c795cfb7ce9552cc928a53f7793b2c83015932fc68127753a46851b695a"
+    },
+    "runs/compression-N4-S60-reference/solver.log": {
+      "bytes": 215782,
+      "sha256": "e00f7b69f997a7522d2e54759a2f850e5e2a48821a16152958d8221a98e38080"
+    },
+    "runs/compression-N4-S60-reference/specimen.feb": {
+      "bytes": 62424,
+      "sha256": "607afe0a102d44c752085745d237744d84a21886f9507c7532cc374f6fee1afd"
+    },
+    "state.json": {
+      "bytes": 6734,
+      "sha256": "63a1b78bf2239832dffd269f6a1b2494cb9ccc5f0fc9f00c636489c4fcfa4315"
+    },
+    "supervision/combined.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "supervision/supervision.json": {
+      "bytes": 1141,
+      "sha256": "9ec5f9ba4f4acc11bf71ab193fb5832a4982cbbf6c877d3cda3332a921cda41b"
+    }
+  },
+  "root": "outputs/mechanics/hbe-01-03-poc-v1/experiment"
+}

@@ -1,0 +1,72 @@
+{
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/bin/febio4",
+    "-noconfig",
+    "-no_title",
+    "-i",
+    "specimen.feb",
+    "-o",
+    "solver.log"
+  ],
+  "cwd": "outputs/mechanics/hbe-01-03-poc-v1/experiment/runs/compression-N4-S60-reference",
+  "executable": {
+    "path": "data/optional-runtimes/febio-4.13/install/bin/febio4",
+    "sha256": "00a3ad9ff8d28b2d2b8ba41fd63890f555ec9ff3e102c1c3eeef649cfec4fc9c"
+  },
+  "execution": {
+    "cleanup": {
+      "kill_sent": false,
+      "reaped": true
+    },
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/bin/febio4",
+      "-noconfig",
+      "-no_title",
+      "-i",
+      "specimen.feb",
+      "-o",
+      "solver.log"
+    ],
+    "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/experiment/runs/compression-N4-S60-reference",
+    "elapsed_seconds": 0.7348852920113131,
+    "exit_code": 0,
+    "pid": 35030,
+    "seconds_cap": 90,
+    "started": true,
+    "status": "completed",
+    "timed_out": false
+  },
+  "primitive_bindings": {
+    "deck": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment/runs/compression-N4-S60-reference/specimen.feb",
+      "sha256": "607afe0a102d44c752085745d237744d84a21886f9507c7532cc374f6fee1afd"
+    },
+    "elements": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment/runs/compression-N4-S60-reference/elements.log",
+      "sha256": "80b12014881bb7e4ee1ac2fdac3d6dbd5b9b5310ffbb14a72a76ef0289ecefd3"
+    },
+    "loading": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment/runs/compression-N4-S60-reference/loading.json",
+      "sha256": "3eae99b3963006e65246e49a834603789bdd029523bf3b61ad5415b51fab7498"
+    },
+    "mesh": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/mesh.json",
+      "sha256": "4df59e253fa595823eedb7ee498b68e01e1f26d9a5427edee1be7defc257e65a"
+    },
+    "nodes": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment/runs/compression-N4-S60-reference/nodes.log",
+      "sha256": "a6f93397138cf170bd4e0eb28f95b7306b9bbd7724013a9a92e08dc4c4c7ad82"
+    },
+    "solver": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment/runs/compression-N4-S60-reference/solver.log",
+      "sha256": "e00f7b69f997a7522d2e54759a2f850e5e2a48821a16152958d8221a98e38080"
+    }
+  },
+  "protocol_sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035",
+  "run_id": "compression:N4:S60:reference",
+  "runtime_identity": {
+    "path": "outputs/validation/hbe-experiment-add7e8b/frozen-source/artifacts/febio-runtime-build-v1/runtime-identity.json",
+    "sha256": "f560f386726d13b399bcfb0c781a4b78104deecf41aa977e0efe205f18fabfc4"
+  },
+  "schema": "hbe-run-execution-v1"
+}

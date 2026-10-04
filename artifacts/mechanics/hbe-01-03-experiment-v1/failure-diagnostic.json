@@ -1,0 +1,63 @@
+{
+  "actual_header_format": "%.9lg",
+  "actual_primitive_value_precision": 12,
+  "analysis_kind": "saved_headers_and_pinned_source_only_no_parser_or_solver_reexecution",
+  "failure": {
+    "message": "Unexpected physical load time",
+    "type": "ValueError"
+  },
+  "followup": "Separate source-format decoder regression and independent readout of the retained first case; no automatic rerun or continuation.",
+  "frozen_parser": {
+    "path": "outputs/validation/hbe-experiment-add7e8b/frozen-source/scripts/mechanics_hbe_outputs.py",
+    "sha256": "a86191769ee71e79596d9f3871da575dd7e2b2d62e1a9c919162242a335fa65d"
+  },
+  "frozen_parser_assumption": "12 significant digits for header and absolute time difference <=5e-12",
+  "headers": {
+    "elements.log": {
+      "all_headers_match_source_nine_significant_digit_rendering": true,
+      "binding": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment/runs/compression-N4-S60-reference/elements.log",
+        "sha256": "80b12014881bb7e4ee1ac2fdac3d6dbd5b9b5310ffbb14a72a76ef0289ecefd3"
+      },
+      "final_printed_token": "1",
+      "first_mismatch": {
+        "absolute_difference": 3.333333262189875e-11,
+        "declared_fraction": 0.016666666666666666,
+        "index": 1,
+        "printed_token": "0.0166666667"
+      },
+      "header_count": 61,
+      "mismatch_count_against_frozen_parser": 40
+    },
+    "nodes.log": {
+      "all_headers_match_source_nine_significant_digit_rendering": true,
+      "binding": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment/runs/compression-N4-S60-reference/nodes.log",
+        "sha256": "a6f93397138cf170bd4e0eb28f95b7306b9bbd7724013a9a92e08dc4c4c7ad82"
+      },
+      "final_printed_token": "1",
+      "first_mismatch": {
+        "absolute_difference": 3.333333262189875e-11,
+        "declared_fraction": 0.016666666666666666,
+        "index": 1,
+        "printed_token": "0.0166666667"
+      },
+      "header_count": 61,
+      "mismatch_count_against_frozen_parser": 40
+    }
+  },
+  "mechanical_tolerances_changed": false,
+  "numerical_convergence_status": "not_established_by_failed_full_readout",
+  "raw_output_changed": false,
+  "source_locations": {
+    "header_format_line": 222,
+    "numeric_values_precision_line": 114
+  },
+  "status": "source_confirmed_output_header_precision_mismatch",
+  "upstream_link": "https://github.com/febiosoftware/FEBio/blob/v4.13/FECore/DataRecord.cpp#L222",
+  "upstream_source": {
+    "path": "data/optional-runtimes/febio-4.13/source/FECore/DataRecord.cpp",
+    "sha256": "7805baf31c36d6380d675f2f20c8fcf3ff6d9382e9389aeb8dd51893ad8542e9"
+  },
+  "upstream_source_verified_against_acquisition_inventory": true
+}

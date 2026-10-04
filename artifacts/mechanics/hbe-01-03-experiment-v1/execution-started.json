@@ -1,0 +1,26 @@
+{
+  "automatic_retry": false,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/hbe-experiment-add7e8b/frozen-source/scripts/mechanics_hbe_experiment.py",
+    "--root",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "--protocol",
+    "outputs/validation/hbe-experiment-add7e8b/frozen-source/manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+    "--protocol-sha256",
+    "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035",
+    "--release",
+    "artifacts/mechanics/hbe-01-03-experiment-v1/release.json",
+    "--release-sha256",
+    "d9649a619b4c5adbc6d97d6167ee15ccef1faf4149edc6140535b82900eda362",
+    "--execute"
+  ],
+  "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+  "release": {
+    "path": "artifacts/mechanics/hbe-01-03-experiment-v1/release.json",
+    "sha256": "d9649a619b4c5adbc6d97d6167ee15ccef1faf4149edc6140535b82900eda362"
+  },
+  "source_commit": "add7e8b9c73a8a4fe28badd335bd59fcfbeb91de",
+  "stage": "starting_single_released_invocation",
+  "started_at_utc": "2026-10-04T20:58:15.227948+00:00"
+}

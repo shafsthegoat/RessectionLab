@@ -248,6 +248,16 @@ no mesh, load or material was changed or regenerated. This is preparation only,
 not specimen equilibrium, convergence or measured force/torque agreement.
 See `artifacts/mechanics/hbe-01-03-mesh-preparation-v1/` and the independent review.
 
+The first specimen experiment stopped after its first solver call because the
+reader rejected a rounded time header. FEBio itself terminated normally in
+0.735 s; the complete failed attempt took 4.266 s. Nineteen cases remain
+unexecuted, and no measured curve was opened, fitted or evaluated. The pinned
+runtime writes nine significant digits in time headers, whereas the reader
+incorrectly assumed twelve. All archived sources, runtime, original meshes,
+decks and measurement bytes remained unchanged. The 219 pre-execution controls
+passed; the real-output failure is retained independently of those tests. See
+`artifacts/mechanics/hbe-01-03-experiment-v1/RESULT.md`.
+
 For the real-anatomy displacement proof of concept, six official RESECT Case4
 files (35,068,010 bytes) were acquired and verified. This patient is permanently
 development and does not change existing cohort roles. The reviewed access

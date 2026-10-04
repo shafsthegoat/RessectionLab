@@ -1,0 +1,68 @@
+{
+  "csv_format_is_unverified_fixed_assumption": true,
+  "curve_or_header_members_opened": 0,
+  "executing_source_origins": {
+    "access": {
+      "path": "outputs/validation/hbe-experiment-add7e8b/frozen-source/scripts/mechanics_hbe_access.py",
+      "sha256": "b1e4f90b2ec84c39949ee02c1088bc0404f34904e24c2d4f328d503d96f76fe0"
+    },
+    "curve_evaluator": {
+      "path": "outputs/validation/hbe-experiment-add7e8b/frozen-source/scripts/mechanics_hbe_evaluation.py",
+      "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+    },
+    "mesh_deck": {
+      "path": "outputs/validation/hbe-experiment-add7e8b/frozen-source/scripts/mechanics_hbe_mesh.py",
+      "sha256": "3cb4d99f5d2d7fa2f66fb5af56ebffcf19342b9bee0b4cb2c9acfe98aabdd892"
+    },
+    "orchestrator": {
+      "path": "outputs/validation/hbe-experiment-add7e8b/frozen-source/scripts/mechanics_hbe_experiment.py",
+      "sha256": "09c92e2d62f0996a4308b9efabb70292d169b0a23ca95796b24590f291c2a444"
+    },
+    "physics": {
+      "path": "outputs/validation/hbe-experiment-add7e8b/frozen-source/scripts/mechanics_hbe_physics.py",
+      "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+    },
+    "primitive_parser": {
+      "path": "outputs/validation/hbe-experiment-add7e8b/frozen-source/scripts/mechanics_hbe_outputs.py",
+      "sha256": "a86191769ee71e79596d9f3871da575dd7e2b2d62e1a9c919162242a335fa65d"
+    },
+    "readout": {
+      "path": "outputs/validation/hbe-experiment-add7e8b/frozen-source/scripts/mechanics_hbe_readout.py",
+      "sha256": "21700558e5cb614a11a7cc62dbd5ec8118fabb11b4fbfc88f89cb8aa02012963"
+    },
+    "runtime_driver": {
+      "path": "outputs/validation/hbe-experiment-add7e8b/frozen-source/scripts/febio_runtime.py",
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+    }
+  },
+  "external_review": {
+    "bindings": {
+      "artifacts/mechanics/hbe-access-independent-review-v1/verification.json": {
+        "path": "artifacts/mechanics/hbe-access-independent-review-v1/verification.json",
+        "sha256": "6503c24e75bfc56a35e13c99ff0a570ce87873d8e177ad8ce2c00dc2cd3183a4"
+      },
+      "artifacts/mechanics/hbe-readout-independent-review-v1/integration-addendum.json": {
+        "path": "artifacts/mechanics/hbe-readout-independent-review-v1/integration-addendum.json",
+        "sha256": "75a8d13b3359d330beba452d9125d64c70dd124bf06132a4d09fca3448dba112"
+      }
+    },
+    "commit": "d5640f2f9c958e2adfae715e49cf2ba8da5ea781"
+  },
+  "frozen_archive_files_verified": 4232,
+  "input_hash_count": 78,
+  "original_mesh_output_files_verified": 52,
+  "protocol": {
+    "path": "outputs/validation/hbe-experiment-add7e8b/frozen-source/manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+    "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+  },
+  "reference_decks_verified": 18,
+  "release": {
+    "path": "artifacts/mechanics/hbe-01-03-experiment-v1/release.json",
+    "sha256": "d9649a619b4c5adbc6d97d6167ee15ccef1faf4149edc6140535b82900eda362"
+  },
+  "runtime_executable_sha256": "00a3ad9ff8d28b2d2b8ba41fd63890f555ec9ff3e102c1c3eeef649cfec4fc9c",
+  "source_archive_sha256": "6e15a2f459793273edd88509ee6c0ddaeee992447ff777d24a6386483d71331c",
+  "source_commit": "add7e8b9c73a8a4fe28badd335bd59fcfbeb91de",
+  "specimen_solver_calls": 0,
+  "status": "passed"
+}

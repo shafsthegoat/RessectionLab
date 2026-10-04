@@ -1,0 +1,42 @@
+{
+  "automatic_retry": false,
+  "calibration_members_opened": 0,
+  "csv_format": "unverified fixed assumption; parser stage never reached measured CSVs",
+  "failure_diagnostic": {
+    "path": "artifacts/mechanics/hbe-01-03-experiment-v1/failure-diagnostic.json",
+    "sha256": "d6a07e46ff8cff18935768cdb3e5a8dcf5446a990df5d341fd5a34e21ec591ae"
+  },
+  "fit_created": false,
+  "full_numerical_case_readout": "rejected_before_completion",
+  "held_out_members_opened": 0,
+  "launcher_elapsed_seconds": 4.2655537920072675,
+  "launcher_exit_code": 1,
+  "physical_validation_pass": null,
+  "post_execution_integrity": {
+    "path": "artifacts/mechanics/hbe-01-03-experiment-v1/post-execution-integrity.json",
+    "sha256": "ed9fbb2976e751b7983dfc8802a44c5f7dff758d68264b9e7dcf0606651ca006"
+  },
+  "prediction_freeze_created": false,
+  "raw_output_index": {
+    "path": "artifacts/mechanics/hbe-01-03-experiment-v1/raw-output-index.json",
+    "sha256": "ce6f1e0529b22bf7e2e25280d7be98600b9730f5ec323c2f74b8c7112e38ee41"
+  },
+  "release": {
+    "path": "artifacts/mechanics/hbe-01-03-experiment-v1/release.json",
+    "sha256": "d9649a619b4c5adbc6d97d6167ee15ccef1faf4149edc6140535b82900eda362"
+  },
+  "remaining_cases_not_executed": 19,
+  "resource_cap_triggered": false,
+  "solver_case": "compression:N4:S60:reference",
+  "solver_elapsed_seconds": 0.7348852920113131,
+  "solver_exit_code": 0,
+  "solver_invocations": 1,
+  "solver_normal_termination_present": true,
+  "source_archive_sha256": "6e15a2f459793273edd88509ee6c0ddaeee992447ff777d24a6386483d71331c",
+  "source_commit": "add7e8b9c73a8a4fe28badd335bd59fcfbeb91de",
+  "status": "failed_first_case_output_reader_no_validation_result",
+  "test_suite": "219 passed in3.34s, one combined isolated-source attempt",
+  "worker_elapsed_seconds": 2.713486708002165,
+  "worker_kill_reason": null,
+  "worker_sampled_peak_rss_bytes": 67977216
+}

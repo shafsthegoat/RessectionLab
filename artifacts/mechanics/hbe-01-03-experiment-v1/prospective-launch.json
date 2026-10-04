@@ -1,0 +1,51 @@
+{
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/hbe-experiment-add7e8b/frozen-source/scripts/mechanics_hbe_experiment.py",
+    "--root",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "--protocol",
+    "outputs/validation/hbe-experiment-add7e8b/frozen-source/manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+    "--protocol-sha256",
+    "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035",
+    "--release",
+    "artifacts/mechanics/hbe-01-03-experiment-v1/release.json",
+    "--release-sha256",
+    "d9649a619b4c5adbc6d97d6167ee15ccef1faf4149edc6140535b82900eda362",
+    "--execute"
+  ],
+  "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+  "protocol": {
+    "path": "outputs/validation/hbe-experiment-add7e8b/frozen-source/manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+    "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+  },
+  "release": {
+    "path": "artifacts/mechanics/hbe-01-03-experiment-v1/release.json",
+    "sha256": "d9649a619b4c5adbc6d97d6167ee15ccef1faf4149edc6140535b82900eda362"
+  },
+  "specimen_runs_attempted": 0,
+  "stage": "released_not_started",
+  "worker_caps": {
+    "aggregate_specimen_seconds": 900,
+    "call_allocation": {
+      "branches_x_three_meshes": 12,
+      "calibrated_axial_confirmations": 2,
+      "double_mu_controls": 2,
+      "fine_loadstep_repeats": 4
+    },
+    "each_active_run_output_bytes": 268435456,
+    "each_mesh_generation_seconds": 30,
+    "each_solver_seconds": 90,
+    "generated_output_bytes": 1073741824,
+    "gmsh_acquisition_bytes": 36427761,
+    "gmsh_acquisition_seconds": 60,
+    "gmsh_aggregate_preparation_seconds": 150,
+    "gmsh_expanded_bytes": 268435456,
+    "gmsh_generation_calls": 3,
+    "maximum_specimen_solver_calls": 20,
+    "on_failure": "kill_and_reap_process_group_preserve_partial_receipt_no_retry_or_budget_increase",
+    "output_budget_basis": "Metadata-only estimate: 3199 fine nodes,2592 cells,9 node+8 element fields,13 characters/value,60 or120 frames yields~828MB (~790MiB) before headers/IDs;1GiB total is a cap,not a measured footprint. Lossless compression after each run may reduce retained size;raw decompressed hash retained.",
+    "runtime_threads": 1,
+    "sampled_process_family_rss_bytes": 3221225472
+  }
+}
