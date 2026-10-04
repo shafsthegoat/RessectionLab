@@ -19,6 +19,7 @@ created or accepted automatically by this script.
 from __future__ import annotations
 
 import argparse
+import gzip
 import hashlib
 import json
 import math
@@ -51,6 +52,8 @@ RUNTIME_SHA = 'f560f386726d13b399bcfb0c781a4b78104deecf41aa977e0efe205f18fabfc4'
 PREPARATION_SOURCE_SHA = '5b102eb74a171d41a8815e408a6473fd65032dd9b30ff5412cf7243addc7d3e2'
 PREPARATION_COMMIT = 'cb72a848c47c6cfb6cc35374963db63d93edbc7c'
 BRANCHES = ('compression', 'tension', 'torsion_neg', 'torsion_pos')
+CONTINUATION_SHA = '7e74bfdfd8889fd38698990c76aad0a96611fdb223ebd1d738c9d8d06b4a6c7d'
+REUSED_RUN = 'compression:N4:S60:reference'
 
 
 def binding(root, path):
@@ -67,6 +70,115 @@ def recheck(input_hashes):
     for name, expected in input_hashes.items():
         if runtime.sha(Path(name)) != expected:
             raise ValueError('Bound input changed: ' + name)
+
+
+def continuation_inputs(root, plan, release, declaration_binding):
+    """Authenticate this one historical parser failure; not general recovery."""
+    if declaration_binding['sha256'] != CONTINUATION_SHA:
+        raise ValueError('Only the reviewed first-coarse continuation is supported')
+    declaration = access.verify_binding(root, declaration_binding, maximum_bytes=1024**2, read_json=True)
+    inputs = {str(access.local_path(root, declaration_binding['path'])): CONTINUATION_SHA}
+    def bound(record, *, json_value=True):
+        value = access.verify_binding(root, record, maximum_bytes=16*1024**2, read_json=json_value)
+        inputs[str(access.local_path(root, record['path']))] = record['sha256']
+        return value
+    old = {key: bound(record) for key, record in declaration['original'].items()}
+    prior = old['release']
+    if (prior['source_commit'] != declaration['original_source_commit']
+            or old['baseline']['release_binding'] != declaration['original']['release']
+            or old['state']['release'] != declaration['original']['release']
+            or old['attempt_marker']['release'] != declaration['original']['release']
+            or old['state'].get('solver_invocations') != 1
+            or old['state'].get('status') != 'failed_or_incomplete'
+            or old['state'].get('error') != {'type': 'ValueError', 'message': 'Unexpected physical load time'}
+            or old['result']['status'] != 'failed_or_incomplete'
+            or old['outcome']['launcher_elapsed_seconds'] != declaration['prior_parent_seconds_debit']):
+        raise ValueError('Original first-case parser failure identity differs')
+    for field in ('calibration_access_attempted', 'calibration_responses_accessed',
+                  'held_out_access_attempted', 'held_out_responses_accessed'):
+        if old['state'].get(field) is not False:
+            raise ValueError('Continuation requires no previous measurement access')
+    if (set(old['state']['runs']) != set(access.expected_runs())
+            or any(row['status'] != ('failed' if name == REUSED_RUN else 'not_executed')
+                   for name, row in old['state']['runs'].items())):
+        raise ValueError('Only the first completed solver call may be reused')
+    # The pinned inventory excludes any access ledger or later output. Bind all
+    # original bytes, not only the successful solver log selected for reuse.
+    previous = Path(plan['raw_root'])/'experiment'
+    index = old['raw_index']
+    actual_files = {str(path.relative_to(previous)) for path in previous.rglob('*') if path.is_file()}
+    if (index['root'] != str(previous.relative_to(root)) or actual_files != set(index['files'])
+            or any(path.is_symlink() for path in previous.rglob('*'))):
+        raise ValueError('Original output inventory changed or gained later access')
+    for name, record in index['files'].items():
+        path = access.local_path(root, str((previous/name).relative_to(root)))
+        if not path.is_relative_to(previous) or path.stat().st_size != record['bytes']:
+            raise ValueError('Original raw output location/size differs')
+        inputs[str(path)] = record['sha256']
+    inputs.update(old['baseline']['inputs'])
+    for field in ('protocol_sha256', 'roles_sha256', 'archive_sha256', 'permitted_members'):
+        if release[field] != prior[field]:
+            raise ValueError('Continuation changed measurement or protocol identity')
+    for field in ('csv_schemas', 'csv_schema_provenance', 'caps', 'interpreter', 'mesh_levels',
+                  'mesh_preparation_source', 'mesh_preparation_record'):
+        if release['execution'][field] != prior['execution'][field]:
+            raise ValueError('Continuation changed fixed execution assumptions: '+field)
+    if ({key: row['sha256'] for key, row in release['prerequisite_evidence'].items()}
+            != {key: row['sha256'] for key, row in prior['prerequisite_evidence'].items()}):
+        raise ValueError('Continuation changed accepted prerequisites')
+    for key, record in plan['source_bindings'].items():
+        expected = (declaration['repaired_parser_sha256'] if key == 'primitive_parser'
+                    else prior['execution']['source_bindings'][key]['sha256'])
+        if key != 'orchestrator' and record['sha256'] != expected:
+            raise ValueError('Continuation changed a scientific/runtime helper: '+key)
+    evidence = declaration['accepted_saved_readout']
+    review = bound(evidence['review'])
+    bound(evidence['gzip'], json_value=False)
+    if (review['status'] != 'pass_source_and_saved_primitive_review_only'
+            or review['saved_coarse_readout']['complete_readout_gzip_sha256'] != evidence['gzip']['sha256']
+            or review['saved_coarse_readout']['complete_readout_uncompressed_sha256'] != evidence['uncompressed_sha256']
+            or review['saved_coarse_readout']['passed_declared_single_run_checks'] is not True):
+        raise ValueError('Independent saved-coarse acceptance differs')
+    execution = old['execution']
+    access.verify_run_execution(root, REUSED_RUN,
+        {'primitive_bindings': execution['primitive_bindings'], 'execution_binding': declaration['original']['execution']},
+        plan['protocol_binding']['sha256'])
+    for key in ('mesh', 'deck', 'loading'):
+        if execution['primitive_bindings'][key]['sha256'] != plan['cases'][REUSED_RUN][key]['sha256']:
+            raise ValueError('Reused solver input differs from the unchanged prepared case')
+    recheck(inputs)
+    plan['inputs'].update(inputs)
+    return {'declaration': declaration_binding, 'execution': declaration['original']['execution'],
+            'accepted_readout': evidence, 'prior_solver_invocations': 1,
+            'prior_parent_seconds_debit': declaration['prior_parent_seconds_debit']}
+
+
+def reuse_coarse(root, plan, state):
+    """Rebuild inside the remaining worker budget, without any solver call."""
+    continuation = plan['continuation']
+    execution = access.verify_binding(root, continuation['execution'], read_json=True)
+    receipt, cache = readout.read_run(root, execution['primitive_bindings'],
+        protocol_sha256=plan['protocol_binding']['sha256'], expected_branch='compression',
+        expected_mesh_N=4, expected_steps=60, expected_mu_Pa=1000.)
+    accepted = continuation['accepted_readout']
+    access.verify_binding(root, accepted['gzip'], maximum_bytes=16*1024**2)
+    with gzip.open(access.local_path(root, accepted['gzip']['path']), 'rb') as stream:
+        data = stream.read(16*1024**2+1)
+    if (len(data) > 16*1024**2 or hashlib.sha256(data).hexdigest() != accepted['uncompressed_sha256']
+            or access.canonical_json(receipt) != access.canonical_json(json.loads(data))
+            or receipt.get('passed') is not True or cache is not None):
+        raise ValueError('Recomputed coarse output differs from independently accepted readout')
+    receipt['execution_binding'] = continuation['execution']
+    row = state['runs'][REUSED_RUN]
+    row.update(status='reused_after_header_only_repair', execution_binding=continuation['execution'],
+               readout=saved(root, Path(plan['experiment'])/'reused-coarse-readout.json', receipt))
+    runtime.write_json(Path(plan['experiment'])/'state.json', state)
+    return receipt
+
+
+def remaining_seconds(plan):
+    return (plan['protocol']['budgets']['aggregate_specimen_seconds']
+            - plan.get('continuation', {}).get('prior_parent_seconds_debit', 0.))
 
 
 def source_inventory(root, sources, archive_binding, archive_sha):
@@ -106,13 +218,16 @@ def preflight(root, protocol_binding, release_binding):
     if protocol_binding['sha256'] != meshing.PROTOCOL_SHA256:
         raise ValueError('Source-bound protocol required')
     raw_root = access.local_path(root, protocol['storage']['immutable_raw_output_root'])
+    release_metadata = access.verify_binding(root, release_binding, maximum_bytes=1024**2, read_json=True)
+    continuation = release_metadata.get('execution', {}).get('continuation')
+    directory = raw_root/('continuation-header-v1' if continuation is not None else 'experiment')
     study = access.ReleasedStudy(root, protocol_binding, release_binding,
-                                ledger_path=str((raw_root/'experiment/access.jsonl').relative_to(root)))
+                                ledger_path=str((directory/'access.jsonl').relative_to(root)))
     _, _, release = study._release()
     execution = release.get('execution', {})
     if execution.get('authorized_specimen_solver_calls') != 20:
         raise ValueError('Explicit release of exactly twenty maximum specimen calls required')
-    if execution.get('access_ledger_path') != str((raw_root/'experiment/access.jsonl').relative_to(root)):
+    if execution.get('access_ledger_path') != str((directory/'access.jsonl').relative_to(root)):
         raise ValueError('Release must bind the actual experiment access ledger')
     sources = execution['source_bindings']
     source_inventory(root, sources, execution['source_archive'], release['source_archive_sha256'])
@@ -210,11 +325,14 @@ def preflight(root, protocol_binding, release_binding):
         if set(receipt['decks']) != names:
             raise ValueError('Prepared deck inventory differs from fixed eighteen cases')
     recheck(inputs)
-    return {'protocol': protocol, 'protocol_binding': protocol_binding, 'release_binding': release_binding,
+    plan = {'protocol': protocol, 'protocol_binding': protocol_binding, 'release_binding': release_binding,
             'source_bindings': sources, 'inputs': inputs, 'cases': cases, 'meshes': meshes,
             'csv_schemas': execution['csv_schemas'], 'executable': str(executable),
             'runtime_identity': runtime_binding,
-            'raw_root': str(raw_root), 'experiment': str(raw_root/'experiment')}
+            'raw_root': str(raw_root), 'experiment': str(directory)}
+    if continuation is not None:
+        plan['continuation'] = continuation_inputs(root, plan, release, continuation)
+    return plan
 
 
 class OutputWatch:
@@ -417,14 +535,17 @@ def check_fitted_deck(reference_xml, fitted_xml, mu_Pa):
 def experiment_worker(root, plan):
     """Sequential state machine, inside one separately supervised process group."""
     directory = Path(plan['experiment'])
-    state = {'schema': 'hbe-experiment-state-v1', 'status': 'starting', 'solver_invocations': 0,
+    previous_calls = plan.get('continuation', {}).get('prior_solver_invocations', 0)
+    state = {'schema': 'hbe-experiment-state-v1', 'status': 'starting', 'solver_invocations': previous_calls,
              'protocol': plan['protocol_binding'], 'release': plan['release_binding'], 'automatic_retry': False,
              'runs': {key: {'status': 'not_executed'} for key in access.expected_runs()},
              'held_out_responses_accessed': False, 'held_out_access_attempted': False,
              'calibration_responses_accessed': False, 'calibration_access_attempted': False}
+    if 'continuation' in plan:
+        state['continuation'] = plan['continuation']
     runtime.write_json(directory/'state.json', state)
     started = time.monotonic()
-    deadline = started+plan['protocol']['budgets']['aggregate_specimen_seconds']
+    deadline = started+remaining_seconds(plan)
     runs, caches = {}, {}
     study = access.ReleasedStudy(root, plan['protocol_binding'], plan['release_binding'],
                                 ledger_path=str((directory/'access.jsonl').relative_to(root)))
@@ -439,8 +560,10 @@ def experiment_worker(root, plan):
         return record
     try:
         with OutputWatch(plan['raw_root'], directory/'output-watch.json', plan['protocol']['budgets']) as watch:
+            if 'continuation' in plan:
+                runs[REUSED_RUN] = reuse_coarse(root, plan, state)
             for run_id, (_, _, _, role) in access.expected_runs().items():
-                if role == 'fitted':
+                if role == 'fitted' or run_id in runs:
                     continue
                 runs[run_id], cache = run_case(root, plan, run_id, plan['cases'][run_id],
                     2000. if role == 'double_mu' else 1000., state, watch, deadline)
@@ -498,22 +621,28 @@ def experiment_worker(root, plan):
         state.update(status='failed_or_incomplete', error={'type': type(error).__name__, 'message': str(error)})
     finally:
         state['elapsed_seconds'] = time.monotonic()-started
+        state['new_solver_invocations'] = state['solver_invocations']-previous_calls
+        state['charged_prior_parent_seconds'] = plan.get('continuation', {}).get('prior_parent_seconds_debit', 0.)
+        state['charged_elapsed_seconds'] = state['elapsed_seconds']+state['charged_prior_parent_seconds']
         try:
             recheck(plan['inputs'])
             state['original_inputs_unchanged'] = True
         except BaseException as error:
             state.update(status='failed_or_incomplete', original_inputs_unchanged=False, integrity_error=str(error))
-        if state['elapsed_seconds'] >= plan['protocol']['budgets']['aggregate_specimen_seconds']:
+        if state['elapsed_seconds'] >= remaining_seconds(plan):
             state.update(status='failed_or_incomplete', budget_error='aggregate_wall_cap')
         runtime.write_json(directory/'state.json', state)
     return state
 
 
-def launch(root, protocol_binding, release_binding):
+def launch(root, protocol_binding, release_binding, *, reuse_verified_coarse=False):
     plan = preflight(root, protocol_binding, release_binding)
+    if reuse_verified_coarse != ('continuation' in plan):
+        raise ValueError('Continuation requires its release binding and explicit reuse opt-in together')
     raw_root, directory = Path(plan['raw_root']), Path(plan['experiment'])
     raw_root.mkdir(parents=True, exist_ok=True)
-    access.exclusive_json(raw_root/'.specimen-experiment-started.json',
+    marker = '.specimen-header-continuation-v1-started.json' if reuse_verified_coarse else '.specimen-experiment-started.json'
+    access.exclusive_json(raw_root/marker,
                           {'protocol': protocol_binding, 'release': release_binding, 'no_retry': True})
     directory.mkdir(exist_ok=False)
     baseline = saved(root, directory/'baseline.json', plan)
@@ -525,7 +654,7 @@ def launch(root, protocol_binding, release_binding):
             environment.pop(name)
     environment.update(PYTHONNOUSERSITE='1', PYTHONDONTWRITEBYTECODE='1')
     status = runtime.supervise(command, directory/'supervision', cwd=root, environment=environment,
-        seconds=plan['protocol']['budgets']['aggregate_specimen_seconds'],
+        seconds=remaining_seconds(plan),
         rss_bytes=plan['protocol']['budgets']['sampled_process_family_rss_bytes'])
     final = {'schema': 'hbe-experiment-supervised-result-v1', 'baseline': baseline, 'supervision': status,
              'status': 'failed_or_incomplete', 'physical_validation_pass': None}
@@ -550,6 +679,8 @@ def main():
     parser.add_argument('--release')
     parser.add_argument('--release-sha256')
     parser.add_argument('--execute', action='store_true')
+    parser.add_argument('--reuse-verified-coarse', action='store_true',
+                        help='Explicitly opt into the one source-bound header-repair continuation')
     parser.add_argument('--worker-baseline', help=argparse.SUPPRESS)
     parser.add_argument('--worker-baseline-sha256', help=argparse.SUPPRESS)
     args = parser.parse_args()
@@ -568,7 +699,7 @@ def main():
     protocol = {'path': args.protocol, 'sha256': args.protocol_sha256}
     release = {'path': args.release, 'sha256': args.release_sha256}
     if args.execute:
-        return 0 if launch(root, protocol, release)['status'] == 'completed_descriptive_one_specimen_comparison' else 1
+        return 0 if launch(root, protocol, release, reuse_verified_coarse=args.reuse_verified_coarse)['status'] == 'completed_descriptive_one_specimen_comparison' else 1
     preflight(root, protocol, release)
     print('Release, prepared inputs, and source identities verified; no solver or response access.')
     return 0

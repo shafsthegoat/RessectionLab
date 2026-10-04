@@ -322,3 +322,85 @@ def test_fitted_xml_rejects_other_physics_or_order_changes(before,after):
     candidate=scalar_deck(123.456)
     assert before in candidate
     with pytest.raises(ValueError):x.check_fitted_deck(scalar_deck(1000.),candidate.replace(before,after),123.456)
+
+
+# The one continuation is tested with state-machine doubles, never FEBio/data.
+def continuation_fixture(tmp_path, monkeypatch, **kwargs):
+    plan, events = fixture(tmp_path, monkeypatch, **kwargs)
+    plan['continuation'] = {'prior_solver_invocations': 1, 'prior_parent_seconds_debit': 4.2655537920072675}
+    def reuse(root, plan, state):
+        events.append('reuse_coarse')
+        state['runs'][x.REUSED_RUN]['status'] = 'reused_after_header_only_repair'
+        return {'synthetic_test_only': True}
+    monkeypatch.setattr(x, 'reuse_coarse', reuse)
+    return plan, events
+
+
+def test_continuation_reuses_one_then_runs_nineteen_in_original_order(tmp_path, monkeypatch):
+    plan, events = continuation_fixture(tmp_path, monkeypatch)
+    result = x.experiment_worker(tmp_path, plan)
+    assert result['status'] == 'completed_descriptive_one_specimen_comparison'
+    assert result['solver_invocations'] == 20 and result['new_solver_invocations'] == 19
+    assert events[0] == 'reuse_coarse'
+    assert [v for v in events if ':N' in v] == list(x.access.expected_runs())[1:]
+    assert events.index('compare18') < events.index('calibration')
+    assert events.index('compare20') < events.index('freeze') < events.index('holdout')
+    assert x.remaining_seconds(plan) == 900 - 4.2655537920072675
+    assert result['charged_elapsed_seconds'] == result['elapsed_seconds'] + 4.2655537920072675
+
+
+def test_continuation_next_failure_is_terminal_without_measurement_access(tmp_path, monkeypatch):
+    second = list(x.access.expected_runs())[1]
+    plan, events = continuation_fixture(tmp_path, monkeypatch, fail_run=second)
+    result = x.experiment_worker(tmp_path, plan)
+    assert result['solver_invocations'] == 2 and result['new_solver_invocations'] == 1
+    assert result['status'] == 'failed_or_incomplete'
+    assert events == ['reuse_coarse', second]
+    assert all(result['runs'][key]['status'] == 'not_executed' for key in list(x.access.expected_runs())[2:])
+
+
+def test_continuation_reuse_rejection_stops_before_any_new_case(tmp_path, monkeypatch):
+    plan, events = continuation_fixture(tmp_path, monkeypatch)
+    monkeypatch.setattr(x, 'reuse_coarse', lambda *args: (_ for _ in ()).throw(ValueError('replay differs')))
+    result = x.experiment_worker(tmp_path, plan)
+    assert result['status'] == 'failed_or_incomplete'
+    assert result['solver_invocations'] == 1 and result['new_solver_invocations'] == 0 and events == []
+
+
+@pytest.mark.parametrize('opt_in,declared', [(False,True),(True,False)])
+def test_continuation_requires_matching_explicit_opt_in_before_marker(tmp_path, monkeypatch,opt_in,declared):
+    plan = {'continuation':{}} if declared else {}
+    monkeypatch.setattr(x, 'preflight', lambda *args: plan)
+    with pytest.raises(ValueError, match='opt-in'):
+        x.launch(tmp_path, {}, {}, reuse_verified_coarse=opt_in)
+    assert list(tmp_path.iterdir()) == []
+
+
+def test_arbitrary_resume_manifest_rejected_before_file_access(tmp_path):
+    with pytest.raises(ValueError, match='Only the reviewed'):
+        x.continuation_inputs(tmp_path, {}, {}, {'path':'absent.json','sha256':'0'*64})
+
+
+@pytest.mark.parametrize('change', ['numeric','compressed_hash','expanded_hash','passed'])
+def test_reused_readout_must_match_independent_result_exactly(tmp_path,monkeypatch,change):
+    import gzip
+    import hashlib
+    plan, _ = continuation_fixture(tmp_path,monkeypatch)
+    # Restore the actual reuse helper overwritten by the state-machine fixture.
+    spec=importlib.util.spec_from_file_location('actual_hbe_reuse',x.__file__)
+    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    original={'passed':True,'value':1.0}
+    raw=x.access.canonical_json(original)
+    expected=tmp_path/'accepted.json.gz';expected.write_bytes(gzip.compress(raw,mtime=0))
+    execution=tmp_path/'execution.json'
+    save(execution,{'primitive_bindings':{'synthetic':'only'}})
+    plan['continuation'].update(execution=x.binding(tmp_path,execution),accepted_readout={
+        'gzip':x.binding(tmp_path,expected),'uncompressed_sha256':hashlib.sha256(raw).hexdigest()})
+    current=dict(original)
+    if change=='numeric':current['value']=1.0000000000000002
+    if change=='passed':current['passed']=False
+    if change=='compressed_hash':expected.write_bytes(expected.read_bytes()+b'x')
+    if change=='expanded_hash':plan['continuation']['accepted_readout']['uncompressed_sha256']='0'*64
+    monkeypatch.setattr(module.readout,'read_run',lambda *args,**kwargs:(current,None))
+    with pytest.raises(ValueError):module.reuse_coarse(tmp_path,plan,{'runs':{x.REUSED_RUN:{}}})
+    assert not (tmp_path/'experiment/reused-coarse-readout.json').exists()

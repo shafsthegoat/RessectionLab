@@ -1,0 +1,32 @@
+{
+  "actual_primitive_replays": 0,
+  "actual_specimen_solver_calls": 0,
+  "all_sources_unchanged": true,
+  "exit_code": 0,
+  "measured_response_access": false,
+  "process_seconds": 0.9666486659552902,
+  "source_hashes_after": {
+    "manifests/experiments/hbe-01-03-header-continuation-v1.json": "7e74bfdfd8889fd38698990c76aad0a96611fdb223ebd1d738c9d8d06b4a6c7d",
+    "scripts/mechanics_hbe_access.py": "b1e4f90b2ec84c39949ee02c1088bc0404f34904e24c2d4f328d503d96f76fe0",
+    "scripts/mechanics_hbe_experiment.py": "ce921239857d45ac4c5d70052c515c3a7804e32e8101f14315953c8b0aa53daa",
+    "scripts/mechanics_hbe_mesh.py": "3cb4d99f5d2d7fa2f66fb5af56ebffcf19342b9bee0b4cb2c9acfe98aabdd892",
+    "scripts/mechanics_hbe_outputs.py": "a372cb89ea9515186d433c74ec650dc3b5cae289619e8b35d481280f6662f473",
+    "scripts/mechanics_hbe_readout.py": "21700558e5cb614a11a7cc62dbd5ec8118fabb11b4fbfc88f89cb8aa02012963",
+    "tests/test_mechanics_hbe_continuation_review.py": "78c6932e6a795e1eb8a74957c470eb6f76c645ccee612a9c3253a275c126d363",
+    "tests/test_mechanics_hbe_experiment.py": "3e4aacabdbf5d713a131704f1ceae089d49fdef095cd58ff5db0929a23c8ec67",
+    "tests/test_mechanics_hbe_experiment_review.py": "03fe4f050adc3137ef96a4523a45d98aabdd166dc482fd2cd45413834408658c"
+  },
+  "source_hashes_before": {
+    "manifests/experiments/hbe-01-03-header-continuation-v1.json": "7e74bfdfd8889fd38698990c76aad0a96611fdb223ebd1d738c9d8d06b4a6c7d",
+    "scripts/mechanics_hbe_access.py": "b1e4f90b2ec84c39949ee02c1088bc0404f34904e24c2d4f328d503d96f76fe0",
+    "scripts/mechanics_hbe_experiment.py": "ce921239857d45ac4c5d70052c515c3a7804e32e8101f14315953c8b0aa53daa",
+    "scripts/mechanics_hbe_mesh.py": "3cb4d99f5d2d7fa2f66fb5af56ebffcf19342b9bee0b4cb2c9acfe98aabdd892",
+    "scripts/mechanics_hbe_outputs.py": "a372cb89ea9515186d433c74ec650dc3b5cae289619e8b35d481280f6662f473",
+    "scripts/mechanics_hbe_readout.py": "21700558e5cb614a11a7cc62dbd5ec8118fabb11b4fbfc88f89cb8aa02012963",
+    "tests/test_mechanics_hbe_continuation_review.py": "78c6932e6a795e1eb8a74957c470eb6f76c645ccee612a9c3253a275c126d363",
+    "tests/test_mechanics_hbe_experiment.py": "3e4aacabdbf5d713a131704f1ceae089d49fdef095cd58ff5db0929a23c8ec67",
+    "tests/test_mechanics_hbe_experiment_review.py": "03fe4f050adc3137ef96a4523a45d98aabdd166dc482fd2cd45413834408658c"
+  },
+  "status": "passed",
+  "stdout_sha256": "798c6c6cc02d6c580297962f6aec4951955ea5fafdae3e2491a7dbf78e8a7b41"
+}
