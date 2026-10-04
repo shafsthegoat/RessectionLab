@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "acquisition_id": "hbe-8095559-acquisition-v1",
+  "declared_at_utc": "2026-10-04T19:01:51.813027+00:00",
+  "authorization": "Root authorized bounded free local acquisition after this prospective manifest is saved; metadata/schema inspection only until donor/loading-mode split is frozen.",
+  "source": {
+    "record_id": 8095559,
+    "concept_record_id": "8095558",
+    "version": "1.0",
+    "doi": "10.5281/zenodo.8095559",
+    "concept_doi": "10.5281/zenodo.8095558",
+    "title": "Hyperelastic Human Brain 1-7",
+    "publication_date": "2023-09-07",
+    "updated": "2023-09-09T02:27:02.341858+00:00",
+    "record_url": "https://zenodo.org/records/8095559",
+    "api_url": "https://zenodo.org/api/records/8095559",
+    "license_id": "cc-by-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "creators": [
+      {
+        "name": "Hinrichsen, Jan",
+        "affiliation": "Institute of Continuum Mechanics and Biomechanics, Friedrich-Alexander-Universität Erlangen-Nürnberg, 91058 Erlangen, Germany",
+        "orcid": "0000-0003-0769-4925"
+      },
+      {
+        "name": "Reiter, Nina",
+        "affiliation": "Institute of Continuum Mechanics and Biomechanics, Friedrich-Alexander-Universität Erlangen-Nürnberg, 91058 Erlangen, Germany",
+        "orcid": "0000-0001-5392-1776"
+      },
+      {
+        "name": "Paulsen, Friedrich",
+        "affiliation": "Institute of Functional and Clinical Anatomy, Friedrich-Alexander-Universität Erlangen-Nürnberg, 91054 Erlangen, Germany",
+        "orcid": "0000-0002-0527-0953"
+      },
+      {
+        "name": "Bräuer, Lars",
+        "affiliation": "Institute of Functional and Clinical Anatomy, Friedrich-Alexander-Universität Erlangen-Nürnberg, 91054 Erlangen, Germany",
+        "orcid": "0000-0003-0339-1919"
+      },
+      {
+        "name": "Budday, Silvia",
+        "affiliation": "Institute of Continuum Mechanics and Biomechanics, Friedrich-Alexander-Universität Erlangen-Nürnberg, 91058 Erlangen, Germany",
+        "orcid": "0000-0002-7072-8174"
+      }
+    ],
+    "provider_record_path": "artifacts/mechanics/hbe-8095559-acquisition-v1/provider-record.json",
+    "provider_record_sha256": "2e8b9f8818e111da30626363c38ac0becf51aa4cac4c4c9eb38779b3c80906e3"
+  },
+  "data_role": "ex_vivo_human_brain_complementary_material_calibration_validation_only",
+  "patient_specific_material_claim_allowed": false,
+  "allowed_inspection_before_split": [
+    "README",
+    "ZIP central directory",
+    "specimen identifiers and filenames",
+    "geometry.yaml schema and values",
+    "sample_lookup metadata"
+  ],
+  "prohibited_until_split": [
+    "force and torque values",
+    "curve plots or summaries",
+    "fitting",
+    "constitutive model selection"
+  ],
+  "scope_limits": {
+    "no_downloaded_code_execution": true,
+    "no_automatic_retries": true,
+    "timeout_seconds_per_request": 45,
+    "maximum_provider_file_bytes": 12985030,
+    "no_other_records_or_patients": true
+  },
+  "raw_directory": "data/mechanics/zenodo-8095559",
+  "files": [
+    {
+      "filename": "HBE_Data.zip",
+      "provider_file_id": "f9da4390-e606-4bfd-8f73-410becd10e0e",
+      "bytes": 12968598,
+      "provider_checksum": "md5:fef23ea6291afd10bb668f763d25863f",
+      "url": "https://zenodo.org/api/records/8095559/files/HBE_Data.zip/content"
+    },
+    {
+      "filename": "README.txt",
+      "provider_file_id": "98dae7c5-87e1-44ef-b4eb-4a6966e29e69",
+      "bytes": 1593,
+      "provider_checksum": "md5:cd2f6779942da38d995eb2081a33d818",
+      "url": "https://zenodo.org/api/records/8095559/files/README.txt/content"
+    },
+    {
+      "filename": "sample_lookup.xlsx",
+      "provider_file_id": "89daa074-a7c4-4ffa-8399-3ed5349de0f7",
+      "bytes": 14839,
+      "provider_checksum": "md5:6e180a041c7514d032f231fdb27deb82",
+      "url": "https://zenodo.org/api/records/8095559/files/sample_lookup.xlsx/content"
+    }
+  ]
+}
