@@ -15,15 +15,14 @@ dependencies = [
   "numpy>=2.2,<3",
   "scipy>=1.15,<2",
   "nibabel>=5.3,<6",
-  "PySide6>=6.8,<7",
-  "vtk>=9.4,<10",
   "scikit-image>=0.25,<1",
   "torch>=2.6,<3",
 ]
 
 [project.optional-dependencies]
 dev = ["pytest>=8,<10", "pyinstaller>=6,<7"]
-diffusion = ["dipy>=1.12,<1.13"]
+diffusion = ["dipy>=1.12,<1.13", "SimpleITK>=2.5,<3"]
+legacy-qt = ["PySide6>=6.8,<7", "vtk>=9.4,<10"]
 
 [project.scripts]
 resectionlab = "resectionlab.app:main"

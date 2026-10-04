@@ -4,6 +4,12 @@ Updated October 4, 2026. The three revised specification documents remain the
 authoritative requirements and have been read completely. This file records
 executed work and open gates, not a replacement plan.
 
+**Interface direction updated by the user:** Electron + React + TypeScript is
+the current Mac UI target. Further PySide/PyQt interface work has stopped. The
+validated Qt prototype is preserved as an earlier experiment; Python planning,
+learning, provenance and evaluation remain the shared backend. The new renderer
+communicates through a narrow local sidecar interface and is under construction.
+
 ## Verified starting state
 
 - Repository initially contained only the three specifications and two commits.
@@ -53,13 +59,17 @@ executed work and open gates, not a replacement plan.
 
 ## Validation record
 
-An independent earlier integrated suite passed 168 tests. Additional diffusion,
-runner and UI tests have since been added. The latest root targeted run passed
-18 tests and exposed one shared-working-tree snapshot race in a runner test;
-the owner is isolating its fixture while retaining production source guards.
+The latest root integrated suite passed **304 tests in 11.43 seconds**, with four
+existing DIPY basis-deprecation warnings. A subsequent independent audit passed
+305 tests as one further test landed. The earlier snapshot race is fixed through
+isolated test inputs while production source guards remain intact. New native
+adversarial checks caught and fixed temporal shaft borrowing and mutable preview
+array descriptors; the previous failed runs remain documented.
 See `EXPERIMENT_LOG.md` for executed experiments, including negative results.
-The app passed its initial standalone runtime and GUI checks; a smaller bundle
-with stronger numerical checks is being built. No second-Mac test is claimed.
+The Qt prototype passed its initial standalone runtime and GUI checks. Its next
+build was stopped following the user's Electron decision. The React/Electron
+package requires its own equivalent functional, visual and performance checks;
+Qt results do not certify the new interface. No second-Mac test is claimed.
 
 ## Completion gates still open
 
