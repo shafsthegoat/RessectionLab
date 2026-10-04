@@ -111,6 +111,17 @@ configuration-identity mismatch; the adapter has not executed a patient episode
 or entered the desktop,
 and existing procedural checkpoints and feature-unit gates remain unchanged.
 
+The frozen extraction procedure has now run on PAT16 and PAT20, with two
+repetitions of both model variants per case. All eight child inferences completed
+without failures or tuning; repeated masks and distance arrays were identical.
+Independent array and visual QC passed, with 28 focused checks. No-CSF/main
+estimates omit 2,045/19 of 45,400 PAT16 annotation voxels and 413/125 of 12,451
+PAT20 voxels. These flags remain; no target voxels were inserted into the masks.
+Working anatomy and portable source cases are unchanged. The estimates still
+require anatomical review, and runtime version pins are not historical binary
+attestation. Exact execution/QC records are linked from
+`docs/brain-extraction-pat16-pat20-independent-review.md`.
+
 ## Verified starting state
 
 - Repository initially contained only the three specifications and two commits.

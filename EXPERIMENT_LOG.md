@@ -858,3 +858,33 @@ unchanged. The independent diagnostic's first JSON export error is retained as
 a diagnostic failure, separately from the successfully checked numerical data.
 A fresh V2 declaration must bind the direct configuration and all unchanged
 physical components. Original V1 evidence is not relabeled.
+
+## October 4, 2026 — frozen extraction repeats on PAT16 and PAT20
+
+The prospectively committed `2e54b98` declaration ran its four sequential CLI
+calls/eight model children without failure, retry or tuning. The unchanged
+wrapper, MPS runner, pretrained model bytes and source images were checked
+before and after. The complete batch took 83.03 seconds; individual model
+children took 5.833–8.033 seconds. Maximum observed child RSS was 683,704,320
+bytes and maximum MPS driver allocation 5,948,243,968 bytes. These sampled
+measurements are not exact total-system memory peaks.
+
+Both repetitions produce identical masks, float32 distance arrays and compressed
+output hashes for each case/model pair. Independent saved-array reconstruction
+from the distance threshold/component/hole-fill procedure agrees exactly for all
+eight results. All native-grid corners agree with the source (0 mm maximum
+displacement); masks have one component and no image-face contacts. Both
+six-panel overlay sheets were actually inspected. The audit took 10.35 seconds
+and 824,393,728-byte peak process RSS; 28 focused checks passed in 0.35 seconds.
+
+No-CSF/main omit 2,045/19 of 45,400 PAT16 annotation voxels and 413/125 of
+12,451 PAT20 voxels. All omissions are retained and flagged; masks were not
+enlarged to include targets. Within-case repeatability and source-annotation
+inclusion do not measure anatomical accuracy. Envelopes remain estimated and
+review required, with no cortical access or working-brain promotion. The
+original source case bundles stayed unchanged. Recorded runtime versions agree,
+but historical interpreter/package binary identities were not preregistered.
+
+Execution snapshots and logs remain under `artifacts/brain-extraction/`;
+`docs/brain-extraction-pat16-pat20-independent-review.md` links the independent
+array/visual reports, exact source hashes and limitations.

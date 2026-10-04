@@ -1,8 +1,8 @@
 # PAT16/PAT20 frozen extraction repeatability batch
 
-Declared October 4, 2026; **inference has not started**. Execution is held until
-the integrated tests and native-axis timing preflight release their resource
-window. The immutable declaration is
+Declared October 4, 2026 and executed after the orchestrator released the resource
+window. All eight child inferences completed in the declared order with no
+failures, retries or retuning. The immutable declaration is
 [`brain-extraction-pat16-pat20-repeatability-v1.json`](../manifests/experiments/brain-extraction-pat16-pat20-repeatability-v1.json).
 
 The existing `resectionlab.brain_extraction` command accepts these source paths
@@ -51,14 +51,42 @@ On failure, retain the log, named failure record and partial files; mark remaini
 runs unexecuted pending review. No hidden retries, changed thresholds, alternative
 models or selective exclusion of failures are permitted within this declaration.
 
-## Checks after the timing hold is released
+## Execution and pending independent review
 
-Recheck source, wrapper, model and runtime identity before execution. After each
-run, retain the exact wrapper and generated runner, validate native-grid corners,
-finite distance values and binary masks, and independently reconstruct the mask
-from the distance threshold/component/hole-fill procedure. Compare repeated mask
-arrays and distance fields directly and record every discrepancy. Inspect source
-annotation inclusion, components, boundary contacts and native overlays.
+The complete batch took 83.032 seconds, including parent preparation and repeat
+comparison. Individual child times were 5.833–8.033 seconds on this local run.
+The maximum sampled child RSS was 683,704,320 bytes; sampled MPS tensor and driver
+allocations reached 4,117,935,104 and 5,948,243,968 bytes respectively. These are
+the declared observational measurements, not exact combined memory peaks or
+population latency estimates.
+
+| Patient | Model | Estimated envelope, mL | Source annotation voxels excluded |
+| --- | --- | ---: | ---: |
+| PAT16 | No-CSF | 1351.353 | 2,045 of 45,400 |
+| PAT16 | Main | 1560.511 | 19 of 45,400 |
+| PAT20 | No-CSF | 1203.833 | 413 of 12,451 |
+| PAT20 | Main | 1402.249 | 125 of 12,451 |
+
+Both repetitions produced identical native mask arrays and identical predicted
+distance arrays for each patient/model combination: zero differing mask voxels
+and maximum absolute distance difference 0.0 mm. Every annotation omission is
+retained as a review flag. Volumes and inclusion counts above are wrapper-reported
+values pending independent array and visual review; repeat equality was measured
+directly from the saved arrays.
+
+[`brain-extraction-pat16-pat20-results.json`](brain-extraction-pat16-pat20-results.json)
+records all eight child measurements and artifact hashes. The complete execution
+receipt is `artifacts/brain-extraction/PAT16-PAT20-repeatability-v1-batch/batch_record.json`,
+SHA256 `df8bb5bef8367e1b2d58be1a7d4ec4346481024544e52dd32dd783e7b79e9140`.
+The original declaration, executor, exact wrapper snapshot and four CLI logs are
+retained beside it. Source/model/runtime hashes and unchanged prepared-case bytes
+were checked before each run and after the batch. Working anatomy was not changed.
+
+The separate review will validate native-grid corners, finite distance values,
+binary masks and reconstruction from the distance threshold/component/hole-fill
+procedure, then inspect annotation inclusion, components, boundary contacts and
+native overlays. Its findings will be recorded separately from these execution
+results.
 
 The existing independent audit helpers support these array checks. Their current
 standalone CLI only enumerates PAT05 and PAT28; extending that CLI would be a
@@ -67,5 +95,4 @@ separate coordinated change. It is not needed to run the unchanged extractor.
 All outputs remain **estimated, review required** and separate from the working
 brain mask. Repeatability and annotation inclusion do not establish anatomical
 accuracy, a pial surface, cortical access, functional localization or clinical
-risk. Repeated runs do not add independent patients. No extraction has been
-performed as part of this declaration.
+risk. Repeated runs do not add independent patients.

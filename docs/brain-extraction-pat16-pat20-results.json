@@ -1,0 +1,213 @@
+{
+  "schema_version": 1,
+  "declaration": "manifests/experiments/brain-extraction-pat16-pat20-repeatability-v1.json",
+  "declaration_sha256": "5be3ade2eb6b383e796cdc34def48dae66a4fb68649b282723daa83e771477db",
+  "execution_record": "artifacts/brain-extraction/PAT16-PAT20-repeatability-v1-batch/batch_record.json",
+  "execution_record_sha256": "df8bb5bef8367e1b2d58be1a7d4ec4346481024544e52dd32dd783e7b79e9140",
+  "executor_sha256": "3a2f3aa67dd00ee5e3a342933f1a1a657ef56dfa57494d66098c70185501a78b",
+  "wrapper_sha256": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917",
+  "started_at": "2026-10-04T12:20:36.154924+00:00",
+  "finished_at": "2026-10-04T12:21:59.187138+00:00",
+  "elapsed_batch_seconds": 83.032214,
+  "declared_child_inferences": 8,
+  "completed_child_inferences": 8,
+  "failed_child_inferences": 0,
+  "retries": 0,
+  "retuned": false,
+  "child_runs": [
+    {
+      "run_id": "PAT16-r1",
+      "variant": "nocsf",
+      "elapsed_seconds": 8.032617917051539,
+      "sampled_process_peak_rss_bytes": 676003840,
+      "mps_memory_samples": {
+        "tensor_bytes_max_sampled": 4117935104,
+        "driver_bytes_max_sampled": 5948243968
+      },
+      "memory_scope": "allocator samples after module forwards, not exact peak; driver includes cached allocations; process RSS alone excludes GPU accounting",
+      "artifact_hashes": {
+        "nocsf_mask.nii.gz": "c2938e8cd2fc68f06979949a1f42410ad931e52363dfdd8657e9de41320d928f",
+        "nocsf_distance_mm.nii.gz": "06b04d355100039d9d9d904a60a661cbb746ec978087e9de6a61e2ec3f215821"
+      },
+      "source_annotation_outside_voxels": 2045,
+      "estimated_envelope_volume_ml": 1351.352885765753,
+      "failure": null,
+      "review_status": "review_required"
+    },
+    {
+      "run_id": "PAT16-r1",
+      "variant": "main",
+      "elapsed_seconds": 6.086783415987156,
+      "sampled_process_peak_rss_bytes": 676347904,
+      "mps_memory_samples": {
+        "tensor_bytes_max_sampled": 4117935104,
+        "driver_bytes_max_sampled": 5948243968
+      },
+      "memory_scope": "allocator samples after module forwards, not exact peak; driver includes cached allocations; process RSS alone excludes GPU accounting",
+      "artifact_hashes": {
+        "main_mask.nii.gz": "c2282a0709d4b984adb092af734e1fc548e7b4a3ced6c44a01c71b916b4fead4",
+        "main_distance_mm.nii.gz": "b0ec3f053a3e4d14ab8cbcdf5cef90260d02560c9191e6a053cfb7e067397921"
+      },
+      "source_annotation_outside_voxels": 19,
+      "estimated_envelope_volume_ml": 1560.5113324161346,
+      "failure": null,
+      "review_status": "review_required"
+    },
+    {
+      "run_id": "PAT16-r2",
+      "variant": "nocsf",
+      "elapsed_seconds": 6.106831207987852,
+      "sampled_process_peak_rss_bytes": 676298752,
+      "mps_memory_samples": {
+        "tensor_bytes_max_sampled": 4117935104,
+        "driver_bytes_max_sampled": 5948243968
+      },
+      "memory_scope": "allocator samples after module forwards, not exact peak; driver includes cached allocations; process RSS alone excludes GPU accounting",
+      "artifact_hashes": {
+        "nocsf_mask.nii.gz": "c2938e8cd2fc68f06979949a1f42410ad931e52363dfdd8657e9de41320d928f",
+        "nocsf_distance_mm.nii.gz": "06b04d355100039d9d9d904a60a661cbb746ec978087e9de6a61e2ec3f215821"
+      },
+      "source_annotation_outside_voxels": 2045,
+      "estimated_envelope_volume_ml": 1351.352885765753,
+      "failure": null,
+      "review_status": "review_required"
+    },
+    {
+      "run_id": "PAT16-r2",
+      "variant": "main",
+      "elapsed_seconds": 5.85267541592475,
+      "sampled_process_peak_rss_bytes": 676200448,
+      "mps_memory_samples": {
+        "tensor_bytes_max_sampled": 4117935104,
+        "driver_bytes_max_sampled": 5948243968
+      },
+      "memory_scope": "allocator samples after module forwards, not exact peak; driver includes cached allocations; process RSS alone excludes GPU accounting",
+      "artifact_hashes": {
+        "main_mask.nii.gz": "c2282a0709d4b984adb092af734e1fc548e7b4a3ced6c44a01c71b916b4fead4",
+        "main_distance_mm.nii.gz": "b0ec3f053a3e4d14ab8cbcdf5cef90260d02560c9191e6a053cfb7e067397921"
+      },
+      "source_annotation_outside_voxels": 19,
+      "estimated_envelope_volume_ml": 1560.5113324161346,
+      "failure": null,
+      "review_status": "review_required"
+    },
+    {
+      "run_id": "PAT20-r1",
+      "variant": "nocsf",
+      "elapsed_seconds": 5.832751167006791,
+      "sampled_process_peak_rss_bytes": 676610048,
+      "mps_memory_samples": {
+        "tensor_bytes_max_sampled": 4117935104,
+        "driver_bytes_max_sampled": 5948243968
+      },
+      "memory_scope": "allocator samples after module forwards, not exact peak; driver includes cached allocations; process RSS alone excludes GPU accounting",
+      "artifact_hashes": {
+        "nocsf_mask.nii.gz": "4aa4698269ceca997a903df340d994c042c0a5b995649d89e6e50a9e9a70cf06",
+        "nocsf_distance_mm.nii.gz": "000e0d51fede04b821ac82eeb0cc1778142ad9a61424329151a118c3b4465355"
+      },
+      "source_annotation_outside_voxels": 413,
+      "estimated_envelope_volume_ml": 1203.833231964143,
+      "failure": null,
+      "review_status": "review_required"
+    },
+    {
+      "run_id": "PAT20-r1",
+      "variant": "main",
+      "elapsed_seconds": 5.854954209062271,
+      "sampled_process_peak_rss_bytes": 676495360,
+      "mps_memory_samples": {
+        "tensor_bytes_max_sampled": 4117935104,
+        "driver_bytes_max_sampled": 5948243968
+      },
+      "memory_scope": "allocator samples after module forwards, not exact peak; driver includes cached allocations; process RSS alone excludes GPU accounting",
+      "artifact_hashes": {
+        "main_mask.nii.gz": "fd19eccbee391dcf96012cf653e5607ff8349f24bdc2d2994c14744726bc4439",
+        "main_distance_mm.nii.gz": "cdf90185eb2b0d972462be9c1cb42e8071e348c2f44a9e17d5ddb40dc73ec857"
+      },
+      "source_annotation_outside_voxels": 125,
+      "estimated_envelope_volume_ml": 1402.249105376422,
+      "failure": null,
+      "review_status": "review_required"
+    },
+    {
+      "run_id": "PAT20-r2",
+      "variant": "nocsf",
+      "elapsed_seconds": 6.111689334036782,
+      "sampled_process_peak_rss_bytes": 683704320,
+      "mps_memory_samples": {
+        "tensor_bytes_max_sampled": 4117935104,
+        "driver_bytes_max_sampled": 5948243968
+      },
+      "memory_scope": "allocator samples after module forwards, not exact peak; driver includes cached allocations; process RSS alone excludes GPU accounting",
+      "artifact_hashes": {
+        "nocsf_mask.nii.gz": "4aa4698269ceca997a903df340d994c042c0a5b995649d89e6e50a9e9a70cf06",
+        "nocsf_distance_mm.nii.gz": "000e0d51fede04b821ac82eeb0cc1778142ad9a61424329151a118c3b4465355"
+      },
+      "source_annotation_outside_voxels": 413,
+      "estimated_envelope_volume_ml": 1203.833231964143,
+      "failure": null,
+      "review_status": "review_required"
+    },
+    {
+      "run_id": "PAT20-r2",
+      "variant": "main",
+      "elapsed_seconds": 5.849329541088082,
+      "sampled_process_peak_rss_bytes": 676478976,
+      "mps_memory_samples": {
+        "tensor_bytes_max_sampled": 4117935104,
+        "driver_bytes_max_sampled": 5948243968
+      },
+      "memory_scope": "allocator samples after module forwards, not exact peak; driver includes cached allocations; process RSS alone excludes GPU accounting",
+      "artifact_hashes": {
+        "main_mask.nii.gz": "fd19eccbee391dcf96012cf653e5607ff8349f24bdc2d2994c14744726bc4439",
+        "main_distance_mm.nii.gz": "cdf90185eb2b0d972462be9c1cb42e8071e348c2f44a9e17d5ddb40dc73ec857"
+      },
+      "source_annotation_outside_voxels": 125,
+      "estimated_envelope_volume_ml": 1402.249105376422,
+      "failure": null,
+      "review_status": "review_required"
+    }
+  ],
+  "repeat_comparisons": {
+    "sub-PAT16": {
+      "nocsf": {
+        "mask_differing_voxels": 0,
+        "maximum_absolute_predicted_distance_difference_mm": 0.0,
+        "predicted_distance_arrays_identical": true,
+        "interpretation": "Within-patient fixed-runtime repeatability, not anatomical accuracy."
+      },
+      "main": {
+        "mask_differing_voxels": 0,
+        "maximum_absolute_predicted_distance_difference_mm": 0.0,
+        "predicted_distance_arrays_identical": true,
+        "interpretation": "Within-patient fixed-runtime repeatability, not anatomical accuracy."
+      }
+    },
+    "sub-PAT20": {
+      "nocsf": {
+        "mask_differing_voxels": 0,
+        "maximum_absolute_predicted_distance_difference_mm": 0.0,
+        "predicted_distance_arrays_identical": true,
+        "interpretation": "Within-patient fixed-runtime repeatability, not anatomical accuracy."
+      },
+      "main": {
+        "mask_differing_voxels": 0,
+        "maximum_absolute_predicted_distance_difference_mm": 0.0,
+        "predicted_distance_arrays_identical": true,
+        "interpretation": "Within-patient fixed-runtime repeatability, not anatomical accuracy."
+      }
+    }
+  },
+  "maximum_sampled_process_RSS_bytes": 683704320,
+  "maximum_sampled_MPS_tensor_bytes": 4117935104,
+  "maximum_sampled_MPS_driver_bytes": 5948243968,
+  "memory_interpretation": "Child RSS and allocator snapshots only; not exact combined host/GPU process peaks.",
+  "working_anatomy_changed": false,
+  "review_status": "review_required",
+  "brain_reviewed": false,
+  "cortex_localized": false,
+  "cortical_access_permitted": false,
+  "clinical_deficit_probability": null,
+  "independent_array_and_visual_QC_status": "pending",
+  "interpretation": "Fixed-runtime within-patient repeatability and wrapper-reported inclusion metrics only; no anatomical or clinical accuracy claim."
+}
