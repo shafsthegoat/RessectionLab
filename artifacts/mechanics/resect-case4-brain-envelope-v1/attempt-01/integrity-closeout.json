@@ -1,0 +1,62 @@
+{
+  "schema_version": 1,
+  "status": "single_inference_completed_unreviewed_independent_QC_pending",
+  "recorded_at": "2026-10-04T21:02:46.113540+00:00",
+  "execution_commit": "ea2c60c28063ba1c389aaab8aa680f2c54c21ac6",
+  "root_release_sha256": "bf61fc1e2d6a2083f15e089c03ce6d91aa89e2270c0b7f4771a98f7b465651b7",
+  "acceptance_sha256": "043b6c04de133110c8bcd9778af8821f99188c78b32551b0e5a8290c741ae335",
+  "worker_record_sha256": "2ed93c0290a5ce30a3765f62f70822308ee1976a89b8eafe441503fd4576e004",
+  "original_input_model_runtime_pins_reverified": 33,
+  "source_snapshot_files_reverified": 59,
+  "source_archive_sha256": "acc99587d64f71a157dd2a5023614b5b3263374da2d54066ca523e6a9440416b",
+  "raw_outputs_reverified": {
+    "LICENSE_FreeSurfer.txt": {
+      "sha256": "632d404ea17b9101d9ac87cf8f09e651d18eb20d2cc0ba8dbee77e85b8516307",
+      "bytes": 10297
+    },
+    "implementation_snapshot.py": {
+      "sha256": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917",
+      "bytes": 23093
+    },
+    "main_distance_mm.nii.gz": {
+      "sha256": "21545d1b70fcce791ddb9d6144c8534cd4c4d2d2616c21e99bfd969781b11195",
+      "bytes": 25171924
+    },
+    "main_inference.log": {
+      "sha256": "796582ebb687be83ddbc2a935f12145a632cc945d6949de750007b30d9fcf11f",
+      "bytes": 1129
+    },
+    "main_inference_record.json": {
+      "sha256": "b0d3546848bc40f04a1b8ccd886f92b63e5c81225b111a23d5bdc2e013c3c11c",
+      "bytes": 6677
+    },
+    "main_mask.nii.gz": {
+      "sha256": "7902cfbcb5fad15144181c06883bac7f4800e842f7ff05a540f56bac4eb38759",
+      "bytes": 127182
+    },
+    "main_synthstrip_mps.py": {
+      "sha256": "d39cbcba9c5303ba74eaf0bb53d9105762f8a01a7de7bae2740958242f8f6cf8",
+      "bytes": 13338
+    }
+  },
+  "raw_outputs_ignored": true,
+  "actual_inference_attempts": 1,
+  "retries": 0,
+  "model_variants": [
+    "main"
+  ],
+  "whole_supervision_seconds": 11.644444959005341,
+  "model_child_seconds": 7.305417749914341,
+  "sampled_group_rss_bytes": 725057536,
+  "mps_samples": {
+    "tensor_bytes_max_sampled": 3098719232,
+    "driver_bytes_max_sampled": 5948243968
+  },
+  "sampling_limit": "These separate sampled CPU/Metal figures do not establish a joint exact memory peak.",
+  "independent_QC_executed_by_acquisition_agent": false,
+  "brain_reviewed": false,
+  "working_brain_mask": null,
+  "world_transform_accepted": false,
+  "motion_annotation_or_during_image_access": false,
+  "compute_context": "HBE actual attempt ended after one solver/readout failure with all curves closed. Root reports compute free; a tiny 27-node MPC software control may overlap. No claim of fully isolated benchmark timing."
+}

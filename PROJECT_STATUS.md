@@ -298,6 +298,16 @@ not available from a preoperative scan alone. Automatic motion extraction and
 the timing/uncertainty of such deployment observations remain separate work;
 the manual correspondences must not become hidden inputs to a preoperative policy.
 
+One frozen main-v1/MPS estimate of the Case4 T1 brain envelope completed in
+7.305 s (11.644 s supervised), with no retry, fallback or download. All 59
+archived sources, 33 provenance bindings and the original image stayed unchanged.
+The wrapper accepted finite native-grid mask/SDT outputs with zero voxel-centre
+corner discrepancy. Independent mask reconstruction, full-cell corner checks
+and three-plane visual QC remain pending. This estimated envelope supplies no
+reviewed pial surface, cavity, cortical access or patient material properties.
+No later motion measurements or ultrasound were used. See
+`artifacts/mechanics/resect-case4-brain-envelope-v1/completed-inference.md`.
+
 The first baseline alignment worker produced all six declared views and the
 15-pair proper rigid fit, but its supervisor failed with `RSS_MONITOR_FAILED`
 after 2.536 s. The cause is unconfirmed because the failed monitoring query's

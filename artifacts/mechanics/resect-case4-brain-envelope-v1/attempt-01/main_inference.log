@@ -1,0 +1,17 @@
+Configuring model on the Apple Metal (RessectionLab modified device adapter)
+Using custom model weights
+Input image read from: /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/MRI/Case4-T1.nii.gz
+Processing frame (of 1): 1 done
+Binary brain mask saved to: /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-brain-envelope-v1/main_mask.nii.gz
+Distance transform saved to: /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-brain-envelope-v1/main_distance_mm.nii.gz
+RESECTIONLAB_MPS_MEMORY {"tensor_bytes_max_sampled": 3098719232, "driver_bytes_max_sampled": 5948243968}
+
+If you use SynthStrip in your analysis, please cite:
+----------------------------------------------------
+SynthStrip: Skull-Stripping for Any Brain Image
+A Hoopes, JS Mora, AV Dalca, B Fischl, M Hoffmann
+NeuroImage 206 (2022), 119474
+https://doi.org/10.1016/j.neuroimage.2022.119474
+
+Website: https://synthstrip.io
+
