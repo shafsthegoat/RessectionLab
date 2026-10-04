@@ -512,3 +512,257 @@ def test_crash_stage_manifest_cannot_admit_an_unsigned_resumable_checkpoint(nati
     outcome = terminal(events, "unsigned-resume")[0]
     assert outcome["event"] == "error", "An unsigned checkpoint restored mutable training budget state"
     assert outcome["error"]["code"] in {"RUN_INTEGRITY_FAILED", "CHECKPOINT_UNVERIFIED", "RUN_NOT_RESUMABLE"}
+
+
+def bridge_request(instance, events, identity, operation, args, *, timeout=20):
+    instance.submit({"id": identity, "op": operation, "args": args})
+    assert instance.wait_idle(timeout)
+    outcomes = terminal(events, identity)
+    assert len(outcomes) == 1, outcomes
+    return outcomes[0]
+
+
+@pytest.fixture
+def route_runtime(tmp_path):
+    events = []
+    instance = bridge.BridgeRuntime(tmp_path / "route-transfer", events.append, run_dir=tmp_path / "route-runs")
+    case_hash = install(instance)
+    outcome = bridge_request(instance, events, "base-search", "generateRoutes", {"caseHash": case_hash})
+    assert outcome["event"] == "result", outcome
+    yield instance, events, case_hash, outcome["result"]
+    instance.close()
+
+
+def test_native_route_append_preserves_original_models_and_pareto_cohorts(route_runtime):
+    instance, events, case_hash, original = route_runtime
+    assert len(original["candidates"]) == 54
+    initial = {item["route_id"]: item for item in original["candidates"]}
+    for number in range(2):
+        outcome = bridge_request(instance, events, f"append-{number}", "generateNativeRoutes", {"caseHash": case_hash})
+        assert outcome["event"] == "result", outcome
+        result = outcome["result"]
+        candidates = {item["route_id"]: item for item in result["candidates"]}
+        assert len(candidates) == 56 and len(result["search_models"]) == 2
+        assert result["combined_models"] is True and result["planning_model_hash"] is None
+        assert {identity: candidates[identity] for identity in initial} == initial
+        memberships = {}
+        for model in result["search_models"]:
+            for identity in model["candidate_ids"]:
+                assert identity not in memberships
+                memberships[identity] = model["planning_model_hash"]
+        assert memberships.keys() == candidates.keys()
+        for identity, candidate in candidates.items():
+            assert candidate["planning_model_hash"] == memberships[identity]
+            assert all(memberships[other] == memberships[identity] for other in candidate["dominated_by"])
+        assert result["requested_candidates"] == sum(model["requested_candidates"] for model in result["search_models"])
+
+
+def test_selected_lps_route_preserves_exact_canonical_geometry_and_tool(route_runtime, tmp_path):
+    from dataclasses import replace
+    instance, events, case_hash, _original = route_runtime
+    original_case = instance.session.cases[case_hash].case
+    conversion = np.diag([-1., -1., 1., 1.])
+    case = replace(original_case, frame="LPS+", affine=conversion @ original_case.affine)
+    source = save_case(case, tmp_path / "lps-selection.ressectionlab")
+    loaded = bridge_request(instance, events, "load-lps-selected", "loadCase", {"path": str(source)})
+    assert loaded["event"] == "result", loaded
+    generated = bridge_request(instance, events, "lps-native-search", "generateNativeRoutes", {"caseHash": case.semantic_hash})
+    assert generated["event"] == "result", generated
+    route = next(item for item in generated["result"]["candidates"] if item["tool"]["tool_id"] == "native-wide-aspiration")
+    inspected = bridge_request(instance, events, "inspect-lps-selected", "inspectRefinement",
+                               {"caseHash": case.semantic_hash, "routeId": route["route_id"]})
+    assert inspected["event"] == "result", inspected
+    readiness = inspected["result"]
+    assert readiness["status"] == "ready" and readiness["legalNonStopActions"] > 0
+    binding = readiness["route_binding"]
+    assert binding["geometry_frame"] == "RAS+" and binding["mode"] == "exact_selected_route"
+    np.testing.assert_array_equal(binding["candidate_entries_mm"], [np.asarray(route["entry_mm"]) * (-1, -1, 1)])
+    np.testing.assert_array_equal(binding["candidate_targets_mm"], [np.asarray(route["target_mm"]) * (-1, -1, 1)])
+    for key in ("center_mm", "normal_inward"):
+        np.testing.assert_array_equal(binding["access"][key], np.asarray(route["window"][key]) * (-1, -1, 1))
+    assert binding["access"]["radius_mm"] == route["window"]["radius_mm"]
+    assert binding["tools"] == [route["tool"]]
+    assert readiness["clinicalDeficitProbability"] is None
+    assert not [path for path in instance.session.run_dir.iterdir() if path.is_dir()]
+
+
+def test_stop_only_selected_route_never_initializes_optimizer(route_runtime, monkeypatch):
+    instance, events, case_hash, original = route_runtime
+    route = next(item for item in original["candidates"] if item["geometry"]["feasible"])
+    attempts = []
+
+    def forbidden_optimizer(*_args, **_kwargs):
+        attempts.append(True)
+        raise AssertionError("A STOP-only model attempted to initialize the learner")
+
+    monkeypatch.setattr("resectionlab.learning.train_patient_policy", forbidden_optimizer)
+    outcome = bridge_request(instance, events, "no-action-training", "trainPatient",
+                               {"caseHash": case_hash, "routeId": route["route_id"], "budgetSeconds": 5})
+    assert outcome["event"] == "result", outcome
+    run = outcome["result"]
+    report = run["training"]
+    assert not attempts
+    assert report["status"] == "no_actionable_moves" and report["role"] == "preflight"
+    assert report["gradient_steps"] == report["optimization_environment_steps"] == 0
+    assert report["actor_parameters_changed"] is False and report["replay"] is None
+    assert report["route_binding"]["tools"] == [route["tool"]]
+    directory = instance.session.run_dir / run["runId"]
+    assert (directory / "native-refinement.json").is_file()
+    assert not (directory / "checkpoint.pt").exists() and not (directory / "contract.json").exists()
+    listed = bridge_request(instance, events, "no-action-list", "listRuns", {"caseHash": case_hash})
+    assert listed["event"] == "result", listed
+    summary = next(item for item in listed["result"]["runs"] if item["runId"] == run["runId"])
+    assert summary["hasCheckpoint"] is False and summary["hasAcceptedReplay"] is False
+
+
+def test_changed_cached_tool_is_rejected_before_geometry_or_training(route_runtime, monkeypatch):
+    from resectionlab.core import freeze_json
+    import copy
+    instance, events, case_hash, original = route_runtime
+    record = copy.deepcopy(original)
+    route = next(item for item in record["candidates"] if item["geometry"]["feasible"])
+    route["tool"]["shaft_radius_mm"] *= .5
+    instance.session.cases[case_hash].routes = freeze_json(record)
+    attempts = []
+
+    def forbidden(*_args, **_kwargs):
+        attempts.append(True)
+        raise AssertionError("Changed cached tool escaped route binding validation")
+
+    monkeypatch.setattr("resectionlab.native_refinement.inspect_native_refinement", forbidden)
+    monkeypatch.setattr("resectionlab.native_refinement.run_native_refinement", forbidden)
+    for op in ("inspectRefinement", "trainPatient"):
+        result = bridge_request(instance, events, "changed-tool-" + op, op,
+                                {"caseHash": case_hash, "routeId": route["route_id"]})
+        assert result["event"] == "error" and result["error"]["code"] == "TOOL_UNAVAILABLE"
+    assert not attempts
+    assert not [path for path in instance.session.run_dir.iterdir() if path.is_dir()]
+
+
+def test_cancelled_native_append_preserves_original_cache(route_runtime, monkeypatch):
+    from resectionlab.native_routes import generate_native_axis_routes
+    from resectionlab.core import thaw_json
+    instance, events, case_hash, original = route_runtime
+    result = generate_native_axis_routes(instance.session.cases[case_hash].case)
+    entered, release = threading.Event(), threading.Event()
+
+    def delayed(*_args, **_kwargs):
+        entered.set()
+        assert release.wait(5)
+        return result
+
+    monkeypatch.setattr("resectionlab.native_routes.generate_native_axis_routes", delayed)
+    instance.submit({"id": "cancelled-append", "op": "generateNativeRoutes", "args": {"caseHash": case_hash}})
+    assert entered.wait(5)
+    try:
+        instance.submit({"id": "cancel-append", "op": "cancel", "args": {"requestId": "cancelled-append"}})
+    finally:
+        release.set()
+    assert instance.wait_idle(5)
+    assert terminal(events, "cancelled-append")[0]["event"] == "cancelled"
+    assert thaw_json(instance.session.cases[case_hash].routes) == original
+
+
+def test_stale_case_cannot_fall_back_to_current_route_or_factory(route_runtime, monkeypatch):
+    from resectionlab.core import thaw_json
+    instance, events, case_hash, original = route_runtime
+    route = original["candidates"][0]
+    attempts = []
+
+    def forbidden(*_args, **_kwargs):
+        attempts.append(True)
+        raise AssertionError("A stale case request reached current anatomy")
+
+    monkeypatch.setattr("resectionlab.native_routes.generate_native_axis_routes", forbidden)
+    monkeypatch.setattr("resectionlab.native_refinement.inspect_native_refinement", forbidden)
+    monkeypatch.setattr("resectionlab.native_refinement.run_native_refinement", forbidden)
+    for operation in ("generateNativeRoutes", "inspectRefinement", "trainPatient"):
+        args = {"caseHash": "sha256:" + "0" * 64}
+        if operation != "generateNativeRoutes":
+            args["routeId"] = route["route_id"]
+        outcome = bridge_request(instance, events, "stale-" + operation, operation, args)
+        assert outcome["event"] == "error", outcome
+    assert not attempts
+    assert thaw_json(instance.session.cases[case_hash].routes) == original
+    assert not [path for path in instance.session.run_dir.iterdir() if path.is_dir()]
+
+
+@pytest.mark.parametrize("changed_component", ["tool", "window"])
+def test_factory_cannot_substitute_selected_tool_or_window(route_runtime, monkeypatch, changed_component):
+    from dataclasses import replace
+    from resectionlab.native_simulation import NativeSequentialSimulator, make_native_patient_simulator
+    instance, events, case_hash, _original = route_runtime
+    generated = bridge_request(instance, events, "factory-native-search", "generateNativeRoutes", {"caseHash": case_hash})
+    assert generated["event"] == "result", generated
+    route = generated["result"]["candidates"][-1]
+
+    def substituted(case, **options):
+        original = make_native_patient_simulator(case, **options)
+        config = original.native_config
+        if changed_component == "tool":
+            config = replace(config, tools=(replace(config.tools[0], shaft_radius_mm=.2),))
+        else:
+            config = replace(config, access=replace(config.access, radius_mm=config.access.radius_mm + 1.))
+        return NativeSequentialSimulator(config, original.candidate_tips_mm,
+            candidate_entries_mm=original.candidate_entries_mm, max_steps=options["max_steps"],
+            max_actions=options["max_actions"], cancelled=options["cancelled"])
+
+    monkeypatch.setattr("resectionlab.native_simulation.make_native_patient_simulator", substituted)
+    outcome = bridge_request(instance, events, "substituted-selected-geometry", "inspectRefinement",
+                              {"caseHash": case_hash, "routeId": route["route_id"]})
+    assert outcome["event"] == "error", "Exact points must not conceal a substituted instrument or access window"
+    assert any(word in outcome["error"]["message"].lower() for word in ("tool", "window", "geometry", "access"))
+    assert not [path for path in instance.session.run_dir.iterdir() if path.is_dir()]
+
+
+def test_refused_resume_preserves_existing_accepted_report(native_runtime, monkeypatch):
+    instance, events, case = native_runtime
+    run = train_native(native_runtime)
+    assert run["training"]["replay_status"] == "accepted_independent_geometry"
+    directory = instance.session.run_dir / run["runId"]
+    names = ("bridge-run.json", "checkpoint.pt", "contract.json", "native-refinement.json", "native-request.json")
+    before = {name: (directory / name).read_bytes() for name in names}
+
+    def refuse_resume(*_args, **_kwargs):
+        raise ValueError("Resume numerical source changed; historical native results remain preserved")
+
+    monkeypatch.setattr("resectionlab.native_refinement.run_native_refinement", refuse_resume)
+    outcome = bridge_request(instance, events, "source-refused-resume", "trainPatient",
+                             {"caseHash": case.semantic_hash, "resumeRunId": run["runId"]})
+    assert outcome["event"] == "error", outcome
+    assert {name: (directory / name).read_bytes() for name in names if name != "bridge-run.json"} == {
+        name: contents for name, contents in before.items() if name != "bridge-run.json"}
+    previous_manifest = json.loads(before["bridge-run.json"])
+    current_manifest = json.loads((directory / "bridge-run.json").read_bytes())
+    previous_manifest.pop("integrity")
+    current_manifest.pop("integrity")
+    attempt = current_manifest.pop("lastResumeAttempt", None)
+    assert attempt is None or attempt["status"] == "failed"
+    assert current_manifest == previous_manifest
+    instance.session.run_reports.clear()
+    reopened = bridge_request(instance, events, "prior-replay", "replayTraining",
+                              {"caseHash": case.semantic_hash, "runId": run["runId"]})
+    assert reopened["event"] == "result", reopened
+
+
+def test_native_request_geometry_integrity_is_checked_before_resume(native_runtime, monkeypatch):
+    instance, events, case = native_runtime
+    run = train_native(native_runtime)
+    directory = instance.session.run_dir / run["runId"]
+    path = directory / "native-request.json"
+    data = json.loads(path.read_text())
+    data["request"]["geometry"]["max_actions"] += 1
+    path.write_text(json.dumps(data))
+    before = (directory / "bridge-run.json").read_bytes()
+    attempts = []
+
+    def forbidden(*_args, **_kwargs):
+        attempts.append(True)
+        raise AssertionError("Changed native route request reached the facade")
+
+    monkeypatch.setattr("resectionlab.native_refinement.run_native_refinement", forbidden)
+    outcome = bridge_request(instance, events, "altered-native-request", "trainPatient",
+                             {"caseHash": case.semantic_hash, "resumeRunId": run["runId"]})
+    assert outcome["event"] == "error" and outcome["error"]["code"] == "RUN_INTEGRITY_FAILED", outcome
+    assert not attempts
+    assert (directory / "bridge-run.json").read_bytes() == before

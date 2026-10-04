@@ -30,6 +30,7 @@ import numpy as np
 
 from .core import CaseData, freeze_json, thaw_json
 from .geometry import AccessWindow, GENERIC_TOOLS
+from .native_resection import NATIVE_GENERIC_TOOLS
 from .imaging import create_synthetic_case, inspect_nifti, load_case, load_nifti_case, read_case_artifacts, save_case
 from .planning import SearchConfig, generate_candidate_routes
 
@@ -39,8 +40,11 @@ MAX_ARRAY_BYTES = 512 * 1024 * 1024
 MAX_CASE_BYTES = 1024 * 1024 * 1024
 MAX_WORKSPACE_BYTES = 512 * 1024
 MAX_PENDING = 8
-OPERATIONS = frozenset({"ping", "loadCase", "importNifti", "importStructuralEvidence", "saveCase", "generateRoutes", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "exportCandidate", "shutdown"})
+OPERATIONS = frozenset({"ping", "loadCase", "importNifti", "importStructuralEvidence", "saveCase", "generateRoutes", "generateNativeRoutes", "inspectRefinement", "cancel", "inspectEvidence", "createSyntheticCase", "nativeTraining", "trainPatient", "listRuns", "replayTraining", "exportCandidate", "shutdown"})
 MAX_RUN_JSON_BYTES = 32 * 1024 * 1024
+RESEARCH_TOOLS = GENERIC_TOOLS + NATIVE_GENERIC_TOOLS
+RUN_INTEGRITY_FILES = {"checkpointSha256": "checkpoint.pt", "contractSha256": "contract.json",
+                       "nativeRequestSha256": "native-request.json", "reportSha256": "native-refinement.json"}
 
 
 class BridgeError(ValueError):
@@ -289,6 +293,7 @@ class BridgeSession:
                 result["withheldRoutesReason"] = "saved_route_case_version_mismatch"
             elif routes and entry.routes is not None and routes == thaw_json(entry.routes)["candidates"]:
                 result["savedRouteValidation"] = "matches_current_session_evaluation"
+                result["searchModels"] = thaw_json(entry.routes).get("search_models", [])
             elif routes:
                 # Bundle artifacts are not covered by the imaging identity.
                 # Preserve them privately for round-trip, but do not let a
@@ -350,30 +355,84 @@ class BridgeSession:
             raise BridgeError("RUN_INTEGRITY_FAILED", "Saved run identity is invalid")
         if record.get("caseHash") != case.semantic_hash or record.get("planningHash") != case.planning_hash:
             raise BridgeError("CASE_VERSION_MISMATCH", "Training run belongs to another case version")
-        if record.get("checkpointSha256") is not None:
-            checkpoint = directory / "checkpoint.pt"
-            if (not checkpoint.is_file() or checkpoint.stat().st_size > MAX_RUN_JSON_BYTES
-                    or hashlib.sha256(checkpoint.read_bytes()).hexdigest() != record["checkpointSha256"]):
-                raise BridgeError("RUN_INTEGRITY_FAILED", "Checkpoint changed outside this desktop")
-        if record.get("contractSha256") is not None:
-            contract = directory / "contract.json"
-            if (not contract.is_file() or contract.stat().st_size > MAX_RUN_JSON_BYTES
-                    or hashlib.sha256(contract.read_bytes()).hexdigest() != record["contractSha256"]):
-                raise BridgeError("RUN_INTEGRITY_FAILED", "Training contract changed outside this desktop")
+        if not self._persisted_run_matches(directory, record):
+            raise BridgeError("RUN_INTEGRITY_FAILED", "Saved run artifacts changed outside this desktop")
         return directory, record
+
+    @staticmethod
+    def _persisted_run_matches(directory: Path, manifest: dict) -> bool:
+        for key, name in RUN_INTEGRITY_FILES.items():
+            if manifest.get(key) is not None:
+                path = directory / name
+                if (path.is_symlink() or not path.is_file() or path.stat().st_size > MAX_RUN_JSON_BYTES
+                        or hashlib.sha256(path.read_bytes()).hexdigest() != manifest[key]):
+                    return False
+        return True
 
     @staticmethod
     def _run_options(config: dict) -> dict:
         access = None if config.get("access") is None else AccessWindow(**config["access"])
         ids = config.get("toolIds")
-        tools = None if ids is None else tuple(tool for tool in GENERIC_TOOLS if tool.tool_id in ids)
-        return {"access": access, "tools": tools}
+        tools = None if ids is None else tuple(tool for tool in RESEARCH_TOOLS if tool.tool_id in ids)
+        if ids is not None and len(tools) != len(ids):
+            raise BridgeError("TOOL_UNAVAILABLE", "Frozen run references an unknown research tool")
+        return {"access": access, "tools": tools, "selected_entry_mm": config.get("selectedEntryMm"),
+                "selected_target_mm": config.get("selectedTargetMm")}
+
+    @staticmethod
+    def _route_config(entry: _CaseEntry, route_id: Any) -> dict:
+        config = {"routeId": route_id, "access": None, "toolIds": None,
+                  "selectedEntryMm": None, "selectedTargetMm": None, "coordinateFrame": "RAS+",
+                  "scope": "default_native_candidate_search", "optimizationChoiceScope": "finite_native_candidate_actions"}
+        if route_id is None:
+            return config
+        route_id = _string(route_id, "routeId", maximum=128)
+        candidates = [] if entry.routes is None else thaw_json(entry.routes)["candidates"]
+        route = next((item for item in candidates if item["route_id"] == route_id), None)
+        if route is None or route["geometry"].get("feasible") is not True:
+            raise BridgeError("ROUTE_UNAVAILABLE", "Choose a feasible route evaluated for this case in the current session")
+        tool = next((item for item in RESEARCH_TOOLS if item.tool_id == route["tool"]["tool_id"]), None)
+        if tool is None or route["tool"] != asdict(tool):
+            raise BridgeError("TOOL_UNAVAILABLE", "Selected route has an unsupported or changed tool definition")
+        conversion = np.array([-1., -1., 1.]) if entry.case.frame == "LPS+" else np.ones(3)
+        access = dict(route["window"])
+        for key in ("center_mm", "normal_inward"):
+            access[key] = (np.asarray(access[key]) * conversion).tolist()
+        config.update(access=access, toolIds=[tool.tool_id],
+            selectedEntryMm=(np.asarray(route["entry_mm"]) * conversion).tolist(),
+            selectedTargetMm=(np.asarray(route["target_mm"]) * conversion).tolist(),
+            routePlanningModelHash=route["planning_model_hash"], scope="exact_selected_research_route",
+            optimizationChoiceScope="STOP_or_declared_native_stroke")
+        return config
+
+    @staticmethod
+    def _merge_search_records(prior: dict | None, current: dict) -> dict:
+        """Keep separate frozen models and Pareto cohorts in one comparison list."""
+        def receipt(record):
+            return {**{key: value for key, value in record.items() if key != "candidates"},
+                    "candidate_ids": [item["route_id"] for item in record["candidates"]]}
+        records = [] if prior is None else prior.get("search_models", [receipt(prior)])
+        records = [item for item in records if item["planning_model_hash"] != current["planning_model_hash"]]
+        records.append(receipt(current))
+        candidates = {} if prior is None else {item["route_id"]: item for item in prior["candidates"]}
+        candidates.update((item["route_id"], item) for item in current["candidates"])
+        return {**current, "candidates": list(candidates.values()), "search_models": records,
+                "combined_models": len(records) > 1,
+                "planning_model_hash": records[0]["planning_model_hash"] if len(records) == 1 else None,
+                "planning_model_hashes": [item["planning_model_hash"] for item in records],
+                "elapsed_seconds": sum(item["elapsed_seconds"] for item in records),
+                "requested_candidates": sum(item["requested_candidates"] for item in records),
+                "access_support": current["access_support"] if len(records) == 1 else {},
+                "optimizer_version": current["optimizer_version"] if len(records) == 1 else "multiple_explicit_search_models",
+                "assumptions": list(dict.fromkeys(statement for item in records for statement in item["assumptions"]))}
 
     @staticmethod
     def _report_summary(manifest: dict, report: dict | None = None) -> dict:
         summary = {key: manifest[key] for key in ("runId", "caseHash", "planningHash", "createdAt", "status", "config")}
         summary["clinicalDeficitProbability"] = None
         summary["clinicalRiskReason"] = "no_validated_clinical_outcome_model"
+        if manifest.get("lastResumeAttempt") is not None:
+            summary["lastResumeAttempt"] = manifest["lastResumeAttempt"]
         if report is not None:
             training = {key: value for key, value in report.items() if key not in {"replay", "output_dir", "native_certificate"}}
             replay = report.get("replay")
@@ -436,23 +495,13 @@ class BridgeSession:
         else:
             if sum(child.is_dir() for child in self.run_dir.iterdir()) >= 256:
                 raise BridgeError("RUN_STORAGE_LIMIT", "Local run limit reached; archive old runs before starting another")
-            config = {"budgetSeconds": float(budget), "seed": seed, "routeId": args.get("routeId"), "access": None, "toolIds": None}
-            if config["routeId"] is not None:
-                route_id = _string(config["routeId"], "routeId", maximum=128)
-                candidates = [] if entry.routes is None else thaw_json(entry.routes)["candidates"]
-                route = next((item for item in candidates if item["route_id"] == route_id), None)
-                if route is None or route["geometry"].get("feasible") is not True:
-                    raise BridgeError("ROUTE_UNAVAILABLE", "Choose a feasible route evaluated for this case in the current session")
-                access = dict(route["window"])
-                if entry.case.frame == "LPS+":
-                    for key in ("center_mm", "normal_inward"):
-                        access[key] = (np.asarray(access[key]) * [-1, -1, 1]).tolist()
-                config.update(access=access, toolIds=[route["tool"]["tool_id"]])
+            config = {"budgetSeconds": float(budget), "seed": seed, **self._route_config(entry, args.get("routeId"))}
             run_id = str(uuid.uuid4())
             directory = self._run_path(run_id)
             directory.mkdir(mode=0o700)
             manifest = {"schema": 1, "runId": run_id, "caseHash": entry.case.semantic_hash,
                         "planningHash": entry.case.planning_hash, "createdAt": time.time(), "status": "preparing", "config": config}
+        original_manifest = dict(manifest)
         config = manifest["config"]
         manifest["status"] = "running"
         manifest.pop("reportSha256", None)
@@ -465,6 +514,7 @@ class BridgeSession:
             # only from counters, optimizer state and weights we actually saw.
             manifest["checkpointSha256"] = hashlib.sha256((directory / "checkpoint.pt").read_bytes()).hexdigest()
             manifest["contractSha256"] = hashlib.sha256((directory / "contract.json").read_bytes()).hexdigest()
+            manifest["nativeRequestSha256"] = hashlib.sha256((directory / "native-request.json").read_bytes()).hexdigest()
             self._write_run(directory, manifest)
             if not request.cancelled.is_set():
                 fraction = min(.9, float(snapshot.get("elapsed_seconds", 0)) / config["budgetSeconds"])
@@ -479,8 +529,10 @@ class BridgeSession:
             report_bytes = report_path.read_bytes()
             report = json.loads(report_bytes)
             manifest["reportSha256"] = hashlib.sha256(report_bytes).hexdigest()
-            manifest["checkpointSha256"] = hashlib.sha256((directory / "checkpoint.pt").read_bytes()).hexdigest()
-            manifest["contractSha256"] = hashlib.sha256((directory / "contract.json").read_bytes()).hexdigest()
+            if report["status"] != "no_actionable_moves":
+                manifest["checkpointSha256"] = hashlib.sha256((directory / "checkpoint.pt").read_bytes()).hexdigest()
+                manifest["contractSha256"] = hashlib.sha256((directory / "contract.json").read_bytes()).hexdigest()
+            manifest["nativeRequestSha256"] = hashlib.sha256((directory / "native-request.json").read_bytes()).hexdigest()
             manifest["replayStatus"] = report.get("replay_status")
             self._write_run(directory, manifest)
             request.begin_commit()
@@ -489,6 +541,11 @@ class BridgeSession:
                 self.run_reports.popitem(last=False)
             return self._report_summary(manifest, report)
         except Exception as error:
+            if resume and self._persisted_run_matches(directory, original_manifest):
+                original_manifest["lastResumeAttempt"] = {"status": "cancelled" if request.cancelled.is_set() else "failed",
+                    "reason": str(error)[:1000], "at": time.time()}
+                self._write_run(directory, original_manifest)
+                raise
             manifest["status"] = "cancelled" if request.cancelled.is_set() else "failed"
             manifest["failure"] = str(error)[:1000]
             checkpoint = directory / "checkpoint.pt"
@@ -497,6 +554,9 @@ class BridgeSession:
             contract = directory / "contract.json"
             if contract.is_file() and not contract.is_symlink() and contract.stat().st_size <= MAX_RUN_JSON_BYTES:
                 manifest["contractSha256"] = hashlib.sha256(contract.read_bytes()).hexdigest()
+            native_request = directory / "native-request.json"
+            if native_request.is_file() and not native_request.is_symlink() and native_request.stat().st_size <= MAX_RUN_JSON_BYTES:
+                manifest["nativeRequestSha256"] = hashlib.sha256(native_request.read_bytes()).hexdigest()
             self._write_run(directory, manifest)
             raise
 
@@ -616,6 +676,32 @@ class BridgeSession:
             request.begin_commit()
             entry.routes = freeze_json(record)
             return record
+        if operation == "generateNativeRoutes":
+            _keys(args, {"caseHash"})
+            entry = self._get_case(args.get("caseHash"))
+            from .native_routes import generate_native_axis_routes
+            result = generate_native_axis_routes(entry.case, cancel=request.cancelled.is_set,
+                progress=lambda done, total: progress(done / max(total, 1), f"Checking separate native research approaches: {done}/{total}"))
+            request.check()
+            if result.cancelled:
+                raise BridgeError("CANCELLED", "Native research route generation was cancelled")
+            record = self._merge_search_records(None if entry.routes is None else thaw_json(entry.routes), result.to_dict())
+            request.begin_commit()
+            entry.routes = freeze_json(record)
+            return record
+        if operation == "inspectRefinement":
+            _keys(args, {"caseHash", "routeId"})
+            entry = self._get_case(args.get("caseHash"))
+            route_id = _string(args.get("routeId"), "routeId", maximum=128)
+            config = self._route_config(entry, route_id)
+            from .native_refinement import inspect_native_refinement
+            progress(0., "Checking initial cutting actions for the selected entry, target and instrument")
+            readiness = inspect_native_refinement(entry.case, cancelled=request.cancelled.is_set, **self._run_options(config))
+            request.check()
+            return {**readiness, "caseHash": entry.case.semantic_hash, "routeId": route_id,
+                    "optimizationChoiceScope": config["optimizationChoiceScope"],
+                    "frozenRoute": config, "clinicalDeficitProbability": None,
+                    "clinicalRiskReason": "no_validated_clinical_outcome_model"}
         if operation == "saveCase":
             _keys(args, {"caseHash", "path", "workspace", "overwrite"})
             entry = self._get_case(args.get("caseHash"))
@@ -773,7 +859,8 @@ class BridgeRuntime:
                 if operation == "ping":
                     _keys(args, set())
                     self.emit({"id": request_id, "event": "result", "result": {"protocolVersion": PROTOCOL_VERSION,
-                               "operations": sorted(OPERATIONS), "tools": [asdict(tool) for tool in GENERIC_TOOLS]}})
+                               "operations": sorted(OPERATIONS), "tools": [asdict(tool) for tool in GENERIC_TOOLS],
+                               "nativeResearchTools": [asdict(tool) for tool in NATIVE_GENERIC_TOOLS]}})
                     return
                 if operation == "cancel":
                     _keys(args, {"requestId"})

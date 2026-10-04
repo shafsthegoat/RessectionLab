@@ -280,6 +280,110 @@ def test_selected_route_access_is_converted_from_lps_before_native_training(tmp_
         assert trained["event"] == "error"
         np.testing.assert_allclose(captured["access"].center_mm, np.asarray(selected["window"]["center_mm"]) * [-1, -1, 1])
         np.testing.assert_allclose(captured["access"].normal_inward, np.asarray(selected["window"]["normal_inward"]) * [-1, -1, 1])
+        np.testing.assert_allclose(captured["selected_entry_mm"], np.asarray(selected["entry_mm"]) * [-1, -1, 1])
+        np.testing.assert_allclose(captured["selected_target_mm"], np.asarray(selected["target_mm"]) * [-1, -1, 1])
         assert captured["tools"][0].tool_id == selected["tool"]["tool_id"]
+    finally:
+        runtime.close()
+
+
+def test_native_alternatives_preserve_original_routes_and_separate_model_receipts(bridge, tmp_path):
+    case = synthetic(bridge)
+    source = {"caseHash": case["caseHash"]}
+    original = request(bridge, "original", "generateRoutes", source)["result"]
+    combined = request(bridge, "alternatives", "generateNativeRoutes", source)["result"]
+    assert combined["candidates"][:54] == original["candidates"]
+    assert len(combined["candidates"]) == 56
+    assert combined["combined_models"] is True and combined["planning_model_hash"] is None
+    assert len(combined["search_models"]) == 2 and len(set(combined["planning_model_hashes"])) == 2
+    assert combined["access_support"] == {}
+    by_model = {receipt["planning_model_hash"]: set(receipt["candidate_ids"]) for receipt in combined["search_models"]}
+    for candidate in combined["candidates"]:
+        assert set(candidate["dominated_by"]) <= by_model[candidate["planning_model_hash"]]
+        assert candidate["clinical_deficit_probability"] is None
+        assert candidate["simulated_removed_target_volume_mm3"] is None
+    assert {item["tool_id"] for item in combined["candidates"][54:]} == {"native-fine-aspiration", "native-wide-aspiration"}
+    repeated = request(bridge, "repeat", "generateNativeRoutes", source)["result"]
+    assert len(repeated["candidates"]) == 56 and len(repeated["search_models"]) == 2
+    path = tmp_path / "alternatives.ressectionlab"
+    request(bridge, "save", "saveCase", {**source, "path": str(path)})
+    restored = request(bridge, "reopen", "loadCase", {"path": str(path)})["result"]
+    assert restored["artifacts"]["workspace"]["routes"] == repeated["candidates"]
+    assert restored["artifacts"]["searchModels"] == repeated["search_models"]
+
+
+def test_blocked_selected_route_reports_exact_geometry_without_starting_optimizer(tmp_path, monkeypatch):
+    events = []
+    runtime = BridgeRuntime(tmp_path / "transfers", events.append, run_dir=tmp_path / "runs")
+    bridge = runtime, events
+    def forbidden_optimizer(*args, **kwargs):
+        raise AssertionError("STOP-only geometry must not start a learner")
+    monkeypatch.setattr("resectionlab.learning.train_patient_policy", forbidden_optimizer)
+    try:
+        case = synthetic(bridge)
+        routes = request(bridge, "routes", "generateRoutes", {"caseHash": case["caseHash"]})["result"]["candidates"]
+        selected = next(item for item in routes if item["geometry"]["feasible"])
+        args = {"caseHash": case["caseHash"], "routeId": selected["route_id"]}
+        readiness = request(bridge, "inspect", "inspectRefinement", args)["result"]
+        assert readiness["status"] == "no_actionable_moves" and readiness["legalNonStopActions"] == 0
+        assert "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE" in readiness["reasons"]
+        assert readiness["optimizationChoiceScope"] == "STOP_or_declared_native_stroke"
+        assert readiness["route_binding"]["candidate_entries_mm"] == [selected["entry_mm"]]
+        assert readiness["route_binding"]["candidate_targets_mm"] == [selected["target_mm"]]
+        assert readiness["route_binding"]["tools"] == [selected["tool"]]
+        assert not list((tmp_path / "runs").glob("*/bridge-run.json"))
+        blocked = request(bridge, "train", "trainPatient", {**args, "budgetSeconds": 5})
+        assert blocked["event"] == "result", blocked
+        result = blocked["result"]
+        assert result["status"] == "no_actionable_moves"
+        assert result["training"]["role"] == "preflight"
+        assert result["training"]["optimizer_mode"] is None
+        assert result["training"]["gradient_steps"] == 0
+        assert result["training"]["optimization_environment_steps"] == 0
+        assert result["training"]["replay"] is None
+        directory = tmp_path / "runs" / result["runId"]
+        assert not any((directory / name).exists() for name in ("checkpoint.pt", "initial.pt", "contract.json"))
+        listed = request(bridge, "list", "listRuns", {"caseHash": case["caseHash"]})["result"]["runs"][0]
+        assert listed["hasCheckpoint"] is False and listed["hasAcceptedReplay"] is False
+    finally:
+        runtime.close()
+
+
+def test_selected_native_route_updates_and_restored_replay_keep_exact_binding(tmp_path):
+    events = []
+    runtime = BridgeRuntime(tmp_path / "transfers", events.append, run_dir=tmp_path / "runs")
+    bridge = runtime, events
+    try:
+        case = synthetic(bridge)
+        generated = request(bridge, "native", "generateNativeRoutes", {"caseHash": case["caseHash"]})["result"]
+        selected = next(item for item in generated["candidates"] if item["tool_id"] == "native-wide-aspiration")
+        args = {"caseHash": case["caseHash"], "routeId": selected["route_id"]}
+        readiness = request(bridge, "inspect", "inspectRefinement", args)["result"]
+        assert readiness["status"] == "ready" and readiness["legalNonStopActions"] == 1
+        trained = request(bridge, "train", "trainPatient", {**args, "budgetSeconds": 5, "seed": 11})
+        assert trained["event"] == "result", trained
+        result = trained["result"]
+        training = result["training"]
+        assert training["gradient_steps"] > 0 and training["actor_parameters_changed"] is True
+        assert training["route_binding"] == readiness["route_binding"]
+        assert training["replay_status"] == "accepted_independent_geometry"
+        assert result["config"]["selectedEntryMm"] == selected["entry_mm"]
+        assert result["config"]["selectedTargetMm"] == selected["target_mm"]
+        assert result["config"]["optimizationChoiceScope"] == "STOP_or_declared_native_stroke"
+        replay_args = {"caseHash": case["caseHash"], "runId": result["runId"]}
+        replay = request(bridge, "replay", "replayTraining", replay_args)
+        assert replay["event"] == "result", replay
+        assert replay["result"]["training"]["route_binding"] == readiness["route_binding"]
+    finally:
+        runtime.close()
+    events = []
+    runtime = BridgeRuntime(tmp_path / "transfers", events.append, run_dir=tmp_path / "runs")
+    bridge = runtime, events
+    try:
+        synthetic(bridge)
+        reopened = request(bridge, "reopened-replay", "replayTraining", replay_args)
+        assert reopened["event"] == "result", reopened
+        assert reopened["result"]["training"]["route_binding"] == readiness["route_binding"]
+        assert reopened["result"]["training"]["replay"]["native_certificate"]["feasible"] is True
     finally:
         runtime.close()
