@@ -17,10 +17,10 @@ BTC TRAIN/SELECT/unopened roles, and assess transfer on separate patients.
 
 Annotation-assisted and inference-only tracks stay distinct. Reviewable supplied
 segmentations are valid inputs in the former; private references cannot influence
-inputs or proposals in the latter. Remaining gates are the executed real-case
-functional comparison, its final-evaluation export integration, explicitly
-provisional support/access for additional cases, and actual real-patient spatial
-learning. Search may remain the strongest research mode;
+inputs or proposals in the latter. Remaining gates include broader executable
+route coverage, a fully exercised patient desktop workflow, and actual
+real-patient spatial learning with independent-patient evaluation.
+Search may remain the strongest research mode;
 no learned-policy superiority is established. The unrun procedural runner also
 exposed a weak teacher on its development fixture; that negative finding is
 preserved and will not be used to justify an RL advantage.
@@ -35,12 +35,42 @@ this does not establish patient functional coverage or registration accuracy.
 The structural mirror's equivalence to official TCIA bytes is still unverified.
 See `artifacts/functional-evidence-integration-v1/real-case-roundtrip.json`.
 
-The independent full-tool event evaluator is implemented and passes 68 combined
-controls. It samples complete shaft/active contact across coherent worlds,
-retains missing coverage, and reports conditional encounter counts, intervals
-and tail surrogate costs. Review caught and repaired two footprint-integrity
-defects before patient execution. Real alternatives have not yet been evaluated
-with this evaluator; no postoperative deficit probability is available.
+The independent full-tool event evaluator passes 68 combined controls. The
+executed real-case comparison completed eight frozen panels in 28.984 seconds
+(worker peak 2.108 GiB). Both retained native histories passed fresh geometry
+checks. At map support 0.5, motor encounters were fine 51/64 versus wide 64/64
+under Gaussian SD 1 mm / 1°, changing to 43/64 and 53/64 under 2 mm / 2°.
+Mean and tail exposure costs increased with broader uncertainty despite lower
+binary counts. Missing channels produced 64 unknown outcomes, never zero risk.
+These are two instruments on the same axis, not two independently discovered
+surgical approaches; three other rays remain rejected for native execution.
+An independent saved-record audit recomputed counts, intervals and cost summaries
+across 1,344 outcomes. See `artifacts/functional-sensitivity-realcase-v1/RESULT.md`.
+This remains unreviewed population-map sensitivity, with no postoperative deficit
+probability, new-patient generalization or complete-resection claim.
+
+The local `evaluateCandidate` operation now seals a selected native history
+before revealing its predeclared final worlds. Interrupted evaluation can resume
+the same assessment; optimizer training cannot resume after sealing. Reopen,
+replay and export verify the same full-sequence events. All 87 focused integration
+checks pass; the current facade has only three final worlds. A current full
+Python regression is running from committed `575eccd`; no full-pass claim yet.
+
+The fixed-scene discretization control completed all 16 numerical rows. Five
+motions were shaft-rejected without state changes; ten accepted histories passed
+independent checks and the last audit reached its declared cap. At 1 mm, phase
+or orientation alone changed acceptance. Even at 0.125 mm, credited physical
+removal remained 13–16% below the analytic reference. Independent audits took
+152 seconds versus 17 seconds in native strokes. These are numerical model
+limitations, not patient training or clinical accuracy results. See
+`artifacts/native-discretization-control-v1/RESULT.md`.
+
+The real spatial adapter now accepts an explicitly bound, provisional research
+envelope without promoting expert-review status. PAT05 main SynthStrip support
+and hypothetical access are declared for the next zero-update native profile;
+scan normalization uses only permitted support intensities. Its fixed 32³ crop
+contains 24.36% of the supplied target, and also limits proposal reach. Profile
+execution and substantive real-patient training remain pending.
 
 The first real TRAIN PAT22 inference profile completed all four declared cells
 in 6.247 seconds with unchanged model parameters. One CPU call took 28–30 ms

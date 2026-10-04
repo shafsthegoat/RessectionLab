@@ -1,0 +1,32 @@
+{
+  "fine_history": {
+    "actual_sha256": "8f71b10f387b72c7a3ff5ccf0c65631e3f0bf0a68d80d2fa9c0be3cfb68f5f79",
+    "bytes": 376818,
+    "path": "artifacts/native-route-alternatives-v1b/native-fine-aspiration-candidate.json",
+    "sha256": "8f71b10f387b72c7a3ff5ccf0c65631e3f0bf0a68d80d2fa9c0be3cfb68f5f79"
+  },
+  "original_case": {
+    "actual_sha256": "11cca797ad0216e5c8d940e7354f2dd23fb6954dc2aed7e4b0423f6adc6cefcf",
+    "bytes": 4654142,
+    "path": "outputs/cases/UCSF-PDGM-0004.ressectionlab",
+    "sha256": "11cca797ad0216e5c8d940e7354f2dd23fb6954dc2aed7e4b0423f6adc6cefcf"
+  },
+  "original_routes": {
+    "actual_sha256": "990793b1eecfa0f9334afd74b0af212acf0e6484fe70273d9327cc0607dc9827",
+    "bytes": 122386,
+    "path": "artifacts/route-native-screen-v1/original-54-routes.json",
+    "sha256": "990793b1eecfa0f9334afd74b0af212acf0e6484fe70273d9327cc0607dc9827"
+  },
+  "prior_case": {
+    "actual_sha256": "59c213b82af205516491058145ad3581a4d1832e1126fb5559118f250ea1bacc",
+    "bytes": 23835372,
+    "path": "outputs/cases/UCSF-PDGM-0004-prior-proposals.ressectionlab",
+    "sha256": "59c213b82af205516491058145ad3581a4d1832e1126fb5559118f250ea1bacc"
+  },
+  "wide_history": {
+    "actual_sha256": "e7b2acd0f5f25e29ca97651b241376e4212149bd156b3fb62862bbb5e41142d8",
+    "bytes": 1255611,
+    "path": "artifacts/native-route-alternatives-v1b/native-wide-aspiration-candidate.json",
+    "sha256": "e7b2acd0f5f25e29ca97651b241376e4212149bd156b3fb62862bbb5e41142d8"
+  }
+}

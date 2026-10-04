@@ -1,0 +1,401 @@
+{
+  "archive_paths": [
+    "src",
+    "scripts/evaluate_patient_functional_sensitivity.py",
+    "manifests/experiments/ucsf-functional-sensitivity-v1.json"
+  ],
+  "archive_sha256": "75f43247d37c39224689b166b101f9df05d626f2e91e249281fa85128adca470",
+  "artifact_sha256": {
+    "analysis/all-panels-frozen.json": "6d75fb41b8c758163a7507c58ab1e39f350e0ea90afe05f3bb1e0878d1d57e8d",
+    "analysis/deterministic_control_support_0.1.json": "217dce20522f667701cd5e37519906356be9ae1dd06abdefe04a05e51af769c6",
+    "analysis/deterministic_control_support_0.5.json": "3a129353ace6bcff0d0e27822cc6af9aedef028d24bd43f23405264cd03b2924",
+    "analysis/gaussian_1mm_1deg_language_only.json": "d73f22461c41696822b17a5b4c1936149e6ff0c9b5143a8277c7b79da0aa0ef9",
+    "analysis/gaussian_1mm_1deg_motor_only.json": "9b836b25b77eaed673afbe346803ae478be89ad07f7ff2cd977b24d45146e9db",
+    "analysis/gaussian_1mm_1deg_support_0.1.json": "d1cd94caba388765376548271bc9c4cb47bd459ce6b78ed5b1dd4681f46c9fe8",
+    "analysis/gaussian_1mm_1deg_support_0.5.json": "9e54b34298e0e93dc96729d42174e6d6bcd3606724944d4855aca38471247666",
+    "analysis/gaussian_2mm_2deg_support_0.1.json": "b5f96b754be890edd18c2805f1d9c9573b0b6e1c73ef85ca36cfb9c27078c03f",
+    "analysis/gaussian_2mm_2deg_support_0.5.json": "cda1910aa631536e621dabff1f4f2d2cff6244354fcdf7aff5c3e88702d65716",
+    "analysis/geometry.json": "6833c2403d0f6fe67db29cfa3c26fdbadfbd996fd83be0d7245226d414e553bf",
+    "analysis/report.json": "53ec790da251fb82322c6880b4fbdfae10517e5f96935438a32a914e9cdb7eb1",
+    "analysis/source-before.json": "18452946ae00cd8e27d06f75a1dee22998b0e90291a0ccc1bbde18c410894c92",
+    "frozen-declaration.json": "b904b340fc47e488403312da7f222568756eb39a547db5ea84d762c73d10164d",
+    "supervisor.json": "ffddc160f934229f9d64893967718642701a41e1331f6e8b0a03caa415f56434"
+  },
+  "audited_at_utc": "2026-10-04T17:49:49.037267+00:00",
+  "checks": [
+    "Exact release archive, snapshot source inventory, five input byte hashes and saved output-bundle hash match.",
+    "Eight panel/model/freeze/partition bindings match prospective declaration; all candidate IDs and source hashes match.",
+    "Two fresh native-history audit receipts pass and retained history removal unions agree; three historical rejections remain unevaluated in every panel.",
+    "Every saved event numerator, total denominator, unknown count, frequency and Wilson interval recalculates from raw outcomes.",
+    "Every saved evaluated mean and fractional-mass CVaR recalculates; incomplete costs remain null.",
+    "Threshold pairs preserve costs and seeds; omitted channels remain unknown while retained-channel outcomes are unchanged.",
+    "Deterministic controls report one transform and no intervals; STOP has zero contact even with omitted evidence.",
+    "Resource completion receipts remain within declared caps without retry; clinical probability fields stay null."
+  ],
+  "counts": {
+    "cost_summaries": 144,
+    "evaluated_rows": 24,
+    "event_summaries": 48,
+    "panel_candidate_rows": 48,
+    "rejected_rows": 24,
+    "saved_world_outcomes": 1344
+  },
+  "execution_commit": "f3582cc05f24d41407f70063855df26722e031d2",
+  "input_files_rehashed": 5,
+  "limits": [
+    "Nonzero transform matrices are not saved in panel reports. This audit checks recorded counts, frozen seed/configuration provenance and previously reviewed counting source, without regenerating worlds.",
+    "Geometry and footprint construction were not rerun. Saved certificates, frozen footprint hashes and original history unions were audited.",
+    "One previously consulted patient and unreviewed population priors; no individual functional, clinical probability, external patient or RL-superiority validation."
+  ],
+  "new_bundle_sha256": "4bed732a4d137fa7b103cf946e5ef52ad220f479bb72372b790ecf3fd7535ca3",
+  "panels": [
+    {
+      "candidates": [
+        {
+          "events": [
+            {
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "numerator": 51,
+              "unknown_worlds": 0
+            },
+            {
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "numerator": 64,
+              "unknown_worlds": 0
+            }
+          ],
+          "plan_id": "native_native-fine-aspiration",
+          "touched_cells": 189
+        },
+        {
+          "events": [
+            {
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "numerator": 64,
+              "unknown_worlds": 0
+            },
+            {
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "numerator": 64,
+              "unknown_worlds": 0
+            }
+          ],
+          "plan_id": "native_native-wide-aspiration",
+          "touched_cells": 543
+        }
+      ],
+      "panel": "gaussian_1mm_1deg_support_0.5",
+      "reported_distinct_transforms": 64,
+      "worlds": 64
+    },
+    {
+      "candidates": [
+        {
+          "events": [
+            {
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "numerator": 64,
+              "unknown_worlds": 0
+            },
+            {
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "numerator": 64,
+              "unknown_worlds": 0
+            }
+          ],
+          "plan_id": "native_native-fine-aspiration",
+          "touched_cells": 189
+        },
+        {
+          "events": [
+            {
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "numerator": 64,
+              "unknown_worlds": 0
+            },
+            {
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "numerator": 64,
+              "unknown_worlds": 0
+            }
+          ],
+          "plan_id": "native_native-wide-aspiration",
+          "touched_cells": 543
+        }
+      ],
+      "panel": "gaussian_1mm_1deg_support_0.1",
+      "reported_distinct_transforms": 64,
+      "worlds": 64
+    },
+    {
+      "candidates": [
+        {
+          "events": [
+            {
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "numerator": 43,
+              "unknown_worlds": 0
+            },
+            {
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "numerator": 64,
+              "unknown_worlds": 0
+            }
+          ],
+          "plan_id": "native_native-fine-aspiration",
+          "touched_cells": 189
+        },
+        {
+          "events": [
+            {
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "numerator": 53,
+              "unknown_worlds": 0
+            },
+            {
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "numerator": 64,
+              "unknown_worlds": 0
+            }
+          ],
+          "plan_id": "native_native-wide-aspiration",
+          "touched_cells": 543
+        }
+      ],
+      "panel": "gaussian_2mm_2deg_support_0.5",
+      "reported_distinct_transforms": 64,
+      "worlds": 64
+    },
+    {
+      "candidates": [
+        {
+          "events": [
+            {
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "numerator": 64,
+              "unknown_worlds": 0
+            },
+            {
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "numerator": 64,
+              "unknown_worlds": 0
+            }
+          ],
+          "plan_id": "native_native-fine-aspiration",
+          "touched_cells": 189
+        },
+        {
+          "events": [
+            {
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "numerator": 64,
+              "unknown_worlds": 0
+            },
+            {
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "numerator": 64,
+              "unknown_worlds": 0
+            }
+          ],
+          "plan_id": "native_native-wide-aspiration",
+          "touched_cells": 543
+        }
+      ],
+      "panel": "gaussian_2mm_2deg_support_0.1",
+      "reported_distinct_transforms": 64,
+      "worlds": 64
+    },
+    {
+      "candidates": [
+        {
+          "events": [
+            {
+              "denominator": 32,
+              "event": "motor_supplied_map_contact",
+              "numerator": 32,
+              "unknown_worlds": 0
+            },
+            {
+              "denominator": 32,
+              "event": "language_supplied_map_contact",
+              "numerator": 32,
+              "unknown_worlds": 0
+            }
+          ],
+          "plan_id": "native_native-fine-aspiration",
+          "touched_cells": 189
+        },
+        {
+          "events": [
+            {
+              "denominator": 32,
+              "event": "motor_supplied_map_contact",
+              "numerator": 32,
+              "unknown_worlds": 0
+            },
+            {
+              "denominator": 32,
+              "event": "language_supplied_map_contact",
+              "numerator": 32,
+              "unknown_worlds": 0
+            }
+          ],
+          "plan_id": "native_native-wide-aspiration",
+          "touched_cells": 543
+        }
+      ],
+      "panel": "deterministic_control_support_0.5",
+      "reported_distinct_transforms": 1,
+      "worlds": 32
+    },
+    {
+      "candidates": [
+        {
+          "events": [
+            {
+              "denominator": 32,
+              "event": "motor_supplied_map_contact",
+              "numerator": 32,
+              "unknown_worlds": 0
+            },
+            {
+              "denominator": 32,
+              "event": "language_supplied_map_contact",
+              "numerator": 32,
+              "unknown_worlds": 0
+            }
+          ],
+          "plan_id": "native_native-fine-aspiration",
+          "touched_cells": 189
+        },
+        {
+          "events": [
+            {
+              "denominator": 32,
+              "event": "motor_supplied_map_contact",
+              "numerator": 32,
+              "unknown_worlds": 0
+            },
+            {
+              "denominator": 32,
+              "event": "language_supplied_map_contact",
+              "numerator": 32,
+              "unknown_worlds": 0
+            }
+          ],
+          "plan_id": "native_native-wide-aspiration",
+          "touched_cells": 543
+        }
+      ],
+      "panel": "deterministic_control_support_0.1",
+      "reported_distinct_transforms": 1,
+      "worlds": 32
+    },
+    {
+      "candidates": [
+        {
+          "events": [
+            {
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "numerator": 51,
+              "unknown_worlds": 0
+            },
+            {
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "numerator": 0,
+              "unknown_worlds": 64
+            }
+          ],
+          "plan_id": "native_native-fine-aspiration",
+          "touched_cells": 189
+        },
+        {
+          "events": [
+            {
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "numerator": 64,
+              "unknown_worlds": 0
+            },
+            {
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "numerator": 0,
+              "unknown_worlds": 64
+            }
+          ],
+          "plan_id": "native_native-wide-aspiration",
+          "touched_cells": 543
+        }
+      ],
+      "panel": "gaussian_1mm_1deg_motor_only",
+      "reported_distinct_transforms": 64,
+      "worlds": 64
+    },
+    {
+      "candidates": [
+        {
+          "events": [
+            {
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "numerator": 0,
+              "unknown_worlds": 64
+            },
+            {
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "numerator": 64,
+              "unknown_worlds": 0
+            }
+          ],
+          "plan_id": "native_native-fine-aspiration",
+          "touched_cells": 189
+        },
+        {
+          "events": [
+            {
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "numerator": 0,
+              "unknown_worlds": 64
+            },
+            {
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "numerator": 64,
+              "unknown_worlds": 0
+            }
+          ],
+          "plan_id": "native_native-wide-aspiration",
+          "touched_cells": 543
+        }
+      ],
+      "panel": "gaussian_1mm_1deg_language_only",
+      "reported_distinct_transforms": 64,
+      "worlds": 64
+    }
+  ],
+  "schema": "independent-saved-functional-sensitivity-audit-v1",
+  "scope": "Saved outcomes and metadata only: no new worlds, resimulation, training or patient-array processing.",
+  "source_files_checked": 51,
+  "status": "passed_saved_artifact_consistency_audit"
+}

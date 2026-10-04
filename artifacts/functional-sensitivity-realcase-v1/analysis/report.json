@@ -1,0 +1,3584 @@
+{
+  "clinical_deficit_probability": null,
+  "clocks": {
+    "evidence_and_freeze_seconds": 7.0628504999913275,
+    "geometry_and_exposure_seconds": 10.966065959073603,
+    "input_verification_and_loading_seconds": 1.769697541021742,
+    "new_evidence_bundle_roundtrip_seconds": 5.9142663340317085
+  },
+  "declared_configuration_sha256": "b904b340fc47e488403312da7f222568756eb39a547db5ea84d762c73d10164d",
+  "final_evaluation_not_external_patient_validation": true,
+  "geometry_clocks": {
+    "native_native-fine-aspiration": {
+      "footprint_seconds": 0.042177499970421195,
+      "independent_audit_seconds": 1.108632041956298
+    },
+    "native_native-wide-aspiration": {
+      "footprint_seconds": 0.07921887503471226,
+      "independent_audit_seconds": 2.00083266699221
+    },
+    "static_search-046893487762fe04": {
+      "footprint_seconds": 4.951066375011578,
+      "independent_audit_seconds": 0.0015009160852059722
+    },
+    "static_search-110df6a56e19bfbc": {
+      "footprint_seconds": 0.3559440840035677,
+      "independent_audit_seconds": 0.0008472499903291464
+    },
+    "static_search-35049655244ec7bf": {
+      "footprint_seconds": 1.2986046250443906,
+      "independent_audit_seconds": 0.0007893749279901385
+    }
+  },
+  "human_patients": 1,
+  "input_receipts": {
+    "fine_history": {
+      "actual_sha256": "8f71b10f387b72c7a3ff5ccf0c65631e3f0bf0a68d80d2fa9c0be3cfb68f5f79",
+      "bytes": 376818,
+      "path": "artifacts/native-route-alternatives-v1b/native-fine-aspiration-candidate.json",
+      "sha256": "8f71b10f387b72c7a3ff5ccf0c65631e3f0bf0a68d80d2fa9c0be3cfb68f5f79"
+    },
+    "original_case": {
+      "actual_sha256": "11cca797ad0216e5c8d940e7354f2dd23fb6954dc2aed7e4b0423f6adc6cefcf",
+      "bytes": 4654142,
+      "path": "outputs/cases/UCSF-PDGM-0004.ressectionlab",
+      "sha256": "11cca797ad0216e5c8d940e7354f2dd23fb6954dc2aed7e4b0423f6adc6cefcf"
+    },
+    "original_routes": {
+      "actual_sha256": "990793b1eecfa0f9334afd74b0af212acf0e6484fe70273d9327cc0607dc9827",
+      "bytes": 122386,
+      "path": "artifacts/route-native-screen-v1/original-54-routes.json",
+      "sha256": "990793b1eecfa0f9334afd74b0af212acf0e6484fe70273d9327cc0607dc9827"
+    },
+    "prior_case": {
+      "actual_sha256": "59c213b82af205516491058145ad3581a4d1832e1126fb5559118f250ea1bacc",
+      "bytes": 23835372,
+      "path": "outputs/cases/UCSF-PDGM-0004-prior-proposals.ressectionlab",
+      "sha256": "59c213b82af205516491058145ad3581a4d1832e1126fb5559118f250ea1bacc"
+    },
+    "wide_history": {
+      "actual_sha256": "e7b2acd0f5f25e29ca97651b241376e4212149bd156b3fb62862bbb5e41142d8",
+      "bytes": 1255611,
+      "path": "artifacts/native-route-alternatives-v1b/native-wide-aspiration-candidate.json",
+      "sha256": "e7b2acd0f5f25e29ca97651b241376e4212149bd156b3fb62862bbb5e41142d8"
+    }
+  },
+  "limitations": [
+    "One previously consulted human development patient; no new-patient generalization",
+    "Structural mirror official TCIA byte equivalence unverified",
+    "Global prior alignment unreviewed and not reliable near tumor mass effect",
+    "Estimated brain support and hypothetical access unreviewed",
+    "Patient diffusion, vascular anatomy, forces and clinical outcomes unavailable",
+    "No parameter updates or synthetic training data"
+  ],
+  "new_bundle": {
+    "case_hash": "sha256:0f9ea30ab997d7d2d6e2b6029a5304b5f272df05243cbb80137216bd0e3a1600",
+    "functional_evidence_hash": "sha256:6f6b2ab64228ff44c5407f8939c18aee1fa5dc0ccaff63b0fc7329e63dfa2e03",
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/cases/UCSF-PDGM-0004-functional-gaussian-primary-v1.ressectionlab",
+    "sha256": "4bed732a4d137fa7b103cf946e5ef52ad220f479bb72372b790ecf3fd7535ca3"
+  },
+  "panels": [
+    {
+      "candidates": [
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 100.73040330410004,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 110.97526407241821
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 100.73040330410004,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 110.97526407241821
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 50.00681386888027,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 105.0885944366455
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 50.00681386888027,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 105.0885944366455
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            }
+          },
+          "events": [
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied motor map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 0.796875,
+              "monte_carlo_interval": [
+                0.6828636426898583,
+                0.8772658218081634
+              ],
+              "numerator": 51,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:0db3565fbc48329c48f36ee190c4197d218c674d47c1d181c3fdf1f01d7f9931"
+            },
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied language map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 1.0,
+              "monte_carlo_interval": [
+                0.9433759402071946,
+                1.0
+              ],
+              "numerator": 64,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:0db3565fbc48329c48f36ee190c4197d218c674d47c1d181c3fdf1f01d7f9931"
+            }
+          ],
+          "plan_id": "native_native-fine-aspiration",
+          "status": "evaluated"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 290.8642818927765,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 318.7743606567383
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 290.8642818927765,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 318.7743606567383
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 146.11627966165543,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 280.79217529296875
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 146.11627966165543,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 280.79217529296875
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            }
+          },
+          "events": [
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied motor map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 1.0,
+              "monte_carlo_interval": [
+                0.9433759402071946,
+                1.0
+              ],
+              "numerator": 64,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:0db3565fbc48329c48f36ee190c4197d218c674d47c1d181c3fdf1f01d7f9931"
+            },
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied language map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 1.0,
+              "monte_carlo_interval": [
+                0.9433759402071946,
+                1.0
+              ],
+              "numerator": 64,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:0db3565fbc48329c48f36ee190c4197d218c674d47c1d181c3fdf1f01d7f9931"
+            }
+          ],
+          "plan_id": "native_native-wide-aspiration",
+          "status": "evaluated"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            }
+          },
+          "events": [],
+          "plan_id": "static_search-046893487762fe04",
+          "status": "rejected_native_execution"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            }
+          },
+          "events": [],
+          "plan_id": "static_search-110df6a56e19bfbc",
+          "status": "rejected_native_execution"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            }
+          },
+          "events": [],
+          "plan_id": "static_search-35049655244ec7bf",
+          "status": "rejected_native_execution"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            }
+          },
+          "events": [
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied motor map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 0.0,
+              "monte_carlo_interval": [
+                0.0,
+                0.0566240597928053
+              ],
+              "numerator": 0,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:0db3565fbc48329c48f36ee190c4197d218c674d47c1d181c3fdf1f01d7f9931"
+            },
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied language map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 0.0,
+              "monte_carlo_interval": [
+                0.0,
+                0.0566240597928053
+              ],
+              "numerator": 0,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:0db3565fbc48329c48f36ee190c4197d218c674d47c1d181c3fdf1f01d7f9931"
+            }
+          ],
+          "plan_id": "STOP",
+          "status": "evaluated"
+        }
+      ],
+      "distinct_transforms": 64,
+      "file": "gaussian_1mm_1deg_support_0.5.json",
+      "panel": "gaussian_1mm_1deg_support_0.5",
+      "seconds": 0.3420472079887986
+    },
+    {
+      "candidates": [
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 100.73040330410004,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 110.97526407241821
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 100.73040330410004,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 110.97526407241821
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 50.00681386888027,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 105.0885944366455
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 50.00681386888027,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 105.0885944366455
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            }
+          },
+          "events": [
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied motor map support >= 0.1. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 1.0,
+              "monte_carlo_interval": [
+                0.9433759402071946,
+                1.0
+              ],
+              "numerator": 64,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:0db3565fbc48329c48f36ee190c4197d218c674d47c1d181c3fdf1f01d7f9931"
+            },
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied language map support >= 0.1. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 1.0,
+              "monte_carlo_interval": [
+                0.9433759402071946,
+                1.0
+              ],
+              "numerator": 64,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:0db3565fbc48329c48f36ee190c4197d218c674d47c1d181c3fdf1f01d7f9931"
+            }
+          ],
+          "plan_id": "native_native-fine-aspiration",
+          "status": "evaluated"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 290.8642818927765,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 318.7743606567383
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 290.8642818927765,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 318.7743606567383
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 146.11627966165543,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 280.79217529296875
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 146.11627966165543,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 280.79217529296875
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            }
+          },
+          "events": [
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied motor map support >= 0.1. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 1.0,
+              "monte_carlo_interval": [
+                0.9433759402071946,
+                1.0
+              ],
+              "numerator": 64,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:0db3565fbc48329c48f36ee190c4197d218c674d47c1d181c3fdf1f01d7f9931"
+            },
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied language map support >= 0.1. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 1.0,
+              "monte_carlo_interval": [
+                0.9433759402071946,
+                1.0
+              ],
+              "numerator": 64,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:0db3565fbc48329c48f36ee190c4197d218c674d47c1d181c3fdf1f01d7f9931"
+            }
+          ],
+          "plan_id": "native_native-wide-aspiration",
+          "status": "evaluated"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            }
+          },
+          "events": [],
+          "plan_id": "static_search-046893487762fe04",
+          "status": "rejected_native_execution"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            }
+          },
+          "events": [],
+          "plan_id": "static_search-110df6a56e19bfbc",
+          "status": "rejected_native_execution"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            }
+          },
+          "events": [],
+          "plan_id": "static_search-35049655244ec7bf",
+          "status": "rejected_native_execution"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            }
+          },
+          "events": [
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied motor map support >= 0.1. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 0.0,
+              "monte_carlo_interval": [
+                0.0,
+                0.0566240597928053
+              ],
+              "numerator": 0,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:0db3565fbc48329c48f36ee190c4197d218c674d47c1d181c3fdf1f01d7f9931"
+            },
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied language map support >= 0.1. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 0.0,
+              "monte_carlo_interval": [
+                0.0,
+                0.0566240597928053
+              ],
+              "numerator": 0,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:0db3565fbc48329c48f36ee190c4197d218c674d47c1d181c3fdf1f01d7f9931"
+            }
+          ],
+          "plan_id": "STOP",
+          "status": "evaluated"
+        }
+      ],
+      "distinct_transforms": 64,
+      "file": "gaussian_1mm_1deg_support_0.1.json",
+      "panel": "gaussian_1mm_1deg_support_0.1",
+      "seconds": 0.3420706669567153
+    },
+    {
+      "candidates": [
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 98.42138135433197,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 117.89699268341064
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 98.42138135433197,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 117.89699268341064
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 54.73896083235741,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 133.7088804244995
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 54.73896083235741,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 133.7088804244995
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            }
+          },
+          "events": [
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied motor map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 0.671875,
+              "monte_carlo_interval": [
+                0.549991058490915,
+                0.7742944209553081
+              ],
+              "numerator": 43,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:fd242f96e6714cebfd2d6329aa867f77f4197f88a1e5539e027304740e100e78"
+            },
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied language map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 1.0,
+              "monte_carlo_interval": [
+                0.9433759402071946,
+                1.0
+              ],
+              "numerator": 64,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:fd242f96e6714cebfd2d6329aa867f77f4197f88a1e5539e027304740e100e78"
+            }
+          ],
+          "plan_id": "native_native-fine-aspiration",
+          "status": "evaluated"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 284.46241331100464,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 338.5593357086181
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 284.46241331100464,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 338.5593357086181
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 153.909370303154,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 357.7184085845947
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 153.909370303154,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 357.7184085845947
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            }
+          },
+          "events": [
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied motor map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 0.828125,
+              "monte_carlo_interval": [
+                0.717867883773418,
+                0.9012225769875535
+              ],
+              "numerator": 53,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:fd242f96e6714cebfd2d6329aa867f77f4197f88a1e5539e027304740e100e78"
+            },
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied language map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 1.0,
+              "monte_carlo_interval": [
+                0.9433759402071946,
+                1.0
+              ],
+              "numerator": 64,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:fd242f96e6714cebfd2d6329aa867f77f4197f88a1e5539e027304740e100e78"
+            }
+          ],
+          "plan_id": "native_native-wide-aspiration",
+          "status": "evaluated"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            }
+          },
+          "events": [],
+          "plan_id": "static_search-046893487762fe04",
+          "status": "rejected_native_execution"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            }
+          },
+          "events": [],
+          "plan_id": "static_search-110df6a56e19bfbc",
+          "status": "rejected_native_execution"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            }
+          },
+          "events": [],
+          "plan_id": "static_search-35049655244ec7bf",
+          "status": "rejected_native_execution"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            }
+          },
+          "events": [
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied motor map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 0.0,
+              "monte_carlo_interval": [
+                0.0,
+                0.0566240597928053
+              ],
+              "numerator": 0,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:fd242f96e6714cebfd2d6329aa867f77f4197f88a1e5539e027304740e100e78"
+            },
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied language map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 0.0,
+              "monte_carlo_interval": [
+                0.0,
+                0.0566240597928053
+              ],
+              "numerator": 0,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:fd242f96e6714cebfd2d6329aa867f77f4197f88a1e5539e027304740e100e78"
+            }
+          ],
+          "plan_id": "STOP",
+          "status": "evaluated"
+        }
+      ],
+      "distinct_transforms": 64,
+      "file": "gaussian_2mm_2deg_support_0.5.json",
+      "panel": "gaussian_2mm_2deg_support_0.5",
+      "seconds": 0.3468367919558659
+    },
+    {
+      "candidates": [
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 98.42138135433197,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 117.89699268341064
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 98.42138135433197,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 117.89699268341064
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 54.73896083235741,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 133.7088804244995
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 54.73896083235741,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 133.7088804244995
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            }
+          },
+          "events": [
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied motor map support >= 0.1. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 1.0,
+              "monte_carlo_interval": [
+                0.9433759402071946,
+                1.0
+              ],
+              "numerator": 64,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:fd242f96e6714cebfd2d6329aa867f77f4197f88a1e5539e027304740e100e78"
+            },
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied language map support >= 0.1. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 1.0,
+              "monte_carlo_interval": [
+                0.9433759402071946,
+                1.0
+              ],
+              "numerator": 64,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:fd242f96e6714cebfd2d6329aa867f77f4197f88a1e5539e027304740e100e78"
+            }
+          ],
+          "plan_id": "native_native-fine-aspiration",
+          "status": "evaluated"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 284.46241331100464,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 338.5593357086181
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 284.46241331100464,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 338.5593357086181
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 153.909370303154,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 357.7184085845947
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 153.909370303154,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 357.7184085845947
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            }
+          },
+          "events": [
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied motor map support >= 0.1. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 1.0,
+              "monte_carlo_interval": [
+                0.9433759402071946,
+                1.0
+              ],
+              "numerator": 64,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:fd242f96e6714cebfd2d6329aa867f77f4197f88a1e5539e027304740e100e78"
+            },
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied language map support >= 0.1. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 1.0,
+              "monte_carlo_interval": [
+                0.9433759402071946,
+                1.0
+              ],
+              "numerator": 64,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:fd242f96e6714cebfd2d6329aa867f77f4197f88a1e5539e027304740e100e78"
+            }
+          ],
+          "plan_id": "native_native-wide-aspiration",
+          "status": "evaluated"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            }
+          },
+          "events": [],
+          "plan_id": "static_search-046893487762fe04",
+          "status": "rejected_native_execution"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            }
+          },
+          "events": [],
+          "plan_id": "static_search-110df6a56e19bfbc",
+          "status": "rejected_native_execution"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            }
+          },
+          "events": [],
+          "plan_id": "static_search-35049655244ec7bf",
+          "status": "rejected_native_execution"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            }
+          },
+          "events": [
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied motor map support >= 0.1. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 0.0,
+              "monte_carlo_interval": [
+                0.0,
+                0.0566240597928053
+              ],
+              "numerator": 0,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:fd242f96e6714cebfd2d6329aa867f77f4197f88a1e5539e027304740e100e78"
+            },
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied language map support >= 0.1. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 0.0,
+              "monte_carlo_interval": [
+                0.0,
+                0.0566240597928053
+              ],
+              "numerator": 0,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:fd242f96e6714cebfd2d6329aa867f77f4197f88a1e5539e027304740e100e78"
+            }
+          ],
+          "plan_id": "STOP",
+          "status": "evaluated"
+        }
+      ],
+      "distinct_transforms": 64,
+      "file": "gaussian_2mm_2deg_support_0.1.json",
+      "panel": "gaussian_2mm_2deg_support_0.1",
+      "seconds": 0.3427812500158325
+    },
+    {
+      "candidates": [
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 101.94367980957031,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 101.94367980957031
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 101.94367980957031,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 101.94367980957031
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 35.70246887207031,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 35.70246887207031
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 35.70246887207031,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 35.70246887207031
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            }
+          },
+          "events": [
+            {
+              "assessed_worlds": 32,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied motor map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 32,
+              "event": "motor_supplied_map_contact",
+              "interpretation": "deterministic_replay_no_uncertainty_validation",
+              "model_conditioned_frequency": 1.0,
+              "monte_carlo_interval": null,
+              "numerator": 32,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:ebd3e1a5d9c247343afb11d104dd09dd5593250c0aed30aa37e5bc3700d15d39"
+            },
+            {
+              "assessed_worlds": 32,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied language map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 32,
+              "event": "language_supplied_map_contact",
+              "interpretation": "deterministic_replay_no_uncertainty_validation",
+              "model_conditioned_frequency": 1.0,
+              "monte_carlo_interval": null,
+              "numerator": 32,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:ebd3e1a5d9c247343afb11d104dd09dd5593250c0aed30aa37e5bc3700d15d39"
+            }
+          ],
+          "plan_id": "native_native-fine-aspiration",
+          "status": "evaluated"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 294.77490234375,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 294.77490234375
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 294.77490234375,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 294.77490234375
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 125.55193328857422,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 125.55193328857422
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 125.55193328857422,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 125.55193328857422
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            }
+          },
+          "events": [
+            {
+              "assessed_worlds": 32,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied motor map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 32,
+              "event": "motor_supplied_map_contact",
+              "interpretation": "deterministic_replay_no_uncertainty_validation",
+              "model_conditioned_frequency": 1.0,
+              "monte_carlo_interval": null,
+              "numerator": 32,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:ebd3e1a5d9c247343afb11d104dd09dd5593250c0aed30aa37e5bc3700d15d39"
+            },
+            {
+              "assessed_worlds": 32,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied language map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 32,
+              "event": "language_supplied_map_contact",
+              "interpretation": "deterministic_replay_no_uncertainty_validation",
+              "model_conditioned_frequency": 1.0,
+              "monte_carlo_interval": null,
+              "numerator": 32,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:ebd3e1a5d9c247343afb11d104dd09dd5593250c0aed30aa37e5bc3700d15d39"
+            }
+          ],
+          "plan_id": "native_native-wide-aspiration",
+          "status": "evaluated"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            }
+          },
+          "events": [],
+          "plan_id": "static_search-046893487762fe04",
+          "status": "rejected_native_execution"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            }
+          },
+          "events": [],
+          "plan_id": "static_search-110df6a56e19bfbc",
+          "status": "rejected_native_execution"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            }
+          },
+          "events": [],
+          "plan_id": "static_search-35049655244ec7bf",
+          "status": "rejected_native_execution"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            }
+          },
+          "events": [
+            {
+              "assessed_worlds": 32,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied motor map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 32,
+              "event": "motor_supplied_map_contact",
+              "interpretation": "deterministic_replay_no_uncertainty_validation",
+              "model_conditioned_frequency": 0.0,
+              "monte_carlo_interval": null,
+              "numerator": 0,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:ebd3e1a5d9c247343afb11d104dd09dd5593250c0aed30aa37e5bc3700d15d39"
+            },
+            {
+              "assessed_worlds": 32,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied language map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 32,
+              "event": "language_supplied_map_contact",
+              "interpretation": "deterministic_replay_no_uncertainty_validation",
+              "model_conditioned_frequency": 0.0,
+              "monte_carlo_interval": null,
+              "numerator": 0,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:ebd3e1a5d9c247343afb11d104dd09dd5593250c0aed30aa37e5bc3700d15d39"
+            }
+          ],
+          "plan_id": "STOP",
+          "status": "evaluated"
+        }
+      ],
+      "distinct_transforms": 1,
+      "file": "deterministic_control_support_0.5.json",
+      "panel": "deterministic_control_support_0.5",
+      "seconds": 0.2914281249977648
+    },
+    {
+      "candidates": [
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 101.94367980957031,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 101.94367980957031
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 101.94367980957031,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 101.94367980957031
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 35.70246887207031,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 35.70246887207031
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 35.70246887207031,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 35.70246887207031
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            }
+          },
+          "events": [
+            {
+              "assessed_worlds": 32,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied motor map support >= 0.1. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 32,
+              "event": "motor_supplied_map_contact",
+              "interpretation": "deterministic_replay_no_uncertainty_validation",
+              "model_conditioned_frequency": 1.0,
+              "monte_carlo_interval": null,
+              "numerator": 32,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:ebd3e1a5d9c247343afb11d104dd09dd5593250c0aed30aa37e5bc3700d15d39"
+            },
+            {
+              "assessed_worlds": 32,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied language map support >= 0.1. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 32,
+              "event": "language_supplied_map_contact",
+              "interpretation": "deterministic_replay_no_uncertainty_validation",
+              "model_conditioned_frequency": 1.0,
+              "monte_carlo_interval": null,
+              "numerator": 32,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:ebd3e1a5d9c247343afb11d104dd09dd5593250c0aed30aa37e5bc3700d15d39"
+            }
+          ],
+          "plan_id": "native_native-fine-aspiration",
+          "status": "evaluated"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 294.77490234375,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 294.77490234375
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 294.77490234375,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 294.77490234375
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 125.55193328857422,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 125.55193328857422
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 125.55193328857422,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 125.55193328857422
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            }
+          },
+          "events": [
+            {
+              "assessed_worlds": 32,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied motor map support >= 0.1. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 32,
+              "event": "motor_supplied_map_contact",
+              "interpretation": "deterministic_replay_no_uncertainty_validation",
+              "model_conditioned_frequency": 1.0,
+              "monte_carlo_interval": null,
+              "numerator": 32,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:ebd3e1a5d9c247343afb11d104dd09dd5593250c0aed30aa37e5bc3700d15d39"
+            },
+            {
+              "assessed_worlds": 32,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied language map support >= 0.1. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 32,
+              "event": "language_supplied_map_contact",
+              "interpretation": "deterministic_replay_no_uncertainty_validation",
+              "model_conditioned_frequency": 1.0,
+              "monte_carlo_interval": null,
+              "numerator": 32,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:ebd3e1a5d9c247343afb11d104dd09dd5593250c0aed30aa37e5bc3700d15d39"
+            }
+          ],
+          "plan_id": "native_native-wide-aspiration",
+          "status": "evaluated"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            }
+          },
+          "events": [],
+          "plan_id": "static_search-046893487762fe04",
+          "status": "rejected_native_execution"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            }
+          },
+          "events": [],
+          "plan_id": "static_search-110df6a56e19bfbc",
+          "status": "rejected_native_execution"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            }
+          },
+          "events": [],
+          "plan_id": "static_search-35049655244ec7bf",
+          "status": "rejected_native_execution"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 32,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            }
+          },
+          "events": [
+            {
+              "assessed_worlds": 32,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied motor map support >= 0.1. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 32,
+              "event": "motor_supplied_map_contact",
+              "interpretation": "deterministic_replay_no_uncertainty_validation",
+              "model_conditioned_frequency": 0.0,
+              "monte_carlo_interval": null,
+              "numerator": 0,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:ebd3e1a5d9c247343afb11d104dd09dd5593250c0aed30aa37e5bc3700d15d39"
+            },
+            {
+              "assessed_worlds": 32,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied language map support >= 0.1. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 32,
+              "event": "language_supplied_map_contact",
+              "interpretation": "deterministic_replay_no_uncertainty_validation",
+              "model_conditioned_frequency": 0.0,
+              "monte_carlo_interval": null,
+              "numerator": 0,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:ebd3e1a5d9c247343afb11d104dd09dd5593250c0aed30aa37e5bc3700d15d39"
+            }
+          ],
+          "plan_id": "STOP",
+          "status": "evaluated"
+        }
+      ],
+      "distinct_transforms": 1,
+      "file": "deterministic_control_support_0.1.json",
+      "panel": "deterministic_control_support_0.1",
+      "seconds": 0.2912169999908656
+    },
+    {
+      "candidates": [
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 64,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 64,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 189.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 189.0
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 50.00681386888027,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 105.0885944366455
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 50.00681386888027,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 105.0885944366455
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            }
+          },
+          "events": [
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied motor map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 0.796875,
+              "monte_carlo_interval": [
+                0.6828636426898583,
+                0.8772658218081634
+              ],
+              "numerator": 51,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:7e1e6ce830631b0b93c48d9962eb47a941f0b358bc8bf32848cecd85715eac7d"
+            },
+            {
+              "assessed_worlds": 0,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied language map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "interpretation": "unknown_due_to_incomplete_anatomical_coverage",
+              "model_conditioned_frequency": null,
+              "monte_carlo_interval": null,
+              "numerator": 0,
+              "unknown_worlds": 64,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:7e1e6ce830631b0b93c48d9962eb47a941f0b358bc8bf32848cecd85715eac7d"
+            }
+          ],
+          "plan_id": "native_native-fine-aspiration",
+          "status": "evaluated"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 64,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 64,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 543.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 543.0
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 146.11627966165543,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 280.79217529296875
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 146.11627966165543,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 280.79217529296875
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            }
+          },
+          "events": [
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied motor map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 1.0,
+              "monte_carlo_interval": [
+                0.9433759402071946,
+                1.0
+              ],
+              "numerator": 64,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:7e1e6ce830631b0b93c48d9962eb47a941f0b358bc8bf32848cecd85715eac7d"
+            },
+            {
+              "assessed_worlds": 0,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied language map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "interpretation": "unknown_due_to_incomplete_anatomical_coverage",
+              "model_conditioned_frequency": null,
+              "monte_carlo_interval": null,
+              "numerator": 0,
+              "unknown_worlds": 64,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:7e1e6ce830631b0b93c48d9962eb47a941f0b358bc8bf32848cecd85715eac7d"
+            }
+          ],
+          "plan_id": "native_native-wide-aspiration",
+          "status": "evaluated"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            }
+          },
+          "events": [],
+          "plan_id": "static_search-046893487762fe04",
+          "status": "rejected_native_execution"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            }
+          },
+          "events": [],
+          "plan_id": "static_search-110df6a56e19bfbc",
+          "status": "rejected_native_execution"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            }
+          },
+          "events": [],
+          "plan_id": "static_search-35049655244ec7bf",
+          "status": "rejected_native_execution"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            }
+          },
+          "events": [
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied motor map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 0.0,
+              "monte_carlo_interval": [
+                0.0,
+                0.0566240597928053
+              ],
+              "numerator": 0,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:7e1e6ce830631b0b93c48d9962eb47a941f0b358bc8bf32848cecd85715eac7d"
+            },
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied language map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 0.0,
+              "monte_carlo_interval": [
+                0.0,
+                0.0566240597928053
+              ],
+              "numerator": 0,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:7e1e6ce830631b0b93c48d9962eb47a941f0b358bc8bf32848cecd85715eac7d"
+            }
+          ],
+          "plan_id": "STOP",
+          "status": "evaluated"
+        }
+      ],
+      "distinct_transforms": 64,
+      "file": "gaussian_1mm_1deg_motor_only.json",
+      "panel": "gaussian_1mm_1deg_motor_only",
+      "seconds": 0.1896245409734547
+    },
+    {
+      "candidates": [
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 100.73040330410004,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 110.97526407241821
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 100.73040330410004,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 110.97526407241821
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 64,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 64,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 189.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 189.0
+            }
+          },
+          "events": [
+            {
+              "assessed_worlds": 0,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied motor map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "interpretation": "unknown_due_to_incomplete_anatomical_coverage",
+              "model_conditioned_frequency": null,
+              "monte_carlo_interval": null,
+              "numerator": 0,
+              "unknown_worlds": 64,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:46dc2e035e0fa4466eba426422b0e8950c0bf862cb7b9f611dd6027c390c8f95"
+            },
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied language map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 1.0,
+              "monte_carlo_interval": [
+                0.9433759402071946,
+                1.0
+              ],
+              "numerator": 64,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:46dc2e035e0fa4466eba426422b0e8950c0bf862cb7b9f611dd6027c390c8f95"
+            }
+          ],
+          "plan_id": "native_native-fine-aspiration",
+          "status": "evaluated"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 290.8642818927765,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 318.7743606567383
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 290.8642818927765,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 318.7743606567383
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 64,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 64,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 543.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 543.0
+            }
+          },
+          "events": [
+            {
+              "assessed_worlds": 0,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied motor map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "interpretation": "unknown_due_to_incomplete_anatomical_coverage",
+              "model_conditioned_frequency": null,
+              "monte_carlo_interval": null,
+              "numerator": 0,
+              "unknown_worlds": 64,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:46dc2e035e0fa4466eba426422b0e8950c0bf862cb7b9f611dd6027c390c8f95"
+            },
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied language map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 1.0,
+              "monte_carlo_interval": [
+                0.9433759402071946,
+                1.0
+              ],
+              "numerator": 64,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:46dc2e035e0fa4466eba426422b0e8950c0bf862cb7b9f611dd6027c390c8f95"
+            }
+          ],
+          "plan_id": "native_native-wide-aspiration",
+          "status": "evaluated"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            }
+          },
+          "events": [],
+          "plan_id": "static_search-046893487762fe04",
+          "status": "rejected_native_execution"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            }
+          },
+          "events": [],
+          "plan_id": "static_search-110df6a56e19bfbc",
+          "status": "rejected_native_execution"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 0,
+              "cvar_alpha": 0.95,
+              "mean": null,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": null
+            }
+          },
+          "events": [],
+          "plan_id": "static_search-35049655244ec7bf",
+          "status": "rejected_native_execution"
+        },
+        {
+          "costs": {
+            "language_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "language_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "language_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_contact_surrogate": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "unitless supplied-map support \u00d7 contacted-cell mm3; not removed volume",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_known_contact_lower_bound": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "known supplied-map support \u00d7 contacted-cell mm3; incomplete-model lower bound",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            },
+            "motor_unassessed_contact_volume": {
+              "assessed_worlds": 64,
+              "cvar_alpha": 0.95,
+              "mean": 0.0,
+              "units": "mm3 of touched source cells lacking supplied-map coverage",
+              "unknown_worlds": 0,
+              "upper_tail_cvar": 0.0
+            }
+          },
+          "events": [
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied motor map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "motor_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 0.0,
+              "monte_carlo_interval": [
+                0.0,
+                0.0566240597928053
+              ],
+              "numerator": 0,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:46dc2e035e0fa4466eba426422b0e8950c0bf862cb7b9f611dd6027c390c8f95"
+            },
+            {
+              "assessed_worlds": 64,
+              "clinical_deficit_probability": null,
+              "definition": "Any native tissue cell touched by the complete shaft or active tool sweep has covered, coherently resampled supplied language map support >= 0.5. Known hit is true; no hit with incomplete contacted-cell coverage is unknown. This is a supplied-map encounter, not individual function or postoperative deficit.",
+              "denominator": 64,
+              "event": "language_supplied_map_contact",
+              "interpretation": "model_conditioned_event_frequency; interval_is_finite_Monte_Carlo_error_only",
+              "model_conditioned_frequency": 0.0,
+              "monte_carlo_interval": [
+                0.0,
+                0.0566240597928053
+              ],
+              "numerator": 0,
+              "unknown_worlds": 0,
+              "world_model_version": "rigid-registration-v1",
+              "world_partition_hash": "sha256:46dc2e035e0fa4466eba426422b0e8950c0bf862cb7b9f611dd6027c390c8f95"
+            }
+          ],
+          "plan_id": "STOP",
+          "status": "evaluated"
+        }
+      ],
+      "distinct_transforms": 64,
+      "file": "gaussian_1mm_1deg_language_only.json",
+      "panel": "gaussian_1mm_1deg_language_only",
+      "seconds": 0.19268404098693281
+    }
+  ],
+  "peak_rss_gib": 2.108062744140625,
+  "schema": "resectionlab.real-patient-functional-sensitivity.v1",
+  "source_and_inputs_unchanged": true,
+  "status": "completed",
+  "training_updates": 0,
+  "worker_seconds": 28.24156925000716
+}

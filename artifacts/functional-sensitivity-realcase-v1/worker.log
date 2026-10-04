@@ -1,0 +1,13 @@
+{"phase": "verify_pinned_inputs", "elapsed_seconds": 0.01888991694431752, "peak_rss_gib": 0.06964111328125}
+{"phase": "independent_geometry_and_exposure", "elapsed_seconds": 1.7949444169644266, "peak_rss_gib": 0.6790618896484375}
+{"phase": "freeze_all_panels_before_events", "elapsed_seconds": 12.762155917007476, "peak_rss_gib": 0.7838592529296875}
+{"phase": "save_primary_evidence_case", "elapsed_seconds": 19.825048750033602, "peak_rss_gib": 1.599090576171875}
+{"phase": "evaluate_gaussian_1mm_1deg_support_0.5", "elapsed_seconds": 25.741813083994202, "peak_rss_gib": 2.108062744140625}
+{"phase": "evaluate_gaussian_1mm_1deg_support_0.1", "elapsed_seconds": 26.088676874991506, "peak_rss_gib": 2.108062744140625}
+{"phase": "evaluate_gaussian_2mm_2deg_support_0.5", "elapsed_seconds": 26.435483417008072, "peak_rss_gib": 2.108062744140625}
+{"phase": "evaluate_gaussian_2mm_2deg_support_0.1", "elapsed_seconds": 26.787360374932177, "peak_rss_gib": 2.108062744140625}
+{"phase": "evaluate_deterministic_control_support_0.5", "elapsed_seconds": 27.135172249982134, "peak_rss_gib": 2.108062744140625}
+{"phase": "evaluate_deterministic_control_support_0.1", "elapsed_seconds": 27.43023408402223, "peak_rss_gib": 2.108062744140625}
+{"phase": "evaluate_gaussian_1mm_1deg_motor_only", "elapsed_seconds": 27.724737250013277, "peak_rss_gib": 2.108062744140625}
+{"phase": "evaluate_gaussian_1mm_1deg_language_only", "elapsed_seconds": 27.919866209034808, "peak_rss_gib": 2.108062744140625}
+{"status": "completed", "seconds": 28.24156925000716, "peak_rss_gib": 2.108062744140625}
