@@ -1,0 +1,733 @@
+"""Connected voxel-suction simulator with complete rigid-tool motion checks.
+
+Every action inserts along one straight line from an explicit access disk, suctions
+only the exposed terminal tip footprint, and retracts on that same line. Tools
+may be reoriented or changed only outside the modeled brain. No initial surgical
+corridor is carved. Cell removal is a conservative, discrete contact abstraction,
+not a calibrated tissue mechanics or surgical outcome model.
+"""
+from __future__ import annotations
+
+from dataclasses import asdict, dataclass, field
+import copy
+import hashlib
+import json
+from typing import Any, Iterable, Mapping
+from types import MappingProxyType
+
+import numpy as np
+from scipy.ndimage import affine_transform, binary_dilation, binary_fill_holes, generate_binary_structure
+
+from .geometry import AccessWindow, GeometryScene, ToolGeometry, ToolPose, check_motion
+from .worlds import WorldGenerator, WorldGeneratorConfig
+from .core import freeze_json, thaw_json
+
+SIMULATOR_VERSION = "connected-suction-v1"
+ACTION_FEATURE_NAMES = (
+    "stop", "target_benefit", "normal_volume", "motor_evidence", "language_evidence",
+    "insertion_distance", "tip_radius", "shaft_radius", "tool_change", "depth",
+    "remaining_target_fraction", "adjacent_target_fraction",
+)
+
+
+def _readonly(value: Any, dtype: Any = None) -> np.ndarray:
+    array = np.ascontiguousarray(value, dtype=dtype)
+    return np.frombuffer(array.tobytes(), dtype=array.dtype).reshape(array.shape)
+
+
+def _array_hash(array: np.ndarray) -> str:
+    return hashlib.sha256(str(array.shape).encode() + str(array.dtype).encode() + array.tobytes()).hexdigest()
+
+
+@dataclass(frozen=True)
+class RewardSpec:
+    """Research preference weights; volumes and spatial sums are in mm^3."""
+    target_per_mm3: float = 1.0
+    normal_per_mm3: float = 0.2
+    motor_per_mm3: float = 2.0
+    language_per_mm3: float = 2.0
+    action_cost: float = 0.02
+    motion_per_mm: float = 0.0
+    tool_change_cost: float = 0.02
+    graph_edge_cost: float = 1.0
+
+    def __post_init__(self) -> None:
+        if any(not np.isfinite(v) or v < 0 for v in asdict(self).values()):
+            raise ValueError("Reward weights must be finite nonnegative declared preferences")
+
+
+@dataclass(frozen=True)
+class SimulationConfig:
+    tissue_mask: np.ndarray
+    target_labels: np.ndarray
+    affine: np.ndarray
+    access: AccessWindow
+    tools: tuple[ToolGeometry, ...]
+    nominal_motor: np.ndarray | None = None
+    nominal_language: np.ndarray | None = None
+    hard_exclusion: np.ndarray | None = None
+    reward: RewardSpec = field(default_factory=RewardSpec)
+    max_steps: int = 48
+    max_actions: int = 16
+    proposal_scan_limit: int = 96
+    world_translation_voxels: int = 0
+    world_generator: WorldGeneratorConfig | None = None
+    graph_edges: Mapping[str, np.ndarray] = field(default_factory=dict)
+    case_id: str = "synthetic"
+    source_hash: str = "synthetic-fixture"
+    tissue_fraction: np.ndarray | None = None
+    target_fractions: Mapping[int, np.ndarray] = field(default_factory=dict)
+    evidence_available: tuple[bool, bool] = (True, True)
+    derivation: Mapping[str, Any] = field(default_factory=dict)
+    compartment_names: Mapping[int, str] = field(default_factory=lambda: {1: "enhancing", 2: "nonenhancing_core", 3: "flair_abnormality"})
+
+    def __post_init__(self) -> None:
+        tissue = _readonly(self.tissue_mask, bool)
+        labels = _readonly(self.target_labels, np.int16)
+        affine = _readonly(self.affine, float)
+        if tissue.ndim != 3 or tissue.shape != labels.shape or not tissue.any():
+            raise ValueError("Tissue and target arrays must be matching nonempty 3-D grids")
+        if np.any(labels < 0) or np.any((labels > 0) & ~tissue):
+            raise ValueError("Target labels must be nonnegative and inside tissue")
+        if affine.shape != (4, 4) or not np.isfinite(affine).all() or not np.allclose(affine[3], [0, 0, 0, 1]):
+            raise ValueError("A finite homogeneous physical affine is required")
+        spacing = np.linalg.norm(affine[:3, :3], axis=0)
+        if np.any(spacing <= 0) or not np.allclose((affine[:3, :3] / spacing).T @ (affine[:3, :3] / spacing), np.eye(3), atol=1e-6):
+            raise ValueError("This voxel contact primitive supports orthogonal grids, including oblique rotations, but not shear")
+        if not self.tools or len({t.tool_id for t in self.tools}) != len(self.tools):
+            raise ValueError("At least one uniquely identified tool is required")
+        if self.max_steps < 1 or self.max_actions < 2 or self.proposal_scan_limit < 1 or self.world_translation_voxels < 0:
+            raise ValueError("Invalid bounded episode/proposal/world settings")
+        object.__setattr__(self, "tissue_mask", tissue)
+        object.__setattr__(self, "target_labels", labels)
+        object.__setattr__(self, "affine", affine)
+        object.__setattr__(self, "tools", tuple(self.tools))
+        for name, dtype in (("nominal_motor", float), ("nominal_language", float), ("hard_exclusion", bool)):
+            source = getattr(self, name)
+            array = _readonly(np.zeros(tissue.shape, dtype=dtype) if source is None else source, dtype)
+            if array.shape != tissue.shape or not np.isfinite(array).all() or np.any(array < 0):
+                raise ValueError(f"{name} must be finite, nonnegative, and aligned")
+            object.__setattr__(self, name, array)
+        edges = {str(k): _readonly(v, bool) for k, v in sorted(self.graph_edges.items())}
+        if any(v.shape != tissue.shape for v in edges.values()):
+            raise ValueError("Graph edge masks must align with the simulation grid")
+        object.__setattr__(self, "graph_edges", MappingProxyType(edges))
+        object.__setattr__(self, "compartment_names", MappingProxyType(dict(self.compartment_names)))
+        if self.world_generator is not None and self.world_translation_voxels:
+            raise ValueError("Specify the physical world generator or the voxel translation convenience parameter, not both")
+        tissue_fraction = _readonly(tissue.astype(float) if self.tissue_fraction is None else self.tissue_fraction, float)
+        if tissue_fraction.shape != tissue.shape or not np.isfinite(tissue_fraction).all() or np.any(tissue_fraction < 0) or np.any(tissue_fraction > 1) or np.any(tissue_fraction[~tissue] != 0):
+            raise ValueError("Tissue fractions must align and lie in [0,1] inside tissue")
+        fractions = {int(k): _readonly(v, float) for k, v in self.target_fractions.items()} if self.target_fractions else {int(label): _readonly(labels == label, float) for label in np.unique(labels) if label > 0}
+        if any(k <= 0 or v.shape != tissue.shape or not np.isfinite(v).all() or np.any(v < 0) for k, v in fractions.items()):
+            raise ValueError("Compartment volume fractions must be aligned finite nonnegative arrays")
+        total = sum(fractions.values(), np.zeros(tissue.shape))
+        if np.any(total > tissue_fraction + 1e-8) or np.any((total > 0) != (labels > 0)):
+            raise ValueError("Target fractions must match target support and cannot exceed tissue fractions")
+        object.__setattr__(self, "tissue_fraction", tissue_fraction)
+        object.__setattr__(self, "target_fractions", MappingProxyType(fractions))
+        object.__setattr__(self, "derivation", freeze_json(dict(self.derivation)))
+        object.__setattr__(self, "evidence_available", tuple(bool(v) for v in self.evidence_available))
+        if len(self.evidence_available) != 2:
+            raise ValueError("Motor and language evidence availability required")
+        generator = self.world_generator or (WorldGeneratorConfig(family="rigid_uniform", translation_scale_mm=tuple(spacing * self.world_translation_voxels)) if self.world_translation_voxels else WorldGeneratorConfig())
+        object.__setattr__(self, "world_generator", generator)
+
+    @property
+    def decision_model_hash(self) -> str:
+        fields = {
+            "version": SIMULATOR_VERSION, "case_id": self.case_id, "source_hash": self.source_hash,
+            "arrays": {name: _array_hash(getattr(self, name)) for name in ("tissue_mask", "target_labels", "affine", "nominal_motor", "nominal_language", "hard_exclusion", "tissue_fraction")},
+            "access": asdict(self.access), "tools": [asdict(tool) for tool in self.tools],
+            "reward": asdict(self.reward), "max_steps": self.max_steps, "max_actions": self.max_actions,
+            "proposal_scan_limit": self.proposal_scan_limit, "world_generator": self.world_generator.to_dict(),
+            "outside_field_policy": "unknown_coverage_with_conservative_maximum_surrogate",
+            "graph_edges": {k: _array_hash(v) for k, v in self.graph_edges.items()},
+            "compartments": dict(self.compartment_names), "evidence_available": self.evidence_available,
+            "derivation": thaw_json(self.derivation),
+            "target_fractions": {k: _array_hash(v) for k, v in self.target_fractions.items()},
+        }
+        return "sha256:" + hashlib.sha256(json.dumps(fields, sort_keys=True, default=lambda x: np.asarray(x).tolist()).encode()).hexdigest()
+
+
+@dataclass(frozen=True)
+class MacroAction:
+    action_id: str
+    tool_id: str | None
+    target_index: tuple[int, int, int] | None
+    tip_mm: tuple[float, float, float] | None
+    axis_unit: tuple[float, float, float] | None
+    removal_indices: np.ndarray
+    swept_indices: np.ndarray
+    insertion_distance_mm: float = 0.0
+
+
+@dataclass(frozen=True)
+class SimulationObservation:
+    action_ids: tuple[str, ...]
+    action_features: np.ndarray
+    action_mask: np.ndarray
+    state_features: np.ndarray
+
+
+@dataclass(frozen=True)
+class StepResult:
+    observation: SimulationObservation
+    reward: float
+    terminated: bool
+    info: dict[str, Any]
+
+    @property
+    def done(self) -> bool:
+        return self.terminated
+
+
+class InvalidActionError(ValueError):
+    """A stale, masked, unknown, or geometrically invalid action was requested."""
+
+
+class SequentialSimulator:
+    """Stateful environment; the sampled functional world stays fixed per episode.
+
+    Observations and action proposals contain nominal evidence only. Reward and
+    audit metrics evaluate the hidden coherent rigid anatomy sampled by reset.
+    This world family represents anatomical localization scenarios, not clinical
+    uncertainty. It does not perturb tissue geometry or hard exclusions.
+    """
+    def __init__(self, config: SimulationConfig):
+        self.config = config
+        self._frozen_hash = config.decision_model_hash
+        self._geometry_cache: dict[tuple[int, int, int, str], MacroAction | None] = {}
+        self._spacing = np.linalg.norm(config.affine[:3, :3], axis=0)
+        self.voxel_volume_mm3 = float(abs(np.linalg.det(config.affine[:3, :3])))
+        self._target_fraction = sum(config.target_fractions.values(), np.zeros(config.tissue_mask.shape))
+        self._normal_fraction = np.maximum(config.tissue_fraction - self._target_fraction, 0)
+        self._total_target = float(self._target_fraction.sum())
+        self.reset()
+
+    @property
+    def decision_model_hash(self) -> str:
+        return self._frozen_hash
+
+    @property
+    def case_hash(self) -> str:
+        return self.config.source_hash
+
+    @property
+    def world_generator_fingerprint(self) -> str:
+        return self.config.world_generator.fingerprint
+
+    def assert_model_frozen(self) -> None:
+        if self.config.decision_model_hash != self._frozen_hash:
+            raise RuntimeError("Decision model changed during optimization; start a new versioned experiment")
+
+    def reset(self, seed: int = 0) -> SimulationObservation:
+        self.assert_model_frozen()
+        self.seed = int(seed)
+        self.removed_mask = np.zeros(self.config.tissue_mask.shape, bool)
+        self.exposed_mask = np.zeros_like(self.removed_mask)
+        self.remaining_mask = self.config.tissue_mask.copy()
+        self._severed_edges: set[str] = set()
+        self._nominal_severed_edges: set[str] = set()
+        self._actions: list[str] = []
+        self._history: list[dict[str, Any]] = []
+        self._current_tool: str | None = None
+        self.total_reward = 0.0
+        self.terminated = False
+        self.termination_reason = None
+        self._proposals: tuple[MacroAction, ...] | None = None
+        latent = WorldGenerator(self.config.world_generator).sample_seed(self.seed)
+        transform = np.linalg.inv(self.config.affine) @ np.linalg.inv(latent.anatomy_transform_mm) @ self.config.affine
+        def resample(array: np.ndarray, *, order: int, outside: float) -> np.ndarray:
+            return affine_transform(array, transform[:3, :3], transform[:3, 3], output_shape=array.shape,
+                                    order=order, mode="constant", cval=outside, prefilter=False)
+        self._hidden_known_coverage = resample(np.ones(self.remaining_mask.shape), order=0, outside=0).astype(bool)
+        # Moving sampled anatomy outside the supplied field creates unknown
+        # coverage. A declared conservative surrogate bound prevents those
+        # missing cells from becoming an artificial zero-hazard opportunity.
+        self._hidden_motor = resample(self.config.nominal_motor, order=1, outside=(max(1.0, float(self.config.nominal_motor.max())) if self.config.evidence_available[0] else 0.0))
+        self._hidden_language = resample(self.config.nominal_language, order=1, outside=(max(1.0, float(self.config.nominal_language.max())) if self.config.evidence_available[1] else 0.0))
+        self._hidden_graph = {k: resample(v, order=0, outside=0).astype(bool) for k, v in self.config.graph_edges.items()}
+        self._hidden_world_hash = "sha256:" + hashlib.sha256((self._frozen_hash + str(self.seed)).encode() + latent.anatomy_transform_mm.tobytes()).hexdigest()
+        return self.observation()
+
+    def clone(self) -> SequentialSimulator:
+        """Copy rollout state while sharing immutable anatomy and cached geometry."""
+        result = copy.copy(self)
+        for name in ("removed_mask", "exposed_mask", "remaining_mask"):
+            setattr(result, name, getattr(self, name).copy())
+        result._severed_edges = self._severed_edges.copy()
+        result._nominal_severed_edges = self._nominal_severed_edges.copy()
+        result._actions = self._actions.copy()
+        result._history = copy.deepcopy(self._history)
+        return result
+
+    @property
+    def cavity_mask(self) -> np.ndarray:
+        return self.removed_mask.copy()
+
+    def frontier_mask(self) -> np.ndarray:
+        # Outside grid cells are free; the explicit access disk still gates every
+        # instrument path, so another outer face cannot grant a new entrance.
+        free = ~self.remaining_mask
+        return self.remaining_mask & binary_dilation(free, structure=generate_binary_structure(3, 1), border_value=1)
+
+    def _sphere_indices(self, index: np.ndarray, radius: float) -> np.ndarray:
+        reach = np.ceil(radius / self._spacing + 0.5).astype(int)
+        lo = np.maximum(index - reach, 0)
+        hi = np.minimum(index + reach + 1, self.remaining_mask.shape)
+        candidate = np.stack(np.meshgrid(*(np.arange(a, b) for a, b in zip(lo, hi)), indexing="ij"), axis=-1).reshape(-1, 3)
+        distance = np.maximum(np.abs(candidate - index) * self._spacing - self._spacing / 2, 0)
+        return candidate[np.sum(distance ** 2, axis=1) < radius ** 2 + 1e-12]
+
+    def _primitive(self, index: np.ndarray, tool: ToolGeometry) -> MacroAction | None:
+        key = (*map(int, index), tool.tool_id)
+        if key in self._geometry_cache:
+            return self._geometry_cache[key]
+        tip = self.config.affine[:3, :3] @ index + self.config.affine[:3, 3]
+        entry = np.asarray(self.config.access.center_mm)
+        vector = tip - entry
+        distance = float(np.linalg.norm(vector))
+        if distance <= 1e-9:
+            self._geometry_cache[key] = None
+            return None
+        axis = vector / distance
+        start = entry
+        geometry = check_motion(tool, ToolPose(tuple(start), tuple(axis)), ToolPose(tuple(tip), tuple(axis)),
+                                GeometryScene(self.config.hard_exclusion, self.config.affine, enforce_tip_in_bounds=False), self.config.access)
+        if not geometry.feasible:
+            self._geometry_cache[key] = None
+            return None
+        footprint = self._sphere_indices(index, tool.tip_radius_mm)
+        footprint = footprint[self.config.tissue_mask[tuple(footprint.T)]]
+        action = MacroAction(f"REMOVE:{tool.tool_id}:{','.join(map(str, index))}", tool.tool_id, tuple(map(int, index)),
+                             tuple(tip), tuple(axis), _readonly(footprint, int),
+                             _readonly(geometry.swept_voxel_indices, int), distance)
+        self._geometry_cache[key] = action
+        return action
+
+    def _legal(self, action: MacroAction, frontier: np.ndarray) -> bool:
+        footprint = action.removal_indices
+        if not len(footprint):
+            return False
+        occupied_footprint = self.remaining_mask[tuple(footprint.T)]
+        if not occupied_footprint.any() or not np.all(frontier[tuple(footprint[occupied_footprint].T)]):
+            return False
+        swept = action.swept_indices
+        blocked = self.remaining_mask[tuple(swept.T)]
+        if not blocked.any():
+            return True
+        # Only the terminal active-tip footprint is exempted. Shaft contact and
+        # any intervening intact tissue outside that footprint reject insertion.
+        exempt = {tuple(i) for i in footprint}
+        return all(tuple(i) in exempt for i in swept[blocked])
+
+    def proposed_actions(self) -> tuple[MacroAction, ...]:
+        if self._proposals is not None:
+            return self._proposals
+        empty = _readonly(np.empty((0, 3)), int)
+        stop = MacroAction("STOP", None, None, None, None, empty, empty)
+        proposals = [stop]
+        if not self.terminated:
+            frontier = self.frontier_mask()
+            indices = np.argwhere(frontier & ~self.config.hard_exclusion)
+            targets = np.argwhere((self.config.target_labels > 0) & self.remaining_mask)
+            if len(targets):
+                center = np.mean(targets, axis=0)
+                distances = np.linalg.norm((indices - center) * self._spacing, axis=1)
+                # Stable sorting defines a shared, bounded proposal generator;
+                # this heuristic is the same for learned and search policies.
+                indices = indices[np.argsort(distances, kind="stable")]
+            for index in indices[:self.config.proposal_scan_limit]:
+                for tool in self.config.tools:
+                    action = self._primitive(index, tool)
+                    if action is not None and self._legal(action, frontier):
+                        proposals.append(action)
+                        if len(proposals) >= self.config.max_actions:
+                            break
+                if len(proposals) >= self.config.max_actions:
+                    break
+        self._proposals = tuple(proposals)
+        return self._proposals
+
+    def action_mask(self) -> np.ndarray:
+        return np.ones(len(self.proposed_actions()), dtype=bool)
+
+    def observation(self) -> SimulationObservation:
+        actions = self.proposed_actions()
+        features = np.zeros((len(actions), len(ACTION_FEATURE_NAMES)), dtype=np.float32)
+        features[0, 0] = 1.0
+        remaining_fraction = self._target_fraction[self.remaining_mask].sum() / max(self._total_target, 1e-9)
+        for row, action in enumerate(actions[1:], start=1):
+            indices = action.removal_indices
+            indices = indices[self.remaining_mask[tuple(indices.T)]]
+            coords = tuple(indices.T)
+            labels = self.config.target_labels[coords]
+            tool = next(t for t in self.config.tools if t.tool_id == action.tool_id)
+            index = np.array(action.target_index)
+            lo, hi = np.maximum(index - 1, 0), np.minimum(index + 2, self.remaining_mask.shape)
+            neighbors = self.config.target_labels[tuple(slice(a, b) for a, b in zip(lo, hi))]
+            features[row] = (0, self._target_fraction[coords].sum() * self.voxel_volume_mm3,
+                             self._normal_fraction[coords].sum() * self.voxel_volume_mm3,
+                             self.config.nominal_motor[coords].sum() * self.voxel_volume_mm3,
+                             self.config.nominal_language[coords].sum() * self.voxel_volume_mm3,
+                             action.insertion_distance_mm, tool.tip_radius_mm, tool.shaft_radius_mm,
+                             float(self._current_tool is not None and self._current_tool != action.tool_id),
+                             len(self._actions) / self.config.max_steps, remaining_fraction,
+                             np.mean(neighbors > 0))
+        state = np.array([remaining_fraction, len(self._actions) / self.config.max_steps,
+                          self.removed_mask.sum() / self.config.tissue_mask.sum(),
+                          len(self._nominal_severed_edges) / max(len(self.config.graph_edges), 1),
+                          *self.config.evidence_available], dtype=np.float32)
+        return SimulationObservation(tuple(a.action_id for a in actions), _readonly(features), _readonly(self.action_mask()), _readonly(state))
+
+    def step(self, action: str | int) -> StepResult:
+        self.assert_model_frozen()
+        actions = self.proposed_actions()
+        if isinstance(action, (int, np.integer)):
+            if action < 0 or action >= len(actions):
+                raise InvalidActionError("Action index is outside the current proposal set")
+            selected = actions[int(action)]
+        else:
+            selected = next((a for a in actions if a.action_id == action), None)
+            if selected is None:
+                raise InvalidActionError("Unknown, stale, or inaccessible action")
+        if selected.action_id == "STOP":
+            self.terminated = True
+            self.termination_reason = self.termination_reason or "explicit_stop"
+            self._proposals = None
+            return StepResult(self.observation(), 0.0, True, {"action_id": "STOP", "termination_reason": self.termination_reason})
+        if self.terminated:
+            raise InvalidActionError("Episode has terminated")
+        if not self._legal(selected, self.frontier_mask()):
+            raise InvalidActionError("Complete-tool access or exposed-frontier constraint failed")
+        indices = selected.removal_indices
+        indices = indices[self.remaining_mask[tuple(indices.T)]]
+        coords = tuple(indices.T)
+        labels = self.config.target_labels[coords]
+        target = float(self._target_fraction[coords].sum() * self.voxel_volume_mm3)
+        normal = float(self._normal_fraction[coords].sum() * self.voxel_volume_mm3)
+        motor = float(self._hidden_motor[coords].sum() * self.voxel_volume_mm3)
+        language = float(self._hidden_language[coords].sum() * self.voxel_volume_mm3)
+        newly_severed = {k for k, edge in self._hidden_graph.items() if k not in self._severed_edges and edge[coords].any()}
+        self._nominal_severed_edges.update(k for k, edge in self.config.graph_edges.items() if edge[coords].any())
+        tool_change = self._current_tool is not None and self._current_tool != selected.tool_id
+        weights = self.config.reward
+        reward = (weights.target_per_mm3 * target - weights.normal_per_mm3 * normal
+                  - weights.motor_per_mm3 * motor - weights.language_per_mm3 * language
+                  - weights.action_cost - weights.motion_per_mm * 2 * selected.insertion_distance_mm
+                  - weights.tool_change_cost * tool_change - weights.graph_edge_cost * len(newly_severed))
+        self.remaining_mask[coords] = False
+        self.removed_mask[coords] = True
+        if len(selected.swept_indices):
+            self.exposed_mask[tuple(selected.swept_indices.T)] = True
+        self._severed_edges.update(newly_severed)
+        self._current_tool = selected.tool_id
+        self._actions.append(selected.action_id)
+        self.total_reward += float(reward)
+        if len(self._actions) >= self.config.max_steps:
+            self.terminated = True
+            self.termination_reason = "step_budget"
+        self._proposals = None
+        info = {"action_id": selected.action_id, "target_removed_mm3": target, "normal_removed_mm3": normal,
+                "motor_surrogate_delta": motor, "language_surrogate_delta": language,
+                "newly_severed_edges": sorted(newly_severed), "removed_indices": indices.tolist(),
+                "tip_mm": selected.tip_mm, "axis_unit": selected.axis_unit,
+                "termination_reason": self.termination_reason}
+        self._history.append(copy.deepcopy(info))
+        return StepResult(self.observation(), float(reward), self.terminated, info)
+
+    def metrics(self) -> dict[str, Any]:
+        labels = self.config.target_labels
+        removed_by_compartment = {self.config.compartment_names.get(int(label), f"label_{label}"): float(fraction[self.removed_mask].sum() * self.voxel_volume_mm3) for label, fraction in self.config.target_fractions.items()}
+        residual_by_compartment = {self.config.compartment_names.get(int(label), f"label_{label}"): float(fraction[self.remaining_mask].sum() * self.voxel_volume_mm3) for label, fraction in self.config.target_fractions.items()}
+        return {
+            "case_id": self.config.case_id, "decision_model_hash": self.decision_model_hash,
+            "episode_world_hash": self._hidden_world_hash, "seed": self.seed,
+            "world_generator": self.config.world_generator.to_dict(),
+            "world_generator_fingerprint": self.world_generator_fingerprint,
+            "removed_unknown_coverage_volume_mm3": float(np.count_nonzero(self.removed_mask & ~self._hidden_known_coverage) * self.voxel_volume_mm3),
+            "unknown_coverage_cost_policy": "conservative_maximum_nominal_or_one_surrogate_per_mm3",
+            "optimizer_observability": "nominal_evidence_only", "simulation_version": SIMULATOR_VERSION,
+            "total_reward": float(self.total_reward), "environment_steps": len(self._actions),
+            "actions": self._actions + (["STOP"] if self.termination_reason == "explicit_stop" else []),
+            "termination_reason": self.termination_reason,
+            "simulated_removed_target_volume_mm3": float(self._target_fraction[self.removed_mask].sum() * self.voxel_volume_mm3),
+            "simulated_removed_normal_volume_mm3": float(self._normal_fraction[self.removed_mask].sum() * self.voxel_volume_mm3),
+            "modeled_residual_target_volume_mm3": float(self._target_fraction[self.remaining_mask].sum() * self.voxel_volume_mm3),
+            "removed_by_compartment_mm3": removed_by_compartment,
+            "residual_by_compartment_mm3": residual_by_compartment,
+            "motor_surrogate": float(self._hidden_motor[self.removed_mask].sum() * self.voxel_volume_mm3) if self.config.evidence_available[0] else None,
+            "language_surrogate": float(self._hidden_language[self.removed_mask].sum() * self.voxel_volume_mm3) if self.config.evidence_available[1] else None,
+            "functional_evidence_available": dict(zip(("motor", "language"), self.config.evidence_available)),
+            "derivation": thaw_json(self.config.derivation),
+            "modeled_severed_edges": sorted(self._severed_edges),
+            "clinical_deficit_probability": None,
+            "clinical_probability_reason": "no_validated_clinical_outcome_model",
+            "assumptions": ["discrete_exposed_tip_suction", "full_retraction_before_reorientation", "rigid_static_tissue_geometry", "hypothetical_intracranial_access"],
+            "unassessed": ["vascular_anatomy", "tissue_forces", "postoperative_function", "microscopic_infiltration"],
+            "history": copy.deepcopy(self._history),
+        }
+
+    def replay(self, actions: Iterable[str | int], seed: int = 0) -> list[StepResult]:
+        self.reset(seed)
+        return [self.step(action) for action in actions]
+
+
+def make_synthetic_simulator(*, world_translation_voxels: int = 0) -> SequentialSimulator:
+    """Tiny known geometry: two target cells behind one paid normal-tissue cell.
+
+    A straight cannula can remove the three consecutive cells. STOP scores zero;
+    the full legal route scores 1.74 with default preferences and no uncertainty.
+    """
+    tissue = np.ones((3, 3, 3), bool)
+    targets = np.zeros(tissue.shape, np.int16)
+    targets[1, 1, 1:] = 1
+    hard = np.ones_like(tissue)
+    hard[1, 1, :] = False
+    tool = ToolGeometry("synthetic-cannula", tip_radius_mm=0.2, shaft_radius_mm=0.2, working_length_mm=10, max_access_angle_deg=5, tip_length_mm=0.2)
+    config = SimulationConfig(tissue, targets, np.eye(4), AccessWindow((1., 1., -.5), (0., 0., 1.), .45),
+                              (tool,), hard_exclusion=hard, max_steps=4, max_actions=4,
+                              world_translation_voxels=world_translation_voxels)
+    return SequentialSimulator(config)
+
+
+@dataclass(frozen=True)
+class SearchResult:
+    actions: tuple[str, ...]
+    nominal_score: float
+    environment_steps: int
+    elapsed_seconds: float
+    termination: str
+    optimizer_mode: str = "SEARCH"
+    observability: str = "nominal_evidence_only"
+
+
+def _nominal_delta(simulator: SequentialSimulator, action: MacroAction) -> float:
+    if action.action_id == "STOP":
+        return 0.0
+    indices = action.removal_indices
+    indices = indices[simulator.remaining_mask[tuple(indices.T)]]
+    coords = tuple(indices.T)
+    labels = simulator.config.target_labels[coords]
+    weights = simulator.config.reward
+    volume = simulator.voxel_volume_mm3
+    edges = sum(k not in simulator._nominal_severed_edges and mask[coords].any()
+                for k, mask in simulator.config.graph_edges.items())
+    change = simulator._current_tool is not None and simulator._current_tool != action.tool_id
+    return float(volume * (weights.target_per_mm3 * simulator._target_fraction[coords].sum()
+                           - weights.normal_per_mm3 * simulator._normal_fraction[coords].sum()
+                           - weights.motor_per_mm3 * simulator.config.nominal_motor[coords].sum()
+                           - weights.language_per_mm3 * simulator.config.nominal_language[coords].sum())
+                 - weights.action_cost - weights.motion_per_mm * 2 * action.insertion_distance_mm
+                 - weights.tool_change_cost * change - weights.graph_edge_cost * edges)
+
+
+def greedy_search(simulator: SequentialSimulator, *, max_wall_seconds: float | None = None) -> SearchResult:
+    """Immediate nominal reward baseline; it may abstain before a useful corridor."""
+    import time
+    started = time.perf_counter()
+    state = simulator.clone()
+    actions: list[str] = []
+    score = 0.0
+    while not state.terminated:
+        if max_wall_seconds is not None and time.perf_counter() - started >= max_wall_seconds:
+            break
+        options = state.proposed_actions()
+        values = [_nominal_delta(state, option) for option in options]
+        index = int(np.argmax(values))
+        if index == 0:
+            break
+        action = options[index]
+        score += values[index]
+        actions.append(action.action_id)
+        state.step(action.action_id)
+    actions.append("STOP")
+    return SearchResult(tuple(actions), score, len(actions) - 1, time.perf_counter() - started, "greedy_stop")
+
+
+def beam_search(simulator: SequentialSimulator, *, beam_width: int = 8,
+                max_expansions: int = 256, max_wall_seconds: float | None = None) -> SearchResult:
+    """Bounded lookahead using the same proposals as RL and nominal evidence.
+
+    Hidden episode rewards are deliberately ignored for node ranking. The search
+    preserves STOP at every depth and reports only its declared nominal score;
+    evaluation must replay the frozen sequence on separate designated worlds.
+    """
+    import time
+    if beam_width < 1 or max_expansions < 1 or (max_wall_seconds is not None and max_wall_seconds <= 0):
+        raise ValueError("Search width and expansion budget must be positive")
+    started = time.perf_counter()
+    beam = [(0.0, (), simulator.clone())]
+    best_score, best_actions = 0.0, ()
+    expansions = 0
+    timed_out = False
+    while beam and expansions < max_expansions:
+        if max_wall_seconds is not None and time.perf_counter() - started >= max_wall_seconds:
+            timed_out = True
+            break
+        children = []
+        for score, actions, state in beam:
+            if state.terminated:
+                continue
+            for action in state.proposed_actions()[1:]:
+                if expansions >= max_expansions:
+                    break
+                if max_wall_seconds is not None and time.perf_counter() - started >= max_wall_seconds:
+                    timed_out = True
+                    break
+                value = score + _nominal_delta(state, action)
+                child = state.clone()
+                child.step(action.action_id)
+                expansions += 1
+                sequence = actions + (action.action_id,)
+                if value > best_score + 1e-12:
+                    best_score, best_actions = value, sequence
+                children.append((value, sequence, child))
+        children.sort(key=lambda node: (-node[0], node[1]))
+        beam = children[:beam_width]
+    return SearchResult(best_actions + ("STOP",), best_score, expansions,
+                        time.perf_counter() - started,
+                        "wall_budget" if timed_out else "expansion_budget" if expansions >= max_expansions else "search_exhausted")
+
+
+def make_patient_simulator(case: Any, *, block_size: int = 6, max_steps: int = 48,
+                           max_actions: int = 8, proposal_scan_limit: int = 128,
+                           access: AccessWindow | None = None,
+                           nominal_motor: np.ndarray | None = None,
+                           nominal_language: np.ndarray | None = None,
+                           world_generator: WorldGeneratorConfig | None = None) -> SequentialSimulator:
+    """Build an explicitly coarse, annotation-assisted structural experiment.
+
+    The native CaseData remains authoritative and unmodified. Max-occupancy
+    pooling preserves thin tissue as occupied; a mixed target block is assigned
+    its most represented source compartment for action proposals only. Exact source
+    compartment and normal-tissue fractions are retained for volume/reward accounting.
+    A voxel contact consumes one indivisible coarse tissue cell: final physical
+    geometry and finer-cell removal require independent resolution sensitivity.
+
+    Without supplied functional arrays, motor/language results remain null and
+    the objective is explicitly limited to target/normal/effort geometry. No
+    population prior or patient tract is invented. MRI support is used only as a
+    declared envelope approximation when an inspected brain mask is absent.
+    """
+    if not isinstance(block_size, int) or isinstance(block_size, bool) or block_size < 1:
+        raise ValueError("block_size must be a positive integer")
+    native_shape = tuple(case.mri.shape)
+    if not case.compartments or not any(np.any(mask) for mask in case.compartments.values()):
+        raise ValueError("At least one nonempty reviewed target compartment is required")
+    shape = tuple(int(np.ceil(n / block_size)) for n in native_shape)
+    padding = tuple((0, n * block_size - m) for n, m in zip(shape, native_shape))
+
+    def pool(array: np.ndarray, mode: str = "max") -> np.ndarray:
+        value = np.asarray(array)
+        if value.shape != native_shape or not np.isfinite(value).all():
+            raise ValueError("Patient-derived fields must be finite and aligned with the source MRI")
+        padded = np.pad(value, padding, mode="constant")
+        blocks = padded.reshape(shape[0], block_size, shape[1], block_size, shape[2], block_size)
+        return blocks.max(axis=(1, 3, 5)) if mode == "max" else blocks.sum(axis=(1, 3, 5))
+
+    labels = np.zeros(shape, dtype=np.int16)
+    names = tuple(sorted(case.compartments))
+    counts = np.stack([pool(case.compartments[name].astype(np.int32), "sum") for name in names])
+    present = counts.sum(axis=0) > 0
+    labels[present] = np.argmax(counts, axis=0)[present] + 1
+    overlap = np.sum(np.stack([np.asarray(case.compartments[name], bool) for name in names]), axis=0)
+    if np.any(overlap > 1):
+        raise ValueError("Patient sequential experiment requires nonoverlapping target compartments")
+    if case.brain_mask is None:
+        collection = case.metadata.get("source_collection", {})
+        skull_stripped_declared = case.metadata.get("skull_stripped") is True or collection.get("name") == "UCSF-PDGM"
+        if not skull_stripped_declared:
+            raise ValueError("A reviewed brain mask is required: full-head or unknown MRI support cannot define an intracranial tissue envelope")
+        native_tissue = binary_fill_holes(np.asarray(case.mri) != 0)
+        envelope_source = "hole_filled_nonzero_MRI_support_unreviewed_skull_strip_assumption"
+    else:
+        native_tissue = np.asarray(case.brain_mask, bool)
+        envelope_source = "case_brain_mask"
+    native_tissue = native_tissue | (overlap > 0)
+    tissue = pool(native_tissue).astype(bool)
+    affine = np.array(case.affine, dtype=float, copy=True)
+    affine[:3, 3] += affine[:3, :3] @ np.full(3, (block_size - 1) / 2)
+    affine[:3, :3] *= block_size
+    spacing = np.linalg.norm(affine[:3, :3], axis=0)
+    centroid = np.rint(np.mean(np.argwhere(labels > 0), axis=0)).astype(int)
+    if access is None:
+        options = []
+        for axis in range(3):
+            selector = [int(v) for v in centroid]
+            selector[axis] = slice(None)
+            occupied = np.flatnonzero(tissue[tuple(selector)])
+            if not len(occupied):
+                continue
+            for side in (-1, 1):
+                boundary = float(occupied[0] - .5 if side == -1 else occupied[-1] + .5)
+                coordinate = centroid.astype(float)
+                coordinate[axis] = boundary
+                depth = abs(coordinate[axis] - centroid[axis]) * spacing[axis]
+                direction = affine[:3, axis] / spacing[axis] * (-side)
+                center = affine[:3, :3] @ coordinate + affine[:3, 3]
+                options.append((depth, axis, side, center, direction))
+        if not options:
+            raise ValueError("No external tissue envelope found for a hypothetical access")
+        _, _, _, center, direction = min(options, key=lambda item: item[:3])
+        access = AccessWindow(center, direction, max(4., float(min(spacing))),
+                              "hypothetical_nearest_envelope_axis_access")
+    # Realistic dimensions are not asserted; distinct generic rigid geometries
+    # expose tool sensitivity while source-space resolution remains inspectable.
+    tools = (
+        ToolGeometry("patient-generic-suction", .8, 1.2, 120., max_access_angle_deg=35, tip_length_mm=1.0),
+        ToolGeometry("patient-generic-wide-suction", .8, 2.4, 120., max_access_angle_deg=35, tip_length_mm=1.0),
+    )
+    source_volume = {name: float(np.count_nonzero(case.compartments[name]) * case.voxel_volume_mm3) for name in names}
+    derivation = {
+        "track": "annotation_assisted_coarse_structural_simulation",
+        "block_size_native_voxels": block_size, "native_shape": native_shape,
+        "grid_spacing_mm": tuple(float(v) for v in spacing),
+        "tissue_envelope_source": envelope_source,
+        "pooling": "any_tissue_any_target_then_dominant_target_compartment",
+        "target_volume_interpretation": "exact_source_fraction_accounting_inside_coarse_removal_cells",
+        "removal_primitive": "indivisible_coarse_cell_on_terminal_tip_contact",
+        "source_compartment_volumes_mm3": source_volume,
+        "requires_independent_finer_resolution_removal_check": True,
+        "functional_mode": "supplied_evidence" if nominal_motor is not None and nominal_language is not None else "restricted_missing_functional_evidence",
+    }
+    config = SimulationConfig(tissue, labels, affine, access, tools,
+                              nominal_motor=None if nominal_motor is None else pool(nominal_motor),
+                              nominal_language=None if nominal_language is None else pool(nominal_language),
+                              max_steps=max_steps, max_actions=max_actions, proposal_scan_limit=proposal_scan_limit,
+                              world_generator=world_generator, case_id=case.case_id, source_hash=case.semantic_hash,
+                              compartment_names={i + 1: name for i, name in enumerate(names)},
+                              tissue_fraction=pool(native_tissue.astype(float), "sum") / block_size ** 3,
+                              target_fractions={i + 1: counts[i] / block_size ** 3 for i in range(len(names))},
+                              evidence_available=(nominal_motor is not None, nominal_language is not None),
+                              derivation=derivation)
+    return SequentialSimulator(config)
+
+
+def make_branching_simulator(*, world_generator: WorldGeneratorConfig | None = None) -> SequentialSimulator:
+    """Solid tissue fixture with paid access and motor/language alternatives.
+
+    The middle surface cell must be removed before the left or right compartment
+    can be accessed. Five removal actions limit extent. Distinct complete shaft
+    radii change oblique access and switching incurs effort. This is synthetic
+    anatomy with declared hazards, suitable for an exhaustive small reference.
+    """
+    tissue = np.ones((3, 3, 3), dtype=bool)
+    labels = np.zeros(tissue.shape, np.int16)
+    labels[0, 1, 1:] = 1
+    labels[2, 1, 1:] = 2
+    motor = np.zeros(tissue.shape)
+    motor[0, 1, 2] = 1.0
+    language = np.zeros(tissue.shape)
+    language[2, 1, 2] = .35
+    hard = np.ones(tissue.shape, bool)
+    hard[:, 1, :] = False
+    narrow = ToolGeometry("branch-narrow", .12, .12, 12., max_access_angle_deg=70, tip_length_mm=.15)
+    wide = ToolGeometry("branch-wide", .12, .45, 12., max_access_angle_deg=70, tip_length_mm=.15)
+    return SequentialSimulator(SimulationConfig(
+        tissue, labels, np.eye(4), AccessWindow((1., 1., -.5), (0., 0., 1.), 2.0), (narrow, wide),
+        nominal_motor=motor, nominal_language=language, hard_exclusion=hard,
+        max_steps=5, max_actions=16, proposal_scan_limit=64, world_generator=world_generator,
+        case_id="synthetic_branching_paid_access", source_hash="synthetic-branching-v1",
+        derivation={"track": "synthetic_known_geometry", "target_ordering": "five_action_horizon", "functional_evidence": "constructed_surrogate_fields"}))

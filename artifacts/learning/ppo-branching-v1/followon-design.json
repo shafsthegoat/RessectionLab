@@ -1,0 +1,30 @@
+{
+  "config": {
+    "checkpoint_interval": 8,
+    "clip_epsilon": 0.2,
+    "entropy_weight": 0.01,
+    "episodes_per_update": 4,
+    "epochs_per_batch": 4,
+    "gae_lambda": 0.95,
+    "gamma": 1.0,
+    "hidden_features": 16,
+    "learning_rate": 0.003,
+    "max_environment_steps": 2048,
+    "max_episode_steps": 24,
+    "max_gradient_norm": 5.0,
+    "max_gradient_steps": 128,
+    "max_wall_seconds": 60,
+    "minibatch_size": 64,
+    "normalize_advantages": true,
+    "seed": 0,
+    "value_weight": 0.5
+  },
+  "final_worlds_used": false,
+  "reason": "32 Adam steps cover only 8 independent rollout batches under 4 epochs. This follow-on permits 128 actual Adam steps to cover 32 fresh batches, as in prior REINFORCE32, with explicit fourfold optimizer budget.",
+  "seeds": [
+    11,
+    23,
+    47
+  ],
+  "study_role": "development_only"
+}

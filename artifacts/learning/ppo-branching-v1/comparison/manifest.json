@@ -1,0 +1,359 @@
+{
+  "benchmark_limitations": [
+    "development_only_no_locked_cohort_claim",
+    "single_default_preference_not_a_pareto_frontier",
+    "no_population_checkpoint",
+    "search_uses_nominal_scoring_not_world_ensemble_optimization"
+  ],
+  "clinical_deficit_probability": null,
+  "decision_model": {
+    "action_primitives": {
+      "max_actions": 16,
+      "proposal_scan_limit": 64,
+      "simulation_version": "connected-suction-v1"
+    },
+    "case_hash": "synthetic-branching-v1",
+    "fingerprint": "sha256:866b9ed76389feee21f3edbed46c0b8dd3f82766038d29b845d4f67f2647e403",
+    "geometry": {
+      "simulation_hash": "sha256:d1ab7b03040e5cfb2cff4c48ef1d8d1f0b796620f621c0d9d2596b6b393c112c"
+    },
+    "objectives": {
+      "action_cost": 0.02,
+      "graph_edge_cost": 1.0,
+      "language_per_mm3": 2.0,
+      "motion_per_mm": 0.0,
+      "motor_per_mm3": 2.0,
+      "normal_per_mm3": 0.2,
+      "target_per_mm3": 1.0,
+      "tool_change_cost": 0.02
+    },
+    "planning_as_of": null,
+    "tools": [
+      {
+        "max_access_angle_deg": 70.0,
+        "parameter_source": "generic research geometry; not a verified commercial device",
+        "shaft_radius_mm": 0.12,
+        "tip_length_mm": 0.15,
+        "tip_radius_mm": 0.12,
+        "tool_id": "branch-narrow",
+        "working_length_mm": 12.0
+      },
+      {
+        "max_access_angle_deg": 70.0,
+        "parameter_source": "generic research geometry; not a verified commercial device",
+        "shaft_radius_mm": 0.45,
+        "tip_length_mm": 0.15,
+        "tip_radius_mm": 0.12,
+        "tool_id": "branch-wide",
+        "working_length_mm": 12.0
+      }
+    ],
+    "world_generator": {
+      "family": "rigid_gaussian",
+      "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+      "rotation_center_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_scale_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "translation_scale_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "version": "rigid-registration-v1"
+    }
+  },
+  "effective_shared_nonstop_horizon": 5,
+  "evidence_available": [
+    true,
+    true
+  ],
+  "experiment_label": "synthetic_smoke",
+  "independent_patient_count": 0,
+  "interpretation": "deterministic_optimization",
+  "optimization_seeds": [
+    11,
+    23,
+    47
+  ],
+  "preoperative_planning_hash": null,
+  "protocol_id": "patient-pilot-v0.1",
+  "requested_simulator_nonstop_horizon": 5,
+  "run_id": "development-4737677b-2ef8-4ed6-9e03-449932c98871",
+  "simulation_derivation": {
+    "functional_evidence": "constructed_surrogate_fields",
+    "target_ordering": "five_action_horizon",
+    "track": "synthetic_known_geometry"
+  },
+  "simulation_hash": "sha256:d1ab7b03040e5cfb2cff4c48ef1d8d1f0b796620f621c0d9d2596b6b393c112c",
+  "source": {
+    "content_hash": "sha256:7c8cd931f2487b06c59d4e53c7c77e5bcdfbbd2f46558f8d23f03fbe1b468085",
+    "file_sha256": {
+      "ANNOTATED_REFERENCES.md": "d3db3f9e7191d4b2353a2e0a3de37bc18f5d533d7a875fe50feac7cbf135bdbc",
+      "EXPERIMENT_LOG.md": "4858af7bde1fcbcfe0d5447a0e8519ca08464981e1760e3cc24047d7f41671c6",
+      "EXPERIMENT_PROTOCOL.md": "a177dddfe6208623953096a15cdc80a0d531ba3db590f64503bdcfc3b7239eef",
+      "IMPLEMENTING_AGENT_HANDOFF.md": "50b099ef9d2e184ba69d57bd1fe0405057920675e478b60b55693ac531204254",
+      "MASTER_PLAN.md": "0f426f708d61eea96ba6094e1b75ef886bd299e006c6e33b272d0afef2b60de7",
+      "PROJECT_STATUS.md": "73f63eac589fe6bcd77257b1fb1cd9e56df65aa424227e6209289b16bc458f95",
+      "README.md": "498b08821c64a1e89007fc644321a8cd0ec08d43225552383c51463794195e01",
+      "docs/architecture-evidence.md": "a7d1e0ae5e4f88d969e17f58d9db50ca926461ef7a84db71a508c2d3c3b4743b",
+      "docs/closest-work.md": "d7554c250df8bf7d00f1f97f89a37e4059b1fd28344290182c8ff37d3907f350",
+      "docs/cohort-registry.md": "a6adb9e2d86105aae830276db545a1234b434df5cc34bae5f6349200b7f95749",
+      "docs/data_acquisition.md": "f3bc3b550e5d27530d62f4b6f1440d53546564998c54a4da093db9f769992fad",
+      "docs/diffusion-pipeline.md": "7aac6837da3ae5004cae2d70cac9ebf31cb7727a1576c3191515607ce4617edb",
+      "docs/diffusion-tools.md": "52df8d0bd7976cffe8eebd560e60acd93375489f405c69f6a99321c6b0820773",
+      "docs/diffusion_source.md": "906a6d9958b9632560bef1ee37fe7420d07056bb8088e6ab072ce7a41efdf9b7",
+      "docs/functional_evidence.md": "fa42227ba773465a7a3eb10d4b16abb47b395fdc753980740959a6dfc00d31ec",
+      "docs/packaging.md": "11121163402268e4585cc329b6399963dec458b008d2e8ed89f73d886f80976a",
+      "docs/preprocessing.md": "145efd3dcbbe49c408a46724d0294225084a74e4186160d20bca4fe7bb60cb3b",
+      "docs/prior-registration.md": "9d16fb303c7c0365e7b69abc3cb3c93007414a883b399bd0180cd0cc47a4f25a",
+      "pyproject.toml": "0d373f8cbb9e68bff40bb9c10a50e0ac461c0495c91699f5598d7af0c89e5ad7",
+      "requirements-lock.txt": "f67a5e95767264eb37068bdd8ac058d770121eaf321fa3a58c716a9ec40476ea",
+      "scripts/acquire_btc_case.py": "b7a98f4fc81b62cbfcc67ccbdb7c9249c715dca1a60cef9bb3f3cdb69bb13bc0",
+      "scripts/acquire_public_case.py": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb",
+      "scripts/benchmark_runtime.py": "5a63df9e0d39a160604b48c8839e2e1d96963b2fa471a3f112826d294ef04a0a",
+      "scripts/build_macos.py": "ec9ab104dd27a9b20267e909497978f30cba2de92e840204532ffae801d7c305",
+      "scripts/prepare_btc_case.py": "6e64fa18645a0bf53b34776c3cc8f4be7d31823038344aaf58f2fe821f9de68d",
+      "scripts/prepare_case.py": "1998356eac3647b53b6c58598801c2cdbbfda1203a766b660d777018fabbe5ef",
+      "scripts/probe_hardware.py": "1a0487e0dd9728ae74d6f88a840cbb68c61137ef95592eb7bc9dea7989c64985",
+      "scripts/run_patient_learning.py": "ea44614d59d50e50cd4016438553a147057f6c1c23c89a271bf2bd954b401672",
+      "scripts/setup_diffusion_tools.py": "72fb3561d2651e1fb0ff61b6fbb3803321abc1eff16f0847b1c77b923fe5301f",
+      "src/resectionlab/__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+      "src/resectionlab/anatomy.py": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37",
+      "src/resectionlab/app/__init__.py": "cad7c4e1282136061456123711d5bddb56413db3ddfb69314ee78f744d2d6d1e",
+      "src/resectionlab/app/annotation.py": "724debbe3ec4bef2a3b6eeba83b497c579f26b8a3549117edc5d72bdd993b6a5",
+      "src/resectionlab/app/desktop.py": "e9b33c7c2dce2dd6b329f9af97033fb33096dbe8b1b9e734e5ae56af489a0f96",
+      "src/resectionlab/app/refinement.py": "ce6116509a83582c904e844305deceb11c9282c2c6267d7fdaea01a734695c2c",
+      "src/resectionlab/app/reslice.py": "f397f7317da203ed88561d6638b8b41af54349bd145af5d0ccea01aa54d54796",
+      "src/resectionlab/app/scene.py": "21a2100de199360a990a12cd4e77fe627cdce5bb6ef79fb1cc2aa074d71f1b5b",
+      "src/resectionlab/app/slice_view.py": "63b279123a94e748222fc5102eeda7c1d30a3eebab2833aecc15b2335df14367",
+      "src/resectionlab/app/style.py": "aca2726fe243e19d11e85463589ef9b5db9e7806e4b36d8646ff8167c2d29468",
+      "src/resectionlab/app/training_view.py": "07fa2bfdacdb470d080cf37d6c3df52d5eee540041619cad9ae6c94132fd88d1",
+      "src/resectionlab/app/workers.py": "d3cb30b107fcfb930c50c26e9ef87cf277bcd90c4ec824909d6c375e9f4f2f8c",
+      "src/resectionlab/cohort.py": "d69538f80af8b318068af70dbc963b7a9ca6c3a4f62d6e8e542d6e43548fa874",
+      "src/resectionlab/core.py": "ca8760f1f5b4ac7dcf765ec51e47e858758b33940643dfa0c12e40b1fdc6d4fd",
+      "src/resectionlab/desktop_bridge.py": "10eeea65cd27913abef35ef9951941b3038b75b58ee782735469d6276b707b47",
+      "src/resectionlab/diffusion.py": "e7f57bf7467fb3cb5d6b9b3f1c80e4665710713124d0720aa84d31ccc03b8e21",
+      "src/resectionlab/evaluation.py": "923e1f523a3b63ae2086ef56fe011f7a565dc9a59421bb8f3261968a054f4ca1",
+      "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+      "src/resectionlab/imaging.py": "c28b2be5f4acf5cd2023c889c3d02fb30a6902298b46602844c5317e41e2da17",
+      "src/resectionlab/learning.py": "474cf054effc1d5bbfba7d2071fcf460bd2edc1144b419ec7345a4296b403086",
+      "src/resectionlab/learning_ppo.py": "a3814bc5da4837b66ae20496c38e17edd0edf73ef7863a920924cd7ec2a42d88",
+      "src/resectionlab/native_resection.py": "e40b0855526e1e7cff6575f54273e899480fed0b6c117c18b049ef2ff0d8696a",
+      "src/resectionlab/native_simulation.py": "3f16f73da9991e4d3f483f1aade80dddee5dab4bfd613b049bfa28ba48443803",
+      "src/resectionlab/planning.py": "aa989269868a3a8655f93c9cc0a68e73f383ecf9b282ddedb071c6f2b3b68bff",
+      "src/resectionlab/preprocessing.py": "dbd2c4ba9551e2aa0d454b638e256ad8bc6cdf45dcdc8ec08e091e43c3eb14e5",
+      "src/resectionlab/prior_registration.py": "9828e76ed3e29e232c39dd16ece7d5fefa4cd366d1cab7899121e929ef34a703",
+      "src/resectionlab/simulation.py": "0ca58ca9340581304a73bfae2b8335c4b15819ac8936a459ea385908800836b0",
+      "src/resectionlab/worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91",
+      "tests/test_adversarial.py": "b651d3637b7800eaaa7308840692e4f2845e95db4b18b3f463b353db089467ed",
+      "tests/test_anatomy.py": "bf49da6ac7f268fda490e534c4355cac4a3d44849f5a18f6bcee1ab85736a79c",
+      "tests/test_app_annotation.py": "dcd658a8f09f05a3b28efe5c034f8c3e00d40e96562b8e877cb27b05ce491b6b",
+      "tests/test_app_native_workflow.py": "f1fb2f59fc1ca7f7909b46de8aebe5128739955804a31452888879c33c0d57d7",
+      "tests/test_app_refinement.py": "b8c10d2ad5eb2b075f2a315cc19084cc5c286954891510f41d303dac83de4741",
+      "tests/test_app_reslice.py": "a1c0b17d8791eb37b12c2aa0e47f24cc5d0c666755d8896f64950f4a517e15c7",
+      "tests/test_app_workers.py": "33dfe49749a3a6704bc5e720c612f3742d5da22a31b26bb8d35a2cdfdbd371cc",
+      "tests/test_btc_acquisition.py": "cf23fb704b4955390512a9c452194d8f56fca06002e51ad72520a815e9e68e23",
+      "tests/test_btc_preparation.py": "7e3af168dad0a6c6047ffe9edf644ac01b4e636ffaeb8bb9153890089e66dde1",
+      "tests/test_cohort.py": "b9336228d23a50a2fde3386ac77103d0059acd846a627bed19439fc3e134be06",
+      "tests/test_core.py": "a37d8a014de2212d6786e73c12dec8a152635f96ad2b45311539587693b64550",
+      "tests/test_data_acquisition.py": "a6a98560e4c2abc453fb27a44566d6bb86b0a9a22aebc6d4d9b14852403de372",
+      "tests/test_desktop_bridge.py": "c80ca663fc6b023303a494d8fe0da9da23f325df5950b5d6339a42b61bb122be",
+      "tests/test_diffusion.py": "44b00d2deb514275cb19babc403d8d8617f7909fcd60d4274db0741fcd608cdf",
+      "tests/test_experiment_runner.py": "636908e17f08d317601c3e6cc46370b668d4caad15b757caf474aad666e22012",
+      "tests/test_geometry.py": "66db8de2af015527c8ec59666e9cef3218ceddb86d6c06f82d934062632dd5f9",
+      "tests/test_imaging.py": "f03f676820be2607d8381fc5e6b00bf6124ce9d103f98a34d98d4525647b55bb",
+      "tests/test_learning.py": "c108afb30bc4d838e6c7c680996ffed6d1bc415510085c6c953cc949d83a038c",
+      "tests/test_learning_ppo.py": "11192fd9befff9efbf55008b62c9f768d1764928972b8080b47bb9596f30cbfa",
+      "tests/test_native_adversarial.py": "c1b607a74b621c88f1a61a1958966c839a7dbc49e98550d9c0026c3344e1eb82",
+      "tests/test_native_resection.py": "9a452e3efba345837099ac7a5d9e91a3f67c91c27ef62454a62bd5466fe4e663",
+      "tests/test_native_simulation.py": "b6e1cd563220cbfa2cbd649cc6c0f459b9b1df88224a90fb3052e9ba6cadea97",
+      "tests/test_planning.py": "00b9905ddb35b27652af4dc222f816ca6bd9752d397a145814cb92e52f88ac03",
+      "tests/test_preprocessing.py": "75be507380920ad40153dfa8cb187de8e0c6b5eb877f99e525637fefee572568",
+      "tests/test_prior_registration.py": "91f19eddd72a38197ab0caa8c4aaeb83fdcfc11cee9da9dfa5e2d050332ccb5e",
+      "tests/test_simulation.py": "fd3f584f47b3d5b4b37c0d1bbdcc50a3adef9b0f153e683c9f8b02010ac916e8",
+      "tests/test_worlds_evaluation.py": "4b059ed5ded4cfbf2308c96a2908b24da55e02db8ca48bae7d4b02d6faf66fc6"
+    },
+    "git_revision": "d9dc0b8f2c6f4db12a3dc0a68a6bee2449103423",
+    "git_status": "M scripts/run_patient_learning.py\n M src/resectionlab/learning.py\n M src/resectionlab/native_simulation.py\n M tests/test_experiment_runner.py\n M tests/test_native_simulation.py\n?? artifacts/app-refinement-smoke/\n?? artifacts/learning/ppo-branching-v1/\n?? artifacts/native_simulation/\n?? desktop/\n?? src/resectionlab/desktop_bridge.py\n?? src/resectionlab/learning_ppo.py\n?? tests/test_app_native_workflow.py\n?? tests/test_desktop_bridge.py\n?? tests/test_learning_ppo.py",
+    "numerical_runtime_content_hash": "sha256:21450a0e066d546665f7c3f134e49fdc175f94f15a25cb0694b4a5665ae3cc21",
+    "numerical_runtime_sha256": {
+      "pyproject.toml": "0d373f8cbb9e68bff40bb9c10a50e0ac461c0495c91699f5598d7af0c89e5ad7",
+      "requirements-lock.txt": "f67a5e95767264eb37068bdd8ac058d770121eaf321fa3a58c716a9ec40476ea",
+      "scripts/run_patient_learning.py": "ea44614d59d50e50cd4016438553a147057f6c1c23c89a271bf2bd954b401672",
+      "src/resectionlab/__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+      "src/resectionlab/anatomy.py": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37",
+      "src/resectionlab/cohort.py": "d69538f80af8b318068af70dbc963b7a9ca6c3a4f62d6e8e542d6e43548fa874",
+      "src/resectionlab/core.py": "ca8760f1f5b4ac7dcf765ec51e47e858758b33940643dfa0c12e40b1fdc6d4fd",
+      "src/resectionlab/desktop_bridge.py": "10eeea65cd27913abef35ef9951941b3038b75b58ee782735469d6276b707b47",
+      "src/resectionlab/diffusion.py": "e7f57bf7467fb3cb5d6b9b3f1c80e4665710713124d0720aa84d31ccc03b8e21",
+      "src/resectionlab/evaluation.py": "923e1f523a3b63ae2086ef56fe011f7a565dc9a59421bb8f3261968a054f4ca1",
+      "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+      "src/resectionlab/imaging.py": "c28b2be5f4acf5cd2023c889c3d02fb30a6902298b46602844c5317e41e2da17",
+      "src/resectionlab/learning.py": "474cf054effc1d5bbfba7d2071fcf460bd2edc1144b419ec7345a4296b403086",
+      "src/resectionlab/learning_ppo.py": "a3814bc5da4837b66ae20496c38e17edd0edf73ef7863a920924cd7ec2a42d88",
+      "src/resectionlab/native_resection.py": "e40b0855526e1e7cff6575f54273e899480fed0b6c117c18b049ef2ff0d8696a",
+      "src/resectionlab/native_simulation.py": "3f16f73da9991e4d3f483f1aade80dddee5dab4bfd613b049bfa28ba48443803",
+      "src/resectionlab/planning.py": "aa989269868a3a8655f93c9cc0a68e73f383ecf9b282ddedb071c6f2b3b68bff",
+      "src/resectionlab/preprocessing.py": "dbd2c4ba9551e2aa0d454b638e256ad8bc6cdf45dcdc8ec08e091e43c3eb14e5",
+      "src/resectionlab/prior_registration.py": "9828e76ed3e29e232c39dd16ece7d5fefa4cd366d1cab7899121e929ef34a703",
+      "src/resectionlab/simulation.py": "0ca58ca9340581304a73bfae2b8335c4b15819ac8936a459ea385908800836b0",
+      "src/resectionlab/worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
+    },
+    "platform": "macOS-26.6-arm64-arm-64bit",
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]"
+  },
+  "started_at": "2026-10-04T07:28:48.147963+00:00",
+  "status": "running",
+  "trainer": "resectionlab.learning_ppo.train_patient_ppo",
+  "training_config": {
+    "checkpoint_interval": 8,
+    "clip_epsilon": 0.2,
+    "entropy_weight": 0.01,
+    "episodes_per_update": 4,
+    "epochs_per_batch": 4,
+    "gae_lambda": 0.95,
+    "gamma": 1.0,
+    "hidden_features": 16,
+    "learning_rate": 0.003,
+    "max_environment_steps": 2048,
+    "max_episode_steps": 24,
+    "max_gradient_norm": 5.0,
+    "max_gradient_steps": 32,
+    "max_wall_seconds": 60,
+    "minibatch_size": 64,
+    "normalize_advantages": true,
+    "seed": 0,
+    "value_weight": 0.5
+  },
+  "world_partitions": {
+    "final_evaluation": {
+      "case_hash": "synthetic-branching-v1",
+      "generator": {
+        "family": "rigid_gaussian",
+        "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+        "rotation_center_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_scale_deg": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "translation_scale_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "version": "rigid-registration-v1"
+      },
+      "interpretation": "deterministic_optimization",
+      "planning_hash": null,
+      "role": "final_evaluation",
+      "seeds": [
+        13930363754444636665,
+        3540522173097896335,
+        9033770491238804985
+      ]
+    },
+    "optimization": {
+      "case_hash": "synthetic-branching-v1",
+      "generator": {
+        "family": "rigid_gaussian",
+        "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+        "rotation_center_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_scale_deg": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "translation_scale_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "version": "rigid-registration-v1"
+      },
+      "interpretation": "deterministic_optimization",
+      "planning_hash": null,
+      "role": "optimization",
+      "seeds": [
+        2715039868682679005,
+        430575957431541021,
+        6787750360569902804
+      ]
+    },
+    "selection": {
+      "case_hash": "synthetic-branching-v1",
+      "generator": {
+        "family": "rigid_gaussian",
+        "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+        "rotation_center_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_scale_deg": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "translation_scale_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "version": "rigid-registration-v1"
+      },
+      "interpretation": "deterministic_optimization",
+      "planning_hash": null,
+      "role": "selection",
+      "seeds": [
+        13570732548748017305,
+        8866893344993779307
+      ]
+    },
+    "stress": {
+      "case_hash": "synthetic-branching-v1",
+      "generator": {
+        "family": "rigid_uniform",
+        "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+        "rotation_center_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_scale_deg": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "translation_scale_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "version": "rigid-registration-v1"
+      },
+      "interpretation": "deterministic_optimization",
+      "planning_hash": null,
+      "role": "stress",
+      "seeds": [
+        3757688071086349051,
+        3895798037646211787
+      ]
+    }
+  }
+}
