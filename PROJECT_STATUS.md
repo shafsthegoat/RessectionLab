@@ -91,9 +91,13 @@ The original v1 failure remains preserved. See
 The same frozen SynthStrip main model completed all four additional BTC
 development estimates (TRAIN PAT22/PAT25 and SELECT PAT26/PAT27) in 35.024
 seconds, without retries, parameter changes or source mutation. All four outputs
-were fixed before annotation-overlap checks; independent QC and source-bound
-proposal attachment are in progress. No working support approval or training
+were fixed before annotation-overlap checks. All four proposal bundles now save
+and reopen with unchanged source arrays, patient roles and planning hashes.
+Independent native-grid and distance-to-mask reconstruction checks passed, with
+zero omitted annotation cells; 24 sampled planes received nonexpert visual QC.
+The estimates remain unreviewed and working support remains absent. No training
 result follows from these inferences. PAT29/PAT31 and UPenn remain unopened.
+See `artifacts/brain-extraction/BTC-spatial-main-v1-independent-qc/README.md`.
 
 The first real TRAIN PAT22 inference profile completed all four declared cells
 in 6.247 seconds with unchanged model parameters. One CPU call took 28–30 ms

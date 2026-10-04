@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-04T18:33:16.849051+00:00",
+  "attempts": [
+    {
+      "attempt": 1,
+      "source": "audit_portable.attempt-01.py.txt",
+      "source_sha256": "b3a4a846fe14cc040cd611f42f1eb4873ecab9e52faefaa7a673919eddf401a8",
+      "log": "portable-audit-attempt-01.log",
+      "log_sha256": "5c45f3f4b3f707de3549ee11a454855a64ba1d45187af1501cfe0f08fde545e3",
+      "outcome": "auditor assertion failed: source array_index correctly remained unchanged; no bundle was written",
+      "product_failure": false
+    },
+    {
+      "attempt": 2,
+      "source": "audit_portable.py",
+      "source_sha256": "eed08fd2b9d167d69e4de068383ccd9d3adecee86bf4e5ab705c88913fbae0ea",
+      "log": "portable-audit-attempt-02.log",
+      "log_sha256": "22232a7e01c023714863dc76de694f45dd593fe8510145b80f78b3dd882ba3ab",
+      "outcome": "all four independent portability checks passed",
+      "result": "portable-qc.json",
+      "result_sha256": "e7cfb39320876dd99074e50639af2ddc0f523eb608a8c5c56a7c4939eb515d52"
+    }
+  ],
+  "model_inference_retries": 0,
+  "no_original_artifacts_replaced": true
+}
