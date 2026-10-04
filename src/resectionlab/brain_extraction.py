@@ -8,6 +8,7 @@ from __future__ import annotations
 import argparse
 from datetime import datetime, timezone
 import json
+from itertools import product
 import os
 from pathlib import Path
 import subprocess
@@ -106,11 +107,23 @@ def ensure_model_assets(cache: Path, *, model: str, allow_download: bool = False
             "weights_license_source": "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/"}
 
 
+def _maximum_corner_displacement_mm(first_qc: dict, second_qc: dict) -> float:
+    """Bound affine disagreement over the complete voxel-centre domain."""
+    if first_qc["shape"] != second_qc["shape"]:
+        return float("inf")
+    corners = np.array(list(product(*[(0, size - 1) for size in first_qc["shape"]])), dtype=float)
+    homogeneous = np.column_stack((corners, np.ones(len(corners))))
+    difference = np.asarray(first_qc["affine_ras_mm"]) - np.asarray(second_qc["affine_ras_mm"])
+    displacements = (difference @ homogeneous.T)[:3]
+    return float(np.linalg.norm(displacements, axis=0).max())
+
+
 def validate_mask(mask_path: Path, image_path: Path) -> tuple[np.ndarray, dict]:
     mask_qc, image_qc = inspect_nifti(mask_path), inspect_nifti(image_path)
-    if (mask_qc["shape"] != image_qc["shape"]
-            or not np.allclose(mask_qc["affine_ras_mm"], image_qc["affine_ras_mm"], atol=0.01, rtol=1e-5)):
+    displacement = _maximum_corner_displacement_mm(mask_qc, image_qc)
+    if displacement > 0.01:
         raise BrainExtractionError("EXTRACTION_FRAME_MISMATCH", "Estimated mask must retain the input native grid.")
+    mask_qc["maximum_native_corner_displacement_mm"] = displacement
     mask = nib.load(mask_path).get_fdata(dtype=np.float32)
     if not np.isfinite(mask).all() or not np.isin(mask, [0, 1]).all():
         raise BrainExtractionError("EXTRACTION_MASK_NONBINARY", "Extraction output must contain only finite zero/one values.")
@@ -122,9 +135,10 @@ def validate_mask(mask_path: Path, image_path: Path) -> tuple[np.ndarray, dict]:
 def validate_distance_map(distance_path: Path, image_path: Path) -> dict:
     """Check predicted signed-distance values and native physical grid before use."""
     distance_qc, image_qc = inspect_nifti(distance_path), inspect_nifti(image_path)
-    if (distance_qc["shape"] != image_qc["shape"]
-            or not np.allclose(distance_qc["affine_ras_mm"], image_qc["affine_ras_mm"], atol=0.01, rtol=1e-5)):
+    displacement = _maximum_corner_displacement_mm(distance_qc, image_qc)
+    if displacement > 0.01:
         raise BrainExtractionError("EXTRACTION_DISTANCE_FRAME_MISMATCH", "Distance output must retain the input native grid.")
+    distance_qc["maximum_native_corner_displacement_mm"] = displacement
     distance = nib.load(distance_path).get_fdata(dtype=np.float32)
     if not np.isfinite(distance).all():
         raise BrainExtractionError("EXTRACTION_DISTANCE_NONFINITE", "Distance output contains nonfinite values.")

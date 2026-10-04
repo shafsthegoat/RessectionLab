@@ -1,0 +1,19 @@
+{
+  "gate": "maximum8nativevoxelcentre_corner_displacement<=0.01mm",
+  "implementation_sha256": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917",
+  "historical_report_unchanged": true,
+  "variants": {
+    "main": {
+      "mask_maximum_corner_mm": 0.0,
+      "distance_maximum_corner_mm": 0.0,
+      "mask_sha256": "f0df2a6c3531ee5949dc496047a6c9f3f67542a4613ce71728f8f19597c09428",
+      "distance_sha256": "bd0570faa6ce2c273ca81d101930097283ca42b7f1f1edc29092ec0324cd6019"
+    },
+    "nocsf": {
+      "mask_maximum_corner_mm": 0.0,
+      "distance_maximum_corner_mm": 0.0,
+      "mask_sha256": "e99c49ba6d180e03389e756f8b0a5b224e069488a5c72b97cc9f84075ac6410e",
+      "distance_sha256": "92a0b275c49d86d5d47db4662e10c707d196c0290a5f7486e143e80aab27326f"
+    }
+  }
+}

@@ -65,6 +65,27 @@ def test_mask_native_frame_and_binary_contract(tmp_path):
         be.validate_mask(mask_path, t1)
 
 
+@pytest.mark.parametrize("validator,code", [(be.validate_mask, "EXTRACTION_FRAME_MISMATCH"),
+                                            (be.validate_distance_map, "EXTRACTION_DISTANCE_FRAME_MISMATCH")])
+@pytest.mark.parametrize("scale_drift,acceptable", [(0.001, False), (0.00001, True)])
+def test_full_image_corner_drift_bounds_mask_and_distance_frames(tmp_path, validator, code, scale_drift, acceptable):
+    shape = (256, 4, 4)
+    image = save_image(tmp_path / "t1.nii.gz", np.ones(shape, np.float32))
+    drifted = np.eye(4)
+    drifted[0, 0] += scale_drift
+    derived = save_image(tmp_path / "derived.nii.gz", np.ones(shape, np.uint8), drifted)
+    # Entrywise tolerance would accept both, but 0.001 scale drift is 0.255 mm
+    # at the far voxel centre. The allowed tolerance is 0.01 mm over the grid.
+    assert np.allclose(drifted, np.eye(4), atol=.01, rtol=1e-5)
+    if acceptable:
+        result = validator(derived, image)
+        qc = result[1] if isinstance(result, tuple) else result["native_geometry"]
+        assert 0 < qc["maximum_native_corner_displacement_mm"] < .01
+    else:
+        with pytest.raises(be.BrainExtractionError, match=code):
+            validator(derived, image)
+
+
 def test_fractional_opposite_axis_tumor_is_reindexed_before_extraction_qc(tmp_path):
     shape = (12, 14, 16)
     image = save_image(tmp_path / "t1.nii.gz", np.arange(np.prod(shape), dtype=np.float32).reshape(shape))
