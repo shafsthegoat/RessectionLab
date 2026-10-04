@@ -1,0 +1,318 @@
+{
+  "cache-construction.json": {
+    "bytes": 1497,
+    "sha256": "633793114298da42da6cd13eb7b66f990ce05e62e6e21fa4643c738eeb1f3068"
+  },
+  "cached_cold-independent-audit.json": {
+    "bytes": 913,
+    "sha256": "b9a43a72b97637c3be09843cd3611116a1c331a5ab779b0943e080c4798380b7"
+  },
+  "cached_cold/receipt.json": {
+    "bytes": 4823,
+    "sha256": "c4e9614544506ce34e2c6f2f7b3f65198a500f3a51e30974d79710f09696b93a"
+  },
+  "cached_cold/scientific-trace.json.gz": {
+    "bytes": 825670,
+    "sha256": "47dd135c0869179252042325e6b663aa3c77f7e7be81484ce71f03315a264021"
+  },
+  "cached_cold/timing.json": {
+    "bytes": 988,
+    "sha256": "8dd4aa333a5d826796491fe25f23b8d2deffeb8db5149c0ae54040bc0c418cb6"
+  },
+  "cached_warm-independent-audit.json": {
+    "bytes": 913,
+    "sha256": "745bb45bad1d4dd5242d7daf15f92d27d0d6928c1fb6977ccae4426793d21a6f"
+  },
+  "cached_warm/receipt.json": {
+    "bytes": 4876,
+    "sha256": "53d23e8b7557cbd384bbd9a77ff18abbfd313d706acac82a4bac45e759b12e99"
+  },
+  "cached_warm/scientific-trace.json.gz": {
+    "bytes": 825670,
+    "sha256": "47dd135c0869179252042325e6b663aa3c77f7e7be81484ce71f03315a264021"
+  },
+  "cached_warm/timing.json": {
+    "bytes": 989,
+    "sha256": "d0be536641b445b9e8eea8db7d86b353c6e96b70e9d116b825d156441508edbb"
+  },
+  "declaration.json": {
+    "bytes": 5748,
+    "sha256": "dc867e89dbc5785f7d2ec7bc0a1fb9820f0fbd6cc8d1768f3031543a4bd6d366"
+  },
+  "frozen-source/artifacts/preflight/native-axis-v2/profile/greedy/episode.json.gz": {
+    "bytes": 163735,
+    "sha256": "6d52eab008e31f320ab2e58651514fbe5a5066013eaf0280dce9df8ea257c77d"
+  },
+  "frozen-source/artifacts/preflight/native-axis-v2/profile/initial/inventory.json": {
+    "bytes": 44936,
+    "sha256": "b5cea2d96d5e5c06ee11fd5024819a78cdbeaaca4cd994221cd6f00f324f70b6"
+  },
+  "frozen-source/artifacts/preflight/native-axis-v2/profile/model.json": {
+    "bytes": 2436,
+    "sha256": "cbfce67b631e13a657bcf578fd793d3407a89b9e20c3e0833a9192388cc83019"
+  },
+  "frozen-source/artifacts/preflight/native-axis-v2/profile/sequence-freeze.json": {
+    "bytes": 677,
+    "sha256": "31ece55a360bc07daf31908400804dbe882e1da4e49ce7571f653eef5de102dc"
+  },
+  "frozen-source/manifests/experiments/native-axis-capsule-cache-v1.json": {
+    "bytes": 5748,
+    "sha256": "28a6e9a170717a9047e481a88d9704bd18eee11ff0fe9d5acd8753a102a9a901"
+  },
+  "frozen-source/manifests/experiments/native-axis-preflight-v2.json": {
+    "bytes": 12550,
+    "sha256": "35402cd0634e1db0798189e41a1dbbd4c880988b3e107ce38338eb8c966fb955"
+  },
+  "frozen-source/manifests/experiments/procedural-native-to-ucsf-v1.json": {
+    "bytes": 37098,
+    "sha256": "6011ec40117f49653df4ab2fb0194c1e630bd2cf09870f87332f340fe3c6fde0"
+  },
+  "frozen-source/pyproject.toml": {
+    "bytes": 937,
+    "sha256": "7b2ea11f08bcba66915eac703244a2e07c4de38c2c364aadf26830f6c35bb053"
+  },
+  "frozen-source/requirements-lock.txt": {
+    "bytes": 998,
+    "sha256": "836f3d9ada81d5a710e6690f9657ff73e5fa0f12f051d9aa4834e12332d55e5a"
+  },
+  "frozen-source/scripts/preflight_native_axis.py": {
+    "bytes": 39506,
+    "sha256": "420eac522225fc5dcc08d2e1680d333043669df9e7bd35808746cf0a0b3266e2"
+  },
+  "frozen-source/scripts/probe_native_capsule_cache.py": {
+    "bytes": 6974,
+    "sha256": "70c3bc2600a769fe152ca65074011931754911ba7166b5c15a83568bb2bd202e"
+  },
+  "frozen-source/scripts/probe_public_native_capsule_cache.py": {
+    "bytes": 23684,
+    "sha256": "5ba33718a1f58cf1f29197887753e9ad6d043d79c8d3f7ad5544d4189e6c79c1"
+  },
+  "frozen-source/src/resectionlab/__init__.py": {
+    "bytes": 99,
+    "sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5"
+  },
+  "frozen-source/src/resectionlab/anatomy.py": {
+    "bytes": 13915,
+    "sha256": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37"
+  },
+  "frozen-source/src/resectionlab/app/__init__.py": {
+    "bytes": 324,
+    "sha256": "cad7c4e1282136061456123711d5bddb56413db3ddfb69314ee78f744d2d6d1e"
+  },
+  "frozen-source/src/resectionlab/app/annotation.py": {
+    "bytes": 1579,
+    "sha256": "724debbe3ec4bef2a3b6eeba83b497c579f26b8a3549117edc5d72bdd993b6a5"
+  },
+  "frozen-source/src/resectionlab/app/desktop.py": {
+    "bytes": 52112,
+    "sha256": "e9b33c7c2dce2dd6b329f9af97033fb33096dbe8b1b9e734e5ae56af489a0f96"
+  },
+  "frozen-source/src/resectionlab/app/refinement.py": {
+    "bytes": 10623,
+    "sha256": "ce6116509a83582c904e844305deceb11c9282c2c6267d7fdaea01a734695c2c"
+  },
+  "frozen-source/src/resectionlab/app/reslice.py": {
+    "bytes": 3963,
+    "sha256": "f397f7317da203ed88561d6638b8b41af54349bd145af5d0ccea01aa54d54796"
+  },
+  "frozen-source/src/resectionlab/app/scene.py": {
+    "bytes": 10251,
+    "sha256": "21a2100de199360a990a12cd4e77fe627cdce5bb6ef79fb1cc2aa074d71f1b5b"
+  },
+  "frozen-source/src/resectionlab/app/slice_view.py": {
+    "bytes": 4846,
+    "sha256": "63b279123a94e748222fc5102eeda7c1d30a3eebab2833aecc15b2335df14367"
+  },
+  "frozen-source/src/resectionlab/app/style.py": {
+    "bytes": 3687,
+    "sha256": "aca2726fe243e19d11e85463589ef9b5db9e7806e4b36d8646ff8167c2d29468"
+  },
+  "frozen-source/src/resectionlab/app/training_view.py": {
+    "bytes": 6651,
+    "sha256": "07fa2bfdacdb470d080cf37d6c3df52d5eee540041619cad9ae6c94132fd88d1"
+  },
+  "frozen-source/src/resectionlab/app/workers.py": {
+    "bytes": 1692,
+    "sha256": "d3cb30b107fcfb930c50c26e9ef87cf277bcd90c4ec824909d6c375e9f4f2f8c"
+  },
+  "frozen-source/src/resectionlab/brain_extraction.py": {
+    "bytes": 23093,
+    "sha256": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917"
+  },
+  "frozen-source/src/resectionlab/cohort.py": {
+    "bytes": 14491,
+    "sha256": "d69538f80af8b318068af70dbc963b7a9ca6c3a4f62d6e8e542d6e43548fa874"
+  },
+  "frozen-source/src/resectionlab/core.py": {
+    "bytes": 27346,
+    "sha256": "0600667e8e8662c78e31a86d9060d53aec5ab5a4f2b14e747afd74800f11eeec"
+  },
+  "frozen-source/src/resectionlab/desktop_bridge.py": {
+    "bytes": 66747,
+    "sha256": "b76b76e58cb1a6476cec57fc093184ab7ea8ff598b26ed66b3438e7720fdfbe8"
+  },
+  "frozen-source/src/resectionlab/diffusion.py": {
+    "bytes": 22180,
+    "sha256": "e7f57bf7467fb3cb5d6b9b3f1c80e4665710713124d0720aa84d31ccc03b8e21"
+  },
+  "frozen-source/src/resectionlab/evaluation.py": {
+    "bytes": 56135,
+    "sha256": "baaa2f3d6b4e41c4621dc22872da9300d649bc91dfeb923e2ad35f66aadad3b7"
+  },
+  "frozen-source/src/resectionlab/experimental_capsule_cache.py": {
+    "bytes": 11590,
+    "sha256": "7b47cf36493c4baeb305beb7f18d4f5acf5bd0fa08b0e80738e948a20bd58869"
+  },
+  "frozen-source/src/resectionlab/geometry.py": {
+    "bytes": 31204,
+    "sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184"
+  },
+  "frozen-source/src/resectionlab/imaging.py": {
+    "bytes": 39865,
+    "sha256": "ad921fb5cda6d3aed84893ad200cb846212311efa17c1996730a394e8474a95b"
+  },
+  "frozen-source/src/resectionlab/learning.py": {
+    "bytes": 49750,
+    "sha256": "ea552afa8faa7a5199ac2c20cf67fc688081fe8d7e5d029131f3fd6e7c0093ec"
+  },
+  "frozen-source/src/resectionlab/learning_ppo.py": {
+    "bytes": 25232,
+    "sha256": "a3814bc5da4837b66ae20496c38e17edd0edf73ef7863a920924cd7ec2a42d88"
+  },
+  "frozen-source/src/resectionlab/native_axis_accounting.py": {
+    "bytes": 30736,
+    "sha256": "e7593bc4c7435961b6d4bee31412ef3e2df85fd6baebee70c6849e94eaf8c259"
+  },
+  "frozen-source/src/resectionlab/native_axis_simulation.py": {
+    "bytes": 23439,
+    "sha256": "e1b8306050b53e636e1d602290720655d1f06fe72bf8309ba80afb2025122b70"
+  },
+  "frozen-source/src/resectionlab/native_proposals.py": {
+    "bytes": 18754,
+    "sha256": "6a173851ad383c32b84121cd0d8871535fffa9174d95aa27bdb08ca4b8a7e5f9"
+  },
+  "frozen-source/src/resectionlab/native_refinement.py": {
+    "bytes": 24376,
+    "sha256": "02a1250d40d7129c77d16031e229c61c3d295139c002c9002f5a3eb78097a413"
+  },
+  "frozen-source/src/resectionlab/native_resection.py": {
+    "bytes": 27603,
+    "sha256": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c"
+  },
+  "frozen-source/src/resectionlab/native_routes.py": {
+    "bytes": 8680,
+    "sha256": "97bb55a3bf2894f336a593bc3c3379b3c4dc291198af90b91d319bd0b9a824ea"
+  },
+  "frozen-source/src/resectionlab/native_simulation.py": {
+    "bytes": 32079,
+    "sha256": "2461cc6c32eb25a3927bcc3a9379bb02417794c3a764c4b1e705a00bcac6493c"
+  },
+  "frozen-source/src/resectionlab/planning.py": {
+    "bytes": 29443,
+    "sha256": "f113ce78b239f91a86c65d8add74227a9d9f3c0d718449c7968a983e76ea850d"
+  },
+  "frozen-source/src/resectionlab/policy_inputs.py": {
+    "bytes": 3294,
+    "sha256": "1366cdabceae5eeee9ad44667be7d8c44de2c9ab8f551c4cf05b053f5b1b8b47"
+  },
+  "frozen-source/src/resectionlab/population_learning.py": {
+    "bytes": 25441,
+    "sha256": "49899618825d08b50016f9b34f389b50ce67f6a3aa79a8f339665523e3ae8de2"
+  },
+  "frozen-source/src/resectionlab/preprocessing.py": {
+    "bytes": 17223,
+    "sha256": "dbd2c4ba9551e2aa0d454b638e256ad8bc6cdf45dcdc8ec08e091e43c3eb14e5"
+  },
+  "frozen-source/src/resectionlab/prior_proposals.py": {
+    "bytes": 27442,
+    "sha256": "05340a6911b0330175d606f84aa81c817a330a929a336fef18078d01e3d0bd55"
+  },
+  "frozen-source/src/resectionlab/prior_registration.py": {
+    "bytes": 21175,
+    "sha256": "9828e76ed3e29e232c39dd16ece7d5fefa4cd366d1cab7899121e929ef34a703"
+  },
+  "frozen-source/src/resectionlab/procedural_learning.py": {
+    "bytes": 39874,
+    "sha256": "d4666701930d2baa1f438b2a1bed4819e895ec6161c38a78b6ef4d68331ac2d1"
+  },
+  "frozen-source/src/resectionlab/route_native_diagnostics.py": {
+    "bytes": 3685,
+    "sha256": "f2cf704da9e971f321dce707dadd9f0350ec7234ecc75c0ed0fc1242fd8c82cf"
+  },
+  "frozen-source/src/resectionlab/selection_contract.py": {
+    "bytes": 1927,
+    "sha256": "bef00b486fb6f0f0465a8526080ae5c6e08a5f1922fcf93f4624aec86ec43d72"
+  },
+  "frozen-source/src/resectionlab/simulation.py": {
+    "bytes": 44750,
+    "sha256": "bc43c16643adf8495f969dcacacb770f5f6be7fdeff0831f2a92eb4aed52939f"
+  },
+  "frozen-source/src/resectionlab/structural_evidence.py": {
+    "bytes": 13489,
+    "sha256": "6a1b9e7aa5b13ea971a75d9416d96ab45de2b46901a036edd73ec58194fb7a33"
+  },
+  "frozen-source/src/resectionlab/worlds.py": {
+    "bytes": 20428,
+    "sha256": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
+  },
+  "launch-source.json": {
+    "bytes": 6621,
+    "sha256": "c067100c907adba159a66af4ac0dc3816555a0ee4f641447bb4c56d28cbfb60e"
+  },
+  "launcher-status.json": {
+    "bytes": 324,
+    "sha256": "0f9476caad4825590c5edbf4c4eb55870c2a594b08830d658a3bb5ce13aaa0d6"
+  },
+  "preparation.json": {
+    "bytes": 3937,
+    "sha256": "621b5f0b49fb7dc87e7d8e41312af6f48c0b86176c80e1ce4c20bc24c831a62c"
+  },
+  "reference_after-independent-audit.json": {
+    "bytes": 913,
+    "sha256": "175e8225d938b592a7204193db12e1e0042e3ad7949451ea0fadd27df5dec3c4"
+  },
+  "reference_after/receipt.json": {
+    "bytes": 4878,
+    "sha256": "3fd70637063b5b6503ca215ad104a34fab51c6a8c20d0e0311e1e2d254f09380"
+  },
+  "reference_after/scientific-trace.json.gz": {
+    "bytes": 825670,
+    "sha256": "47dd135c0869179252042325e6b663aa3c77f7e7be81484ce71f03315a264021"
+  },
+  "reference_after/timing.json": {
+    "bytes": 987,
+    "sha256": "951d224d3fffe8d8d651cd917051a8c6ff15b8bcb5825601b9f21ca7d7120e84"
+  },
+  "reference_before-independent-audit.json": {
+    "bytes": 912,
+    "sha256": "45327890f3afba5fee157353ee4f74de7a5723af289f6cbf3531f44a816ba430"
+  },
+  "reference_before/receipt.json": {
+    "bytes": 2013,
+    "sha256": "53e199ee541238e3606c2449bf5ec0c52723c3d9123ee00127441fb4dab52dd4"
+  },
+  "reference_before/scientific-trace.json.gz": {
+    "bytes": 825670,
+    "sha256": "47dd135c0869179252042325e6b663aa3c77f7e7be81484ce71f03315a264021"
+  },
+  "reference_before/timing.json": {
+    "bytes": 988,
+    "sha256": "bebc400cd66c427ab507cca17e5ee62d4abe2f546276057c9be44437bf79234f"
+  },
+  "result.json": {
+    "bytes": 23554,
+    "sha256": "0e42d6bc19dd1d4d20ee66873fafe3b779cef43294d43120eb7a4d1938f3e3e7"
+  },
+  "template.json": {
+    "bytes": 564,
+    "sha256": "6a88ba4f6a92afa92cb9ce11f7780bd184d39bc67ca0bf6adbe8942da89edc75"
+  },
+  "worker-resource.json": {
+    "bytes": 485,
+    "sha256": "1d70a6798b59408626852546c504a98b64deb59b742b9c1ff539b28231d71569"
+  },
+  "worker-status.json": {
+    "bytes": 323,
+    "sha256": "dfcfcc86a122ac30e4a199acabdd39d45101fb898e0ef91bdc721c294623e3b9"
+  }
+}

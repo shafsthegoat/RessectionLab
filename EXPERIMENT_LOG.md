@@ -1099,3 +1099,36 @@ This is a provenance limitation, not a legal-permission assessment. Earlier
 lookup failures remain unchanged; no package installation or app modification
 was made. Small official responses and exact hashes are retained in
 `artifacts/dependency-notices-license-followup-v1/`.
+
+## October 4, 2026 — declared public cache configuration is slower with zero hits
+
+After a committed release and independent archive review, the exact `43857b5`
+runner replayed the same three V2 greedy cuts in four phases. Reference-before,
+cold-cache, warm-cache and reference-after whole-phase times were respectively
+21.182, 22.896, 23.050 and 21.670 seconds. These include scientific comparison
+and export. The cache produced zero hits in each 22,364-call cached phase;
+all calls missed. Cold evicted 16,902 entries and warm evicted another 22,364,
+retaining 5,462 entries and 33,553,224 bytes under the declared 32-MiB payload
+and 16,384-entry limits. The experiment demonstrates no speed benefit at those
+limits; counters alone do not identify exact distinct keys or reuse distances.
+
+All four 23,482,729-byte scientific traces and their deterministic gzip exports
+are identical. Each phase executes the same three cuts and inventories with
+26/22/18/0 previews, returning 1,098.77. The uncached common constructor's
+26 previews are separate. All four native history audits pass. A separate
+34-test artifact audit checks certificates, exact source-cell reward and all
+five saved mask digests by independent cell/flood reconstruction. It adds no
+geometry replay, patient episode or gradient. Full raw-mask byte comparison
+and callable restoration are source-bound runner observations; the auditor
+distinguishes those from its own saved-evidence verification.
+
+Full launcher time was 158.288 seconds; worker time 157.790 seconds and peak
+process RSS 2,289,860,608 bytes. Four native audits took about 59.56 seconds in
+total. Nested preview, integrity, proposer and cache timers must not be added.
+Certificate capture is not separately timed. Other agent numerical tests,
+builds and native UI activity were held; ordinary OS load and caches remained
+uncontrolled. No final/stress worlds, optimization or changed scientific model
+were used. All 2,930 source files, archive and case remain unchanged.
+Original receipts are under `artifacts/benchmarks/native-axis-cache-v1/`, with
+the source-derived report and separate audit in their corresponding artifact
+directories. Existing production and desktop cache behavior remains unchanged.

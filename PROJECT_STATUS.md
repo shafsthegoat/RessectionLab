@@ -163,8 +163,19 @@ reproduction pass. See the actual report in
 `artifacts/native-axis-pilot-result-audit/`.
 An isolated exact capsule-cover cache prototype passes 78 focused checks and
 26 independent checks, with its actual invalidation failures preserved. Synthetic
-reference/cached/reference outputs agree, including independent native histories;
-no patient speedup is established and production geometry stays unchanged.
+reference/cached/reference outputs agree, including independent native histories.
+The separately declared public four-phase probe then completed from immutable
+`43857b5` in 158.29 seconds. Cold/warm caching took 22.896/23.050 seconds versus
+21.182/21.670 seconds for the bracketing uncached phases. Both cached phases had
+22,364 misses and zero hits at the declared 32-MiB/16,384-entry limits; no speedup
+was demonstrated. All four scientific traces are byte-identical and all four
+native audits pass. A separate artifact audit reconstructs five tissue/contact
+masks at all four states and the 1,098.77 reward from source cells; 34 adversarial
+checks pass. Process peak RSS was 2.133 GiB, distinct from cache payload size.
+This negative fixed-trace result does not establish full-learning throughput.
+Production geometry and the packaged engine stay unchanged. See
+`artifacts/native-axis-cache-report-v2/` and
+`artifacts/native-axis-cache-result-audit/`.
 
 An isolated synthetic descriptor probe reproduces a known RAW action/state
 alias: identical first reward 4.33 but best two-cut returns 39.43 and 39.68.

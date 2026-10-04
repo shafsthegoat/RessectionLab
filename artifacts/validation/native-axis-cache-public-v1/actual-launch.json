@@ -1,0 +1,23 @@
+{
+  "started_utc": "2026-10-04T13:50:34.095642+00:00",
+  "release_commit": "2b0779c95fe7942f2cd6372708f8958463f8a8c1",
+  "root_release_sha256": "d22496b7b9be78e02efa55b197fa496bae8e03174cfb514a067d67bacef39f4f",
+  "source_commit": "43857b5a4931a9b4c3909f9c2914833e795b685b",
+  "command_argv": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-cache-v1/43857b5a4931a9b4c3909f9c2914833e795b685b/source/scripts/probe_public_native_capsule_cache.py",
+    "--output",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/benchmarks/native-axis-cache-v1",
+    "--case-bundle",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-cache-v1/43857b5a4931a9b4c3909f9c2914833e795b685b/source/outputs/cases/UCSF-PDGM-0004.ressectionlab",
+    "--execute"
+  ],
+  "environment_overrides": {
+    "MKL_NUM_THREADS": "2",
+    "OMP_NUM_THREADS": "2",
+    "OPENBLAS_NUM_THREADS": "2",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-cache-v1/43857b5a4931a9b4c3909f9c2914833e795b685b/source/src"
+  },
+  "compute_hold": "Other agent tests/builds/numerical runs/native UI held; static editing and small metadata reading allowed. Existing Electron app open; OS load/file caches uncontrolled."
+}

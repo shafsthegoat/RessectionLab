@@ -1,0 +1,39 @@
+{
+  "scope": "empty cache constructed after reference_before",
+  "seconds": 0.06904070801101625,
+  "stats": {
+    "bypasses": 0,
+    "cache_version": "experimental-exact-capsule-cover-cache-v1",
+    "calls": 0,
+    "cavity_cached": false,
+    "compute_seconds": 0.0,
+    "entries": 0,
+    "evictions": 0,
+    "feasibility_cached": false,
+    "geometry_epsilon": 1e-09,
+    "geometry_source_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+    "guarded_direct_geometry_callables": [
+      "_vector",
+      "_immutable",
+      "point_segment_distances",
+      "_segment_cell_distances",
+      "world_to_voxel",
+      "voxel_to_world"
+    ],
+    "hits": 0,
+    "integrity_cached": false,
+    "max_entries": 16384,
+    "max_payload_bytes": 33554432,
+    "misses": 0,
+    "mode": "exact_orthogonal_cells",
+    "namespace": "sha256:41eeccfc7b8f35c3eb2f1364fbb71073c034d184b73519b65f4ba917aee6f088",
+    "native_config_hash": "sha256:6d817c5c7441cc7d6c6bcaeac4542cfd3266f2474c9c1904a2d6279870b3143b",
+    "native_version": "contained-native-cell-connected-suction-v2",
+    "payload_scope": "array buffers only; keys/bookkeeping and process RSS separate",
+    "query_seconds": 0.0,
+    "retained_payload_bytes": 0,
+    "source_guard_sha256": "6a173851ad383c32b84121cd0d8871535fffa9174d95aa27bdb08ca4b8a7e5f9",
+    "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+  }
+}

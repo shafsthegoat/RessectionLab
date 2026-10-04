@@ -1,0 +1,16 @@
+{
+  "factory_seconds": 8.146586708026007,
+  "initialization": {
+    "native_engine_setup_seconds": 0.3382209580158815,
+    "proposer_preparation_seconds": 0.04474816599395126,
+    "scope": "includes initial complete inventory; local diagnostic only",
+    "total_seconds": 8.146512042032555
+  },
+  "proposal_accounting": {
+    "integrity_calls": 3,
+    "integrity_seconds": 0.8557882490567863,
+    "preview_calls": 26,
+    "preview_seconds": 5.866875539650209
+  },
+  "scope": "one common uncached constructor/full initial inventory; not credited as cache warmup"
+}

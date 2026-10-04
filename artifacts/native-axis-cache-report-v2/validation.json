@@ -1,0 +1,19 @@
+{
+  "status": "completed_artifact_report_only",
+  "script_sha256": "9f1752494ca749315fef1e743e19c27241f7e1f87df8cfc4ec90e010966670c2",
+  "tests_sha256": "56b949047f1fa9ba2e1b1b689ef155ed8ceabe16fddb38984455c60e7ae977d2",
+  "test_command": ".venv/bin/python -m pytest tests/test_public_cache_report.py -q",
+  "test_result": "10 passed in 0.12s",
+  "report_command": ".venv/bin/python scripts/report_public_native_capsule_cache.py --input artifacts/benchmarks/native-axis-cache-v1 --baseline artifacts/validation/native-axis-cache-public-v1/execution-baseline.json --output artifacts/native-axis-cache-report-v2",
+  "report_exit_code": 0,
+  "summary_sha256": "5a3066943e6583f3e0e457c217af60d9e11f153c9413abaa2ac8e645ecc61f75",
+  "input_index_sha256": "41318e6d46738687954b7848349da4c1310fa091e4707ff83f05a6b0b19f5e60",
+  "archived_tracked_files_byte_verified": 2930,
+  "archive_and_case_unchanged": true,
+  "new_simulations": 0,
+  "new_native_audit_replays": 0,
+  "new_policy_forwards": 0,
+  "new_gradient_updates": 0,
+  "original_benchmark_receipts_modified": false,
+  "independent_artifact_audit_directory": "../native-axis-cache-result-audit/"
+}

@@ -1,0 +1,58 @@
+{
+  "actions": [
+    "AXISv1:733fc018d7bf3838d0cdc4b8",
+    "AXISv1:655c3d5433c0c367b0806d85",
+    "AXISv1:bb274fe18711b9d4160bdc31"
+  ],
+  "cache_after": null,
+  "cache_before": null,
+  "exact_scientific_equality": true,
+  "history_hash": "sha256:8c6e1dd7af7ce28281f424508ee87e6fbe8983120e45f41165313093d7eacfdd",
+  "mode": "reference_before",
+  "process_cumulative_peak_rss_bytes": 1582891008,
+  "scientific_trace_export": {
+    "canonical_bytes": 23482729,
+    "canonical_sha256": "34c52fa24522d0a5cf0bd7f925639bc268435b799ac05e8acb35fe6e5f6d7430",
+    "compressed_bytes": 825670,
+    "compressed_sha256": "47dd135c0869179252042325e6b663aa3c77f7e7be81484ce71f03315a264021"
+  },
+  "scientific_trace_export_seconds": 0.2606045409338549,
+  "scientific_trace_hash": "sha256:34c52fa24522d0a5cf0bd7f925639bc268435b799ac05e8acb35fe6e5f6d7430",
+  "seconds_including_scientific_comparison_and_export": 21.181820416008122,
+  "timing": {
+    "adapter_proposal_accounting": {
+      "integrity_calls": 9,
+      "integrity_seconds": 2.7796560840215534,
+      "preview_calls": 66,
+      "preview_seconds": 14.938501670025289
+    },
+    "full_proposal_verification": {
+      "calls": 10,
+      "seconds": 3.063500499818474
+    },
+    "process_cumulative_peak_rss_bytes": 1543585792,
+    "reset_seconds": 7.147247457993217,
+    "seconds_before_export": 20.729252958088182,
+    "transitions": [
+      {
+        "action_id": "AXISv1:733fc018d7bf3838d0cdc4b8",
+        "reward": 373.24,
+        "terminated": false,
+        "transition_and_next_inventory_seconds": 5.99259866704233
+      },
+      {
+        "action_id": "AXISv1:655c3d5433c0c367b0806d85",
+        "reward": 364.03000000000003,
+        "terminated": false,
+        "transition_and_next_inventory_seconds": 5.127345291082747
+      },
+      {
+        "action_id": "AXISv1:bb274fe18711b9d4160bdc31",
+        "reward": 361.5,
+        "terminated": true,
+        "transition_and_next_inventory_seconds": 0.9948259579250589
+      }
+    ]
+  },
+  "total_reward": 1098.77
+}

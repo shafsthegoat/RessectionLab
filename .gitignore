@@ -67,3 +67,6 @@ outputs/
 /artifacts/learning/native-axis-raw-update-pilot-v1/pilot/accounting.json
 /artifacts/learning/native-axis-raw-update-pilot-v1/pilot/history-freeze.json
 /artifacts/learning/native-axis-raw-update-pilot-v1/pilot/candidate-record.json
+
+# Fixed-trace cache probe retains its exact executable snapshot locally.
+/artifacts/benchmarks/native-axis-cache-v1/frozen-source/
