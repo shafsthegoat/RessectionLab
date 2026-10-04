@@ -128,3 +128,71 @@ generated 54 routes in 1.32 seconds. Twelve geometric Pareto alternatives were
 shown with source MRI and full-tool overlay. Screenshot review identified
 clipped slice scale labels, opaque route IDs and poor accessibility of route
 selection; fixes are underway. These are research usability observations.
+
+## October 4, 2026 — native correction and patient learning
+
+The native engine credits only fully contained original image cells, checks each
+shaft microstep against the prior cavity, and records partial contact separately.
+The real UCSF two-stroke sequence removes 249 mm³ target and 17 mm³ normal tissue;
+the independent checker finds zero unsupported source volume. Cumulative partial
+normal contact is 32 mm³: 26 remain and 6 are fully removed later. Partial contact
+is never credited as removal at first touch. Residual target is 41,670 mm³.
+
+Three scratch seeds received a 30-second optimization/selection wall budget.
+Seeds 11/23/47 made 7/6/5 actual gradient updates; all actor weights changed.
+Seed 11 improved from STOP to 245.24, matching SEARCH. Seeds 23/47 retained their
+initial selected returns of 171.42/139.62. Cooperative budget overshoot reached
+30.51 seconds; setup and independent validation are additional measured costs.
+GREEDY and SEARCH reached 245.24 in 0.82 and 7.39 seconds, respectively, excluding
+their separately recorded preparation. Nine frozen candidates shared four unique
+native audits; all passed. Validation took 19.07 seconds using the preserved
+older checker. No final/stress worlds were opened. These results establish actual
+patient policy refinement, without an RL advantage or clinical validation.
+Records and exact source: `artifacts/learning/native-ucsf0004-v1/`.
+
+The independent checker was then optimized on the same saved two-stroke history.
+Sparse connectivity and one whole-grid flood replaced 143 repeated floods.
+Elapsed time decreased from 17.638 to 4.310 seconds, with identical geometry
+calculations, tolerances and certificates. Ninety-one tests included sealed
+pockets, diagonal contact, boundary cuts and randomized connectivity batches.
+This measured 4.09× speedup is one before/after probe. The old study timing above
+is unchanged. Evidence: `artifacts/native_simulation/ucsf0004-initial-development-v2/independent-optimization/`.
+
+## October 4, 2026 — PPO negative result
+
+Masked clipped PPO with GAE used the same initial weights as REINFORCE.
+At 32 actual Adam steps, selected branching scores were [0, 0, 0.04]; SEARCH
+achieved 1.30. A 128-step follow-on produced [0, 0, 0.06]. The 32-step PPO arm
+used eight fresh rollout batches; the 128-step arm matched REINFORCE's 32 fresh
+batches while spending four times its optimizer steps. Transition counts,
+sample reuse, clipping and gradient diagnostics are recorded explicitly.
+PPO did not resolve the observed STOP/exploration failure. Records:
+`artifacts/learning/ppo-branching-v1/`.
+
+## October 4, 2026 — Electron migration and native training bridge
+
+Following the user's interface direction, the current Mac app uses Electron,
+React, TypeScript and Three.js with a local Python numerical process. The first
+standalone package loaded real MRI, generated 54 routes in 1.16 seconds and saved
+route comparison/cursor through the macOS dialog. The 388,588,500-byte bundle
+passed strict ad-hoc signing and had 17 internal links, no external/broken links,
+and no Qt/VTK dependency. It was tested outside the repository working directory
+with Python environment overrides cleared. This first bundle covers imaging and
+search; later training verification must accompany its own source snapshot.
+
+The native training bridge's 5-second UCSF run made one real update and retained
+STOP. A 30-second run made eight updates and selected the independently checked
+249/17-mm³ sequence. Total elapsed times were 8.91 and 37.77 seconds. Reports
+bind source/runtime and selected checkpoint hashes; neither opens final worlds.
+Adversarial tests exposed mutable resume budgets and unsigned crash recovery.
+Both were fixed by binding checkpoint bytes to signed progress metadata and
+refusing unverifiable recovery. All 37 focused bridge/refinement tests passed.
+Reports: `artifacts/desktop-native-bridge/`.
+
+Screenshot review caught incorrect pre-render camera bounds that mixed voxel and
+physical coordinates. The fix is covered by an analytic sign-flipped source-grid
+test. Source-derived surface meshes have no degenerate faces and differ in
+display volume from source-cell volumes by under 0.6%; quantitative volumes still
+use source cells. Binary hydration rejects shape, frame, dtype and accounting
+corruption. Model refinement and removal replay are being integrated into the
+new interface; the initial Qt workflow is preserved as historical evidence.
