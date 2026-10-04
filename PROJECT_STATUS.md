@@ -289,6 +289,16 @@ combined-patch declaration are required. No replacement runtime has been built
 or executed; the previous positive offset tests and driver review remain valid
 within their stated scope. See the runtime-v2 preparation root decision.
 
+The subsequent direct-path ownership audit also found definite numerical-factor
+storage loss across repeated stiffness reformations, skipped symbolic cleanup
+before a successful first factorization, and a missing implementation-object
+delete. The SDK permits some failed numeric objects to retain allocated storage;
+those require appropriate cleanup too. These are static ownership findings, not
+measured memory growth or a performance result. The combined adapter repair must
+track ownership separately from factorization success, keep the existing
+SparseFactor algorithm, and verify defined corrected-only lifecycle controls
+before the full build. See `artifacts/febio-accelerate-lifecycle-review-v1/`.
+
 One bounded Gmsh preparation generated the three measured-specimen meshes
 (96/768/2,592 hex elements) and 18 fixed loading decks in 3.43 s, with
 140.2 MB maximum sampled memory. Independent native-mesh and deck review

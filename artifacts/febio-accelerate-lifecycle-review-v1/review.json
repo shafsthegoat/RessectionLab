@@ -1,0 +1,164 @@
+{
+  "all_bound_files_unchanged": true,
+  "bounded_repair_requirements": [
+    "Initialize opaque handles and track resource ownership independently from numerical readiness. A successful PreProcess creates symbolic ownership even before Factor.",
+    "Before assigning a new numerical factor, release the previous owned numerical object while retaining the current symbolic object. Keep the existing SparseFactor algorithm; switching to SparseRefactor is optional later optimization, not required for this correctness fix.",
+    "On symbol/numeric failure, retain enough initialized ownership information to clean any returned resources. Check symbolic status before reporting successful preprocessing. Do not assume negative status means no allocation.",
+    "Make Destroy release any owned numeric and symbolic resources regardless of m_isFactored or matrix pointer, reset handles/ownership, and remain idempotent. By-value SDK cleanup does not reset caller handles.",
+    "Delete the Implementation object after Destroy in the derived destructor; do not take ownership of the external stiffness matrix.",
+    "Keep iterative mode excluded. No general RAII framework or changes to Newton/BFGS scientific logic are needed."
+  ],
+  "executed_counts": {
+    "build": 0,
+    "compiler": 0,
+    "fixture": 0,
+    "solver": 0
+  },
+  "findings": [
+    {
+      "certainty": "Definite ownership loss on a second factorization without intervening Destroy.",
+      "id": "numeric_factor_overwrite",
+      "impact": "Lost numerical storage and its associated references can accumulate across reformations. No measured leak size or memory-pressure estimate is claimed.",
+      "path": "PreProcess creates ASS. First Factor creates ASF1. A later ReformStiffness with m_breshape=false skips CreateStiffness and calls Factor again; assignment replaces ASF1 with ASF2 without releasing ASF1. Later Destroy sees only ASF2.",
+      "sdk_proof": "The called two-argument SparseFactor forwards NULL factorStorage/workspace. The inline allocator allocates new factorStorage and workspace, frees only workspace before return, and marks factorStorage library-owned. It has no old ASF argument and cannot release ASF1. SDK explicitly requires cleanup of returned objects."
+    },
+    {
+      "certainty": "Definite symbolic ownership retained after successful PreProcess and before first successful Factor; numerical leakage depends on the failed factor state.",
+      "id": "failure_cleanup_gated_by_success",
+      "nuance": "If a numerical failure follows an earlier success, the old m_isFactored remains true; later Destroy can clean the latest failed handle and ASS, but cannot recover the prior ASF already overwritten. Not every failed numerical result allocates memory.",
+      "path": "m_isFactored starts false and becomes true only after successful Factor. If stiffness assembly aborts after successful PreProcess, or the first numerical Factor fails, Destroy skips both ASS and ASF because it requires m_isFactored. Recreating/rebinding later may overwrite ASS while still skipping cleanup.",
+      "sdk_proof": "Symbolic factor owns resources independently. SDK documents failed numerical objects both with null numeric storage and with non-null allocated numeric storage; status<0 is not equivalent to owning nothing."
+    },
+    {
+      "certainty": "Definite unreleased heap allocation.",
+      "id": "implementation_destructor_leak",
+      "impact": "Separate from SDK factor resources; FEGlobalMatrix owns the stiffness matrix, so this does not justify deleting m_pA.",
+      "path": "Constructor creates new Implementation; derived destructor calls Destroy only. There is no delete imp in the translation unit. The Implementation object and its vector<long> storage therefore remain allocated after solver destruction."
+    }
+  ],
+  "meaningful_future_controls": [
+    "Two successful numerical Factor calls under one symbolic object release each numeric ownership exactly once.",
+    "PreProcess success followed by Destroy before Factor releases symbolic ownership.",
+    "First numerical failure with an allocated numeric result releases both resources; null-storage failure avoids invented ownership.",
+    "Success followed by failed reformation releases old and failed numeric objects without double cleanup.",
+    "Repeated Destroy and destructor release each owned object and pointer-vector allocation once; zero-equation path acquires no factor ownership."
+  ],
+  "primary_line_evidence": [
+    {
+      "lines": "49-53,65,75-89,109-118",
+      "meaning": "Opaque factor members and vector; success flag initialized false; heap Implementation allocation and destructor omission.",
+      "source": "adapter"
+    },
+    {
+      "lines": "184-196,239-282,303",
+      "meaning": "SetSparseMatrix cleanup and preprocessing assert are success-gated; symbolic factor assigned, with no ASS status test before base success return.",
+      "source": "adapter"
+    },
+    {
+      "lines": "307-347,364-366,508-516",
+      "meaning": "Numerical assignment overwrites ASF; failure returns before setting success; Destroy gates both resource cleanups on success.",
+      "source": "adapter"
+    },
+    {
+      "lines": "185-193,229-248,277-320",
+      "meaning": "No-reshape reformations skip Destroy/PreProcess but call Factor; reshape path performs both.",
+      "source": "newton"
+    },
+    {
+      "lines": "91-100,124-129",
+      "meaning": "Full-Newton mode/max-update/conditioning cases trigger failed update and reformation.",
+      "source": "bfgs"
+    },
+    {
+      "lines": "775-798,918-945",
+      "meaning": "Step initialization and failed quasi-Newton updates invoke strategy reformations.",
+      "source": "newton"
+    },
+    {
+      "lines": "67-69",
+      "meaning": "Strategy reformation forwards to the same Newton routine.",
+      "source": "strategy"
+    },
+    {
+      "lines": "33-37,48-51",
+      "meaning": "Full-Newton strategy always forces a reformation on update.",
+      "source": "full_newton"
+    },
+    {
+      "lines": "131-135,495-538",
+      "meaning": "Solver destruction and nonpersistent-step cleanup reach adapter Destroy; exceptions can return before step-end cleanup.",
+      "source": "newton"
+    },
+    {
+      "lines": "621-623,635-699",
+      "meaning": "Fresh factorStorage allocation, workspace handling and return; no cleanup of previous caller-held numerical factor.",
+      "source": "sdk_typed_inline"
+    },
+    {
+      "lines": "1432-1443,1502-1520,1533-1537,8063-8077,8178-8192",
+      "meaning": "Independent reference-counted symbolic ownership, failed numerical states and explicit cleanup contract.",
+      "source": "sdk_api"
+    },
+    {
+      "lines": "298-304,1863-1868",
+      "meaning": "Canonical failed result initialization and by-value numeric cleanup forwarding.",
+      "source": "sdk_typed_inline"
+    },
+    {
+      "lines": "394-397",
+      "meaning": "By-value symbolic cleanup forwarding; caller must reset its own handle/ownership after release.",
+      "source": "sdk_inline"
+    }
+  ],
+  "prior_evidence_scope": "Earlier driver acceptance and positive-only pointer controls remain valid within their stated scope. This separate static finding explains why a broader direct-adapter repair must precede compilation; no prior frozen evidence is rewritten.",
+  "schema_version": 1,
+  "scope": "Upstream direct-adapter ownership, repeated Newton/BFGS stiffness reformations and failure cleanup. No source changes, compiler, fixtures, build, solver or measured data access. Only this new receipt is written.",
+  "source_bindings": {
+    "adapter": {
+      "bytes": 20622,
+      "path": "data/optional-runtimes/febio-4.13/source/NumCore/AccelerateSparseSolver.cpp",
+      "sha256": "f5432e79ab73dd11d4a0550691480edd7fd5f00c392ae2f78eddf9c4b5da51c9"
+    },
+    "base_solver": {
+      "bytes": 5172,
+      "path": "data/optional-runtimes/febio-4.13/source/FECore/LinearSolver.cpp",
+      "sha256": "3b35ed3e6acb4a15333e63ed503beb3cc77e0bc8de19e662ce549ca60d7521aa"
+    },
+    "bfgs": {
+      "bytes": 5832,
+      "path": "data/optional-runtimes/febio-4.13/source/FECore/BFGSSolver.cpp",
+      "sha256": "fee2d4c42fadd736e5707f3f3d65254a39e44a737d15c7f0dc070c6e6267f52d"
+    },
+    "full_newton": {
+      "bytes": 2353,
+      "path": "data/optional-runtimes/febio-4.13/source/FECore/FEFullNewtonStrategy.cpp",
+      "sha256": "e86a37dd049f1df8cf598d51df184a4a2e7b9f33a511294dddce4e71bcd3af88"
+    },
+    "newton": {
+      "bytes": 31438,
+      "path": "data/optional-runtimes/febio-4.13/source/FECore/FENewtonSolver.cpp",
+      "sha256": "9ef170b3cac244a9fde318951261ff60f4eeaec42dc59e6832a37d4d1b0e0d2c"
+    },
+    "sdk_api": {
+      "bytes": 423862,
+      "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers/Sparse/Solve.h",
+      "sha256": "8d2a7b44d05f1ff67cb1688ab8bb6573b021b88c758baa37e10a8aea1c46811a"
+    },
+    "sdk_inline": {
+      "bytes": 23850,
+      "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers/Sparse/SolveImplementation.h",
+      "sha256": "82a509ffea2e0e27d44473337698e3ebd97b182d3069da704c20fd2995049c17"
+    },
+    "sdk_typed_inline": {
+      "bytes": 104361,
+      "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers/Sparse/SolveImplementationTyped.h",
+      "sha256": "201d2246ac80ecae14375abf8703d556e1adbd8d63cf2460e6db49ea31511bae"
+    },
+    "strategy": {
+      "bytes": 2408,
+      "path": "data/optional-runtimes/febio-4.13/source/FECore/FENewtonStrategy.cpp",
+      "sha256": "e4b99b12d27eeeb116dc5edc6a684745a2b505e3d330e6fc18f7e52c1c79ba6b"
+    }
+  },
+  "status": "confirmed_direct_adapter_ownership_defects_static_only"
+}
