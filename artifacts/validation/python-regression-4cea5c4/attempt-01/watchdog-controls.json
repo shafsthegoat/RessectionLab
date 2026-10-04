@@ -1,0 +1,35 @@
+{
+  "controls": [
+    {
+      "exit_code": 0,
+      "cap_failure": null,
+      "sampled_peak_process_family_rss_bytes": 1982464,
+      "resource_samples": 1,
+      "sample_interval_seconds": 0.02,
+      "wall_cap_seconds": 5,
+      "memory_cap_bytes": 4294967296,
+      "control": "complete"
+    },
+    {
+      "exit_code": -15,
+      "cap_failure": "wall_time_cap",
+      "sampled_peak_process_family_rss_bytes": 14925824,
+      "resource_samples": 3,
+      "sample_interval_seconds": 0.02,
+      "wall_cap_seconds": 0.1,
+      "memory_cap_bytes": 4294967296,
+      "control": "timeout"
+    },
+    {
+      "exit_code": -15,
+      "cap_failure": "sampled_process_family_memory_cap",
+      "sampled_peak_process_family_rss_bytes": 507904,
+      "resource_samples": 1,
+      "sample_interval_seconds": 0.02,
+      "wall_cap_seconds": 5,
+      "memory_cap_bytes": 1,
+      "control": "memory"
+    }
+  ],
+  "all_passed": true
+}
