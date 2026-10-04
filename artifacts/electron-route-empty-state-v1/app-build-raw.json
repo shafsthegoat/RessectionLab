@@ -1,0 +1,23 @@
+{
+  "status": "built_unverified",
+  "appPath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/electron-route-empty-c09ee50/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app",
+  "architecture": "arm64",
+  "signing": "local_ad_hoc",
+  "notarized": false,
+  "internalSymlinks": 41,
+  "sourceDigest": "834c7cebe711f34cd877a92b4832f9f25428bfe36e0e46f74b23699a4a9345b0",
+  "noticeSourceCompleteness": "incomplete",
+  "unresolvedNotices": [
+    {
+      "component": "react-remove-scroll-bar@2.3.8",
+      "reason": "Installed runtime package declares a license but contains no upstream root license/notice text. Its package.json is retained; no substitute license is invented."
+    },
+    {
+      "component": "CPython 3.12.14 static vendor libraries",
+      "reason": "No verified static-vendor notice/version manifest has been configured for this exact runtime. Its upstream build provenance must supply that closure; copying CPython LICENSE.txt alone does not resolve the gap."
+    }
+  ],
+  "noticeLocation": "Contents/Resources/ThirdPartyNotices",
+  "inputSnapshot": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/electron-route-empty-c09ee50/desktop/release/inputs-u6HNOa",
+  "elapsedSeconds": 11.906
+}

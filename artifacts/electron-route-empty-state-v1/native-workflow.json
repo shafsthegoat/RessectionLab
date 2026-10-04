@@ -1,0 +1,109 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "created_utc": "2026-10-04T14:04:10.805820+00:00",
+  "source_revision": "c09ee50a72b787f76ed157a98fb966e290ba977c",
+  "renderer_source_digest": "834c7cebe711f34cd877a92b4832f9f25428bfe36e0e46f74b23699a4a9345b0",
+  "renderer_archive_sha256": "bddc52360ee25a03c20d998bac1b53e7b2ea5c7216b6652795f2d363dbf3b2d5",
+  "engine_executable_sha256": "85a92eff69cb1ea97afc400bc80433c53d146174dd32a9cf36061b8420f72ddd",
+  "engine_source_revision": "0b4e3345137316bb72d6daf9bf2a15ee6b613ed7",
+  "capture_receipt": "capture-verification.json",
+  "scope": "Focused native zero-route controls, real search and existing case identity/centering regression; no model training.",
+  "checks": {
+    "window_widths_points": [
+      1460,
+      1050
+    ],
+    "zero_route_guidance_states": {
+      "unloaded-wide": {
+        "all_three_selectors_absent": true,
+        "guidance": "Open a case to begin"
+      },
+      "unloaded-minimum": {
+        "all_three_selectors_absent": true,
+        "guidance": "Open a case to begin"
+      },
+      "ucsf-before-search-wide": {
+        "all_three_selectors_absent": true,
+        "guidance": "Choose an access assumption"
+      },
+      "ucsf-before-search-minimum": {
+        "all_three_selectors_absent": true,
+        "guidance": "Choose an access assumption"
+      },
+      "pat20-blocked-wide": {
+        "all_three_selectors_absent": true,
+        "guidance": "Access support needs review"
+      },
+      "pat20-blocked-minimum": {
+        "all_three_selectors_absent": true,
+        "guidance": "Access support needs review"
+      }
+    },
+    "actual_ucsf_search_evaluations": 54,
+    "real_category_counts": {
+      "Retained alternatives": 12,
+      "Dominated alternatives": 19,
+      "Rejected candidates": 23
+    },
+    "all_three_category_choices_exercised": true,
+    "selected_A": "Route 06 \u00b7 Aspirator",
+    "selected_B": "Route 08 \u00b7 Aspirator",
+    "selected_AB_functional_at_both_widths": true,
+    "selected_AB_conditional_accessible_tissue_ml_display": [
+      0.013,
+      0.212
+    ],
+    "route_metrics_are_not_removed_tissue_or_clinical_probabilities": true,
+    "full_head_pat20_generation_remains_disabled": true,
+    "actual_case_ids_retained_and_update_on_case_switch": true,
+    "centering_before_ras_mm_display": [
+      -173.0,
+      137.0,
+      112.0
+    ],
+    "centering_after_ras_mm_display": [
+      -161.9,
+      84.9,
+      104.6
+    ],
+    "no_renderer_warning_or_shader_error_observed": true,
+    "numerical_and_notice_payloads_unchanged": true,
+    "deep_strict_local_ad_hoc_signature_passed": true
+  },
+  "scope_limits": [
+    "The actual public-case search had no empty category: retained12, dominated19, rejected23. Keeping the category selector while the active category is empty is covered by focused source tests, not claimed as a native observation.",
+    "UI search timing is an observed display value, not a controlled performance benchmark.",
+    "No new training, final evaluation, seven-prior-map or full structural-proposal regression was repeated.",
+    "UCSF mirror source match remains unverified; imported structural estimates remain view-only and review-required.",
+    "Two notice-source gaps and notarization remain unresolved."
+  ],
+  "screenshots": {
+    "pat20-blocked-minimum.jpg": "41705666986f884e3d20fbf878f50477f231149e01b13a502fe631fa66d42cfd",
+    "pat20-blocked-wide.jpg": "84662bd659a1dfac434adef55e25fb547f74d10a8c08009318001b6cd95a2e4c",
+    "ucsf-after-search-wide.jpg": "736f6f03c8690d667670a39fff2b5193a9d5660fca29e5686f95e868c1be1408",
+    "ucsf-before-search-minimum.jpg": "1d8807bdcb04394ac31f7628eaaeba24dfbcdbc7b63aec5bec2419c73b684741",
+    "ucsf-before-search-wide.jpg": "ea8fba05668ee496b63150f7ebc8e96c5a210b6a5ac53d0988663cc5a249da1f",
+    "ucsf-dominated-category-wide.jpg": "0b24c2e11a0501c3f68d3753afe5b8d3c8688812ad1a4249e0d8e619336a7fb9",
+    "ucsf-rejected-category-wide.jpg": "9a7c38e97f823157802f57cdca9b6e861b0a59d7344a13f7286fff9c82637314",
+    "ucsf-selected-routes-minimum.jpg": "083921c435bbd2a4a504b9eaf4d59800acd26be79682cae2f804a20769f3be05",
+    "ucsf-selected-routes-wide.jpg": "2d93ae92413c9e1b1a86f044993a55663bfa87d72defdbe7bc6db1b2245fcc64",
+    "unloaded-minimum.jpg": "05f7ff8c5c3f3b4fd1f1c0087e49bf7edd50833ca9e92454ac0a5030ae972af8",
+    "unloaded-wide.jpg": "18aec8556e554b97b6bc0f662f780dd46a3fec755d7a4c72684def921ebedbf6"
+  },
+  "accessibility_receipts": {
+    "pat20-blocked-minimum-ax.txt": "5751b2bc976bef8b0e7be4eb8b5bd9a9fc82cd04fd337525af540fd9faf8955d",
+    "pat20-blocked-wide-ax.txt": "4094f8ab8995ea4aa83de2f791379797e118f3c24b352b86d6490bf382eb5902",
+    "ucsf-after-search-wide-ax.txt": "aaac532a5db4c08ca7b9b92e02489202cfe83bd98c00d2b3f5c2c64c425b3673",
+    "ucsf-before-search-minimum-ax.txt": "4d7b2ba805a26b741d264a67dddd19bb76c896645dd2144a749cf5c421ea2c17",
+    "ucsf-before-search-wide-ax.txt": "13e62e9fd7d1cf234abd96d23f3e149d0cac50b048e38c74148a130439300d77",
+    "ucsf-dominated-category-wide-ax.txt": "07a8b7627a0b921f753cf355d9e1246a298c41609ac3dca0e41e37360c5cf6f1",
+    "ucsf-rejected-category-wide-ax.txt": "761f23ffb9c6b38c649a5c091470ca62021dd31497c1a1d44b517f0035ba7bb9",
+    "ucsf-selected-routes-minimum-ax.txt": "4c146971ec5b4dbadd4a4f10bf20d9e6d182e3c66405d9db81c18d2f8d7a4028",
+    "ucsf-selected-routes-wide-ax.txt": "f9773dd8969cb3dcc8077be040492b0074b8eefbadf6cc2eb28f7f3f1556e547",
+    "unloaded-minimum-ax.txt": "9bd77bfb07c993af242ae16cf19fc17d6a457e8d96851aa365777071f2de15d6",
+    "unloaded-wide-ax.txt": "0b9e534d68456ee2ac19395e1065a3a446bbc4b5ff24ac1f38c031f9bb57c475"
+  },
+  "mac_focus_released": true,
+  "app_left_open_case": "BTC-ds001226-sub-PAT20-preop"
+}

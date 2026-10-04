@@ -1132,3 +1132,22 @@ were used. All 2,930 source files, archive and case remain unchanged.
 Original receipts are under `artifacts/benchmarks/native-axis-cache-v1/`, with
 the source-derived report and separate audit in their corresponding artifact
 directories. Existing production and desktop cache behavior remains unchanged.
+
+## October 4, 2026 — route controls appear when candidates exist
+
+Renderer `c09ee50` passes all 153 desktop checks and production build. Native
+inspection at 1460 and 1050 points confirms that unloaded, pre-search UCSF and
+blocked full-head PAT20 states display guidance without empty category or A/B
+selectors. A real UCSF search restores the controls and compares selected routes.
+All three categories switch correctly: 12 retained, 19 dominated and 23 rejected
+candidates. Because none was empty, retaining category switching with an empty
+active filter is verified by source tests and is not a native observation.
+Case identity and annotation centering also pass; full-head access stays blocked.
+
+All 73 captured source inputs match the exact commit; all 2,809 engine entries
+and 292 notices are unchanged, with local ad hoc signature verification passing.
+The current renderer digest is `834c7ceb…` and archive `bddc5236…`. Root viewed
+the minimum-width pre-search and wide populated-search screenshots. No training
+or historical full workflow was repeated. Exact tests, accessibility captures,
+screenshots and package/native receipts are in
+`artifacts/electron-route-empty-state-v1/`.

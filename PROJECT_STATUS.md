@@ -53,7 +53,7 @@ entries verify. `artifacts/electron-annotation-center-v1/` retains exact receipt
 and screenshots. The engine remains `85a92eff…`; new experimental learning and
 cache code are not in this package.
 
-The current renderer is `bc63bc2e…` from `fe25f2a`, with 150 passing desktop
+The preceding renderer is `bc63bc2e…` from `fe25f2a`, with 150 passing desktop
 checks and a successful production build. Its fixed header retains the loaded
 case identifier during evidence-panel scrolling. Actual UCSF → PAT16 → PAT20
 switching passes at 1460- and 1050-point widths, with correct full accessible
@@ -62,6 +62,17 @@ the engine and notices remain byte-identical. Root inspected the minimum-width
 UCSF and wide PAT20 MRI screenshots. Native testing did not introduce an
 extreme-length synthetic identifier. Exact receipts and images are in
 `artifacts/electron-case-identity-v1/`.
+
+The current native renderer is `834c7ceb…` from `c09ee50`, with 153 passing
+desktop checks and a successful production build. Empty category/A/B selectors
+now stay hidden until candidates exist. Native unloaded, pre-search UCSF and
+blocked PAT20 states show their existing next-step guidance at both window
+widths. Actual UCSF search produced 54 candidates; category switching and A/B
+comparison work, with breadcrumb and centering preserved. Its three categories
+were nonempty, so the empty-filter boundary is source-tested rather than claimed
+as a native observation. All 73 source inputs, 2,809 engine entries and 292
+notice entries verify. Root inspected pre-search and populated screenshots.
+See `artifacts/electron-route-empty-state-v1/`; the engine remains unchanged.
 
 Two notice-source completeness gaps and distribution signing remain open. An
 independent actual GPU probe passes 487 cases, with the earlier failures retained.

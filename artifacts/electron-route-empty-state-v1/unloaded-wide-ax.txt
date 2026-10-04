@@ -1,0 +1,84 @@
+Window: "RessectionLab", App: RessectionLab.
+0 standard window RessectionLab, Secondary Actions: Raise
+	1 container RessectionLab
+		2 container
+			3 HTML content RessectionLab, URL: file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/dist/index.html
+				4 container
+					5 text Ressection Lab Patient-specific planning Research workspace
+					6 button Open case ⌘O
+						7 text Open case
+						8 text ⌘O
+					9 button Import MRI
+					10 button (disabled) Save
+					11 container Workspace navigation
+						12 button Toggle case and evidence panel
+						13 button Focus route comparison
+					14 text CASE & EVIDENCE
+					15 button Collapse case panel
+					16 heading No case open
+						17 text No case open
+					18 text A focused workspace for inspecting anatomy and candidate routes.
+					19 button Explore synthetic fixture
+					20 container
+						21 heading Source imaging —
+							22 text Source imaging —
+						23 text No MRI loaded NIfTI source volume
+					24 container
+						25 heading Target annotations —
+							26 text Target annotations —
+						27 button (disabled) Center on annotations, Help: Open a case with target annotations to center its MRI slices.
+						28 text Import a supplied mask to inspect its target compartments. Overlay opacity 32 %
+						29 slider (disabled) Overlay opacity 32%, Value: 0.32, Secondary Actions: Increment, Decrement
+					30 container
+						31 heading Functional evidence
+							32 text Functional evidence
+						33 text Motor network Unassessed Language network Unassessed Missing evidence remains unknown. Population priors require registration and review.
+					34 pop up button (disabled) Inspect evidence
+					35 text Local processing · source preserved Workspace Route comparison
+					36 heading Anatomy, in context
+						37 text Anatomy, in context
+					38 container Camera framing
+						39 toggle button Focus anatomy
+						40 toggle button Fit instruments
+					41 container
+						42 text YOUR CASE IS THE STARTING POINT
+						43 heading From source imaging to inspectable alternatives.
+							44 text From source imaging to inspectable alternatives.
+						45 text Load a case to explore linked MRI views, source annotations and complete instrument geometry.
+						46 button Open a case
+						47 button Explore the synthetic fixture
+					48 text Linked physical coordinates · RAS+ mm Anatomy focus may crop instruments
+					49 tab group Planning workflows
+						50 tab (selected) Routes, Value: 1
+						51 tab (settable, integer) Refine, Value: 0
+					52 container Routes
+						53 text INSTRUMENT-AWARE SEARCH
+						54 heading Compare the alternatives
+							55 text Compare the alternatives
+						56 text Inspect modeled access under shared geometric assumptions.
+						57 container
+							58 disclosure triangle Search settings
+								59 text Search settings
+							60 text Instrument configuration
+							61 pop up button Instrument configuration, Value: Compare both generic tools
+								62 (selected) Compare both generic tools
+							63 text Generic research geometry · whole shaft and active tip
+							64 button (disabled) Generate candidate routes
+						65 heading Open a case to begin
+							66 text Open a case to begin
+						67 text Use Open case or Import MRI to inspect source imaging and target annotations.
+					68 text Research use only
+					69 text Clinical outcomes are not predicted. Functional and vascular anatomy remain unassessed.
+					70 text Local workspace · Open imaging to begin
+					71 text RAS+ · millimeters
+	72 close button
+	73 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	74 minimize button
+75 menu bar
+	76 RessectionLab
+	77 File
+	78 Edit
+	79 View
+	80 Window
+
+The focused UI element is 3 HTML content RessectionLab, URL: file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/dist/index.html

@@ -406,7 +406,7 @@ remain unchanged.
 
 ## Persistent loaded-case identity
 
-The current renderer is exact commit `fe25f2a`: capture `bc63bc2e…`, archive
+The case-identity checkpoint uses exact commit `fe25f2a`: capture `bc63bc2e…`, archive
 `542a036a…`, with all 73 captured source inputs checked against the commit.
 The aggregate 150 desktop checks and production build passed. All numerical
 payload and notice entries remain identical to the prior verified app, and
@@ -423,3 +423,36 @@ regression passed. No renderer warning or shader error was observed. No
 training, final evaluation or broader historical check was repeated. The
 previous app is retained at the path in `app-build.json`; the raw builder
 record and subsequent native passing receipt are preserved separately.
+
+
+## Route controls after search
+
+The current renderer is exact commit `c09ee50`: capture `834c7ceb…`, archive
+`bddc5236…`, with all 73 source inputs checked against the commit. All 153
+aggregate desktop checks passed (38 main-process, 84 renderer, 31 viewer),
+along with the production build and local ad hoc deep strict signature
+verification. The complete 2,809-entry numerical payload and 292-entry
+notice tree remain identical to the previous verified package.
+
+`artifacts/electron-route-empty-state-v1/` records native checks at 1460- and
+1050-point widths. An unloaded workspace, UCSF before search and blocked
+full-head PAT20 each displayed the appropriate guidance without empty
+category or A/B selectors. After explicitly choosing estimated image support,
+actual UCSF search evaluated 54 routes and exposed the controls. Native
+category switching worked, as did choosing Route 06 for A and Route 08 for B
+at both widths. Their displayed conditional accessible tissue was
+0.013/0.212 mL; these values do not describe removed tissue or clinical risk.
+
+The actual search produced 12 retained, 19 dominated and 23 rejected routes,
+so this native run did not encounter an empty filtered category. The focused
+source test covers retaining the category selector in that situation; no
+interactive empty-category result is claimed. The case breadcrumb and
+annotation-centering quick regression passed, and PAT20 generation stayed
+disabled pending reviewed access support. No renderer warning or shader
+error was observed. No training or final evaluation was performed.
+
+The raw builder record, later native passing receipt, screenshots and
+accessibility snapshots are preserved separately. The previous application
+remains recoverable at the publication path in `app-build.json`. Existing
+source-provenance limitations, two notice-source gaps and lack of
+notarization remain unchanged.

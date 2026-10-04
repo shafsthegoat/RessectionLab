@@ -7,15 +7,18 @@ documents; ongoing work is tracked in [PROJECT_STATUS](../PROJECT_STATUS.md).
 
 ## Identified application and purpose
 
-The inspected arm64 Electron application uses renderer `fe25f2a` (source digest
-`bc63bc2e…`) and the unchanged Python `0b4e334` engine (executable SHA256
-`85a92eff…`). All **150 desktop checks** and its production build passed; all
+The inspected arm64 Electron application uses renderer `c09ee50` (source digest
+`834c7ceb…`) and the unchanged Python `0b4e334` engine (executable SHA256
+`85a92eff…`). All **153 desktop checks** and its production build passed; all
 73 captured desktop source inputs match that commit. The
-[capture receipt](../artifacts/electron-case-identity-v1/capture-verification.json)
+[capture receipt](../artifacts/electron-route-empty-state-v1/capture-verification.json)
 binds the renderer, complete engine payload and packaged notices. The
-[focused native receipt and screenshots](../artifacts/electron-case-identity-v1/native-workflow.json)
-verify UCSF → PAT16 → PAT20 case switching, the persistent loaded identifier
-at two window widths after evidence-panel scrolling, and annotation centering.
+[focused native receipt and screenshots](../artifacts/electron-route-empty-state-v1/native-workflow.json)
+verify clear unloaded/pre-search/blocked guidance, actual 54-route search and
+category/A/B comparison at two window widths, plus case identity and centering.
+The actual categories were all nonempty; the empty-filter boundary is verified
+in source tests. The preceding `fe25f2a` package passed 150 checks and separately
+[verified the persistent identifier across three cases](../artifacts/electron-case-identity-v1/native-workflow.json).
 The identifier describes the loaded research bundle; it does not certify
 clinical patient correspondence. No training or final evaluation was invoked.
 
@@ -26,12 +29,12 @@ estimates remained review-required and route generation stayed blocked.
 The earlier `100865f` package's **143 checks** and
 [guidance/motor-prior refresh](../artifacts/dependency-notices-v1/native-workflow-final.json)
 retain their separate build scope; these broader viewer checks were not all
-repeated in the current identity-focused refresh.
+repeated in the current presentation refresh.
 
 Earlier [full training/cancellation/resume checks](../artifacts/electron-refinement-v2/native-workflow-final.json)
 and [seven-map, replay and GPU checks](../artifacts/electron-priors-v1/native-workflow-final.json)
 retain their own package identities; they were not repeated in full on
-`fe25f2a`. Later feature-unit learning and the experimental RAW-only axis
+`c09ee50`. Later feature-unit learning and the experimental RAW-only axis
 adapter, preflight and one-update pilot are not bundled. Their results or
 validation must not be attributed to this app.
 [Experimental axis scope](native-axis-preflight.md).
@@ -134,7 +137,7 @@ identity. No genotype-to-injury or molecular-to-tool-tolerance rule is supplied.
 The separate immutable `f3a0591` backend archive passed **1,150 tests in
 215.95 seconds**, with no skips or source changes. Its 14 warnings are deliberate
 NumPy metadata adversaries and existing DIPY warnings. This is a research-source
-validation record, distinct from the current app's 150 desktop checks and
+validation record, distinct from the current app's 153 desktop checks and
 unchanged engine. [Frozen validation](../artifacts/validation/native-axis-pilot-public-v1/execution-baseline.json),
 [original test log](../artifacts/validation/native-axis-pilot-public-v1/full-suite-attempt-01/pytest.log).
 

@@ -1,0 +1,201 @@
+Window: "RessectionLab", App: RessectionLab.
+0 standard window RessectionLab, Secondary Actions: Raise
+	1 container RessectionLab
+		2 container
+			3 HTML content RessectionLab, URL: file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/dist/index.html
+				4 container
+					5 text Ressection Lab Research workspace
+					6 button Open case ⌘O
+						7 text Open case
+						8 text ⌘O
+					9 button Import MRI
+					10 button Save
+					11 container Workspace navigation
+						12 button Toggle case and evidence panel
+						13 button Focus route comparison
+					14 text CASE & EVIDENCE
+					15 button Collapse case panel
+					16 heading UCSF-PDGM-0004, Value: 1
+						17 text UCSF-PDGM-0004
+					18 text Annotation-assisted structural workspace
+					19 text Public mirror · source match unverified
+					20 container
+						21 heading Source imaging 01, Value: 2
+							22 text Source imaging 01
+						23 text T1c 240 × 240 × 155 voxels 1.0 × 1.0 × 1.0 mm ·  RAS+
+					24 container
+						25 heading Target annotations 03, Value: 2
+							26 text Target annotations 03
+						27 button Center on annotations, Help: Move the linked MRI slices to the source annotation center.
+						28 checkbox FLAIR Abnormality 18.65 mL · supplied annotation, Value: 1
+						29 text FLAIR Abnormality
+						30 text 18.65  mL · supplied annotation
+						31 checkbox Enhancing Target 15.67 mL · supplied annotation, Value: 1
+						32 text Enhancing Target
+						33 text 15.67  mL · supplied annotation
+						34 checkbox Nonenhancing Or Necrotic Core 7.59 mL · supplied annotation, Value: 1
+						35 text Nonenhancing Or Necrotic Core
+						36 text 7.59  mL · supplied annotation Overlay opacity 32 %
+						37 slider Overlay opacity 32%, Value: 0.32, Secondary Actions: Increment, Decrement
+					38 container
+						39 heading Population priors 07, Value: 2
+							40 text Population priors 07
+						41 text Population prior Alignment review required · inspection only Inspect one released map
+						42 pop up button Inspect one released map, Value: Source only · no prior overlay
+							43 (selected) Source only · no prior overlay
+						44 text Not used in route scoring Patient language dominance: unknown Patient-specific function: unknown
+					45 pop up button Inspect evidence
+					46 text Local processing · source preserved Workspace
+					47 container Current case: UCSF-PDGM-0004
+						48 text UCSF-PDGM-0004
+					49 heading Anatomy, in context, Value: 2
+						50 text Anatomy, in context
+					51 container Camera framing
+						52 toggle button Focus anatomy, Value: 1
+						53 toggle button Fit instruments, Value: 0
+					54 container Linked patient imaging workspace
+						55 toolbar Imaging layout and 3D controls
+							56 container View layout
+								57 toggle button 3D focus, Value: 1
+								58 toggle button MRI review, Value: 0
+							59 toggle button MRI plane off, Help: Show or hide the source MRI plane in 3D; linked MRI views remain visible, Value: 0
+							60 pop up button Description: MRI plane shown in 3D, Value: Axial
+								61 (selected) Axial
+							62 button Description: Fit 3D view, Help: Fit anatomy and the selected 3D camera preset
+						63 container
+							64 text 3D Spatial workspace
+							65 container 3-D source anatomy. Drag to rotate, scroll to zoom, double-click to set linked cursor.
+								66 container
+									67 text Source annotation surfaces ● Route  A ● Route  B
+								68 container 3-D patient coordinates: R is right, A anterior, S superior
+									69 text R A S
+									70 text Patient axes
+								71 container
+									72 text Drag to rotate  ·  Scroll to zoom
+						73 container
+							74 text Axial 104.6 mm
+							75 toggle button Description: Expand Axial MRI, Value: 0
+							76 container Axial source MRI, neurological convention, slice position 104.6 millimeters. Click to set cursor; scroll or arrow keys change slice.
+								77 text L
+								78 text R
+								79 text A
+								80 text P
+								81 text 20
+								82 text  mm
+								83 text SOURCE MRI
+						84 container
+							85 text Coronal 84.9 mm
+							86 toggle button Description: Expand Coronal MRI, Value: 0
+							87 container Coronal source MRI, neurological convention, slice position 84.9 millimeters. Click to set cursor; scroll or arrow keys change slice.
+								88 text L
+								89 text R
+								90 text S
+								91 text I
+								92 text 20
+								93 text  mm
+								94 text SOURCE MRI
+						95 container
+							96 text Sagittal -161.9 mm
+							97 toggle button Description: Expand Sagittal MRI, Value: 0
+							98 container Sagittal source MRI, neurological convention, slice position -161.9 millimeters. Click to set cursor; scroll or arrow keys change slice.
+								99 text P
+								100 text A
+								101 text S
+								102 text I
+								103 text 20
+								104 text  mm
+								105 text SOURCE MRI
+						106 text Linked views
+						107 text RAS
+						108 text -161.9 / 84.9 / 104.6  mm
+						109 container
+							110 text Contrast
+							111 slider Description: Source MRI window width, Value: 1, Secondary Actions: Increment, Decrement
+					112 text Linked physical coordinates · RAS+ mm Anatomy focus may crop instruments
+					113 tab group Planning workflows
+						114 tab (selected) Routes, Value: 1
+						115 tab (settable, integer) Refine, Value: 0
+					116 container Routes
+						117 text INSTRUMENT-AWARE SEARCH
+						118 heading Compare the alternatives, Value: 2
+							119 text Compare the alternatives
+						120 disclosure triangle Search settings
+							121 text Search settings
+						122 pop up button Description: Candidate category, Value: Retained alternatives
+							123 (selected) Retained alternatives
+						124 text 12
+						125 container
+							126 text A
+							127 pop up button Description: Primary route A, Value: Route 06 · Aspirator
+								128 (selected) Route 06 · Aspirator
+						129 container
+							130 text B
+							131 pop up button Description: Comparison route B, Value: Route 08 · Aspirator
+								132 (selected) Route 08 · Aspirator
+						133 table
+							134 row
+								135 column header
+									136 text Modeled metric
+								137 column header
+									138 text A
+									139 text Route 06
+								140 column header
+									141 text B
+									142 text Route 08
+							143 row
+								144 row header
+									145 text Accessible target
+								146 cell
+									147 text 0.013 mL
+								148 cell
+									149 text 0.212 mL
+							150 row
+								151 row header
+									152 text Route length
+								153 cell
+									154 text 24.5 mm
+								155 cell
+									156 text 39.9 mm
+							157 row
+								158 row header
+									159 text Clearance¹
+								160 cell
+									161 text 0.6 mm
+								162 cell
+									163 text 1.3 mm
+							164 row
+								165 row header
+									166 text Normal exposure²
+								167 cell
+									168 text Unassessed
+								169 cell
+									170 text Unassessed
+							171 row
+								172 row header
+									173 text Assessment
+								174 cell
+									175 text Incomplete
+								176 cell
+									177 text Incomplete
+						178 text ¹ Conservative lower bound
+						179 text ² Geometric exposure, not tissue removal
+						180 text Removed target volume
+						181 text Not simulated
+						182 disclosure triangle Target compartments
+							183 text Target compartments
+						184 text 54 evaluations · 1.11 s · Search
+					185 text Research use only
+					186 text Clinical outcomes are not predicted. Functional and vascular anatomy remain unassessed.
+					187 text 54 candidates evaluated · Search completed in 1.11 s
+					188 text RAS -161.9 / 84.9 / 104.6 mm
+	189 close button
+	190 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	191 minimize button
+192 menu bar
+	193 RessectionLab
+	194 File
+	195 Edit
+	196 View
+	197 Window
+
+The focused UI element is 131 pop up button Description: Comparison route B, Value: Route 08 · Aspirator
