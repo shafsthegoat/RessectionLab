@@ -1,0 +1,659 @@
+{
+  "schema_version": 1,
+  "kind": "metadata_only_development_acquisition_queue",
+  "declared_at": "2026-10-04T11:20:34.491792+00:00",
+  "metadata_checked_at": "2026-10-04T11:20:35.467083+00:00",
+  "scope": "Two future BTC development candidates. No image acquisition, preparation, cohort registry mutation or final assignment change.",
+  "source": {
+    "dataset": "BTC_preop",
+    "accession": "ds001226",
+    "release": "5.0.1",
+    "git_commit": "359d372c5e972a161966312128adb365870df949",
+    "doi": "10.18112/openneuro.ds001226.v5.0.1",
+    "primary_source": "https://openneuro.org/datasets/ds001226/versions/5.0.1",
+    "pinned_git_text_base": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/",
+    "license": "CC0",
+    "license_evidence": "dataset_description.json",
+    "source_phase": "preoperative per README and ses-preop paths"
+  },
+  "selection": {
+    "extends_manifest": "manifests/btc_pat05_selection.json",
+    "extends_manifest_sha256": "edd2d5ace4db04615ac948f339beb058eb5f637a7a588325fb714e360fd887f3",
+    "source_metadata_path": "participants.tsv",
+    "source_metadata_sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d",
+    "rule": "Retain diagnoses containing glioma, glioblastoma or astrocytoma (case-insensitive); exclude already acquired sub-PAT05 and sub-PAT28; sort participant_id lexicographically; take the first two. Diagnosis is used only for retrospective source inclusion.",
+    "excluded_already_acquired": [
+      "sub-PAT05",
+      "sub-PAT28"
+    ],
+    "ordered_metadata_candidates": [
+      "sub-PAT16",
+      "sub-PAT20",
+      "sub-PAT22",
+      "sub-PAT25",
+      "sub-PAT26",
+      "sub-PAT27",
+      "sub-PAT29",
+      "sub-PAT31"
+    ],
+    "selected_subjects": [
+      "sub-PAT16",
+      "sub-PAT20"
+    ],
+    "selected_before_image_access": true,
+    "selection_used_images_routes_outcomes_or_model_scores": false,
+    "location_not_used_for_selection": true,
+    "replacement_rule": "Retain any selected acquisition or reconstruction failure in the flow report. Do not silently replace it with a visually convenient case; a replacement requires a new dated metadata-only selection.",
+    "outer_role_locked": "development",
+    "eligible_for_future_outer_final": false
+  },
+  "existing_development_inventory": [
+    {
+      "patient_group": "UCSF-PDGM:UCSF-PDGM-0004",
+      "source_manifest": "manifests/data_acquisition_ucsf.json",
+      "status": "structural_mirror_primary_release_equivalence_unverified",
+      "known_overlap": "UCSF-PDGM-004 / UCSF-PDGM-0004 / BraTS2021_00097 Training; use cohort_registry aliases"
+    },
+    {
+      "patient_group": "BTC:sub-PAT28",
+      "source_manifest": "manifests/btc_acquisition.json",
+      "status": "primary_structural_and_directional_diffusion_source_bytes_verified"
+    },
+    {
+      "patient_group": "BTC:sub-PAT05",
+      "source_manifest": "manifests/btc_pat05_acquisition.json",
+      "status": "primary_structural_source_bytes_verified"
+    }
+  ],
+  "shared_release_files": [
+    {
+      "path": "dataset_description.json",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/dataset_description.json",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/dataset_description.json",
+      "bytes": 1209,
+      "sha256": "84185f9c387ae232ddbe87e20b329bacf82b9b5dafe9bde63b64c9bc78bed6f2"
+    },
+    {
+      "path": "participants.tsv",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/participants.tsv",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/participants.tsv",
+      "bytes": 10103,
+      "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d"
+    },
+    {
+      "path": "README",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/README",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/README",
+      "bytes": 3145,
+      "sha256": "fbb3e2e1b00d699835badc0bbda1296f9a90f2995117d93ba3123bd2f8e2d0bb"
+    },
+    {
+      "path": "CHANGES",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/CHANGES",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/CHANGES",
+      "bytes": 434,
+      "sha256": "8c766a15851db0823c661e0a3ec0ac14e2698711461a4f169cab30b3896461c9"
+    }
+  ],
+  "candidates": [
+    {
+      "subject": "sub-PAT16",
+      "patient_group": "BTC:sub-PAT16",
+      "visit_id": "ses-preop",
+      "registry_assignment_status": "append_acquired_development_record_only_after_source_and_geometry_QC",
+      "identity_status": "participant_row_and_annex_pointer_verified_image_content_unverified",
+      "primary_image_acquired": false,
+      "image_opened": false,
+      "metadata_eligibility": "source_diagnosis_string_matches_predeclared_glioma_filter_only",
+      "source_participant_fields": {
+        "participant_id": "sub-PAT16",
+        "tumor type & grade": "Anaplastic astrocytoma II-III",
+        "tumor location": "Fronto-temporal"
+      },
+      "overlap": {
+        "within_source_grouping": "All visits, source images, annotations, reconstructions and simulated episodes of this person belong to this patient group.",
+        "related_postoperative_accession": "ds002080",
+        "postoperative_subject_correspondence": "not_inspected_not_verified",
+        "cross_collection_independence_verified": false,
+        "unknown_alias_rule": "Resolve source-supported correspondence before any independent evaluation claim; exclude unresolved cases from that claim.",
+        "eligible_for_outer_final": false
+      },
+      "storage_forecast": {
+        "structural_subject_bytes": 18195685,
+        "structural_bytes_with_shared_metadata": 18210576,
+        "directional_diffusion_additional_bytes": 47854915,
+        "all_subject_bytes": 66050600,
+        "all_bytes_with_shared_metadata": 66065491,
+        "source_bytes_are_exact_pinned_lengths": true,
+        "temporary_derivative_space_not_included": true
+      },
+      "files": [
+        {
+          "path": "sub-PAT16/ses-preop/anat/sub-PAT16_ses-preop_T1w.nii.gz",
+          "scope": "structural_minimum",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT16/ses-preop/anat/sub-PAT16_ses-preop_T1w.nii.gz?versionId=Dbm4LvlEQiJ3PtgfUP9Z.OHwmvEgaKLQ",
+          "expected_bytes": 7708650,
+          "expected_annex_md5": "007ee49f198ff2fe3da375b21e3aa7fa",
+          "annex_pointer": "../../../.git/annex/objects/7f/ZK/MD5E-s7708650--007ee49f198ff2fe3da375b21e3aa7fa.nii.gz/MD5E-s7708650--007ee49f198ff2fe3da375b21e3aa7fa.nii.gz",
+          "annex_pointer_sha256": "34939208289af69b0bbee029e4aba3ccedd1d5de943d4d2d11eb0a38936d9c92",
+          "image_sha256": null,
+          "verification_status": "pinned_pointer_and_object_headers_only_content_unverified",
+          "image_bytes_read": 0,
+          "head_verified_at": "2026-10-04T11:20:35.467083+00:00",
+          "head_headers": {
+            "content_length": 7708650,
+            "version_id": "Dbm4LvlEQiJ3PtgfUP9Z.OHwmvEgaKLQ",
+            "etag": "\"007ee49f198ff2fe3da375b21e3aa7fa\"",
+            "last_modified": "Fri, 19 Jan 2024 20:53:50 GMT",
+            "http_status": 200
+          }
+        },
+        {
+          "path": "sub-PAT16/ses-preop/anat/sub-PAT16_ses-preop_T1w.json",
+          "scope": "structural_minimum",
+          "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT16/ses-preop/anat/sub-PAT16_ses-preop_T1w.json",
+          "expected_bytes": 923,
+          "sha256": "562f4dab35bb77988d6b66adb69dc76303c2991a2ec57d1dcdd5a8cd523ebc9d",
+          "verification_status": "pinned_text_metadata_fetched_and_hashed",
+          "acquisition_metadata": {
+            "Modality": "MR",
+            "Manufacturer": "Siemens",
+            "ManufacturersModelName": "TrioTim",
+            "MagneticFieldStrength": 3,
+            "ProtocolName": "T1_mprage",
+            "SequenceName": "_tfl3d1_ns",
+            "PhaseEncodingDirection": "i-",
+            "EchoTime": 0.00418,
+            "RepetitionTime": 1.75,
+            "ConversionSoftware": "dcm2niix",
+            "ConversionSoftwareVersion": "v1.0.20170724 GCC4.8.5"
+          }
+        },
+        {
+          "path": "derivatives/tumor_masks/sub-PAT16/anat/sub-PAT16_space_T1_label-tumor.nii",
+          "scope": "structural_minimum",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/derivatives/tumor_masks/sub-PAT16/anat/sub-PAT16_space_T1_label-tumor.nii?versionId=IDmVkLclbm3WeUJ_GG3sNeYvD3.s6RUl",
+          "expected_bytes": 10486112,
+          "expected_annex_md5": "39460dac3ecad3304d6fd61d3dc3de5f",
+          "annex_pointer": "../../../../.git/annex/objects/P7/Pj/MD5E-s10486112--39460dac3ecad3304d6fd61d3dc3de5f.nii/MD5E-s10486112--39460dac3ecad3304d6fd61d3dc3de5f.nii",
+          "annex_pointer_sha256": "5cb0c5d6e17202507edc459a1bc778f18c55175648160b556fb9a00a6e05eca2",
+          "image_sha256": null,
+          "verification_status": "pinned_pointer_and_object_headers_only_content_unverified",
+          "image_bytes_read": 0,
+          "head_verified_at": "2026-10-04T11:20:35.467083+00:00",
+          "head_headers": {
+            "content_length": 10486112,
+            "version_id": "IDmVkLclbm3WeUJ_GG3sNeYvD3.s6RUl",
+            "etag": "\"39460dac3ecad3304d6fd61d3dc3de5f\"",
+            "last_modified": "Fri, 19 Jan 2024 20:55:40 GMT",
+            "http_status": 200
+          }
+        },
+        {
+          "path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.nii.gz",
+          "scope": "optional_directional_diffusion",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.nii.gz?versionId=SRzm45cxSVON3NC6GTyWAhhYOMtV7hPe",
+          "expected_bytes": 46711430,
+          "expected_annex_md5": "df0336601e359838c2b8d274e6184e99",
+          "annex_pointer": "../../../.git/annex/objects/6k/Kp/MD5E-s46711430--df0336601e359838c2b8d274e6184e99.nii.gz/MD5E-s46711430--df0336601e359838c2b8d274e6184e99.nii.gz",
+          "annex_pointer_sha256": "6caefbd0f3cd46506338c0fcd49b8f6f14acf20dfb102e039a2385ed1df67451",
+          "image_sha256": null,
+          "verification_status": "pinned_pointer_and_object_headers_only_content_unverified",
+          "image_bytes_read": 0,
+          "head_verified_at": "2026-10-04T11:20:35.467083+00:00",
+          "head_headers": {
+            "content_length": 46711430,
+            "version_id": "SRzm45cxSVON3NC6GTyWAhhYOMtV7hPe",
+            "etag": "\"df0336601e359838c2b8d274e6184e99\"",
+            "last_modified": "Fri, 19 Jan 2024 20:53:51 GMT",
+            "http_status": 200
+          }
+        },
+        {
+          "path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.json",
+          "scope": "optional_directional_diffusion",
+          "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.json",
+          "expected_bytes": 1644,
+          "sha256": "3f3b5b5f3a485f9e70501c7e23d5c48711e85282b9d60f9452963c9b1ab2099d",
+          "verification_status": "pinned_text_metadata_fetched_and_hashed",
+          "acquisition_metadata": {
+            "Modality": "MR",
+            "Manufacturer": "Siemens",
+            "ManufacturersModelName": "TrioTim",
+            "MagneticFieldStrength": 3,
+            "ProtocolName": "DTI_2.5_b2800_101dir",
+            "SequenceName": "_ep_b0",
+            "PhaseEncodingDirection": "j-",
+            "TotalReadoutTime": 0.0266003,
+            "EffectiveEchoSpacing": 0.000380004,
+            "EchoTime": 0.11,
+            "RepetitionTime": 8.7,
+            "ConversionSoftware": "dcm2niix",
+            "ConversionSoftwareVersion": "v1.0.20170724 GCC4.8.5"
+          }
+        },
+        {
+          "path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.bval",
+          "scope": "optional_directional_diffusion",
+          "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.bval",
+          "expected_bytes": 476,
+          "sha256": "a678931600142ebf20236adba60c52b41e85b9aa241b78dc69c6385c089576c2",
+          "verification_status": "pinned_text_metadata_fetched_and_hashed",
+          "gradient_metadata": {
+            "b_value_count": 102,
+            "unique_b_values_s_per_mm2": [
+              0.0,
+              700.0,
+              1200.0,
+              2800.0
+            ],
+            "b_zero_count_threshold_50": 6,
+            "image_volume_count_check": "not_run_image_unopened"
+          }
+        },
+        {
+          "path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.bvec",
+          "scope": "optional_directional_diffusion",
+          "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-AP_dwi.bvec",
+          "expected_bytes": 2773,
+          "sha256": "79aef7283c3ec6c1889c2d3090ca8c971d50db41ba768b3ccbea9c66a76443b4",
+          "verification_status": "pinned_text_metadata_fetched_and_hashed",
+          "gradient_metadata": {
+            "rows": 3,
+            "columns_per_row": [
+              102,
+              102,
+              102
+            ],
+            "orientation_validation": "not_run_image_unopened"
+          }
+        },
+        {
+          "path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.nii.gz",
+          "scope": "optional_directional_diffusion",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.nii.gz?versionId=viNG95HVkXPEncnUMIv3BuZsGuSc5EfC",
+          "expected_bytes": 1137510,
+          "expected_annex_md5": "032af0922a6fa1773763ac2f3a9f7a24",
+          "annex_pointer": "../../../.git/annex/objects/W4/FX/MD5E-s1137510--032af0922a6fa1773763ac2f3a9f7a24.nii.gz/MD5E-s1137510--032af0922a6fa1773763ac2f3a9f7a24.nii.gz",
+          "annex_pointer_sha256": "b0078bd7c60e22525ca2be09a33de6ead3aa13177bf17d31a3a9126cedbfc104",
+          "image_sha256": null,
+          "verification_status": "pinned_pointer_and_object_headers_only_content_unverified",
+          "image_bytes_read": 0,
+          "head_verified_at": "2026-10-04T11:20:35.467083+00:00",
+          "head_headers": {
+            "content_length": 1137510,
+            "version_id": "viNG95HVkXPEncnUMIv3BuZsGuSc5EfC",
+            "etag": "\"032af0922a6fa1773763ac2f3a9f7a24\"",
+            "last_modified": "Fri, 19 Jan 2024 20:53:54 GMT",
+            "http_status": 200
+          }
+        },
+        {
+          "path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.json",
+          "scope": "optional_directional_diffusion",
+          "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.json",
+          "expected_bytes": 1066,
+          "sha256": "336a04320f8086c9de3ddc8cc82e4a3a515e9c5ea6feec7cc33a1be2ad220ceb",
+          "verification_status": "pinned_text_metadata_fetched_and_hashed",
+          "acquisition_metadata": {
+            "Modality": "MR",
+            "Manufacturer": "Siemens",
+            "ManufacturersModelName": "TrioTim",
+            "MagneticFieldStrength": 3,
+            "ProtocolName": "PA_2averages_MDDW_6dir",
+            "SequenceName": "_ep_b0",
+            "PhaseEncodingDirection": "j",
+            "TotalReadoutTime": 0.0266003,
+            "EffectiveEchoSpacing": 0.000380004,
+            "EchoTime": 0.11,
+            "RepetitionTime": 8.7,
+            "ConversionSoftware": "dcm2niix",
+            "ConversionSoftwareVersion": "v1.0.20170724 GCC4.8.5"
+          }
+        },
+        {
+          "path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.bval",
+          "scope": "optional_directional_diffusion",
+          "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.bval",
+          "expected_bytes": 4,
+          "sha256": "0ccdb5a77ba5bf7687f2565a8ed97dfb9c1af45503c496fb646312239fab5101",
+          "verification_status": "pinned_text_metadata_fetched_and_hashed",
+          "gradient_metadata": {
+            "b_value_count": 2,
+            "unique_b_values_s_per_mm2": [
+              0.0
+            ],
+            "b_zero_count_threshold_50": 2,
+            "image_volume_count_check": "not_run_image_unopened"
+          }
+        },
+        {
+          "path": "sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.bvec",
+          "scope": "optional_directional_diffusion",
+          "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT16/ses-preop/dwi/sub-PAT16_ses-preop_acq-PA_dwi.bvec",
+          "expected_bytes": 12,
+          "sha256": "1097c9882126db5f7d6f7a4856ec9d3db40cc1dd03515d68ac46f454a9bf1ae4",
+          "verification_status": "pinned_text_metadata_fetched_and_hashed",
+          "gradient_metadata": {
+            "rows": 3,
+            "columns_per_row": [
+              2,
+              2,
+              2
+            ],
+            "orientation_validation": "not_run_image_unopened"
+          }
+        }
+      ],
+      "outer_role": "development",
+      "outer_role_locked": true
+    },
+    {
+      "subject": "sub-PAT20",
+      "patient_group": "BTC:sub-PAT20",
+      "visit_id": "ses-preop",
+      "registry_assignment_status": "append_acquired_development_record_only_after_source_and_geometry_QC",
+      "identity_status": "participant_row_and_annex_pointer_verified_image_content_unverified",
+      "primary_image_acquired": false,
+      "image_opened": false,
+      "metadata_eligibility": "source_diagnosis_string_matches_predeclared_glioma_filter_only",
+      "source_participant_fields": {
+        "participant_id": "sub-PAT20",
+        "tumor type & grade": "Anaplastic astrocytoma III",
+        "tumor location": "Parietal"
+      },
+      "overlap": {
+        "within_source_grouping": "All visits, source images, annotations, reconstructions and simulated episodes of this person belong to this patient group.",
+        "related_postoperative_accession": "ds002080",
+        "postoperative_subject_correspondence": "not_inspected_not_verified",
+        "cross_collection_independence_verified": false,
+        "unknown_alias_rule": "Resolve source-supported correspondence before any independent evaluation claim; exclude unresolved cases from that claim.",
+        "eligible_for_outer_final": false
+      },
+      "storage_forecast": {
+        "structural_subject_bytes": 17531332,
+        "structural_bytes_with_shared_metadata": 17546223,
+        "directional_diffusion_additional_bytes": 46456177,
+        "all_subject_bytes": 63987509,
+        "all_bytes_with_shared_metadata": 64002400,
+        "source_bytes_are_exact_pinned_lengths": true,
+        "temporary_derivative_space_not_included": true
+      },
+      "files": [
+        {
+          "path": "sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.nii.gz",
+          "scope": "structural_minimum",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.nii.gz?versionId=GwT6HXksPRjidtHgRIIBZwwUCpXxJjWH",
+          "expected_bytes": 7044313,
+          "expected_annex_md5": "5a773054340f6f84d68e93a676c9e389",
+          "annex_pointer": "../../../.git/annex/objects/34/09/MD5E-s7044313--5a773054340f6f84d68e93a676c9e389.nii.gz/MD5E-s7044313--5a773054340f6f84d68e93a676c9e389.nii.gz",
+          "annex_pointer_sha256": "302423c11a9ee6aafd52b6dece54cef3395a6a0662e2abdd4fc9cc108b183a9d",
+          "image_sha256": null,
+          "verification_status": "pinned_pointer_and_object_headers_only_content_unverified",
+          "image_bytes_read": 0,
+          "head_verified_at": "2026-10-04T11:20:35.467083+00:00",
+          "head_headers": {
+            "content_length": 7044313,
+            "version_id": "GwT6HXksPRjidtHgRIIBZwwUCpXxJjWH",
+            "etag": "\"5a773054340f6f84d68e93a676c9e389\"",
+            "last_modified": "Fri, 19 Jan 2024 20:54:12 GMT",
+            "http_status": 200
+          }
+        },
+        {
+          "path": "sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.json",
+          "scope": "structural_minimum",
+          "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.json",
+          "expected_bytes": 907,
+          "sha256": "42790d45fcbc3c06e447aaee965be0e1758488a86534597153cdec6eb7504ae9",
+          "verification_status": "pinned_text_metadata_fetched_and_hashed",
+          "acquisition_metadata": {
+            "Modality": "MR",
+            "Manufacturer": "Siemens",
+            "ManufacturersModelName": "TrioTim",
+            "MagneticFieldStrength": 3,
+            "ProtocolName": "T1_mprage",
+            "SequenceName": "_tfl3d1_ns",
+            "PhaseEncodingDirection": "i-",
+            "EchoTime": 0.00418,
+            "RepetitionTime": 1.75,
+            "ConversionSoftware": "dcm2niix",
+            "ConversionSoftwareVersion": "v1.0.20170724 GCC4.8.5"
+          }
+        },
+        {
+          "path": "derivatives/tumor_masks/sub-PAT20/anat/sub-PAT20_space_T1_label-tumor.nii",
+          "scope": "structural_minimum",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/derivatives/tumor_masks/sub-PAT20/anat/sub-PAT20_space_T1_label-tumor.nii?versionId=dOJ3f23OM6ap.tRBlxmoevMp0_h.jyWL",
+          "expected_bytes": 10486112,
+          "expected_annex_md5": "d126fda2aea36a594b966f2220716737",
+          "annex_pointer": "../../../../.git/annex/objects/6g/j3/MD5E-s10486112--d126fda2aea36a594b966f2220716737.nii/MD5E-s10486112--d126fda2aea36a594b966f2220716737.nii",
+          "annex_pointer_sha256": "ef287500eab5f781d7512a47e3b4748a85839ff66089bcefc24b9e8f361cd25f",
+          "image_sha256": null,
+          "verification_status": "pinned_pointer_and_object_headers_only_content_unverified",
+          "image_bytes_read": 0,
+          "head_verified_at": "2026-10-04T11:20:35.467083+00:00",
+          "head_headers": {
+            "content_length": 10486112,
+            "version_id": "dOJ3f23OM6ap.tRBlxmoevMp0_h.jyWL",
+            "etag": "\"d126fda2aea36a594b966f2220716737\"",
+            "last_modified": "Fri, 19 Jan 2024 20:55:43 GMT",
+            "http_status": 200
+          }
+        },
+        {
+          "path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.nii.gz",
+          "scope": "optional_directional_diffusion",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.nii.gz?versionId=fVP4kdrIMpOoKQMrXmYDVXxHXDS8YNJV",
+          "expected_bytes": 45361486,
+          "expected_annex_md5": "89f4bcb6da1c5bbeb7d31f9a5a3b57f2",
+          "annex_pointer": "../../../.git/annex/objects/p7/mf/MD5E-s45361486--89f4bcb6da1c5bbeb7d31f9a5a3b57f2.nii.gz/MD5E-s45361486--89f4bcb6da1c5bbeb7d31f9a5a3b57f2.nii.gz",
+          "annex_pointer_sha256": "7e9aaf68a1c638257914cae2343d2dd82cbc20fbcef28197681f4cfad35f12f9",
+          "image_sha256": null,
+          "verification_status": "pinned_pointer_and_object_headers_only_content_unverified",
+          "image_bytes_read": 0,
+          "head_verified_at": "2026-10-04T11:20:35.467083+00:00",
+          "head_headers": {
+            "content_length": 45361486,
+            "version_id": "fVP4kdrIMpOoKQMrXmYDVXxHXDS8YNJV",
+            "etag": "\"89f4bcb6da1c5bbeb7d31f9a5a3b57f2\"",
+            "last_modified": "Fri, 19 Jan 2024 20:54:13 GMT",
+            "http_status": 200
+          }
+        },
+        {
+          "path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.json",
+          "scope": "optional_directional_diffusion",
+          "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.json",
+          "expected_bytes": 1628,
+          "sha256": "ae4571f6fb0b8a98c969af56cbaeb04b6fd1f3f6d2bc7b63f01ffff43d34679e",
+          "verification_status": "pinned_text_metadata_fetched_and_hashed",
+          "acquisition_metadata": {
+            "Modality": "MR",
+            "Manufacturer": "Siemens",
+            "ManufacturersModelName": "TrioTim",
+            "MagneticFieldStrength": 3,
+            "ProtocolName": "DTI_2.5_b2800_101dir",
+            "SequenceName": "_ep_b0",
+            "PhaseEncodingDirection": "j-",
+            "TotalReadoutTime": 0.0266003,
+            "EffectiveEchoSpacing": 0.000380004,
+            "EchoTime": 0.11,
+            "RepetitionTime": 8.7,
+            "ConversionSoftware": "dcm2niix",
+            "ConversionSoftwareVersion": "v1.0.20170724 GCC4.8.5"
+          }
+        },
+        {
+          "path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.bval",
+          "scope": "optional_directional_diffusion",
+          "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.bval",
+          "expected_bytes": 476,
+          "sha256": "a678931600142ebf20236adba60c52b41e85b9aa241b78dc69c6385c089576c2",
+          "verification_status": "pinned_text_metadata_fetched_and_hashed",
+          "gradient_metadata": {
+            "b_value_count": 102,
+            "unique_b_values_s_per_mm2": [
+              0.0,
+              700.0,
+              1200.0,
+              2800.0
+            ],
+            "b_zero_count_threshold_50": 6,
+            "image_volume_count_check": "not_run_image_unopened"
+          }
+        },
+        {
+          "path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.bvec",
+          "scope": "optional_directional_diffusion",
+          "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-AP_dwi.bvec",
+          "expected_bytes": 2762,
+          "sha256": "9cb0b6ce8c1107ce5ea4af258a1082df07e83898c7f47dbcc5b10391acd50a12",
+          "verification_status": "pinned_text_metadata_fetched_and_hashed",
+          "gradient_metadata": {
+            "rows": 3,
+            "columns_per_row": [
+              102,
+              102,
+              102
+            ],
+            "orientation_validation": "not_run_image_unopened"
+          }
+        },
+        {
+          "path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.nii.gz",
+          "scope": "optional_directional_diffusion",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.nii.gz?versionId=Txd13AVIo.stHFvoTVyb.sOzRQEKKY6r",
+          "expected_bytes": 1088759,
+          "expected_annex_md5": "68904e75eb00a7c971ba43ea19e56889",
+          "annex_pointer": "../../../.git/annex/objects/MP/kx/MD5E-s1088759--68904e75eb00a7c971ba43ea19e56889.nii.gz/MD5E-s1088759--68904e75eb00a7c971ba43ea19e56889.nii.gz",
+          "annex_pointer_sha256": "8e85ee3af7c32f4fee565a6f66e94211171a8f4d0e03314fcdcb5d7d58aecf02",
+          "image_sha256": null,
+          "verification_status": "pinned_pointer_and_object_headers_only_content_unverified",
+          "image_bytes_read": 0,
+          "head_verified_at": "2026-10-04T11:20:35.467083+00:00",
+          "head_headers": {
+            "content_length": 1088759,
+            "version_id": "Txd13AVIo.stHFvoTVyb.sOzRQEKKY6r",
+            "etag": "\"68904e75eb00a7c971ba43ea19e56889\"",
+            "last_modified": "Fri, 19 Jan 2024 20:54:15 GMT",
+            "http_status": 200
+          }
+        },
+        {
+          "path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.json",
+          "scope": "optional_directional_diffusion",
+          "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.json",
+          "expected_bytes": 1050,
+          "sha256": "c3d8c4c0d6b07d9bf7cdcf63975dcda2eed8f1434e1551f9be7701d2dc2ee46d",
+          "verification_status": "pinned_text_metadata_fetched_and_hashed",
+          "acquisition_metadata": {
+            "Modality": "MR",
+            "Manufacturer": "Siemens",
+            "ManufacturersModelName": "TrioTim",
+            "MagneticFieldStrength": 3,
+            "ProtocolName": "PA_2averages_MDDW_6dir",
+            "SequenceName": "_ep_b0",
+            "PhaseEncodingDirection": "j",
+            "TotalReadoutTime": 0.0266003,
+            "EffectiveEchoSpacing": 0.000380004,
+            "EchoTime": 0.11,
+            "RepetitionTime": 8.7,
+            "ConversionSoftware": "dcm2niix",
+            "ConversionSoftwareVersion": "v1.0.20170724 GCC4.8.5"
+          }
+        },
+        {
+          "path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.bval",
+          "scope": "optional_directional_diffusion",
+          "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.bval",
+          "expected_bytes": 4,
+          "sha256": "0ccdb5a77ba5bf7687f2565a8ed97dfb9c1af45503c496fb646312239fab5101",
+          "verification_status": "pinned_text_metadata_fetched_and_hashed",
+          "gradient_metadata": {
+            "b_value_count": 2,
+            "unique_b_values_s_per_mm2": [
+              0.0
+            ],
+            "b_zero_count_threshold_50": 2,
+            "image_volume_count_check": "not_run_image_unopened"
+          }
+        },
+        {
+          "path": "sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.bvec",
+          "scope": "optional_directional_diffusion",
+          "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT20/ses-preop/dwi/sub-PAT20_ses-preop_acq-PA_dwi.bvec",
+          "expected_bytes": 12,
+          "sha256": "1097c9882126db5f7d6f7a4856ec9d3db40cc1dd03515d68ac46f454a9bf1ae4",
+          "verification_status": "pinned_text_metadata_fetched_and_hashed",
+          "gradient_metadata": {
+            "rows": 3,
+            "columns_per_row": [
+              2,
+              2,
+              2
+            ],
+            "orientation_validation": "not_run_image_unopened"
+          }
+        }
+      ],
+      "outer_role": "development",
+      "outer_role_locked": true
+    }
+  ],
+  "availability_and_provenance": {
+    "imaging": "Observed preoperative imaging only after checksum-verified acquisition; actual frames and contents not inspected in this audit.",
+    "source_annotation": "Supplied derivative from manual delineation plus disconnectome according to README; annotation-assisted track only. Confirm actual datatype/scaling/value semantics after acquisition and preserve original.",
+    "clinical_context": "Observed retrospective metadata for cohort inclusion only. Individual preoperative availability is unknown; excluded from optimizer inputs.",
+    "measured_at": null,
+    "available_at": null,
+    "planning_as_of": null,
+    "molecular_input_eligible": false,
+    "clinical_probability_labels": null,
+    "source_last_modified_dates_are_clinical_availability_dates": false,
+    "functional_maps": "Any later DES map is a population prior requiring reviewed registration, not observed patient function.",
+    "later_brain_masks_and_tracts": "Estimated derivatives with independent QC; not observed ground truth.",
+    "simulation": "Worlds and action effects remain simulated and share the original patient group."
+  },
+  "storage_forecast": {
+    "shared_release_bytes_once": 14891,
+    "both_structural_subject_bytes": 35727017,
+    "both_structural_with_shared_metadata_once": 35741908,
+    "both_with_diffusion_and_shared_metadata_once": 130053000,
+    "metadata_audit_image_bytes_read": 0,
+    "network_methods": "GET pinned Git text capped at 64KiB; HEAD exact image S3 objects and versions only. No image GET."
+  },
+  "execution_status": {
+    "exact_source_metadata_and_urls_available": true,
+    "download_allowed_in_current_study": false,
+    "current_acquisition_cli_accepts_candidates": false,
+    "reason": "The maintained BTC downloader and preparation CLI currently restrict reviewed subjects to PAT28 and PAT05. Future bounded support must validate this frozen declaration and source pointers before fetching. Development roles are locked here; acquired-case registry records are appended only after source and geometry QC.",
+    "registry_record_inserted": false,
+    "final_assignments_changed": false
+  },
+  "remaining_gates": [
+    "The queue irrevocably assigns both selected people and all their derivatives or visits to development. Keep the acquired-case registry unchanged until source and geometry QC completes; then append development records referencing this declaration before optimization.",
+    "Extend bounded BTC acquisition/preparation scope without changing existing PAT28/PAT05 behavior; source image SHA256 is intentionally null until verified download.",
+    "Match each image to pinned annex MD5 and bytes, compute SHA256, then audit native qform/sform, handedness, T1-to-mask physical geometry and annotation scaling.",
+    "Treat full-head T1 conservatively; provide independently reviewed brain/cortical support before route access. Nonzero full-head signal is not cortex.",
+    "For tract-aware eligibility, verify DWI volume/gradient correspondence, gradient frame and reorientation, distortion/motion correction, diffusion-to-T1 registration and tumor-domain tract QC.",
+    "Review patient-to-prior registration; keep missing functional evidence unknown rather than low risk.",
+    "Keep historical clinical/molecular metadata out of optimization unless verified availability precedes a declared planning cutoff.",
+    "Keep both candidates and their future derivatives/visits within development; unresolved cross-source overlap prevents independence claims."
+  ],
+  "spec_reconciliation": {
+    "reference_sections": [
+      "MASTER_PLAN.md \u00a73.2",
+      "MASTER_PLAN.md \u00a74.1\u20134.3",
+      "MASTER_PLAN.md Milestone 0",
+      "MASTER_PLAN.md Milestone 2",
+      "IMPLEMENTING_AGENT_HANDOFF.md first acquisition"
+    ],
+    "official_ucsf_status": "Previously recorded v5 transfer failure remains unresolved; this metadata audit did not retry or download UCSF. Supplied spec v4 is superseded by the documented source correction v5.",
+    "five_ucsf_quality_controlled_pilot_met": false,
+    "five_case_acquisition_executable_claim": false,
+    "reason": "Two planned BTC candidates plus the existing three development representations would total five mixed-source representations only after acquisition. This is not the specified five UCSF cases, five verified primary-source patients or five tract-aware QC passes.",
+    "anatomy_strata_status": "Easy access, motor adjacency, language adjacency, large lesion and reconstruction failure are not established by diagnosis/location metadata. Do not assign these strata before anatomical and reconstruction review.",
+    "held_out_sources": "UPenn and external final assignments remain untouched."
+  }
+}
