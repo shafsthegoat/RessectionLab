@@ -111,6 +111,17 @@ optimizer updates. Full-field search and cropped actor inputs remain different
 representations. See `docs/real-patient-learning.md` and
 `artifacts/real-learning-helpers-independent-review-v1/receipt.json`.
 
+An opt-in common nominal/cavity proposal generator now offers exposed openings
+and proximal/distal target endpoints across the existing 13 source columns.
+It uses permitted annotations/estimates and observed cavity state, keeps engine
+target labels zero, and requires a fresh full native preview for every emitted
+unique ray. Endpoints are no longer clipped to the actor crop; visibility and
+bounded-family coverage remain separate from geometry acceptance. Seven
+independent controls pass, including hidden-reference swaps and paid-opening
+sequences. Three legacy states/two transitions match the original default
+exactly. Real-patient coverage has not yet been measured with this generator.
+See `artifacts/nominal-cavity-independent-review-v1/provider-receipt.json`.
+
 The first real TRAIN PAT22 inference profile completed all four declared cells
 in 6.247 seconds with unchanged model parameters. One CPU call took 28–30 ms
 for a 32³ crop and 256–269 ms for a 64³ crop, with highest observed memory about

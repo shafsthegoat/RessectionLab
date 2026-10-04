@@ -19,6 +19,8 @@ import numpy as np
 from .core import array_digest, immutable_array, semantic_digest, freeze_json, thaw_json
 from .geometry import AccessWindow, ToolGeometry
 from .native_resection import NativeResectionConfig, NativeResectionEngine
+from .native_proposals import (NominalCavityProposalConfig, PreparedNominalCavityProposer,
+    NOMINAL_CAVITY_PROPOSAL_VERSION, NOMINAL_CAVITY_FAMILIES)
 from .simulation import InvalidActionError, RewardSpec
 from .spatial_observations import (ObservedChannel, ObservedProcedureState,
     SpatialAction, SpatialInputs, build_spatial_observation)
@@ -149,6 +151,9 @@ class NativeSpatialCase:
     support_provenance: Mapping = field(default_factory=dict)
     intensity_normalization: str = "raw"
     native_grid_reconciliation: str = "none"
+    proposal_mode: str = "fixed_lattice"
+    proposal_config: NominalCavityProposalConfig | None = None
+    _nominal_proposer: PreparedNominalCavityProposer | None = field(init=False, repr=False, default=None)
     _normalization_record: Mapping = field(init=False, repr=False)
     _native_affine_ras_mm: np.ndarray = field(init=False, repr=False)
     _grid_record: Mapping = field(init=False, repr=False)
@@ -177,6 +182,18 @@ class NativeSpatialCase:
             raise ValueError("Explicit tissue support is essential; full-head signal is not a brain envelope")
         if nominal is not None and np.any((nominal > 0) & ~support):
             raise ValueError("Permitted target estimates conflict with supplied tissue support")
+        if self.proposal_mode == "nominal_cavity_v1":
+            if nominal is None:
+                raise ValueError("ESSENTIAL_EVIDENCE_MISSING: nominal/cavity proposals need explicit permitted target evidence")
+            rule = self.proposal_config
+            if isinstance(rule, Mapping):
+                rule = NominalCavityProposalConfig(**dict(rule))
+            rule = rule or NominalCavityProposalConfig()
+            if not isinstance(rule, NominalCavityProposalConfig):
+                raise ValueError("Nominal/cavity proposal configuration must be typed or an explicit object")
+            object.__setattr__(self, "proposal_config", rule)
+        elif self.proposal_mode != "fixed_lattice" or self.proposal_config is not None:
+            raise ValueError("Unknown proposal mode or a configuration supplied to the unchanged fixed lattice")
         affine = np.asarray(self.affine_ras_mm)
         if affine.dtype.kind not in "iuf" or not np.isfinite(affine).all():
             raise ValueError("A real finite RAS affine is required")
@@ -238,7 +255,9 @@ class NativeSpatialCase:
         origin = np.clip(np.floor(center - actual_shape / 2).astype(int), 0, np.asarray(image.shape) - actual_shape)
         object.__setattr__(self, "_crop_origin", tuple(int(v) for v in origin))
         object.__setattr__(self, "_crop_shape", tuple(int(v) for v in actual_shape))
-        if int(support.sum()) * len(tools) <= MAX_PRIMITIVES:
+        if self.proposal_mode == "nominal_cavity_v1":
+            voxels, scope = (), "permitted_nominal_and_observed_cavity_columns_without_crop_clipping"
+        elif int(support.sum()) * len(tools) <= MAX_PRIMITIVES:
             voxels = tuple(tuple(int(v) for v in cell) for cell in np.argwhere(support))
             scope = "all_observed_support_cells_in_small_source"
         else:
@@ -268,7 +287,9 @@ class NativeSpatialCase:
             "provenance": [self.support_source_kind, self.support_derivation, self.target_source_kind, self.target_derivation],
             **({"support_provenance": self.support_provenance} if self.support_provenance else {}),
             **({"intensity_normalization": self._normalization_record} if self.intensity_normalization != "raw" else {}),
-            **({"native_grid_reconciliation": self._grid_record} if self.native_grid_reconciliation != "none" else {})})
+            **({"native_grid_reconciliation": self._grid_record} if self.native_grid_reconciliation != "none" else {}),
+            **({"proposal_mode": self.proposal_mode, "proposal_rule": self.proposal_config.fingerprint}
+               if self.proposal_mode != "fixed_lattice" else {})})
         object.__setattr__(self, "_source_hash", source_hash)
         object.__setattr__(self, "_reference_hash", semantic_digest({"source": source_hash, "target": array_digest(target)}))
         config = NativeResectionConfig(support, np.zeros(image.shape, np.int16), self._native_affine_ras_mm,
@@ -277,6 +298,14 @@ class NativeSpatialCase:
             case_id="native-spatial", max_tip_step_mm=min(.25, float(np.linalg.norm(self._native_affine_ras_mm[:3, :3], axis=0).min()) / 2))
         object.__setattr__(self, "_native_config", config)
         object.__setattr__(self, "_native_identity", _native_identity(config))
+        if self.proposal_mode == "nominal_cavity_v1":
+            provenance = {"source_hash": self._source_hash, "nominal_target_hash": array_digest(nominal),
+                "source_kind": self.target_source_kind, "derivation": self.target_derivation,
+                "source_image_hash": array_digest(image), "original_frame_hash": array_digest(self.affine_ras_mm)}
+            proposer = PreparedNominalCavityProposer(config, nominal, nominal_provenance=provenance,
+                config=self.proposal_config, index_affine=self.affine_ras_mm, index_frame_record=self._grid_record)
+            object.__setattr__(self, "_nominal_proposer", proposer)
+            object.__setattr__(self, "_identity", self._identity_record())
         # Enforce the same observed-frame contract as the policy boundary now.
         self.spatial_inputs(np.zeros(image.shape, bool))
 
@@ -299,7 +328,9 @@ class NativeSpatialCase:
             self.target_derivation, self.crop_shape, self._crop_origin, self._crop_shape,
             self._candidate_voxels, self._candidate_scope, semantic_digest(self.support_provenance),
             self.intensity_normalization, semantic_digest(self._normalization_record),
-            self.native_grid_reconciliation, semantic_digest(self._grid_record))
+            self.native_grid_reconciliation, semantic_digest(self._grid_record),
+            self.proposal_mode, None if self.proposal_config is None else self.proposal_config.fingerprint,
+            None if self._nominal_proposer is None else (id(self._nominal_proposer), self._nominal_proposer.model_hash))
 
     def assert_intact(self):
         if (self._identity_record() != self._identity or (hasattr(self, "_native_identity")
@@ -408,6 +439,7 @@ class NativeSpatialTask:
         self._terminated, self._history = False, []
         self._inventory = None
         self._ledger = ()
+        self._proposal_batch = None
         self._seal()
         return self.observation()
 
@@ -417,7 +449,28 @@ class NativeSpatialTask:
         if self._inventory is not None:
             return self._inventory
         inventory, ledger = {}, []
-        if not self._terminated:
+        batch = None
+        if not self._terminated and self.case._nominal_proposer is not None:
+            batch = self.case._nominal_proposer.propose(self._engine, cancelled=self._cancelled)
+            outcomes = {}
+            origin, last = np.array(self.case._crop_origin), np.array(self.case._crop_origin)+self.case._crop_shape
+            for ray in batch.proposals:
+                self._check_cancelled()
+                result = self._engine.preview_stroke(ray.tool_id, ray.tip_mm, entry_mm=ray.entry_mm)
+                inside = bool(np.all(np.asarray(ray.voxel) >= origin) and np.all(np.asarray(ray.voxel) < last))
+                outcomes[ray.proposal_id] = {"entry_mm": list(ray.entry_mm), "tip_mm": list(ray.tip_mm),
+                    "feasible": bool(result.feasible), "reason": result.reason,
+                    "endpoint_center_in_actor_crop": inside}
+                if result.feasible:
+                    inventory[ray.proposal_id] = result
+            for slot in batch.ledger:
+                row = {**asdict(slot), "offset_source_voxels": list(slot.offset_source_voxels),
+                    "voxel": None if slot.voxel is None else list(slot.voxel),
+                    "action_id": slot.proposal_id, "proposal_reason": slot.reason, "feasible": False}
+                if slot.reason == "PROPOSED_UNCERTIFIED":
+                    row.update(outcomes[slot.proposal_id])
+                ledger.append(row)
+        elif not self._terminated:
             cavity = array_digest(self._engine.removed_mask)
             for voxel in self.case._candidate_voxels:
                 tip = self.case._native_affine_ras_mm[:3, :3] @ voxel + self.case._native_affine_ras_mm[:3, 3]
@@ -436,7 +489,7 @@ class NativeSpatialTask:
                     if feasible:
                         inventory[action_id] = result
         self._check_cancelled()
-        self._inventory, self._ledger = inventory, tuple(ledger)
+        self._inventory, self._ledger, self._proposal_batch = inventory, tuple(ledger), batch
         return inventory
 
     def observation(self):
@@ -488,7 +541,7 @@ class NativeSpatialTask:
         self._total_reward += record["reward"]
         self._terminated = action == "STOP" or self._steps >= self.max_steps
         self._history.append(copy.deepcopy(record))
-        self._inventory, self._ledger = None, ()
+        self._inventory, self._ledger, self._proposal_batch = None, (), None
         self._seal()
         try:
             observed = self.observation()
@@ -538,12 +591,42 @@ class NativeSpatialTask:
 
     def candidate_inventory(self):
         self._prepare_inventory()
+        if self.case._nominal_proposer is not None:
+            config = self.case.proposal_config
+            slots = len(config.offsets_source_voxels) * len(self.case.tools) * len(NOMINAL_CAVITY_FAMILIES)
+            emitted = [copy.deepcopy(row) for row in self._ledger if row["proposal_reason"] == "PROPOSED_UNCERTIFIED"]
+            counts = {}
+            for row in self._ledger:
+                counts[row["proposal_reason"]] = counts.get(row["proposal_reason"], 0)+1
+            omitted, duplicate = counts.get("CANDIDATE_CAP",0), counts.get("DUPLICATE_GEOMETRY",0)
+            return {"basis": self.case._candidate_scope, "provider_version": NOMINAL_CAVITY_PROPOSAL_VERSION,
+                "source_hash": self._source_hash, "decision_model_hash": self.decision_model_hash,
+                "cavity_state_hash": self._engine.state_hash,
+                "provider_model_hash": self.case._nominal_proposer.model_hash,
+                "nominal_target_hash": array_digest(self.case.nominal_target),
+                "nominal_provenance_hash": None if self._proposal_batch is None else self._proposal_batch.nominal_provenance_hash,
+                "declared_slots": slots, "evaluated_slots": len(emitted), "emitted_count": len(emitted),
+                "accepted_count": len(self._inventory), "rejected_count": len(emitted)-len(self._inventory),
+                "omitted_count": omitted, "duplicate_count": duplicate,
+                "unavailable_count": len(self._ledger)-len(emitted)-omitted-duplicate,
+                "complete": omitted == 0, "ledger_complete": True, "terminal": self._terminated,
+                "steps_taken": self._steps, "max_steps": self.max_steps, "remaining_steps": self.max_steps-self._steps,
+                "terminated_slots": slots if self._terminated else 0, "candidate_cap": config.max_candidates,
+                "crop_clipping": False, "endpoint_centers_in_actor_crop": sum(row["endpoint_center_in_actor_crop"] for row in emitted),
+                "all_support_cell_tool_pairs": int(self.case.observed_support.sum())*len(self.case.tools),
+                "scope": "complete_dispositions_for_declared_columns_and_families_not_all_surgical_paths",
+                "disposition_counts": counts, "emitted": emitted, "ledger": copy.deepcopy(list(self._ledger))}
         slots = len(self.case._candidate_voxels) * len(self.case.tools)
+        emitted = [copy.deepcopy(row) for row in self._ledger if row["reason"] != "OUTSIDE_DECLARED_INWARD_WORKSPACE"]
         return {"basis": self.case._candidate_scope, "declared_slots": slots,
+            "source_hash": self._source_hash, "decision_model_hash": self.decision_model_hash,
+            "cavity_state_hash": self._engine.state_hash,
             "evaluated_slots": len(self._ledger), "accepted_count": len(self._inventory),
             "rejected_count": len(self._ledger) - len(self._inventory), "omitted_count": 0,
             "terminated_slots": slots if self._terminated else 0, "complete": True,
             "scope": "complete_declared_source_normal_primitives_not_all_surgical_paths",
+            "terminal": self._terminated, "steps_taken": self._steps, "max_steps": self.max_steps,
+            "remaining_steps": self.max_steps-self._steps, "emitted_count": len(emitted), "emitted": emitted,
             "all_support_cell_tool_pairs": int(self.case.observed_support.sum()) * len(self.case.tools),
             "ledger": copy.deepcopy(list(self._ledger))}
 
@@ -567,6 +650,8 @@ class NativeSpatialTask:
             "unknowns": ["motor_evidence_unavailable", "language_evidence_unavailable", "vascular_coverage_unassessed"],
             "planning_estimator_only": self._planning, "history": copy.deepcopy(self._history),
             "observation_track": self.case.track,
+            "proposal_mode": self.case.proposal_mode,
+            "proposal_rule_hash": None if self.case.proposal_config is None else self.case.proposal_config.fingerprint,
             "support_provenance": thaw_json(self.case.support_provenance),
             "intensity_normalization": thaw_json(self.case._normalization_record),
             "native_grid_reconciliation": thaw_json(self.case._grid_record),
@@ -653,7 +738,7 @@ def native_spatial_task_from_case(case, *, access, tools, max_steps=3,
                                   track="annotation_assisted", nominal_target=None,
                                   nominal_target_derivation="", crop_shape=(32, 32, 32), cancelled=None,
                                   research_support_acknowledgment=None, intensity_normalization="raw",
-                                  native_grid_reconciliation="none"):
+                                  native_grid_reconciliation="none", proposal_mode="fixed_lattice", proposal_config=None):
     """Load a real source case with existing support gates and explicit target role.
 
     ``access`` is canonical RAS+. Annotation-assisted defaults to the supplied
@@ -701,5 +786,6 @@ def native_spatial_task_from_case(case, *, access, tools, max_steps=3,
         nominal_target=nominal_target, target_source_kind="supplied_annotation" if track == "annotation_assisted" else "derived_from_scan",
         target_derivation=nominal_target_derivation, crop_shape=crop_shape,
         support_provenance=record if research_support_acknowledgment is not None else {},
-        intensity_normalization=intensity_normalization, native_grid_reconciliation=native_grid_reconciliation)
+        intensity_normalization=intensity_normalization, native_grid_reconciliation=native_grid_reconciliation,
+        proposal_mode=proposal_mode, proposal_config=proposal_config)
     return NativeSpatialTask(source, max_steps=max_steps, cancelled=cancelled)

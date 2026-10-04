@@ -1,0 +1,12 @@
+{
+  "base_commit": "3d9278de4735640150e4d9b83ae0ec1d88c3d407",
+  "files": {
+    "src/resectionlab/native_proposals.py": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee",
+    "src/resectionlab/native_spatial_task.py": "6b3f2a7f36db4c4a5f2ea0e5461f592ab7ac510a10c7f6a3de9debaccb200214",
+    "src/resectionlab/spatial_policy_diagnostics.py": "6475b3e10cc0b3dcf2a75402d8bc301018853d8817319d446d77235fb8f85c1c",
+    "scripts/preflight_real_spatial_policy.py": "cfac175b072dbd8218c19f079d7ec3fa9143966b5059fe4cdfd918dff818ed3f",
+    "src/resectionlab/observed_search.py": "a27c244159fd328ddaa9d16f3f90ea466bb37a564d542e42acd52a949c482be0",
+    "tests/test_nominal_cavity_proposals_review.py": "15dad8579f12f070531f502e31546a9f847f04f097bcd013fedc81c7b1d38c92"
+  },
+  "scope": "Analytic unit checks only; no patient loading, policy forward, optimizer or training."
+}

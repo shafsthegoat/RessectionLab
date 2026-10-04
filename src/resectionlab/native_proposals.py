@@ -10,11 +10,14 @@ from dataclasses import asdict, dataclass, field, replace
 from hashlib import sha256
 import json
 from typing import Any
+from collections.abc import Mapping
+from itertools import product
 
 import numpy as np
 from scipy.ndimage import binary_fill_holes
 
 from .native_resection import NATIVE_RESECTION_VERSION, NativeResectionConfig, NativeResectionEngine
+from .core import array_digest, immutable_array, freeze_json, thaw_json, semantic_digest
 
 
 AXIS_PROPOSAL_VERSION = "experimental-residual-axis-columns-v1"
@@ -346,3 +349,248 @@ class PreparedAxisColumnProposer:
         """Reject a stale or altered ledger; this still grants no tool clearance."""
         if not isinstance(batch, AxisProposalBatch) or batch != self.propose(engine):
             raise ValueError("Proposal batch is stale, altered or bound to a different model")
+
+
+NOMINAL_CAVITY_PROPOSAL_VERSION = "permitted-nominal-cavity-columns-v1"
+NOMINAL_CAVITY_FAMILIES = ("exposed_opening", "proximal_nominal", "distal_nominal")
+
+
+@dataclass(frozen=True)
+class NominalCavityProposalConfig:
+    """A complete ledger over a bounded family, never all possible tool paths."""
+    offsets_source_voxels: tuple[tuple[int, int], ...] = DEFAULT_COLUMN_OFFSETS
+    max_candidates: int = 96
+    nominal_min_membership: float = 0.
+
+    def __post_init__(self):
+        offsets = AxisColumnProposalConfig(self.offsets_source_voxels).offsets_source_voxels
+        if type(self.max_candidates) is not int or not 1 <= self.max_candidates <= 96:
+            raise ValueError("Nominal/cavity candidate cap must be between one and96")
+        value = self.nominal_min_membership
+        if isinstance(value, (bool, np.bool_)) or not isinstance(value, (int, float, np.integer, np.floating)) or not np.isfinite(value) or not 0 <= value < 1:
+            raise ValueError("Nominal membership threshold must be a declared finite value in [0,1)")
+        object.__setattr__(self, "offsets_source_voxels", offsets)
+        object.__setattr__(self, "nominal_min_membership", float(value))
+
+    @property
+    def fingerprint(self):
+        return semantic_digest({"version": NOMINAL_CAVITY_PROPOSAL_VERSION, **asdict(self),
+            "families": NOMINAL_CAVITY_FAMILIES, "order": "column_tool_family",
+            "deduplication": "identical_tool_entry_tip", "crop_clipping": False,
+            "opening": "nearest_remaining_tissue_with_face_adjacent_to_connected_free"})
+
+
+@dataclass(frozen=True)
+class NominalCavityRay:
+    proposal_id: str
+    family: str
+    column_index: int
+    offset_source_voxels: tuple[int, int]
+    tool_id: str
+    voxel: tuple[int, int, int]
+    entry_mm: tuple[float, float, float]
+    tip_mm: tuple[float, float, float]
+
+
+@dataclass(frozen=True)
+class NominalCavitySlot:
+    column_index: int
+    offset_source_voxels: tuple[int, int]
+    tool_id: str
+    family: str
+    reason: str
+    proposal_id: str | None = None
+    voxel: tuple[int, int, int] | None = None
+
+
+@dataclass(frozen=True)
+class NominalCavityBatch:
+    model_hash: str
+    cavity_state_hash: str
+    nominal_target_hash: str
+    nominal_provenance_hash: str
+    proposals: tuple[NominalCavityRay, ...]
+    ledger: tuple[NominalCavitySlot, ...]
+
+    def to_dict(self):
+        counts = {}
+        for row in self.ledger:
+            counts[row.reason] = counts.get(row.reason, 0) + 1
+        return {**asdict(self), "counts": counts, "slot_count": len(self.ledger),
+            "emitted_count": len(self.proposals), "geometry_certified": False,
+            "scope": "declared_columns_and_three_endpoint_families_not_all_paths"}
+
+
+class PreparedNominalCavityProposer:
+    """Propose from explicit permitted evidence and authenticated observed state.
+
+    Engine target labels must stay zero. Neither private references nor preview
+    outcomes select endpoints. Every emitted ray still needs a native preview.
+    """
+    def __init__(self, native_config: NativeResectionConfig, nominal_target: np.ndarray, *,
+                 nominal_provenance: Mapping, config: NominalCavityProposalConfig | None = None,
+                 index_affine=None, index_frame_record: Mapping | None = None):
+        if not isinstance(native_config, NativeResectionConfig):
+            raise TypeError("A validated native configuration is required")
+        if NATIVE_RESECTION_VERSION != _HISTORY_ENGINE_VERSION:
+            raise ValueError("Nominal/cavity proposals require the audited native history schema")
+        if replace(native_config).fingerprint != native_config.fingerprint:
+            raise ValueError("Native source changed before proposal preparation")
+        if np.any(native_config.target_labels):
+            raise ValueError("Nominal/cavity proposals require zero engine target labels")
+        nominal = np.asarray(nominal_target)
+        if (nominal.shape != native_config.tissue_mask.shape or nominal.dtype.kind not in "biuf"
+                or not np.isfinite(nominal).all() or np.any(nominal < 0) or np.any(nominal > 1)
+                or np.any((nominal > 0) & ~native_config.tissue_mask)):
+            raise ValueError("Permitted nominal target must be a finite source-aligned membership grid inside observed support")
+        if not isinstance(nominal_provenance, Mapping):
+            raise ValueError("Explicit nominal source/derivation provenance is required")
+        nominal = immutable_array(nominal, np.float32)
+        provenance = freeze_json(nominal_provenance)
+        if (provenance.get("source_hash") != native_config.source_hash
+                or provenance.get("nominal_target_hash") != array_digest(nominal)
+                or provenance.get("source_kind") not in {"supplied_annotation", "derived_from_scan"}
+                or not isinstance(provenance.get("derivation"), str) or not provenance["derivation"].strip()):
+            raise ValueError("Nominal provenance must bind the exact permitted target and source")
+        rule = NominalCavityProposalConfig() if config is None else config
+        if not isinstance(rule, NominalCavityProposalConfig):
+            raise TypeError("A typed nominal/cavity rule is required")
+        original = native_config.affine if index_affine is None else np.asarray(index_affine)
+        if (original.shape != (4,4) or original.dtype.kind not in "iuf" or not np.isfinite(original).all()
+                or not np.array_equal(original[3], [0,0,0,1])):
+            raise ValueError("Original index-selection affine must be finite and homogeneous")
+        original = immutable_array(original, np.float64)
+        if index_frame_record is not None and not isinstance(index_frame_record, Mapping):
+            raise ValueError("Index-frame reconciliation record must be an explicit object")
+        frame_record = freeze_json({} if index_frame_record is None else index_frame_record)
+        if not np.array_equal(original, native_config.affine):
+            self._validate_index_frame(original, native_config, frame_record)
+        self._native, self._config = native_config, rule
+        self._nominal, self._provenance, self._index_affine, self._frame_record = nominal, provenance, original, frame_record
+        self._source_identity = _source_identity(native_config)
+        self._nominal_identity, self._index_identity = _array_identity(nominal), _array_identity(original)
+        self._rule_hash, self._nominal_hash = rule.fingerprint, array_digest(nominal)
+        self._provenance_hash, self._frame_hash = semantic_digest(provenance), semantic_digest(frame_record)
+        self._model_hash = semantic_digest({"source_hash": native_config.source_hash,
+            "engine_model_hash": native_config.fingerprint, "rule_hash": self._rule_hash,
+            "nominal_hash": self._nominal_hash, "nominal_provenance_hash": self._provenance_hash,
+            "index_affine_hash": array_digest(original), "index_frame_record_hash": self._frame_hash})
+        basis = original[:3,:3]
+        spacing = np.linalg.norm(basis, axis=0)
+        if not np.isfinite(spacing).all() or np.any(spacing <= 0):
+            raise ValueError("Original index frame requires positive finite spacing")
+        unit = basis / spacing
+        normal = native_config.access.normal_inward
+        axis = int(np.argmax(np.abs(unit.T @ normal)))
+        sign = 1 if unit[:,axis] @ normal >= 0 else -1
+        if not np.allclose(normal, sign * unit[:,axis], rtol=0, atol=_DIRECTION_ATOL):
+            raise ValueError("Nominal/cavity columns require an original source-axis-normal access")
+        origin = np.linalg.solve(basis, native_config.access.center_mm - original[:3,3])
+        self._axis, self._sign = axis, sign
+        self._transverse = tuple(dim for dim in range(3) if dim != axis)
+        self._columns = tuple(tuple(int(np.rint(origin[dim])) + offset[i]
+            for i,dim in enumerate(self._transverse)) for offset in rule.offsets_source_voxels)
+        self._geometry_identity = (self._axis, self._sign, self._transverse, self._columns)
+
+    @staticmethod
+    def _validate_index_frame(original, native, record):
+        if (record.get("method") != "orthogonal_roundoff_1e-6mm"
+                or record.get("original_affine_hash") != array_digest(original)
+                or record.get("derived_affine_hash") != array_digest(native.affine)
+                or tuple(record.get("shape", ())) != native.tissue_mask.shape
+                or not np.array_equal(record.get("original_affine_ras_mm"), original)
+                or not np.array_equal(record.get("derived_affine_ras_mm"), native.affine)
+                or record.get("resampled") is not False):
+            raise ValueError("Original index frame needs the exact source-bound roundoff record")
+        spacing = np.linalg.norm(original[:3,:3], axis=0)
+        native_spacing = np.linalg.norm(native.affine[:3,:3], axis=0)
+        corners = np.array(list(product(*[(-.5,n-.5) for n in native.tissue_mask.shape])))
+        displacement = np.linalg.norm(corners @ (native.affine[:3,:3] - original[:3,:3]).T, axis=1).max()
+        if (not np.array_equal(original[:3,3], native.affine[:3,3])
+                or np.sign(np.linalg.det(original[:3,:3])) != np.sign(np.linalg.det(native.affine[:3,:3]))
+                or not np.allclose(spacing, native_spacing, rtol=64*np.finfo(float).eps, atol=0)
+                or not np.isfinite(displacement) or displacement > 1e-6
+                or np.abs((original[:3,:3]/spacing).T @ (original[:3,:3]/spacing)-np.eye(3)).max() > 1e-8):
+            raise ValueError("Original index frame exceeds declared roundoff-only geometry")
+
+    @property
+    def model_hash(self):
+        return self._model_hash
+
+    @property
+    def rule_hash(self):
+        return self._rule_hash
+
+    def propose(self, engine: NativeResectionEngine, *, cancelled=None) -> NominalCavityBatch:
+        if not isinstance(engine, NativeResectionEngine) or engine.config is not self._native:
+            raise ValueError("Nominal/cavity provider is bound to its exact native source")
+        if (_source_identity(self._native) != self._source_identity
+                or _array_identity(self._nominal) != self._nominal_identity
+                or _array_identity(self._index_affine) != self._index_identity
+                or self._config.fingerprint != self._rule_hash
+                or semantic_digest(self._provenance) != self._provenance_hash
+                or semantic_digest(self._frame_record) != self._frame_hash
+                or (self._axis,self._sign,self._transverse,self._columns) != self._geometry_identity):
+            raise RuntimeError("Frozen nominal/cavity source, evidence or proposal geometry changed")
+        cavity_hash = _verify_cavity(engine)
+        shape, affine = self._native.tissue_mask.shape, self._native.affine
+        access = self._native.access
+        rays, ledger, seen = [], [], {}
+        for column_index, (offset, column) in enumerate(zip(self._config.offsets_source_voxels, self._columns)):
+            if cancelled is not None and cancelled():
+                raise InterruptedError("Nominal/cavity proposal preparation cancelled")
+            candidates = {}
+            outside = any(value < 0 or value >= shape[dim] for dim,value in zip(self._transverse,column))
+            if not outside:
+                selector = [slice(None)]*3
+                for dim,value in zip(self._transverse,column): selector[dim] = value
+                remaining = engine.remaining_mask[tuple(selector)]
+                cells = np.flatnonzero(remaining)
+                points = np.zeros((len(cells),3), dtype=np.int64)
+                points[:,self._axis] = cells
+                points[:,self._transverse] = column
+                depths = (points @ affine[:3,:3].T + affine[:3,3] - access.center_mm) @ access.normal_inward
+                order = np.argsort(depths, kind="stable")
+                points = points[order[depths[order] > 0]]
+                exposed = np.zeros(len(points), bool)
+                for dim in range(3):
+                    for sign in (-1,1):
+                        neighbor = points.copy(); neighbor[:,dim] += sign
+                        inside = np.all((neighbor >= 0) & (neighbor < shape), axis=1)
+                        exposed |= ~inside
+                        exposed[inside] |= engine.connected_free_mask[tuple(neighbor[inside].T)]
+                exposed_indices = np.flatnonzero(exposed)
+                if len(exposed_indices):
+                    candidates["exposed_opening"] = tuple(int(v) for v in points[exposed_indices[0]])
+                nominal = points[self._nominal[tuple(points.T)] > self._config.nominal_min_membership]
+                if len(nominal):
+                    candidates["proximal_nominal"] = tuple(int(v) for v in nominal[0])
+                    candidates["distal_nominal"] = tuple(int(v) for v in nominal[-1])
+            for tool in self._native.tools:
+                for family in NOMINAL_CAVITY_FAMILIES:
+                    voxel = candidates.get(family)
+                    identifier = None
+                    reason = "COLUMN_OUT_OF_IMAGE" if outside else ("NO_EXPOSED_REMAINING_TISSUE" if family == "exposed_opening" else "NO_REMAINING_NOMINAL_TARGET")
+                    if voxel is not None:
+                        tip = affine[:3,:3] @ voxel + affine[:3,3]
+                        depth = float((tip-access.center_mm) @ access.normal_inward)
+                        entry = tip-depth*access.normal_inward
+                        key = (tool.tool_id, _point(entry), _point(tip))
+                        if key in seen:
+                            identifier, reason = seen[key], "DUPLICATE_GEOMETRY"
+                        elif len(rays) >= self._config.max_candidates:
+                            reason = "CANDIDATE_CAP"
+                        else:
+                            identifier = "nominal-cavity-" + semantic_digest({"model": self._model_hash,
+                                "cavity": cavity_hash, "geometry": key}).split(":",1)[1][:24]
+                            rays.append(NominalCavityRay(identifier, family, column_index, offset,
+                                tool.tool_id, voxel, key[1], key[2]))
+                            seen[key], reason = identifier, "PROPOSED_UNCERTIFIED"
+                    ledger.append(NominalCavitySlot(column_index, offset, tool.tool_id, family, reason, identifier, voxel))
+        return NominalCavityBatch(self._model_hash, cavity_hash, self._nominal_hash,
+            self._provenance_hash, tuple(rays), tuple(ledger))
+
+    def validate_batch(self, batch: NominalCavityBatch, engine: NativeResectionEngine) -> None:
+        """Validate current evidence/cavity dispositions, never certify geometry."""
+        if not isinstance(batch, NominalCavityBatch) or batch != self.propose(engine):
+            raise ValueError("Nominal/cavity proposal batch is stale, altered or source-mismatched")

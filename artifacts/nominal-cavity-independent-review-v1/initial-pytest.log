@@ -1,0 +1,87 @@
+....F..FFF                                                               [100%]
+=================================== FAILURES ===================================
+_ test_full_native_geometry_and_contact_remain_independent_of_small_actor_crop _
+
+    def test_full_native_geometry_and_contact_remain_independent_of_small_actor_crop():
+        base = tiny_task().case
+        task = NativeSpatialTask(replace(base, crop_shape=(3, 3, 3)), max_steps=2)
+        inventory = task.candidate_inventory()
+        distal = [r for r in inventory["emitted"] if r["family"] == "distal_nominal"]
+        assert distal and all(not r["endpoint_center_in_actor_crop"] for r in distal)
+        assert all(not r["feasible"] for r in distal)
+        task.step(opening(task))
+        inventory = task.candidate_inventory()
+        action = next(r["action_id"] for r in inventory["emitted"] if r["family"] == "distal_nominal"
+            and r["tool_id"] == task.case.tools[1].tool_id and r["feasible"])
+        result = task.step(action)
+        removed = np.asarray(result.info["removed_indices_native"])
+        origin = np.asarray(task.case._crop_origin)
+        assert np.any((removed < origin) | (removed >= origin + 3))
+        assert task.independent_geometry_check().feasible
+        retained = task._engine.contact_mask & ~task._engine.removed_mask
+>       assert retained.any() and task._engine.remaining_mask[retained].all()
+E       assert (np.False_)
+E        +  where np.False_ = <built-in method any of numpy.ndarray object at 0x111695170>()
+E        +    where <built-in method any of numpy.ndarray object at 0x111695170> = array([[[False, False, False, False, False, False, False],\n        [False, False, False, False, False, False, False],\n...        [False, False, False, False, False, False, False],\n        [False, False, False, False, False, False, False]]]).any
+
+tests/test_nominal_cavity_proposals_review.py:131: AssertionError
+_ test_runtime_report_refuses_accepted_geometry_changed_under_same_legal_identifier[tip] _
+
+mutation = 'tip'
+
+    @pytest.mark.parametrize("mutation", ["tip", "entry", "tool"])
+    def test_runtime_report_refuses_accepted_geometry_changed_under_same_legal_identifier(mutation):
+        task = tiny_task()
+        inventory = copy.deepcopy(task.candidate_inventory())
+        row = next(r for r in inventory["emitted"] if r["feasible"])
+        if mutation == "tool":
+            row["tool_id"] = next(tool.tool_id for tool in task.case.tools if tool.tool_id != row["tool_id"])
+        else:
+            row[mutation + "_mm"][2] += 40.
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_nominal_cavity_proposals_review.py:179: Failed
+_ test_runtime_report_refuses_accepted_geometry_changed_under_same_legal_identifier[entry] _
+
+mutation = 'entry'
+
+    @pytest.mark.parametrize("mutation", ["tip", "entry", "tool"])
+    def test_runtime_report_refuses_accepted_geometry_changed_under_same_legal_identifier(mutation):
+        task = tiny_task()
+        inventory = copy.deepcopy(task.candidate_inventory())
+        row = next(r for r in inventory["emitted"] if r["feasible"])
+        if mutation == "tool":
+            row["tool_id"] = next(tool.tool_id for tool in task.case.tools if tool.tool_id != row["tool_id"])
+        else:
+            row[mutation + "_mm"][2] += 40.
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_nominal_cavity_proposals_review.py:179: Failed
+_ test_runtime_report_refuses_accepted_geometry_changed_under_same_legal_identifier[tool] _
+
+mutation = 'tool'
+
+    @pytest.mark.parametrize("mutation", ["tip", "entry", "tool"])
+    def test_runtime_report_refuses_accepted_geometry_changed_under_same_legal_identifier(mutation):
+        task = tiny_task()
+        inventory = copy.deepcopy(task.candidate_inventory())
+        row = next(r for r in inventory["emitted"] if r["feasible"])
+        if mutation == "tool":
+            row["tool_id"] = next(tool.tool_id for tool in task.case.tools if tool.tool_id != row["tool_id"])
+        else:
+            row[mutation + "_mm"][2] += 40.
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_nominal_cavity_proposals_review.py:179: Failed
+=========================== short test summary info ============================
+FAILED tests/test_nominal_cavity_proposals_review.py::test_full_native_geometry_and_contact_remain_independent_of_small_actor_crop
+FAILED tests/test_nominal_cavity_proposals_review.py::test_runtime_report_refuses_accepted_geometry_changed_under_same_legal_identifier[tip]
+FAILED tests/test_nominal_cavity_proposals_review.py::test_runtime_report_refuses_accepted_geometry_changed_under_same_legal_identifier[entry]
+FAILED tests/test_nominal_cavity_proposals_review.py::test_runtime_report_refuses_accepted_geometry_changed_under_same_legal_identifier[tool]
+4 failed, 6 passed in 2.43s
