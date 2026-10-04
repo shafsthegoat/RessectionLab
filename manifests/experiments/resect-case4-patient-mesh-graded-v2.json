@@ -1,0 +1,101 @@
+{
+  "version": "resect-case4-patient-mesh-graded-v2",
+  "status": "prospective_preparation_not_executed",
+  "candidate_id": "case4_boundary12_interior24_single",
+  "source_case": "Case4 unchanged estimated native T1 envelope; known inferior/cerebellar exclusions; no whole-brain or pial truth",
+  "source_surface_binding": {
+    "path": "outputs/mechanics/resect-case4-patient-mesh-v1/native-surface.npz",
+    "sha256": "dca30aacd485fb6c5a23fdfa2785e6ebead42a071f77d989c684e65a0360787f",
+    "mask_sha256": "7902cfbcb5fad15144181c06883bac7f4800e842f7ff05a540f56bac4eb38759"
+  },
+  "source_frame": "native Case4 T1 RAS meters",
+  "geometry_operations": "None; same source reference and parametrized discrete workflow; only size field differs.",
+  "size_profile": {
+    "kind": "Distance(discreteSurfaces)+Threshold",
+    "boundary_size_m": 0.012,
+    "interior_size_m": 0.024,
+    "sampling_per_dimension": 100,
+    "distance_min_m": 0.002,
+    "distance_max_m": 0.024,
+    "sigmoid": false,
+    "meaning": "Untested sizing requests; sampled Distance is not the independent surface-error oracle."
+  },
+  "eligibility": {
+    "maximum_nodes": 6000,
+    "maximum_elements": 6000,
+    "meaning": "Prospective mesh-count gate only; not solver admission or clinical acceptance."
+  },
+  "diagnostic_limits": {
+    "maximum_nodes": 10000,
+    "maximum_elements": 20000,
+    "maximum_total_bytes": 2097152,
+    "maximum_metadata_bytes": 8192,
+    "scope": "Returned-candidate packet only: four complete NPY arrays plus manifest; excludes previously retained native source surface, bounded result/log receipts and original v1 evidence.",
+    "no_truncation": true
+  },
+  "caps": {
+    "aggregate_seconds": 180,
+    "process_group_rss_bytes": 3221225472,
+    "numerical_threads": 1,
+    "maximum_generations": 1,
+    "retries": 0,
+    "maximum_native_triangles": 500000,
+    "maximum_discrete_patches": 256
+  },
+  "quality": {
+    "midpoint_tolerance_m": 1e-12,
+    "minimum_mean_ratio": 0.05,
+    "maximum_overlap_candidate_pairs": 2000000
+  },
+  "surface_fidelity": {
+    "maximum_distance_m": 0.002,
+    "cover_radius_m": 0.001,
+    "maximum_samples_per_direction": 4000000,
+    "maximum_relative_volume_error": 0.03,
+    "meaning": "Engineering approximation against the estimated mask isosurface, not anatomical error. Bidirectional nearest-triangle samples plus full triangle-interior covering radius."
+  },
+  "gmsh_options": {
+    "General.NumThreads": 1,
+    "Mesh.MaxNumThreads1D": 1,
+    "Mesh.MaxNumThreads2D": 1,
+    "Mesh.MaxNumThreads3D": 1,
+    "Mesh.Algorithm": 6,
+    "Mesh.Algorithm3D": 1,
+    "Mesh.ElementOrder": 2,
+    "Mesh.SecondOrderLinear": 1,
+    "Mesh.HighOrderOptimize": 0,
+    "Mesh.MeshSizeFromPoints": 0,
+    "Mesh.MeshSizeFromCurvature": 0,
+    "Mesh.MeshSizeExtendFromBoundary": 0,
+    "Mesh.Optimize": 1,
+    "Mesh.OptimizeNetgen": 0,
+    "Mesh.RandomSeed": 1,
+    "Mesh.Binary": 1
+  },
+  "v1_helper_sha256": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+  "v1_evidence_unchanged": true,
+  "solver_admission": {
+    "authorized": false,
+    "backend_validated_for_patient": false,
+    "at6000_nodes_unreduced_dofs": 18000,
+    "three_worst_case_skyline_value_arrays_bytes": 3888216000,
+    "limitation": "Above3GiB before other allocations; mesh-count acceptance does not permit a Skyline or other patient solve."
+  },
+  "execution_release": {
+    "authorized": false,
+    "required": "A separately reviewed source-bound launcher must verify source/runtime/case hashes, enforce one fresh attempt and supervisor caps. This helper has no image reader, CLI, runtime initialization or solver."
+  },
+  "prohibited": [
+    "new patient arrays before root release",
+    "B/V landmarks",
+    "source smoothing/dilation/enlargement/repair",
+    "additional candidates or mesh sweeps",
+    "reuse or acceptance of failed v1",
+    "solver calls",
+    "training"
+  ],
+  "references": [
+    "https://gmsh.info/doc/texinfo/gmsh.html#t10",
+    "https://gmsh.info/doc/texinfo/gmsh.html#Gmsh-mesh-size-fields"
+  ]
+}

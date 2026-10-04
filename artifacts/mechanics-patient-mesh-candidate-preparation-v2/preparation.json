@@ -1,0 +1,40 @@
+{
+  "schema": "mechanics-patient-mesh-candidate-preparation-v2",
+  "created_utc": "2026-10-04T23:45:42.868601+00:00",
+  "status": "frozen_preparation_pending_independent_review",
+  "files": {
+    "scripts/mechanics_patient_mesh_candidate.py": "ff4a64f1593a3384601e10f0ea33564769e46050d88e1432ca34f5d11d0771fe",
+    "tests/test_mechanics_patient_mesh_candidate.py": "62fb655c30c28f91d4a56680e84dcf9fa49e1a512ea45002e4674a9cd87ed238",
+    "manifests/experiments/resect-case4-patient-mesh-graded-v2.json": "ff27037c4141c5da99266da0c92efd5f6a673f5eb0bba6ac3032e916ba5db54e",
+    "docs/mechanics-patient-mesh-candidate.md": "dc853656a186a1197bbea2fdf3c8051deb3a862449a9883a2e190753b97af70c",
+    "artifacts/mechanics-patient-mesh-candidate-preparation-v2/integrity-control-before-repair.txt": "64661fc307748facf73b11dd5d1d5a1b81429371c6279af7d53c09386eec11ff",
+    "artifacts/mechanics-patient-mesh-candidate-preparation-v2/owner-tests.txt": "4061f41c09f3127a2af2a21fc0d63d814ad749628bd1c10594a02bfc2a80ba6d"
+  },
+  "actual_native_meshing_calls": 0,
+  "patient_array_reads": 0,
+  "landmark_reads": 0,
+  "solver_calls": 0,
+  "training_updates": 0,
+  "actual_execution_authorized": false,
+  "tests_exit_code": 0,
+  "tests_scope": "Analytic software fixtures and mocks only, including unchanged v1 owner controls.",
+  "initial_failure_retained": "Same-length corrupted NPY write was initially accepted; explicit expected original-array digest comparison added.",
+  "v1_source_sha256": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+  "unchanged_v1_manifest_sha256": "b6b3fd278df85fb0ea89c72dcff37cc5f229644602f5288c81e8ce6e7653173c",
+  "fixed_profile": "boundary12mm/interior24mm,Sampling100,transition2\u201324mm",
+  "candidate_count": 1,
+  "mesh_count_limits": {
+    "nodes": 6000,
+    "tet10_elements": 6000
+  },
+  "diagnostic_limits": {
+    "nodes": 10000,
+    "tet10_elements": 20000,
+    "bytes_including_headers_ids_manifest": 2097152
+  },
+  "independent_surface_fidelity_mm": 2,
+  "independent_relative_volume_gate": 0.03,
+  "solver_admitted": false,
+  "released_caller_still_required": true,
+  "documentation_review": "Count-cap rationale is an expectation, not a monotonicity assertion across changed size fields."
+}

@@ -1,0 +1,60 @@
+{
+  "anatomical_or_clinical_approval": false,
+  "candidate_execution_authorized": false,
+  "completed_at": "2026-10-04T23:48:28.013085+00:00",
+  "documentation_sha256": "dc853656a186a1197bbea2fdf3c8051deb3a862449a9883a2e190753b97af70c",
+  "focused_tests": {
+    "output_sha256": "73ee8797fcdb50a531a264f9dbc71d1f80354d013d4b04352cf7d56221c326df",
+    "passed": 52,
+    "scope": "25unchangedv1 owner+17candidate owner+10independent analytic/mocked controls",
+    "seconds": 0.42
+  },
+  "future_dependency": "Separately reviewed and released source/runtime/case-bound caller enforcing fresh output and180s/3GiB/one-thread process limits. Current helper has no image reader, native runtime initialization or execution launcher.",
+  "independent_tests_sha256": "f87f99180db5727771729b6323ba2c6c26f552809e1132ba5d761d15b2b82bfb",
+  "library_contract_reference": {
+    "checked": "Distance supports discrete SurfacesList and Sampling per parametric dimension; sampled points are distinct from independent nearest-triangle fidelity checks.",
+    "runtime_test_performed": false,
+    "url": "https://gmsh.info/doc/texinfo/#Gmsh-mesh-size-fields",
+    "version": "4.15.2"
+  },
+  "limitations": [
+    "No new candidate native execution or patient fidelity evidence.",
+    "6000nodes\u219218000DOFs\u21923888216000bytes for three worst-case Skyline value arrays alone, above3GiB; not a prediction of actual sparse RSS.",
+    "2MiB is returned-candidate packet only, excluding retained native source and separately bounded future logs/receipts.",
+    "Atomic completion marking protects partial process writes; no power-loss durability guarantee is established.",
+    "Caller must verify declared source file identity and enforce prospective resource limits; injected helper alone is not such a release."
+  ],
+  "manifest_sha256": "ff27037c4141c5da99266da0c92efd5f6a673f5eb0bba6ac3032e916ba5db54e",
+  "native_mesher_or_VTK_executions": 0,
+  "owner_preparation_receipt_sha256": "b9b0e19642dc5568ae84fee42c183989ccd25955411c7882b40092c58723366b",
+  "patient_image_or_landmark_reads": 0,
+  "retained_failure": {
+    "file": "initial-same-length-write-failure.txt",
+    "finding": "Same-length corrupted diagnostic payload was incorrectly marked complete.",
+    "initial_result": "one failed,9deselected in0.33s",
+    "resolution": "Serialized array must match expected header plus entire original array SHA before completeness publication; independent injected corruption now rejected.",
+    "sha256": "b10a8d69a2a76af4776f9c2e991951cab7f45352b7bd938e5d67f527ab0f8eba"
+  },
+  "reviewed_contracts": [
+    "Complete four-array packet preserves values, native IDs, counts and nonfinite diagnostic evidence without truncation.",
+    "2MiB cap includes all four NPY headers/native IDs/manifest; maximum10000node/20000element packet tested.",
+    "Count,byte ormetadata omission returns original counts and no truncated packet.",
+    "Short writes, same-length corruption and marker-rename failure leave incomplete evidence without complete marker; prior partial directory blocks replacement.",
+    "Diagnostics precede6000/6000 count rejection, which remains terminal and prevents geometry/distance checks or another candidate.",
+    "One exact12/24mm Distance/Threshold request, Sampling100, transition2\u201324mm; no node monotonicity, uniform physical sampling or accuracy guarantee.",
+    "Existing2mm fulltriangle bidirectional distance and3%volume gates, topology/midsides/Jacobian/overlap/quality unchanged.",
+    "6000 mesh-count cap is not solver admission; geometry pass retains solver_admittedFalse."
+  ],
+  "schema": "mesh-candidate-independent-preparation-review-v2",
+  "solver_admission": false,
+  "solver_calls": 0,
+  "source_sha256": "ff4a64f1593a3384601e10f0ea33564769e46050d88e1432ca34f5d11d0771fe",
+  "status": "preparation_source_review_passed_no_execution_release",
+  "training_updates": 0,
+  "unchanged_terminal_v1": {
+    "artifact_index_sha256": "d9d50451a40070edf4d8317977ff2fa781f68aaad6db78024922cadad471dfa3",
+    "manifest_sha256": "b6b3fd278df85fb0ea89c72dcff37cc5f229644602f5288c81e8ce6e7653173c",
+    "prior_failed_attempt_not_rescued": true,
+    "source_sha256": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d"
+  }
+}

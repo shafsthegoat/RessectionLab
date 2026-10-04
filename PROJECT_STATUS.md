@@ -344,6 +344,16 @@ These are runner checks, not new FEM results. The repaired runtime must be
 built and accepted before the actual eight controls can run. See
 `docs/mechanics-accelerate-controls.md` and its independent review.
 
+A separate patient-mesh candidate helper passed 52 analytical/mocked checks.
+It preserves complete bounded coordinate/connectivity/ID diagnostics before
+count rejection, and rejects same-length corrupted writes; the original
+failing control is retained. Its one prospective Gmsh size field requests a
+12 mm boundary and 24 mm interior without changing the source surface or
+2 mm/3% fidelity gates. A new 6,000-node/6,000-element preparation cap is not
+solver admission. No new patient meshing has run; the original 2,065-node
+rejection remains terminal. A bounded source-bound caller is still required.
+See `docs/mechanics-patient-mesh-candidate.md` and its independent review.
+
 One bounded Gmsh preparation generated the three measured-specimen meshes
 (96/768/2,592 hex elements) and 18 fixed loading decks in 3.43 s, with
 140.2 MB maximum sampled memory. Independent native-mesh and deck review
