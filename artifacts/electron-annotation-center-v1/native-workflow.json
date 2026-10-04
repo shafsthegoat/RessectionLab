@@ -1,0 +1,158 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "created_utc": "2026-10-04T13:05:47.962515+00:00",
+  "source_revision": "346df23f3d869cc3ecfa524f6ece89215c3e9304",
+  "renderer_source_digest": "a6bb6b7638d583653df3b8f8bd822dca49ce13781e7d96e202a61f981c243542",
+  "renderer_archive_sha256": "94553760acc105443c7c5b92a3f1ce8f7e7c4e23c3de586ebcc690f632c89df6",
+  "engine_executable_sha256": "85a92eff69cb1ea97afc400bc80433c53d146174dd32a9cf36061b8420f72ddd",
+  "engine_source_revision": "0b4e3345137316bb72d6daf9bf2a15ee6b613ed7",
+  "capture_receipt": "capture-verification.json",
+  "coordinate_reporting": "Native accessibility displays RAS+ millimetres rounded to one decimal; focused source tests separately exercise exact RAS/LPS conversion.",
+  "centering": {
+    "unloaded_disabled": true,
+    "actual_mri_only_import_without_segmentation_disabled": true,
+    "before_ras_mm_display": [
+      -173.0,
+      137.0,
+      112.0
+    ],
+    "after_ras_mm_display": [
+      -161.9,
+      84.9,
+      104.6
+    ],
+    "minimum_width_before_ras_mm_display": [
+      -99.9,
+      146.0,
+      104.6
+    ],
+    "minimum_width_after_ras_mm_display": [
+      -161.9,
+      84.9,
+      104.6
+    ],
+    "widths_points": [
+      1460,
+      1050
+    ],
+    "route_a": "Route02 Aspirator",
+    "route_b": "Route04 Aspirator",
+    "route_selections_and_metrics_preserved": true,
+    "source_only_and_motor_prior_modes_preserved": true,
+    "motor_readout_changed_with_cursor": "0.9969 to covered zero0.0000; unknown patient function preserved",
+    "annotation_visibility_preserved": true,
+    "observed_opacity_values_preserved": [
+      0.32,
+      0.75
+    ],
+    "mri_review_layout_preserved": true,
+    "three_d_camera_visually_stable": true,
+    "structural_estimate_selection_preserved_on_recenter": true,
+    "source_only_before_ras_mm_display": [
+      -105.5,
+      32.5,
+      104.6
+    ],
+    "source_only_after_ras_mm_display": [
+      -161.9,
+      84.9,
+      104.6
+    ],
+    "accessibility_state_comparison": "accessibility-state-comparison.json"
+  },
+  "structural_proposals": {
+    "PAT16": {
+      "main_outside_count": 19,
+      "nocsf_outside_count": 2045,
+      "main_jump_ras_mm_display": [
+        13.4,
+        36.3,
+        -31.3
+      ],
+      "nocsf_jump_ras_mm_display": [
+        -3.4,
+        36.0,
+        -17.0
+      ],
+      "center_ras_mm_display": [
+        30.7,
+        36.2,
+        -13.2
+      ],
+      "source_restoration_passed": true
+    },
+    "PAT20": {
+      "main_outside_count": 125,
+      "nocsf_outside_count": 413,
+      "main_jump_ras_mm_display": [
+        39.5,
+        -50.2,
+        30.9
+      ],
+      "nocsf_jump_ras_mm_display": [
+        38.5,
+        -50.3,
+        30.0
+      ],
+      "center_ras_mm_display": [
+        48.7,
+        -27.4,
+        28.3
+      ],
+      "source_restoration_passed": true,
+      "minimum_width_checked": true
+    },
+    "all_estimates_review_required_and_view_only": true,
+    "route_generation_remained_disabled": true,
+    "cortical_access_not_certified": true,
+    "source_files_unchanged": [
+      {
+        "case_id": "sub-PAT16",
+        "path": "outputs/cases/BTC-sub-PAT16-structural-evidence.ressectionlab",
+        "sha256": "b906e1c061450526e4ed4737f17f880f1ab7fdf35d667d1d6f8d7eb55b3c416b",
+        "matches_independently_released_bundle": true
+      },
+      {
+        "case_id": "sub-PAT20",
+        "path": "outputs/cases/BTC-sub-PAT20-structural-evidence.ressectionlab",
+        "sha256": "edd4d0d149cf27e81dbc67c2742fd14dff5bfa6fa1c63ad111fecb4b48eca66b",
+        "matches_independently_released_bundle": true
+      }
+    ],
+    "independent_release_receipt": "docs/brain-extraction-pat16-pat20-portable-independent-qc.json",
+    "independent_release_receipt_sha256": "19f9ff9ef0a2783368a53642021210fb8195d358cde6693c8b49abfd70107ace"
+  },
+  "renderer_warning_or_shader_error_observed": false,
+  "scope_limits": [
+    "No new numerical engine, training, final evaluation or model-performance claim.",
+    "No independent validation of anatomical correctness is implied by a software-viewer check.",
+    "Camera preservation is observed visually and supported by the single setCursor callback; internal camera matrices were not read through runtime instrumentation.",
+    "No new complete seven-prior-map regression repeated.",
+    "Two notice-source gaps and distribution notarization remain unresolved."
+  ],
+  "screenshots": {
+    "after-centering-minimum.jpg": "9ea8cfd9cc7517f85fa3b6aecd0d24bb4b59dd86d86692d5fe27767b561fd8b1",
+    "after-centering-wide.jpg": "817ffbaab727ce9b6a64cad37c7e6f8efefac7be4382beed596971ddaa9e5615",
+    "before-centering-minimum.jpg": "2b2b6e119c5c2ec191b2a0ef3194642a022d42a26e5df2588834cdfc9f7fbf9a",
+    "before-centering-wide.jpg": "a8eaf04563f4ee1035ddbea18a552f8070fac03f1dd5aa4e4e0d67bf03c44d87",
+    "mri-only-disabled.jpg": "fe3364318674c0d84e91f7e22787e0303803eff197ea1e43ed87d085daf0c394",
+    "pat16-estimate-centered.jpg": "1da49d491e0129b4b6452744e2b15a9d07cf5999bb409c13714f5388fe10a99c",
+    "pat16-main-outside.jpg": "6fb5dc6551f6d9ad5c5a347f9190d40459f096f7ea1c3ea5b4a3fa27219d064b",
+    "pat16-main.jpg": "25741aa4dd5d38d8ed94b2d25096a5fa40420ef9960b06d0ea243fbf2b09e759",
+    "pat16-nocsf-outside.jpg": "f129f3fd554bc17a096d1f08aa9e0d7a5034f635eba5792a0ffb584874d7bb14",
+    "pat16-source-restored.jpg": "b1830050bac668e90e8bcf2c1502bf22bdf5408ae6fb27501635f28847388f50",
+    "pat16-source.jpg": "80b007e8ad0a06bc263ae20ecf6d2625406198d84c1709fbced119cb2539cb36",
+    "pat20-estimate-centered-minimum.jpg": "eb89534642b7777e2af7d3be8a539bc370faeb0b51dea04e06b7bcca7844f3be",
+    "pat20-main-outside.jpg": "3b661983d954f61b3ef69555e79f4a008c8079c1f1076b826e0ec601f644bbd6",
+    "pat20-nocsf-minimum.jpg": "4c8d1ad86d0fdcd5cc618d9198daa76f2868a6a1a6f2dbb235b2ecc298d9459d",
+    "pat20-nocsf-outside.jpg": "0d425a45b33d693b9e8011934f6fa87219be9124cb9b6eb53cfa9f023994c47d",
+    "pat20-source-restored-minimum.jpg": "9f6d19733aa9f550ac8a03a5baa48174a65f51e6e8eb520f24341be73288eabb",
+    "pat20-source-restored-wide.jpg": "8fd8d1ea4c602b037ee5683506b048bb518da199bc9bc4c18e5da94af7a40955",
+    "pat20-source.jpg": "09013e89e4122ad9451993bc42b545c95267025fe0551c0176941fa9cbca47ac",
+    "source-after-centering-minimum.jpg": "24cdb429ca207d3332688bf777df40f5fcceeca1a7140b58a50a91ae1b0ff264",
+    "source-before-centering-minimum.jpg": "333566aebbed5bf78529e83b2affe4278d0a9106faa6b1e8c370a4d91bb5297f",
+    "unloaded-disabled.jpg": "a78755e5490c3b9c9539e54680bf2801eb420323d8140b113df69a195ce0030c"
+  },
+  "mac_focus_released": true
+}

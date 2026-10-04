@@ -944,3 +944,46 @@ provenance tests passed in 0.25 seconds. Each proposed-as-working-support attemp
 is rejected with BRAIN_MASK_REVIEW_REQUIRED. Historical runtime version agreement
 does not attest extraction-time binary identity. Native UI inspection remains
 separate. Receipts are linked from the portable independent review in `docs/`.
+
+## October 4, 2026 — linked MRI recentering passes in the Electron Mac app
+
+The exact `346df23` renderer passes 148 desktop checks and production build.
+The packaged app moves the linked UCSF MRI cursor from [-173, 137, 112] to the
+annotation center [-161.9, 84.9, 104.6] mm as rounded in the native display.
+Exact RAS/LPS and rotated-source fallback coordinates are covered separately by
+source tests. The action preserves selected motor/source mode, A/B routes,
+annotation visibility, opacity and MRI layout at 1460 and 1050 points. Camera
+preservation is visually observed; internal matrices were not instrumented.
+Actual MRI-only import and unloaded states correctly disable the action.
+
+Both newly audited portable BTC cases load, display each estimated envelope,
+jump to all four omission examples and restore source MRI. Recentring preserves
+the selected estimate. Review-required/view-only labels and blocked cortical
+access remain intact. No new numerical engine or training was exercised.
+All 72 renderer source inputs, the unchanged 2,809-entry engine payload and
+292-entry notice tree match their captures. Source digest is `a6bb6b76…`,
+archive `94553760…`, engine `85a92eff…`. Existing chunk-size warning, two
+notice-source gaps and distribution-signing limitations remain documented.
+Root inspected the wide centered and minimum-width PAT20 screenshots. Exact
+records are in `artifacts/electron-annotation-center-v1/`.
+
+## October 4, 2026 — bounded cache and truthful decision logging tested separately
+
+The isolated capsule-cover prototype caches only immutable pure geometry, with
+32-MiB payload and entry caps. Actual input-conversion and direct-helper mutation
+failures were found, preserved and fixed. Seventy-eight focused checks and 26
+independent checks pass. Synthetic reference/cached/reference previews, histories,
+masks and independent certificates agree, including causal collision rejection.
+These small local timings do not establish a patient or complete-learning speedup.
+Production native geometry and the desktop engine remain unchanged.
+
+The optional decision observer and native journal pass 54 compatibility checks
+and 30 independent adversaries. Paired recording-on/off training preserves exact
+weights, optimizer/RNG state, actions, forward and simulator-access counts.
+Actual same-forward inputs/logits/value are captured; forced STOP records absent
+outputs when the existing path skips a forward. Records bind to served native
+observations and authenticated transition outcomes. Checkpoint identities and
+any derived probabilities are explicitly post-run joins, not invented capture.
+Two metadata/input-binding gaps were reproduced and fixed. The separately
+committed seed-11 one-update pilot remains unexecuted until runner and integrated
+checks complete; it is an integration test, not a claim of learning advantage.

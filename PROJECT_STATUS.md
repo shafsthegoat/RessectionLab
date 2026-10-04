@@ -33,15 +33,26 @@ bindings, and unchanged planning inputs. They remain view-only population
 evidence requiring alignment review. Their Electron controls now display one
 selected layer with separate atlas coverage, scalar/binary sampling and cursor
 values. Source restoration, stale loads and case changes clear the layer.
-All 143 desktop checks and the production build pass after removing an unsafe
+The preceding 143 desktop checks and production build passed after removing an unsafe
 source-image hash cache, correcting float32 atlas boundary sampling and adding
 context-aware route-comparison guidance. Native inspection caught overlapping
 unloaded welcome text; a regression test and shell correction now pass at both
-1460- and 1050-point window widths. The final notice-bearing renderer is
+1460- and 1050-point window widths. That notice-bearing renderer is
 `34285015…` from `100865f`, with the unchanged verified `85a92eff…` engine. Its
 source, complete engine payload and packaged upstream notices match the captured
 bytes. Loaded-case guidance, real search, motor-prior inspection and source
 restoration pass; screenshots and receipts are in `artifacts/dependency-notices-v1/`.
+The current native renderer is `a6bb6b76…` from `346df23`, with 148 passing
+desktop checks and a successful production build. Its new Center on annotations
+action returns linked MRI slices to the source annotation center while preserving
+prior/source mode, A/B routes, opacity and layout. Native checks pass at both
+window widths; unloaded and MRI-only cases disable the control. PAT16/PAT20
+main/no-CSF estimates, all four omission jumps and source restoration also pass.
+All 72 source inputs, 2,809 unchanged engine entries and 292 unchanged notice
+entries verify. `artifacts/electron-annotation-center-v1/` retains exact receipts
+and screenshots. The engine remains `85a92eff…`; new experimental learning and
+cache code are not in this package.
+
 Two notice-source completeness gaps and distribution signing remain open. An
 independent actual GPU probe passes 487 cases, with the earlier failures retained.
 The new complete engine and renderer passed native inspection. All seven layers,
@@ -120,6 +131,18 @@ bounded update pilot must record them. The adapter remains outside the desktop,
 and existing procedural checkpoints and feature-unit gates remain unchanged.
 See `artifacts/preflight/native-axis-v2/RESULT.md`.
 
+A supported optional decision observer now records the actual already-used
+policy inputs, logits, value and action before execution. Fifty-four focused
+compatibility checks and 30 independent checks pass; recording preserves exact
+weights, Adam state, RNG and environment behavior. Its native journal binds to
+served observations and distinguishes attempted, executed and returned steps.
+A separately declared one-update seed-11 pilot has a 300-second online allowance
+and remains unexecuted pending its runner tests and immutable integrated sweep.
+An isolated exact capsule-cover cache prototype passes 78 focused checks and
+26 independent checks, with its actual invalidation failures preserved. Synthetic
+reference/cached/reference outputs agree, including independent native histories;
+no patient speedup is established and production geometry stays unchanged.
+
 The frozen extraction procedure has now run on PAT16 and PAT20, with two
 repetitions of both model variants per case. All eight child inferences completed
 without failures or tuning; repeated masks and distance arrays were identical.
@@ -133,7 +156,7 @@ attestation. Exact execution/QC records are linked from
 Separate portable copies now include both r1 envelope proposals and exact report
 provenance. An independent 11.92-second audit and 15 adversarial checks confirm
 unchanged source/planning inputs, exact mask persistence and enforced review
-gates; native app inspection is pending. Predicted distance arrays remain
+gates; focused native app inspection now passes. Predicted distance arrays remain
 external diagnostic files. See `docs/brain-extraction-pat16-pat20-bundles.md`.
 
 ## Verified starting state

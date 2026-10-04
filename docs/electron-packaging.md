@@ -326,7 +326,7 @@ software behavior, not anatomical accuracy or clinical readiness. Local deep
 strict signature verification passed; distribution signing and notarization
 remain unperformed.
 
-The current notice-bearing application uses exact renderer commit `100865f`,
+The notice-bearing application checkpoint uses exact renderer commit `100865f`,
 with capture `34285015…` and archive `b99ba3da…`. Its 143 aggregate desktop
 checks and production build passed. The complete numerical payload remains
 identical to the verified `0b4e334` engine: executable `85a92eff…`, original
@@ -361,3 +361,44 @@ historical seven-map/native-replay evidence remains associated with its
 original package; it was not represented as a full repetition here. No new
 patient training or final evaluation was invoked. Previous application
 bundles remain recoverable through the recorded publication paths.
+
+
+## Annotation centering and additional structural cases
+
+The current app captures exact renderer commit `346df23`: source digest
+`a6bb6b76…`, archive `94553760…`, with all 72 captured desktop source inputs
+verified against that commit. All 148 aggregate desktop checks passed
+(38 main-process, 79 renderer and 31 viewer checks), as did the production
+build. Local ad hoc deep strict signature verification passed. The entire
+2,809-entry numerical payload and 292-entry notice tree remain byte-identical
+to the preceding validated package; no experimental Python learner is bundled.
+
+`artifacts/electron-annotation-center-v1/` records actual native interaction.
+**Center on annotations** changed the linked UCSF MRI cursor from
+(-173.0, 137.0, 112.0) to the displayed annotation center
+(-161.9, 84.9, 104.6) mm. Manual navigation followed by centering passed at
+1050-point minimum width, as did the normal 1460-point view. The selected
+motor prior, source-only mode, route A/B choices, metrics, annotation layers,
+overlay opacity and MRI-review layout were retained. The 3D camera remained
+visually stable. Atlas readouts changed with the cursor as expected; covered
+zero remained distinct from unknown patient function. Both an unloaded app
+and an actual MRI-only import disabled the control. Source tests separately
+cover exact RAS/LPS conversion and source-grid fallback; native coordinates
+in the receipt are the UI's rounded values.
+
+After independent bundle release, the same app opened PAT16 and PAT20 with
+both unreviewed structural estimates. It displayed the recorded annotation
+omissions: PAT16 main/no-CSF 19/2,045 voxels; PAT20 125/413. All four omission
+jumps moved the linked cursor. Centering preserved the selected estimate,
+and Source view cleared its contour without changing the annotations.
+PAT20 also passed the minimum-width view check. All estimates remained
+review-required and view-only, and full-head route generation remained
+blocked. The portable bundle hashes still match the independently released
+files. These viewer checks do not certify anatomical accuracy or access.
+
+No renderer warning or shader error was observed. No new training or final
+evaluation was performed. The prior application remains recoverable at the
+publication path recorded in `app-build.json`; `native-workflow.json` and
+`capture-verification.json` bind the current screenshots to this renderer
+and retained engine. The two notice-source gaps and lack of notarization
+remain unchanged.
