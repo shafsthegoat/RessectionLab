@@ -6,13 +6,14 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const os = require('node:os');
 const { Sidecar } = require('./sidecar.cjs');
+const { verificationDirectory } = require('./verification-output.cjs');
 
 async function main() {
   const repo = path.resolve(__dirname, '../..');
   const transferDir = await fs.mkdtemp(path.join(os.tmpdir(), 'ressectionlab-verify-'));
   const packaged = process.argv.includes('--bundle');
   const frozen = process.argv.includes('--frozen') || packaged;
-  const output = path.join(repo, 'artifacts', packaged ? 'electron-sidecar-packaged.json' : frozen ? 'electron-sidecar-frozen.json' : 'electron-sidecar-source.json');
+  const output = path.join(verificationDirectory(repo), packaged ? 'electron-sidecar-packaged.json' : frozen ? 'electron-sidecar-frozen.json' : 'electron-sidecar-source.json');
   const checks = {};
   const start = performance.now();
   const sidecar = new Sidecar({ transferDir, cwd: os.tmpdir(), ...(frozen

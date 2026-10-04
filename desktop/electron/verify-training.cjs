@@ -5,9 +5,11 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const os = require('node:os');
 const { Sidecar } = require('./sidecar.cjs');
+const { verificationDirectory } = require('./verification-output.cjs');
 
 async function main() {
   const repo = path.resolve(__dirname, '../..');
+  const reportDir = verificationDirectory(repo);
   const packaged = process.argv.includes('--bundle');
   const frozen = process.argv.includes('--frozen') || packaged;
   const suffix = packaged ? 'packaged' : frozen ? 'frozen' : 'source';
@@ -66,8 +68,8 @@ async function main() {
   finally {
     if (engine) await engine.stop(); await fs.rm(temporary, { recursive: true, force: true });
     report.elapsedSeconds = (performance.now() - started) / 1000;
-    await fs.mkdir(path.join(repo, 'artifacts'), { recursive: true });
-    await fs.writeFile(path.join(repo, 'artifacts', `electron-training-${suffix}.json`), JSON.stringify(report, null, 2));
+    await fs.mkdir(reportDir, { recursive: true });
+    await fs.writeFile(path.join(reportDir, `electron-training-${suffix}.json`), JSON.stringify(report, null, 2));
     process.stdout.write(JSON.stringify(report) + '\n');
   }
 }

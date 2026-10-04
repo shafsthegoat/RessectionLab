@@ -8,9 +8,11 @@ const path = require('node:path');
 const os = require('node:os');
 const { createHash } = require('node:crypto');
 const { Sidecar } = require('./sidecar.cjs');
+const { verificationDirectory } = require('./verification-output.cjs');
 
 async function main() {
   const repo = path.resolve(__dirname, '../..');
+  const reportDir = verificationDirectory(repo);
   const packaged = process.argv.includes('--bundle');
   const suffix = packaged ? 'packaged' : 'frozen';
   const temporary = await fs.mkdtemp(path.join(os.tmpdir(), 'ressectionlab-cancellation-'));
@@ -201,7 +203,7 @@ async function main() {
     if (engine) await engine.stop();
     await fs.rm(temporary, { recursive: true, force: true });
     report.elapsedSeconds = (performance.now() - started) / 1000;
-    const artifact = path.join(repo, 'artifacts', `electron-cancellation-${suffix}.json`);
+    const artifact = path.join(reportDir, `electron-cancellation-${suffix}.json`);
     await fs.mkdir(path.dirname(artifact), { recursive: true });
     await fs.writeFile(artifact, JSON.stringify(report, null, 2) + '\n');
     process.stdout.write(JSON.stringify(report) + '\n');
