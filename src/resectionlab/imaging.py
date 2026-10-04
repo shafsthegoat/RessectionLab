@@ -401,6 +401,12 @@ def save_case(case: CaseData, path: str | Path, *, artifacts: Mapping[str, Any] 
         key = f"structural_evidence_{position}"
         arrays[key] = evidence.mask
         structural_records[name] = {"array_key": key, "manifest": evidence.to_manifest()}
+    prior_records = {}
+    for position, (name, proposal) in enumerate(getattr(case, "prior_proposals", {}).items()):
+        data_key, coverage_key = f"prior_values_{position}", f"prior_coverage_{position}"
+        arrays[data_key], arrays[coverage_key] = proposal.data, proposal.sampling_coverage
+        prior_records[name] = {"data_key": data_key, "coverage_key": coverage_key,
+                               "manifest": proposal.to_manifest()}
     buffer = BytesIO()
     np.savez_compressed(buffer, **arrays)
     payload = buffer.getvalue()
@@ -413,6 +419,8 @@ def save_case(case: CaseData, path: str | Path, *, artifacts: Mapping[str, Any] 
     }
     if structural_records:
         manifest["structural_evidence"] = structural_records
+    if prior_records:
+        manifest["prior_proposals"] = prior_records
     encoded_manifest = json.dumps(manifest, indent=2, sort_keys=True, allow_nan=False).encode("utf-8")
     temporary: Path | None = None
     try:
@@ -468,6 +476,13 @@ def load_case(path: str | Path) -> CaseData:
                     for name, record in manifest["structural_evidence"].items()
                 }
             extra = {"structural_evidence": structural} if structural else {}
+            if manifest.get("prior_proposals"):
+                from .prior_proposals import RegisteredPriorProposal
+                extra["prior_proposals"] = {
+                    name: RegisteredPriorProposal.from_manifest(record["manifest"],
+                        data=arrays[record["data_key"]], sampling_coverage=arrays[record["coverage_key"]])
+                    for name, record in manifest["prior_proposals"].items()
+                }
             case = CaseData(case_id=manifest["case_id"], mri=arrays["mri"], affine=arrays["affine"],
                             compartments=groups["compartments"], source_compartments=groups["source_compartments"],
                             brain_mask=arrays["brain_mask"] if "brain_mask" in arrays.files else None,

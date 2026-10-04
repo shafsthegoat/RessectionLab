@@ -21,6 +21,7 @@ import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
 if TYPE_CHECKING:
+    from .prior_proposals import RegisteredPriorProposal
     from .structural_evidence import StructuralEvidence
 
 
@@ -293,6 +294,7 @@ class CaseData:
     source_compartments: Mapping[str, NDArray[np.bool_]] | None = None
     brain_mask: NDArray[np.bool_] | None = None
     structural_evidence: Mapping[str, StructuralEvidence] = field(default_factory=dict)
+    prior_proposals: Mapping[str, RegisteredPriorProposal] = field(default_factory=dict)
     _semantic_hash: str = field(init=False, repr=False)
     _planning_hash: str = field(init=False, repr=False)
     _array_state: tuple[Any, ...] = field(init=False, repr=False)
@@ -346,10 +348,24 @@ class CaseData:
                 raise ValueError("Structural evidence IDs and typed records must agree")
             proposal.assert_matches(self)
         object.__setattr__(self, "structural_evidence", MappingProxyType(evidence))
+        if not isinstance(self.prior_proposals, Mapping):
+            raise ValueError("prior_proposals must map IDs to RegisteredPriorProposal")
+        proposals = dict(self.prior_proposals)
+        if proposals:
+            from .prior_proposals import RegisteredPriorProposal
+            for identity, proposal in proposals.items():
+                if not isinstance(proposal, RegisteredPriorProposal) or identity != proposal.proposal_id:
+                    raise ValueError("Prior proposal IDs and typed records must agree")
+        object.__setattr__(self, "prior_proposals", MappingProxyType(proposals))
         manifest = self.to_manifest(include_hash=False)
         object.__setattr__(self, "_semantic_hash", semantic_digest(manifest))
         object.__setattr__(self, "_planning_hash", semantic_digest(self._planning_manifest(manifest)))
         object.__setattr__(self, "_array_state", self._array_signature())
+        # A registered preview refers to the historical registration case, while
+        # current eligibility binds the unchanged image/frame/anatomy inputs.
+        # Compute the proposal-excluding planning identity before checking it.
+        for proposal in proposals.values():
+            proposal.assert_matches(self)
 
     @property
     def semantic_hash(self) -> str:
@@ -375,6 +391,9 @@ class CaseData:
         if self.brain_mask is not None:
             arrays.append(self.brain_mask)
         arrays.extend(item.mask for item in self.structural_evidence.values())
+        for item in self.prior_proposals.values():
+            arrays.extend((item.data, item.sampling_coverage, item.affine_ras_mm,
+                           item.source_prior_affine_ras_mm, item.mni_ras_to_patient_ras_mm))
         return tuple((array.shape, array.dtype.str, array.strides, array.__array_interface__["data"][0]) for array in arrays)
 
     def _planning_manifest(self, manifest: Mapping[str, Any]) -> dict[str, Any]:
@@ -383,6 +402,8 @@ class CaseData:
         # Unselected structural proposals cannot perturb optimization seeds.
         # An explicitly selected working brain_mask remains in this identity.
         result.pop("structural_evidence", None)
+        # Registered functional previews are view-only population evidence.
+        result.pop("prior_proposals", None)
         if self.context is not None:
             result["context"] = {
                 "planning_as_of": self.context.planning_as_of.isoformat(),
@@ -431,6 +452,8 @@ class CaseData:
         }
         if self.structural_evidence:
             result["structural_evidence"] = {key: value.to_manifest() for key, value in self.structural_evidence.items()}
+        if self.prior_proposals:
+            result["prior_proposals"] = {key: value.to_manifest() for key, value in self.prior_proposals.items()}
         if include_hash:
             result["semantic_hash"] = self.semantic_hash
         return result

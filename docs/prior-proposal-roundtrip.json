@@ -1,0 +1,92 @@
+{
+  "schema_version": 1,
+  "check": "registered_prior_proposal_import_and_portable_roundtrip",
+  "case_id": "UCSF-PDGM-0004",
+  "original_case_semantic_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+  "enriched_case_semantic_hash": "sha256:2dd4c1ccc72a3ee6f821cf8f23a8c32996ec74fe1d616411863d5197bf3d2547",
+  "planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+  "planning_hash_unchanged": true,
+  "bundle": "outputs/cases/UCSF-PDGM-0004-prior-proposals.ressectionlab",
+  "bundle_bytes": 23835372,
+  "bundle_sha256": "59c213b82af205516491058145ad3581a4d1832e1126fb5559118f250ea1bacc",
+  "source_registration_report_sha256": "32dea3154c63bda4a1ff75e343ce45dc1d9cbe7f1d60afd2ef7ef385d9606ca3",
+  "verification": "Each preview exactly reconstructed from its pinned source map and unchanged saved registration transform before import; then source-bound typed data persisted and reopened.",
+  "template_arrays_embedded": false,
+  "population_prior_only": true,
+  "alignment_accepted": false,
+  "patient_specific_function": false,
+  "planning_eligible": false,
+  "clinical_deficit_probability": null,
+  "layers": {
+    "motor_functional_concordance_851c3e8fac7c": {
+      "map_id": "motor_functional_concordance",
+      "title": "Motor \u00b7 functional network",
+      "evidence_hash": "sha256:de1490e682050abe22d8f6ec5eed704499f6b4f6f17771ef6514f37d14f84813",
+      "data_hash": "sha256:7ff809ab85bceb4019a1069df2ef8173bd3eb70d8c5149352e3030824fc108f3",
+      "coverage_hash": "sha256:e5a02c1f4e15c9fd083eefd5538c8e9e63827623ce2d54a5059dc1ab378f6418",
+      "sampling_coverage_fraction": 0.4924369399641577,
+      "review_status": "alignment_review_required",
+      "map_kind": "functional_concordance"
+    },
+    "phonology_functional_concordance_aa00f5de1df2": {
+      "map_id": "phonology_functional_concordance",
+      "title": "Phonology \u00b7 functional network",
+      "evidence_hash": "sha256:18d95b0657cc4bc26b62cdb775aaa0b9d89b836f95f1eb18c0ef2448bc3a2b1e",
+      "data_hash": "sha256:c2536cda4eb089b46d3ed8669ea81a7c6d4bf1ff5a8c84e7c431974d40b56081",
+      "coverage_hash": "sha256:e5a02c1f4e15c9fd083eefd5538c8e9e63827623ce2d54a5059dc1ab378f6418",
+      "sampling_coverage_fraction": 0.4924369399641577,
+      "review_status": "alignment_review_required",
+      "map_kind": "functional_concordance"
+    },
+    "phonology_structural_mask_2529233bb604": {
+      "map_id": "phonology_structural_mask",
+      "title": "Phonology \u00b7 structural network mask",
+      "evidence_hash": "sha256:28447c181ce3b512b7ab3877e2481b356adf8b2c4e2fb46c65ab240b8d848a80",
+      "data_hash": "sha256:81141aae1f071a4cc75de48138ba7469bb3379696205d0c0a13a0aaeda51a3ac",
+      "coverage_hash": "sha256:98e8953da58a49c052676f701004f0e67b3c261653d8dcc2867d02213140fbd5",
+      "sampling_coverage_fraction": 0.497322020609319,
+      "review_status": "alignment_review_required",
+      "map_kind": "structural_mask"
+    },
+    "semantics_functional_concordance_e8527c2c7da1": {
+      "map_id": "semantics_functional_concordance",
+      "title": "Semantics \u00b7 functional network",
+      "evidence_hash": "sha256:2a6b573b6f7d60351f3a2c0ee93ecad32db1e6e92ce338bb7b971963de1fe5dd",
+      "data_hash": "sha256:66f74f925b41e8b088641a6d5aab58a5b2b4c005cddd462dd419b2a7eedc4da1",
+      "coverage_hash": "sha256:e5a02c1f4e15c9fd083eefd5538c8e9e63827623ce2d54a5059dc1ab378f6418",
+      "sampling_coverage_fraction": 0.4924369399641577,
+      "review_status": "alignment_review_required",
+      "map_kind": "functional_concordance"
+    },
+    "semantics_structural_mask_a74d3536729f": {
+      "map_id": "semantics_structural_mask",
+      "title": "Semantics \u00b7 structural network mask",
+      "evidence_hash": "sha256:5ea105c472eebac9b19ab2a07b4eb084bfb46056abdda35fcbe5d78f124c73c2",
+      "data_hash": "sha256:661206f3aa62c615793b0b2910943c1c943999701ffc1d59cd392650f559f30b",
+      "coverage_hash": "sha256:98e8953da58a49c052676f701004f0e67b3c261653d8dcc2867d02213140fbd5",
+      "sampling_coverage_fraction": 0.497322020609319,
+      "review_status": "alignment_review_required",
+      "map_kind": "structural_mask"
+    },
+    "speech_articulation_functional_concordance_27125b9db140": {
+      "map_id": "speech_articulation_functional_concordance",
+      "title": "Speech arrest / articulation \u00b7 functional network",
+      "evidence_hash": "sha256:c09c84c12b1f3171ed82d35d5d465e310e56a672814ecfccf3f2529886ea4962",
+      "data_hash": "sha256:5ff1ffef211988c65100dbe2bad2c0d38a0d14f33d9bc57aa6837579b21c55fb",
+      "coverage_hash": "sha256:e5a02c1f4e15c9fd083eefd5538c8e9e63827623ce2d54a5059dc1ab378f6418",
+      "sampling_coverage_fraction": 0.4924369399641577,
+      "review_status": "alignment_review_required",
+      "map_kind": "functional_concordance"
+    },
+    "speech_articulation_structural_mask_a7bfec0d6120": {
+      "map_id": "speech_articulation_structural_mask",
+      "title": "Speech arrest / articulation \u00b7 structural network mask",
+      "evidence_hash": "sha256:cb43d0e6af70551f7056d6e97c255575ee72cd00ec286d309d94ddcd8bea433d",
+      "data_hash": "sha256:044fd5d7715482a60b4dccacef7fe233260774ac0f727c016e5496b995fbfb6e",
+      "coverage_hash": "sha256:98e8953da58a49c052676f701004f0e67b3c261653d8dcc2867d02213140fbd5",
+      "sampling_coverage_fraction": 0.497322020609319,
+      "review_status": "alignment_review_required",
+      "map_kind": "structural_mask"
+    }
+  }
+}
