@@ -11,11 +11,17 @@ const { Sidecar } = require('./sidecar.cjs');
 
 async function main() {
   const repo = path.resolve(__dirname, '../..');
+  const packaged = process.argv.includes('--bundle');
+  const suffix = packaged ? 'packaged' : 'frozen';
   const temporary = await fs.mkdtemp(path.join(os.tmpdir(), 'ressectionlab-cancellation-'));
   const runDir = path.join(temporary, 'runs');
-  const executable = path.join(repo, 'desktop/sidecar/ressectionlab-engine/ressectionlab-engine');
+  const resources = path.join(repo, 'desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources');
+  const executable = packaged
+    ? path.join(resources, 'research-engine/ressectionlab-engine')
+    : path.join(repo, 'desktop/sidecar/ressectionlab-engine/ressectionlab-engine');
   const report = {
-    schemaVersion: 1, frozen: true, passed: false, checks: {},
+    schemaVersion: 1, frozen: true, packaged, passed: false, checks: {},
+    verificationStartedUtc: new Date().toISOString(), executable,
     scope: 'synthetic_native_training_cancellation_restart_resume_selection', finalEvaluation: false,
     shape: [24, 24, 24], budgetSeconds: 10, seed: 11,
   };
@@ -29,6 +35,35 @@ async function main() {
   let cancelledTerminalEvents = 0;
   let observedGradientSteps;
   let diagnostics = '';
+
+  async function fileIdentity(filename) {
+    const contents = await fs.readFile(filename);
+    return { path: await fs.realpath(filename), sha256: createHash('sha256').update(contents).digest('hex') };
+  }
+
+  async function buildIdentity() {
+    const identity = { executable: await fileIdentity(executable), engineSource: null, renderer: null };
+    // Read provenance from the exact target engine, never the current checkout
+    // or a build-report.json that might describe a different build attempt.
+    const manifestPath = path.join(path.dirname(executable), '_internal/build_info/BUILD_INPUT_MANIFEST.json');
+    try {
+      const contents = await fs.readFile(manifestPath);
+      const manifest = JSON.parse(contents.toString('utf8'));
+      identity.engineSource = {
+        path: await fs.realpath(manifestPath),
+        manifestSha256: createHash('sha256').update(contents).digest('hex'),
+        sourceDigest: manifest.source_digest ?? manifest.sourceDigest ?? null,
+        revision: manifest.revision ?? null,
+        createdUtc: manifest.created_utc ?? manifest.createdUtc ?? null,
+      };
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+    }
+    // The archive identifies the actual bundled renderer and Electron main
+    // code. A standalone sidecar test makes no claim about a renderer build.
+    if (packaged) identity.renderer = await fileIdentity(path.join(resources, 'app.asar'));
+    return identity;
+  }
 
   function observeEvent(event) {
     if (event.id === cancelledRequestId && event.event === 'cancelled') cancelledTerminalEvents += 1;
@@ -69,6 +104,8 @@ async function main() {
   }
 
   try {
+    report.buildIdentity = await buildIdentity();
+    report.executableSha256 = report.buildIdentity.executable.sha256;
     const source = await start();
     const trainingStarted = performance.now();
     await assert.rejects(
@@ -109,6 +146,7 @@ async function main() {
     phase = 'resume';
     const originalPid = engine.child.pid;
     await engine.stop();
+    assert.deepEqual(await buildIdentity(), report.buildIdentity, 'target build changed before engine restart');
     const restored = await start();
     assert.notEqual(engine.child.pid, originalPid);
     assert.equal(restored.caseHash, source.caseHash);
@@ -145,6 +183,8 @@ async function main() {
     assert.equal(resumedRun.hasCheckpoint, true);
     assert.equal(resumedRun.hasAcceptedReplay, true);
     report.checks.resumedCheckpointSignedAndListed = true;
+    assert.deepEqual(await buildIdentity(), report.buildIdentity, 'target build changed during verification');
+    report.checks.runtimeBuildIdentityUnchanged = true;
     Object.assign(report, {
       passed: true, resumedGradientSteps: result.training.gradient_steps,
       additionalGradientSteps: result.training.gradient_steps - before.training.gradient_steps,
@@ -161,7 +201,7 @@ async function main() {
     if (engine) await engine.stop();
     await fs.rm(temporary, { recursive: true, force: true });
     report.elapsedSeconds = (performance.now() - started) / 1000;
-    const artifact = path.join(repo, 'artifacts/electron-cancellation-frozen.json');
+    const artifact = path.join(repo, 'artifacts', `electron-cancellation-${suffix}.json`);
     await fs.mkdir(path.dirname(artifact), { recursive: true });
     await fs.writeFile(artifact, JSON.stringify(report, null, 2) + '\n');
     process.stdout.write(JSON.stringify(report) + '\n');

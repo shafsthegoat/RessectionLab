@@ -109,6 +109,30 @@ JSONL event record the cancellation. No final-evaluation operation was invoked.
 Finder launches write local diagnostic logs to the application logs directory.
 No logs or patient data are transmitted.
 
-The 20 main-process adversarial tests cover opaque IDs, checksums, traversal,
-symlink replacement, layout limits and trusted frame checks. Renderer tests
+The 26 main-process tests cover opaque IDs, checksums, traversal,
+symlink replacement, layout limits, trusted frame checks, atomic publication
+rollback, bounded logging, and structural-import file grants. Renderer tests
 independently enforce imaging dtype, shape, coordinate and volume contracts.
+
+`verify-cancellation.cjs --bundle` targets the engine inside the actual `.app`
+and writes `artifacts/electron-cancellation-packaged.json`. Both modes record
+the executable and embedded source identities; packaged mode also records the
+renderer archive hash. The verifier rejects changes to these identities between
+cancellation and restart. This option does not imply a new run has passed;
+check the matching artifact and its build identity.
+
+`artifacts/electron-full-native-validation.json` preserves the complete app's
+negative UCSF route-conditioned training result: 32 updates left the actor
+unchanged and selected STOP, with zero modeled removal. Native replay, source
+view restoration and the macOS export dialog worked. A later geometry audit
+identified a changed entry point and no feasible initial cutting action for the
+original route/tool configurations. This evidence is retained as a failure of
+that modeled configuration, not relabeled as a successful removal experiment.
+
+`artifacts/electron-btc-inventory-validation.json` records source-app inspection
+of a second, full-head case. Two whole-brain envelope estimates remain pending
+review, the no-CSF annotation mismatch is disclosed, and route generation stays
+disabled. Structural import uses three native selections (source MRI, proposed
+mask, provenance report); cancelling any selection leaves the case untouched.
+Import stores evidence without certifying cortex or promoting the estimate into
+working anatomy. This source inspection is separate from packaged validation.

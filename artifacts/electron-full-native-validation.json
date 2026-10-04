@@ -1,0 +1,66 @@
+{
+  "tested_utc": "2026-10-04T08:20:43.306498+00:00",
+  "status": "partial_ui_validation_with_negative_model_result",
+  "renderer_source_digest": "f5ac2ff6b606b638227ad0d22fe6cb1dede060dab5ca23eec1f59f454ebc09a6",
+  "python_source_digest": "ddec6f6f60465cd7d41b6445a87480af2e2bca293c4ff502f5f004e3a50a99ab",
+  "app_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app",
+  "architecture": "arm64",
+  "internal_symlinks": 41,
+  "deep_strict_adhoc_signature_verified": true,
+  "native_ui_checks": {
+    "real_case": "UCSF-PDGM-0004",
+    "route_count": 54,
+    "route_search_seconds": 1.15,
+    "training_run_id": "e6b54c93-15f2-42fb-b3e5-435a118d7ff8",
+    "frozen_config": {
+      "access": {
+        "center_mm": [
+          -161.89188673393926,
+          84.87771654858179,
+          143.39832772728357
+        ],
+        "normal_inward": [
+          -0.0,
+          -0.0,
+          -1.0
+        ],
+        "radius_mm": 4.0,
+        "window_id": "hypothetical-envelope-1"
+      },
+      "budgetSeconds": 30.0,
+      "routeId": "search-e8eea12fa7ae6b0f",
+      "seed": 0,
+      "toolIds": [
+        "generic_aspirator"
+      ]
+    },
+    "gradient_updates": 32,
+    "actor_parameters_changed": false,
+    "selected_surrogate_return": 0.0,
+    "accepted_selection_actions": [
+      "STOP"
+    ],
+    "zero_action_replay_volumes_mm3": {
+      "target": 0,
+      "normal": 0,
+      "residual": 41919
+    },
+    "source_view_restored": true,
+    "search_alternatives_preserved": true,
+    "native_export_dialog_passed": true,
+    "export": "outputs/cases/electron-native-stop-candidate.json"
+  },
+  "packaged_engine_verification": "artifacts/electron-training-packaged.json",
+  "frozen_cancel_resume_verification": "artifacts/electron-cancellation-frozen.json",
+  "screenshots": [
+    "artifacts/electron-native-stop-result.jpg",
+    "artifacts/electron-full-source-view.jpg"
+  ],
+  "pending": [
+    "Native nonzero-replay UI inspection requires an actionable supported configuration",
+    "Native UI cancellation/resume still pending; frozen message-channel test passed",
+    "Route B-only semantic color issue reported to renderer owners"
+  ],
+  "clinical_use": "research_only",
+  "final_evaluation": false
+}

@@ -7,7 +7,7 @@ const path = require('node:path');
 const fs = require('node:fs/promises');
 const { AssetRegistry } = require('./assets.cjs');
 
-const OPERATIONS = new Set(['ping', 'createSyntheticCase', 'loadCase', 'importNifti', 'saveCase', 'generateRoutes', 'cancel', 'inspectEvidence', 'trainPatient', 'nativeTraining', 'listRuns', 'replayTraining', 'exportCandidate', 'shutdown']);
+const OPERATIONS = new Set(['ping', 'createSyntheticCase', 'loadCase', 'importNifti', 'importStructuralEvidence', 'saveCase', 'generateRoutes', 'generateNativeRoutes', 'inspectRefinement', 'cancel', 'inspectEvidence', 'trainPatient', 'nativeTraining', 'listRuns', 'replayTraining', 'exportCandidate', 'shutdown']);
 
 class Sidecar extends EventEmitter {
   constructor({ python, cwd, sourcePath, transferDir, executable, runDir }) {
@@ -71,7 +71,7 @@ class Sidecar extends EventEmitter {
     if (!pending) return;
     if (!['started', 'progress', 'result', 'error', 'cancelled'].includes(message.event)) throw new Error('Unknown local engine event');
     if (message.event === 'result') {
-      if (['loadCase', 'importNifti', 'createSyntheticCase'].includes(pending.op)) this.assets.clear();
+      if (['loadCase', 'importNifti', 'importStructuralEvidence', 'createSyntheticCase'].includes(pending.op)) this.assets.clear();
       message.result = await this.assets.expose(message.result);
     }
     this.emit('event', { ...message, op: pending.op });

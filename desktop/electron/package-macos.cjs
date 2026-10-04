@@ -9,7 +9,9 @@ const { publishBundle } = require('./publish.cjs');
 
 async function hashes(root, relative = '') {
   const result = {};
-  for (const entry of await fs.readdir(path.join(root, relative), { withFileTypes: true })) {
+  const entries = await fs.readdir(path.join(root, relative), { withFileTypes: true });
+  entries.sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
+  for (const entry of entries) {
     const name = path.join(relative, entry.name);
     if (entry.isSymbolicLink()) result[name] = 'symlink:' + await fs.readlink(path.join(root, name));
     else if (entry.isDirectory()) Object.assign(result, await hashes(root, name));
