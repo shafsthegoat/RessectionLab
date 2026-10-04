@@ -1,0 +1,27 @@
+{
+  "status": "verified_focused_native_workflow",
+  "appPath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app",
+  "architecture": "arm64",
+  "signing": "local_ad_hoc",
+  "notarized": false,
+  "internalSymlinks": 41,
+  "sourceDigest": "bc63bc2e29b123b5ba25263824e3e3a65f2b3cc693025d5dc8ebef8b14d55064",
+  "noticeSourceCompleteness": "incomplete",
+  "unresolvedNotices": [
+    {
+      "component": "react-remove-scroll-bar@2.3.8",
+      "reason": "Installed runtime package declares a license but contains no upstream root license/notice text. Its package.json is retained; no substitute license is invented."
+    },
+    {
+      "component": "CPython 3.12.14 static vendor libraries",
+      "reason": "No verified static-vendor notice/version manifest has been configured for this exact runtime. Its upstream build provenance must supply that closure; copying CPython LICENSE.txt alone does not resolve the gap."
+    }
+  ],
+  "noticeLocation": "Contents/Resources/ThirdPartyNotices",
+  "inputSnapshot": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/electron-identity-fe25f2a/desktop/release/inputs-KZ184K",
+  "elapsedSeconds": 12.955,
+  "previousDirectory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/previous-1791120855180-1ca8b12a",
+  "publicationNote": "Exactfe25f2a renderer; numerical engine and notices identical to verified346df23 package.",
+  "nativeReceipt": "artifacts/electron-case-identity-v1/native-workflow.json",
+  "distributionReadiness": "not established; local ad hoc signature with two notice-source gaps"
+}

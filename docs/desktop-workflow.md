@@ -2,23 +2,29 @@
 
 RessectionLab is a local research app. This guide follows the current Electron interface; [project status](../PROJECT_STATUS.md) and the [packaging records](electron-packaging.md) identify which app snapshots have been tested. A modeled geometry check does not establish clinical suitability.
 
-The current verified renderer is `100865f` (`34285015…`) with the unchanged
-`0b4e334` numerical engine (`85a92eff…`). Its 143 desktop checks passed. The
-[latest native checks](../artifacts/dependency-notices-v1/native-workflow-final.json)
-cover welcome guidance, opening a real case, motor-prior inspection and source
-restoration. Earlier full training/resume and all-seven-map checks retain their
-original build identities; they were not repeated in full in this refresh.
-The experimental feature-unit learner and RAW-only axis adapter/preflight are
-not included in this app. See the [environment card](environment-card.md) for
-the evidence boundaries and the [exact capture](../artifacts/dependency-notices-v1/app-capture-verification-final.json).
+The current verified renderer is `fe25f2a` (`bc63bc2e…`) with the unchanged
+`0b4e334` numerical engine (`85a92eff…`). Its 150 desktop checks passed, and all
+73 captured desktop source inputs match the commit. The
+[latest native checks](../artifacts/electron-case-identity-v1/native-workflow.json)
+cover the persistent loaded identifier across UCSF, PAT16 and PAT20 at two
+window widths, plus annotation centering. The preceding `346df23` package had
+148 checks and [actual PAT16/PAT20 view-only proposal checks](../artifacts/electron-annotation-center-v1/native-workflow.json);
+`100865f` had 143 checks and a guidance/motor-prior refresh. Earlier full
+training/resume and all-seven-map checks retain their original build identities;
+they were not repeated in full here. Experimental feature-unit learning and the
+RAW-only axis pilot are not included in this app. See the
+[environment card](environment-card.md) for evidence boundaries and the
+[exact capture](../artifacts/electron-case-identity-v1/capture-verification.json).
 
 ## Open and inspect the source
 
 Choose **Open case** (⌘O) for a saved `.ressectionlab` workspace. **Import MRI** first asks for a structural NIfTI image, then a tumor segmentation; cancel the second chooser to open MRI only. **Explore synthetic fixture** is a labeled fixture for learning the controls.
 
-Check the case name, source badge, image dimensions and target annotation labels on the left. **Inspect evidence** shows source provenance, transforms, unresolved inputs and any recorded annotation threshold. A public mirror remains identified as a mirror.
+Check the loaded identifier in the fixed central header; it stays visible when the left panel scrolls and changes when another case opens. It identifies the research bundle, not a verified clinical patient match. The left panel shows the source badge, image dimensions and target annotation labels. **Inspect evidence** shows source provenance, transforms, unresolved inputs and any recorded annotation threshold. A public mirror remains identified as a mirror.
 
 Choose **MRI review** for the linked axial, coronal and sagittal images beside the 3D view. Click an MRI to move the shared cursor; scroll or use arrow keys in a focused MRI pane to change slices. A pane's expand button enlarges that MRI; **Restore linked views** returns to the layout. Use **Contrast**, target checkboxes and **Overlay opacity** to inspect the original image beneath annotations.
+
+**Center on annotations** moves the linked MRI cursor to the annotation center while retaining the current evidence layer, route choices, opacity and layout. It is disabled without annotations. Centering does not accept an estimate or change the source labels.
 
 **3D focus** gives more space to the spatial view. Drag to rotate and scroll to zoom. **Focus anatomy** may crop instruments; **Fit instruments** frames the whole selected tools. **MRI plane on/off** controls the image plane inside 3D without hiding the linked MRI panels.
 

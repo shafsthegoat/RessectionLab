@@ -42,7 +42,7 @@ unloaded welcome text; a regression test and shell correction now pass at both
 source, complete engine payload and packaged upstream notices match the captured
 bytes. Loaded-case guidance, real search, motor-prior inspection and source
 restoration pass; screenshots and receipts are in `artifacts/dependency-notices-v1/`.
-The current native renderer is `a6bb6b76…` from `346df23`, with 148 passing
+The preceding native renderer is `a6bb6b76…` from `346df23`, with 148 passing
 desktop checks and a successful production build. Its new Center on annotations
 action returns linked MRI slices to the source annotation center while preserving
 prior/source mode, A/B routes, opacity and layout. Native checks pass at both
@@ -52,6 +52,16 @@ All 72 source inputs, 2,809 unchanged engine entries and 292 unchanged notice
 entries verify. `artifacts/electron-annotation-center-v1/` retains exact receipts
 and screenshots. The engine remains `85a92eff…`; new experimental learning and
 cache code are not in this package.
+
+The current renderer is `bc63bc2e…` from `fe25f2a`, with 150 passing desktop
+checks and a successful production build. Its fixed header retains the loaded
+case identifier during evidence-panel scrolling. Actual UCSF → PAT16 → PAT20
+switching passes at 1460- and 1050-point widths, with correct full accessible
+labels and a centering regression check. All 73 desktop source inputs verify;
+the engine and notices remain byte-identical. Root inspected the minimum-width
+UCSF and wide PAT20 MRI screenshots. Native testing did not introduce an
+extreme-length synthetic identifier. Exact receipts and images are in
+`artifacts/electron-case-identity-v1/`.
 
 Two notice-source completeness gaps and distribution signing remain open. An
 independent actual GPU probe passes 487 cases, with the earlier failures retained.

@@ -7,22 +7,34 @@ documents; ongoing work is tracked in [PROJECT_STATUS](../PROJECT_STATUS.md).
 
 ## Identified application and purpose
 
-The inspected arm64 Electron application uses renderer `100865f` (source digest
-`34285015…`) and the unchanged Python `0b4e334` engine (executable SHA256
-`85a92eff…`). All **143 desktop checks** and its production build passed.
-The [capture receipt](../artifacts/dependency-notices-v1/app-capture-verification-final.json)
+The inspected arm64 Electron application uses renderer `fe25f2a` (source digest
+`bc63bc2e…`) and the unchanged Python `0b4e334` engine (executable SHA256
+`85a92eff…`). All **150 desktop checks** and its production build passed; all
+73 captured desktop source inputs match that commit. The
+[capture receipt](../artifacts/electron-case-identity-v1/capture-verification.json)
 binds the renderer, complete engine payload and packaged notices. The
-[focused native receipt and screenshots](../artifacts/dependency-notices-v1/native-workflow-final.json)
-verify corrected welcome guidance at two window widths, transition to a real
-case, motor-prior inspection and source restoration. No training or final
-evaluation was invoked in this refresh.
+[focused native receipt and screenshots](../artifacts/electron-case-identity-v1/native-workflow.json)
+verify UCSF → PAT16 → PAT20 case switching, the persistent loaded identifier
+at two window widths after evidence-panel scrolling, and annotation centering.
+The identifier describes the loaded research bundle; it does not certify
+clinical patient correspondence. No training or final evaluation was invoked.
+
+The preceding `346df23` package passed **148 desktop checks** and actual
+[PAT16/PAT20 view-only proposal inspection](../artifacts/electron-annotation-center-v1/native-workflow.json),
+including annotation-omission jumps, centering and source restoration. Its
+estimates remained review-required and route generation stayed blocked.
+The earlier `100865f` package's **143 checks** and
+[guidance/motor-prior refresh](../artifacts/dependency-notices-v1/native-workflow-final.json)
+retain their separate build scope; these broader viewer checks were not all
+repeated in the current identity-focused refresh.
 
 Earlier [full training/cancellation/resume checks](../artifacts/electron-refinement-v2/native-workflow-final.json)
 and [seven-map, replay and GPU checks](../artifacts/electron-priors-v1/native-workflow-final.json)
 retain their own package identities; they were not repeated in full on
-`100865f`. Later feature-unit learning and the experimental RAW-only axis
-adapter/preflight at `558b2e3` are not bundled. Their results or validation must
-not be attributed to this app. [Experimental axis scope](native-axis-preflight.md).
+`fe25f2a`. Later feature-unit learning and the experimental RAW-only axis
+adapter, preflight and one-update pilot are not bundled. Their results or
+validation must not be attributed to this app.
+[Experimental axis scope](native-axis-preflight.md).
 
 Supported uses are local inspection of MRI and source annotations, comparison
 of declared complete-tool routes, inspection of unreviewed evidence proposals,
@@ -119,6 +131,13 @@ identity. No genotype-to-injury or molecular-to-tool-tolerance rule is supplied.
 
 ## Validation, failure modes and reproducibility
 
+The separate immutable `f3a0591` backend archive passed **1,150 tests in
+215.95 seconds**, with no skips or source changes. Its 14 warnings are deliberate
+NumPy metadata adversaries and existing DIPY warnings. This is a research-source
+validation record, distinct from the current app's 150 desktop checks and
+unchanged engine. [Frozen validation](../artifacts/validation/native-axis-pilot-public-v1/execution-baseline.json),
+[original test log](../artifacts/validation/native-axis-pilot-public-v1/full-suite-attempt-01/pytest.log).
+
 - Static feasibility does not imply a cuttable corridor: all 54 original UCSF
   routes failed native action checks. Two separately declared native access/tool
   alternatives were introduced; blocked configurations now stop before learning.
@@ -146,6 +165,20 @@ identity. No genotype-to-injury or molecular-to-tool-tolerance rule is supplied.
   pretraining patients and nominal worlds. These results belong to the separate
   `0bffeaa` research archive, not the packaged engine.
   [Feature-unit result](../artifacts/learning/procedural-native-feature-units-v1/RESULT.md).
+- The RAW one-update pilot completed two optimization episodes and both
+  two-world selection panels on the `f3a0591` archive. Actor parameters changed,
+  but initial and updated selection both scored **441.60**; the initial
+  checkpoint remained selected. All six histories have accepted native
+  certificates covering three unique histories. A separate audit reconstructed
+  all 18 saved policy forwards and verified 12 deterministic argmax choices;
+  it checked eligibility of six stochastic choices without replaying RNG or
+  rerunning geometry. Full launcher time was **221.139 seconds** and peak
+  worker memory **2.219 GiB**. This one reused development patient establishes
+  integration and cost accounting, not improvement, uncertainty calibration or
+  a new training budget. Final/stress worlds remained unopened.
+  [Actual pilot result](../artifacts/learning/native-axis-raw-update-pilot-v1/report-v1/RESULT.md),
+  [independent audit](../artifacts/native-axis-pilot-result-audit/audit-02.json),
+  [audit scope and verification](../artifacts/native-axis-pilot-result-audit/verification.json).
 
 Cancellation is cooperative. Invalid stroke previews do not alter cavity state.
 The local bridge preserves resumable checkpoints under the original budget and

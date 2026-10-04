@@ -1043,3 +1043,22 @@ This is integration evidence and a negative learning result on one reused
 development patient, with unreviewed anatomy and hypothetical access.
 See `artifacts/learning/native-axis-raw-update-pilot-v1/` and the separate
 `artifacts/native-axis-pilot-result-audit/`.
+
+## October 4, 2026 — persistent case identity passes native Mac checks
+
+Renderer `fe25f2a` passes 150 desktop checks and its production build. Native
+UCSF → PAT16 → PAT20 switching updates the fixed header correctly; the loaded
+identifier stays visible while the evidence sidebar scrolls at 1460- and
+1050-point widths. Full accessible labels match the loaded bundles, and actual
+BTC identifiers fit without wrapping. The unloaded label remains generic.
+Annotation centering still returns the UCSF cursor to the expected displayed
+coordinates. No arbitrary extreme-length identifier was loaded; that behavior
+has source tests rather than a native claim.
+
+All 73 captured source files match the commit. The 2,809-entry engine payload
+and 292-entry notice tree remain unchanged; local ad hoc signature verification
+passes. This UI pass performs no training or broader historical evaluation.
+Root inspected the minimum-width UCSF and wide PAT20 MRI screenshots. Exact
+build, native, screenshot and capture records are preserved in
+`artifacts/electron-case-identity-v1/`. Environment and desktop workflow guides
+now distinguish this package from separate experimental learning results.

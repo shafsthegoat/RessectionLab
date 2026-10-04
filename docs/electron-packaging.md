@@ -365,7 +365,7 @@ bundles remain recoverable through the recorded publication paths.
 
 ## Annotation centering and additional structural cases
 
-The current app captures exact renderer commit `346df23`: source digest
+The annotation-centering checkpoint captures renderer commit `346df23`: source digest
 `a6bb6b76…`, archive `94553760…`, with all 72 captured desktop source inputs
 verified against that commit. All 148 aggregate desktop checks passed
 (38 main-process, 79 renderer and 31 viewer checks), as did the production
@@ -402,3 +402,24 @@ publication path recorded in `app-build.json`; `native-workflow.json` and
 `capture-verification.json` bind the current screenshots to this renderer
 and retained engine. The two notice-source gaps and lack of notarization
 remain unchanged.
+
+
+## Persistent loaded-case identity
+
+The current renderer is exact commit `fe25f2a`: capture `bc63bc2e…`, archive
+`542a036a…`, with all 73 captured source inputs checked against the commit.
+The aggregate 150 desktop checks and production build passed. All numerical
+payload and notice entries remain identical to the prior verified app, and
+local ad hoc deep strict signature verification passed.
+
+`artifacts/electron-case-identity-v1/` records native startup and actual
+UCSF → PAT16 → PAT20 file opens. The fixed central header updated to each
+loaded identifier and remained readable when the evidence panel scrolled,
+at 1460- and 1050-point widths. The complete accessible labels matched the
+loaded cases. Actual BTC identifiers fit without wrapping; no synthetic
+extreme-length identifier was introduced in this native pass. The unloaded
+workspace retained its generic label, and a quick annotation-centering
+regression passed. No renderer warning or shader error was observed. No
+training, final evaluation or broader historical check was repeated. The
+previous app is retained at the path in `app-build.json`; the raw builder
+record and subsequent native passing receipt are preserved separately.
