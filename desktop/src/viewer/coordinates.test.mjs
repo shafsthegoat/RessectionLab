@@ -13,6 +13,7 @@ import {
 import { maskSurface } from "./surface.ts";
 import * as THREE from "three";
 import { physicalBounds, placeInSourceFrame } from "./sceneGeometry.ts";
+import { residualMask, validateReplay } from "./replay.ts";
 
 const close = (actual, expected) =>
   actual.forEach((value, index) =>
@@ -21,6 +22,129 @@ const close = (actual, expected) =>
       `${actual} != ${expected}`,
     ),
   );
+
+function replayFixture() {
+  const volume = {
+    caseId: "overlapping-source-test",
+    caseHash: "case-version-a",
+    frame: "RAS+",
+    affine: [
+      [0, -3, 0, 10],
+      [2, 0, 0, -20],
+      [0, 0, 4, 7],
+      [0, 0, 0, 1],
+    ],
+    shape: [2, 2, 2],
+    mri: new Float32Array(8),
+    compartments: [
+      {
+        name: "A",
+        color: "#ee9988",
+        mask: new Uint8Array([1, 1, 0, 0, 0, 0, 0, 0]),
+      },
+      {
+        name: "B",
+        color: "#ddcc77",
+        mask: new Uint8Array([0, 1, 1, 0, 0, 0, 0, 0]),
+      },
+    ],
+  };
+  const replay = {
+    caseHash: volume.caseHash,
+    scope: "native-source-grid",
+    independentlyAccepted: true,
+    shape: [2, 2, 2],
+    affine: volume.affine.map((row) => [...row]),
+    step: 2,
+    stepCount: 3,
+    removedMask: new Uint8Array([0, 1, 0, 0, 0, 0, 0, 1]),
+    removedTargetVolumeMm3: 24,
+    removedNormalVolumeMm3: 24,
+    residualTargetVolumeMm3: 48,
+  };
+  return { volume, replay };
+}
+
+test("Accepted replay accounts for unique target cells and preserves source arrays", () => {
+  const { volume, replay } = replayFixture();
+  validateReplay(volume, replay);
+  const source = volume.compartments[0].mask.slice(),
+    effect = replay.removedMask.slice();
+  assert.deepEqual(
+    residualMask(source, effect),
+    new Uint8Array([1, 0, 0, 0, 0, 0, 0, 0]),
+  );
+  assert.deepEqual(source, volume.compartments[0].mask);
+  assert.deepEqual(effect, replay.removedMask);
+  assert.throws(
+    () => residualMask(source, new Uint8Array(1)),
+    /identical source grids/,
+  );
+});
+
+test("Replay gate rejects unaccepted, stale, misframed, nonbinary and inconsistent effects", () => {
+  const invalid = [
+    { independentlyAccepted: false },
+    { scope: "coarse-grid" },
+    { caseHash: "stale-case" },
+    { step: -1 },
+    { step: 4 },
+    { step: 1.5 },
+    { stepCount: -1 },
+    { shape: [2, 2, 3] },
+    { removedMask: new Uint8Array(7) },
+    { removedMask: new Uint8Array([0, 2, 0, 0, 0, 0, 0, 1]) },
+    { removedMask: new Float32Array(8) },
+    { removedTargetVolumeMm3: 48 },
+    { removedNormalVolumeMm3: 0 },
+    { residualTargetVolumeMm3: 24 },
+    { removedTargetVolumeMm3: NaN },
+    { removedNormalVolumeMm3: -1 },
+    {
+      affine: [
+        [0, -3, 0, 11],
+        [2, 0, 0, -20],
+        [0, 0, 4, 7],
+        [0, 0, 0, 1],
+      ],
+    },
+  ];
+  for (const patch of invalid) {
+    const { volume, replay } = replayFixture();
+    assert.throws(
+      () => validateReplay(volume, { ...replay, ...patch }),
+      undefined,
+      JSON.stringify(patch),
+    );
+  }
+  const { volume, replay } = replayFixture();
+  volume.affine[2] = [0, 0, 0, 7];
+  replay.affine = volume.affine;
+  assert.throws(() => validateReplay(volume, replay), /Source geometry/);
+});
+
+test("Replay affine conversion preserves native LPS voxel indexing in RAS", () => {
+  const { volume, replay } = replayFixture();
+  volume.frame = "LPS+";
+  assert.throws(() => validateReplay(volume, replay), /affine differs/);
+  replay.affine = rasAffine(volume.affine, volume.frame);
+  validateReplay(volume, replay);
+  const sourceCell = [1, 0, 0];
+  close(transformPoint(replay.affine, sourceCell), [-10, 18, 7]);
+});
+
+test("Zero-removal STOP replay retains every source target cell", () => {
+  const { volume, replay } = replayFixture();
+  replay.removedMask.fill(0);
+  replay.step = 0;
+  replay.stepCount = 0;
+  replay.removedTargetVolumeMm3 = 0;
+  replay.removedNormalVolumeMm3 = 0;
+  replay.residualTargetVolumeMm3 = 72;
+  validateReplay(volume, replay);
+  for (const layer of volume.compartments)
+    assert.deepEqual(residualMask(layer.mask, replay.removedMask), layer.mask);
+});
 
 test("C-order scalar lookup and trilinear interpolation preserve z-fastest source data", () => {
   const shape = [2, 3, 4],

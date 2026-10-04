@@ -31,6 +31,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     overlayOpacity,
     routes,
     cameraMode,
+    replay,
   } = props;
   const container = useRef<HTMLDivElement>(null),
     canvas = useRef<HTMLCanvasElement>(null),
@@ -45,7 +46,9 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     [remaining, setRemaining] = useState(0),
     [ready, setReady] = useState(false);
   const [activePlane, setActivePlane] = useState<SlicePlane>("axial"),
-    [contrast, setContrast] = useState(1);
+    [contrast, setContrast] = useState(1),
+    [showPlane, setShowPlane] = useState(false),
+    [replayError, setReplayError] = useState<string | null>(null);
   const [paneSizes, setPaneSizes] = useState<
     Record<SlicePlane, [number, number]>
   >({ axial: [1, 1], coronal: [1, 1], sagittal: [1, 1] });
@@ -97,6 +100,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         caseData,
         setError,
         setRemaining,
+        setReplayError,
       );
       engine.current = renderer;
       setReady(true);
@@ -130,8 +134,34 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   ]);
 
   useEffect(() => {
-    engine.current?.setSourcePlane(activePlane);
-  }, [activePlane, ready]);
+    engine.current?.setSourcePlane(showPlane ? activePlane : null);
+  }, [activePlane, showPlane, ready, caseData]);
+
+  useEffect(() => {
+    if (!engine.current) return;
+    setReplayError(null);
+    try {
+      engine.current.setReplay(replay ?? null);
+    } catch (cause) {
+      setReplayError(cause instanceof Error ? cause.message : String(cause));
+    }
+    // The app may recreate its props object on cursor movement; the accepted
+    // mask and certificate inputs, rather than that wrapper, define a new step.
+  }, [
+    ready,
+    caseData,
+    replay?.removedMask,
+    replay?.step,
+    replay?.stepCount,
+    replay?.scope,
+    replay?.caseHash,
+    replay?.shape,
+    replay?.affine,
+    replay?.independentlyAccepted,
+    replay?.removedTargetVolumeMm3,
+    replay?.removedNormalVolumeMm3,
+    replay?.residualTargetVolumeMm3,
+  ]);
 
   useEffect(() => {
     const renderer = engine.current;
@@ -245,6 +275,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     );
 
   const refs = { axial, coronal, sagittal };
+  const modeled = replay && !replayError;
   return (
     <div
       className="rl-viewer"
@@ -272,12 +303,25 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           onPointerDown={(event) => event.stopPropagation()}
           onDoubleClick={(event) => event.stopPropagation()}
         >
+          <button
+            className={`rl-viewer-reset rl-viewer-plane-toggle ${showPlane ? "is-active" : ""}`}
+            aria-pressed={showPlane}
+            onClick={() => setShowPlane(!showPlane)}
+            title="Show or hide the source MRI plane in 3D; linked MRI views remain visible"
+          >
+            MRI plane {showPlane ? "on" : "off"}
+          </button>
           <div className="rl-viewer-segment" aria-label="Source MRI plane">
             {PLANES.map((plane) => (
               <button
                 key={plane}
-                className={activePlane === plane ? "is-active" : ""}
-                onClick={() => setActivePlane(plane)}
+                className={
+                  showPlane && activePlane === plane ? "is-active" : ""
+                }
+                onClick={() => {
+                  setActivePlane(plane);
+                  setShowPlane(true);
+                }}
                 title={`Show source ${plane} MRI plane`}
               >
                 {TITLES[plane]}
@@ -293,7 +337,15 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           </button>
         </div>
         <div className="rl-viewer-annotations">
-          <span className="rl-viewer-dot" /> Source annotation surfaces
+          <span className="rl-viewer-dot" />{" "}
+          {modeled
+            ? `Modeled residual annotations · step ${replay.step}/${replay.stepCount}`
+            : "Source annotation surfaces"}
+          {modeled && (
+            <span className="rl-viewer-replay-key">
+              Mint mesh: modeled removal · source MRI unchanged
+            </span>
+          )}
           {remaining > 0 && (
             <span className="rl-viewer-preparing" role="status">
               Preparing {remaining} {remaining === 1 ? "surface" : "surfaces"}…
@@ -394,10 +446,10 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         </label>
         <span>Neurological convention</span>
       </div>
-      {error && (
+      {(error || replayError) && (
         <div className="rl-viewer-error" role="alert">
           <strong>Imaging view needs attention</strong>
-          <p>{error}</p>
+          <p>{error || replayError}</p>
         </div>
       )}
     </div>

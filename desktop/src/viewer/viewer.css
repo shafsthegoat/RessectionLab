@@ -147,6 +147,18 @@
   color: #c9ede2;
   border-color: #4a6f70;
 }
+.rl-viewer-plane-toggle {
+  white-space: nowrap;
+}
+.rl-viewer-plane-toggle.is-active {
+  color: #b5e0d1;
+  border-color: #487166;
+}
+.rl-viewer-replay-key {
+  flex-basis: 100%;
+  color: #b7e7d3;
+  line-height: 1.5;
+}
 .rl-viewer-reset:focus-visible,
 .rl-viewer-segment button:focus-visible {
   outline: 1px solid #9ed6c0;

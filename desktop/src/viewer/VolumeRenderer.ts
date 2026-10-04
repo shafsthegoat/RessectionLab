@@ -9,9 +9,10 @@ import {
   volumeBounds,
 } from "./coordinates";
 import type { Affine, Bounds3, Point3, SlicePlane } from "./coordinates";
-import type { ViewerRoute, ViewerVolume } from "./contracts";
+import type { ViewerReplay, ViewerRoute, ViewerVolume } from "./contracts";
 import { fragmentShader, vertexShader } from "./shaders";
 import { physicalBounds, placeInSourceFrame } from "./sceneGeometry";
+import { residualMask, validateReplay } from "./replay";
 
 type Panes = { anatomy: HTMLElement } & Record<SlicePlane, HTMLElement>;
 const SLICE_PLANES: SlicePlane[] = ["axial", "coronal", "sagittal"];
@@ -97,6 +98,13 @@ export class VolumeRenderer {
   >();
   private readonly anatomy = new THREE.Group();
   private readonly tools = new THREE.Group();
+  private readonly replayGroup = new THREE.Group();
+  private replayWorker: Worker | null = null;
+  private replayGeneration = 0;
+  private pendingReplayGroup: THREE.Group | null = null;
+  private replayActive = false;
+  private activeRouteCount = 0;
+  private removedTexture: THREE.Data3DTexture;
   private readonly surfaces = new Map<string, THREE.Mesh>();
   private readonly mriTexture: THREE.Data3DTexture;
   private readonly labelTexture: THREE.Data3DTexture;
@@ -133,6 +141,7 @@ export class VolumeRenderer {
     private readonly volume: ViewerVolume,
     private readonly onError: (message: string) => void,
     private readonly onSurfaceStatus: (remaining: number) => void,
+    private readonly onReplayError: (message: string) => void,
   ) {
     const count = volume.shape.reduce((a, b) => a * b, 1);
     if (
@@ -186,6 +195,7 @@ export class VolumeRenderer {
       this.visible[layer.name] = true;
     });
     this.labelTexture = dataTexture(packed, volume.shape);
+    this.removedTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
     const material = (threeD: boolean, plane: SlicePlane) =>
       new THREE.ShaderMaterial({
         vertexShader,
@@ -198,6 +208,8 @@ export class VolumeRenderer {
         uniforms: {
           uMri: { value: this.mriTexture },
           uLabels: { value: this.labelTexture },
+          uRemoved: { value: this.removedTexture },
+          uReplayActive: { value: 0 },
           uWorldToVoxel: { value: matrix(inverse) },
           uShape: { value: new THREE.Vector3(...volume.shape) },
           uLow: { value: new THREE.Vector3(...this.bounds[0]) },
@@ -249,7 +261,12 @@ export class VolumeRenderer {
     planeGeometry.setIndex([0, 1, 2, 0, 2, 3]);
     this.sourcePlane = new THREE.Mesh(planeGeometry, material(true, "axial"));
     this.sourcePlane.renderOrder = 1;
-    this.scene.add(this.sourcePlane, this.anatomy, this.tools);
+    this.scene.add(
+      this.sourcePlane,
+      this.anatomy,
+      this.tools,
+      this.replayGroup,
+    );
     this.scene.add(new THREE.HemisphereLight(0xb7d6df, 0x142738, 2.1));
     const centre = new THREE.Vector3(...this.cursor);
     const key = new THREE.DirectionalLight(0xe8f3f3, 3.1);
@@ -303,7 +320,7 @@ export class VolumeRenderer {
     ) => {
       if (this.disposed) return;
       remaining--;
-      onSurfaceStatus(remaining);
+      if (!this.replayActive) onSurfaceStatus(remaining);
       if (event.data.error) {
         onError(`Source surface unavailable: ${event.data.error}`);
         return;
@@ -378,6 +395,11 @@ export class VolumeRenderer {
       const mesh = this.surfaces.get(layer.name);
       if (mesh) mesh.visible = visible[layer.name] !== false;
     });
+    this.replayGroup.children.forEach((mesh) => {
+      mesh.visible =
+        mesh.userData.compartment === undefined ||
+        visible[mesh.userData.compartment] !== false;
+    });
     this.materials().forEach((shader) => {
       shader.uniforms.uCursor.value.set(...cursor);
       shader.uniforms.uVisibleBits.value = bits;
@@ -405,9 +427,143 @@ export class VolumeRenderer {
     this.requestRender();
   }
 
-  setSourcePlane(plane: SlicePlane): void {
-    this.activePlane = plane;
+  setSourcePlane(plane: SlicePlane | null): void {
+    this.sourcePlane.visible = plane !== null;
+    if (plane !== null) this.activePlane = plane;
     this.updateSourcePlane();
+    this.requestRender();
+  }
+
+  /** A certified effect overlays the original MRI; source labels remain immutable. */
+  setReplay(replay: ViewerReplay | null): void {
+    if (this.replayActive) this.onSurfaceStatus(0);
+    const generation = ++this.replayGeneration;
+    this.replayWorker?.terminate();
+    this.replayWorker = null;
+    if (this.pendingReplayGroup) disposeObject(this.pendingReplayGroup);
+    this.pendingReplayGroup = null;
+    disposeObject(this.replayGroup);
+    this.replayGroup.clear();
+    this.replayActive = false;
+    this.anatomy.visible = true;
+    this.tools.visible = true;
+    this.materials().forEach((shader) => {
+      shader.uniforms.uReplayActive.value = 0;
+      shader.uniforms.uRouteCount.value = this.activeRouteCount;
+    });
+    this.requestRender();
+    if (!replay) return;
+    validateReplay(this.volume, replay);
+
+    // Snapshot the accepted effect so later UI updates cannot mutate this replay.
+    const removed = replay.removedMask.slice();
+    const texture = dataTexture(removed, this.volume.shape);
+    this.removedTexture.dispose();
+    this.removedTexture = texture;
+    this.materials().forEach((shader) => {
+      shader.uniforms.uRemoved.value = texture;
+      shader.uniforms.uReplayActive.value = 1;
+      shader.uniforms.uRouteCount.value = 0;
+    });
+    this.replayActive = true;
+    this.anatomy.visible = false;
+    // Route candidates show terminal approach poses, not certified replay motions.
+    this.tools.visible = false;
+    const pending = new THREE.Group();
+    this.pendingReplayGroup = pending;
+    const layers = this.volume.compartments.map((layer, index) => ({
+      id: `residual-${index}`,
+      name: layer.name,
+      color: layer.color,
+      removed: false,
+      mask: residualMask(layer.mask, removed),
+    }));
+    layers.push({
+      id: "modeled-removal",
+      name: "Modeled removal",
+      color: "#b7f0d8",
+      removed: true,
+      mask: removed,
+    });
+    const waiting = new Map(layers.map((layer) => [layer.id, layer]));
+    this.onSurfaceStatus(waiting.size);
+    const worker = new Worker(new URL("./surface.worker.ts", import.meta.url), {
+      type: "module",
+    });
+    this.replayWorker = worker;
+    const failed = (message: string) => {
+      if (this.disposed || generation !== this.replayGeneration) return;
+      this.setReplay(null);
+      this.onSurfaceStatus(0);
+      this.onReplayError(
+        `Modeled anatomy could not be displayed: ${message}. The original source anatomy has been restored.`,
+      );
+    };
+    worker.onerror = () => failed("surface preparation failed");
+    worker.onmessage = (
+      event: MessageEvent<{
+        name: string;
+        positions?: Float32Array;
+        error?: string;
+      }>,
+    ) => {
+      if (this.disposed || generation !== this.replayGeneration) return;
+      if (event.data.error) {
+        failed(event.data.error);
+        return;
+      }
+      const layer = waiting.get(event.data.name);
+      if (!layer) {
+        failed("unexpected surface response");
+        return;
+      }
+      waiting.delete(event.data.name);
+      const positions = event.data.positions;
+      if (!positions) {
+        failed("missing source-grid surface");
+        return;
+      }
+      if (positions.length) {
+        const geometry = new THREE.BufferGeometry();
+        geometry.setAttribute(
+          "position",
+          new THREE.BufferAttribute(positions, 3),
+        );
+        geometry.computeVertexNormals();
+        const mesh = new THREE.Mesh(
+          geometry,
+          new THREE.MeshStandardMaterial({
+            color: layer.color,
+            roughness: 0.34,
+            metalness: 0.08,
+            transparent: true,
+            opacity: layer.removed ? 0.78 : 0.66,
+            side: THREE.DoubleSide,
+            depthWrite: false,
+            wireframe: layer.removed,
+          }),
+        );
+        placeInSourceFrame(mesh, this.affine);
+        if (!layer.removed) mesh.userData.compartment = layer.name;
+        mesh.visible = layer.removed || this.visible[layer.name] !== false;
+        pending.add(mesh);
+      }
+      this.onSurfaceStatus(waiting.size);
+      if (!waiting.size) {
+        for (const child of [...pending.children]) this.replayGroup.add(child);
+        this.pendingReplayGroup = null;
+        worker.terminate();
+        this.replayWorker = null;
+        this.requestRender();
+      }
+    };
+    for (const layer of layers) {
+      worker.postMessage({
+        name: layer.id,
+        mask: layer.mask,
+        shape: this.volume.shape,
+      });
+    }
     this.requestRender();
   }
 
@@ -440,8 +596,13 @@ export class VolumeRenderer {
     disposeObject(this.tools);
     this.tools.clear();
     const shown = routes.slice(0, 2);
+    this.activeRouteCount = shown.length;
+    this.tools.visible = !this.replayActive;
     this.materials().forEach(
-      (shader) => (shader.uniforms.uRouteCount.value = shown.length),
+      (shader) =>
+        (shader.uniforms.uRouteCount.value = this.replayActive
+          ? 0
+          : shown.length),
     );
     shown.forEach((route, index) => {
       const entry = this.sourceToRas(route.entry_mm),
@@ -602,8 +763,11 @@ export class VolumeRenderer {
     this.pickRay.setFromCamera(ndc, this.camera);
     const hits = this.pickRay.intersectObjects(
       [
-        this.sourcePlane,
-        ...Array.from(this.surfaces.values()).filter((mesh) => mesh.visible),
+        ...(this.sourcePlane.visible ? [this.sourcePlane] : []),
+        ...(this.anatomy.visible
+          ? Array.from(this.surfaces.values()).filter((mesh) => mesh.visible)
+          : []),
+        ...this.replayGroup.children.filter((mesh) => mesh.visible),
       ],
       false,
     );
@@ -671,6 +835,8 @@ export class VolumeRenderer {
     cancelAnimationFrame(this.frame);
     this.observer.disconnect();
     this.worker.terminate();
+    this.replayWorker?.terminate();
+    if (this.pendingReplayGroup) disposeObject(this.pendingReplayGroup);
     this.controls.removeEventListener("change", this.onControlsChange);
     this.controls.dispose();
     this.canvas.removeEventListener("webglcontextlost", this.onContextLost);
@@ -678,6 +844,7 @@ export class VolumeRenderer {
     this.slices.forEach((slice) => disposeObject(slice.scene));
     this.mriTexture.dispose();
     this.labelTexture.dispose();
+    this.removedTexture.dispose();
     this.renderer.dispose();
   }
 }

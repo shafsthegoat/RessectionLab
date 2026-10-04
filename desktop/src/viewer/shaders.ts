@@ -17,6 +17,8 @@ in vec3 vWorld;
 out vec4 outColor;
 uniform sampler3D uMri;
 uniform sampler3D uLabels;
+uniform sampler3D uRemoved;
+uniform int uReplayActive;
 uniform mat4 uWorldToVoxel;
 uniform vec3 uShape;
 uniform vec3 uLow;
@@ -52,6 +54,7 @@ float trilinear(vec3 voxel) {
 }
 int labels(ivec3 voxel) {
   if (any(lessThan(voxel,ivec3(0))) || any(greaterThanEqual(voxel,ivec3(uShape)))) return 0;
+  if (uReplayActive==1 && texelFetch(uRemoved,voxel.zyx,0).r>0.0) return 0;
   return int(round(texelFetch(uLabels,voxel.zyx,0).r*255.0));
 }
 float capsuleDistance(vec3 p,vec3 a,vec3 b) {
@@ -79,11 +82,14 @@ void main() {
   vec3 color=vec3(gray);
   ivec3 nearest=ivec3(floor(voxel+0.5));
   int bits=labels(nearest)&uVisibleBits;
+  bool removed=uReplayActive==1 && texelFetch(uRemoved,nearest.zyx,0).r>0.0;
+  if(removed) bits=0;
   for(int i=0;i<8;i++) if((bits & (1<<i))!=0) {
     int neighbors=labels(nearest+ivec3(1,0,0))&labels(nearest-ivec3(1,0,0))&labels(nearest+ivec3(0,1,0))&labels(nearest-ivec3(0,1,0))&labels(nearest+ivec3(0,0,1))&labels(nearest-ivec3(0,0,1));
     float edge=(neighbors&(1<<i))==0?min(0.9,uOverlay+0.3):uOverlay;
     color=mix(color,uColors[i],edge);
   }
+  if(removed) color=mix(color,vec3(0.66,0.94,0.82),0.70);
   for(int i=0;i<2;i++) if(i<uRouteCount) {
     float shaft=capsuleDistance(world,uShaftStart[i],uShaftEnd[i])-uRadii[i].x;
     float tip=capsuleDistance(world,uShaftEnd[i],uTipEnd[i])-uRadii[i].y;

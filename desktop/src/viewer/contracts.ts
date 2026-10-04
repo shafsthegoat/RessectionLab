@@ -38,4 +38,19 @@ export interface ViewerWorkspaceProps {
   onCursorChange: (point: Point3) => void;
   routes: ViewerRoute[];
   cameraMode: "anatomy" | "instruments";
+  replay?: ViewerReplay | null;
+}
+
+export interface ViewerReplay {
+  removedMask: Uint8Array;
+  step: number;
+  stepCount: number;
+  scope: "native-source-grid";
+  caseHash: string;
+  shape: Shape3;
+  affine: Affine;
+  independentlyAccepted: boolean;
+  removedTargetVolumeMm3: number;
+  removedNormalVolumeMm3: number;
+  residualTargetVolumeMm3: number;
 }
