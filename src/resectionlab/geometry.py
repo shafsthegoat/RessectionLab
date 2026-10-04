@@ -25,10 +25,19 @@ _EPS = 1e-9
 _CLEARANCE_CAP_MM = 10.0
 
 
+class _ImmutableArray(np.ndarray):
+    """Protect both buffer data and interpretation metadata of frozen inputs."""
+
+    def __setattr__(self, name: str, value: Any) -> None:
+        if name in {"shape", "dtype", "strides", "data"}:
+            raise ValueError(f"Immutable geometry array {name} cannot be reassigned")
+        super().__setattr__(name, value)
+
+
 def _immutable(array: NDArray) -> NDArray:
     """Use an immutable backing buffer, so writeability cannot be re-enabled."""
     value = np.ascontiguousarray(array)
-    return np.frombuffer(value.tobytes(), dtype=value.dtype).reshape(value.shape)
+    return np.frombuffer(value.tobytes(), dtype=value.dtype).reshape(value.shape).view(_ImmutableArray)
 
 
 def _vector(value: ArrayLike, name: str, *, unit: bool = False) -> NDArray[np.float64]:
@@ -46,6 +55,13 @@ def _vector(value: ArrayLike, name: str, *, unit: bool = False) -> NDArray[np.fl
 def _positive(value: float, name: str) -> None:
     if not np.isfinite(value) or value <= 0:
         raise ValueError(f"{name} must be finite and positive")
+
+
+def _scalar(value: Any, name: str) -> float:
+    array = np.asarray(value)
+    if array.shape != () or array.dtype.kind not in "iuf" or not np.isfinite(array):
+        raise ValueError(f"{name} must be a finite numeric scalar")
+    return float(array)
 
 
 def _axis_angle(first: NDArray, second: NDArray) -> float:
@@ -72,10 +88,14 @@ class ToolGeometry:
     parameter_source: str = "generic research geometry; not a verified commercial device"
 
     def __post_init__(self) -> None:
-        if not self.tool_id:
+        if not isinstance(self.tool_id, str) or not self.tool_id:
             raise ValueError("tool_id is required")
         for name in ("tip_radius_mm", "shaft_radius_mm", "working_length_mm", "tip_length_mm"):
+            object.__setattr__(self, name, _scalar(getattr(self, name), name))
             _positive(getattr(self, name), name)
+        object.__setattr__(self, "max_access_angle_deg", _scalar(self.max_access_angle_deg, "max_access_angle_deg"))
+        if not isinstance(self.parameter_source, str) or not self.parameter_source:
+            raise ValueError("parameter_source must be a nonempty string")
         if self.tip_length_mm >= self.working_length_mm:
             raise ValueError("tip_length_mm must be shorter than working_length_mm")
         if not np.isfinite(self.max_access_angle_deg) or not 0 <= self.max_access_angle_deg < 90:
@@ -123,7 +143,10 @@ class AccessWindow:
     def __post_init__(self) -> None:
         object.__setattr__(self, "center_mm", _vector(self.center_mm, "center_mm"))
         object.__setattr__(self, "normal_inward", _vector(self.normal_inward, "normal_inward", unit=True))
+        object.__setattr__(self, "radius_mm", _scalar(self.radius_mm, "radius_mm"))
         _positive(self.radius_mm, "radius_mm")
+        if not isinstance(self.window_id, str) or not self.window_id:
+            raise ValueError("window_id must be a nonempty string")
 
 
 @dataclass(frozen=True)
@@ -134,7 +157,10 @@ class SphereObstacle:
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "center_mm", _vector(self.center_mm, "center_mm"))
+        object.__setattr__(self, "radius_mm", _scalar(self.radius_mm, "radius_mm"))
         _positive(self.radius_mm, "radius_mm")
+        if not isinstance(self.obstacle_id, str) or not self.obstacle_id:
+            raise ValueError("obstacle_id must be a nonempty string")
 
 
 @dataclass(frozen=True)
