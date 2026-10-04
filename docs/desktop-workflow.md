@@ -2,6 +2,16 @@
 
 RessectionLab is a local research app. This guide follows the current Electron interface; [project status](../PROJECT_STATUS.md) and the [packaging records](electron-packaging.md) identify which app snapshots have been tested. A modeled geometry check does not establish clinical suitability.
 
+The current verified renderer is `100865f` (`34285015…`) with the unchanged
+`0b4e334` numerical engine (`85a92eff…`). Its 143 desktop checks passed. The
+[latest native checks](../artifacts/dependency-notices-v1/native-workflow-final.json)
+cover welcome guidance, opening a real case, motor-prior inspection and source
+restoration. Earlier full training/resume and all-seven-map checks retain their
+original build identities; they were not repeated in full in this refresh.
+The experimental feature-unit learner and RAW-only axis adapter/preflight are
+not included in this app. See the [environment card](environment-card.md) for
+the evidence boundaries and the [exact capture](../artifacts/dependency-notices-v1/app-capture-verification-final.json).
+
 ## Open and inspect the source
 
 Choose **Open case** (⌘O) for a saved `.ressectionlab` workspace. **Import MRI** first asks for a structural NIfTI image, then a tumor segmentation; cancel the second chooser to open MRI only. **Explore synthetic fixture** is a labeled fixture for learning the controls.

@@ -7,14 +7,22 @@ documents; ongoing work is tracked in [PROJECT_STATUS](../PROJECT_STATUS.md).
 
 ## Identified application and purpose
 
-The inspected arm64 Electron application uses renderer `c194a8b` (source digest
-`762973e2…`) and the separately frozen Python `0b4e334` engine (executable SHA256
-`85a92eff…`). Its [native validation receipt](../artifacts/electron-priors-v1/native-workflow-final.json)
-contains the full identities and exact scope: final focused MRI/prior checks,
-487 independent GPU sampling checks, and earlier seven-layer, save/reopen and
-historical-replay checks on the same engine. No new training was performed in
-that final UI inspection. Later learner changes and the feature-unit study are
-outside this application snapshot; this card claims no outcome from that study.
+The inspected arm64 Electron application uses renderer `100865f` (source digest
+`34285015…`) and the unchanged Python `0b4e334` engine (executable SHA256
+`85a92eff…`). All **143 desktop checks** and its production build passed.
+The [capture receipt](../artifacts/dependency-notices-v1/app-capture-verification-final.json)
+binds the renderer, complete engine payload and packaged notices. The
+[focused native receipt and screenshots](../artifacts/dependency-notices-v1/native-workflow-final.json)
+verify corrected welcome guidance at two window widths, transition to a real
+case, motor-prior inspection and source restoration. No training or final
+evaluation was invoked in this refresh.
+
+Earlier [full training/cancellation/resume checks](../artifacts/electron-refinement-v2/native-workflow-final.json)
+and [seven-map, replay and GPU checks](../artifacts/electron-priors-v1/native-workflow-final.json)
+retain their own package identities; they were not repeated in full on
+`100865f`. Later feature-unit learning and the experimental RAW-only axis
+adapter/preflight at `558b2e3` are not bundled. Their results or validation must
+not be attributed to this app. [Experimental axis scope](native-axis-preflight.md).
 
 Supported uses are local inspection of MRI and source annotations, comparison
 of declared complete-tool routes, inspection of unreviewed evidence proposals,
@@ -44,8 +52,8 @@ Definitions are enforced in [route planning](../src/resectionlab/planning.py),
 
 The source voxel grid and physical affine remain authoritative. “Native” refers
 to the imported release grid; original acquisition geometry may be unavailable.
-Native removal supports orthogonal grids, including oblique rotations; unsupported shear is
-rejected. Tools are rigid research profiles with declared tip, shaft, length and
+Native removal supports orthogonal grids, including oblique rotations;
+unsupported shear is rejected. Tools are rigid research profiles with declared tip, shaft, length and
 angle dimensions, not verified commercial devices. Access is a hypothetical
 disk, not an inferred skull opening or reviewed cortical surface. Each stroke
 inserts along one straight line and fully retracts along it before reorientation.
@@ -87,6 +95,12 @@ main/no-CSF proposals remain separate from working anatomy; annotation overlap
 checks are not segmentation accuracy scores. [Source registry](../manifests/cohort_registry.json),
 [structural proposal inspection](../artifacts/electron-structural-proposals-v1/native-validation-final.json).
 
+The expanded registry has **five development patient groups, four verified
+primary-source identities and zero final groups**. PAT16/PAT20 add structural
+development evidence; they do not establish an external evaluation cohort,
+tract-aware eligibility or human population-policy training.
+[Cohort audit](../artifacts/validation/btc-queued-structural-v1/cohort-audit.json).
+
 The seven motor/language layers remain **population priors requiring alignment
 review**, with no planning eligibility. Their T1 registration, T1c display,
 lesion labels, transform, values and coverage are bound separately. Coverage
@@ -124,6 +138,14 @@ identity. No genotype-to-injury or molecular-to-tool-tolerance rule is supplied.
   only 249 of 41,919 target mm³. Actor weight changes alone do not establish
   improvement; one scratch run retained its initial selected policy.
   [Completed result and negative findings](../artifacts/learning/procedural-native-to-ucsf-v2/RESULT.md).
+- The completed feature-unit study raised its procedural frozen-policy return
+  from 139.62 to 245.24, matching SEARCH. All three FEATURE_UNITS adaptations
+  retained that initial checkpoint despite real updates: no additional
+  patient-specific adaptation gain was demonstrated, and no learned arm
+  exceeded SEARCH. The comparison still used one reused patient, zero human
+  pretraining patients and nominal worlds. These results belong to the separate
+  `0bffeaa` research archive, not the packaged engine.
+  [Feature-unit result](../artifacts/learning/procedural-native-feature-units-v1/RESULT.md).
 
 Cancellation is cooperative. Invalid stroke previews do not alter cavity state.
 The local bridge preserves resumable checkpoints under the original budget and
@@ -136,7 +158,9 @@ checks the declared simulator, not surgical safety. [Replay implementation](../s
 
 The application runs locally through a narrow JSONL sidecar, without a listening
 service or paid infrastructure. Local ad-hoc signing is verified; distribution
-signing, notarization and a second physical Mac remain unvalidated. Data, model
-and template redistribution terms and required notices remain separate release
-work; the current package is not a completed distribution release.
+signing, notarization and a second physical Mac remain unvalidated. The current
+app includes 292 capture-verified notice entries, but two notice-source
+completeness gaps remain. First-party release terms and optional data/model/
+template rights remain separate work; notice inclusion does not establish a
+completed distribution release. [Notice status](dependency-notices.md),
 [Release evidence audit](release-evidence-audit.md).
