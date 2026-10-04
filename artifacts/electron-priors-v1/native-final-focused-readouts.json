@@ -1,0 +1,29 @@
+{
+  "observations": [
+    {
+      "label": "Motor · functional network",
+      "screenshot": "final-motor-representative-wide.jpg",
+      "readout": "\t\t\t\t\t\t43 text Atlas concordance (unitless, 0–1) 0 1 Normative connectivity-map concordance. This is not an injury probability or patient connectivity. AT LINKED CURSOR · INTERPOLATED ATLAS SAMPLE Within atlas field of view Atlas concordance 0.9969 Population map value; patient function remains unknown."
+    },
+    {
+      "label": "Motor · functional network",
+      "screenshot": "final-motor-incomplete-support.jpg",
+      "readout": "\t\t\t\t\t\t43 text Atlas concordance (unitless, 0–1) 0 1 Normative connectivity-map concordance. This is not an injury probability or patient connectivity. AT LINKED CURSOR · INTERPOLATED ATLAS SAMPLE Incomplete atlas sampling support — unknown No complete atlas sample is available here. Patient function is unknown."
+    },
+    {
+      "label": "Motor · functional network",
+      "screenshot": "final-motor-outside-fov.jpg",
+      "readout": "\t\t\t\t\t\t43 text Atlas concordance (unitless, 0–1) 0 1 Normative connectivity-map concordance. This is not an injury probability or patient connectivity. AT LINKED CURSOR · INTERPOLATED ATLAS SAMPLE Outside atlas field of view — unknown No complete atlas sample is available here. Patient function is unknown."
+    },
+    {
+      "label": "Motor · functional network",
+      "screenshot": "final-motor-covered-zero.jpg",
+      "readout": "\t\t\t\t\t\t43 text Atlas concordance (unitless, 0–1) 0 1 Normative connectivity-map concordance. This is not an injury probability or patient connectivity. AT LINKED CURSOR · INTERPOLATED ATLAS SAMPLE Within atlas field of view Atlas concordance 0.0000 No signal in this released map; patient function unknown."
+    },
+    {
+      "label": "Motor · functional network",
+      "screenshot": "final-prior-ready.jpg",
+      "readout": "\t\t\t\t\t\t43 text Atlas concordance (unitless, 0–1) 0 1 Normative connectivity-map concordance. This is not an injury probability or patient connectivity. AT LINKED CURSOR · INTERPOLATED ATLAS SAMPLE Within atlas field of view Atlas concordance 0.9969 Population map value; patient function remains unknown."
+    }
+  ]
+}

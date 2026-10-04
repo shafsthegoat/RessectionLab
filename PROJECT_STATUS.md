@@ -36,10 +36,13 @@ values. Source restoration, stale loads and case changes clear the layer.
 All 131 desktop checks and the production build pass after removing an unsafe
 source-image hash cache and correcting float32 atlas boundary sampling. An
 independent actual GPU probe passes 487 cases, with the earlier failures retained.
-The new complete engine
-and renderer are undergoing native GPU and interaction verification. The current
-packaged MRI review layout already passed normal/minimum-width inspection on
-both BTC cases, including three expanded planes and physical cursor navigation.
+The new complete engine and renderer passed native inspection. All seven layers,
+covered zero, positive values, outside/incomplete support, minimum-width layouts,
+save/reopen and historical checked replay were exercised. Final renderer
+`762973e2…` from `c194a8b` repeats the corrected sampler and source-restoration
+checks with engine `85a92eff…` from the verified `0b4e334` Python snapshot.
+Later experimental learning changes are not in this app snapshot. Native
+receipts and screenshots are in `artifacts/electron-priors-v1/`.
 
 The first declared procedural-to-patient comparison stopped before adaptation
 updates because equivalent typed and JSON world vectors compared differently.

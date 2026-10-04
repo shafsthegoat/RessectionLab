@@ -1,0 +1,384 @@
+{
+  "passed": true,
+  "packaged": true,
+  "executableSha256": "85a92eff69cb1ea97afc400bc80433c53d146174dd32a9cf36061b8420f72ddd",
+  "trainingRequested": false,
+  "finalEvaluationRequested": false,
+  "layers": [
+    {
+      "mapId": "motor_functional_concordance",
+      "mapKind": "functional_concordance",
+      "valueSha256": "2df024f575cd67e149b4648de7f51f3ba9117991ea2343f741b89f65554f9cdc",
+      "coverageSha256": "2d7ba85df54c65fc6404cb0597c3ddb5273f699cb0a45b37737a5de4f7111e25",
+      "samples": {
+        "outsideFov": {
+          "world": [
+            0,
+            239,
+            0
+          ],
+          "covered": false,
+          "value": null
+        },
+        "coveredZero": {
+          "world": [
+            -32,
+            24,
+            18
+          ],
+          "covered": true,
+          "value": 0
+        },
+        "coveredNonzero": {
+          "world": [
+            -54,
+            106,
+            77
+          ],
+          "covered": true,
+          "value": 0.00014824711252003908
+        }
+      }
+    },
+    {
+      "mapId": "phonology_functional_concordance",
+      "mapKind": "functional_concordance",
+      "valueSha256": "4de93b4c29c0f7129f5cd20b8d4af6afd88b40331e26c890b75dd5230ef8590e",
+      "coverageSha256": "2d7ba85df54c65fc6404cb0597c3ddb5273f699cb0a45b37737a5de4f7111e25",
+      "samples": {
+        "outsideFov": {
+          "world": [
+            0,
+            239,
+            0
+          ],
+          "covered": false,
+          "value": null
+        },
+        "coveredZero": {
+          "world": [
+            -32,
+            24,
+            18
+          ],
+          "covered": true,
+          "value": 0
+        },
+        "coveredNonzero": {
+          "world": [
+            -54,
+            106,
+            77
+          ],
+          "covered": true,
+          "value": 0.001675472129136324
+        }
+      }
+    },
+    {
+      "mapId": "phonology_structural_mask",
+      "mapKind": "structural_mask",
+      "valueSha256": "1c6de1e7fc231a01942793db88517f87e58051e11bf3f65eab9294b962d39460",
+      "coverageSha256": "2823f8677d4e1fe2f7e46272ec3181586cbaca29319f1a54794f9325ac7818b9",
+      "samples": {
+        "outsideFov": {
+          "world": [
+            0,
+            239,
+            0
+          ],
+          "covered": false,
+          "value": null
+        },
+        "coveredZero": {
+          "world": [
+            -32,
+            24,
+            18
+          ],
+          "covered": true,
+          "value": 0
+        },
+        "coveredNonzero": {
+          "world": [
+            -64,
+            92,
+            79
+          ],
+          "covered": true,
+          "value": 1
+        }
+      }
+    },
+    {
+      "mapId": "semantics_functional_concordance",
+      "mapKind": "functional_concordance",
+      "valueSha256": "e4953448971671f237779f96ec16017abd02b0d694bc2711095cbb3b249c4be4",
+      "coverageSha256": "2d7ba85df54c65fc6404cb0597c3ddb5273f699cb0a45b37737a5de4f7111e25",
+      "samples": {
+        "outsideFov": {
+          "world": [
+            0,
+            239,
+            0
+          ],
+          "covered": false,
+          "value": null
+        },
+        "coveredZero": {
+          "world": [
+            -32,
+            24,
+            18
+          ],
+          "covered": true,
+          "value": 0
+        },
+        "coveredNonzero": {
+          "world": [
+            -54,
+            106,
+            77
+          ],
+          "covered": true,
+          "value": 0.0013888566754758358
+        }
+      }
+    },
+    {
+      "mapId": "semantics_structural_mask",
+      "mapKind": "structural_mask",
+      "valueSha256": "8feada321a1ccc0c75f4eb46778674261f731972a2c7b159a43ca11b71e68646",
+      "coverageSha256": "2823f8677d4e1fe2f7e46272ec3181586cbaca29319f1a54794f9325ac7818b9",
+      "samples": {
+        "outsideFov": {
+          "world": [
+            0,
+            239,
+            0
+          ],
+          "covered": false,
+          "value": null
+        },
+        "coveredZero": {
+          "world": [
+            -32,
+            24,
+            18
+          ],
+          "covered": true,
+          "value": 0
+        },
+        "coveredNonzero": {
+          "world": [
+            -110,
+            140,
+            106
+          ],
+          "covered": true,
+          "value": 1
+        }
+      }
+    },
+    {
+      "mapId": "speech_articulation_functional_concordance",
+      "mapKind": "functional_concordance",
+      "valueSha256": "1953fe41a07174f04139fbe29055a753e7a0c459fa83e0b5aeea5b8d0a8373aa",
+      "coverageSha256": "2d7ba85df54c65fc6404cb0597c3ddb5273f699cb0a45b37737a5de4f7111e25",
+      "samples": {
+        "outsideFov": {
+          "world": [
+            0,
+            239,
+            0
+          ],
+          "covered": false,
+          "value": null
+        },
+        "coveredZero": {
+          "world": [
+            -32,
+            24,
+            18
+          ],
+          "covered": true,
+          "value": 0
+        },
+        "coveredNonzero": {
+          "world": [
+            -54,
+            106,
+            77
+          ],
+          "covered": true,
+          "value": 0.0008880002424120903
+        }
+      }
+    },
+    {
+      "mapId": "speech_articulation_structural_mask",
+      "mapKind": "structural_mask",
+      "valueSha256": "a4b9d59de57b4f2de454b9e07fd0a21c350a6f6bef515ef2d44e6e4f36929ed4",
+      "coverageSha256": "2823f8677d4e1fe2f7e46272ec3181586cbaca29319f1a54794f9325ac7818b9",
+      "samples": {
+        "outsideFov": {
+          "world": [
+            0,
+            239,
+            0
+          ],
+          "covered": false,
+          "value": null
+        },
+        "coveredZero": {
+          "world": [
+            -32,
+            24,
+            18
+          ],
+          "covered": true,
+          "value": 0
+        },
+        "coveredNonzero": {
+          "world": [
+            -84,
+            126,
+            116
+          ],
+          "covered": true,
+          "value": 1
+        }
+      }
+    }
+  ],
+  "fixtures": [
+    {
+      "name": "covered-nonzero",
+      "path": "outputs/cases/electron-prior-qa/covered-nonzero.ressectionlab",
+      "cursor": [
+        -54,
+        106,
+        77
+      ],
+      "bundleSha256": "0bdc70d3d80f080ca016fa62289217166f93ac928bcc0ab7be6cf1f0a5ba513e",
+      "sourceArraysAndPriorsUnchanged": true,
+      "caseHashUnchanged": true
+    },
+    {
+      "name": "covered-zero",
+      "path": "outputs/cases/electron-prior-qa/covered-zero.ressectionlab",
+      "cursor": [
+        -32,
+        24,
+        18
+      ],
+      "bundleSha256": "a88ac42a59bd3ad1290e593e475e7b22ae05ecdcac6890260b931921f62888fa",
+      "sourceArraysAndPriorsUnchanged": true,
+      "caseHashUnchanged": true
+    },
+    {
+      "name": "outside-fov",
+      "path": "outputs/cases/electron-prior-qa/outside-fov.ressectionlab",
+      "cursor": [
+        0,
+        239,
+        0
+      ],
+      "bundleSha256": "e9421053fb103cc7824a46caa8111d728ddca9a63e1743e17c74af0218ca6ace",
+      "sourceArraysAndPriorsUnchanged": true,
+      "caseHashUnchanged": true
+    },
+    {
+      "name": "incomplete-support",
+      "path": "outputs/cases/electron-prior-qa/incomplete-support.ressectionlab",
+      "cursor": [
+        -39.75,
+        106,
+        77
+      ],
+      "bundleSha256": "844ed3cd77f22f6b85cdc5b85e6690edeb045aea9b6b919ecf486557a7f13d4a",
+      "sourceArraysAndPriorsUnchanged": true,
+      "caseHashUnchanged": true
+    },
+    {
+      "name": "binary-included",
+      "path": "outputs/cases/electron-prior-qa/binary-included.ressectionlab",
+      "cursor": [
+        -64,
+        92,
+        79
+      ],
+      "bundleSha256": "b42543578793eadfc03e3c1de04200cf2ffebe889d822b3d3f29fbd908397fc9",
+      "sourceArraysAndPriorsUnchanged": true,
+      "caseHashUnchanged": true
+    }
+  ],
+  "protocol": {
+    "protocolVersion": 1,
+    "operations": [
+      "cancel",
+      "createSyntheticCase",
+      "exportCandidate",
+      "generateNativeRoutes",
+      "generateRoutes",
+      "importNifti",
+      "importPriorProposals",
+      "importStructuralEvidence",
+      "inspectEvidence",
+      "inspectRefinement",
+      "listRuns",
+      "loadCase",
+      "nativeTraining",
+      "ping",
+      "replayTraining",
+      "saveCase",
+      "shutdown",
+      "trainPatient"
+    ],
+    "tools": [
+      {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100,
+        "max_access_angle_deg": 45,
+        "tip_length_mm": 3,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90,
+        "max_access_angle_deg": 45,
+        "tip_length_mm": 4,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      }
+    ],
+    "nativeResearchTools": [
+      {
+        "tool_id": "native-fine-aspiration",
+        "tip_radius_mm": 1.25,
+        "shaft_radius_mm": 0.45,
+        "working_length_mm": 120,
+        "max_access_angle_deg": 35,
+        "tip_length_mm": 2,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      {
+        "tool_id": "native-wide-aspiration",
+        "tip_radius_mm": 2.25,
+        "shaft_radius_mm": 1.1,
+        "working_length_mm": 120,
+        "max_access_angle_deg": 35,
+        "tip_length_mm": 3,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      }
+    ]
+  },
+  "caseHash": "sha256:2dd4c1ccc72a3ee6f821cf8f23a8c32996ec74fe1d616411863d5197bf3d2547",
+  "planningHash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+  "originalBundleSha256": "59c213b82af205516491058145ad3581a4d1832e1126fb5559118f250ea1bacc",
+  "originalBundleUnchanged": true,
+  "elapsedSeconds": 31.870718042
+}

@@ -605,3 +605,32 @@ parity, paired trainable tensors, hidden buffer keys, rehashed metadata/buffer
 attacks, masked gradients and cross-profile resume/adaptation. Tiny constructed
 fixtures exercised actual updates; the registered patient comparison has not
 run. Its separate runner and integrated pre-execution validation remain pending.
+
+## October 4, 2026 — complete native Electron prior workflow
+
+The full Python engine was rebuilt from `0b4e334` (source `afd24365…`, executable
+`85a92eff…`). Native checks on renderer `5c57ddb` exercised all seven maps, scalar
+zero/positive samples, outside/incomplete coverage, structural membership zero
+and one, minimum-width 2×2/expanded views, source restoration, case switching and
+native save/reopen. Independent frozen-engine inspection verified unchanged MRI,
+annotation, prior-value and coverage hashes in the saved case. An older accepted
+selection replay rechecked 174 target / 11 normal / 41,745 residual mm³; its
+checked initial step showed 0 / 0 / 41,919. No new training was invoked.
+
+The final renderer from `c194a8b` has source digest `762973e2…`, with all 67 desktop
+inputs matched to that exact commit. It retains the verified engine and includes
+the independently audited GPU precision correction. Native follow-up repeated
+the representative motor sample (0.9969 unitless), covered zero, outside and
+incomplete support, expanded view and source restoration. The four GPU-audited
+source files match the final package; no renderer/shader error was observed and
+strict local ad hoc signature verification passed. The earlier seven-map/save/
+replay checks are attributed to their earlier renderer rather than claimed as
+fully repeated. A same-case prior-to-replay transition remains untested because
+the enriched case has a different immutable identity and no accepted run.
+
+Unmodified native screenshots, accessibility readouts, exact package identities
+and scope limits are retained in `artifacts/electron-priors-v1/`. The app remains
+at the representative MRI review view. Population alignment and patient function
+remain unaccepted/unknown; distribution signing and second-Mac validation remain
+open. Later experimental learner changes are intentionally absent from this
+verified Mac app.

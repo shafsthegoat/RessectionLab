@@ -1,0 +1,95 @@
+{
+  "status": "passed_research_ui_validation",
+  "recorded_at": "2026-10-04T11:01:30.797757+00:00",
+  "build_identity": {
+    "source_revision": "c194a8b89da974e08f925a51c7e0acd067bc51be",
+    "renderer_source_digest": "762973e28edb5d2697618a08d2332674dad170ff4f2d2d8ad625313bb642d831",
+    "renderer_archive_sha256": "a8da5a065836e282761fa50cb7281071990128d0b0edcffb3905f1d3d9528103",
+    "verified_desktop_files": 67,
+    "all_captured_desktop_source_matches_exact_git_commit": true,
+    "engine_executable_sha256": "85a92eff69cb1ea97afc400bc80433c53d146174dd32a9cf36061b8420f72ddd",
+    "python_source_revision": "0b4e3345137316bb72d6daf9bf2a15ee6b613ed7",
+    "python_source_digest": "afd2436576c29f8029af6f8c40b4789fa7610b38959d65b95829fff1b18bd5cd",
+    "app_build_seconds": 10.958,
+    "engine_unchanged_from_prior_protocol_and_native_replay_receipts": true
+  },
+  "method": "Standalone arm64 app launched from /tmp without PYTHONHOME, PYTHONPATH, or VIRTUAL_ENV. Native macOS accessibility actions and unmodified screenshots; no renderer evaluation.",
+  "python_engine_rebuilt_for_final_renderer": false,
+  "training_invoked": false,
+  "final_evaluation_invoked": false,
+  "native_focused_checks": {
+    "source_supported_motor_concordance": {
+      "cursor_ras_mm": [
+        -173,
+        137,
+        112
+      ],
+      "display": "0.9969",
+      "all_three_source_mri_planes_visible": true
+    },
+    "covered_zero": {
+      "cursor_ras_mm": [
+        -32,
+        24,
+        18
+      ],
+      "display": "0.0000",
+      "patient_function": "unknown"
+    },
+    "outside_field_of_view": {
+      "cursor_ras_mm": [
+        0,
+        239,
+        0
+      ],
+      "value": null,
+      "display": "Outside atlas field of view \u2014 unknown"
+    },
+    "incomplete_interpolation_support": {
+      "cursor_ras_mm": [
+        -39.75,
+        106,
+        77
+      ],
+      "value": null,
+      "display": "Incomplete atlas sampling support \u2014 unknown"
+    },
+    "expanded_coronal_preserves_linked_cursor_and_review_status": true,
+    "source_view_clears_prior_and_restores_footer": true,
+    "case_switch_clears_prior": true,
+    "source_annotation_volumes_ml": [
+      18.65,
+      15.67,
+      7.59
+    ],
+    "alignment_review_required_and_not_used_in_route_scoring": true,
+    "patient_function_and_language_dominance_remain_unknown": true,
+    "renderer_console_warnings_or_errors_observed": false,
+    "local_deep_strict_signature_verification_passed": true
+  },
+  "prior_native_scope": "native-workflow-cache-fixed-provisional.json retains all7layer, minimum1050width, native save/reopen, and historical accepted replay checks on the separately identified 5c57ddb renderer. These were not repeated in full after the bounded shader fix.",
+  "independent_gpu_validation": {
+    "receipt": "../desktop-renderer/prior-gpu-sampling-v1/validated487.json",
+    "passed": true,
+    "cases": 487,
+    "renderer": "ANGLE (Apple, ANGLE Metal Renderer: Apple M5, Unspecified Version)",
+    "all_audited_shader_and_sampler_source_hashes_match_exact_final_capture": true,
+    "scope": "Actual WebGL2 production shader prefix and production CPU sampler on analytic fixtures; not native-app layout or clinical validation"
+  },
+  "screenshots": {
+    "final-motor-covered-zero.jpg": "c1b297328b0ceee8ba8f68cd62eb6f3dad0aaae637fd72da21c210f43778035d",
+    "final-motor-incomplete-support.jpg": "faec494b48e8d429ff043c0a3ccf91be7a533ed3cc5cd8880e180cae67b9b642",
+    "final-motor-outside-fov.jpg": "0c0b5c44d76a4a0fec3531fbf940cc4c41dd18d13df10087714a2347d8dc3d3a",
+    "final-motor-representative-expanded.jpg": "5a3d999e47d5cc84932341c3ac2240d81f1c1ed89ac1f2953b0e673e4d615e71",
+    "final-motor-representative-wide.jpg": "1c29e2420af66ca82b015cc0e6dfa4ecfa25366b4794e7a47585be23af89c0db",
+    "final-prior-ready.jpg": "4f9e96c4071cb0603b8626b3bfa013a50378dd047a3c09c44d9d433cd8b82979",
+    "final-source-restored.jpg": "c0a9fe404414abed1ba4a4d8342079a6dadc8bf4e6effa6df6780883a8a1dee0"
+  },
+  "limitations": [
+    "No anatomical alignment acceptance, patient-specific connectivity validation, deficit probability, or clinical usability certification.",
+    "No same-case prior-to-accepted-replay transition was exercised; enriched case has a different immutable hash and no accepted run. Case-switch into independently accepted historical original-case replay passed on the same numerical engine.",
+    "No performance benchmark or new policy training; concurrent research work makes wall-clock UI timings unsuitable for performance claims.",
+    "Local ad hoc signing only; distribution signing and notarization remain unperformed.",
+    "Application retains exact0b4e334 Python engine; later learning-source and dependency-lock edits are intentionally absent."
+  ]
+}

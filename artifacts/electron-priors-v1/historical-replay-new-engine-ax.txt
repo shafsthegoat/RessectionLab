@@ -1,0 +1,170 @@
+Window: "RessectionLab", App: RessectionLab.
+0 standard window RessectionLab, Secondary Actions: Raise
+	1 container RessectionLab
+		2 container
+			3 HTML content RessectionLab, URL: file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/dist/index.html
+				4 container
+					5 text Ressection Lab Patient-specific planning Research workspace
+					6 button Open case ⌘O
+						7 text Open case
+						8 text ⌘O
+					9 button Import MRI
+					10 button Save
+					11 container Workspace navigation
+						12 button Toggle case and evidence panel
+						13 button Focus route comparison
+					14 text CASE & EVIDENCE
+					15 button Collapse case panel
+					16 heading UCSF-PDGM-0004, Value: 1
+						17 text UCSF-PDGM-0004
+					18 text Annotation-assisted structural workspace
+					19 text Public mirror · source match unverified
+					20 container
+						21 heading Source imaging 01, Value: 2
+							22 text Source imaging 01
+						23 text T1c 240 × 240 × 155 voxels 1.0 × 1.0 × 1.0 mm ·  RAS+
+					24 container
+						25 heading Target annotations 03, Value: 2
+							26 text Target annotations 03
+						27 checkbox FLAIR Abnormality 18.65 mL · supplied annotation, Value: 1
+						28 text FLAIR Abnormality
+						29 text 18.65  mL · supplied annotation
+						30 checkbox Enhancing Target 15.67 mL · supplied annotation, Value: 1
+						31 text Enhancing Target
+						32 text 15.67  mL · supplied annotation
+						33 checkbox Nonenhancing Or Necrotic Core 7.59 mL · supplied annotation, Value: 1
+						34 text Nonenhancing Or Necrotic Core
+						35 text 7.59  mL · supplied annotation Overlay opacity 32 %
+						36 slider Overlay opacity 32%, Value: 0.32, Secondary Actions: Increment, Decrement
+					37 container
+						38 heading Functional evidence, Value: 2
+							39 text Functional evidence
+						40 text Motor network Unassessed Language network Unassessed Missing evidence remains unknown. Population priors require registration and review.
+					41 pop up button Inspect evidence
+					42 text Local processing · source preserved Workspace Route comparison
+					43 heading Anatomy, in context, Value: 2
+						44 text Anatomy, in context
+					45 container Camera framing
+						46 toggle button Focus anatomy, Value: 1
+						47 toggle button Fit instruments, Value: 0
+					48 text Modeled removal · native source grid · selection step 1 / 1
+					49 button Source view
+					50 container Linked patient imaging workspace
+						51 toolbar Imaging layout and 3D controls
+							52 container View layout
+								53 toggle button 3D focus, Value: 0
+								54 toggle button MRI review, Value: 0
+							55 text Coronal  MRI expanded
+						56 container
+							57 text Coronal 84.9 mm
+							58 toggle button Description: Restore linked views, Value: 1
+							59 container Coronal source MRI, neurological convention, slice position 84.9 millimeters. Click to set cursor; scroll or arrow keys change slice.
+								60 text L
+								61 text R
+								62 text S
+								63 text I
+								64 text 20
+								65 text  mm
+								66 text SOURCE MRI
+						67 text Linked views
+						68 text RAS
+						69 text -161.9 / 84.9 / 104.6  mm
+						70 container
+							71 text Contrast
+							72 slider Description: Source MRI window width, Value: 1, Secondary Actions: Increment, Decrement
+						73 text Neurological convention
+					74 text Linked physical coordinates · RAS+ mm Anatomy focus may crop instruments
+					75 tab group Planning workflows
+						76 tab (settable, integer) Routes, Value: 0
+						77 tab (selected) Refine, Value: 1
+					78 container Refine
+						79 text PATIENT-SPECIFIC OPTIMIZATION
+						80 heading Refine within this case, Value: 2
+							81 text Refine within this case
+						82 text Train a scratch policy in a frozen source-grid simulation. Search alternatives remain available.
+						83 text Discrete native-cell research model
+						84 text Source-cell brush and complete-tool geometry.
+						85 disclosure triangle Frozen run assumptions
+							86 text Frozen run assumptions
+						87 container Selected route readiness
+							88 text SELECTED GEOMETRY
+							89 text Choose route A
+							90 text Training choices are limited to stopping or making this single modeled stroke. The route and instrument stay fixed.
+							91 button (disabled) Check modeled cutting
+							92 disclosure triangle Need another research geometry?
+								93 text Need another research geometry?
+						94 container
+							95 text Learning budget
+							96 pop up button Learning budget, Value: 30 seconds
+								97 (selected) 30 seconds
+						98 container
+							99 text Seed
+							100 stepper (settable, float) Seed, Value: 0
+						101 text Preparation and independent checking add time beyond the learning budget.
+						102 button (disabled) Freeze assumptions & train
+						103 text Choose a feasible route A to supply a hypothetical access window and instrument.
+						104 container
+							105 text Run geometry:  Saved run · original frozen geometry . Choices: stop or make the fixed modeled stroke.
+						106 text 32
+						107 text Gradient updates
+						108 text 99
+						109 text Optimization steps
+						110 text 63
+						111 text Selection steps
+						112 text Actor parameters
+						113 text Updated
+						114 text Selected surrogate return
+						115 text 171.58
+						116 text (initial
+						117 text 0.00
+						118 text )
+						119 container
+							120 text Selection-world return Surrogate objective
+							121 image Selection return at 16 checkpoints, ranging from 0.00 to 171.58
+							122 text Selection is used to choose a checkpoint. Final evaluation remains untouched.
+						123 text Independent native geometry accepted
+						124 text Declared source-grid removal only. Missing functional and vascular evidence remains unassessed.
+						125 button Inspect selection replay
+						126 container
+							127 text Showing modeled step 1  /  1
+							128 slider Showing modeled step 1 / 1, Value: 1, Details: Showing checked step 1 of 1, Secondary Actions: Increment, Decrement
+						129 definition list
+							130 container Removed target
+								131 text Removed target
+							132 container
+								133 text 174.0  mm³
+							134 container Removed normal
+								135 text Removed normal
+							136 container
+								137 text 11.0  mm³
+							138 container Residual target
+								139 text Residual target
+							140 container
+								141 text 41745.0  mm³
+						142 button Return to source annotations
+						143 button Export checked candidate
+						144 container
+							145 disclosure triangle Local run history 3
+								146 text Local run history
+								147 text 3
+							148 text 05:13 AM gradient budget  · seed  11
+							149 button Recheck and inspect saved replay
+							150 text 05:07 AM gradient budget  · seed  11
+							151 button Recheck and inspect saved replay
+							152 text 04:11 AM gradient budget  · seed  0
+							153 button Recheck and inspect saved replay
+					154 text Research use only
+					155 text Clinical outcomes are not predicted. Functional and vascular anatomy remain unassessed.
+					156 text UCSF-PDGM-0004 ready · Source imaging preserved
+					157 text RAS -161.9 / 84.9 / 104.6 mm
+	158 close button
+	159 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	160 minimize button
+161 menu bar
+	162 RessectionLab
+	163 File
+	164 Edit
+	165 View
+	166 Window
+
+The focused UI element is 3 HTML content RessectionLab, URL: file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/dist/index.html

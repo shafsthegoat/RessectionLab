@@ -1,0 +1,169 @@
+{
+  "status": "native_axis_aligned_case_checks_passed_oblique_shader_refresh_pending",
+  "recorded_at": "2026-10-04T10:56:54.362492+00:00",
+  "build_identity": {
+    "source_revision": "5c57ddb52f49d481fbeac893f9b44b5b870aa07a",
+    "renderer_source_digest": "4566849919e992f01de5047bf0e2aca9b5fadef9dd74874a064ab47164dcaa6a",
+    "renderer_archive_sha256": "466f09de0f25d549eb2298e023e66f97046e95c8e0866cff7fbefb3ed8071f51",
+    "verified_desktop_files": 66,
+    "all_captured_desktop_source_matches_exact_git_commit": true,
+    "engine_executable_sha256": "85a92eff69cb1ea97afc400bc80433c53d146174dd32a9cf36061b8420f72ddd",
+    "python_source_revision": "0b4e3345137316bb72d6daf9bf2a15ee6b613ed7",
+    "python_source_digest": "afd2436576c29f8029af6f8c40b4789fa7610b38959d65b95829fff1b18bd5cd",
+    "app_build_seconds": 11.42
+  },
+  "initial_0b4e334_renderer_native_inspected": false,
+  "method": "Actual packaged arm64 Electron application through macOS native accessibility and screenshots; no renderer evaluation or test-only UI controls.",
+  "training_invoked": false,
+  "final_evaluation_invoked": false,
+  "views": [
+    {
+      "label": "Motor \u00b7 functional network",
+      "screenshot": "motor-nonzero-wide.jpg",
+      "cursor": [
+        -54,
+        106,
+        77
+      ],
+      "readout": "\t\t\t\t\t\t43 text Atlas concordance (unitless, 0\u20131) 0 1 Normative connectivity-map concordance. This is not an injury probability or patient connectivity. AT LINKED CURSOR \u00b7 INTERPOLATED ATLAS SAMPLE Within atlas field of view Atlas concordance 0.0001 Population map value; patient function remains unknown.\n\t\t\t\t\t\t\t\t69 text Population prior  \u00b7 alignment review required Interpolated atlas sample: 0.0001 \u00b7 unitless Patient function unknown \u00b7 hatching marks unavailable atlas support"
+    },
+    {
+      "label": "Phonology \u00b7 functional network",
+      "screenshot": "phonology-functional-wide.jpg",
+      "readout": "\t\t\t\t\t\t43 text Atlas concordance (unitless, 0\u20131) 0 1 Normative connectivity-map concordance. This is not an injury probability or patient connectivity. AT LINKED CURSOR \u00b7 INTERPOLATED ATLAS SAMPLE Within atlas field of view Atlas concordance 0.0017 Population map value; patient function remains unknown.\n\t\t\t\t\t\t\t\t69 text Population prior  \u00b7 alignment review required Interpolated atlas sample: 0.0017 \u00b7 unitless Patient function unknown \u00b7 hatching marks unavailable atlas support\n\t\t\t\t\t\t\t82 container Axial source MRI, neurological convention, slice position 77.0 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice.\n\t\t\t\t\t\t\t94 container Coronal source MRI, neurological convention, slice position 106.0 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice.\n\t\t\t\t\t\t\t106 container Sagittal source MRI, neurological convention, slice position -54.0 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice."
+    },
+    {
+      "label": "Phonology \u00b7 structural network mask",
+      "screenshot": "phonology-mask-wide.jpg",
+      "readout": "\t\t\t\t\t\t43 text Released mask membership (0 or 1) Included in the released normative mask. This is not a patient tract or tract probability. AT LINKED CURSOR \u00b7 NEAREST RELEASED-MASK CELL Within atlas field of view Released mask membership Not included (0) No signal in this released map; patient function unknown."
+    },
+    {
+      "label": "Semantics \u00b7 functional network",
+      "screenshot": "semantics-functional-wide.jpg",
+      "readout": "\t\t\t\t\t\t43 text Atlas concordance (unitless, 0\u20131) 0 1 Normative connectivity-map concordance. This is not an injury probability or patient connectivity. AT LINKED CURSOR \u00b7 INTERPOLATED ATLAS SAMPLE Within atlas field of view Atlas concordance 0.0014 Population map value; patient function remains unknown.\n\t\t\t\t\t\t\t\t69 text Population prior  \u00b7 alignment review required Interpolated atlas sample: 0.0014 \u00b7 unitless Patient function unknown \u00b7 hatching marks unavailable atlas support\n\t\t\t\t\t\t\t82 container Axial source MRI, neurological convention, slice position 77.0 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice.\n\t\t\t\t\t\t\t94 container Coronal source MRI, neurological convention, slice position 106.0 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice.\n\t\t\t\t\t\t\t106 container Sagittal source MRI, neurological convention, slice position -54.0 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice."
+    },
+    {
+      "label": "Semantics \u00b7 structural network mask",
+      "screenshot": "semantics-mask-wide.jpg",
+      "readout": "\t\t\t\t\t\t43 text Released mask membership (0 or 1) Included in the released normative mask. This is not a patient tract or tract probability. AT LINKED CURSOR \u00b7 NEAREST RELEASED-MASK CELL Within atlas field of view Released mask membership Not included (0) No signal in this released map; patient function unknown.\n\t\t\t\t\t\t\t\t69 text Population prior  \u00b7 alignment review required Nearest released-mask cell: covered zero \u00b7 0.0000 \u00b7 unitless Patient function unknown \u00b7 hatching marks unavailable atlas support\n\t\t\t\t\t\t\t82 container Axial source MRI, neurological convention, slice position 77.0 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice.\n\t\t\t\t\t\t\t94 container Coronal source MRI, neurological convention, slice position 106.0 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice.\n\t\t\t\t\t\t\t106 container Sagittal source MRI, neurological convention, slice position -54.0 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice."
+    },
+    {
+      "label": "Speech arrest / articulation \u00b7 functional network",
+      "screenshot": "speech-functional-wide.jpg",
+      "readout": "\t\t\t\t\t\t43 text Atlas concordance (unitless, 0\u20131) 0 1 Normative connectivity-map concordance. This is not an injury probability or patient connectivity. AT LINKED CURSOR \u00b7 INTERPOLATED ATLAS SAMPLE Within atlas field of view Atlas concordance 0.0009 Population map value; patient function remains unknown.\n\t\t\t\t\t\t\t\t69 text Population prior  \u00b7 alignment review required Interpolated atlas sample: 0.0009 \u00b7 unitless Patient function unknown \u00b7 hatching marks unavailable atlas support\n\t\t\t\t\t\t\t82 container Axial source MRI, neurological convention, slice position 77.0 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice.\n\t\t\t\t\t\t\t94 container Coronal source MRI, neurological convention, slice position 106.0 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice.\n\t\t\t\t\t\t\t106 container Sagittal source MRI, neurological convention, slice position -54.0 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice."
+    },
+    {
+      "label": "Speech arrest / articulation \u00b7 structural network mask",
+      "screenshot": "speech-mask-wide.jpg",
+      "readout": "\t\t\t\t\t\t43 text Released mask membership (0 or 1) Included in the released normative mask. This is not a patient tract or tract probability. AT LINKED CURSOR \u00b7 NEAREST RELEASED-MASK CELL Within atlas field of view Released mask membership Not included (0) No signal in this released map; patient function unknown."
+    },
+    {
+      "label": "Motor \u00b7 functional network",
+      "screenshot": "motor-covered-zero-wide.jpg",
+      "readout": "\t\t\t\t\t\t43 text Atlas concordance (unitless, 0\u20131) 0 1 Normative connectivity-map concordance. This is not an injury probability or patient connectivity. AT LINKED CURSOR \u00b7 INTERPOLATED ATLAS SAMPLE Within atlas field of view Atlas concordance 0.0000 No signal in this released map; patient function unknown."
+    },
+    {
+      "label": "Motor \u00b7 functional network",
+      "screenshot": "motor-outside-fov-wide.jpg",
+      "readout": "\t\t\t\t\t\t43 text Atlas concordance (unitless, 0\u20131) 0 1 Normative connectivity-map concordance. This is not an injury probability or patient connectivity. AT LINKED CURSOR \u00b7 INTERPOLATED ATLAS SAMPLE Outside atlas field of view \u2014 unknown No complete atlas sample is available here. Patient function is unknown."
+    },
+    {
+      "label": "Motor \u00b7 functional network",
+      "screenshot": "motor-incomplete-support-wide.jpg",
+      "readout": "\t\t\t\t\t\t43 text Atlas concordance (unitless, 0\u20131) 0 1 Normative connectivity-map concordance. This is not an injury probability or patient connectivity. AT LINKED CURSOR \u00b7 INTERPOLATED ATLAS SAMPLE Incomplete atlas sampling support \u2014 unknown No complete atlas sample is available here. Patient function is unknown."
+    },
+    {
+      "label": "Phonology \u00b7 structural network mask",
+      "screenshot": "phonology-mask-included-wide.jpg",
+      "readout": "\t\t\t\t\t\t43 text Released mask membership (0 or 1) Included in the released normative mask. This is not a patient tract or tract probability. AT LINKED CURSOR \u00b7 NEAREST RELEASED-MASK CELL Within atlas field of view Released mask membership Included (1) Population map value; patient function remains unknown."
+    },
+    {
+      "label": "Phonology \u00b7 structural network mask",
+      "screenshot": "before-native-save.jpg",
+      "readout": "\t\t\t\t\t\t43 text Released mask membership (0 or 1) Included in the released normative mask. This is not a patient tract or tract probability. AT LINKED CURSOR \u00b7 NEAREST RELEASED-MASK CELL Within atlas field of view Released mask membership Included (1) Population map value; patient function remains unknown."
+    },
+    {
+      "label": "Phonology \u00b7 structural network mask",
+      "screenshot": "native-save-reopen-mask.jpg",
+      "readout": "\t\t\t\t\t\t43 text Released mask membership (0 or 1) Included in the released normative mask. This is not a patient tract or tract probability. AT LINKED CURSOR \u00b7 NEAREST RELEASED-MASK CELL Within atlas field of view Released mask membership Included (1) Population map value; patient function remains unknown."
+    },
+    {
+      "label": "Motor \u00b7 functional network",
+      "screenshot": "motor-representative-wide.jpg",
+      "readout": "\t\t\t\t\t\t43 text Atlas concordance (unitless, 0\u20131) 0 1 Normative connectivity-map concordance. This is not an injury probability or patient connectivity. AT LINKED CURSOR \u00b7 INTERPOLATED ATLAS SAMPLE Within atlas field of view Atlas concordance 0.9969 Population map value; patient function remains unknown."
+    }
+  ],
+  "checks": {
+    "all_seven_real_prior_layers_selected": true,
+    "motor_covered_zero_distinct_from_unavailable_support": true,
+    "motor_nonzero_tiny_and_source_supported_high_value": true,
+    "outside_atlas_and_incomplete_interpolation_support_show_unknown": true,
+    "binary_mask_included_and_not_included": true,
+    "alignment_review_required_view_only_and_patient_function_unknown_retained": true,
+    "source_image_and_target_volumes_preserved": true,
+    "prior_overlay_mri_only": true,
+    "minimum_1050_point_width_mri_review_and_expanded_axial": true,
+    "normal_1460_point_width_mri_review_and_expanded_coronal": true,
+    "fit_3d_control_accessible_and_text_does_not_wrap": true,
+    "source_view_clears_overlay_readout_and_footer": true,
+    "case_switch_clears_prior": true,
+    "native_save_reopen_retains_seven_priors_cursor_and_all_source_hashes": true,
+    "historical_completed_selection_replay_rechecked_by_new_engine": true,
+    "historical_replay_ax_zero_step_and_source_restoration": true,
+    "renderer_console_warning_or_error_observed": false
+  },
+  "historical_replay": {
+    "run_id": "38e17ad4-0d07-4973-8642-8669fab84cf6",
+    "case": "UCSF-PDGM-0004 original case without priors",
+    "step_1": {
+      "target_mm3": 174,
+      "normal_mm3": 11,
+      "residual_mm3": 41745
+    },
+    "step_0": {
+      "target_mm3": 0,
+      "normal_mm3": 0,
+      "residual_mm3": 41919
+    },
+    "source_restored": true
+  },
+  "limits": [
+    "This renderer predates the subsequently audited oblique-grid floating-point boundary correction; final refreshed renderer needs a focused native check.",
+    "Actual UCSF source grid is axis aligned. Independent oblique CPU/GPU fixtures are separate from this native UI evidence.",
+    "No same-case prior-to-accepted-replay transition: enriched case has different immutable case hash and no accepted run; case switch followed by historical replay was exercised.",
+    "No clinical alignment review or patient function validation, clinical deficit probabilities, new training, or final evaluation.",
+    "No standardized performance claims: other research tests ran during some checks.",
+    "Distribution signing and notarization not performed."
+  ],
+  "supporting_receipts": [
+    "prior-protocol-validation.json",
+    "native-roundtrip-integrity.json",
+    "representative-motor-landmark.json",
+    "incomplete-support-landmark.json"
+  ],
+  "screenshots": {
+    "before-native-save.jpg": "e9aa6fbdb859c4a2d45e7f665adcbe39a36b79781e18d24076675bb61f54cbea",
+    "case-switch-clears-prior.jpg": "2ee07cba3a1227375ac763096e0c308513261e98075810f0c1d9cfd3c90ba31a",
+    "historical-replay-new-engine.jpg": "2bad1c45de423937c574d314fbea4f2bd9b64376e5d55d0f01f84f36921da82f",
+    "historical-replay-quantities.jpg": "856e635a39dc2ef22c57fac007b7f4f23fbece131c751a2d1e6f2fc77da18933",
+    "historical-replay-source-restored.jpg": "86e3777b53d4aa50460f4164a28f33e86daac7e2883ef9468abadbab6e09eee4",
+    "historical-replay-zero.jpg": "cf304619817bb87b6c3cfc502ba0a2be54eecbbd57de5cd88fc963cbf4495c0b",
+    "mask-included-minimum-expanded.jpg": "2c4f5578f169bdad9fbd145f62c78c13ef313f922f84fb41ec1472bc7f93eb4e",
+    "mask-included-minimum-width.jpg": "3c0587cf30ae5c2d046bbcf9445d8f7463041af9c6db0dfb42dfaef1b937b76c",
+    "motor-covered-zero-wide.jpg": "675c74c929d1f9af9093c1dc228581c9919f1209b33c0d4b23200a74a68a4556",
+    "motor-incomplete-support-wide.jpg": "6670f0a7bf3262d0ee733a27835e88e3180a1fd66a20ccd4bcf5791dd4eefd7e",
+    "motor-nonzero-wide.jpg": "1ca6f2b4efe4236bbbef455bfbf2bf05248b81bd283ffe43c70d2f197bd48ef5",
+    "motor-outside-fov-wide.jpg": "37e887628951c047c13fd1476d99def41b9b807b333b6778aa200c42de286730",
+    "motor-representative-expanded.jpg": "a89b882622b059586348bd2999b907a97e71c8d883e18dc358d9b73250ee9d10",
+    "motor-representative-wide.jpg": "fc74d374e006aa0e3ae3c141deb4b69f4b4fe1ef0dbf02dcb990f4753f7355bd",
+    "native-save-reopen-mask.jpg": "647202077eec118a08d37361fb6f4486aa300ad36fa3967e864bc429c446eef0",
+    "phonology-functional-wide.jpg": "f0a95110f924788ce81db872fbc05255342ecaea48717fbe0fdd8fba6174c0a8",
+    "phonology-mask-included-wide.jpg": "702fc90d1c199fcd0a7c715b58f6dda40e38e2696d5ceff5f9fc04b674327bfa",
+    "phonology-mask-wide.jpg": "8bf0f48cd8690c942c38d1f0d53ec471ca259ae1d6be640d8e3653f4c81f816a",
+    "semantics-functional-wide.jpg": "da670ee8530561816cf51b163506db1f5f5baffb6377858cc4691a01d88a4109",
+    "semantics-mask-wide.jpg": "9b84fc19689c522f86837d22dd346e7bedf0b0b2decda01858431fdf44166629",
+    "source-clear-minimum-expanded.jpg": "2f94de0f6586d0eec1ec73340d6d0cf217b655f5d1671adb935a970f01f7afdf",
+    "speech-functional-wide.jpg": "0187ae741ebc53cd43c7f6da88951836451827b6fe258b1222e432362712ace5",
+    "speech-mask-wide.jpg": "4f271e587f3900df54a6ff9044b2c40f1a8539d201a67fa6b7804158c55dc22b"
+  }
+}

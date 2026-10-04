@@ -1,0 +1,41 @@
+{
+  "passed": true,
+  "trainingRequested": false,
+  "originalCaseHash": "sha256:2dd4c1ccc72a3ee6f821cf8f23a8c32996ec74fe1d616411863d5197bf3d2547",
+  "nativeRoundtrip": {
+    "path": "outputs/cases/electron-prior-qa/native-prior-roundtrip.ressectionlab",
+    "cursor": [
+      -64,
+      92,
+      79
+    ],
+    "allSevenPriorArraysAndSourceArraysPreserved": true,
+    "workspace": {
+      "case_hash": "sha256:2dd4c1ccc72a3ee6f821cf8f23a8c32996ec74fe1d616411863d5197bf3d2547",
+      "category": "pareto",
+      "cursor": [
+        -64,
+        92,
+        79
+      ],
+      "overlayOpacity": 0.32,
+      "routeA": "",
+      "routeB": "",
+      "visibleLayers": {
+        "FLAIR_abnormality": true,
+        "enhancing_target": true,
+        "nonenhancing_or_necrotic_core": true
+      }
+    }
+  },
+  "representativeFixture": {
+    "path": "outputs/cases/electron-prior-qa/representative-motor.ressectionlab",
+    "cursor": [
+      -173,
+      137,
+      112
+    ],
+    "allSevenPriorArraysAndSourceArraysPreserved": true,
+    "selectionReceipt": "representative-motor-landmark.json"
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "observations": [
+    {
+      "label": "Motor · functional network",
+      "screenshot": "motor-nonzero-wide.jpg",
+      "cursor": [
+        -54,
+        106,
+        77
+      ],
+      "readout": "\t\t\t\t\t\t43 text Atlas concordance (unitless, 0–1) 0 1 Normative connectivity-map concordance. This is not an injury probability or patient connectivity. AT LINKED CURSOR · INTERPOLATED ATLAS SAMPLE Within atlas field of view Atlas concordance 0.0001 Population map value; patient function remains unknown.\n\t\t\t\t\t\t\t\t69 text Population prior  · alignment review required Interpolated atlas sample: 0.0001 · unitless Patient function unknown · hatching marks unavailable atlas support"
+    },
+    {
+      "label": "Phonology · functional network",
+      "screenshot": "phonology-functional-wide.jpg",
+      "readout": "\t\t\t\t\t\t43 text Atlas concordance (unitless, 0–1) 0 1 Normative connectivity-map concordance. This is not an injury probability or patient connectivity. AT LINKED CURSOR · INTERPOLATED ATLAS SAMPLE Within atlas field of view Atlas concordance 0.0017 Population map value; patient function remains unknown.\n\t\t\t\t\t\t\t\t69 text Population prior  · alignment review required Interpolated atlas sample: 0.0017 · unitless Patient function unknown · hatching marks unavailable atlas support\n\t\t\t\t\t\t\t82 container Axial source MRI, neurological convention, slice position 77.0 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice.\n\t\t\t\t\t\t\t94 container Coronal source MRI, neurological convention, slice position 106.0 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice.\n\t\t\t\t\t\t\t106 container Sagittal source MRI, neurological convention, slice position -54.0 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice."
+    },
+    {
+      "label": "Phonology · structural network mask",
+      "screenshot": "phonology-mask-wide.jpg",
+      "readout": "\t\t\t\t\t\t43 text Released mask membership (0 or 1) Included in the released normative mask. This is not a patient tract or tract probability. AT LINKED CURSOR · NEAREST RELEASED-MASK CELL Within atlas field of view Released mask membership Not included (0) No signal in this released map; patient function unknown."
+    },
+    {
+      "label": "Semantics · functional network",
+      "screenshot": "semantics-functional-wide.jpg",
+      "readout": "\t\t\t\t\t\t43 text Atlas concordance (unitless, 0–1) 0 1 Normative connectivity-map concordance. This is not an injury probability or patient connectivity. AT LINKED CURSOR · INTERPOLATED ATLAS SAMPLE Within atlas field of view Atlas concordance 0.0014 Population map value; patient function remains unknown.\n\t\t\t\t\t\t\t\t69 text Population prior  · alignment review required Interpolated atlas sample: 0.0014 · unitless Patient function unknown · hatching marks unavailable atlas support\n\t\t\t\t\t\t\t82 container Axial source MRI, neurological convention, slice position 77.0 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice.\n\t\t\t\t\t\t\t94 container Coronal source MRI, neurological convention, slice position 106.0 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice.\n\t\t\t\t\t\t\t106 container Sagittal source MRI, neurological convention, slice position -54.0 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice."
+    },
+    {
+      "label": "Semantics · structural network mask",
+      "screenshot": "semantics-mask-wide.jpg",
+      "readout": "\t\t\t\t\t\t43 text Released mask membership (0 or 1) Included in the released normative mask. This is not a patient tract or tract probability. AT LINKED CURSOR · NEAREST RELEASED-MASK CELL Within atlas field of view Released mask membership Not included (0) No signal in this released map; patient function unknown.\n\t\t\t\t\t\t\t\t69 text Population prior  · alignment review required Nearest released-mask cell: covered zero · 0.0000 · unitless Patient function unknown · hatching marks unavailable atlas support\n\t\t\t\t\t\t\t82 container Axial source MRI, neurological convention, slice position 77.0 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice.\n\t\t\t\t\t\t\t94 container Coronal source MRI, neurological convention, slice position 106.0 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice.\n\t\t\t\t\t\t\t106 container Sagittal source MRI, neurological convention, slice position -54.0 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice."
+    },
+    {
+      "label": "Speech arrest / articulation · functional network",
+      "screenshot": "speech-functional-wide.jpg",
+      "readout": "\t\t\t\t\t\t43 text Atlas concordance (unitless, 0–1) 0 1 Normative connectivity-map concordance. This is not an injury probability or patient connectivity. AT LINKED CURSOR · INTERPOLATED ATLAS SAMPLE Within atlas field of view Atlas concordance 0.0009 Population map value; patient function remains unknown.\n\t\t\t\t\t\t\t\t69 text Population prior  · alignment review required Interpolated atlas sample: 0.0009 · unitless Patient function unknown · hatching marks unavailable atlas support\n\t\t\t\t\t\t\t82 container Axial source MRI, neurological convention, slice position 77.0 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice.\n\t\t\t\t\t\t\t94 container Coronal source MRI, neurological convention, slice position 106.0 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice.\n\t\t\t\t\t\t\t106 container Sagittal source MRI, neurological convention, slice position -54.0 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice."
+    },
+    {
+      "label": "Speech arrest / articulation · structural network mask",
+      "screenshot": "speech-mask-wide.jpg",
+      "readout": "\t\t\t\t\t\t43 text Released mask membership (0 or 1) Included in the released normative mask. This is not a patient tract or tract probability. AT LINKED CURSOR · NEAREST RELEASED-MASK CELL Within atlas field of view Released mask membership Not included (0) No signal in this released map; patient function unknown."
+    },
+    {
+      "label": "Motor · functional network",
+      "screenshot": "motor-covered-zero-wide.jpg",
+      "readout": "\t\t\t\t\t\t43 text Atlas concordance (unitless, 0–1) 0 1 Normative connectivity-map concordance. This is not an injury probability or patient connectivity. AT LINKED CURSOR · INTERPOLATED ATLAS SAMPLE Within atlas field of view Atlas concordance 0.0000 No signal in this released map; patient function unknown."
+    },
+    {
+      "label": "Motor · functional network",
+      "screenshot": "motor-outside-fov-wide.jpg",
+      "readout": "\t\t\t\t\t\t43 text Atlas concordance (unitless, 0–1) 0 1 Normative connectivity-map concordance. This is not an injury probability or patient connectivity. AT LINKED CURSOR · INTERPOLATED ATLAS SAMPLE Outside atlas field of view — unknown No complete atlas sample is available here. Patient function is unknown."
+    },
+    {
+      "label": "Motor · functional network",
+      "screenshot": "motor-incomplete-support-wide.jpg",
+      "readout": "\t\t\t\t\t\t43 text Atlas concordance (unitless, 0–1) 0 1 Normative connectivity-map concordance. This is not an injury probability or patient connectivity. AT LINKED CURSOR · INTERPOLATED ATLAS SAMPLE Incomplete atlas sampling support — unknown No complete atlas sample is available here. Patient function is unknown."
+    },
+    {
+      "label": "Phonology · structural network mask",
+      "screenshot": "phonology-mask-included-wide.jpg",
+      "readout": "\t\t\t\t\t\t43 text Released mask membership (0 or 1) Included in the released normative mask. This is not a patient tract or tract probability. AT LINKED CURSOR · NEAREST RELEASED-MASK CELL Within atlas field of view Released mask membership Included (1) Population map value; patient function remains unknown."
+    },
+    {
+      "label": "Phonology · structural network mask",
+      "screenshot": "before-native-save.jpg",
+      "readout": "\t\t\t\t\t\t43 text Released mask membership (0 or 1) Included in the released normative mask. This is not a patient tract or tract probability. AT LINKED CURSOR · NEAREST RELEASED-MASK CELL Within atlas field of view Released mask membership Included (1) Population map value; patient function remains unknown."
+    },
+    {
+      "label": "Phonology · structural network mask",
+      "screenshot": "native-save-reopen-mask.jpg",
+      "readout": "\t\t\t\t\t\t43 text Released mask membership (0 or 1) Included in the released normative mask. This is not a patient tract or tract probability. AT LINKED CURSOR · NEAREST RELEASED-MASK CELL Within atlas field of view Released mask membership Included (1) Population map value; patient function remains unknown."
+    },
+    {
+      "label": "Motor · functional network",
+      "screenshot": "motor-representative-wide.jpg",
+      "readout": "\t\t\t\t\t\t43 text Atlas concordance (unitless, 0–1) 0 1 Normative connectivity-map concordance. This is not an injury probability or patient connectivity. AT LINKED CURSOR · INTERPOLATED ATLAS SAMPLE Within atlas field of view Atlas concordance 0.9969 Population map value; patient function remains unknown."
+    }
+  ]
+}

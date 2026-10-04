@@ -248,3 +248,65 @@ Controls stayed visible at minimum width. The wide-layout Fit 3D label wraps
 vertically in this capture; its later no-wrap source fix is not retroactively
 included in this receipt. No new training or population-prior bundle loading
 was performed with the retained engine.
+
+
+`artifacts/electron-priors-v1/` records the seven-layer population-prior slice.
+The numerical engine was rebuilt from the immutable `0b4e334` capture
+`afd24365…`, with every captured Python input checked against that commit.
+The standalone executable is `85a92eff…`; it understands prior bundles and the
+completed-selection replay gate. Its build took 83.14 seconds. Later changes
+to policy inputs and dependency locks are absent from this engine.
+
+The first prior renderer, also from `0b4e334`, was protocol-tested but was not
+inspected through the native interface. A mutable-MRI digest cache finding was
+corrected before native checks. The exact `5c57ddb` capture `45668499…` then
+passed native selection of all seven real UCSF prior layers, covered zero and
+nonzero samples, binary mask membership, missing field-of-view and incomplete
+interpolation support. The maps remain view-only, alignment-review-required,
+and excluded from route scoring. Patient-specific function and language
+dominance remain unknown. Source annotations, MRI bytes and physical cursor
+coordinates were preserved.
+
+Native checks at 1460- and 1050-point window widths covered MRI review,
+expanded views and source restoration. The Fit 3D control remains accessible;
+its text no longer wraps vertically. A native save and reopen retained all
+seven prior arrays and the linked cursor. A separate frozen-sidecar comparison
+verified unchanged case/planning hashes, source-array hashes, prior-array
+hashes and annotation volumes. The development verifier
+`desktop/electron/verify-priors.cjs --bundle --prepare-cursors` reproduces the
+protocol checks and saves separate view-position fixtures without changing the
+original case or its evidence. These fixtures change only the saved cursor.
+
+The representative screenshot landmark was selected by an explicit display
+rule: the largest covered motor-map value among source voxels with MRI
+intensity at least the median positive intensity. At RAS (-173, 137, 112) mm,
+the actual atlas value is 0.99692738, displayed as 0.9969, with source anatomy
+visible in all three planes. This is a display landmark, not validation of
+motor function. The small-positive and unknown-support regression landmarks
+are also retained in the receipts.
+
+An independent GPU audit subsequently found oblique-grid floating-point
+boundary disagreement. The final renderer was rebuilt from exact commit
+`c194a8b`: capture `762973e2…`, archive `a8da5a06…`, 67 source inputs checked
+against the commit, 10.96 seconds. It retains the identical `85a92eff…`
+numerical executable. All source hashes used by the independent 487-fixture
+WebGL2 audit match this capture. Native focused checks repeated the actual
+motor value, covered zero, outside field of view, incomplete support, expanded
+MRI and source clearing. No renderer warning, shader error or renderer crash
+was observed. `native-workflow-final.json` records this scope; the earlier
+`native-workflow-cache-fixed-provisional.json` preserves the broader checks
+and their separate renderer identity. The older files named
+`capture-verification-final.json` and `app-build-final.json` identify the
+intermediate cache correction; the `*-gpu-final.json` files identify the
+published app.
+
+The new engine also independently accepted the historical completed selection
+replay: 174 mm³ target and 11 mm³ normal removal, with 41,745 mm³ residual.
+Accessibility decrement restored step zero at 0/0/41,919 mm³; source restoration
+passed. No training or final evaluation was invoked. The enriched prior case
+has a different immutable hash and no accepted run, so a same-case
+prior-to-replay transition was not exercised; switching to the original case
+cleared the prior before its stored replay was opened. These checks establish
+software behavior, not anatomical accuracy or clinical readiness. Local deep
+strict signature verification passed; distribution signing and notarization
+remain unperformed.
