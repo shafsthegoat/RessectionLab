@@ -1,0 +1,21 @@
+<!-- Schema fragment only: not a complete or solvable FEBio model. -->
+<febio_spec version="4.0">
+  <Boundary>
+    <bc type="linear constraint">
+      <node>1</node>
+      <dof>x</dof>
+      <offset lc="1">0.004</offset>
+      <child_dof>
+        <node>2</node>
+        <dof>x</dof>
+        <value>-3</value>
+      </child_dof>
+    </bc>
+  </Boundary>
+  <LoadData>
+    <load_controller id="1" type="loadcurve">
+      <interpolate>LINEAR</interpolate>
+      <points><pt>0,0</pt><pt>1,1</pt></points>
+    </load_controller>
+  </LoadData>
+</febio_spec>

@@ -1,0 +1,63 @@
+{
+  "source_commit": "32ae206ff4881dfb54f62296cd1558e58ed9fcc6",
+  "source_version": "v4.13",
+  "scope": "Static local pinned-source review only; no model parsing, solves, patient arrays or observed/validation destinations accessed.",
+  "files": {
+    "FEBioXML/FEBioImport.cpp": {
+      "sha256": "e988bd389adebbd398e70ab32e2a5aad4103d83ea5c7040770be0c5ed5d2bd94",
+      "bytes": 22924
+    },
+    "FEBioXML/FEBioBoundarySection3.cpp": {
+      "sha256": "59fc7179458aa86e37b04a7fac492044cd42239ca65a6f2aecd6833cae0ad724",
+      "bytes": 6701
+    },
+    "FECore/FELinearConstraint.cpp": {
+      "sha256": "454ece6a242078f14b36b207aa38aeb3a5474538c371c88877ebf01bc46bf766",
+      "bytes": 9538
+    },
+    "FECore/FELinearConstraintManager.cpp": {
+      "sha256": "d87fb27814c7bd9be0a4c01f77c7ebf40c4fc94bf579461033a17c049a1a5909",
+      "bytes": 15489
+    },
+    "FEBioMech/FESolidSolver2.cpp": {
+      "sha256": "0558262b37931ff591b53e9645d7c5a809e149ecd399656d59aa4bf84f245bf6",
+      "bytes": 50649
+    },
+    "FEBioMech/FEResidualVector.cpp": {
+      "sha256": "7e11906bdab31ea44e195abeb01d00eff5f137d3f3ac07f995bfc16b6165279f",
+      "bytes": 5967
+    },
+    "FEBioMech/FESolidDomainFactory.cpp": {
+      "sha256": "1e20985fa6b5d3621056e29f89957ef10980008b48971f5d4d92a04244d9d7d5",
+      "bytes": 6485
+    },
+    "FEBioXML/FEModelBuilder.cpp": {
+      "sha256": "0b5584efadeab7da681d51a08a944398972bc4dc1fcf746040adc27c94ca09a8",
+      "bytes": 32617
+    },
+    "FEBioXML/FEBioMeshDomainsSection4.cpp": {
+      "sha256": "1efcd31d640e5ddd7dd207e5d40451951e03a5ae1cef7e23669dd8623410815c",
+      "bytes": 12537
+    },
+    "FEBioMech/FE3FieldElasticSolidDomain.cpp": {
+      "sha256": "2eabad7908288baca716695e52059fa662d52323a236d6a13bbeeb9c3c982c9f",
+      "bytes": 19072
+    },
+    "FECore/FEElementTraits.cpp": {
+      "sha256": "6d6a9fe2a52351997ece0c711bffe4900ad4d65765d9f8ad75d50227c35a9327",
+      "bytes": 135005
+    },
+    "FEBioMech/FEBioMechModule.cpp": {
+      "sha256": "aecff27231e0e11475f732252cfcd8968944a9581f18663549abb56bf11f4645",
+      "bytes": 71188
+    },
+    "FEBioMech/FEBioMechData.cpp": {
+      "sha256": "f34f426fd662048099df46fb5c6bafd80d021f689749815d1bc812f851e74069",
+      "bytes": 85655
+    }
+  },
+  "document": "docs/mechanics-patient-constraints.md",
+  "document_sha256": "ef3586be41366b6aa7822b86d2168e7d9130ff8250172c0747a20d9e728bd95f",
+  "controls_status": "11 pure algebra/XML specification controls passed; tent integration and all FEBio MPC/tet10 solver controls remain unexecuted",
+  "production_changes": false
+}
