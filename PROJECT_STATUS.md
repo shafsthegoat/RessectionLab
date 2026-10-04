@@ -4,6 +4,36 @@ Updated October 4, 2026. The three revised specification documents remain the
 authoritative requirements and have been read completely. This file records
 executed work and open gates, not a replacement plan.
 
+**Current user priority (October 4): spatial RL and surgical decision learning.**
+Interface development, packaging, the pending cache-sizing execution and the
+older paired feature-unit patient run are deferred. The user wants a policy
+conditioned on a new patient's available scan evidence and tool geometry, with
+optional bounded adaptation/search, rather than further interface polish.
+The immediate research direction is spatial observations, explicit separation
+of observed estimates from hidden reference anatomy, and sequential opening /
+removal decisions across varied anatomies. Existing clinical and data-provenance
+limits remain in force; more simulator training cannot establish surgical safety.
+
+The current 15+6-feature actor is annotation-assisted: exact supplied labels and
+simulated cavity state affect both its features and candidate inventory. It has
+no image encoder. Missing motor/language flags identify array presence; they do
+not establish adequate functional evidence or compel abstention. Completed
+procedural pretraining used zero human training patients. Unseen-patient,
+scan-only and unfamiliar-tool generalization are unproved. The next spatial
+experiment must label procedural scans as synthetic, keep reference truth out
+of proposals as well as tensors, and compare learned inference with search under
+the same observation contract. Research and implementation are in progress;
+no spatial-policy result is claimed yet.
+
+The read-only inspection bridge and separate linked MRI/3D tool display were
+committed after 100 bridge checks and 68 viewer checks, respectively. App host
+integration is unfinished and preserved as working changes. Its 10 focused
+synthetic checks do not establish an integrated build or native validation.
+Known deferred issues include logical cancellation preceding actual worker
+completion and mismatched support-acknowledgment conditions. The validated
+packaged app below has not been replaced. The previous full Python suite's
+12 failures have focused repairs, but a new full-suite pass is still pending.
+
 **Interface direction updated by the user:** Electron + React + TypeScript is
 the current Mac UI target. Further PySide/PyQt interface work has stopped. The
 validated Qt prototype is preserved as an earlier experiment; Python planning,
