@@ -137,7 +137,8 @@ compatibility checks and 30 independent checks pass; recording preserves exact
 weights, Adam state, RNG and environment behavior. Its native journal binds to
 served observations and distinguishes attempted, executed and returned steps.
 A separately declared one-update seed-11 pilot has a 300-second online allowance
-and remains unexecuted pending its runner tests and immutable integrated sweep.
+and is released after 53 focused runner checks and the immutable integrated sweep;
+its public execution results remain pending.
 An isolated exact capsule-cover cache prototype passes 78 focused checks and
 26 independent checks, with its actual invalidation failures preserved. Synthetic
 reference/cached/reference outputs agree, including independent native histories;
@@ -294,7 +295,17 @@ external diagnostic files. See `docs/brain-extraction-pat16-pat20-bundles.md`.
 
 ## Validation record
 
-The latest root integrated run passed **959 tests in 196.11 seconds** from
+The latest root integrated run passed **1,150 tests in 215.95 seconds** from
+immutable `f3a0591`, with no skips and no changes or additions to any of the
+2,904 baseline files. Fourteen warnings comprise ten intentional NumPy metadata
+adversaries and four existing DIPY warnings. The preserved archive includes the
+new observer/accounting, one-update pilot runner, cache prototype and portable
+proposal audits. Its committed release baseline permits one patient update,
+two optimization episodes and both complete selection panels, with no cache,
+final worlds or stress worlds. Results remain separate from the launch record.
+See `artifacts/validation/native-axis-pilot-public-v1/`.
+
+The preceding integrated run passed **959 tests in 196.11 seconds** from
 immutable `558b2e3`, with four existing DIPY warnings. All 2,669 baseline
 files stayed byte-identical. This includes the axis provider/adapter, tiny RAW
 learning, preflight/adversarial checks, notice collector and acquisition changes.

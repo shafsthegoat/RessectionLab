@@ -1,0 +1,70 @@
+{
+  "commits_created_by_reviewer": 0,
+  "declaration_content_hash": "sha256:7783126ab41fab01be6b148131c23fdd305c1e3276d27edb2971a734b644e385",
+  "file_sha256": {
+    "manifests/experiments/native-axis-raw-update-pilot-v1.json": "057fe7cf5d2e770c34314ed081db129452f451067891a37bc3e6e9b5f6e9bc61",
+    "scripts/run_native_axis_pilot.py": "e10dd2aa01a0ccf148f877b0e37b2bd0e7453048e68e507a0656847264f6da86",
+    "src/resectionlab/learning.py": "ea552afa8faa7a5199ac2c20cf67fc688081fe8d7e5d029131f3fd6e7c0093ec",
+    "src/resectionlab/native_axis_accounting.py": "e7593bc4c7435961b6d4bee31412ef3e2df85fd6baebee70c6849e94eaf8c259",
+    "tests/test_native_axis_pilot.py": "c1127832d548a891bad0d77ac08684e884e33a6b5ea16415eed56abecbc026af",
+    "tests/test_native_axis_pilot_independent.py": "81384c005bd5853cc8f963720773463c4c01ce4812dd481084dfbba073e97424"
+  },
+  "limits": [
+    "No public patient episode, public gradient, final evaluation world or stress world executed by this review.",
+    "Synthetic coverage establishes orchestration behavior, not public latency, clinical efficacy, geometric tissue mechanics or patient outcome validity.",
+    "Independent offline replay of saved RAW forward logits/value from initial/latest checkpoint tensors is a post-run verification requirement for any subsequent completed public pilot; it has not been claimed here.",
+    "Actual optimizer RNG draw verification is not inferred from a selected action alone; recorded categorical decision semantics and artifact/source identity are verified without extra online draws."
+  ],
+  "public_execution_authorized_by_this_receipt": false,
+  "review": "independent prospective one-update native-axis RAW pilot runner review",
+  "source_review_findings_fixed_before_test_execution": [
+    "Geometry audit gate originally trusted three booleans without source/cell/failure consistency; now validates source/history/action counts and source-cell volumes.",
+    "Checkpoint/accounting/history identities were originally last checked before candidate export; now checked again after final large export.",
+    "Trace rule/version/dtype/forward flag and declared monotonic IDs now checked explicitly."
+  ],
+  "status": "passed_implementation_review_public_execution_not_performed",
+  "tests": [
+    {
+      "command": ".venv/bin/python -m pytest -q tests/test_native_axis_pilot_independent.py",
+      "result": "29 passed in 5.60s",
+      "scope": "first independent suite before added metadata cases"
+    },
+    {
+      "command": ".venv/bin/python -m pytest -q tests/test_native_axis_pilot_independent.py -k trace_metadata",
+      "interpretation": "One shared fixture failed seven tests before adversarial bodies ran. Validator expected float64 but actual source_action_features and source_state_features were float32. Corrected to the existing adapter dtype; no numerical model changes. Original temporary files were later removed by pytest retention; only tool-output findings are summarized here, no frozen pre-fix source hash is claimed.",
+      "result": "7 setup errors, 29 deselected in 2.64s",
+      "scope": "actual temporary source-dtype regression"
+    },
+    {
+      "interpretation": "Test double intercepted platform uname subprocess; production runner was not defective. Mock narrowed to worker command.",
+      "result": "1 passed, 1 failed, 36 deselected in 0.48s",
+      "scope": "standalone resource/runtime tests, first test-harness attempt"
+    },
+    {
+      "command": ".venv/bin/python -m pytest -q tests/test_native_axis_pilot_independent.py -k \"runtime_mismatch or parent_timeout_remains\"",
+      "result": "2 passed, 36 deselected in 0.36s",
+      "scope": "repaired standalone runtime/parent-timeout tests"
+    },
+    {
+      "command": ".venv/bin/python -m pytest -q tests/test_native_axis_pilot.py tests/test_native_axis_pilot_independent.py",
+      "execution_owner": "research_protocol",
+      "independent_case_count": 38,
+      "owner_case_count": 15,
+      "owner_receipt": "artifacts/validation/native-axis-pilot-runner-v1/owner-review.json",
+      "result": "53 passed in 8.25s",
+      "scope": "final combined owner and independent synthetic suite"
+    }
+  ],
+  "verified": [
+    "All declaration reference bytes and canonical declaration hash agree; exact V2 case, planning, native configuration, proposal, reward, deterministic world partitions and initial RAW weights remain fixed.",
+    "Exactly one actual tiny synthetic Adam update, two optimization episodes, two complete initial and two complete updated selection episodes, and one zero-transition shape probe are required. Final and stress roles are rejected.",
+    "Actual actor tensor change and positive finite actor gradient are required; incomplete updates/panels/counters/returned outcomes cannot publish a candidate.",
+    "Saved RAW source/actual input dtype, layout and values, observer version, rule, forward flag, action identity, phase and monotonic decision joins are checked.",
+    "Update1 decisions bind latest checkpoint tensors even when earliest-best selection retains initial weights. Forced no-forward outputs remain absent.",
+    "All six frozen native histories require matching full-tool/frontier certificates with exact source, action counts, unique removed-cell volumes, zero unsupported volume and no failure fields.",
+    "Frozen histories/checkpoint/result/accounting/audit/candidate payload identities are rechecked after candidate export before completed status; failed outputs remain diagnostics.",
+    "Runtime mismatch fails before MRI load. RSS/wall/cancellation at final export fails closed. Parent timeout remains failure even if worker exits successfully during grace.",
+    "Final launcher, worker and pilot status authorities must all complete and hash-bind exported candidate evidence. Fresh output and exclusive worker start prohibit retry/overwrite.",
+    "Timing scopes keep preparation/initialization separate from online optimization including both selection panels; audit cache reuse records zero additional check time and does not add nested phase timers."
+  ]
+}

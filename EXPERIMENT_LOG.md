@@ -987,3 +987,26 @@ any derived probabilities are explicitly post-run joins, not invented capture.
 Two metadata/input-binding gaps were reproduced and fixed. The separately
 committed seed-11 one-update pilot remains unexecuted until runner and integrated
 checks complete; it is an integration test, not a claim of learning advantage.
+
+## October 4, 2026 — immutable pilot regression and prospective execution release
+
+The final one-update runner passed 53 focused checks, including 38 independent
+adversaries, on constructed anatomy. A temporary validator regression incorrectly
+required float64 source features instead of the actual float32 capture and was
+corrected before public execution. An owner canonical-world fixture mismatch and
+a standalone process mock issue were test-only failures, recorded separately
+from static publication/checkpoint/audit review repairs.
+
+Immutable `f3a0591` then passed all 1,150 tests in 215.95 seconds, with no skips.
+All 2,904 archived baseline files remain identical with no new source files.
+The full launcher took 217.46 seconds. Ten intentional metadata-tampering warnings
+and four existing DIPY warnings are retained in the full output. Source archive
+SHA256 is `e2db9dbd…`; exact source/runtime/input manifests and original output
+are in `artifacts/validation/native-axis-pilot-public-v1/`.
+
+A separate committed baseline releases the declared one-update RAW seed-11
+integration pilot from that exact archive, with 300 seconds online, 600 seconds
+worker time and a cooperative 6-GiB process RSS ceiling. Other agent computation
+is held; ordinary Mac activity and OS caches remain uncontrolled. Cache reuse is
+disabled. This release is not an execution result; failures or completion will be
+preserved separately. No final/stress worlds are permitted.
