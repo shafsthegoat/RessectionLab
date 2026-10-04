@@ -31,7 +31,7 @@ class Sidecar extends EventEmitter {
     this.child.stdout.on('data', chunk => this.consume(chunk));
     this.child.stderr.on('data', chunk => this.emit('diagnostic', String(chunk).slice(0, 16000)));
     this.child.on('error', error => this.failAll(error));
-    this.child.on('exit', (code, signal) => this.failAll(new Error(`Local research engine exited (${signal || code}); reopen the case to retry.`)));
+    this.child.on('exit', (code, signal) => this.failAll(new Error(`Local research engine exited (${signal || code}); restart RessectionLab to retry.`)));
   }
 
   request(op, args = {}, timeoutMs = 120000) {

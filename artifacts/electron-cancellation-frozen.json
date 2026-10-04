@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "frozen": true,
+  "passed": true,
+  "checks": {
+    "trainingCancelledAfterRealUpdates": true,
+    "cancelledCheckpointSignedAndListed": true,
+    "cancelledRunRestoredAfterEngineRestart": true,
+    "resumeContinuedActorUpdatesUnderOriginalContract": true,
+    "independentSelectionAcceptedWithoutFinalEvaluation": true,
+    "resumedCheckpointSignedAndListed": true
+  },
+  "scope": "synthetic_native_training_cancellation_restart_resume_selection",
+  "finalEvaluation": false,
+  "shape": [
+    24,
+    24,
+    24
+  ],
+  "budgetSeconds": 10,
+  "seed": 11,
+  "cancellationAcknowledgementSeconds": 0.0016020829999997658,
+  "cancelledTrainingSeconds": 2.334560417,
+  "observedGradientStepsBeforeCancel": 2,
+  "cancelledCheckpointSnapshotStatus": "running",
+  "cancelledGradientSteps": 2,
+  "cancelledOptimizationEnvironmentSteps": 5,
+  "cancelledSelectionEnvironmentSteps": 6,
+  "resumeSeconds": 9.745738166999999,
+  "resumedGradientSteps": 16,
+  "additionalGradientSteps": 14,
+  "resumedOptimizationEnvironmentSteps": 79,
+  "resumedSelectionEnvironmentSteps": 32,
+  "finalStatus": "wall_time_budget",
+  "selectionReplayStatus": "accepted_independent_geometry",
+  "cancelledTerminalEvents": 1,
+  "elapsedSeconds": 13.68671075
+}

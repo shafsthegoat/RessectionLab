@@ -5,12 +5,14 @@ const path = require('node:path');
 const crypto = require('node:crypto');
 const { spawnSync } = require('node:child_process');
 const { packager } = require('@electron/packager');
+const { publishBundle } = require('./publish.cjs');
 
 async function hashes(root, relative = '') {
   const result = {};
   for (const entry of await fs.readdir(path.join(root, relative), { withFileTypes: true })) {
     const name = path.join(relative, entry.name);
-    if (entry.isDirectory()) Object.assign(result, await hashes(root, name));
+    if (entry.isSymbolicLink()) result[name] = 'symlink:' + await fs.readlink(path.join(root, name));
+    else if (entry.isDirectory()) Object.assign(result, await hashes(root, name));
     else if (entry.isFile()) result[name] = crypto.createHash('sha256').update(await fs.readFile(path.join(root, name))).digest('hex');
   }
   return result;
@@ -51,6 +53,12 @@ async function main() {
       if (actual !== expected) throw new Error('Desktop source changed during snapshot capture; retry');
       await fs.chmod(path.join(input, relative), 0o444);
     }
+    const iconInput = path.join(input, 'RessectionLab.icns');
+    const iconSource = path.join(repo, 'packaging/RessectionLab.icns');
+    await fs.copyFile(iconSource, iconInput);
+    const iconSha256 = crypto.createHash('sha256').update(await fs.readFile(iconInput)).digest('hex');
+    if (iconSha256 !== crypto.createHash('sha256').update(await fs.readFile(iconSource)).digest('hex')) throw new Error('App icon changed during capture');
+    await fs.chmod(iconInput, 0o444);
     await fs.symlink(path.join(root, 'node_modules'), path.join(input, 'node_modules'), 'dir');
     // Both checking and bundling run against the same captured renderer sources.
     run(process.execPath, [path.join(root, 'node_modules/typescript/bin/tsc'), '--noEmit'], input);
@@ -65,22 +73,28 @@ async function main() {
     for (const item of ['dist', 'electron']) await fs.cp(path.join(input, item), path.join(stage, item), { recursive: true });
     await fs.writeFile(path.join(stage, 'package.json'), JSON.stringify({ name: sourcePackage.name, version: sourcePackage.version, main: sourcePackage.main }));
     const engineInput = path.join(input, 'research-engine');
-    await fs.cp(path.join(root, 'sidecar/ressectionlab-engine'), engineInput, { recursive: true, verbatimSymlinks: true });
+    const originalEngine = path.join(root, 'sidecar/ressectionlab-engine');
+    const expectedEngineHashes = await hashes(originalEngine);
+    await fs.cp(originalEngine, engineInput, { recursive: true, verbatimSymlinks: true });
     const engineHashes = await hashes(engineInput);
-    const manifest = { sourceHashes, engineHashes, sourceDigest: crypto.createHash('sha256').update(JSON.stringify(sourceHashes)).digest('hex'),
+    if (JSON.stringify(expectedEngineHashes) !== JSON.stringify(engineHashes) || JSON.stringify(engineHashes) !== JSON.stringify(await hashes(originalEngine))) throw new Error('Numerical engine changed during snapshot capture');
+    const manifest = { sourceHashes, engineHashes, appIconSha256: iconSha256, sourceDigest: crypto.createHash('sha256').update(JSON.stringify(sourceHashes)).digest('hex'),
       revision: run('git', ['rev-parse', 'HEAD'], repo).trim(), gitStatus: run('git', ['status', '--porcelain'], repo).split('\n').filter(Boolean), createdUtc: new Date().toISOString() };
     await fs.writeFile(path.join(stage, 'BUILD_INPUT_MANIFEST.json'), JSON.stringify(manifest));
-    const paths = await packager({ dir: stage, name: 'RessectionLab', platform: 'darwin', arch: 'arm64', out: release, overwrite: true, asar: true,
-      electronVersion: sourcePackage.devDependencies.electron.replace(/^[^\d]*/, ''), appBundleId: 'org.ressectionlab.desktop', appCategoryType: 'public.app-category.medical',
-      icon: path.join(repo, 'packaging/RessectionLab.icns'), prune: false,
+    const paths = await packager({ dir: stage, name: 'RessectionLab', platform: 'darwin', arch: 'arm64', out: path.join(input, 'package-output'), overwrite: true, asar: true,
+      electronVersion: sourcePackage.devDependencies.electron.replace(/^[^\d]*/, ''), appBundleId: 'org.ressectionlab.electron', appCategoryType: 'public.app-category.medical',
+      icon: iconInput, prune: false,
       extendInfo: { NSHumanReadableCopyright: 'RessectionLab research software. Research use only.' },
     });
-    const appPath = path.join(paths[0], 'RessectionLab.app');
+    let appPath = path.join(paths[0], 'RessectionLab.app');
     await fs.cp(engineInput, path.join(appPath, 'Contents/Resources/research-engine'), { recursive: true, verbatimSymlinks: true });
     const internalSymlinks = await verifyLinks(appPath);
     run('/usr/bin/codesign', ['--force', '--deep', '--sign', '-', appPath], repo);
     run('/usr/bin/codesign', ['--verify', '--deep', '--strict', appPath], repo);
-    await fs.writeFile(reportPath, JSON.stringify({ status: 'built_unverified', appPath, architecture: 'arm64', signing: 'local_ad_hoc', notarized: false, internalSymlinks, sourceDigest: manifest.sourceDigest, inputSnapshot: input, elapsedSeconds: (Date.now()-started)/1000 }, null, 2));
+    const finalDirectory = path.join(release, 'RessectionLab-darwin-arm64');
+    const { previousDirectory } = await publishBundle(paths[0], finalDirectory);
+    appPath = path.join(finalDirectory, 'RessectionLab.app');
+    await fs.writeFile(reportPath, JSON.stringify({ status: 'built_unverified', appPath, architecture: 'arm64', signing: 'local_ad_hoc', notarized: false, internalSymlinks, previousDirectory, sourceDigest: manifest.sourceDigest, inputSnapshot: input, elapsedSeconds: (Date.now()-started)/1000 }, null, 2));
     process.stdout.write(appPath + '\n');
   } catch (error) { await fs.writeFile(reportPath, JSON.stringify({ status: 'failed', error: error.message })); throw error; }
 }

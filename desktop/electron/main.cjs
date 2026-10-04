@@ -6,8 +6,10 @@ const fs = require('node:fs/promises');
 const os = require('node:os');
 const { pathToFileURL } = require('node:url');
 const { Sidecar } = require('./sidecar.cjs');
+const { createLogger } = require('./logging.cjs');
 const { assertSender, plainArgs } = require('./security.cjs');
 
+let log = message => process.stderr.write(String(message) + '\n');
 let window;
 let engine;
 let allowedUrl;
@@ -28,7 +30,7 @@ async function startEngine() {
   await fs.access(config.executable || config.python);
   engine = new Sidecar(config);
   engine.on('event', payload => { if (window && !window.isDestroyed()) window.webContents.send('research:event', payload); });
-  engine.on('diagnostic', message => process.stderr.write(message));
+  engine.on('diagnostic', message => log(message));
 }
 
 function handle(name, operation) {
@@ -104,8 +106,8 @@ async function createWindow() {
   window.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
   window.webContents.on('will-navigate', event => event.preventDefault());
   window.webContents.on('will-attach-webview', event => event.preventDefault());
-  window.webContents.on('console-message', (_event, details) => { if (details.level === 'error' || details.level === 'warning') process.stderr.write(`Renderer ${details.level}: ${details.message}\n`); });
-  window.webContents.on('render-process-gone', (_event, details) => process.stderr.write(`Renderer stopped: ${details.reason}\n`));
+  window.webContents.on('console-message', (_event, details) => { if (details.level === 'error' || details.level === 'warning') log(`Renderer ${details.level}: ${details.message}`); });
+  window.webContents.on('render-process-gone', (_event, details) => log(`Renderer stopped: ${details.reason}`));
   const menuAction = action => { if (window && !window.isDestroyed()) window.webContents.send('research:event', {event: 'menuAction', action}); };
   Menu.setApplicationMenu(Menu.buildFromTemplate([
     { role: 'appMenu' },
@@ -120,8 +122,13 @@ async function createWindow() {
   await window.loadURL(allowedUrl);
 }
 
-app.whenReady().then(async () => { await startEngine(); bindOperations(); await createWindow(); }).catch(error => {
-  dialog.showErrorBox('RessectionLab could not start', error.message); process.stderr.write(error.stack + '\n'); app.quit();
+const ownsAppInstance = app.requestSingleInstanceLock();
+if (!ownsAppInstance) app.quit();
+app.on('second-instance', () => {
+  if (window && !window.isDestroyed()) { if (window.isMinimized()) window.restore(); window.show(); window.focus(); }
+});
+if (ownsAppInstance) app.whenReady().then(async () => { log = createLogger(app.getPath('logs')); log(`Starting ${app.getVersion()} (${app.isPackaged ? 'packaged' : 'development'})`); await startEngine(); bindOperations(); await createWindow(); }).catch(error => {
+  dialog.showErrorBox('RessectionLab could not start', error.message); log(error.stack); app.quit();
 });
 app.on('window-all-closed', () => app.quit());
 app.on('before-quit', event => {
