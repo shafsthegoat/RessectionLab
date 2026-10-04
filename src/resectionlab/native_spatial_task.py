@@ -8,6 +8,7 @@ the frozen six-channel policy does not yet observe prior contact history.
 from __future__ import annotations
 
 import copy
+from itertools import product
 from dataclasses import asdict, dataclass, field
 from types import SimpleNamespace
 from typing import Callable
@@ -24,6 +25,8 @@ from .spatial_observations import (ObservedChannel, ObservedProcedureState,
 
 NATIVE_SPATIAL_VERSION = "native-spatial-observed-openings-v1"
 MAX_PRIMITIVES = 96  # Below the unchanged engine's 128-certificate capacity.
+GRID_ROUNDOFF_MAX_DISPLACEMENT_MM = 1e-6
+GRID_ROUNDOFF_MAX_GRAM_ERROR = 1e-8
 SYNTHETIC_TARGET_THRESHOLD = .5
 DEFAULT_NATIVE_SPATIAL_REWARD = RewardSpec(target_per_mm3=1., normal_per_mm3=.2,
     motor_per_mm3=0., language_per_mm3=0., action_cost=.03,
@@ -74,6 +77,54 @@ def _native_identity(config):
             "fingerprint": config.fingerprint}))
 
 
+def reconcile_native_grid_roundoff(affine, shape):
+    """Return a declared orthogonal grid only within a fixed roundoff budget.
+
+    No sampling occurs. The eight full source-cell extent corners bound the
+    affine displacement over the complete volume, including voxel boundaries.
+    """
+    original = np.asarray(affine)
+    if (original.shape != (4, 4) or original.dtype.kind not in "iuf"
+            or not np.isfinite(original).all() or not np.array_equal(original[3], [0, 0, 0, 1])):
+        raise ValueError("GRID_ROUNDOFF_INVALID_AFFINE: a real finite canonical homogeneous matrix is required")
+    shape = tuple(shape)
+    if len(shape) != 3 or any(type(n) is not int or n < 1 for n in shape):
+        raise ValueError("GRID_ROUNDOFF_INVALID_SHAPE: three positive integer dimensions are required")
+    original = np.array(original, dtype=np.float64, copy=True)
+    spacing = np.linalg.norm(original[:3, :3], axis=0)
+    if not np.isfinite(spacing).all() or np.any(spacing <= 0):
+        raise ValueError("GRID_ROUNDOFF_INVALID_SCALE: positive finite source-axis lengths are required")
+    directions = original[:3, :3] / spacing
+    gram_error = float(np.abs(directions.T @ directions - np.eye(3)).max())
+    if gram_error > GRID_ROUNDOFF_MAX_GRAM_ERROR:
+        raise ValueError("GRID_ROUNDOFF_MEANINGFUL_SHEAR: normalized source axes exceed the fixed roundoff bound")
+    u, _, vt = np.linalg.svd(directions)
+    derived = original.copy()
+    derived[:3, :3] = (u @ vt) * spacing
+    derived_spacing = np.linalg.norm(derived[:3, :3], axis=0)
+    if (np.sign(np.linalg.det(derived[:3, :3])) != np.sign(np.linalg.det(original[:3, :3]))
+            or not np.allclose(derived_spacing, spacing, rtol=64 * np.finfo(float).eps, atol=0)
+            or not np.array_equal(derived[:3, 3], original[:3, 3])):
+        raise ValueError("GRID_ROUNDOFF_FRAME_CHANGE: handedness, axis lengths and source origin must be preserved")
+    corners = np.array(list(product(*[(-.5, n - .5) for n in shape])), dtype=np.float64)
+    displacements = corners @ (derived[:3, :3] - original[:3, :3]).T
+    maximum = float(np.linalg.norm(displacements, axis=1).max())
+    if not np.isfinite(maximum) or maximum > GRID_ROUNDOFF_MAX_DISPLACEMENT_MM:
+        raise ValueError("GRID_ROUNDOFF_DISPLACEMENT_EXCEEDED: full source cells move more than 1e-6 mm")
+    record = {"method": "orthogonal_roundoff_1e-6mm", "shape": list(shape),
+        "original_affine_ras_mm": original.tolist(), "derived_affine_ras_mm": derived.tolist(),
+        "original_affine_hash": array_digest(original), "derived_affine_hash": array_digest(derived),
+        "original_spacing_mm": spacing.tolist(), "derived_spacing_mm": derived_spacing.tolist(),
+        "origin_preserved": True, "handedness_preserved": True,
+        "source_axis_gram_max_error": gram_error, "maximum_allowed_gram_error": GRID_ROUNDOFF_MAX_GRAM_ERROR,
+        "corner_domain": "full_source_cell_extent_minus_half_to_shape_minus_half",
+        "maximum_corner_displacement_mm": maximum,
+        "maximum_allowed_corner_displacement_mm": GRID_ROUNDOFF_MAX_DISPLACEMENT_MM,
+        "resampled": False, "proposal_and_crop_indices_basis": "original_source_affine",
+        "native_and_actor_physical_grid": "derived_affine_ras_mm"}
+    return immutable_array(derived, np.float64), freeze_json(record)
+
+
 @dataclass(frozen=True)
 class NativeSpatialCase:
     """Explicit observed geometry and separate evaluator labels on one source grid.
@@ -97,7 +148,10 @@ class NativeSpatialCase:
     crop_shape: tuple[int, int, int] = (32, 32, 32)
     support_provenance: Mapping = field(default_factory=dict)
     intensity_normalization: str = "raw"
+    native_grid_reconciliation: str = "none"
     _normalization_record: Mapping = field(init=False, repr=False)
+    _native_affine_ras_mm: np.ndarray = field(init=False, repr=False)
+    _grid_record: Mapping = field(init=False, repr=False)
     _native_config: NativeResectionConfig = field(init=False, repr=False)
     _native_identity: tuple = field(init=False, repr=False)
     _source_hash: str = field(init=False, repr=False)
@@ -126,6 +180,16 @@ class NativeSpatialCase:
         affine = np.asarray(self.affine_ras_mm)
         if affine.dtype.kind not in "iuf" or not np.isfinite(affine).all():
             raise ValueError("A real finite RAS affine is required")
+        if self.native_grid_reconciliation == "orthogonal_roundoff_1e-6mm":
+            native_affine, grid_record = reconcile_native_grid_roundoff(affine, image.shape)
+            grid_record = freeze_json({**grid_record, "source_image_hash": array_digest(image),
+                "support_hash": array_digest(support)})
+        elif self.native_grid_reconciliation == "none":
+            native_affine, grid_record = immutable_array(affine, np.float64), freeze_json({"method": "none"})
+        else:
+            raise ValueError("Unknown explicit native grid reconciliation")
+        object.__setattr__(self, "_native_affine_ras_mm", native_affine)
+        object.__setattr__(self, "_grid_record", grid_record)
         tools = tuple(self.tools)
         if (not 1 <= len(tools) <= 4 or any(not isinstance(t, ToolGeometry) for t in tools)
                 or len({t.tool_id for t in tools}) != len(tools)):
@@ -203,13 +267,14 @@ class NativeSpatialCase:
             "proposal_scope": scope, "candidate_voxels": voxels,
             "provenance": [self.support_source_kind, self.support_derivation, self.target_source_kind, self.target_derivation],
             **({"support_provenance": self.support_provenance} if self.support_provenance else {}),
-            **({"intensity_normalization": self._normalization_record} if self.intensity_normalization != "raw" else {})})
+            **({"intensity_normalization": self._normalization_record} if self.intensity_normalization != "raw" else {}),
+            **({"native_grid_reconciliation": self._grid_record} if self.native_grid_reconciliation != "none" else {})})
         object.__setattr__(self, "_source_hash", source_hash)
         object.__setattr__(self, "_reference_hash", semantic_digest({"source": source_hash, "target": array_digest(target)}))
-        config = NativeResectionConfig(support, np.zeros(image.shape, np.int16), self.affine_ras_mm,
+        config = NativeResectionConfig(support, np.zeros(image.shape, np.int16), self._native_affine_ras_mm,
             self.access, tools, self.source_hash,
             self.support_derivation + "; hypothetical aperture; cortical access unverified",
-            case_id="native-spatial", max_tip_step_mm=min(.25, float(np.linalg.norm(self.affine_ras_mm[:3, :3], axis=0).min()) / 2))
+            case_id="native-spatial", max_tip_step_mm=min(.25, float(np.linalg.norm(self._native_affine_ras_mm[:3, :3], axis=0).min()) / 2))
         object.__setattr__(self, "_native_config", config)
         object.__setattr__(self, "_native_identity", _native_identity(config))
         # Enforce the same observed-frame contract as the policy boundary now.
@@ -227,13 +292,14 @@ class NativeSpatialCase:
 
     def _identity_record(self):
         arrays = tuple(_array_identity(getattr(self, name)) for name in
-            ("structural_intensity", "observed_support", "reference_target", "affine_ras_mm"))
+            ("structural_intensity", "observed_support", "reference_target", "affine_ras_mm", "_native_affine_ras_mm"))
         return (arrays, None if self.nominal_target is None else _array_identity(self.nominal_target),
             semantic_digest({"access": _access_record(self.access), "tools": [asdict(t) for t in self.tools]}),
             self.track, self.support_source_kind, self.support_derivation, self.target_source_kind,
             self.target_derivation, self.crop_shape, self._crop_origin, self._crop_shape,
             self._candidate_voxels, self._candidate_scope, semantic_digest(self.support_provenance),
-            self.intensity_normalization, semantic_digest(self._normalization_record))
+            self.intensity_normalization, semantic_digest(self._normalization_record),
+            self.native_grid_reconciliation, semantic_digest(self._grid_record))
 
     def assert_intact(self):
         if (self._identity_record() != self._identity or (hasattr(self, "_native_identity")
@@ -242,7 +308,7 @@ class NativeSpatialCase:
 
     def spatial_inputs(self, cavity):
         region = tuple(slice(origin, origin + size) for origin, size in zip(self._crop_origin, self._crop_shape))
-        affine = np.array(self.affine_ras_mm, copy=True)
+        affine = np.array(self._native_affine_ras_mm, copy=True)
         affine[:3, 3] += affine[:3, :3] @ self._crop_origin
         intensity = self.structural_intensity[region]
         intensity_derivation = ""
@@ -354,7 +420,7 @@ class NativeSpatialTask:
         if not self._terminated:
             cavity = array_digest(self._engine.removed_mask)
             for voxel in self.case._candidate_voxels:
-                tip = self.case.affine_ras_mm[:3, :3] @ voxel + self.case.affine_ras_mm[:3, 3]
+                tip = self.case._native_affine_ras_mm[:3, :3] @ voxel + self.case._native_affine_ras_mm[:3, 3]
                 depth = float((tip - self.case.access.center_mm) @ self.case.access.normal_inward)
                 entry = tip - depth * self.case.access.normal_inward
                 for tool in self.case.tools:
@@ -503,6 +569,7 @@ class NativeSpatialTask:
             "observation_track": self.case.track,
             "support_provenance": thaw_json(self.case.support_provenance),
             "intensity_normalization": thaw_json(self.case._normalization_record),
+            "native_grid_reconciliation": thaw_json(self.case._grid_record),
             "crop": {"origin_voxels": self.case._crop_origin, "shape": self.case._crop_shape,
                      "basis": "scan_frame_and_declared_access_only", "native_geometry_resampled": False},
             "assumptions": ["rigid_fully_contained_native_cell_removal",
@@ -512,7 +579,7 @@ class NativeSpatialTask:
     def independent_geometry_check(self):
         self._assert_frozen()
         from .evaluation import independent_check_native_history
-        source = SimpleNamespace(mri=self.case.structural_intensity, affine=self.case.affine_ras_mm,
+        source = SimpleNamespace(mri=self.case.structural_intensity, affine=self.case._native_affine_ras_mm,
                                  frame="RAS+", semantic_hash=self._source_hash)
         return independent_check_native_history(source, self.case.tools, self._history,
             tissue_mask=self.case.observed_support, access=self.case.access, geometry_frame="RAS+")
@@ -585,7 +652,8 @@ def _provisional_proposal_support(case, acknowledgment):
 def native_spatial_task_from_case(case, *, access, tools, max_steps=3,
                                   track="annotation_assisted", nominal_target=None,
                                   nominal_target_derivation="", crop_shape=(32, 32, 32), cancelled=None,
-                                  research_support_acknowledgment=None, intensity_normalization="raw"):
+                                  research_support_acknowledgment=None, intensity_normalization="raw",
+                                  native_grid_reconciliation="none"):
     """Load a real source case with existing support gates and explicit target role.
 
     ``access`` is canonical RAS+. Annotation-assisted defaults to the supplied
@@ -633,5 +701,5 @@ def native_spatial_task_from_case(case, *, access, tools, max_steps=3,
         nominal_target=nominal_target, target_source_kind="supplied_annotation" if track == "annotation_assisted" else "derived_from_scan",
         target_derivation=nominal_target_derivation, crop_shape=crop_shape,
         support_provenance=record if research_support_acknowledgment is not None else {},
-        intensity_normalization=intensity_normalization)
+        intensity_normalization=intensity_normalization, native_grid_reconciliation=native_grid_reconciliation)
     return NativeSpatialTask(source, max_steps=max_steps, cancelled=cancelled)

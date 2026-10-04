@@ -1,0 +1,32 @@
+{
+  "git_head": "e5c041b928febe9376a746f848720cb9d29b34b4",
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_native_spatial_roundoff_review.py",
+    "-q",
+    "--basetemp=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-spatial-roundoff-review-v1/core-tmp"
+  ],
+  "exit_code": 1,
+  "elapsed_seconds": 0.8318012089002877,
+  "before": {
+    "src/resectionlab/native_spatial_task.py": "137d89a8ec6c1d538c3ebf69aed87be9eefa4d3fddc1f6631ed887ba3e650475",
+    "tests/test_native_spatial_task.py": "fd683ce5fe0a7960dbf34d2a8014f0b3a72aeefb14c33da7a23ade607139b45f",
+    "tests/test_native_spatial_roundoff_review.py": "0b0512c618e03f5c0418ea3ed23bbfce5be95a8879e638048ef40a83f7c00fd8",
+    "docs/native-spatial-task.md": "5be680d99b635705014fb87664fc8a462096d81c3fa6ccf34d3afde67028a64c",
+    "src/resectionlab/native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/evaluation.py": "baaa2f3d6b4e41c4621dc22872da9300d649bc91dfeb923e2ad35f66aadad3b7"
+  },
+  "after": {
+    "src/resectionlab/native_spatial_task.py": "137d89a8ec6c1d538c3ebf69aed87be9eefa4d3fddc1f6631ed887ba3e650475",
+    "tests/test_native_spatial_task.py": "fd683ce5fe0a7960dbf34d2a8014f0b3a72aeefb14c33da7a23ade607139b45f",
+    "tests/test_native_spatial_roundoff_review.py": "0b0512c618e03f5c0418ea3ed23bbfce5be95a8879e638048ef40a83f7c00fd8",
+    "docs/native-spatial-task.md": "5be680d99b635705014fb87664fc8a462096d81c3fa6ccf34d3afde67028a64c",
+    "src/resectionlab/native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/evaluation.py": "baaa2f3d6b4e41c4621dc22872da9300d649bc91dfeb923e2ad35f66aadad3b7"
+  },
+  "patient_task_preview_or_learning_run": false
+}

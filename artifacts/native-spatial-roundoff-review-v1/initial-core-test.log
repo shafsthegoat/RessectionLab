@@ -1,0 +1,49 @@
+.....F..                                                                 [100%]
+=================================== FAILURES ===================================
+_ test_reconciliation_authority_replacement_invalidates_model[derived_affine] __
+
+changed = 'derived_affine'
+
+    @pytest.mark.parametrize("changed", ["derived_affine", "report", "mode"])
+    def test_reconciliation_authority_replacement_invalidates_model(changed):
+        source = replace(make_native_opening_task().case, native_grid_reconciliation=METHOD)
+        if changed == "derived_affine":
+            shifted = source._native_affine_ras_mm.copy()
+            shifted[0, 3] += 1e-9
+            object.__setattr__(source, "_native_affine_ras_mm", shifted)
+        elif changed == "report":
+            object.__setattr__(source, "_grid_record", {**source._grid_record, "derived_affine_hash": "forged"})
+        else:
+            object.__setattr__(source, "native_grid_reconciliation", "none")
+        with pytest.raises(RuntimeError, match="interpretation was replaced"):
+>           source.assert_intact()
+
+tests/test_native_spatial_roundoff_review.py:142: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/resectionlab/native_spatial_task.py:305: in assert_intact
+    if (self._identity_record() != self._identity or (hasattr(self, "_native_identity")
+        ^^^^^^^^^^^^^^^^^^^^^^^
+src/resectionlab/native_spatial_task.py:294: in _identity_record
+    arrays = tuple(_array_identity(getattr(self, name)) for name in
+src/resectionlab/native_spatial_task.py:294: in <genexpr>
+    arrays = tuple(_array_identity(getattr(self, name)) for name in
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+array = array([[1.e+00, 0.e+00, 0.e+00, 1.e-09],
+       [0.e+00, 1.e+00, 0.e+00, 0.e+00],
+       [0.e+00, 0.e+00, 1.e+00, 0.e+00],
+       [0.e+00, 0.e+00, 0.e+00, 1.e+00]])
+
+    def _array_identity(array):
+        root = array
+        while isinstance(root, np.ndarray) and root.base is not None:
+            root = root.base
+        if array.flags.writeable or not isinstance(root, bytes):
+>           raise ValueError("Native spatial source arrays require immutable owned bytes")
+E           ValueError: Native spatial source arrays require immutable owned bytes
+
+src/resectionlab/native_spatial_task.py:67: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_native_spatial_roundoff_review.py::test_reconciliation_authority_replacement_invalidates_model[derived_affine]
+1 failed, 7 passed in 0.62s

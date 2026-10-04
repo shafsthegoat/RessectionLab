@@ -10,6 +10,7 @@ from resectionlab.native_resection import NativeResectionEngine
 from resectionlab.native_spatial_task import (
     DEFAULT_NATIVE_SPATIAL_REWARD, NativeSpatialCase, NativeSpatialTask,
     OPENING_TOOLS, make_native_opening_task, native_spatial_task_from_case,
+    reconcile_native_grid_roundoff,
 )
 from resectionlab.simulation import InvalidActionError
 from resectionlab.structural_evidence import structural_frame_hash
@@ -385,5 +386,71 @@ def test_normalization_record_is_frozen_and_part_of_source_integrity():
     with pytest.raises(TypeError):
         source._normalization_record["lower"] = -100.
     object.__setattr__(source, "_normalization_record", {**source._normalization_record, "lower": -100.})
+    with pytest.raises(RuntimeError, match="interpretation was replaced"):
+        source.assert_intact()
+
+
+def test_grid_roundoff_requires_opt_in_preserves_original_and_uses_derived_grid_everywhere():
+    source = make_native_opening_task().case
+    original = np.eye(4)
+    original[0, 1] = 1e-9
+    with pytest.raises(ValueError, match="orthogonal affine"):
+        replace(source, affine_ras_mm=original)
+    reconciled = replace(source, affine_ras_mm=original,
+        native_grid_reconciliation="orthogonal_roundoff_1e-6mm")
+    np.testing.assert_array_equal(reconciled.affine_ras_mm, original)
+    np.testing.assert_array_equal(reconciled.structural_intensity, source.structural_intensity)
+    np.testing.assert_array_equal(reconciled._native_config.affine, reconciled._native_affine_ras_mm)
+    assert reconciled._grid_record["maximum_corner_displacement_mm"] < 1e-6
+    assert reconciled._grid_record["resampled"] is False
+    assert reconciled._crop_origin == source._crop_origin and reconciled._candidate_voxels == source._candidate_voxels
+    inputs = reconciled.spatial_inputs(np.zeros(source.structural_intensity.shape, bool))
+    np.testing.assert_array_equal(inputs.affine_ras_mm, reconciled._native_affine_ras_mm)
+    task = NativeSpatialTask(reconciled, max_steps=2)
+    for tool, voxel in ((OPENING_TOOLS[0].tool_id, (4, 4, 1)), (OPENING_TOOLS[1].tool_id, (4, 4, 5))):
+        row = next(row for row in task.candidate_inventory()["ledger"]
+                   if row["tool_id"] == tool and row["voxel"] == list(voxel))
+        observation = task.observation()
+        index = observation.action_ids.index(row["action_id"])
+        np.testing.assert_allclose(observation.action_geometry[index, 4:7],
+            reconciled._native_affine_ras_mm[:3, :3] @ voxel + reconciled._native_affine_ras_mm[:3, 3], rtol=0, atol=1e-14)
+        task.step(row["action_id"])
+    assert task.independent_geometry_check().feasible
+    assert task.metrics()["native_grid_reconciliation"]["original_affine_hash"] == array_digest(original)
+
+
+def test_roundoff_preserves_anisotropic_reflected_frame_origin_and_full_corner_bound():
+    affine = np.array([[-.9, 1e-10, 0, 170], [0, 1.7, 0, -240], [0, 0, 2.5, 100], [0, 0, 0, 1.]])
+    corrected, record = reconcile_native_grid_roundoff(affine, (160, 256, 256))
+    np.testing.assert_array_equal(corrected[:3, 3], affine[:3, 3])
+    np.testing.assert_allclose(np.linalg.norm(corrected[:3, :3], axis=0),
+        np.linalg.norm(affine[:3, :3], axis=0), rtol=1e-14, atol=0)
+    assert np.linalg.det(corrected[:3, :3]) < 0 and record["handedness_preserved"]
+    corners = np.array([[x, y, z] for x in [-.5,159.5] for y in [-.5,255.5] for z in [-.5,255.5]])
+    measured = np.linalg.norm(corners @ (corrected[:3, :3] - affine[:3, :3]).T, axis=1).max()
+    assert measured == record["maximum_corner_displacement_mm"] and measured < 1e-6
+
+
+@pytest.mark.parametrize("affine,shape,reason", [
+    (np.array([[1., 1e-4, 0, 0], [0, 1., 0, 0], [0, 0, 1., 0], [0, 0, 0, 1.]]), (3,3,3), "MEANINGFUL_SHEAR"),
+    (np.array([[1., 1e-9, 0, 0], [0, 1., 0, 0], [0, 0, 1., 0], [0, 0, 0, 1.]]), (2000,2000,3), "DISPLACEMENT_EXCEEDED"),
+    (np.diag([1., 0., 1., 1.]), (3,3,3), "INVALID_SCALE"),
+])
+def test_roundoff_refuses_material_shear_large_extent_and_degenerate_scales(affine, shape, reason):
+    with pytest.raises(ValueError, match=reason):
+        reconcile_native_grid_roundoff(affine, shape)
+
+
+def test_roundoff_rejects_svd_frame_changes_and_seals_record(monkeypatch):
+    def reflected_svd(directions):
+        return np.diag([-1., 1., 1.]), np.ones(3), np.eye(3)
+    with monkeypatch.context() as patch:
+        patch.setattr(np.linalg, "svd", reflected_svd)
+        with pytest.raises(ValueError, match="FRAME_CHANGE"):
+            reconcile_native_grid_roundoff(np.eye(4), (3,3,3))
+    source = replace(make_native_opening_task().case, native_grid_reconciliation="orthogonal_roundoff_1e-6mm")
+    with pytest.raises(TypeError):
+        source._grid_record["resampled"] = True
+    object.__setattr__(source, "_grid_record", {**source._grid_record, "maximum_corner_displacement_mm": 1.})
     with pytest.raises(RuntimeError, match="interpretation was replaced"):
         source.assert_intact()
