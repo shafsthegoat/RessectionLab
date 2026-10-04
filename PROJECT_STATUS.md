@@ -4,6 +4,27 @@ Updated October 4, 2026. The three revised specification documents remain the
 authoritative requirements and have been read completely. This file records
 executed work and open gates, not a replacement plan.
 
+**Latest steering (October 4): real-patient learning and probability-aware planning.**
+The user supplied `docs/CODEX_STEERING_PROMPT.md` and
+`docs/DATASET_ACQUISITION_ADDENDUM.md`; both were read completely and copied
+unchanged from the supplied files. They supersede the proposed procedural
+training screen. No synthetic population screen, opening-learning run or scale
+experiment was executed. Existing analytical fixtures remain software checks,
+not human training data. The immediate milestone is one real patient with
+independently checked alternative plans and nonzero, evidence-bound functional
+uncertainty. Population training must use existing real patients, preserve the
+BTC TRAIN/SELECT/unopened roles, and assess transfer on separate patients.
+
+Annotation-assisted and inference-only tracks stay distinct. Reviewable supplied
+segmentations are valid inputs in the former; private references cannot influence
+inputs or proposals in the latter. Current blockers are the functional-evidence
+handoff through native refinement/evaluation, missing approved or explicitly
+provisional support/access for additional cases, and the scan-based policy's
+integration with native geometry. Search may remain the strongest research mode;
+no learned-policy superiority is established. The unrun procedural runner also
+exposed a weak teacher on its development fixture; that negative finding is
+preserved and will not be used to justify an RL advantage.
+
 **Current user priority (October 4): spatial RL and surgical decision learning.**
 Interface development, packaging, the pending cache-sizing execution and the
 older paired feature-unit patient run are deferred. The user wants a policy
