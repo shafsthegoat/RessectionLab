@@ -33,6 +33,7 @@ import {
 } from "./case-data";
 import { readOnlyPreview } from "./preview-api";
 import { RefinementPanel } from "./RefinementPanel";
+import { isOperationCancelled, operationMessage } from "./operation-feedback";
 import { StructuralEvidenceInventory } from "./StructuralEvidenceInventory";
 import { StructuralImportDialog } from "./StructuralImportDialog";
 import { researchSupportGate } from "./case-support";
@@ -455,11 +456,20 @@ export default function App() {
   const [engineOperations, setEngineOperations] = useState<Set<string>>(
     new Set(),
   );
+  const [engineStopped, setEngineStopped] = useState(false);
+  const stoppedEngine = useRef(false);
   const mounted = useRef(true);
   const caseGeneration = useRef(0);
   const activeCaseHash = useRef<string | null>(null);
   const busy = !!operation || hydrating;
   const readonly = !!api?.readOnly;
+  const controlsBlocked = busy || engineStopped;
+  const reportError = (failure: unknown) =>
+    setError(
+      stoppedEngine.current
+        ? "The local computation engine stopped. Your visible case is preserved. Reopen the app to reconnect."
+        : operationMessage(failure),
+    );
 
   const installSearch = useCallback((result: SearchResult) => {
     if (
@@ -639,6 +649,9 @@ export default function App() {
     if (!api) return;
     return api.onEvent((event: BridgeEvent) => {
       if (event.event === "engineStopped") {
+        stoppedEngine.current = true;
+        setEngineStopped(true);
+        setEngineOperations(new Set());
         setOperation(null);
         setError(
           "The local computation engine stopped. Your visible case is preserved. Reopen the app to reconnect.",
@@ -702,7 +715,9 @@ export default function App() {
     try {
       await work();
     } catch (failure) {
-      setError(failure instanceof Error ? failure.message : String(failure));
+      if (isOperationCancelled(failure))
+        setMessage("Operation cancelled · Current case preserved");
+      else reportError(failure);
     }
   };
   const load = (kind: "openCase" | "importNifti" | "createSyntheticCase") =>
@@ -752,7 +767,7 @@ export default function App() {
         );
       }
       setMessage(
-        `${added.length} native action alternatives added · original routes preserved · review the new geometry`,
+        `${added.length} additional research routes added · original routes preserved · review the new geometry`,
       );
     });
   const save = () =>
@@ -775,13 +790,13 @@ export default function App() {
   useEffect(() => {
     if (!api) return;
     return api.onEvent((event) => {
-      if (event.event !== "menuAction" || busy || readonly) return;
+      if (event.event !== "menuAction" || controlsBlocked || readonly) return;
       if (event.action === "openCase") void load("openCase");
       if (event.action === "saveCase" && payload) void save();
     });
   }, [
     api,
-    busy,
+    controlsBlocked,
     readonly,
     payload,
     routeA,
@@ -856,7 +871,7 @@ export default function App() {
   const canGenerate =
     !!payload &&
     !!caseData?.compartments.length &&
-    !busy &&
+    !controlsBlocked &&
     !readonly &&
     !supportGate.blocked &&
     (!needsSupport || allowEstimatedSupport);
@@ -897,7 +912,7 @@ export default function App() {
         <button
           className="header-button"
           onClick={() => load("openCase")}
-          disabled={!api || busy || readonly}
+          disabled={!api || controlsBlocked || readonly}
         >
           <FolderOpen size={15} />
           <span>Open case</span>
@@ -906,7 +921,7 @@ export default function App() {
         <button
           className="header-button"
           onClick={() => load("importNifti")}
-          disabled={!api || busy || readonly}
+          disabled={!api || controlsBlocked || readonly}
         >
           <ArrowUpFromLine size={15} />
           <span>Import MRI</span>
@@ -914,7 +929,7 @@ export default function App() {
         <button
           className="header-button save-button"
           onClick={save}
-          disabled={!payload || busy || readonly}
+          disabled={!payload || controlsBlocked || readonly}
         >
           <ArrowDownToLine size={15} />
           <span>Save</span>
@@ -926,6 +941,8 @@ export default function App() {
           className={`rail-button ${casePanel ? "selected" : ""}`}
           onClick={() => setCasePanel(!casePanel)}
           aria-label="Toggle case and evidence panel"
+          aria-expanded={casePanel}
+          aria-controls="case-evidence-panel"
         >
           <Layers3 size={19} />
           <span>Case</span>
@@ -946,7 +963,7 @@ export default function App() {
         </span>
       </nav>
 
-      <aside className="case-panel">
+      <aside className="case-panel" id="case-evidence-panel">
         <div className="panel-heading">
           <span className="eyebrow">CASE & EVIDENCE</span>
           <button
@@ -974,7 +991,7 @@ export default function App() {
           <button
             className="outline-button demo-button"
             onClick={() => load("createSyntheticCase")}
-            disabled={!api || readonly || busy}
+            disabled={!api || readonly || controlsBlocked}
           >
             <FlaskConical size={15} /> Explore synthetic fixture
           </button>
@@ -1092,7 +1109,7 @@ export default function App() {
             canImport={
               !!api?.importStructuralEvidence &&
               engineOperations.has("importStructuralEvidence") &&
-              !busy &&
+              !controlsBlocked &&
               !readonly
             }
             onImport={importStructural}
@@ -1123,12 +1140,14 @@ export default function App() {
             <button
               className={cameraMode === "anatomy" ? "active" : ""}
               onClick={() => setCameraMode("anatomy")}
+              aria-pressed={cameraMode === "anatomy"}
             >
               <Focus size={14} /> Focus anatomy
             </button>
             <button
               className={cameraMode === "instruments" ? "active" : ""}
               onClick={() => setCameraMode("instruments")}
+              aria-pressed={cameraMode === "instruments"}
             >
               <Expand size={14} /> Fit instruments
             </button>
@@ -1177,14 +1196,14 @@ export default function App() {
               </p>
               <button
                 className="primary-button"
-                disabled={!api || readonly || busy}
+                disabled={!api || readonly || controlsBlocked}
                 onClick={() => load("openCase")}
               >
                 <FolderOpen size={16} /> Open a case
               </button>
               <button
                 className="text-button"
-                disabled={!api || readonly || busy}
+                disabled={!api || readonly || controlsBlocked}
                 onClick={() => load("createSyntheticCase")}
               >
                 Explore the synthetic fixture <ChevronRight size={13} />
@@ -1246,7 +1265,7 @@ export default function App() {
                   id="instrument"
                   value={instrument}
                   onChange={(event) => setInstrument(event.target.value)}
-                  disabled={busy}
+                  disabled={controlsBlocked}
                 >
                   <option value="all">Compare both generic tools</option>
                   <option value="generic_suction">
@@ -1269,7 +1288,7 @@ export default function App() {
                     onChange={(event) =>
                       setAllowEstimatedSupport(event.target.checked)
                     }
-                    disabled={busy || readonly}
+                    disabled={controlsBlocked || readonly}
                   />
                   <span>
                     Use estimated image support for{" "}
@@ -1400,9 +1419,10 @@ export default function App() {
               api={api}
               caseData={payload}
               route={routes.find((route) => route.route_id === routeA)}
-              busy={busy}
+              busy={controlsBlocked}
               onReplay={setCertifiedReplay}
-              onError={setError}
+              replayVisible={certifiedReplay !== null}
+              onError={reportError}
               routeLabel={
                 routes.find((route) => route.route_id === routeA)
                   ? routeName(
@@ -1452,10 +1472,17 @@ export default function App() {
       )}
       <footer className="status-bar">
         <span className={`status-dot ${busy ? "working" : ""}`} />
-        <span className="status-message">
-          {hydrating
-            ? "Transferring source imaging to the local viewer…"
-            : (operation?.message ?? message)}
+        <span
+          className="status-message"
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+        >
+          {engineStopped
+            ? "Local engine stopped · Reopen the app to reconnect"
+            : hydrating
+              ? "Transferring source imaging to the local viewer…"
+              : (operation?.message ?? message)}
         </span>
         {operation && (
           <>
@@ -1468,7 +1495,11 @@ export default function App() {
             </div>
             <button
               className="cancel-operation"
-              onClick={() => api?.cancel(operation.id)}
+              onClick={() =>
+                void act(async () => {
+                  await api?.cancel(operation.id);
+                })
+              }
             >
               Cancel <X size={11} />
             </button>

@@ -21,6 +21,9 @@ import {
   validateRefinementReadiness,
   readinessReason,
 } from "./refinement-readiness";
+import { isOperationCancelled, operationMessage } from "./operation-feedback";
+import { ReplayStepControl } from "./ReplayStepControl";
+import { LatestReplayRequests } from "./replay-step-request";
 import { hydrateCertifiedReplay } from "./training-data";
 import type { CertifiedReplay, TrainingRun, TrainingStats } from "./types";
 
@@ -100,6 +103,7 @@ export function RefinementPanel({
   onGenerateNative,
   busy,
   onReplay,
+  replayVisible,
   onError,
 }: {
   api: ResectionApi | null;
@@ -111,6 +115,7 @@ export function RefinementPanel({
   onGenerateNative: () => Promise<void>;
   busy: boolean;
   onReplay: (replay: CertifiedReplay | null) => void;
+  replayVisible: boolean;
   onError: (error: string) => void;
 }) {
   const [supported, setSupported] = useState(false),
@@ -126,17 +131,50 @@ export function RefinementPanel({
   const [readiness, setReadiness] = useState<RefinementReadiness | null>(null);
   const [inspecting, setInspecting] = useState(false);
   const [runGeometryLabel, setRunGeometryLabel] = useState("");
-  const currentRoute = useRef(route?.route_id);
-  currentRoute.current = route?.route_id;
+  const [replayPending, setReplayPending] = useState(false);
+  const latestRequestedStep = useRef<number | null>(null);
+  const activeReplay = useRef<number | null>(null);
+  // Same route IDs must not retain readiness after a changed search model or geometry.
+  const selectionKey = JSON.stringify([
+    caseData?.caseHash,
+    route?.route_id,
+    route?.planning_model_hash,
+    route?.entry_mm,
+    route?.target_mm,
+    route?.window,
+    route?.tool,
+  ]);
+  const currentSelection = useRef(selectionKey);
+  currentSelection.current = selectionKey;
   const readinessGeneration = useRef(0);
   const currentHash = useRef(caseData?.caseHash);
   currentHash.current = caseData?.caseHash;
   const replayGeneration = useRef(0);
-  const blocked = busy || working || inspecting,
+  const blocked = busy || working || inspecting || replayPending,
     readonly = !!api?.readOnly;
   const stats = run?.training ?? live;
   const accepted =
     !!stats?.replay && stats.replay_status === "accepted_independent_geometry";
+  const executeReplay = useRef<
+    (
+      item: { run: TrainingRun; step: number; caseHash: string },
+      current: () => boolean,
+    ) => Promise<void>
+  >(async () => {});
+  executeReplay.current = async (item, current) => {
+    if (!current() || item.caseHash !== currentHash.current) return;
+    await showReplay(item.run, item.step, current);
+  };
+  const replayRequests = useRef<LatestReplayRequests<{
+    run: TrainingRun;
+    step: number;
+    caseHash: string;
+  }> | null>(null);
+  if (!replayRequests.current)
+    replayRequests.current = new LatestReplayRequests(
+      (item, current) => executeReplay.current(item, current),
+      setReplayPending,
+    );
   useEffect(() => {
     let disposed = false;
     setSupported(false);
@@ -175,6 +213,16 @@ export function RefinementPanel({
   useEffect(() => {
     if (!api) return;
     return api.onEvent((event: BridgeEvent) => {
+      if (event.event === "engineStopped") {
+        replayRequests.current?.invalidate();
+        replayGeneration.current++;
+        latestRequestedStep.current = null;
+        setReadiness(null);
+        setReplay(null);
+        setStep(0);
+        onReplay(null);
+        return;
+      }
       if (event.op !== "trainPatient") return;
       const progress = event.progress as typeof event.progress & {
         metrics?: TrainingStats;
@@ -188,7 +236,21 @@ export function RefinementPanel({
     readinessGeneration.current++;
     setReadiness(null);
     setInspecting(false);
-  }, [caseData?.caseHash, route?.route_id]);
+    replayGeneration.current++;
+    replayRequests.current?.invalidate();
+    latestRequestedStep.current = null;
+    setReplay(null);
+    setStep(0);
+    onReplay(null);
+  }, [selectionKey]);
+  useEffect(() => {
+    if (replayVisible) return;
+    replayRequests.current?.invalidate();
+    replayGeneration.current++;
+    latestRequestedStep.current = null;
+    setReplay(null);
+    setStep(0);
+  }, [replayVisible]);
   async function inspect() {
     if (!api?.inspectRefinement || !caseData || !route) return;
     const generation = ++readinessGeneration.current;
@@ -202,19 +264,23 @@ export function RefinementPanel({
       if (
         generation !== readinessGeneration.current ||
         result.caseHash !== currentHash.current ||
-        result.routeId !== currentRoute.current
+        selectionKey !== currentSelection.current
       )
         return;
       setReadiness(validateRefinementReadiness(result, caseData, route));
     } catch (error) {
-      if (generation === readinessGeneration.current)
-        onError(error instanceof Error ? error.message : String(error));
+      if (generation === readinessGeneration.current) {
+        if (isOperationCancelled(error))
+          setNote("Readiness check cancelled. No optimization was started.");
+        else onError(operationMessage(error));
+      }
     } finally {
       if (generation === readinessGeneration.current) setInspecting(false);
     }
   }
   async function refresh() {
     if (!api || !caseData) return;
+    if (caseData.caseHash !== currentHash.current) return;
     const result = await api.listRuns({ caseHash: caseData.caseHash });
     if (result.caseHash === currentHash.current) setRuns(result.runs);
   }
@@ -228,6 +294,15 @@ export function RefinementPanel({
         readiness.routeId !== route.route_id)
     )
       return;
+    if (!resume && readiness && route) {
+      try {
+        validateRefinementReadiness(readiness, caseData, route);
+      } catch (error) {
+        setReadiness(null);
+        onError(operationMessage(error));
+        return;
+      }
+    }
     setRunGeometryLabel(
       resume ? "Saved run · original frozen geometry" : routeLabel,
     );
@@ -266,8 +341,9 @@ export function RefinementPanel({
             : "Run completed. Inspect the actual update counts and independent replay status.",
       );
     } catch (error) {
-      const message = error instanceof Error ? error.message : String(error);
-      if (/operation cancelled/i.test(message))
+      if (caseData.caseHash !== currentHash.current) return;
+      const message = operationMessage(error);
+      if (isOperationCancelled(error))
         setNote("Cancelled. Any available checkpoint stays on this Mac.");
       else onError(message);
     } finally {
@@ -275,9 +351,14 @@ export function RefinementPanel({
       void refresh().catch((error) => onError(String(error)));
     }
   }
-  async function showReplay(selectedRun: TrainingRun, requestedStep?: number) {
-    if (!api || !caseData) return;
+  async function showReplay(
+    selectedRun: TrainingRun,
+    requestedStep?: number,
+    isCurrent: () => boolean = () => true,
+  ) {
+    if (!api || !caseData || activeReplay.current !== null) return;
     const generation = ++replayGeneration.current;
+    activeReplay.current = generation;
     setWorking(true);
     try {
       const result = await api.replayTraining({
@@ -287,6 +368,7 @@ export function RefinementPanel({
       });
       const checked = await hydrateCertifiedReplay(result, caseData, api);
       if (
+        !isCurrent() ||
         generation !== replayGeneration.current ||
         result.caseHash !== currentHash.current
       )
@@ -295,16 +377,47 @@ export function RefinementPanel({
       if (selectedRun.runId !== run?.runId)
         setRunGeometryLabel("Saved run · original frozen geometry");
       setReplay(checked);
-      setStep(result.step);
+      if (
+        latestRequestedStep.current === null ||
+        latestRequestedStep.current === requestedStep
+      ) {
+        latestRequestedStep.current = null;
+        setStep(result.step);
+      }
       onReplay(checked);
     } catch (error) {
-      setReplay(null);
-      onReplay(null);
-      onError(error instanceof Error ? error.message : String(error));
+      if (
+        !isCurrent() ||
+        generation !== replayGeneration.current ||
+        caseData.caseHash !== currentHash.current
+      )
+        return;
+      if (
+        latestRequestedStep.current === null ||
+        latestRequestedStep.current === requestedStep
+      ) {
+        latestRequestedStep.current = null;
+        setStep(replay?.result.step ?? 0);
+      }
+      if (isOperationCancelled(error))
+        setNote(
+          "Replay request cancelled. The last checked view is preserved.",
+        );
+      else onError(operationMessage(error));
     } finally {
-      if (generation === replayGeneration.current) setWorking(false);
+      if (activeReplay.current === generation) {
+        activeReplay.current = null;
+        setWorking(false);
+      }
     }
   }
+  useEffect(
+    () => () => {
+      replayRequests.current?.invalidate();
+      replayGeneration.current++;
+    },
+    [],
+  );
   return (
     <div className="native-refinement">
       <div className="planning-title">
@@ -345,9 +458,8 @@ export function RefinementPanel({
           <strong>{route ? routeLabel : "Choose route A"}</strong>
         </div>
         <p>
-          This prototype learns STOP versus the declared fixed native stroke.
-          The entry, target, window and tool stay fixed; this run does not
-          optimize a free-form trajectory.
+          Training choices are limited to stopping or making this single modeled
+          stroke. The route and instrument stay fixed.
         </p>
         <button
           className="outline-button"
@@ -361,9 +473,7 @@ export function RefinementPanel({
           ) : (
             <Check size={14} />
           )}
-          {inspecting
-            ? "Inspecting initial actions…"
-            : "Check cutting-action readiness"}
+          {inspecting ? "Inspecting initial actions…" : "Check modeled cutting"}
         </button>
         {readiness && (
           <div
@@ -401,16 +511,15 @@ export function RefinementPanel({
         <details className="native-alternatives">
           <summary>Need another research geometry?</summary>
           <p>
-            Generate separate native-action alternatives with explicitly new
-            hypothetical access windows, rays and instruments. Existing search
-            routes stay available.
+            These alternatives have new hypothetical access windows, routes and
+            instruments. Existing search routes stay available.
           </p>
           <button
             className="outline-button"
             disabled={!canGenerateNative || blocked}
             onClick={() => void onGenerateNative()}
           >
-            <FlaskConical size={14} /> Generate native action alternatives
+            <FlaskConical size={14} /> Generate additional research routes
           </button>
         </details>
       </section>
@@ -486,8 +595,8 @@ export function RefinementPanel({
       {stats && (
         <>
           <p className="run-geometry-label">
-            Run geometry: {runGeometryLabel || "Saved frozen route"}. Policy
-            choice: STOP or the declared fixed stroke.
+            Run geometry: {runGeometryLabel || "Saved frozen route"}. Choices:
+            stop or make the fixed modeled stroke.
           </p>
           <div className="training-metrics">
             <div>
@@ -556,26 +665,20 @@ export function RefinementPanel({
           </button>
           {replay && (
             <>
-              <label htmlFor="replay-step">
-                Modeled step{" "}
-                <span>
-                  {step} / {replay.result.stepCount}
-                </span>
-              </label>
-              <input
-                id="replay-step"
-                type="range"
-                min={0}
-                max={replay.result.stepCount}
-                value={step}
-                onChange={(event) => setStep(Number(event.target.value))}
-                onPointerUp={(event) =>
-                  void showReplay(run, Number(event.currentTarget.value))
-                }
-                onKeyUp={(event) =>
-                  void showReplay(run, Number(event.currentTarget.value))
-                }
-                disabled={blocked}
+              <ReplayStepControl
+                requestedStep={step}
+                appliedStep={replay.result.step}
+                stepCount={replay.result.stepCount}
+                disabled={inspecting || (blocked && !replayPending)}
+                onRequest={(requested) => {
+                  latestRequestedStep.current = requested;
+                  setStep(requested);
+                  replayRequests.current?.request({
+                    run,
+                    step: requested,
+                    caseHash: run.caseHash,
+                  });
+                }}
               />
               <dl>
                 <dt>Removed target</dt>
@@ -595,6 +698,8 @@ export function RefinementPanel({
                 className="text-button"
                 onClick={() => {
                   replayGeneration.current++;
+                  replayRequests.current?.invalidate();
+                  latestRequestedStep.current = null;
                   setReplay(null);
                   onReplay(null);
                 }}

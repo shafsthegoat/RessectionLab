@@ -7,7 +7,7 @@ import os from "node:os";
 import path from "node:path";
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-let server, Inventory, cacheDir;
+let server, Inventory, ReplayStepControl, cacheDir;
 before(async () => {
   cacheDir = await fs.mkdtemp(
     path.join(os.tmpdir(), "resection-renderer-test-"),
@@ -23,6 +23,8 @@ before(async () => {
   Inventory = (
     await server.ssrLoadModule("/src/StructuralEvidenceInventory.tsx")
   ).StructuralEvidenceInventory;
+  ReplayStepControl = (await server.ssrLoadModule("/src/ReplayStepControl.tsx"))
+    .ReplayStepControl;
 });
 after(async () => {
   await server?.close();
@@ -62,4 +64,34 @@ test("pending envelope remains an estimate with no cortical permission or approv
   assert.match(html, /Review required/);
   assert.match(html, /does not certify cortex/);
   assert.doesNotMatch(html, /<button/);
+});
+
+test("pending replay announces the checked applied step, never labels an old overlay as the requested step", () => {
+  const html = renderToStaticMarkup(
+    React.createElement(ReplayStepControl, {
+      requestedStep: 0,
+      appliedStep: 1,
+      stepCount: 2,
+      disabled: false,
+      onRequest: () => {},
+    }),
+  );
+  assert.match(html, /Showing modeled step <span>1 \/ 2<\/span>/);
+  assert.match(html, /Requested step 0; showing checked step 1 of 2/);
+  assert.match(html, /Quantities and overlay still show step 1/);
+  assert.match(html, /role="status"/);
+});
+test("zero-action replay is a labeled disabled timeline", () => {
+  const html = renderToStaticMarkup(
+    React.createElement(ReplayStepControl, {
+      requestedStep: 0,
+      appliedStep: 0,
+      stepCount: 0,
+      disabled: false,
+      onRequest: () => {},
+    }),
+  );
+  assert.match(html, /Showing checked step 0 of 0/);
+  assert.match(html, /disabled=""/);
+  assert.doesNotMatch(html, /Updating to step/);
 });

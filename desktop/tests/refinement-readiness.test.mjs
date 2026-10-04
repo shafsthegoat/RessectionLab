@@ -118,3 +118,13 @@ test("entry, target, access and tool substitution are rejected even with same ro
     );
   }
 });
+
+test("a replacement route with the same ID cannot reuse readiness for old geometry", () => {
+  const f = fixture(),
+    replacement = structuredClone(f.route);
+  replacement.target_mm[0] += 1;
+  assert.throws(
+    () => validateRefinementReadiness(f.result, f.source, replacement),
+    /changed the selected entry or target/,
+  );
+});

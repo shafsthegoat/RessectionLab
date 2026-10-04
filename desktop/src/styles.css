@@ -2149,3 +2149,13 @@ h3 {
   color: #acbfc0;
   padding: 11px 0;
 }
+
+[data-route-panel]:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: -3px;
+}
+.replay-step-pending {
+  font-size: 11px;
+  line-height: 1.5;
+  color: #c1c9b1;
+}
