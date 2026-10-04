@@ -1,5 +1,6 @@
 """Counterfactual declaration/source/action-set checks; no registered training."""
 import copy
+import hashlib
 import importlib.util
 import json
 from pathlib import Path
@@ -164,6 +165,29 @@ def test_exact_runner_bytes_are_part_of_runtime_freeze(tmp_path):
         runner.assert_transfer_source_unchanged(snapshot, tmp_path)
 
 
+def test_preserved_noncode_input_refuses_registry_drift(tmp_path):
+    """The real byte-preservation gate still refuses changed declared inputs."""
+    source = tmp_path / "source"
+    declaration_path = source / runner.DECLARATION_PATH
+    declaration_path.parent.mkdir(parents=True)
+    declaration_path.write_bytes((ROOT / runner.DECLARATION_PATH).read_bytes())
+    registry_name = "manifests/cohort_registry.json"
+    registry = source / registry_name
+    original = b'{"scope":"procedural_test_only","members":[]}\n'
+    registry.write_bytes(original)
+    # A controlled input list tests this helper independently of changes to the
+    # real cohort. The copied preregistration itself remains unmodified.
+    inputs = {"source_hashes_at_declaration": {
+        registry_name: hashlib.sha256(original).hexdigest()}}
+    saved = tmp_path / "preserved"
+    runner.preserve_declaration_inputs(inputs, saved, root=source)
+    assert (saved / registry_name).read_bytes() == original
+    runner.load_declaration(saved / runner.DECLARATION_PATH)
+    registry.write_bytes(original + b" ")
+    with pytest.raises(ValueError, match="Declared input changed.*cohort_registry"):
+        runner.preserve_declaration_inputs(inputs, tmp_path / "refused", root=source)
+
+
 def test_reused_failed_audit_keeps_every_candidate_in_denominator(tmp_path, monkeypatch):
     case, sim, _ = native_fixture()
     calls = []
@@ -216,6 +240,10 @@ def test_all_arm_orchestration_uses_explicit_nonpatient_test_scope(tmp_path, mon
     monkeypatch.setattr(runner, "assert_declaration", lambda value: None)
     monkeypatch.setattr(runner, "assert_declared_sources", lambda value: None)
     monkeypatch.setattr(runner, "assert_declared_target", lambda *args: panels)
+    # This orchestration fixture substitutes a nonpatient target and budgets;
+    # it must not preserve the historical patient's declared cohort inputs.
+    # The unchanged production preservation gate is tested separately above.
+    monkeypatch.setattr(runner, "preserve_declaration_inputs", lambda *args: None)
     output = tmp_path / "comparison"
     result = runner.run_target_comparison(base, case, target, Path(shared["checkpoint_path"]), output, declaration)
     assert result["status"] == "completed"
