@@ -1,0 +1,234 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import {
+  cIndex,
+  inverseAffine,
+  rasAffine,
+  sampleTrilinear,
+  slicePoint,
+  sliceRect,
+  transformPoint,
+  volumeBounds,
+} from "./coordinates.ts";
+import { maskSurface } from "./surface.ts";
+import * as THREE from "three";
+import { physicalBounds, placeInSourceFrame } from "./sceneGeometry.ts";
+
+const close = (actual, expected) =>
+  actual.forEach((value, index) =>
+    assert.ok(
+      Math.abs(value - expected[index]) < 1e-8,
+      `${actual} != ${expected}`,
+    ),
+  );
+
+test("C-order scalar lookup and trilinear interpolation preserve z-fastest source data", () => {
+  const shape = [2, 3, 4],
+    data = new Float32Array(24);
+  for (let x = 0; x < 2; x++)
+    for (let y = 0; y < 3; y++)
+      for (let z = 0; z < 4; z++)
+        data[cIndex(shape, [x, y, z])] = 100 * x + 10 * y + z;
+  assert.equal(sampleTrilinear(data, shape, [0.5, 0.5, 1.5]), 56.5);
+  assert.equal(sampleTrilinear(data, shape, [1, 2, 3]), 123);
+  assert.equal(sampleTrilinear(data, shape, [-0.1, 2, 3]), 0);
+});
+
+test("Oblique anisotropic source affine is invertible in physical millimetres", () => {
+  const angle = Math.PI / 6,
+    c = Math.cos(angle),
+    s = Math.sin(angle);
+  const affine = [
+    [2 * c, -3 * s, 0, 10],
+    [2 * s, 3 * c, 0, -20],
+    [0, 0, 4, 7],
+    [0, 0, 0, 1],
+  ];
+  const voxel = [3.2, 11, 0.7],
+    world = transformPoint(affine, voxel);
+  close(transformPoint(inverseAffine(affine), world), voxel);
+  const bounds = volumeBounds([10, 20, 5], affine);
+  assert.ok(bounds[0][0] < 10);
+  assert.equal(bounds[0][2], 7);
+  assert.equal(bounds[1][2], 23);
+  assert.throws(
+    () =>
+      inverseAffine([
+        [1, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1],
+      ]),
+    /singular/,
+  );
+});
+
+test("LPS source is transformed once into RAS display coordinates", () => {
+  const affine = rasAffine(
+    [
+      [2, 0, 0, 10],
+      [0, 3, 0, 20],
+      [0, 0, 4, 30],
+      [0, 0, 0, 1],
+    ],
+    "LPS+",
+  );
+  close(transformPoint(affine, [1, 2, 3]), [-12, -26, 42]);
+  close(transformPoint(inverseAffine(affine), [-12, -26, 42]), [1, 2, 3]);
+  assert.throws(() => rasAffine(affine, "unknown"), /Unsupported/);
+});
+
+test("Linked MPR click mapping uses neurological orientation and equal physical scale", () => {
+  const bounds = [
+      [-20, -30, -40],
+      [80, 170, 60],
+    ],
+    cursor = [10, 15, 25],
+    rect = sliceRect(bounds, "axial", 320, 180);
+  assert.equal(rect.width / 100, rect.height / 200);
+  close(
+    slicePoint(bounds, "axial", cursor, rect, rect.left, rect.top),
+    [-20, 170, 25],
+  );
+  close(
+    slicePoint(
+      bounds,
+      "axial",
+      cursor,
+      rect,
+      rect.left + rect.width,
+      rect.top + rect.height,
+    ),
+    [80, -30, 25],
+  );
+  assert.equal(slicePoint(bounds, "axial", cursor, rect, 0, 0), null);
+  const sagittal = sliceRect(bounds, "sagittal", 320, 180);
+  close(
+    slicePoint(
+      bounds,
+      "sagittal",
+      cursor,
+      sagittal,
+      sagittal.left,
+      sagittal.top,
+    ),
+    [10, -30, 60],
+  );
+});
+
+test("Surface worker derives only source-mask geometry and pads image-edge labels", () => {
+  const mask = new Uint8Array(27);
+  mask[13] = 1;
+  const vertices = maskSurface(mask, [3, 3, 3]);
+  assert.ok(vertices.length > 0);
+  assert.equal(vertices.length % 9, 0);
+  for (let axis = 0; axis < 3; axis++) {
+    const coords = Array.from(vertices).filter((_, i) => i % 3 === axis);
+    assert.equal(Math.min(...coords), 0.5);
+    assert.equal(Math.max(...coords), 1.5);
+  }
+  const boundary = new Uint8Array(8);
+  boundary[0] = 1;
+  assert.equal(Math.min(...maskSurface(boundary, [2, 2, 2])), -0.5);
+  assert.equal(maskSurface(new Uint8Array(8), [2, 2, 2]).length, 0);
+});
+
+test("A newly added surface has physical camera bounds before its first render", () => {
+  const group = new THREE.Group(),
+    affine = [
+      [-1, 0, 0, 0],
+      [0, -1, 0, 239],
+      [0, 0, 1, 0],
+      [0, 0, 0, 1],
+    ];
+  const mesh = () =>
+    new THREE.Mesh(
+      new THREE.BufferGeometry().setAttribute(
+        "position",
+        new THREE.Float32BufferAttribute(
+          [150, 140, 90, 180, 170, 110, 170, 160, 100],
+          3,
+        ),
+      ),
+      new THREE.MeshBasicMaterial(),
+    );
+  const first = mesh();
+  placeInSourceFrame(first, affine);
+  group.add(first);
+  group.updateMatrixWorld(true);
+  const newest = mesh();
+  placeInSourceFrame(newest, affine);
+  group.add(newest);
+  const bounds = physicalBounds(group);
+  close(bounds.min.toArray(), [-180, 69, 90]);
+  close(bounds.max.toArray(), [-150, 99, 110]);
+  assert.ok(
+    bounds.max.x < 0,
+    "No positive native voxel coordinates may leak into the RAS bounding box",
+  );
+});
+
+test("The source isosurface is watertight, oriented, and has nonzero physical volume", () => {
+  const vertices = maskSurface(new Uint8Array(125).fill(1), [5, 5, 5]);
+  const edges = new Map();
+  let signedVolume = 0;
+  for (let index = 0; index < vertices.length; index += 9) {
+    const a = [...vertices.slice(index, index + 3)];
+    const b = [...vertices.slice(index + 3, index + 6)];
+    const c = [...vertices.slice(index + 6, index + 9)];
+    signedVolume +=
+      (a[0] * (b[1] * c[2] - b[2] * c[1]) +
+        a[1] * (b[2] * c[0] - b[0] * c[2]) +
+        a[2] * (b[0] * c[1] - b[1] * c[0])) /
+      6;
+    const ab = b.map((v, i) => v - a[i]),
+      ac = c.map((v, i) => v - a[i]);
+    assert.ok(
+      Math.hypot(
+        ab[1] * ac[2] - ab[2] * ac[1],
+        ab[2] * ac[0] - ab[0] * ac[2],
+        ab[0] * ac[1] - ab[1] * ac[0],
+      ) > 0,
+    );
+    for (const [start, end] of [
+      [a, b],
+      [b, c],
+      [c, a],
+    ]) {
+      const key = [start.join(","), end.join(",")].sort().join("|");
+      edges.set(key, (edges.get(key) ?? 0) + 1);
+    }
+  }
+  assert.ok(
+    [...edges.values()].every((count) => count === 2),
+    "Every surface edge must have exactly two incident faces",
+  );
+  // The binary 0.5 isosurface rounds block edges: n³ - 3n/4 + 1/4.
+  // Quantitative target volume continues to use the 125 source voxel cells.
+  assert.ok(Math.abs(signedVolume - 121.5) < 1e-8);
+  assert.ok(
+    signedVolume > 0,
+    "Outward winding must give positive signed volume",
+  );
+  const affine = [
+    [2, 0, 0, 10],
+    [0, 3, 0, -20],
+    [0, 0, 4, 7],
+    [0, 0, 0, 1],
+  ];
+  const transformed = [];
+  for (let i = 0; i < vertices.length; i += 3)
+    transformed.push(...transformPoint(affine, [...vertices.slice(i, i + 3)]));
+  let physicalVolume = 0;
+  for (let i = 0; i < transformed.length; i += 9) {
+    const a = transformed.slice(i, i + 3),
+      b = transformed.slice(i + 3, i + 6),
+      c = transformed.slice(i + 6, i + 9);
+    physicalVolume +=
+      (a[0] * (b[1] * c[2] - b[2] * c[1]) +
+        a[1] * (b[2] * c[0] - b[0] * c[2]) +
+        a[2] * (b[0] * c[1] - b[1] * c[0])) /
+      6;
+  }
+  assert.ok(Math.abs(physicalVolume - 121.5 * 24) < 1e-7);
+});

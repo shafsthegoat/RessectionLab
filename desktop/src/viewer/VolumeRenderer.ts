@@ -1,0 +1,683 @@
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import {
+  PLANE_AXES,
+  inverseAffine,
+  rasAffine,
+  sliceRect,
+  transformPoint,
+  volumeBounds,
+} from "./coordinates";
+import type { Affine, Bounds3, Point3, SlicePlane } from "./coordinates";
+import type { ViewerRoute, ViewerVolume } from "./contracts";
+import { fragmentShader, vertexShader } from "./shaders";
+import { physicalBounds, placeInSourceFrame } from "./sceneGeometry";
+
+type Panes = { anatomy: HTMLElement } & Record<SlicePlane, HTMLElement>;
+const SLICE_PLANES: SlicePlane[] = ["axial", "coronal", "sagittal"];
+const ROUTE_COLORS = ["#8ae0c8", "#a7a1f3"];
+
+function matrix(affine: Affine): THREE.Matrix4 {
+  return new THREE.Matrix4().set(
+    ...(affine.flat() as [
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+      number,
+    ]),
+  );
+}
+function disposeObject(object: THREE.Object3D): void {
+  object.traverse((child) => {
+    if (child instanceof THREE.Mesh || child instanceof THREE.Line) {
+      child.geometry.dispose();
+      const materials = Array.isArray(child.material)
+        ? child.material
+        : [child.material];
+      materials.forEach((material) => material.dispose());
+    }
+  });
+}
+function dataTexture(
+  data: Float32Array | Uint8Array,
+  shape: [number, number, number],
+): THREE.Data3DTexture {
+  const texture = new THREE.Data3DTexture(data, shape[2], shape[1], shape[0]);
+  texture.format = THREE.RedFormat;
+  texture.type =
+    data instanceof Float32Array ? THREE.FloatType : THREE.UnsignedByteType;
+  texture.minFilter = THREE.NearestFilter;
+  texture.magFilter = THREE.NearestFilter;
+  texture.unpackAlignment = 1;
+  texture.generateMipmaps = false;
+  texture.needsUpdate = true;
+  return texture;
+}
+function intensityWindow(values: Float32Array): [number, number] {
+  const sampled: number[] = [],
+    stride = Math.max(1, Math.floor(values.length / 16000));
+  for (let i = 0; i < values.length; i += stride)
+    if (Number.isFinite(values[i]) && values[i] !== 0) sampled.push(values[i]);
+  sampled.sort((a, b) => a - b);
+  if (!sampled.length) return [0, 1];
+  const low = sampled[Math.floor(sampled.length * 0.005)],
+    high =
+      sampled[Math.min(sampled.length - 1, Math.floor(sampled.length * 0.995))];
+  return [low, Math.max(low + 1e-6, high)];
+}
+
+/** One GPU context shares the source textures across the 3-D scene and all MPRs. */
+export class VolumeRenderer {
+  readonly bounds: Bounds3;
+  readonly defaultWindow: [number, number];
+  readonly affine: Affine;
+  private readonly renderer: THREE.WebGLRenderer;
+  private readonly scene = new THREE.Scene();
+  private readonly camera = new THREE.PerspectiveCamera(34, 1, 0.1, 5000);
+  private readonly controls: OrbitControls;
+  private readonly slices = new Map<
+    SlicePlane,
+    {
+      scene: THREE.Scene;
+      material: THREE.ShaderMaterial;
+      camera: THREE.OrthographicCamera;
+    }
+  >();
+  private readonly anatomy = new THREE.Group();
+  private readonly tools = new THREE.Group();
+  private readonly surfaces = new Map<string, THREE.Mesh>();
+  private readonly mriTexture: THREE.Data3DTexture;
+  private readonly labelTexture: THREE.Data3DTexture;
+  private readonly sourcePlane: THREE.Mesh<
+    THREE.BufferGeometry,
+    THREE.ShaderMaterial
+  >;
+  private readonly cursorObject: THREE.LineSegments;
+  private readonly observer: ResizeObserver;
+  private readonly worker: Worker;
+  private disposed = false;
+  private frame = 0;
+  private width = 0;
+  private height = 0;
+  private cursor: Point3;
+  private visible: Record<string, boolean> = {};
+  private opacity = 0.4;
+  private activePlane: SlicePlane = "axial";
+  private routeSignature = "";
+  private mode: "anatomy" | "instruments" = "anatomy";
+  private readonly pickRay = new THREE.Raycaster();
+  private readonly onControlsChange = () => this.requestRender();
+  private readonly onContextLost = (event: Event) => {
+    event.preventDefault();
+    this.onError(
+      "The graphics context was lost. Reopen this case to restore the source-image views.",
+    );
+  };
+
+  constructor(
+    private readonly container: HTMLElement,
+    private readonly canvas: HTMLCanvasElement,
+    private readonly panes: Panes,
+    private readonly volume: ViewerVolume,
+    private readonly onError: (message: string) => void,
+    private readonly onSurfaceStatus: (remaining: number) => void,
+  ) {
+    const count = volume.shape.reduce((a, b) => a * b, 1);
+    if (
+      volume.shape.some((x) => !Number.isInteger(x) || x < 2) ||
+      volume.mri.length !== count
+    )
+      throw new Error("MRI array dimensions do not match the source grid.");
+    if (volume.compartments.length > 8)
+      throw new Error(
+        "This viewer supports up to eight independently visible source compartments.",
+      );
+    if (volume.compartments.some((layer) => layer.mask.length !== count))
+      throw new Error("A source compartment does not match the MRI grid.");
+    this.affine = rasAffine(volume.affine, volume.frame);
+    const inverse = inverseAffine(this.affine);
+    this.bounds = volumeBounds(volume.shape, this.affine);
+    this.cursor = this.bounds[0].map(
+      (x, i) => (x + this.bounds[1][i]) / 2,
+    ) as Point3;
+    this.defaultWindow = intensityWindow(volume.mri);
+    this.renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias: true,
+      alpha: false,
+      powerPreference: "high-performance",
+    });
+    const gl = this.renderer.getContext() as WebGL2RenderingContext;
+    const maximum = gl.getParameter(gl.MAX_3D_TEXTURE_SIZE) as number;
+    if (volume.shape.some((x) => x > maximum)) {
+      this.renderer.dispose();
+      throw new Error(
+        `The source grid exceeds this GPU's ${maximum}-voxel 3-D texture limit.`,
+      );
+    }
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    this.renderer.setClearColor(0x05080d, 1);
+    this.renderer.autoClear = false;
+    this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+    this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    this.renderer.toneMappingExposure = 1.05;
+    this.renderer.debug.onShaderError = () =>
+      onError(
+        "The GPU could not compile the source-image renderer. No image or route geometry has been substituted.",
+      );
+    this.canvas.addEventListener("webglcontextlost", this.onContextLost);
+    this.mriTexture = dataTexture(volume.mri, volume.shape);
+    const packed = new Uint8Array(count);
+    volume.compartments.forEach((layer, index) => {
+      const bit = 1 << index;
+      for (let i = 0; i < count; i++) if (layer.mask[i]) packed[i] |= bit;
+      this.visible[layer.name] = true;
+    });
+    this.labelTexture = dataTexture(packed, volume.shape);
+    const material = (threeD: boolean, plane: SlicePlane) =>
+      new THREE.ShaderMaterial({
+        vertexShader,
+        fragmentShader,
+        glslVersion: THREE.GLSL3,
+        side: THREE.DoubleSide,
+        transparent: threeD,
+        depthWrite: !threeD,
+        toneMapped: false,
+        uniforms: {
+          uMri: { value: this.mriTexture },
+          uLabels: { value: this.labelTexture },
+          uWorldToVoxel: { value: matrix(inverse) },
+          uShape: { value: new THREE.Vector3(...volume.shape) },
+          uLow: { value: new THREE.Vector3(...this.bounds[0]) },
+          uHigh: { value: new THREE.Vector3(...this.bounds[1]) },
+          uCursor: { value: new THREE.Vector3(...this.cursor) },
+          uAxes: { value: new THREE.Vector3(...PLANE_AXES[plane]) },
+          uRect: { value: new THREE.Vector4(0, 0, 1, 1) },
+          uResolution: { value: new THREE.Vector2(1, 1) },
+          uWindow: { value: new THREE.Vector2(...this.defaultWindow) },
+          uOverlay: { value: this.opacity },
+          uThreeD: { value: threeD ? 1 : 0 },
+          uVisibleBits: { value: (1 << volume.compartments.length) - 1 },
+          uColors: {
+            value: Array.from({ length: 8 }, (_, i) =>
+              new THREE.Color(
+                volume.compartments[i]?.color || "#738c9e",
+              ).convertLinearToSRGB(),
+            ),
+          },
+          uRouteCount: { value: 0 },
+          uShaftStart: { value: [new THREE.Vector3(), new THREE.Vector3()] },
+          uShaftEnd: { value: [new THREE.Vector3(), new THREE.Vector3()] },
+          uTipEnd: { value: [new THREE.Vector3(), new THREE.Vector3()] },
+          uRadii: { value: [new THREE.Vector2(), new THREE.Vector2()] },
+          uRouteColors: {
+            value: ROUTE_COLORS.map((color) =>
+              new THREE.Color(color).convertLinearToSRGB(),
+            ),
+          },
+        },
+      });
+    for (const plane of SLICE_PLANES) {
+      const scene = new THREE.Scene(),
+        shader = material(false, plane),
+        camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 3);
+      camera.position.z = 1;
+      scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), shader));
+      this.slices.set(plane, { scene, material: shader, camera });
+    }
+    const planeGeometry = new THREE.BufferGeometry();
+    planeGeometry.setAttribute(
+      "position",
+      new THREE.Float32BufferAttribute(new Float32Array(12), 3),
+    );
+    planeGeometry.setAttribute(
+      "uv",
+      new THREE.Float32BufferAttribute([0, 0, 1, 0, 1, 1, 0, 1], 2),
+    );
+    planeGeometry.setIndex([0, 1, 2, 0, 2, 3]);
+    this.sourcePlane = new THREE.Mesh(planeGeometry, material(true, "axial"));
+    this.sourcePlane.renderOrder = 1;
+    this.scene.add(this.sourcePlane, this.anatomy, this.tools);
+    this.scene.add(new THREE.HemisphereLight(0xb7d6df, 0x142738, 2.1));
+    const centre = new THREE.Vector3(...this.cursor);
+    const key = new THREE.DirectionalLight(0xe8f3f3, 3.1);
+    key.position.copy(centre).add(new THREE.Vector3(170, -220, 240));
+    key.target.position.copy(centre);
+    const rim = new THREE.DirectionalLight(0x77bdb4, 1.6);
+    rim.position.copy(centre).add(new THREE.Vector3(-190, 160, 70));
+    rim.target.position.copy(centre);
+    this.scene.add(key, key.target, rim, rim.target);
+    const cursorGeometry = new THREE.BufferGeometry().setAttribute(
+      "position",
+      new THREE.Float32BufferAttribute(
+        [-3, 0, 0, 3, 0, 0, 0, -3, 0, 0, 3, 0, 0, 0, -3, 0, 0, 3],
+        3,
+      ),
+    );
+    this.cursorObject = new THREE.LineSegments(
+      cursorGeometry,
+      new THREE.LineBasicMaterial({
+        color: 0xb4eadb,
+        transparent: true,
+        opacity: 0.95,
+        depthTest: false,
+      }),
+    );
+    this.cursorObject.renderOrder = 5;
+    this.scene.add(this.cursorObject);
+    this.camera.up.set(0, 0, 1);
+    this.controls = new OrbitControls(this.camera, panes.anatomy);
+    this.controls.enableDamping = true;
+    this.controls.dampingFactor = 0.12;
+    this.controls.rotateSpeed = 0.65;
+    this.controls.zoomSpeed = 0.8;
+    this.controls.minDistance = 5;
+    this.controls.maxDistance = 2200;
+    this.controls.addEventListener("change", this.onControlsChange);
+    this.observer = new ResizeObserver(() => this.requestRender());
+    this.observer.observe(container);
+    Object.values(panes).forEach((pane) => this.observer.observe(pane));
+    this.worker = new Worker(new URL("./surface.worker.ts", import.meta.url), {
+      type: "module",
+    });
+    let remaining = volume.compartments.length;
+    onSurfaceStatus(remaining);
+    this.worker.onmessage = (
+      event: MessageEvent<{
+        name: string;
+        positions?: Float32Array;
+        error?: string;
+      }>,
+    ) => {
+      if (this.disposed) return;
+      remaining--;
+      onSurfaceStatus(remaining);
+      if (event.data.error) {
+        onError(`Source surface unavailable: ${event.data.error}`);
+        return;
+      }
+      const layer = volume.compartments.find(
+          (item) => item.name === event.data.name,
+        ),
+        positions = event.data.positions;
+      if (!layer || !positions?.length) return;
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute(
+        "position",
+        new THREE.BufferAttribute(positions, 3),
+      );
+      geometry.computeVertexNormals();
+      const mesh = new THREE.Mesh(
+        geometry,
+        new THREE.MeshStandardMaterial({
+          color: layer.color,
+          roughness: 0.34,
+          metalness: 0.08,
+          transparent: true,
+          opacity: 0.66,
+          side: THREE.DoubleSide,
+          depthWrite: false,
+        }),
+      );
+      placeInSourceFrame(mesh, this.affine);
+      mesh.visible = this.visible[layer.name] !== false;
+      mesh.userData.compartment = layer.name;
+      this.surfaces.set(layer.name, mesh);
+      this.anatomy.add(mesh);
+      if (remaining === 0 && this.mode === "anatomy") this.fitCamera("anatomy");
+      this.requestRender();
+    };
+    this.worker.onerror = () =>
+      onError(
+        "A source surface could not be prepared. The original MRI and labels remain available in the linked slices.",
+      );
+    volume.compartments.forEach((layer) =>
+      this.worker.postMessage({
+        name: layer.name,
+        mask: layer.mask,
+        shape: volume.shape,
+      }),
+    );
+    this.updateSourcePlane();
+    this.fitCamera("anatomy");
+    this.requestRender();
+  }
+
+  private materials(): THREE.ShaderMaterial[] {
+    return [
+      this.sourcePlane.material,
+      ...Array.from(this.slices.values(), (slice) => slice.material),
+    ];
+  }
+
+  update(
+    cursor: Point3,
+    visible: Record<string, boolean>,
+    opacity: number,
+    routes: ViewerRoute[],
+    cameraMode: "anatomy" | "instruments",
+  ): void {
+    this.cursor = [...cursor];
+    this.visible = visible;
+    this.opacity = Math.max(0, Math.min(1, opacity));
+    let bits = 0;
+    this.volume.compartments.forEach((layer, index) => {
+      if (visible[layer.name] !== false) bits |= 1 << index;
+      const mesh = this.surfaces.get(layer.name);
+      if (mesh) mesh.visible = visible[layer.name] !== false;
+    });
+    this.materials().forEach((shader) => {
+      shader.uniforms.uCursor.value.set(...cursor);
+      shader.uniforms.uVisibleBits.value = bits;
+      shader.uniforms.uOverlay.value = this.opacity;
+    });
+    this.cursorObject.position.set(...cursor);
+    this.updateSourcePlane();
+    const signature = JSON.stringify(routes);
+    if (signature !== this.routeSignature) {
+      this.routeSignature = signature;
+      this.updateRoutes(routes);
+    }
+    if (cameraMode !== this.mode) {
+      this.mode = cameraMode;
+      this.fitCamera(cameraMode);
+    }
+    this.requestRender();
+  }
+
+  setWindow(low: number, high: number): void {
+    if (!Number.isFinite(low) || !Number.isFinite(high) || high <= low) return;
+    this.materials().forEach((shader) =>
+      shader.uniforms.uWindow.value.set(low, high),
+    );
+    this.requestRender();
+  }
+
+  setSourcePlane(plane: SlicePlane): void {
+    this.activePlane = plane;
+    this.updateSourcePlane();
+    this.requestRender();
+  }
+
+  private updateSourcePlane(): void {
+    const [a, b, c] = PLANE_AXES[this.activePlane],
+      values = this.sourcePlane.geometry.attributes.position
+        .array as Float32Array;
+    [
+      [0, 0],
+      [1, 0],
+      [1, 1],
+      [0, 1],
+    ].forEach(([u, v], index) => {
+      const point = [...this.cursor];
+      point[a] = this.bounds[u][a];
+      point[b] = this.bounds[v][b];
+      point[c] = this.cursor[c];
+      values.set(point, index * 3);
+    });
+    this.sourcePlane.geometry.attributes.position.needsUpdate = true;
+    this.sourcePlane.geometry.computeBoundingSphere();
+  }
+
+  private sourceToRas(point: number[]): THREE.Vector3 {
+    const sign = this.volume.frame.startsWith("LPS") ? -1 : 1;
+    return new THREE.Vector3(point[0] * sign, point[1] * sign, point[2]);
+  }
+
+  private updateRoutes(routes: ViewerRoute[]): void {
+    disposeObject(this.tools);
+    this.tools.clear();
+    const shown = routes.slice(0, 2);
+    this.materials().forEach(
+      (shader) => (shader.uniforms.uRouteCount.value = shown.length),
+    );
+    shown.forEach((route, index) => {
+      const entry = this.sourceToRas(route.entry_mm),
+        tip = this.sourceToRas(route.target_mm),
+        axis = tip.clone().sub(entry).normalize();
+      const shaftStart = tip
+          .clone()
+          .addScaledVector(axis, -route.tool.working_length_mm),
+        shaftEnd = tip.clone().addScaledVector(axis, -route.tool.tip_length_mm);
+      const color =
+        route.category === "rejected" ? "#ed9290" : ROUTE_COLORS[index];
+      const capsule = (
+        a: THREE.Vector3,
+        b: THREE.Vector3,
+        radius: number,
+        active: boolean,
+      ) => {
+        const mesh = new THREE.Mesh(
+          new THREE.CapsuleGeometry(radius, a.distanceTo(b), 5, 16),
+          new THREE.MeshStandardMaterial({
+            color,
+            metalness: active ? 0.2 : 0.62,
+            roughness: active ? 0.3 : 0.23,
+            transparent: true,
+            opacity: active ? 1 : 0.9,
+          }),
+        );
+        mesh.position.copy(a).add(b).multiplyScalar(0.5);
+        mesh.quaternion.setFromUnitVectors(
+          new THREE.Vector3(0, 1, 0),
+          b.clone().sub(a).normalize(),
+        );
+        this.tools.add(mesh);
+      };
+      capsule(shaftStart, shaftEnd, route.tool.shaft_radius_mm, false);
+      capsule(shaftEnd, tip, route.tool.tip_radius_mm, true);
+      const line = new THREE.Line(
+        new THREE.BufferGeometry().setFromPoints([entry, tip]),
+        new THREE.LineDashedMaterial({
+          color,
+          transparent: true,
+          opacity: 0.65,
+          dashSize: 2,
+          gapSize: 1.4,
+          depthTest: false,
+        }),
+      );
+      line.computeLineDistances();
+      line.renderOrder = 4;
+      this.tools.add(line);
+      if (route.window) {
+        const ring = new THREE.Mesh(
+          new THREE.RingGeometry(
+            Math.max(0.1, route.window.radius_mm - 0.24),
+            route.window.radius_mm + 0.24,
+            48,
+          ),
+          new THREE.MeshBasicMaterial({
+            color,
+            side: THREE.DoubleSide,
+            transparent: true,
+            opacity: 0.95,
+          }),
+        );
+        ring.position.copy(this.sourceToRas(route.window.center_mm));
+        ring.quaternion.setFromUnitVectors(
+          new THREE.Vector3(0, 0, 1),
+          this.sourceToRas(route.window.normal_inward).normalize(),
+        );
+        this.tools.add(ring);
+      }
+      const failure = route.geometry?.failures?.[0];
+      if (failure) {
+        const marker = new THREE.Mesh(
+          new THREE.SphereGeometry(1.5, 16, 12),
+          new THREE.MeshBasicMaterial({ color: 0xff8580, depthTest: false }),
+        );
+        marker.position.copy(this.sourceToRas(failure.position_mm));
+        marker.renderOrder = 6;
+        this.tools.add(marker);
+      }
+      this.materials().forEach((shader) => {
+        shader.uniforms.uShaftStart.value[index].copy(shaftStart);
+        shader.uniforms.uShaftEnd.value[index].copy(shaftEnd);
+        shader.uniforms.uTipEnd.value[index].copy(tip);
+        shader.uniforms.uRadii.value[index].set(
+          route.tool.shaft_radius_mm,
+          route.tool.tip_radius_mm,
+        );
+        shader.uniforms.uRouteColors.value[index]
+          .set(color)
+          .convertLinearToSRGB();
+      });
+    });
+    if (this.mode === "instruments") this.fitCamera("instruments");
+  }
+
+  fitCamera(mode: "anatomy" | "instruments" = this.mode): void {
+    let box = physicalBounds(this.anatomy);
+    if (box.isEmpty())
+      box = new THREE.Box3(
+        new THREE.Vector3(...this.bounds[0]),
+        new THREE.Vector3(...this.bounds[1]),
+      );
+    else box.expandByScalar(12);
+    if (
+      mode === "instruments" &&
+      !new THREE.Box3().setFromObject(this.tools).isEmpty()
+    )
+      box.union(new THREE.Box3().setFromObject(this.tools)).expandByScalar(8);
+    const centre = box.getCenter(new THREE.Vector3()),
+      size = box.getSize(new THREE.Vector3());
+    const pane = this.panes.anatomy.getBoundingClientRect(),
+      aspect = Math.max(0.2, pane.width / Math.max(pane.height, 1));
+    const vertical = THREE.MathUtils.degToRad(this.camera.fov),
+      horizontal = 2 * Math.atan(Math.tan(vertical / 2) * aspect);
+    const direction = new THREE.Vector3(0.88, -1.65, 0.8).normalize();
+    const right = new THREE.Vector3()
+      .crossVectors(new THREE.Vector3(0, 0, 1), direction)
+      .normalize();
+    const up = new THREE.Vector3().crossVectors(direction, right).normalize();
+    let distance = 40;
+    for (const x of [box.min.x, box.max.x])
+      for (const y of [box.min.y, box.max.y])
+        for (const z of [box.min.z, box.max.z]) {
+          const relative = new THREE.Vector3(x, y, z).sub(centre),
+            depth = relative.dot(direction);
+          distance = Math.max(
+            distance,
+            depth + Math.abs(relative.dot(right)) / Math.tan(horizontal / 2),
+            depth + Math.abs(relative.dot(up)) / Math.tan(vertical / 2),
+          );
+        }
+    distance *= 1.06;
+    this.camera.position.copy(centre).addScaledVector(direction, distance);
+    this.panes.anatomy.dataset.cameraFit = JSON.stringify({
+      mode,
+      centre: centre.toArray(),
+      size: size.toArray(),
+      distanceMm: distance,
+      surfaces: this.surfaces.size,
+    });
+    this.controls.target.copy(centre);
+    this.camera.near = Math.max(0.1, distance / 1000);
+    this.camera.far = Math.max(1000, distance * 8);
+    this.camera.updateProjectionMatrix();
+    this.controls.update();
+    this.requestRender();
+  }
+
+  /** A click on displayed source MRI/surfaces updates the same RAS cursor. */
+  pick(clientX: number, clientY: number): Point3 | null {
+    const rect = this.panes.anatomy.getBoundingClientRect();
+    const ndc = new THREE.Vector2(
+      ((clientX - rect.left) / rect.width) * 2 - 1,
+      (-(clientY - rect.top) / rect.height) * 2 + 1,
+    );
+    this.pickRay.setFromCamera(ndc, this.camera);
+    const hits = this.pickRay.intersectObjects(
+      [
+        this.sourcePlane,
+        ...Array.from(this.surfaces.values()).filter((mesh) => mesh.visible),
+      ],
+      false,
+    );
+    return hits.length
+      ? [hits[0].point.x, hits[0].point.y, hits[0].point.z]
+      : null;
+  }
+
+  private requestRender(): void {
+    if (this.disposed || this.frame) return;
+    this.frame = requestAnimationFrame(() => {
+      this.frame = 0;
+      this.controls.update();
+      this.render();
+    });
+  }
+
+  private render(): void {
+    if (this.disposed) return;
+    const root = this.container.getBoundingClientRect(),
+      width = Math.round(root.width),
+      height = Math.round(root.height);
+    if (width < 1 || height < 1) return;
+    if (width !== this.width || height !== this.height) {
+      this.width = width;
+      this.height = height;
+      this.renderer.setSize(width, height, false);
+    }
+    this.renderer.setScissorTest(false);
+    this.renderer.clear();
+    this.renderer.setScissorTest(true);
+    const viewport = (element: HTMLElement) => {
+      const r = element.getBoundingClientRect();
+      const left = Math.round(r.left - root.left),
+        bottom = Math.round(height - (r.bottom - root.top)),
+        w = Math.max(1, Math.round(r.width)),
+        h = Math.max(1, Math.round(r.height));
+      this.renderer.setViewport(left, bottom, w, h);
+      this.renderer.setScissor(left, bottom, w, h);
+      return { w, h };
+    };
+    const main = viewport(this.panes.anatomy);
+    this.camera.aspect = main.w / main.h;
+    this.camera.updateProjectionMatrix();
+    this.renderer.render(this.scene, this.camera);
+    for (const plane of SLICE_PLANES) {
+      const size = viewport(this.panes[plane]),
+        slice = this.slices.get(plane)!,
+        rect = sliceRect(this.bounds, plane, size.w, size.h);
+      slice.material.uniforms.uRect.value.set(
+        rect.left / size.w,
+        1 - (rect.top + rect.height) / size.h,
+        rect.width / size.w,
+        rect.height / size.h,
+      );
+      slice.material.uniforms.uResolution.value.set(size.w, size.h);
+      this.renderer.render(slice.scene, slice.camera);
+    }
+    this.renderer.setScissorTest(false);
+  }
+
+  dispose(): void {
+    if (this.disposed) return;
+    this.disposed = true;
+    cancelAnimationFrame(this.frame);
+    this.observer.disconnect();
+    this.worker.terminate();
+    this.controls.removeEventListener("change", this.onControlsChange);
+    this.controls.dispose();
+    this.canvas.removeEventListener("webglcontextlost", this.onContextLost);
+    disposeObject(this.scene);
+    this.slices.forEach((slice) => disposeObject(slice.scene));
+    this.mriTexture.dispose();
+    this.labelTexture.dispose();
+    this.renderer.dispose();
+  }
+}
