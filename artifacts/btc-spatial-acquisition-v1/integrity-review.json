@@ -1,0 +1,734 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-04T16:52:38.504057+00:00",
+  "root_release_sha256": "968bf5dad7dff71ff6a90e57674dba790ad335122a3872441f1a06b0da4eca0b",
+  "batch_record_sha256": "c06636316525305d964bbca82829164ec45e4ece60e87082aa060c73baff20b8",
+  "auditor_sha256": "50040a3af9497b09e5c984a1e9c165517cb9bd1022453fd81ed2089a743b688d",
+  "status": "passed",
+  "cases": [
+    {
+      "subject": "sub-PAT22",
+      "development_role": "population_training",
+      "status": "source_integrity_passed",
+      "verified_files": [
+        {
+          "path": "dataset_description.json",
+          "bytes": 1209,
+          "sha256": "84185f9c387ae232ddbe87e20b329bacf82b9b5dafe9bde63b64c9bc78bed6f2",
+          "annex_md5": null
+        },
+        {
+          "path": "participants.tsv",
+          "bytes": 10103,
+          "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d",
+          "annex_md5": null
+        },
+        {
+          "path": "README",
+          "bytes": 3145,
+          "sha256": "fbb3e2e1b00d699835badc0bbda1296f9a90f2995117d93ba3123bd2f8e2d0bb",
+          "annex_md5": null
+        },
+        {
+          "path": "CHANGES",
+          "bytes": 434,
+          "sha256": "8c766a15851db0823c661e0a3ec0ac14e2698711461a4f169cab30b3896461c9",
+          "annex_md5": null
+        },
+        {
+          "path": "sub-PAT22/ses-preop/anat/sub-PAT22_ses-preop_T1w.nii.gz",
+          "bytes": 7549922,
+          "sha256": "6ac1bc950dc2b48709367550b1c740684457fce875e3e402d870d3356282334e",
+          "annex_md5": "d0b4e260d84180ed35641855d8822f37"
+        },
+        {
+          "path": "sub-PAT22/ses-preop/anat/sub-PAT22_ses-preop_T1w.json",
+          "bytes": 929,
+          "sha256": "6af3d1cc27106772d52059ab68405d59c484daf6f8b2637a4f5efc6f15b64f3d",
+          "annex_md5": null
+        },
+        {
+          "path": "derivatives/tumor_masks/sub-PAT22/anat/sub-PAT22_space_T1_label-tumor.nii",
+          "bytes": 10486112,
+          "sha256": "b1e59048f5651e4d7e268ac14e2e3a7ea9d7e78dac5cd09f5eddc7b66a09f752",
+          "annex_md5": "a15102c95b3381219caae4d6a2c4af5b"
+        }
+      ],
+      "structural": {
+        "shape": [
+          160,
+          256,
+          256
+        ],
+        "stored_dtype": "int16",
+        "physical_units": "mm",
+        "spacing_mm": [
+          0.999997079372406,
+          1.0,
+          1.0
+        ],
+        "orientation": [
+          "R",
+          "A",
+          "S"
+        ],
+        "affine_ras_mm": [
+          [
+            0.9992063641548157,
+            -0.02438328042626381,
+            0.03140365704894066,
+            -76.97232818603516
+          ],
+          [
+            0.024371175095438957,
+            0.9997026920318604,
+            0.0007659494876861572,
+            -103.12860107421875
+          ],
+          [
+            -0.03141290321946144,
+            2.457493764040919e-09,
+            0.9995064735412598,
+            -131.29685974121094
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "qform_code": 1,
+        "sform_code": 1,
+        "maximum_qform_sform_corner_error_mm": 7.510913974508479e-06,
+        "scale_slope": 1.0,
+        "scale_intercept": 0.0,
+        "all_voxels_finite": true,
+        "scaled_intensity_min": 0.0,
+        "scaled_intensity_max": 1021.0
+      },
+      "source_annotation": {
+        "shape": [
+          160,
+          256,
+          256
+        ],
+        "stored_dtype": "uint8",
+        "physical_units": "mm",
+        "spacing_mm": [
+          1.0000001192092896,
+          1.0,
+          1.0
+        ],
+        "orientation": [
+          "L",
+          "A",
+          "S"
+        ],
+        "affine_ras_mm": [
+          [
+            -0.9992094039916992,
+            -0.0243833065032959,
+            0.03140366077423096,
+            81.90148162841797
+          ],
+          [
+            -0.02437126636505127,
+            0.9997026920318604,
+            0.0007659196853637695,
+            -99.25359344482422
+          ],
+          [
+            0.03141301870346069,
+            0.0,
+            0.9995064735412598,
+            -136.29151916503906
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "qform_code": 2,
+        "sform_code": 2,
+        "maximum_qform_sform_corner_error_mm": 2.6163185290151766e-05,
+        "scale_slope": 0.003921568859368563,
+        "scale_intercept": 0.0,
+        "all_voxels_finite": true,
+        "scaled_intensity_min": 0.0,
+        "scaled_intensity_max": 1.0
+      },
+      "orientation_reindex": [
+        [
+          0.0,
+          -1.0
+        ],
+        [
+          1.0,
+          1.0
+        ],
+        [
+          2.0,
+          1.0
+        ]
+      ],
+      "maximum_reindexed_corner_error_mm": 0.0004927413057039419,
+      "annotation_threshold": 0.5,
+      "annotation_threshold_status": "existing research assumption; no binary image saved",
+      "target_voxels_at_declared_threshold": 13915,
+      "source_annotation_meaning": "fractional source annotation; not a clinical probability or observed removal",
+      "full_head_support_accepted": false,
+      "working_brain_mask": null
+    },
+    {
+      "subject": "sub-PAT25",
+      "development_role": "population_training",
+      "status": "source_integrity_passed",
+      "verified_files": [
+        {
+          "path": "dataset_description.json",
+          "bytes": 1209,
+          "sha256": "84185f9c387ae232ddbe87e20b329bacf82b9b5dafe9bde63b64c9bc78bed6f2",
+          "annex_md5": null
+        },
+        {
+          "path": "participants.tsv",
+          "bytes": 10103,
+          "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d",
+          "annex_md5": null
+        },
+        {
+          "path": "README",
+          "bytes": 3145,
+          "sha256": "fbb3e2e1b00d699835badc0bbda1296f9a90f2995117d93ba3123bd2f8e2d0bb",
+          "annex_md5": null
+        },
+        {
+          "path": "CHANGES",
+          "bytes": 434,
+          "sha256": "8c766a15851db0823c661e0a3ec0ac14e2698711461a4f169cab30b3896461c9",
+          "annex_md5": null
+        },
+        {
+          "path": "sub-PAT25/ses-preop/anat/sub-PAT25_ses-preop_T1w.nii.gz",
+          "bytes": 7840879,
+          "sha256": "40f786e7fbdfdb036d6409ffe771ec9309d0c424fca88e44e8a42c43c8900562",
+          "annex_md5": "5cef3000e15d0c715424d3c19ead5ceb"
+        },
+        {
+          "path": "sub-PAT25/ses-preop/anat/sub-PAT25_ses-preop_T1w.json",
+          "bytes": 926,
+          "sha256": "1518fed8c4da1c8a93847733b9361990f0f8edc9c716dca2c9498fb65ee428ff",
+          "annex_md5": null
+        },
+        {
+          "path": "derivatives/tumor_masks/sub-PAT25/anat/sub-PAT25_space_T1_label-tumor.nii",
+          "bytes": 10486112,
+          "sha256": "b064c64c1a24333ae9e6f61afaa57ea49e179dff66bc2e2e3cba124262cb0aae",
+          "annex_md5": "11678794420afa14b7419581b1aa1faa"
+        }
+      ],
+      "structural": {
+        "shape": [
+          160,
+          256,
+          256
+        ],
+        "stored_dtype": "int16",
+        "physical_units": "mm",
+        "spacing_mm": [
+          1.0000054836273193,
+          1.0,
+          1.0
+        ],
+        "orientation": [
+          "R",
+          "A",
+          "S"
+        ],
+        "affine_ras_mm": [
+          [
+            0.9996336698532104,
+            -0.0243731290102005,
+            0.012221364304423332,
+            -78.97980499267578
+          ],
+          [
+            0.024371441453695297,
+            0.9997029304504395,
+            0.00029797846218571067,
+            -109.11360168457031
+          ],
+          [
+            -0.012225063517689705,
+            -1.705437391308351e-08,
+            0.9999252557754517,
+            -133.74107360839844
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "qform_code": 1,
+        "sform_code": 1,
+        "maximum_qform_sform_corner_error_mm": 7.3049491283626415e-06,
+        "scale_slope": 1.0,
+        "scale_intercept": 0.0,
+        "all_voxels_finite": true,
+        "scaled_intensity_min": 0.0,
+        "scaled_intensity_max": 1039.0
+      },
+      "source_annotation": {
+        "shape": [
+          160,
+          256,
+          256
+        ],
+        "stored_dtype": "uint8",
+        "physical_units": "mm",
+        "spacing_mm": [
+          1.0000001192092896,
+          1.0,
+          1.0
+        ],
+        "orientation": [
+          "L",
+          "A",
+          "S"
+        ],
+        "affine_ras_mm": [
+          [
+            -0.9996283054351807,
+            -0.024373173713684082,
+            0.012221336364746094,
+            79.96195220947266
+          ],
+          [
+            -0.02437126636505127,
+            0.9997029304504395,
+            0.00029796361923217773,
+            -105.2385482788086
+          ],
+          [
+            0.012224972248077393,
+            0.0,
+            0.9999252557754517,
+            -135.6848602294922
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "qform_code": 2,
+        "sform_code": 2,
+        "maximum_qform_sform_corner_error_mm": 0.002668884379900375,
+        "scale_slope": 0.003921568859368563,
+        "scale_intercept": 0.0,
+        "all_voxels_finite": true,
+        "scaled_intensity_min": 0.0,
+        "scaled_intensity_max": 1.0
+      },
+      "orientation_reindex": [
+        [
+          0.0,
+          -1.0
+        ],
+        [
+          1.0,
+          1.0
+        ],
+        [
+          2.0,
+          1.0
+        ]
+      ],
+      "maximum_reindexed_corner_error_mm": 0.0008570717763817397,
+      "annotation_threshold": 0.5,
+      "annotation_threshold_status": "existing research assumption; no binary image saved",
+      "target_voxels_at_declared_threshold": 16526,
+      "source_annotation_meaning": "fractional source annotation; not a clinical probability or observed removal",
+      "full_head_support_accepted": false,
+      "working_brain_mask": null
+    },
+    {
+      "subject": "sub-PAT26",
+      "development_role": "checkpoint_selection_development",
+      "status": "source_integrity_passed",
+      "verified_files": [
+        {
+          "path": "dataset_description.json",
+          "bytes": 1209,
+          "sha256": "84185f9c387ae232ddbe87e20b329bacf82b9b5dafe9bde63b64c9bc78bed6f2",
+          "annex_md5": null
+        },
+        {
+          "path": "participants.tsv",
+          "bytes": 10103,
+          "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d",
+          "annex_md5": null
+        },
+        {
+          "path": "README",
+          "bytes": 3145,
+          "sha256": "fbb3e2e1b00d699835badc0bbda1296f9a90f2995117d93ba3123bd2f8e2d0bb",
+          "annex_md5": null
+        },
+        {
+          "path": "CHANGES",
+          "bytes": 434,
+          "sha256": "8c766a15851db0823c661e0a3ec0ac14e2698711461a4f169cab30b3896461c9",
+          "annex_md5": null
+        },
+        {
+          "path": "sub-PAT26/ses-preop/anat/sub-PAT26_ses-preop_T1w.nii.gz",
+          "bytes": 7679139,
+          "sha256": "a27b46c82c4df0b4ebae97b5bea22bb4299abc5086577416c498edfa63879595",
+          "annex_md5": "4096e06bea2c2eb8797e8830ea0fd7db"
+        },
+        {
+          "path": "sub-PAT26/ses-preop/anat/sub-PAT26_ses-preop_T1w.json",
+          "bytes": 926,
+          "sha256": "566b553a3c55cd7c59ed22f5e9646a70e7267dcaa990c202f2d4ffd26a98bef3",
+          "annex_md5": null
+        },
+        {
+          "path": "derivatives/tumor_masks/sub-PAT26/anat/sub-PAT26_space_T1_label-tumor.nii",
+          "bytes": 10486112,
+          "sha256": "1e79c102fe85092fa6d8b9100c2fb2ad334cf8adf1c7d3bdcbda635d91884294",
+          "annex_md5": "0cc343b576553a0fd95fa92743c4ed29"
+        }
+      ],
+      "structural": {
+        "shape": [
+          160,
+          256,
+          256
+        ],
+        "stored_dtype": "int16",
+        "physical_units": "mm",
+        "spacing_mm": [
+          1.0000009536743164,
+          1.0,
+          1.0
+        ],
+        "orientation": [
+          "R",
+          "A",
+          "S"
+        ],
+        "affine_ras_mm": [
+          [
+            0.9993138313293457,
+            -0.024380743503570557,
+            0.02791663259267807,
+            -77.2808609008789
+          ],
+          [
+            0.024371257051825523,
+            0.9997027516365051,
+            0.0006808483740314841,
+            -109.16217041015625
+          ],
+          [
+            -0.02792496047914028,
+            -1.7723966294624915e-08,
+            0.9996100068092346,
+            -129.7393035888672
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "qform_code": 1,
+        "sform_code": 1,
+        "maximum_qform_sform_corner_error_mm": 4.558364457618419e-06,
+        "scale_slope": 1.0,
+        "scale_intercept": 0.0,
+        "all_voxels_finite": true,
+        "scaled_intensity_min": 0.0,
+        "scaled_intensity_max": 1201.0
+      },
+      "source_annotation": {
+        "shape": [
+          160,
+          256,
+          256
+        ],
+        "stored_dtype": "uint8",
+        "physical_units": "mm",
+        "spacing_mm": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "orientation": [
+          "L",
+          "A",
+          "S"
+        ],
+        "affine_ras_mm": [
+          [
+            -0.9993128776550293,
+            -0.02438068389892578,
+            0.02791661024093628,
+            81.61003875732422
+          ],
+          [
+            -0.02437126636505127,
+            0.9997027516365051,
+            0.0006808638572692871,
+            -105.28715515136719
+          ],
+          [
+            0.027924954891204834,
+            0.0,
+            0.9996100068092346,
+            -134.1793670654297
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "qform_code": 2,
+        "sform_code": 2,
+        "maximum_qform_sform_corner_error_mm": 0.0011966808365868732,
+        "scale_slope": 0.003921568859368563,
+        "scale_intercept": 0.0,
+        "all_voxels_finite": true,
+        "scaled_intensity_min": 0.0,
+        "scaled_intensity_max": 1.0
+      },
+      "orientation_reindex": [
+        [
+          0.0,
+          -1.0
+        ],
+        [
+          1.0,
+          1.0
+        ],
+        [
+          2.0,
+          1.0
+        ]
+      ],
+      "maximum_reindexed_corner_error_mm": 0.00016831636504492921,
+      "annotation_threshold": 0.5,
+      "annotation_threshold_status": "existing research assumption; no binary image saved",
+      "target_voxels_at_declared_threshold": 55312,
+      "source_annotation_meaning": "fractional source annotation; not a clinical probability or observed removal",
+      "full_head_support_accepted": false,
+      "working_brain_mask": null
+    },
+    {
+      "subject": "sub-PAT27",
+      "development_role": "checkpoint_selection_development",
+      "status": "source_integrity_passed",
+      "verified_files": [
+        {
+          "path": "dataset_description.json",
+          "bytes": 1209,
+          "sha256": "84185f9c387ae232ddbe87e20b329bacf82b9b5dafe9bde63b64c9bc78bed6f2",
+          "annex_md5": null
+        },
+        {
+          "path": "participants.tsv",
+          "bytes": 10103,
+          "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d",
+          "annex_md5": null
+        },
+        {
+          "path": "README",
+          "bytes": 3145,
+          "sha256": "fbb3e2e1b00d699835badc0bbda1296f9a90f2995117d93ba3123bd2f8e2d0bb",
+          "annex_md5": null
+        },
+        {
+          "path": "CHANGES",
+          "bytes": 434,
+          "sha256": "8c766a15851db0823c661e0a3ec0ac14e2698711461a4f169cab30b3896461c9",
+          "annex_md5": null
+        },
+        {
+          "path": "sub-PAT27/ses-preop/anat/sub-PAT27_ses-preop_T1w.nii.gz",
+          "bytes": 7357615,
+          "sha256": "f12b9c898194467ef43da71d0f517b24cb57b494b2456acc559bf9473e6e75ab",
+          "annex_md5": "42541d52e5940f049cf57fb8cb3f804c"
+        },
+        {
+          "path": "sub-PAT27/ses-preop/anat/sub-PAT27_ses-preop_T1w.json",
+          "bytes": 926,
+          "sha256": "c777ba9a9a49653f21623cf11b7ccd10544e4f8388d98e95bed39bb09a33ac1a",
+          "annex_md5": null
+        },
+        {
+          "path": "derivatives/tumor_masks/sub-PAT27/anat/sub-PAT27_space_T1_label-tumor.nii",
+          "bytes": 10486112,
+          "sha256": "f9495be91f7c47844be7a69d4f37467c2eddeb315f8560d9b65ce470d949645a",
+          "annex_md5": "40e9084da2df8fd287b4717c03e1cc25"
+        }
+      ],
+      "structural": {
+        "shape": [
+          160,
+          256,
+          256
+        ],
+        "stored_dtype": "int16",
+        "physical_units": "mm",
+        "spacing_mm": [
+          0.9999974966049194,
+          1.0,
+          1.0
+        ],
+        "orientation": [
+          "R",
+          "A",
+          "S"
+        ],
+        "affine_ras_mm": [
+          [
+            0.9996031522750854,
+            -0.024373624473810196,
+            -0.013942251913249493,
+            -74.70027923583984
+          ],
+          [
+            0.0243711918592453,
+            0.9997029304504395,
+            -0.00033993780380114913,
+            -100.91281127929688
+          ],
+          [
+            0.01394636183977127,
+            1.358186096922509e-08,
+            0.9999027252197266,
+            -145.96343994140625
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "qform_code": 1,
+        "sform_code": 1,
+        "maximum_qform_sform_corner_error_mm": 7.836811310425472e-06,
+        "scale_slope": 1.0,
+        "scale_intercept": 0.0,
+        "all_voxels_finite": true,
+        "scaled_intensity_min": 0.0,
+        "scaled_intensity_max": 1188.0
+      },
+      "source_annotation": {
+        "shape": [
+          160,
+          256,
+          256
+        ],
+        "stored_dtype": "uint8",
+        "physical_units": "mm",
+        "spacing_mm": [
+          0.9999999403953552,
+          1.0,
+          1.0
+        ],
+        "orientation": [
+          "L",
+          "A",
+          "S"
+        ],
+        "affine_ras_mm": [
+          [
+            -0.999605655670166,
+            -0.024373650550842285,
+            -0.013942241668701172,
+            84.23662567138672
+          ],
+          [
+            -0.02437126636505127,
+            0.9997029304504395,
+            -0.0003399848937988281,
+            -97.03779602050781
+          ],
+          [
+            -0.01394641399383545,
+            0.0,
+            0.9999027252197266,
+            -143.74598693847656
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "qform_code": 2,
+        "sform_code": 2,
+        "maximum_qform_sform_corner_error_mm": 4.457438011925208e-05,
+        "scale_slope": 0.003921568859368563,
+        "scale_intercept": 0.0,
+        "all_voxels_finite": true,
+        "scaled_intensity_min": 0.0,
+        "scaled_intensity_max": 1.0
+      },
+      "orientation_reindex": [
+        [
+          0.0,
+          -1.0
+        ],
+        [
+          1.0,
+          1.0
+        ],
+        [
+          2.0,
+          1.0
+        ]
+      ],
+      "maximum_reindexed_corner_error_mm": 0.0004024579090976117,
+      "annotation_threshold": 0.5,
+      "annotation_threshold_status": "existing research assumption; no binary image saved",
+      "target_voxels_at_declared_threshold": 11983,
+      "source_annotation_meaning": "fractional source annotation; not a clinical probability or observed removal",
+      "full_head_support_accepted": false,
+      "working_brain_mask": null
+    }
+  ],
+  "failures": [],
+  "runtime": {
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "numpy": "2.5.3",
+    "nibabel": "5.4.2"
+  },
+  "numerical_threads_requested": 1,
+  "downloads_performed": false,
+  "inference_executed": false,
+  "case_preparation_executed": false,
+  "source_images_modified": false,
+  "brain_reviewed": false,
+  "cortex_localized": false,
+  "cortical_access_permitted": false,
+  "clinical_deficit_probability": null,
+  "interpretation": "Source identity, finite arrays and coordinate consistency only; not anatomical accuracy, surgical feasibility or planning eligibility.",
+  "unopened_PAT29_PAT31_files_absent": true,
+  "frozen_source_unchanged": true,
+  "elapsed_seconds": 0.6290182080119848,
+  "peak_rss_bytes_macos": 278249472
+}

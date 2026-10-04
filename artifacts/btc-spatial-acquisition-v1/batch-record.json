@@ -1,0 +1,326 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "started_at": "2026-10-04T15:33:21.799179+00:00",
+  "root_release_sha256": "968bf5dad7dff71ff6a90e57674dba790ad335122a3872441f1a06b0da4eca0b",
+  "executor_sha256": "33304c3478f3aa9aa1d2cdc2c2fc74e2267cd1467d022464d2fcf88d56e75977",
+  "git_commit": "59972d6520e8e95f858d9dd97c4fa621dab559ba",
+  "attempts": [
+    {
+      "subject": "sub-PAT22",
+      "started_at": "2026-10-04T15:33:21.799653+00:00",
+      "argv": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+        "-I",
+        "-S",
+        "-c",
+        "import runpy,sys;sys.path.insert(0,sys.argv[1]);sys.argv=sys.argv[2:];runpy.run_path(sys.argv[0],run_name='__main__')",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/btc-spatial-acquisition-59972d6/scripts",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/btc-spatial-acquisition-59972d6/scripts/acquire_btc_case.py",
+        "--spatial-subject",
+        "sub-PAT22",
+        "--output-root",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/diffusion_source/ds001226-v5.0.1"
+      ],
+      "status": "completed",
+      "finished_at": "2026-10-04T15:33:24.098959+00:00",
+      "exit_code": 0,
+      "log_sha256": "b4bedaec3223ccaf3ca04b4f85153c0719f4c2f29834869f4c493f9cde6f30ec",
+      "source_manifest_sha256": "e1f6fa5c82558bdbaa245223315fac6437b09bcc0938bfe61a3081845a9c72bb",
+      "acquisition_report_sha256": "a9d7f9e6a114812fd95b6f49590d1273dccaa59e611f4582c3c4fc84fcd04907",
+      "files": [
+        {
+          "path": "dataset_description.json",
+          "bytes": 1209,
+          "sha256": "84185f9c387ae232ddbe87e20b329bacf82b9b5dafe9bde63b64c9bc78bed6f2",
+          "annex_md5": null,
+          "status": "already_verified"
+        },
+        {
+          "path": "participants.tsv",
+          "bytes": 10103,
+          "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d",
+          "annex_md5": null,
+          "status": "already_verified"
+        },
+        {
+          "path": "README",
+          "bytes": 3145,
+          "sha256": "fbb3e2e1b00d699835badc0bbda1296f9a90f2995117d93ba3123bd2f8e2d0bb",
+          "annex_md5": null,
+          "status": "already_verified"
+        },
+        {
+          "path": "CHANGES",
+          "bytes": 434,
+          "sha256": "8c766a15851db0823c661e0a3ec0ac14e2698711461a4f169cab30b3896461c9",
+          "annex_md5": null,
+          "status": "already_verified"
+        },
+        {
+          "path": "sub-PAT22/ses-preop/anat/sub-PAT22_ses-preop_T1w.nii.gz",
+          "bytes": 7549922,
+          "sha256": "6ac1bc950dc2b48709367550b1c740684457fce875e3e402d870d3356282334e",
+          "annex_md5": "d0b4e260d84180ed35641855d8822f37",
+          "status": "downloaded_and_verified"
+        },
+        {
+          "path": "sub-PAT22/ses-preop/anat/sub-PAT22_ses-preop_T1w.json",
+          "bytes": 929,
+          "sha256": "6af3d1cc27106772d52059ab68405d59c484daf6f8b2637a4f5efc6f15b64f3d",
+          "annex_md5": null,
+          "status": "downloaded_and_verified"
+        },
+        {
+          "path": "derivatives/tumor_masks/sub-PAT22/anat/sub-PAT22_space_T1_label-tumor.nii",
+          "bytes": 10486112,
+          "sha256": "b1e59048f5651e4d7e268ac14e2e3a7ea9d7e78dac5cd09f5eddc7b66a09f752",
+          "annex_md5": "a15102c95b3381219caae4d6a2c4af5b",
+          "status": "downloaded_and_verified"
+        }
+      ],
+      "development_role": "population_training"
+    },
+    {
+      "subject": "sub-PAT25",
+      "started_at": "2026-10-04T15:33:24.153915+00:00",
+      "argv": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+        "-I",
+        "-S",
+        "-c",
+        "import runpy,sys;sys.path.insert(0,sys.argv[1]);sys.argv=sys.argv[2:];runpy.run_path(sys.argv[0],run_name='__main__')",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/btc-spatial-acquisition-59972d6/scripts",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/btc-spatial-acquisition-59972d6/scripts/acquire_btc_case.py",
+        "--spatial-subject",
+        "sub-PAT25",
+        "--output-root",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/diffusion_source/ds001226-v5.0.1"
+      ],
+      "status": "completed",
+      "finished_at": "2026-10-04T15:33:26.463912+00:00",
+      "exit_code": 0,
+      "log_sha256": "04afd66fcabc27c1efbd8220d93dbf3ae303fe66be7f6305ae48e18d942c3c07",
+      "source_manifest_sha256": "1473ee1d337bce1d09bb0ee0bb9bf21e9d84231db83c753b1e5a5b9fcf238920",
+      "acquisition_report_sha256": "6d7d30dae1ba17bd928fb29de778c11a6b97b26c6e2cbe4e9088700eb5bdde04",
+      "files": [
+        {
+          "path": "dataset_description.json",
+          "bytes": 1209,
+          "sha256": "84185f9c387ae232ddbe87e20b329bacf82b9b5dafe9bde63b64c9bc78bed6f2",
+          "annex_md5": null,
+          "status": "already_verified"
+        },
+        {
+          "path": "participants.tsv",
+          "bytes": 10103,
+          "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d",
+          "annex_md5": null,
+          "status": "already_verified"
+        },
+        {
+          "path": "README",
+          "bytes": 3145,
+          "sha256": "fbb3e2e1b00d699835badc0bbda1296f9a90f2995117d93ba3123bd2f8e2d0bb",
+          "annex_md5": null,
+          "status": "already_verified"
+        },
+        {
+          "path": "CHANGES",
+          "bytes": 434,
+          "sha256": "8c766a15851db0823c661e0a3ec0ac14e2698711461a4f169cab30b3896461c9",
+          "annex_md5": null,
+          "status": "already_verified"
+        },
+        {
+          "path": "sub-PAT25/ses-preop/anat/sub-PAT25_ses-preop_T1w.nii.gz",
+          "bytes": 7840879,
+          "sha256": "40f786e7fbdfdb036d6409ffe771ec9309d0c424fca88e44e8a42c43c8900562",
+          "annex_md5": "5cef3000e15d0c715424d3c19ead5ceb",
+          "status": "downloaded_and_verified"
+        },
+        {
+          "path": "sub-PAT25/ses-preop/anat/sub-PAT25_ses-preop_T1w.json",
+          "bytes": 926,
+          "sha256": "1518fed8c4da1c8a93847733b9361990f0f8edc9c716dca2c9498fb65ee428ff",
+          "annex_md5": null,
+          "status": "downloaded_and_verified"
+        },
+        {
+          "path": "derivatives/tumor_masks/sub-PAT25/anat/sub-PAT25_space_T1_label-tumor.nii",
+          "bytes": 10486112,
+          "sha256": "b064c64c1a24333ae9e6f61afaa57ea49e179dff66bc2e2e3cba124262cb0aae",
+          "annex_md5": "11678794420afa14b7419581b1aa1faa",
+          "status": "downloaded_and_verified"
+        }
+      ],
+      "development_role": "population_training"
+    },
+    {
+      "subject": "sub-PAT26",
+      "started_at": "2026-10-04T15:33:26.518795+00:00",
+      "argv": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+        "-I",
+        "-S",
+        "-c",
+        "import runpy,sys;sys.path.insert(0,sys.argv[1]);sys.argv=sys.argv[2:];runpy.run_path(sys.argv[0],run_name='__main__')",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/btc-spatial-acquisition-59972d6/scripts",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/btc-spatial-acquisition-59972d6/scripts/acquire_btc_case.py",
+        "--spatial-subject",
+        "sub-PAT26",
+        "--output-root",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/diffusion_source/ds001226-v5.0.1"
+      ],
+      "status": "completed",
+      "finished_at": "2026-10-04T15:33:29.607481+00:00",
+      "exit_code": 0,
+      "log_sha256": "1622b4960ade2683474158a6259ea05354e8504baa3cd5eefe86271333e36e70",
+      "source_manifest_sha256": "e33f8c6fc60997b93afd2920f4590c316a3bb2a5499d5529dd4eaede7102fc01",
+      "acquisition_report_sha256": "20fec73a9410c8293f96719f53b9e9f8de5e642e771c17a23be1ef7fdaad9340",
+      "files": [
+        {
+          "path": "dataset_description.json",
+          "bytes": 1209,
+          "sha256": "84185f9c387ae232ddbe87e20b329bacf82b9b5dafe9bde63b64c9bc78bed6f2",
+          "annex_md5": null,
+          "status": "already_verified"
+        },
+        {
+          "path": "participants.tsv",
+          "bytes": 10103,
+          "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d",
+          "annex_md5": null,
+          "status": "already_verified"
+        },
+        {
+          "path": "README",
+          "bytes": 3145,
+          "sha256": "fbb3e2e1b00d699835badc0bbda1296f9a90f2995117d93ba3123bd2f8e2d0bb",
+          "annex_md5": null,
+          "status": "already_verified"
+        },
+        {
+          "path": "CHANGES",
+          "bytes": 434,
+          "sha256": "8c766a15851db0823c661e0a3ec0ac14e2698711461a4f169cab30b3896461c9",
+          "annex_md5": null,
+          "status": "already_verified"
+        },
+        {
+          "path": "sub-PAT26/ses-preop/anat/sub-PAT26_ses-preop_T1w.nii.gz",
+          "bytes": 7679139,
+          "sha256": "a27b46c82c4df0b4ebae97b5bea22bb4299abc5086577416c498edfa63879595",
+          "annex_md5": "4096e06bea2c2eb8797e8830ea0fd7db",
+          "status": "downloaded_and_verified"
+        },
+        {
+          "path": "sub-PAT26/ses-preop/anat/sub-PAT26_ses-preop_T1w.json",
+          "bytes": 926,
+          "sha256": "566b553a3c55cd7c59ed22f5e9646a70e7267dcaa990c202f2d4ffd26a98bef3",
+          "annex_md5": null,
+          "status": "downloaded_and_verified"
+        },
+        {
+          "path": "derivatives/tumor_masks/sub-PAT26/anat/sub-PAT26_space_T1_label-tumor.nii",
+          "bytes": 10486112,
+          "sha256": "1e79c102fe85092fa6d8b9100c2fb2ad334cf8adf1c7d3bdcbda635d91884294",
+          "annex_md5": "0cc343b576553a0fd95fa92743c4ed29",
+          "status": "downloaded_and_verified"
+        }
+      ],
+      "development_role": "checkpoint_selection_development"
+    },
+    {
+      "subject": "sub-PAT27",
+      "started_at": "2026-10-04T15:33:29.665252+00:00",
+      "argv": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+        "-I",
+        "-S",
+        "-c",
+        "import runpy,sys;sys.path.insert(0,sys.argv[1]);sys.argv=sys.argv[2:];runpy.run_path(sys.argv[0],run_name='__main__')",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/btc-spatial-acquisition-59972d6/scripts",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/btc-spatial-acquisition-59972d6/scripts/acquire_btc_case.py",
+        "--spatial-subject",
+        "sub-PAT27",
+        "--output-root",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/diffusion_source/ds001226-v5.0.1"
+      ],
+      "status": "completed",
+      "finished_at": "2026-10-04T15:33:32.125676+00:00",
+      "exit_code": 0,
+      "log_sha256": "ea21decee4d89b86a73fa9e94f28f9bd7a5f82dd0caa206b8aeee7c7e0ccc0b9",
+      "source_manifest_sha256": "c95aaee50921dda1f8a5cb4ec5ea3349d9986e111c7e9be53d0dab208a9a8959",
+      "acquisition_report_sha256": "ebb1d2e722ead8292ff1ea2e47805c2cb9ef2e90ff83c9d7e2c59af50125e0ee",
+      "files": [
+        {
+          "path": "dataset_description.json",
+          "bytes": 1209,
+          "sha256": "84185f9c387ae232ddbe87e20b329bacf82b9b5dafe9bde63b64c9bc78bed6f2",
+          "annex_md5": null,
+          "status": "already_verified"
+        },
+        {
+          "path": "participants.tsv",
+          "bytes": 10103,
+          "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d",
+          "annex_md5": null,
+          "status": "already_verified"
+        },
+        {
+          "path": "README",
+          "bytes": 3145,
+          "sha256": "fbb3e2e1b00d699835badc0bbda1296f9a90f2995117d93ba3123bd2f8e2d0bb",
+          "annex_md5": null,
+          "status": "already_verified"
+        },
+        {
+          "path": "CHANGES",
+          "bytes": 434,
+          "sha256": "8c766a15851db0823c661e0a3ec0ac14e2698711461a4f169cab30b3896461c9",
+          "annex_md5": null,
+          "status": "already_verified"
+        },
+        {
+          "path": "sub-PAT27/ses-preop/anat/sub-PAT27_ses-preop_T1w.nii.gz",
+          "bytes": 7357615,
+          "sha256": "f12b9c898194467ef43da71d0f517b24cb57b494b2456acc559bf9473e6e75ab",
+          "annex_md5": "42541d52e5940f049cf57fb8cb3f804c",
+          "status": "downloaded_and_verified"
+        },
+        {
+          "path": "sub-PAT27/ses-preop/anat/sub-PAT27_ses-preop_T1w.json",
+          "bytes": 926,
+          "sha256": "c777ba9a9a49653f21623cf11b7ccd10544e4f8388d98e95bed39bb09a33ac1a",
+          "annex_md5": null,
+          "status": "downloaded_and_verified"
+        },
+        {
+          "path": "derivatives/tumor_masks/sub-PAT27/anat/sub-PAT27_space_T1_label-tumor.nii",
+          "bytes": 10486112,
+          "sha256": "f9495be91f7c47844be7a69d4f37467c2eddeb315f8560d9b65ce470d949645a",
+          "annex_md5": "40e9084da2df8fd287b4717c03e1cc25",
+          "status": "downloaded_and_verified"
+        }
+      ],
+      "development_role": "checkpoint_selection_development"
+    }
+  ],
+  "failures": [],
+  "expected_new_bytes": 72375710,
+  "new_downloaded_bytes": 72375710,
+  "preparation_or_training_executed": false,
+  "brain_reviewed": false,
+  "cortical_access_permitted": false,
+  "unopened_transfer_files_absent_after_batch": true,
+  "existing_shared_metadata_bytes_and_mtimes_unchanged": true,
+  "frozen_source_after_sha256": {
+    "scripts/acquire_btc_case.py": "2978b5c7756f46aac9dc8aa9f308fdf6f84a054326a48bd704fe3addc5bca0bf",
+    "scripts/acquire_public_case.py": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb",
+    "manifests/experiments/btc-spatial-development-cohort-v1.json": "962d964e1d71427f3625cdbebc0f7e4759e5d2345d8f95cb211ed45810ed2985"
+  },
+  "frozen_source_unchanged": true,
+  "finished_at": "2026-10-04T15:33:32.179644+00:00",
+  "elapsed_seconds": 10.380589165957645
+}

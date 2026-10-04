@@ -43,6 +43,14 @@ integration, vessel/function evidence, realistic image scale and held-out human
 generalization remain open requirements. See `docs/spatial-policy-research.md`,
 `docs/spatial-task.md` and their linked negative-result receipts.
 
+The frozen BTC expansion acquired PAT22/PAT25 for population training and
+PAT26/PAT27 for checkpoint selection: 72,375,710 new bytes, with source checksums
+and finite image arrays verified. Native T1/annotation orientation reconciliation
+has at most 0.000858 mm corner discrepancy. These are acquisition/integrity
+results; brain envelopes and cortical access remain unreviewed. PAT29/PAT31 stay
+unopened. Receipts are in `artifacts/btc-spatial-acquisition-v1/`; no new human
+training or planning run has been executed from this batch.
+
 The read-only inspection bridge and separate linked MRI/3D tool display were
 committed after 100 bridge checks and 68 viewer checks, respectively. App host
 integration is unfinished and preserved as working changes. Its 10 focused
