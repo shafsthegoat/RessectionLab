@@ -1,0 +1,27 @@
+{
+  "status": "prepared_not_executed",
+  "command": [
+    ".venv/bin/python",
+    "scripts/mechanics_febio_verification.py",
+    "prepare",
+    "--output",
+    "artifacts/mechanics-febio-verification-v1/decks"
+  ],
+  "exit_code": 0,
+  "sources": {
+    "scripts/mechanics_febio_verification.py": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5",
+    "tests/test_mechanics_febio_verification.py": "1b543562910763d74ca7e67fa4090a03089d2d3d2de2cba7db8e3d7d397a0d18",
+    "docs/mechanics-febio-verification.md": "a32860b0aed344a8491e83dc4f233f64525bff1122592fba8ac10d224bff1103"
+  },
+  "deck_manifest_sha256": "2492e1d20c25a3d0adfc34faf51d88206fe43c4d6897e63db4cf7ea26c96c3d7",
+  "decks": {
+    "zero.feb": "d202aa532e5cc2ec9f8219ba672d37c4606b74cbfeca9b6ea1ebbcd40a061f67",
+    "translation.feb": "98a34f49115f260feff3ce45a231c3dfcb3d5f7bcd15edf1777cd230566a8481",
+    "finite_stretch.feb": "51f7966c5054f009f7e1bf8cefa3306364196b58ede0170b39cbeab18391dee6",
+    "shear.feb": "509c6ea97211d44d81e00d35d004e0e503517c0d0d5d8857a4af89abbec2b5b6",
+    "shear_double_stiffness.feb": "af78dc2a965892293d20786149224ae8337392347fdca19ec7e3ced8db987ac5"
+  },
+  "solver_invocations": 0,
+  "specimen_values_read": 0,
+  "patient_arrays_read": 0
+}
