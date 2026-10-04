@@ -208,10 +208,11 @@ def validate_explicit_support(case: Any, support: np.ndarray, record: dict) -> d
         item = matching[0]
         item.assert_matches(case)
         return {**record, "source": item.evidence_hash, "review": item.review.to_manifest(),
-                "review_status": "accepted", "cortical_access_permitted": False}
+                "evidence_type": item.provenance, "review_status": "accepted", "cortical_access_permitted": False}
     refs = getattr(case, "source_refs", ())
     if refs and all(source.provenance == "simulated" for source in refs):
-        return {**record, "cortical_access_permitted": False}
+        return {**record, "evidence_type": "simulated" if record["evidence_type"] == "observed" else record["evidence_type"],
+                "source_domain": "synthetic_fixture", "cortical_access_permitted": False}
     if (declared_mri_support_allowed(case)
             and np.array_equal(support, case.mri != 0) and record.get("source") == case.semantic_hash
             and record.get("evidence_type") == "estimated"):

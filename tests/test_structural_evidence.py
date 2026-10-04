@@ -135,6 +135,15 @@ def test_explicit_support_cannot_reuse_unreviewed_extraction(source_case):
             support_provenance={"source": evidence.evidence_hash, "method": "extraction", "evidence_type": "estimated"})
 
 
+def test_simulated_source_cannot_be_relabelled_patient_observation():
+    source = create_synthetic_case((24, 24, 24))
+    case = source.revised(brain_mask=None)
+    result = generate_candidate_routes(case, support_mask=source.brain_mask,
+        support_provenance={"source": "synthetic fixture", "method": "known box", "evidence_type": "observed"})
+    assert result.access_support["evidence_type"] == "simulated"
+    assert result.access_support["source_domain"] == "synthetic_fixture"
+
+
 def test_desktop_displays_separate_proposal_without_planning_permission(source_case, tmp_path):
     from resectionlab.desktop_bridge import BridgeRuntime
     evidence = proposal(source_case)
