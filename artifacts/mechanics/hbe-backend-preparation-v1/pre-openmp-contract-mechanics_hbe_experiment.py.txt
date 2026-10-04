@@ -294,9 +294,7 @@ def preflight(root, protocol_binding, release_binding):
             raise ValueError('Runtime library escaped private prefix')
         inputs[str(path)] = sha
     omp = identity['private_openmp']
-    # Explicit profiles already verify either their own private library or the
-    # one original path/hash declared for read-only reuse. Legacy stays local.
-    if profile is None and not Path(omp['path']).resolve().is_relative_to(prefix.resolve()):
+    if not Path(omp['path']).resolve().is_relative_to(prefix.resolve()):
         raise ValueError('OpenMP escaped private prefix')
     inputs[str(Path(omp['path']).resolve())] = omp['sha256']
     patch = access.verify_binding(root, release['prerequisite_evidence']['analytic_verification'], read_json=True)

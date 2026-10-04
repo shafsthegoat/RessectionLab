@@ -1,0 +1,24 @@
+{
+  "actual_runtime_created": false,
+  "actual_solver_runs": 0,
+  "actual_specimen_decks_prepared": 0,
+  "focused_checks": 127,
+  "independent_checks": 14,
+  "measured_response_reads": 0,
+  "pytest_seconds": 2.03,
+  "retained_prior_receipts": [
+    "source-freeze.json",
+    "generic-repair-receipt.json"
+  ],
+  "runtime_pin_status": "Historical provisional pins only; combined CSC/matrix-attribute/ownership repair pending separate approved source identities. No build or execution release.",
+  "source_and_evidence": {
+    "artifacts/mechanics/hbe-backend-independent-review-v1/checker-origin-negative.json": "2c19b31bb42a01918ed912c128fbaa53b52e97f2b5f3e72c36dd6b91e499bd07",
+    "artifacts/mechanics/hbe-backend-independent-review-v1/initial-negative.json": "24b649a0ff6a202e280296d4172e03544529af764ba4c2fd964de2389b75834b",
+    "artifacts/mechanics/hbe-backend-independent-review-v1/verification.json": "fac9917706e12920a792ef131b63a103afa24530d9a05c773e6c148fb2cbe68c",
+    "docs/hbe-backend-comparison.md": "3cb615dd21dd958c6b3a3e84ad3a66893b65c183cddcb71ba95d0923b29bedd6",
+    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "scripts/mechanics_hbe_backend.py": "e98a51a58a006c1a55fce6b5c428ad349311104b626ed52cdafa7ec22cd8d5a3",
+    "scripts/mechanics_hbe_experiment.py": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa"
+  },
+  "status": "generic_source_integration_independently_reviewed_final_runtime_pins_held"
+}

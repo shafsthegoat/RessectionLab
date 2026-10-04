@@ -1,0 +1,23 @@
+{
+  "actual_runtime_identity_or_profile_created": false,
+  "actual_solver_runs": 0,
+  "actual_specimen_decks_prepared": 0,
+  "measured_response_reads": 0,
+  "new_api": "verify_runtime_binding authenticates bytes before8controls; verify_profile additionally requires their actual same-runtime completion. This extraction was requested by geometry to avoid duplicate identity code.",
+  "source_and_tests": {
+    "docs/hbe-backend-comparison.md": "56a908d7dcbb6143df9b05c23f129f1b9647b072c5402e4dc355d44282afd100",
+    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "scripts/mechanics_hbe_backend.py": "79e98d6d554f0de238eab47fdbc5f4c2bc3c79e2350e8a5b9dbf2842135a8209",
+    "scripts/mechanics_hbe_experiment.py": "9109a1dbb40dc5958221230d7d4c1d9543ef75910cea37b8e83e118c1363d3f9",
+    "tests/test_mechanics_hbe_backend.py": "5c57f395034d34ec735062ccfcf6cd8f45116cb8930ed37f58562e930fc23075",
+    "tests/test_mechanics_hbe_backend_access.py": "3ce71fecbc4d2392996d2eeda5881bb7cc96b1505e6600949226316bd63a1b8c",
+    "tests/test_mechanics_hbe_continuation_review.py": "78c6932e6a795e1eb8a74957c470eb6f76c645ccee612a9c3253a275c126d363",
+    "tests/test_mechanics_hbe_experiment.py": "3e4aacabdbf5d713a131704f1ceae089d49fdef095cd58ff5db0929a23c8ec67",
+    "tests/test_mechanics_hbe_experiment_review.py": "03fe4f050adc3137ef96a4523a45d98aabdd166dc482fd2cd45413834408658c"
+  },
+  "status": "source_frozen_for_independent_review_no_runtime_or_execution_release",
+  "test_log": {
+    "path": "final-owner-controls.txt",
+    "sha256": "d9cb687254a6b0323ca5c979f85c8e2edb6a243f7e7d97c9d2667f8effcccab2"
+  }
+}

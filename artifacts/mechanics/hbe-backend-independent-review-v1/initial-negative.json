@@ -1,0 +1,32 @@
+{
+  "scope": "Constructed files only; no solver, runtime load, patient or measured curve reads. Runtime monkeypatch in controls test isolates control receipt verification. Fixed source SHA monkeypatch in runtime fixtures authenticates constructed bytes only.",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_mechanics_hbe_backend_review.py",
+    "-p",
+    "no:cacheprovider"
+  ],
+  "exit_code": 1,
+  "process_elapsed_seconds": 0.32796562497969717,
+  "source_sha256": {
+    "scripts/mechanics_hbe_backend.py": "7084d18b6dbc2001d8cacd82f2c18eab3c90e81205e8e85446a204bd5e317f55",
+    "scripts/mechanics_hbe_experiment.py": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa",
+    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "tests/test_mechanics_hbe_backend_review.py": "bcfc683faa93833cc95915139e810031acbe08bbffe96f911f2ffad4dbadade9"
+  },
+  "source_after_sha256": {
+    "scripts/mechanics_hbe_backend.py": "7084d18b6dbc2001d8cacd82f2c18eab3c90e81205e8e85446a204bd5e317f55",
+    "scripts/mechanics_hbe_experiment.py": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa",
+    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "tests/test_mechanics_hbe_backend_review.py": "bcfc683faa93833cc95915139e810031acbe08bbffe96f911f2ffad4dbadade9"
+  },
+  "all_sources_unchanged": true,
+  "expected_findings": [
+    "Boolean-only eight-control summaries accepted without raw/execution evidence",
+    "Runtime missing twelve linked libraries accepted",
+    "Unaccepted worker-candidate runtime status accepted"
+  ]
+}

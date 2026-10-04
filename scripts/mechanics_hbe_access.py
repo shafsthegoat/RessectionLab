@@ -30,6 +30,28 @@ SOURCE_FILES={'runtime_driver':'febio_runtime.py','access':'mechanics_hbe_access
               'readout':'mechanics_hbe_readout.py','orchestrator':'mechanics_hbe_experiment.py'}
 
 
+def source_files_for_release(release):
+    """An explicit alternative backend also pins its verification helper."""
+    files = dict(SOURCE_FILES)
+    execution = release.get('execution', {})
+    if 'backend_profile' in execution:
+        if not isinstance(execution['backend_profile'], dict):
+            raise ValueError('An explicit backend profile requires an exact artifact binding')
+        files['backend_profile'] = 'mechanics_hbe_backend.py'
+    return files
+
+
+def _verified_backend(root, binding):
+    if binding is None:
+        return None
+    from scripts.mechanics_hbe_backend import verify_profile
+
+    context = verify_profile(root, binding)
+    if context.get('binding') != binding or context.get('profile_id') != 'accelerate_csc_v1':
+        raise ValueError('Verified backend differs from the explicitly released profile')
+    return context
+
+
 def digest(data):
     return hashlib.sha256(data).hexdigest()
 
@@ -88,10 +110,11 @@ def verify_release_provenance(root,release,protocol_sha256):
     """Bind actual committed source archive and established execution prerequisites."""
     execution=release.get('execution',{})
     sources=execution.get('source_bindings',{})
-    if set(sources)!=set(SOURCE_FILES):
+    required_sources = source_files_for_release(release)
+    if set(sources)!=set(required_sources):
         raise ValueError('Complete executing source inventory required')
     wanted={}
-    for key,filename in SOURCE_FILES.items():
+    for key,filename in required_sources.items():
         binding=sources[key]
         if local_path(root,binding['path'])!=Path(__file__).resolve().with_name(filename):
             raise ValueError('Released source differs from executing module origin')
@@ -117,7 +140,14 @@ def verify_release_provenance(root,release,protocol_sha256):
     if seen!=set(wanted):
         raise ValueError('Source archive lacks required executing helpers')
     prerequisites=release['prerequisite_evidence']
-    if prerequisites['runtime']['sha256']!=RUNTIME_IDENTITY_SHA256:
+    backend = _verified_backend(root, execution.get('backend_profile'))
+    expected_runtime_sha = RUNTIME_IDENTITY_SHA256
+    if backend is not None:
+        if (prerequisites['runtime'] != backend['runtime_identity']
+                or prerequisites['analytic_verification'] != backend['hex8_controls']):
+            raise ValueError('Release prerequisites differ from the verified backend profile')
+        expected_runtime_sha = backend['runtime_identity']['sha256']
+    if prerequisites['runtime']['sha256']!=expected_runtime_sha:
         raise ValueError('Exact verified local FEBio runtime identity required')
     runtime=verify_binding(root,prerequisites['runtime'],read_json=True)
     if runtime.get('runtime_version')!='4.13.0' or runtime.get('architecture')!='arm64':
@@ -125,7 +155,7 @@ def verify_release_provenance(root,release,protocol_sha256):
     patch=verify_binding(root,prerequisites['analytic_verification'],read_json=True)
     if (
         patch.get('status') != 'passed_all_five_fixed_patch_controls'
-        or patch.get('runtime_identity_sha256') != RUNTIME_IDENTITY_SHA256
+        or patch.get('runtime_identity_sha256') != expected_runtime_sha
         or patch.get('solver_invocations') != 5
         or len(patch.get('rows', [])) != 5
         or not all(row.get('passed') is True for row in patch['rows'])
@@ -237,7 +267,13 @@ def check_numeric_report(report, *, fitted_mu_Pa=None):
     )
 
 
-def verify_run_execution(root, run_id, row, protocol_sha256):
+def verify_run_execution(root, run_id, row, protocol_sha256, *, expected_backend_profile=None):
+    """Use the released profile, never infer the allowed runtime from a run row."""
+    backend = _verified_backend(root, expected_backend_profile)
+    return _verify_run_execution(root, run_id, row, protocol_sha256, backend=backend)
+
+
+def _verify_run_execution(root, run_id, row, protocol_sha256, *, backend):
     binding = row.get('execution_binding')
     if binding is None:
         raise ValueError('Actual bounded solver execution receipt required')
@@ -261,13 +297,27 @@ def verify_run_execution(root, run_id, row, protocol_sha256):
     ):
         raise ValueError('Bounded successful execution was not established')
     runtime_binding = record.get('runtime_identity', {})
-    if runtime_binding.get('sha256') != RUNTIME_IDENTITY_SHA256:
+    expected_runtime_sha = RUNTIME_IDENTITY_SHA256
+    if backend is None:
+        if record.get('backend_profile') is not None:
+            raise ValueError('A run backend was not authorized by the study release')
+    else:
+        if record.get('backend_profile') != backend['binding']:
+            raise ValueError('Run backend differs from the explicitly released profile')
+        if runtime_binding != backend['runtime_identity']:
+            raise ValueError('Run runtime binding differs from the verified backend profile')
+        expected_runtime_sha = backend['runtime_identity']['sha256']
+    if runtime_binding.get('sha256') != expected_runtime_sha:
         raise ValueError('Run used an unverified FEBio runtime')
     runtime = verify_binding(root, runtime_binding, read_json=True)
     executable = record.get('executable', {})
     verify_binding(root, executable)
     if executable['sha256'] != runtime['executable_sha256']:
         raise ValueError('Executed binary differs from verified runtime')
+    if backend is not None:
+        expected_executable = Path(backend['prefix']).resolve()/'install/bin/febio4'
+        if local_path(root, executable['path']) != expected_executable:
+            raise ValueError('Executed binary is outside the verified backend prefix')
     expected_command = [
         str(local_path(root, executable['path'])),
         '-noconfig', '-no_title', '-i', 'specimen.feb', '-o', 'solver.log',
@@ -281,17 +331,41 @@ def verify_run_execution(root, run_id, row, protocol_sha256):
     ):
         if local_path(root, row['primitive_bindings'][key]['path']) != directory / filename:
             raise ValueError('Execution working directory differs from bound deck or outputs')
+    if backend is None:
+        if record.get('backend_source_deck') is not None:
+            raise ValueError('An adapted backend deck was not authorized by the study release')
+    else:
+        from scripts.mechanics_hbe_backend import verify_deck
+
+        original_binding = record.get('backend_source_deck')
+        if original_binding is None:
+            raise ValueError('Backend execution lacks its original scientific deck')
+        original = _read_bound_deck(root, original_binding)
+        adapted = _read_bound_deck(root, row['primitive_bindings']['deck'])
+        verify_deck(original, adapted)
     return record
 
 
-def _replay_evidence(root, report, *, protocol_sha256, fitted_mu_Pa):
+def _read_bound_deck(root, binding):
+    maximum_bytes = 16*1024**2
+    with local_path(root, binding['path']).open('rb') as stream:
+        data = stream.read(maximum_bytes+1)
+    if len(data) > maximum_bytes or digest(data) != binding['sha256']:
+        raise ValueError('Bound solver deck changed or exceeded its read limit')
+    return data
+
+
+def _replay_evidence(root, report, *, protocol_sha256, fitted_mu_Pa, expected_backend_profile=None):
     # Import late: readout shares small binding helpers from this module.
     from scripts.mechanics_hbe_readout import read_run, build_numerical_evidence
 
     runs = {}
     caches = {}
+    # Verify all runtime/control/library evidence once for this replay; the
+    # private context cannot be selected or replaced by any individual run.
+    backend = _verified_backend(root, expected_backend_profile)
     for run_id, row in report['runs'].items():
-        verify_run_execution(root, run_id, row, protocol_sha256)
+        _verify_run_execution(root, run_id, row, protocol_sha256, backend=backend)
         retain = row['mesh_N'] == 12 and row['steps'] == 120 and row['branch'] in (
             'compression', 'tension', 'torsion_pos',
         )
@@ -312,7 +386,8 @@ def _replay_evidence(root, report, *, protocol_sha256, fitted_mu_Pa):
     )
 
 
-def validate_numerical_evidence(root, binding, *, protocol_sha256, fitted_mu_Pa):
+def validate_numerical_evidence(root, binding, *, protocol_sha256, fitted_mu_Pa,
+                                expected_backend_profile=None):
     """One independent replay before a durable parameter/prediction freeze."""
     report = verify_binding(root, binding, maximum_bytes=64*1024**2, read_json=True)
     _check_report(
@@ -321,6 +396,7 @@ def validate_numerical_evidence(root, binding, *, protocol_sha256, fitted_mu_Pa)
     )
     rebuilt = _replay_evidence(
         root, report, protocol_sha256=protocol_sha256, fitted_mu_Pa=fitted_mu_Pa,
+        expected_backend_profile=expected_backend_profile,
     )
     if canonical_json(rebuilt) != canonical_json(report):
         raise ValueError('Numerical evidence differs from independent primitive replay')
@@ -545,6 +621,7 @@ class ReleasedStudy:
         evidence=validate_numerical_evidence(
             self.root, numerical_binding,
             protocol_sha256=self.protocol_binding['sha256'], fitted_mu_Pa=fit['mu_Pa'],
+            expected_backend_profile=release.get('execution', {}).get('backend_profile'),
         )
         refs={}
         for mode in ('compression','tension'):
@@ -596,6 +673,13 @@ class ReleasedStudy:
         collect(evidence)
         collect(release)
         collect([fit_binding, prediction_binding, numerical_binding])
+        backend = _verified_backend(self.root, release.get('execution', {}).get('backend_profile'))
+        if backend is not None:
+            for path, sha in backend['inputs'].items():
+                absolute = Path(path).resolve()
+                if not absolute.is_relative_to(self.root):
+                    raise ValueError('Verified backend input escapes this local study root')
+                collect({'path': str(absolute.relative_to(self.root)), 'sha256': sha})
         for row in evidence['runs'].values():
             collect(verify_binding(self.root, row['execution_binding'], read_json=True))
         freeze['verified_file_bindings'] = [

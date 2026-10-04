@@ -1,0 +1,29 @@
+{
+  "actual_runtime_created": false,
+  "actual_solver_runs": 0,
+  "actual_specimen_decks_prepared": 0,
+  "bindings": {
+    "artifacts/mechanics/hbe-backend-independent-review-v1/initial-negative.json": "24b649a0ff6a202e280296d4172e03544529af764ba4c2fd964de2389b75834b",
+    "artifacts/mechanics/hbe-backend-preparation-v1/generic-repair-controls-01.txt": "79d0059236333601c0358bb7b72aea5e067b9ee6edfb2a47b27c99e430a0fd8a",
+    "docs/hbe-backend-comparison.md": "67afd88e44e9d0cc0a510352cda1df70ac1998ac775766b005e3ec7440aa17dc",
+    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "scripts/mechanics_hbe_backend.py": "1a5f559aba920f1a23af1e6fca962865f23a88c036a6f3f3c36790ae9ecd2af0",
+    "scripts/mechanics_hbe_experiment.py": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa",
+    "tests/test_mechanics_hbe_backend.py": "410a975d7f3cc3130ab31c7e62065baefa557625b3a8f9769b9f8a556ce76e4a"
+  },
+  "measured_response_reads": 0,
+  "preserved_negatives": "artifacts/mechanics/hbe-backend-independent-review-v1/initial-negative.json",
+  "repairs": [
+    "Final accepted build instead of candidate and six accepted artifact hashes",
+    "Exact complete thirteen installed file inventory",
+    "Exact declared old private OpenMP reuse path and digest",
+    "Eight-case source/deck/attempt/parent/raw output bindings and unchanged checker replay"
+  ],
+  "runtime_pin_hold": "CSC-only pins are historical provisional preparation; combined CSC, matrix-attribute initialization and direct-factor ownership repair must be independently approved before final pins/build.",
+  "status": "generic_validation_repair_pending_independent_wiring_review_runtime_pins_held",
+  "test_result": {
+    "passed": 42,
+    "pytest_seconds": 0.78,
+    "scope": "constructed file and receipt controls only; no compiled runtime or numerical solve"
+  }
+}

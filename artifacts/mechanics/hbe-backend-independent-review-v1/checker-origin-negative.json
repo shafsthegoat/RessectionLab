@@ -1,0 +1,25 @@
+{
+  "exit_code": 1,
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_mechanics_hbe_backend_review.py",
+    "-k",
+    "relocated_checker",
+    "-p",
+    "no:cacheprovider"
+  ],
+  "process_elapsed_seconds": 0.366406042012386,
+  "source_sha256": {
+    "scripts/mechanics_hbe_backend.py": "1a5f559aba920f1a23af1e6fca962865f23a88c036a6f3f3c36790ae9ecd2af0",
+    "tests/test_mechanics_hbe_backend_review.py": "0e1579a8bfd160d852b1295ef71d3f888952642b1624a545c8831b3eb6abd05f"
+  },
+  "source_after_sha256": {
+    "scripts/mechanics_hbe_backend.py": "1a5f559aba920f1a23af1e6fca962865f23a88c036a6f3f3c36790ae9ecd2af0",
+    "tests/test_mechanics_hbe_backend_review.py": "0e1579a8bfd160d852b1295ef71d3f888952642b1624a545c8831b3eb6abd05f"
+  },
+  "all_sources_unchanged": true,
+  "scope": "Constructed deterministic checker and files; no production physics or solver execution. Identical checker bytes relocated outside source/baseline must be refused because real tet checker imports a sibling helper by location."
+}

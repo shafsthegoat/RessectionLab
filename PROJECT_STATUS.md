@@ -299,6 +299,16 @@ track ownership separately from factorization success, keep the existing
 SparseFactor algorithm, and verify defined corrected-only lifecycle controls
 before the full build. See `artifacts/febio-accelerate-lifecycle-review-v1/`.
 
+The optional backend comparison/access integration passed 127 focused checks
+including 14 independent controls. It now verifies the actual accepted build,
+complete library inventory and saved eight-control execution/checker evidence,
+while retaining the original scientific decks and all twenty specimen-case
+roles. Review exposed four evidence-validation defects, which are repaired with
+original failures preserved. This is preparation only: runtime/patch identities
+remain provisional until the combined adapter repair is verified and built.
+No replacement solver, specimen measurement or patient outcome was accessed.
+See `docs/hbe-backend-comparison.md` and its independent review.
+
 One bounded Gmsh preparation generated the three measured-specimen meshes
 (96/768/2,592 hex elements) and 18 fixed loading decks in 3.43 s, with
 140.2 MB maximum sampled memory. Independent native-mesh and deck review

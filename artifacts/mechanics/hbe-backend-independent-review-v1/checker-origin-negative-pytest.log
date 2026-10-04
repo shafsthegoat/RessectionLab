@@ -1,0 +1,46 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_eight_control_replay_binds_attempt_inputs_and_checker_results[relocated_checker] _
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-478/test_eight_control_replay_bind0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10abd4410>
+change = 'relocated_checker'
+
+    @pytest.mark.parametrize("change", [None, "stale_parent", "different_attempt", "relocated_original", "relocated_checker", "raw_disagreement", "scaling_disagreement"])
+    def test_eight_control_replay_binds_attempt_inputs_and_checker_results(tmp_path, monkeypatch, change):
+        fixture = constructed_control_attempt(tmp_path, monkeypatch)
+        if change == "stale_parent":
+            fixture["execution"]["status"] = "failed_or_incomplete"
+            save(tmp_path, fixture["evidence"]["execution"]["path"], fixture["execution"])
+        elif change == "different_attempt":
+            fixture["baseline"]["attempt_directory"] = str(tmp_path / "another-attempt")
+            fixture["evidence"]["baseline"] = save(tmp_path, fixture["evidence"]["baseline"]["path"], fixture["baseline"])
+        elif change == "relocated_original":
+            row = fixture["groups"][0]["rows"][0]
+            original = tmp_path / row["evidence"]["original_deck"]["path"]
+            row["evidence"]["original_deck"] = save(tmp_path, "unrelated/identical.feb", original.read_bytes())
+        elif change == "relocated_checker":
+            row = fixture["groups"][1]["case_rows"][0]
+            original = tmp_path / row["evidence"]["checker_source"]["path"]
+            row["evidence"]["checker_source"] = save(tmp_path, "unrelated/copied_checker.py", original.read_bytes())
+        elif change == "raw_disagreement":
+            row = fixture["groups"][0]["rows"][0]
+            record = row["evidence"]["nodes"]
+            value = json.loads((tmp_path / record["path"]).read_bytes())
+            value["valid"] = False
+            row["evidence"]["nodes"] = save(tmp_path, record["path"], value)
+        elif change == "scaling_disagreement":
+            fixture["groups"][0]["stiffness_scaling"]["ratio"] = 2.1
+        def verify():
+            backend._verify_controls(tmp_path, fixture["profile"], fixture["groups"], fixture["runtime"], fixture["bound"])
+        if change is None:
+            verify()
+        else:
+>           with pytest.raises(ValueError):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE ValueError
+
+tests/test_mechanics_hbe_backend_review.py:251: Failed
+=========================== short test summary info ============================
+FAILED tests/test_mechanics_hbe_backend_review.py::test_eight_control_replay_binds_attempt_inputs_and_checker_results[relocated_checker]
+1 failed, 13 deselected in 0.17s

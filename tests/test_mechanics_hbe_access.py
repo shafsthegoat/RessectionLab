@@ -52,7 +52,8 @@ def analytical_prerequisite_stubs(monkeypatch):
     Physics, raw parsing and readout have independent analytical test modules.
     """
     monkeypatch.setattr(a,'verify_release_provenance',lambda *args,**kwargs:None)
-    def accepted_analytical_report(root,binding,*,protocol_sha256,fitted_mu_Pa):
+    def accepted_analytical_report(root,binding,*,protocol_sha256,fitted_mu_Pa,expected_backend_profile=None):
+        assert expected_backend_profile is None  # This fixture isolates legacy lifecycle only.
         report=a.verify_binding(root,binding,read_json=True)
         return a._check_report(report,protocol_sha256=protocol_sha256,fitted_mu_Pa=fitted_mu_Pa,require_fitted=True)
     monkeypatch.setattr(a,'validate_numerical_evidence',accepted_analytical_report)

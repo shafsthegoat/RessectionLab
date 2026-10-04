@@ -1,0 +1,8 @@
+{
+  "finding": "Declared repaired build reuses exact original private OpenMP; frozen candidate incorrectly accepted only new-prefix OpenMP. Found statically by root before any runtime or specimen execution.",
+  "scope": "Narrow path/hash exception required for explicit repaired profile; no arbitrary external library path and no legacy guard weakening.",
+  "source_sha256": {
+    "scripts/mechanics_hbe_backend.py": "79e98d6d554f0de238eab47fdbc5f4c2bc3c79e2350e8a5b9dbf2842135a8209",
+    "scripts/mechanics_hbe_experiment.py": "9109a1dbb40dc5958221230d7d4c1d9543ef75910cea37b8e83e118c1363d3f9"
+  }
+}

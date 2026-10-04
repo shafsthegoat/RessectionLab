@@ -1,0 +1,31 @@
+# Separately released direct-solver comparison
+
+This is implementation preparation. No repaired runtime, actual backend-control acceptance, specimen solve or measured response is supplied by this change. Original Skyline evidence, including the preserved fine-mesh timeout, remains historical and unchanged.
+
+The provisional source-repair pins are on hold. Independent static review identified additional matrix-attribute initialization and factorization-storage ownership defects beyond the original CSC pointer repair. A combined, independently reviewed one-file adapter repair must replace those pins before any build or final profile release. The previously saved source-freeze and negative-test receipts remain historical evidence; generic receipt-validation tests do not clear this runtime hold.
+
+`mechanics_hbe_backend.py` supports one explicit profile, `accelerate_csc_v1`, under `data/optional-runtimes/febio-4.13-accelerate-csc-v1`. A future `hbe-solver-backend-v1` record must contain the profile ID and exact path/SHA bindings for `runtime_identity`, `hex8_controls`, `tet10_mpc_controls` and `patch_identity`. The profile fails closed while any receipt or required runtime file is absent.
+
+The runtime identity must bind the actual parent-accepted build and all six retained build artifacts, the full thirteen-file installed executable/library set, source inventory, linkage record, OpenMP, upstream commit, and final reviewed repair hashes (`source_patch_sha256` and `patched_source_sha256`). Actual source/library bytes are checked. A candidate awaiting parent acceptance is rejected. The exact existing private OpenMP path and digest declared by the builder may be reused; arbitrary files outside the repaired prefix are rejected.
+
+The five existing hex8 controls and three existing tet10/MPC controls must have passed using that same runtime hash and `solver_backend: "accelerate"`. Their summaries bind a common completed, bounded execution, source/input baseline, declared original and adapted decks, command, actual backend-selection text, retained primitive logs and unchanged checker sources. The profile replays those checkers from the saved tiny outputs and recomputes stiffness scaling. It checks source/deck and attempt-directory connections as well as hashes. Boolean-only summaries, a successful build, old Skyline controls or prospectively labelled reports do not substitute for this evidence. These controls verify software behavior; they do not establish tissue calibration or clinical validity.
+
+The eight-control runner may use `verify_runtime_binding` to authenticate the runtime before running its controls. That helper provides no mechanics acceptance; `verify_profile` still requires all completed controls before a specimen release can pass.
+
+The only deck transformation is the original canonical Skyline token into:
+
+```xml
+<linear_solver type="accelerate"><iterative>0</iterative><factorization>4</factorization><order_method>0</order_method><print_condition_number>0</print_condition_number></linear_solver>
+```
+
+The pinned upstream implementation maps these explicit values to direct LDLTTPP with AMD ordering for the already prescribed symmetric tangent. No iterative tolerance is introduced. `verify_deck` requires every byte outside that exact replacement to remain unchanged. It rejects duplicate/missing solver nodes, alternative solver settings, material changes, tolerance changes, reordered loading, and altered connectivity.
+
+`prepare_decks(root, original_cases, new_directory)` creates copies of the eighteen existing reference/scaling inputs and a hash-bound manifest. It preserves original mesh bindings and changes only `loading.deck_sha256` in loading metadata. The source-bound `verify_prepared_decks` checks all eighteen exact original/adapted bindings. Preparation is exclusive, does not execute FEBio and does not produce an authorization. Actual new prepared decks remain to be generated and independently inspected from committed source before execution.
+
+A future release adds `execution.backend_profile` and `execution.backend_decks`, and includes the ninth executing-source binding `backend_profile: mechanics_hbe_backend.py`. Its runtime and five-case prerequisite bindings must match the profile. The original protocol, three mesh levels, four load branches, law, tolerances, twenty-case order and CSV schemas stay fixed. The CSV format remains explicitly an unverified assumption: comma delimiter, no header, columns 0/1, with creator-declared units. No format mismatch is repaired automatically.
+
+The existing runner requires `--execute --explicit-backend`; it uses a fresh `experiment-accelerate-csc-v1` directory and exclusive marker. A backend comparison cannot combine with the header-repair continuation or borrow Skyline solves. The existing 20-case, 900-second aggregate, 90-second per-call, one-thread, 3 GiB sampled RSS, and common output limits remain. A separately committed actual release is required.
+
+For fitted cases, the unchanged builder first produces a retained Skyline source deck at the fitted modulus; the same exact solver transformation follows. The existing three-scalar fit check still verifies all other content. Every execution record binds both its backend profile and original scientific deck. Independent raw replay receives the expected profile from the release, rejects mixed runtimes/profiles, and checks the deck relation. Freeze inventory includes all verified profile/runtime/control dependencies. The eighteen-case numerical gate, two axial calibration members, one positive scale fit, two fitted confirmations, full raw replay, durable prediction freeze and two held-out torsion members retain their existing order.
+
+The [independent generic integration receipt](../artifacts/mechanics/hbe-backend-independent-review-v1/verification.json) records 127 focused checks, including fourteen independent controls. Preserved regressions cover summary-only acceptance, incomplete installed libraries, unaccepted runtime candidates and copied checkers outside the bound sibling-source directory. Constructed receipt tests explicitly substitute checker doubles to test evidence connections; they provide no numerical or physical validation of a new runtime. Final adapter pins and actual eight-control results remain separate pending prerequisites.
