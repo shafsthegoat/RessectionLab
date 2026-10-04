@@ -99,6 +99,18 @@ The estimates remain unreviewed and working support remains absent. No training
 result follows from these inferences. PAT29/PAT31 and UPenn remain unopened.
 See `artifacts/brain-extraction/BTC-spatial-main-v1-independent-qc/README.md`.
 
+Shared observed-only search and real-patient batch bookkeeping now pass 51
+focused checks, including six independent controls. Search preserves costly
+opening prefixes, reports incomplete layers, and uses optional actor guidance
+only to order legal actions. Bounded beam retention agrees with full-state
+materialization across 430 budget/width controls. Independent review reproduced
+and repaired two exceptional-exit accounting errors; the original failures are
+retained. Six-TRAIN/two-SELECT roles and patient-uniform imitation sampling are
+checked without opening images. These helpers performed no patient search or
+optimizer updates. Full-field search and cropped actor inputs remain different
+representations. See `docs/real-patient-learning.md` and
+`artifacts/real-learning-helpers-independent-review-v1/receipt.json`.
+
 The first real TRAIN PAT22 inference profile completed all four declared cells
 in 6.247 seconds with unchanged model parameters. One CPU call took 28–30 ms
 for a 32³ crop and 256–269 ms for a 64³ crop, with highest observed memory about

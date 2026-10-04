@@ -1,0 +1,27 @@
+Independent analytic regression. No images, training, or optimizer execution.
+Command: .venv/bin/python -m pytest -q tests/test_real_learning_helpers_review.py
+Reviewed observed_search.py SHA256:
+a1a8b8705ec120a09f2bac778f65d478e52f0d68666be484f5f30b9e06556725
+
+...F.                                                                    [100%]
+=================================== FAILURES ===================================
+____ test_an_interrupted_mutating_forward_still_records_the_attempted_work _____
+
+    def test_an_interrupted_mutating_forward_still_records_the_attempted_work():
+        class InterruptedActor(ReverseActor):
+            def forward(self, observation):
+                self.offset.add_(1.)
+                raise RuntimeError("Analytic forward interruption")
+
+        with pytest.raises(RuntimeError, match="changed the frozen") as failure:
+            observed_beam_search(PrivateSourceTrap(ObservedTree([])), max_calls=1,
+                beam_width=2, policy=InterruptedActor(0.))
+        row = failure.value.accounting
+>       assert row["actor_forward_calls"] == 1
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       KeyError: 'actor_forward_calls'
+
+tests/test_real_learning_helpers_review.py:166: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_real_learning_helpers_review.py::test_an_interrupted_mutating_forward_still_records_the_attempted_work
+1 failed, 4 passed in 1.25s
