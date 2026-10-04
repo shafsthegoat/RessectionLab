@@ -4,7 +4,7 @@ The React shell owns case review, source visibility, route comparison, and local
 
 - `App.tsx`: workspace state, operation status, native menu actions, case lifecycle and A/B route choices. A newer case load invalidates older hydration; route results must match the active source fingerprint.
 - `case-data.ts`: validates array encoding, shape, physical affine, source volumes and finite values before exposing typed arrays to the viewer. It converts LPS+ physical coordinates to RAS+ without resampling source voxels.
-- `viewer/`: linked WebGL MRI planes, exact source-cell annotation surfaces, complete instrument geometry and physical camera framing. The viewer has its own geometry and surface tests.
+- `viewer/`: linked WebGL MRI planes, source-derived annotation surfaces, complete instrument geometry and physical camera framing. Display meshes approximate voxel boundaries; quantitative volume uses original source cells. The viewer has its own geometry and surface tests.
 - `RefinementPanel.tsx`: actual optimization/selection counters, selection-return history, local cancellation/resume and independently accepted replay. Search choices stay in parent state throughout refinement.
 - `training-data.ts`: checks replay identity, independent certificate, source frame, binary mask and volume accounting before allowing a modeled removal overlay. It does not approve imported simulation artifacts.
 - `preview-api.ts`: explicitly read-only development adapter for an ignored local export of a real public case. It cannot train, search, save or substitute invented results. Patient preview assets are excluded from production packaging.

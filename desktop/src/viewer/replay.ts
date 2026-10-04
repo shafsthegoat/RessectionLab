@@ -68,11 +68,18 @@ export function validateReplay(
   let removed = 0,
     removedTarget = 0,
     totalTarget = 0;
+  const targetMasks = volume.compartments.map((layer) => layer.mask);
   for (let i = 0; i < size; i++) {
     const value = replay.removedMask[i];
     if (value !== 0 && value !== 1)
       throw new Error("Modeled removal mask is not binary.");
-    const target = volume.compartments.some((layer) => layer.mask[i] !== 0);
+    let target = false;
+    for (let layer = 0; layer < targetMasks.length; layer++) {
+      if (targetMasks[layer][i] !== 0) {
+        target = true;
+        break;
+      }
+    }
     removed += value;
     if (target) {
       totalTarget++;
