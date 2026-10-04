@@ -1,0 +1,746 @@
+{
+  "status": "baseline_diagnostic_complete_anatomical_review_pending",
+  "N": 15,
+  "source_hashes_before": {
+    "artifacts/mechanics/resect-case4-baseline-alignment-v2/declaration.json": "9f606a76471b71b0de4598ecee0c1f9bf7f21cd410f856ec19f958ba33225593",
+    "artifacts/mechanics/resect-case4-baseline-alignment-v2/coordinate-justification.json": "f293613dd1ca5adf58bfd768c2fe2b4d50e352fe0534ee28264225739f88c2ec",
+    "artifacts/mechanics/resect-case4-baseline-alignment-v2/align.py": "71f1a6440057960beb576180243ba3bf14855dd33a4584e1c99eb8a80e091e4c",
+    "artifacts/mechanics/resect-case4-baseline-header-qc-v1/header-receipt.json": "18d6e6306e38f409a314ba180d7d0a21e9a7ee02677f34a1d1fd28ea1294d692",
+    "artifacts/mechanics/resect-case4-source-partition-v1/source-snapshot.json": "7e5d7853952b6ce86890ff046f2890b8ef44feb2ddd15a7fc2da48cdd3cf008b",
+    "build/resect-source-partition-6766a2a/src/resectionlab/__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "build/resect-source-partition-6766a2a/src/resectionlab/core.py": "f1f0b8ae334cabc864c3ec85d4f6b49e4842de2b580edaadd7562276ea0c92db",
+    "build/resect-source-partition-6766a2a/src/resectionlab/mechanics_landmarks.py": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc",
+    "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/MRI/Case4-T1.nii.gz": "eeab888d611b7dee3627468b172ad67db39b6887e6ba38540aa39131b6cbb787",
+    "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/MRI/Case4-FLAIR.nii.gz": "e4b2e09f6d47e256a0af3e515d321a393cfc1b5d6c704a6b23bbfeed8c712d26",
+    "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/US/Case4-US-before.nii.gz": "62f6b6217774653267702acd4a55b16ad5c8cc4980237afaa39e92b102240379",
+    "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/Landmarks/Case4-MRI-beforeUS.tag": "55fcd43c2a2a73b823f08a5560ed136be3a2c43c0fc23a6796bc3b030e14b37d"
+  },
+  "source_hashes_after": {
+    "artifacts/mechanics/resect-case4-baseline-alignment-v2/declaration.json": "9f606a76471b71b0de4598ecee0c1f9bf7f21cd410f856ec19f958ba33225593",
+    "artifacts/mechanics/resect-case4-baseline-alignment-v2/coordinate-justification.json": "f293613dd1ca5adf58bfd768c2fe2b4d50e352fe0534ee28264225739f88c2ec",
+    "artifacts/mechanics/resect-case4-baseline-alignment-v2/align.py": "71f1a6440057960beb576180243ba3bf14855dd33a4584e1c99eb8a80e091e4c",
+    "artifacts/mechanics/resect-case4-baseline-header-qc-v1/header-receipt.json": "18d6e6306e38f409a314ba180d7d0a21e9a7ee02677f34a1d1fd28ea1294d692",
+    "artifacts/mechanics/resect-case4-source-partition-v1/source-snapshot.json": "7e5d7853952b6ce86890ff046f2890b8ef44feb2ddd15a7fc2da48cdd3cf008b",
+    "build/resect-source-partition-6766a2a/src/resectionlab/__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "build/resect-source-partition-6766a2a/src/resectionlab/core.py": "f1f0b8ae334cabc864c3ec85d4f6b49e4842de2b580edaadd7562276ea0c92db",
+    "build/resect-source-partition-6766a2a/src/resectionlab/mechanics_landmarks.py": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc",
+    "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/MRI/Case4-T1.nii.gz": "eeab888d611b7dee3627468b172ad67db39b6887e6ba38540aa39131b6cbb787",
+    "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/MRI/Case4-FLAIR.nii.gz": "e4b2e09f6d47e256a0af3e515d321a393cfc1b5d6c704a6b23bbfeed8c712d26",
+    "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/US/Case4-US-before.nii.gz": "62f6b6217774653267702acd4a55b16ad5c8cc4980237afaa39e92b102240379",
+    "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/Landmarks/Case4-MRI-beforeUS.tag": "55fcd43c2a2a73b823f08a5560ed136be3a2c43c0fc23a6796bc3b030e14b37d"
+  },
+  "coordinate_justification_sha256": "f293613dd1ca5adf58bfd768c2fe2b4d50e352fe0534ee28264225739f88c2ec",
+  "source_world_to_RAS": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "destination_world_to_RAS": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "pair_role": "mri_to_before_us",
+  "pair_binding_hash": "sha256:f4e72a2a1e9be09455f677f626f444069ad9015fe78bd433e6fe691dafba9795",
+  "row_ids": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15
+  ],
+  "FLAIR_reference_RAS_mm": [
+    [
+      50.82711,
+      20.16555,
+      -13.474728
+    ],
+    [
+      49.272388,
+      -7.647651,
+      -16.447916
+    ],
+    [
+      42.67448,
+      -3.178869,
+      -22.934887
+    ],
+    [
+      40.520447,
+      -0.057238,
+      -6.171556
+    ],
+    [
+      49.654064,
+      9.171086,
+      -25.621696
+    ],
+    [
+      47.039963,
+      17.931736,
+      -6.622776
+    ],
+    [
+      46.821316,
+      -0.523326,
+      -14.600183
+    ],
+    [
+      40.017597,
+      9.072222,
+      -3.105677
+    ],
+    [
+      35.530613,
+      -11.552846,
+      -22.669483
+    ],
+    [
+      49.669018,
+      11.043722,
+      -13.169514
+    ],
+    [
+      48.57357,
+      18.73093,
+      -20.634384
+    ],
+    [
+      50.43618,
+      -7.778788,
+      -13.477903
+    ],
+    [
+      47.737579,
+      3.825708,
+      -21.984486
+    ],
+    [
+      50.112572,
+      6.697327,
+      -26.290907
+    ],
+    [
+      32.762035,
+      0.099984,
+      -27.143894
+    ]
+  ],
+  "beforeUS_reference_RAS_mm": [
+    [
+      48.631355,
+      21.893848,
+      -14.881527
+    ],
+    [
+      50.372994,
+      -7.240995,
+      -20.544041
+    ],
+    [
+      43.285446,
+      -3.245983,
+      -25.983883
+    ],
+    [
+      40.64237,
+      -0.034662,
+      -9.549773
+    ],
+    [
+      49.086453,
+      10.275356,
+      -28.441065
+    ],
+    [
+      46.360292,
+      17.417202,
+      -8.598879
+    ],
+    [
+      46.458204,
+      -1.527189,
+      -17.796312
+    ],
+    [
+      38.749119,
+      8.508823,
+      -3.959333
+    ],
+    [
+      36.252067,
+      -10.704157,
+      -26.468703
+    ],
+    [
+      48.587117,
+      12.154015,
+      -14.806899
+    ],
+    [
+      46.496489,
+      18.875491,
+      -22.98361
+    ],
+    [
+      50.420057,
+      -5.590294,
+      -17.468637
+    ],
+    [
+      47.143528,
+      3.554576,
+      -23.456741
+    ],
+    [
+      49.244076,
+      7.681924,
+      -29.247165
+    ],
+    [
+      33.476385,
+      0.263868,
+      -28.926462
+    ]
+  ],
+  "FLAIR_RAS_to_beforeUS_RAS_mm": [
+    [
+      0.9963725714686039,
+      -0.0835907880199654,
+      0.015946127531214004,
+      0.37350028700841875
+    ],
+    [
+      0.08437450928149519,
+      0.9947859925440068,
+      -0.05728674560263911,
+      -4.363885278717929
+    ],
+    [
+      -0.011074340095348231,
+      0.058424388712555675,
+      0.9982304091716581,
+      -2.368020433311635
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "bounds": {
+    "FLAIR_reference": {
+      "inside_count": 15,
+      "outside_row_ids": [],
+      "voxel_coordinates": [
+        [
+          117.05075339692601,
+          108.74653846760303,
+          141.03425628715584
+        ],
+        [
+          144.7325317883146,
+          110.9622281660952,
+          137.34088661269618
+        ],
+        [
+          139.94179877116488,
+          117.46377511444905,
+          130.98778075624412
+        ],
+        [
+          136.24610406283836,
+          100.75771921985046,
+          129.36198037973827
+        ],
+        [
+          128.22660081602393,
+          120.58052512487438,
+          138.82965029600228
+        ],
+        [
+          118.81887415914804,
+          101.78144971177952,
+          137.20764713559151
+        ],
+        [
+          137.39905008400262,
+          109.26579128077385,
+          135.46471423605757
+        ],
+        [
+          127.03064557378303,
+          97.92607382102958,
+          129.59992234732118
+        ],
+        [
+          147.7420611706213,
+          116.86953567744428,
+          123.2397781542634
+        ],
+        [
+          126.04828736212292,
+          108.18364490511672,
+          139.19860721521724
+        ],
+        [
+          118.49016975965287,
+          115.8309041502143,
+          138.55694090074442
+        ],
+        [
+          144.87668866419745,
+          108.00779432158944,
+          138.54218794077846
+        ],
+        [
+          133.3186396993001,
+          116.77512912283933,
+          136.57901125899616
+        ],
+        [
+          130.74398223979074,
+          121.19123198615706,
+          139.0892347438538
+        ],
+        [
+          136.02926071167732,
+          121.60677286432269,
+          121.27949610233071
+        ]
+      ]
+    },
+    "beforeUS_reference": {
+      "inside_count": 15,
+      "outside_row_ids": [],
+      "voxel_coordinates": [
+        [
+          78.1641760107197,
+          149.40040879680495,
+          164.8974939880744
+        ],
+        [
+          158.4376083566488,
+          79.04890173465844,
+          254.84246789388348
+        ],
+        [
+          179.053948223703,
+          118.44429353806115,
+          243.25710128585234
+        ],
+        [
+          162.08749384433654,
+          75.8354380054241,
+          178.21200576531345
+        ],
+        [
+          123.22698505146695,
+          159.88200721552934,
+          234.840158679809
+        ],
+        [
+          92.02863456635197,
+          117.62581068851446,
+          149.94534115403678
+        ],
+        [
+          153.93406886231833,
+          91.85663655100295,
+          222.6013068934116
+        ],
+        [
+          139.34413518471882,
+          84.93069754582075,
+          136.06090126167803
+        ],
+        [
+          225.78194121937082,
+          106.69377655341009,
+          243.28243480702585
+        ],
+        [
+          105.15908000576567,
+          120.02307562625502,
+          187.2439154876927
+        ],
+        [
+          103.00590686516662,
+          170.48389346732523,
+          191.09913124118086
+        ],
+        [
+          150.39049713791678,
+          73.53075816459462,
+          241.67537122614567
+        ],
+        [
+          143.49777164175984,
+          125.35818512743678,
+          229.98414366099993
+        ],
+        [
+          130.688604159746,
+          154.63820171583822,
+          243.78137414715798
+        ],
+        [
+          208.22383365080793,
+          151.40297961081092,
+          217.84044952135278
+        ]
+      ]
+    },
+    "MRI_reference_in_T1": {
+      "inside_count": 15,
+      "outside_row_ids": [],
+      "voxel_coordinates": [
+        [
+          118.31675836886444,
+          142.2163369185159,
+          52.208317233334746
+        ],
+        [
+          145.8892510044168,
+          139.2142678129412,
+          56.155012744182535
+        ],
+        [
+          140.86341224948754,
+          132.68234572623754,
+          62.29163462970344
+        ],
+        [
+          137.56622372077547,
+          149.43155372167072,
+          64.28819718861537
+        ],
+        [
+          129.1674847581062,
+          130.0541852208559,
+          54.244711412358804
+        ],
+        [
+          120.21263278390222,
+          149.0391585627814,
+          56.22533274464011
+        ],
+        [
+          138.57870129019642,
+          141.04865759042906,
+          57.99042980899224
+        ],
+        [
+          128.4276311980495,
+          152.49949205295755,
+          64.01728283951334
+        ],
+        [
+          148.58414396168052,
+          132.8904959700625,
+          70.13865552526775
+        ],
+        [
+          127.30325097481493,
+          142.50733288947814,
+          54.15776648901525
+        ],
+        [
+          119.54988682866001,
+          135.03957958795533,
+          54.52581483252383
+        ],
+        [
+          146.1211376951911,
+          142.1925781694016,
+          55.028744062288645
+        ],
+        [
+          134.32586781911607,
+          133.67397317154547,
+          56.64543959355968
+        ],
+        [
+          131.67175349982764,
+          129.38675442382117,
+          53.99827508188658
+        ],
+        [
+          136.73463596279746,
+          128.40347748374006,
+          71.8502781997758
+        ]
+      ]
+    }
+  },
+  "raw_distances_mm": [
+    3.128488041087897,
+    4.260861730354202,
+    3.110331228369093,
+    3.380491827056235,
+    3.080655131361183,
+    2.15213405065902,
+    3.3696931361704148,
+    1.629473361556121,
+    3.9591465622324473,
+    2.254837013594331,
+    3.139112320761713,
+    4.55145293262723,
+    1.6105725494525212,
+    3.2346835883883593,
+    1.9273563662644253
+  ],
+  "fit_residuals_mm": [
+    1.2770548913671427,
+    1.0003028788435855,
+    0.8053990959211532,
+    0.8370047155086466,
+    0.6515002277665853,
+    0.8409507110695099,
+    1.5097789743624974,
+    1.6071109617135384,
+    0.9544220025188548,
+    0.8596123892533539,
+    0.9635755556857091,
+    1.7367603044630304,
+    1.6568720689634837,
+    0.5930142409066724,
+    1.2865597025764883
+  ],
+  "leave_one_out_residuals_mm": [
+    1.4679470592709176,
+    1.1617847387856202,
+    0.9028934234610211,
+    0.9283319670905015,
+    0.7317630616084979,
+    1.05463593056626,
+    1.6328962457575018,
+    1.7246238448096145,
+    1.2088530741286518,
+    0.9361153670424658,
+    1.114294889973319,
+    1.8708136700435898,
+    1.7951121016740397,
+    0.6652667448657761,
+    1.3863193914692828
+  ],
+  "summaries": {
+    "raw": {
+      "rms_mm": 3.112095795074031,
+      "mean_mm": 2.9859526559956793,
+      "median_mm": 3.128488041087897,
+      "maximum_mm": 4.55145293262723
+    },
+    "fit": {
+      "rms_mm": 1.1639417029743828,
+      "mean_mm": 1.105327914728017,
+      "median_mm": 0.9635755556857091,
+      "maximum_mm": 1.7367603044630304
+    },
+    "leave_one_out": {
+      "rms_mm": 1.2945054186282894,
+      "mean_mm": 1.2387767673698038,
+      "median_mm": 1.1617847387856202,
+      "maximum_mm": 1.8708136700435898
+    }
+  },
+  "LOO_RMS_worse_than_raw": false,
+  "outliers_removed": false,
+  "alternative_fits_selected": false,
+  "clinical_accuracy_validated": false,
+  "brain_domain_available": false,
+  "anatomical_alignment_accepted": false,
+  "duringUS_or_before_during_tag_opened": false,
+  "B_or_V_motion_accessed": false,
+  "native_affines_preserved": true,
+  "resampled_volumes_saved": false,
+  "plots": [
+    {
+      "path": "MRI-native-axis0.png",
+      "sha256": "92f5863c837c8e6390ce7684c544f9750bd85c500e7d020b19659672d985a997",
+      "base_image": "Case4-FLAIR.nii.gz",
+      "axis": 0,
+      "index": 133,
+      "display_limits": {
+        "Case4-T1.nii.gz": [
+          0.0,
+          638.11892578125
+        ],
+        "Case4-FLAIR.nii.gz": [
+          -3.475613266346045e-05,
+          113.82936096191406
+        ],
+        "Case4-US-before.nii.gz": [
+          0.0,
+          70.0
+        ]
+      }
+    },
+    {
+      "path": "MRI-native-axis1.png",
+      "sha256": "ad44a9d1ef3adb72960b20c34b2d53dc6bb875cddaabd637c0055d3ce7c15bb4",
+      "base_image": "Case4-FLAIR.nii.gz",
+      "axis": 1,
+      "index": 111,
+      "display_limits": {
+        "Case4-T1.nii.gz": [
+          0.0,
+          638.11892578125
+        ],
+        "Case4-FLAIR.nii.gz": [
+          -3.475613266346045e-05,
+          113.82936096191406
+        ],
+        "Case4-US-before.nii.gz": [
+          0.0,
+          70.0
+        ]
+      }
+    },
+    {
+      "path": "MRI-native-axis2.png",
+      "sha256": "f1febbbd647fe2a1505bc31a0f07337688e94e3230fb6242a7c1233154e48bc1",
+      "base_image": "Case4-FLAIR.nii.gz",
+      "axis": 2,
+      "index": 137,
+      "display_limits": {
+        "Case4-T1.nii.gz": [
+          0.0,
+          638.11892578125
+        ],
+        "Case4-FLAIR.nii.gz": [
+          -3.475613266346045e-05,
+          113.82936096191406
+        ],
+        "Case4-US-before.nii.gz": [
+          0.0,
+          70.0
+        ]
+      }
+    },
+    {
+      "path": "US-native-axis0.png",
+      "sha256": "bf32d28ac60bb8254095a6358cb98a6a29913292cf74971890da87c628028441",
+      "base_image": "Case4-US-before.nii.gz",
+      "axis": 0,
+      "index": 143,
+      "display_limits": {
+        "Case4-T1.nii.gz": [
+          0.0,
+          638.11892578125
+        ],
+        "Case4-FLAIR.nii.gz": [
+          -3.475613266346045e-05,
+          113.82936096191406
+        ],
+        "Case4-US-before.nii.gz": [
+          0.0,
+          70.0
+        ]
+      }
+    },
+    {
+      "path": "US-native-axis1.png",
+      "sha256": "b930c8971887bdc4a11879a2f02d5fd7a0628775da3e79efeb8c7ca53e7de7dd",
+      "base_image": "Case4-US-before.nii.gz",
+      "axis": 1,
+      "index": 118,
+      "display_limits": {
+        "Case4-T1.nii.gz": [
+          0.0,
+          638.11892578125
+        ],
+        "Case4-FLAIR.nii.gz": [
+          -3.475613266346045e-05,
+          113.82936096191406
+        ],
+        "Case4-US-before.nii.gz": [
+          0.0,
+          70.0
+        ]
+      }
+    },
+    {
+      "path": "US-native-axis2.png",
+      "sha256": "75b9973c67232cde0e6e962227943eecff451793839dee31779e32f959c3ac1f",
+      "base_image": "Case4-US-before.nii.gz",
+      "axis": 2,
+      "index": 223,
+      "display_limits": {
+        "Case4-T1.nii.gz": [
+          0.0,
+          638.11892578125
+        ],
+        "Case4-FLAIR.nii.gz": [
+          -3.475613266346045e-05,
+          113.82936096191406
+        ],
+        "Case4-US-before.nii.gz": [
+          0.0,
+          70.0
+        ]
+      }
+    }
+  ],
+  "runtime": {
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "numpy": "2.5.3",
+    "nibabel": "5.4.2",
+    "helper_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/resect-source-partition-6766a2a/src/resectionlab/mechanics_landmarks.py"
+  },
+  "elapsed_seconds": 2.430624832981266,
+  "child_peak_RSS_bytes": 601915392
+}

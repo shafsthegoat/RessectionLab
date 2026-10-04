@@ -1,0 +1,19 @@
+{
+  "status": "failed",
+  "exit_code": 0,
+  "failure": "RSS_MONITOR_FAILED",
+  "elapsed_seconds": 2.5550502919359133,
+  "maximum_sampled_parent_child_RSS_bytes": 627949568,
+  "budget": {
+    "wall_seconds": 115,
+    "RSS_bytes": 2147483648,
+    "threads": 1,
+    "automatic_retries": 0,
+    "new_dependencies": false
+  },
+  "sampling_caveat": "RSS monitoring is sampled, not continuous",
+  "script_sha256": "71f1a6440057960beb576180243ba3bf14855dd33a4584e1c99eb8a80e091e4c",
+  "resource_probes_sha256": "15dc708fff6695b9226551b85e1f3f626f3e9926e53c29b93061ff2f678a79bc",
+  "result_sha256": "c179ca68bf4e3b97a64d5c50a962c88f87eaa7a6783ce2092929e905cb7d3cce",
+  "log_sha256": "d9cdec72718a55c4ef55e1efeddebc867fff7b758db5f9b1444835004bdac2fa"
+}

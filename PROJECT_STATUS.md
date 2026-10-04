@@ -275,9 +275,16 @@ review reproduces raw/fitted/leave-one-out RMS distances of
 3.112/1.164/1.295 mm and verifies the original source/frame/view hashes.
 Nonexpert inspection of all six views grants no anatomical acceptance.
 The original failure and preparation chronology are preserved in
-`artifacts/mechanics/resect-case4-baseline-alignment-v1/`; no retry or change
-to the fit, landmarks or thresholds has occurred. All B/V motion destinations
-and the during-resection ultrasound remain closed.
+`artifacts/mechanics/resect-case4-baseline-alignment-v1/`.
+A separately reviewed V2 supervision repair reproduced all numerical fields
+and six images exactly, but also failed in 2.555 s: its final valid system query
+reported child RSS zero/state `?E` while direct exit checks still returned
+running, followed shortly by exit zero. All 69 monitoring records and the
+failed outcome are retained; this does not retrospectively diagnose V1.
+Independent saved-record review confirms source and input integrity. Neither
+attempt changed the fit, landmarks or thresholds; neither is a successful
+supervised run. All B/V motion destinations and the during-resection ultrasound
+remain closed.
 
 The first real TRAIN PAT22 inference profile completed all four declared cells
 in 6.247 seconds with unchanged model parameters. One CPU call took 28–30 ms
