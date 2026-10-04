@@ -1,6 +1,6 @@
 """Independent diagnostics contracts; artificial arrays only, no learning."""
 from contextlib import nullcontext
-from dataclasses import asdict
+from dataclasses import asdict, replace
 import importlib.util
 import json
 from pathlib import Path
@@ -127,12 +127,15 @@ def test_profiler_preserves_exact_calls_results_and_exception_identity_across_ne
     assert profiler.snapshot()["phases"]["inner"]["returned_microsteps"] == 2
 
 
-def test_profile_worker_never_constructs_optimizer_or_takes_update_branch(monkeypatch, tmp_path):
+@pytest.mark.parametrize("grid_case", ["default", "derived", "mismatch"])
+def test_profile_worker_never_constructs_optimizer_or_takes_update_branch(monkeypatch, tmp_path, grid_case):
     import torch
     import resectionlab.native_spatial_task as task_module
     import resectionlab.spatial_policy as policy_module
     import resectionlab.spatial_policy_diagnostics as diagnostic_module
-    calls, observation = [], SimpleNamespace(action_ids=("STOP", "CUT"))
+    calls, diagnostic_calls, observation = [], [], SimpleNamespace(action_ids=("STOP", "CUT"))
+    derived = np.eye(4).tolist() if grid_case != "default" else None
+    grid_record = {} if derived is None else {"method": "unit-derived", "derived_affine_ras_mm": derived}
 
     def forbidden(*args, **kwargs):
         raise AssertionError("Profile must not enter an optimizer, gradient or checkpoint path")
@@ -147,13 +150,18 @@ def test_profile_worker_never_constructs_optimizer_or_takes_update_branch(monkey
 
     fake_case = SimpleNamespace(structural_intensity=np.zeros((3, 3, 3)), affine_ras_mm=np.eye(4), nominal_target=None)
     fake_task = SimpleNamespace(case=fake_case, reward_spec=DEFAULT_NATIVE_SPATIAL_REWARD,
-        metrics=lambda: {}, observation=lambda: observation, candidate_inventory=lambda: {})
+        metrics=lambda: {"native_grid_reconciliation": grid_record},
+        observation=lambda: observation, candidate_inventory=lambda: {})
     declaration = {"version": runner.VERSION, "subject": "unit-only", "mode": "profile", "track": "annotation_assisted",
         "settings": {"seed": 11, "max_steps": 3, "max_rss_bytes": 10**9, "max_wall_seconds": 30},
         "policy_config": {}, "expected_policy_architecture_hash": "unit-architecture",
         "access": {"center_mm": [0., 0., 0.], "normal_inward": [0., 0., 1.], "radius_mm": 2.},
         "tools": [asdict(ToolGeometry("unit", .2, .2, 30., tip_length_mm=1.))],
         "objective": asdict(DEFAULT_NATIVE_SPATIAL_REWARD)}
+    if derived is not None:
+        declaration["expected_native_grid_binding"] = {"method": "unit-derived", "derived_affine_ras_mm": derived}
+    if grid_case == "mismatch":
+        declaration["expected_native_grid_binding"]["method"] = "stale-declared-grid"
     for name in ("set_num_threads", "set_num_interop_threads", "use_deterministic_algorithms", "manual_seed"):
         monkeypatch.setattr(torch, name, lambda *args: None)
     monkeypatch.setattr(torch, "Generator", lambda: SimpleNamespace(manual_seed=lambda value: None))
@@ -167,12 +175,21 @@ def test_profile_worker_never_constructs_optimizer_or_takes_update_branch(monkey
     monkeypatch.setattr(runner, "load_inputs", lambda value: (fake_case, "unit-only", {"source": "frozen"}))
     monkeypatch.setattr(runner, "numerical_source_inventory", lambda: {"source": "frozen"})
     monkeypatch.setattr(runner, "peak_rss_bytes", lambda: 1)
-    monkeypatch.setattr(diagnostic_module, "nominal_depth_coverage", lambda case: {})
-    monkeypatch.setattr(diagnostic_module, "spatial_coverage", lambda *args, **kwargs: {})
+    monkeypatch.setattr(diagnostic_module, "nominal_depth_coverage",
+        lambda case, **kwargs: diagnostic_calls.append(("depth", kwargs["native_affine"])) or {})
+    monkeypatch.setattr(diagnostic_module, "spatial_coverage",
+        lambda *args, **kwargs: diagnostic_calls.append(("coverage", kwargs["native_affine"])) or {})
     monkeypatch.setattr(runner, "episode", lambda *args, **kwargs: (calls.append(kwargs) or [], {"fake_episode": True}))
     profiler = SimpleNamespace(phase=lambda name: nullcontext(), snapshot=lambda: {})
+    if grid_case == "mismatch":
+        with pytest.raises(ValueError, match="Executed native grid differs"):
+            runner._worker_with_profiler(declaration, tmp_path, profiler)
+        assert not calls and not diagnostic_calls
+        return
     runner._worker_with_profiler(declaration, tmp_path, profiler)
     assert len(calls) == 1 and calls[0]["profile_actions"] and not calls[0]["stochastic"]
+    assert calls[0]["native_affine"] == derived
+    assert diagnostic_calls == [("depth", derived), ("coverage", derived)]
     report = json.loads((tmp_path / "receipt.json").read_text())
     assert report["optimizer_updates"] == 0
     assert [row["phase"] for row in report["episodes"]] == ["untrained_fixed_inventory_profile"]
@@ -212,3 +229,32 @@ def test_supervisor_rss_measurement_failure_stops_group_and_preserves_failure_id
     assert launches[0][0] is command and launches[0][1]["start_new_session"]
     assert launches[0][1]["env"]["OMP_NUM_THREADS"] == "1"
     assert json.loads((tmp_path / "supervisor-failure.json").read_text()) == result
+
+
+def test_roundoff_reporting_uses_derived_physical_frame_and_preserves_original_index_authority():
+    from resectionlab.native_spatial_task import make_native_opening_task
+    original = np.eye(4)
+    original[2, 0] = 1e-9
+    source = replace(make_native_opening_task().case, affine_ras_mm=original,
+        native_grid_reconciliation="orthogonal_roundoff_1e-6mm", crop_shape=(5, 5, 5))
+    inputs = source.spatial_inputs(np.zeros(source.structural_intensity.shape, bool))
+    observation = build_spatial_observation(inputs, (SpatialAction("STOP"),),
+        ObservedProcedureState(source.access, 0, 3))
+    arguments = {"source_shape": source.structural_intensity.shape, "source_affine": original,
+                 "nominal_target": source.nominal_target}
+    default = spatial_coverage(observation, **arguments)
+    assert default == spatial_coverage(observation, **arguments, native_affine=original)
+    physical = source._native_affine_ras_mm
+    corrected = spatial_coverage(observation, **arguments, native_affine=physical)
+    np.testing.assert_allclose(corrected["crop_origin_source_voxels"], source._crop_origin, rtol=0, atol=1e-14)
+    assert np.max(np.abs(np.asarray(default["crop_origin_source_voxels"]) - source._crop_origin)) > 1e-11
+    assert corrected["original_source_affine_ras_mm"] == original.tolist()
+    assert corrected["native_physical_affine_ras_mm"] == physical.tolist()
+    depths = nominal_depth_coverage(source, native_affine=physical)
+    default_depths = nominal_depth_coverage(source)
+    assert default_depths == nominal_depth_coverage(source, native_affine=original)
+    assert depths["retained_depth_offsets_voxels"] == default_depths["retained_depth_offsets_voxels"]
+    points = np.column_stack((source._candidate_voxels, np.ones(len(source._candidate_voxels)))) @ physical.T
+    manual = (points[:, :3] - source.access.center_mm) @ source.access.normal_inward
+    np.testing.assert_allclose(depths["endpoint_depth_range_mm"], [manual.min(), manual.max()], rtol=0, atol=1e-14)
+    assert depths["endpoint_depth_range_mm"] != default_depths["endpoint_depth_range_mm"]

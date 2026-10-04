@@ -30,12 +30,15 @@ def segment_fraction_inside_grid(first, last):
     return float(max(0., hi - lo))
 
 
-def spatial_coverage(observation, *, source_shape, source_affine, nominal_target, ray_samples=5):
+def spatial_coverage(observation, *, source_shape, source_affine, nominal_target, ray_samples=5,
+                     native_affine=None):
     """Describe visible permitted inputs; the function accepts no private truth."""
     observation.assert_intact()
     shape = observation.image_channels.shape[1:]
-    origin = np.linalg.solve(np.asarray(source_affine)[:3, :3],
-        observation.affine_ras_mm[:3, 3] - np.asarray(source_affine)[:3, 3])
+    source_affine = np.asarray(source_affine)
+    physical_affine = source_affine if native_affine is None else np.asarray(native_affine)
+    origin = np.linalg.solve(physical_affine[:3, :3],
+        observation.affine_ras_mm[:3, 3] - physical_affine[:3, 3])
     target = observation.image_channels[2]
     covered = observation.coverage[2] & observation.channel_available[2]
     visible_mass = float(target[covered].sum())
@@ -54,6 +57,9 @@ def spatial_coverage(observation, *, source_shape, source_affine, nominal_target
             "ray_samples_inside": int(inside.sum()), "sample_fraction_inside": float(inside.mean()),
             "straight_segment_fraction_inside": segment_fraction_inside_grid(grid[0], grid[-1])})
     return {"source_shape": list(source_shape), "crop_shape": list(shape),
+        "original_source_affine_ras_mm": source_affine.tolist(),
+        "native_physical_affine_ras_mm": physical_affine.tolist(),
+        "frame_basis": "unchanged source voxel indices; native physical affine defines actor crop and tool rays",
         "crop_origin_source_voxels": origin.tolist(), "crop_last_center_source_voxels": (origin + np.asarray(shape) - 1).tolist(),
         "crop_affine_ras_mm": observation.affine_ras_mm.tolist(),
         "nominal_target_available": bool(observation.channel_available[2]),
@@ -71,9 +77,10 @@ def spatial_coverage(observation, *, source_shape, source_affine, nominal_target
         "interpretation": "image-center-domain coverage only; neither tool clearance nor clinical evidence adequacy"}
 
 
-def nominal_depth_coverage(case):
+def nominal_depth_coverage(case, *, native_affine=None):
     """An axial envelope upper bound, never a reachability/feasibility claim."""
     affine = np.asarray(case.affine_ras_mm)
+    physical_affine = affine if native_affine is None else np.asarray(native_affine)
     normal = np.asarray(case.access.normal_inward)
     access_voxel = np.linalg.solve(affine[:3, :3], case.access.center_mm - affine[:3, 3])
     directions = affine[:3, :3] / np.linalg.norm(affine[:3, :3], axis=0)
@@ -81,13 +88,16 @@ def nominal_depth_coverage(case):
     sign = 1 if directions[:, axis] @ normal > 0 else -1
     first = int(np.floor(access_voxel[axis]) + 1) if sign > 0 else int(np.ceil(access_voxel[axis]) - 1)
     cells = np.asarray(case._candidate_voxels, dtype=int).reshape(-1, 3)
-    depths = (cells @ affine[:3, :3].T + affine[:3, 3] - case.access.center_mm) @ normal
+    depths = (cells @ physical_affine[:3, :3].T + physical_affine[:3, 3] - case.access.center_mm) @ normal
     retained = sorted(set(int((cell[axis] - first) * sign) for cell in cells))
     upper = None if len(depths) == 0 else float(depths.max() + max(tool.tip_radius_mm for tool in case.tools))
     target = case.nominal_target
     positions = np.empty((0, 3), int) if target is None else np.argwhere(np.asarray(target) > 0)
-    target_depths = (positions @ affine[:3, :3].T + affine[:3, 3] - case.access.center_mm) @ normal
+    target_depths = (positions @ physical_affine[:3, :3].T + physical_affine[:3, 3] - case.access.center_mm) @ normal
     return {"proposal_scope": case._candidate_scope, "retained_endpoint_voxels": len(cells),
+        "original_source_affine_ras_mm": affine.tolist(),
+        "native_physical_affine_ras_mm": physical_affine.tolist(),
+        "frame_basis": "original source affine determines proposal indices and axis; native physical affine determines depths",
         "nominal_source_axis": axis, "inward_sign": sign,
         "requested_depth_offsets_voxels": [0, 1, 2, 4, 8, 16, 24, 31]
             if case._candidate_scope == "fixed_access_grid_3columns_8depths_within_actor_crop" else None,

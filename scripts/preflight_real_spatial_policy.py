@@ -117,7 +117,7 @@ def peak_rss_bytes():
 
 
 def episode(base, policy, generator, *, stochastic, profile_actions=False, checkpoint=lambda row: None,
-            diagnostics=False, profiler=None):
+            diagnostics=False, profiler=None, native_affine=None):
     from resectionlab.spatial_policy import SpatialTransition, parameter_hash
     before = parameter_hash(policy)
     started = time.perf_counter()
@@ -131,7 +131,7 @@ def episode(base, policy, generator, *, stochastic, profile_actions=False, check
         def covered(observation):
             return spatial_coverage(observation, source_shape=task.case.structural_intensity.shape,
                 source_affine=task.case.affine_ras_mm, nominal_target=task.case.nominal_target,
-                ray_samples=policy.config.ray_samples)
+                ray_samples=policy.config.ray_samples, native_affine=native_affine)
 
         coverage = covered(task.observation())
     while not task.terminated:
@@ -228,12 +228,18 @@ def _worker_with_profiler(declaration, output, profiler):
         "reward_weights": reward_weights, "initial_parameter_hash": parameter_hash(policy),
         "optimizer_updates": 0, "episodes": [], "scope": "real anatomy; simulated actions and outcomes; pipeline preflight only"}
     receipt["initial_task_metrics"] = task.metrics()
+    grid_record = receipt["initial_task_metrics"].get("native_grid_reconciliation", {})
+    expected_grid = declaration.get("expected_native_grid_binding", {})
+    if any(grid_record.get(key) != value for key, value in expected_grid.items()):
+        raise ValueError("Executed native grid differs from the declared source/derived frame binding")
+    native_affine = grid_record.get("derived_affine_ras_mm")
     initial_observation = task.observation()
     receipt["initial_candidate_inventory"] = task.candidate_inventory()
-    receipt["nominal_depth_coverage"] = nominal_depth_coverage(task.case)
+    receipt["nominal_depth_coverage"] = nominal_depth_coverage(task.case, native_affine=native_affine)
     receipt["initial_observation_coverage"] = spatial_coverage(initial_observation,
         source_shape=task.case.structural_intensity.shape, source_affine=task.case.affine_ras_mm,
-        nominal_target=task.case.nominal_target, ray_samples=policy.config.ray_samples)
+        nominal_target=task.case.nominal_target, ray_samples=policy.config.ray_samples,
+        native_affine=native_affine)
     write_json(output / "declaration.json", declaration)
 
     def preserve():
@@ -262,7 +268,8 @@ def _worker_with_profiler(declaration, output, profiler):
 
         with profiler.phase(phase):
             transitions, row = episode(task, policy, generator, stochastic=stochastic,
-                profile_actions=profile_actions, checkpoint=checkpoint, diagnostics=True, profiler=profiler)
+                profile_actions=profile_actions, checkpoint=checkpoint, diagnostics=True, profiler=profiler,
+                native_affine=native_affine)
         saved.update(row, status="complete")
         preserve()
         return transitions

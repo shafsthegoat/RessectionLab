@@ -111,6 +111,45 @@ def test_live_memory_watchdog_stops_child_and_preserves_partial_output(tmp_path)
     assert "allocated" in (tmp_path / "worker.log").read_text()
 
 
+def test_episode_threads_native_grid_to_initial_and_poststep_coverage(monkeypatch):
+    from types import SimpleNamespace
+    import numpy as np
+    import torch
+    from resectionlab.evaluation import IndependentGeometryResult
+    import resectionlab.spatial_policy_diagnostics as diagnostics
+
+    native, original = np.diag([1., 1., 1.125, 1.]), np.eye(4)
+    calls = []
+    monkeypatch.setattr(diagnostics, "spatial_coverage", lambda obs, **kwargs: calls.append(kwargs) or {})
+
+    class Policy(torch.nn.Linear):
+        config = SimpleNamespace(ray_samples=5)
+        def act(self, observation, **kwargs):
+            return "STOP"
+
+    class Task:
+        terminated = False
+        case = SimpleNamespace(structural_intensity=np.zeros((3, 3, 3)), affine_ras_mm=original,
+                               nominal_target=None)
+        def fresh(self):
+            return Task()
+        def observation(self):
+            return SimpleNamespace(action_ids=("STOP",), fingerprint="observed")
+        def step(self, action):
+            self.terminated = True
+            return SimpleNamespace(reward=0., terminated=True, info={}, observation=self.observation())
+        def metrics(self):
+            return {}
+        def candidate_inventory(self):
+            return {}
+        def independent_geometry_check(self):
+            return IndependentGeometryResult(True, ())
+
+    runner.episode(Task(), Policy(1, 1), None, stochastic=False, diagnostics=True, native_affine=native)
+    assert len(calls) == 2
+    assert all(row["source_affine"] is original and row["native_affine"] is native for row in calls)
+
+
 def test_live_deadline_watchdog_stops_child_and_retains_logs(tmp_path):
     result = runner.supervise_worker([sys.executable, "-c",
         "import time; print('child-started',flush=True); time.sleep(20)"], tmp_path,
