@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-10-04T19:42:43.827213+00:00",
+  "release_sha256": "bd6135672fbe6982b7f19e814375ea5c791d98f459c930e7192e44e55c6fb95a",
+  "driver_sha256": "739e84f71071a0f9800585a6503bfd4e3ca07b309f0ca8aa6da5798e3dd5890d",
+  "command": [
+    "curl",
+    "--silent",
+    "--show-error",
+    "--fail",
+    "--proto",
+    "=https",
+    "--max-time",
+    "60",
+    "--max-filesize",
+    "36427761",
+    "--dump-header",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/gmsh-4.15.2-runtime-v1/transfer-headers.txt",
+    "--output",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/gmsh-4.15.2/gmsh-4.15.2-py2.py3-none-macosx_12_0_arm64.whl.partial",
+    "--write-out",
+    "%{http_code}\n%{url_effective}\n%{size_download}\n",
+    "https://files.pythonhosted.org/packages/3d/b4/0d25938ad62ea4db6bcbdecbc77c72d05d8a6a679abe4addcd86167ffd77/gmsh-4.15.2-py2.py3-none-macosx_12_0_arm64.whl"
+  ],
+  "status": "running",
+  "mesh_generation": false,
+  "patient_or_curve_access": false
+}

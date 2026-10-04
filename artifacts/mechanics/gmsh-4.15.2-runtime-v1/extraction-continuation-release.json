@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-04T19:45:23.289802+00:00",
+  "authority": "Root explicit approval: bounded continuation for verified wheel, retain original verifier/failure, accept strict 64-hex SHA256 plus base64 controls, reuse sole wrapper unchanged, exclusive remaining writes, one originally authorized probe after full checks.",
+  "original_failure_sha256": "9396349f54a439a80baf7e4609cf3caf52ce06859eb8382031e02860a6becd6f",
+  "continuation_driver_sha256": "07300a53df11378dae3327f3f7bc32d1c9236d2d621ec237ccf71df7028ce8a4",
+  "download_retry": false,
+  "overwrite": false,
+  "scientific_rerun": false
+}

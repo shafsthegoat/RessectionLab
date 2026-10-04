@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "status": "extracted_verified_pending_single_probe",
+  "acquisition_receipt_sha256": "2c13199102254f379880002b5539ae192180c451608bdda0c54a16d3079a6078",
+  "extraction_driver_sha256": "07300a53df11378dae3327f3f7bc32d1c9236d2d621ec237ccf71df7028ce8a4",
+  "private_prefix": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/gmsh-4.15.2",
+  "runtime_prefix": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/gmsh-4.15.2/runtime",
+  "module": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/gmsh-4.15.2/runtime/gmsh.py",
+    "sha256": "f4b0935cebde899750293d87a643090e5ea33c9b18d249267f507db68a0e01c3",
+    "bytes": 427222
+  },
+  "library": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/gmsh-4.15.2/runtime/lib/libgmsh.4.15.dylib",
+    "sha256": "def0f5c10988a986e5e879b3db9669d8fe016a81e2d994bbaf2b8497c6b8a58a",
+    "bytes": 82659384,
+    "architecture": "arm64"
+  },
+  "license": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/gmsh-4.15.2/runtime/share/doc/gmsh/LICENSE.txt",
+    "sha256": "32085d8c954e2e22dc667c089f360049e8f1af955f946fb0a18f29d70390276a",
+    "copied_notice": "LICENSE-upstream.txt"
+  },
+  "extracted_files_sha256": "e65d605dc73d83d5a73540d4e904c4b44659057b84f8a67cb59967288a52a00d",
+  "extracted_file_count": 425,
+  "extracted_bytes": 97904552,
+  "linkage_sha256": "33db524582419447afc336b3e0cd8597c65f3ae8b23c53f7a05eaa0d98a1f695",
+  "wheel_record_all_payload_files_verified": true,
+  "record_encoding": "Creator uses SHA256 hex, accepted after six explicit controls; original failed base64-only verifier retained",
+  "existing_wrapper_reused_unchanged": true,
+  "no_code_executed": true,
+  "no_global_or_app_install": true
+}
