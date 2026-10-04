@@ -1,15 +1,15 @@
 # Local diffusion correction: dependency and feasibility audit
 
-Checked October 4, 2026. This slice inspected primary documentation, source, release metadata and a 62.9 kB Python wheel. It installed no dependency, ran no patient correction, and changed no acquisition metadata. See `btc-acquisition-physics.md` for the separate readout/geometry audit and `diffusion-pipeline.md` for the existing reconstruction gates.
+Initial audit, October 4, 2026: inspected primary documentation, source, release metadata and a 62.9 kB Python wheel, without installing or executing it. A subsequent isolated optional-runtime experiment is now recorded in [pyhysco-phantom.md](pyhysco-phantom.md): the known-field case improved relative image RMSE from 9.6788% to 0.4032%, with 0.3948 mm field RMSE, 9.34 seconds wall time and 415.2 MiB sampled peak RSS. Its zero-field solver failure and unsupported rotated-PE negative control remain rejected. These are synthetic results only; no patient correction or acquisition-metadata change followed. See `btc-acquisition-physics.md` and `diffusion-pipeline.md` for the remaining physics and reconstruction gates.
 
-**Recommendation:** retain the pending FSL decision for the established complete correction path. For independent FSL-free experimentation, first test PyHySCO on known-distortion phantoms; consider AFNI as a more mature susceptibility comparator. Neither is a verified replacement for the combined motion, eddy-current, susceptibility and outlier correction needed for BTC. Unmodified TORTOISE V4 does not remove the FSL dependency.
+**Recommendation:** retain the pending FSL decision for the established complete correction path. The first FSL-free PyHySCO phantom experiment is complete; its explicit geometry gate remains closed for BTC. Consider AFNI as a more mature susceptibility comparator. Neither is a verified replacement for the combined motion, eddy-current, susceptibility and outlier correction needed for BTC. Unmodified TORTOISE V4 does not remove the FSL dependency.
 
 ## Options
 
 | Candidate | Verified scope and license | Mac/local feasibility | Decision |
 |---|---|---|---|
 | TORTOISE V4 / DR-BUDDI | Main source GPL-3.0; the CPU executables link bundled FSL BET. DIFFPREP handles motion/eddy; DR-BUDDI handles susceptibility. | Current instructions recommend Linux binaries or Linux/amd64 Docker for macOS; native Apple Silicon build unverified. Release archive is 744,715,009 bytes. | Does not bypass the FSL license question. |
-| PyHySCO 0.0.4 | GPL-3.0; opposite-PE susceptibility model implemented in Python/PyTorch. No FSL dependency found in the wheel or its declared dependencies. | Universal wheel is 62,904 bytes; Torch, NumPy, SciPy, nibabel and matplotlib are already available locally. CPU execution supported; no M5 timing/memory measurement yet. | Smallest bounded phantom experiment; requires a geometry-preserving adapter before patient use. |
+| PyHySCO 0.0.4 | GPL-3.0; opposite-PE susceptibility model implemented in Python/PyTorch. No FSL dependency found in the wheel or its declared dependencies. | Universal wheel is 62,904 bytes; dependencies already available locally. Subsequent isolated CPU phantom run: 9.34 s, 415.2 MiB sampled RSS for known distortion. | Same-grid phantom adapter tested; zero-field solver failure and BTC's nonparallel PE geometry remain gates. |
 | AFNI `3dQwarp -plusminus` | NIH public-domain work, MCW CC BY 4.0 portions, and enumerated third-party licenses. Susceptibility-oriented symmetric nonlinear registration. | Official macOS 12+ ARM instructions exist. ARM archive HEAD reports 864,018,288 bytes; standalone `3dQwarp` 6,838,868 bytes, with runtime libraries still to inspect. | More mature comparator, but broader install and still not full DWI correction. |
 | Existing DIPY motion correction | BSD-licensed rigid/affine registration; no reverse-PE susceptibility solver or EDDY-equivalent model established here. | Already installed on this Mac. | Preserve separate motion-only status; never promote it to complete correction. |
 
@@ -36,19 +36,17 @@ Source inspection identifies four concrete integration traps:
 
 These findings come from the inspected wheel's `scripts/pyhysco.py`, `EPI_MRI/utils.py`, and `optimization/EPIOptimize.py`; the [pinned source loader/writer](https://github.com/EmoryMLIP/PyHySCO/blob/bff665515231bfbd53165e8e18cfdc9c7fe38cf8/src/EPI_MRI/utils.py) retains the geometry limitations. Audit files reside in `/tmp/ressectionlab-correction-audit/PyHySCO-wheel`; they are inspection artifacts, not installed product dependencies.
 
-Concrete future setup and phantom-only command, **not executed in this slice**:
+The subsequent experiment supersedes the original audit's illustrative direct-CLI command. Use its isolated runtime and reproducible driver, which include source-integrity checks, a header adapter and a watchdog; keep the optional package outside the app environment. With the verified wheel available:
 
 ```sh
-.venv/bin/python -m pip install --no-deps 'PyHySCO==0.0.4'
-.venv/bin/pyhysco --help
-OMP_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 MKL_NUM_THREADS=2 MPLBACKEND=Agg \
-  /usr/bin/time -l .venv/bin/pyhysco \
-  phantom_ap_same_grid.nii.gz phantom_pa_same_grid.nii.gz 2 \
-  --precision single --max_iter 25 --correction jac \
-  --output_dir outputs/pyhysco_phantom/run1
+.venv/bin/python -m pip install --no-deps \
+  --target data/optional-runtimes/pyhysco-0.0.4 /path/to/PyHySCO-0.0.4-py3-none-any.whl
+.venv/bin/python scripts/experimental_pyhysco_phantom.py \
+  --wheel /path/to/PyHySCO-0.0.4-py3-none-any.whl \
+  --output outputs/pyhysco_phantom/new-run
 ```
 
-Verify the downloaded wheel hash before installing. The example input names deliberately refer to generated phantoms with a known common grid and opposite axis. Output is a filename prefix in the inspected implementation; create its parent directory first. The installed dependency checks and a `--help` smoke check must precede numerical work.
+The output directory must not already exist. The driver generates phantoms and accepts no patient-image input. See [pyhysco-phantom.md](pyhysco-phantom.md) for the completed run, strict geometry rejections and retained solver failure.
 
 ## AFNI: mature comparator with a larger dependency footprint
 
@@ -71,9 +69,9 @@ The official [ARM installation instructions](https://afni.nimh.nih.gov/pub/dist/
 
 The source audit establishes a 0.8-degree AP/PA prescription difference and supports a separately derived effective readout of `0.0361003696677854` seconds. The originals retain `0.0266003`; no derived sidecar has yet been created. Regridding PA into native AP space leaves a PE vector approximately `[-0.01396218, 0.99990252, 0]`, which is not exactly opposite AP's `[0, -1, 0]`. PyHySCO and one-axis AFNI half-warps do not represent that pair exactly. Do not erase this difference or interpret header prescription as measured head motion.
 
-Before any patient adapter, run known-field phantoms at the actual `96 × 96 × 60` grid with: zero distortion; a smooth invertible field; opposite sign; and the measured 0.8-degree grid/PE difference. Test displacement sign/units, coordinate round trips, Jacobian positivity, intensity modulation, header preservation and rejection of unsupported geometry. Compare against truth, not only improved AP/PA similarity. Do not use a flexible registration improvement to certify lesion-region anatomy.
+The subsequent `96 × 96 × 60` phantom experiment checked zero distortion, a smooth invertible field, opposite sign and the measured 0.8-degree grid/PE difference, alongside coordinate, intensity and header contracts. Its negative control shows why improved image similarity cannot overrule unsupported geometry. New correction implementations still require known-field tests and independent validation before any patient adapter. A flexible registration improvement cannot certify lesion-region anatomy.
 
-A float32 image at that grid is 2.11 MiB; all 102 AP volumes alone are about 215.2 MiB. These are array sizes, **not measured solver peak RAM**. Proposed resource budget: one 3D pair at a time, two CPU threads, float32, a five-minute timeout and an external RSS watchdog terminating at 8 GiB, leaving room on the 16 GiB host. Confirm `time -l` peak RSS and wall time on the phantom before admitting a patient run; macOS memory limits alone are not a reliable RSS guard. Published CPU timing cannot guarantee this budget.
+A float32 image at that grid is 2.11 MiB; all 102 AP volumes alone are about 215.2 MiB. These are array sizes, **not measured solver peak RAM**. The subsequent phantom driver used one pair, two CPU threads, float32, a 90-second timeout and an 8 GiB RSS watchdog. Its known-field sampled maximum was 415.2 MiB; sampling can miss a brief high-water peak. This measurement does not guarantee a patient run's resource use or scientific validity. macOS memory limits alone are not a reliable RSS guard.
 
 Persist each correction component's status separately. A future accepted result needs source/derived metadata hashes, algorithm/version/parameters, complete image and PE transforms, gradient rotation provenance, residual and Jacobian summaries, independent visual review and the remaining motion/eddy/outlier limitations. Until those exist, BTC tract evidence remains unaccepted.
 

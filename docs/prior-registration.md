@@ -133,3 +133,79 @@ physical translation, oblique/anisotropic RAS-to-LPS landmarks, transform-center
 and inverse-direction checks, reflection/shear rejection, finite budget and
 cancellation gates, qform-only ingestion, categorical interpolation, unknown
 sampling coverage and stale-review rejection.
+
+## Seven-map inspection audit and UI labels
+
+Rechecked October 4, 2026 for the view-only desktop import. All seven cached
+members pass their pinned source hashes and active spatial-header checks.
+Recreating every overlay from the saved matrix with the current `anatomy.py`
+reproduced its values, coverage, affine and registration hash **exactly**. This
+confirms artifact integrity; it does not independently validate alignment. Every
+saved layer still has `alignment_review_required`, `review=null`,
+`patient_specific=false` and `clinical_deficit_probability=null`.
+
+Use a persistent **Population prior** badge and these distinct layer labels:
+
+| Map ID | Display label |
+|---|---|
+| `motor_functional_concordance` | Motor · functional network |
+| `phonology_functional_concordance` | Phonology · functional network |
+| `semantics_functional_concordance` | Semantics · functional network |
+| `speech_articulation_functional_concordance` | Speech arrest / articulation · functional network |
+| `phonology_structural_mask` | Phonology · structural network mask |
+| `semantics_structural_mask` | Semantics · structural network mask |
+| `speech_articulation_structural_mask` | Speech arrest / articulation · structural network mask |
+
+The existing generic inventory titles repeat across functional/structural pairs;
+the UI must include map kind. Preserve `SPEECH_ARREST` as the source category
+even when the explanation uses “speech articulation.” No combined “language”
+layer should silently replace the three components.
+
+**Value legends:** functional maps use **Atlas concordance (unitless, 0–1)**:
+the fraction of DES-seeded normative connectivity maps supporting a location.
+Motor seeds originate from cortical DES; the language maps originate from
+subcortical DES/white-matter connectivity. `_randomise` in the filename does
+not make the released scalar a p-value. These values are neither measured
+patient BOLD connectivity nor probabilities of injury. Structural maps use
+**Released mask membership (0 or 1)**, derived from filtered normative
+tractography. They are not patient tracts, FA, streamline counts or calibrated
+tract probabilities. Keep spatial units **mm** separate from value units.
+([Motor methods](https://academic.oup.com/brain/article/147/3/1100/7458468),
+[language functional and structural methods](https://www.nature.com/articles/s43856-025-01121-0))
+
+The language paper describes normalized structural maps and a 95th-percentile
+threshold for its clinical analyses. The pinned files are already binary; their
+voxel values do not retain the original density or numeric cutoff. Do not label
+membership as “95% confidence” or manufacture the pre-threshold values. The
+paper's outcome analyses concern semantic/phonological recovery; the speech
+articulation mask does not supply a corresponding postoperative predictor.
+
+**Coverage labels:** show **Within atlas field of view** or **Outside atlas
+field of view — unknown** at the inspected voxel. Within the field, zero means
+**No signal in this released map; patient function unknown**, not absent
+function. The saved coverage fractions are 0.49243694 for the four 2 mm maps
+and 0.49732202 for the three 1 mm maps. Their denominator is the entire
+240 × 240 × 155 target image box, including background; they are not fractions
+of brain tissue assessed, registration accuracy, or confidence. The different
+fractions reflect slightly different source-grid extents.
+
+**Laterality:** all seven source maps contain nonzero voxels on both sides of
+the source RAS x=0 plane. The structural masks are strongly asymmetric, so a
+bilateral display must preserve the supplied data rather than mirror or crop
+them. Keep **Patient language dominance: unknown** unless separate patient
+evidence establishes it. Handedness, atlas asymmetry and a registration cannot
+establish the patient's dominance or tumor-related functional reorganization.
+Presence on both sides is a byte-level observation, not equivalent bilateral
+support or patient-specific localization.
+
+**Review labels:** use **Alignment review required · inspection only** for
+these saved previews and **Not used in route scoring** for the view-only
+proposal. A future explicit acceptance may say **Alignment reviewed ·
+population prior**, never “patient function verified.” Show source/member hash,
+registration hash, transform direction, method/version, interpolation and
+review scope in the inspector. The NPZ's values/coverage/affine alone do not
+constitute an accepted evidence record. Import reconstructs against the pinned
+source and saved transform, compares all artifacts and the current MRI, frame,
+lesion and planning identities while retaining the historical registration case hash,
+and keeps the gate closed on mismatch. Merely opening a preview cannot accept
+it. Template redistribution remains unresolved as described above.
