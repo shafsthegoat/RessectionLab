@@ -1,0 +1,18 @@
+{
+  "commit": "0632559217b8cdff8080fdee34c5f785dbd58a45",
+  "archive": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-febio-patch-v1/0632559217b8cdff8080fdee34c5f785dbd58a45.tar",
+  "archive_sha256": "04406256d83bc0f49776b31aa7c545ba0b0494f6d8de9f8343666b332ac18a4b",
+  "source_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-febio-patch-v1/0632559217b8cdff8080fdee34c5f785dbd58a45",
+  "scope": "Exact committed checker, committed generic process supervisor, five committed decks and manifests; no mutable numerical source imports",
+  "files": {
+    "artifacts/febio-runtime-investigation-v1/prospective-runtime.json": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48",
+    "artifacts/mechanics-febio-verification-v1/decks/finite_stretch.feb": "51f7966c5054f009f7e1bf8cefa3306364196b58ede0170b39cbeab18391dee6",
+    "artifacts/mechanics-febio-verification-v1/decks/manifest.json": "2492e1d20c25a3d0adfc34faf51d88206fe43c4d6897e63db4cf7ea26c96c3d7",
+    "artifacts/mechanics-febio-verification-v1/decks/shear.feb": "509c6ea97211d44d81e00d35d004e0e503517c0d0d5d8857a4af89abbec2b5b6",
+    "artifacts/mechanics-febio-verification-v1/decks/shear_double_stiffness.feb": "af78dc2a965892293d20786149224ae8337392347fdca19ec7e3ced8db987ac5",
+    "artifacts/mechanics-febio-verification-v1/decks/translation.feb": "98a34f49115f260feff3ce45a231c3dfcb3d5f7bcd15edf1777cd230566a8481",
+    "artifacts/mechanics-febio-verification-v1/decks/zero.feb": "d202aa532e5cc2ec9f8219ba672d37c4606b74cbfeca9b6ea1ebbcd40a061f67",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "scripts/mechanics_febio_verification.py": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5"
+  }
+}

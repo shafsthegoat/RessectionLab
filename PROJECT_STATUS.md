@@ -221,18 +221,31 @@ Analytical FEBio deck/output checks pass 43 controls, and the isolated runtime
 driver passes 19 controls; these are software checks, not executed solver or
 measurement agreement. The isolated FEBio 4.13 source build completed in 386.7 s
 at 664.7 MB sampled process-group peak, with verified private/system linkage and
-unchanged inputs. Its version probe reported 4.13.0; analytical solver execution
-is a separate next gate. Gmsh 4.15.2 also passed private payload/version checks;
+unchanged inputs. Its version probe reported 4.13.0. Gmsh 4.15.2 also passed
+private payload/version checks;
 its original checksum-format extraction failure and exact repair are retained.
 See `docs/hbe-specimen-mechanics-poc.md` and `docs/mechanics-febio-verification.md`.
+
+The actual five-deck FEBio patch attempt passed once: zero load, rigid
+translation, finite stretch, shear and doubled stiffness. Independent review
+verified all 25 saved states, signed reactions, stress, energy, reconstructed
+Jacobians, force/moment balance, nonlinear residuals and stiffness scaling.
+Largest signed-reaction error was 4.50e-14 N; supervised runtime was 0.525 s
+with 48.8 MB sampled peak memory. Inputs, source and runtime hashes stayed
+unchanged. These are homogeneous analytical controls, not measured tissue
+agreement, mesh convergence or patient validation. See
+`artifacts/mechanics-febio-patch-run-v1/RESULT.md` and its independent audit.
 
 For the real-anatomy displacement proof of concept, six official RESECT Case4
 files (35,068,010 bytes) were acquired and verified. This patient is permanently
 development and does not change existing cohort roles. The reviewed access
 contract selects six supplied motions using source coordinates only, leaving at
 least six destination measurements withheld. Baseline MRI/ultrasound alignment
-cannot use the later ultrasound or those outcomes. No patient arrays or landmark
-values have been opened yet; brain/cavity boundaries are not supplied. The task
+cannot use the later ultrasound or those outcomes. Baseline header checks
+preserve different original T1/FLAIR affines and the oblique ultrasound frame.
+Source-only parsing found 19 eligible landmarks and froze six input IDs with
+13 withheld outcomes; every destination coordinate remains unopened.
+Brain/cavity boundaries are not supplied. The task
 is conditional displacement interpolation with declared mechanical assumptions,
 not a validated surgical action, retractor force or cutting response. See
 `docs/resect-conditional-displacement-poc.md` and the acquisition receipts.

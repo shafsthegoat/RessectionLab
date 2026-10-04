@@ -1,0 +1,165 @@
+{
+  "status": "passed_independent_saved_output_audit",
+  "source_commit": "0632559217b8cdff8080fdee34c5f785dbd58a45",
+  "checker_sha256": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5",
+  "bound_input_hashes_rechecked": 36,
+  "committed_archive_files_rechecked": 9,
+  "five_original_case_output_hash_sets_rechecked": true,
+  "runtime_identity_sha256": "f560f386726d13b399bcfb0c781a4b78104deecf41aa977e0efe205f18fabfc4",
+  "case_results": [
+    {
+      "case": "zero",
+      "states": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0
+      ],
+      "solver_exit_code": 0,
+      "named_solver": "skyline",
+      "maximum_absolute_errors": {
+        "position_m": 0.0,
+        "signed_reaction_N": 6.57632674256e-34,
+        "Cauchy_stress_Pa": 2.8398992588e-29,
+        "energy_density_Pa": 4.16333634234e-13,
+        "logged_J": 0.0
+      },
+      "minimum_actual_sampled_J": 1.0,
+      "maximum_net_force_N": 1.0584855250751198e-45,
+      "maximum_current_net_moment_Nm": 7.848038416199184e-48,
+      "maximum_final_residual_squared_norm_N2": 7.164428e-67,
+      "maximum_residual_to_required_or_floor_ratio": 7.1644280000000005e-47,
+      "independent_checker_matches_saved": true
+    },
+    {
+      "case": "translation",
+      "states": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0
+      ],
+      "solver_exit_code": 0,
+      "named_solver": "skyline",
+      "maximum_absolute_errors": {
+        "position_m": 1.734723475976807e-18,
+        "signed_reaction_N": 1.03389519168e-15,
+        "Cauchy_stress_Pa": 5.51410768897e-11,
+        "energy_density_Pa": 7.77156117238e-13,
+        "logged_J": 0.0
+      },
+      "minimum_actual_sampled_J": 0.9999999999999992,
+      "maximum_net_force_N": 3.1148200701224193e-27,
+      "maximum_current_net_moment_Nm": 1.938558529818749e-29,
+      "maximum_final_residual_squared_norm_N2": 7.981413e-31,
+      "maximum_residual_to_required_or_floor_ratio": 4.722346768338898e-17,
+      "independent_checker_matches_saved": true
+    },
+    {
+      "case": "finite_stretch",
+      "states": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0
+      ],
+      "solver_exit_code": 0,
+      "named_solver": "skyline",
+      "maximum_absolute_errors": {
+        "position_m": 3.469446951953614e-18,
+        "signed_reaction_N": 4.4988318625982515e-14,
+        "Cauchy_stress_Pa": 4.856019586441107e-09,
+        "energy_density_Pa": 4.383338136904058e-11,
+        "logged_J": 0.0
+      },
+      "minimum_actual_sampled_J": 1.0,
+      "maximum_net_force_N": 1.0016358019154443e-14,
+      "maximum_current_net_moment_Nm": 5.139391074264784e-17,
+      "maximum_final_residual_squared_norm_N2": 1.879294e-31,
+      "maximum_residual_to_required_or_floor_ratio": 5.198230720526922e-18,
+      "independent_checker_matches_saved": true
+    },
+    {
+      "case": "shear",
+      "states": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0
+      ],
+      "solver_exit_code": 0,
+      "named_solver": "skyline",
+      "maximum_absolute_errors": {
+        "position_m": 1.734723475976807e-18,
+        "signed_reaction_N": 3.335439563434406e-15,
+        "Cauchy_stress_Pa": 2.6820323739684682e-11,
+        "energy_density_Pa": 1.5987211554602254e-13,
+        "logged_J": 0.0
+      },
+      "minimum_actual_sampled_J": 0.9999999999999996,
+      "maximum_net_force_N": 1.4646811791917498e-16,
+      "maximum_current_net_moment_Nm": 2.3473909762213535e-17,
+      "maximum_final_residual_squared_norm_N2": 6.43849e-32,
+      "maximum_residual_to_required_or_floor_ratio": 2.1221658815448246e-18,
+      "independent_checker_matches_saved": true
+    },
+    {
+      "case": "shear_double_stiffness",
+      "states": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0
+      ],
+      "solver_exit_code": 0,
+      "named_solver": "skyline",
+      "maximum_absolute_errors": {
+        "position_m": 1.734723475976807e-18,
+        "signed_reaction_N": 3.3371742869103826e-15,
+        "Cauchy_stress_Pa": 4.446365498012028e-11,
+        "energy_density_Pa": 3.197442310920451e-13,
+        "logged_J": 0.0
+      },
+      "minimum_actual_sampled_J": 0.9999999999999996,
+      "maximum_net_force_N": 3.9892828976106845e-16,
+      "maximum_current_net_moment_Nm": 6.157258087578046e-17,
+      "maximum_final_residual_squared_norm_N2": 2.575396e-31,
+      "maximum_residual_to_required_or_floor_ratio": 2.122165182066135e-18,
+      "independent_checker_matches_saved": true
+    }
+  ],
+  "all_stiffness_scaling_states_passed": true,
+  "bounds": {
+    "original_aggregate_seconds": 60,
+    "version_probe_seconds": 3.501999792060815,
+    "effective_patch_parent_cap_seconds": 56.49,
+    "patch_parent_elapsed_seconds": 0.5246963331010193,
+    "patch_execution_wrapper_elapsed_seconds": 0.5259119169786572,
+    "sampled_peak_process_group_rss_bytes": 48775168
+  },
+  "inputs_sha256": {
+    "artifacts/mechanics-febio-patch-run-v1/results.json": "6558a03c5171023a9d312110cea2f88585d15889ba72968bc9df13be44b8f715",
+    "artifacts/mechanics-febio-patch-run-v1/execution.json": "aa7a112b04803fb0fa9bff9f6b7394bb50b0be174b7177019aaae351ac223749",
+    "artifacts/mechanics-febio-patch-run-v1/execution-baseline.json": "3d9f0adf52893827086f177e79dcb4f76d8a5c23a6beddaf95ae4a2211ac0bfe",
+    "artifacts/mechanics-febio-patch-run-v1/archive-binding.json": "02b931d891ede55f0818df0893ad85cb86754042595e8149a9b769fa52fe34d2",
+    "artifacts/mechanics-febio-patch-run-v1/supervision/supervision.json": "3319f0c1d4937c69ae7b5382710725c1ce9f1464c8468e84225dfbeefcabd71f"
+  },
+  "review_solver_invocations": 0,
+  "limits": [
+    "Five homogeneous numerical patch cases only. No tissue fit, locking/mesh convergence, patient displacement or incision/contact validation.",
+    "Original results retain the original 60 s allowance; the actual supervisor enforced 56.49 s after counting the separate 3.501999792 s version probe.",
+    "RSS is sampled; a between-sample peak may be missed."
+  ],
+  "frozen_run_index": {
+    "path": "artifacts/mechanics-febio-patch-run-v1/artifact-index.json",
+    "sha256": "9e4e12d1b1d34b8936dc08e5121a38075e2a6c90ac15906309efb498b6f9b467",
+    "files_verified": 45,
+    "bytes_verified": 494698,
+    "exact_file_set_verified": true
+  }
+}

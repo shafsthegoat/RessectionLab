@@ -1,0 +1,204 @@
+{
+  "case": "shear_double_stiffness",
+  "passed": true,
+  "failures": [],
+  "states": [
+    {
+      "time": 0.0,
+      "checks": {
+        "positions_m": true,
+        "displacements_m": true,
+        "signed_reactions_N": true,
+        "stress_Pa": true,
+        "energy_density_Pa": true,
+        "positive_actual_sampled_jacobians": true,
+        "actual_gradient": true,
+        "logged_J_matches_actual_Gauss_average": true,
+        "force_balance_N": true,
+        "current_coordinate_moment_balance_Nm": true,
+        "free_center_residual_N": true
+      },
+      "minimum_actual_sampled_J": 1.0,
+      "total_logged_energy_J": 0.0,
+      "expected_energy_J": 0.0,
+      "net_force_N": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "net_current_moment_Nm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "center_displacement_m": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "time": 0.25,
+      "checks": {
+        "positions_m": true,
+        "displacements_m": true,
+        "signed_reactions_N": true,
+        "stress_Pa": true,
+        "energy_density_Pa": true,
+        "positive_actual_sampled_jacobians": true,
+        "actual_gradient": true,
+        "logged_J_matches_actual_Gauss_average": true,
+        "force_balance_N": true,
+        "current_coordinate_moment_balance_Nm": true,
+        "free_center_residual_N": true
+      },
+      "minimum_actual_sampled_J": 0.9999999999999997,
+      "total_logged_energy_J": 6.250000000000002e-07,
+      "expected_energy_J": 6.250000000003198e-07,
+      "net_force_N": [
+        7.746624522408929e-17,
+        7.567731163948821e-17,
+        6.40386554277405e-17
+      ],
+      "net_current_moment_Nm": [
+        -1.3976043629695956e-19,
+        1.6517142471458857e-20,
+        -2.3100706053992906e-17
+      ],
+      "center_displacement_m": [
+        0.000125,
+        3.90427197567e-20,
+        -6.87990637145e-20
+      ]
+    },
+    {
+      "time": 0.5,
+      "checks": {
+        "positions_m": true,
+        "displacements_m": true,
+        "signed_reactions_N": true,
+        "stress_Pa": true,
+        "energy_density_Pa": true,
+        "positive_actual_sampled_jacobians": true,
+        "actual_gradient": true,
+        "logged_J_matches_actual_Gauss_average": true,
+        "force_balance_N": true,
+        "current_coordinate_moment_balance_Nm": true,
+        "free_center_residual_N": true
+      },
+      "minimum_actual_sampled_J": 0.9999999999999997,
+      "total_logged_energy_J": 2.5000000000000006e-06,
+      "expected_energy_J": 2.4999999999999473e-06,
+      "net_force_N": [
+        -1.2750217548429532e-16,
+        7.047314121155779e-17,
+        -8.75323847692594e-18
+      ],
+      "net_current_moment_Nm": [
+        -2.676624113323589e-19,
+        -1.6855955650360577e-19,
+        -3.8455295805345235e-18
+      ],
+      "center_displacement_m": [
+        0.00025,
+        -3.71424421965e-19,
+        -5.77208244363e-19
+      ]
+    },
+    {
+      "time": 0.75,
+      "checks": {
+        "positions_m": true,
+        "displacements_m": true,
+        "signed_reactions_N": true,
+        "stress_Pa": true,
+        "energy_density_Pa": true,
+        "positive_actual_sampled_jacobians": true,
+        "actual_gradient": true,
+        "logged_J_matches_actual_Gauss_average": true,
+        "force_balance_N": true,
+        "current_coordinate_moment_balance_Nm": true,
+        "free_center_residual_N": true
+      },
+      "minimum_actual_sampled_J": 0.9999999999999996,
+      "total_logged_energy_J": 5.625000000000001e-06,
+      "expected_energy_J": 5.625000000000214e-06,
+      "net_force_N": [
+        -1.3801893655740471e-16,
+        4.85722573273506e-17,
+        -6.413733476609562e-18
+      ],
+      "net_current_moment_Nm": [
+        -1.2163393122571753e-18,
+        -2.168404344971009e-19,
+        1.429791614965259e-18
+      ],
+      "center_displacement_m": [
+        0.000375,
+        2.10416057312e-19,
+        -1.03992355132e-18
+      ]
+    },
+    {
+      "time": 1.0,
+      "checks": {
+        "positions_m": true,
+        "displacements_m": true,
+        "signed_reactions_N": true,
+        "stress_Pa": true,
+        "energy_density_Pa": true,
+        "positive_actual_sampled_jacobians": true,
+        "actual_gradient": true,
+        "logged_J_matches_actual_Gauss_average": true,
+        "force_balance_N": true,
+        "current_coordinate_moment_balance_Nm": true,
+        "free_center_residual_N": true
+      },
+      "minimum_actual_sampled_J": 0.9999999999999996,
+      "total_logged_energy_J": 1.0000000000000003e-05,
+      "expected_energy_J": 9.999999999999789e-06,
+      "net_force_N": [
+        1.0863705768304754e-16,
+        -3.725318664660193e-16,
+        9.252987915805977e-17
+      ],
+      "net_current_moment_Nm": [
+        1.0418505251227894e-18,
+        6.183340514956392e-19,
+        6.156066054054804e-17
+      ],
+      "center_displacement_m": [
+        0.0005,
+        8.25285702141e-19,
+        -4.79336281772e-19
+      ]
+    }
+  ],
+  "solver": {
+    "passed": true,
+    "last_squared_force_residual_norms_N2": {
+      "0.25": [
+        0.001207241,
+        5.236976e-32,
+        1.207241e-13
+      ],
+      "0.5": [
+        0.001207944,
+        5.150118e-32,
+        1.207944e-13
+      ],
+      "0.75": [
+        0.001210053,
+        2.331123e-31,
+        1.210053e-13
+      ],
+      "1.0": [
+        0.00121357,
+        2.575396e-31,
+        1.21357e-13
+      ]
+    },
+    "criterion": "current <= max(FEBio required relative norm, declared absolute floor), allowing only log-print rounding"
+  },
+  "scope": "Tiny homogeneous patch verification only; no locking, mesh convergence, specimen fit, or patient mechanics validation"
+}
