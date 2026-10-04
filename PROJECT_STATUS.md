@@ -4,6 +4,20 @@ Updated October 4, 2026. The three revised specification documents remain the
 authoritative requirements and have been read completely. This file records
 executed work and open gates, not a replacement plan.
 
+**Latest user steering: validate tissue mechanics before substantial RL.**
+Finish and commit the bounded proposal, real-data preparation and geometric
+search comparison already underway. Further substantial training and model
+sweeps are on hold while one narrow tissue interaction is selected against
+accessible physical measurements or intraoperative imaging. Compare established
+simulation frameworks; preserve the geometric planner as the baseline. A proof
+of concept must state mechanical assumptions, check numerical convergence and
+use independent measurements on real anatomy. Brain-shift images may validate
+displacement, not cutting forces. Missing force/material calibration remains
+an explicit dependency; do not invent patient-specific properties. Simulated
+interactions stay distinct from observed surgery, with hidden simulator fields
+excluded from deployment inputs. Compare search, imitation and RL on that task
+only after its physical validation. Existing patient splits remain unchanged.
+
 **Latest steering (October 4): real-patient learning and probability-aware planning.**
 The user supplied `docs/CODEX_STEERING_PROMPT.md` and
 `docs/DATASET_ACQUISITION_ADDENDUM.md`; both were read completely and copied
