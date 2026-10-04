@@ -21,7 +21,9 @@ def write(path, value):
 
 def test_declaration_loads_saved_positive_only_evidence_without_execution(monkeypatch):
     monkeypatch.setattr(d.subprocess, 'run', lambda *a, **kw: pytest.fail('No subprocess expected'))
-    spec, original = d.load_declaration(d.rt.sha(d.DECLARATION))
+    spec, original = d.load_declaration(d.rt.sha(d.DECLARATION), require_controls=False)
+    with pytest.raises(ValueError, match='adapter controls'):
+        d.load_declaration(d.rt.sha(d.DECLARATION))
     assert spec['basis']['sha256'] == d.V1_SHA
     assert original['patch']['patched_sha256'] == d.PATCHED_SHA
     assert original['caps']['configure_seconds'] == 120
@@ -35,7 +37,7 @@ def test_exact_reviewed_patch_is_text_only_and_rejects_second_or_fuzzy_applicati
     patch = (d.ROOT/original['patch']['file']['path']).read_bytes()
     repaired = d.exact_single_hunk(source, patch, original['patch']['relative_source'])
     assert hashlib.sha256(source).hexdigest() == original['patch']['original_sha256']
-    assert hashlib.sha256(repaired).hexdigest() == d.PATCHED_SHA
+    assert hashlib.sha256(repaired).hexdigest() == d.POINTER_ONLY_SHA
     for changed in (repaired, b'\n'+source, source.replace(b'imp->m_nrhs = 1;', b'imp->m_nrhs = 2;')):
         with pytest.raises(ValueError, match='context|position'):
             d.exact_single_hunk(changed, patch, original['patch']['relative_source'])

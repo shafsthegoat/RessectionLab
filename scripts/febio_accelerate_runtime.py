@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """One isolated patched FEBio build; no downloads, fixtures or solver launches.
 
-The root release supplies the exact v2 declaration SHA. Two fixed, one-attempt
+The root release supplies the exact v3 declaration SHA. Two fixed, one-attempt
 stages reuse the reviewed supervisor and retain failures. A build identity is
 not numerical validation and is published only after parent acceptance.
 """
@@ -18,7 +18,7 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-DECLARATION = ROOT/'manifests/experiments/febio-accelerate-csc-runtime-v2.json'
+DECLARATION = ROOT/'manifests/experiments/febio-accelerate-csc-runtime-v3.json'
 V1_SHA = '7517aa3bd9a40cce9ce2864e5118c52185448a1a3eb1bab24b42ae9e9e4026b2'
 HELPER_SHA = '679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e'
 _helper_path = ROOT/'scripts/febio_runtime.py'
@@ -29,8 +29,10 @@ rt = importlib.util.module_from_spec(_helper_spec)
 _helper_spec.loader.exec_module(rt)
 PREFIX = ROOT/'data/optional-runtimes/febio-4.13-accelerate-csc-v1'
 OLD_PREFIX = ROOT/'data/optional-runtimes/febio-4.13'
-OUTPUT = ROOT/'artifacts/febio-accelerate-csc-runtime-v2'
-PATCHED_SHA = '60e5a3f2350826af1b95376ab93c8a476f2312158763d63d82eb80ec54af79c2'
+OUTPUT = ROOT/'artifacts/febio-accelerate-csc-runtime-v3'
+POINTER_ONLY_SHA = '60e5a3f2350826af1b95376ab93c8a476f2312158763d63d82eb80ec54af79c2'
+PATCHED_SHA = '476ac8471ea681a99c298352a50aba2a7a5baa71635e1678155a7f58b72ba04a'
+PATCH_SHA = '67a1858f2d55046796d7ccb46758ca06e5bfb673e75a539d158b1a17652f3340'
 STAGE_FILES = {
     'configure': ('result.json', 'supervision.json', 'source-inventory.json', 'verified-cache.json',
                   'source-preparation.json', 'commands.json'),
@@ -46,15 +48,18 @@ def pin(binding):
     return path
 
 
-def load_declaration(expected_sha):
+def load_declaration(expected_sha, *, require_controls=True):
     if not re.fullmatch('[0-9a-f]{64}', expected_sha) or rt.sha(DECLARATION) != expected_sha:
-        raise ValueError('Exact released v2 declaration required')
+        raise ValueError('Exact released v3 declaration required')
     spec = json.loads(DECLARATION.read_bytes())
     if rt.sha(Path(__file__)) != spec['driver_sha256'] or rt.sha(Path(rt.__file__)) != HELPER_SHA:
         raise ValueError('Driver or reviewed helper changed')
     v1_path = pin(spec['basis'])
     if spec['basis']['sha256'] != V1_SHA:
         raise ValueError('Original runtime-v1 declaration must remain exact')
+    if spec['preserved_v2']['sha256'] != '6079e2198a4c21b71354c8a23054eb6d7ec75415576168ebecdfaa9e8c19bb06':
+        raise ValueError('Historical v2 preparation must remain exact')
+    pin(spec['preserved_v2'])
     v1 = json.loads(v1_path.read_bytes())
     if (v1['configure']['source'] != str(PREFIX/'source')
             or v1['configure']['build'] != str(PREFIX/'build')
@@ -73,10 +78,62 @@ def load_declaration(expected_sha):
             or positive['original_code_executed'] is not False
             or positive['all_pins_unchanged'] is not True
             or supervision['status'] != 'completed'
-            or review['patched_source_sha256'] != PATCHED_SHA
+            or review['patched_source_sha256'] != POINTER_ONLY_SHA
             or review['positive_result_sha256'] != spec['saved_evidence']['positive_result']['sha256']):
         raise ValueError('Successful positive-only review is required')
+    override = spec['patch_override']
+    if (set(override) != {'file', 'identity', 'patched_sha256'}
+            or override['patched_sha256'] != PATCHED_SHA
+            or override['file']['sha256'] != PATCH_SHA):
+        raise ValueError('Only the exact combined one-file patch override is allowed')
+    pin(override['file'])
+    identity = json.loads(pin(override['identity']).read_bytes())
+    if (identity['patched_source']['sha256'] != PATCHED_SHA
+            or identity['patch']['sha256'] != PATCH_SHA
+            or identity['original_source']['sha256'] != v1['patch']['original_sha256']):
+        raise ValueError('Combined patch identity mismatch')
+    if str(pin(spec['patch_tool'])) != '/usr/bin/patch':
+        raise ValueError('Pinned system patch only')
+    v1['patch'] = {**v1['patch'], **override}
+    v1['patch_tool'] = spec['patch_tool']
+    if require_controls:
+        require_adapter_controls(spec)
     return spec, v1
+
+
+def require_adapter_controls(spec):
+    """Build remains unavailable until the separate repaired-only release passes."""
+    bindings = spec.get('adapter_control_validation')
+    if not isinstance(bindings, dict) or set(bindings) != {'declaration', 'acceptance', 'result', 'supervision', 'independent_review'}:
+        raise ValueError('Separately accepted and independently reviewed adapter controls required')
+    if bindings['declaration'] != spec['prospective_adapter_controls']:
+        raise ValueError('Adapter control declaration differs from prospective release')
+    records = {key: json.loads(pin(value).read_bytes()) for key, value in bindings.items()}
+    result, acceptance, supervision, review = (records[key] for key in
+        ('result', 'acceptance', 'supervision', 'independent_review'))
+    if (acceptance['status'] != 'completed'
+            or acceptance['declaration_sha256'] != bindings['declaration']['sha256']
+            or acceptance['result_sha256'] != bindings['result']['sha256']
+            or acceptance['supervision_sha256'] != bindings['supervision']['sha256']
+            or result['status'] != 'adapter_initialization_lifecycle_controls_passed'
+            or result['declaration_sha256'] != bindings['declaration']['sha256']
+            or result['patched_source_sha256'] != PATCHED_SHA
+            or result['original_code_executed'] is not False
+            or result['factorization_or_model_executed'] is not False
+            or result['sdk_factorization_executed'] is not False
+            or result['lifecycle_api_is_mock'] is not True
+            or result['all_pins_unchanged'] is not True
+            or supervision['status'] != 'completed' or supervision['exit_code'] != 0
+            or supervision['kill_reason'] is not None or supervision['cleanup_error'] is not None
+            or supervision['wall_cap_seconds'] != 100 or supervision['rss_cap_bytes'] != 1024**3
+            or review['status'] != 'adapter_initialization_lifecycle_controls_independently_verified'
+            or review['patched_source_sha256'] != PATCHED_SHA
+            or review['result_sha256'] != bindings['result']['sha256']
+            or review['acceptance_sha256'] != bindings['acceptance']['sha256']
+            or review['supervision_sha256'] != bindings['supervision']['sha256']):
+        raise ValueError('Adapter controls do not bind accepted repaired-only evidence')
+    for binding in records['declaration']['pins'].values():
+        pin(binding)
 
 
 def verify_original(v1):
@@ -159,14 +216,22 @@ def prepare_source(v1, output):
         raise ValueError('Original patch target changed')
     marker = PREFIX/'patch-attempt.json'
     write_once(marker, {'patch_sha256': patch['file']['sha256'], 'attempts': 1})
-    updated = exact_single_hunk(source.read_bytes(), pin(patch['file']).read_bytes(), patch['relative_source'])
-    if patch['patched_sha256'] != PATCHED_SHA or hashlib.sha256(updated).hexdigest() != PATCHED_SHA:
-        raise ValueError('Unexpected patched source bytes')
-    source.write_bytes(updated)
+    if patch['patched_sha256'] != PATCHED_SHA:
+        raise ValueError('Unexpected combined patched source identity')
+    command = [str(pin(v1['patch_tool'])), '--batch', '--forward', '--fuzz=0', '-p1',
+               '-i', str(pin(patch['file']))]
+    # Exact input/output and the complete tree inventory are authoritative;
+    # no dry run, retry, reverse application, fuzz or generated parser.
+    with (output/'patch.log').open('x') as log:
+        completed = subprocess.run(command, cwd=PREFIX/'source', stdout=log,
+                                   stderr=subprocess.STDOUT, timeout=15, check=False)
+    if completed.returncode or rt.sha(source) != PATCHED_SHA:
+        raise ValueError('Single exact patch application failed; preserve attempt without retry')
     rt.write_json(output/'source-inventory.json', verify_source(v1))
     rt.write_json(output/'source-preparation.json', {'expansion': expansion,
         'changed_files': [patch['relative_source']], 'patch': patch['file'],
-        'original_sha256': patch['original_sha256'], 'patched_sha256': PATCHED_SHA})
+        'original_sha256': patch['original_sha256'], 'patched_sha256': PATCHED_SHA,
+        'patch_tool': v1['patch_tool'], 'patch_log_sha256': rt.sha(output/'patch.log')})
 
 
 def verify_cache(v1):
@@ -372,6 +437,7 @@ def worker(stage, declaration_sha):
                 'runtime_version_evidence': 'pinned_source_version_only_not_executed',
                 'version_executable_launched': False,
                 'controls': spec['saved_evidence']['independent_positive_review'],
+                'adapter_controls': spec['adapter_control_validation'],
                 'solver_executed': False, 'models_executed': 0, 'numerically_validated': False,
                 'global_environment_changed': False}
             rt.write_json(output/'runtime-identity-candidate.json', identity)

@@ -1,0 +1,61 @@
+{
+  "source_sha256": "476ac8471ea681a99c298352a50aba2a7a5baa71635e1678155a7f58b72ba04a",
+  "extracted_methods": [
+    {
+      "signature": "class AccelerateSparseSolver::Implementation",
+      "first_line": 38,
+      "bytes": 1763,
+      "sha256": "f02953f73701a7c719cdd42c01dc2110ca79e0746fb05a13eb9103a717a14c54"
+    },
+    {
+      "signature": "AccelerateSparseSolver::AccelerateSparseSolver(FEModel* fem)",
+      "first_line": 120,
+      "bytes": 156,
+      "sha256": "2e67f78f045c22db7f05a9a9139cd54f47729b570b7c8886c90723015a200249"
+    },
+    {
+      "signature": "AccelerateSparseSolver::~AccelerateSparseSolver()",
+      "first_line": 126,
+      "bytes": 104,
+      "sha256": "e0705bb34d2483bfa11253118dcd9bd9de1f867c58e6cfcf633f7f8a5784c01d"
+    },
+    {
+      "signature": "SparseMatrix* AccelerateSparseSolver::CreateSparseMatrix",
+      "first_line": 180,
+      "bytes": 594,
+      "sha256": "209b727f2f5be2c920800d38b514f21081e29c2c8d41e35ccffd42e28b506493"
+    },
+    {
+      "signature": "bool AccelerateSparseSolver::SetSparseMatrix",
+      "first_line": 198,
+      "bytes": 253,
+      "sha256": "3b48cb116ee32fca661260a2ffc6566d0052788d9e56341852ad12f5b61dc140"
+    },
+    {
+      "signature": "bool AccelerateSparseSolver::PreProcess()",
+      "first_line": 208,
+      "bytes": 5206,
+      "sha256": "f7079969fb5aad27d2d7b95f2c09cd9fb7e94188019481bb2d6627bd6452e261"
+    },
+    {
+      "signature": "bool AccelerateSparseSolver::Factor()",
+      "first_line": 331,
+      "bytes": 2576,
+      "sha256": "a108cd7191eab057880429fdc0256cdb459d36950be406397d407e8e6da3e378"
+    },
+    {
+      "signature": "bool AccelerateSparseSolver::BackSolve(",
+      "first_line": 401,
+      "bytes": 4265,
+      "sha256": "0f1594760915e6db0908adf9cc7065d3cc487c45fde8b5dadf4fbd91da7dbade"
+    },
+    {
+      "signature": "void AccelerateSparseSolver::Destroy()",
+      "first_line": 539,
+      "bytes": 300,
+      "sha256": "c838dd2ca6801fa2dad10dee307bdf6853ba3ae15c35cd265cec15a2c6c59214"
+    }
+  ],
+  "method_bytes_are_literal": true,
+  "original_code_executed": false
+}

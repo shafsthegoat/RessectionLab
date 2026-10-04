@@ -1,0 +1,45 @@
+{
+  "additional_statements": [
+    "imp->SMS = {};",
+    "imp->SMS.attributes.triangle = SparseUpperTriangle;"
+  ],
+  "combined_patch": {
+    "bytes": 869,
+    "path": "artifacts/febio-accelerate-matrix-init-v1/accelerate-csc-and-matrix-init.patch",
+    "sha256": "e5a745070635fc632d1d2dc6d4c7cdb9df738ad4e6fae110c16345f685b52358"
+  },
+  "combined_source": {
+    "bytes": 20823,
+    "path": "artifacts/febio-accelerate-matrix-init-v1/patched-AccelerateSparseSolver.cpp",
+    "sha256": "9f35180792f95e1b96b3c43a30f0ae5c3a38719b41ada5d0069a054ed40845aa"
+  },
+  "initialization_fragment": {
+    "bytes": 310,
+    "path": "artifacts/febio-accelerate-matrix-init-v1/matrix-initialization-fragment.cpp.txt",
+    "sha256": "f4f69d99bbefb3b20c4e79a35b44288384922c44a2d40ddfdb27519b55184dd3"
+  },
+  "original_sha256": "f5432e79ab73dd11d4a0550691480edd7fd5f00c392ae2f78eddf9c4b5da51c9",
+  "original_source": {
+    "bytes": 20622,
+    "path": "data/optional-runtimes/febio-4.13/source/NumCore/AccelerateSparseSolver.cpp",
+    "sha256": "f5432e79ab73dd11d4a0550691480edd7fd5f00c392ae2f78eddf9c4b5da51c9"
+  },
+  "patched_sha256": "9f35180792f95e1b96b3c43a30f0ae5c3a38719b41ada5d0069a054ed40845aa",
+  "pointer_fragment_sha256": "88315d2f9d1499688c66c202ad600d963f89e158c99c3ef6170dd71754fefa1b",
+  "pointer_fragment_unchanged": true,
+  "pointer_only_source": {
+    "bytes": 20740,
+    "path": "build/febio-accelerate-csc-bounds-v1/patched/NumCore/AccelerateSparseSolver.cpp",
+    "sha256": "60e5a3f2350826af1b95376ab93c8a476f2312158763d63d82eb80ec54af79c2"
+  },
+  "relative_source": "NumCore/AccelerateSparseSolver.cpp",
+  "review_basis": {
+    "bytes": 8528,
+    "path": "artifacts/febio-accelerate-initialization-review-v1/review.json",
+    "sha256": "d6aef94bae672fe4143518906fd9057528a82b411a233d70641d1525164316f8"
+  },
+  "schema_version": 1,
+  "scope": "Defined-field aggregate reset, full CSC upper half convention; no old uninitialized behavior, factorization, model or physical validation.",
+  "ssfo_changed": false,
+  "status": "prospective_combined_patch_not_compiled_or_executed"
+}

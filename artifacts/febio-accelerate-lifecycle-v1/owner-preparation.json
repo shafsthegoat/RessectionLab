@@ -1,0 +1,29 @@
+{
+  "command": ".venv/bin/python -m pytest -q tests/test_febio_accelerate_runtime.py tests/test_febio_accelerate_runtime_review.py tests/test_febio_accelerate_lifecycle_preparation.py",
+  "compiler_or_fixture_executed": false,
+  "files": {
+    "artifacts/febio-accelerate-lifecycle-v1/README.md": "cdd6c5a5f7903acb1630a83b8d14bf81b725d6f1e22324b54f4018fb5d19a084",
+    "artifacts/febio-accelerate-lifecycle-v1/accelerate-correctness.patch": "67a1858f2d55046796d7ccb46758ca06e5bfb673e75a539d158b1a17652f3340",
+    "artifacts/febio-accelerate-lifecycle-v1/adapter-control.py": "af24ed8a31eb787d968c6d08b24ea373615dd9c0802673946469416e49dd2778",
+    "artifacts/febio-accelerate-lifecycle-v1/control-declaration.json": "d45883853df0516efeba4e0f7d21f78b91899d47f3cd1743db58b61ec66334c9",
+    "artifacts/febio-accelerate-lifecycle-v1/extracted-methods.inc": "ebdd5b0619fba88411cdb15d8f6d23ea5ee7e0c295bafa7e28fa5e7a28cd95e4",
+    "artifacts/febio-accelerate-lifecycle-v1/extraction.json": "198889d13d942eea439e0352da3e0bfd837e25ddbd9cf0036a14d24fa4ecd76e",
+    "artifacts/febio-accelerate-lifecycle-v1/lifecycle-control.cpp": "3e7abc5e14d5d8caf7ace33618662191b0ab171f05b94a79957825479dad1678",
+    "artifacts/febio-accelerate-lifecycle-v1/patch-identity.json": "54198366eccb90a9fcdf4fcbf2a5055919a5658a1db0fdd7db8cfeede3b49eee",
+    "artifacts/febio-accelerate-lifecycle-v1/patched-AccelerateSparseSolver.cpp": "476ac8471ea681a99c298352a50aba2a7a5baa71635e1678155a7f58b72ba04a",
+    "manifests/experiments/febio-accelerate-csc-runtime-v3.json": "4f24c624808a7077e2a02a6350e85efd2b86d407180c1a5599e4e456d94dcedd",
+    "scripts/febio_accelerate_runtime.py": "ba94376626a0c9a1a78b81368f60b752e2fcd320f822418934c75bfcd6d80a46",
+    "tests/test_febio_accelerate_lifecycle_preparation.py": "3d8566f65ea6e231f440e4c648781ad0d202ca0193b46bc189ba31388813bcbf",
+    "tests/test_febio_accelerate_runtime.py": "092540ff123fefcd5d28401d86df0ad5a0bc572032dde822526cad545034d23f"
+  },
+  "metadata_after_checks": "Only documentation/patch-identity slice-boundary clarification and dependent declaration hashes refreshed after tests; executable driver/fixture/extracted source unchanged. Independent final source/binding review pending.",
+  "new_runtime_prefix_exists": false,
+  "original_faulty_code_executed": false,
+  "original_source_sha256": "f5432e79ab73dd11d4a0550691480edd7fd5f00c392ae2f78eddf9c4b5da51c9",
+  "passed": 23,
+  "pytest_seconds": 1.3,
+  "runtime_or_model_executed": false,
+  "status": "source_preparation_checks_passed_no_compiler_execution",
+  "v1_declaration_sha256": "7517aa3bd9a40cce9ce2864e5118c52185448a1a3eb1bab24b42ae9e9e4026b2",
+  "v2_declaration_sha256": "6079e2198a4c21b71354c8a23054eb6d7ec75415576168ebecdfaa9e8c19bb06"
+}

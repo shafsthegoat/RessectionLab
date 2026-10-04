@@ -1,0 +1,145 @@
+{
+  "caps": {
+    "attempts": 1,
+    "automatic_retry": false,
+    "per_fixture_compile_seconds": 40,
+    "per_fixture_run_seconds": 5,
+    "process_group_sampled_rss_bytes": 1073741824,
+    "wall_seconds": 100
+  },
+  "controls": [
+    "Four profiles reuse one State: symmetric and ordinary full CSC structures at dimensions2 and3.",
+    "Seed every field/attribute with a defined nondefault value; these deliberately stale values never enter Sparse API functions.",
+    "Execute exact saved initialization fragment and exact original kind assignments; verify row/column dimensions, pointers, blocksize and all5 attribute fields.",
+    "Verify reset/reuse by reseeding the same previously initialized structure before each profile; do not compare object padding.",
+    "Fourteen literal-method mock scenarios: no-factor solve refusal; symbolic-only destroy; success-to-success reformation; numeric failure with storage, symbolic-only reference or no resource; success-to-failure; symbolic failure with/without defined resources; repeated PreProcess/Factor/Destroy; matrix replacement/create; zero equations; Implementation/vector destruction.",
+    "Mock SDK allocation/refcount ledger refuses cleanup of never-acquired dummy objects and checks old numeric storage/references released before replacement."
+  ],
+  "declaration_id": "febio-accelerate-adapter-controls-v1",
+  "excluded": [
+    "original faulty/uninitialized code execution",
+    "actual SDK factorization or solve",
+    "private SDK allocator/constructor validation",
+    "numerical physics/mechanics",
+    "patient/material data",
+    "runtime build/version launch",
+    "dynamic reproduction of original defects"
+  ],
+  "expected_stdout": {
+    "initialization": "PASS matrix-init profile=0 rows=2 symmetric=1\nPASS matrix-init profile=1 rows=2 symmetric=0\nPASS matrix-init profile=2 rows=3 symmetric=1\nPASS matrix-init profile=3 rows=3 symmetric=0\n",
+    "lifecycle": "PASS lifecycle scenario=0\nPASS lifecycle scenario=1\nPASS lifecycle scenario=2\nPASS lifecycle scenario=3\nPASS lifecycle scenario=4\nPASS lifecycle scenario=5\nPASS lifecycle scenario=6\nPASS lifecycle scenario=7\nPASS lifecycle scenario=8\nPASS lifecycle scenario=9\nPASS lifecycle scenario=10\nPASS lifecycle scenario=11\nPASS lifecycle scenario=12\nPASS lifecycle scenario=13\n"
+  },
+  "limitations": [
+    "Mock allocations/refcounts verify adapter ownership transitions under defined SDK states; they do not execute or validate private Accelerate constructors, factorization, solve accuracy or mechanics.",
+    "Failed owned-symbolic return is a defined mock edge, not a claim that each SDK error allocates. Canonical empty numeric failure has invalid embedded symbolic status and no resources; documented failed numeric states retain valid symbolic state.",
+    "ASan/UBSan run only corrected fixture code; leak sanitizer unavailable on this Mac profile, so explicit allocation/refcount and implementation/vector destruction checks are used.",
+    "Original zero-row/CSC conversion positive evidence is retained; unchanged fragment does not require executing original defective bounds path.",
+    "Excluded iterative and condition-number branches are aborting stubs and are not validated."
+  ],
+  "pins": {
+    "combined_patch": {
+      "bytes": 5484,
+      "path": "artifacts/febio-accelerate-lifecycle-v1/accelerate-correctness.patch",
+      "sha256": "67a1858f2d55046796d7ccb46758ca06e5bfb673e75a539d158b1a17652f3340"
+    },
+    "combined_source": {
+      "bytes": 21906,
+      "path": "artifacts/febio-accelerate-lifecycle-v1/patched-AccelerateSparseSolver.cpp",
+      "sha256": "476ac8471ea681a99c298352a50aba2a7a5baa71635e1678155a7f58b72ba04a"
+    },
+    "compiler": {
+      "bytes": 290664032,
+      "path": "/Library/Developer/CommandLineTools/usr/bin/clang++",
+      "sha256": "f30550eab15fdf5ab8c0dc54c52679711241e5d4b636b027e18c09fef531775d"
+    },
+    "driver": {
+      "bytes": 6611,
+      "path": "artifacts/febio-accelerate-lifecycle-v1/adapter-control.py",
+      "sha256": "af24ed8a31eb787d968c6d08b24ea373615dd9c0802673946469416e49dd2778"
+    },
+    "extracted_methods": {
+      "bytes": 15225,
+      "path": "artifacts/febio-accelerate-lifecycle-v1/extracted-methods.inc",
+      "sha256": "ebdd5b0619fba88411cdb15d8f6d23ea5ee7e0c295bafa7e28fa5e7a28cd95e4"
+    },
+    "extraction": {
+      "bytes": 2077,
+      "path": "artifacts/febio-accelerate-lifecycle-v1/extraction.json",
+      "sha256": "198889d13d942eea439e0352da3e0bfd837e25ddbd9cf0036a14d24fa4ecd76e"
+    },
+    "historical_sms_only_patch": {
+      "bytes": 869,
+      "path": "artifacts/febio-accelerate-matrix-init-v1/accelerate-csc-and-matrix-init.patch",
+      "sha256": "e5a745070635fc632d1d2dc6d4c7cdb9df738ad4e6fae110c16345f685b52358"
+    },
+    "initialization_fixture": {
+      "bytes": 3073,
+      "path": "artifacts/febio-accelerate-matrix-init-v1/matrix-initialization-control.cpp",
+      "sha256": "6b754a7b63c02949068040416111f7184e31e2ad0bad5e1f599e6c87b67a39e3"
+    },
+    "initialization_fragment": {
+      "bytes": 310,
+      "path": "artifacts/febio-accelerate-matrix-init-v1/matrix-initialization-fragment.cpp.txt",
+      "sha256": "f4f69d99bbefb3b20c4e79a35b44288384922c44a2d40ddfdb27519b55184dd3"
+    },
+    "lifecycle_fixture": {
+      "bytes": 11063,
+      "path": "artifacts/febio-accelerate-lifecycle-v1/lifecycle-control.cpp",
+      "sha256": "3e7abc5e14d5d8caf7ace33618662191b0ab171f05b94a79957825479dad1678"
+    },
+    "lifecycle_review": {
+      "bytes": 9900,
+      "path": "artifacts/febio-accelerate-lifecycle-review-v1/review.json",
+      "sha256": "e7681c9abc95857ece6f163ba7cd88f4e3d674a8488f6422a2d1a719c01fc629"
+    },
+    "patch_identity": {
+      "bytes": 2860,
+      "path": "artifacts/febio-accelerate-lifecycle-v1/patch-identity.json",
+      "sha256": "54198366eccb90a9fcdf4fcbf2a5055919a5658a1db0fdd7db8cfeede3b49eee"
+    },
+    "sdk_settings": {
+      "bytes": 7774,
+      "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/SDKSettings.json",
+      "sha256": "f8d005f09381389167f9e0aeaa169bc9e7dff162ef22ca2fd8e98df7ff1acafe"
+    },
+    "sdk_sparse_dispatch": {
+      "bytes": 23850,
+      "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers/Sparse/SolveImplementation.h",
+      "sha256": "82a509ffea2e0e27d44473337698e3ebd97b182d3069da704c20fd2995049c17"
+    },
+    "sdk_sparse_types": {
+      "bytes": 423862,
+      "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers/Sparse/Solve.h",
+      "sha256": "8d2a7b44d05f1ff67cb1688ab8bb6573b021b88c758baa37e10a8aea1c46811a"
+    },
+    "sdk_typed": {
+      "bytes": 104361,
+      "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers/Sparse/SolveImplementationTyped.h",
+      "sha256": "201d2246ac80ecae14375abf8703d556e1adbd8d63cf2460e6db49ea31511bae"
+    },
+    "static_review": {
+      "bytes": 8528,
+      "path": "artifacts/febio-accelerate-initialization-review-v1/review.json",
+      "sha256": "d6aef94bae672fe4143518906fd9057528a82b411a233d70641d1525164316f8"
+    },
+    "supervisor": {
+      "bytes": 24801,
+      "path": "scripts/febio_runtime.py",
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+    }
+  },
+  "purpose": "Validate repaired-only SMS initialization and literal adapter resource lifetime using actual SDK types with defined API allocation/refcount mocks.",
+  "remaining_gate": "Independent review, commit and separate bounded root release of these two repaired-only fixtures; accepted saved results plus independent review required before any runtime build.",
+  "schema_version": 1,
+  "scope": "Repaired-only actual SDK structure initialization and literal patched adapter lifecycle with defined allocation/refcount mocks. No original faulty code, real SparseFactor/SparseSolve, FEBio runtime/model or numerical accuracy test.",
+  "sdk": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+  "source_binding_note": "Pointer conversion fragment remains byte-identical88315d2f\u2026 to saved six positive controls; those controls will not be rerun.",
+  "status": "prospective_unexecuted_pending_independent_review_and_separate_root_release",
+  "thread_environment": {
+    "MKL_NUM_THREADS": "1",
+    "OMP_DYNAMIC": "FALSE",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  }
+}

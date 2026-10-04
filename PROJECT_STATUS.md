@@ -299,6 +299,15 @@ track ownership separately from factorization success, keep the existing
 SparseFactor algorithm, and verify defined corrected-only lifecycle controls
 before the full build. See `artifacts/febio-accelerate-lifecycle-review-v1/`.
 
+The combined one-file correctness patch is now prepared and independently
+reviewed. Twenty-three Python/static preparation controls pass; the new
+corrected-only fixtures cover four SDK structure-reset profiles and fourteen
+defined mock ownership scenarios. These C++ fixtures have not yet run. They
+cannot establish actual factorization or physical accuracy. The runtime-v3
+driver refuses configure/build until their accepted result and independent
+review are bound. Original runtime, declarations and failed diagnostics remain
+unchanged. See `artifacts/febio-accelerate-lifecycle-v1/` and its preparation review.
+
 The optional backend comparison/access integration passed 127 focused checks
 including 14 independent controls. It now verifies the actual accepted build,
 complete library inventory and saved eight-control execution/checker evidence,
