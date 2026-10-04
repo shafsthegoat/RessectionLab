@@ -106,7 +106,9 @@ search/learner interface while retaining the native cutting engine. Twenty-nine
 new analytic checks and 29 compatibility checks pass; the independent review's
 19 cases are included in the new checks. Failed-reset integrity, preview-error
 accounting and transient-cache defects were caught, repaired and preserved as
-negative evidence. This adapter has not run on a patient or entered the desktop,
+negative evidence. The first public preflight stopped before adapter construction on a
+configuration-identity mismatch; the adapter has not executed a patient episode
+or entered the desktop,
 and existing procedural checkpoints and feature-unit gates remain unchanged.
 
 ## Verified starting state
@@ -253,7 +255,9 @@ fixture incorrectly mixed the evolving registry with historical frozen inputs.
 The test-only repair passed 63 focused checks and retains a real production
 byte-drift rejection test. Both full attempts are in
 `artifacts/validation/integrated-axis-v1/`. The new zero-gradient public
-action-model preflight is declared and source-frozen, with execution next.
+action-model preflight V1 stopped during configuration validation before
+adapter construction, simulated cuts or gradients. Its source stayed unchanged;
+exact component differences are being checked before any new attempt.
 
 The preceding complete run passed **794 tests in 176.14 seconds**, with four
 existing DIPY basis-deprecation warnings, from an immutable archive of `0bffeaa`.

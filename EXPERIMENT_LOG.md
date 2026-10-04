@@ -828,3 +828,19 @@ independent certification and 600-second/6-GiB cooperative caps are frozen befor
 execution. It measures cost rather than selecting a better policy. Launch
 baseline is in `artifacts/validation/native-axis-public-v1/`; execution results
 will be recorded separately without rewriting that baseline.
+
+## October 4, 2026 — native action preflight V1 stops before simulation
+
+The source-frozen public run used `558b2e3` after the 959-pass full suite and
+committed launch baseline. It stopped during native-configuration identity
+validation, before constructing the adapter. No patient transition, gradient,
+policy initialization or eligible candidate occurred. The launcher took
+1.064 seconds; worker preparation recorded 0.600 seconds and a peak RSS of
+354,877,440 bytes. Captured and archived source bytes remain unchanged.
+
+The direct native-case helper produces a different identity from the historical
+factory. A separate component audit will determine the exact difference; the
+strict check was not bypassed and no automatic retry was made. Original failure
+records are in `artifacts/preflight/native-axis-v1/`, with root verification in
+`artifacts/validation/native-axis-public-v1/execution-result.json`. A later
+corrected attempt needs its own committed declaration and output namespace.

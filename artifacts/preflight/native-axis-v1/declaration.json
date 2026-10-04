@@ -1,0 +1,149 @@
+{
+  "action_model": {
+    "adapter_version": "experimental-native-axis-column-policy-v1",
+    "constructor_initialization": {
+      "gradient_steps": 0,
+      "interpretation": "deterministic initial inventory preparation only; no optimization or selection score",
+      "seed": 0,
+      "transitions": 0
+    },
+    "fallback_policy": "proximal_only_after_primary_preview_rejection",
+    "feasibility": "complete native tool preview required; no uncertified proposal is an action",
+    "identity": "new decision-model and proposal-model hashes persisted before greedy episode",
+    "input_profile": "RAW",
+    "max_actions_including_stop": 27,
+    "max_cuts": 3,
+    "primary_policy": "distal_remaining_target_in_each_source_column",
+    "proposal_rule": {
+      "max_primary_rays": 26,
+      "offsets_source_voxels": [
+        [
+          0,
+          0
+        ],
+        [
+          -2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          -2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          -2,
+          -2
+        ],
+        [
+          -2,
+          2
+        ],
+        [
+          2,
+          -2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          -3,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          -3
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "version": "experimental-residual-axis-columns-v1"
+    }
+  },
+  "budget_scope": {
+    "future_training_budget": "undecided; no inherited 30-second training budget",
+    "launcher": "source snapshot/copy/import startup reported separately; parent enforces wall timeout from subprocess launch",
+    "memory": "cooperative process peak RSS; no hard OS reservation or whole-system memory guarantee",
+    "panel_cost_limit": "Panels reset one existing simulator; initial clone is measured separately. These are not exact generic-learner selection/update costs, and do not resolve postcommit learning cancellation/resume.",
+    "timing_covariates": "Record background load; normal desktop and OS activity uncontrolled",
+    "worker": "case load + native preparation + cold adapter/full inventory + initial clone probe + greedy + two frozen-sequence replays + initial RAW policy construction/freeze + two unchanged-policy rollouts + independent audits + receipts"
+  },
+  "declaration_content_hash": "sha256:ae12468ad89898ba997cea2d4576fd65ecff9ea49a8fcc35f6d3e7850255d341",
+  "expected_denominators": {
+    "eligible_development_records": 2,
+    "final_worlds": 0,
+    "frozen_sequence_selection_replays": 2,
+    "gradient_steps": 0,
+    "greedy_optimization_episodes": 1,
+    "stress_worlds": 0,
+    "unique_native_audits_maximum": 2,
+    "untrained_policy_selection_rollouts": 2
+  },
+  "failure_policy": "Fresh output required. Retain all failed attempts, partial inventory receipts and any committed transition after interruption. No partial panel or failed geometry candidate publication, no automatic retry or setting change.",
+  "greedy_rule": "stable argmax nominal action value across entire certified inventory; STOP first wins zero ties; terminal max3cuts or STOP",
+  "interpretation": {
+    "anatomy": "existing unreviewed structural mirror-derived brain support and hypothetical access remain unreviewed",
+    "approved_anatomy": false,
+    "clinical_efficacy_or_safety": false,
+    "clinical_probability": null,
+    "independent_human_patients": 1,
+    "motor_language_assessed": false,
+    "selection_uncertainty": "zero-perturbation deterministic replay; not a Monte Carlo interval"
+  },
+  "preflight_id": "native-axis-public-preflight-v1",
+  "publication": "candidate-records.json is diagnostic payload only. Both final worker and launcher status must be completed, candidate count2, and worker status must hash-bind that payload. Failed exports or timeouts remain ineligible.",
+  "question": "What are the complete inventory, transition, integrity, selection and independent geometry costs of this distinct native action model before any training budget is chosen?",
+  "resource_budget": {
+    "hard_termination_grace_seconds": 15.0,
+    "process_peak_rss_bytes": 6442450944,
+    "worker_wall_seconds": 600.0
+  },
+  "schema_version": 1,
+  "scope": "one_previously_studied_structural_development_patient_resource_preflight",
+  "sequence": [
+    "preserve exact executable source before worker",
+    "load and hash-bind declared source/native config",
+    "cold construct RAW axis adapter and inspect complete 26-slot inventory",
+    "measure one integrity-checked initial clone separately; episode panel resets reuse one simulator",
+    "reset to first optimization seed and run one complete nominal greedy episode",
+    "freeze complete action IDs before selection",
+    "replay same fixed sequence on each of two selection seeds; no new decisions",
+    "initialize and freeze unchanged RAW policy seed11 hidden16; record imports/initialization/checkpoint costs",
+    "run the unchanged masked-argmax policy on both selection worlds with no optimizer or gradients",
+    "deduplicate independent geometry only within exact source/model/native-history identities; certify all five complete episodes",
+    "measure cancellation before cached inventory without changing committed state",
+    "publish eligible development candidate only after all complete-panel/source/geometry gates"
+  ],
+  "source_binding": "Exact source files and runtime versions preserved by launcher; tested commit recorded externally at execution release.",
+  "source_reference": {
+    "case_id": "UCSF-PDGM-0004",
+    "declaration_content_hash": "sha256:3abf10162ed9d096a7e21ec84a87c1a88ebf12bb074345a78040dfdebb828ac9",
+    "path": "manifests/experiments/procedural-native-to-ucsf-v1.json",
+    "reuse": "Exact bundle, source cells, native geometry/tools/access/reward/partial-contact weight and deterministic optimization/selection manifests; not the old fixed action inventory"
+  },
+  "status": "declared_not_executed",
+  "untrained_policy": {
+    "action_features": 15,
+    "hidden_features": 16,
+    "interpretation": "unchanged initial-policy cost probe; not checkpoint selection or a model-comparison experiment",
+    "optimizer_constructed": false,
+    "profile": "RAW",
+    "requires_grad": false,
+    "rule": "deterministic masked argmax until STOP or three cuts",
+    "seed": 11,
+    "state_features": 6
+  }
+}
