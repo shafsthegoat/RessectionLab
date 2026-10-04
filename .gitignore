@@ -30,3 +30,9 @@ outputs/
 *.app/
 *.dmg
 *.zip
+# Local validation archives retain exact bytes; compact receipts are versioned.
+/artifacts/validation/procedural-transfer-*/baseline.tar
+/artifacts/validation/procedural-transfer-*/frozen-source/
+/artifacts/validation/procedural-transfer-*/pretest-initial/
+/artifacts/learning/procedural-native-to-ucsf-*/frozen-source/
+/artifacts/learning/procedural-native-to-ucsf-*/comparison/source-snapshot/
