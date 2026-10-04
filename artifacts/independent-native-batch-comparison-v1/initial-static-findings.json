@@ -1,0 +1,9 @@
+{
+  "source_sha256": "507595ce1968cfa736fc3734f7a581c68b7a9b8d4873cc23a4c532a1ddf3c0e6",
+  "scope": "Static findings only; no benchmark executed",
+  "findings": [
+    "Memory sampler has no subprocess timeout",
+    "Supervision exception lacks guaranteed worker kill/reap and receipt",
+    "Phase acceptance does not yet enforce backend and observed query counters"
+  ]
+}

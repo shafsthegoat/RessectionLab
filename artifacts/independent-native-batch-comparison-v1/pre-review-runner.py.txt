@@ -1,0 +1,410 @@
+#!/usr/bin/env python3
+"""One declared analytic history: scalar -> batch -> scalar, never patients."""
+from __future__ import annotations
+
+import argparse
+from contextlib import contextmanager
+import gzip
+import hashlib
+import importlib.util
+import json
+import math
+import os
+from pathlib import Path
+import platform
+import resource
+import signal
+import subprocess
+import sys
+import time
+
+ROOT = Path(__file__).resolve().parents[1]
+DECLARATION = Path("manifests/experiments/independent-native-batch-history-v1.json")
+THREAD_KEYS = ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
+               "VECLIB_MAXIMUM_THREADS", "NUMEXPR_NUM_THREADS", "BLIS_NUM_THREADS")
+_TRACING = False
+
+
+def canonical(value):
+    return json.dumps(value, sort_keys=True, allow_nan=False).encode()
+
+
+def digest(value):
+    return "sha256:" + hashlib.sha256(canonical(value)).hexdigest()
+
+
+def file_sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def write_json(path, value):
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_bytes(json.dumps(value, indent=2, sort_keys=True, allow_nan=False).encode() + b"\n")
+    temporary.replace(path)
+
+
+def write_gzip(path, value):
+    with path.open("xb") as stream:
+        with gzip.GzipFile(filename="", mode="wb", fileobj=stream, mtime=0) as compressed:
+            compressed.write(canonical(value))
+
+
+def declaration():
+    spec = json.loads((ROOT / DECLARATION).read_text())
+    if (spec["phase_order"] != ["scalar_before", "batch", "scalar_after"]
+            or spec["distance_batch_size"] != 256 or spec["max_histories"] != 1
+            or spec["max_native_strokes"] != 1 or spec["human_patients"] != 0
+            or spec["training_updates"] != 0 or spec["cpu_workers"] != 1
+            or spec["numerical_threads"] != 1 or spec["max_artifact_uncompressed_bytes"] != 64 * 1024**2
+            or spec["caps"] != {"cooperative_seconds": 140, "parent_wall_seconds": 150,
+                                "worker_rss_bytes": 3 * 1024**3, "poll_seconds": .05}):
+        raise ValueError("The fixed history/order/work/resource declaration changed")
+    return spec
+
+
+def verify_declared_files(spec):
+    for name, expected in spec["fixed_files_sha256"].items():
+        if file_sha(ROOT / name) != expected:
+            raise ValueError(f"Declared input or numerical source changed: {name}")
+
+
+def source_receipt(spec):
+    paths = set(spec["fixed_files_sha256"])
+    paths.update(str(path.relative_to(ROOT)) for path in (ROOT / "src").rglob("*.py"))
+    paths.update((str(DECLARATION), str(Path(__file__).resolve().relative_to(ROOT)),
+                  "tests/test_independent_native_batch_comparison.py"))
+    return {name: file_sha(ROOT / name) for name in sorted(paths)}
+
+
+def reference_row(spec):
+    reference = json.loads((ROOT / spec["historical_report"]).read_text())
+    rows = [row for row in reference["rows"] if row["row_id"] == spec["row_id"]]
+    if len(rows) != 1:
+        raise ValueError("The single declared historical row is unavailable")
+    row = rows[0]
+    if (row["source_hash"] != spec["expected_source_hash"]
+            or row["native_config_hash"] != spec["expected_config_hash"]
+            or row["native"]["committed_history_hash"] != spec["expected_history_hash"]
+            or row["native"]["completed_microsteps"] != spec["expected_microsteps"]
+            or row["independent_audit"]["status"] != "completed"
+            or row["independent_audit"]["certificate"]["feasible"] is not True):
+        raise ValueError("Historical row identity or independent certificate changed")
+    return row
+
+
+def verify_constructed_binding(spec, case, config, history, fixture):
+    if (case.semantic_hash != spec["expected_source_hash"]
+            or config.fingerprint != spec["expected_config_hash"]
+            or fixture.digest(history) != spec["expected_history_hash"]
+            or len(history) != 1
+            or sum(len(record["microsteps"]) for record in history) != spec["expected_microsteps"]):
+        raise ValueError("Reconstructed source/config/history differs from the certified row")
+
+
+def load_runtime():
+    sys.path.insert(0, str(ROOT / "src"))
+    from resectionlab import evaluation, independent_geometry_batch
+    from resectionlab.native_resection import NativeResectionEngine
+    for module, filename in ((evaluation, "evaluation.py"), (independent_geometry_batch, "independent_geometry_batch.py")):
+        if Path(module.__file__).resolve() != ROOT / "src/resectionlab" / filename:
+            raise RuntimeError("Loaded numerical implementation differs from receipted source")
+    location = ROOT / "scripts/probe_native_discretization.py"
+    loader = importlib.util.spec_from_file_location("declared_discretization_fixture", location)
+    fixture = importlib.util.module_from_spec(loader)
+    loader.loader.exec_module(fixture)
+    return evaluation, NativeResectionEngine, fixture
+
+
+def mask_digest(array):
+    return {"shape": list(array.shape), "dtype": array.dtype.str,
+            "sha256": hashlib.sha256(array.tobytes(order="C")).hexdigest()}
+
+
+@contextmanager
+def trace_prefixes(evaluation):
+    """Observational hooks only; identical scientific fields for both backends."""
+    global _TRACING
+    if _TRACING:
+        raise RuntimeError("Reentrant audit tracing is not permitted")
+    names = ("_native_active_contacts", "_cell_collision", "_extend_independent_free_space")
+    originals = {name: getattr(evaluation, name) for name in names}
+    _TRACING = True
+    record = {"contacts": [], "cell_queries": [], "prefixes": [], "trace_seconds": 0.,
+              "scalar_cell_queries": 0, "batch_cell_queries": 0, "hooks_restored": False}
+
+    def contacts(remaining, rotation, spacing, origin, start, end, radius, **kwargs):
+        result = originals[names[0]](remaining, rotation, spacing, origin, start, end, radius, **kwargs)
+        begun = time.perf_counter()
+        record["contacts"].append({"remaining": mask_digest(remaining), "start": start.tolist(),
+            "end": end.tolist(), "radius": radius, "indices": [list(index) for index in sorted(result)]})
+        record["trace_seconds"] += time.perf_counter() - begun
+        return result
+
+    def collision(scene, start, end, radius, **kwargs):
+        result = originals[names[1]](scene, start, end, radius, **kwargs)
+        begun = time.perf_counter()
+        record["cell_queries"].append({"remaining": mask_digest(scene.forbidden_mask),
+            "affine": scene.affine.tolist(), "start": start.tolist(), "end": end.tolist(),
+            "radius": radius, "witness": result})
+        key = "batch_cell_queries" if kwargs.get("_batch_size") is not None else "scalar_cell_queries"
+        record[key] += 1
+        record["trace_seconds"] += time.perf_counter() - begun
+        return result
+
+    def extend(remaining, connected, removed, **kwargs):
+        result = originals[names[2]](remaining, connected, removed, **kwargs)
+        begun = time.perf_counter()
+        record["prefixes"].append({"remaining": mask_digest(remaining), "connected": mask_digest(connected),
+            "removed": [list(index) for index in sorted(removed)]})
+        record["trace_seconds"] += time.perf_counter() - begun
+        return result
+
+    wrappers = dict(zip(names, (contacts, collision, extend)))
+    try:
+        for name, wrapper in wrappers.items():
+            setattr(evaluation, name, wrapper)
+        yield record
+    finally:
+        conflict = any(getattr(evaluation, name) is not wrapper for name, wrapper in wrappers.items())
+        for name, original in originals.items():
+            setattr(evaluation, name, original)
+        record["hooks_restored"] = all(getattr(evaluation, name) is original for name, original in originals.items())
+        _TRACING = False
+        if conflict or not record["hooks_restored"]:
+            raise RuntimeError("Audit trace hook restoration conflict")
+
+
+def scientific_trace(trace):
+    return {key: trace[key] for key in ("contacts", "cell_queries", "prefixes")}
+
+
+def peak_rss_bytes():
+    rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    return int(rss if sys.platform == "darwin" else rss * 1024)
+
+
+def run_phase(evaluation, case, config, history, backend, batch_size, cancelled):
+    trace, certificate, error = None, None, None
+    begun = time.perf_counter()
+    try:
+        with trace_prefixes(evaluation) as trace:
+            certificate = evaluation.independent_check_native_history(case, config.tools, history,
+                tissue_mask=config.tissue_mask, access=config.access, hard_exclusion=config.hard_exclusion,
+                distance_backend=backend, distance_batch_size=batch_size, cancelled=cancelled).to_dict()
+    except BaseException as failure:
+        error = {"type": type(failure).__name__, "message": str(failure)}
+    elapsed = time.perf_counter() - begun
+    if trace is None:
+        trace = {"contacts": [], "cell_queries": [], "prefixes": [], "trace_seconds": 0.,
+                 "hooks_restored": False, "scalar_cell_queries": 0, "batch_cell_queries": 0}
+    return {"certificate": certificate, "error": error, "backend": backend,
+        "audit_with_trace_seconds": elapsed, "trace_capture_seconds": trace["trace_seconds"],
+        "trace_digest": digest(scientific_trace(trace)), "hooks_restored": trace["hooks_restored"],
+        "scalar_cell_queries": trace["scalar_cell_queries"], "batch_cell_queries": trace["batch_cell_queries"],
+        "active_contact_scans": len(trace["contacts"]), "committed_prefixes": len(trace["prefixes"])}, scientific_trace(trace)
+
+
+def validate_phase(row, reference, expected_microsteps):
+    if (row["error"] is not None or row["hooks_restored"] is not True
+            or row["certificate"] != reference or row["certificate"].get("feasible") is not True
+            or row["active_contact_scans"] != expected_microsteps
+            or row["committed_prefixes"] != expected_microsteps):
+        raise ValueError("Phase is incomplete, rejected, unrestored, or differs from the historical certificate")
+
+
+def worker(output, deadline):
+    spec = declaration()
+    started = time.perf_counter()
+    report = {"status": "running", "phases": [], "declaration_hash": digest(spec),
+              "human_patients": 0, "training_updates": 0, "native_strokes": 0}
+    sources = None
+    try:
+        if not math.isfinite(deadline) or any(os.environ.get(key) != "1" for key in THREAD_KEYS):
+            raise ValueError("Worker deadline and one-thread launch controls are required")
+        deadline = min(deadline, started + spec["caps"]["cooperative_seconds"])
+        def cancelled():
+            return time.perf_counter() >= deadline or peak_rss_bytes() > spec["caps"]["worker_rss_bytes"]
+        verify_declared_files(spec)
+        sources = source_receipt(spec)
+        report["sources"] = sources
+        reference = reference_row(spec)
+        evaluation, Engine, fixture = load_runtime()
+        preparation_started = time.perf_counter()
+        old_spec = fixture.declaration()
+        if cancelled():
+            raise TimeoutError("Declared budget exhausted before scene construction")
+        case, config = fixture.grid_case(reference["spacing_mm"], reference["grid"], old_spec)
+        engine = Engine(config)
+        if cancelled():
+            raise TimeoutError("Declared budget exhausted before history construction")
+        # The unchanged native fixture API has no cooperative callback. The
+        # parent watchdog still bounds this one reconstruction call.
+        stroke = engine.execute_stroke(config.tools[0].tool_id, old_spec["tip_mm"])
+        report["native_strokes"] = 1
+        if not stroke.feasible:
+            raise ValueError(f"Declared native history reconstruction rejected: {stroke.reason}")
+        history = engine.history
+        verify_constructed_binding(spec, case, config, history, fixture)
+        report["setup_native_and_binding_seconds"] = time.perf_counter() - preparation_started
+        report["binding"] = {"source_hash": case.semantic_hash, "config_hash": config.fingerprint,
+            "history_hash": fixture.digest(history), "microsteps": spec["expected_microsteps"]}
+        write_gzip(output / "native-history.json.gz", history)
+        baseline_trace = None
+        for phase_name in spec["phase_order"]:
+            if cancelled():
+                raise TimeoutError("Declared time/RSS budget exhausted before phase")
+            write_json(output / "phase-status.json", {"phase": phase_name, "status": "started"})
+            backend = "batch" if phase_name == "batch" else "scalar"
+            row, trace = run_phase(evaluation, case, config, history, backend, spec["distance_batch_size"], cancelled)
+            row["phase"] = phase_name
+            export_started = time.perf_counter()
+            write_gzip(output / f"{phase_name}-trace.json.gz", trace)
+            row["trace_export_seconds"] = time.perf_counter() - export_started
+            report["phases"].append(row)
+            write_json(output / "report.json", report)
+            validate_phase(row, reference["independent_audit"]["certificate"], spec["expected_microsteps"])
+            if baseline_trace is None:
+                baseline_trace = trace
+            elif canonical(trace) != canonical(baseline_trace):
+                raise ValueError("Complete contact/shaft/witness/cavity prefix traces differ")
+            verify_constructed_binding(spec, case, config, history, fixture)
+            if source_receipt(spec) != sources:
+                raise ValueError("Source changed during declared comparison")
+            write_json(output / "phase-status.json", {"phase": phase_name, "status": "completed"})
+        if cancelled():
+            raise TimeoutError("Declared budget exhausted before completion")
+        report["status"] = "completed"
+        report["complete_trace_parity"] = True
+    except BaseException as error:
+        report["status"] = "failed_or_incomplete"
+        report["error"] = {"type": type(error).__name__, "message": str(error)}
+    report["worker_seconds"] = time.perf_counter() - started
+    report["peak_worker_rss_bytes"] = peak_rss_bytes()
+    report["source_unchanged"] = sources is not None and source_receipt(spec) == sources
+    if not report["source_unchanged"]:
+        report["status"] = "failed_or_incomplete"
+    write_json(output / "report.json", report)
+    return 0 if report["status"] == "completed" else 1
+
+
+def sampled_rss(pid):
+    result = subprocess.run(["/bin/ps", "-o", "rss=", "-p", str(pid)], capture_output=True, text=True)
+    value = result.stdout.strip()
+    return int(value) * 1024 if result.returncode == 0 and value.isdigit() else None
+
+
+def accepted_report(report, spec, sources):
+    if not isinstance(report, dict):
+        return False
+    phases = report.get("phases", [])
+    if (report.get("status") != "completed" or report.get("complete_trace_parity") is not True
+            or report.get("source_unchanged") is not True or report.get("sources") != sources
+            or report.get("declaration_hash") != digest(spec) or report.get("native_strokes") != 1
+            or not isinstance(phases, list) or not all(isinstance(row, dict) for row in phases)
+            or [row.get("phase") for row in phases] != spec["phase_order"]):
+        return False
+    reference = reference_row(spec)["independent_audit"]["certificate"]
+    try:
+        for row in phases:
+            validate_phase(row, reference, spec["expected_microsteps"])
+        return len({row["trace_digest"] for row in phases}) == 1
+    except (KeyError, TypeError, ValueError):
+        return False
+
+
+def saved_artifacts_match(output, report, spec):
+    """Verify actual saved scientific payloads, not just worker success flags."""
+    def load(name):
+        with gzip.open(output / name, "rb") as stream:
+            data = stream.read(spec["max_artifact_uncompressed_bytes"] + 1)
+        if len(data) > spec["max_artifact_uncompressed_bytes"]:
+            raise ValueError("Saved artifact exceeds declared uncompressed limit")
+        return json.loads(data)
+    try:
+        if digest(load("native-history.json.gz")) != spec["expected_history_hash"]:
+            return False
+        previous = None
+        for row in report["phases"]:
+            trace = load(f"{row['phase']}-trace.json.gz")
+            if (not isinstance(trace, dict) or set(trace) != {"contacts", "cell_queries", "prefixes"}
+                    or len(trace["contacts"]) != spec["expected_microsteps"]
+                    or len(trace["prefixes"]) != spec["expected_microsteps"]
+                    or digest(trace) != row["trace_digest"]):
+                return False
+            if previous is not None and canonical(trace) != previous:
+                return False
+            previous = canonical(trace)
+        return True
+    except (OSError, EOFError, ValueError, KeyError, TypeError):
+        return False
+
+
+def launch(output):
+    if output.exists():
+        raise FileExistsError("A fresh output directory is required; no retry/overwrite")
+    output.mkdir(parents=True)
+    started = time.perf_counter()
+    spec = declaration()
+    verify_declared_files(spec)
+    sources = source_receipt(spec)
+    env = dict(os.environ)
+    env.update({key: "1" for key in THREAD_KEYS})
+    command = [sys.executable, str(Path(__file__).resolve()), "--worker", "--output", str(output),
+               "--deadline", str(started + spec["caps"]["cooperative_seconds"])]
+    write_json(output / "prospective.json", {"declaration": spec, "sources": sources,
+        "argv": command, "python": sys.version, "platform": platform.platform(),
+        "numerical_thread_environment": {key: env[key] for key in THREAD_KEYS},
+        "cpu_scope": "One numerical worker with one-thread library controls; no macOS CPU-affinity claim"})
+    killed = None
+    maximum_rss = 0
+    with (output / "worker.log").open("x") as log:
+        process = subprocess.Popen(command, stdout=log, stderr=log, env=env, start_new_session=True)
+        while process.poll() is None:
+            if time.perf_counter() - started >= spec["caps"]["parent_wall_seconds"]:
+                killed = "parent_wall_cap"
+            current_rss = sampled_rss(process.pid)
+            if current_rss is None and process.poll() is None:
+                killed = "worker_rss_unavailable"
+            if current_rss is not None:
+                maximum_rss = max(maximum_rss, current_rss)
+                if current_rss > spec["caps"]["worker_rss_bytes"]:
+                    killed = "worker_rss_cap"
+            if killed:
+                if process.poll() is None:
+                    os.killpg(process.pid, signal.SIGKILL)
+                break
+            time.sleep(spec["caps"]["poll_seconds"])
+        exit_code = process.wait()
+    try:
+        report = json.loads((output / "report.json").read_text())
+    except (OSError, ValueError):
+        report = None
+    unchanged = source_receipt(spec) == sources
+    accepted = (killed is None and exit_code == 0 and unchanged
+                and accepted_report(report, spec, sources)
+                and saved_artifacts_match(output, report, spec)
+                and time.perf_counter() - started < spec["caps"]["parent_wall_seconds"])
+    write_json(output / "launcher.json", {"status": "completed" if accepted else "failed_or_incomplete",
+        "exit_code": exit_code, "kill_reason": killed, "parent_seconds": time.perf_counter() - started,
+        "peak_sampled_worker_rss_bytes": maximum_rss, "source_unchanged": unchanged,
+        "complete_history_parity_verified": accepted,
+        "limits": spec["caps"], "no_retry": True,
+        "rss_scope": "Sampled worker RSS plus worker peak RSS; brief excursions between samples may be missed"})
+    return 0 if accepted else 1
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--worker", action="store_true")
+    parser.add_argument("--deadline", type=float)
+    args = parser.parse_args()
+    if args.worker:
+        if args.deadline is None:
+            parser.error("Worker requires the bounded parent deadline")
+        return worker(args.output.resolve(), args.deadline)
+    return launch(args.output.resolve())
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

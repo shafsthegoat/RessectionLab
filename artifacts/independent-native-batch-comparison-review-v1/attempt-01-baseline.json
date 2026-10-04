@@ -1,0 +1,15 @@
+{
+  "sources": {
+    "scripts/compare_independent_native_batch.py": "507595ce1968cfa736fc3734f7a581c68b7a9b8d4873cc23a4c532a1ddf3c0e6",
+    "manifests/experiments/independent-native-batch-history-v1.json": "76533ab14eaa9d922e2c148e2b40d745804a0cee85fee397d1a1c4b50c11a5d6",
+    "tests/test_independent_native_batch_comparison_review.py": "4887e0cc64d2fe81f3c4ff2ca54110ecb3645593816541c4ea4555e66fc304f6"
+  },
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_independent_native_batch_comparison_review.py"
+  ],
+  "scope": "Mocked orchestration only: no scene, native reconstruction, audit or benchmark."
+}

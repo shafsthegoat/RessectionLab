@@ -1,0 +1,231 @@
+.FFFFFFF.                                                                [100%]
+=================================== FAILURES ===================================
+_ test_phase_parity_cannot_claim_batch_execution_without_backend_evidence[batch_label_is_scalar] _
+
+fault = 'batch_label_is_scalar'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1076086b0>
+
+    @pytest.mark.parametrize("fault", ["batch_label_is_scalar", "scalar_used_batch", "batch_has_no_queries", "missing_backend"])
+    def test_phase_parity_cannot_claim_batch_execution_without_backend_evidence(fault, monkeypatch):
+        report, spec, sources = _mock_completed_report(monkeypatch)
+        if fault == "batch_label_is_scalar":
+            report["phases"][1]["backend"] = "scalar"
+        elif fault == "scalar_used_batch":
+            report["phases"][0]["batch_cell_queries"] = 1
+        elif fault == "batch_has_no_queries":
+            report["phases"][1]["batch_cell_queries"] = 0
+        else:
+            del report["phases"][1]["backend"]
+>       assert not runner.accepted_report(report, spec, sources)
+E       AssertionError: assert not True
+E        +  where True = <function accepted_report at 0x1075f8fe0>({'status': 'completed', 'complete_trace_parity': True, 'source_unchanged': True, 'sources': {'mock_source': 'mock-hash'}, ...}, {'version': 'independent-native-batch-history-v1', 'role': 'fixed_analytic_numerical_control_not_training', 'historical_report': 'artifacts/native-discretization-control-v1/run-01/report.json', 'row_id': 'tilted_20_degrees-0.125mm', ...}, {'mock_source': 'mock-hash'})
+E        +    where <function accepted_report at 0x1075f8fe0> = runner.accepted_report
+
+tests/test_independent_native_batch_comparison_review.py:56: AssertionError
+_ test_phase_parity_cannot_claim_batch_execution_without_backend_evidence[scalar_used_batch] _
+
+fault = 'scalar_used_batch'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10760b4d0>
+
+    @pytest.mark.parametrize("fault", ["batch_label_is_scalar", "scalar_used_batch", "batch_has_no_queries", "missing_backend"])
+    def test_phase_parity_cannot_claim_batch_execution_without_backend_evidence(fault, monkeypatch):
+        report, spec, sources = _mock_completed_report(monkeypatch)
+        if fault == "batch_label_is_scalar":
+            report["phases"][1]["backend"] = "scalar"
+        elif fault == "scalar_used_batch":
+            report["phases"][0]["batch_cell_queries"] = 1
+        elif fault == "batch_has_no_queries":
+            report["phases"][1]["batch_cell_queries"] = 0
+        else:
+            del report["phases"][1]["backend"]
+>       assert not runner.accepted_report(report, spec, sources)
+E       AssertionError: assert not True
+E        +  where True = <function accepted_report at 0x1075f8fe0>({'status': 'completed', 'complete_trace_parity': True, 'source_unchanged': True, 'sources': {'mock_source': 'mock-hash'}, ...}, {'version': 'independent-native-batch-history-v1', 'role': 'fixed_analytic_numerical_control_not_training', 'historical_report': 'artifacts/native-discretization-control-v1/run-01/report.json', 'row_id': 'tilted_20_degrees-0.125mm', ...}, {'mock_source': 'mock-hash'})
+E        +    where <function accepted_report at 0x1075f8fe0> = runner.accepted_report
+
+tests/test_independent_native_batch_comparison_review.py:56: AssertionError
+_ test_phase_parity_cannot_claim_batch_execution_without_backend_evidence[batch_has_no_queries] _
+
+fault = 'batch_has_no_queries'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10760b290>
+
+    @pytest.mark.parametrize("fault", ["batch_label_is_scalar", "scalar_used_batch", "batch_has_no_queries", "missing_backend"])
+    def test_phase_parity_cannot_claim_batch_execution_without_backend_evidence(fault, monkeypatch):
+        report, spec, sources = _mock_completed_report(monkeypatch)
+        if fault == "batch_label_is_scalar":
+            report["phases"][1]["backend"] = "scalar"
+        elif fault == "scalar_used_batch":
+            report["phases"][0]["batch_cell_queries"] = 1
+        elif fault == "batch_has_no_queries":
+            report["phases"][1]["batch_cell_queries"] = 0
+        else:
+            del report["phases"][1]["backend"]
+>       assert not runner.accepted_report(report, spec, sources)
+E       AssertionError: assert not True
+E        +  where True = <function accepted_report at 0x1075f8fe0>({'status': 'completed', 'complete_trace_parity': True, 'source_unchanged': True, 'sources': {'mock_source': 'mock-hash'}, ...}, {'version': 'independent-native-batch-history-v1', 'role': 'fixed_analytic_numerical_control_not_training', 'historical_report': 'artifacts/native-discretization-control-v1/run-01/report.json', 'row_id': 'tilted_20_degrees-0.125mm', ...}, {'mock_source': 'mock-hash'})
+E        +    where <function accepted_report at 0x1075f8fe0> = runner.accepted_report
+
+tests/test_independent_native_batch_comparison_review.py:56: AssertionError
+_ test_phase_parity_cannot_claim_batch_execution_without_backend_evidence[missing_backend] _
+
+fault = 'missing_backend'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1075b2540>
+
+    @pytest.mark.parametrize("fault", ["batch_label_is_scalar", "scalar_used_batch", "batch_has_no_queries", "missing_backend"])
+    def test_phase_parity_cannot_claim_batch_execution_without_backend_evidence(fault, monkeypatch):
+        report, spec, sources = _mock_completed_report(monkeypatch)
+        if fault == "batch_label_is_scalar":
+            report["phases"][1]["backend"] = "scalar"
+        elif fault == "scalar_used_batch":
+            report["phases"][0]["batch_cell_queries"] = 1
+        elif fault == "batch_has_no_queries":
+            report["phases"][1]["batch_cell_queries"] = 0
+        else:
+            del report["phases"][1]["backend"]
+>       assert not runner.accepted_report(report, spec, sources)
+E       AssertionError: assert not True
+E        +  where True = <function accepted_report at 0x1075f8fe0>({'status': 'completed', 'complete_trace_parity': True, 'source_unchanged': True, 'sources': {'mock_source': 'mock-hash'}, ...}, {'version': 'independent-native-batch-history-v1', 'role': 'fixed_analytic_numerical_control_not_training', 'historical_report': 'artifacts/native-discretization-control-v1/run-01/report.json', 'row_id': 'tilted_20_degrees-0.125mm', ...}, {'mock_source': 'mock-hash'})
+E        +    where <function accepted_report at 0x1075f8fe0> = runner.accepted_report
+
+tests/test_independent_native_batch_comparison_review.py:56: AssertionError
+______________ test_rss_sampler_has_a_finite_subprocess_deadline _______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1075b1490>
+
+    def test_rss_sampler_has_a_finite_subprocess_deadline(monkeypatch):
+        def fake_ps(*args, **kwargs):
+            assert 0 < kwargs.get("timeout", 0) <= 2, "Unbounded ps can stall the parent watchdog"
+            return SimpleNamespace(returncode=0, stdout="123\n")
+    
+        monkeypatch.setattr(runner.subprocess, "run", fake_ps)
+>       assert runner.sampled_rss(1234) == 123 * 1024
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_independent_native_batch_comparison_review.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/compare_independent_native_batch.py:291: in sampled_rss
+    result = subprocess.run(["/bin/ps", "-o", "rss=", "-p", str(pid)], capture_output=True, text=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (['/bin/ps', '-o', 'rss=', '-p', '1234'],)
+kwargs = {'capture_output': True, 'text': True}
+
+    def fake_ps(*args, **kwargs):
+>       assert 0 < kwargs.get("timeout", 0) <= 2, "Unbounded ps can stall the parent watchdog"
+E       AssertionError: Unbounded ps can stall the parent watchdog
+E       assert 0 < 0
+E        +  where 0 = <built-in method get of dict object at 0x1075d24c0>('timeout', 0)
+E        +    where <built-in method get of dict object at 0x1075d24c0> = {'capture_output': True, 'text': True}.get
+
+tests/test_independent_native_batch_comparison_review.py:61: AssertionError
+_ test_supervision_exception_kills_and_reaps_worker_and_preserves_failure_receipt _
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-382/test_supervision_exception_kil0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107593650>
+
+    def test_supervision_exception_kills_and_reaps_worker_and_preserves_failure_receipt(tmp_path, monkeypatch):
+        _mock_launch_inputs(monkeypatch)
+        state = dict(killed=False, waited=False)
+    
+        class FakeWorker:
+            pid = 123456
+    
+            def __init__(self, *args, **kwargs):
+                pass
+    
+            def poll(self):
+                return -9 if state["killed"] else None
+    
+            def wait(self, *args, **kwargs):
+                state["waited"] = True
+                return -9
+    
+        def failed_sampler(_):
+            raise RuntimeError("deliberate mock sampler failure")
+    
+        def kill_group(pid, _):
+            assert pid == FakeWorker.pid
+            state["killed"] = True
+    
+        monkeypatch.setattr(runner.subprocess, "Popen", FakeWorker)
+        monkeypatch.setattr(runner, "sampled_rss", failed_sampler)
+        monkeypatch.setattr(runner.os, "killpg", kill_group)
+        output = tmp_path / "fresh"
+>       assert runner.launch(output) == 1
+               ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_independent_native_batch_comparison_review.py:105: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/compare_independent_native_batch.py:365: in launch
+    current_rss = sampled_rss(process.pid)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+_ = 123456
+
+    def failed_sampler(_):
+>       raise RuntimeError("deliberate mock sampler failure")
+E       RuntimeError: deliberate mock sampler failure
+
+tests/test_independent_native_batch_comparison_review.py:95: RuntimeError
+____ test_disappearing_source_after_worker_exit_still_saves_failed_launcher ____
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-382/test_disappearing_source_after0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10760b4d0>
+
+    def test_disappearing_source_after_worker_exit_still_saves_failed_launcher(tmp_path, monkeypatch):
+        _mock_launch_inputs(monkeypatch)
+        calls = 0
+    
+        def source_receipt(_):
+            nonlocal calls
+            calls += 1
+            if calls > 1:
+                raise FileNotFoundError("mock source disappeared during supervision")
+            return {"mock_source": "mock-hash"}
+    
+        class FinishedWorker:
+            pid = 123456
+    
+            def __init__(self, *args, **kwargs):
+                pass
+    
+            def poll(self):
+                return 0
+    
+            def wait(self, *args, **kwargs):
+                return 0
+    
+        monkeypatch.setattr(runner, "source_receipt", source_receipt)
+        monkeypatch.setattr(runner.subprocess, "Popen", FinishedWorker)
+        output = tmp_path / "fresh"
+>       assert runner.launch(output) == 1
+               ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_independent_native_batch_comparison_review.py:138: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/compare_independent_native_batch.py:382: in launch
+    unchanged = source_receipt(spec) == sources
+                ^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+_ = {'version': 'independent-native-batch-history-v1', 'role': 'fixed_analytic_numerical_control_not_training', 'historical_report': 'artifacts/native-discretization-control-v1/run-01/report.json', 'row_id': 'tilted_20_degrees-0.125mm', ...}
+
+    def source_receipt(_):
+        nonlocal calls
+        calls += 1
+        if calls > 1:
+>           raise FileNotFoundError("mock source disappeared during supervision")
+E           FileNotFoundError: mock source disappeared during supervision
+
+tests/test_independent_native_batch_comparison_review.py:120: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_independent_native_batch_comparison_review.py::test_phase_parity_cannot_claim_batch_execution_without_backend_evidence[batch_label_is_scalar]
+FAILED tests/test_independent_native_batch_comparison_review.py::test_phase_parity_cannot_claim_batch_execution_without_backend_evidence[scalar_used_batch]
+FAILED tests/test_independent_native_batch_comparison_review.py::test_phase_parity_cannot_claim_batch_execution_without_backend_evidence[batch_has_no_queries]
+FAILED tests/test_independent_native_batch_comparison_review.py::test_phase_parity_cannot_claim_batch_execution_without_backend_evidence[missing_backend]
+FAILED tests/test_independent_native_batch_comparison_review.py::test_rss_sampler_has_a_finite_subprocess_deadline
+FAILED tests/test_independent_native_batch_comparison_review.py::test_supervision_exception_kills_and_reaps_worker_and_preserves_failure_receipt
+FAILED tests/test_independent_native_batch_comparison_review.py::test_disappearing_source_after_worker_exit_still_saves_failed_launcher
+7 failed, 2 passed in 0.08s

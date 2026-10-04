@@ -1,0 +1,354 @@
+.FFFFFFF.                                                                [100%]
+=================================== FAILURES ===================================
+_ test_phase_parity_cannot_claim_batch_execution_without_backend_evidence[batch_label_is_scalar] _
+
+fault = 'batch_label_is_scalar'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107563bc0>
+
+    @pytest.mark.parametrize("fault", ["batch_label_is_scalar", "scalar_used_batch", "batch_has_no_queries", "missing_backend"])
+    def test_phase_parity_cannot_claim_batch_execution_without_backend_evidence(fault, monkeypatch):
+        report, spec, sources = _mock_completed_report(monkeypatch)
+        if fault == "batch_label_is_scalar":
+            report["phases"][1]["backend"] = "scalar"
+        elif fault == "scalar_used_batch":
+            report["phases"][0]["batch_cell_queries"] = 1
+        elif fault == "batch_has_no_queries":
+            report["phases"][1]["batch_cell_queries"] = 0
+        else:
+            del report["phases"][1]["backend"]
+>       assert not runner.accepted_report(report, spec, sources)
+E       AssertionError: assert not True
+E        +  where True = <function accepted_report at 0x1075b8f40>({'status': 'completed', 'complete_trace_parity': True, 'source_unchanged': True, 'sources': {'mock_source': 'mock-hash'}, ...}, {'version': 'independent-native-batch-history-v1', 'role': 'fixed_analytic_numerical_control_not_training', 'historical_report': 'artifacts/native-discretization-control-v1/run-01/report.json', 'row_id': 'tilted_20_degrees-0.125mm', ...}, {'mock_source': 'mock-hash'})
+E        +    where <function accepted_report at 0x1075b8f40> = runner.accepted_report
+
+tests/test_independent_native_batch_comparison_review.py:56: AssertionError
+_ test_phase_parity_cannot_claim_batch_execution_without_backend_evidence[scalar_used_batch] _
+
+fault = 'scalar_used_batch'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107563590>
+
+    @pytest.mark.parametrize("fault", ["batch_label_is_scalar", "scalar_used_batch", "batch_has_no_queries", "missing_backend"])
+    def test_phase_parity_cannot_claim_batch_execution_without_backend_evidence(fault, monkeypatch):
+        report, spec, sources = _mock_completed_report(monkeypatch)
+        if fault == "batch_label_is_scalar":
+            report["phases"][1]["backend"] = "scalar"
+        elif fault == "scalar_used_batch":
+            report["phases"][0]["batch_cell_queries"] = 1
+        elif fault == "batch_has_no_queries":
+            report["phases"][1]["batch_cell_queries"] = 0
+        else:
+            del report["phases"][1]["backend"]
+>       assert not runner.accepted_report(report, spec, sources)
+E       AssertionError: assert not True
+E        +  where True = <function accepted_report at 0x1075b8f40>({'status': 'completed', 'complete_trace_parity': True, 'source_unchanged': True, 'sources': {'mock_source': 'mock-hash'}, ...}, {'version': 'independent-native-batch-history-v1', 'role': 'fixed_analytic_numerical_control_not_training', 'historical_report': 'artifacts/native-discretization-control-v1/run-01/report.json', 'row_id': 'tilted_20_degrees-0.125mm', ...}, {'mock_source': 'mock-hash'})
+E        +    where <function accepted_report at 0x1075b8f40> = runner.accepted_report
+
+tests/test_independent_native_batch_comparison_review.py:56: AssertionError
+_ test_phase_parity_cannot_claim_batch_execution_without_backend_evidence[batch_has_no_queries] _
+
+fault = 'batch_has_no_queries'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10757e120>
+
+    @pytest.mark.parametrize("fault", ["batch_label_is_scalar", "scalar_used_batch", "batch_has_no_queries", "missing_backend"])
+    def test_phase_parity_cannot_claim_batch_execution_without_backend_evidence(fault, monkeypatch):
+        report, spec, sources = _mock_completed_report(monkeypatch)
+        if fault == "batch_label_is_scalar":
+            report["phases"][1]["backend"] = "scalar"
+        elif fault == "scalar_used_batch":
+            report["phases"][0]["batch_cell_queries"] = 1
+        elif fault == "batch_has_no_queries":
+            report["phases"][1]["batch_cell_queries"] = 0
+        else:
+            del report["phases"][1]["backend"]
+>       assert not runner.accepted_report(report, spec, sources)
+E       AssertionError: assert not True
+E        +  where True = <function accepted_report at 0x1075b8f40>({'status': 'completed', 'complete_trace_parity': True, 'source_unchanged': True, 'sources': {'mock_source': 'mock-hash'}, ...}, {'version': 'independent-native-batch-history-v1', 'role': 'fixed_analytic_numerical_control_not_training', 'historical_report': 'artifacts/native-discretization-control-v1/run-01/report.json', 'row_id': 'tilted_20_degrees-0.125mm', ...}, {'mock_source': 'mock-hash'})
+E        +    where <function accepted_report at 0x1075b8f40> = runner.accepted_report
+
+tests/test_independent_native_batch_comparison_review.py:56: AssertionError
+_ test_phase_parity_cannot_claim_batch_execution_without_backend_evidence[missing_backend] _
+
+fault = 'missing_backend'
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107563d40>
+
+    @pytest.mark.parametrize("fault", ["batch_label_is_scalar", "scalar_used_batch", "batch_has_no_queries", "missing_backend"])
+    def test_phase_parity_cannot_claim_batch_execution_without_backend_evidence(fault, monkeypatch):
+        report, spec, sources = _mock_completed_report(monkeypatch)
+        if fault == "batch_label_is_scalar":
+            report["phases"][1]["backend"] = "scalar"
+        elif fault == "scalar_used_batch":
+            report["phases"][0]["batch_cell_queries"] = 1
+        elif fault == "batch_has_no_queries":
+            report["phases"][1]["batch_cell_queries"] = 0
+        else:
+            del report["phases"][1]["backend"]
+>       assert not runner.accepted_report(report, spec, sources)
+E       AssertionError: assert not True
+E        +  where True = <function accepted_report at 0x1075b8f40>({'status': 'completed', 'complete_trace_parity': True, 'source_unchanged': True, 'sources': {'mock_source': 'mock-hash'}, ...}, {'version': 'independent-native-batch-history-v1', 'role': 'fixed_analytic_numerical_control_not_training', 'historical_report': 'artifacts/native-discretization-control-v1/run-01/report.json', 'row_id': 'tilted_20_degrees-0.125mm', ...}, {'mock_source': 'mock-hash'})
+E        +    where <function accepted_report at 0x1075b8f40> = runner.accepted_report
+
+tests/test_independent_native_batch_comparison_review.py:56: AssertionError
+______________ test_rss_sampler_has_a_finite_subprocess_deadline _______________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10753ec90>
+
+    def test_rss_sampler_has_a_finite_subprocess_deadline(monkeypatch):
+        def fake_ps(*args, **kwargs):
+            assert 0 < kwargs.get("timeout", 0) <= 2, "Unbounded ps can stall the parent watchdog"
+            return SimpleNamespace(returncode=0, stdout="123\n")
+    
+        monkeypatch.setattr(runner.subprocess, "run", fake_ps)
+>       assert runner.sampled_rss(1234) == 123 * 1024
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_independent_native_batch_comparison_review.py:65: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/compare_independent_native_batch.py:291: in sampled_rss
+    result = subprocess.run(["/bin/ps", "-o", "rss=", "-p", str(pid)], capture_output=True, text=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (['/bin/ps', '-o', 'rss=', '-p', '1234'],)
+kwargs = {'capture_output': True, 'text': True}
+
+    def fake_ps(*args, **kwargs):
+>       assert 0 < kwargs.get("timeout", 0) <= 2, "Unbounded ps can stall the parent watchdog"
+E       AssertionError: Unbounded ps can stall the parent watchdog
+E       assert 0 < 0
+E        +  where 0 = <built-in method get of dict object at 0x1075aa040>('timeout', 0)
+E        +    where <built-in method get of dict object at 0x1075aa040> = {'capture_output': True, 'text': True}.get
+
+tests/test_independent_native_batch_comparison_review.py:61: AssertionError
+_ test_supervision_exception_kills_and_reaps_worker_and_preserves_failure_receipt _
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-381/test_supervision_exception_kil0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10753c7a0>
+
+    def test_supervision_exception_kills_and_reaps_worker_and_preserves_failure_receipt(tmp_path, monkeypatch):
+        _mock_launch_inputs(monkeypatch)
+        state = dict(killed=False, waited=False)
+    
+        class FakeWorker:
+            pid = 123456
+    
+            def __init__(self, *args, **kwargs):
+                pass
+    
+            def poll(self):
+                return -9 if state["killed"] else None
+    
+            def wait(self, *args, **kwargs):
+                state["waited"] = True
+                return -9
+    
+        def failed_sampler(_):
+            raise RuntimeError("deliberate mock sampler failure")
+    
+        def kill_group(pid, _):
+            assert pid == FakeWorker.pid
+            state["killed"] = True
+    
+        monkeypatch.setattr(runner.subprocess, "Popen", FakeWorker)
+        monkeypatch.setattr(runner, "sampled_rss", failed_sampler)
+        monkeypatch.setattr(runner.os, "killpg", kill_group)
+        output = tmp_path / "fresh"
+>       assert runner.launch(output) == 1
+               ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_independent_native_batch_comparison_review.py:104: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/compare_independent_native_batch.py:355: in launch
+    "argv": command, "python": sys.version, "platform": platform.platform(),
+                                                        ^^^^^^^^^^^^^^^^^^^
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py:1245: in platform
+    system, node, release, version, machine, processor = uname()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py:865: in __iter__
+    (self.processor,)
+     ^^^^^^^^^^^^^^
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/functools.py:998: in __get__
+    val = self.func(instance)
+          ^^^^^^^^^^^^^^^^^^^
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py:860: in processor
+    return _unknown_as_blank(_Processor.get())
+                             ^^^^^^^^^^^^^^^^
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py:800: in get
+    return func() or ''
+           ^^^^^^
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py:828: in from_subprocess
+    return subprocess.check_output(
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:466: in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['uname', '-p'],)
+kwargs = {'stdout': -1, 'stderr': -3, 'text': True, 'encoding': 'utf8'}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+>       with Popen(*popenargs, **kwargs) as process:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: 'FakeWorker' object does not support the context manager protocol
+
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:548: TypeError
+____ test_disappearing_source_after_worker_exit_still_saves_failed_launcher ____
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-381/test_disappearing_source_after0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10757dcd0>
+
+    def test_disappearing_source_after_worker_exit_still_saves_failed_launcher(tmp_path, monkeypatch):
+        _mock_launch_inputs(monkeypatch)
+        calls = 0
+    
+        def source_receipt(_):
+            nonlocal calls
+            calls += 1
+            if calls > 1:
+                raise FileNotFoundError("mock source disappeared during supervision")
+            return {"mock_source": "mock-hash"}
+    
+        class FinishedWorker:
+            pid = 123456
+    
+            def __init__(self, *args, **kwargs):
+                pass
+    
+            def poll(self):
+                return 0
+    
+            def wait(self, *args, **kwargs):
+                return 0
+    
+        monkeypatch.setattr(runner, "source_receipt", source_receipt)
+        monkeypatch.setattr(runner.subprocess, "Popen", FinishedWorker)
+        output = tmp_path / "fresh"
+>       assert runner.launch(output) == 1
+               ^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_independent_native_batch_comparison_review.py:137: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/compare_independent_native_batch.py:355: in launch
+    "argv": command, "python": sys.version, "platform": platform.platform(),
+                                                        ^^^^^^^^^^^^^^^^^^^
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py:1245: in platform
+    system, node, release, version, machine, processor = uname()
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py:865: in __iter__
+    (self.processor,)
+     ^^^^^^^^^^^^^^
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/functools.py:998: in __get__
+    val = self.func(instance)
+          ^^^^^^^^^^^^^^^^^^^
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py:860: in processor
+    return _unknown_as_blank(_Processor.get())
+                             ^^^^^^^^^^^^^^^^
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py:800: in get
+    return func() or ''
+           ^^^^^^
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/platform.py:828: in from_subprocess
+    return subprocess.check_output(
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:466: in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+input = None, capture_output = False, timeout = None, check = True
+popenargs = (['uname', '-p'],)
+kwargs = {'stdout': -1, 'stderr': -3, 'text': True, 'encoding': 'utf8'}
+
+    def run(*popenargs,
+            input=None, capture_output=False, timeout=None, check=False, **kwargs):
+        """Run command with arguments and return a CompletedProcess instance.
+    
+        The returned instance will have attributes args, returncode, stdout and
+        stderr. By default, stdout and stderr are not captured, and those attributes
+        will be None. Pass stdout=PIPE and/or stderr=PIPE in order to capture them,
+        or pass capture_output=True to capture both.
+    
+        If check is True and the exit code was non-zero, it raises a
+        CalledProcessError. The CalledProcessError object will have the return code
+        in the returncode attribute, and output & stderr attributes if those streams
+        were captured.
+    
+        If timeout (seconds) is given and the process takes too long,
+         a TimeoutExpired exception will be raised.
+    
+        There is an optional argument "input", allowing you to
+        pass bytes or a string to the subprocess's stdin.  If you use this argument
+        you may not also use the Popen constructor's "stdin" argument, as
+        it will be used internally.
+    
+        By default, all communication is in bytes, and therefore any "input" should
+        be bytes, and the stdout and stderr will be bytes. If in text mode, any
+        "input" should be a string, and stdout and stderr will be strings decoded
+        according to locale encoding, or by "encoding" if set. Text mode is
+        triggered by setting any of text, encoding, errors or universal_newlines.
+    
+        The other arguments are the same as for the Popen constructor.
+        """
+        if input is not None:
+            if kwargs.get('stdin') is not None:
+                raise ValueError('stdin and input arguments may not both be used.')
+            kwargs['stdin'] = PIPE
+    
+        if capture_output:
+            if kwargs.get('stdout') is not None or kwargs.get('stderr') is not None:
+                raise ValueError('stdout and stderr arguments may not be used '
+                                 'with capture_output.')
+            kwargs['stdout'] = PIPE
+            kwargs['stderr'] = PIPE
+    
+>       with Popen(*popenargs, **kwargs) as process:
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       TypeError: 'FinishedWorker' object does not support the context manager protocol
+
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py:548: TypeError
+=========================== short test summary info ============================
+FAILED tests/test_independent_native_batch_comparison_review.py::test_phase_parity_cannot_claim_batch_execution_without_backend_evidence[batch_label_is_scalar]
+FAILED tests/test_independent_native_batch_comparison_review.py::test_phase_parity_cannot_claim_batch_execution_without_backend_evidence[scalar_used_batch]
+FAILED tests/test_independent_native_batch_comparison_review.py::test_phase_parity_cannot_claim_batch_execution_without_backend_evidence[batch_has_no_queries]
+FAILED tests/test_independent_native_batch_comparison_review.py::test_phase_parity_cannot_claim_batch_execution_without_backend_evidence[missing_backend]
+FAILED tests/test_independent_native_batch_comparison_review.py::test_rss_sampler_has_a_finite_subprocess_deadline
+FAILED tests/test_independent_native_batch_comparison_review.py::test_supervision_exception_kills_and_reaps_worker_and_preserves_failure_receipt
+FAILED tests/test_independent_native_batch_comparison_review.py::test_disappearing_source_after_worker_exit_still_saves_failed_launcher
+7 failed, 2 passed in 0.18s
