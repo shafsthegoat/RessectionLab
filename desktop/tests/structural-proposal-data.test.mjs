@@ -256,3 +256,17 @@ test("a reviewed or rejected legend requires a matching limited-scope evidence r
     /review is not bound/,
   );
 });
+
+for (const mode of ["in-place", "replacement"]) {
+  test(`structural estimate rechecks current MRI bytes after ${mode} mutation, before mask transfer`, async () => {
+    const f = fixture();
+    await hydrateStructuralProposal(f.source, f.viewer, "main", f.api);
+    if (mode === "replacement") f.viewer.mri = f.viewer.mri.slice();
+    f.viewer.mri[0] = 50;
+    await assert.rejects(
+      hydrateStructuralProposal(f.source, f.viewer, "main", f.api),
+      /another source image/,
+    );
+    assert.equal(f.reads(), 1);
+  });
+}

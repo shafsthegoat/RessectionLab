@@ -345,3 +345,17 @@ test("released structural membership uses nearest sampling without creating frac
   assert.equal(samplePriorAtCursor(view, [10, -5, 8]).value, 0);
   assert.equal(samplePriorAtCursor(view, [10, -5, 10]).value, 1);
 });
+
+for (const mode of ["in-place", "replacement"]) {
+  test(`prior rechecks current MRI bytes after ${mode} mutation, before fetching another layer`, async () => {
+    const f = fixture();
+    await hydratePriorProposal(f.source, f.viewer, "prior", f.api);
+    if (mode === "replacement") f.viewer.mri = f.viewer.mri.slice();
+    f.viewer.mri[0] = 50;
+    await assert.rejects(
+      hydratePriorProposal(f.source, f.viewer, "prior", f.api),
+      /another source MRI/,
+    );
+    assert.equal(f.reads(), 2);
+  });
+}

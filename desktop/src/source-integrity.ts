@@ -1,5 +1,4 @@
 import type { CasePayload, ViewerCase, Vec3 } from "./types";
-const sourceDigests = new WeakMap<ViewerCase, Promise<string>>();
 const hex = (bytes: ArrayBuffer) =>
   Array.from(new Uint8Array(bytes), (value) =>
     value.toString(16).padStart(2, "0"),
@@ -44,22 +43,18 @@ export async function sourceFrameDigest(source: CasePayload): Promise<string> {
   return `sha256:${await sha256Bytes(new TextEncoder().encode(text))}`;
 }
 
+/** Typed arrays and their container can be mutated; hash current bytes for every inspection. */
 export function sourceImageDigest(
   viewer: ViewerCase,
   shape: Vec3,
 ): Promise<string> {
-  let pending = sourceDigests.get(viewer);
-  if (!pending) {
-    pending = arrayDigest(
-      new Uint8Array(
-        viewer.mri.buffer,
-        viewer.mri.byteOffset,
-        viewer.mri.byteLength,
-      ),
-      shape,
-      "<f4",
-    );
-    sourceDigests.set(viewer, pending);
-  }
-  return pending;
+  return arrayDigest(
+    new Uint8Array(
+      viewer.mri.buffer,
+      viewer.mri.byteOffset,
+      viewer.mri.byteLength,
+    ),
+    shape,
+    "<f4",
+  );
 }
