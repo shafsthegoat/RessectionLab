@@ -53,8 +53,13 @@ The local `evaluateCandidate` operation now seals a selected native history
 before revealing its predeclared final worlds. Interrupted evaluation can resume
 the same assessment; optimizer training cannot resume after sealing. Reopen,
 replay and export verify the same full-sequence events. All 87 focused integration
-checks pass; the current facade has only three final worlds. A current full
-Python regression is running from committed `575eccd`; no full-pass claim yet.
+checks pass; the current facade has only three final worlds. The full Python
+regression from committed `575eccd` passed 2,134 checks in 286.80 seconds, with
+six skips and 14 retained warnings. Five skipped DICOM controls passed in the
+separate existing acquisition environment (21 checks); only one unavailable
+historical bundle fixture remains skipped. All 3,555 archived source files and
+the consulted UCSF bundle stayed unchanged. No repairs or installs were needed.
+Receipts: `artifacts/validation/python-regression-575eccd/attempt-01/`.
 
 The fixed-scene discretization control completed all 16 numerical rows. Five
 motions were shaft-rejected without state changes; ten accepted histories passed
