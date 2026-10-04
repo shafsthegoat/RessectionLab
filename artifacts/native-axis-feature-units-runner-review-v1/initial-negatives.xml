@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="4" time="5.770" timestamp="2026-10-04T10:45:46.454161-04:00" hostname="Sayems-MacBook-Pro-5.local"><testcase classname="tests.test_native_axis_feature_units_review" name="test_initial_contract_rejects_stale_or_coherently_resealed_semantics[stale_algorithm_hash]" time="4.789"><failure message="Failed: DID NOT RAISE ValueError">completed = {'RAW': {'output': PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-307...odes': 2, 'decision_model_hash': 'sha256:256df86fc8e29049cf77a8bfc9d094f25306c2a979e68906cad829d49212220f', ...}, ...}}
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-307/test_initial_contract_rejects_0')
+attack = 'stale_algorithm_hash'
+
+    @pytest.mark.parametrize("attack", ["stale_algorithm_hash", "coherent_units", "coherent_partial_semantics"])
+    def test_initial_contract_rejects_stale_or_coherently_resealed_semantics(completed, tmp_path, attack):
+        item = completed["FEATURE_UNITS"]
+        folder = tmp_path / "learner"
+        shutil.copytree(item["output"] / "learner", folder)
+        path = folder / "contract.json"
+        contract = json.loads(path.read_text())
+        if attack == "stale_algorithm_hash":
+            contract["algorithm"] = "different_unexecuted_algorithm"
+        else:
+            schema = contract["axis_observation_contract"]
+            if attack == "coherent_units":
+                schema["action_feature_units"][5] = "cm"
+            else:
+                schema["partial_contact_semantics"] = "all contact including already charged removed tissue"
+            schema["contract_hash"] = content_hash({k:v for k,v in schema.items() if k != "contract_hash"})
+            _seal_contract(contract)
+            checkpoint = torch.load(folder / "checkpoint.pt", map_location="cpu", weights_only=True)
+            checkpoint["contract_hash"] = contract["contract_hash"]
+            torch.save(checkpoint, folder / "checkpoint.pt")
+        _write(path, contract)
+&gt;       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_native_axis_feature_units_review.py:45: Failed</failure></testcase><testcase classname="tests.test_native_axis_feature_units_review" name="test_initial_contract_rejects_stale_or_coherently_resealed_semantics[coherent_units]" time="0.007"><failure message="Failed: DID NOT RAISE ValueError">completed = {'RAW': {'output': PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-307...odes': 2, 'decision_model_hash': 'sha256:256df86fc8e29049cf77a8bfc9d094f25306c2a979e68906cad829d49212220f', ...}, ...}}
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-307/test_initial_contract_rejects_1')
+attack = 'coherent_units'
+
+    @pytest.mark.parametrize("attack", ["stale_algorithm_hash", "coherent_units", "coherent_partial_semantics"])
+    def test_initial_contract_rejects_stale_or_coherently_resealed_semantics(completed, tmp_path, attack):
+        item = completed["FEATURE_UNITS"]
+        folder = tmp_path / "learner"
+        shutil.copytree(item["output"] / "learner", folder)
+        path = folder / "contract.json"
+        contract = json.loads(path.read_text())
+        if attack == "stale_algorithm_hash":
+            contract["algorithm"] = "different_unexecuted_algorithm"
+        else:
+            schema = contract["axis_observation_contract"]
+            if attack == "coherent_units":
+                schema["action_feature_units"][5] = "cm"
+            else:
+                schema["partial_contact_semantics"] = "all contact including already charged removed tissue"
+            schema["contract_hash"] = content_hash({k:v for k,v in schema.items() if k != "contract_hash"})
+            _seal_contract(contract)
+            checkpoint = torch.load(folder / "checkpoint.pt", map_location="cpu", weights_only=True)
+            checkpoint["contract_hash"] = contract["contract_hash"]
+            torch.save(checkpoint, folder / "checkpoint.pt")
+        _write(path, contract)
+&gt;       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_native_axis_feature_units_review.py:45: Failed</failure></testcase><testcase classname="tests.test_native_axis_feature_units_review" name="test_initial_contract_rejects_stale_or_coherently_resealed_semantics[coherent_partial_semantics]" time="0.006"><failure message="Failed: DID NOT RAISE ValueError">completed = {'RAW': {'output': PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-307...odes': 2, 'decision_model_hash': 'sha256:256df86fc8e29049cf77a8bfc9d094f25306c2a979e68906cad829d49212220f', ...}, ...}}
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-307/test_initial_contract_rejects_2')
+attack = 'coherent_partial_semantics'
+
+    @pytest.mark.parametrize("attack", ["stale_algorithm_hash", "coherent_units", "coherent_partial_semantics"])
+    def test_initial_contract_rejects_stale_or_coherently_resealed_semantics(completed, tmp_path, attack):
+        item = completed["FEATURE_UNITS"]
+        folder = tmp_path / "learner"
+        shutil.copytree(item["output"] / "learner", folder)
+        path = folder / "contract.json"
+        contract = json.loads(path.read_text())
+        if attack == "stale_algorithm_hash":
+            contract["algorithm"] = "different_unexecuted_algorithm"
+        else:
+            schema = contract["axis_observation_contract"]
+            if attack == "coherent_units":
+                schema["action_feature_units"][5] = "cm"
+            else:
+                schema["partial_contact_semantics"] = "all contact including already charged removed tissue"
+            schema["contract_hash"] = content_hash({k:v for k,v in schema.items() if k != "contract_hash"})
+            _seal_contract(contract)
+            checkpoint = torch.load(folder / "checkpoint.pt", map_location="cpu", weights_only=True)
+            checkpoint["contract_hash"] = contract["contract_hash"]
+            torch.save(checkpoint, folder / "checkpoint.pt")
+        _write(path, contract)
+&gt;       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_native_axis_feature_units_review.py:45: Failed</failure></testcase><testcase classname="tests.test_native_axis_feature_units_review" name="test_one_saved_adam_state_cannot_stand_for_complete_optimizer" time="0.009"><failure message="Failed: DID NOT RAISE ValueError">completed = {'RAW': {'output': PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-307...odes': 2, 'decision_model_hash': 'sha256:256df86fc8e29049cf77a8bfc9d094f25306c2a979e68906cad829d49212220f', ...}, ...}}
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-307/test_one_saved_adam_state_cann0')
+
+    def test_one_saved_adam_state_cannot_stand_for_complete_optimizer(completed, tmp_path):
+        item = completed["FEATURE_UNITS"]
+        folder = tmp_path / "learner"
+        shutil.copytree(item["output"] / "learner", folder)
+        path = folder / "checkpoint.pt"
+        checkpoint = torch.load(path, map_location="cpu", weights_only=True)
+        states = checkpoint["optimizer"]["state"]
+        assert len(states) == 8  # Actual actor and critic parameters all participated.
+        checkpoint["optimizer"]["state"] = {next(iter(states)): next(iter(states.values()))}
+        torch.save(checkpoint, path)
+&gt;       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_native_axis_feature_units_review.py:59: Failed</failure></testcase></testsuite></testsuites>
