@@ -8,11 +8,12 @@ has actually been run. The October 4, 2026 [master plan](MASTER_PLAN.md),
 [annotated references](ANNOTATED_REFERENCES.md), and
 [implementation handoff](IMPLEMENTING_AGENT_HANDOFF.md) define the project.
 
-The active Mac interface is being migrated to **Electron, React and TypeScript**
-at the user's request. The Python engine remains responsible for physical
-geometry, patient-specific training, evidence and independent validation. The
-earlier Qt prototype is retained as a tested historical reference; it is no
-longer the product interface target. See `desktop/` for the new application.
+The active Mac application uses **Electron, React and TypeScript**. The Python
+engine handles physical geometry, patient-specific training, evidence and
+independent validation. The earlier Qt prototype is retained as a tested
+historical reference. Application source is in `desktop/`; the
+[desktop workflow guide](docs/desktop-workflow.md) covers opening imaging,
+inspecting evidence, comparing routes, refinement, replay and local saving.
 
 The standalone Electron app has passed real MRI loading, full-tool route
 comparison and native workspace-save checks on this Mac. Its Python training
@@ -64,8 +65,9 @@ The creator-source BTC case can be acquired and prepared with:
 ```
 
 This writes `outputs/cases/BTC-sub-PAT28.ressectionlab`. Its T1 includes the full
-head, so automatic cortical access remains blocked until a suitable brain mask
-has been reviewed. The source annotation is fractional; 0.5 is a recorded
+head, so hypothetical route generation remains blocked without reviewed
+research support. A reviewed brain envelope alone does not certify cortical
+access. The source annotation is fractional; 0.5 is a recorded
 research threshold, not a clinical probability. Unknown-timed context is withheld.
 
 For the limited UCSF structural mirror used in viewer/route development:
