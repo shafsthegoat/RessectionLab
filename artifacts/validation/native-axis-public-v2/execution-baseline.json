@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-04T12:29:40Z",
+  "status": "released_not_started",
+  "source_commit": "69304172a74c50a8b83025c863edd979ff26e4fd",
+  "source_archive_sha256": "a4f24a49dd0d30ad872e80260f6b1275c5cd1756d0261ae3eda1745b72e5c9c5",
+  "immutable_source_root": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-v2/69304172a74c50a8b83025c863edd979ff26e4fd/source",
+  "focused_tests_passed": 77,
+  "full_suite_baseline": "558b2e3:959passed",
+  "runner_sha256": "420eac522225fc5dcc08d2e1680d333043669df9e7bd35808746cf0a0b3266e2",
+  "declaration_sha256": "35402cd0634e1db0798189e41a1dbbd4c880988b3e107ce38338eb8c966fb955",
+  "declaration_content_hash": "sha256:089dca680b992a5808c104a559ab562a034de9bea91de6df939da40d87650fe3",
+  "case_bundle_sha256": "11cca797ad0216e5c8d940e7354f2dd23fb6954dc2aed7e4b0423f6adc6cefcf",
+  "output_namespace": "artifacts/preflight/native-axis-v2",
+  "gradient_steps_permitted": 0,
+  "final_or_stress_worlds_permitted": false,
+  "load_average_before_launch": [
+    1.6533203125,
+    1.48828125,
+    1.55712890625
+  ],
+  "background_scope": "Other agent compute/tests held; extraction batch complete. Verified Electron app open and ordinary macOS/desktop activity uncontrolled. OS file caches not flushed.",
+  "resource_budget": {
+    "worker_wall_seconds": 600,
+    "process_peak_rss_bytes": 6442450944,
+    "hard_termination_grace_seconds": 15
+  }
+}

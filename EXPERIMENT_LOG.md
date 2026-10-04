@@ -846,7 +846,8 @@ records are in `artifacts/preflight/native-axis-v1/`, with root verification in
 corrected attempt needs its own committed declaration and output namespace.
 
 Two subsequent configuration-only audits of the exact frozen V1 source agree:
-all 12 native configuration fields were compared, and only
+all 11 public constructor fields and the full native fingerprint were compared,
+and only
 `tissue_support_provenance` differs. Tissue, target labels, affine and hard
 exclusions have identical dtype, shape and elements. Access, instruments, source,
 case identity, 0.25-mm microsteps and the 4,096-step cap are equal. Both complete
