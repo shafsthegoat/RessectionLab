@@ -1,0 +1,104 @@
+{
+  "schema_version": 2,
+  "role": "real_training_scan_untrained_policy_engineering_profile",
+  "plan": [
+    {
+      "side": 32,
+      "non_stop_rays": 16
+    },
+    {
+      "side": 32,
+      "non_stop_rays": 128
+    },
+    {
+      "side": 64,
+      "non_stop_rays": 16
+    },
+    {
+      "side": 64,
+      "non_stop_rays": 128
+    }
+  ],
+  "cpu_threads": 1,
+  "seed": 139,
+  "inference_calls_per_cell": 1,
+  "training_forward_calls_per_cell": 0,
+  "optimizer_steps_per_cell": 0,
+  "total_deadline_seconds": 55.0,
+  "rss_limit_bytes": 2147483648,
+  "sampled_rss_stop_bytes": 1879048192,
+  "sample_period_seconds": 0.025,
+  "source_sha256": {
+    "scripts/profile_spatial_policy_scale.py": "1b8c2936a873eecd715eba34d8b77155e02f9d048b275faeb1047dd1df6eb7a9",
+    "src/resectionlab/core.py": "0600667e8e8662c78e31a86d9060d53aec5ab5a4f2b14e747afd74800f11eeec",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+    "src/resectionlab/spatial_observations.py": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711",
+    "src/resectionlab/spatial_policy.py": "a346b2e187d943238f2676ce2cb90ef609f4655dc7e798e21b247fae41778cb5"
+  },
+  "python_executable": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+  "python_executable_sha256": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a",
+  "scan_source": {
+    "subject": "sub-PAT22",
+    "development_role": "population_training",
+    "image_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/diffusion_source/ds001226-v5.0.1/sub-PAT22/ses-preop/anat/sub-PAT22_ses-preop_T1w.nii.gz",
+    "image_sha256": "6ac1bc950dc2b48709367550b1c740684457fce875e3e402d870d3356282334e",
+    "image_bytes": 7549922,
+    "shape": [
+      160,
+      256,
+      256
+    ],
+    "affine_ras_mm": [
+      [
+        0.9992063641548157,
+        -0.02438328042626381,
+        0.03140365704894066,
+        -76.97232818603516
+      ],
+      [
+        0.024371175095438957,
+        0.9997026920318604,
+        0.0007659494876861572,
+        -103.12860107421875
+      ],
+      [
+        -0.03141290321946144,
+        2.457493764040919e-09,
+        0.9995064735412598,
+        -131.29685974121094
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "spacing_mm": [
+      0.9999970414114703,
+      1.000000008410047,
+      0.999999983502775
+    ],
+    "manifest_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/diffusion_source/ds001226-v5.0.1/btc_sub-PAT22_verified_manifest.json",
+    "manifest_sha256": "e1f6fa5c82558bdbaa245223315fac6437b09bcc0938bfe61a3081845a9c72bb",
+    "cohort_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/manifests/experiments/btc-spatial-development-cohort-v1.json",
+    "cohort_sha256": "962d964e1d71427f3625cdbebc0f7e4759e5d2345d8f95cb211ed45810ed2985",
+    "source_root": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/diffusion_source/ds001226-v5.0.1",
+    "qform_code": 1,
+    "sform_code": 1,
+    "annotation_opened": false
+  },
+  "crop_rule": "Native centered index crop: start=floor((shape-side)/2); no resampling, labels or brain mask.",
+  "normalization": "All finite voxels of this one source image, including zero background: float64 population mean/std; cropped z-score float32; no clipping or cohort statistics.",
+  "action_rule": "Fixed geometry-only rays through the crop along its third voxel axis; arbitrary engineering queries, no anatomical access/route claim.",
+  "public_data": true,
+  "synthetic_scan": false,
+  "clinical_or_native_geometry_validation": false,
+  "limits": [
+    "One un-warmed forward per cell, not a latency distribution; no training or saved checkpoint.",
+    "Sampled RSS termination is not an OS allocation guarantee; an over-cap high-water mark fails the cell.",
+    "Centered native crops omit most MRI anatomy and may omit the lesion; they do not establish whole-volume fit.",
+    "Later resampling can erase vessels and narrow structures; no clinical safety or model accuracy claim."
+  ]
+}
