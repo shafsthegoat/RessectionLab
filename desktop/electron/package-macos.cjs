@@ -6,6 +6,7 @@ const crypto = require('node:crypto');
 const { spawnSync } = require('node:child_process');
 const { packager } = require('@electron/packager');
 const { publishBundle } = require('./publish.cjs');
+const { assertLockedElectronVersion } = require('./electron-version.cjs');
 
 async function hashes(root, relative = '') {
   const result = {};
@@ -70,6 +71,10 @@ async function main() {
       if (actual !== expected) throw new Error('Captured desktop input changed during build');
     }
     const sourcePackage = JSON.parse(await fs.readFile(path.join(input, 'package.json'), 'utf8'));
+    const electronVersion = assertLockedElectronVersion(require('electron/package.json').version, await fs.readFile(path.join(input, 'pnpm-lock.yaml'), 'utf8'));
+    const electronChecksums = require('electron/checksums.json');
+    const electronArchiveSha256 = electronChecksums[`electron-v${electronVersion}-darwin-arm64.zip`];
+    if (!/^[a-f0-9]{64}$/.test(electronArchiveSha256 || '')) throw new Error('Installed Electron package lacks the arm64 archive checksum');
     const stage = path.join(input, 'runtime');
     await fs.mkdir(stage);
     for (const item of ['dist', 'electron']) await fs.cp(path.join(input, item), path.join(stage, item), { recursive: true });
@@ -80,11 +85,11 @@ async function main() {
     await fs.cp(originalEngine, engineInput, { recursive: true, verbatimSymlinks: true });
     const engineHashes = await hashes(engineInput);
     if (JSON.stringify(expectedEngineHashes) !== JSON.stringify(engineHashes) || JSON.stringify(engineHashes) !== JSON.stringify(await hashes(originalEngine))) throw new Error('Numerical engine changed during snapshot capture');
-    const manifest = { sourceHashes, engineHashes, appIconSha256: iconSha256, sourceDigest: crypto.createHash('sha256').update(JSON.stringify(sourceHashes)).digest('hex'),
+    const manifest = { sourceHashes, engineHashes, appIconSha256: iconSha256, electronVersion, electronArchiveSha256, sourceDigest: crypto.createHash('sha256').update(JSON.stringify(sourceHashes)).digest('hex'),
       revision: run('git', ['rev-parse', 'HEAD'], repo).trim(), gitStatus: run('git', ['status', '--porcelain'], repo).split('\n').filter(Boolean), createdUtc: new Date().toISOString() };
     await fs.writeFile(path.join(stage, 'BUILD_INPUT_MANIFEST.json'), JSON.stringify(manifest));
     const paths = await packager({ dir: stage, name: 'RessectionLab', platform: 'darwin', arch: 'arm64', out: path.join(input, 'package-output'), overwrite: true, asar: true,
-      electronVersion: sourcePackage.devDependencies.electron.replace(/^[^\d]*/, ''), appBundleId: 'org.ressectionlab.electron', appCategoryType: 'public.app-category.medical',
+      electronVersion, download: { checksums: electronChecksums }, appBundleId: 'org.ressectionlab.electron', appCategoryType: 'public.app-category.medical',
       icon: iconInput, prune: false,
       extendInfo: { NSHumanReadableCopyright: 'RessectionLab research software. Research use only.' },
     });
