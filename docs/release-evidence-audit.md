@@ -90,3 +90,32 @@ existing research-only claims or evidence-acceptance gates.
 artifact. Keep them as historical findings. A later source-inventory review or
 rebuilt-package inspection should be recorded as an addendum with its own exact
 artifact identity; it must not retroactively mark this package complete.
+
+## Addendum: notice-source inventory review, October 4, 2026
+
+Static review of packaging's first local collector outputs, before integration
+into a rebuilt app:
+
+- `build/dependency-notices/python-probe-v1/inventory.json`, SHA-256
+  `76312cbe4557f5e07e38c23c593a9c0b0d7cd4e1505966daaadeddf81904b225`, identifies
+  the same numerical executable above, 28 distribution owners and 225 copied
+  upstream files. Its recorded archive check covers 5,428 module names and
+  5,420 matching source code objects. The inventory retains package/vendor
+  notice trees, including the previously missed pytest, matplotlib and
+  setuptools dependencies. The file count includes metadata and incidental
+  `packaging/licenses/` Python files; it is not a count of distinct licenses.
+- `build/dependency-notices/renderer-probe-v1/renderer-inventory.json`, SHA-256
+  `f053dadfc21e673313373758e265bafd8a5658a683780f055a05a1f462501233`, records
+  35 packages and 69 metadata/notice files, matching an independent traversal
+  of installed production dependencies and runtime peers. Exact Electron and
+  Chromium texts were also captured alongside this probe.
+
+The captured renderer explicitly leaves `react-remove-scroll-bar@2.3.8`
+unresolved: its installed package declares MIT, but contains no license/notice
+file, and its README provides only that identifier. Obtain authoritative text
+for that version; another package's copyright notice is not a substitute.
+The CPython static-vendor provenance gap remains explicit. First-party release
+terms and template redistribution rights are unchanged. This source-inventory
+review does not certify native-binary provenance, final app inclusion, or
+complete redistribution rights; those require separate evidence for the final
+artifact.

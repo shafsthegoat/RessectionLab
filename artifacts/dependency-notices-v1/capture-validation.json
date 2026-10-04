@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "scope": "Notice capture validation only; existing app and engine unmodified; no packaging or runtime launch.",
+  "pythonOwners": 28,
+  "pythonFiles": 217,
+  "actualCollectedPayloadFiles": 2809,
+  "archiveVerification": {
+    "matching_source_code_objects": 5420,
+    "module_count": 5428,
+    "module_names_sha256": "263f559a0508bd271e3359df4e85d384d0408dca6d5bb62ca90b10914f9c45aa"
+  },
+  "rendererPackages": 35,
+  "rendererFiles": 69,
+  "electronFiles": {
+    "electron/LICENSE": {
+      "source": "electron-v44.5.1-darwin-arm64/LICENSE",
+      "sha256": "5154e165bd6c2cc0cfbcd8916498c7abab0497923bafcd5cb07673fe8480087d",
+      "bytes": 1096
+    },
+    "electron/LICENSES.chromium.html": {
+      "source": "electron-v44.5.1-darwin-arm64/LICENSES.chromium.html",
+      "sha256": "a62dabd1c6ef1327365b2a3fdffb806222684a746dcb8f4afd1c1f690eba5535",
+      "bytes": 20111209
+    }
+  },
+  "collectorSourceHashes": {
+    "python": "bbfc21bc59c2cd16c95953da0d4aaf48a2f1cb99b9be258c6ea3fbe1652845db",
+    "javascript": "5e361099d815846b4a2e0b011151e8bc12e4ecc0d99d629dd3c50fd5615bc3f2"
+  },
+  "engineSha256": "85a92eff69cb1ea97afc400bc80433c53d146174dd32a9cf36061b8420f72ddd",
+  "focusedTests": {
+    "javascript": 7,
+    "python": 5
+  },
+  "unresolved": [
+    {
+      "component": "react-remove-scroll-bar@2.3.8",
+      "reason": "Installed runtime package declares a license but contains no upstream root license/notice text. Its package.json is retained; no substitute license is invented."
+    },
+    {
+      "component": "CPython 3.12.14 static vendor libraries",
+      "reason": "No verified static-vendor notice/version manifest has been configured for this exact runtime. Its upstream build provenance must supply that closure; copying CPython LICENSE.txt alone does not resolve the gap."
+    }
+  ]
+}

@@ -1,0 +1,747 @@
+{
+  "schema_version": 1,
+  "collector_source_sha256": "5e361099d815846b4a2e0b011151e8bc12e4ecc0d99d629dd3c50fd5615bc3f2",
+  "scope": "Conservative installed production dependency and runtime peer closure, not a claim that every file in each package was emitted by the renderer bundler. Dev-only tools and type peers are excluded.",
+  "lock_sha256": "996e46fd73b851f4e9fae58285b408a4b02117fa319fd97f95b918a1177e87f0",
+  "packages": [
+    {
+      "name": "@radix-ui/primitive",
+      "version": "1.1.7",
+      "declared_license": "MIT",
+      "package_json_sha256": "c8776f615ee911517a19670827761383bc6be081d30955c523879a49fecc7093",
+      "reached_via": "@radix-ui/react-dialog@1.1.23 dependency",
+      "license_files": [
+        "renderer/radix-ui__primitive-1.1.7/LICENSE"
+      ]
+    },
+    {
+      "name": "@radix-ui/react-collection",
+      "version": "1.1.15",
+      "declared_license": "MIT",
+      "package_json_sha256": "fe634c6a9f5e60e360d8140fa371783e859e5bbbd2a94ae537ce3ed7abc0ef84",
+      "reached_via": "@radix-ui/react-roving-focus@1.1.19 dependency",
+      "license_files": [
+        "renderer/radix-ui__react-collection-1.1.15/LICENSE"
+      ]
+    },
+    {
+      "name": "@radix-ui/react-compose-refs",
+      "version": "1.1.5",
+      "declared_license": "MIT",
+      "package_json_sha256": "9422da6cb4b0004d394d5f9f521ebd5ede2018400c857abf222dfe2061cfed0e",
+      "reached_via": "@radix-ui/react-dialog@1.1.23 dependency",
+      "license_files": [
+        "renderer/radix-ui__react-compose-refs-1.1.5/LICENSE"
+      ]
+    },
+    {
+      "name": "@radix-ui/react-context",
+      "version": "1.2.2",
+      "declared_license": "MIT",
+      "package_json_sha256": "ea54ee28a42de24859d2c55e02d145f54291c7749805da86cc7faf8af32868ca",
+      "reached_via": "@radix-ui/react-dialog@1.1.23 dependency",
+      "license_files": [
+        "renderer/radix-ui__react-context-1.2.2/LICENSE"
+      ]
+    },
+    {
+      "name": "@radix-ui/react-dialog",
+      "version": "1.1.23",
+      "declared_license": "MIT",
+      "package_json_sha256": "443c6bcf3f468416e4b778da3bdbd5ed837f7671f20bb8f499522d1cfe4cb5eb",
+      "reached_via": "direct dependency",
+      "license_files": [
+        "renderer/radix-ui__react-dialog-1.1.23/LICENSE"
+      ]
+    },
+    {
+      "name": "@radix-ui/react-direction",
+      "version": "1.1.4",
+      "declared_license": "MIT",
+      "package_json_sha256": "674b40fd3675de96a7baa1efd779e25fb9a020a220c935eb595d3f7f4049e6d0",
+      "reached_via": "@radix-ui/react-tabs@1.1.21 dependency",
+      "license_files": [
+        "renderer/radix-ui__react-direction-1.1.4/LICENSE"
+      ]
+    },
+    {
+      "name": "@radix-ui/react-dismissable-layer",
+      "version": "1.1.19",
+      "declared_license": "MIT",
+      "package_json_sha256": "84e468dee5324048e0e17cce840ca2e2e1782510a6af44f48063bf760ef9c8e6",
+      "reached_via": "@radix-ui/react-dialog@1.1.23 dependency",
+      "license_files": [
+        "renderer/radix-ui__react-dismissable-layer-1.1.19/LICENSE"
+      ]
+    },
+    {
+      "name": "@radix-ui/react-focus-guards",
+      "version": "1.1.6",
+      "declared_license": "MIT",
+      "package_json_sha256": "c8cfe4aba9ebfa3d107b100eea601eb914c7833be72a56167e90d8533563c6d8",
+      "reached_via": "@radix-ui/react-dialog@1.1.23 dependency",
+      "license_files": [
+        "renderer/radix-ui__react-focus-guards-1.1.6/LICENSE"
+      ]
+    },
+    {
+      "name": "@radix-ui/react-focus-scope",
+      "version": "1.1.16",
+      "declared_license": "MIT",
+      "package_json_sha256": "eef947074c4c22642cc4f487e0e40fc78a8f077ed3569d02b8e892059ce14d83",
+      "reached_via": "@radix-ui/react-dialog@1.1.23 dependency",
+      "license_files": [
+        "renderer/radix-ui__react-focus-scope-1.1.16/LICENSE"
+      ]
+    },
+    {
+      "name": "@radix-ui/react-id",
+      "version": "1.1.4",
+      "declared_license": "MIT",
+      "package_json_sha256": "e7e0ebe622944df861305093a71a63241b75d83f5512195d8d43d8dbbbf71d32",
+      "reached_via": "@radix-ui/react-dialog@1.1.23 dependency",
+      "license_files": [
+        "renderer/radix-ui__react-id-1.1.4/LICENSE"
+      ]
+    },
+    {
+      "name": "@radix-ui/react-portal",
+      "version": "1.1.17",
+      "declared_license": "MIT",
+      "package_json_sha256": "25e8d08f3dabcfc080d792f8545fc54c0746df7f7a4799ddd59cf386872d2baf",
+      "reached_via": "@radix-ui/react-dialog@1.1.23 dependency",
+      "license_files": [
+        "renderer/radix-ui__react-portal-1.1.17/LICENSE"
+      ]
+    },
+    {
+      "name": "@radix-ui/react-presence",
+      "version": "1.1.10",
+      "declared_license": "MIT",
+      "package_json_sha256": "2185ddfeeace864294d09fa7a4dc7804aa6c1f5e6431efb6d7dfe7842a887d5d",
+      "reached_via": "@radix-ui/react-dialog@1.1.23 dependency",
+      "license_files": [
+        "renderer/radix-ui__react-presence-1.1.10/LICENSE"
+      ]
+    },
+    {
+      "name": "@radix-ui/react-primitive",
+      "version": "2.1.10",
+      "declared_license": "MIT",
+      "package_json_sha256": "189895b89261cfbcd421a3488ea052eeb5d09b83f709172cec202be92e03b63a",
+      "reached_via": "@radix-ui/react-dialog@1.1.23 dependency",
+      "license_files": [
+        "renderer/radix-ui__react-primitive-2.1.10/LICENSE"
+      ]
+    },
+    {
+      "name": "@radix-ui/react-roving-focus",
+      "version": "1.1.19",
+      "declared_license": "MIT",
+      "package_json_sha256": "15590fbcec4fe186a3b56e4000918431ef59cda20c5db15516704e175e68b363",
+      "reached_via": "@radix-ui/react-tabs@1.1.21 dependency",
+      "license_files": [
+        "renderer/radix-ui__react-roving-focus-1.1.19/LICENSE"
+      ]
+    },
+    {
+      "name": "@radix-ui/react-slot",
+      "version": "1.3.3",
+      "declared_license": "MIT",
+      "package_json_sha256": "7c80787fcfec9659010411688e1b9e5de553a656b7935da5cfed8f1fc6db706e",
+      "reached_via": "@radix-ui/react-dialog@1.1.23 dependency",
+      "license_files": [
+        "renderer/radix-ui__react-slot-1.3.3/LICENSE"
+      ]
+    },
+    {
+      "name": "@radix-ui/react-tabs",
+      "version": "1.1.21",
+      "declared_license": "MIT",
+      "package_json_sha256": "6ed924e1fc864ab129a5ec5adc587761f9f3650510b704312d7ff5a2691c9b38",
+      "reached_via": "direct dependency",
+      "license_files": [
+        "renderer/radix-ui__react-tabs-1.1.21/LICENSE"
+      ]
+    },
+    {
+      "name": "@radix-ui/react-use-callback-ref",
+      "version": "1.1.4",
+      "declared_license": "MIT",
+      "package_json_sha256": "2c94e3ff04b459606223b72de419538f391295cb66f76c5bc5efe98a91edf51e",
+      "reached_via": "@radix-ui/react-dismissable-layer@1.1.19 dependency",
+      "license_files": [
+        "renderer/radix-ui__react-use-callback-ref-1.1.4/LICENSE"
+      ]
+    },
+    {
+      "name": "@radix-ui/react-use-controllable-state",
+      "version": "1.2.6",
+      "declared_license": "MIT",
+      "package_json_sha256": "666fdd308cbfe087b0e4fafae25bdf4e472d230190bb7fe1a1e413ed4370930a",
+      "reached_via": "@radix-ui/react-dialog@1.1.23 dependency",
+      "license_files": [
+        "renderer/radix-ui__react-use-controllable-state-1.2.6/LICENSE"
+      ]
+    },
+    {
+      "name": "@radix-ui/react-use-effect-event",
+      "version": "0.0.5",
+      "declared_license": "MIT",
+      "package_json_sha256": "fa52035177fd41d2c4004239992c395f6eb493ea8b0cff0083153f9d07d311c2",
+      "reached_via": "@radix-ui/react-dismissable-layer@1.1.19 dependency",
+      "license_files": [
+        "renderer/radix-ui__react-use-effect-event-0.0.5/LICENSE"
+      ]
+    },
+    {
+      "name": "@radix-ui/react-use-is-hydrated",
+      "version": "0.1.3",
+      "declared_license": "MIT",
+      "package_json_sha256": "b79053720733c0a5bbbcb42cb0147f771d181d5664380659efb292957f0827d6",
+      "reached_via": "@radix-ui/react-roving-focus@1.1.19 dependency",
+      "license_files": [
+        "renderer/radix-ui__react-use-is-hydrated-0.1.3/LICENSE"
+      ]
+    },
+    {
+      "name": "@radix-ui/react-use-layout-effect",
+      "version": "1.1.4",
+      "declared_license": "MIT",
+      "package_json_sha256": "5612665d1acb0647bce0e3ceee72bdcb407821d2cb2267a560f92b9b8d0ae549",
+      "reached_via": "@radix-ui/react-dialog@1.1.23 dependency",
+      "license_files": [
+        "renderer/radix-ui__react-use-layout-effect-1.1.4/LICENSE"
+      ]
+    },
+    {
+      "name": "aria-hidden",
+      "version": "1.2.6",
+      "declared_license": "MIT",
+      "package_json_sha256": "46d066afef535db19d7ba05d8e38ac50662b17a515845deb3ca70613f9623933",
+      "reached_via": "@radix-ui/react-dialog@1.1.23 dependency",
+      "license_files": [
+        "renderer/aria-hidden-1.2.6/LICENSE"
+      ]
+    },
+    {
+      "name": "detect-node-es",
+      "version": "1.1.0",
+      "declared_license": "MIT",
+      "package_json_sha256": "06f9cfd73b6c401019dfa5cbdf4b4a5b346b1b15c4fca2d6f3ecc1a830528b06",
+      "reached_via": "use-sidecar@1.1.3 dependency",
+      "license_files": [
+        "renderer/detect-node-es-1.1.0/LICENSE"
+      ]
+    },
+    {
+      "name": "get-nonce",
+      "version": "1.0.1",
+      "declared_license": "MIT",
+      "package_json_sha256": "cd0262ed52e44beb166ba0ed31081587074d48602bd057d1d438103ec169ef8b",
+      "reached_via": "react-style-singleton@2.2.3 dependency",
+      "license_files": [
+        "renderer/get-nonce-1.0.1/LICENSE"
+      ]
+    },
+    {
+      "name": "lucide-react",
+      "version": "1.51.0",
+      "declared_license": "ISC",
+      "package_json_sha256": "51e90c202224e832d65de3157bc3bd543d51e668451b732b2876bec01380feb7",
+      "reached_via": "direct dependency",
+      "license_files": [
+        "renderer/lucide-react-1.51.0/LICENSE"
+      ]
+    },
+    {
+      "name": "react",
+      "version": "19.3.0",
+      "declared_license": "MIT",
+      "package_json_sha256": "6e003e4e9ed25afa7fdd55613f8aa877cefa9b359d9c13f81ee704030248e24e",
+      "reached_via": "direct dependency",
+      "license_files": [
+        "renderer/react-19.3.0/LICENSE"
+      ]
+    },
+    {
+      "name": "react-dom",
+      "version": "19.3.0",
+      "declared_license": "MIT",
+      "package_json_sha256": "136d4af63de473392ea79d6a21932b0ed9eb37fe518ce70f4621250f3d79e9bb",
+      "reached_via": "direct dependency",
+      "license_files": [
+        "renderer/react-dom-19.3.0/LICENSE"
+      ]
+    },
+    {
+      "name": "react-remove-scroll",
+      "version": "2.7.2",
+      "declared_license": "MIT",
+      "package_json_sha256": "35db8a2ffa5161d98795cff1b1f56dc775c94fea5f80eda128f083db59b40ab2",
+      "reached_via": "@radix-ui/react-dialog@1.1.23 dependency",
+      "license_files": [
+        "renderer/react-remove-scroll-2.7.2/LICENSE"
+      ]
+    },
+    {
+      "name": "react-remove-scroll-bar",
+      "version": "2.3.8",
+      "declared_license": "MIT",
+      "package_json_sha256": "e372f857ce05f266137c65293436b5380fec42ac311e6acb9378ed78b98d75d0",
+      "reached_via": "react-remove-scroll@2.7.2 dependency",
+      "license_files": []
+    },
+    {
+      "name": "react-style-singleton",
+      "version": "2.2.3",
+      "declared_license": "MIT",
+      "package_json_sha256": "c6d832faf8d9d54cd854d47f23b5b747928fe7554f548b093a7faaf239185d08",
+      "reached_via": "react-remove-scroll@2.7.2 dependency",
+      "license_files": [
+        "renderer/react-style-singleton-2.2.3/LICENSE"
+      ]
+    },
+    {
+      "name": "scheduler",
+      "version": "0.28.0",
+      "declared_license": "MIT",
+      "package_json_sha256": "06290718f22bcd93f29eaa1ac8d2ec9a7592ba4fec12bf1230e7cdd9a871b324",
+      "reached_via": "react-dom@19.3.0 dependency",
+      "license_files": [
+        "renderer/scheduler-0.28.0/LICENSE"
+      ]
+    },
+    {
+      "name": "three",
+      "version": "0.186.1",
+      "declared_license": "MIT",
+      "package_json_sha256": "f9c474a27c920b9435353a6235968f4453436bee0444fac7e5fd289c8fa463de",
+      "reached_via": "direct dependency",
+      "license_files": [
+        "renderer/three-0.186.1/LICENSE"
+      ]
+    },
+    {
+      "name": "tslib",
+      "version": "2.8.1",
+      "declared_license": "0BSD",
+      "package_json_sha256": "f02b4851df316f29bdfcd404aa1eb41e4e216b5859015f81fcd3e91caf8be931",
+      "reached_via": "aria-hidden@1.2.6 dependency",
+      "license_files": [
+        "renderer/tslib-2.8.1/LICENSE.txt"
+      ]
+    },
+    {
+      "name": "use-callback-ref",
+      "version": "1.3.3",
+      "declared_license": "MIT",
+      "package_json_sha256": "1fb8f0b34573d1d4057710e559488dbfdff0436cd01d318e20bf66e4cd165318",
+      "reached_via": "react-remove-scroll@2.7.2 dependency",
+      "license_files": [
+        "renderer/use-callback-ref-1.3.3/LICENSE"
+      ]
+    },
+    {
+      "name": "use-sidecar",
+      "version": "1.1.3",
+      "declared_license": "MIT",
+      "package_json_sha256": "a8703897c0caeb8ddfa35ef4b622bd7ebd677ea3fc6c97a0264574552e9404e1",
+      "reached_via": "react-remove-scroll@2.7.2 dependency",
+      "license_files": [
+        "renderer/use-sidecar-1.1.3/LICENSE"
+      ]
+    }
+  ],
+  "files": {
+    "renderer/radix-ui__react-dialog-1.1.23/package.json": {
+      "source": "@radix-ui/react-dialog@1.1.23/package.json",
+      "sha256": "443c6bcf3f468416e4b778da3bdbd5ed837f7671f20bb8f499522d1cfe4cb5eb",
+      "bytes": 2227
+    },
+    "renderer/radix-ui__react-dialog-1.1.23/LICENSE": {
+      "source": "@radix-ui/react-dialog@1.1.23/LICENSE",
+      "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+      "bytes": 1063
+    },
+    "renderer/radix-ui__react-tabs-1.1.21/package.json": {
+      "source": "@radix-ui/react-tabs@1.1.21/package.json",
+      "sha256": "6ed924e1fc864ab129a5ec5adc587761f9f3650510b704312d7ff5a2691c9b38",
+      "bytes": 1932
+    },
+    "renderer/radix-ui__react-tabs-1.1.21/LICENSE": {
+      "source": "@radix-ui/react-tabs@1.1.21/LICENSE",
+      "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+      "bytes": 1063
+    },
+    "renderer/lucide-react-1.51.0/package.json": {
+      "source": "lucide-react@1.51.0/package.json",
+      "sha256": "51e90c202224e832d65de3157bc3bd543d51e668451b732b2876bec01380feb7",
+      "bytes": 2549
+    },
+    "renderer/lucide-react-1.51.0/LICENSE": {
+      "source": "lucide-react@1.51.0/LICENSE",
+      "sha256": "b495047bd93a9b06913511076f504daba17d5bbeb3e0650f3bb53a4220329c57",
+      "bytes": 3208
+    },
+    "renderer/react-19.3.0/package.json": {
+      "source": "react@19.3.0/package.json",
+      "sha256": "6e003e4e9ed25afa7fdd55613f8aa877cefa9b359d9c13f81ee704030248e24e",
+      "bytes": 1242
+    },
+    "renderer/react-19.3.0/LICENSE": {
+      "source": "react@19.3.0/LICENSE",
+      "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+      "bytes": 1088
+    },
+    "renderer/react-dom-19.3.0/package.json": {
+      "source": "react-dom@19.3.0/package.json",
+      "sha256": "136d4af63de473392ea79d6a21932b0ed9eb37fe518ce70f4621250f3d79e9bb",
+      "bytes": 3054
+    },
+    "renderer/react-dom-19.3.0/LICENSE": {
+      "source": "react-dom@19.3.0/LICENSE",
+      "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+      "bytes": 1088
+    },
+    "renderer/three-0.186.1/package.json": {
+      "source": "three@0.186.1/package.json",
+      "sha256": "f9c474a27c920b9435353a6235968f4453436bee0444fac7e5fd289c8fa463de",
+      "bytes": 3672
+    },
+    "renderer/three-0.186.1/LICENSE": {
+      "source": "three@0.186.1/LICENSE",
+      "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc",
+      "bytes": 1081
+    },
+    "renderer/radix-ui__primitive-1.1.7/package.json": {
+      "source": "@radix-ui/primitive@1.1.7/package.json",
+      "sha256": "c8776f615ee911517a19670827761383bc6be081d30955c523879a49fecc7093",
+      "bytes": 2174
+    },
+    "renderer/radix-ui__primitive-1.1.7/LICENSE": {
+      "source": "@radix-ui/primitive@1.1.7/LICENSE",
+      "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+      "bytes": 1063
+    },
+    "renderer/radix-ui__react-compose-refs-1.1.5/package.json": {
+      "source": "@radix-ui/react-compose-refs@1.1.5/package.json",
+      "sha256": "9422da6cb4b0004d394d5f9f521ebd5ede2018400c857abf222dfe2061cfed0e",
+      "bytes": 1432
+    },
+    "renderer/radix-ui__react-compose-refs-1.1.5/LICENSE": {
+      "source": "@radix-ui/react-compose-refs@1.1.5/LICENSE",
+      "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+      "bytes": 1063
+    },
+    "renderer/radix-ui__react-context-1.2.2/package.json": {
+      "source": "@radix-ui/react-context@1.2.2/package.json",
+      "sha256": "ea54ee28a42de24859d2c55e02d145f54291c7749805da86cc7faf8af32868ca",
+      "bytes": 1422
+    },
+    "renderer/radix-ui__react-context-1.2.2/LICENSE": {
+      "source": "@radix-ui/react-context@1.2.2/LICENSE",
+      "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+      "bytes": 1063
+    },
+    "renderer/radix-ui__react-dismissable-layer-1.1.19/package.json": {
+      "source": "@radix-ui/react-dismissable-layer@1.1.19/package.json",
+      "sha256": "84e468dee5324048e0e17cce840ca2e2e1782510a6af44f48063bf760ef9c8e6",
+      "bytes": 1911
+    },
+    "renderer/radix-ui__react-dismissable-layer-1.1.19/LICENSE": {
+      "source": "@radix-ui/react-dismissable-layer@1.1.19/LICENSE",
+      "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+      "bytes": 1063
+    },
+    "renderer/radix-ui__react-focus-guards-1.1.6/package.json": {
+      "source": "@radix-ui/react-focus-guards@1.1.6/package.json",
+      "sha256": "c8cfe4aba9ebfa3d107b100eea601eb914c7833be72a56167e90d8533563c6d8",
+      "bytes": 1432
+    },
+    "renderer/radix-ui__react-focus-guards-1.1.6/LICENSE": {
+      "source": "@radix-ui/react-focus-guards@1.1.6/LICENSE",
+      "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+      "bytes": 1063
+    },
+    "renderer/radix-ui__react-focus-scope-1.1.16/package.json": {
+      "source": "@radix-ui/react-focus-scope@1.1.16/package.json",
+      "sha256": "eef947074c4c22642cc4f487e0e40fc78a8f077ed3569d02b8e892059ce14d83",
+      "bytes": 1777
+    },
+    "renderer/radix-ui__react-focus-scope-1.1.16/LICENSE": {
+      "source": "@radix-ui/react-focus-scope@1.1.16/LICENSE",
+      "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+      "bytes": 1063
+    },
+    "renderer/radix-ui__react-id-1.1.4/package.json": {
+      "source": "@radix-ui/react-id@1.1.4/package.json",
+      "sha256": "e7e0ebe622944df861305093a71a63241b75d83f5512195d8d43d8dbbbf71d32",
+      "bytes": 1486
+    },
+    "renderer/radix-ui__react-id-1.1.4/LICENSE": {
+      "source": "@radix-ui/react-id@1.1.4/LICENSE",
+      "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+      "bytes": 1063
+    },
+    "renderer/radix-ui__react-portal-1.1.17/package.json": {
+      "source": "@radix-ui/react-portal@1.1.17/package.json",
+      "sha256": "25e8d08f3dabcfc080d792f8545fc54c0746df7f7a4799ddd59cf386872d2baf",
+      "bytes": 1690
+    },
+    "renderer/radix-ui__react-portal-1.1.17/LICENSE": {
+      "source": "@radix-ui/react-portal@1.1.17/LICENSE",
+      "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+      "bytes": 1063
+    },
+    "renderer/radix-ui__react-presence-1.1.10/package.json": {
+      "source": "@radix-ui/react-presence@1.1.10/package.json",
+      "sha256": "2185ddfeeace864294d09fa7a4dc7804aa6c1f5e6431efb6d7dfe7842a887d5d",
+      "bytes": 1651
+    },
+    "renderer/radix-ui__react-presence-1.1.10/LICENSE": {
+      "source": "@radix-ui/react-presence@1.1.10/LICENSE",
+      "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+      "bytes": 1063
+    },
+    "renderer/radix-ui__react-primitive-2.1.10/package.json": {
+      "source": "@radix-ui/react-primitive@2.1.10/package.json",
+      "sha256": "189895b89261cfbcd421a3488ea052eeb5d09b83f709172cec202be92e03b63a",
+      "bytes": 1640
+    },
+    "renderer/radix-ui__react-primitive-2.1.10/LICENSE": {
+      "source": "@radix-ui/react-primitive@2.1.10/LICENSE",
+      "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+      "bytes": 1063
+    },
+    "renderer/radix-ui__react-slot-1.3.3/package.json": {
+      "source": "@radix-ui/react-slot@1.3.3/package.json",
+      "sha256": "7c80787fcfec9659010411688e1b9e5de553a656b7935da5cfed8f1fc6db706e",
+      "bytes": 1485
+    },
+    "renderer/radix-ui__react-slot-1.3.3/LICENSE": {
+      "source": "@radix-ui/react-slot@1.3.3/LICENSE",
+      "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+      "bytes": 1063
+    },
+    "renderer/radix-ui__react-use-controllable-state-1.2.6/package.json": {
+      "source": "@radix-ui/react-use-controllable-state@1.2.6/package.json",
+      "sha256": "666fdd308cbfe087b0e4fafae25bdf4e472d230190bb7fe1a1e413ed4370930a",
+      "bytes": 1611
+    },
+    "renderer/radix-ui__react-use-controllable-state-1.2.6/LICENSE": {
+      "source": "@radix-ui/react-use-controllable-state@1.2.6/LICENSE",
+      "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+      "bytes": 1063
+    },
+    "renderer/radix-ui__react-use-layout-effect-1.1.4/package.json": {
+      "source": "@radix-ui/react-use-layout-effect@1.1.4/package.json",
+      "sha256": "5612665d1acb0647bce0e3ceee72bdcb407821d2cb2267a560f92b9b8d0ae549",
+      "bytes": 1442
+    },
+    "renderer/radix-ui__react-use-layout-effect-1.1.4/LICENSE": {
+      "source": "@radix-ui/react-use-layout-effect@1.1.4/LICENSE",
+      "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+      "bytes": 1063
+    },
+    "renderer/aria-hidden-1.2.6/package.json": {
+      "source": "aria-hidden@1.2.6/package.json",
+      "sha256": "46d066afef535db19d7ba05d8e38ac50662b17a515845deb3ca70613f9623933",
+      "bytes": 1995
+    },
+    "renderer/aria-hidden-1.2.6/LICENSE": {
+      "source": "aria-hidden@1.2.6/LICENSE",
+      "sha256": "30f0cfddf483d1128e3610205020f2041a6c5e837aa999e0aa82e5576187d4a9",
+      "bytes": 1071
+    },
+    "renderer/react-remove-scroll-2.7.2/package.json": {
+      "source": "react-remove-scroll@2.7.2/package.json",
+      "sha256": "35db8a2ffa5161d98795cff1b1f56dc775c94fea5f80eda128f083db59b40ab2",
+      "bytes": 2532
+    },
+    "renderer/react-remove-scroll-2.7.2/LICENSE": {
+      "source": "react-remove-scroll@2.7.2/LICENSE",
+      "sha256": "30f0cfddf483d1128e3610205020f2041a6c5e837aa999e0aa82e5576187d4a9",
+      "bytes": 1071
+    },
+    "renderer/radix-ui__react-direction-1.1.4/package.json": {
+      "source": "@radix-ui/react-direction@1.1.4/package.json",
+      "sha256": "674b40fd3675de96a7baa1efd779e25fb9a020a220c935eb595d3f7f4049e6d0",
+      "bytes": 1426
+    },
+    "renderer/radix-ui__react-direction-1.1.4/LICENSE": {
+      "source": "@radix-ui/react-direction@1.1.4/LICENSE",
+      "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+      "bytes": 1063
+    },
+    "renderer/radix-ui__react-roving-focus-1.1.19/package.json": {
+      "source": "@radix-ui/react-roving-focus@1.1.19/package.json",
+      "sha256": "15590fbcec4fe186a3b56e4000918431ef59cda20c5db15516704e175e68b363",
+      "bytes": 2096
+    },
+    "renderer/radix-ui__react-roving-focus-1.1.19/LICENSE": {
+      "source": "@radix-ui/react-roving-focus@1.1.19/LICENSE",
+      "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+      "bytes": 1063
+    },
+    "renderer/scheduler-0.28.0/package.json": {
+      "source": "scheduler@0.28.0/package.json",
+      "sha256": "06290718f22bcd93f29eaa1ac8d2ec9a7592ba4fec12bf1230e7cdd9a871b324",
+      "bytes": 558
+    },
+    "renderer/scheduler-0.28.0/LICENSE": {
+      "source": "scheduler@0.28.0/LICENSE",
+      "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93",
+      "bytes": 1088
+    },
+    "renderer/radix-ui__react-use-callback-ref-1.1.4/package.json": {
+      "source": "@radix-ui/react-use-callback-ref@1.1.4/package.json",
+      "sha256": "2c94e3ff04b459606223b72de419538f391295cb66f76c5bc5efe98a91edf51e",
+      "bytes": 1440
+    },
+    "renderer/radix-ui__react-use-callback-ref-1.1.4/LICENSE": {
+      "source": "@radix-ui/react-use-callback-ref@1.1.4/LICENSE",
+      "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+      "bytes": 1063
+    },
+    "renderer/radix-ui__react-use-effect-event-0.0.5/package.json": {
+      "source": "@radix-ui/react-use-effect-event@0.0.5/package.json",
+      "sha256": "fa52035177fd41d2c4004239992c395f6eb493ea8b0cff0083153f9d07d311c2",
+      "bytes": 1573
+    },
+    "renderer/radix-ui__react-use-effect-event-0.0.5/LICENSE": {
+      "source": "@radix-ui/react-use-effect-event@0.0.5/LICENSE",
+      "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+      "bytes": 1063
+    },
+    "renderer/tslib-2.8.1/package.json": {
+      "source": "tslib@2.8.1/package.json",
+      "sha256": "f02b4851df316f29bdfcd404aa1eb41e4e216b5859015f81fcd3e91caf8be931",
+      "bytes": 1219
+    },
+    "renderer/tslib-2.8.1/LICENSE.txt": {
+      "source": "tslib@2.8.1/LICENSE.txt",
+      "sha256": "210b19e543130388c68654b7497e967119ce17145f66ab7d85688fbd70f08751",
+      "bytes": 655
+    },
+    "renderer/react-remove-scroll-bar-2.3.8/package.json": {
+      "source": "react-remove-scroll-bar@2.3.8/package.json",
+      "sha256": "e372f857ce05f266137c65293436b5380fec42ac311e6acb9378ed78b98d75d0",
+      "bytes": 2221
+    },
+    "renderer/react-style-singleton-2.2.3/package.json": {
+      "source": "react-style-singleton@2.2.3/package.json",
+      "sha256": "c6d832faf8d9d54cd854d47f23b5b747928fe7554f548b093a7faaf239185d08",
+      "bytes": 2292
+    },
+    "renderer/react-style-singleton-2.2.3/LICENSE": {
+      "source": "react-style-singleton@2.2.3/LICENSE",
+      "sha256": "30f0cfddf483d1128e3610205020f2041a6c5e837aa999e0aa82e5576187d4a9",
+      "bytes": 1071
+    },
+    "renderer/use-callback-ref-1.3.3/package.json": {
+      "source": "use-callback-ref@1.3.3/package.json",
+      "sha256": "1fb8f0b34573d1d4057710e559488dbfdff0436cd01d318e20bf66e4cd165318",
+      "bytes": 2145
+    },
+    "renderer/use-callback-ref-1.3.3/LICENSE": {
+      "source": "use-callback-ref@1.3.3/LICENSE",
+      "sha256": "30f0cfddf483d1128e3610205020f2041a6c5e837aa999e0aa82e5576187d4a9",
+      "bytes": 1071
+    },
+    "renderer/use-sidecar-1.1.3/package.json": {
+      "source": "use-sidecar@1.1.3/package.json",
+      "sha256": "a8703897c0caeb8ddfa35ef4b622bd7ebd677ea3fc6c97a0264574552e9404e1",
+      "bytes": 2278
+    },
+    "renderer/use-sidecar-1.1.3/LICENSE": {
+      "source": "use-sidecar@1.1.3/LICENSE",
+      "sha256": "30f0cfddf483d1128e3610205020f2041a6c5e837aa999e0aa82e5576187d4a9",
+      "bytes": 1071
+    },
+    "renderer/radix-ui__react-collection-1.1.15/package.json": {
+      "source": "@radix-ui/react-collection@1.1.15/package.json",
+      "sha256": "fe634c6a9f5e60e360d8140fa371783e859e5bbbd2a94ae537ce3ed7abc0ef84",
+      "bytes": 1770
+    },
+    "renderer/radix-ui__react-collection-1.1.15/LICENSE": {
+      "source": "@radix-ui/react-collection@1.1.15/LICENSE",
+      "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+      "bytes": 1063
+    },
+    "renderer/radix-ui__react-use-is-hydrated-0.1.3/package.json": {
+      "source": "@radix-ui/react-use-is-hydrated@0.1.3/package.json",
+      "sha256": "b79053720733c0a5bbbcb42cb0147f771d181d5664380659efb292957f0827d6",
+      "bytes": 1449
+    },
+    "renderer/radix-ui__react-use-is-hydrated-0.1.3/LICENSE": {
+      "source": "@radix-ui/react-use-is-hydrated@0.1.3/LICENSE",
+      "sha256": "0e80a2d229d2fd4fc7e8636142ec5d0ff0bc031f14c15b682e2ac01dfd5b5138",
+      "bytes": 1063
+    },
+    "renderer/get-nonce-1.0.1/package.json": {
+      "source": "get-nonce@1.0.1/package.json",
+      "sha256": "cd0262ed52e44beb166ba0ed31081587074d48602bd057d1d438103ec169ef8b",
+      "bytes": 1715
+    },
+    "renderer/get-nonce-1.0.1/LICENSE": {
+      "source": "get-nonce@1.0.1/LICENSE",
+      "sha256": "acf3b087b348d2f2e731b9d4131af185aad694c1204ce14a46909483fd42da05",
+      "bytes": 1071
+    },
+    "renderer/detect-node-es-1.1.0/package.json": {
+      "source": "detect-node-es@1.1.0/package.json",
+      "sha256": "06f9cfd73b6c401019dfa5cbdf4b4a5b346b1b15c4fca2d6f3ecc1a830528b06",
+      "bytes": 727
+    },
+    "renderer/detect-node-es-1.1.0/LICENSE": {
+      "source": "detect-node-es@1.1.0/LICENSE",
+      "sha256": "54b32293ea560d22cd9b62af9b2cda1a030d910a48c6601d227c5ff2338d95f8",
+      "bytes": 1068
+    }
+  },
+  "unresolved": [
+    {
+      "component": "react-remove-scroll-bar@2.3.8",
+      "reason": "Installed runtime package declares a license but contains no upstream root license/notice text. Its package.json is retained; no substitute license is invented."
+    }
+  ],
+  "omitted_optional_packages": [],
+  "omitted_type_peers": [
+    "@radix-ui/react-collection@1.1.15: @types/react",
+    "@radix-ui/react-collection@1.1.15: @types/react-dom",
+    "@radix-ui/react-compose-refs@1.1.5: @types/react",
+    "@radix-ui/react-context@1.2.2: @types/react",
+    "@radix-ui/react-dialog@1.1.23: @types/react",
+    "@radix-ui/react-dialog@1.1.23: @types/react-dom",
+    "@radix-ui/react-direction@1.1.4: @types/react",
+    "@radix-ui/react-dismissable-layer@1.1.19: @types/react",
+    "@radix-ui/react-dismissable-layer@1.1.19: @types/react-dom",
+    "@radix-ui/react-focus-guards@1.1.6: @types/react",
+    "@radix-ui/react-focus-scope@1.1.16: @types/react",
+    "@radix-ui/react-focus-scope@1.1.16: @types/react-dom",
+    "@radix-ui/react-id@1.1.4: @types/react",
+    "@radix-ui/react-portal@1.1.17: @types/react",
+    "@radix-ui/react-portal@1.1.17: @types/react-dom",
+    "@radix-ui/react-presence@1.1.10: @types/react",
+    "@radix-ui/react-presence@1.1.10: @types/react-dom",
+    "@radix-ui/react-primitive@2.1.10: @types/react",
+    "@radix-ui/react-primitive@2.1.10: @types/react-dom",
+    "@radix-ui/react-roving-focus@1.1.19: @types/react",
+    "@radix-ui/react-roving-focus@1.1.19: @types/react-dom",
+    "@radix-ui/react-slot@1.3.3: @types/react",
+    "@radix-ui/react-tabs@1.1.21: @types/react",
+    "@radix-ui/react-tabs@1.1.21: @types/react-dom",
+    "@radix-ui/react-use-callback-ref@1.1.4: @types/react",
+    "@radix-ui/react-use-controllable-state@1.2.6: @types/react",
+    "@radix-ui/react-use-effect-event@0.0.5: @types/react",
+    "@radix-ui/react-use-is-hydrated@0.1.3: @types/react",
+    "@radix-ui/react-use-layout-effect@1.1.4: @types/react",
+    "lucide-react@1.51.0: @types/react",
+    "react-remove-scroll-bar@2.3.8: @types/react",
+    "react-remove-scroll@2.7.2: @types/react",
+    "react-style-singleton@2.2.3: @types/react",
+    "use-callback-ref@1.3.3: @types/react",
+    "use-sidecar@1.1.3: @types/react"
+  ]
+}

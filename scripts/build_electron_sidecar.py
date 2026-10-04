@@ -25,7 +25,7 @@ def digest(path: Path) -> str:
 
 
 def inputs() -> list[Path]:
-    return sorted([*list((ROOT / "src" / "resectionlab").rglob("*.py")), ROOT / "packaging" / "sidecar_entry.py", Path(__file__).resolve(), ROOT / "pyproject.toml"] + list(ROOT.glob("*lock*")))
+    return sorted([*list((ROOT / "src" / "resectionlab").rglob("*.py")), ROOT / "packaging" / "sidecar_entry.py", ROOT / "packaging" / "python_notices.py", Path(__file__).resolve(), ROOT / "pyproject.toml"] + list(ROOT.glob("*lock*")))
 
 
 def main() -> int:
@@ -65,8 +65,19 @@ def main() -> int:
             subprocess.run(command, cwd=snapshot, env=env, stdout=output, stderr=subprocess.STDOUT, check=True)
         if captured != {relative: digest(snapshot / relative) for relative in captured}:
             raise RuntimeError("Captured sources changed during build")
+        # Capture notices beside the engine, never by editing its executable.
+        # The application builder binds this inventory to exact payload hashes.
+        notice_capture = BUILD / "notice-inputs" / snapshot.name
+        subprocess.run([sys.executable, str(snapshot / "packaging/python_notices.py"),
+                        "--engine", str(destination / "ressectionlab-engine/ressectionlab-engine"),
+                        "--work", str(BUILD / "work/ressectionlab-engine"),
+                        "--snapshot", str(snapshot), "--output", str(notice_capture)], check=True)
+        notice_target = destination / "notices"
+        if notice_target.exists():
+            shutil.move(str(notice_target), str(BUILD / f"previous-notices-{snapshot.name}"))
+        shutil.copytree(notice_capture, notice_target)
         manifest.update(status="built_unverified", elapsed_seconds=time.perf_counter()-started,
-                        executable=str(destination / "ressectionlab-engine" / "ressectionlab-engine"), snapshot=str(snapshot))
+                        executable=str(destination / "ressectionlab-engine" / "ressectionlab-engine"), snapshot=str(snapshot), notice_inventory=str(notice_target / "inventory.json"))
         report.write_text(json.dumps(manifest, indent=2) + "\n")
         print(json.dumps({"status": manifest["status"], "source_digest": manifest["source_digest"], "elapsed_seconds": manifest["elapsed_seconds"]}))
         return 0

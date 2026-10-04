@@ -325,3 +325,10 @@ cleared the prior before its stored replay was opened. These checks establish
 software behavior, not anatomical accuracy or clinical readiness. Local deep
 strict signature verification passed; distribution signing and notarization
 remain unperformed.
+
+The next packaging source includes reproducible upstream notices inside
+`Contents/Resources/ThirdPartyNotices`, with their hashes in the build manifest.
+See [dependency-notices.md](dependency-notices.md) for collection prerequisites,
+the exact verified-engine inventory and unresolved upstream material. This
+source change has not yet been rebuilt into the validated app described above;
+copying available notices does not establish complete distribution compliance.
