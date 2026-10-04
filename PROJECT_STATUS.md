@@ -383,6 +383,14 @@ limitation prevents retrospective fidelity analysis; no retry, mask change,
 solver or B/V access occurred. No accepted patient mesh exists. See
 `artifacts/mechanics/resect-case4-patient-mesh-v1/RESULT.md` and its saved audit.
 
+Saved-log investigation also found Gmsh's rounded optimization volume about
+4.339% below the extracted source-surface volume. This is a warning from the
+library log, not an independent assessment of the unsaved rejected mesh. It
+supports investigating boundary approximation rather than merely raising a
+node cap. One untested boundary/interior size-field approach and bounded raw
+diagnostic retention are documented in `docs/mechanics-patient-mesh-followup.md`;
+no new mesh, source change, parameter trial or solver was released.
+
 The first baseline alignment worker produced all six declared views and the
 15-pair proper rigid fit, but its supervisor failed with `RSS_MONITOR_FAILED`
 after 2.536 s. The cause is unconfirmed because the failed monitoring query's
