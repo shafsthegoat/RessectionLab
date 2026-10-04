@@ -1,0 +1,20 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_mechanics_hbe_layers_review.py::test_final_iteration_missing_residual_cannot_reuse_previous_iteration"
+  ],
+  "exit_code": 1,
+  "wall_seconds": 0.240906125,
+  "before_sha256": {
+    "scripts/mechanics_hbe_outputs.py": "cff33021b7215cb26d6d6bb384be3270dc2edeb1ae5eb8af6b269530b860395b",
+    "tests/test_mechanics_hbe_layers_review.py": "ffe9604d2fb182af35a5c6183c6b63a0781ac820ca2bf44dd8e7c0529753d820"
+  },
+  "after_sha256": {
+    "scripts/mechanics_hbe_outputs.py": "cff33021b7215cb26d6d6bb384be3270dc2edeb1ae5eb8af6b269530b860395b",
+    "tests/test_mechanics_hbe_layers_review.py": "ffe9604d2fb182af35a5c6183c6b63a0781ac820ca2bf44dd8e7c0529753d820"
+  },
+  "scope": "Constructed log only; appended final nonlinear status lacks residual and must not reuse old iteration norm."
+}

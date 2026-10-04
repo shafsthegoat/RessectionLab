@@ -1,0 +1,22 @@
+{
+  "provenance": "Original uncommitted source was reconstructed by reversing the narrow owner patch in saved partial-repair source; SHA256 of each reconstructed module exactly matches the owner original freeze and independent initial static read. No shared production file was replaced.",
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_mechanics_hbe_layers_review.py",
+    "--basetemp",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-hbe-original-reconstruction/tmp"
+  ],
+  "exit_code": 1,
+  "wall_seconds": 0.284768542,
+  "source_sha256": {
+    "scripts/mechanics_hbe_evaluation.py": "8e9c18233a13a1bccce33db8a8c7773847bc7de60d851d898ddbb3117fd308bd",
+    "scripts/mechanics_hbe_outputs.py": "9b496aadf71800780991256561cf884ac901ad110a5d7aba9140ab604afe7efa",
+    "tests/test_mechanics_hbe_layers_review.py": "6af6adfc6d64651109e9d053cdcda9a4494a59518c6d2276abf8cccbfcb7054d"
+  },
+  "source_unchanged_after": true,
+  "scope": "Constructed curves and printed text only; no measured values or FEM calls.",
+  "setup_failure": "Prior reviewer invocation resolved the venv Python symlink to base runtime, which lacks pytest. No test ran then. Corrected only executable path to preserve venv."
+}

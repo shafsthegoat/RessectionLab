@@ -1,0 +1,22 @@
+{
+  "protocol_commit": "5554d38a8f9ede8f660467f8a6162121b0c46678",
+  "files": [
+    {
+      "path": "docs/hbe-specimen-mechanics-poc.md",
+      "sha256": "e58e484310ebdd91e1366b2855bd8ae64b3b33e466d9842fb16c778a5110bccb",
+      "workspace_matches_committed_protocol": true
+    },
+    {
+      "path": "manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+      "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035",
+      "workspace_matches_committed_protocol": true
+    }
+  ],
+  "pinned_FEBio_reference": {
+    "path": "artifacts/febio-runtime-investigation-v1/upstream-FEBioMech__FESolidSolver2.cpp",
+    "sha256": "0558262b37931ff591b53e9645d7c5a809e149ecd399656d59aa4bf84f245bf6",
+    "lines_read": "1060-1170",
+    "observed_format": "time %lg (six significant digits); residual %15le; required=m_Rtol*normRi; repeated nonlinear iteration status per time is valid"
+  },
+  "patient_or_specimen_data_opened": false
+}

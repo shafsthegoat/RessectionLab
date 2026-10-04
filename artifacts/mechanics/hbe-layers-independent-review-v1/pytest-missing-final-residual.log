@@ -1,0 +1,15 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____ test_final_iteration_missing_residual_cannot_reuse_previous_iteration _____
+
+    def test_final_iteration_missing_residual_cannot_reuse_previous_iteration():
+        lines = list(solver_log([.5, 1]))[:-1]
+        lines += ["Nonlinear solution status: time= 1\n", "NORMAL TERMINATION\n"]
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_mechanics_hbe_layers_review.py:136: Failed
+=========================== short test summary info ============================
+FAILED tests/test_mechanics_hbe_layers_review.py::test_final_iteration_missing_residual_cannot_reuse_previous_iteration
+1 failed in 0.08s

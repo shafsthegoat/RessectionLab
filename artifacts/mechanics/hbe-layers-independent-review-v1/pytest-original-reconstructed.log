@@ -1,0 +1,138 @@
+...F..FFFFFF                                                             [100%]
+=================================== FAILURES ===================================
+_ test_paired_metric_mapping_cannot_relabel_two_compression_curves_as_two_modes _
+
+    def test_paired_metric_mapping_cannot_relabel_two_compression_curves_as_two_modes():
+        value = e.curve("compression", [0, -1], [0, -1])
+        wrong = {"compression": value, "tension": value}
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_mechanics_hbe_layers_review.py:82: Failed
+___ test_real_source_printf_precision_accepts_all_declared_solver_states[60] ___
+
+steps = 60
+
+    @pytest.mark.parametrize("steps", [60, 120])
+    def test_real_source_printf_precision_accepts_all_declared_solver_states(steps):
+        times = np.linspace(0, 1, steps + 1)
+>       result = o.check_solver_records(solver_log(times[1:]), expected_times=times, residual_floor_N2=1e-20)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_mechanics_hbe_layers_review.py:115: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+lines = <generator object solver_log at 0x10bb37880>
+expected_times = array([0.        , 0.01666667, 0.03333333, 0.05      , 0.06666667,
+       0.08333333, 0.1       , 0.11666667, 0.133333...6666667, 0.88333333, 0.9       ,
+       0.91666667, 0.93333333, 0.95      , 0.96666667, 0.98333333,
+       1.        ])
+residual_floor_N2 = 1e-20, maximum_bytes = 16777216
+
+    def check_solver_records(lines, *, expected_times, residual_floor_N2, maximum_bytes=16*1024**2):
+        """Check actual final residual evidence at each nonzero declared load time."""
+        times=tuple(float(t) for t in expected_times)
+        if not times or times[0]!=0 or not math.isfinite(residual_floor_N2) or residual_floor_N2<=0:
+            raise ValueError('Finite declared residual floor and complete time grid required')
+        seen={};active=None;normal=False;byte_count=0
+        for raw in lines:
+            byte_count+=len(raw.encode('utf-8'))
+            if byte_count>maximum_bytes:raise ValueError('Solver log bound exceeded')
+            banner=re.sub(r'[^A-Za-z]','',raw).upper()
+            if banner=='NORMALTERMINATION':normal=True
+            if banner in ('ERRORTERMINATION','ABNORMALTERMINATION') or re.search(r'\bnan\b|negative jacobian',raw,re.I):
+                raise ValueError('Solver failure evidence')
+            match=re.search(r'Nonlinear solution status:\s*time=\s*(\S+)',raw)
+            if match:
+                t=float(match[1]);nearest=min(range(1,len(times)),key=lambda i:abs(times[i]-t))
+>               if not math.isfinite(t) or abs(times[nearest]-t)>5e-12:raise ValueError('Undeclared solver load state/cutback')
+                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               ValueError: Undeclared solver load state/cutback
+
+scripts/mechanics_hbe_outputs.py:86: ValueError
+__ test_real_source_printf_precision_accepts_all_declared_solver_states[120] ___
+
+steps = 120
+
+    @pytest.mark.parametrize("steps", [60, 120])
+    def test_real_source_printf_precision_accepts_all_declared_solver_states(steps):
+        times = np.linspace(0, 1, steps + 1)
+>       result = o.check_solver_records(solver_log(times[1:]), expected_times=times, residual_floor_N2=1e-20)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_mechanics_hbe_layers_review.py:115: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+lines = <generator object solver_log at 0x10bb37f10>
+expected_times = array([0.        , 0.00833333, 0.01666667, 0.025     , 0.03333333,
+       0.04166667, 0.05      , 0.05833333, 0.066666...3333333, 0.94166667, 0.95      ,
+       0.95833333, 0.96666667, 0.975     , 0.98333333, 0.99166667,
+       1.        ])
+residual_floor_N2 = 1e-20, maximum_bytes = 16777216
+
+    def check_solver_records(lines, *, expected_times, residual_floor_N2, maximum_bytes=16*1024**2):
+        """Check actual final residual evidence at each nonzero declared load time."""
+        times=tuple(float(t) for t in expected_times)
+        if not times or times[0]!=0 or not math.isfinite(residual_floor_N2) or residual_floor_N2<=0:
+            raise ValueError('Finite declared residual floor and complete time grid required')
+        seen={};active=None;normal=False;byte_count=0
+        for raw in lines:
+            byte_count+=len(raw.encode('utf-8'))
+            if byte_count>maximum_bytes:raise ValueError('Solver log bound exceeded')
+            banner=re.sub(r'[^A-Za-z]','',raw).upper()
+            if banner=='NORMALTERMINATION':normal=True
+            if banner in ('ERRORTERMINATION','ABNORMALTERMINATION') or re.search(r'\bnan\b|negative jacobian',raw,re.I):
+                raise ValueError('Solver failure evidence')
+            match=re.search(r'Nonlinear solution status:\s*time=\s*(\S+)',raw)
+            if match:
+                t=float(match[1]);nearest=min(range(1,len(times)),key=lambda i:abs(times[i]-t))
+>               if not math.isfinite(t) or abs(times[nearest]-t)>5e-12:raise ValueError('Undeclared solver load state/cutback')
+                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E               ValueError: Undeclared solver load state/cutback
+
+scripts/mechanics_hbe_outputs.py:86: ValueError
+_______ test_same_time_iterations_allowed_but_time_backtracking_rejected _______
+
+    def test_same_time_iterations_allowed_but_time_backtracking_rejected():
+        args = dict(expected_times=[0, .5, 1], residual_floor_N2=1e-20)
+        assert o.check_solver_records(solver_log([.5, .5, 1, 1]), **args)["passed"]
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_mechanics_hbe_layers_review.py:123: Failed
+_ test_solver_log_cannot_relabel_loose_reported_tolerance_as_frozen_residual_gate _
+
+    def test_solver_log_cannot_relabel_loose_reported_tolerance_as_frozen_residual_gate():
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_mechanics_hbe_layers_review.py:128: Failed
+______ test_solver_log_requires_nonempty_complete_increasing_declaration _______
+
+    def test_solver_log_requires_nonempty_complete_increasing_declaration():
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_mechanics_hbe_layers_review.py:134: Failed
+_ test_primitive_stream_rejects_wrong_header_token_even_if_record_name_matches _
+
+    def test_primitive_stream_rejects_wrong_header_token_even_if_record_name_matches():
+        lines = [line.replace("*Data =", "*DataUnexpected =") for line in primitives(60)]
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_mechanics_hbe_layers_review.py:142: Failed
+=========================== short test summary info ============================
+FAILED tests/test_mechanics_hbe_layers_review.py::test_paired_metric_mapping_cannot_relabel_two_compression_curves_as_two_modes
+FAILED tests/test_mechanics_hbe_layers_review.py::test_real_source_printf_precision_accepts_all_declared_solver_states[60]
+FAILED tests/test_mechanics_hbe_layers_review.py::test_real_source_printf_precision_accepts_all_declared_solver_states[120]
+FAILED tests/test_mechanics_hbe_layers_review.py::test_same_time_iterations_allowed_but_time_backtracking_rejected
+FAILED tests/test_mechanics_hbe_layers_review.py::test_solver_log_cannot_relabel_loose_reported_tolerance_as_frozen_residual_gate
+FAILED tests/test_mechanics_hbe_layers_review.py::test_solver_log_requires_nonempty_complete_increasing_declaration
+FAILED tests/test_mechanics_hbe_layers_review.py::test_primitive_stream_rejects_wrong_header_token_even_if_record_name_matches
+7 failed, 5 passed in 0.12s

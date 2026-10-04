@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "status": "pass_after_narrow_repairs_at_pure_helper_and_parser_boundaries",
+  "protocol_commit": "5554d38a8f9ede8f660467f8a6162121b0c46678",
+  "source_and_test_sha256": {
+    "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "scripts/mechanics_hbe_outputs.py": "a86191769ee71e79596d9f3871da575dd7e2b2d62e1a9c919162242a335fa65d",
+    "tests/test_mechanics_hbe_layers_review.py": "ffe9604d2fb182af35a5c6183c6b63a0781ac820ca2bf44dd8e7c0529753d820",
+    "tests/test_mechanics_hbe_evaluation.py": "f2e512c621e2cafec042b1789c2465688fdc3f73c4d74e649c88d8a001416f2a",
+    "tests/test_mechanics_hbe_outputs.py": "006538a2e86005697cb9fd3f9f8b1000e9da6b93b8b9f84aa8431c7b8a86c83b",
+    "docs/hbe-specimen-mechanics-poc.md": "e58e484310ebdd91e1366b2855bd8ae64b3b33e466d9842fb16c778a5110bccb",
+    "manifests/experiments/hbe-01-03-mechanics-poc-v1.json": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+  },
+  "final_focused_checks": {
+    "passed": 26,
+    "independent": 13,
+    "owner": 13,
+    "pytest_seconds": 0.14,
+    "process_wall_seconds": 0.359928584,
+    "all_bound_files_unchanged": true,
+    "receipt_sha256": "ce9ec2abc58819fc040d5d25e02e1400a962a142dd2ae5a27cb0d04d9f66b18c",
+    "log_sha256": "8997ac89df070375799259770ad04703997262aabca711a217ca9fb22e595cba"
+  },
+  "negative_results": [
+    {
+      "stage": "original_exact_SHA_reconstructed_source",
+      "passed": 5,
+      "failed": 7,
+      "pytest_seconds": 0.12,
+      "provenance": "Owner began repair before initial runtime capture. Original bytes reconstructed by reversing only the captured narrow patch, then both exact original owner freeze hashes verified before isolated tests. Original negative was not an in-place pre-repair run.",
+      "receipt": "original-reconstructed-check.json",
+      "failures": [
+        "Paired metric mapping could relabel compression as tension.",
+        "Declared60 and120-step logs rejected because solver status time is printed with6significant digits, not primitive12digit precision (two cases).",
+        "Backtracked status times accepted through dictionary overwrite.",
+        "Arbitrary reported required residual was trusted instead of checking fixed rtol1e-8.",
+        "Empty nonzero-load declaration [0] falsely passed.",
+        "Malformed *DataUnexpected header accepted."
+      ]
+    },
+    {
+      "stage": "partial_repair",
+      "passed": 11,
+      "failed": 1,
+      "pytest_seconds": 0.1,
+      "receipt": "partial-repair-check.json",
+      "failure": "Malformed Data header remained accepted."
+    },
+    {
+      "stage": "additional_final_iteration_corruption",
+      "passed": 0,
+      "failed": 1,
+      "pytest_seconds": 0.08,
+      "receipt": "missing-final-residual-check.json",
+      "failure": "A final repeated-time nonlinear status lacking a residual reused an earlier iteration norm."
+    }
+  ],
+  "reviewer_setup_failures": [
+    {
+      "record": "initial-source-guard-refusal.json",
+      "detail": "Source changed before initial pytest attempt; exact-hash guard stopped before tests."
+    },
+    {
+      "record": "original-reconstruction-interpreter-setup.json",
+      "detail": "Reviewer resolved .venv Python symlink to base interpreter without pytest. Corrected executable path only; no test ran in failed setup."
+    }
+  ],
+  "repairs_verified": [
+    "Mapping keys must match the actual branch of both observed and predicted curves.",
+    "Solver status time maps exactly to the pinned six-significant-digit expected print representation; primitive records retain their separate tight12digit time check. Ambiguous formatted time grids reject.",
+    "Solver declarations require finite increasing0-to1times with a nonzero state; same-time nonlinear iterations remain allowed, backtracking rejects.",
+    "Required residual is recomputed as1e-8 times logged initial norm, checked against reported required norm with explicit print-rounding tolerance, and actual residual checked against that value plus the declared absolute floor.",
+    "Each recognized nonlinear status block requires exactly one residual; missing final or duplicate residual cannot reuse/hide another iteration.",
+    "Primitive *Data header must match its exact token, bound field name, item count and complete finite ID rows."
+  ],
+  "mathematical_controls": [
+    "Signed positive one-scale least squares with no intercept: unequal101-vs3row branch counts yield closed-form scale3 from equal total mode weights; compression zero-input response remains-2, showing no offset subtraction. Negative optimum rejects.",
+    "Normalized trapezoid weights independently checked; equal-branch torque RMSE=sqrt(5) and normalized RMSE=sqrt(13/32) for constant residuals despite unequal row counts. UnitsNm and signed endpoint biases-1/+3 remain intact.",
+    "Observed/predicted odd-symmetry RMSE2/4 over the frozen21pointcommonangle grid; no empirical tolerance or physical pass synthesized.",
+    "Observed RMS exactly at64*float64_epsilon times characteristic scale yields null normalized error with reason; extrapolation rejects.",
+    "61and121constructed primitive records include actual provided zero state and canonicalize exact IDs. Solver residual logs accept all60/120nonzero states printed in pinned runtime format."
+  ],
+  "actions": {
+    "measured_curves_opened": 0,
+    "patient_images_or_values_loaded": 0,
+    "solver_executions": 0,
+    "network_requests": 0,
+    "training_or_physical_benchmarks": 0,
+    "thread_environment_limit": 1
+  },
+  "remaining_boundaries": [
+    "Pure functions do not authorize measured-data access or enforce calibration/held-out filesystem roles. Separate access and freeze integration remains required.",
+    "The primitive generator must be fully exhausted before claiming complete output; valid prefixes are not complete-run success.",
+    "Real emitted primitive/log formatting, initial zero-state output, source/deck/runtime identity, force/torque axis and sign, residual-floor derivation, work/energy and mesh checks remain actual execution/aggregator obligations.",
+    "This review validates code arithmetic and format handling with constructed fixtures, not specimen material fidelity, instrument uncertainty, patient properties, force response or clinical accuracy."
+  ],
+  "blocking_findings": []
+}

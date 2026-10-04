@@ -1,0 +1,6 @@
+{
+  "status": "source_guard_refused_before_test_execution",
+  "reason": "Owner repairs landed after initial static review and before initial pytest attempt; expected original source SHA mismatch. No pytest executed in that attempt.",
+  "expected_evaluation_sha256": "8e9c18233a13a1bccce33db8a8c7773847bc7de60d851d898ddbb3117fd308bd",
+  "expected_outputs_sha256": "9b496aadf71800780991256561cf884ac901ad110a5d7aba9140ab604afe7efa"
+}
