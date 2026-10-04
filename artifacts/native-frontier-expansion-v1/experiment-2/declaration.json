@@ -1,0 +1,129 @@
+{
+  "rule": {
+    "version": "residual-source-axis-columns-development-v1",
+    "offsets_source_voxels": [
+      [
+        0,
+        0
+      ],
+      [
+        -2,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        -2
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        -2,
+        -2
+      ],
+      [
+        -2,
+        2
+      ],
+      [
+        2,
+        -2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        -3,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        0,
+        -3
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    "primary_endpoint": "distal_remaining_annotated_cell_in_same_source_axis_column",
+    "fallback_endpoint": "proximal_remaining_annotated_cell_if_distal_preview_rejected",
+    "entry": "integer_transverse_source_column_projected_to_unchanged_access_plane",
+    "entry_filter": "parallel_full_tool_radius_inside_declared_disk",
+    "unsupported_access": "abstain_when_not_orthogonal_source_axis_or_not_integer_transverse_origin",
+    "sort": "declared_offsets_then_unchanged_tool_order; ties_by_stable_ray_id",
+    "state_inputs": "visible_remaining_native_tissue_and_supplied_radiological_labels_only",
+    "certifier": "unchanged_complete_native_preview_including_prior_cavity_swept_shaft",
+    "macromotion": "fixed_axis_insertion_and_full_retraction_before_next_action"
+  },
+  "caps_per_inventory": {
+    "max_actions": 3,
+    "max_preview_checks": 128,
+    "max_search_seconds": 45.0
+  },
+  "new_action_model": true,
+  "posthoc_development_discovery": "early-probe.json generated hypotheses before this rule was frozen",
+  "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+  "original_adapter_hash": "sha256:dd81bd59566ead4e42916c8ede3d48d5615837e523d23d359b268d9a90f63f0b",
+  "unchanged_engine_hash": "sha256:0924b7d0a4ab4310f319372fbfc6dd84919c16ffff7070030494cf8a5acc72cd",
+  "tools": [
+    {
+      "tool_id": "native-fine-aspiration",
+      "tip_radius_mm": 1.25,
+      "shaft_radius_mm": 0.45,
+      "working_length_mm": 120.0,
+      "max_access_angle_deg": 35.0,
+      "tip_length_mm": 2.0,
+      "parameter_source": "generic research geometry; not a verified commercial device"
+    },
+    {
+      "tool_id": "native-wide-aspiration",
+      "tip_radius_mm": 2.25,
+      "shaft_radius_mm": 1.1,
+      "working_length_mm": 120.0,
+      "max_access_angle_deg": 35.0,
+      "tip_length_mm": 3.0,
+      "parameter_source": "generic research geometry; not a verified commercial device"
+    }
+  ],
+  "access": {
+    "center_mm": [
+      -181.5,
+      85.0,
+      105.0
+    ],
+    "normal_inward": [
+      1.0,
+      0.0,
+      -0.0
+    ],
+    "radius_mm": 6.0
+  },
+  "reward": {
+    "target_per_mm3": 1.0,
+    "normal_per_mm3": 0.2,
+    "motor_per_mm3": 2.0,
+    "language_per_mm3": 2.0,
+    "action_cost": 0.02,
+    "motion_per_mm": 0.0,
+    "tool_change_cost": 0.02,
+    "graph_edge_cost": 1.0
+  },
+  "partial_contact_weight": 0.05,
+  "gradient_steps": 0,
+  "world_partitions_opened": [],
+  "final_worlds_used": false,
+  "stress_worlds_used": false,
+  "frozen_runtime_hash": "sha256:e1186e12e79263c41e3cdad06112012702b4126a73fd912c14fa1e41d6d8843f",
+  "script_sha256": "6c1536b093b26bbdd611bc0478f48ad5f2c762b8a48e2acf1779e2984238f75f",
+  "proposal_model_hash": "sha256:1e0471ce1426b12a387c2f090d0321b364ced32d2729c1dff14c1aa970a50123"
+}

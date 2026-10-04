@@ -551,3 +551,38 @@ The initial coverage failure and an intermediate overly strict, ad hoc scalar
 threshold failure remain recorded, with their exact source and outputs, in
 `artifacts/desktop-renderer/prior-gpu-sampling-v1/`. These are numerical display
 checks, not clinical atlas-alignment validation.
+
+## October 4, 2026 — expanded native proposal development probe
+
+A separate post hoc probe tested whether the fixed action inventory limited
+coverage. It froze a thirteen-column residual-target rule before the comparison,
+using the completed v2 runtime, same source, 6-mm access disk, tools, physical
+reward and native legality checks. Both old and expanded inventories used nominal
+greedy selection with caps of three cuts, 128 previews and 45 search seconds.
+No policy was trained or optimization/selection/final/stress panel opened.
+
+The fixed inventory removed 249 target plus 17 normal mm³, with 32 mm³ of partial
+normal contact, score 245.24 and 24 checked previews in 1.008 s. The expanded
+inventory removed 1,113 target plus 62 normal mm³, with 177 mm³ of partial normal
+contact, score 1098.77 and 66 checked previews in 14.951 s. It stopped at three
+cuts. Target coverage increased from 0.594% to 2.655%, leaving 40,806 mm³; this is
+an action-inventory result, not an RL gain or a complete resection plan. More
+modeled normal removal and contact accompanied the increased target removal.
+
+The expanded history passed independent full-tool/prior-cavity/native-cell checks
+in 14.750 s with zero unsupported removal. The fixed history exactly matches the
+previously audited two-cut sequence, whose certificate was reused explicitly.
+Solid and forbidden-barrier phantoms passed separate native audits. The barrier
+run stopped at its preview cap with fourteen rays still unchecked and retained
+all cells on and beyond the barrier. Seven proposal tests passed; a separate
+artifact audit reconstructed source-cell costs, corner containment, dynamic
+proposal order, greedy choices, all denominators and compressed history hashes.
+
+The whole probe took 44.353 s. Its first launcher failed on a metadata-key typo
+before any comparison; that failure and the corrected frozen attempt are saved.
+Review also found overly permissive default relative tolerances and unreported
+out-of-image skips in the prototype generator. The actual exact-axis, integer,
+in-bounds cases are unaffected; a reusable implementation must correct both.
+Production numerical code and the completed learning study remain unchanged.
+Evidence: `artifacts/native-frontier-expansion-v1/`, including lossless compressed
+histories and the independent audit. Raw histories remain unchanged locally.

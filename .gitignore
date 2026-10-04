@@ -40,3 +40,6 @@ outputs/
 
 # Full native replay remains local; lossless gzip and roundtrip receipt are versioned.
 /artifacts/learning/procedural-native-to-ucsf-v2/comparison/development-geometry-e8a2cc46-0d88-4fc3-93be-176711ee19aa/native-history-replay.json
+/artifacts/native-frontier-expansion-v1/experiment-2/patient-expanded-candidate.json
+/artifacts/native-frontier-expansion-v1/experiment-2/frontier-solid-candidate.json
+/artifacts/native-frontier-expansion-v1/experiment-2/frontier-barrier-candidate.json

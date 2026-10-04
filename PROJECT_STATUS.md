@@ -55,6 +55,13 @@ development patient with zero human pretraining patients. Final/stress worlds
 remain closed. The best sequence removes only 249 of 41,919 target mm³ under
 hypothetical access; this is not a complete resection plan.
 
+A separate post hoc geometry probe expands the proposal inventory while keeping
+the native checker, source, tools and access assumptions fixed. Under the same
+three-cut cap, it removes 1,113 target and 62 normal mm³, with 177 mm³ of partial
+normal contact. Both native and independent artifact audits pass. Coverage is
+still only 2.655%, and this new, restricted parallel-column model is not yet part
+of the desktop planner or the frozen learning comparisons.
+
 ## Verified starting state
 
 - Repository initially contained only the three specifications and two commits.
