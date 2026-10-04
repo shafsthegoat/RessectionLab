@@ -1,0 +1,31 @@
+{
+  "status": "prospective_coordinate_semantics_not_anatomical_alignment_acceptance",
+  "patient_group": "RESECT:Case4",
+  "role": "mri_to_before_us",
+  "source_image": "Case4-FLAIR.nii.gz",
+  "destination_image": "Case4-US-before.nii.gz",
+  "source_world_to_ras_mm": [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]],
+  "destination_world_to_ras_mm": [[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]],
+  "evidence": [
+    {
+      "url": "https://yimingxiao.weebly.com/data-repositories.html",
+      "section": "Instruction for RESECT dataset",
+      "supports": "First triplet is reference MRI or before-US, second triplet destination; world coordinates in mm; MINC and NIfTI world coordinates are the same."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/NIFTI-Imaging/nifti_clib/master/niftilib/nifti1.h",
+      "section": "ORIENTATION, methods2/3, lines906-912",
+      "supports": "NIfTI declared subject-based world axes are positive right, anterior and superior; sform maps voxel centres into this world."
+    },
+    {
+      "url": "https://users.encs.concordia.ca/~hrivaz/Xiao_Database_MedPhys.pdf",
+      "sections": "II.E and III",
+      "supports": "MRI-reference landmarks were tagged in FLAIR; released T1 was rigidly registered to FLAIR upstream. Actual image agreement still requires QC."
+    }
+  ],
+  "baseline_header_receipt_sha256": "18d6e6306e38f409a314ba180d7d0a21e9a7ee02677f34a1d1fd28ea1294d692",
+  "required_header_conditions": "Exact pinned original affines, sformcode1 and mm units; qformcode0 is unused. Do not replace any source affine.",
+  "limitations": "Identity here converts the declared coordinate convention, not the anatomy. Independent FLAIR-to-beforeUS all-point rigid alignment is computed later. Incorrect file correspondence or provider convention remains detectable by source bounds and visual QC. No clinical registration accuracy or brain-domain acceptance follows.",
+  "native_NIfTI_documentation_endpoint": "https://nifti.nimh.nih.gov/nifti-1/documentation/nifti1fields/nifti1fields_pages/qsform.html",
+  "endpoint_check": "NIMH documentation fetch timed out; official NIFTI-Imaging header definition was read as the primary fallback."
+}
