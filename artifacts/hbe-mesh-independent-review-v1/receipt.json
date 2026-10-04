@@ -1,0 +1,44 @@
+{
+  "status": "passed_independent_analytic_review_after_two_repairs",
+  "source_sha256": {
+    "scripts/mechanics_hbe_mesh.py": "5b102eb74a171d41a8815e408a6473fd65032dd9b30ff5412cf7243addc7d3e2",
+    "tests/test_mechanics_hbe_mesh.py": "9d068caff9553c86383593925cd61092f4e12eff434e931aa5db5f47d0216d3e",
+    "tests/test_mechanics_hbe_mesh_review.py": "ac2f7b2884363449c1c700f065c03a3b4a2ff16f33f437e02907da3c2e1719f9"
+  },
+  "protocol_sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035",
+  "runtime_receipt_sha256": "705056d13e78f98fda0ab04884c0c6e3b31ead73f88d01b6dcf3bd99d5417137",
+  "runtime_receipt_matches_commit": "5c0a2c3",
+  "actual_runtime_module_library_license_interpreter_rehashed_without_import": true,
+  "command": ".venv/bin/python -m pytest -q tests/test_mechanics_hbe_mesh_review.py tests/test_mechanics_hbe_mesh.py",
+  "observed_result": "40 passed in 0.29s",
+  "initial_findings": "initial-findings.json",
+  "reviewer_setup_error": {
+    "kind": "SyntaxError during test collection",
+    "location": "tests/test_mechanics_hbe_mesh_review.py:28",
+    "reason": "Reviewer dict comprehension lacked closing brace. Test fixture repaired only; no product source change for this setup error.",
+    "independent_observed_result": "1 collection error in 0.12s",
+    "owner_observed_result": "1 collection error in 0.19s"
+  },
+  "repairs_verified": [
+    "Interior faces require reversed canonical cycles modulo cyclic rotation, preserving a valid rotated numbering while rejecting same-side overlapping cell interfaces.",
+    "Child loader and Python startup overrides are stripped; parent environment and HOME/CODEX_HOME remain unchanged."
+  ],
+  "independent_controls": [
+    "Positive-J adjacent cells with rotated local numbering pass; positive-J same-side shared faces reject.",
+    "Mocked supervisor receives clean child environment with new process session, without changing the parent environment.",
+    "Both 60/120-step decks match the actually passed patch material/domain/output schema, constrain all and only top/bottom xyz, keep side-only middle nodes free, and reproduce finite top rotations using an independent complex exponential."
+  ],
+  "static_review": [
+    "Five shared CAD surfaces use N edge/quarter-arc cells, N/2 radial cells and N/2 axial layers, yielding nominal 1.5*N^3 hexes. Actual generation remains unexecuted.",
+    "Gmsh reference coordinates determine canonical FEBio permutation; surface quads are mapped to outward volume cycles. Paired interfaces, connectedness and complete exclusive boundary tags are checked.",
+    "Rest Jacobians and scaled Jacobians are evaluated at 17 sites; eight Gauss determinants integrate volume. Side-node radii and actual projected chord sag are checked; finest volume/sag gates apply to actual mesh.",
+    "Tagged FEAnalysis/FETimeStepController support default controller with equal dtmin/dtmax and max_retries=0; FEBioMeshSection4 supports the new NodeSet/Surface schema.",
+    "Private runtime bytes/version are bound before import and after finalization; attempted generation is charged before native call. Three levels stop on first failure, enforce per-worker/aggregate wall and sampled RSS/output caps, and refuse existing output roots."
+  ],
+  "limits": [
+    "No Gmsh import, mesh generation, response-curve access or FEBio invocation in this review.",
+    "Actual mesh generation and specimen equilibrium are still unverified.",
+    "Sampled Jacobian positivity is not a proof over an arbitrary hex interior; matched oriented faces do not establish general global nonoverlap.",
+    "RSS/output caps are sampled and cover inherited process groups; short peaks may be missed."
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "source_sha256": "f4932684be06d2ea55c54994415b6093dcb810a55d5d09d58d834d79104ae899",
+  "findings": [
+    {
+      "kind": "analytic_topology_reproduction",
+      "fixture": "Two canonical hexes share bottom node IDs1..4, extend in +z to1 and2, and have distinct upper IDs; exposed faces have consistent declared tags.",
+      "positive_rest_jacobians": true,
+      "minimum_scaled_jacobian": 1.0,
+      "actual_result": {
+        "connected_cell_count": 2,
+        "interior_face_count": 1,
+        "exterior_face_count": 10
+      },
+      "expected": "Reject same-direction shared face cycles; overlapping cells are not a conforming interface."
+    },
+    {
+      "kind": "static_child_environment_review",
+      "actual": "supervise_level copies os.environ and overrides thread counts only; DYLD_* and PYTHONPATH/PYTHONHOME remain.",
+      "expected": "Strip dynamic-loader injection/lookup and Python startup overrides in the child, preserving user home variables."
+    }
+  ],
+  "gmsh_imported": false,
+  "meshes_generated": 0,
+  "solver_runs": 0
+}
