@@ -1,0 +1,33 @@
+{
+  "recorded_at_utc": "2026-10-04T11:17:02.261284+00:00",
+  "archive_commit": "0bffeaa33dc3120183d0c6fb124aff6e2d327a63",
+  "archive_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-feature-units-v1/0bffeaa33dc3120183d0c6fb124aff6e2d327a63/source",
+  "archive_sha256": "f46356427bc270428984bd7f3e518e7946212c68ec0972111e4004fb10579cb9",
+  "archive_matches_full_test_source_hashes": true,
+  "checked_full_test_files": 125,
+  "numerical_runtime_content_hash": "sha256:850dab806bca81be6d18f25cc39643e76d7cf1621d7cbad1f96669228fed65fa",
+  "declaration_hash": "sha256:b19aac85f9241e37b98ae53d539ad923f3258bf42a106d67e520f37abcf6a237",
+  "all_nine_protected_sources_unchanged": true,
+  "case_sha256": "11cca797ad0216e5c8d940e7354f2dd23fb6954dc2aed7e4b0423f6adc6cefcf",
+  "git_metadata_in_archive": null,
+  "pythonpath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-feature-units-v1/0bffeaa33dc3120183d0c6fb124aff6e2d327a63/source/src",
+  "git_ceiling_directories": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-feature-units-v1/0bffeaa33dc3120183d0c6fb124aff6e2d327a63:/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning",
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-feature-units-v1/0bffeaa33dc3120183d0c6fb124aff6e2d327a63/source/scripts/run_native_feature_units.py",
+    "--output",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1",
+    "--case-bundle",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/cases/UCSF-PDGM-0004.ressectionlab",
+    "--execute"
+  ],
+  "output": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1",
+  "fresh_pretraining_and_all_arms": true,
+  "reuse_prior_training_state": false,
+  "full_suite_passed": 794,
+  "full_suite_receipt_commit": "7cb41ff",
+  "execution_released_by_root": true,
+  "other_agents_heavy_work_held": true,
+  "normal_desktop_and_os_load_uncontrolled": true,
+  "final_worlds_will_be_used": false
+}

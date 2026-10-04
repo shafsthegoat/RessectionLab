@@ -58,6 +58,14 @@ development patient with zero human pretraining patients. Final/stress worlds
 remain closed. The best sequence removes only 249 of 41,919 target mm³ under
 hypothetical access; this is not a complete resection plan.
 
+The separately declared actor feature-unit comparison is now running from the
+immutable `0bffeaa` archive after all 794 tests and the real-case preflight
+passed. It compares raw inputs with fixed physical reference units while
+preserving the old action inventory, rewards, critic, seeds and budgets. Other
+heavy work is paused for timing comparability; ordinary desktop/OS load is not
+controlled. No outcome is claimed while the run is in progress. Exact launch
+identities are in `artifacts/validation/native-feature-units-runner-v1/`.
+
 A separate post hoc geometry probe expands the proposal inventory while keeping
 the native checker, source, tools and access assumptions fixed. Under the same
 three-cut cap, it removes 1,113 target and 62 normal mm³, with 177 mm³ of partial
