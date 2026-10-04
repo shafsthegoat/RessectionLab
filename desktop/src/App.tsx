@@ -486,6 +486,11 @@ export default function App() {
   const busy = !!operation || hydrating;
   const readonly = !!api?.readOnly;
   const controlsBlocked = busy || engineStopped;
+  const restoreSourceView = () => {
+    clearProposal();
+    setCertifiedReplay(null);
+    setMessage("Source imaging restored · Source annotations preserved");
+  };
   const reportError = (failure: unknown) =>
     setError(
       stoppedEngine.current
@@ -1151,7 +1156,7 @@ export default function App() {
             loadingId: proposalLoadingId ?? undefined,
             disabled: controlsBlocked || !!certifiedReplay,
             onSelect: (id) => void viewProposal(id),
-            onClear: clearProposal,
+            onClear: restoreSourceView,
             outsideCount: proposalView?.annotationOutsideVoxelCount,
             onOutside: proposalView?.outsideAnnotationPointMm
               ? () => setCursor(proposalView.outsideAnnotationPointMm)
@@ -1243,7 +1248,7 @@ export default function App() {
                 · view only · cortical access not certified
               </span>
             </div>
-            <button className="text-button" onClick={clearProposal}>
+            <button className="text-button" onClick={restoreSourceView}>
               Source view <X size={12} />
             </button>
           </div>
@@ -1255,10 +1260,7 @@ export default function App() {
               Modeled removal · native source grid · selection step{" "}
               {certifiedReplay.result.step}/{certifiedReplay.result.stepCount}
             </span>
-            <button
-              className="text-button"
-              onClick={() => setCertifiedReplay(null)}
-            >
+            <button className="text-button" onClick={restoreSourceView}>
               Source view <X size={12} />
             </button>
           </div>
