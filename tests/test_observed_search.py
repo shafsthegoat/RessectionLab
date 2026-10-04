@@ -1,5 +1,5 @@
 """Search arithmetic and isolation tests; no anatomy generation or training."""
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, field, replace
 import importlib
 from itertools import product
 from types import SimpleNamespace
@@ -321,7 +321,8 @@ def test_incremental_retention_matches_full_layer_oracle_for_every_cap(width):
         assert report["peak_next_layer_states"] <= width + 1
 
 
-def test_live_clone_count_is_bounded_without_weakrefs():
+@pytest.mark.parametrize("transition_mode", ["eager", "lazy_planning"])
+def test_live_clone_count_is_bounded_without_weakrefs(transition_mode):
     counters = {"active": 0, "peak": 0, "created": 0}
 
     class CountedTask(GraphTask):
@@ -346,9 +347,13 @@ def test_live_clone_count_is_bounded_without_weakrefs():
             result.planning = True
             return result
 
+        def advance_planning(self, action):
+            assert self.planning
+            return super().step(action)
+
     width = 3
     task = CountedTask(tied_graph(branches=12).tree)
-    _, row = observed_beam_search(task, max_calls=1000, beam_width=width)
+    _, row = observed_beam_search(task, max_calls=1000, beam_width=width, transition_mode=transition_mode)
     assert row["model_transition_calls"] == 12 + 36 + 36
     assert counters["created"] == 1 + row["model_transition_calls"]
     # At most the current beam plus the next beam and one insertion candidate.
@@ -356,3 +361,77 @@ def test_live_clone_count_is_bounded_without_weakrefs():
     assert counters["peak"] <= 2 * width + 1
     assert counters["active"] == 0
     assert row["peak_next_layer_states"] <= width + 1
+
+
+@dataclass
+class DeferredGraphTask(GraphTask):
+    counters: dict = field(default_factory=lambda: {"inventory_builds": 0})
+    inventory_ready: bool = False
+
+    def observation(self):
+        if not self.terminated and not self.inventory_ready:
+            self.counters["inventory_builds"] += 1
+            self.inventory_ready = True
+        return super().observation()
+
+    def step(self, action):
+        result = super().step(action)
+        self.inventory_ready = False
+        result.observation = self.observation()
+        return result
+
+    def advance_planning(self, action):
+        assert self.planning
+        result = GraphTask.step(self, action)
+        self.inventory_ready = False
+        result.observation = None
+        return result
+
+
+def test_explicit_lazy_mode_preserves_search_and_avoids_discarded_successor_work():
+    tree = tied_graph(branches=8).tree
+    eager, lazy = DeferredGraphTask(tree, max_steps=3), DeferredGraphTask(tree, max_steps=3)
+    eager_path, a = observed_beam_search(eager, max_calls=100, beam_width=2)
+    lazy_path, b = observed_beam_search(lazy, max_calls=100, beam_width=2, transition_mode="lazy_planning")
+    assert eager_path == lazy_path
+    excluded = {"planning_seconds", "transition_mode", "eager_transition_calls", "lazy_planning_transition_calls"}
+    assert {key: value for key, value in a.items() if key not in excluded} == {
+        key: value for key, value in b.items() if key not in excluded}
+    assert a["eager_transition_calls"] == b["lazy_planning_transition_calls"] == 40
+    assert a["lazy_planning_transition_calls"] == b["eager_transition_calls"] == 0
+    assert a["observation_requests"] == b["observation_requests"] == 5
+    assert eager.counters["inventory_builds"] == 25
+    assert lazy.counters["inventory_builds"] == 5
+
+
+@pytest.mark.parametrize("cap", range(12))
+def test_eager_lazy_call_cap_layer_and_negative_prefix_parity(cap):
+    tree = tied_graph().tree
+    eager, lazy = DeferredGraphTask(tree, max_steps=3), DeferredGraphTask(tree, max_steps=3)
+    a_path, a = observed_beam_search(eager, max_calls=cap, beam_width=2)
+    b_path, b = observed_beam_search(lazy, max_calls=cap, beam_width=2, transition_mode="lazy_planning")
+    assert a_path == b_path and a["layers"] == b["layers"]
+    for key in ("model_transition_calls", "evaluated_transition_prefixes", "completed_layers",
+                "estimated_incremental_return", "negative_prefixes_retained", "negative_prefixes_pruned_by_beam",
+                "call_cap_reached", "implicit_stop_prefix_count"):
+        assert a[key] == b[key]
+
+
+def test_requested_lazy_mode_fails_without_capability_instead_of_falling_back():
+    with pytest.raises(ValueError, match="requires advance_planning"):
+        observed_beam_search(opening_graph(), max_calls=1, beam_width=1, transition_mode="lazy_planning")
+    with pytest.raises(ValueError, match="explicit eager or lazy_planning"):
+        observed_beam_search(opening_graph(), max_calls=1, beam_width=1, transition_mode="automatic")
+
+
+def test_failed_lazy_transition_is_charged_separately_without_a_stop_prefix():
+    class FailingLazy(DeferredGraphTask):
+        def advance_planning(self, action):
+            raise RuntimeError("intentional lazy transition failure")
+    with pytest.raises(RuntimeError, match="lazy transition failure") as caught:
+        observed_beam_search(FailingLazy(opening_graph().tree), max_calls=4, beam_width=2,
+                             transition_mode="lazy_planning")
+    row = caught.value.accounting
+    assert row["lazy_planning_transition_calls"] == row["model_transition_calls"] == 1
+    assert row["eager_transition_calls"] == row["evaluated_transition_prefixes"] == 0
+    assert row["implicit_stop_prefix_count"] == 1 and row["observation_requests"] == 1

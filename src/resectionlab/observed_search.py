@@ -43,7 +43,8 @@ def _legal_actions(observation):
 
 
 def observed_beam_search(task, *, max_calls: int, beam_width: int, seconds: float = 2.,
-                         policy=None, objective_source: str = "observed_scan_estimator_only"):
+                         policy=None, objective_source: str = "observed_scan_estimator_only",
+                         transition_mode: str = "eager"):
     """Run observed beam search with optional, state-checked actor ordering.
 
 The before/after state_dict hashes cover parameters and registered buffers,
@@ -54,7 +55,8 @@ Python-side counters are not model state, and are outside this check.
     integrity = {"policy_state_checks": 0, "policy_state_check_seconds": 0.,
                  "initial_policy_state_hash": None, "final_policy_state_hash": None}
     arguments = dict(max_calls=max_calls, beam_width=beam_width, seconds=seconds, policy=policy,
-                     objective_source=objective_source, started=started, integrity=integrity)
+                     objective_source=objective_source, transition_mode=transition_mode,
+                     started=started, integrity=integrity)
     if policy is None:
         return _observed_beam_search(task, **arguments)
 
@@ -89,7 +91,7 @@ Python-side counters are not model state, and are outside this check.
 
 
 def _observed_beam_search(task, *, max_calls, beam_width, seconds, policy,
-                          objective_source, started, integrity):
+                          objective_source, transition_mode, started, integrity):
     """Return the best evaluated prefix and accounting within declared bounds.
 
 Every prefix has a known zero-increment STOP option. Negative opening prefixes
@@ -101,21 +103,28 @@ the same physical reward, beam ranking, candidate inventory and call cap.
 The policy must be a frozen spatial policy returning (logits, value). One
 no-grad forward is counted per guided expanded node; value is ignored. Task
 cloning, inventory preparation and policy forwards are inside the wall budget.
+The explicit lazy_planning mode requires advance_planning on the nominal-only
+planning clone. It defers successor observations, not current-action geometry.
 """
     if (type(max_calls) is not int or max_calls < 0 or type(beam_width) is not int
             or beam_width < 1 or isinstance(seconds, bool) or not math.isfinite(seconds)
             or seconds < 0 or not isinstance(objective_source, str) or not objective_source):
         raise ValueError("Invalid observed-search budget or objective description")
+    if transition_mode not in {"eager", "lazy_planning"}:
+        raise ValueError("Choose explicit eager or lazy_planning transition mode")
     observed = task.planning_clone()
     metrics = observed.metrics()
     if not metrics["planning_estimator_only"]:
         raise ValueError("Search requires the observed-only planning model")
+    if transition_mode == "lazy_planning" and not callable(getattr(observed, "advance_planning", None)):
+        raise ValueError("Requested lazy_planning requires advance_planning on the planning clone")
     initial_steps = metrics["steps"]
     incumbent, sequence = 0., ()
     incumbent_terminated = observed.terminated
     frontier = [(0., (), observed)]
     del observed  # Do not keep the initial full native state alive after its layer.
     calls = evaluated_prefixes = completed_layers = actor_calls = expanded_nodes = 0
+    eager_calls = lazy_calls = observation_requests = 0
     negative_evaluated = negative_retained = negative_pruned = beam_pruned = 0
     peak_next_layer_states = 0
     truncated, root_inventory = False, 0
@@ -134,6 +143,9 @@ cloning, inventory preparation and policy forwards are inside the wall budget.
             "implicit_stop_prefix_count": evaluated_prefixes + 1,
             "evaluated_transition_prefixes": evaluated_prefixes, "objective_source": objective_source,
             "root_legal_nonstop_actions": root_inventory, "expanded_nodes": expanded_nodes,
+            "transition_mode": transition_mode, "eager_transition_calls": eager_calls,
+            "lazy_planning_transition_calls": lazy_calls,
+            "observation_requests": observation_requests,
             "actor_forward_calls": actor_calls,
             "guidance": "actor_expansion_order_only" if policy is not None else "none",
             "negative_prefixes_evaluated": negative_evaluated,
@@ -160,6 +172,7 @@ cloning, inventory preparation and policy forwards are inside the wall budget.
             for value, prefix, node in frontier:
                 if node.terminated:
                     continue
+                observation_requests += 1
                 observation = node.observation()
                 actions = _legal_actions(observation)
                 if not prefix:
@@ -187,7 +200,12 @@ cloning, inventory preparation and policy forwards are inside the wall budget.
                     peak_next_layer_states = max(peak_next_layer_states, len(children) + 1)
                     calls += 1
                     layer["model_transition_calls"] += 1
-                    outcome = child.step(action)
+                    if transition_mode == "lazy_planning":
+                        lazy_calls += 1
+                        outcome = child.advance_planning(action)
+                    else:
+                        eager_calls += 1
+                        outcome = child.step(action)
                     if not math.isfinite(outcome.reward):
                         raise FloatingPointError("Nonfinite observed-model transition reward")
                     total, path = value + outcome.reward, (*prefix, action)

@@ -20,6 +20,15 @@ Next-layer native states are retained incrementally by the exact existing
 Every legal transition is still evaluated. Logical counts of discarded negative
 prefixes are preserved independently of which state objects remain in memory.
 
+`transition_mode="eager"` remains the default. The explicit `"lazy_planning"`
+option requires a nominal-only planning clone with `advance_planning(action)`;
+unsupported tasks fail rather than silently falling back. This commits the same
+certified transition but defers its successor inventory until that state is
+expanded. Attempted eager/lazy transitions and explicit observation requests are
+counted separately. Observation requests are not inventory-build or preview
+counts: task setup, caching, and eager transitions can perform additional work.
+Use the native preview profiler and the full wall/RSS budget for cost comparisons.
+
 Optional guidance orders all legal expansions by actor logits. It does not use
 the critic, alter physical reward, or discard candidates using a policy top-k.
 Every attempted actor forward is counted, including failures, and runs without

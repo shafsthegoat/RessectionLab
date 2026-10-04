@@ -1,0 +1,28 @@
+{
+  "kind": "independent_native_lazy_planning_analytic_review",
+  "completed_at_utc": "2026-10-04T18:49:54Z",
+  "baseline_git_head": "7331e63ac02efbdc4157a8b4a09a5220b9fbaa98",
+  "command": ".venv/bin/python -m pytest -q tests/test_native_spatial_lazy_planning.py tests/test_observed_search.py tests/test_native_lazy_planning_review.py",
+  "output": ".............................................................            [100%]\n61 passed in 3.93s\n",
+  "independent_controls": 6,
+  "providers": [
+    "fixed_lattice",
+    "nominal_cavity_v1"
+  ],
+  "reviewed_source_sha256": {
+    "src/resectionlab/native_spatial_task.py": "208a90d79818d26378b3157f94e879d7f2338aac4d59df78b337a02a2a76c024",
+    "src/resectionlab/observed_search.py": "cdbacc079fa3e4f8d49a356e76dfdc77e4484ef4bb1a3383970a0e937c72febd",
+    "tests/test_native_lazy_planning_review.py": "24e589ed91484cacb8bf3d046a862cf7ff5b4ef40d962f649c5fe69657ab64ee"
+  },
+  "checks": [
+    "After unequal private rewards, planning clones replace the private history consistently; eager/lazy rewards, state seals, native masks, history and independent certificates remain identical.",
+    "Metrics and independent audit leave successor inventory deferred; materializing a cloned branch preserves its sibling's deferred state and yields exactly the eager observation and inventory.",
+    "Complete beam layers yield identical routes, layers, calls, pruning and objective accounting; direct preview interception verifies fewer actual previews in lazy mode for both providers.",
+    "Search propagates postcommit cancellation as a committed-transition failure with one charged attempt, no invented evaluated prefix, and unchanged root state.",
+    "Owner controls for current-action certificate tampering, stale/infeasible actions, precommit cancellation, STOP, terminal horizon, planning-only authority and unsupported lazy-provider refusal also passed."
+  ],
+  "defects_found": [],
+  "patient_images_opened": 0,
+  "optimizer_steps": 0,
+  "limits": "Analytic software parity and preview-count checks only. No patient latency, accuracy or efficacy claim; normal step remains eager and lazy search requires explicit opt-in."
+}

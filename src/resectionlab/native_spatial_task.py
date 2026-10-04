@@ -368,7 +368,7 @@ class NativeSpatialCase:
 
 @dataclass(frozen=True)
 class NativeSpatialStep:
-    observation: object
+    observation: object | None
     reward: float
     terminated: bool
     info: dict
@@ -521,6 +521,22 @@ class NativeSpatialTask:
             "outcome_scope": "permitted_nominal_model" if self._planning else "separate_evaluator_reference"}
 
     def step(self, action: str | int):
+        """Commit a transition and eagerly produce the successor observation."""
+        return self._transition(action, observe_successor=True)
+
+    def advance_planning(self, action: str | int):
+        """Commit a nominal planning transition without preparing its successor.
+
+        Only planning clones may use this path. Current-action certification,
+        scoring and committed history are identical to ``step``. A later
+        observation or inventory request prepares the successor on demand.
+        """
+        self._assert_frozen()
+        if not self._planning:
+            raise ValueError("LAZY_PLANNING_ONLY: advance_planning requires a nominal planning clone")
+        return self._transition(action, observe_successor=False)
+
+    def _transition(self, action: str | int, *, observe_successor: bool):
         if self._terminated:
             raise InvalidActionError("Native spatial episode has terminated")
         inventory = self._prepare_inventory()
@@ -544,7 +560,13 @@ class NativeSpatialTask:
         self._inventory, self._ledger, self._proposal_batch = None, (), None
         self._seal()
         try:
-            observed = self.observation()
+            if observe_successor:
+                observed = self.observation()
+            else:
+                # A cancellation during commit must still report the durable
+                # transition even though successor previews are deferred.
+                self._check_cancelled()
+                observed = None
         except InterruptedError as error:
             from .native_axis_simulation import CommittedTransitionInterrupted
             raise CommittedTransitionInterrupted(record, record["reward"]) from error

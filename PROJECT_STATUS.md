@@ -122,6 +122,15 @@ sequences. Three legacy states/two transitions match the original default
 exactly. Real-patient coverage has not yet been measured with this generator.
 See `artifacts/nominal-cavity-independent-review-v1/provider-receipt.json`.
 
+Optional lazy planning transitions now defer successor inventories until a
+retained search branch is expanded. Current-action certification, state,
+reward and history remain identical; the ordinary policy transition stays
+eager. Independent native/search checks pass (61 combined controls), including
+both proposal modes, hidden references, cancellation and exact route parity.
+Fewer previews were measured on analytic code fixtures; patient latency and
+training benefits remain unmeasured. See
+`artifacts/native-lazy-planning-review-v1/receipt.json`.
+
 The first real TRAIN PAT22 inference profile completed all four declared cells
 in 6.247 seconds with unchanged model parameters. One CPU call took 28–30 ms
 for a 32³ crop and 256–269 ms for a 64³ crop, with highest observed memory about
