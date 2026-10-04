@@ -199,6 +199,17 @@ contact history, tool and remaining budget are omitted unless supplied separatel
 The proposed summary is not a complete state or an established learning gain.
 See `docs/synthetic-spatial-feature-probe.md` and both independent artifact sets.
 
+The isolated V2.1 descriptor replaces automatic tangent-axis selection with an
+explicit source/frame-bound reference and a declared engineering conditioning
+check. The saved rotation case has 2.22e-16-mm error for a well-conditioned
+reference; a near-parallel reference rejects in both frames. Independent review
+found 14 initial constructor/mutation/overflow/complex-input failures, now fixed
+with their original evidence preserved. Eleven owner and 30 independent checks
+pass; 14 saved numeric comparisons are unchanged. This is algebra-only work
+with no patient, simulator, policy or production-profile changes. Lossy state
+summaries and the absence of a shared cross-patient reference convention remain
+explicit. See `docs/synthetic-spatial-feature-v2.md`.
+
 The frozen extraction procedure has now run on PAT16 and PAT20, with two
 repetitions of both model variants per case. All eight child inferences completed
 without failures or tuning; repeated masks and distance arrays were identical.

@@ -1,0 +1,23 @@
+{
+  "all_identical": true,
+  "checks": {
+    "archived_alias_coordinates": true,
+    "boundary_classification": true,
+    "counterexample_error": true,
+    "lossy_summary": true,
+    "original.basis_columns": true,
+    "original.conditioning": true,
+    "original.coordinates_mm": true,
+    "original.normal_inward": true,
+    "original.origin_mm": true,
+    "rotated.basis_columns": true,
+    "rotated.conditioning": true,
+    "rotated.coordinates_mm": true,
+    "rotated.normal_inward": true,
+    "rotated.origin_mm": true
+  },
+  "initial_report_sha256": "0d7a2cc0f18f0dfcf26d567882b9311b33571e601c9bc8d15571f61b131cd839",
+  "original_v2_capture_still_intact": true,
+  "repair_report_sha256": "32468d2b764a742b7e422a590f01744cdba55e4ec653c701bf8f2ee128838d70",
+  "scope": "Exact saved accepted-case JSON numeric equality, not a general proof"
+}

@@ -1,0 +1,62 @@
+{
+  "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 NUMEXPR_NUM_THREADS=1 PYTHONPATH=src .venv/bin/python -m pytest -q tests/test_native_spatial_features_v2_adversarial.py",
+  "initial_negative_result": {
+    "failed": 14,
+    "passed": 16,
+    "receipt": "initial-negative-tests.json",
+    "seconds": 0.1
+  },
+  "limitations": [
+    "Caller metadata equality is checked; external provenance authenticity is not established",
+    "Engineering rejection band is not a rigorous universal floating-point error bound",
+    "Explicit reference must be transported with physical coordinate changes",
+    "Lossy critic summary and absence of global cross-patient tangent convention remain unchanged",
+    "No production profile, patient validation, policy improvement or Markov completeness claim"
+  ],
+  "observed_test_result": {
+    "exit_code": 0,
+    "failed": 0,
+    "passed": 30,
+    "seconds": 0.08,
+    "stdout": ".............................. [100%]\n30 passed in 0.08s\n",
+    "tool_chunk_id": "1b3602"
+  },
+  "original_v1_evidence_unchanged": {
+    "artifacts/native-spatial-feature-independent-v1/conditioning-counterexample.json": true,
+    "artifacts/native-spatial-feature-probe-v1/probe/report.json": true,
+    "research/native_spatial_features.py": true
+  },
+  "positive_checks": [
+    "Directions normalized consistently from smallest positive subnormal through near-max float64 magnitudes",
+    "Zero/nonfinite and anti-parallel directions rejected",
+    "Rejected and accepted engineering-band fixtures behave consistently under transported proper coordinate rotation",
+    "Reference vector bytes affect reference hash despite identical declaration ID",
+    "Left-handed/sheared affine physical summaries survive cyclic source permutation and flips"
+  ],
+  "python": "3.12.14",
+  "recorded_at": "2026-10-04T14:04:16.318394+00:00",
+  "resolved_findings": [
+    "Unvalidated direct frames could report accepted basis/normal/sine inconsistent with reference",
+    "Caller-owned numeric containers could mutate a supposedly immutable frame",
+    "Finite extreme coordinate/volume inputs could return nonfinite descriptors",
+    "Complex input casts could silently discard imaginary coordinates"
+  ],
+  "resource_scope": {
+    "gradients": 0,
+    "native_transitions": 0,
+    "numerical_threads": 1,
+    "patients": 0,
+    "policies": 0,
+    "simulators": 0
+  },
+  "same_adversarial_test_bytes_after_repair": true,
+  "schema_version": 1,
+  "scope": "Independent algebra-only review of synthetic explicit-reference descriptor V2.1",
+  "source_sha256": {
+    "artifacts/native-spatial-feature-independent-v1/conditioning-counterexample.json": "109c1b89e57a16898ea3cae3e1ed3feb6439ac23230fc99c83cf8f2e76adc5ef",
+    "artifacts/native-spatial-feature-probe-v1/probe/report.json": "f7ac523a033e7b9dbfb8119c0a78916d0ef3dc420d7156d8459f25d21bd0c79c",
+    "research/native_spatial_features.py": "b412a0f38ff4c33edae29be41ee6368430812ccd0ab6ea0a6d897db8e9434ef4",
+    "research/native_spatial_features_v2.py": "1bd454e0a6f15d0b664545bed4c7a8bbf9ed265d7f5e6c015b0ef502b4f3ff79",
+    "tests/test_native_spatial_features_v2_adversarial.py": "54df141e332853544bb3fa99935657c301d7e324947a8a84444fea9dc3b15350"
+  }
+}

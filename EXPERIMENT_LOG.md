@@ -1151,3 +1151,24 @@ the minimum-width pre-search and wide populated-search screenshots. No training
 or historical full workflow was repeated. Exact tests, accessibility captures,
 screenshots and package/native receipts are in
 `artifacts/electron-route-empty-state-v1/`.
+
+## October 4, 2026 — explicit spatial reference repairs the bounded frame probe
+
+An isolated V2 descriptor requires an external tangent reference with source and
+coordinate identity, rather than choosing a source axis. The declared sine
+condition exceeds 0.1 plus a 64-epsilon rejection margin; this is an engineering
+condition, not a clinical threshold or universal numerical guarantee. On the
+saved V1 rotation counterexample, an explicit well-conditioned Y reference gives
+2.22e-16-mm error, while a near-parallel X reference rejects in both frames.
+
+Eleven owner tests initially passed. Independent review then preserved 14
+failures and 16 passes involving direct-constructor validation, caller mutation,
+nonfinite extreme-coordinate/volume outputs and discarded imaginary components.
+V2.1 fixes those isolated validation paths and passes the same 30 independent
+tests plus 11 owner checks. Fourteen saved accepted numeric comparisons are
+exactly unchanged. The original and repaired source archives, tests and reports
+remain separate and verified; V1 bytes are unchanged. Both probes are algebra
+only, with zero simulators, transitions, policies, gradients or patient loads.
+No learning, state completeness or cross-patient reference claim follows.
+See `artifacts/native-spatial-feature-v2/repair-01/` and the separate independent
+review; no production profile or public experiment was changed.

@@ -70,3 +70,7 @@ outputs/
 
 # Fixed-trace cache probe retains its exact executable snapshot locally.
 /artifacts/benchmarks/native-axis-cache-v1/frozen-source/
+
+# Tiny descriptor sources are retained in verified archives instead of duplicate trees.
+/artifacts/native-spatial-feature-v2/frozen-source/
+/artifacts/native-spatial-feature-v2/repair-01/frozen-source/
