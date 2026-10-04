@@ -1,0 +1,49 @@
+{
+  "command_argv": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-cache-v1/43857b5a4931a9b4c3909f9c2914833e795b685b/source/scripts/probe_public_native_capsule_cache.py",
+    "--output",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/benchmarks/native-axis-cache-v1",
+    "--case-bundle",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-cache-v1/43857b5a4931a9b4c3909f9c2914833e795b685b/source/outputs/cases/UCSF-PDGM-0004.ressectionlab",
+    "--execute"
+  ],
+  "coordinated_compute_scope": "Other active agents restricted to static edits/reading and small web metadata. No tests, builds, training, imaging or native app interactions during benchmark. Existing Electron app remains open; ordinary OS activity and file caches are uncontrolled.",
+  "created_utc": "2026-10-04T13:50:10.547104+00:00",
+  "environment_overrides": {
+    "MKL_NUM_THREADS": "2",
+    "OMP_NUM_THREADS": "2",
+    "OPENBLAS_NUM_THREADS": "2",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-cache-v1/43857b5a4931a9b4c3909f9c2914833e795b685b/source/src"
+  },
+  "execution_baseline_sha256": "f3709aa794562fa12e482472fe3b94f26403b19ed1f639923654ab86feca01f6",
+  "fixed_work": {
+    "common_template_preview_attempts": 26,
+    "cuts_per_episode": 3,
+    "episodes": 4,
+    "final_worlds": 0,
+    "gradient_updates": 0,
+    "independent_history_audits": 4,
+    "inventory_count_per_episode": 4,
+    "preview_attempts_per_episode": 66,
+    "preview_attempts_per_inventory": [
+      26,
+      22,
+      18,
+      0
+    ],
+    "stress_worlds": 0
+  },
+  "independent_release_review_sha256": "d854cbdebccc1cf6639d0f44f38ed2349ac4542e4c85408b627787ee567a9697",
+  "orchestrator_release": "Execute exactly once from the bound archive after this release is committed. Preserve outcome without automatic retry or altered parameters.",
+  "resource_budget": {
+    "hard_termination_grace_seconds": 10.0,
+    "process_peak_rss_bytes": 6442450944,
+    "worker_wall_seconds": 590.0
+  },
+  "runtime_content_hash": "sha256:55fe17e6a1e5811f606713e857ee8c3142ae44573f4c30f409aa142d3656c92e",
+  "schema_version": 1,
+  "source_commit": "43857b5a4931a9b4c3909f9c2914833e795b685b",
+  "status": "prospective_root_release_not_executed"
+}

@@ -1,0 +1,116 @@
+{
+  "cache": {
+    "cached_values": "immutable pure active/shaft capsule-cell coverage only; no feasibility/cavity/integrity/audit cache",
+    "max_entries": 16384,
+    "max_payload_bytes": 33554432,
+    "tested_helper_sha256": "7b47cf36493c4baeb305beb7f18d4f5acf5bd0fa08b0e80738e948a20bd58869",
+    "version": "experimental-exact-capsule-cover-cache-v1"
+  },
+  "case_bundle_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-cache-v1/43857b5a4931a9b4c3909f9c2914833e795b685b/source/outputs/cases/UCSF-PDGM-0004.ressectionlab",
+  "case_bundle_relative_path": "outputs/cases/UCSF-PDGM-0004.ressectionlab",
+  "case_bundle_sha256": "11cca797ad0216e5c8d940e7354f2dd23fb6954dc2aed7e4b0423f6adc6cefcf",
+  "case_check_scope": "Copied bytes match the previously verified declared bundle; no case loading or simulation performed during preparation.",
+  "case_planning_hash_from_bound_declaration": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+  "case_semantic_hash_from_bound_declaration": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+  "command_argv": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-cache-v1/43857b5a4931a9b4c3909f9c2914833e795b685b/source/scripts/probe_public_native_capsule_cache.py",
+    "--output",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/benchmarks/native-axis-cache-v1",
+    "--case-bundle",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-cache-v1/43857b5a4931a9b4c3909f9c2914833e795b685b/source/outputs/cases/UCSF-PDGM-0004.ressectionlab",
+    "--execute"
+  ],
+  "command_shell": "env PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-cache-v1/43857b5a4931a9b4c3909f9c2914833e795b685b/source/src OMP_NUM_THREADS=2 MKL_NUM_THREADS=2 OPENBLAS_NUM_THREADS=2 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-cache-v1/43857b5a4931a9b4c3909f9c2914833e795b685b/source/scripts/probe_public_native_capsule_cache.py --output /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/benchmarks/native-axis-cache-v1 --case-bundle /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-cache-v1/43857b5a4931a9b4c3909f9c2914833e795b685b/source/outputs/cases/UCSF-PDGM-0004.ressectionlab --execute",
+  "created_utc": "2026-10-04T13:46:08.876418+00:00",
+  "declaration_content_hash": "sha256:90b245b72f84acac1cbe32cb338d64e47222fd75b2f20673439dbb34e6e4f9d6",
+  "declaration_sha256": "28a6e9a170717a9047e481a88d9704bd18eee11ff0fe9d5acd8753a102a9a901",
+  "environment_overrides": {
+    "MKL_NUM_THREADS": "2",
+    "OMP_NUM_THREADS": "2",
+    "OPENBLAS_NUM_THREADS": "2",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONPATH": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-cache-v1/43857b5a4931a9b4c3909f9c2914833e795b685b/source/src"
+  },
+  "existing_test_evidence": {
+    "focused_independent": {
+      "passed": 25,
+      "pytest_seconds": 1.47,
+      "receipt_path": "artifacts/public-capsule-probe-independent-v1/review.json",
+      "receipt_sha256": "828bcb8d32b138842362e7262d5f5e1fe7feefb1dad46a77a52a340fa9be8dd0"
+    },
+    "focused_owner": {
+      "passed": 7,
+      "pytest_seconds": 1.1,
+      "receipt_path": "artifacts/public-capsule-probe-review-v1/owner-review.json",
+      "receipt_sha256": "2c4be8499a92b9f87a74e70df16d5c4b91cc753c045df74ac7176c1fad59141b"
+    },
+    "full_suite": {
+      "errors": 0,
+      "failures": 0,
+      "pytest_seconds": 215.95,
+      "receipt_path": "artifacts/validation/native-axis-pilot-public-v1/full-suite-attempt-01/receipt.json",
+      "receipt_sha256": "0925d7205b11d1954c208413bf14523267c22bb1d94e348bd9c2f9f5b045d7ef",
+      "tests": 1150
+    },
+    "scope": "Full1150-pass source closure is unchanged;32 additional prospective-runner tests passed on exact committed runner/test bytes. Five initial runner failures and one review harness correction remain preserved.",
+    "tests_reexecuted_during_preparation": 0
+  },
+  "fixed_work": {
+    "common_template_preview_attempts": 26,
+    "cuts_per_episode": 3,
+    "episodes": 4,
+    "final_worlds": 0,
+    "gradient_updates": 0,
+    "independent_history_audits": 4,
+    "inventory_count_per_episode": 4,
+    "preview_attempts_per_episode": 66,
+    "preview_attempts_per_inventory": [
+      26,
+      22,
+      18,
+      0
+    ],
+    "stress_worlds": 0
+  },
+  "immutable_source_root": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-cache-v1/43857b5a4931a9b4c3909f9c2914833e795b685b/source",
+  "launcher_log": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/validation/native-axis-cache-public-v1/launcher.log",
+  "maximum_worker_and_grace_seconds": 600,
+  "measurement_scope": "One isolated worker; source copy/import and launcher overhead reported separately from590s worker+10s grace.6GiB is cooperative cumulative processRSS, not an OS reservation. Background activity recorded at actual launch; no launch or timing comparison occurred in preparation.",
+  "output_namespace": "artifacts/benchmarks/native-axis-cache-v1",
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "python_executable": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+  "python_executable_sha256": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a",
+  "release_requirement": "Do not execute until this prospective baseline is committed and root explicitly releases. No automatic retry or parameter changes.",
+  "resource_budget": {
+    "hard_termination_grace_seconds": 10.0,
+    "process_peak_rss_bytes": 6442450944,
+    "worker_wall_seconds": 590.0
+  },
+  "runner_sha256": "5ba33718a1f58cf1f29197887753e9ad6d043d79c8d3f7ad5544d4189e6c79c1",
+  "runtime_content_hash": "sha256:55fe17e6a1e5811f606713e857ee8c3142ae44573f4c30f409aa142d3656c92e",
+  "runtime_manifest_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-cache-v1/43857b5a4931a9b4c3909f9c2914833e795b685b/runtime-source.json",
+  "runtime_manifest_sha256": "c067100c907adba159a66af4ac0dc3816555a0ee4f641447bb4c56d28cbfb60e",
+  "runtime_versions": {
+    "nibabel": "5.4.2",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "torch": "2.14.1"
+  },
+  "schema_version": 1,
+  "scientific_source_equivalence": {
+    "full_suite_revision": "f3a05910bc142e44c253cae7b747da3fb315d3ea",
+    "python_files_byte_verified_against_full_suite_commit": 42,
+    "src_resectionlab_changed_paths": []
+  },
+  "source_archive_bytes": 156590080,
+  "source_archive_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-cache-v1/43857b5a4931a9b4c3909f9c2914833e795b685b/source.tar",
+  "source_archive_sha256": "685b33cb19a7d8004454fb80b3e102f7d5304e39908e41f850edb72c180b7ee3",
+  "source_commit": "43857b5a4931a9b4c3909f9c2914833e795b685b",
+  "source_file_count": 2930,
+  "source_file_permissions": "All extracted regular files and copied case have write bits cleared; archive and manifests are mode0444. Content checks remain authoritative.",
+  "source_manifest_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-cache-v1/43857b5a4931a9b4c3909f9c2914833e795b685b/source-files.json",
+  "source_manifest_sha256": "ca855aa790848be755b8603211b6de668f29fd0fb63e48e18ba13c6c5d57e713",
+  "status": "prepared_not_released_not_executed",
+  "working_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-cache-v1/43857b5a4931a9b4c3909f9c2914833e795b685b/source"
+}
