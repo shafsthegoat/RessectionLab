@@ -1,0 +1,18 @@
+{
+  "source_file_sha256": {
+    "experiment-status.json": "131a5c06c87793b1ebcff9c417fe50ffce1e1329ab57955b528a1be2190e7c57",
+    "launch-source.json": "036ce307d1785559a340e3576df495829288cb25760838c1d7b22e8a676a81cd",
+    "study/source.json": "036ce307d1785559a340e3576df495829288cb25760838c1d7b22e8a676a81cd",
+    "study/summary.json": "1b42e80f0a23e1ad98ee49023e0fdb6845a77f1ef030e419c32fde93ed047a6f",
+    "study/status.json": "1bb9a3a37be896b36f9a03ebf147eb0599cfaa5bceb36088d5344dbd956a1780",
+    "study/manifest.json": "f8cf86b1276266473fd63fa353fdc5c6e777a76f2b6265c0dbb4c4d4509f04d2",
+    "study/candidate-freeze.json": "a7baf10993aab57ceaf48c5795a896d9cede77f1f5d10261cdad8b1ea41cb02c",
+    "study/development-geometry-825d1885-6d54-4d69-963c-b5c585fb6d8c/native-history-audit.json": "b8f515e3da3add10ff35cb7d40a7a1af616bfc595edc0ce37b8efc245840dd2f",
+    "study/development-geometry-825d1885-6d54-4d69-963c-b5c585fb6d8c/native-history-replay.json": "50c69c8fbf10a18342524a3f8df6aa496331b0fd61edc85444b80c55be53cda9"
+  },
+  "report_script_sha256": "15c6b2ff7b2a05fc68f9ce3ef42c5f138143b9f8d3d2736fe11215c927946af5",
+  "patient_derived_development_cases": 1,
+  "human_pretraining_patients": 0,
+  "optimizer_seeds_are_not_independent_patients": true,
+  "final_worlds_used": false
+}

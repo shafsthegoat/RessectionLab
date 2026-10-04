@@ -1,0 +1,631 @@
+{
+  "candidate_hashes": [
+    [
+      "FEATURE_UNITS:INITIAL:11",
+      "sha256:4ed27fa093c5380ebe2446a7ac2fec8a719a4cab7a74d73d2bf9a04af55099a6"
+    ],
+    [
+      "FEATURE_UNITS:INITIAL:23",
+      "sha256:3349923db7b12a32bebf3262331321eec36538f22d98973ad76f3ef6768a83e7"
+    ],
+    [
+      "FEATURE_UNITS:INITIAL:47",
+      "sha256:0c9d9c08d529dc65364bf5db19d92abc94d5d9d4088da0495b768c1b18e4e70d"
+    ],
+    [
+      "FEATURE_UNITS:PATIENT_SCRATCH_RL:11",
+      "sha256:0dba16fa92767c3175e63db4edab206bbc2193195fceaaa2b7fafe1005e03c9e"
+    ],
+    [
+      "FEATURE_UNITS:PATIENT_SCRATCH_RL:23",
+      "sha256:fcafbb6d7ce7cd2a6aefca67b38153772b77dfab6e401d55a1c97f6da9d72511"
+    ],
+    [
+      "FEATURE_UNITS:PATIENT_SCRATCH_RL:47",
+      "sha256:a15612f88b401e6a787562df04e346bc08051417472999b4d84370c84ca38e73"
+    ],
+    [
+      "FEATURE_UNITS:PROCEDURAL_PRETRAINED_ADAPTED:11",
+      "sha256:ba0cab3787e936c4f8aafd7bcaf329001d24d93ccf3bb75e8d37bce2dc2e08e5"
+    ],
+    [
+      "FEATURE_UNITS:PROCEDURAL_PRETRAINED_ADAPTED:23",
+      "sha256:8fc6b2e3659d403f78109592f583a8e01edaef74ef628c44967578fca8e6b5aa"
+    ],
+    [
+      "FEATURE_UNITS:PROCEDURAL_PRETRAINED_ADAPTED:47",
+      "sha256:4525c3e868ccc48f1687e7b415b2a65fdca475654c390da0286e3736a6477099"
+    ],
+    [
+      "FEATURE_UNITS:PROCEDURAL_PRETRAINED_FROZEN",
+      "sha256:71f1099cad2417cc3dd5999ecad0d2b24a21d27da4a74131d1bb3d3f806752ae"
+    ],
+    [
+      "GREEDY",
+      "sha256:5d03da9a3b9145ec19db580ab16018e72c32f5c073c9314ebcd58bbadc2208e9"
+    ],
+    [
+      "RAW:INITIAL:11",
+      "sha256:43aed0973a83e55822669578fa97df8347ede446086bca70c4166ac63f7c0a9e"
+    ],
+    [
+      "RAW:INITIAL:23",
+      "sha256:dedcea21d9d4cc1f6a230d6f63f293fbaf447e1b5a2197b61ca850f8170cf429"
+    ],
+    [
+      "RAW:INITIAL:47",
+      "sha256:b406b849271cab5cd2ba16582fd7ae214e5854396250ef2db81efbf6fb77cdad"
+    ],
+    [
+      "RAW:PATIENT_SCRATCH_RL:11",
+      "sha256:1d3e6a9ee8e144cbffa089bde98d317c4f5e09f58344dc23178bd84f3904bd3a"
+    ],
+    [
+      "RAW:PATIENT_SCRATCH_RL:23",
+      "sha256:aeb25b995e2570a4d91229fc83e7a3ba4046f02481e312ee7c4caa6161216091"
+    ],
+    [
+      "RAW:PATIENT_SCRATCH_RL:47",
+      "sha256:58491e6f3e6f3b8c994c25906b2d734492b8929ba1b064dfb3e825ba72591dc1"
+    ],
+    [
+      "RAW:PROCEDURAL_PRETRAINED_ADAPTED:11",
+      "sha256:6b9700dce2724ffd7d106a16e86df6dd58afe89d6d525c0520aeb3e852a0417e"
+    ],
+    [
+      "RAW:PROCEDURAL_PRETRAINED_ADAPTED:23",
+      "sha256:0720ac4163242ed0689f9e78ec39612bb9de9326fe6afff80f320085480c9f47"
+    ],
+    [
+      "RAW:PROCEDURAL_PRETRAINED_ADAPTED:47",
+      "sha256:960c111f83f0bfb05aca1132ddfd0232a7f55d646da43279ae966edfe2a8dc57"
+    ],
+    [
+      "RAW:PROCEDURAL_PRETRAINED_FROZEN",
+      "sha256:8336345563e1c0f9ec13f986b55218ac843397e33977977aea8d2072780ce3cd"
+    ],
+    [
+      "SEARCH",
+      "sha256:e0579e9b5633d553ed3ae98691e6bc82ebeddeabfedb3c5a09d58e9d034e2d96"
+    ],
+    [
+      "STOP",
+      "sha256:09bfe1237e410b2c35059b9908434f42392fec027d8a2a91f55b841a083c4098"
+    ]
+  ],
+  "candidate_profiles": {
+    "FEATURE_UNITS:INITIAL:11": {
+      "full_policy_hash": "sha256:748abc9f7d23465682bd6766dfd9ac09ac52652c890a31aadb2847b6bc0402fe",
+      "profile_content_hash": "sha256:ae7e392794857e72d3cbd06dd7106dd30bcf557e8a91fe9261bf14d6481cc74b",
+      "profile_id": "FEATURE_UNITS"
+    },
+    "FEATURE_UNITS:INITIAL:23": {
+      "full_policy_hash": "sha256:40ac2014f6904ddb076d4a2211bc0fc77734c0fc015e1575e7682289f75453d0",
+      "profile_content_hash": "sha256:ae7e392794857e72d3cbd06dd7106dd30bcf557e8a91fe9261bf14d6481cc74b",
+      "profile_id": "FEATURE_UNITS"
+    },
+    "FEATURE_UNITS:INITIAL:47": {
+      "full_policy_hash": "sha256:110823e726e31fabdc4168f019dc4bf581ae4de8c1298e33ef9e48ea812f7bf1",
+      "profile_content_hash": "sha256:ae7e392794857e72d3cbd06dd7106dd30bcf557e8a91fe9261bf14d6481cc74b",
+      "profile_id": "FEATURE_UNITS"
+    },
+    "FEATURE_UNITS:PATIENT_SCRATCH_RL:11": {
+      "full_policy_hash": "sha256:748abc9f7d23465682bd6766dfd9ac09ac52652c890a31aadb2847b6bc0402fe",
+      "profile_content_hash": "sha256:ae7e392794857e72d3cbd06dd7106dd30bcf557e8a91fe9261bf14d6481cc74b",
+      "profile_id": "FEATURE_UNITS"
+    },
+    "FEATURE_UNITS:PATIENT_SCRATCH_RL:23": {
+      "full_policy_hash": "sha256:4df113d7ca4ab2229b9a096e37a483b26ec80ac42188dbe751ee2ff10745804d",
+      "profile_content_hash": "sha256:ae7e392794857e72d3cbd06dd7106dd30bcf557e8a91fe9261bf14d6481cc74b",
+      "profile_id": "FEATURE_UNITS"
+    },
+    "FEATURE_UNITS:PATIENT_SCRATCH_RL:47": {
+      "full_policy_hash": "sha256:cc383b516f1f03c1d81715091dd665343ad8d8681f32cc6b7a3aace1264c0c2b",
+      "profile_content_hash": "sha256:ae7e392794857e72d3cbd06dd7106dd30bcf557e8a91fe9261bf14d6481cc74b",
+      "profile_id": "FEATURE_UNITS"
+    },
+    "FEATURE_UNITS:PROCEDURAL_PRETRAINED_ADAPTED:11": {
+      "full_policy_hash": "sha256:b9adca0f70959d8f74f0b6d81e7445c73001a7f71740fe517381c59281e73b11",
+      "profile_content_hash": "sha256:ae7e392794857e72d3cbd06dd7106dd30bcf557e8a91fe9261bf14d6481cc74b",
+      "profile_id": "FEATURE_UNITS"
+    },
+    "FEATURE_UNITS:PROCEDURAL_PRETRAINED_ADAPTED:23": {
+      "full_policy_hash": "sha256:b9adca0f70959d8f74f0b6d81e7445c73001a7f71740fe517381c59281e73b11",
+      "profile_content_hash": "sha256:ae7e392794857e72d3cbd06dd7106dd30bcf557e8a91fe9261bf14d6481cc74b",
+      "profile_id": "FEATURE_UNITS"
+    },
+    "FEATURE_UNITS:PROCEDURAL_PRETRAINED_ADAPTED:47": {
+      "full_policy_hash": "sha256:b9adca0f70959d8f74f0b6d81e7445c73001a7f71740fe517381c59281e73b11",
+      "profile_content_hash": "sha256:ae7e392794857e72d3cbd06dd7106dd30bcf557e8a91fe9261bf14d6481cc74b",
+      "profile_id": "FEATURE_UNITS"
+    },
+    "FEATURE_UNITS:PROCEDURAL_PRETRAINED_FROZEN": {
+      "full_policy_hash": "sha256:b9adca0f70959d8f74f0b6d81e7445c73001a7f71740fe517381c59281e73b11",
+      "profile_content_hash": "sha256:ae7e392794857e72d3cbd06dd7106dd30bcf557e8a91fe9261bf14d6481cc74b",
+      "profile_id": "FEATURE_UNITS"
+    },
+    "RAW:INITIAL:11": {
+      "full_policy_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322",
+      "profile_content_hash": "sha256:b0ae5e34b7fbd206ca7e690fc29c5283ab4be69af25ba45b67f4f5d858b27e12",
+      "profile_id": "RAW"
+    },
+    "RAW:INITIAL:23": {
+      "full_policy_hash": "sha256:435e605ae7df4d64e5929702a690098954baf7a962fdf4218133dab6494fd326",
+      "profile_content_hash": "sha256:b0ae5e34b7fbd206ca7e690fc29c5283ab4be69af25ba45b67f4f5d858b27e12",
+      "profile_id": "RAW"
+    },
+    "RAW:INITIAL:47": {
+      "full_policy_hash": "sha256:df38b5264d3ee1df4f133ea9e01d5d44e6d4fe896106e3696950fb9e4c19e215",
+      "profile_content_hash": "sha256:b0ae5e34b7fbd206ca7e690fc29c5283ab4be69af25ba45b67f4f5d858b27e12",
+      "profile_id": "RAW"
+    },
+    "RAW:PATIENT_SCRATCH_RL:11": {
+      "full_policy_hash": "sha256:9356db7deb702a192ceba1b538385c6dd635844afd05b90ebaa7ae001010cb8d",
+      "profile_content_hash": "sha256:b0ae5e34b7fbd206ca7e690fc29c5283ab4be69af25ba45b67f4f5d858b27e12",
+      "profile_id": "RAW"
+    },
+    "RAW:PATIENT_SCRATCH_RL:23": {
+      "full_policy_hash": "sha256:435e605ae7df4d64e5929702a690098954baf7a962fdf4218133dab6494fd326",
+      "profile_content_hash": "sha256:b0ae5e34b7fbd206ca7e690fc29c5283ab4be69af25ba45b67f4f5d858b27e12",
+      "profile_id": "RAW"
+    },
+    "RAW:PATIENT_SCRATCH_RL:47": {
+      "full_policy_hash": "sha256:7b77aef4802730f8e1a52b0952c6992ef16edf181f9b025bf0f4a54a95f9fd97",
+      "profile_content_hash": "sha256:b0ae5e34b7fbd206ca7e690fc29c5283ab4be69af25ba45b67f4f5d858b27e12",
+      "profile_id": "RAW"
+    },
+    "RAW:PROCEDURAL_PRETRAINED_ADAPTED:11": {
+      "full_policy_hash": "sha256:3ca1f7d23de440257bf1819f2d36ef1beb348ba6452b0b234b740e41d06de566",
+      "profile_content_hash": "sha256:b0ae5e34b7fbd206ca7e690fc29c5283ab4be69af25ba45b67f4f5d858b27e12",
+      "profile_id": "RAW"
+    },
+    "RAW:PROCEDURAL_PRETRAINED_ADAPTED:23": {
+      "full_policy_hash": "sha256:9591d9e40207b4a150a685f753680fca29f3b4f1b4f113d4a167980a8738847a",
+      "profile_content_hash": "sha256:b0ae5e34b7fbd206ca7e690fc29c5283ab4be69af25ba45b67f4f5d858b27e12",
+      "profile_id": "RAW"
+    },
+    "RAW:PROCEDURAL_PRETRAINED_ADAPTED:47": {
+      "full_policy_hash": "sha256:cc4c86f79827b0500e2628da6e7546c53819b720f12203dc1bb73571c2ed61ce",
+      "profile_content_hash": "sha256:b0ae5e34b7fbd206ca7e690fc29c5283ab4be69af25ba45b67f4f5d858b27e12",
+      "profile_id": "RAW"
+    },
+    "RAW:PROCEDURAL_PRETRAINED_FROZEN": {
+      "full_policy_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57",
+      "profile_content_hash": "sha256:b0ae5e34b7fbd206ca7e690fc29c5283ab4be69af25ba45b67f4f5d858b27e12",
+      "profile_id": "RAW"
+    }
+  },
+  "candidates": [
+    {
+      "actions": [
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "STOP",
+      "plan_id": "STOP",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": null,
+      "shared_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "NATIVE:native-wide-aspiration:0",
+        "NATIVE:native-wide-aspiration:3",
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "GREEDY",
+      "plan_id": "GREEDY",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": null,
+      "shared_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "NATIVE:native-wide-aspiration:0",
+        "NATIVE:native-wide-aspiration:3",
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "SEARCH",
+      "plan_id": "SEARCH",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": null,
+      "shared_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "NATIVE:native-fine-aspiration:3",
+        "NATIVE:native-fine-aspiration:0",
+        "NATIVE:native-wide-aspiration:3"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PROCEDURAL_PRETRAINED_FROZEN",
+      "plan_id": "RAW:PROCEDURAL_PRETRAINED_FROZEN",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57",
+      "shared_checkpoint_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57"
+    },
+    {
+      "actions": [
+        "NATIVE:native-wide-aspiration:0",
+        "NATIVE:native-wide-aspiration:3",
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PROCEDURAL_PRETRAINED_FROZEN",
+      "plan_id": "FEATURE_UNITS:PROCEDURAL_PRETRAINED_FROZEN",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:b9adca0f70959d8f74f0b6d81e7445c73001a7f71740fe517381c59281e73b11",
+      "shared_checkpoint_hash": "sha256:b9adca0f70959d8f74f0b6d81e7445c73001a7f71740fe517381c59281e73b11"
+    },
+    {
+      "actions": [
+        "NATIVE:native-wide-aspiration:0",
+        "NATIVE:native-wide-aspiration:3",
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PATIENT_SCRATCH_RL",
+      "plan_id": "RAW:PATIENT_SCRATCH_RL:11",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:9356db7deb702a192ceba1b538385c6dd635844afd05b90ebaa7ae001010cb8d",
+      "shared_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "INITIAL_POLICY",
+      "plan_id": "RAW:INITIAL:11",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322",
+      "shared_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "NATIVE:native-wide-aspiration:0",
+        "NATIVE:native-wide-aspiration:3",
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PATIENT_SCRATCH_RL",
+      "plan_id": "FEATURE_UNITS:PATIENT_SCRATCH_RL:11",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:748abc9f7d23465682bd6766dfd9ac09ac52652c890a31aadb2847b6bc0402fe",
+      "shared_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "NATIVE:native-wide-aspiration:0",
+        "NATIVE:native-wide-aspiration:3",
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "INITIAL_POLICY",
+      "plan_id": "FEATURE_UNITS:INITIAL:11",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:748abc9f7d23465682bd6766dfd9ac09ac52652c890a31aadb2847b6bc0402fe",
+      "shared_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "NATIVE:native-fine-aspiration:0",
+        "NATIVE:native-fine-aspiration:3",
+        "NATIVE:native-wide-aspiration:0"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PROCEDURAL_PRETRAINED_ADAPTED",
+      "plan_id": "RAW:PROCEDURAL_PRETRAINED_ADAPTED:11",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:3ca1f7d23de440257bf1819f2d36ef1beb348ba6452b0b234b740e41d06de566",
+      "shared_checkpoint_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57"
+    },
+    {
+      "actions": [
+        "NATIVE:native-wide-aspiration:0",
+        "NATIVE:native-wide-aspiration:3",
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PROCEDURAL_PRETRAINED_ADAPTED",
+      "plan_id": "FEATURE_UNITS:PROCEDURAL_PRETRAINED_ADAPTED:11",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:b9adca0f70959d8f74f0b6d81e7445c73001a7f71740fe517381c59281e73b11",
+      "shared_checkpoint_hash": "sha256:b9adca0f70959d8f74f0b6d81e7445c73001a7f71740fe517381c59281e73b11"
+    },
+    {
+      "actions": [
+        "NATIVE:native-fine-aspiration:0",
+        "NATIVE:native-fine-aspiration:3",
+        "NATIVE:native-wide-aspiration:0"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PATIENT_SCRATCH_RL",
+      "plan_id": "RAW:PATIENT_SCRATCH_RL:23",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:435e605ae7df4d64e5929702a690098954baf7a962fdf4218133dab6494fd326",
+      "shared_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "NATIVE:native-fine-aspiration:0",
+        "NATIVE:native-fine-aspiration:3",
+        "NATIVE:native-wide-aspiration:0"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "INITIAL_POLICY",
+      "plan_id": "RAW:INITIAL:23",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:435e605ae7df4d64e5929702a690098954baf7a962fdf4218133dab6494fd326",
+      "shared_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "NATIVE:native-fine-aspiration:0",
+        "NATIVE:native-fine-aspiration:3",
+        "NATIVE:native-wide-aspiration:0"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PATIENT_SCRATCH_RL",
+      "plan_id": "FEATURE_UNITS:PATIENT_SCRATCH_RL:23",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:4df113d7ca4ab2229b9a096e37a483b26ec80ac42188dbe751ee2ff10745804d",
+      "shared_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "NATIVE:native-fine-aspiration:0",
+        "NATIVE:native-fine-aspiration:3",
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "INITIAL_POLICY",
+      "plan_id": "FEATURE_UNITS:INITIAL:23",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:40ac2014f6904ddb076d4a2211bc0fc77734c0fc015e1575e7682289f75453d0",
+      "shared_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "NATIVE:native-fine-aspiration:3",
+        "NATIVE:native-fine-aspiration:0",
+        "NATIVE:native-wide-aspiration:0"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PROCEDURAL_PRETRAINED_ADAPTED",
+      "plan_id": "RAW:PROCEDURAL_PRETRAINED_ADAPTED:23",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:9591d9e40207b4a150a685f753680fca29f3b4f1b4f113d4a167980a8738847a",
+      "shared_checkpoint_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57"
+    },
+    {
+      "actions": [
+        "NATIVE:native-wide-aspiration:0",
+        "NATIVE:native-wide-aspiration:3",
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PROCEDURAL_PRETRAINED_ADAPTED",
+      "plan_id": "FEATURE_UNITS:PROCEDURAL_PRETRAINED_ADAPTED:23",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:b9adca0f70959d8f74f0b6d81e7445c73001a7f71740fe517381c59281e73b11",
+      "shared_checkpoint_hash": "sha256:b9adca0f70959d8f74f0b6d81e7445c73001a7f71740fe517381c59281e73b11"
+    },
+    {
+      "actions": [
+        "NATIVE:native-fine-aspiration:0",
+        "NATIVE:native-wide-aspiration:3",
+        "NATIVE:native-wide-aspiration:0"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PATIENT_SCRATCH_RL",
+      "plan_id": "RAW:PATIENT_SCRATCH_RL:47",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:7b77aef4802730f8e1a52b0952c6992ef16edf181f9b025bf0f4a54a95f9fd97",
+      "shared_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "NATIVE:native-fine-aspiration:0",
+        "NATIVE:native-fine-aspiration:3",
+        "NATIVE:native-wide-aspiration:3"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "INITIAL_POLICY",
+      "plan_id": "RAW:INITIAL:47",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:df38b5264d3ee1df4f133ea9e01d5d44e6d4fe896106e3696950fb9e4c19e215",
+      "shared_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "NATIVE:native-wide-aspiration:0",
+        "NATIVE:native-wide-aspiration:3",
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PATIENT_SCRATCH_RL",
+      "plan_id": "FEATURE_UNITS:PATIENT_SCRATCH_RL:47",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:cc383b516f1f03c1d81715091dd665343ad8d8681f32cc6b7a3aace1264c0c2b",
+      "shared_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "INITIAL_POLICY",
+      "plan_id": "FEATURE_UNITS:INITIAL:47",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:110823e726e31fabdc4168f019dc4bf581ae4de8c1298e33ef9e48ea812f7bf1",
+      "shared_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "NATIVE:native-wide-aspiration:3",
+        "NATIVE:native-fine-aspiration:0",
+        "NATIVE:native-wide-aspiration:0"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PROCEDURAL_PRETRAINED_ADAPTED",
+      "plan_id": "RAW:PROCEDURAL_PRETRAINED_ADAPTED:47",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:cc4c86f79827b0500e2628da6e7546c53819b720f12203dc1bb73571c2ed61ce",
+      "shared_checkpoint_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57"
+    },
+    {
+      "actions": [
+        "NATIVE:native-wide-aspiration:0",
+        "NATIVE:native-wide-aspiration:3",
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PROCEDURAL_PRETRAINED_ADAPTED",
+      "plan_id": "FEATURE_UNITS:PROCEDURAL_PRETRAINED_ADAPTED:47",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:b9adca0f70959d8f74f0b6d81e7445c73001a7f71740fe517381c59281e73b11",
+      "shared_checkpoint_hash": "sha256:b9adca0f70959d8f74f0b6d81e7445c73001a7f71740fe517381c59281e73b11"
+    }
+  ],
+  "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+  "decision_model_fingerprint": "sha256:ffe264c83cf64b4d52fac9bf6169d94f364c776bd0394ed313741c1fac403658",
+  "development_seeds": [
+    17944101631498118750,
+    16050408593453808557,
+    16285456173753334256,
+    8109736527858856845,
+    8342823306791655420
+  ],
+  "fingerprint": "sha256:32b066c62f69c81fc5a964d4485c69b6d823a5fea914126575093b04009c9569",
+  "frozen_at": "2026-10-04T11:25:12.959165+00:00",
+  "generator_family": "rigid_gaussian",
+  "generator_fingerprint": "sha256:65178826778d6f02e623f38390d72c121c9e2cd84e5c0b69f882353a64f09a48",
+  "input_profiles": {
+    "FEATURE_UNITS": {
+      "action_divisors": [
+        1.0,
+        648.0,
+        648.0,
+        648.0,
+        648.0,
+        120.0,
+        2.25,
+        1.1,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        648.0,
+        648.0,
+        648.0
+      ],
+      "action_feature_names": [
+        "stop",
+        "target_benefit",
+        "normal_volume",
+        "motor_evidence",
+        "language_evidence",
+        "insertion_distance",
+        "tip_radius",
+        "shaft_radius",
+        "tool_change",
+        "depth",
+        "remaining_target_fraction",
+        "adjacent_target_fraction",
+        "partial_normal_contact_volume",
+        "partial_motor_contact_surrogate",
+        "partial_language_contact_surrogate"
+      ],
+      "centering": false,
+      "clipping": false,
+      "critic_output_divisor": 1.0,
+      "profile_content_hash": "sha256:ae7e392794857e72d3cbd06dd7106dd30bcf557e8a91fe9261bf14d6481cc74b",
+      "profile_id": "FEATURE_UNITS",
+      "return_divisor": 1.0,
+      "running_statistics": false,
+      "state_divisors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "state_feature_names": [
+        "remaining_target_fraction",
+        "action_budget_fraction_used",
+        "removed_tissue_fraction",
+        "nominal_severed_edge_fraction",
+        "motor_evidence_available",
+        "language_evidence_available"
+      ],
+      "version": "native-fixed-action-units-v1"
+    },
+    "RAW": {
+      "action_divisors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "action_feature_names": [
+        "stop",
+        "target_benefit",
+        "normal_volume",
+        "motor_evidence",
+        "language_evidence",
+        "insertion_distance",
+        "tip_radius",
+        "shaft_radius",
+        "tool_change",
+        "depth",
+        "remaining_target_fraction",
+        "adjacent_target_fraction",
+        "partial_normal_contact_volume",
+        "partial_motor_contact_surrogate",
+        "partial_language_contact_surrogate"
+      ],
+      "centering": false,
+      "clipping": false,
+      "critic_output_divisor": 1.0,
+      "profile_content_hash": "sha256:b0ae5e34b7fbd206ca7e690fc29c5283ab4be69af25ba45b67f4f5d858b27e12",
+      "profile_id": "RAW",
+      "return_divisor": 1.0,
+      "running_statistics": false,
+      "state_divisors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "state_feature_names": [
+        "remaining_target_fraction",
+        "action_budget_fraction_used",
+        "removed_tissue_fraction",
+        "nominal_severed_edge_fraction",
+        "motor_evidence_available",
+        "language_evidence_available"
+      ],
+      "version": "native-fixed-action-units-v1"
+    }
+  },
+  "optimization_partition_hash": "sha256:aa8de3098a046f59a463eca08667916b6e4619417da135a473405457b94b0a1c",
+  "selection_partition_hash": "sha256:62f80e45baec7c506272e1b04037c8551267969fdbd2fdb650a61bb720df8dc2",
+  "selection_rule": "declared shared baselines; profile-specific initial, frozen and selection-best actors; earliest tie"
+}

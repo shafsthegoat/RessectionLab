@@ -1,0 +1,1670 @@
+{
+  "checkpoint_export_seconds": 0.008049792028032243,
+  "checkpoint_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/pretraining-feature_units/procedural.pt",
+  "policy_hash": "sha256:b9adca0f70959d8f74f0b6d81e7445c73001a7f71740fe517381c59281e73b11",
+  "provenance": {
+    "actor_parameters_changed": true,
+    "checkpoint_rule": "fixed_budget_latest",
+    "clinical_population_training": false,
+    "declaration_hash": "sha256:3abf10162ed9d096a7e21ec84a87c1a88ebf12bb074345a78040dfdebb828ac9",
+    "excluded_targets": [
+      {
+        "aliases": [
+          "UCSF-PDGM:UCSF-PDGM-004",
+          "BraTS2021:BraTS2021_00097"
+        ],
+        "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "excluded_from_pretraining": true,
+        "group_id": "UCSF-PDGM:UCSF-PDGM-0004",
+        "outer_split": "development",
+        "planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+        "source_kind": "public_patient_structural_mirror"
+      }
+    ],
+    "final_worlds_used": false,
+    "gradient_episode_sources": {
+      "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89": 32,
+      "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c": 32
+    },
+    "human_patients_in_pretraining": 0,
+    "initial_policy_hash": "sha256:28620f54f1afdc3f0da87342fc7bba3a85a7f7e68b0728e5a5a0bad3c1b47389",
+    "initial_trainable_parameter_hash": "sha256:6acfac0b0f8565437d2d85384df3e1b2815438109b63636cf0ea2515d6c6b008",
+    "input_profile": {
+      "action_divisors": [
+        1.0,
+        648.0,
+        648.0,
+        648.0,
+        648.0,
+        120.0,
+        2.25,
+        1.1,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        648.0,
+        648.0,
+        648.0
+      ],
+      "action_feature_names": [
+        "stop",
+        "target_benefit",
+        "normal_volume",
+        "motor_evidence",
+        "language_evidence",
+        "insertion_distance",
+        "tip_radius",
+        "shaft_radius",
+        "tool_change",
+        "depth",
+        "remaining_target_fraction",
+        "adjacent_target_fraction",
+        "partial_normal_contact_volume",
+        "partial_motor_contact_surrogate",
+        "partial_language_contact_surrogate"
+      ],
+      "centering": false,
+      "clipping": false,
+      "critic_output_divisor": 1.0,
+      "profile_id": "FEATURE_UNITS",
+      "return_divisor": 1.0,
+      "running_statistics": false,
+      "state_divisors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "state_feature_names": [
+        "remaining_target_fraction",
+        "action_budget_fraction_used",
+        "removed_tissue_fraction",
+        "nominal_severed_edge_fraction",
+        "motor_evidence_available",
+        "language_evidence_available"
+      ],
+      "version": "native-fixed-action-units-v1"
+    },
+    "input_profile_hash": "sha256:ae7e392794857e72d3cbd06dd7106dd30bcf557e8a91fe9261bf14d6481cc74b",
+    "members": [
+      {
+        "aliases": [
+          "procedural_generator:native-slab-v1"
+        ],
+        "decision_model_hash": "sha256:c81e119adde1daa22f8515f16ae821ab495ab0b658df86185d65820e07b0d5d5",
+        "family_id": "procedural:native-slab-v1",
+        "generator_manifest": {
+          "aliases": [
+            "procedural_generator:native-slab-v1"
+          ],
+          "case_id": "synthetic_native_procedural_slab_v1",
+          "construction_check": {
+            "action_feature_shape": [
+              5,
+              15
+            ],
+            "gradient_steps": 0,
+            "legal_nonstop_count": 4,
+            "rejection_counts": {},
+            "source_and_model_hashes_reproduced": true,
+            "state_feature_shape": [
+              6
+            ],
+            "transitions_executed": 0
+          },
+          "construction_only": true,
+          "group_id": "procedural:native-slab-v1",
+          "initial_action_ids": [
+            "STOP",
+            "NATIVE:native-fine-aspiration:0",
+            "NATIVE:native-wide-aspiration:0",
+            "NATIVE:native-fine-aspiration:1",
+            "NATIVE:native-wide-aspiration:1"
+          ],
+          "initial_legal_nonstop": 4,
+          "initial_nonstop_action_ids": [
+            "NATIVE:native-fine-aspiration:0",
+            "NATIVE:native-wide-aspiration:0",
+            "NATIVE:native-fine-aspiration:1",
+            "NATIVE:native-wide-aspiration:1"
+          ],
+          "initial_rejection_counts": {},
+          "model_hash": "sha256:c81e119adde1daa22f8515f16ae821ab495ab0b658df86185d65820e07b0d5d5",
+          "native_config_hash": "sha256:f041c131728710b7da1505db940865608b6ca98b4ae4b654211e183b3cdc97fd",
+          "recipe": {
+            "access": {
+              "center_mm": [
+                4.0,
+                4.0,
+                -0.5
+              ],
+              "normal_inward": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "radius_mm": 4.0,
+              "window_id": "hypothetical"
+            },
+            "affine": [
+              [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "candidate_entries_mm": [
+              [
+                3.0,
+                4.0,
+                -0.5
+              ],
+              [
+                5.0,
+                4.0,
+                -0.5
+              ]
+            ],
+            "candidate_targets_mm": [
+              [
+                3.0,
+                4.0,
+                6.0
+              ],
+              [
+                5.0,
+                4.0,
+                6.0
+              ]
+            ],
+            "case_id": "synthetic_native_procedural_slab_v1",
+            "family_id": "procedural:native-slab-v1",
+            "language_evidence": null,
+            "max_actions": 7,
+            "max_steps": 3,
+            "motor_evidence": null,
+            "partial_contact_weight": 0.05,
+            "shape": [
+              9,
+              9,
+              8
+            ],
+            "source_kind": "procedural_native",
+            "target_boxes_half_open": [
+              [
+                [
+                  2,
+                  7
+                ],
+                [
+                  2,
+                  7
+                ],
+                [
+                  4,
+                  8
+                ]
+              ]
+            ],
+            "target_label": 1,
+            "tissue": "all_true",
+            "tools": [
+              {
+                "max_access_angle_deg": 35.0,
+                "parameter_source": "generic research geometry; not a verified commercial device",
+                "shaft_radius_mm": 0.45,
+                "tip_length_mm": 2.0,
+                "tip_radius_mm": 1.25,
+                "tool_id": "native-fine-aspiration",
+                "working_length_mm": 120.0
+              },
+              {
+                "max_access_angle_deg": 35.0,
+                "parameter_source": "generic research geometry; not a verified commercial device",
+                "shaft_radius_mm": 1.1,
+                "tip_length_mm": 3.0,
+                "tip_radius_mm": 2.25,
+                "tool_id": "native-wide-aspiration",
+                "working_length_mm": 120.0
+              }
+            ],
+            "version": "native-procedural-families-v1"
+          },
+          "source_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+          "target_voxels": 100,
+          "tissue_support_provenance": "procedural solid cube; exact generating mask",
+          "training_gradient_steps": 0,
+          "world_partitions": {
+            "final_evaluation": {
+              "case_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+              "generator": {
+                "family": "rigid_gaussian",
+                "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+                "rotation_center_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation_scale_deg": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "translation_scale_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "version": "rigid-registration-v1"
+              },
+              "interpretation": "deterministic_optimization",
+              "planning_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+              "role": "final_evaluation",
+              "seeds": [
+                2876800108607767037,
+                9197612259568361627,
+                9562622899901630680
+              ]
+            },
+            "optimization": {
+              "case_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+              "generator": {
+                "family": "rigid_gaussian",
+                "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+                "rotation_center_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation_scale_deg": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "translation_scale_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "version": "rigid-registration-v1"
+              },
+              "interpretation": "deterministic_optimization",
+              "planning_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+              "role": "optimization",
+              "seeds": [
+                11103855882051260355,
+                11243981505934875939,
+                6936170738492634982
+              ]
+            },
+            "selection": {
+              "case_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+              "generator": {
+                "family": "rigid_gaussian",
+                "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+                "rotation_center_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation_scale_deg": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "translation_scale_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "version": "rigid-registration-v1"
+              },
+              "interpretation": "deterministic_optimization",
+              "planning_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+              "role": "selection",
+              "seeds": [
+                1943417729305584125,
+                9073826545075957572
+              ]
+            },
+            "stress": {
+              "case_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+              "generator": {
+                "family": "rigid_uniform",
+                "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+                "rotation_center_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation_scale_deg": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "translation_scale_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "version": "rigid-registration-v1"
+              },
+              "interpretation": "deterministic_optimization",
+              "planning_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+              "role": "stress",
+              "seeds": [
+                17462187812550523012,
+                1659979217699667971
+              ]
+            }
+          }
+        },
+        "partitions": {
+          "optimization": {
+            "case_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "generator": {
+              "family": "rigid_gaussian",
+              "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+              "rotation_center_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rotation_scale_deg": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "translation_scale_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "version": "rigid-registration-v1"
+            },
+            "partition_hash": "sha256:734aa165f9934f7facdda33914b20d6c8492bed964bcf03fe3aafb2231e8fa82",
+            "planning_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "role": "optimization",
+            "seeds": [
+              11103855882051260355,
+              11243981505934875939,
+              6936170738492634982
+            ]
+          },
+          "selection": {
+            "case_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "generator": {
+              "family": "rigid_gaussian",
+              "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+              "rotation_center_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rotation_scale_deg": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "translation_scale_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "version": "rigid-registration-v1"
+            },
+            "partition_hash": "sha256:2c0578167f503390a34e2835d792b8d93e0a959060d189447fc5c0cf03787e02",
+            "planning_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "role": "selection",
+            "seeds": [
+              1943417729305584125,
+              9073826545075957572
+            ]
+          }
+        }
+      },
+      {
+        "aliases": [
+          "procedural_generator:native-split_lobes-v1"
+        ],
+        "decision_model_hash": "sha256:73cce7f2cca5f4899cb646965e8b26184db31a7d2d1783fdf6ca563aa55e7188",
+        "family_id": "procedural:native-split_lobes-v1",
+        "generator_manifest": {
+          "aliases": [
+            "procedural_generator:native-split_lobes-v1"
+          ],
+          "case_id": "synthetic_native_procedural_split_lobes_v1",
+          "construction_check": {
+            "action_feature_shape": [
+              5,
+              15
+            ],
+            "gradient_steps": 0,
+            "legal_nonstop_count": 4,
+            "rejection_counts": {},
+            "source_and_model_hashes_reproduced": true,
+            "state_feature_shape": [
+              6
+            ],
+            "transitions_executed": 0
+          },
+          "construction_only": true,
+          "group_id": "procedural:native-split_lobes-v1",
+          "initial_action_ids": [
+            "STOP",
+            "NATIVE:native-fine-aspiration:0",
+            "NATIVE:native-wide-aspiration:0",
+            "NATIVE:native-fine-aspiration:1",
+            "NATIVE:native-wide-aspiration:1"
+          ],
+          "initial_legal_nonstop": 4,
+          "initial_nonstop_action_ids": [
+            "NATIVE:native-fine-aspiration:0",
+            "NATIVE:native-wide-aspiration:0",
+            "NATIVE:native-fine-aspiration:1",
+            "NATIVE:native-wide-aspiration:1"
+          ],
+          "initial_rejection_counts": {},
+          "model_hash": "sha256:73cce7f2cca5f4899cb646965e8b26184db31a7d2d1783fdf6ca563aa55e7188",
+          "native_config_hash": "sha256:16fed4abf39d89d6d7ec8aa00906ec48f15a90e7f5dcaae2473b8d18dc8e7665",
+          "recipe": {
+            "access": {
+              "center_mm": [
+                4.0,
+                4.0,
+                -0.5
+              ],
+              "normal_inward": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "radius_mm": 4.0,
+              "window_id": "hypothetical"
+            },
+            "affine": [
+              [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "candidate_entries_mm": [
+              [
+                3.0,
+                4.0,
+                -0.5
+              ],
+              [
+                5.0,
+                4.0,
+                -0.5
+              ]
+            ],
+            "candidate_targets_mm": [
+              [
+                3.0,
+                4.0,
+                6.0
+              ],
+              [
+                5.0,
+                4.0,
+                6.0
+              ]
+            ],
+            "case_id": "synthetic_native_procedural_split_lobes_v1",
+            "family_id": "procedural:native-split_lobes-v1",
+            "language_evidence": null,
+            "max_actions": 7,
+            "max_steps": 3,
+            "motor_evidence": null,
+            "partial_contact_weight": 0.05,
+            "shape": [
+              9,
+              9,
+              8
+            ],
+            "source_kind": "procedural_native",
+            "target_boxes_half_open": [
+              [
+                [
+                  1,
+                  4
+                ],
+                [
+                  2,
+                  7
+                ],
+                [
+                  4,
+                  7
+                ]
+              ],
+              [
+                [
+                  5,
+                  8
+                ],
+                [
+                  2,
+                  7
+                ],
+                [
+                  5,
+                  8
+                ]
+              ]
+            ],
+            "target_label": 1,
+            "tissue": "all_true",
+            "tools": [
+              {
+                "max_access_angle_deg": 35.0,
+                "parameter_source": "generic research geometry; not a verified commercial device",
+                "shaft_radius_mm": 0.45,
+                "tip_length_mm": 2.0,
+                "tip_radius_mm": 1.25,
+                "tool_id": "native-fine-aspiration",
+                "working_length_mm": 120.0
+              },
+              {
+                "max_access_angle_deg": 35.0,
+                "parameter_source": "generic research geometry; not a verified commercial device",
+                "shaft_radius_mm": 1.1,
+                "tip_length_mm": 3.0,
+                "tip_radius_mm": 2.25,
+                "tool_id": "native-wide-aspiration",
+                "working_length_mm": 120.0
+              }
+            ],
+            "version": "native-procedural-families-v1"
+          },
+          "source_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+          "target_voxels": 90,
+          "tissue_support_provenance": "procedural solid cube; exact generating mask",
+          "training_gradient_steps": 0,
+          "world_partitions": {
+            "final_evaluation": {
+              "case_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+              "generator": {
+                "family": "rigid_gaussian",
+                "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+                "rotation_center_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation_scale_deg": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "translation_scale_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "version": "rigid-registration-v1"
+              },
+              "interpretation": "deterministic_optimization",
+              "planning_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+              "role": "final_evaluation",
+              "seeds": [
+                3586485727780767959,
+                12438740218599795306,
+                1625848127013726120
+              ]
+            },
+            "optimization": {
+              "case_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+              "generator": {
+                "family": "rigid_gaussian",
+                "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+                "rotation_center_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation_scale_deg": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "translation_scale_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "version": "rigid-registration-v1"
+              },
+              "interpretation": "deterministic_optimization",
+              "planning_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+              "role": "optimization",
+              "seeds": [
+                7161218702232290418,
+                7399955035493491159,
+                17846098911440281578
+              ]
+            },
+            "selection": {
+              "case_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+              "generator": {
+                "family": "rigid_gaussian",
+                "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+                "rotation_center_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation_scale_deg": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "translation_scale_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "version": "rigid-registration-v1"
+              },
+              "interpretation": "deterministic_optimization",
+              "planning_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+              "role": "selection",
+              "seeds": [
+                14356669542590053023,
+                15498795532782231477
+              ]
+            },
+            "stress": {
+              "case_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+              "generator": {
+                "family": "rigid_uniform",
+                "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+                "rotation_center_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation_scale_deg": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "translation_scale_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "version": "rigid-registration-v1"
+              },
+              "interpretation": "deterministic_optimization",
+              "planning_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+              "role": "stress",
+              "seeds": [
+                7524832007186600751,
+                16776302469904887833
+              ]
+            }
+          }
+        },
+        "partitions": {
+          "optimization": {
+            "case_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+            "generator": {
+              "family": "rigid_gaussian",
+              "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+              "rotation_center_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rotation_scale_deg": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "translation_scale_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "version": "rigid-registration-v1"
+            },
+            "partition_hash": "sha256:e732e5de1442054fecb7a335959415b7d458bcb378585cd30bb908373a807753",
+            "planning_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+            "role": "optimization",
+            "seeds": [
+              7161218702232290418,
+              7399955035493491159,
+              17846098911440281578
+            ]
+          },
+          "selection": {
+            "case_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+            "generator": {
+              "family": "rigid_gaussian",
+              "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+              "rotation_center_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rotation_scale_deg": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "translation_scale_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "version": "rigid-registration-v1"
+            },
+            "partition_hash": "sha256:3c2b0ff9ba07cc2ba58c56dae82201a8407beaecee845a5b4f688e0c0834509f",
+            "planning_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+            "role": "selection",
+            "seeds": [
+              14356669542590053023,
+              15498795532782231477
+            ]
+          }
+        }
+      }
+    ],
+    "observation_schema": {
+      "action_feature_names": [
+        "stop",
+        "target_benefit",
+        "normal_volume",
+        "motor_evidence",
+        "language_evidence",
+        "insertion_distance",
+        "tip_radius",
+        "shaft_radius",
+        "tool_change",
+        "depth",
+        "remaining_target_fraction",
+        "adjacent_target_fraction",
+        "partial_normal_contact_volume",
+        "partial_motor_contact_surrogate",
+        "partial_language_contact_surrogate"
+      ],
+      "action_feature_units": [
+        "binary",
+        "mm3",
+        "mm3",
+        "spatial_surrogate_mm3",
+        "spatial_surrogate_mm3",
+        "mm",
+        "mm",
+        "mm",
+        "binary",
+        "fraction_of_action_budget",
+        "fraction",
+        "fraction",
+        "mm3",
+        "spatial_surrogate_mm3",
+        "spatial_surrogate_mm3"
+      ],
+      "actor_evidence": "nominal fields and actual cavity only; hidden world excluded",
+      "adapter_version": "native-contained-brush-policy-v2",
+      "depth_semantics": "historical name; completed nonSTOP actions / max_steps; not physical depth",
+      "evidence_available": [
+        false,
+        false
+      ],
+      "max_actions": 7,
+      "max_steps": 3,
+      "partial_contact_weight": 0.05,
+      "removal_semantics": "fully contained exterior-connected native cells only; partial cells retained and costed",
+      "removal_version": "contained-native-cell-connected-suction-v2",
+      "reward": {
+        "action_cost": 0.02,
+        "graph_edge_cost": 1.0,
+        "language_per_mm3": 2.0,
+        "motion_per_mm": 0.0,
+        "motor_per_mm3": 2.0,
+        "normal_per_mm3": 0.2,
+        "target_per_mm3": 1.0,
+        "tool_change_cost": 0.02
+      },
+      "scaling": "identity; raw physical volumes/distances and existing fractions; no learned normalization",
+      "state_feature_names": [
+        "remaining_target_fraction",
+        "action_budget_fraction_used",
+        "removed_tissue_fraction",
+        "nominal_severed_edge_fraction",
+        "motor_evidence_available",
+        "language_evidence_available"
+      ],
+      "state_feature_units": [
+        "fraction",
+        "fraction",
+        "fraction",
+        "fraction",
+        "binary",
+        "binary"
+      ],
+      "tools": [
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 0.45,
+          "tip_length_mm": 2.0,
+          "tip_radius_mm": 1.25,
+          "tool_id": "native-fine-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.1,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 2.25,
+          "tool_id": "native-wide-aspiration",
+          "working_length_mm": 120.0
+        }
+      ],
+      "version": "native-15x6-actual-semantics-v1",
+      "world_generator": {
+        "family": "rigid_gaussian",
+        "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+        "rotation_center_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_scale_deg": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "translation_scale_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "version": "rigid-registration-v1"
+      }
+    },
+    "offline_pretraining": {
+      "elapsed_seconds": 27.350969874998555,
+      "elapsed_seconds_scope": "optimization and selection including initial selection; initialization and preparation separately measured",
+      "gradient_steps": 32,
+      "initialization_seconds": 0.08696012501604855,
+      "optimization_environment_steps": 159,
+      "postprocessing_seconds_before_export": 0.005441709072329104,
+      "preparation_seconds": 0.31704583298414946,
+      "selection_environment_steps": 188,
+      "total_offline_seconds_before_checkpoint_write": 27.763659375021234
+    },
+    "policy_hash": "sha256:b9adca0f70959d8f74f0b6d81e7445c73001a7f71740fe517381c59281e73b11",
+    "runtime": {
+      "device": "cpu",
+      "numpy": "2.5.3",
+      "python": "3.12.14",
+      "torch": "2.14.1"
+    },
+    "scope": "procedural_native_to_patient_development",
+    "source_sha256": {
+      "__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+      "anatomy.py": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37",
+      "brain_extraction.py": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917",
+      "cohort.py": "d69538f80af8b318068af70dbc963b7a9ca6c3a4f62d6e8e542d6e43548fa874",
+      "core.py": "0600667e8e8662c78e31a86d9060d53aec5ab5a4f2b14e747afd74800f11eeec",
+      "desktop_bridge.py": "b76b76e58cb1a6476cec57fc093184ab7ea8ff598b26ed66b3438e7720fdfbe8",
+      "diffusion.py": "e7f57bf7467fb3cb5d6b9b3f1c80e4665710713124d0720aa84d31ccc03b8e21",
+      "evaluation.py": "baaa2f3d6b4e41c4621dc22872da9300d649bc91dfeb923e2ad35f66aadad3b7",
+      "geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+      "imaging.py": "ad921fb5cda6d3aed84893ad200cb846212311efa17c1996730a394e8474a95b",
+      "learning.py": "f6c490beb563357599fa35bf1674eee47b02f28864a4128122c526e3c995cd48",
+      "learning_ppo.py": "a3814bc5da4837b66ae20496c38e17edd0edf73ef7863a920924cd7ec2a42d88",
+      "native_refinement.py": "02a1250d40d7129c77d16031e229c61c3d295139c002c9002f5a3eb78097a413",
+      "native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+      "native_routes.py": "97bb55a3bf2894f336a593bc3c3379b3c4dc291198af90b91d319bd0b9a824ea",
+      "native_simulation.py": "2461cc6c32eb25a3927bcc3a9379bb02417794c3a764c4b1e705a00bcac6493c",
+      "planning.py": "f113ce78b239f91a86c65d8add74227a9d9f3c0d718449c7968a983e76ea850d",
+      "policy_inputs.py": "1366cdabceae5eeee9ad44667be7d8c44de2c9ab8f551c4cf05b053f5b1b8b47",
+      "population_learning.py": "49899618825d08b50016f9b34f389b50ce67f6a3aa79a8f339665523e3ae8de2",
+      "preprocessing.py": "dbd2c4ba9551e2aa0d454b638e256ad8bc6cdf45dcdc8ec08e091e43c3eb14e5",
+      "prior_proposals.py": "05340a6911b0330175d606f84aa81c817a330a929a336fef18078d01e3d0bd55",
+      "prior_registration.py": "9828e76ed3e29e232c39dd16ece7d5fefa4cd366d1cab7899121e929ef34a703",
+      "procedural_learning.py": "d4666701930d2baa1f438b2a1bed4819e895ec6161c38a78b6ef4d68331ac2d1",
+      "route_native_diagnostics.py": "f2cf704da9e971f321dce707dadd9f0350ec7234ecc75c0ed0fc1242fd8c82cf",
+      "selection_contract.py": "bef00b486fb6f0f0465a8526080ae5c6e08a5f1922fcf93f4624aec86ec43d72",
+      "simulation.py": "bc43c16643adf8495f969dcacacb770f5f6be7fdeff0831f2a92eb4aed52939f",
+      "structural_evidence.py": "6a1b9e7aa5b13ea971a75d9416d96ab45de2b46901a036edd73ec58194fb7a33",
+      "worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
+    },
+    "study_declaration_hash": "sha256:b19aac85f9241e37b98ae53d539ad923f3258bf42a106d67e520f37abcf6a237",
+    "study_id": "procedural-native-feature-units-v1",
+    "study_scope": "procedural_native_feature_units_development",
+    "trainable_parameter_hash": "sha256:f8e62bd464a300924c37e9956f24227b855aea25a26f061a84e335a3ef29ebb6",
+    "training_config": {
+      "checkpoint_interval": 2,
+      "entropy_weight": 0.01,
+      "episodes_per_update": 2,
+      "gamma": 1.0,
+      "hidden_features": 16,
+      "learning_rate": 0.003,
+      "max_environment_steps": 256,
+      "max_episode_steps": 4,
+      "max_gradient_norm": 5.0,
+      "max_gradient_steps": 32,
+      "max_wall_seconds": 60.0,
+      "seed": 101,
+      "value_weight": 0.5
+    },
+    "training_gradient_steps": 32,
+    "training_record": {
+      "actor_parameters_changed": true,
+      "clinical_deficit_probability": null,
+      "completed_episodes": 64,
+      "decision_model_hash": "sha256:74f60ec85a9793ebd4d1ebb1729768e92c1d57c97d5e3aa93b584004fd2bdf76",
+      "discarded_partial_batches": 0,
+      "elapsed_seconds": 27.350969874998555,
+      "elapsed_seconds_scope": "cumulative optimization and selection, including initial selection; initialization excluded",
+      "episode_index": 64,
+      "final_checkpoint_export_seconds": 0.0013126659905537963,
+      "final_checkpoint_export_seconds_scope": "last atomic checkpoint write only; result JSON write and return are outside this measurement",
+      "gradient_steps": 32,
+      "initial_actor_hash": "sha256:56b097453aef571a0c34909b3771c0346a308953657bc2798a310c083f22e8f8",
+      "initial_checkpoint_hash": "sha256:28620f54f1afdc3f0da87342fc7bba3a85a7f7e68b0728e5a5a0bad3c1b47389",
+      "initial_selection_return": 0.0,
+      "initial_trainable_parameter_hash": "sha256:6acfac0b0f8565437d2d85384df3e1b2815438109b63636cf0ea2515d6c6b008",
+      "initialization_seconds": 0.08696012501604855,
+      "initialization_seconds_scope": "cumulative model/policy/provenance/optimizer/contract setup across invocations; excluded from learner budget",
+      "initialization_seconds_this_invocation": 0.08696012501604855,
+      "input_profile": {
+        "action_divisors": [
+          1.0,
+          648.0,
+          648.0,
+          648.0,
+          648.0,
+          120.0,
+          2.25,
+          1.1,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          648.0,
+          648.0,
+          648.0
+        ],
+        "action_feature_names": [
+          "stop",
+          "target_benefit",
+          "normal_volume",
+          "motor_evidence",
+          "language_evidence",
+          "insertion_distance",
+          "tip_radius",
+          "shaft_radius",
+          "tool_change",
+          "depth",
+          "remaining_target_fraction",
+          "adjacent_target_fraction",
+          "partial_normal_contact_volume",
+          "partial_motor_contact_surrogate",
+          "partial_language_contact_surrogate"
+        ],
+        "centering": false,
+        "clipping": false,
+        "critic_output_divisor": 1.0,
+        "profile_id": "FEATURE_UNITS",
+        "return_divisor": 1.0,
+        "running_statistics": false,
+        "state_divisors": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "state_feature_names": [
+          "remaining_target_fraction",
+          "action_budget_fraction_used",
+          "removed_tissue_fraction",
+          "nominal_severed_edge_fraction",
+          "motor_evidence_available",
+          "language_evidence_available"
+        ],
+        "version": "native-fixed-action-units-v1"
+      },
+      "input_profile_hash": "sha256:ae7e392794857e72d3cbd06dd7106dd30bcf557e8a91fe9261bf14d6481cc74b",
+      "latest_actor_hash": "sha256:7969a54e40597a2c3b9f8bdee75e62528cec7b72c6b570ff6a39815acd6c89fc",
+      "latest_checkpoint_hash": "sha256:b9adca0f70959d8f74f0b6d81e7445c73001a7f71740fe517381c59281e73b11",
+      "latest_trainable_parameter_hash": "sha256:f8e62bd464a300924c37e9956f24227b855aea25a26f061a84e335a3ef29ebb6",
+      "learning_improvement_guaranteed": false,
+      "optimization_environment_steps": 159,
+      "optimization_history": [
+        {
+          "actor_gradient_norm_after_clip": 1.4002236111391766,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 77.80036926269531,
+          "gradient_steps": 1,
+          "loss": 900.7682495117188,
+          "mean_return": 20.200000000000003,
+          "optimization_environment_steps": 4
+        },
+        {
+          "actor_gradient_norm_after_clip": 1.3536810861534454,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 71.50732421875,
+          "gradient_steps": 2,
+          "loss": 476.88067626953125,
+          "mean_return": 21.060000000000002,
+          "optimization_environment_steps": 10
+        },
+        {
+          "actor_gradient_norm_after_clip": 1.28930216894837,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 33.962093353271484,
+          "gradient_steps": 3,
+          "loss": 175.74571228027344,
+          "mean_return": 8.175,
+          "optimization_environment_steps": 14
+        },
+        {
+          "actor_gradient_norm_after_clip": 0.9789190945312357,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 13.135138511657715,
+          "gradient_steps": 4,
+          "loss": 33.05145263671875,
+          "mean_return": 3.13,
+          "optimization_environment_steps": 18
+        },
+        {
+          "actor_gradient_norm_after_clip": 1.450121951093984,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 20.549095153808594,
+          "gradient_steps": 5,
+          "loss": 161.47276306152344,
+          "mean_return": 11.97,
+          "optimization_environment_steps": 21
+        },
+        {
+          "actor_gradient_norm_after_clip": 1.3433692161813,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 26.532934188842773,
+          "gradient_steps": 6,
+          "loss": 118.90391540527344,
+          "mean_return": 10.275,
+          "optimization_environment_steps": 27
+        },
+        {
+          "actor_gradient_norm_after_clip": 1.1109174574472223,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 37.72834777832031,
+          "gradient_steps": 7,
+          "loss": 193.1533203125,
+          "mean_return": 9.03,
+          "optimization_environment_steps": 32
+        },
+        {
+          "actor_gradient_norm_after_clip": 0.9596473867197389,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 59.50360107421875,
+          "gradient_steps": 8,
+          "loss": 471.13848876953125,
+          "mean_return": 12.840000000000002,
+          "optimization_environment_steps": 36
+        },
+        {
+          "actor_gradient_norm_after_clip": 1.44851106493641,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 79.31065368652344,
+          "gradient_steps": 9,
+          "loss": 664.1751098632812,
+          "mean_return": 28.58,
+          "optimization_environment_steps": 42
+        },
+        {
+          "actor_gradient_norm_after_clip": 1.0685641409182676,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 35.181846618652344,
+          "gradient_steps": 10,
+          "loss": 172.65414428710938,
+          "mean_return": 9.105,
+          "optimization_environment_steps": 47
+        },
+        {
+          "actor_gradient_norm_after_clip": 0.9193131497857165,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 46.75792694091797,
+          "gradient_steps": 11,
+          "loss": 346.65423583984375,
+          "mean_return": 15.16,
+          "optimization_environment_steps": 52
+        },
+        {
+          "actor_gradient_norm_after_clip": 1.2149095392888758,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 63.929325103759766,
+          "gradient_steps": 12,
+          "loss": 558.5758056640625,
+          "mean_return": 24.05,
+          "optimization_environment_steps": 58
+        },
+        {
+          "actor_gradient_norm_after_clip": 0.8468692582717136,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 61.48781204223633,
+          "gradient_steps": 13,
+          "loss": 467.0663146972656,
+          "mean_return": 13.680000000000001,
+          "optimization_environment_steps": 63
+        },
+        {
+          "actor_gradient_norm_after_clip": 1.333391047851596,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 61.40297317504883,
+          "gradient_steps": 14,
+          "loss": 565.7308959960938,
+          "mean_return": 21.435000000000002,
+          "optimization_environment_steps": 69
+        },
+        {
+          "actor_gradient_norm_after_clip": 0.49120403302954413,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 0.9833917617797852,
+          "gradient_steps": 15,
+          "loss": 1.3919541835784912,
+          "mean_return": 0.93,
+          "optimization_environment_steps": 72
+        },
+        {
+          "actor_gradient_norm_after_clip": 0.9681294029077542,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 34.175880432128906,
+          "gradient_steps": 16,
+          "loss": 162.3477325439453,
+          "mean_return": 8.18,
+          "optimization_environment_steps": 76
+        },
+        {
+          "actor_gradient_norm_after_clip": 0.899907513524463,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 114.31806945800781,
+          "gradient_steps": 17,
+          "loss": 1037.1749267578125,
+          "mean_return": 28.380000000000003,
+          "optimization_environment_steps": 82
+        },
+        {
+          "actor_gradient_norm_after_clip": 1.4622940980273949,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 25.649911880493164,
+          "gradient_steps": 18,
+          "loss": 119.23394012451172,
+          "mean_return": 9.285,
+          "optimization_environment_steps": 87
+        },
+        {
+          "actor_gradient_norm_after_clip": 0.5878117756386603,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 0.8514808416366577,
+          "gradient_steps": 19,
+          "loss": -0.6237380504608154,
+          "mean_return": 0.245,
+          "optimization_environment_steps": 90
+        },
+        {
+          "actor_gradient_norm_after_clip": 1.4123732830039155,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 74.8684310913086,
+          "gradient_steps": 20,
+          "loss": 623.9357299804688,
+          "mean_return": 28.675,
+          "optimization_environment_steps": 96
+        },
+        {
+          "actor_gradient_norm_after_clip": 1.451860666140636,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 25.791555404663086,
+          "gradient_steps": 21,
+          "loss": 117.52741241455078,
+          "mean_return": 9.285,
+          "optimization_environment_steps": 101
+        },
+        {
+          "actor_gradient_norm_after_clip": 1.1807652699056908,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 50.6796875,
+          "gradient_steps": 22,
+          "loss": 272.4018249511719,
+          "mean_return": 20.22,
+          "optimization_environment_steps": 106
+        },
+        {
+          "actor_gradient_norm_after_clip": 1.3498456733601465,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 73.54278564453125,
+          "gradient_steps": 23,
+          "loss": 606.2354125976562,
+          "mean_return": 28.675,
+          "optimization_environment_steps": 112
+        },
+        {
+          "actor_gradient_norm_after_clip": 0.6563284243828622,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 72.64691162109375,
+          "gradient_steps": 24,
+          "loss": 474.43341064453125,
+          "mean_return": 16.105000000000004,
+          "optimization_environment_steps": 118
+        },
+        {
+          "actor_gradient_norm_after_clip": 0.6265528705132316,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 54.5723762512207,
+          "gradient_steps": 25,
+          "loss": 347.3771667480469,
+          "mean_return": 16.075000000000003,
+          "optimization_environment_steps": 124
+        },
+        {
+          "actor_gradient_norm_after_clip": 0.9695499800575809,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 36.015464782714844,
+          "gradient_steps": 26,
+          "loss": 203.0345458984375,
+          "mean_return": 16.09,
+          "optimization_environment_steps": 130
+        },
+        {
+          "actor_gradient_norm_after_clip": 1.0683150013080656,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 1.0747740268707275,
+          "gradient_steps": 27,
+          "loss": 0.24744147062301636,
+          "mean_return": 0.93,
+          "optimization_environment_steps": 133
+        },
+        {
+          "actor_gradient_norm_after_clip": 0.5670530381419209,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 97.53964233398438,
+          "gradient_steps": 28,
+          "loss": 900.544189453125,
+          "mean_return": 23.835,
+          "optimization_environment_steps": 139
+        },
+        {
+          "actor_gradient_norm_after_clip": 0.6132171838092884,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 87.31678009033203,
+          "gradient_steps": 29,
+          "loss": 873.0861206054688,
+          "mean_return": 20.98,
+          "optimization_environment_steps": 144
+        },
+        {
+          "actor_gradient_norm_after_clip": 1.2589396101135866,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 76.04866027832031,
+          "gradient_steps": 30,
+          "loss": 595.6259155273438,
+          "mean_return": 28.675,
+          "optimization_environment_steps": 150
+        },
+        {
+          "actor_gradient_norm_after_clip": 2.133550706116347,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 3.276639223098755,
+          "gradient_steps": 31,
+          "loss": 5.349344253540039,
+          "mean_return": 2.35,
+          "optimization_environment_steps": 153
+        },
+        {
+          "actor_gradient_norm_after_clip": 1.263461234344264,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 79.23866271972656,
+          "gradient_steps": 32,
+          "loss": 605.12548828125,
+          "mean_return": 28.675,
+          "optimization_environment_steps": 159
+        }
+      ],
+      "optimizer_mode": "PATIENT_SCRATCH_RL",
+      "output_dir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/pretraining-feature_units/training",
+      "selected_checkpoint_hash": "sha256:a1cd9aba7bd21284889974cac156e2a8ec9cd10d9d0793b606aca73cbea20419",
+      "selected_selection_return": 28.675000000000004,
+      "selection_environment_steps": 188,
+      "selection_history": [
+        {
+          "checkpoint_hash": "sha256:28620f54f1afdc3f0da87342fc7bba3a85a7f7e68b0728e5a5a0bad3c1b47389",
+          "gradient_steps": 0,
+          "mean_return": 0.0,
+          "optimization_environment_steps": 0,
+          "panel_elapsed_seconds": 0.3038460420211777,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:18dd72c528d39a3094dd56dd0f18a0bb1dbd1bbad7a052b937e6f66c0f782a34",
+          "gradient_steps": 2,
+          "mean_return": 0.0,
+          "optimization_environment_steps": 10,
+          "panel_elapsed_seconds": 0.30275649996474385,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:a1cd9aba7bd21284889974cac156e2a8ec9cd10d9d0793b606aca73cbea20419",
+          "gradient_steps": 4,
+          "mean_return": 28.675000000000004,
+          "optimization_environment_steps": 18,
+          "panel_elapsed_seconds": 0.9797396250069141,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:b50791c60fa85b82616f97d96396c8fe2dc118a9259bc71e343da7c629e46f24",
+          "gradient_steps": 6,
+          "mean_return": 28.675000000000004,
+          "optimization_environment_steps": 27,
+          "panel_elapsed_seconds": 0.9856434169923887,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:8f7e18b5b58bbc03b5d0e7fe005e144e51bb0c4d3f6f2ae14b5c4b054ad430bf",
+          "gradient_steps": 8,
+          "mean_return": 28.675000000000004,
+          "optimization_environment_steps": 36,
+          "panel_elapsed_seconds": 0.9762659169500694,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:7dd3e856f1e112d03c49c4131099110f82959aaba0f278aedc74b31cf87b54e1",
+          "gradient_steps": 10,
+          "mean_return": 28.675000000000004,
+          "optimization_environment_steps": 47,
+          "panel_elapsed_seconds": 0.9949937500059605,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:4b239a9d57b46417e16f6c5807f9cf70407197374cd8b4a4cc42cedff329c4f7",
+          "gradient_steps": 12,
+          "mean_return": 28.675000000000004,
+          "optimization_environment_steps": 58,
+          "panel_elapsed_seconds": 0.9864856250351295,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:8198e4d3f4e4b2b90936fd3693818645f194daee02ee1fce0225819ba6c567d5",
+          "gradient_steps": 14,
+          "mean_return": 28.675000000000004,
+          "optimization_environment_steps": 69,
+          "panel_elapsed_seconds": 0.9883528330828995,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:111df7d721adbde1f1bfae80224d206dae8467c439faec0a40f59d7c4a54bd3d",
+          "gradient_steps": 16,
+          "mean_return": 28.675000000000004,
+          "optimization_environment_steps": 76,
+          "panel_elapsed_seconds": 0.984557667048648,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:79e3acb52e0ec4b162e2758c8fd966dfbeb156d1b71c4794154a33fccb1557cd",
+          "gradient_steps": 18,
+          "mean_return": 28.675000000000004,
+          "optimization_environment_steps": 87,
+          "panel_elapsed_seconds": 0.9021168749313802,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:51bc6504c182522220701602227f079c3831f8ef2fbaace25fe9aea095e8d5f3",
+          "gradient_steps": 20,
+          "mean_return": 28.675000000000004,
+          "optimization_environment_steps": 96,
+          "panel_elapsed_seconds": 0.919871833990328,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:36d1cbbb2c62e89e96a48e9d06f3b6fac126d911f325c81232bde52cd8794410",
+          "gradient_steps": 22,
+          "mean_return": 28.675000000000004,
+          "optimization_environment_steps": 106,
+          "panel_elapsed_seconds": 0.9957822500728071,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:f918f43ee77b098403d56ad7c29d15434098d6cefc9b44a27c7beb33334aa228",
+          "gradient_steps": 24,
+          "mean_return": 28.675000000000004,
+          "optimization_environment_steps": 118,
+          "panel_elapsed_seconds": 0.9598131249658763,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:6d8b691872a3bcbc080c71ff4a4071cf5bf6873bfc46367f05bf5884ae8a2a68",
+          "gradient_steps": 26,
+          "mean_return": 28.675000000000004,
+          "optimization_environment_steps": 130,
+          "panel_elapsed_seconds": 0.9212094999384135,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:a5cb905b49f0969fd10a12e6045f492d7ef5ecca05360e76515bb2059c03f7f8",
+          "gradient_steps": 28,
+          "mean_return": 28.675000000000004,
+          "optimization_environment_steps": 139,
+          "panel_elapsed_seconds": 0.9230373749742284,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:a3f74ffb21698fe8f319e3ee3f2eeb0866cc20082294bd4b9b65e6501bf5a6f9",
+          "gradient_steps": 30,
+          "mean_return": 28.675000000000004,
+          "optimization_environment_steps": 150,
+          "panel_elapsed_seconds": 0.9894275419646874,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:b9adca0f70959d8f74f0b6d81e7445c73001a7f71740fe517381c59281e73b11",
+          "gradient_steps": 32,
+          "mean_return": 28.675000000000004,
+          "optimization_environment_steps": 159,
+          "panel_elapsed_seconds": 0.9073301249882206,
+          "world_count": 4
+        }
+      ],
+      "selection_rule": "maximum mean deterministic selection return; earliest wins ties",
+      "selection_seconds": 15.021230001933873,
+      "shared_checkpoint_hash": null,
+      "status": "gradient_budget",
+      "wall_limit_semantics": "cooperative; a simulator/gradient call may overrun the deadline"
+    },
+    "training_run_hash": "sha256:0ebb0a7ebcc51b94465aa2efae20838b2af37e0f2a09015adba884df9e429474",
+    "world_map": {
+      "0": [
+        0,
+        11103855882051260355
+      ],
+      "1": [
+        1,
+        7161218702232290418
+      ],
+      "1000000": [
+        0,
+        1943417729305584125
+      ],
+      "1000001": [
+        1,
+        14356669542590053023
+      ],
+      "1000002": [
+        0,
+        9073826545075957572
+      ],
+      "1000003": [
+        1,
+        15498795532782231477
+      ],
+      "2": [
+        0,
+        11243981505934875939
+      ],
+      "3": [
+        1,
+        7399955035493491159
+      ],
+      "4": [
+        0,
+        6936170738492634982
+      ],
+      "5": [
+        1,
+        17846098911440281578
+      ]
+    }
+  },
+  "provenance_hash": "sha256:9d1e6914e5abf0e37ed5e66c2716ed85a3d8cf827834d43a37205a9f7f277510",
+  "scope": "procedural_native_to_patient_development",
+  "status": "completed",
+  "total_offline_seconds": 27.771717000054196
+}

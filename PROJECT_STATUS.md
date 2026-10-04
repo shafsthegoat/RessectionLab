@@ -33,8 +33,10 @@ bindings, and unchanged planning inputs. They remain view-only population
 evidence requiring alignment review. Their Electron controls now display one
 selected layer with separate atlas coverage, scalar/binary sampling and cursor
 values. Source restoration, stale loads and case changes clear the layer.
-All 131 desktop checks and the production build pass after removing an unsafe
-source-image hash cache and correcting float32 atlas boundary sampling. An
+All 135 desktop checks and the production build pass after removing an unsafe
+source-image hash cache, correcting float32 atlas boundary sampling and adding
+context-aware route-comparison guidance. The new guidance awaits native package
+verification; the existing verified app is identified below. An
 independent actual GPU probe passes 487 cases, with the earlier failures retained.
 The new complete engine and renderer passed native inspection. All seven layers,
 covered zero, positive values, outside/incomplete support, minimum-width layouts,
@@ -63,9 +65,17 @@ immutable `0bffeaa` archive after all 794 tests and the real-case preflight
 passed. It compares raw inputs with fixed physical reference units while
 preserving the old action inventory, rewards, critic, seeds and budgets. Other
 heavy work was paused for timing comparability; ordinary desktop/OS load was not
-controlled. All 23 frozen candidates passed native checking; the independent
-artifact audit and result interpretation are pending. Exact launch identities
-are in `artifacts/validation/native-feature-units-runner-v1/`.
+controlled. All 23 frozen candidates passed native checking and a separate
+artifact audit. Fixed units raised the procedural frozen-policy return from
+139.62 to 245.24, matching SEARCH. All three scaled adapted runs selected their
+unchanged initial checkpoint; they establish no additional adaptation gain.
+Scratch seed differences were [0, 0, +0.08], and no arm exceeded SEARCH. The full
+launcher took 534.18 seconds, including separately reported offline and audit
+costs. Read-only diagnostics confirm reduced actor saturation and persistent
+critic state aliasing, without proving clipping-induced learning harm. See
+`artifacts/learning/procedural-native-feature-units-v1/RESULT.md` and its
+separate independent audit and diagnostic records. This is one reused case,
+two procedural families and zero human pretraining patients.
 
 A separate post hoc geometry probe expands the proposal inventory while keeping
 the native checker, source, tools and access assumptions fixed. Under the same
@@ -234,7 +244,7 @@ See `EXPERIMENT_LOG.md` for executed experiments, including negative results.
 The Qt prototype passed its initial standalone runtime and GUI checks. Its next
 build was stopped following the user's Electron decision. The React/Electron
 package passed its own imaging/search checks and 31 main-process boundary and
-lifecycle tests. The current 69 renderer tests and 31 viewer tests cover source
+lifecycle tests. The current 73 renderer tests and 31 viewer tests cover source
 hydration, evidence status, A/B identity, independently accepted removal overlays
 and population-prior sampling. The complete
 training bundle has its own source-bound verification receipts. Qt results do

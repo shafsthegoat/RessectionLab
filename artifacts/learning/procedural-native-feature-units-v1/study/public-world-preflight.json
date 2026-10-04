@@ -1,0 +1,789 @@
+{
+  "before_offline_pretraining": true,
+  "checks": [
+    {
+      "input_profile": "RAW",
+      "receipt": {
+        "decision_model_hash": "sha256:dd81bd59566ead4e42916c8ede3d48d5615837e523d23d359b268d9a90f63f0b",
+        "declaration_hash": "sha256:3abf10162ed9d096a7e21ec84a87c1a88ebf12bb074345a78040dfdebb828ac9",
+        "final_worlds_used": false,
+        "input_profile": {
+          "action_divisors": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "action_feature_names": [
+            "stop",
+            "target_benefit",
+            "normal_volume",
+            "motor_evidence",
+            "language_evidence",
+            "insertion_distance",
+            "tip_radius",
+            "shaft_radius",
+            "tool_change",
+            "depth",
+            "remaining_target_fraction",
+            "adjacent_target_fraction",
+            "partial_normal_contact_volume",
+            "partial_motor_contact_surrogate",
+            "partial_language_contact_surrogate"
+          ],
+          "centering": false,
+          "clipping": false,
+          "critic_output_divisor": 1.0,
+          "profile_id": "RAW",
+          "return_divisor": 1.0,
+          "running_statistics": false,
+          "state_divisors": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "state_feature_names": [
+            "remaining_target_fraction",
+            "action_budget_fraction_used",
+            "removed_tissue_fraction",
+            "nominal_severed_edge_fraction",
+            "motor_evidence_available",
+            "language_evidence_available"
+          ],
+          "version": "native-fixed-action-units-v1"
+        },
+        "input_profile_hash": "sha256:b0ae5e34b7fbd206ca7e690fc29c5283ab4be69af25ba45b67f4f5d858b27e12",
+        "optimization_partition_hash": "sha256:aa8de3098a046f59a463eca08667916b6e4619417da135a473405457b94b0a1c",
+        "selection_partition_hash": "sha256:62f80e45baec7c506272e1b04037c8551267969fdbd2fdb650a61bb720df8dc2",
+        "study_declaration_hash": "sha256:b19aac85f9241e37b98ae53d539ad923f3258bf42a106d67e520f37abcf6a237",
+        "study_id": "procedural-native-feature-units-v1",
+        "study_scope": "procedural_native_feature_units_development",
+        "target_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "training_config_hash": "sha256:ae4b4c577cd60035378dbf911d188f6cce3c9f36abb4b871f5205cba21617244"
+      },
+      "seed": 11
+    },
+    {
+      "input_profile": "RAW",
+      "receipt": {
+        "decision_model_hash": "sha256:dd81bd59566ead4e42916c8ede3d48d5615837e523d23d359b268d9a90f63f0b",
+        "declaration_hash": "sha256:3abf10162ed9d096a7e21ec84a87c1a88ebf12bb074345a78040dfdebb828ac9",
+        "final_worlds_used": false,
+        "input_profile": {
+          "action_divisors": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "action_feature_names": [
+            "stop",
+            "target_benefit",
+            "normal_volume",
+            "motor_evidence",
+            "language_evidence",
+            "insertion_distance",
+            "tip_radius",
+            "shaft_radius",
+            "tool_change",
+            "depth",
+            "remaining_target_fraction",
+            "adjacent_target_fraction",
+            "partial_normal_contact_volume",
+            "partial_motor_contact_surrogate",
+            "partial_language_contact_surrogate"
+          ],
+          "centering": false,
+          "clipping": false,
+          "critic_output_divisor": 1.0,
+          "profile_id": "RAW",
+          "return_divisor": 1.0,
+          "running_statistics": false,
+          "state_divisors": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "state_feature_names": [
+            "remaining_target_fraction",
+            "action_budget_fraction_used",
+            "removed_tissue_fraction",
+            "nominal_severed_edge_fraction",
+            "motor_evidence_available",
+            "language_evidence_available"
+          ],
+          "version": "native-fixed-action-units-v1"
+        },
+        "input_profile_hash": "sha256:b0ae5e34b7fbd206ca7e690fc29c5283ab4be69af25ba45b67f4f5d858b27e12",
+        "optimization_partition_hash": "sha256:aa8de3098a046f59a463eca08667916b6e4619417da135a473405457b94b0a1c",
+        "selection_partition_hash": "sha256:62f80e45baec7c506272e1b04037c8551267969fdbd2fdb650a61bb720df8dc2",
+        "study_declaration_hash": "sha256:b19aac85f9241e37b98ae53d539ad923f3258bf42a106d67e520f37abcf6a237",
+        "study_id": "procedural-native-feature-units-v1",
+        "study_scope": "procedural_native_feature_units_development",
+        "target_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "training_config_hash": "sha256:1e037e5b95d90630a36fbdafa2584847c718e5227c2bf5cb2b77f8068f6c55d8"
+      },
+      "seed": 23
+    },
+    {
+      "input_profile": "RAW",
+      "receipt": {
+        "decision_model_hash": "sha256:dd81bd59566ead4e42916c8ede3d48d5615837e523d23d359b268d9a90f63f0b",
+        "declaration_hash": "sha256:3abf10162ed9d096a7e21ec84a87c1a88ebf12bb074345a78040dfdebb828ac9",
+        "final_worlds_used": false,
+        "input_profile": {
+          "action_divisors": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "action_feature_names": [
+            "stop",
+            "target_benefit",
+            "normal_volume",
+            "motor_evidence",
+            "language_evidence",
+            "insertion_distance",
+            "tip_radius",
+            "shaft_radius",
+            "tool_change",
+            "depth",
+            "remaining_target_fraction",
+            "adjacent_target_fraction",
+            "partial_normal_contact_volume",
+            "partial_motor_contact_surrogate",
+            "partial_language_contact_surrogate"
+          ],
+          "centering": false,
+          "clipping": false,
+          "critic_output_divisor": 1.0,
+          "profile_id": "RAW",
+          "return_divisor": 1.0,
+          "running_statistics": false,
+          "state_divisors": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "state_feature_names": [
+            "remaining_target_fraction",
+            "action_budget_fraction_used",
+            "removed_tissue_fraction",
+            "nominal_severed_edge_fraction",
+            "motor_evidence_available",
+            "language_evidence_available"
+          ],
+          "version": "native-fixed-action-units-v1"
+        },
+        "input_profile_hash": "sha256:b0ae5e34b7fbd206ca7e690fc29c5283ab4be69af25ba45b67f4f5d858b27e12",
+        "optimization_partition_hash": "sha256:aa8de3098a046f59a463eca08667916b6e4619417da135a473405457b94b0a1c",
+        "selection_partition_hash": "sha256:62f80e45baec7c506272e1b04037c8551267969fdbd2fdb650a61bb720df8dc2",
+        "study_declaration_hash": "sha256:b19aac85f9241e37b98ae53d539ad923f3258bf42a106d67e520f37abcf6a237",
+        "study_id": "procedural-native-feature-units-v1",
+        "study_scope": "procedural_native_feature_units_development",
+        "target_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "training_config_hash": "sha256:3b9b32879643a524d7b20f75aaf33321503392f9a15e5649906745474ea1ad31"
+      },
+      "seed": 47
+    },
+    {
+      "input_profile": "FEATURE_UNITS",
+      "receipt": {
+        "decision_model_hash": "sha256:dd81bd59566ead4e42916c8ede3d48d5615837e523d23d359b268d9a90f63f0b",
+        "declaration_hash": "sha256:3abf10162ed9d096a7e21ec84a87c1a88ebf12bb074345a78040dfdebb828ac9",
+        "final_worlds_used": false,
+        "input_profile": {
+          "action_divisors": [
+            1.0,
+            648.0,
+            648.0,
+            648.0,
+            648.0,
+            120.0,
+            2.25,
+            1.1,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            648.0,
+            648.0,
+            648.0
+          ],
+          "action_feature_names": [
+            "stop",
+            "target_benefit",
+            "normal_volume",
+            "motor_evidence",
+            "language_evidence",
+            "insertion_distance",
+            "tip_radius",
+            "shaft_radius",
+            "tool_change",
+            "depth",
+            "remaining_target_fraction",
+            "adjacent_target_fraction",
+            "partial_normal_contact_volume",
+            "partial_motor_contact_surrogate",
+            "partial_language_contact_surrogate"
+          ],
+          "centering": false,
+          "clipping": false,
+          "critic_output_divisor": 1.0,
+          "profile_id": "FEATURE_UNITS",
+          "return_divisor": 1.0,
+          "running_statistics": false,
+          "state_divisors": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "state_feature_names": [
+            "remaining_target_fraction",
+            "action_budget_fraction_used",
+            "removed_tissue_fraction",
+            "nominal_severed_edge_fraction",
+            "motor_evidence_available",
+            "language_evidence_available"
+          ],
+          "version": "native-fixed-action-units-v1"
+        },
+        "input_profile_hash": "sha256:ae7e392794857e72d3cbd06dd7106dd30bcf557e8a91fe9261bf14d6481cc74b",
+        "optimization_partition_hash": "sha256:aa8de3098a046f59a463eca08667916b6e4619417da135a473405457b94b0a1c",
+        "selection_partition_hash": "sha256:62f80e45baec7c506272e1b04037c8551267969fdbd2fdb650a61bb720df8dc2",
+        "study_declaration_hash": "sha256:b19aac85f9241e37b98ae53d539ad923f3258bf42a106d67e520f37abcf6a237",
+        "study_id": "procedural-native-feature-units-v1",
+        "study_scope": "procedural_native_feature_units_development",
+        "target_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "training_config_hash": "sha256:ae4b4c577cd60035378dbf911d188f6cce3c9f36abb4b871f5205cba21617244"
+      },
+      "seed": 11
+    },
+    {
+      "input_profile": "FEATURE_UNITS",
+      "receipt": {
+        "decision_model_hash": "sha256:dd81bd59566ead4e42916c8ede3d48d5615837e523d23d359b268d9a90f63f0b",
+        "declaration_hash": "sha256:3abf10162ed9d096a7e21ec84a87c1a88ebf12bb074345a78040dfdebb828ac9",
+        "final_worlds_used": false,
+        "input_profile": {
+          "action_divisors": [
+            1.0,
+            648.0,
+            648.0,
+            648.0,
+            648.0,
+            120.0,
+            2.25,
+            1.1,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            648.0,
+            648.0,
+            648.0
+          ],
+          "action_feature_names": [
+            "stop",
+            "target_benefit",
+            "normal_volume",
+            "motor_evidence",
+            "language_evidence",
+            "insertion_distance",
+            "tip_radius",
+            "shaft_radius",
+            "tool_change",
+            "depth",
+            "remaining_target_fraction",
+            "adjacent_target_fraction",
+            "partial_normal_contact_volume",
+            "partial_motor_contact_surrogate",
+            "partial_language_contact_surrogate"
+          ],
+          "centering": false,
+          "clipping": false,
+          "critic_output_divisor": 1.0,
+          "profile_id": "FEATURE_UNITS",
+          "return_divisor": 1.0,
+          "running_statistics": false,
+          "state_divisors": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "state_feature_names": [
+            "remaining_target_fraction",
+            "action_budget_fraction_used",
+            "removed_tissue_fraction",
+            "nominal_severed_edge_fraction",
+            "motor_evidence_available",
+            "language_evidence_available"
+          ],
+          "version": "native-fixed-action-units-v1"
+        },
+        "input_profile_hash": "sha256:ae7e392794857e72d3cbd06dd7106dd30bcf557e8a91fe9261bf14d6481cc74b",
+        "optimization_partition_hash": "sha256:aa8de3098a046f59a463eca08667916b6e4619417da135a473405457b94b0a1c",
+        "selection_partition_hash": "sha256:62f80e45baec7c506272e1b04037c8551267969fdbd2fdb650a61bb720df8dc2",
+        "study_declaration_hash": "sha256:b19aac85f9241e37b98ae53d539ad923f3258bf42a106d67e520f37abcf6a237",
+        "study_id": "procedural-native-feature-units-v1",
+        "study_scope": "procedural_native_feature_units_development",
+        "target_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "training_config_hash": "sha256:1e037e5b95d90630a36fbdafa2584847c718e5227c2bf5cb2b77f8068f6c55d8"
+      },
+      "seed": 23
+    },
+    {
+      "input_profile": "FEATURE_UNITS",
+      "receipt": {
+        "decision_model_hash": "sha256:dd81bd59566ead4e42916c8ede3d48d5615837e523d23d359b268d9a90f63f0b",
+        "declaration_hash": "sha256:3abf10162ed9d096a7e21ec84a87c1a88ebf12bb074345a78040dfdebb828ac9",
+        "final_worlds_used": false,
+        "input_profile": {
+          "action_divisors": [
+            1.0,
+            648.0,
+            648.0,
+            648.0,
+            648.0,
+            120.0,
+            2.25,
+            1.1,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            648.0,
+            648.0,
+            648.0
+          ],
+          "action_feature_names": [
+            "stop",
+            "target_benefit",
+            "normal_volume",
+            "motor_evidence",
+            "language_evidence",
+            "insertion_distance",
+            "tip_radius",
+            "shaft_radius",
+            "tool_change",
+            "depth",
+            "remaining_target_fraction",
+            "adjacent_target_fraction",
+            "partial_normal_contact_volume",
+            "partial_motor_contact_surrogate",
+            "partial_language_contact_surrogate"
+          ],
+          "centering": false,
+          "clipping": false,
+          "critic_output_divisor": 1.0,
+          "profile_id": "FEATURE_UNITS",
+          "return_divisor": 1.0,
+          "running_statistics": false,
+          "state_divisors": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "state_feature_names": [
+            "remaining_target_fraction",
+            "action_budget_fraction_used",
+            "removed_tissue_fraction",
+            "nominal_severed_edge_fraction",
+            "motor_evidence_available",
+            "language_evidence_available"
+          ],
+          "version": "native-fixed-action-units-v1"
+        },
+        "input_profile_hash": "sha256:ae7e392794857e72d3cbd06dd7106dd30bcf557e8a91fe9261bf14d6481cc74b",
+        "optimization_partition_hash": "sha256:aa8de3098a046f59a463eca08667916b6e4619417da135a473405457b94b0a1c",
+        "selection_partition_hash": "sha256:62f80e45baec7c506272e1b04037c8551267969fdbd2fdb650a61bb720df8dc2",
+        "study_declaration_hash": "sha256:b19aac85f9241e37b98ae53d539ad923f3258bf42a106d67e520f37abcf6a237",
+        "study_id": "procedural-native-feature-units-v1",
+        "study_scope": "procedural_native_feature_units_development",
+        "target_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "training_config_hash": "sha256:3b9b32879643a524d7b20f75aaf33321503392f9a15e5649906745474ea1ad31"
+      },
+      "seed": 47
+    }
+  ],
+  "final_worlds_used": false,
+  "gradient_steps": 0,
+  "paired_initialization": [
+    {
+      "diagnostics": {
+        "FEATURE_UNITS": {
+          "action_ids": [
+            "STOP",
+            "NATIVE:native-fine-aspiration:0",
+            "NATIVE:native-wide-aspiration:0",
+            "NATIVE:native-fine-aspiration:3",
+            "NATIVE:native-wide-aspiration:3"
+          ],
+          "action_probabilities": [
+            0.22900862991809845,
+            0.1876051425933838,
+            0.19807732105255127,
+            0.18738098442554474,
+            0.19792798161506653
+          ],
+          "actor_preactivation_max": 0.7706969976425171,
+          "actor_preactivation_min": -0.5294739007949829,
+          "actor_tanh_fraction_abs_above_0_95": 0.0,
+          "actor_tanh_max": 0.6473345756530762,
+          "actor_tanh_min": -0.4849788248538971,
+          "critic_physical_value": -0.048553016036748886,
+          "diagnostic_scope": "initial permitted optimization state; no transitions or gradients",
+          "entropy_nats": 1.6066100597381592
+        },
+        "RAW": {
+          "action_ids": [
+            "STOP",
+            "NATIVE:native-fine-aspiration:0",
+            "NATIVE:native-wide-aspiration:0",
+            "NATIVE:native-fine-aspiration:3",
+            "NATIVE:native-wide-aspiration:3"
+          ],
+          "action_probabilities": [
+            0.22341467440128326,
+            0.18145595490932465,
+            0.2058100402355194,
+            0.18367740511894226,
+            0.2056419849395752
+          ],
+          "actor_preactivation_max": 38.20895004272461,
+          "actor_preactivation_min": -34.11874008178711,
+          "actor_tanh_fraction_abs_above_0_95": 0.699999988079071,
+          "actor_tanh_max": 1.0,
+          "actor_tanh_min": -1.0,
+          "critic_physical_value": -0.048553016036748886,
+          "diagnostic_scope": "initial permitted optimization state; no transitions or gradients",
+          "entropy_nats": 1.6063828468322754
+        }
+      },
+      "gradient_steps": 0,
+      "initial_action_probabilities": {
+        "FEATURE_UNITS": [
+          0.22900862991809845,
+          0.1876051425933838,
+          0.19807732105255127,
+          0.18738098442554474,
+          0.19792798161506653
+        ],
+        "RAW": [
+          0.22341467440128326,
+          0.18145595490932465,
+          0.2058100402355194,
+          0.18367740511894226,
+          0.2056419849395752
+        ]
+      },
+      "initial_critic_value": -0.048553016036748886,
+      "input_profile_hashes": {
+        "FEATURE_UNITS": "sha256:ae7e392794857e72d3cbd06dd7106dd30bcf557e8a91fe9261bf14d6481cc74b",
+        "RAW": "sha256:b0ae5e34b7fbd206ca7e690fc29c5283ab4be69af25ba45b67f4f5d858b27e12"
+      },
+      "optimization_world_seed": 17944101631498118750,
+      "policy_hashes": {
+        "FEATURE_UNITS": "sha256:28620f54f1afdc3f0da87342fc7bba3a85a7f7e68b0728e5a5a0bad3c1b47389",
+        "RAW": "sha256:6acfac0b0f8565437d2d85384df3e1b2815438109b63636cf0ea2515d6c6b008"
+      },
+      "seed": 101,
+      "trainable_parameter_hash": "sha256:6acfac0b0f8565437d2d85384df3e1b2815438109b63636cf0ea2515d6c6b008"
+    },
+    {
+      "diagnostics": {
+        "FEATURE_UNITS": {
+          "action_ids": [
+            "STOP",
+            "NATIVE:native-fine-aspiration:0",
+            "NATIVE:native-wide-aspiration:0",
+            "NATIVE:native-fine-aspiration:3",
+            "NATIVE:native-wide-aspiration:3"
+          ],
+          "action_probabilities": [
+            0.1927729994058609,
+            0.19568957388401031,
+            0.20803001523017883,
+            0.1957589089870453,
+            0.20774850249290466
+          ],
+          "actor_preactivation_max": 0.8058090806007385,
+          "actor_preactivation_min": -0.4257189631462097,
+          "actor_tanh_fraction_abs_above_0_95": 0.0,
+          "actor_tanh_max": 0.6672718524932861,
+          "actor_tanh_min": -0.40173739194869995,
+          "critic_physical_value": -0.10159453749656677,
+          "diagnostic_scope": "initial permitted optimization state; no transitions or gradients",
+          "entropy_nats": 1.6089063882827759
+        },
+        "RAW": {
+          "action_ids": [
+            "STOP",
+            "NATIVE:native-fine-aspiration:0",
+            "NATIVE:native-wide-aspiration:0",
+            "NATIVE:native-fine-aspiration:3",
+            "NATIVE:native-wide-aspiration:3"
+          ],
+          "action_probabilities": [
+            0.23032480478286743,
+            0.16458448767662048,
+            0.2209802269935608,
+            0.15543317794799805,
+            0.22867725789546967
+          ],
+          "actor_preactivation_max": 41.09404754638672,
+          "actor_preactivation_min": -31.71793556213379,
+          "actor_tanh_fraction_abs_above_0_95": 0.550000011920929,
+          "actor_tanh_max": 1.0,
+          "actor_tanh_min": -1.0,
+          "critic_physical_value": -0.10159453749656677,
+          "diagnostic_scope": "initial permitted optimization state; no transitions or gradients",
+          "entropy_nats": 1.5954980850219727
+        }
+      },
+      "gradient_steps": 0,
+      "initial_action_probabilities": {
+        "FEATURE_UNITS": [
+          0.1927729994058609,
+          0.19568957388401031,
+          0.20803001523017883,
+          0.1957589089870453,
+          0.20774850249290466
+        ],
+        "RAW": [
+          0.23032480478286743,
+          0.16458448767662048,
+          0.2209802269935608,
+          0.15543317794799805,
+          0.22867725789546967
+        ]
+      },
+      "initial_critic_value": -0.10159453749656677,
+      "input_profile_hashes": {
+        "FEATURE_UNITS": "sha256:ae7e392794857e72d3cbd06dd7106dd30bcf557e8a91fe9261bf14d6481cc74b",
+        "RAW": "sha256:b0ae5e34b7fbd206ca7e690fc29c5283ab4be69af25ba45b67f4f5d858b27e12"
+      },
+      "optimization_world_seed": 17944101631498118750,
+      "policy_hashes": {
+        "FEATURE_UNITS": "sha256:748abc9f7d23465682bd6766dfd9ac09ac52652c890a31aadb2847b6bc0402fe",
+        "RAW": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322"
+      },
+      "seed": 11,
+      "trainable_parameter_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322"
+    },
+    {
+      "diagnostics": {
+        "FEATURE_UNITS": {
+          "action_ids": [
+            "STOP",
+            "NATIVE:native-fine-aspiration:0",
+            "NATIVE:native-wide-aspiration:0",
+            "NATIVE:native-fine-aspiration:3",
+            "NATIVE:native-wide-aspiration:3"
+          ],
+          "action_probabilities": [
+            0.20402145385742188,
+            0.21144141256809235,
+            0.18760617077350616,
+            0.21029368042945862,
+            0.1866372674703598
+          ],
+          "actor_preactivation_max": 0.4856823682785034,
+          "actor_preactivation_min": -0.9125996232032776,
+          "actor_tanh_fraction_abs_above_0_95": 0.0,
+          "actor_tanh_max": 0.4507828652858734,
+          "actor_tanh_min": -0.7223776578903198,
+          "critic_physical_value": -0.12240979075431824,
+          "diagnostic_scope": "initial permitted optimization state; no transitions or gradients",
+          "entropy_nats": 1.6079671382904053
+        },
+        "RAW": {
+          "action_ids": [
+            "STOP",
+            "NATIVE:native-fine-aspiration:0",
+            "NATIVE:native-wide-aspiration:0",
+            "NATIVE:native-fine-aspiration:3",
+            "NATIVE:native-wide-aspiration:3"
+          ],
+          "action_probabilities": [
+            0.13423974812030792,
+            0.2867601811885834,
+            0.14795172214508057,
+            0.2831556797027588,
+            0.14789274334907532
+          ],
+          "actor_preactivation_max": 34.851383209228516,
+          "actor_preactivation_min": -35.35594940185547,
+          "actor_tanh_fraction_abs_above_0_95": 0.625,
+          "actor_tanh_max": 1.0,
+          "actor_tanh_min": -1.0,
+          "critic_physical_value": -0.12240979075431824,
+          "diagnostic_scope": "initial permitted optimization state; no transitions or gradients",
+          "entropy_nats": 1.5504183769226074
+        }
+      },
+      "gradient_steps": 0,
+      "initial_action_probabilities": {
+        "FEATURE_UNITS": [
+          0.20402145385742188,
+          0.21144141256809235,
+          0.18760617077350616,
+          0.21029368042945862,
+          0.1866372674703598
+        ],
+        "RAW": [
+          0.13423974812030792,
+          0.2867601811885834,
+          0.14795172214508057,
+          0.2831556797027588,
+          0.14789274334907532
+        ]
+      },
+      "initial_critic_value": -0.12240979075431824,
+      "input_profile_hashes": {
+        "FEATURE_UNITS": "sha256:ae7e392794857e72d3cbd06dd7106dd30bcf557e8a91fe9261bf14d6481cc74b",
+        "RAW": "sha256:b0ae5e34b7fbd206ca7e690fc29c5283ab4be69af25ba45b67f4f5d858b27e12"
+      },
+      "optimization_world_seed": 17944101631498118750,
+      "policy_hashes": {
+        "FEATURE_UNITS": "sha256:40ac2014f6904ddb076d4a2211bc0fc77734c0fc015e1575e7682289f75453d0",
+        "RAW": "sha256:435e605ae7df4d64e5929702a690098954baf7a962fdf4218133dab6494fd326"
+      },
+      "seed": 23,
+      "trainable_parameter_hash": "sha256:435e605ae7df4d64e5929702a690098954baf7a962fdf4218133dab6494fd326"
+    },
+    {
+      "diagnostics": {
+        "FEATURE_UNITS": {
+          "action_ids": [
+            "STOP",
+            "NATIVE:native-fine-aspiration:0",
+            "NATIVE:native-wide-aspiration:0",
+            "NATIVE:native-fine-aspiration:3",
+            "NATIVE:native-wide-aspiration:3"
+          ],
+          "action_probabilities": [
+            0.21898029744625092,
+            0.18998153507709503,
+            0.20057933032512665,
+            0.1900276243686676,
+            0.20043125748634338
+          ],
+          "actor_preactivation_max": 0.5937198400497437,
+          "actor_preactivation_min": -0.38502436876296997,
+          "actor_tanh_fraction_abs_above_0_95": 0.0,
+          "actor_tanh_max": 0.5325656533241272,
+          "actor_tanh_min": -0.36706286668777466,
+          "critic_physical_value": 0.20000417530536652,
+          "diagnostic_scope": "initial permitted optimization state; no transitions or gradients",
+          "entropy_nats": 1.6080551147460938
+        },
+        "RAW": {
+          "action_ids": [
+            "STOP",
+            "NATIVE:native-fine-aspiration:0",
+            "NATIVE:native-wide-aspiration:0",
+            "NATIVE:native-fine-aspiration:3",
+            "NATIVE:native-wide-aspiration:3"
+          ],
+          "action_probabilities": [
+            0.15570585429668427,
+            0.26423752307891846,
+            0.1635853797197342,
+            0.2528718411922455,
+            0.16359937191009521
+          ],
+          "actor_preactivation_max": 27.030054092407227,
+          "actor_preactivation_min": -33.3251838684082,
+          "actor_tanh_fraction_abs_above_0_95": 0.5249999761581421,
+          "actor_tanh_max": 1.0,
+          "actor_tanh_min": -1.0,
+          "critic_physical_value": 0.20000417530536652,
+          "diagnostic_scope": "initial permitted optimization state; no transitions or gradients",
+          "entropy_nats": 1.5812495946884155
+        }
+      },
+      "gradient_steps": 0,
+      "initial_action_probabilities": {
+        "FEATURE_UNITS": [
+          0.21898029744625092,
+          0.18998153507709503,
+          0.20057933032512665,
+          0.1900276243686676,
+          0.20043125748634338
+        ],
+        "RAW": [
+          0.15570585429668427,
+          0.26423752307891846,
+          0.1635853797197342,
+          0.2528718411922455,
+          0.16359937191009521
+        ]
+      },
+      "initial_critic_value": 0.20000417530536652,
+      "input_profile_hashes": {
+        "FEATURE_UNITS": "sha256:ae7e392794857e72d3cbd06dd7106dd30bcf557e8a91fe9261bf14d6481cc74b",
+        "RAW": "sha256:b0ae5e34b7fbd206ca7e690fc29c5283ab4be69af25ba45b67f4f5d858b27e12"
+      },
+      "optimization_world_seed": 17944101631498118750,
+      "policy_hashes": {
+        "FEATURE_UNITS": "sha256:110823e726e31fabdc4168f019dc4bf581ae4de8c1298e33ef9e48ea812f7bf1",
+        "RAW": "sha256:df38b5264d3ee1df4f133ea9e01d5d44e6d4fe896106e3696950fb9e4c19e215"
+      },
+      "seed": 47,
+      "trainable_parameter_hash": "sha256:df38b5264d3ee1df4f133ea9e01d5d44e6d4fe896106e3696950fb9e4c19e215"
+    }
+  ]
+}

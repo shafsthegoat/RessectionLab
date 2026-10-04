@@ -653,3 +653,54 @@ the exact committed revision and archive bytes. Evidence is in
 `artifacts/learning/procedural-native-feature-units-v1-preflight/`. Registered
 execution must use these tested frozen bytes; the newer proposal module remains
 outside this learning comparison.
+
+## October 4, 2026 — completed actor feature-unit comparison
+
+The declared RAW/FEATURE_UNITS comparison ran from tested archive `0bffeaa`
+(runtime `850dab80…`) without outcome-driven changes. Two fresh procedural
+pretraining runs each made 32 Adam updates; all twelve patient learners changed
+actor weights over 10–15 actual updates. All 23 frozen candidate identities
+passed nine distinct native audits. A separate artifact audit passed seventeen
+self-checks and verified source/profile/tensor identities, initialization,
+selection, costs and physical scores recomputed from source cells. It checked
+geometry certificates rather than rerunning their geometry implementation.
+
+SEARCH/GREEDY scored 245.24. RAW scratch seeds scored [245.24, 171.42, 245.16],
+while scaled scratch scored [245.24, 171.42, 245.24]. RAW frozen initialization
+scored 139.62 versus scaled frozen 245.24. RAW adapted scores were
+[171.42, 171.42, 245.17]; scaled adapted scores were all 245.24, with every run
+selecting its unchanged initial checkpoint. The scaled frozen policy improved,
+but additional adaptation gain was not established and no learner beat search.
+Paired trainable initialization does not imply identical initial behavior after
+the input transform; the comparison does not isolate initialization from offline
+learning as the source of the frozen-policy difference.
+
+Online clocks were 30.027–30.340 seconds, including initial and later selection.
+Selection consumed 11.59–15.40 seconds within those clocks. The full offline
+calls were 30.630 and 27.773 seconds; SEARCH used 6.127 seconds plus 2.091 seconds
+cold setup. Full native validation took 43.904 seconds. Launcher time was
+534.183 seconds and peak recorded worker RSS 2.573 GiB. Other heavy work was
+paused, while ordinary desktop/OS load remained uncontrolled. These are local
+observations, with matched declared caps rather than equal executed transitions.
+
+The experiment remains one reused patient-derived development case, two
+procedural families and zero human pretraining patients. Worlds had zero
+perturbations; final/stress worlds stayed closed. The best sequence still
+removes only 249 of 41,919 target mm³ under unreviewed anatomy and hypothetical
+access. Its 17 normal mm³ removed and 32 cumulative partial-normal-contact mm³
+are distinct categories. Clinical deficit probabilities remain null.
+
+A separate read-only diagnostic loaded 42 checkpoints on seven archived states
+with zero simulator resets, transitions, gradients or optimizer updates. Six
+static checks passed. Fixed units removed measured actor saturation; the critic
+still receives the same initial six features for different physical reward
+scales. Algebraic norm decomposition shows stronger value-gradient contribution
+to shared clipping after scaling, but larger actual scaled-actor displacement
+means the record does not demonstrate clipping-caused learning harm.
+
+Results, source-derived plots and complete cost tables are in
+`artifacts/learning/procedural-native-feature-units-v1/RESULT.md`; the separate
+audit and `diagnostics-v1/` preserve their source and limitations. The 50,380,301
+byte native replay is retained locally and stored as an 836,680-byte lossless
+gzip in Git, with byte/semantic roundtrip checks. Gzip-only report regeneration
+reproduces the same Markdown and uncompressed evidence hashes.
