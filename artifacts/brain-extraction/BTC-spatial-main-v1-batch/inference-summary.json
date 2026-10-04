@@ -1,0 +1,1182 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-04T18:18:48.559378+00:00",
+  "status": "all_four_inferences_completed_before_overlap_QC",
+  "git_commit": "ea501a8991e9a4ec6a6154f117c48a8b6ff1e390",
+  "declaration_sha256": "f6560e7d35a3c85d3e56f2abfbaa487337f22405a4be20dc28ddeb368f78450f",
+  "root_release_sha256": "3bc62f7a736f7d690df24754990b89075491fd7ae787404a264e559cb6b98934",
+  "inference_batch_sha256": "57b41c12d937358165ca4aa8e46d0085b9577ee1619034a375e2c90d84bbc975",
+  "driver": {
+    "path": "build/btc-spatial-support-ea501a8/execute_inference.py",
+    "sha256": "dff2b326c94a5dcec8fc6680c87cf4821b2f88501b35073bfa398f251640879a",
+    "bytes": 6627,
+    "tracked_copy": "artifacts/brain-extraction/BTC-spatial-main-v1-batch/execution-driver.py",
+    "tracked_copy_sha256": "dff2b326c94a5dcec8fc6680c87cf4821b2f88501b35073bfa398f251640879a",
+    "tracked_copy_byte_identical": true
+  },
+  "source_archive": {
+    "path": "build/btc-spatial-support-ea501a8/source.tar",
+    "sha256": "8a0ef44d05bbf0c30cc20ab9ebae879ff17da23893d26f35d96700e7a9b6d77c"
+  },
+  "parent_argv": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-S",
+    "-B",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/btc-spatial-support-ea501a8/execute_inference.py",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab"
+  ],
+  "parent_log": {
+    "path": "build/btc-spatial-support-ea501a8/execution.log",
+    "sha256": "5d1fa8b4b567e65f7e4a7c9a140f832a32986080c262b82a4756e9ed75fab39e"
+  },
+  "model": {
+    "name": "SynthStrip",
+    "variant": "main",
+    "weights_version": 1,
+    "upstream_code_commit": "cf4bccf24875a47245b4df9fc9372d0f1c3d784f",
+    "files": {
+      "mri_synthstrip": {
+        "url": "https://raw.githubusercontent.com/freesurfer/freesurfer/cf4bccf24875a47245b4df9fc9372d0f1c3d784f/mri_synthstrip/mri_synthstrip",
+        "sha256": "291c253ab2f7c0cbcb84afa769ae10909549537e727db5b92d268754b7cc7871",
+        "bytes": 12238
+      },
+      "LICENSE_FreeSurfer.txt": {
+        "url": "https://raw.githubusercontent.com/freesurfer/freesurfer/cf4bccf24875a47245b4df9fc9372d0f1c3d784f/LICENSE.txt",
+        "sha256": "632d404ea17b9101d9ac87cf8f09e651d18eb20d2cc0ba8dbee77e85b8516307",
+        "bytes": 10297
+      },
+      "synthstrip.1.pt": {
+        "url": "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/requirements/synthstrip.1.pt",
+        "sha256": "37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33",
+        "bytes": 30851709
+      }
+    },
+    "code_license": "FreeSurfer Software License Agreement 1.0, February 2011",
+    "weights_license_choice": "MIT, explicitly offered by official SynthStrip page",
+    "weights_license_source": "https://surfer.nmr.mgh.harvard.edu/docs/synthstrip/"
+  },
+  "frozen_configuration": {
+    "device": "mps",
+    "cpu_threads": 2,
+    "border_mm": 1,
+    "timeout_seconds": 300,
+    "maximum_rss_bytes": 6442450944,
+    "MPS_allocator_maximum_bytes": 6442450944,
+    "MPS_allocator_maximum_fraction_of_recommended": 0.7,
+    "MPS_fallback_enabled": false,
+    "native_corner_displacement_tolerance_mm": 0.01
+  },
+  "cases": [
+    {
+      "subject": "sub-PAT22",
+      "patient_group": "BTC:sub-PAT22",
+      "development_role": "population_training",
+      "output_directory": "outputs/brain-extraction/BTC-spatial-main-v1/sub-PAT22",
+      "mask": {
+        "path": "outputs/brain-extraction/BTC-spatial-main-v1/sub-PAT22/main_mask.nii.gz",
+        "sha256": "be7440cdba7fc921cf32615fa632ebc58858bf205bdc688746540dfd73e81591",
+        "bytes": 134513
+      },
+      "predicted_SDT": {
+        "path": "outputs/brain-extraction/BTC-spatial-main-v1/sub-PAT22/main_distance_mm.nii.gz",
+        "sha256": "e01622e26d5fd418495cf1162f13d873b11185cbbff5289cacddb1cd005ffe4f",
+        "bytes": 27929520
+      },
+      "inference_record_sha256": "e3c61b910f2f647c60f537d7438daa48c2262c576ac96b06f9a1e8444e2da6bf",
+      "initial_report_sha256": "bc36f8be603ebf011183d0c76f548accbbfe54c104319b073f0372a2b4ed04e4",
+      "input_sha256": "6ac1bc950dc2b48709367550b1c740684457fce875e3e402d870d3356282334e",
+      "source_native_grid": {
+        "file": "sub-PAT22_ses-preop_T1w.nii.gz",
+        "shape": [
+          160,
+          256,
+          256
+        ],
+        "affine_ras_mm": [
+          [
+            0.9992063641548157,
+            -0.02438328042626381,
+            0.03140365704894066,
+            -76.97232818603516
+          ],
+          [
+            0.024371175095438957,
+            0.9997026920318604,
+            0.0007659494876861572,
+            -103.12860107421875
+          ],
+          [
+            -0.03141290321946144,
+            2.457493764040919e-09,
+            0.9995064735412598,
+            -131.29685974121094
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_units": "mm",
+        "physical_units": "mm",
+        "unit_scale_to_mm": 1.0,
+        "qform_code": 1,
+        "sform_code": 1,
+        "qform_native": [
+          [
+            0.9992064020383555,
+            -0.024383280737595263,
+            0.03140365795310657,
+            -76.97232818603516
+          ],
+          [
+            0.02437117624281035,
+            0.9997026836117184,
+            0.000765949487127674,
+            -103.12860107421875
+          ],
+          [
+            -0.031412905746653286,
+            2.4514752861156883e-09,
+            0.9995064900182227,
+            -131.29685974121094
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "sform_native": [
+          [
+            0.9992063641548157,
+            -0.02438328042626381,
+            0.03140365704894066,
+            -76.97232818603516
+          ],
+          [
+            0.024371175095438957,
+            0.9997026920318604,
+            0.0007659494876861572,
+            -103.12860107421875
+          ],
+          [
+            -0.03141290321946144,
+            2.457493764040919e-09,
+            0.9995064735412598,
+            -131.29685974121094
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "orientation": [
+          "R",
+          "A",
+          "S"
+        ],
+        "spacing_mm": [
+          0.9999970414114703,
+          1.000000008410047,
+          0.999999983502775
+        ],
+        "voxel_volume_mm3": 0.9999970333243163,
+        "handedness": "right",
+        "anisotropic": false,
+        "obliquity_degrees": [
+          2.2785917251091905,
+          1.3971975200050826,
+          1.8001282928989968
+        ],
+        "status": "passed_header_checks",
+        "visual_alignment_review": "pending",
+        "frame": "RAS+",
+        "simulation_frame": "source_coded_frame_native_status_requires_source_provenance"
+      },
+      "predicted_SDT_QC": {
+        "native_geometry": {
+          "file": "main_distance_mm.nii.gz",
+          "shape": [
+            160,
+            256,
+            256
+          ],
+          "affine_ras_mm": [
+            [
+              0.9992063641548157,
+              -0.02438328042626381,
+              0.03140365704894066,
+              -76.97232818603516
+            ],
+            [
+              0.024371175095438957,
+              0.9997026920318604,
+              0.0007659494876861572,
+              -103.12860107421875
+            ],
+            [
+              -0.03141290321946144,
+              2.457493764040919e-09,
+              0.9995064735412598,
+              -131.29685974121094
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "source_units": "mm",
+          "physical_units": "mm",
+          "unit_scale_to_mm": 1.0,
+          "qform_code": 1,
+          "sform_code": 1,
+          "qform_native": [
+            [
+              0.9992064020383555,
+              -0.024383280737595263,
+              0.03140365795310657,
+              -76.97232818603516
+            ],
+            [
+              0.02437117624281035,
+              0.9997026836117184,
+              0.000765949487127674,
+              -103.12860107421875
+            ],
+            [
+              -0.031412905746653286,
+              2.4514752861156883e-09,
+              0.9995064900182227,
+              -131.29685974121094
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "sform_native": [
+            [
+              0.9992063641548157,
+              -0.02438328042626381,
+              0.03140365704894066,
+              -76.97232818603516
+            ],
+            [
+              0.024371175095438957,
+              0.9997026920318604,
+              0.0007659494876861572,
+              -103.12860107421875
+            ],
+            [
+              -0.03141290321946144,
+              2.457493764040919e-09,
+              0.9995064735412598,
+              -131.29685974121094
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "orientation": [
+            "R",
+            "A",
+            "S"
+          ],
+          "spacing_mm": [
+            0.9999970414114703,
+            1.000000008410047,
+            0.999999983502775
+          ],
+          "voxel_volume_mm3": 0.9999970333243163,
+          "handedness": "right",
+          "anisotropic": false,
+          "obliquity_degrees": [
+            2.2785917251091905,
+            1.3971975200050826,
+            1.8001282928989968
+          ],
+          "status": "passed_header_checks",
+          "visual_alignment_review": "pending",
+          "frame": "RAS+",
+          "simulation_frame": "source_coded_frame_native_status_requires_source_provenance",
+          "maximum_native_corner_displacement_mm": 0.0
+        },
+        "finite_values": true,
+        "minimum_mm": -5.230258464813232,
+        "maximum_mm": 100.0,
+        "meaning": "predicted signed distance with upstream extension; not a clinical probability or reviewed surface"
+      },
+      "mask_native_validation": "Frozen wrapper validate_mask completed successfully; independent array/visual QC pending.",
+      "child_elapsed_seconds": 7.901334209018387,
+      "sampled_child_RSS_bytes": 671498240,
+      "sampled_MPS_allocations": {
+        "tensor_bytes_max_sampled": 4117935104,
+        "driver_bytes_max_sampled": 5948243968
+      },
+      "memory_measurement": "child-process RSS sampled with ps approximately every 0.25 s; may miss brief peaks",
+      "MPS_measurement": "allocator samples after module forwards, not exact peak; driver includes cached allocations; process RSS alone excludes GPU accounting",
+      "runtime_versions": {
+        "python": "3.12.14",
+        "numpy": "2.2.6",
+        "torch": "2.14.1",
+        "surfa": "0.6.3"
+      },
+      "executed_runner_sha256": "d39cbcba9c5303ba74eaf0bb53d9105762f8a01a7de7bae2740958242f8f6cf8",
+      "failure": null,
+      "exit_code": 0,
+      "proposal_ready_status": "inference_outputs_retained; independent_QC_and_bundle_integration_pending",
+      "brain_reviewed": false,
+      "working_brain_mask_attached": false,
+      "cortical_access_permitted": false
+    },
+    {
+      "subject": "sub-PAT25",
+      "patient_group": "BTC:sub-PAT25",
+      "development_role": "population_training",
+      "output_directory": "outputs/brain-extraction/BTC-spatial-main-v1/sub-PAT25",
+      "mask": {
+        "path": "outputs/brain-extraction/BTC-spatial-main-v1/sub-PAT25/main_mask.nii.gz",
+        "sha256": "70b2b1bfe1234a32946e82ac6525f6c6cbfeefa074d6c340ab0e27f5efce3fc7",
+        "bytes": 137605
+      },
+      "predicted_SDT": {
+        "path": "outputs/brain-extraction/BTC-spatial-main-v1/sub-PAT25/main_distance_mm.nii.gz",
+        "sha256": "5841ff9950495b270e84aeca7165f8924c8cb7d34103c4903c1b29e0e589fe7e",
+        "bytes": 28759285
+      },
+      "inference_record_sha256": "3c48fd84cf00ef8bb23ccd430fce647dc14af2e2c0f6447f999a552a6716adc9",
+      "initial_report_sha256": "a6d400062bf17972457ee763966202ffe0d69db931ef82367b9e91d04ab2e3af",
+      "input_sha256": "40f786e7fbdfdb036d6409ffe771ec9309d0c424fca88e44e8a42c43c8900562",
+      "source_native_grid": {
+        "file": "sub-PAT25_ses-preop_T1w.nii.gz",
+        "shape": [
+          160,
+          256,
+          256
+        ],
+        "affine_ras_mm": [
+          [
+            0.9996336698532104,
+            -0.0243731290102005,
+            0.012221364304423332,
+            -78.97980499267578
+          ],
+          [
+            0.024371441453695297,
+            0.9997029304504395,
+            0.00029797846218571067,
+            -109.11360168457031
+          ],
+          [
+            -0.012225063517689705,
+            -1.705437391308351e-08,
+            0.9999252557754517,
+            -133.74107360839844
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_units": "mm",
+        "physical_units": "mm",
+        "unit_scale_to_mm": 1.0,
+        "qform_code": 1,
+        "sform_code": 1,
+        "qform_native": [
+          [
+            0.9996337068592345,
+            -0.024373130171068562,
+            0.012221365228010858,
+            -78.97980499267578
+          ],
+          [
+            0.024371442249160387,
+            0.9997029311378776,
+            0.0002979784688541562,
+            -109.11360168457031
+          ],
+          [
+            -0.01222506434628777,
+            -1.7024431199979618e-08,
+            0.9999252719282555,
+            -133.74107360839844
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "sform_native": [
+          [
+            0.9996336698532104,
+            -0.0243731290102005,
+            0.012221364304423332,
+            -78.97980499267578
+          ],
+          [
+            0.024371441453695297,
+            0.9997029304504395,
+            0.00029797846218571067,
+            -109.11360168457031
+          ],
+          [
+            -0.012225063517689705,
+            -1.705437391308351e-08,
+            0.9999252557754517,
+            -133.74107360839844
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "orientation": [
+          "R",
+          "A",
+          "S"
+        ],
+        "spacing_mm": [
+          1.0000054466055373,
+          0.9999999992844721,
+          0.9999999838371137
+        ],
+        "voxel_volume_mm3": 1.000005429727031,
+        "handedness": "right",
+        "anisotropic": false,
+        "obliquity_degrees": [
+          1.56239563901548,
+          1.3966157265529824,
+          0.7004581568198935
+        ],
+        "status": "passed_header_checks",
+        "visual_alignment_review": "pending",
+        "frame": "RAS+",
+        "simulation_frame": "source_coded_frame_native_status_requires_source_provenance"
+      },
+      "predicted_SDT_QC": {
+        "native_geometry": {
+          "file": "main_distance_mm.nii.gz",
+          "shape": [
+            160,
+            256,
+            256
+          ],
+          "affine_ras_mm": [
+            [
+              0.9996336698532104,
+              -0.0243731290102005,
+              0.012221364304423332,
+              -78.97980499267578
+            ],
+            [
+              0.024371441453695297,
+              0.9997029304504395,
+              0.00029797846218571067,
+              -109.11360168457031
+            ],
+            [
+              -0.012225063517689705,
+              -1.705437391308351e-08,
+              0.9999252557754517,
+              -133.74107360839844
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "source_units": "mm",
+          "physical_units": "mm",
+          "unit_scale_to_mm": 1.0,
+          "qform_code": 1,
+          "sform_code": 1,
+          "qform_native": [
+            [
+              0.9996337068706193,
+              -0.024373130171157477,
+              0.01222136429663229,
+              -78.97980499267578
+            ],
+            [
+              0.024371442249210194,
+              0.9997029311378753,
+              0.00029797847205488873,
+              -109.11360168457031
+            ],
+            [
+              -0.012225063415258792,
+              -1.7050332440767197e-08,
+              0.9999252719396381,
+              -133.74107360839844
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "sform_native": [
+            [
+              0.9996336698532104,
+              -0.0243731290102005,
+              0.012221364304423332,
+              -78.97980499267578
+            ],
+            [
+              0.024371441453695297,
+              0.9997029304504395,
+              0.00029797846218571067,
+              -109.11360168457031
+            ],
+            [
+              -0.012225063517689705,
+              -1.705437391308351e-08,
+              0.9999252557754517,
+              -133.74107360839844
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "orientation": [
+            "R",
+            "A",
+            "S"
+          ],
+          "spacing_mm": [
+            1.0000054466055373,
+            0.9999999992844721,
+            0.9999999838371137
+          ],
+          "voxel_volume_mm3": 1.000005429727031,
+          "handedness": "right",
+          "anisotropic": false,
+          "obliquity_degrees": [
+            1.56239563901548,
+            1.3966157265529824,
+            0.7004581568198935
+          ],
+          "status": "passed_header_checks",
+          "visual_alignment_review": "pending",
+          "frame": "RAS+",
+          "simulation_frame": "source_coded_frame_native_status_requires_source_provenance",
+          "maximum_native_corner_displacement_mm": 0.0
+        },
+        "finite_values": true,
+        "minimum_mm": -5.187133312225342,
+        "maximum_mm": 100.0,
+        "meaning": "predicted signed distance with upstream extension; not a clinical probability or reviewed surface"
+      },
+      "mask_native_validation": "Frozen wrapper validate_mask completed successfully; independent array/visual QC pending.",
+      "child_elapsed_seconds": 6.847231792053208,
+      "sampled_child_RSS_bytes": 676331520,
+      "sampled_MPS_allocations": {
+        "tensor_bytes_max_sampled": 4117935104,
+        "driver_bytes_max_sampled": 5948243968
+      },
+      "memory_measurement": "child-process RSS sampled with ps approximately every 0.25 s; may miss brief peaks",
+      "MPS_measurement": "allocator samples after module forwards, not exact peak; driver includes cached allocations; process RSS alone excludes GPU accounting",
+      "runtime_versions": {
+        "python": "3.12.14",
+        "numpy": "2.2.6",
+        "torch": "2.14.1",
+        "surfa": "0.6.3"
+      },
+      "executed_runner_sha256": "d39cbcba9c5303ba74eaf0bb53d9105762f8a01a7de7bae2740958242f8f6cf8",
+      "failure": null,
+      "exit_code": 0,
+      "proposal_ready_status": "inference_outputs_retained; independent_QC_and_bundle_integration_pending",
+      "brain_reviewed": false,
+      "working_brain_mask_attached": false,
+      "cortical_access_permitted": false
+    },
+    {
+      "subject": "sub-PAT26",
+      "patient_group": "BTC:sub-PAT26",
+      "development_role": "checkpoint_selection_development",
+      "output_directory": "outputs/brain-extraction/BTC-spatial-main-v1/sub-PAT26",
+      "mask": {
+        "path": "outputs/brain-extraction/BTC-spatial-main-v1/sub-PAT26/main_mask.nii.gz",
+        "sha256": "80aa8b90713525c8b95ded63a190113a0f3c50260cc08241f2344f030249b58d",
+        "bytes": 142695
+      },
+      "predicted_SDT": {
+        "path": "outputs/brain-extraction/BTC-spatial-main-v1/sub-PAT26/main_distance_mm.nii.gz",
+        "sha256": "8068abdb80c426a435d53c53fbe30ba71f7c045638884b3542d1893e2fd0e322",
+        "bytes": 28573539
+      },
+      "inference_record_sha256": "d82f11cda18627bf64d45feae06f305257c762de9313f5f8c6577c6b9c58475c",
+      "initial_report_sha256": "5b1da3b664b80a624e5f6f998f897f47e7d0670617c6e479b8d81de5903dfe51",
+      "input_sha256": "a27b46c82c4df0b4ebae97b5bea22bb4299abc5086577416c498edfa63879595",
+      "source_native_grid": {
+        "file": "sub-PAT26_ses-preop_T1w.nii.gz",
+        "shape": [
+          160,
+          256,
+          256
+        ],
+        "affine_ras_mm": [
+          [
+            0.9993138313293457,
+            -0.024380743503570557,
+            0.02791663259267807,
+            -77.2808609008789
+          ],
+          [
+            0.024371257051825523,
+            0.9997027516365051,
+            0.0006808483740314841,
+            -109.16217041015625
+          ],
+          [
+            -0.02792496047914028,
+            -1.7723966294624915e-08,
+            0.9996100068092346,
+            -129.7393035888672
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_units": "mm",
+        "physical_units": "mm",
+        "unit_scale_to_mm": 1.0,
+        "qform_code": 1,
+        "sform_code": 1,
+        "qform_native": [
+          [
+            0.9993138374675985,
+            -0.024380742758877628,
+            0.02791663227560309,
+            -77.2808609008789
+          ],
+          [
+            0.02437125757648126,
+            0.999702745511147,
+            0.0006808483674184461,
+            -109.16217041015625
+          ],
+          [
+            -0.027924960151541226,
+            -1.7758904907554367e-08,
+            0.9996100230029156,
+            -129.7393035888672
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "sform_native": [
+          [
+            0.9993138313293457,
+            -0.024380743503570557,
+            0.02791663259267807,
+            -77.2808609008789
+          ],
+          [
+            0.024371257051825523,
+            0.9997027516365051,
+            0.0006808483740314841,
+            -109.16217041015625
+          ],
+          [
+            -0.02792496047914028,
+            -1.7723966294624915e-08,
+            0.9996100068092346,
+            -129.7393035888672
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "orientation": [
+          "R",
+          "A",
+          "S"
+        ],
+        "spacing_mm": [
+          1.000000947536643,
+          1.0000000061416934,
+          0.9999999838214904
+        ],
+        "voxel_volume_mm3": 1.000000937499817,
+        "handedness": "right",
+        "anisotropic": false,
+        "obliquity_degrees": [
+          2.1241118971823445,
+          1.3970521249881298,
+          1.600188895656915
+        ],
+        "status": "passed_header_checks",
+        "visual_alignment_review": "pending",
+        "frame": "RAS+",
+        "simulation_frame": "source_coded_frame_native_status_requires_source_provenance"
+      },
+      "predicted_SDT_QC": {
+        "native_geometry": {
+          "file": "main_distance_mm.nii.gz",
+          "shape": [
+            160,
+            256,
+            256
+          ],
+          "affine_ras_mm": [
+            [
+              0.9993138313293457,
+              -0.024380743503570557,
+              0.02791663259267807,
+              -77.2808609008789
+            ],
+            [
+              0.024371257051825523,
+              0.9997027516365051,
+              0.0006808483740314841,
+              -109.16217041015625
+            ],
+            [
+              -0.02792496047914028,
+              -1.7723966294624915e-08,
+              0.9996100068092346,
+              -129.7393035888672
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "source_units": "mm",
+          "physical_units": "mm",
+          "unit_scale_to_mm": 1.0,
+          "qform_code": 1,
+          "sform_code": 1,
+          "qform_native": [
+            [
+              0.9993138374675985,
+              -0.024380742758877628,
+              0.02791663227560309,
+              -77.2808609008789
+            ],
+            [
+              0.02437125757648126,
+              0.999702745511147,
+              0.0006808483674184461,
+              -109.16217041015625
+            ],
+            [
+              -0.027924960151541226,
+              -1.7758904907554367e-08,
+              0.9996100230029156,
+              -129.7393035888672
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "sform_native": [
+            [
+              0.9993138313293457,
+              -0.024380743503570557,
+              0.02791663259267807,
+              -77.2808609008789
+            ],
+            [
+              0.024371257051825523,
+              0.9997027516365051,
+              0.0006808483740314841,
+              -109.16217041015625
+            ],
+            [
+              -0.02792496047914028,
+              -1.7723966294624915e-08,
+              0.9996100068092346,
+              -129.7393035888672
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "orientation": [
+            "R",
+            "A",
+            "S"
+          ],
+          "spacing_mm": [
+            1.000000947536643,
+            1.0000000061416934,
+            0.9999999838214904
+          ],
+          "voxel_volume_mm3": 1.000000937499817,
+          "handedness": "right",
+          "anisotropic": false,
+          "obliquity_degrees": [
+            2.1241118971823445,
+            1.3970521249881298,
+            1.600188895656915
+          ],
+          "status": "passed_header_checks",
+          "visual_alignment_review": "pending",
+          "frame": "RAS+",
+          "simulation_frame": "source_coded_frame_native_status_requires_source_provenance",
+          "maximum_native_corner_displacement_mm": 0.0
+        },
+        "finite_values": true,
+        "minimum_mm": -5.204668045043945,
+        "maximum_mm": 100.0,
+        "meaning": "predicted signed distance with upstream extension; not a clinical probability or reviewed surface"
+      },
+      "mask_native_validation": "Frozen wrapper validate_mask completed successfully; independent array/visual QC pending.",
+      "child_elapsed_seconds": 6.073116875020787,
+      "sampled_child_RSS_bytes": 678838272,
+      "sampled_MPS_allocations": {
+        "tensor_bytes_max_sampled": 4117935104,
+        "driver_bytes_max_sampled": 5948243968
+      },
+      "memory_measurement": "child-process RSS sampled with ps approximately every 0.25 s; may miss brief peaks",
+      "MPS_measurement": "allocator samples after module forwards, not exact peak; driver includes cached allocations; process RSS alone excludes GPU accounting",
+      "runtime_versions": {
+        "python": "3.12.14",
+        "numpy": "2.2.6",
+        "torch": "2.14.1",
+        "surfa": "0.6.3"
+      },
+      "executed_runner_sha256": "d39cbcba9c5303ba74eaf0bb53d9105762f8a01a7de7bae2740958242f8f6cf8",
+      "failure": null,
+      "exit_code": 0,
+      "proposal_ready_status": "inference_outputs_retained; independent_QC_and_bundle_integration_pending",
+      "brain_reviewed": false,
+      "working_brain_mask_attached": false,
+      "cortical_access_permitted": false
+    },
+    {
+      "subject": "sub-PAT27",
+      "patient_group": "BTC:sub-PAT27",
+      "development_role": "checkpoint_selection_development",
+      "output_directory": "outputs/brain-extraction/BTC-spatial-main-v1/sub-PAT27",
+      "mask": {
+        "path": "outputs/brain-extraction/BTC-spatial-main-v1/sub-PAT27/main_mask.nii.gz",
+        "sha256": "4b990b4dda738ed14565624e4e190db8b0145e15fd537ddffb24a36e94811709",
+        "bytes": 147238
+      },
+      "predicted_SDT": {
+        "path": "outputs/brain-extraction/BTC-spatial-main-v1/sub-PAT27/main_distance_mm.nii.gz",
+        "sha256": "d568aaf0939facfc8a771ae04fcaff98dc2cda35230cd06b757f648075cc71fc",
+        "bytes": 28420864
+      },
+      "inference_record_sha256": "5eb3a7cdbf793f602aff1d3b8b9ce3857e93b892bce78bf78c48631864a44731",
+      "initial_report_sha256": "3eabd2ba26603854f78ccd65cdbbc4cda13789bd759c6e105dbf4bef540a6822",
+      "input_sha256": "f12b9c898194467ef43da71d0f517b24cb57b494b2456acc559bf9473e6e75ab",
+      "source_native_grid": {
+        "file": "sub-PAT27_ses-preop_T1w.nii.gz",
+        "shape": [
+          160,
+          256,
+          256
+        ],
+        "affine_ras_mm": [
+          [
+            0.9996031522750854,
+            -0.024373624473810196,
+            -0.013942251913249493,
+            -74.70027923583984
+          ],
+          [
+            0.0243711918592453,
+            0.9997029304504395,
+            -0.00033993780380114913,
+            -100.91281127929688
+          ],
+          [
+            0.01394636183977127,
+            1.358186096922509e-08,
+            0.9999027252197266,
+            -145.96343994140625
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_units": "mm",
+        "physical_units": "mm",
+        "unit_scale_to_mm": 1.0,
+        "qform_code": 1,
+        "sform_code": 1,
+        "qform_native": [
+          [
+            0.9996031898454392,
+            -0.024373624971828586,
+            -0.013942253057174583,
+            -74.70027923583984
+          ],
+          [
+            0.02437119329713698,
+            0.9997029190743281,
+            -0.0003399378201745757,
+            -100.91281127929688
+          ],
+          [
+            0.013946361683332447,
+            1.3585175619537128e-08,
+            0.9999027442816467,
+            -145.96343994140625
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "sform_native": [
+          [
+            0.9996031522750854,
+            -0.024373624473810196,
+            -0.013942251913249493,
+            -74.70027923583984
+          ],
+          [
+            0.0243711918592453,
+            0.9997029304504395,
+            -0.00033993780380114913,
+            -100.91281127929688
+          ],
+          [
+            0.01394636183977127,
+            1.358186096922509e-08,
+            0.9999027252197266,
+            -145.96343994140625
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "orientation": [
+          "R",
+          "A",
+          "S"
+        ],
+        "spacing_mm": [
+          0.9999974590165185,
+          1.0000000113605934,
+          0.9999999809239792
+        ],
+        "voxel_volume_mm3": 0.9999974513011105,
+        "handedness": "right",
+        "anisotropic": false,
+        "obliquity_degrees": [
+          1.6090500554067892,
+          1.3966441060933543,
+          0.7990955198038452
+        ],
+        "status": "passed_header_checks",
+        "visual_alignment_review": "pending",
+        "frame": "RAS+",
+        "simulation_frame": "source_coded_frame_native_status_requires_source_provenance"
+      },
+      "predicted_SDT_QC": {
+        "native_geometry": {
+          "file": "main_distance_mm.nii.gz",
+          "shape": [
+            160,
+            256,
+            256
+          ],
+          "affine_ras_mm": [
+            [
+              0.9996031522750854,
+              -0.024373624473810196,
+              -0.013942251913249493,
+              -74.70027923583984
+            ],
+            [
+              0.0243711918592453,
+              0.9997029304504395,
+              -0.00033993780380114913,
+              -100.91281127929688
+            ],
+            [
+              0.01394636183977127,
+              1.358186096922509e-08,
+              0.9999027252197266,
+              -145.96343994140625
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "source_units": "mm",
+          "physical_units": "mm",
+          "unit_scale_to_mm": 1.0,
+          "qform_code": 1,
+          "sform_code": 1,
+          "qform_native": [
+            [
+              0.9996031898454392,
+              -0.024373624971828586,
+              -0.013942253057174583,
+              -74.70027923583984
+            ],
+            [
+              0.02437119329713698,
+              0.9997029190743281,
+              -0.0003399378201745757,
+              -100.91281127929688
+            ],
+            [
+              0.013946361683332447,
+              1.3585175619537128e-08,
+              0.9999027442816467,
+              -145.96343994140625
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "sform_native": [
+            [
+              0.9996031522750854,
+              -0.024373624473810196,
+              -0.013942251913249493,
+              -74.70027923583984
+            ],
+            [
+              0.0243711918592453,
+              0.9997029304504395,
+              -0.00033993780380114913,
+              -100.91281127929688
+            ],
+            [
+              0.01394636183977127,
+              1.358186096922509e-08,
+              0.9999027252197266,
+              -145.96343994140625
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "orientation": [
+            "R",
+            "A",
+            "S"
+          ],
+          "spacing_mm": [
+            0.9999974590165185,
+            1.0000000113605934,
+            0.9999999809239792
+          ],
+          "voxel_volume_mm3": 0.9999974513011105,
+          "handedness": "right",
+          "anisotropic": false,
+          "obliquity_degrees": [
+            1.6090500554067892,
+            1.3966441060933543,
+            0.7990955198038452
+          ],
+          "status": "passed_header_checks",
+          "visual_alignment_review": "pending",
+          "frame": "RAS+",
+          "simulation_frame": "source_coded_frame_native_status_requires_source_provenance",
+          "maximum_native_corner_displacement_mm": 0.0
+        },
+        "finite_values": true,
+        "minimum_mm": -5.180730819702148,
+        "maximum_mm": 100.0,
+        "meaning": "predicted signed distance with upstream extension; not a clinical probability or reviewed surface"
+      },
+      "mask_native_validation": "Frozen wrapper validate_mask completed successfully; independent array/visual QC pending.",
+      "child_elapsed_seconds": 6.322828415897675,
+      "sampled_child_RSS_bytes": 676036608,
+      "sampled_MPS_allocations": {
+        "tensor_bytes_max_sampled": 4117935104,
+        "driver_bytes_max_sampled": 5948243968
+      },
+      "memory_measurement": "child-process RSS sampled with ps approximately every 0.25 s; may miss brief peaks",
+      "MPS_measurement": "allocator samples after module forwards, not exact peak; driver includes cached allocations; process RSS alone excludes GPU accounting",
+      "runtime_versions": {
+        "python": "3.12.14",
+        "numpy": "2.2.6",
+        "torch": "2.14.1",
+        "surfa": "0.6.3"
+      },
+      "executed_runner_sha256": "d39cbcba9c5303ba74eaf0bb53d9105762f8a01a7de7bae2740958242f8f6cf8",
+      "failure": null,
+      "exit_code": 0,
+      "proposal_ready_status": "inference_outputs_retained; independent_QC_and_bundle_integration_pending",
+      "brain_reviewed": false,
+      "working_brain_mask_attached": false,
+      "cortical_access_permitted": false
+    }
+  ],
+  "elapsed_seconds": 35.0239120000042,
+  "source_files_unchanged": true,
+  "snapshot_files_unchanged": true,
+  "target_annotation_opened_during_inference": false,
+  "target_overlap_QC_performed": false,
+  "model_training_performed": false,
+  "no_synthetic_patient_data": true,
+  "new_downloads_or_installs": false,
+  "failures": [],
+  "retries": 0,
+  "upenn_or_unopened_PAT29_PAT31_used": false,
+  "independent_array_QC_and_integration_status": "held for root-scheduled real PAT05 profiling window",
+  "historical_PAT05_runtime_binary_equivalence_attested": false,
+  "limitations": "Model-derived support remains estimated and review_required; no anatomical approval, cortex localization, clinical accuracy, target-overlap selection, or cortical-access permission."
+}
