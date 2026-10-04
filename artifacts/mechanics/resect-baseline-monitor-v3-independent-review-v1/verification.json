@@ -1,0 +1,180 @@
+{
+  "schema_version": 1,
+  "status": "prepared_v3_independent_review_passed_no_patient_execution",
+  "created_at_utc": "2026-10-04T21:01:04.768604+00:00",
+  "command": ".venv/bin/python -m pytest -q -s tests/test_resect_baseline_monitor_v3_review.py",
+  "independent_result": {
+    "passed": 14,
+    "failed": 0,
+    "pytest_seconds": 0.17,
+    "process_seconds": 0.214975667
+  },
+  "separately_retained_owner_result": {
+    "passed": 25,
+    "pytest_seconds": 0.57,
+    "source_hash_matches": true,
+    "rerun_by_reviewer": false
+  },
+  "source_sha256": {
+    "artifacts/mechanics/resect-case4-baseline-alignment-v3/align.py": "a4f7761995238a05488a6cc9f1d7cfc360fc258d8c30510a40ec4e2a496c0a04",
+    "artifacts/mechanics/resect-case4-baseline-alignment-v3/declaration.json": "765eb2048aa7e5a7814560a66c4e8d2f2796b087352cdff75ade81ab08af975f",
+    "artifacts/mechanics/resect-case4-baseline-alignment-v3/coordinate-justification.json": "f293613dd1ca5adf58bfd768c2fe2b4d50e352fe0534ee28264225739f88c2ec",
+    "artifacts/mechanics/resect-case4-baseline-alignment-v3/verification.json": "60dac461165615a1b4a6c4acd05b08565ea3ca4841d87c542eb86b21df74c058",
+    "artifacts/mechanics/resect-case4-baseline-alignment-v3/real-process-controls.json": "6cfb10d0f7e2cbd27ea3650e8d226e2a9b5ce838a471af8303b4b222e2d9ba8f",
+    "artifacts/mechanics/resect-case4-baseline-alignment-v3/README.md": "3a1e7d54392504e19392cce053fea4fdeac8b9d59afe19b43804c0e62516cf2f",
+    "tests/test_resect_baseline_monitor_v3_review.py": "7867e437dac4f8d082c3f194a5ef24efd90ffe68c58f282dfef001a2ec7b23f4"
+  },
+  "real_OS_control": {
+    "status": "passed",
+    "child_pid": 35155,
+    "elapsed_seconds": 0.04349445807747543,
+    "actual_ps": true,
+    "patient_access": false,
+    "samples": [
+      {
+        "parent_pid": 35153,
+        "child_pid": 35155,
+        "returncode": 0,
+        "stdout": "35153  39392 Ss  \n35155  15200 S   \n",
+        "stderr": "",
+        "parsed_rows": [
+          {
+            "pid": 35153,
+            "rss_KiB": 39392,
+            "state": "Ss"
+          },
+          {
+            "pid": 35155,
+            "rss_KiB": 15200,
+            "state": "S"
+          }
+        ],
+        "failure": null,
+        "query_timeout_seconds": 0.9999656250001863,
+        "exit_code_after_query": null,
+        "combined_RSS_bytes": 55902208,
+        "child_observed_exited_during_query": false
+      },
+      {
+        "parent_pid": 35153,
+        "child_pid": 35155,
+        "returncode": 0,
+        "stdout": "35153  39392 Ss  \n35155  15200 S   \n",
+        "stderr": "",
+        "parsed_rows": [
+          {
+            "pid": 35153,
+            "rss_KiB": 39392,
+            "state": "Ss"
+          },
+          {
+            "pid": 35155,
+            "rss_KiB": 15200,
+            "state": "S"
+          }
+        ],
+        "failure": null,
+        "query_timeout_seconds": 0.9935600419994444,
+        "exit_code_after_query": null,
+        "combined_RSS_bytes": 55902208,
+        "child_observed_exited_during_query": false
+      },
+      {
+        "parent_pid": 35153,
+        "child_pid": 35155,
+        "returncode": 0,
+        "stdout": "35153  39392 Ss  \n35155  15200 S   \n",
+        "stderr": "",
+        "parsed_rows": [
+          {
+            "pid": 35153,
+            "rss_KiB": 39392,
+            "state": "Ss"
+          },
+          {
+            "pid": 35155,
+            "rss_KiB": 15200,
+            "state": "S"
+          }
+        ],
+        "failure": null,
+        "query_timeout_seconds": 0.9875066250097007,
+        "exit_code_after_query": null,
+        "combined_RSS_bytes": 55902208,
+        "child_observed_exited_during_query": false
+      },
+      {
+        "parent_pid": 35153,
+        "child_pid": 35155,
+        "returncode": 0,
+        "stdout": "35153  39392 Ss  \n35155  15200 S   \n",
+        "stderr": "",
+        "parsed_rows": [
+          {
+            "pid": 35153,
+            "rss_KiB": 39392,
+            "state": "Ss"
+          },
+          {
+            "pid": 35155,
+            "rss_KiB": 15200,
+            "state": "S"
+          }
+        ],
+        "failure": null,
+        "query_timeout_seconds": 0.9817270000930876,
+        "exit_code_after_query": null,
+        "combined_RSS_bytes": 55902208,
+        "child_observed_exited_during_query": false
+      },
+      {
+        "parent_pid": 35153,
+        "child_pid": 35155,
+        "returncode": 0,
+        "stdout": "35153  39392 Ss  \n35155      0 Z   \n",
+        "stderr": "",
+        "parsed_rows": [
+          {
+            "pid": 35153,
+            "rss_KiB": 39392,
+            "state": "Ss"
+          },
+          {
+            "pid": 35155,
+            "rss_KiB": 0,
+            "state": "Z"
+          }
+        ],
+        "failure": null,
+        "query_timeout_seconds": 0.9759322080062702,
+        "exit_code_after_query": 0,
+        "combined_RSS_bytes": 40337408,
+        "child_observed_exited_during_query": true
+      }
+    ]
+  },
+  "controls": [
+    "Query consumption reduces the single grace timeout to remaining work deadline",
+    "Requested 50ms cap is distinct from observed scheduler elapsed; actual overshoot remains visible",
+    "Successful termination beyond the work deadline cannot become a monitoring success",
+    "Process state strings ?E, Z and R have no termination authority",
+    "Still-live grace timeout fails; malformed, failed, empty and duplicate-PID queries never receive grace",
+    "Final cleanup wall overrun and observed RSS overrun fail despite worker exit0",
+    "All scientific/access/render functions match committed V1; data, fit, views, domain and budgets unchanged",
+    "Natural actual-ps child lifecycle completed: five valid samples, final zero RSS with direct poll exit0"
+  ],
+  "interpretation": {
+    "actual_OS_grace_triggered": false,
+    "actual_OS_control_scope": "One tiny stdlib child and actual OS ps; no patient inputs, no MRI/landmark worker",
+    "owner_real_controls_scope": "Separately retained two actual children with constructed valid deficient ps responses exercised direct wait success and timeout",
+    "fifty_ms_rule": "Maximum requested wait timeout; not a guaranteed observed elapsed bound under OS scheduling",
+    "overall_cap": "115s including cleanup remains enforced; sampled RSS is not a continuous peak guarantee",
+    "prior_attempts": "V1 and V2 remain failed; V1 exact cause unknown, V2 retained zero-RSS/live-poll observation unchanged"
+  },
+  "original_patient_files_opened": false,
+  "patient_image_arrays_decoded": false,
+  "closed_B_V_or_during_values_accessed": false,
+  "production_edits_by_reviewer": false,
+  "actual_V3_patient_alignment_run": false,
+  "remaining_blocking_findings": []
+}

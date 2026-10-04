@@ -1,0 +1,17 @@
+{
+  "status": "prepared_unrun_independent_review_pending",
+  "created_at_utc": "2026-10-04T20:57:22.362049+00:00",
+  "tests": "25 passed in0.57s",
+  "test_command": ".venv/bin/python -m pytest -q -s artifacts/mechanics/resect-case4-baseline-alignment-v3/test_alignment.py artifacts/mechanics/resect-case4-baseline-alignment-v3/test_termination_grace.py",
+  "patient_arrays_or_coordinates_opened": false,
+  "actual_patient_worker_run": false,
+  "files": {
+    "align.py": "a4f7761995238a05488a6cc9f1d7cfc360fc258d8c30510a40ec4e2a496c0a04",
+    "test_alignment.py": "0ff0c76d8227e51d59c29de05ea0ebb8dbde2039255ffe80a0f3d41cc442819f",
+    "test_termination_grace.py": "0949844f328e2471e8699c86b9e6607c3807ea197558d13612bb041d2dd64a60",
+    "declaration.json": "47bb2cb48ee93c96275e430ba1c87b899c9b6f5a3ebcbb2248a8ea5fc61aae65",
+    "coordinate-justification.json": "f293613dd1ca5adf58bfd768c2fe2b4d50e352fe0534ee28264225739f88c2ec",
+    "README.md": "e1da4b9604973fcbe6c5e75fd6eb7d6ea0788992c6d9c8ae4113fb5e154c9c5a",
+    "real-process-controls.json": "6cfb10d0f7e2cbd27ea3650e8d226e2a9b5ce838a471af8303b4b222e2d9ba8f"
+  }
+}

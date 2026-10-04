@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "id": "resect-case4-baseline-alignment-v3",
+  "status": "prepared_unrun_requires_new_root_release",
+  "created_at_utc": "2026-10-04T20:09:05.645970+00:00",
+  "patient_group": "RESECT:Case4",
+  "role": "DEVELOPMENT",
+  "files": [
+    {
+      "source_path": "RESECT/NIFTI/Case4/MRI/Case4-T1.nii.gz",
+      "local_path": "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/MRI/Case4-T1.nii.gz",
+      "bytes": 8763797,
+      "md5": "e2db363c6ce57e83663b4de2f95c2ed0",
+      "sha256": "eeab888d611b7dee3627468b172ad67db39b6887e6ba38540aa39131b6cbb787"
+    },
+    {
+      "source_path": "RESECT/NIFTI/Case4/MRI/Case4-FLAIR.nii.gz",
+      "local_path": "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/MRI/Case4-FLAIR.nii.gz",
+      "bytes": 6550243,
+      "md5": "e50cfb97bbf1c4424034889413bc2fcc",
+      "sha256": "e4b2e09f6d47e256a0af3e515d321a393cfc1b5d6c704a6b23bbfeed8c712d26"
+    },
+    {
+      "source_path": "RESECT/NIFTI/Case4/US/Case4-US-before.nii.gz",
+      "local_path": "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/US/Case4-US-before.nii.gz",
+      "bytes": 9955302,
+      "md5": "984ab4b314a55b014e770b32e623b16c",
+      "sha256": "62f6b6217774653267702acd4a55b16ad5c8cc4980237afaa39e92b102240379"
+    },
+    {
+      "source_path": "RESECT/NIFTI/Case4/Landmarks/Case4-MRI-beforeUS.tag",
+      "local_path": "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/Landmarks/Case4-MRI-beforeUS.tag",
+      "bytes": 1052,
+      "md5": "19b7fa7c07322c98647cfa99eaa53fc4",
+      "sha256": "55fcd43c2a2a73b823f08a5560ed136be3a2c43c0fc23a6796bc3b030e14b37d"
+    }
+  ],
+  "helper_commit": "6766a2a3efd03858bf16634cb6776e2af1f48e38",
+  "helper_snapshot_manifest": "artifacts/mechanics/resect-case4-source-partition-v1/source-snapshot.json",
+  "helper_snapshot_manifest_sha256": "7e5d7853952b6ce86890ff046f2890b8ef44feb2ddd15a7fc2da48cdd3cf008b",
+  "baseline_header_receipt": "artifacts/mechanics/resect-case4-baseline-header-qc-v1/header-receipt.json",
+  "baseline_header_receipt_sha256": "18d6e6306e38f409a314ba180d7d0a21e9a7ee02677f34a1d1fd28ea1294d692",
+  "allowed": "MRI-before pairs and T1/FLAIR/beforeUS arrays, proper rigid baseline diagnostic and fixed source-plane display derivatives",
+  "forbidden": [
+    "duringUS",
+    "before-during tag",
+    "all B/V motion destinations",
+    "inference",
+    "mask changes",
+    "nonrigid registration",
+    "source resampling/mutation",
+    "outlier removal",
+    "replacement/retuning"
+  ],
+  "fit": {
+    "direction": "FLAIR_world_RAS_mm_to_beforeUS_world_RAS_mm",
+    "method": "all-point unweighted proper Kabsch",
+    "minimum_pairs": 4,
+    "minimum_centered_second_over_first_singular_ratio": 1e-06,
+    "scale_allowed": false,
+    "reflection_allowed": false,
+    "outlier_removal": false,
+    "LOO": "each baseline row once; all remaining rows train, no tuning",
+    "metrics": [
+      "per-row raw distance",
+      "per-row all-fit residual",
+      "per-row held-row LOO residual",
+      "RMS",
+      "median",
+      "maximum",
+      "mean"
+    ],
+    "bounds": "each source/destination inside its original full-cell grid [-0.5,shape-0.5]",
+    "numeric_checks": "finite data; properR atol1e-10; fitRMS<=identityRMS+1e-8mm",
+    "clinical_distance_threshold": null,
+    "interpretation": "Baseline calibration and leave-one-out diagnostics, not independent V or clinical accuracy. Poor LOO retained, no fallback fit"
+  },
+  "views": {
+    "count": 6,
+    "T1_FLAIR": "three FLAIR native planes at rounded median MRI-reference voxel location; T1 sampled by original affines",
+    "US_FLAIR": "three beforeUS native planes at rounded median US-reference voxel location; raw and fitted FLAIR comparisons",
+    "sampling": "2D trilinear display pixels only, NaN outsideFOV; no resampledNIfTI",
+    "contrast": "fixed stride3 all-voxel finite 1st/99th percentiles, not brainmask"
+  },
+  "acceptance": {
+    "frame_semantics": "Creator common MINC/NIfTI world plus native sform millimetres and official RAS convention",
+    "registration_anatomical_acceptance": false,
+    "clinical_accuracy_validated": false,
+    "brain_domain_available": false,
+    "visual_QC": "Record gross orientation/FOV/mismatch after all fixed panels; no expertapproval",
+    "followup": "B/Vmotion andduringimage stillsealed"
+  },
+  "budget": {
+    "wall_seconds": 115,
+    "RSS_bytes": 2147483648,
+    "threads": 1,
+    "automatic_retries": 0,
+    "new_dependencies": false
+  },
+  "preparation_note": "Supervision-only termination grace after preserved V2 failure; no new patient run authorized and no scientific setting changed.",
+  "prior_attempt": {
+    "directory": "artifacts/mechanics/resect-case4-baseline-alignment-v2",
+    "failed_attempt_freeze_sha256": "313e26eae8021976b76a4f33b18b4c2334b6850536c37e01c5220901fd3d5768",
+    "status": "failed_live_child_zero_RSS_exit_transition",
+    "observation": "Valid ps response contained childRSS0 state?E while directpolls remainedNone; exit0 later. No ps-state-only acceptance."
+  },
+  "monitor_v2": {
+    "query": "ps -o pid=,rss=,stat= -p parent,child",
+    "raw_diagnostics_saved": true,
+    "child_exit_confirmation": "subprocess.poll after query; ps state alone does not establish exit",
+    "missing_or_zero_RSS": "fail if worker remains alive; allow absent/zero worker row only when direct poll confirms exited and parent sample valid",
+    "malformed_or_failed_query": "retain failure even if worker exited",
+    "retry": false
+  },
+  "monitor_v3": {
+    "termination_grace_max_seconds": 0.05,
+    "grace_count_per_deficient_sample": 1,
+    "eligibility": "Valid PID/RSS response, positive parent RSS, absent/zero child RSS, direct poll stillNone",
+    "confirmation": "process.wait must confirm termination within min(0.05,remaining work deadline); ps state never proves exit",
+    "fail_immediately": [
+      "malformed query",
+      "nonzero query exit",
+      "empty query",
+      "query exception",
+      "invalid PID/value"
+    ],
+    "cleanup_reserve_seconds": 0.25,
+    "work_deadline": "overall wall cap minus0.25s cleanup reserve; query and grace timeouts bounded by work deadline",
+    "cleanup": "SIGKILL when stillalive; wait bounded by remaining overall wall cap; unconfirmed cleanup fails",
+    "no_continuous_RSS_claim": true,
+    "no_automatic_patient_retry": true
+  }
+}
