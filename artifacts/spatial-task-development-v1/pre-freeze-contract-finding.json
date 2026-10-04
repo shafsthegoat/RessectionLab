@@ -1,0 +1,7 @@
+{
+  "source_sha256": "62a7ff83fd579e951b00bdd7c69d2518509edb4294e0e480ec1af9b8d25aef63",
+  "reviewer": "worlds_evaluation",
+  "test": "tests/test_spatial_policy_review.py::test_actor_geometry_cannot_diverge_from_frozen_simulator_geometry",
+  "result": "3 failed in 1.04s",
+  "finding": "Replacing task.case tool/access or mutable max_steps could change actor parameters while geometry retained original config. All three attacks did not raise; no patient or training execution."
+}

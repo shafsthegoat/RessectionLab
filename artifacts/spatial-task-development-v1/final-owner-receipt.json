@@ -1,0 +1,145 @@
+{
+  "scope": "synthetic development prerequisites, not population training or clinical validation",
+  "anatomy_group_version": "support-target-xy-dihedral-fixed-affine-v1",
+  "tests": {
+    "command": ".venv/bin/python -m pytest tests/test_spatial_task.py -q",
+    "exit_code": 0,
+    "output": "................                                                         [100%]\n16 passed in 1.27s"
+  },
+  "source_hashes": {
+    "src/resectionlab/spatial_task.py": "79ae36adbc29a5eaa40c1c38c9080f6cde8c52f2c5babf6acd4664eb6842a225",
+    "tests/test_spatial_task.py": "8d3d8dd8e0efe43fd101189b9fb94585c04181350a7421e7ae2862bce47e6ee4",
+    "docs/spatial-task.md": "3f4c7f6ea8913ea6419a2aa60d66ddfb2af0f6aab033790806da3382f3b2c9f7"
+  },
+  "exact_opening": {
+    "terminal_sequences": 32,
+    "nonterminal_states": 7,
+    "transitions": 38,
+    "optimal_return": 0.5031583807470361,
+    "optimal_actions": [
+      "REMOVE:opening-tool:1,1,0",
+      "REMOVE:opening-tool:0,1,0",
+      "REMOVE:opening-tool:0,1,1"
+    ],
+    "unique_best": true,
+    "independent_whole_tool_geometry_feasible": true,
+    "metrics": {
+      "task_version": "synthetic-scan-opening-v1",
+      "source_hash": "sha256:44e2d9de743bb405eb1854a92af76293db1f513d5ec0db768ce1f7c1384ab8bf",
+      "objective_version": "scan-removal-normal-effort-v1",
+      "reward_weights": {
+        "target_per_mm3": 1.0,
+        "normal_per_mm3": 0.2,
+        "motor_per_mm3": 0.0,
+        "language_per_mm3": 0.0,
+        "action_cost": 0.03,
+        "motion_per_mm": 0.001,
+        "tool_change_cost": 0.03,
+        "graph_edge_cost": 0.0
+      },
+      "planning_target_estimator": "synthetic_forward_model_midpoint_v1",
+      "planning_target_threshold": 0.35,
+      "anatomy_hash": "sha256:1fb74e30813818237744bfec1f602666a68bbe59b0c3e98ef800e6bc2429e950",
+      "anatomy_group_version": "support-target-xy-dihedral-fixed-affine-v1",
+      "decision_model_hash": "sha256:8621715cee70428bac5deb63b27e6020e8365a1c8a0479d5bdb7f9664ab19f02",
+      "reference_hash": "sha256:969fb86c7dfba7c4420617f294436abe25272874024291e209c5f7b62290630a",
+      "world_hash": "sha256:9ee81f6886d81d2eb1e8bc18d098879ee1f5f2b900b83dea8f7efa3cb589208d",
+      "world_seed": 0,
+      "steps": 3,
+      "terminated": true,
+      "total_reward": 0.5031583807470361,
+      "target_removed_mm3": 1.0,
+      "normal_removed_mm3": 2.0,
+      "function_unassessed_removed_volume_mm3": 3.0,
+      "motor_surrogate_exposure": 0.0,
+      "language_surrogate_exposure": 0.0,
+      "insertion_distance_mm": 3.4208096264818897,
+      "withdrawal_distance_mm": 3.4208096264818897,
+      "complete_tool_path_length_mm": 6.841619252963779,
+      "history": [
+        {
+          "action_id": "REMOVE:opening-tool:1,1,0",
+          "reward": -0.231,
+          "target_removed_mm3": 0.0,
+          "normal_removed_mm3": 1.0,
+          "motor_surrogate": 0.0,
+          "language_surrogate": 0.0,
+          "function_unassessed_removed_volume_mm3": 1.0,
+          "insertion_distance_mm": 0.5,
+          "withdrawal_distance_mm": 0.5,
+          "complete_tool_path_length_mm": 1.0,
+          "removed_indices": [
+            [
+              1,
+              1,
+              0
+            ]
+          ],
+          "outcome_scope": "private_synthetic_reference"
+        },
+        {
+          "action_id": "REMOVE:opening-tool:0,1,0",
+          "reward": -0.2322360679774998,
+          "target_removed_mm3": 0.0,
+          "normal_removed_mm3": 1.0,
+          "motor_surrogate": 0.0,
+          "language_surrogate": 0.0,
+          "function_unassessed_removed_volume_mm3": 1.0,
+          "insertion_distance_mm": 1.118033988749895,
+          "withdrawal_distance_mm": 1.118033988749895,
+          "complete_tool_path_length_mm": 2.23606797749979,
+          "removed_indices": [
+            [
+              0,
+              1,
+              0
+            ]
+          ],
+          "outcome_scope": "private_synthetic_reference"
+        },
+        {
+          "action_id": "REMOVE:opening-tool:0,1,1",
+          "reward": 0.966394448724536,
+          "target_removed_mm3": 1.0,
+          "normal_removed_mm3": 0.0,
+          "motor_surrogate": 0.0,
+          "language_surrogate": 0.0,
+          "function_unassessed_removed_volume_mm3": 1.0,
+          "insertion_distance_mm": 1.8027756377319946,
+          "withdrawal_distance_mm": 1.8027756377319946,
+          "complete_tool_path_length_mm": 3.605551275463989,
+          "removed_indices": [
+            [
+              0,
+              1,
+              1
+            ]
+          ],
+          "outcome_scope": "private_synthetic_reference"
+        }
+      ],
+      "planning_estimator_only": false,
+      "candidate_inventory": {
+        "basis": "every_observed_frontier_cell_times_every_declared_tool",
+        "frontier_cells": 0,
+        "tool_count": 1,
+        "slot_count": 0,
+        "accepted_action_ids": [],
+        "accepted_count": 0,
+        "rejected_geometry_or_cavity_count": 0,
+        "omitted_count": 0,
+        "complete": true,
+        "scope": "complete_local_primitive_inventory_not_global_surgical_paths"
+      },
+      "clinical_deficit_probability": null,
+      "assumptions": [
+        "rigid_tip_intersected_cell_suction_not_native_contained_cell_removal",
+        "no_force_or_deformation_model",
+        "geometric_objective_does_not_optimize_functional_outcomes",
+        "functional_measurements_unavailable",
+        "not_a_patient"
+      ]
+    }
+  },
+  "elapsed_seconds": 1.6121444590389729
+}
