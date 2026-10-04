@@ -233,3 +233,18 @@ The viewer explicitly suppresses estimates during replay; the native check
 confirmed that no estimate survived a case switch into the existing UCSF replay.
 These visual checks establish display behavior, not anatomical accuracy. Later
 population-prior and layout work is absent from this exact packaged snapshot.
+
+
+`artifacts/electron-mri-layout-v1/` identifies the exact `8c7c6f7` renderer
+capture (`214afa02…`). All 61 desktop inputs matched the committed source; the
+build took 10.39 seconds and retained the previous numerical engine. Native
+PAT05 and PAT28 checks covered equal 2×2 MRI review, expanded axial/coronal/
+sagittal views, and restoration at 1460- and 1050-point window widths. Original
+MRI orientation labels, estimate contours, source target volumes and linked
+cursor positions remained consistent. A focused axial image advanced from
+3.2 to 4.2 mm with one Up key; restoring the layout preserved the new physical
+cursor. The separate 3D plane selector and toggle also preserved that cursor.
+Controls stayed visible at minimum width. The wide-layout Fit 3D label wraps
+vertically in this capture; its later no-wrap source fix is not retroactively
+included in this receipt. No new training or population-prior bundle loading
+was performed with the retained engine.

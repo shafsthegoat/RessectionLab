@@ -1,0 +1,127 @@
+{
+  "tested_utc": "2026-10-04T10:19:06.360456+00:00",
+  "status": "passed_layout_and_cursor_checks_with_fit_label_wrap",
+  "identity": {
+    "source_revision": "8c7c6f710e253a6a988ef314d867626d1ee1dfbc",
+    "renderer_source_digest": "214afa0265f90051aeb235ef2377ff02f61b46c577c9d4c9b71c7adfc00b299b",
+    "renderer_archive_sha256": "e3e7b50afda3f6ff4ee8e22400866259db4dc1da67d445d4c672d193a162a2e8",
+    "verified_input_files": 61,
+    "all_captured_source_bytes_match_exact_git_commit": true,
+    "engine_executable_sha256": "d88dd33cbccfdeb512c17cf492614422d7d01d8f9b20fbe86f2bc9f63275cbb3",
+    "python_source_digest": "377284f6d80164a86ca69d6b8f9f606e4015266b8c5285070d12d1d147b2ef62",
+    "build_seconds": 10.394
+  },
+  "native_window_widths_points": [
+    1460,
+    1050
+  ],
+  "retina_capture_scale": 2,
+  "screenshots_pixels": {
+    "pat05-axial-expanded-wide.jpg": [
+      2920,
+      1736
+    ],
+    "pat05-coronal-expanded-minimum.jpg": [
+      2100,
+      1736
+    ],
+    "pat05-mri-review-minimum.jpg": [
+      2100,
+      1736
+    ],
+    "pat05-mri-review-wide.jpg": [
+      2920,
+      1736
+    ],
+    "pat28-mri-review-minimum.jpg": [
+      2100,
+      1736
+    ],
+    "pat28-mri-review-wide.jpg": [
+      2920,
+      1736
+    ],
+    "pat28-sagittal-expanded-minimum.jpg": [
+      2100,
+      1736
+    ],
+    "pat28-sagittal-expanded-wide.jpg": [
+      2920,
+      1736
+    ]
+  },
+  "checks": {
+    "mri_review_displays_equal_2x2_panes": true,
+    "axial_coronal_sagittal_expansion_and_restore_accessible": true,
+    "layout_controls_separate_from_mri_image_bounds": true,
+    "controls_visible_at_both_tested_window_widths": true,
+    "estimated_contours_remain_on_original_mri_planes": true,
+    "review_required_and_view_only_disclosures_remain_visible": true,
+    "native_route_generation_remains_blocked_on_full_head_cases": true,
+    "cursor_preserved_on_expand_restore_and_window_resize": true,
+    "source_annotation_volumes_preserved": true,
+    "three_dimensional_plane_selector_and_toggle_preserve_linked_cursor": true,
+    "new_training_started": false,
+    "prior_proposal_bundles_opened": false
+  },
+  "cases": [
+    {
+      "case_id": "BTC-ds001226-sub-PAT05-preop",
+      "displayed_target_mL": 11.44,
+      "nocsf_outside_annotation_voxels": 538,
+      "outside_cursor_display_mm": [
+        -41.2,
+        27.3,
+        3.2
+      ],
+      "expanded_planes_checked": [
+        "axial",
+        "coronal"
+      ]
+    },
+    {
+      "case_id": "BTC-ds001226-sub-PAT28-preop",
+      "displayed_target_mL": 10.27,
+      "nocsf_outside_annotation_voxels": 214,
+      "outside_cursor_display_mm": [
+        -14.0,
+        9.3,
+        64.3
+      ],
+      "expanded_planes_checked": [
+        "sagittal"
+      ]
+    }
+  ],
+  "cursor_navigation": {
+    "native_image_click_updates_physical_cursor": true,
+    "focused_expanded_axial_before_up_mm": [
+      3.5,
+      15.2,
+      3.2
+    ],
+    "focused_expanded_axial_after_up_mm": [
+      3.5,
+      15.2,
+      4.2
+    ],
+    "restored_linked_cursor_mm": [
+      3.5,
+      15.2,
+      4.2
+    ],
+    "keyboard_step_mm": 1.0,
+    "orientation_labels": "Axial L/R/A/P; coronal L/R/S/I; sagittal P/A/S/I"
+  },
+  "known_issues": [
+    {
+      "issue": "Wide-layout Fit 3D button text wraps vertically. Button remains visible and accessible; minimum-width media style uses its icon.",
+      "source_fix": "Viewer owner has a no-wrap fix for the later prior-proposal renderer; absent from this exact8c7c6f7 capture."
+    }
+  ],
+  "validation_limits": [
+    "Screenshot and native interaction checks validate layout behavior, not anatomical accuracy or clinical use.",
+    "Physical mapping unit tests remain necessary for subpixel/oblique numerical accuracy; this native check verifies linked behavior and a one-millimeter keyboard step.",
+    "Earlier immutable numerical engine retained. No uncommitted population-prior UI or newer numerical source included."
+  ]
+}
