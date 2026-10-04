@@ -1,6 +1,5 @@
 """One-update orchestration on a constructed cube; never a patient experiment."""
 import copy
-from dataclasses import asdict
 import json
 from pathlib import Path
 import sys
@@ -36,11 +35,7 @@ def fixture(tmp_path):
     declared["pilot_id"] = "private_synthetic_orchestration_test"
     declared["declaration_content_hash"] = "test-only"
     declared["frozen_model"].update(case_hash=case.semantic_hash, planning_hash=case.planning_hash,
-        decision_model_hash=base.decision_model_hash, native_config_hash=cfg.fingerprint,
-        proposal_model_hash=base._proposer.model_hash)
-    declared["frozen_model"]["action_model"].update(max_cuts=base.config.max_steps,
-        max_actions_including_stop=base.config.max_actions,
-        proposal_rule=asdict(base.proposal_config))
+        decision_model_hash=base.decision_model_hash, native_config_hash=cfg.fingerprint)
     declared["world_partitions"] = {p.role.value: p.to_dict() for p in (panels.optimization, panels.selection)}
     declared["optimization_episode_seeds"] = list(panels.optimization.seeds[:2])
     return case, base, panels, declared

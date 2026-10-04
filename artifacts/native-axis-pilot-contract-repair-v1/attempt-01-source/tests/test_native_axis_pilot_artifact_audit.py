@@ -84,18 +84,6 @@ def test_nested_checksum_drift_rejected_even_with_matching_outer_checkpoint(comp
         audit.check_learner_contract(contract, completed["declaration"], contract["contract_hash"])
 
 
-@pytest.mark.parametrize("removed", ["axis_schema", "schema_source"])
-def test_resealed_contract_cannot_masquerade_as_another_source_generation(completed, removed):
-    contract = current_contract(completed)
-    if removed == "axis_schema":
-        del contract["axis_observation_contract"]
-    else:
-        del contract["numerical_source_sha256"]["native_axis_policy_schema.py"]
-    reseal_contract(contract)
-    with pytest.raises(audit.AuditError, match="Axis schema presence"):
-        audit.check_learner_contract(contract, completed["declaration"], contract["contract_hash"])
-
-
 def packed(values, dtype="float32"):
     array = np.asarray(values, dtype=dtype)
     return {"dtype": array.dtype.str, "shape": list(array.shape), "values": array.tolist()}

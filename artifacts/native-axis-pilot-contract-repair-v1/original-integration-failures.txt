@@ -1,0 +1,52 @@
+__ test_all_actual_tiny_captured_forwards_verify_without_rng_or_policy_class ___
+
+completed = {'output': PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/bu...sodes': 2, 'decision_model_hash': 'sha256:256df86fc8e29049cf77a8bfc9d094f25306c2a979e68906cad829d49212220f', ...}, ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11c2da1e0>
+
+    def test_all_actual_tiny_captured_forwards_verify_without_rng_or_policy_class(completed, monkeypatch):
+        import torch
+        import resectionlab.learning as learning
+        monkeypatch.setattr(learning.MaskedPatientPolicy, "forward", lambda *a, **k: pytest.fail("Independent auditor must not call policy class"))
+        torch_state = torch.get_rng_state().clone()
+        numpy_state = np.random.get_state()
+        path = completed["output"]
+        frozen = json.loads((path / "history-freeze.json").read_text())
+>       states = audit.check_checkpoints(audit.Reader(), path / "learner", completed["declaration"], completed["result"], frozen)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_native_axis_pilot_artifact_audit.py:135: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/audit_native_axis_pilot.py:301: in check_checkpoints
+    require(canonical_hash({key: contract[key] for key in contract_fields}) == contract["contract_hash"] == latest["contract_hash"],
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'Learner contract checksum differs'
+
+    def require(condition: Any, message: str) -> None:
+        if not condition:
+>           raise AuditError(message)
+E           independent_axis_v2_helpers.AuditError: Learner contract checksum differs
+
+artifacts/native-axis-v2-result-audit/audit.py:34: AuditError
+_________ test_coherently_rehashed_nonfinite_optimizer_state_rejected __________
+
+completed = {'output': PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/bu...sodes': 2, 'decision_model_hash': 'sha256:256df86fc8e29049cf77a8bfc9d094f25306c2a979e68906cad829d49212220f', ...}, ...}
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/axis-profile-full-01/523a72bf3c12a9575184024c13ed31525c33645a/pytest-temp/test_coherently_rehashed_nonfi0')
+
+    def test_coherently_rehashed_nonfinite_optimizer_state_rejected(completed, tmp_path):
+        import torch
+        folder = tmp_path / "learner"
+        shutil.copytree(completed["output"] / "learner", folder)
+        frozen = json.loads((completed["output"] / "history-freeze.json").read_text())
+        checkpoint = torch.load(folder / "checkpoint.pt", map_location="cpu", weights_only=True)
+        state = next(iter(checkpoint["optimizer"]["state"].values()))
+        state["exp_avg"].flatten()[0] = float("nan")
+        torch.save(checkpoint, folder / "checkpoint.pt")
+        frozen["checkpoints"]["files"]["checkpoint.pt"] = audit.file_hash(folder / "checkpoint.pt")
+>       with pytest.raises(audit.AuditError, match="Nonfinite saved optimizer state"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'Nonfinite saved optimizer state'
+E         Actual message: 'Learner contract checksum differs'
+
+tests/test_native_axis_pilot_artifact_audit.py:157: AssertionError

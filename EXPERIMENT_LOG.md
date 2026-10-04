@@ -1315,3 +1315,20 @@ validation paths, while the explicit over-limit test still rejects. All 54 query
 checks pass in 1.36 seconds. Production code, limits and completed public output
 are unchanged; no public diagnostic was rerun. The initial full-suite failure
 and the repair receipt remain separate in `artifacts/validation/`.
+
+## October 4, 2026 — retain both historical and current learner contract audits
+
+The pilot artifact auditor now recognizes two explicit contract forms. The
+current form validates the complete source-bound axis schema, nested semantics,
+units, hashes and model/proposal/reward/budget joins before including that schema
+in the outer checksum. Historical contracts remain valid under their original
+closed field set; unknown versions, fields and schema downgrade attempts reject.
+A private synthetic fixture now names its own actual proposal model and inventory
+instead of inheriting unrelated public values.
+
+All 68 focused checks pass in 5.55 seconds, including captured forwards, nonfinite
+optimizer rejection and the exact retained historical contract. All 31 tracked
+historical pilot/audit files remain unchanged. No public experiment was rerun.
+The original integrated failure and intermediate/final repair evidence are
+retained in `artifacts/native-axis-pilot-contract-repair-v1/`. A new immutable
+full-suite attempt is still required before release.

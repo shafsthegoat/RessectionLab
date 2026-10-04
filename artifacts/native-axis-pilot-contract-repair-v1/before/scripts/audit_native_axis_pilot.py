@@ -281,14 +281,13 @@ def read_source_case(read: Reader, attempt: Path, bundle: Path, archive: Path, d
     return compartments, tissue, affine, configuration["actual"]["components"]["tissue_support_provenance"]
 
 
-def check_learner_contract(contract: dict, declaration: dict, checkpoint_contract_hash: str) -> str:
-    """Authenticate both explicitly supported RAW contract forms in full.
-
-    The historical public pilot predates the axis schema. Current synthetic
-    regression fixtures use the new schema, whose complete nested body belongs
-    to the learner hash. Neither path changes the pinned public source gate.
-    """
+def check_checkpoints(read: Reader, folder: Path, declaration: dict, result: dict, completion: dict,
+                      source_files: dict | None = None) -> dict:
+    import torch
+    initial = torch.load(folder / "initial.pt", map_location="cpu", weights_only=True)
+    latest = torch.load(folder / "checkpoint.pt", map_location="cpu", weights_only=True)
     model = declaration["frozen_model"]
+    contract = read.json(folder / "contract.json")
     expected_partitions = {role: {key: row[key] for key in ("role", "case_hash", "planning_hash", "generator", "seeds")}
                            | {"partition_hash": canonical_hash(row)} for role, row in declaration["world_partitions"].items()}
     require(contract["config"] == declaration["training_config"] and canonical_hash(contract["partitions"]) == canonical_hash(expected_partitions)
@@ -299,69 +298,8 @@ def check_learner_contract(contract: dict, declaration: dict, checkpoint_contrac
         "simulator_implementation_sha256", "numerical_source_sha256", "runtime", "config", "partitions",
         "population_initialization", "procedural_initialization", "timing_contract", "elapsed_seconds_scope",
         "decision_model_hash", "dimensions")
-    metadata_fields = {"contract_hash", "initial_checkpoint_hash", "shared_checkpoint_hash", "code_sha256",
-                       "hardware", "clinical_deficit_probability", "final_evaluation_used_for_optimization"}
-    # The actual historical snapshot predates this module. A current contract
-    # cannot become legacy merely by deleting/resealing its nested schema.
-    require(("axis_observation_contract" in contract)
-            == ("native_axis_policy_schema.py" in contract["numerical_source_sha256"]),
-            "Axis schema presence differs from the declared numerical source")
-    form = "legacy_raw_without_axis_schema"
-    if "axis_observation_contract" in contract:
-        schema = contract["axis_observation_contract"]
-        require(isinstance(schema, dict) and schema.get("version") == "native-axis-raw-15x6-observation-v1",
-                "Unknown axis observation contract version")
-        expected_schema = {
-            "version": "native-axis-raw-15x6-observation-v1",
-            "backend": "experimental-native-axis-column-policy-v1",
-            "observation_encoding": "RAW",
-            "legacy_model_input_profile_scope": "RAW simulator feature encoding; policy transform bound separately",
-            "action_feature_names": model["input_profile_manifest"]["action_feature_names"],
-            "action_feature_units": ["binary", "mm3", "mm3", "spatial_surrogate_mm3", "spatial_surrogate_mm3",
-                "mm", "mm", "mm", "binary", "fraction_of_action_budget", "fraction", "fraction", "mm3",
-                "spatial_surrogate_mm3", "spatial_surrogate_mm3"],
-            "state_feature_names": model["input_profile_manifest"]["state_feature_names"],
-            "state_feature_units": ["fraction", "fraction", "fraction", "fraction", "binary", "binary"],
-            "depth_semantics": "completed nonSTOP actions / max_steps; not physical depth",
-            "adjacent_target_semantics": "supplied target-label occupancy in clipped 3x3x3 endpoint neighborhood; not residual-only",
-            "partial_contact_semantics": "new retained contact excluding prior charged contact and cells removed now",
-            "actor_evidence": "nominal fields and actual cavity only; hidden world excluded",
-            "removal_version": "contained-native-cell-connected-suction-v2",
-            "decision_model_hash": model["decision_model_hash"],
-            "proposal_model_hash": model["proposal_model_hash"],
-            "reward": model["physical_reward"],
-            "partial_contact_weight": model["partial_contact_weight"],
-            "max_steps": model["action_model"]["max_cuts"],
-            "max_actions_including_stop": model["action_model"]["max_actions_including_stop"],
-            "scope": "scratch REINFORCE compatibility only; no transfer or resume authorization",
-        }
-        require(schema.get("contract_hash") == canonical_hash({k: v for k, v in schema.items() if k != "contract_hash"}),
-                "Axis observation contract checksum differs")
-        expected_schema["contract_hash"] = canonical_hash(expected_schema)
-        require(canonical_hash(schema) == canonical_hash(expected_schema), "Axis observation contract semantics or model differ")
-        contract_fields += ("axis_observation_contract",)
-        form = "raw_with_axis_observation_v1"
-    require(set(contract) == set(contract_fields) | metadata_fields, "Unknown or missing learner contract fields")
-    require(type(contract["schema_version"]) is int and contract["schema_version"] == 1
-            and contract["algorithm"] == "masked_reinforce_state_value_v2"
-            and contract["dimensions"] == [15, 6, 16]
-            and model["input_profile"] == "RAW"
-            and contract["input_profile"] == model["input_profile_manifest"]
-            and contract["input_profile_hash"] == canonical_hash(contract["input_profile"]) == model["input_profile_hash"],
-            "Unsupported learner contract or RAW profile")
-    require(canonical_hash({key: contract[key] for key in contract_fields}) == contract["contract_hash"] == checkpoint_contract_hash,
+    require(canonical_hash({key: contract[key] for key in contract_fields}) == contract["contract_hash"] == latest["contract_hash"],
             "Learner contract checksum differs")
-    return form
-
-
-def check_checkpoints(read: Reader, folder: Path, declaration: dict, result: dict, completion: dict,
-                      source_files: dict | None = None) -> dict:
-    import torch
-    initial = torch.load(folder / "initial.pt", map_location="cpu", weights_only=True)
-    latest = torch.load(folder / "checkpoint.pt", map_location="cpu", weights_only=True)
-    model = declaration["frozen_model"]
-    contract = read.json(folder / "contract.json")
-    check_learner_contract(contract, declaration, latest["contract_hash"])
     if source_files is not None:
         require(contract["implementation_sha256"] == contract["code_sha256"] == source_files["src/resectionlab/learning.py"]
                 and contract["simulator_implementation_sha256"] == source_files["src/resectionlab/native_axis_accounting.py"],

@@ -301,11 +301,6 @@ def check_learner_contract(contract: dict, declaration: dict, checkpoint_contrac
         "decision_model_hash", "dimensions")
     metadata_fields = {"contract_hash", "initial_checkpoint_hash", "shared_checkpoint_hash", "code_sha256",
                        "hardware", "clinical_deficit_probability", "final_evaluation_used_for_optimization"}
-    # The actual historical snapshot predates this module. A current contract
-    # cannot become legacy merely by deleting/resealing its nested schema.
-    require(("axis_observation_contract" in contract)
-            == ("native_axis_policy_schema.py" in contract["numerical_source_sha256"]),
-            "Axis schema presence differs from the declared numerical source")
     form = "legacy_raw_without_axis_schema"
     if "axis_observation_contract" in contract:
         schema = contract["axis_observation_contract"]

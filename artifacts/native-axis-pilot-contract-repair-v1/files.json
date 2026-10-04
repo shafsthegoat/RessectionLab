@@ -1,0 +1,82 @@
+{
+  "README.md": {
+    "bytes": 2596,
+    "sha256": "c377312fef00e874d5570d7cffa49829bd25eb7c3b0ab7fdd079bab5da02c86a"
+  },
+  "attempt-01-source.json": {
+    "bytes": 336,
+    "sha256": "c56d68efd72d26eb633dcd6becb385f5f4daf2205a7cda4e6c23c45ad9fa1273"
+  },
+  "attempt-01-source/scripts/audit_native_axis_pilot.py": {
+    "bytes": 48213,
+    "sha256": "90926f21be3ca610c9027ab6a1d6c0e32da6b758a0363d190afb38fe22b5ee85"
+  },
+  "attempt-01-source/tests/test_native_axis_pilot.py": {
+    "bytes": 10997,
+    "sha256": "bc008eeadda5341b50e7188fde938130775ce83127c273e378899012c4fc52b8"
+  },
+  "attempt-01-source/tests/test_native_axis_pilot_artifact_audit.py": {
+    "bytes": 20631,
+    "sha256": "ab0791590bedfbd43ccefe6a00984bdfbcac9027542d1f848bfd2113f2d70d96"
+  },
+  "before.json": {
+    "bytes": 782,
+    "sha256": "e2ac36fa1330b8accbb9919f1149ce3b193f096e3fe2a6e6b0f370d9462724c4"
+  },
+  "before/artifacts/learning/native-axis-raw-update-pilot-v1/pilot/learner/contract.json": {
+    "bytes": 7899,
+    "sha256": "1a547a9b4036fe2fcfc3fa2cfb4972de4f7cbd89744668499daf66bbc839bed7"
+  },
+  "before/scripts/audit_native_axis_pilot.py": {
+    "bytes": 44079,
+    "sha256": "11d274eb50087624b157e95e533a5387f36d44f7087b6589017a52e39affa856"
+  },
+  "before/tests/test_native_axis_pilot.py": {
+    "bytes": 10715,
+    "sha256": "c1127832d548a891bad0d77ac08684e884e33a6b5ea16415eed56abecbc026af"
+  },
+  "before/tests/test_native_axis_pilot_artifact_audit.py": {
+    "bytes": 16308,
+    "sha256": "00eda8fec190a137095a31a0ffbab3a6b72f95cc65d9309596c73ecf567b821e"
+  },
+  "final-source/scripts/audit_native_axis_pilot.py": {
+    "bytes": 48587,
+    "sha256": "30b67a89a76de39b2079f4247614f7d8f28fb73a641988ae3e8eb26c5d4c9335"
+  },
+  "final-source/tests/test_native_axis_pilot.py": {
+    "bytes": 10997,
+    "sha256": "bc008eeadda5341b50e7188fde938130775ce83127c273e378899012c4fc52b8"
+  },
+  "final-source/tests/test_native_axis_pilot_artifact_audit.py": {
+    "bytes": 21216,
+    "sha256": "9359b4d3d202e141bf6c28d47523a1d3d2e0a215f0e42c0d06c5b9d22d80904e"
+  },
+  "historical-file-hashes.json": {
+    "bytes": 4502,
+    "sha256": "655c7468237149dc087b99be481123429ebe642f2167f725747dabbc2fcf2e69"
+  },
+  "original-integration-failures.txt": {
+    "bytes": 3610,
+    "sha256": "06f4ba849011154ee5eb6ad9191c97bca6d3a506d70b8be9e638295d89c1ceb0"
+  },
+  "receipt.json": {
+    "bytes": 2214,
+    "sha256": "4158f241d6dd5dfd16da6e8bb59446c4c63f79698dc08e19db097c37e2977a82"
+  },
+  "test-attempt-01.log": {
+    "bytes": 99,
+    "sha256": "2af9ae331ecfa2bac04fb5d8a5d8ff04486bcacb1f238b27afd5b97d3314ef6a"
+  },
+  "test-attempt-01.xml": {
+    "bytes": 10317,
+    "sha256": "ed8237b0ab589d6fa7b1d759c35e7c7fb0670f84727cb9a894ec8b8d0a9b9c49"
+  },
+  "test-attempt-02.log": {
+    "bytes": 99,
+    "sha256": "75509d66db21a220493d963879ccebf7b6ca033e71a279cf75ae98b07f0d97bf"
+  },
+  "test-attempt-02.xml": {
+    "bytes": 10661,
+    "sha256": "090b60cb5177ce1137c25c64243a55d7f6eaa449afae57ea5fbef88384511f03"
+  }
+}

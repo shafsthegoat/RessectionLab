@@ -1,7 +1,6 @@
 """Independent post-run audit tests; constructed data only, no public rollout."""
 import copy
 import gzip
-import hashlib
 import json
 from pathlib import Path
 import shutil
@@ -14,86 +13,6 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
 import audit_native_axis_pilot as audit
 from test_native_axis_pilot import completed
-
-
-def test_preserved_actual_legacy_contract_bytes_still_authenticate():
-    path = ROOT / "artifacts/learning/native-axis-raw-update-pilot-v1/pilot/learner/contract.json"
-    payload = path.read_bytes()
-    assert hashlib.sha256(payload).hexdigest() == "1a547a9b4036fe2fcfc3fa2cfb4972de4f7cbd89744668499daf66bbc839bed7"
-    contract = json.loads(payload)
-    declaration = json.loads((ROOT / "manifests/experiments/native-axis-raw-update-pilot-v1.json").read_text())
-    assert "axis_observation_contract" not in contract
-    assert audit.check_learner_contract(contract, declaration, contract["contract_hash"]) == "legacy_raw_without_axis_schema"
-
-
-def current_contract(completed):
-    return json.loads((completed["output"] / "learner/contract.json").read_text())
-
-
-def reseal_contract(contract):
-    """Test-only coherent forgery; include every numerical field, including schema."""
-    metadata = {"contract_hash", "initial_checkpoint_hash", "shared_checkpoint_hash", "code_sha256",
-                "hardware", "clinical_deficit_probability", "final_evaluation_used_for_optimization"}
-    schema = contract.get("axis_observation_contract")
-    if isinstance(schema, dict):
-        schema["contract_hash"] = audit.canonical_hash({k: v for k, v in schema.items() if k != "contract_hash"})
-    contract["contract_hash"] = audit.canonical_hash({k: v for k, v in contract.items() if k not in metadata})
-
-
-def test_current_axis_contract_authenticates_full_nested_body(completed):
-    contract = current_contract(completed)
-    assert audit.check_learner_contract(contract, completed["declaration"], contract["contract_hash"]) == "raw_with_axis_observation_v1"
-    # Omitting the field when reconstructing the checksum must still fail.
-    digest_without_schema = copy.deepcopy(contract)
-    digest_without_schema.pop("axis_observation_contract")
-    reseal_contract(digest_without_schema)
-    with pytest.raises(audit.AuditError, match="Learner contract checksum"):
-        audit.check_learner_contract(contract, completed["declaration"], digest_without_schema["contract_hash"])
-
-
-@pytest.mark.parametrize("attack", ["version", "units", "depth", "partial_contact", "proposal", "model",
-    "reward", "max_actions", "extra_nested", "extra_top_level", "profile", "schema_version", "algorithm"])
-def test_coherently_resealed_new_contract_semantic_drift_is_rejected(completed, attack):
-    contract = current_contract(completed)
-    schema = contract["axis_observation_contract"]
-    if attack == "version": schema["version"] = "unknown-v2"
-    elif attack == "units": schema["action_feature_units"][1] = "probability"
-    elif attack == "depth": schema["depth_semantics"] = "physical millimetres"
-    elif attack == "partial_contact": schema["partial_contact_semantics"] = "removed tissue"
-    elif attack == "proposal": schema["proposal_model_hash"] = "sha256:forged"
-    elif attack == "model": schema["decision_model_hash"] = "sha256:forged"
-    elif attack == "reward": schema["reward"]["normal_per_mm3"] *= 2
-    elif attack == "max_actions": schema["max_actions_including_stop"] += 1
-    elif attack == "extra_nested": schema["future_transform"] = True
-    elif attack == "extra_top_level": contract["future_transform"] = True
-    elif attack == "profile": contract["input_profile"]["action_divisors"][1] = 2.
-    elif attack == "schema_version": contract["schema_version"] = 2
-    else: contract["algorithm"] = "unknown-v2"
-    reseal_contract(contract)
-    with pytest.raises(audit.AuditError):
-        audit.check_learner_contract(contract, completed["declaration"], contract["contract_hash"])
-
-
-def test_nested_checksum_drift_rejected_even_with_matching_outer_checkpoint(completed):
-    contract = current_contract(completed)
-    contract["axis_observation_contract"]["contract_hash"] = "sha256:forged"
-    metadata = {"contract_hash", "initial_checkpoint_hash", "shared_checkpoint_hash", "code_sha256",
-                "hardware", "clinical_deficit_probability", "final_evaluation_used_for_optimization"}
-    contract["contract_hash"] = audit.canonical_hash({k: v for k, v in contract.items() if k not in metadata})
-    with pytest.raises(audit.AuditError, match="Axis observation contract checksum"):
-        audit.check_learner_contract(contract, completed["declaration"], contract["contract_hash"])
-
-
-@pytest.mark.parametrize("removed", ["axis_schema", "schema_source"])
-def test_resealed_contract_cannot_masquerade_as_another_source_generation(completed, removed):
-    contract = current_contract(completed)
-    if removed == "axis_schema":
-        del contract["axis_observation_contract"]
-    else:
-        del contract["numerical_source_sha256"]["native_axis_policy_schema.py"]
-    reseal_contract(contract)
-    with pytest.raises(audit.AuditError, match="Axis schema presence"):
-        audit.check_learner_contract(contract, completed["declaration"], contract["contract_hash"])
 
 
 def packed(values, dtype="float32"):
