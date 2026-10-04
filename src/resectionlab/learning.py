@@ -163,6 +163,16 @@ def _json_hash(value: Any) -> str:
                                                 separators=(",", ":")).encode()).hexdigest()
 
 
+def numerical_source_hashes() -> dict[str, str]:
+    """Conservatively bind every headless module, including inherited geometry.
+
+    Hashing only a simulator's class file misses imported transition helpers and
+    inherited methods. GUI edits remain outside this numerical resume contract.
+    """
+    return {path.name: hashlib.sha256(path.read_bytes()).hexdigest()
+            for path in sorted(Path(__file__).parent.glob("*.py"))}
+
+
 def _partition_record(manifest: Any, expected_role: str) -> dict[str, Any]:
     role = getattr(manifest.role, "value", manifest.role)
     if role != expected_role:
@@ -357,6 +367,9 @@ def train_patient_policy(
     contract = {"schema_version": 1, "algorithm": "masked_reinforce_state_value_v2",
                 "implementation_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
                 "simulator_implementation_sha256": hashlib.sha256(simulator_source.read_bytes()).hexdigest(),
+                "numerical_source_sha256": numerical_source_hashes(),
+                "runtime": {"torch": str(torch.__version__), "numpy": str(np.__version__),
+                            "python": platform.python_version(), "device": "cpu"},
                 "config": asdict(config), "partitions": partitions,
                 "decision_model_hash": frozen_hash, "dimensions": list(dimensions)}
     contract_hash = _json_hash(contract)
