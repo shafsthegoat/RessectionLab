@@ -1087,3 +1087,15 @@ retained separately. No Markov, learning or clinical benefit is established.
 The prototype remains outside the production package. See
 `artifacts/native-spatial-feature-probe-v1/` and
 `artifacts/native-spatial-feature-independent-v1/`.
+
+## October 4, 2026 — exact dependency-notice provenance remains unresolved
+
+A read-only upstream follow-up finds a complete repository license added in
+May 2025, but that commit still declares react-remove-scroll-bar 2.3.7. The
+published 2.3.8 metadata is unchanged, dates to December 2024, and names a commit
+the official API still cannot retrieve. Current repository text was therefore
+preserved as evidence without substituting it for verified 2.3.8 notice text.
+This is a provenance limitation, not a legal-permission assessment. Earlier
+lookup failures remain unchanged; no package installation or app modification
+was made. Small official responses and exact hashes are retained in
+`artifacts/dependency-notices-license-followup-v1/`.
