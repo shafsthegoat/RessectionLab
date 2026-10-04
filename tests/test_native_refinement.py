@@ -5,11 +5,12 @@ import numpy as np
 import pytest
 
 from resectionlab.core import CaseData, SourceRef
-from resectionlab.geometry import AccessWindow
+from resectionlab.geometry import AccessWindow, ToolGeometry
 from resectionlab.native_resection import NATIVE_GENERIC_TOOLS, NativeResectionConfig
 from resectionlab.native_simulation import NativeSequentialSimulator
 from resectionlab.native_refinement import (native_replay_mask, replay_artifact_hash,
-    native_partial_contact_accounting, recheck_native_replay, run_native_refinement, validate_native_replay)
+    inspect_native_refinement, native_partial_contact_accounting, recheck_native_replay,
+    run_native_refinement, validate_native_replay)
 
 
 @pytest.fixture
@@ -22,9 +23,13 @@ def native_case(monkeypatch):
         source_refs=(SourceRef("fixture", "synthetic://native-refinement", provenance="simulated"),))
     def factory(case, **kwargs):
         config = NativeResectionConfig(tissue, target.astype(np.int16), np.eye(4),
-            AccessWindow((2, 2, -.5), (0, 0, 1), 3.), NATIVE_GENERIC_TOOLS,
+            kwargs.get("access") or AccessWindow((2, 2, -.5), (0, 0, 1), 3.),
+            kwargs.get("tools") or NATIVE_GENERIC_TOOLS,
             case.semantic_hash, "synthetic solid cube")
-        return NativeSequentialSimulator(config, [(2, 2, 3)], max_steps=kwargs["max_steps"],
+        target_point = kwargs.get("selected_target_mm") or (2, 2, 3)
+        entry = kwargs.get("selected_entry_mm")
+        return NativeSequentialSimulator(config, [target_point],
+            candidate_entries_mm=None if entry is None else [entry], max_steps=kwargs["max_steps"],
             max_actions=kwargs["max_actions"], cancelled=kwargs["cancelled"])
     monkeypatch.setattr("resectionlab.native_simulation.make_native_patient_simulator", factory)
     return case
@@ -98,3 +103,60 @@ def test_partial_contact_is_not_permanently_retained_when_a_later_stroke_removes
         "currently_retained_partial_normal_contact_mm3": 0.,
         "previously_partial_normal_later_removed_mm3": 1.,
     }
+
+
+def test_exact_selected_route_is_preserved_through_updates_reopen_and_resume(native_case, tmp_path):
+    options = {"access": AccessWindow((2, 2, -.5), (0, 0, 1), 3., "selected-window"),
+               "tools": (NATIVE_GENERIC_TOOLS[0],), "selected_entry_mm": [1., 2., -.5],
+               "selected_target_mm": [1., 2., 3.], "candidate_count": 9, "max_steps": 1}
+    ready = inspect_native_refinement(native_case, **options)
+    assert ready["legalNonStopActions"] == 1
+    binding = ready["route_binding"]
+    assert binding["candidate_entries_mm"] == [[1., 2., -.5]]
+    assert binding["candidate_targets_mm"] == [[1., 2., 3.]]
+    assert binding["mode"] == "exact_selected_route"
+    report = run_native_refinement(native_case, tmp_path, budget_seconds=3., seed=11, **options)
+    assert report["gradient_steps"] > 0
+    assert report["route_binding"] == binding
+    assert report["replay"]["route_binding"] == binding
+    assert recheck_native_replay(native_case, report["replay"], **options)["route_binding"] == binding
+    modified = {**options, "selected_target_mm": [2., 2., 3.]}
+    before = (tmp_path / "native-refinement.json").read_bytes()
+    with pytest.raises(ValueError, match="Resume route or settings changed"):
+        run_native_refinement(native_case, tmp_path, budget_seconds=3., seed=11, resume=True, **modified)
+    assert (tmp_path / "native-refinement.json").read_bytes() == before
+    with pytest.raises(ValueError, match="route binding differs"):
+        recheck_native_replay(native_case, report["replay"], **modified)
+
+
+def test_stop_only_preflight_creates_no_optimizer_or_checkpoint(native_case, tmp_path, monkeypatch):
+    import torch
+    def forbidden(*args, **kwargs):
+        raise AssertionError("STOP-only preflight must not create an optimizer or take a transition")
+    monkeypatch.setattr(torch.optim, "Adam", forbidden)
+    monkeypatch.setattr(NativeSequentialSimulator, "step", forbidden)
+    options = {"access": AccessWindow((2, 2, -.5), (0, 0, 1), 3.),
+        "tools": (ToolGeometry("subvoxel-tip", .05, .05, 10., tip_length_mm=.1),),
+        "selected_entry_mm": [2., 2., -.5], "selected_target_mm": [2., 2., 3.]}
+    readiness = inspect_native_refinement(native_case, **options)
+    assert readiness["status"] == "no_actionable_moves" and readiness["legalNonStopActions"] == 0
+    assert readiness["reasons"]
+    report = run_native_refinement(native_case, tmp_path, budget_seconds=3., seed=11, **options)
+    assert report["status"] == report["replay_status"] == "no_actionable_moves"
+    assert report["gradient_steps"] == report["optimization_environment_steps"] == report["selection_environment_steps"] == 0
+    assert report["optimizer_mode"] is None and report["replay"] is None
+    assert report["role"] == "preflight" and report["selection_history"] == []
+    assert (tmp_path / "native-refinement.json").exists()
+    for name in ("checkpoint.pt", "initial.pt", "contract.json", "native-selection-replay.json"):
+        assert not (tmp_path / name).exists()
+    previous = (tmp_path / "native-refinement.json").read_bytes()
+    with pytest.raises(FileExistsError):
+        run_native_refinement(native_case, tmp_path, budget_seconds=3., seed=11, **options)
+    assert (tmp_path / "native-refinement.json").read_bytes() == previous
+
+
+def test_selected_geometry_requires_paired_points_window_and_explicit_tool(native_case):
+    with pytest.raises(ValueError, match="together"):
+        inspect_native_refinement(native_case, selected_entry_mm=[2, 2, -.5])
+    with pytest.raises(ValueError, match="explicit access window and tool"):
+        inspect_native_refinement(native_case, selected_entry_mm=[2, 2, -.5], selected_target_mm=[2, 2, 3])

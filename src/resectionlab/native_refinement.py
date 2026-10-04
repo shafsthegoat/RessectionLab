@@ -3,6 +3,8 @@ from __future__ import annotations
 
 import json
 import copy
+from dataclasses import asdict
+import math
 from pathlib import Path
 import time
 from typing import Any
@@ -20,6 +22,88 @@ def _write(path: Path, value: Any) -> None:
 
 def replay_artifact_hash(replay: dict[str, Any]) -> str:
     return content_hash({key: value for key, value in replay.items() if key != "artifact_hash"})
+
+
+def _point(value: Any, name: str) -> list[float] | None:
+    if value is None:
+        return None
+    array = np.asarray(value, float)
+    if array.shape != (3,) or not np.isfinite(array).all():
+        raise ValueError(f"{name} must be a finite canonical RAS+ three-vector")
+    return array.tolist()
+
+
+def _access_record(access: Any) -> dict[str, Any] | None:
+    if access is None:
+        return None
+    return {"center_mm": np.asarray(access.center_mm).tolist(),
+            "normal_inward": np.asarray(access.normal_inward).tolist(),
+            "radius_mm": float(access.radius_mm), "window_id": access.window_id}
+
+
+def _geometry_request(*, access, tools, selected_entry_mm, selected_target_mm,
+                      candidate_count: int, max_steps: int, max_actions: int) -> dict[str, Any]:
+    entry = _point(selected_entry_mm, "Selected entry")
+    target = _point(selected_target_mm, "Selected target")
+    if (entry is None) != (target is None):
+        raise ValueError("Selected entry and target must be supplied together")
+    if entry is not None and (access is None or not tools):
+        raise ValueError("A selected route requires its explicit access window and tool geometry")
+    return {"geometry_frame": "RAS+", "selected_entry_mm": entry, "selected_target_mm": target,
+        "access": _access_record(access), "tools": None if tools is None else [asdict(tool) for tool in tools],
+        "candidate_count": candidate_count, "max_steps": max_steps, "max_actions": max_actions}
+
+
+def _prepare_native(case: Any, *, access, tools, selected_entry_mm, selected_target_mm,
+                    candidate_count: int, max_steps: int, max_actions: int, cancelled):
+    from .native_simulation import make_native_patient_simulator
+    from .route_native_diagnostics import initial_native_action_diagnostic
+
+    requested = _geometry_request(access=access, tools=tools, selected_entry_mm=selected_entry_mm,
+        selected_target_mm=selected_target_mm, candidate_count=candidate_count, max_steps=max_steps,
+        max_actions=max_actions)
+    template = make_native_patient_simulator(case, access=access, tools=tools,
+        selected_entry_mm=requested["selected_entry_mm"], selected_target_mm=requested["selected_target_mm"],
+        candidate_count=candidate_count, max_steps=max_steps, max_actions=max_actions, cancelled=cancelled)
+    actual_access = _access_record(template.native_config.access)
+    actual_tools = [asdict(tool) for tool in template.native_config.tools]
+    if requested["selected_entry_mm"] is not None:
+        if (len(template.candidate_tips_mm) != 1 or len(template.candidate_entries_mm) != 1
+                or not np.array_equal(template.candidate_entries_mm[0], requested["selected_entry_mm"])
+                or not np.array_equal(template.candidate_tips_mm[0], requested["selected_target_mm"])):
+            raise ValueError("Native factory did not preserve the exact selected entry/target pair")
+        if actual_access != requested["access"]:
+            raise ValueError("Native factory did not preserve the exact selected access window")
+        if actual_tools != requested["tools"]:
+            raise ValueError("Native factory did not preserve the complete selected tool geometry")
+    binding = {"version": "native-route-binding-v1", "geometry_frame": "RAS+",
+        "mode": "exact_selected_route" if requested["selected_entry_mm"] is not None else "default_candidate_set",
+        "requested_geometry": requested, "access": actual_access, "tools": actual_tools,
+        "candidate_entries_mm": template.candidate_entries_mm.tolist(),
+        "candidate_targets_mm": template.candidate_tips_mm.tolist(),
+        "decision_model_hash": template.decision_model_hash}
+    binding["binding_hash"] = content_hash(binding)
+    diagnostic = initial_native_action_diagnostic(template)
+    legal = diagnostic["non_stop_action_count"]
+    readiness = {"status": "ready" if legal else "no_actionable_moves", "role": "preflight", "legalNonStopActions": legal,
+        "action_ids": diagnostic["non_stop_action_ids"], "reasons": sorted(diagnostic["rejection_counts"]),
+        "diagnostic": diagnostic, "decision_model_hash": template.decision_model_hash,
+        "case_hash": case.semantic_hash, "route_binding": binding, "clinical_deficit_probability": None}
+    if not legal and not readiness["reasons"]:
+        readiness["reasons"] = ["no_legal_native_nonstop_action"]
+    return template, readiness
+
+
+def inspect_native_refinement(case: Any, *, access=None, tools=None, selected_entry_mm=None,
+                              selected_target_mm=None, candidate_count: int = 4, max_steps: int = 3,
+                              max_actions: int = 7, cancelled=None) -> dict[str, Any]:
+    """Geometry-only preflight; no optimizer, checkpoint, policy rollout or removal."""
+    started = time.perf_counter()
+    _, readiness = _prepare_native(case, access=access, tools=tools, selected_entry_mm=selected_entry_mm,
+        selected_target_mm=selected_target_mm, candidate_count=candidate_count, max_steps=max_steps,
+        max_actions=max_actions, cancelled=cancelled)
+    readiness["preparation_seconds"] = time.perf_counter() - started
+    return readiness
 
 
 def native_replay_mask(replay: dict[str, Any], step: int) -> np.ndarray:
@@ -74,6 +158,20 @@ def validate_native_replay(case: Any, replay: dict[str, Any]) -> bool:
     if affine.shape != (4, 4) or not np.allclose(affine, expected, rtol=0, atol=1e-7):
         raise ValueError("Native replay physical frame differs from source")
     metrics = replay["metrics"]
+    binding = replay.get("route_binding")
+    if binding is not None:
+        if binding.get("binding_hash") != content_hash({key: value for key, value in binding.items() if key != "binding_hash"}):
+            raise ValueError("Native route binding changed after preparation")
+        if binding.get("decision_model_hash") != replay.get("decision_model_hash"):
+            raise ValueError("Native route binding belongs to a different decision model")
+        entries = np.asarray(binding["candidate_entries_mm"], float)
+        targets = np.asarray(binding["candidate_targets_mm"], float)
+        allowed_tools = {tool["tool_id"] for tool in binding["tools"]}
+        for record in metrics["history"]:
+            matches = np.all(np.isclose(entries, record.get("entry_mm"), rtol=0, atol=1e-7), axis=1)
+            matches &= np.all(np.isclose(targets, record.get("tip_mm"), rtol=0, atol=1e-7), axis=1)
+            if not matches.any() or record.get("tool_id") not in allowed_tools:
+                raise ValueError("Native replay departed from its retained entry, target or tool choices")
     if any(record.get("source_hash") != case.semantic_hash for record in metrics["history"]):
         raise ValueError("Native removal history belongs to another source case")
     removed = native_replay_mask(replay, len(metrics["history"]))
@@ -99,7 +197,8 @@ def validate_native_replay(case: Any, replay: dict[str, Any]) -> bool:
 
 def recheck_native_replay(case: Any, replay: dict[str, Any], *, access=None, tools=None,
                          cancelled=None, candidate_count: int = 4, max_steps: int = 3,
-                         max_actions: int = 7) -> dict[str, Any]:
+                         max_actions: int = 7, selected_entry_mm=None,
+                         selected_target_mm=None) -> dict[str, Any]:
     """Reopen disk artifacts without trusting their claimed certificate or digest.
 
     Fresh model replay must reproduce the saved native removal history. The
@@ -107,15 +206,20 @@ def recheck_native_replay(case: Any, replay: dict[str, Any], *, access=None, too
     separate checkpoint-weight check for the caller; geometry cannot prove it.
     """
     from .evaluation import independent_check_native_history
-    from .native_simulation import make_native_patient_simulator
 
     if replay.get("case_hash") != case.semantic_hash or replay.get("role") != "selection":
         raise ValueError("Saved native replay has a stale case or wrong world role")
     selected_seed = replay.get("selection_seed")
     if type(selected_seed) is not int or selected_seed < 0:
         raise ValueError("Saved native replay requires its selection seed")
-    template = make_native_patient_simulator(case, access=access, tools=tools,
+    template, readiness = _prepare_native(case, access=access, tools=tools,
+        selected_entry_mm=selected_entry_mm, selected_target_mm=selected_target_mm,
         candidate_count=candidate_count, max_steps=max_steps, max_actions=max_actions, cancelled=cancelled)
+    if replay.get("route_binding") is not None:
+        if replay["route_binding"] != readiness["route_binding"]:
+            raise ValueError("Saved native replay route binding differs from the selected entry, target, window or tool")
+    elif selected_entry_mm is not None:
+        raise ValueError("Historical replay has no exact selected-route binding")
     if template.decision_model_hash != replay.get("decision_model_hash"):
         raise ValueError("Saved replay decision model differs from current native model")
     template.replay(replay["actions"], selected_seed)
@@ -136,26 +240,66 @@ def recheck_native_replay(case: Any, replay: dict[str, Any], *, access=None, too
 def run_native_refinement(case: Any, output_dir: str | Path, *, budget_seconds: float = 30.,
                           seed: int = 0, resume: bool = False, cancelled=None, progress=None,
                           access=None, tools=None, candidate_count: int = 4,
-                          max_steps: int = 3, max_actions: int = 7) -> dict[str, Any]:
+                          max_steps: int = 3, max_actions: int = 7, selected_entry_mm=None,
+                          selected_target_mm=None) -> dict[str, Any]:
     """Train within fixed assumptions; only independently accepted replay is exposed.
 
     The budget covers learner initialization, optimization and selection; native
     preprocessing and independent certification are separate measured costs.
     Resume retains the original total learner budget and frozen source contract.
     """
-    from .evaluation import independent_check_native_history
-    from .learning import TrainingConfig, load_policy, rollout_policy, train_patient_policy
-    from .native_simulation import make_native_patient_simulator
-    from .worlds import generate_partitions
-
     cancelled = cancelled or (lambda: False)
     progress = progress or (lambda _: None)
+    if type(seed) is not int or seed < 0 or not math.isfinite(budget_seconds) or budget_seconds <= 0:
+        raise ValueError("Native refinement needs a nonnegative seed and positive finite budget")
     directory = Path(output_dir)
     directory.mkdir(parents=True, exist_ok=True)
+    request_path = directory / "native-request.json"
+    request = {"schema_version": 1, "case_hash": case.semantic_hash, "planning_hash": case.planning_hash,
+        "seed": seed, "budget_seconds": float(budget_seconds),
+        "geometry": _geometry_request(access=access, tools=tools, selected_entry_mm=selected_entry_mm,
+            selected_target_mm=selected_target_mm, candidate_count=candidate_count, max_steps=max_steps,
+            max_actions=max_actions)}
+    previous = None
+    if resume:
+        if not request_path.is_file() or not (directory / "checkpoint.pt").is_file():
+            raise ValueError("No matching native route request and optimizer checkpoint exist to resume")
+        previous = json.loads(request_path.read_text())
+        if previous.get("request") != request:
+            raise ValueError("Resume route or settings changed; use a new run for edited geometry or budget")
+        from .learning import numerical_source_hashes
+        contract_path = directory / "contract.json"
+        if not contract_path.is_file() or json.loads(contract_path.read_text()).get("numerical_source_sha256") != numerical_source_hashes():
+            raise ValueError("Resume numerical source changed; historical native results remain preserved")
+    elif any((directory / name).exists() for name in ("native-request.json", "native-refinement.json", "checkpoint.pt")):
+        raise FileExistsError("Native refinement run exists; resume its exact request or use a new directory")
     started = time.perf_counter()
-    template = make_native_patient_simulator(case, access=access, tools=tools,
+    template, readiness = _prepare_native(case, access=access, tools=tools,
+        selected_entry_mm=selected_entry_mm, selected_target_mm=selected_target_mm,
         candidate_count=candidate_count, max_steps=max_steps, max_actions=max_actions, cancelled=cancelled)
     preparation_seconds = time.perf_counter() - started
+    if previous is not None and previous.get("route_binding") != readiness["route_binding"]:
+        raise ValueError("Resume native route model changed; retained source geometry cannot be substituted")
+    if not resume:
+        _write(request_path, {"request": request, "route_binding": readiness["route_binding"]})
+    if readiness["status"] == "no_actionable_moves":
+        report = {"status": "no_actionable_moves", "replay_status": "no_actionable_moves", "replay": None,
+            "optimizer_mode": None, "requested_optimizer_mode": "PATIENT_SCRATCH_RL",
+            "gradient_steps": 0, "optimization_environment_steps": 0, "selection_environment_steps": 0,
+            "actor_parameters_changed": False, "initial_selection_return": None, "selected_selection_return": None,
+            "case_hash": case.semantic_hash, "planning_hash": case.planning_hash, "role": "preflight",
+            "final_evaluation": False, "elapsed_seconds": 0., "preparation_seconds": preparation_seconds,
+            "decision_model_hash": template.decision_model_hash, "readiness": readiness,
+            "route_binding": readiness["route_binding"], "selection_history": [], "optimization_history": [],
+            "clinical_deficit_probability": None}
+        _write(directory / "native-refinement.json", report)
+        return report
+    # Import the learner only after native geometry establishes a real action
+    # choice. A STOP-only setup never creates a policy or optimizer checkpoint.
+    from .evaluation import independent_check_native_history
+    from .learning import TrainingConfig, load_policy, rollout_policy, train_patient_policy
+    from .worlds import generate_partitions
+
     partitions = generate_partitions(case.semantic_hash, template.config.world_generator, seed,
         optimization=3, selection=2, final_evaluation=3, stress=2, planning_hash=case.planning_hash)
     config = TrainingConfig(seed=seed, max_environment_steps=256, max_gradient_steps=32,
@@ -168,6 +312,7 @@ def run_native_refinement(case: Any, output_dir: str | Path, *, budget_seconds: 
     report = json.loads((directory / "result.json").read_text())
     report.update(case_hash=case.semantic_hash, planning_hash=case.planning_hash,
         role="selection", final_evaluation=False, preparation_seconds=preparation_seconds,
+        readiness=readiness, route_binding=readiness["route_binding"],
         replay=None, replay_status="cancelled" if cancelled() else "pending_independent_check")
     if cancelled() or result.status == "cancelled":
         _write(directory / "native-refinement.json", report)
@@ -181,6 +326,7 @@ def run_native_refinement(case: Any, output_dir: str | Path, *, budget_seconds: 
         "decision_model_hash": template.decision_model_hash, "checkpoint_hash": result.selected_checkpoint_hash,
         "selection_partition_hash": partitions.selection.partition_hash, "actions": list(selected.actions),
         "selection_seed": partitions.selection.seeds[0],
+        "route_binding": readiness["route_binding"],
         "metrics": selected.metrics, "shape": list(case.mri.shape), "affine": template.config.affine.tolist(),
         "final_evaluation": False, "scope": "native_contained_cell_structural_research",
         "interpretation": "Independent geometric checks within rigid modeled anatomy; tissue mechanics and clinical consequences unvalidated"}
