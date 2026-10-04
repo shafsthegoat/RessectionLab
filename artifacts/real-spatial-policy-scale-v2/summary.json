@@ -1,0 +1,154 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "recorded_utc": "2026-10-04T17:17:16.040243+00:00",
+  "commit": "b93c9af71e80ee7d63ac116451cc5aa94f38e475",
+  "archive_sha256": "409543a1d249d5aa683e29d05da85322be2a3fbced47ad267dfe3538489c6819",
+  "declaration_sha256": "477d35fa5153407bd5551a69306d71251bd1a1c669e853eed5daa834cc0d2780",
+  "results_sha256": "f9ef44ef46dae8d57707a16a66bfcb000f02dd9ffe70d0dafdcd221574cef509",
+  "scan_source": {
+    "subject": "sub-PAT22",
+    "development_role": "population_training",
+    "image_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/diffusion_source/ds001226-v5.0.1/sub-PAT22/ses-preop/anat/sub-PAT22_ses-preop_T1w.nii.gz",
+    "image_sha256": "6ac1bc950dc2b48709367550b1c740684457fce875e3e402d870d3356282334e",
+    "image_bytes": 7549922,
+    "shape": [
+      160,
+      256,
+      256
+    ],
+    "affine_ras_mm": [
+      [
+        0.9992063641548157,
+        -0.02438328042626381,
+        0.03140365704894066,
+        -76.97232818603516
+      ],
+      [
+        0.024371175095438957,
+        0.9997026920318604,
+        0.0007659494876861572,
+        -103.12860107421875
+      ],
+      [
+        -0.03141290321946144,
+        2.457493764040919e-09,
+        0.9995064735412598,
+        -131.29685974121094
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "spacing_mm": [
+      0.9999970414114703,
+      1.000000008410047,
+      0.999999983502775
+    ],
+    "manifest_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/diffusion_source/ds001226-v5.0.1/btc_sub-PAT22_verified_manifest.json",
+    "manifest_sha256": "e1f6fa5c82558bdbaa245223315fac6437b09bcc0938bfe61a3081845a9c72bb",
+    "cohort_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/manifests/experiments/btc-spatial-development-cohort-v1.json",
+    "cohort_sha256": "962d964e1d71427f3625cdbebc0f7e4759e5d2345d8f95cb211ed45810ed2985",
+    "source_root": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/diffusion_source/ds001226-v5.0.1",
+    "qform_code": 1,
+    "sform_code": 1,
+    "annotation_opened": false
+  },
+  "cells": [
+    {
+      "shape_xyz": [
+        32,
+        32,
+        32
+      ],
+      "non_stop_rays": 16,
+      "full_forward_ms": 28.015832998789847,
+      "encoder_ms": 23.726916988380253,
+      "sampling_ms": 1.058999914675951,
+      "source_preprocessing_ms": 374.81745798140764,
+      "reported_highwater_mib": 420.015625,
+      "sampled_peak_mib": 429.765625,
+      "crop_start_voxel": [
+        64,
+        112,
+        112
+      ],
+      "module_paths_verified": true,
+      "parameters_unchanged": true
+    },
+    {
+      "shape_xyz": [
+        32,
+        32,
+        32
+      ],
+      "non_stop_rays": 128,
+      "full_forward_ms": 30.111375031992793,
+      "encoder_ms": 22.661375114694238,
+      "sampling_ms": 1.0242919670417905,
+      "source_preprocessing_ms": 354.20279193203896,
+      "reported_highwater_mib": 418.09375,
+      "sampled_peak_mib": 418.359375,
+      "crop_start_voxel": [
+        64,
+        112,
+        112
+      ],
+      "module_paths_verified": true,
+      "parameters_unchanged": true
+    },
+    {
+      "shape_xyz": [
+        64,
+        64,
+        64
+      ],
+      "non_stop_rays": 16,
+      "full_forward_ms": 268.84875004179776,
+      "encoder_ms": 248.27920796815306,
+      "sampling_ms": 5.9712500078603625,
+      "source_preprocessing_ms": 366.2076670443639,
+      "reported_highwater_mib": 1172.90625,
+      "sampled_peak_mib": 1173.15625,
+      "crop_start_voxel": [
+        48,
+        96,
+        96
+      ],
+      "module_paths_verified": true,
+      "parameters_unchanged": true
+    },
+    {
+      "shape_xyz": [
+        64,
+        64,
+        64
+      ],
+      "non_stop_rays": 128,
+      "full_forward_ms": 255.51787507720292,
+      "encoder_ms": 235.22620892617851,
+      "sampling_ms": 5.8325419668108225,
+      "source_preprocessing_ms": 366.9629590585828,
+      "reported_highwater_mib": 1173.15625,
+      "sampled_peak_mib": 1179.96875,
+      "crop_start_voxel": [
+        48,
+        96,
+        96
+      ],
+      "module_paths_verified": true,
+      "parameters_unchanged": true
+    }
+  ],
+  "total_wall_seconds": 6.247176709002815,
+  "failures": [],
+  "unexecuted_cells": 0,
+  "optimizer_steps": 0,
+  "synthetic_scan": false,
+  "model_accuracy_assessed": false,
+  "clinical_or_whole_volume_fit_assessed": false,
+  "measurement_limit": "One un-warmed inference per cell; no latency distribution. Different RSS instruments can differ, and the in-child high-water snapshot precedes final provenance serialization."
+}

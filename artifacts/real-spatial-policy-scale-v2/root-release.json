@@ -1,0 +1,33 @@
+{
+  "kind": "root_execution_release",
+  "released_commit": "b93c9af71e80ee7d63ac116451cc5aa94f38e475",
+  "recorded_utc": "2026-10-04T17:15:04.163674+00:00",
+  "release": "Root explicitly released this one four-cell real TRAIN PAT22 inference profile; no gradients or retries.",
+  "archive_sha256": "409543a1d249d5aa683e29d05da85322be2a3fbced47ad267dfe3538489c6819",
+  "archive_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/real-spatial-policy-scale-v2/source.tar",
+  "source_archive": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/real-spatial-policy-scale-v2/source_archive",
+  "source_reference_declaration": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/real-spatial-policy-scale-v1/declaration.json",
+  "plan": [
+    [
+      32,
+      16
+    ],
+    [
+      32,
+      128
+    ],
+    [
+      64,
+      16
+    ],
+    [
+      64,
+      128
+    ]
+  ],
+  "total_deadline_seconds": 55,
+  "rss_limit_bytes": 2147483648,
+  "optimizer_steps": 0,
+  "script_sha256": "32fe8eb8aaa26fd082c7e2e02610b136797f3894214c2510ab7a814bf76ee086",
+  "spatial_policy_sha256": "129d6195f76bb7a5105d6097ea41cce681c34b88b79bef287e61fd56e961073f"
+}
