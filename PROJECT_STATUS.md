@@ -250,6 +250,15 @@ the patient volume-integral observation operator and anatomical mesh remain
 unvalidated. See `artifacts/mechanics-patient-constraints-run-v1/RESULT.md` and
 `artifacts/mechanics-patient-constraints-run-review-v1/REVIEW.md`.
 
+A source/runtime audit found the optional Apple sparse backend is compiled and
+linked, but its adapter copies a nonzero-entry count from a column-pointer array
+allocated with only columns-plus-one entries. This concrete bounds defect blocks
+its use; no defective-backend execution was attempted. Iterative tolerance types
+also truncate fractional defaults. The existing verified Skyline path and size
+caps remain unchanged. A separate local framework repair is documented but has
+not been built or released. See
+`artifacts/febio-sparse-backend-static-review-v1/REVIEW.md`.
+
 One bounded Gmsh preparation generated the three measured-specimen meshes
 (96/768/2,592 hex elements) and 18 fixed loading decks in 3.43 s, with
 140.2 MB maximum sampled memory. Independent native-mesh and deck review

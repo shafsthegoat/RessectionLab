@@ -1,0 +1,24 @@
+[
+  {
+    "command": [
+      "otool",
+      "-L",
+      "data/optional-runtimes/febio-4.13/install/lib/libnumcore.dylib"
+    ],
+    "exit_code": 0,
+    "stdout": "data/optional-runtimes/febio-4.13/install/lib/libnumcore.dylib:\n\t@rpath/libnumcore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libomp.dylib (compatibility version 5.0.0, current version 5.0.0)\n\t/System/Library/Frameworks/Accelerate.framework/Versions/A/Accelerate (compatibility version 1.0.0, current version 4.0.0)\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n",
+    "stderr": "",
+    "scope": "static Mach-O metadata, no loading or execution of FEBio"
+  },
+  {
+    "command": [
+      "nm",
+      "-g",
+      "data/optional-runtimes/febio-4.13/install/lib/libnumcore.dylib"
+    ],
+    "exit_code": 0,
+    "stdout": "                 U __SparseSolveOpaque_Double\n00000000000056ec T __ZN14BiCGStabSolver10PreProcessEv\n000000000000552c T __ZN14BiCGStabSolver14BuildParamListEv\n00000000000056dc T __ZN14BiCGStabSolver15SetSparseMatrixEP12SparseMatrix\n0000000000005628 T __ZN14BiCGStabSolver18CreateSparseMatrixE11Matrix_Type\n00000000000062bc T __ZN14BiCGStabSolver21GetLeftPreconditionerEv\n0000000000006264 T __ZN14BiCGStabSolver21SetLeftPreconditionerEP12LinearSolver\n00000000000056f4 T __ZN14BiCGStabSolver6FactorEv\n0000000000006250 T __ZN14BiCGStabSolver7DestroyEv\n0000000000005754 T __ZN14BiCGStabSolver9BackSolveEPdS0_\n0000000000006870 T __ZN14BiCGStabSolverC1EP7FEModel\n0000000000006830 T __ZN14BiCGStabSolverC2EP7FEModel\n0000000000002588 T __ZN22AccelerateSparseSolver10PreProcessEv\n0000000000003904 T __ZN22AccelerateSparseSolver13MyReportErrorEPKc\n00000000000023a0 T __ZN22AccelerateSparseSolver13SetPrintLevelEi\n00000000000022ac T __ZN22AccelerateSparseSolver14BuildParamListEv\n000000000000393c T __ZN22AccelerateSparseSolver14MyReportStatusEPKc\n00000000000038f8 T __ZN22AccelerateSparseSolver14SetOrderMethodEi\n000000000000249c T __ZN22AccelerateSparseSolver15SetSparseMatrixEP12SparseMatrix\n0000000000003db4 T __ZN22AccelerateSparseSolver16condition_numberEv\n00000000000023ac T __ZN22AccelerateSparseSolver18CreateSparseMatrixE11Matrix_Type\n00000000000038d4 T __ZN22AccelerateSparseSolver20PrintConditionNumberEb\n00000000000038ec T __ZN22AccelerateSparseSolver20SetFactorizationTypeEi\n00000000000038e0 T __ZN22AccelerateSparseSolver25UseIterativeFactorizationEb\n0000000000002a80 T __ZN22AccelerateSparseSolver6FactorEv\n0000000000003668 T __ZN22AccelerateSparseSolver7DestroyEv\n0000000000002fb8 T __ZN22AccelerateSparseSolver9BackSolveEPdS0_\n0000000000003790 T __ZN22AccelerateSparseSolverC1EP7FEModel\n00000000000036fc T __ZN22AccelerateSparseSolverC2EP7FEModel\n0000000000002208 T __ZN22AccelerateSparseSolverD0Ev\n0000000000002168 T __ZN22AccelerateSparseSolverD1Ev\n0000000000003824 T __ZN22AccelerateSparseSolverD2Ev\n0000000000006254 T __ZNK14BiCGStabSolver17HasPreconditionerEv\n00000000000036f0 T __ZNK22AccelerateSparseSolver11IsIterativeEv\n00000000000183d8 S __ZTI14BiCGStabSolver\n00000000000181a0 S __ZTI22AccelerateSparseSolver\n00000000000136e0 S __ZTS14BiCGStabSolver\n0000000000013680 S __ZTS22AccelerateSparseSolver\n00000000000182f0 S __ZTV14BiCGStabSolver\n00000000000180e0 S __ZTV22AccelerateSparseSolver\n",
+    "stderr": "",
+    "scope": "static Mach-O metadata, no loading or execution of FEBio"
+  }
+]
