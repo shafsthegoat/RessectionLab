@@ -1172,3 +1172,27 @@ only, with zero simulators, transitions, policies, gradients or patient loads.
 No learning, state completeness or cross-patient reference claim follows.
 See `artifacts/native-spatial-feature-v2/repair-01/` and the separate independent
 review; no production profile or public experiment was changed.
+
+## October 4, 2026 — saved decisions change rank without changing the chosen path
+
+A post hoc stdlib-only reader pairs every saved initial/latest selection forward
+from the completed RAW pilot. All six pairs match exactly on ordered action IDs,
+float32 inputs, state and mask; deterministic repeats yield three distinct states.
+The chosen action is unchanged in each, but 8, 17 and 12 rows change ordinal rank
+(including STOP). Top-two saved-logit margins change from 0.000252/0.006669/0.018136
+to 0.004095/0.010175/0.030040. All three saved values change. None of the
+26/24/22 legal non-STOP feature rows is an exact duplicate on this observed path.
+Separate synthetic aliases therefore do not establish an alias explanation for
+this patient's unchanged selection score.
+
+Twenty-six constructed-record checks pass, including 15 independent tests.
+Independent exact-rational arithmetic reproduces all per-action deltas, ranks,
+margins and values; mean-centered differences differ by at most 2.78e-17 through
+rounding. Source, RAW profile, saved checkpoint bytes and prior forward-audit
+bindings verify. Review found duplicate decision IDs could be accepted across
+slots; a strict identity gate repairs that validation gap. Actual scientific
+fields remain identical across report revisions, and gzip-only reproduction is
+byte-identical. Original reports and the initial test/audit harness errors remain
+preserved. No model, simulator, geometry, RNG, gradient or new-world execution
+was performed. See `artifacts/native-axis-decision-diagnostics-v2/` and
+`artifacts/native-axis-decision-diagnostics-independent-v1/`.

@@ -172,6 +172,14 @@ Original receipts remain unchanged; lossless gzip and gzip-only report/audit
 reproduction pass. See the actual report in
 `artifacts/learning/native-axis-raw-update-pilot-v1/report-v1/RESULT.md` and
 `artifacts/native-axis-pilot-result-audit/`.
+A later saved-decision diagnostic pairs all six selection records into three
+distinct states. Chosen actions are unchanged, while 8/17/12 rows change ordinal
+rank, including STOP, and all saved values/logits change. No exact 15-feature
+aliases occur among the 26/24/22 legal non-STOP rows on this path. Twenty-six
+constructed-record checks and an independent arithmetic/hash audit pass; a
+duplicate-decision-ID validation gap was fixed without changing actual results.
+This performs no new model forward or simulation and does not explain the cause
+of the unchanged score. See `artifacts/native-axis-decision-diagnostics-v2/`.
 An isolated exact capsule-cover cache prototype passes 78 focused checks and
 26 independent checks, with its actual invalidation failures preserved. Synthetic
 reference/cached/reference outputs agree, including independent native histories.

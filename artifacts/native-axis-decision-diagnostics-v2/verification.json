@@ -1,0 +1,46 @@
+{
+  "gzip_only_reproduction": {
+    "exit_code": 0,
+    "outputs": {
+      "DIAGNOSTIC.md": {
+        "byte_identical": true,
+        "sha256": "265bcd96e5348899ad86a74a777da288dcf1bd7778917f61f5325e96a6491519"
+      },
+      "diagnostic.json": {
+        "byte_identical": true,
+        "sha256": "d13bb1d298c69dd176db397adb0b63b609672d66af89343066de1462f953b4ec"
+      }
+    },
+    "paths": [
+      "pilot/accounting.json",
+      "pilot/candidate-record.json"
+    ]
+  },
+  "new_gradient_steps": 0,
+  "new_policy_forwards": 0,
+  "new_random_draws": 0,
+  "new_simulator_calls": 0,
+  "revision": {
+    "all_scientific_fields_identical": true,
+    "changes": [
+      "Reject empty or repeated selection decision IDs in pure diagnostic helper",
+      "State observed absence of exact aliases explicitly, distinguishing separate synthetic examples",
+      "Clarify rank-change counts include STOP"
+    ],
+    "only_changed_json_field": "diagnostic_script_sha256",
+    "prior_artifact": "artifacts/native-axis-decision-diagnostics-v1",
+    "prior_output_and_executed_script_preserved": true
+  },
+  "scope": "Saved-record arithmetic only; original inputs unchanged; no runtime performance claim",
+  "source_sha256": {
+    "scripts/report_native_axis_decision_diagnostics.py": "c3d3036d568383b01ffd86b6834f6ef6ba4bb8973e908259c06393ce0bf0d271",
+    "tests/test_native_axis_decision_diagnostics.py": "2006c89bfd701041dc87d0e0c34dc340e8e06c728cce89425426ccf95166a7e3",
+    "tests/test_native_axis_decision_diagnostics_independent.py": "ef1ed20ef842e86faec083fb421f850181bf616576dc1a9196c407f194bae203"
+  },
+  "status": "passed",
+  "tests": {
+    "command": ".venv/bin/python -m pytest tests/test_native_axis_decision_diagnostics.py tests/test_native_axis_decision_diagnostics_independent.py -q",
+    "passed": 26,
+    "seconds": 0.11
+  }
+}

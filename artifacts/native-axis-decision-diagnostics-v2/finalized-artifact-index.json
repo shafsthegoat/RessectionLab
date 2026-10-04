@@ -1,0 +1,49 @@
+{
+  "bytes_excluding_index": 97595,
+  "file_count_excluding_index": 5,
+  "independent_audit": {
+    "path": "artifacts/native-axis-decision-diagnostics-independent-v1/audit-v2.json",
+    "sha256": "11fb68995bf1c8d68a5c7c0b17ce4fec7da17b5f0aa68102da21c149042d0abb",
+    "verification_sha256": "386364e361d768368ccf60966c59d942fc8db3d62d25de65169593d8140fb244"
+  },
+  "new_gradient_steps": 0,
+  "new_policy_forwards": 0,
+  "new_random_draws": 0,
+  "new_simulator_calls": 0,
+  "original_pilot_receipts_or_reports_modified": false,
+  "prior_version_preserved": "artifacts/native-axis-decision-diagnostics-v1",
+  "scientific_outcome": "Six paired records, three unique states; no exact 15-feature aliases among 26, 24 and 22 non-STOP rows; 8, 17 and 12 action ranks changed, including STOP; chosen actions unchanged.",
+  "status": "finalized_independently_reviewed_read_only_diagnostic",
+  "tests": {
+    "independent_cases": 15,
+    "owner_plus_independent": 26,
+    "seconds": 0.11
+  },
+  "versionable_files": [
+    {
+      "bytes": 2180,
+      "path": "DIAGNOSTIC.md",
+      "sha256": "265bcd96e5348899ad86a74a777da288dcf1bd7778917f61f5325e96a6491519"
+    },
+    {
+      "bytes": 1766,
+      "path": "README.md",
+      "sha256": "7d346eefa2a05f38b2a1e0269c48a5d9a91d0915adf7525d51caa609b451b7a5"
+    },
+    {
+      "bytes": 73102,
+      "path": "diagnostic.json",
+      "sha256": "d13bb1d298c69dd176db397adb0b63b609672d66af89343066de1462f953b4ec"
+    },
+    {
+      "bytes": 18717,
+      "path": "source/report_native_axis_decision_diagnostics.py",
+      "sha256": "c3d3036d568383b01ffd86b6834f6ef6ba4bb8973e908259c06393ce0bf0d271"
+    },
+    {
+      "bytes": 1830,
+      "path": "verification.json",
+      "sha256": "d5d74dcb700423e13b893ea531d1358ebb811f10cab159b3cb828d09ef862292"
+    }
+  ]
+}

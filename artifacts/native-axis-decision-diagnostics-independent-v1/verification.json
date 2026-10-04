@@ -1,0 +1,26 @@
+{
+  "files": {
+    "artifacts/native-axis-decision-diagnostics-independent-v1/README.md": "06b531598bcfe010a42f43751655b099ae82b16982d95981515c59e3ac4ddd32",
+    "artifacts/native-axis-decision-diagnostics-independent-v1/audit-before-profile-hash-fix.py.txt": "307ddc5704ff1a047cbe97a85a5053dd6e4e2245518a8512b8fdd155537a6cec",
+    "artifacts/native-axis-decision-diagnostics-independent-v1/audit-v2-attempt-02.log": "4f8eec9f1fc576cff43fad1b5b9080a3e7754677a116121224e97855f9267283",
+    "artifacts/native-axis-decision-diagnostics-independent-v1/audit-v2.json": "11fb68995bf1c8d68a5c7c0b17ce4fec7da17b5f0aa68102da21c149042d0abb",
+    "artifacts/native-axis-decision-diagnostics-independent-v1/audit-v2.log": "fd75359adc22c81f8227bec521de815e14f6b0ab1be446368d52a703a4d5e11c",
+    "artifacts/native-axis-decision-diagnostics-independent-v1/audit.py": "cfba4ee655a7fb234271ba78482f5b7c48526e8fb829f172c7c9185cc570012e",
+    "artifacts/native-axis-decision-diagnostics-independent-v1/duplicate-id-and-version-recheck.json": "04d12e46751c270abc11178c50efb78c1d78ee8f6ef774a50f068321cfa49e91",
+    "artifacts/native-axis-decision-diagnostics-independent-v1/test-attempt-01.log": "aab22d039fd0e6d49eb81310d11623a71a520c02f90da1e8b8d2d8917810f9f8",
+    "tests/test_native_axis_decision_diagnostics_independent.py": "ef1ed20ef842e86faec083fb421f850181bf616576dc1a9196c407f194bae203"
+  },
+  "independent_tests": {
+    "command": ".venv/bin/python -m pytest -q tests/test_native_axis_decision_diagnostics_independent.py",
+    "passed": 15,
+    "seconds": 0.09
+  },
+  "new_geometry_checks": 0,
+  "new_gradient_steps": 0,
+  "new_policy_forwards": 0,
+  "new_random_draws": 0,
+  "new_simulator_calls": 0,
+  "original_experiment_or_result_records_modified": false,
+  "reviewed_owner_source_sha256": "c3d3036d568383b01ffd86b6834f6ef6ba4bb8973e908259c06393ce0bf0d271",
+  "status": "passed"
+}

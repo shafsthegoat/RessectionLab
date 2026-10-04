@@ -1,0 +1,211 @@
+"""Independent saved-array arithmetic and provenance checks; stdlib only."""
+import argparse
+from fractions import Fraction
+import gzip
+import hashlib
+import json
+import math
+from pathlib import Path
+import struct
+
+ROOT = Path(__file__).resolve().parents[2]
+RUN = ROOT / "artifacts/learning/native-axis-raw-update-pilot-v1"
+SOURCE_RECEIPT = "d2fb38139898d842961220d19aec7f481a9a8567bdb288737ffc627cd2450ea0"
+FORWARD_AUDIT = "37b9bec653545486446cd78f845615867654838938a7f9a69ba07c0451d0eb21"
+
+
+def sha(raw):
+    return hashlib.sha256(raw).hexdigest()
+
+
+def content(value, compact=False):
+    options = {"separators": (",", ":")} if compact else {}
+    return "sha256:" + sha(json.dumps(value, sort_keys=True, allow_nan=False, **options).encode())
+
+
+def encoded(record, shape, boolean=False):
+    assert record["shape"] == list(shape)
+    assert all(type(value) is int for value in record["shape"])
+    values = record["values"]
+    assert len(values) == shape[0]
+    if len(shape) == 2:
+        assert all(len(row) == shape[1] for row in values)
+        values = [value for row in values for value in row]
+    if boolean:
+        assert record["dtype"] == "|b1" and all(type(value) is bool for value in values)
+        return bytes(values)
+    assert record["dtype"] == "<f4"
+    assert all(type(value) in (int, float) and math.isfinite(value) for value in values)
+    raw = struct.pack("<" + "f" * len(values), *values)
+    assert list(struct.unpack("<" + "f" * len(values), raw)) == values
+    return raw
+
+
+def ordinal(values):
+    # Independent pairwise rank counts, not the report's sorting algorithm.
+    return [1 + sum(other > value or (other == value and j < i)
+                    for j, other in enumerate(values)) for i, value in enumerate(values)]
+
+
+def audit(report_dir, script):
+    physical_hashes = {}
+
+    def physical(path):
+        raw = path.read_bytes()
+        physical_hashes[str(path.relative_to(ROOT))] = sha(raw)
+        return raw
+
+    def saved(name, expected=None):
+        path = RUN / name
+        compressed = Path(str(path) + ".gz")
+        raw = physical(path) if path.exists() else gzip.decompress(physical(compressed))
+        if path.exists() and compressed.exists():
+            assert raw == gzip.decompress(physical(compressed))
+        if expected is not None:
+            assert sha(raw) == expected, name
+        return raw
+
+    report = json.loads(physical(report_dir / "diagnostic.json"))
+    assert sha(physical(script)) == report["diagnostic_script_sha256"]
+    reference = json.loads(saved("report-v1/report-source.json", SOURCE_RECEIPT))
+    prior = json.loads(physical(ROOT / "artifacts/native-axis-pilot-result-audit/audit-02.json"))
+    assert physical_hashes["artifacts/native-axis-pilot-result-audit/audit-02.json"] == FORWARD_AUDIT
+    assert report["source_receipt_sha256"] == SOURCE_RECEIPT
+    assert report["independent_forward_audit_sha256"] == FORWARD_AUDIT
+    assert prior["audit_status"] == "passed"
+    assert sha(physical(ROOT / "scripts/audit_native_axis_pilot.py")) == prior["auditor_sha256"]
+    assert report["source_commit"] == reference["execution_baseline"]["record"]["source_commit"]
+    decoded = {}
+    for name, expected in report["source_file_sha256"].items():
+        raw = saved(name, expected)
+        if name != "report-v1/report-source.json":
+            assert reference["input_files"][name]["uncompressed_sha256"] == expected
+            assert reference["input_files"][name]["uncompressed_bytes"] == len(raw)
+        if name.endswith(".json"):
+            decoded[name] = json.loads(raw)
+    for name in ("declaration.json", "launcher-status.json", "worker-status.json",
+                 "pilot/status.json", "pilot/candidate-record.json", "pilot/accounting.json",
+                 "pilot/learner/contract.json", "pilot/learner/result.json"):
+        key = str((RUN / name).relative_to(ROOT))
+        assert prior["input_file_sha256"][key] == report["source_file_sha256"][name]
+    assert all(name in report["source_file_sha256"] for name in
+               ("pilot/learner/initial.pt", "pilot/learner/checkpoint.pt"))
+
+    result, contract, journal, declaration = (decoded[name] for name in
+        ("pilot/learner/result.json", "pilot/learner/contract.json", "pilot/accounting.json", "declaration.json"))
+    assert content({key: value for key, value in journal.items() if key != "receipt_hash"}) == journal["receipt_hash"]
+    assert contract["input_profile"] == result["input_profile"]
+    assert content(contract["input_profile"], compact=True) == contract["input_profile_hash"] == result["input_profile_hash"] == report["profile_hash"]
+    assert contract["input_profile"]["profile_id"] == journal["input_profile"] == "RAW"
+    assert contract["input_profile"]["action_divisors"] == [1.] * 15
+    assert contract["input_profile"]["state_divisors"] == [1.] * 6
+    assert not any(contract["input_profile"][key] for key in ("centering", "clipping", "running_statistics"))
+    assert contract["decision_model_hash"] == result["decision_model_hash"] == journal["decision_model_hash"] == report["decision_model_hash"]
+    panels = result["selection_history"]
+    assert len(panels) == 2 and [panel["gradient_steps"] for panel in panels] == [0, 1]
+    assert all(panel["world_count"] == 2 for panel in panels)
+    assert contract["initial_checkpoint_hash"] == report["initial_policy_hash"] == panels[0]["checkpoint_hash"] == result["initial_checkpoint_hash"]
+    assert report["latest_policy_hash"] == panels[1]["checkpoint_hash"] == result["latest_checkpoint_hash"]
+    assert report["selected_policy_hash"] == prior["selected_checkpoint_hash"] == result["selected_checkpoint_hash"] == report["initial_policy_hash"]
+    assert panels[0]["mean_return"] == panels[1]["mean_return"] == prior["initial_selection_return"] == prior["updated_selection_return"] == 441.6
+    launcher, worker, pilot = (decoded[name] for name in ("launcher-status.json", "worker-status.json", "pilot/status.json"))
+    assert launcher["status"] == worker["status"] == pilot["status"] == "completed"
+    assert launcher["worker_returncode"] == 0 and not launcher["hard_killed"] and not launcher["parent_timeout_requested"]
+    assert worker["candidate_record_sha256"] == pilot["candidate_record_sha256"] == report["source_file_sha256"]["pilot/candidate-record.json"]
+    assert worker["pilot_status_sha256"] == report["source_file_sha256"]["pilot/status.json"]
+
+    seeds = declaration["world_partitions"]["selection"]["seeds"]
+    selected = [event for event in journal["events"] if event["kind"] == "decision" and event["role"] == "selection"]
+    assert len(selected) == len({event["decision_id"] for event in selected}) == 12
+    forward = {event["decision_id"]: event for event in prior["forward_verification"]["decisions"]}
+    assert len(forward) == len(prior["forward_verification"]["decisions"]) == 18
+    evidence = {}
+    for event in selected:
+        payload = event["payload"]
+        seed, step, update = payload["seed"], payload["step"], payload["update"]
+        key = (seed, step, update)
+        assert key not in evidence and seed == event["seed"] and seed in seeds
+        assert type(update) is int and update in (0, 1) and payload["panel"] == update
+        assert type(step) is int and step in range(3) and payload["episode"] == seeds.index(seed)
+        assert event["status"] == "step_returned" and payload["role"] == "selection"
+        assert payload["forward_evaluated"] is True and payload["decision_rule"] == "deterministic_argmax" and payload["forced_reason"] is None
+        data = payload["inputs"]
+        ids = data["action_ids"]
+        assert ids[0] == "STOP" and len(ids) == len(set(ids))
+        features, states, masks = encoded(data["action_features"], (len(ids), 15)), encoded(data["state_features"], (6,)), encoded(data["action_mask"], (len(ids),), True)
+        assert masks == bytes([1] * len(ids))
+        assert features == encoded(data["source_action_features"], (len(ids), 15)) == encoded(data["actor_action_features"], (len(ids), 15))
+        assert states == encoded(data["source_state_features"], (6,))
+        encoded(payload["logits"], (len(ids),))
+        logits = payload["logits"]["values"]
+        ranks = ordinal(logits)
+        assert type(payload["selected_index"]) is int and payload["selected_index"] == ranks.index(1)
+        assert payload["selected_action_id"] == ids[ranks.index(1)]
+        checked = forward[event["decision_id"]]
+        assert checked["evaluated"] and checked["argmax_verified"] and checked["role"] == "selection"
+        assert checked["selected_index"] == checked["independent_argmax_index"] == payload["selected_index"]
+        assert checked["legal_action_count"] == len(ids) and checked["update"] == update
+        evidence[key] = (event, (tuple(ids), features, states, masks), ranks)
+    assert set(evidence) == {(seed, step, update) for seed in seeds for step in range(3) for update in (0, 1)}
+
+    unique, rows, max_center_error = {}, [], 0.
+    assert len(report["analysis"]["pairs"]) == 6
+    for pair_index, (seed, step) in enumerate((seed, step) for seed in seeds for step in range(3)):
+        initial, before, br = evidence[(seed, step, 0)]
+        latest, after, ar = evidence[(seed, step, 1)]
+        assert before == after
+        recorded = report["analysis"]["pairs"][pair_index]
+        assert (recorded["world_seed"], recorded["step"]) == (seed, step)
+        assert recorded["initial_decision_id"] == initial["decision_id"] and recorded["latest_decision_id"] == latest["decision_id"]
+        first, last = initial["payload"], latest["payload"]
+        b, a = first["logits"]["values"], last["logits"]["values"]
+        exact_mean_delta = sum((Fraction.from_float(y) - Fraction.from_float(x) for x, y in zip(b, a)), Fraction()) / len(b)
+        assert len(recorded["action_rows"]) == len(b)
+        for i, item in enumerate(recorded["action_rows"]):
+            assert (item["index"], item["action_id"], item["initial_logit"], item["latest_logit"], item["initial_rank"], item["latest_rank"]) == (i, before[0][i], b[i], a[i], br[i], ar[i])
+            assert item["logit_delta"] == a[i] - b[i] and item["rank_delta"] == ar[i] - br[i]
+            exact_center = float(Fraction.from_float(a[i]) - Fraction.from_float(b[i]) - exact_mean_delta)
+            error = abs(item["centered_logit_delta"] - exact_center)
+            assert error <= 4 * max(math.ulp(a[i]), math.ulp(b[i]), math.ulp(sum(a)/len(a)), math.ulp(sum(b)/len(b)))
+            max_center_error = max(max_center_error, error)
+        feature_rows = [before[1][i * 60:(i + 1) * 60] for i in range(1, len(b))]
+        assert len(feature_rows) == len(set(feature_rows)) == recorded["legal_nonstop_actions"] == recorded["unique_nonstop_feature_rows"]
+        assert recorded["alias_groups"] == [] and recorded["aliased_nonstop_actions"] == 0
+        assert recorded["rank_changed_actions"] == sum(x != y for x, y in zip(br, ar))
+        assert recorded["initial_top_two_margin"] == b[br.index(1)] - b[br.index(2)]
+        assert recorded["latest_top_two_margin"] == a[ar.index(1)] - a[ar.index(2)]
+        assert recorded["value_delta"] == last["value"] - first["value"]
+        assert first["selected_action_id"] == last["selected_action_id"] == recorded["initial_chosen_id"] == recorded["latest_chosen_id"]
+        unique.setdefault(before, []).append(pair_index)
+        rows.append({"seed": seed, "step": step, "nonstop_rows": len(feature_rows),
+            "changed_ordinal_ranks_including_stop": recorded["rank_changed_actions"],
+            "value_delta": recorded["value_delta"], "initial_margin": recorded["initial_top_two_margin"],
+            "latest_margin": recorded["latest_top_two_margin"]})
+    assert list(unique.values()) == [group["pair_indices"] for group in report["analysis"]["unique_state_groups"]] == [[0, 3], [1, 4], [2, 5]]
+    assert report["analysis"]["selection_record_pairs"] == 6 and report["analysis"]["unique_states"] == 3
+    assert report["analysis"]["all_chosen_actions_unchanged"]
+    assert all(report[key] == 0 for key in ("new_policy_forwards", "new_simulator_calls", "new_random_draws", "new_gradient_steps"))
+    assert report["final_worlds_used"] is report["stress_worlds_used"] is False
+    assert all(sha((ROOT / name).read_bytes()) == expected for name, expected in physical_hashes.items())
+    return {"status": "passed", "scope": "Independent saved-float arithmetic and pinned-byte checks only",
+        "report": str(report_dir.relative_to(ROOT)), "audit_source_sha256": sha(Path(__file__).read_bytes()),
+        "physical_input_sha256": physical_hashes, "input_files_unchanged": True,
+        "selection_pairs": 6, "unique_states": 3, "state_pair_indices": list(unique.values()), "pairs": rows,
+        "max_centered_delta_error_against_exact_rational": max_center_error,
+        "center_error_scope": "Only binary64 arithmetic rounding allowed; state/features/masks/pairing/ranks use exact comparisons",
+        "checkpoint_binding_scope": "Actual file bytes match pinned source receipt; tensor/profile/forward semantics use the matching prior pinned audit, without rerunning it",
+        "prior_forward_audit_sha256": FORWARD_AUDIT, "new_policy_forwards": 0, "new_simulator_calls": 0,
+        "new_random_draws": 0, "new_gradient_steps": 0, "new_geometry_checks": 0}
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--report", type=Path, required=True)
+    parser.add_argument("--source", type=Path, required=True)
+    parser.add_argument("--output", type=Path, required=True)
+    args = parser.parse_args()
+    result = audit(args.report.resolve(), args.source.resolve())
+    with args.output.open("x") as stream:
+        json.dump(result, stream, sort_keys=True, indent=2, allow_nan=False)
+        stream.write("\n")
+    print(f"{result['status']}: {result['selection_pairs']} pairs, {result['unique_states']} unique states")
