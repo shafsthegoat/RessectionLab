@@ -183,7 +183,8 @@ def _partition_record(manifest: Any, expected_role: str) -> dict[str, Any]:
     generator = manifest.generator
     generator_record = asdict(generator) if hasattr(generator, "__dataclass_fields__") else generator
     return {"role": role, "case_hash": manifest.case_hash, "seeds": list(seeds),
-            "generator": generator_record, "partition_hash": manifest.partition_hash}
+            "generator": generator_record, "partition_hash": manifest.partition_hash,
+            "planning_hash": getattr(manifest, "planning_hash", None)}
 
 
 def _validate_partitions(optimization: Any, selection: Any) -> dict[str, Any]:
@@ -306,6 +307,8 @@ def train_patient_policy(
     progress: Callable[[dict[str, Any]], None] | None = None,
     resume: bool = False,
     shared_checkpoint: str | Path | None = None,
+    population_case_group: str | None = None,
+    population_case_aliases: tuple[str, ...] = (),
 ) -> TrainingResult:
     """Train a fresh policy or isolated clone, with selection-world-only ranking.
 
@@ -335,18 +338,34 @@ def train_patient_policy(
         torch.manual_seed(config.seed)
         policy = MaskedPatientPolicy(*dimensions)
     shared_hash = None
+    population_context = None
+    if resume:
+        saved_population = torch.load(checkpoint_path, map_location="cpu", weights_only=True).get("population_initialization")
+        if saved_population is not None:
+            shared_checkpoint = directory / "population-source.pt"
+            if population_case_group is None:
+                population_case_group = saved_population["target_group"]
+                population_case_aliases = tuple(saved_population["target_aliases"])
     if shared_checkpoint is not None:
+        from .population_learning import feature_schema, validate_population_checkpoint
         source = torch.load(shared_checkpoint, map_location="cpu", weights_only=True)
-        provenance = source.get("population_provenance", {})
-        if (source.get("kind") != "population_checkpoint"
-                or not provenance.get("development_case_hashes")
-                or not provenance.get("training_run_hash")):
+        if source.get("kind") != "population_checkpoint":
             raise ValueError("population adaptation requires an actual shared training checkpoint with provenance")
-        if optimization_manifest.case_hash in provenance["development_case_hashes"]:
-            raise ValueError("patient overlaps shared population development data")
-        shared = clone_checkpoint_policy(shared_checkpoint)
-        if shared.dimensions != dimensions:
-            raise ValueError("shared checkpoint observation schema differs")
+        if population_case_group is None:
+            raise ValueError("Population adaptation requires the declared target patient group and aliases")
+        validation = validate_population_checkpoint(shared_checkpoint, target_case_hash=optimization_manifest.case_hash,
+            target_group=population_case_group, target_aliases=population_case_aliases,
+            expected_dimensions=dimensions, expected_feature_schema=feature_schema(simulator))
+        copied = directory / "population-source.pt"
+        if not resume:
+            copied.write_bytes(Path(shared_checkpoint).read_bytes())
+        if hashlib.sha256(copied.read_bytes()).hexdigest() != validation["checkpoint_file_sha256"]:
+            raise ValueError("Shared population checkpoint changed while copying or resuming")
+        population_context = {"target_case_hash": optimization_manifest.case_hash,
+            "target_group": population_case_group, "target_aliases": list(population_case_aliases),
+            "checkpoint_file_sha256": validation["checkpoint_file_sha256"],
+            "provenance_hash": validation["provenance_hash"], "scope": validation["scope"]}
+        shared = clone_checkpoint_policy(copied)
         policy.load_state_dict(copy.deepcopy(shared.state_dict()))
         shared_hash = policy_hash(shared)
     optimizer = torch.optim.Adam(policy.parameters(), lr=config.learning_rate)
@@ -371,6 +390,7 @@ def train_patient_policy(
                 "runtime": {"torch": str(torch.__version__), "numpy": str(np.__version__),
                             "python": platform.python_version(), "device": "cpu"},
                 "config": asdict(config), "partitions": partitions,
+                "population_initialization": population_context,
                 "decision_model_hash": frozen_hash, "dimensions": list(dimensions)}
     contract_hash = _json_hash(contract)
     if resume:
@@ -413,6 +433,7 @@ def train_patient_policy(
             "selected_policy": selected_weights, "selected_hash": selected_hash,
             "optimizer": optimizer.state_dict(), "random_state": generator.get_state(),
             "initial_hash": initial_hash, "shared_hash": shared_hash, "state": state,
+            "population_initialization": population_context,
         })
         result = TrainingResult(status, "POPULATION_ADAPTED" if shared_hash else "PATIENT_SCRATCH_RL",
                                 initial_hash, selected_hash, latest_hash, frozen_hash,
@@ -480,6 +501,7 @@ def train_patient_policy(
             break
         losses: list[torch.Tensor] = []
         episode_returns: list[float] = []
+        episode_source_hashes: list[str] = []
         for _ in range(config.episodes_per_update):
             if state["optimization_environment_steps"] >= config.max_environment_steps:
                 break
@@ -522,6 +544,7 @@ def train_patient_policy(
                 break
             state["completed_episodes"] += 1
             episode_returns.append(sum(rewards))
+            episode_source_hashes.append(getattr(instance, "optimization_source_hash", instance.case_hash))
             future = 0.0
             returns: list[float] = []
             for reward in reversed(rewards):
@@ -559,6 +582,7 @@ def train_patient_policy(
         state["gradient_steps"] += 1
         state["optimization_history"].append({"gradient_steps": state["gradient_steps"],
             "optimization_environment_steps": state["optimization_environment_steps"],
+            "episode_source_case_hashes": episode_source_hashes,
             "mean_return": float(np.mean(episode_returns)), "loss": float(loss.detach()),
             "gradient_norm_before_clip": float(norm), "actor_gradient_norm_after_clip": actor_norm})
         if state["gradient_steps"] % config.checkpoint_interval == 0:
