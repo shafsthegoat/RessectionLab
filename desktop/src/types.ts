@@ -229,6 +229,39 @@ export interface RefinementReadiness {
   optimizationChoiceScope: "STOP_or_declared_native_stroke";
 }
 
+export interface InspectAxisPlanningRequest {
+  caseHash: string;
+  planningHash: string;
+  routeId: string;
+  routePlanningModelHash: string;
+  toolIds: string[];
+  acknowledgeNeighboringColumns: true;
+  acknowledgeEstimatedSupport: boolean;
+  expectedBindingHash?: string;
+}
+
+export interface InspectAxisPlanningResult {
+  schemaVersion: 1;
+  caseHash: string;
+  planningHash: string;
+  routeId: string;
+  routePlanningModelHash: string;
+  accessSource: "selected_route_window_only";
+  anchorWindowRas: {
+    center_mm: Vec3;
+    normal_inward: Vec3;
+    radius_mm: number;
+    window_id: string;
+  };
+  anchorWindowNormalization: {
+    normalAbsoluteTolerance: number;
+    normalMaximumDifference: number;
+  };
+  requestedToolIds: InspectAxisPlanningRequest["toolIds"];
+  // The dedicated inspection boundary validates the numerical payload at runtime.
+  inspection: unknown;
+}
+
 export interface SearchResult {
   combined_models?: boolean;
   planning_model_hash?: string | null;
@@ -356,6 +389,7 @@ export interface ResectionApi extends TrainingApi {
     caseHash: string;
     routeId: string;
   }): Promise<RefinementReadiness>;
+  inspectAxisPlanning?(args: InspectAxisPlanningRequest): Promise<InspectAxisPlanningResult>;
   inspectEvidence(args?: Record<string, unknown>): Promise<unknown>;
   cancel(requestId: string): Promise<unknown>;
   readAsset(assetId: string): Promise<Uint8Array>;

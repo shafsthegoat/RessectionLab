@@ -9,6 +9,7 @@ const { Sidecar } = require('./sidecar.cjs');
 const { createLogger } = require('./logging.cjs');
 const { assertSender, plainArgs } = require('./security.cjs');
 const { importStructuralEvidence } = require('./structural-import.cjs');
+const { inspectAxisPlanning } = require('./axis-inspection.cjs');
 
 let log = message => process.stderr.write(String(message) + '\n');
 let window;
@@ -77,6 +78,7 @@ function bindOperations() {
   handle('generateRoutes', args => engine.request('generateRoutes', plainArgs(args, ['caseHash', 'toolIds', 'allowEstimatedSupport', 'config'])));
   handle('generateNativeRoutes', args => engine.request('generateNativeRoutes', plainArgs(args, ['caseHash'])));
   handle('inspectRefinement', args => engine.request('inspectRefinement', plainArgs(args, ['caseHash', 'routeId'])));
+  handle('inspectAxisPlanning', args => inspectAxisPlanning(args, { request: (...requestArgs) => engine.request(...requestArgs) }));
   handle('inspectEvidence', args => engine.request('inspectEvidence', plainArgs(args, ['caseHash'])));
   handle('trainPatient', args => engine.request('trainPatient', plainArgs(args, ['caseHash', 'budgetSeconds', 'seed', 'routeId', 'resumeRunId']), 300000));
   handle('listRuns', args => engine.request('listRuns', plainArgs(args, ['caseHash'])));

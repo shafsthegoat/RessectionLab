@@ -13,6 +13,7 @@ contextBridge.exposeInMainWorld('resectionApi', Object.freeze({
   generateRoutes: args => ipcRenderer.invoke('research:generateRoutes', args || {}),
   generateNativeRoutes: args => ipcRenderer.invoke('research:generateNativeRoutes', args || {}),
   inspectRefinement: args => ipcRenderer.invoke('research:inspectRefinement', args || {}),
+  inspectAxisPlanning: args => ipcRenderer.invoke('research:inspectAxisPlanning', args || {}),
   inspectEvidence: args => ipcRenderer.invoke('research:inspectEvidence', args || {}),
   trainPatient: args => ipcRenderer.invoke('research:trainPatient', args || {}),
   listRuns: args => ipcRenderer.invoke('research:listRuns', args || {}),
