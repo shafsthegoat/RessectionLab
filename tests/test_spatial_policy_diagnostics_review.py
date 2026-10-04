@@ -179,6 +179,8 @@ def test_profile_worker_never_constructs_optimizer_or_takes_update_branch(monkey
         lambda case, **kwargs: diagnostic_calls.append(("depth", kwargs["native_affine"])) or {})
     monkeypatch.setattr(diagnostic_module, "spatial_coverage",
         lambda *args, **kwargs: diagnostic_calls.append(("coverage", kwargs["native_affine"])) or {})
+    monkeypatch.setattr(diagnostic_module, "runtime_proposal_coverage",
+        lambda *args, **kwargs: diagnostic_calls.append(("runtime", kwargs["native_affine"])) or {})
     monkeypatch.setattr(runner, "episode", lambda *args, **kwargs: (calls.append(kwargs) or [], {"fake_episode": True}))
     profiler = SimpleNamespace(phase=lambda name: nullcontext(), snapshot=lambda: {})
     if grid_case == "mismatch":
@@ -189,7 +191,7 @@ def test_profile_worker_never_constructs_optimizer_or_takes_update_branch(monkey
     runner._worker_with_profiler(declaration, tmp_path, profiler)
     assert len(calls) == 1 and calls[0]["profile_actions"] and not calls[0]["stochastic"]
     assert calls[0]["native_affine"] == derived
-    assert diagnostic_calls == [("depth", derived), ("coverage", derived)]
+    assert diagnostic_calls == [("depth", derived), ("runtime", derived), ("coverage", derived)]
     report = json.loads((tmp_path / "receipt.json").read_text())
     assert report["optimizer_updates"] == 0
     assert [row["phase"] for row in report["episodes"]] == ["untrained_fixed_inventory_profile"]

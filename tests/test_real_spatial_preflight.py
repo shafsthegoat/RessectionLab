@@ -121,6 +121,7 @@ def test_episode_threads_native_grid_to_initial_and_poststep_coverage(monkeypatc
     native, original = np.diag([1., 1., 1.125, 1.]), np.eye(4)
     calls = []
     monkeypatch.setattr(diagnostics, "spatial_coverage", lambda obs, **kwargs: calls.append(kwargs) or {})
+    monkeypatch.setattr(diagnostics, "runtime_proposal_coverage", lambda *args, **kwargs: {})
 
     class Policy(torch.nn.Linear):
         config = SimpleNamespace(ray_samples=5)

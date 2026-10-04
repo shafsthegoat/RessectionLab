@@ -124,16 +124,24 @@ def episode(base, policy, generator, *, stochastic, profile_actions=False, check
     task = base.fresh()
     setup_seconds = time.perf_counter() - started
     transitions, decisions = [], []
-    coverage = None
+    coverage, proposal_coverage = None, None
     if diagnostics:
-        from resectionlab.spatial_policy_diagnostics import spatial_coverage
+        from resectionlab.spatial_policy_diagnostics import spatial_coverage, runtime_proposal_coverage
 
         def covered(observation):
             return spatial_coverage(observation, source_shape=task.case.structural_intensity.shape,
                 source_affine=task.case.affine_ras_mm, nominal_target=task.case.nominal_target,
                 ray_samples=policy.config.ray_samples, native_affine=native_affine)
 
-        coverage = covered(task.observation())
+        def proposals(observation, inventory):
+            return runtime_proposal_coverage(task.case, inventory, observation,
+                native_affine=native_affine, ray_samples=policy.config.ray_samples)
+
+        initial_observation, initial_inventory = task.observation(), task.candidate_inventory()
+        coverage = covered(initial_observation)
+        proposal_coverage = proposals(initial_observation, initial_inventory)
+        checkpoint({"status": "prepared", "initial_candidate_inventory": initial_inventory,
+            "initial_observation_coverage": coverage, "initial_proposal_coverage": proposal_coverage})
     while not task.terminated:
         observation_start = time.perf_counter()
         observation = task.observation()
@@ -155,9 +163,13 @@ def episode(base, policy, generator, *, stochastic, profile_actions=False, check
         if diagnostics:
             diagnostic_start = time.perf_counter()
             decisions[-1]["before_observation_coverage"] = coverage
+            decisions[-1]["before_proposal_coverage"] = proposal_coverage
             coverage = covered(result.observation)
             decisions[-1]["after_observation_coverage"] = coverage
-            decisions[-1]["after_candidate_inventory"] = task.candidate_inventory()
+            inventory = task.candidate_inventory()
+            decisions[-1]["after_candidate_inventory"] = inventory
+            proposal_coverage = proposals(result.observation, inventory)
+            decisions[-1]["after_proposal_coverage"] = proposal_coverage
             decisions[-1]["diagnostic_seconds"] = time.perf_counter() - diagnostic_start
         checkpoint({"status": "collecting", "decisions": decisions,
                     "committed_transition_count": len(transitions), "latest_transition_info": result.info})
@@ -198,7 +210,7 @@ def _worker_with_profiler(declaration, output, profiler):
     from resectionlab.native_spatial_task import native_spatial_task_from_case
     from resectionlab.spatial_policy import (SpatialPolicy, SpatialPolicyConfig,
         gradient_step, parameter_hash, reinforce_loss)
-    from resectionlab.spatial_policy_diagnostics import nominal_depth_coverage, spatial_coverage
+    from resectionlab.spatial_policy_diagnostics import nominal_depth_coverage, spatial_coverage, runtime_proposal_coverage
 
     started = time.perf_counter()
     settings = declaration["settings"]
@@ -235,7 +247,11 @@ def _worker_with_profiler(declaration, output, profiler):
     native_affine = grid_record.get("derived_affine_ras_mm")
     initial_observation = task.observation()
     receipt["initial_candidate_inventory"] = task.candidate_inventory()
-    receipt["nominal_depth_coverage"] = nominal_depth_coverage(task.case, native_affine=native_affine)
+    if getattr(task.case, "proposal_mode", "fixed_lattice") == "fixed_lattice":
+        receipt["nominal_depth_coverage"] = nominal_depth_coverage(task.case, native_affine=native_affine)
+    receipt["initial_proposal_coverage"] = runtime_proposal_coverage(task.case,
+        receipt["initial_candidate_inventory"], initial_observation, native_affine=native_affine,
+        ray_samples=policy.config.ray_samples)
     receipt["initial_observation_coverage"] = spatial_coverage(initial_observation,
         source_shape=task.case.structural_intensity.shape, source_affine=task.case.affine_ras_mm,
         nominal_target=task.case.nominal_target, ray_samples=policy.config.ray_samples,

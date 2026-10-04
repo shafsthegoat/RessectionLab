@@ -1,0 +1,16 @@
+{
+  "command": ".venv/bin/python -m pytest tests/test_spatial_policy_diagnostics.py tests/test_real_spatial_preflight.py -q",
+  "diagnostic_contract": "Actual emitted rows including rejected previews; legal observation identity crosscheck; separate emitted/accepted envelopes; original/native frames; horizon, ray coverage and slot dispositions",
+  "envelope_limit": "Current-state necessary target-center bounds only; no voxel-volume, full-cell containment, shaft clearance, dynamic future catalog or horizon reachability claim",
+  "fixed_compatibility": "Legacy depth helper remains available for fixed_lattice; refuses dynamic mode so stale case._candidate_voxels cannot silently substitute for actual emitted rows",
+  "integration": "Actual tiny fixed_lattice and nominal_cavity_v1 inventories: initial, one legal transition, early STOP; no model optimization",
+  "result": "34 passed in2.21s",
+  "runner_persistence": "Initial inventory/report before policy forward, then before/after per transition; terminal empty catalog preserved",
+  "scope": "Analytic software checks only; no patient image loading, patient execution or training",
+  "source_sha256": {
+    "scripts/preflight_real_spatial_policy.py": "cfac175b072dbd8218c19f079d7ec3fa9143966b5059fe4cdfd918dff818ed3f",
+    "src/resectionlab/spatial_policy_diagnostics.py": "6475b3e10cc0b3dcf2a75402d8bc301018853d8817319d446d77235fb8f85c1c",
+    "tests/test_real_spatial_preflight.py": "4be445915a18589738384a1b5935378dd0093ec7decaddec6cfbe0c59b56128b",
+    "tests/test_spatial_policy_diagnostics.py": "d40a71ea29864112a8fb12fcb827526463ff153d82ebbf352de9718b815c2059"
+  }
+}

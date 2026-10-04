@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from contextlib import contextmanager
+from collections import Counter
 import copy
 from functools import wraps
 import time
@@ -9,6 +10,7 @@ import time
 import numpy as np
 
 from .spatial_policy import world_to_sample_grid
+from .core import array_digest, semantic_digest
 
 
 def segment_fraction_inside_grid(first, last):
@@ -79,6 +81,8 @@ def spatial_coverage(observation, *, source_shape, source_affine, nominal_target
 
 def nominal_depth_coverage(case, *, native_affine=None):
     """An axial envelope upper bound, never a reachability/feasibility claim."""
+    if getattr(case, "proposal_mode", "fixed_lattice") != "fixed_lattice":
+        raise ValueError("Dynamic proposals require runtime_proposal_coverage with the actual emitted inventory")
     affine = np.asarray(case.affine_ras_mm)
     physical_affine = affine if native_affine is None else np.asarray(native_affine)
     normal = np.asarray(case.access.normal_inward)
@@ -108,6 +112,146 @@ def nominal_depth_coverage(case, *, native_affine=None):
         "nominal_target_centers_beyond_axial_upper_bound": None if upper is None or target is None else int((target_depths > upper).sum()),
         "nominal_target_centers_total": None if target is None else len(positions),
         "interpretation": "all declared endpoints before feasibility; axial center-distance upper bound ignores lateral distance, containment, blocked shaft travel and action horizon"}
+
+
+def runtime_proposal_coverage(case, inventory, observation, *, native_affine=None, ray_samples=5):
+    """Describe this state's emitted proposals without predicting later catalogs.
+
+    Rejected preview attempts remain visible. Envelope membership is only a
+    necessary geometric condition; it gives no removal or reachability credit.
+    """
+    observation.assert_intact()
+    if hasattr(case, "assert_intact"):
+        case.assert_intact()
+    if "emitted" not in inventory:
+        raise ValueError("Runtime diagnostics require explicit emitted proposal rows")
+    emitted = inventory["emitted"]
+    accepted_ids = [row["action_id"] for row in emitted if row["feasible"]]
+    observed_ids = [identifier for identifier, allowed in zip(observation.action_ids[1:], observation.action_mask[1:]) if allowed]
+    if accepted_ids != observed_ids or len({row["action_id"] for row in emitted}) != len(emitted):
+        raise ValueError("Emitted inventory does not match distinct legal observed actions")
+    if inventory.get("emitted_count", len(emitted)) != len(emitted):
+        raise ValueError("Emitted proposal count differs from its runtime rows")
+    source = np.asarray(case.affine_ras_mm)
+    physical = source if native_affine is None else np.asarray(native_affine)
+    if hasattr(case, "_native_affine_ras_mm") and not np.array_equal(physical, case._native_affine_ras_mm):
+        raise ValueError("Runtime coverage frame differs from the frozen native grid")
+    if hasattr(case, "source_hash") and (observation.source_id != case.source_hash
+            or inventory.get("source_hash") != case.source_hash):
+        raise ValueError("Runtime inventory and observation must bind the same permitted source")
+    rejected_count = (len(inventory.get("ledger", emitted)) - len(accepted_ids)
+        if getattr(case, "proposal_mode", "fixed_lattice") == "fixed_lattice"
+        else len(emitted) - len(accepted_ids))
+    for key, value in (("steps_taken", int(observation.state_features[0])),
+                       ("max_steps", int(observation.state_features[1])),
+                       ("remaining_steps", int(observation.state_features[1] - observation.state_features[0])),
+                       ("accepted_count", len(accepted_ids)), ("rejected_count", rejected_count)):
+        if key in inventory and inventory[key] != value:
+            raise ValueError("Runtime inventory count or horizon differs from its observed/emitted catalog")
+    if inventory.get("terminal") and emitted:
+        raise ValueError("Terminal runtime inventory cannot retain active emitted proposals")
+    provider = getattr(case, "_nominal_proposer", None)
+    if provider is not None and (inventory.get("provider_model_hash") != provider.model_hash
+            or inventory.get("nominal_target_hash") != array_digest(case.nominal_target)
+            or inventory.get("nominal_provenance_hash") != (None if inventory.get("terminal")
+                else semantic_digest(provider._provenance))):
+        raise ValueError("Runtime proposal provider or permitted nominal evidence changed")
+    normal, access = np.asarray(case.access.normal_inward), np.asarray(case.access.center_mm)
+    tools = {tool.tool_id: tool for tool in case.tools}
+    nominal = case.nominal_target
+    target_cells = np.empty((0, 3), int) if nominal is None else np.argwhere(np.asarray(nominal) > 0)
+    target_world = target_cells @ physical[:3, :3].T + physical[:3, 3]
+    target_depths = (target_world - access) @ normal
+    rows, envelopes = [], {"emitted": [], "accepted": []}
+    shape = observation.image_channels.shape[1:]
+    observed_indices = {identifier: index for index, identifier in enumerate(observation.action_ids)}
+    for row in emitted:
+        entry, tip = np.asarray(row["entry_mm"], float), np.asarray(row["tip_mm"], float)
+        vector = tip - entry
+        distance = float(np.linalg.norm(vector))
+        if entry.shape != (3,) or tip.shape != (3,) or not np.isfinite([*entry, *tip]).all() or distance <= 0:
+            raise ValueError("Emitted proposal requires a finite nonzero entry-to-tip segment")
+        voxel = np.asarray(row["voxel"])
+        if voxel.shape != (3,) or voxel.dtype.kind not in "iu" or np.any(voxel < 0):
+            raise ValueError("Emitted proposal requires original source-cell indices")
+        source_image = getattr(case, "structural_intensity", nominal)
+        if source_image is not None and np.any(voxel >= np.asarray(source_image.shape)):
+            raise ValueError("Emitted proposal source cell lies outside the native image")
+        expected_tip = physical[:3, :3] @ voxel + physical[:3, 3]
+        expected_entry = expected_tip - float((expected_tip - access) @ normal) * normal
+        if not np.array_equal(tip, expected_tip) or not np.array_equal(entry, expected_entry):
+            raise ValueError("Emitted geometry differs from its native source cell or projected entry")
+        if row["tool_id"] not in tools:
+            raise ValueError("Emitted proposal uses an undeclared tool")
+        tool = tools[row["tool_id"]]
+        if row["feasible"]:
+            index = observed_indices[row["action_id"]]
+            geometry = observation.action_geometry[index]
+            dimensions = [tool.tip_radius_mm, tool.shaft_radius_mm, tool.working_length_mm,
+                          tool.tip_length_mm, tool.max_access_angle_deg]
+            if (observation.action_tool_ids[index] != row["tool_id"]
+                    or not np.array_equal(np.asarray(entry, dtype=geometry.dtype), geometry[1:4])
+                    or not np.array_equal(np.asarray(tip, dtype=geometry.dtype), geometry[4:7])
+                    or not np.array_equal(np.asarray(dimensions, dtype=geometry.dtype), geometry[10:15])):
+                raise ValueError("Accepted emitted geometry/tool differs from the actual observed encoding")
+        if provider is not None:
+            expected_id = "nominal-cavity-" + semantic_digest({"model": provider.model_hash,
+                "cavity": inventory.get("cavity_state_hash"),
+                "geometry": (tool.tool_id, tuple(entry), tuple(tip))}).split(":", 1)[1][:24]
+            if row["action_id"] != expected_id:
+                raise ValueError("Emitted proposal identifier differs from its declared provider/cavity geometry")
+        points = entry + np.linspace(0., 1., ray_samples)[:, None] * vector
+        grid = world_to_sample_grid(points, observation.affine_ras_mm, shape)
+        inside = (np.abs(grid) <= 1).all(axis=1)
+        active_start = entry - tool.tip_length_mm * vector / distance
+        low, high = np.minimum(active_start, tip) - tool.tip_radius_mm, np.maximum(active_start, tip) + tool.tip_radius_mm
+        distal = max(float((active_start - access) @ normal), float((tip - access) @ normal)) + tool.tip_radius_mm
+        envelope = (low, high, distal, float((tip - access) @ normal))
+        envelopes["emitted"].append(envelope)
+        if row["feasible"]:
+            envelopes["accepted"].append(envelope)
+        rows.append({"action_id": row["action_id"], "tool_id": row["tool_id"],
+            "family": row.get("family"), "feasible": bool(row["feasible"]),
+            "reason": row.get("reason"), "entry_mm": entry.tolist(), "tip_mm": tip.tolist(),
+            "tip_depth_mm": envelope[3], "entry_inside_center_bounds": bool(inside[0]),
+            "tip_inside_center_bounds": bool(inside[-1]), "ray_samples": ray_samples,
+            "ray_samples_inside": int(inside.sum()), "sample_fraction_inside": float(inside.mean()),
+            "straight_segment_fraction_inside": segment_fraction_inside_grid(grid[0], grid[-1])})
+
+    def envelope_report(items):
+        if not items:
+            return {"proposal_count": 0, "distal_active_tip_axial_upper_bound_mm": None,
+                    "active_sweep_aabb_ras_mm": None, "target_centers_beyond_axial_bound": None,
+                    "target_centers_outside_aabb": None, "endpoint_depth_range_mm": None}
+        low = np.min([item[0] for item in items], axis=0)
+        high = np.max([item[1] for item in items], axis=0)
+        distal = max(item[2] for item in items)
+        return {"proposal_count": len(items), "distal_active_tip_axial_upper_bound_mm": distal,
+            "active_sweep_aabb_ras_mm": [low.tolist(), high.tolist()],
+            "target_centers_beyond_axial_bound": None if nominal is None else int((target_depths > distal).sum()),
+            "target_centers_outside_aabb": None if nominal is None else int(((target_world < low) | (target_world > high)).any(axis=1).sum()),
+            "endpoint_depth_range_mm": [min(item[3] for item in items), max(item[3] for item in items)]}
+
+    ledger = inventory.get("ledger", [])
+    steps, maximum = (int(value) for value in observation.state_features[:2])
+    return {"scope": "current_state_actual_emitted_proposals_only",
+        "catalog_metadata": {key: value for key, value in inventory.items() if key not in {"emitted", "ledger"}},
+        "catalog_count_basis": "Declared/omitted/duplicate/unavailable counts are family-tool-column slots; capped slots need not be unique geometries. Emitted actions are unique, actually previewed attempts. Legacy fixed rejected_count includes non-previewed outside-workspace slots.",
+        "original_source_affine_ras_mm": source.tolist(), "native_physical_affine_ras_mm": physical.tolist(),
+        "steps_taken": steps, "max_steps": maximum, "remaining_step_budget": max(0, maximum - steps),
+        "episode_terminal": bool(inventory.get("terminal", steps >= maximum)),
+        "proposal_dispositions": dict(Counter(row.get("proposal_reason", row.get("reason", "unspecified")) for row in ledger)),
+        "preview_dispositions": dict(Counter(row.get("reason", "unspecified") for row in emitted)),
+        "nominal_target_centers_total": None if nominal is None else len(target_cells),
+        "nominal_target_center_depth_range_mm": None if not len(target_depths) else [float(target_depths.min()), float(target_depths.max())],
+        "emitted_envelope": envelope_report(envelopes["emitted"]),
+        "accepted_envelope": envelope_report(envelopes["accepted"]), "actions": rows,
+        "ray_sample_coverage_counts": {"none": sum(row["ray_samples_inside"] == 0 for row in rows),
+            "partial": sum(0 < row["ray_samples_inside"] < ray_samples for row in rows),
+            "full": sum(row["ray_samples_inside"] == ray_samples for row in rows)},
+        "target_basis": "static permitted nominal field; no private reference or residual/removal credit",
+        "binding_scope": "Source/provider/nominal and source-cell geometry checked; accepted actions exactly match observation dtype projection and tools. Cavity/decision hashes are task-reported provenance, not reconstructed from cropped images; rejected feasibility remains native-preview authority.",
+        "interpretation": "Current emitted/accepted active-tip sweep envelopes only. Bounds ignore cell containment, lateral gaps within the bounding box, prior-shaft clearance, interactions and horizon; future dynamic catalogs may extend them. No reachability or safety claim."}
 
 
 class NativePreviewProfiler:

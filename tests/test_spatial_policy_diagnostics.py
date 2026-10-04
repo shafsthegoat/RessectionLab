@@ -9,7 +9,8 @@ from resectionlab.spatial_observations import (
     ObservedChannel, ObservedProcedureState, SpatialAction, SpatialInputs, build_spatial_observation,
 )
 from resectionlab.spatial_policy_diagnostics import (
-    NativePreviewProfiler, nominal_depth_coverage, segment_fraction_inside_grid, spatial_coverage,
+    NativePreviewProfiler, nominal_depth_coverage, runtime_proposal_coverage,
+    segment_fraction_inside_grid, spatial_coverage,
 )
 
 
@@ -126,3 +127,90 @@ def test_preview_profiler_preserves_outputs_exceptions_and_restores_engine_metho
         row = profiler.snapshot()["phases"]["constructor_and_inventory"]
         assert (row["started"], row["returned"], row["raised"], row["rejected"], row["returned_microsteps"]) == (2, 1, 1, 1, 2)
     assert Engine.preview_stroke is original
+
+
+def runtime_inventory_fixture(*, terminal=False):
+    shape = (5, 5, 5)
+    target = np.zeros((9, 9, 9), np.float32)
+    target[2, 2, 4] = target[2, 2, 8] = 1
+    access = AccessWindow((2, 2, -.5), (0, 0, 1), 2.)
+    tool = ToolGeometry("probe", .2, .2, 20., 35., 1.)
+    case = SimpleNamespace(affine_ras_mm=np.eye(4), access=access, tools=(tool,), nominal_target=target,
+        proposal_mode="nominal_cavity_v1", _candidate_voxels=((2, 2, 0),))
+    inputs = SpatialInputs({
+        "structural_intensity": ObservedChannel(np.ones(shape), source_kind="observed_scan"),
+        "nominal_target": ObservedChannel(target[:5, :5, :5], source_kind="supplied_annotation"),
+        "observed_cavity": ObservedChannel(np.zeros(shape), source_kind="observed_procedure_state"),
+    }, np.eye(4), "annotation_assisted", "analytic-runtime-inventory")
+    actions = (SpatialAction("STOP"),) if terminal else (SpatialAction("STOP"),
+        SpatialAction("A", access.center_mm, (2, 2, 4), tool))
+    observation = build_spatial_observation(inputs, actions, ObservedProcedureState(access, 1, 3))
+    emitted = [] if terminal else [
+        {"action_id": "A", "tool_id": "probe", "family": "proximal_nominal", "feasible": True,
+         "reason": "OK", "voxel": [2, 2, 4], "entry_mm": access.center_mm.tolist(), "tip_mm": [2, 2, 4]},
+        {"action_id": "B", "tool_id": "probe", "family": "distal_nominal", "feasible": False,
+         "reason": "SHAFT_BLOCKED", "voxel": [2, 2, 8], "entry_mm": access.center_mm.tolist(), "tip_mm": [2, 2, 8]}]
+    inventory = {"basis": "nominal_cavity_v1", "terminal": terminal, "emitted": emitted,
+        "emitted_count": len(emitted), "declared_slots": 6, "omitted_count": 2,
+        "duplicate_count": 1, "unavailable_count": 1, "ledger_complete": True,
+        "ledger": [] if terminal else [*emitted, {"proposal_reason": "CANDIDATE_CAP"},
+            {"proposal_reason": "CANDIDATE_CAP"}, {"proposal_reason": "DUPLICATE"},
+            {"proposal_reason": "NO_NOMINAL"}]}
+    return case, inventory, observation
+
+
+def test_runtime_catalog_uses_emitted_geometry_and_separates_rejected_envelope():
+    case, inventory, observation = runtime_inventory_fixture()
+    result = runtime_proposal_coverage(case, inventory, observation)
+    assert result["remaining_step_budget"] == 2 and not result["episode_terminal"]
+    assert result["emitted_envelope"]["endpoint_depth_range_mm"] == [4.5, 8.5]
+    assert result["emitted_envelope"]["target_centers_beyond_axial_bound"] == 0
+    assert result["accepted_envelope"]["target_centers_beyond_axial_bound"] == 1
+    assert result["accepted_envelope"]["target_centers_outside_aabb"] == 1
+    assert result["catalog_metadata"]["omitted_count"] == 2
+    assert result["proposal_dispositions"]["CANDIDATE_CAP"] == 2
+    assert result["ray_sample_coverage_counts"] == {"none": 0, "partial": 2, "full": 0}
+    assert [row["feasible"] for row in result["actions"]] == [True, False]
+    assert "future dynamic catalogs may extend" in result["interpretation"]
+    with pytest.raises(ValueError, match="Dynamic proposals require"):
+        nominal_depth_coverage(case)
+
+
+def test_terminal_runtime_catalog_does_not_reuse_static_or_previous_endpoints():
+    case, inventory, observation = runtime_inventory_fixture(terminal=True)
+    result = runtime_proposal_coverage(case, inventory, observation)
+    assert result["episode_terminal"] and result["remaining_step_budget"] == 2
+    assert result["emitted_envelope"]["proposal_count"] == 0
+    assert result["emitted_envelope"]["distal_active_tip_axial_upper_bound_mm"] is None
+    assert result["actions"] == []
+
+
+def test_runtime_inventory_must_match_observed_legal_actions():
+    case, inventory, observation = runtime_inventory_fixture()
+    inventory["emitted"][1]["feasible"] = True
+    with pytest.raises(ValueError, match="does not match"):
+        runtime_proposal_coverage(case, inventory, observation)
+
+
+@pytest.mark.parametrize("mode", ["fixed_lattice", "nominal_cavity_v1"])
+def test_actual_tiny_native_inventory_reports_current_and_terminal_states(mode):
+    from dataclasses import replace
+    from resectionlab.native_proposals import NominalCavityProposalConfig
+    from resectionlab.native_spatial_task import NativeSpatialTask, make_native_opening_task
+
+    source = make_native_opening_task().case
+    if mode == "nominal_cavity_v1":
+        source = replace(source, proposal_mode=mode, proposal_config=NominalCavityProposalConfig(((0, 0),)))
+    task = NativeSpatialTask(source, max_steps=3)
+    inventory, observed = task.candidate_inventory(), task.observation()
+    first = runtime_proposal_coverage(source, inventory, observed)
+    assert first["emitted_envelope"]["proposal_count"] == inventory["emitted_count"]
+    assert first["accepted_envelope"]["proposal_count"] == len(observed.action_ids) - 1
+    assert first["remaining_step_budget"] == 3 and not first["episode_terminal"]
+    task.step(observed.action_ids[1])
+    later = runtime_proposal_coverage(source, task.candidate_inventory(), task.observation())
+    assert later["steps_taken"] == 1 and later["remaining_step_budget"] == 2
+    task.step("STOP")
+    stopped = runtime_proposal_coverage(source, task.candidate_inventory(), task.observation())
+    assert stopped["episode_terminal"] and stopped["remaining_step_budget"] == 1
+    assert stopped["actions"] == [] and stopped["emitted_envelope"]["proposal_count"] == 0
