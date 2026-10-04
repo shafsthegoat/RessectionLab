@@ -1,0 +1,30 @@
+{
+  "deck_sha256": {
+    "N12/compression-120-double_mu": "a4a8d683dfc4ed10746bd25867d0b59ebbbfa9d4a1698cd4c27ac0c721288995",
+    "N12/compression-120-reference": "1afc593c9e5158bf53711e394b2d8e3193a91623352e628b0281a4a940815adc",
+    "N12/compression-60-reference": "0860b181fc427979b463f516d83fdbd10e9357b90390138f2b2b6c2212101440",
+    "N12/tension-120-reference": "90b9933c771d7d23655ca3aed872f0e5a5b35a2ce1126772ac482e3f2a467b2f",
+    "N12/tension-60-reference": "b3cbf26b826b700aab89273f13324852690be09947d087acff6bebd92b218294",
+    "N12/torsion_neg-120-reference": "2b7015ad8f8df5dd9b092143fd7e3ed1ac788e468858135fb0c2903602b0a7d8",
+    "N12/torsion_neg-60-reference": "86b1b2c8efd02f7f623ca4f7f3f2c5fe052cdf603c1196a0cfc0c9760e7f3f7b",
+    "N12/torsion_pos-120-double_mu": "17653f658b881f3aa59c03a6a012f76beb3c26e2b3d3c808a78f8975f7017656",
+    "N12/torsion_pos-120-reference": "c38385b01fa265bcf817b83fd605929d77b1b4b2074f942e54c665d7f039b86f",
+    "N12/torsion_pos-60-reference": "978eac09798a579d41df0f6d245417dc4564516da92690a5c26ad5a0dc082949",
+    "N4/compression-60-reference": "607afe0a102d44c752085745d237744d84a21886f9507c7532cc374f6fee1afd",
+    "N4/tension-60-reference": "30d19a15d2690e7c0f5536506616e81d353c84fb02916ba55d7ae7bd552b61e5",
+    "N4/torsion_neg-60-reference": "4195443bc0d916b885fb7f52159409e09fedff63dafc426a95996995562d2d72",
+    "N4/torsion_pos-60-reference": "a19e88501da3e80af743893a57984656b861ff8459a9c3f8e21416c729a991ed",
+    "N8/compression-60-reference": "b0191042df6fccc4c4dc317bb9145f0a077880a7e5589cd471b9ac93452a2506",
+    "N8/tension-60-reference": "474c1f0fdfa5769ab53c0dd72933e63961a90da4db922e57e8b51695b0149a5a",
+    "N8/torsion_neg-60-reference": "bea2dd7ccb17ec1c0c3ec6b0c9db875bd05946f28d4f8bb9c469d0011178521b",
+    "N8/torsion_pos-60-reference": "8977d2e717fb04b853ae835447463f5e43011064ef8ee6fea687486328a0493e"
+  },
+  "gmsh_imported": false,
+  "historical_generation_commit": "cb72a848c47c6cfb6cc35374963db63d93edbc7c",
+  "measured_values_accessed": false,
+  "new_helper_sha256": "3cb4d99f5d2d7fa2f66fb5af56ebffcf19342b9bee0b4cb2c9acfe98aabdd892",
+  "old_source_limitation_preserved": "Historical helper requires original bottom/top/side dict insertion order; new helper explicitly fixes this same section order.",
+  "original_files_modified": false,
+  "solver_calls": 0,
+  "status": "all_eighteen_historical_decks_exactly_reproduced_from_sorted_mesh_json"
+}

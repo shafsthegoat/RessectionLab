@@ -1,0 +1,285 @@
+{
+  "all_raw_hashes_and_read_only_modes_verified": true,
+  "deck_count": 18,
+  "decks": {
+    "N12/compression-120-double_mu": {
+      "exact_original_insertion_order_reproduction": true,
+      "maximum_independent_prescribed_motion_error_m": 0.0,
+      "plain_reload_byte_reproduction": false,
+      "saved_sha256": "a4a8d683dfc4ed10746bd25867d0b59ebbbfa9d4a1698cd4c27ac0c721288995",
+      "semantic_checks_passed": true
+    },
+    "N12/compression-120-reference": {
+      "exact_original_insertion_order_reproduction": true,
+      "maximum_independent_prescribed_motion_error_m": 0.0,
+      "plain_reload_byte_reproduction": false,
+      "saved_sha256": "1afc593c9e5158bf53711e394b2d8e3193a91623352e628b0281a4a940815adc",
+      "semantic_checks_passed": true
+    },
+    "N12/compression-60-reference": {
+      "exact_original_insertion_order_reproduction": true,
+      "maximum_independent_prescribed_motion_error_m": 0.0,
+      "plain_reload_byte_reproduction": false,
+      "saved_sha256": "0860b181fc427979b463f516d83fdbd10e9357b90390138f2b2b6c2212101440",
+      "semantic_checks_passed": true
+    },
+    "N12/tension-120-reference": {
+      "exact_original_insertion_order_reproduction": true,
+      "maximum_independent_prescribed_motion_error_m": 0.0,
+      "plain_reload_byte_reproduction": false,
+      "saved_sha256": "90b9933c771d7d23655ca3aed872f0e5a5b35a2ce1126772ac482e3f2a467b2f",
+      "semantic_checks_passed": true
+    },
+    "N12/tension-60-reference": {
+      "exact_original_insertion_order_reproduction": true,
+      "maximum_independent_prescribed_motion_error_m": 0.0,
+      "plain_reload_byte_reproduction": false,
+      "saved_sha256": "b3cbf26b826b700aab89273f13324852690be09947d087acff6bebd92b218294",
+      "semantic_checks_passed": true
+    },
+    "N12/torsion_neg-120-reference": {
+      "exact_original_insertion_order_reproduction": true,
+      "maximum_independent_prescribed_motion_error_m": 2.168404344971009e-19,
+      "plain_reload_byte_reproduction": false,
+      "saved_sha256": "2b7015ad8f8df5dd9b092143fd7e3ed1ac788e468858135fb0c2903602b0a7d8",
+      "semantic_checks_passed": true
+    },
+    "N12/torsion_neg-60-reference": {
+      "exact_original_insertion_order_reproduction": true,
+      "maximum_independent_prescribed_motion_error_m": 2.168404344971009e-19,
+      "plain_reload_byte_reproduction": false,
+      "saved_sha256": "86b1b2c8efd02f7f623ca4f7f3f2c5fe052cdf603c1196a0cfc0c9760e7f3f7b",
+      "semantic_checks_passed": true
+    },
+    "N12/torsion_pos-120-double_mu": {
+      "exact_original_insertion_order_reproduction": true,
+      "maximum_independent_prescribed_motion_error_m": 2.168404344971009e-19,
+      "plain_reload_byte_reproduction": false,
+      "saved_sha256": "17653f658b881f3aa59c03a6a012f76beb3c26e2b3d3c808a78f8975f7017656",
+      "semantic_checks_passed": true
+    },
+    "N12/torsion_pos-120-reference": {
+      "exact_original_insertion_order_reproduction": true,
+      "maximum_independent_prescribed_motion_error_m": 2.168404344971009e-19,
+      "plain_reload_byte_reproduction": false,
+      "saved_sha256": "c38385b01fa265bcf817b83fd605929d77b1b4b2074f942e54c665d7f039b86f",
+      "semantic_checks_passed": true
+    },
+    "N12/torsion_pos-60-reference": {
+      "exact_original_insertion_order_reproduction": true,
+      "maximum_independent_prescribed_motion_error_m": 2.168404344971009e-19,
+      "plain_reload_byte_reproduction": false,
+      "saved_sha256": "978eac09798a579d41df0f6d245417dc4564516da92690a5c26ad5a0dc082949",
+      "semantic_checks_passed": true
+    },
+    "N4/compression-60-reference": {
+      "exact_original_insertion_order_reproduction": true,
+      "maximum_independent_prescribed_motion_error_m": 0.0,
+      "plain_reload_byte_reproduction": false,
+      "saved_sha256": "607afe0a102d44c752085745d237744d84a21886f9507c7532cc374f6fee1afd",
+      "semantic_checks_passed": true
+    },
+    "N4/tension-60-reference": {
+      "exact_original_insertion_order_reproduction": true,
+      "maximum_independent_prescribed_motion_error_m": 0.0,
+      "plain_reload_byte_reproduction": false,
+      "saved_sha256": "30d19a15d2690e7c0f5536506616e81d353c84fb02916ba55d7ae7bd552b61e5",
+      "semantic_checks_passed": true
+    },
+    "N4/torsion_neg-60-reference": {
+      "exact_original_insertion_order_reproduction": true,
+      "maximum_independent_prescribed_motion_error_m": 2.168404344971009e-19,
+      "plain_reload_byte_reproduction": false,
+      "saved_sha256": "4195443bc0d916b885fb7f52159409e09fedff63dafc426a95996995562d2d72",
+      "semantic_checks_passed": true
+    },
+    "N4/torsion_pos-60-reference": {
+      "exact_original_insertion_order_reproduction": true,
+      "maximum_independent_prescribed_motion_error_m": 2.168404344971009e-19,
+      "plain_reload_byte_reproduction": false,
+      "saved_sha256": "a19e88501da3e80af743893a57984656b861ff8459a9c3f8e21416c729a991ed",
+      "semantic_checks_passed": true
+    },
+    "N8/compression-60-reference": {
+      "exact_original_insertion_order_reproduction": true,
+      "maximum_independent_prescribed_motion_error_m": 0.0,
+      "plain_reload_byte_reproduction": false,
+      "saved_sha256": "b0191042df6fccc4c4dc317bb9145f0a077880a7e5589cd471b9ac93452a2506",
+      "semantic_checks_passed": true
+    },
+    "N8/tension-60-reference": {
+      "exact_original_insertion_order_reproduction": true,
+      "maximum_independent_prescribed_motion_error_m": 0.0,
+      "plain_reload_byte_reproduction": false,
+      "saved_sha256": "474c1f0fdfa5769ab53c0dd72933e63961a90da4db922e57e8b51695b0149a5a",
+      "semantic_checks_passed": true
+    },
+    "N8/torsion_neg-60-reference": {
+      "exact_original_insertion_order_reproduction": true,
+      "maximum_independent_prescribed_motion_error_m": 2.168404344971009e-19,
+      "plain_reload_byte_reproduction": false,
+      "saved_sha256": "bea2dd7ccb17ec1c0c3ec6b0c9db875bd05946f28d4f8bb9c469d0011178521b",
+      "semantic_checks_passed": true
+    },
+    "N8/torsion_pos-60-reference": {
+      "exact_original_insertion_order_reproduction": true,
+      "maximum_independent_prescribed_motion_error_m": 2.168404344971009e-19,
+      "plain_reload_byte_reproduction": false,
+      "saved_sha256": "8977d2e717fb04b853ae835447463f5e43011064ef8ee6fea687486328a0493e",
+      "semantic_checks_passed": true
+    }
+  },
+  "evidence_index_sha256": "a808c1aad6162a758201cc0e18220d995c4da2fc1cbc591c67038ade332c4c59",
+  "final_raw_file_count": 52,
+  "final_raw_total_bytes": 28981271,
+  "followup_repair": {
+    "path": "canonical-order-repair-verification.json",
+    "result": "All eighteen byte hashes match original decks after plain JSON reload using repaired helper; historical failure retained.",
+    "sha256": "c7de815255449870e6357f55fb55f37a0e3696d303bd66fcc61b2127d8bb6511"
+  },
+  "initial_integrity_stage": {
+    "archive_and_inventory_hashes_verified": true,
+    "four_source_pins_matched_git_commit": true,
+    "full_archive_files_rehashed": 4093,
+    "private_runtime_module_library_license_interpreter_rehashed": true
+  },
+  "limitations": [
+    "Sampled positive Jacobians do not prove global validity between sampling sites.",
+    "No equilibrium response, specimen fit, force/torque measurements or patient mechanics validated by preparation.",
+    "Resource receipts are sampled watchdog evidence; transient peaks may be missed.",
+    "Frozen helper plain JSON reload changes XML block order; original decks are semantically correct and reproduced exactly only with explicitly restored original boundary insertion order."
+  ],
+  "meshes": {
+    "12": {
+      "actual_ring_angle_sag_over_R": 0.002141076778386153,
+      "independent_bottom_polygon_volume_m3": 2.45176556775046e-07,
+      "independent_native_msh_parse": {
+        "conversion_exact": true,
+        "native_hex8_count": 2592,
+        "native_node_count": 3199,
+        "physical_volume_entities": 5
+      },
+      "quality": {
+        "analytic_cylinder_volume_m3": 2.458781313339728e-07,
+        "checks": {
+          "declared_cell_count": true,
+          "finest_boundary_sag": true,
+          "finest_volume": true,
+          "minimum_scaled_jacobian": true,
+          "positive_rest_jacobians": true
+        },
+        "connected_cell_count": 2592,
+        "exterior_face_count": 1152,
+        "hex8_cell_count": 2592,
+        "integrated_volume_m3": 2.45176556775046e-07,
+        "interior_face_count": 7200,
+        "maximum_radial_boundary_sag_m": 8.564307113546367e-06,
+        "maximum_radial_boundary_sag_over_R": 0.0021410767783865917,
+        "minimum_rest_determinant_m3": 4.690191943435289e-12,
+        "minimum_rest_scaled_jacobian": 0.7071067811865455,
+        "node_count": 3199,
+        "passed": true,
+        "relative_volume_error": 0.002853342650363104,
+        "sampled_site_count_per_cell": 17
+      },
+      "supervision": {
+        "automatic_retry": false,
+        "elapsed_seconds": 2.203993250033818,
+        "exit_code": 0,
+        "sampled_peak_process_family_rss_bytes": 140181504
+      }
+    },
+    "4": {
+      "actual_ring_angle_sag_over_R": 0.01921471971600608,
+      "independent_bottom_polygon_volume_m3": 2.396070977181118e-07,
+      "independent_native_msh_parse": {
+        "conversion_exact": true,
+        "native_hex8_count": 96,
+        "native_node_count": 171,
+        "physical_volume_entities": 5
+      },
+      "quality": {
+        "analytic_cylinder_volume_m3": 2.458781313339728e-07,
+        "checks": {
+          "declared_cell_count": true,
+          "minimum_scaled_jacobian": true,
+          "positive_rest_jacobians": true
+        },
+        "connected_cell_count": 96,
+        "exterior_face_count": 128,
+        "hex8_cell_count": 96,
+        "integrated_volume_m3": 2.3960709771811174e-07,
+        "interior_face_count": 224,
+        "maximum_radial_boundary_sag_m": 7.685887886402492e-05,
+        "maximum_radial_boundary_sag_over_R": 0.019214719716006228,
+        "minimum_rest_determinant_m3": 1.2663518247248196e-10,
+        "minimum_rest_scaled_jacobian": 0.7071067811865471,
+        "node_count": 171,
+        "passed": true,
+        "relative_volume_error": 0.02550464159556826,
+        "sampled_site_count_per_cell": 17
+      },
+      "supervision": {
+        "automatic_retry": false,
+        "elapsed_seconds": 0.5353270419873297,
+        "exit_code": 0,
+        "sampled_peak_process_family_rss_bytes": 85852160
+      }
+    },
+    "8": {
+      "actual_ring_angle_sag_over_R": 0.0048152733584491125,
+      "independent_bottom_polygon_volume_m3": 2.443012782773433e-07,
+      "independent_native_msh_parse": {
+        "conversion_exact": true,
+        "native_hex8_count": 768,
+        "native_node_count": 1045,
+        "physical_volume_entities": 5
+      },
+      "quality": {
+        "analytic_cylinder_volume_m3": 2.458781313339728e-07,
+        "checks": {
+          "declared_cell_count": true,
+          "minimum_scaled_jacobian": true,
+          "positive_rest_jacobians": true
+        },
+        "connected_cell_count": 768,
+        "exterior_face_count": 512,
+        "hex8_cell_count": 768,
+        "integrated_volume_m3": 2.4430127827734354e-07,
+        "interior_face_count": 2048,
+        "maximum_radial_boundary_sag_m": 1.926109343379761e-05,
+        "maximum_radial_boundary_sag_over_R": 0.004815273358449402,
+        "minimum_rest_determinant_m3": 1.582939780908316e-11,
+        "minimum_rest_scaled_jacobian": 0.7071067811865466,
+        "node_count": 1045,
+        "passed": true,
+        "relative_volume_error": 0.0064131488557940455,
+        "sampled_site_count_per_cell": 17
+      },
+      "supervision": {
+        "automatic_retry": false,
+        "elapsed_seconds": 0.661761416005902,
+        "exit_code": 0,
+        "sampled_peak_process_family_rss_bytes": 90079232
+      }
+    }
+  },
+  "original_insertion_order_byte_reproduction_count": 18,
+  "plain_reload_byte_reproduction_defect_count": 18,
+  "raw_output_index_sha256": "0cb55a598e3eddaf9ec486d049343c1ccfe556b64337b1cdb580ac0eb695ad83",
+  "reviewer_execution": {
+    "gmsh_imports": 0,
+    "mesh_generation_calls": 0,
+    "response_curve_access": false,
+    "solver_calls": 0
+  },
+  "reviewer_setup_correction": "Review initially compared loading record dictionaries for exact equality, omitting three explicit preparation metadata fields (mesh_sha256, protocol_sha256, role). Corrected comparison requires the generated fields plus exactly those three verified metadata fields; no product data changed.",
+  "source_commit": "cb72a848c47c6cfb6cc35374963db63d93edbc7c",
+  "source_sha256": {
+    "artifacts/mechanics/gmsh-4.15.2-runtime-v1/runtime-receipt.json": "705056d13e78f98fda0ab04884c0c6e3b31ead73f88d01b6dcf3bd99d5417137",
+    "manifests/experiments/hbe-01-03-mechanics-poc-v1.json": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "scripts/mechanics_hbe_mesh.py": "5b102eb74a171d41a8815e408a6473fd65032dd9b30ff5412cf7243addc7d3e2"
+  },
+  "status": "saved_scientific_contents_verified_with_roundtrip_source_defect"
+}

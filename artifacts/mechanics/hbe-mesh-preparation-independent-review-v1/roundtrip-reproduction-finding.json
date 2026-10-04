@@ -1,0 +1,100 @@
+{
+  "cause": "Frozen specimen_deck uses boundary dictionary insertion order; sorted JSON reload changes bottom/top/side to bottom/side/top, reordering only named NodeSet and Surface blocks.",
+  "decks": [
+    {
+      "deck": "N12/compression-120-double_mu",
+      "plain_json_reload_sha256": "e4ba5feacab98e0cbdb7877dcca70aad95c966afd284dead6c272f1e97e0b196",
+      "saved_sha256": "a4a8d683dfc4ed10746bd25867d0b59ebbbfa9d4a1698cd4c27ac0c721288995"
+    },
+    {
+      "deck": "N12/compression-120-reference",
+      "plain_json_reload_sha256": "40fa343416c0cc32d39bd9e65ff07f7f8a435ce98b93d1a2bd3bc5e499737df3",
+      "saved_sha256": "1afc593c9e5158bf53711e394b2d8e3193a91623352e628b0281a4a940815adc"
+    },
+    {
+      "deck": "N12/compression-60-reference",
+      "plain_json_reload_sha256": "76238951ccecedabf11b4812ea6809904d39c41eab13ca1763321dbafc2fbe06",
+      "saved_sha256": "0860b181fc427979b463f516d83fdbd10e9357b90390138f2b2b6c2212101440"
+    },
+    {
+      "deck": "N12/tension-120-reference",
+      "plain_json_reload_sha256": "8029a2e5425d693dd608a33b0b1eba93f8bd8745479d59028c100a501178c0ec",
+      "saved_sha256": "90b9933c771d7d23655ca3aed872f0e5a5b35a2ce1126772ac482e3f2a467b2f"
+    },
+    {
+      "deck": "N12/tension-60-reference",
+      "plain_json_reload_sha256": "b3b4527730768ee321372ab82a5cbc982c7eefd621a52f5a2e6428fec75916c0",
+      "saved_sha256": "b3cbf26b826b700aab89273f13324852690be09947d087acff6bebd92b218294"
+    },
+    {
+      "deck": "N12/torsion_neg-120-reference",
+      "plain_json_reload_sha256": "60504a0c23fad39d23eb10362568e7a0ac88f1f0f0f431c00e6c6043e6d2d978",
+      "saved_sha256": "2b7015ad8f8df5dd9b092143fd7e3ed1ac788e468858135fb0c2903602b0a7d8"
+    },
+    {
+      "deck": "N12/torsion_neg-60-reference",
+      "plain_json_reload_sha256": "4afbcfbfa0997df08e64ee41c0bde734933175c10b27d4fb0ac2703fd8f95842",
+      "saved_sha256": "86b1b2c8efd02f7f623ca4f7f3f2c5fe052cdf603c1196a0cfc0c9760e7f3f7b"
+    },
+    {
+      "deck": "N12/torsion_pos-120-double_mu",
+      "plain_json_reload_sha256": "cd01567f8d1c368e4be8b41636965c31e8193abbae9ebc907752d0911aeeb295",
+      "saved_sha256": "17653f658b881f3aa59c03a6a012f76beb3c26e2b3d3c808a78f8975f7017656"
+    },
+    {
+      "deck": "N12/torsion_pos-120-reference",
+      "plain_json_reload_sha256": "83ea14e44959900a72420f397bdb056612d1b6393120540558ff3ea4fcaaf3b8",
+      "saved_sha256": "c38385b01fa265bcf817b83fd605929d77b1b4b2074f942e54c665d7f039b86f"
+    },
+    {
+      "deck": "N12/torsion_pos-60-reference",
+      "plain_json_reload_sha256": "dbaedadb61362033a7cb75cf025734939c739fb944e92f2253a91cda85a29b3f",
+      "saved_sha256": "978eac09798a579d41df0f6d245417dc4564516da92690a5c26ad5a0dc082949"
+    },
+    {
+      "deck": "N4/compression-60-reference",
+      "plain_json_reload_sha256": "118ce8d77d4b1a461e69dac1299d7941b73de60be4cf1978d5dbe0a1957028b7",
+      "saved_sha256": "607afe0a102d44c752085745d237744d84a21886f9507c7532cc374f6fee1afd"
+    },
+    {
+      "deck": "N4/tension-60-reference",
+      "plain_json_reload_sha256": "3fd4b03684ef30ee3d0747ef9481e2c4487b9865d8906c888e53a94e67d34d91",
+      "saved_sha256": "30d19a15d2690e7c0f5536506616e81d353c84fb02916ba55d7ae7bd552b61e5"
+    },
+    {
+      "deck": "N4/torsion_neg-60-reference",
+      "plain_json_reload_sha256": "e615ce7c9c472435e071c64e9238459e7cc4b7cab405c4d12b171aa12017f263",
+      "saved_sha256": "4195443bc0d916b885fb7f52159409e09fedff63dafc426a95996995562d2d72"
+    },
+    {
+      "deck": "N4/torsion_pos-60-reference",
+      "plain_json_reload_sha256": "8cc169c5eb7b41272e41008a784962173d26cc91057ece3cef160bb73df575c9",
+      "saved_sha256": "a19e88501da3e80af743893a57984656b861ff8459a9c3f8e21416c729a991ed"
+    },
+    {
+      "deck": "N8/compression-60-reference",
+      "plain_json_reload_sha256": "91705a5d2b27ab1c3fb84148350b8dc542c6b9fb9db9279ef33bc0e2bbee9bb8",
+      "saved_sha256": "b0191042df6fccc4c4dc317bb9145f0a077880a7e5589cd471b9ac93452a2506"
+    },
+    {
+      "deck": "N8/tension-60-reference",
+      "plain_json_reload_sha256": "130d81b96414fa2ff9d0216335edbfd428ec9bfa32a14d7717e9fe06d4ec15f6",
+      "saved_sha256": "474c1f0fdfa5769ab53c0dd72933e63961a90da4db922e57e8b51695b0149a5a"
+    },
+    {
+      "deck": "N8/torsion_neg-60-reference",
+      "plain_json_reload_sha256": "16b135105f172b923f7eba12228fdac52f4c717b7608ce79978b5aa1ce61d907",
+      "saved_sha256": "bea2dd7ccb17ec1c0c3ec6b0c9db875bd05946f28d4f8bb9c469d0011178521b"
+    },
+    {
+      "deck": "N8/torsion_pos-60-reference",
+      "plain_json_reload_sha256": "dc88e58632bee83501a6dd804c17c359fe51d732cbfdfa3065adbf245a83906a",
+      "saved_sha256": "8977d2e717fb04b853ae835447463f5e43011064ef8ee6fea687486328a0493e"
+    }
+  ],
+  "frozen_source_sha256": "5b102eb74a171d41a8815e408a6473fd65032dd9b30ff5412cf7243addc7d3e2",
+  "original_order_exact_reproduction_count": 18,
+  "original_output_modified": false,
+  "plain_reload_failed_count": 18,
+  "status": "confirmed_serialization_order_defect"
+}

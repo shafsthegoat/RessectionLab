@@ -237,6 +237,17 @@ unchanged. These are homogeneous analytical controls, not measured tissue
 agreement, mesh convergence or patient validation. See
 `artifacts/mechanics-febio-patch-run-v1/RESULT.md` and its independent audit.
 
+One bounded Gmsh preparation generated the three measured-specimen meshes
+(96/768/2,592 hex elements) and 18 fixed loading decks in 3.43 s, with
+140.2 MB maximum sampled memory. Independent native-mesh and deck review
+passed the geometry/topology/loading checks; finest volume error is 0.2853%
+and boundary sag is 0.2141% of specimen radius. Review also found and preserved
+a JSON-reload serialization defect: named boundary sections changed order.
+A narrow canonical-order repair now reproduces all 18 original deck byte hashes;
+no mesh, load or material was changed or regenerated. This is preparation only,
+not specimen equilibrium, convergence or measured force/torque agreement.
+See `artifacts/mechanics/hbe-01-03-mesh-preparation-v1/` and the independent review.
+
 For the real-anatomy displacement proof of concept, six official RESECT Case4
 files (35,068,010 bytes) were acquired and verified. This patient is permanently
 development and does not change existing cohort roles. The reviewed access
