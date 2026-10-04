@@ -2,6 +2,7 @@
 import copy
 import gzip
 import importlib.util
+import itertools
 import json
 import math
 import os
@@ -241,6 +242,23 @@ def test_deck_exact_rotation_controllers_and_modulus_scaling(protocol):
             node=int(name.split("_")[-1]);column=prescribed["top_node_ids"].tolist().index(node)
             axis="xyz".index(bc.findtext("dof"))
             np.testing.assert_array_equal(values[:,1],prescribed["top_displacement_m"][:,column,axis])
+
+
+@pytest.mark.parametrize("branch",["compression","tension","torsion_neg","torsion_pos"])
+@pytest.mark.parametrize("steps",[60,120])
+def test_deck_bytes_and_loading_hash_survive_mesh_json_roundtrip(protocol,branch,steps):
+    fixture=arithmetic_hex(protocol)
+    expected_xml,expected_loading=mesh.specimen_deck(fixture,branch,steps,1375.,protocol)
+    serialized=json.dumps(fixture,sort_keys=True,default=int)
+    reloaded=json.loads(serialized)
+    assert list(reloaded["boundaries"])==["bottom","side","top"]
+    for order in itertools.permutations(("bottom","top","side")):
+        reordered=copy.deepcopy(reloaded)
+        reordered["boundaries"]={name:reloaded["boundaries"][name] for name in order}
+        actual_xml,actual_loading=mesh.specimen_deck(reordered,branch,steps,1375.,protocol)
+        assert actual_xml==expected_xml
+        assert actual_loading==expected_loading
+    assert json.dumps(fixture,sort_keys=True,default=int)==serialized
 
 
 def test_closed_log_compression_is_lossless_bounded_and_retains_raw_on_failure(tmp_path):

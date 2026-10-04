@@ -388,7 +388,9 @@ def specimen_deck(mesh, branch, steps, mu_Pa, protocol):
     elements = _child(mesh_xml, "Elements", type="hex8", name="specimen")
     for i, cell in enumerate(cells, 1):
         _child(elements, "elem", ",".join(map(str, cell)), id=str(i))
-    for name, boundary in mesh["boundaries"].items():
+    # Preserve identical deck bytes after sorted JSON storage or caller reordering.
+    for name in ("bottom", "top", "side"):
+        boundary = mesh["boundaries"][name]
         _child(mesh_xml, "NodeSet", ",".join(map(str, boundary["node_ids"])), name=name)
         surface = _child(mesh_xml, "Surface", name=name)
         for i, face in enumerate(boundary["faces_quad4"], 1):
