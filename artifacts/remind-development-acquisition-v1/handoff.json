@@ -1,0 +1,38 @@
+{
+  "status": "acquired_and_native_converted_not_jointly_aligned",
+  "human_patients_acquired": 1,
+  "patient": "ReMIND-001",
+  "role": "development_annotation_assisted_geometry",
+  "training_executed": false,
+  "planner_case_ready": false,
+  "files": {
+    "scripts/acquire_remind_development.py": "d8939a1d7c867a329d94974f04d9ce2f978dd2ad6a8eb868afc8a14279c6d34d",
+    "scripts/convert_remind_development.py": "34e6ceb9560344a88226489b2dd8ca6bfb90cb87c52d2ff3184d393293df4ef6",
+    "tests/test_remind_development_acquisition.py": "ccdedf00d6a56cababfa68130b89cd8e505ce4e47fb539eac7c2fec5a022e8ef",
+    "manifests/experiments/remind-001-structural-development-v1.json": "3dad212f49655937d8ef3d0dff998eb796de9f885c4328e9f4202503157ac08f",
+    "docs/remind-001-development-acquisition.md": "a59586e128690f1ccb6a05b859821234da86634c0cbc112a982dccf8031e0640"
+  },
+  "focused_validation": {
+    "passed": 21,
+    "seconds": 0.84,
+    "xml": "artifacts/remind-development-acquisition-v1/focused-tests.xml",
+    "environment": "isolated acquisition packages on PYTHONPATH with project pytest"
+  },
+  "native_conversion_receipt_sha256": "0c047a4691b63d0e31441fafa27d656184a1efd03e050518f0577a45ae38b7a6",
+  "next_owner": "imaging: independent conversion/reference review then measured cross-sequence alignment",
+  "acquisition_attempts": 1,
+  "source_metadata_probes": [
+    "TCIA clinical workbook",
+    "TCIA series digest",
+    "official idc-index 0.12.5 local v24 metadata",
+    "four exact S3 series-prefix listings; zero-byte directory markers excluded"
+  ],
+  "not_accessed": [
+    "UPenn images",
+    "other ReMIND patients images",
+    "ReMIND intraoperative or postoperative images"
+  ],
+  "negative_results": [
+    "Endpoint affine decimal-rounding tolerance failure; retained and repaired by least-squares position fit without relaxed threshold."
+  ]
+}

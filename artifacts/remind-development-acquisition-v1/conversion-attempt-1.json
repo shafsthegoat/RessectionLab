@@ -1,0 +1,12 @@
+{
+  "status": "failed_before_all_native_series_conversion",
+  "source_sha256": "6ca9366693d6b50b288a5924fa0cb156d1b83adf99e016445762a12317698cd2",
+  "reason": "endpoint-defined affine gave 0.0012876202042872381 mm maximal MR position residual, above predeclared 0.001 mm tolerance",
+  "diagnostic": {
+    "t1_endpoint_max_mm": 0.0012876202042872381,
+    "t1_least_squares_max_mm": 0.0007767459801736097,
+    "t2_endpoint_max_mm": 0.0009524259952728225,
+    "t2_least_squares_max_mm": 0.0006336752806541062
+  },
+  "repair": "Fit all slice positions by least squares, retaining 0.001 mm acceptance threshold and reporting residual. Pixel samples unchanged. No cross-frame alignment performed."
+}
