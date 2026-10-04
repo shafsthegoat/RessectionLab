@@ -138,3 +138,18 @@ def test_parallel_native_columns_charge_access_and_preserve_entry_poses():
     second_cells = {tuple(cell) for cell in two.info["removed_indices_native"]}
     assert first_cells.isdisjoint(second_cells)
     assert sim.metrics()["simulated_removed_target_volume_mm3"] == pytest.approx(one.info["target_removed_mm3"] + two.info["target_removed_mm3"])
+
+
+def test_fast_native_freeze_guard_detects_array_reinterpretation_and_reward_change():
+    from resectionlab.simulation import RewardSpec
+    sim = NativeSequentialSimulator(fixture(), [(3, 3, 4)])
+    import warnings
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", DeprecationWarning)
+        sim.config.nominal_motor.dtype = np.int64
+    with pytest.raises(RuntimeError, match="Decision model changed"):
+        sim.step("STOP")
+    sim = NativeSequentialSimulator(fixture(), [(3, 3, 4)])
+    object.__setattr__(sim.config, "reward", RewardSpec(target_per_mm3=100))
+    with pytest.raises(RuntimeError, match="Decision model changed"):
+        sim.step("STOP")

@@ -237,17 +237,26 @@ class SequentialSimulator:
         self.termination_reason = None
         self._proposals: tuple[MacroAction, ...] | None = None
         latent = WorldGenerator(self.config.world_generator).sample_seed(self.seed)
-        transform = np.linalg.inv(self.config.affine) @ np.linalg.inv(latent.anatomy_transform_mm) @ self.config.affine
-        def resample(array: np.ndarray, *, order: int, outside: float) -> np.ndarray:
-            return affine_transform(array, transform[:3, :3], transform[:3, 3], output_shape=array.shape,
-                                    order=order, mode="constant", cval=outside, prefilter=False)
-        self._hidden_known_coverage = resample(np.ones(self.remaining_mask.shape), order=0, outside=0).astype(bool)
-        # Moving sampled anatomy outside the supplied field creates unknown
-        # coverage. A declared conservative surrogate bound prevents those
-        # missing cells from becoming an artificial zero-hazard opportunity.
-        self._hidden_motor = resample(self.config.nominal_motor, order=1, outside=(max(1.0, float(self.config.nominal_motor.max())) if self.config.evidence_available[0] else 0.0))
-        self._hidden_language = resample(self.config.nominal_language, order=1, outside=(max(1.0, float(self.config.nominal_language.max())) if self.config.evidence_available[1] else 0.0))
-        self._hidden_graph = {k: resample(v, order=0, outside=0).astype(bool) for k, v in self.config.graph_edges.items()}
+        if self.config.world_generator.deterministic:
+            # Identity worlds must preserve the source grid exactly. Inverting
+            # and reapplying an oblique affine can otherwise move a boundary a
+            # few ulps outside support and manufacture missing coverage.
+            self._hidden_known_coverage = np.ones(self.remaining_mask.shape, dtype=bool)
+            self._hidden_motor = self.config.nominal_motor
+            self._hidden_language = self.config.nominal_language
+            self._hidden_graph = dict(self.config.graph_edges)
+        else:
+            transform = np.linalg.inv(self.config.affine) @ np.linalg.inv(latent.anatomy_transform_mm) @ self.config.affine
+            def resample(array: np.ndarray, *, order: int, outside: float) -> np.ndarray:
+                return affine_transform(array, transform[:3, :3], transform[:3, 3], output_shape=array.shape,
+                                        order=order, mode="constant", cval=outside, prefilter=False)
+            self._hidden_known_coverage = resample(np.ones(self.remaining_mask.shape), order=0, outside=0).astype(bool)
+            # Moving sampled anatomy outside the supplied field creates unknown
+            # coverage. A declared conservative surrogate bound prevents those
+            # missing cells from becoming an artificial zero-hazard opportunity.
+            self._hidden_motor = resample(self.config.nominal_motor, order=1, outside=(max(1.0, float(self.config.nominal_motor.max())) if self.config.evidence_available[0] else 0.0))
+            self._hidden_language = resample(self.config.nominal_language, order=1, outside=(max(1.0, float(self.config.nominal_language.max())) if self.config.evidence_available[1] else 0.0))
+            self._hidden_graph = {k: resample(v, order=0, outside=0).astype(bool) for k, v in self.config.graph_edges.items()}
         self._hidden_world_hash = "sha256:" + hashlib.sha256((self._frozen_hash + str(self.seed)).encode() + latent.anatomy_transform_mm.tobytes()).hexdigest()
         return self.observation()
 

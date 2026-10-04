@@ -197,3 +197,15 @@ def test_branching_fixture_has_paid_access_and_exhaustive_reference():
     initial.replay(reference.actions)
     assert initial.metrics()["simulated_removed_normal_volume_mm3"] == 3
     assert initial.metrics()["simulated_removed_target_volume_mm3"] == 2
+
+
+def test_deterministic_world_preserves_oblique_grid_fields_exactly():
+    from scipy.spatial.transform import Rotation
+    original = make_synthetic_simulator()
+    affine = np.eye(4)
+    affine[:3, :3] = Rotation.from_euler("xyz", [13, 27, 8], degrees=True).as_matrix()
+    affine[:3, 3] = [17.3, -81.5, .7]
+    evidence = np.arange(27, dtype=float).reshape(3, 3, 3) / 27
+    sim = SequentialSimulator(replace(original.config, affine=affine, nominal_motor=evidence))
+    np.testing.assert_array_equal(sim._hidden_motor, evidence)
+    assert sim._hidden_known_coverage.all()

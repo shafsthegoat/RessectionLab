@@ -9,6 +9,8 @@ change of model; old coarse results cannot be relabeled as native results.
 from __future__ import annotations
 
 import copy
+from collections.abc import Mapping
+from dataclasses import fields, is_dataclass
 import hashlib
 import json
 import time
@@ -27,6 +29,36 @@ NATIVE_ADAPTER_VERSION = "native-contained-brush-policy-v2"
 NATIVE_ACTION_FEATURE_NAMES = ACTION_FEATURE_NAMES + (
     "partial_normal_contact_volume", "partial_motor_contact_surrogate", "partial_language_contact_surrogate",
 )
+
+
+def _immutable_model_descriptor(value: Any) -> Any:
+    """Verify frozen bytes once by identity and preserve every array interpretation.
+
+    All configuration arrays own immutable bytes snapshots. Their contents cannot
+    change, so repeatedly hashing hundreds of MB adds no protection. Identity,
+    pointer, shape, dtype, strides, and immutable root buffer detect replacement
+    or reinterpretation; scalar/mapping/dataclass fields are compared directly.
+    Mutable or unsupported buffers fail closed instead of using this fast path.
+    """
+    if isinstance(value, np.ndarray):
+        root = value
+        while isinstance(root, np.ndarray) and root.base is not None:
+            root = root.base
+        if value.flags.writeable or not isinstance(root, bytes):
+            raise RuntimeError("Native model arrays must retain immutable bytes backing")
+        return ("array", id(value), id(root), value.shape, value.dtype.str, value.strides,
+                value.__array_interface__["data"][0], value.nbytes)
+    if is_dataclass(value):
+        return (type(value).__qualname__, tuple((field.name, _immutable_model_descriptor(getattr(value, field.name))) for field in fields(value)))
+    if isinstance(value, Mapping):
+        return (type(value).__qualname__, tuple((repr(key), _immutable_model_descriptor(item)) for key, item in sorted(value.items(), key=lambda pair: repr(pair[0]))))
+    if isinstance(value, (tuple, list)):
+        return (type(value).__qualname__, tuple(_immutable_model_descriptor(item) for item in value))
+    if isinstance(value, np.generic):
+        return (value.dtype.str, value.item())
+    if value is None or isinstance(value, (str, int, float, bool)):
+        return (type(value).__qualname__, value)
+    raise TypeError(f"Unsupported mutable model value: {type(value).__qualname__}")
 
 
 class NativeSequentialSimulator(SequentialSimulator):
@@ -80,6 +112,7 @@ class NativeSequentialSimulator(SequentialSimulator):
             "partial_contact_weight": self.partial_contact_weight,
         }, sort_keys=True).encode()).hexdigest()
         super().__init__(config)
+        self._frozen_model_descriptor = _immutable_model_descriptor((self.config, self.native_config))
 
     def _check_cancelled(self) -> None:
         if self._cancelled is not None and self._cancelled():
@@ -97,7 +130,11 @@ class NativeSequentialSimulator(SequentialSimulator):
         return self._native_decision_hash
 
     def assert_model_frozen(self) -> None:
-        super().assert_model_frozen()
+        if hasattr(self, "_frozen_model_descriptor"):
+            if _immutable_model_descriptor((self.config, self.native_config)) != self._frozen_model_descriptor:
+                raise RuntimeError("Decision model changed during native optimization")
+        else:
+            super().assert_model_frozen()
         if self.native_config.fingerprint != self._native_config_hash:
             raise RuntimeError("Native cutting model changed during optimization")
         current = self._adapter_signature(self.candidate_tips_mm, self.partial_contact_weight, self.candidate_entries_mm)
