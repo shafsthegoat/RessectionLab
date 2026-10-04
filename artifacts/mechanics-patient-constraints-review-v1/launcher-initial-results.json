@@ -1,0 +1,23 @@
+{
+  "result": "3 failed,11 passed in0.15s;all subprocess calls mocked",
+  "source_sha256": {
+    "scripts/mechanics_patient_constraints_run.py": "11dba4763f740f6abd6f8a32b7e4379e4824469e156cf56a65405a3b950a9cc9",
+    "tests/test_mechanics_patient_constraints_launcher_review.py": "ce8c6cd21ae48480daad409ad94bf373bc3e646d6b0ee96c1016ab57fcdc89e1"
+  },
+  "findings": [
+    {
+      "type": "confirmed_launcher_defect_owner_also_identified",
+      "detail": "Repeated worker invocation overwrites existing completed results.json in finally despite refusing execution. Regression preserved."
+    },
+    {
+      "type": "review_test_error",
+      "detail": "Thread test incorrectly required OMP_DYNAMIC=1. Correct declaration uses OMP_DYNAMIC=FALSE and numeric thread counts1."
+    },
+    {
+      "type": "review_test_error",
+      "detail": "Wrong-output fixture omitted release_path and assumed output check preceded source revalidation. The contract permits source validation before refusing alternate output, so use a complete mocked baseline."
+    }
+  ],
+  "solver_executed": false,
+  "patient_data_accessed": false
+}
