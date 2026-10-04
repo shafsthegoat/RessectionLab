@@ -1,0 +1,876 @@
+{
+  "dynamic_symbol_resolution_tested": false,
+  "files": [
+    {
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/lipo",
+            "-archs",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "arm64\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4:\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n\t@rpath/libfebiolib.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4:\nLoad command 0\n      cmd LC_SEGMENT_64\n  cmdsize 72\n  segname __PAGEZERO\n   vmaddr 0x0000000000000000\n   vmsize 0x0000000100000000\n  fileoff 0\n filesize 0\n  maxprot 0x00000000\n initprot 0x00000000\n   nsects 0\n    flags 0x0\nLoad command 1\n      cmd LC_SEGMENT_64\n  cmdsize 632\n  segname __TEXT\n   vmaddr 0x0000000100000000\n   vmsize 0x000000000000c000\n  fileoff 0\n filesize 49152\n  maxprot 0x00000005\n initprot 0x00000005\n   nsects 7\n    flags 0x0\nSection\n  sectname __text\n   segname __TEXT\n      addr 0x0000000100001860\n      size 0x0000000000005454\n    offset 6240\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000400\n reserved1 0\n reserved2 0\nSection\n  sectname __stubs\n   segname __TEXT\n      addr 0x0000000100006cb4\n      size 0x0000000000000600\n    offset 27828\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000408\n reserved1 0 (index into indirect symbol table)\n reserved2 12 (size of stubs)\nSection\n  sectname __init_offsets\n   segname __TEXT\n      addr 0x00000001000072b4\n      size 0x0000000000000008\n    offset 29364\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000016\n reserved1 0\n reserved2 0\nSection\n  sectname __const\n   segname __TEXT\n      addr 0x00000001000072c0\n      size 0x0000000000000252\n    offset 29376\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __gcc_except_tab\n   segname __TEXT\n      addr 0x0000000100007514\n      size 0x000000000000039c\n    offset 29972\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __cstring\n   segname __TEXT\n      addr 0x00000001000078b0\n      size 0x0000000000000fcd\n    offset 30896\n     align 2^0 (1)\n    reloff 0\n    nreloc 0\n     flags 0x00000002\n reserved1 0\n reserved2 0\nSection\n  sectname __unwind_info\n   segname __TEXT\n      addr 0x0000000100008880\n      size 0x0000000000000290\n    offset 34944\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 2\n      cmd LC_SEGMENT_64\n  cmdsize 232\n  segname __DATA_CONST\n   vmaddr 0x000000010000c000\n   vmsize 0x0000000000004000\n  fileoff 49152\n filesize 16384\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 2\n    flags 0x10\nSection\n  sectname __got\n   segname __DATA_CONST\n      addr 0x000000010000c000\n      size 0x0000000000000498\n    offset 49152\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000006\n reserved1 128 (index into indirect symbol table)\n reserved2 0\nSection\n  sectname __const\n   segname __DATA_CONST\n      addr 0x000000010000c498\n      size 0x0000000000000828\n    offset 50328\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 3\n      cmd LC_SEGMENT_64\n  cmdsize 312\n  segname __DATA\n   vmaddr 0x0000000100010000\n   vmsize 0x0000000000004000\n  fileoff 65536\n filesize 16384\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 3\n    flags 0x0\nSection\n  sectname __data\n   segname __DATA\n      addr 0x0000000100010000\n      size 0x0000000000000001\n    offset 65536\n     align 2^0 (1)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __common\n   segname __DATA\n      addr 0x0000000100010008\n      size 0x0000000000000050\n    offset 0\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000001\n reserved1 0\n reserved2 0\nSection\n  sectname __bss\n   segname __DATA\n      addr 0x0000000100010058\n      size 0x0000000000000201\n    offset 0\n     align 2^0 (1)\n    reloff 0\n    nreloc 0\n     flags 0x00000001\n reserved1 0\n reserved2 0\nLoad command 4\n      cmd LC_SEGMENT_64\n  cmdsize 72\n  segname __LINKEDIT\n   vmaddr 0x0000000100014000\n   vmsize 0x000000000000c000\n  fileoff 81920\n filesize 34392\n  maxprot 0x00000001\n initprot 0x00000001\n   nsects 0\n    flags 0x0\nLoad command 5\n      cmd LC_DYLD_CHAINED_FIXUPS\n  cmdsize 16\n  dataoff 81920\n datasize 5264\nLoad command 6\n      cmd LC_DYLD_EXPORTS_TRIE\n  cmdsize 16\n  dataoff 87184\n datasize 4912\nLoad command 7\n     cmd LC_SYMTAB\n cmdsize 24\n  symoff 92256\n   nsyms 480\n  stroff 101040\n strsize 14224\nLoad command 8\n            cmd LC_DYSYMTAB\n        cmdsize 80\n      ilocalsym 0\n      nlocalsym 128\n     iextdefsym 128\n     nextdefsym 200\n      iundefsym 328\n      nundefsym 152\n         tocoff 0\n           ntoc 0\n      modtaboff 0\n        nmodtab 0\n   extrefsymoff 0\n    nextrefsyms 0\n indirectsymoff 99936\n  nindirectsyms 275\n      extreloff 0\n        nextrel 0\n      locreloff 0\n        nlocrel 0\nLoad command 9\n          cmd LC_LOAD_DYLINKER\n      cmdsize 32\n         name /usr/lib/dyld (offset 12)\nLoad command 10\n     cmd LC_UUID\n cmdsize 24\n    uuid 6211D8A0-B25D-32B2-B4A2-BB7C1D68F616\nLoad command 11\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform 1\n    minos 26.0\n      sdk 26.5\n   ntools 1\n     tool 3\n  version 1267.0\nLoad command 12\n      cmd LC_SOURCE_VERSION\n  cmdsize 16\n  version 0.0\nLoad command 13\n       cmd LC_MAIN\n   cmdsize 24\n  entryoff 6240\n stacksize 0\nLoad command 14\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name /usr/lib/libSystem.B.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 1356.0.0\ncompatibility version 1.0.0\nLoad command 15\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name @rpath/libfebiolib.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 16\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name @rpath/libfecore.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 17\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name /usr/lib/libc++.1.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 2100.43.0\ncompatibility version 1.0.0\nLoad command 18\n      cmd LC_FUNCTION_STARTS\n  cmdsize 16\n  dataoff 92096\n datasize 160\nLoad command 19\n      cmd LC_DATA_IN_CODE\n  cmdsize 16\n  dataoff 92256\n datasize 0\nLoad command 20\n      cmd LC_CODE_SIGNATURE\n  cmdsize 16\n  dataoff 115264\n datasize 1048\nLoad command 21\n          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 22\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\nLoad command 23\n          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\n"
+        }
+      ],
+      "dependencies": [
+        "/usr/lib/libSystem.B.dylib",
+        "@rpath/libfebiolib.dylib",
+        "@rpath/libfecore.dylib",
+        "/usr/lib/libc++.1.dylib"
+      ],
+      "path": "install/bin/febio4",
+      "resolved_dependencies": {
+        "/usr/lib/libSystem.B.dylib": "system_install_name_not_loaded",
+        "/usr/lib/libc++.1.dylib": "system_install_name_not_loaded",
+        "@rpath/libfebiolib.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiolib.dylib",
+          "sha256": "c44341895c567529c6917fa51ed4d0cfc6a826aebbe02ff410f4f9b89455d69d"
+        },
+        "@rpath/libfecore.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfecore.dylib",
+          "sha256": "fd5b224a47ad55f12b1e1ddd804bcb84d19f6ff63caf5b6d2b4e305337e4deca"
+        }
+      },
+      "rpaths": [
+        "@loader_path",
+        "@executable_path/../lib",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib"
+      ],
+      "sha256": "d7d4855d1d541a6407f22efd4381e23d7057cc49ec726144f06599aa5184f7b6"
+    },
+    {
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/lipo",
+            "-archs",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfeamr.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "arm64\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfeamr.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfeamr.dylib:\n\t@rpath/libfeamr.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfeamr.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfeamr.dylib:\nLoad command 0\n      cmd LC_SEGMENT_64\n  cmdsize 632\n  segname __TEXT\n   vmaddr 0x0000000000000000\n   vmsize 0x0000000000020000\n  fileoff 0\n filesize 131072\n  maxprot 0x00000005\n initprot 0x00000005\n   nsects 7\n    flags 0x0\nSection\n  sectname __text\n   segname __TEXT\n      addr 0x0000000000001848\n      size 0x0000000000018dc8\n    offset 6216\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000400\n reserved1 0\n reserved2 0\nSection\n  sectname __stubs\n   segname __TEXT\n      addr 0x000000000001a610\n      size 0x000000000000087c\n    offset 108048\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000408\n reserved1 0 (index into indirect symbol table)\n reserved2 12 (size of stubs)\nSection\n  sectname __stub_helper\n   segname __TEXT\n      addr 0x000000000001ae8c\n      size 0x000000000000087c\n    offset 110220\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000400\n reserved1 0\n reserved2 0\nSection\n  sectname __gcc_except_tab\n   segname __TEXT\n      addr 0x000000000001b708\n      size 0x00000000000013bc\n    offset 112392\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __cstring\n   segname __TEXT\n      addr 0x000000000001cac4\n      size 0x00000000000008ce\n    offset 117444\n     align 2^0 (1)\n    reloff 0\n    nreloc 0\n     flags 0x00000002\n reserved1 0\n reserved2 0\nSection\n  sectname __const\n   segname __TEXT\n      addr 0x000000000001d3a0\n      size 0x0000000000000df4\n    offset 119712\n     align 2^4 (16)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __unwind_info\n   segname __TEXT\n      addr 0x000000000001e194\n      size 0x0000000000000798\n    offset 123284\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 1\n      cmd LC_SEGMENT_64\n  cmdsize 232\n  segname __DATA_CONST\n   vmaddr 0x0000000000020000\n   vmsize 0x0000000000004000\n  fileoff 131072\n filesize 16384\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 2\n    flags 0x10\nSection\n  sectname __got\n   segname __DATA_CONST\n      addr 0x0000000000020000\n      size 0x00000000000000d8\n    offset 131072\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000006\n reserved1 181 (index into indirect symbol table)\n reserved2 0\nSection\n  sectname __const\n   segname __DATA_CONST\n      addr 0x00000000000200d8\n      size 0x0000000000001a18\n    offset 131288\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 2\n      cmd LC_SEGMENT_64\n  cmdsize 392\n  segname __DATA\n   vmaddr 0x0000000000024000\n   vmsize 0x0000000000004000\n  fileoff 147456\n filesize 16384\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 4\n    flags 0x0\nSection\n  sectname __la_symbol_ptr\n   segname __DATA\n      addr 0x0000000000024000\n      size 0x0000000000000598\n    offset 147456\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000007\n reserved1 208 (index into indirect symbol table)\n reserved2 0\nSection\n  sectname __data\n   segname __DATA\n      addr 0x0000000000024598\n      size 0x0000000000000008\n    offset 148888\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __bss\n   segname __DATA\n      addr 0x00000000000245a0\n      size 0x0000000000000480\n    offset 0\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000001\n reserved1 0\n reserved2 0\nSection\n  sectname __common\n   segname __DATA\n      addr 0x0000000000024a20\n      size 0x0000000000000008\n    offset 0\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000001\n reserved1 0\n reserved2 0\nLoad command 3\n      cmd LC_SEGMENT_64\n  cmdsize 72\n  segname __LINKEDIT\n   vmaddr 0x0000000000028000\n   vmsize 0x0000000000014000\n  fileoff 163840\n filesize 81088\n  maxprot 0x00000001\n initprot 0x00000001\n   nsects 0\n    flags 0x0\nLoad command 4\n          cmd LC_ID_DYLIB\n      cmdsize 48\n         name @rpath/libfeamr.dylib (offset 24)\n   time stamp 1 Wed Dec 31 19:00:01 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 5\n            cmd LC_DYLD_INFO_ONLY\n        cmdsize 48\n     rebase_off 163840\n    rebase_size 320\n       bind_off 164160\n      bind_size 2696\n  weak_bind_off 166856\n weak_bind_size 88\n  lazy_bind_off 166944\n lazy_bind_size 7192\n     export_off 174136\n    export_size 8952\nLoad command 6\n     cmd LC_SYMTAB\n cmdsize 24\n  symoff 183536\n   nsyms 920\n  stroff 199808\n strsize 43072\nLoad command 7\n            cmd LC_DYSYMTAB\n        cmdsize 80\n      ilocalsym 0\n      nlocalsym 444\n     iextdefsym 444\n     nextdefsym 247\n      iundefsym 691\n      nundefsym 229\n         tocoff 0\n           ntoc 0\n      modtaboff 0\n        nmodtab 0\n   extrefsymoff 0\n    nextrefsyms 0\n indirectsymoff 198256\n  nindirectsyms 387\n      extreloff 0\n        nextrel 0\n      locreloff 0\n        nlocrel 0\nLoad command 8\n     cmd LC_UUID\n cmdsize 24\n    uuid 908B3E53-3CAE-35D2-A487-309BD5E870BF\nLoad command 9\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform 1\n    minos 26.0\n      sdk 26.5\n   ntools 1\n     tool 3\n  version 1267.0\nLoad command 10\n      cmd LC_SOURCE_VERSION\n  cmdsize 16\n  version 0.0\nLoad command 11\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name @rpath/libfecore.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 12\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name /usr/lib/libc++.1.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 2100.43.0\ncompatibility version 1.0.0\nLoad command 13\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name /usr/lib/libSystem.B.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 1356.0.0\ncompatibility version 1.0.0\nLoad command 14\n      cmd LC_FUNCTION_STARTS\n  cmdsize 16\n  dataoff 183088\n datasize 448\nLoad command 15\n      cmd LC_DATA_IN_CODE\n  cmdsize 16\n  dataoff 183536\n datasize 0\nLoad command 16\n      cmd LC_CODE_SIGNATURE\n  cmdsize 16\n  dataoff 242880\n datasize 2048\nLoad command 17\n          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 18\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\nLoad command 19\n          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\n"
+        }
+      ],
+      "dependencies": [
+        "@rpath/libfeamr.dylib",
+        "@rpath/libfecore.dylib",
+        "/usr/lib/libc++.1.dylib",
+        "/usr/lib/libSystem.B.dylib"
+      ],
+      "path": "install/lib/libfeamr.dylib",
+      "resolved_dependencies": {
+        "/usr/lib/libSystem.B.dylib": "system_install_name_not_loaded",
+        "/usr/lib/libc++.1.dylib": "system_install_name_not_loaded",
+        "@rpath/libfeamr.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfeamr.dylib",
+          "sha256": "7328649aa6a1e21359e9b470464306970b4bc475bab6a176ae769d0455aa1811"
+        },
+        "@rpath/libfecore.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfecore.dylib",
+          "sha256": "fd5b224a47ad55f12b1e1ddd804bcb84d19f6ff63caf5b6d2b4e305337e4deca"
+        }
+      },
+      "rpaths": [
+        "@loader_path",
+        "@executable_path/../lib",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib"
+      ],
+      "sha256": "7328649aa6a1e21359e9b470464306970b4bc475bab6a176ae769d0455aa1811"
+    },
+    {
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/lipo",
+            "-archs",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiofluid.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "arm64\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiofluid.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiofluid.dylib:\n\t@rpath/libfebiofluid.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebiomix.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebiomech.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiofluid.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiofluid.dylib:\nLoad command 0\n      cmd LC_SEGMENT_64\n  cmdsize 632\n  segname __TEXT\n   vmaddr 0x0000000000000000\n   vmsize 0x000000000010c000\n  fileoff 0\n filesize 1097728\n  maxprot 0x00000005\n initprot 0x00000005\n   nsects 7\n    flags 0x0\nSection\n  sectname __text\n   segname __TEXT\n      addr 0x00000000000020c0\n      size 0x00000000000ec0b0\n    offset 8384\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000400\n reserved1 0\n reserved2 0\nSection\n  sectname __stubs\n   segname __TEXT\n      addr 0x00000000000ee170\n      size 0x00000000000013ec\n    offset 975216\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000408\n reserved1 0 (index into indirect symbol table)\n reserved2 12 (size of stubs)\nSection\n  sectname __stub_helper\n   segname __TEXT\n      addr 0x00000000000ef55c\n      size 0x00000000000013ec\n    offset 980316\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000400\n reserved1 0\n reserved2 0\nSection\n  sectname __gcc_except_tab\n   segname __TEXT\n      addr 0x00000000000f0948\n      size 0x0000000000008e9c\n    offset 985416\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __const\n   segname __TEXT\n      addr 0x00000000000f97f0\n      size 0x0000000000008e21\n    offset 1021936\n     align 2^4 (16)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __cstring\n   segname __TEXT\n      addr 0x0000000000102611\n      size 0x00000000000040d3\n    offset 1058321\n     align 2^0 (1)\n    reloff 0\n    nreloc 0\n     flags 0x00000002\n reserved1 0\n reserved2 0\nSection\n  sectname __unwind_info\n   segname __TEXT\n      addr 0x00000000001066e4\n      size 0x00000000000045b0\n    offset 1074916\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 1\n      cmd LC_SEGMENT_64\n  cmdsize 232\n  segname __DATA_CONST\n   vmaddr 0x000000000010c000\n   vmsize 0x0000000000018000\n  fileoff 1097728\n filesize 98304\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 2\n    flags 0x10\nSection\n  sectname __got\n   segname __DATA_CONST\n      addr 0x000000000010c000\n      size 0x0000000000000188\n    offset 1097728\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000006\n reserved1 425 (index into indirect symbol table)\n reserved2 0\nSection\n  sectname __const\n   segname __DATA_CONST\n      addr 0x000000000010c188\n      size 0x0000000000016a18\n    offset 1098120\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 2\n      cmd LC_SEGMENT_64\n  cmdsize 392\n  segname __DATA\n   vmaddr 0x0000000000124000\n   vmsize 0x0000000000008000\n  fileoff 1196032\n filesize 16384\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 4\n    flags 0x0\nSection\n  sectname __la_symbol_ptr\n   segname __DATA\n      addr 0x0000000000124000\n      size 0x0000000000000d38\n    offset 1196032\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000007\n reserved1 474 (index into indirect symbol table)\n reserved2 0\nSection\n  sectname __data\n   segname __DATA\n      addr 0x0000000000124d38\n      size 0x0000000000000010\n    offset 1199416\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __bss\n   segname __DATA\n      addr 0x0000000000124d48\n      size 0x0000000000003740\n    offset 0\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000001\n reserved1 0\n reserved2 0\nSection\n  sectname __common\n   segname __DATA\n      addr 0x0000000000128488\n      size 0x0000000000000020\n    offset 0\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000001\n reserved1 0\n reserved2 0\nLoad command 3\n      cmd LC_SEGMENT_64\n  cmdsize 72\n  segname __LINKEDIT\n   vmaddr 0x000000000012c000\n   vmsize 0x00000000000b8000\n  fileoff 1212416\n filesize 746560\n  maxprot 0x00000001\n initprot 0x00000001\n   nsects 0\n    flags 0x0\nLoad command 4\n          cmd LC_ID_DYLIB\n      cmdsize 56\n         name @rpath/libfebiofluid.dylib (offset 24)\n   time stamp 1 Wed Dec 31 19:00:01 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 5\n            cmd LC_DYLD_INFO_ONLY\n        cmdsize 48\n     rebase_off 1212416\n    rebase_size 4288\n       bind_off 1216704\n      bind_size 14632\n  weak_bind_off 1231336\n weak_bind_size 48\n  lazy_bind_off 1231384\n lazy_bind_size 18936\n     export_off 1250320\n    export_size 89096\nLoad command 6\n     cmd LC_SYMTAB\n cmdsize 24\n  symoff 1343952\n   nsyms 8066\n  stroff 1476600\n strsize 467040\nLoad command 7\n            cmd LC_DYSYMTAB\n        cmdsize 80\n      ilocalsym 0\n      nlocalsym 5109\n     iextdefsym 5109\n     nextdefsym 2365\n      iundefsym 7474\n      nundefsym 592\n         tocoff 0\n           ntoc 0\n      modtaboff 0\n        nmodtab 0\n   extrefsymoff 0\n    nextrefsyms 0\n indirectsymoff 1473008\n  nindirectsyms 897\n      extreloff 0\n        nextrel 0\n      locreloff 0\n        nlocrel 0\nLoad command 8\n     cmd LC_UUID\n cmdsize 24\n    uuid C1AF5AA3-E4BC-365E-A7B1-C58B3403A75E\nLoad command 9\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform 1\n    minos 26.0\n      sdk 26.5\n   ntools 1\n     tool 3\n  version 1267.0\nLoad command 10\n      cmd LC_SOURCE_VERSION\n  cmdsize 16\n  version 0.0\nLoad command 11\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name @rpath/libfebiomix.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 12\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name @rpath/libfebiomech.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 13\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name @rpath/libfecore.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 14\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name /usr/lib/libc++.1.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 2100.43.0\ncompatibility version 1.0.0\nLoad command 15\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name /usr/lib/libSystem.B.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 1356.0.0\ncompatibility version 1.0.0\nLoad command 16\n      cmd LC_FUNCTION_STARTS\n  cmdsize 16\n  dataoff 1339416\n datasize 4536\nLoad command 17\n      cmd LC_DATA_IN_CODE\n  cmdsize 16\n  dataoff 1343952\n datasize 0\nLoad command 18\n      cmd LC_CODE_SIGNATURE\n  cmdsize 16\n  dataoff 1943648\n datasize 15328\nLoad command 19\n          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 20\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\nLoad command 21\n          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\n"
+        }
+      ],
+      "dependencies": [
+        "@rpath/libfebiofluid.dylib",
+        "@rpath/libfebiomix.dylib",
+        "@rpath/libfebiomech.dylib",
+        "@rpath/libfecore.dylib",
+        "/usr/lib/libc++.1.dylib",
+        "/usr/lib/libSystem.B.dylib"
+      ],
+      "path": "install/lib/libfebiofluid.dylib",
+      "resolved_dependencies": {
+        "/usr/lib/libSystem.B.dylib": "system_install_name_not_loaded",
+        "/usr/lib/libc++.1.dylib": "system_install_name_not_loaded",
+        "@rpath/libfebiofluid.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiofluid.dylib",
+          "sha256": "c64d397056fcf024e1d2e10ba7872e98590a440d406062d7b66a49e90b88bc7f"
+        },
+        "@rpath/libfebiomech.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiomech.dylib",
+          "sha256": "a035e3e975863fa8e35629d9348f885c6e38eba4aa1ef823af014e1f0af9974f"
+        },
+        "@rpath/libfebiomix.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiomix.dylib",
+          "sha256": "69dd24a13c299b5f8eb66a9d4e5348579815dea1b49f3a6494a647dd1df1f2e8"
+        },
+        "@rpath/libfecore.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfecore.dylib",
+          "sha256": "fd5b224a47ad55f12b1e1ddd804bcb84d19f6ff63caf5b6d2b4e305337e4deca"
+        }
+      },
+      "rpaths": [
+        "@loader_path",
+        "@executable_path/../lib",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib"
+      ],
+      "sha256": "c64d397056fcf024e1d2e10ba7872e98590a440d406062d7b66a49e90b88bc7f"
+    },
+    {
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/lipo",
+            "-archs",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiolib.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "arm64\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiolib.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiolib.dylib:\n\t@rpath/libfebiolib.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libnumcore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebioopt.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebiofluid.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebiorve.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfeimglib.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebiomix.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebioplot.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebiomech.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfeamr.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebioxml.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiolib.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiolib.dylib:\nLoad command 0\n      cmd LC_SEGMENT_64\n  cmdsize 712\n  segname __TEXT\n   vmaddr 0x0000000000000000\n   vmsize 0x0000000000034000\n  fileoff 0\n filesize 212992\n  maxprot 0x00000005\n initprot 0x00000005\n   nsects 8\n    flags 0x0\nSection\n  sectname __text\n   segname __TEXT\n      addr 0x00000000000042d0\n      size 0x0000000000024e80\n    offset 17104\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000400\n reserved1 0\n reserved2 0\nSection\n  sectname __stubs\n   segname __TEXT\n      addr 0x0000000000029150\n      size 0x0000000000001434\n    offset 168272\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000408\n reserved1 0 (index into indirect symbol table)\n reserved2 12 (size of stubs)\nSection\n  sectname __stub_helper\n   segname __TEXT\n      addr 0x000000000002a584\n      size 0x0000000000001434\n    offset 173444\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000400\n reserved1 0\n reserved2 0\nSection\n  sectname __init_offsets\n   segname __TEXT\n      addr 0x000000000002b9b8\n      size 0x0000000000000004\n    offset 178616\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000016\n reserved1 0\n reserved2 0\nSection\n  sectname __const\n   segname __TEXT\n      addr 0x000000000002b9c0\n      size 0x00000000000012fd\n    offset 178624\n     align 2^4 (16)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __gcc_except_tab\n   segname __TEXT\n      addr 0x000000000002ccc0\n      size 0x0000000000002a50\n    offset 183488\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __cstring\n   segname __TEXT\n      addr 0x000000000002f710\n      size 0x0000000000002a9f\n    offset 194320\n     align 2^0 (1)\n    reloff 0\n    nreloc 0\n     flags 0x00000002\n reserved1 0\n reserved2 0\nSection\n  sectname __unwind_info\n   segname __TEXT\n      addr 0x00000000000321b0\n      size 0x0000000000000bd0\n    offset 205232\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 1\n      cmd LC_SEGMENT_64\n  cmdsize 232\n  segname __DATA_CONST\n   vmaddr 0x0000000000034000\n   vmsize 0x0000000000004000\n  fileoff 212992\n filesize 16384\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 2\n    flags 0x10\nSection\n  sectname __got\n   segname __DATA_CONST\n      addr 0x0000000000034000\n      size 0x0000000000000240\n    offset 212992\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000006\n reserved1 431 (index into indirect symbol table)\n reserved2 0\nSection\n  sectname __const\n   segname __DATA_CONST\n      addr 0x0000000000034240\n      size 0x0000000000003048\n    offset 213568\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 2\n      cmd LC_SEGMENT_64\n  cmdsize 392\n  segname __DATA\n   vmaddr 0x0000000000038000\n   vmsize 0x0000000000004000\n  fileoff 229376\n filesize 16384\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 4\n    flags 0x0\nSection\n  sectname __la_symbol_ptr\n   segname __DATA\n      addr 0x0000000000038000\n      size 0x0000000000000d68\n    offset 229376\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000007\n reserved1 503 (index into indirect symbol table)\n reserved2 0\nSection\n  sectname __data\n   segname __DATA\n      addr 0x0000000000038d68\n      size 0x0000000000000010\n    offset 232808\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __bss\n   segname __DATA\n      addr 0x0000000000038d78\n      size 0x00000000000002f8\n    offset 0\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000001\n reserved1 0\n reserved2 0\nSection\n  sectname __common\n   segname __DATA\n      addr 0x0000000000039070\n      size 0x0000000000000008\n    offset 0\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000001\n reserved1 0\n reserved2 0\nLoad command 3\n      cmd LC_SEGMENT_64\n  cmdsize 72\n  segname __LINKEDIT\n   vmaddr 0x000000000003c000\n   vmsize 0x0000000000024000\n  fileoff 245760\n filesize 146192\n  maxprot 0x00000001\n initprot 0x00000001\n   nsects 0\n    flags 0x0\nLoad command 4\n          cmd LC_ID_DYLIB\n      cmdsize 56\n         name @rpath/libfebiolib.dylib (offset 24)\n   time stamp 1 Wed Dec 31 19:00:01 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 5\n            cmd LC_DYLD_INFO_ONLY\n        cmdsize 48\n     rebase_off 245760\n    rebase_size 568\n       bind_off 246328\n      bind_size 4768\n  weak_bind_off 251096\n weak_bind_size 152\n  lazy_bind_off 251248\n lazy_bind_size 18920\n     export_off 270168\n    export_size 16304\nLoad command 6\n     cmd LC_SYMTAB\n cmdsize 24\n  symoff 287192\n   nsyms 1688\n  stroff 317928\n strsize 70848\nLoad command 7\n            cmd LC_DYSYMTAB\n        cmdsize 80\n      ilocalsym 0\n      nlocalsym 640\n     iextdefsym 640\n     nextdefsym 514\n      iundefsym 1154\n      nundefsym 534\n         tocoff 0\n           ntoc 0\n      modtaboff 0\n        nmodtab 0\n   extrefsymoff 0\n    nextrefsyms 0\n indirectsymoff 314200\n  nindirectsyms 932\n      extreloff 0\n        nextrel 0\n      locreloff 0\n        nlocrel 0\nLoad command 8\n     cmd LC_UUID\n cmdsize 24\n    uuid 62642CEA-86FE-3C6B-A1B3-A95C71B7F236\nLoad command 9\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform 1\n    minos 26.0\n      sdk 26.5\n   ntools 1\n     tool 3\n  version 1267.0\nLoad command 10\n      cmd LC_SOURCE_VERSION\n  cmdsize 16\n  version 0.0\nLoad command 11\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name @rpath/libnumcore.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 12\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name @rpath/libfebioopt.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 13\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name @rpath/libfebiofluid.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 14\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name @rpath/libfebiorve.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 15\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name @rpath/libfeimglib.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 16\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name @rpath/libfebiomix.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 17\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name @rpath/libfebioplot.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 18\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name @rpath/libfebiomech.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 19\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name @rpath/libfeamr.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 20\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name @rpath/libfebioxml.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 21\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name @rpath/libfecore.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 22\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name /usr/lib/libc++.1.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 2100.43.0\ncompatibility version 1.0.0\nLoad command 23\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name /usr/lib/libSystem.B.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 1356.0.0\ncompatibility version 1.0.0\nLoad command 24\n      cmd LC_FUNCTION_STARTS\n  cmdsize 16\n  dataoff 286472\n datasize 720\nLoad command 25\n      cmd LC_DATA_IN_CODE\n  cmdsize 16\n  dataoff 287192\n datasize 0\nLoad command 26\n      cmd LC_CODE_SIGNATURE\n  cmdsize 16\n  dataoff 388784\n datasize 3168\nLoad command 27\n          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 28\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\nLoad command 29\n          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\n"
+        }
+      ],
+      "dependencies": [
+        "@rpath/libfebiolib.dylib",
+        "@rpath/libnumcore.dylib",
+        "@rpath/libfebioopt.dylib",
+        "@rpath/libfebiofluid.dylib",
+        "@rpath/libfebiorve.dylib",
+        "@rpath/libfeimglib.dylib",
+        "@rpath/libfebiomix.dylib",
+        "@rpath/libfebioplot.dylib",
+        "@rpath/libfebiomech.dylib",
+        "@rpath/libfeamr.dylib",
+        "@rpath/libfebioxml.dylib",
+        "@rpath/libfecore.dylib",
+        "/usr/lib/libc++.1.dylib",
+        "/usr/lib/libSystem.B.dylib"
+      ],
+      "path": "install/lib/libfebiolib.dylib",
+      "resolved_dependencies": {
+        "/usr/lib/libSystem.B.dylib": "system_install_name_not_loaded",
+        "/usr/lib/libc++.1.dylib": "system_install_name_not_loaded",
+        "@rpath/libfeamr.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfeamr.dylib",
+          "sha256": "7328649aa6a1e21359e9b470464306970b4bc475bab6a176ae769d0455aa1811"
+        },
+        "@rpath/libfebiofluid.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiofluid.dylib",
+          "sha256": "c64d397056fcf024e1d2e10ba7872e98590a440d406062d7b66a49e90b88bc7f"
+        },
+        "@rpath/libfebiolib.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiolib.dylib",
+          "sha256": "c44341895c567529c6917fa51ed4d0cfc6a826aebbe02ff410f4f9b89455d69d"
+        },
+        "@rpath/libfebiomech.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiomech.dylib",
+          "sha256": "a035e3e975863fa8e35629d9348f885c6e38eba4aa1ef823af014e1f0af9974f"
+        },
+        "@rpath/libfebiomix.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiomix.dylib",
+          "sha256": "69dd24a13c299b5f8eb66a9d4e5348579815dea1b49f3a6494a647dd1df1f2e8"
+        },
+        "@rpath/libfebioopt.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioopt.dylib",
+          "sha256": "9261f2d2d175590bf957759d65b575bdc1fb9598bb7a29ecbf1b89e2a4268da0"
+        },
+        "@rpath/libfebioplot.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioplot.dylib",
+          "sha256": "4689bebeefb692df58449bf17e04ad51c20c9022ba05954d3d21831499ea79d0"
+        },
+        "@rpath/libfebiorve.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiorve.dylib",
+          "sha256": "3e6ab78be3b49d7a7e6c369662006f9eb61aad3658da4190f8ff486e38ad6711"
+        },
+        "@rpath/libfebioxml.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioxml.dylib",
+          "sha256": "0ae741248991be10ba53a8c914467b7caa725a90b8f5c4512aa570fb48778959"
+        },
+        "@rpath/libfecore.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfecore.dylib",
+          "sha256": "fd5b224a47ad55f12b1e1ddd804bcb84d19f6ff63caf5b6d2b4e305337e4deca"
+        },
+        "@rpath/libfeimglib.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfeimglib.dylib",
+          "sha256": "13a35c45ca32da28f72644d7b2b73feaf62dbe24312e91b235a1789365d7e171"
+        },
+        "@rpath/libnumcore.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libnumcore.dylib",
+          "sha256": "2c578d76fe57193494872e18d07469e6d542dbf1951d94b252ac04552514b4a3"
+        }
+      },
+      "rpaths": [
+        "@loader_path",
+        "@executable_path/../lib",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib"
+      ],
+      "sha256": "c44341895c567529c6917fa51ed4d0cfc6a826aebbe02ff410f4f9b89455d69d"
+    },
+    {
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/lipo",
+            "-archs",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiomech.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "arm64\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiomech.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiomech.dylib:\n\t@rpath/libfebiomech.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfeamr.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiomech.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiomech.dylib:\nLoad command 0\n      cmd LC_SEGMENT_64\n  cmdsize 632\n  segname __TEXT\n   vmaddr 0x0000000000000000\n   vmsize 0x000000000031c000\n  fileoff 0\n filesize 3260416\n  maxprot 0x00000005\n initprot 0x00000005\n   nsects 7\n    flags 0x0\nSection\n  sectname __text\n   segname __TEXT\n      addr 0x0000000000001c88\n      size 0x0000000000255c4c\n    offset 7304\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000400\n reserved1 0\n reserved2 0\nSection\n  sectname __stubs\n   segname __TEXT\n      addr 0x00000000002578d4\n      size 0x0000000000001ecc\n    offset 2455764\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000408\n reserved1 0 (index into indirect symbol table)\n reserved2 12 (size of stubs)\nSection\n  sectname __stub_helper\n   segname __TEXT\n      addr 0x00000000002597a0\n      size 0x0000000000001eb4\n    offset 2463648\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000400\n reserved1 0\n reserved2 0\nSection\n  sectname __const\n   segname __TEXT\n      addr 0x000000000025b660\n      size 0x0000000000095431\n    offset 2471520\n     align 2^4 (16)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __gcc_except_tab\n   segname __TEXT\n      addr 0x00000000002f0a94\n      size 0x0000000000014810\n    offset 3082900\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __cstring\n   segname __TEXT\n      addr 0x00000000003052a4\n      size 0x000000000000a9c9\n    offset 3166884\n     align 2^0 (1)\n    reloff 0\n    nreloc 0\n     flags 0x00000002\n reserved1 0\n reserved2 0\nSection\n  sectname __unwind_info\n   segname __TEXT\n      addr 0x000000000030fc70\n      size 0x000000000000b2f8\n    offset 3210352\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 1\n      cmd LC_SEGMENT_64\n  cmdsize 232\n  segname __DATA_CONST\n   vmaddr 0x000000000031c000\n   vmsize 0x0000000000050000\n  fileoff 3260416\n filesize 327680\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 2\n    flags 0x10\nSection\n  sectname __got\n   segname __DATA_CONST\n      addr 0x000000000031c000\n      size 0x0000000000000268\n    offset 3260416\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000006\n reserved1 657 (index into indirect symbol table)\n reserved2 0\nSection\n  sectname __const\n   segname __DATA_CONST\n      addr 0x000000000031c268\n      size 0x000000000004c7a8\n    offset 3261032\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 2\n      cmd LC_SEGMENT_64\n  cmdsize 392\n  segname __DATA\n   vmaddr 0x000000000036c000\n   vmsize 0x0000000000010000\n  fileoff 3588096\n filesize 16384\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 4\n    flags 0x0\nSection\n  sectname __la_symbol_ptr\n   segname __DATA\n      addr 0x000000000036c000\n      size 0x0000000000001468\n    offset 3588096\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000007\n reserved1 734 (index into indirect symbol table)\n reserved2 0\nSection\n  sectname __data\n   segname __DATA\n      addr 0x000000000036d468\n      size 0x0000000000000040\n    offset 3593320\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __common\n   segname __DATA\n      addr 0x000000000036d4b0\n      size 0x00000000000002c8\n    offset 0\n     align 2^4 (16)\n    reloff 0\n    nreloc 0\n     flags 0x00000001\n reserved1 0\n reserved2 0\nSection\n  sectname __bss\n   segname __DATA\n      addr 0x000000000036d778\n      size 0x000000000000cdd4\n    offset 0\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000001\n reserved1 0\n reserved2 0\nLoad command 3\n      cmd LC_SEGMENT_64\n  cmdsize 72\n  segname __LINKEDIT\n   vmaddr 0x000000000037c000\n   vmsize 0x00000000001c0000\n  fileoff 3604480\n filesize 1831760\n  maxprot 0x00000001\n initprot 0x00000001\n   nsects 0\n    flags 0x0\nLoad command 4\n          cmd LC_ID_DYLIB\n      cmdsize 56\n         name @rpath/libfebiomech.dylib (offset 24)\n   time stamp 1 Wed Dec 31 19:00:01 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 5\n            cmd LC_DYLD_INFO_ONLY\n        cmdsize 48\n     rebase_off 3604480\n    rebase_size 14048\n       bind_off 3618528\n      bind_size 28264\n  weak_bind_off 3646792\n weak_bind_size 104\n  lazy_bind_off 3646896\n lazy_bind_size 29144\n     export_off 3676040\n    export_size 226264\nLoad command 6\n     cmd LC_SYMTAB\n cmdsize 24\n  symoff 3913360\n   nsyms 22156\n  stroff 4273408\n strsize 1120552\nLoad command 7\n            cmd LC_DYSYMTAB\n        cmdsize 80\n      ilocalsym 0\n      nlocalsym 14815\n     iextdefsym 14815\n     nextdefsym 6476\n      iundefsym 21291\n      nundefsym 865\n         tocoff 0\n           ntoc 0\n      modtaboff 0\n        nmodtab 0\n   extrefsymoff 0\n    nextrefsyms 0\n indirectsymoff 4267856\n  nindirectsyms 1387\n      extreloff 0\n        nextrel 0\n      locreloff 0\n        nlocrel 0\nLoad command 8\n     cmd LC_UUID\n cmdsize 24\n    uuid CBEF42CA-6E01-3329-8AF8-C35ECFCFE70C\nLoad command 9\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform 1\n    minos 26.0\n      sdk 26.5\n   ntools 1\n     tool 3\n  version 1267.0\nLoad command 10\n      cmd LC_SOURCE_VERSION\n  cmdsize 16\n  version 0.0\nLoad command 11\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name @rpath/libfeamr.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 12\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name @rpath/libfecore.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 13\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name /usr/lib/libc++.1.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 2100.43.0\ncompatibility version 1.0.0\nLoad command 14\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name /usr/lib/libSystem.B.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 1356.0.0\ncompatibility version 1.0.0\nLoad command 15\n      cmd LC_FUNCTION_STARTS\n  cmdsize 16\n  dataoff 3902304\n datasize 11056\nLoad command 16\n      cmd LC_DATA_IN_CODE\n  cmdsize 16\n  dataoff 3913360\n datasize 0\nLoad command 17\n      cmd LC_CODE_SIGNATURE\n  cmdsize 16\n  dataoff 5393968\n datasize 42272\nLoad command 18\n          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 19\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\nLoad command 20\n          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\n"
+        }
+      ],
+      "dependencies": [
+        "@rpath/libfebiomech.dylib",
+        "@rpath/libfeamr.dylib",
+        "@rpath/libfecore.dylib",
+        "/usr/lib/libc++.1.dylib",
+        "/usr/lib/libSystem.B.dylib"
+      ],
+      "path": "install/lib/libfebiomech.dylib",
+      "resolved_dependencies": {
+        "/usr/lib/libSystem.B.dylib": "system_install_name_not_loaded",
+        "/usr/lib/libc++.1.dylib": "system_install_name_not_loaded",
+        "@rpath/libfeamr.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfeamr.dylib",
+          "sha256": "7328649aa6a1e21359e9b470464306970b4bc475bab6a176ae769d0455aa1811"
+        },
+        "@rpath/libfebiomech.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiomech.dylib",
+          "sha256": "a035e3e975863fa8e35629d9348f885c6e38eba4aa1ef823af014e1f0af9974f"
+        },
+        "@rpath/libfecore.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfecore.dylib",
+          "sha256": "fd5b224a47ad55f12b1e1ddd804bcb84d19f6ff63caf5b6d2b4e305337e4deca"
+        }
+      },
+      "rpaths": [
+        "@loader_path",
+        "@executable_path/../lib",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib"
+      ],
+      "sha256": "a035e3e975863fa8e35629d9348f885c6e38eba4aa1ef823af014e1f0af9974f"
+    },
+    {
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/lipo",
+            "-archs",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiomix.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "arm64\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiomix.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiomix.dylib:\n\t@rpath/libfebiomix.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebiomech.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiomix.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiomix.dylib:\nLoad command 0\n      cmd LC_SEGMENT_64\n  cmdsize 632\n  segname __TEXT\n   vmaddr 0x0000000000000000\n   vmsize 0x0000000000160000\n  fileoff 0\n filesize 1441792\n  maxprot 0x00000005\n initprot 0x00000005\n   nsects 7\n    flags 0x0\nSection\n  sectname __text\n   segname __TEXT\n      addr 0x0000000000001c88\n      size 0x0000000000141724\n    offset 7304\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000400\n reserved1 0\n reserved2 0\nSection\n  sectname __stubs\n   segname __TEXT\n      addr 0x00000000001433ac\n      size 0x00000000000012e4\n    offset 1323948\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000408\n reserved1 0 (index into indirect symbol table)\n reserved2 12 (size of stubs)\nSection\n  sectname __stub_helper\n   segname __TEXT\n      addr 0x0000000000144690\n      size 0x00000000000012e4\n    offset 1328784\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000400\n reserved1 0\n reserved2 0\nSection\n  sectname __const\n   segname __TEXT\n      addr 0x0000000000145980\n      size 0x00000000000077a1\n    offset 1333632\n     align 2^4 (16)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __cstring\n   segname __TEXT\n      addr 0x000000000014d121\n      size 0x0000000000003552\n    offset 1364257\n     align 2^0 (1)\n    reloff 0\n    nreloc 0\n     flags 0x00000002\n reserved1 0\n reserved2 0\nSection\n  sectname __gcc_except_tab\n   segname __TEXT\n      addr 0x0000000000150674\n      size 0x000000000000968c\n    offset 1377908\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __unwind_info\n   segname __TEXT\n      addr 0x0000000000159d00\n      size 0x0000000000003da8\n    offset 1416448\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 1\n      cmd LC_SEGMENT_64\n  cmdsize 232\n  segname __DATA_CONST\n   vmaddr 0x0000000000160000\n   vmsize 0x0000000000018000\n  fileoff 1441792\n filesize 98304\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 2\n    flags 0x10\nSection\n  sectname __got\n   segname __DATA_CONST\n      addr 0x0000000000160000\n      size 0x00000000000001e0\n    offset 1441792\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000006\n reserved1 403 (index into indirect symbol table)\n reserved2 0\nSection\n  sectname __const\n   segname __DATA_CONST\n      addr 0x00000000001601e0\n      size 0x00000000000164f8\n    offset 1442272\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 2\n      cmd LC_SEGMENT_64\n  cmdsize 392\n  segname __DATA\n   vmaddr 0x0000000000178000\n   vmsize 0x0000000000014000\n  fileoff 1540096\n filesize 16384\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 4\n    flags 0x0\nSection\n  sectname __la_symbol_ptr\n   segname __DATA\n      addr 0x0000000000178000\n      size 0x0000000000000c88\n    offset 1540096\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000007\n reserved1 463 (index into indirect symbol table)\n reserved2 0\nSection\n  sectname __data\n   segname __DATA\n      addr 0x0000000000178c88\n      size 0x0000000000000028\n    offset 1543304\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __bss\n   segname __DATA\n      addr 0x0000000000178cb0\n      size 0x0000000000003b44\n    offset 0\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000001\n reserved1 0\n reserved2 0\nSection\n  sectname __common\n   segname __DATA\n      addr 0x000000000017c7f8\n      size 0x000000000000c828\n    offset 0\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000001\n reserved1 0\n reserved2 0\nLoad command 3\n      cmd LC_SEGMENT_64\n  cmdsize 72\n  segname __LINKEDIT\n   vmaddr 0x000000000018c000\n   vmsize 0x00000000000a4000\n  fileoff 1556480\n filesize 655696\n  maxprot 0x00000001\n initprot 0x00000001\n   nsects 0\n    flags 0x0\nLoad command 4\n          cmd LC_ID_DYLIB\n      cmdsize 56\n         name @rpath/libfebiomix.dylib (offset 24)\n   time stamp 1 Wed Dec 31 19:00:01 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 5\n            cmd LC_DYLD_INFO_ONLY\n        cmdsize 48\n     rebase_off 1556480\n    rebase_size 4160\n       bind_off 1560640\n      bind_size 15616\n  weak_bind_off 1576256\n weak_bind_size 48\n  lazy_bind_off 1576304\n lazy_bind_size 17472\n     export_off 1593776\n    export_size 75240\nLoad command 6\n     cmd LC_SYMTAB\n cmdsize 24\n  symoff 1672904\n   nsyms 7598\n  stroff 1797928\n strsize 396968\nLoad command 7\n            cmd LC_DYSYMTAB\n        cmdsize 80\n      ilocalsym 0\n      nlocalsym 5077\n     iextdefsym 5077\n     nextdefsym 1937\n      iundefsym 7014\n      nundefsym 584\n         tocoff 0\n           ntoc 0\n      modtaboff 0\n        nmodtab 0\n   extrefsymoff 0\n    nextrefsyms 0\n indirectsymoff 1794472\n  nindirectsyms 864\n      extreloff 0\n        nextrel 0\n      locreloff 0\n        nlocrel 0\nLoad command 8\n     cmd LC_UUID\n cmdsize 24\n    uuid 725E6835-CE12-3932-B4B7-1F3A9F91EAE7\nLoad command 9\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform 1\n    minos 26.0\n      sdk 26.5\n   ntools 1\n     tool 3\n  version 1267.0\nLoad command 10\n      cmd LC_SOURCE_VERSION\n  cmdsize 16\n  version 0.0\nLoad command 11\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name @rpath/libfebiomech.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 12\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name @rpath/libfecore.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 13\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name /usr/lib/libc++.1.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 2100.43.0\ncompatibility version 1.0.0\nLoad command 14\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name /usr/lib/libSystem.B.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 1356.0.0\ncompatibility version 1.0.0\nLoad command 15\n      cmd LC_FUNCTION_STARTS\n  cmdsize 16\n  dataoff 1669016\n datasize 3888\nLoad command 16\n      cmd LC_DATA_IN_CODE\n  cmdsize 16\n  dataoff 1672904\n datasize 0\nLoad command 17\n      cmd LC_CODE_SIGNATURE\n  cmdsize 16\n  dataoff 2194896\n datasize 17280\nLoad command 18\n          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 19\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\nLoad command 20\n          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\n"
+        }
+      ],
+      "dependencies": [
+        "@rpath/libfebiomix.dylib",
+        "@rpath/libfebiomech.dylib",
+        "@rpath/libfecore.dylib",
+        "/usr/lib/libc++.1.dylib",
+        "/usr/lib/libSystem.B.dylib"
+      ],
+      "path": "install/lib/libfebiomix.dylib",
+      "resolved_dependencies": {
+        "/usr/lib/libSystem.B.dylib": "system_install_name_not_loaded",
+        "/usr/lib/libc++.1.dylib": "system_install_name_not_loaded",
+        "@rpath/libfebiomech.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiomech.dylib",
+          "sha256": "a035e3e975863fa8e35629d9348f885c6e38eba4aa1ef823af014e1f0af9974f"
+        },
+        "@rpath/libfebiomix.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiomix.dylib",
+          "sha256": "69dd24a13c299b5f8eb66a9d4e5348579815dea1b49f3a6494a647dd1df1f2e8"
+        },
+        "@rpath/libfecore.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfecore.dylib",
+          "sha256": "fd5b224a47ad55f12b1e1ddd804bcb84d19f6ff63caf5b6d2b4e305337e4deca"
+        }
+      },
+      "rpaths": [
+        "@loader_path",
+        "@executable_path/../lib",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib"
+      ],
+      "sha256": "69dd24a13c299b5f8eb66a9d4e5348579815dea1b49f3a6494a647dd1df1f2e8"
+    },
+    {
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/lipo",
+            "-archs",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioopt.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "arm64\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioopt.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioopt.dylib:\n\t@rpath/libfebioopt.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libomp.dylib (compatibility version 5.0.0, current version 5.0.0)\n\t@rpath/libfebioxml.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebioplot.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioopt.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioopt.dylib:\nLoad command 0\n      cmd LC_SEGMENT_64\n  cmdsize 632\n  segname __TEXT\n   vmaddr 0x0000000000000000\n   vmsize 0x0000000000018000\n  fileoff 0\n filesize 98304\n  maxprot 0x00000005\n initprot 0x00000005\n   nsects 7\n    flags 0x0\nSection\n  sectname __text\n   segname __TEXT\n      addr 0x0000000000002588\n      size 0x000000000000fe58\n    offset 9608\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000400\n reserved1 0\n reserved2 0\nSection\n  sectname __stubs\n   segname __TEXT\n      addr 0x00000000000123e0\n      size 0x0000000000000720\n    offset 74720\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000408\n reserved1 0 (index into indirect symbol table)\n reserved2 12 (size of stubs)\nSection\n  sectname __stub_helper\n   segname __TEXT\n      addr 0x0000000000012b00\n      size 0x0000000000000720\n    offset 76544\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000400\n reserved1 0\n reserved2 0\nSection\n  sectname __gcc_except_tab\n   segname __TEXT\n      addr 0x0000000000013220\n      size 0x0000000000000f80\n    offset 78368\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __cstring\n   segname __TEXT\n      addr 0x00000000000141a0\n      size 0x0000000000000bc6\n    offset 82336\n     align 2^0 (1)\n    reloff 0\n    nreloc 0\n     flags 0x00000002\n reserved1 0\n reserved2 0\nSection\n  sectname __const\n   segname __TEXT\n      addr 0x0000000000014d70\n      size 0x0000000000000856\n    offset 85360\n     align 2^4 (16)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __unwind_info\n   segname __TEXT\n      addr 0x00000000000155c8\n      size 0x0000000000000638\n    offset 87496\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 1\n      cmd LC_SEGMENT_64\n  cmdsize 232\n  segname __DATA_CONST\n   vmaddr 0x0000000000018000\n   vmsize 0x0000000000004000\n  fileoff 98304\n filesize 16384\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 2\n    flags 0x10\nSection\n  sectname __got\n   segname __DATA_CONST\n      addr 0x0000000000018000\n      size 0x00000000000000a8\n    offset 98304\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000006\n reserved1 152 (index into indirect symbol table)\n reserved2 0\nSection\n  sectname __const\n   segname __DATA_CONST\n      addr 0x00000000000180a8\n      size 0x00000000000013f8\n    offset 98472\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 2\n      cmd LC_SEGMENT_64\n  cmdsize 392\n  segname __DATA\n   vmaddr 0x000000000001c000\n   vmsize 0x0000000000004000\n  fileoff 114688\n filesize 16384\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 4\n    flags 0x0\nSection\n  sectname __la_symbol_ptr\n   segname __DATA\n      addr 0x000000000001c000\n      size 0x00000000000004b0\n    offset 114688\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000007\n reserved1 173 (index into indirect symbol table)\n reserved2 0\nSection\n  sectname __data\n   segname __DATA\n      addr 0x000000000001c4b0\n      size 0x0000000000000008\n    offset 115888\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __bss\n   segname __DATA\n      addr 0x000000000001c4b8\n      size 0x00000000000001c8\n    offset 0\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000001\n reserved1 0\n reserved2 0\nSection\n  sectname __common\n   segname __DATA\n      addr 0x000000000001c680\n      size 0x0000000000000010\n    offset 0\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000001\n reserved1 0\n reserved2 0\nLoad command 3\n      cmd LC_SEGMENT_64\n  cmdsize 72\n  segname __LINKEDIT\n   vmaddr 0x0000000000020000\n   vmsize 0x0000000000014000\n  fileoff 131072\n filesize 71328\n  maxprot 0x00000001\n initprot 0x00000001\n   nsects 0\n    flags 0x0\nLoad command 4\n          cmd LC_ID_DYLIB\n      cmdsize 56\n         name @rpath/libfebioopt.dylib (offset 24)\n   time stamp 1 Wed Dec 31 19:00:01 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 5\n            cmd LC_DYLD_INFO_ONLY\n        cmdsize 48\n     rebase_off 131072\n    rebase_size 264\n       bind_off 131336\n      bind_size 1880\n  weak_bind_off 133216\n weak_bind_size 176\n  lazy_bind_off 133392\n lazy_bind_size 6376\n     export_off 139768\n    export_size 7952\nLoad command 6\n     cmd LC_SYMTAB\n cmdsize 24\n  symoff 148176\n   nsyms 849\n  stroff 163056\n strsize 37648\nLoad command 7\n            cmd LC_DYSYMTAB\n        cmdsize 80\n      ilocalsym 0\n      nlocalsym 413\n     iextdefsym 413\n     nextdefsym 246\n      iundefsym 659\n      nundefsym 190\n         tocoff 0\n           ntoc 0\n      modtaboff 0\n        nmodtab 0\n   extrefsymoff 0\n    nextrefsyms 0\n indirectsymoff 161760\n  nindirectsyms 323\n      extreloff 0\n        nextrel 0\n      locreloff 0\n        nlocrel 0\nLoad command 8\n     cmd LC_UUID\n cmdsize 24\n    uuid CC667BFE-00BD-345C-AB13-4421302CFA31\nLoad command 9\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform 1\n    minos 26.0\n      sdk 26.5\n   ntools 1\n     tool 3\n  version 1267.0\nLoad command 10\n      cmd LC_SOURCE_VERSION\n  cmdsize 16\n  version 0.0\nLoad command 11\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name @rpath/libomp.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 5.0.0\ncompatibility version 5.0.0\nLoad command 12\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name @rpath/libfebioxml.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 13\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name @rpath/libfebioplot.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 14\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name @rpath/libfecore.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 15\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name /usr/lib/libc++.1.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 2100.43.0\ncompatibility version 1.0.0\nLoad command 16\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name /usr/lib/libSystem.B.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 1356.0.0\ncompatibility version 1.0.0\nLoad command 17\n          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\nLoad command 18\n      cmd LC_FUNCTION_STARTS\n  cmdsize 16\n  dataoff 147720\n datasize 456\nLoad command 19\n      cmd LC_DATA_IN_CODE\n  cmdsize 16\n  dataoff 148176\n datasize 0\nLoad command 20\n      cmd LC_CODE_SIGNATURE\n  cmdsize 16\n  dataoff 200704\n datasize 1696\nLoad command 21\n          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 22\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\n"
+        }
+      ],
+      "dependencies": [
+        "@rpath/libfebioopt.dylib",
+        "@rpath/libomp.dylib",
+        "@rpath/libfebioxml.dylib",
+        "@rpath/libfebioplot.dylib",
+        "@rpath/libfecore.dylib",
+        "/usr/lib/libc++.1.dylib",
+        "/usr/lib/libSystem.B.dylib"
+      ],
+      "path": "install/lib/libfebioopt.dylib",
+      "resolved_dependencies": {
+        "/usr/lib/libSystem.B.dylib": "system_install_name_not_loaded",
+        "/usr/lib/libc++.1.dylib": "system_install_name_not_loaded",
+        "@rpath/libfebioopt.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioopt.dylib",
+          "sha256": "9261f2d2d175590bf957759d65b575bdc1fb9598bb7a29ecbf1b89e2a4268da0"
+        },
+        "@rpath/libfebioplot.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioplot.dylib",
+          "sha256": "4689bebeefb692df58449bf17e04ad51c20c9022ba05954d3d21831499ea79d0"
+        },
+        "@rpath/libfebioxml.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioxml.dylib",
+          "sha256": "0ae741248991be10ba53a8c914467b7caa725a90b8f5c4512aa570fb48778959"
+        },
+        "@rpath/libfecore.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfecore.dylib",
+          "sha256": "fd5b224a47ad55f12b1e1ddd804bcb84d19f6ff63caf5b6d2b4e305337e4deca"
+        },
+        "@rpath/libomp.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib/libomp.dylib",
+          "sha256": "38f6afed27bf1d3bd52779547c7ab53aeda9c06c3473263b5cd11ed4f04b41f8"
+        }
+      },
+      "rpaths": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib",
+        "@loader_path",
+        "@executable_path/../lib"
+      ],
+      "sha256": "9261f2d2d175590bf957759d65b575bdc1fb9598bb7a29ecbf1b89e2a4268da0"
+    },
+    {
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/lipo",
+            "-archs",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioplot.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "arm64\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioplot.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioplot.dylib:\n\t@rpath/libfebioplot.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioplot.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioplot.dylib:\nLoad command 0\n      cmd LC_SEGMENT_64\n  cmdsize 632\n  segname __TEXT\n   vmaddr 0x0000000000000000\n   vmsize 0x0000000000014000\n  fileoff 0\n filesize 81920\n  maxprot 0x00000005\n initprot 0x00000005\n   nsects 7\n    flags 0x0\nSection\n  sectname __text\n   segname __TEXT\n      addr 0x00000000000017b0\n      size 0x00000000000105c8\n    offset 6064\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000400\n reserved1 0\n reserved2 0\nSection\n  sectname __stubs\n   segname __TEXT\n      addr 0x0000000000011d78\n      size 0x00000000000004b0\n    offset 73080\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000408\n reserved1 0 (index into indirect symbol table)\n reserved2 12 (size of stubs)\nSection\n  sectname __stub_helper\n   segname __TEXT\n      addr 0x0000000000012228\n      size 0x0000000000000498\n    offset 74280\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000400\n reserved1 0\n reserved2 0\nSection\n  sectname __gcc_except_tab\n   segname __TEXT\n      addr 0x00000000000126c0\n      size 0x0000000000000b60\n    offset 75456\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __const\n   segname __TEXT\n      addr 0x0000000000013220\n      size 0x000000000000027c\n    offset 78368\n     align 2^4 (16)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __cstring\n   segname __TEXT\n      addr 0x000000000001349c\n      size 0x0000000000000220\n    offset 79004\n     align 2^0 (1)\n    reloff 0\n    nreloc 0\n     flags 0x00000002\n reserved1 0\n reserved2 0\nSection\n  sectname __unwind_info\n   segname __TEXT\n      addr 0x00000000000136bc\n      size 0x00000000000004c0\n    offset 79548\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 1\n      cmd LC_SEGMENT_64\n  cmdsize 232\n  segname __DATA_CONST\n   vmaddr 0x0000000000014000\n   vmsize 0x0000000000004000\n  fileoff 81920\n filesize 16384\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 2\n    flags 0x10\nSection\n  sectname __got\n   segname __DATA_CONST\n      addr 0x0000000000014000\n      size 0x00000000000000a8\n    offset 81920\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000006\n reserved1 100 (index into indirect symbol table)\n reserved2 0\nSection\n  sectname __const\n   segname __DATA_CONST\n      addr 0x00000000000140a8\n      size 0x0000000000000928\n    offset 82088\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 2\n      cmd LC_SEGMENT_64\n  cmdsize 232\n  segname __DATA\n   vmaddr 0x0000000000018000\n   vmsize 0x0000000000004000\n  fileoff 98304\n filesize 16384\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 2\n    flags 0x0\nSection\n  sectname __la_symbol_ptr\n   segname __DATA\n      addr 0x0000000000018000\n      size 0x0000000000000300\n    offset 98304\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000007\n reserved1 121 (index into indirect symbol table)\n reserved2 0\nSection\n  sectname __data\n   segname __DATA\n      addr 0x0000000000018300\n      size 0x0000000000000008\n    offset 99072\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 3\n      cmd LC_SEGMENT_64\n  cmdsize 72\n  segname __LINKEDIT\n   vmaddr 0x000000000001c000\n   vmsize 0x000000000000c000\n  fileoff 114688\n filesize 39520\n  maxprot 0x00000001\n initprot 0x00000001\n   nsects 0\n    flags 0x0\nLoad command 4\n          cmd LC_ID_DYLIB\n      cmdsize 56\n         name @rpath/libfebioplot.dylib (offset 24)\n   time stamp 1 Wed Dec 31 19:00:01 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 5\n            cmd LC_DYLD_INFO_ONLY\n        cmdsize 48\n     rebase_off 114688\n    rebase_size 120\n       bind_off 114808\n      bind_size 1520\n  weak_bind_off 116328\n weak_bind_size 72\n  lazy_bind_off 116400\n lazy_bind_size 3448\n     export_off 119848\n    export_size 4984\nLoad command 6\n     cmd LC_SYMTAB\n cmdsize 24\n  symoff 125152\n   nsyms 511\n  stroff 134200\n strsize 18656\nLoad command 7\n            cmd LC_DYSYMTAB\n        cmdsize 80\n      ilocalsym 0\n      nlocalsym 245\n     iextdefsym 245\n     nextdefsym 135\n      iundefsym 380\n      nundefsym 131\n         tocoff 0\n           ntoc 0\n      modtaboff 0\n        nmodtab 0\n   extrefsymoff 0\n    nextrefsyms 0\n indirectsymoff 133328\n  nindirectsyms 217\n      extreloff 0\n        nextrel 0\n      locreloff 0\n        nlocrel 0\nLoad command 8\n     cmd LC_UUID\n cmdsize 24\n    uuid ACA5A2C5-61F7-3099-9A8E-1F3D04D8055A\nLoad command 9\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform 1\n    minos 26.0\n      sdk 26.5\n   ntools 1\n     tool 3\n  version 1267.0\nLoad command 10\n      cmd LC_SOURCE_VERSION\n  cmdsize 16\n  version 0.0\nLoad command 11\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name @rpath/libfecore.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 12\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name /usr/lib/libc++.1.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 2100.43.0\ncompatibility version 1.0.0\nLoad command 13\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name /usr/lib/libSystem.B.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 1356.0.0\ncompatibility version 1.0.0\nLoad command 14\n      cmd LC_FUNCTION_STARTS\n  cmdsize 16\n  dataoff 124832\n datasize 320\nLoad command 15\n      cmd LC_DATA_IN_CODE\n  cmdsize 16\n  dataoff 125152\n datasize 0\nLoad command 16\n      cmd LC_CODE_SIGNATURE\n  cmdsize 16\n  dataoff 152864\n datasize 1344\nLoad command 17\n          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 18\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\nLoad command 19\n          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\n"
+        }
+      ],
+      "dependencies": [
+        "@rpath/libfebioplot.dylib",
+        "@rpath/libfecore.dylib",
+        "/usr/lib/libc++.1.dylib",
+        "/usr/lib/libSystem.B.dylib"
+      ],
+      "path": "install/lib/libfebioplot.dylib",
+      "resolved_dependencies": {
+        "/usr/lib/libSystem.B.dylib": "system_install_name_not_loaded",
+        "/usr/lib/libc++.1.dylib": "system_install_name_not_loaded",
+        "@rpath/libfebioplot.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioplot.dylib",
+          "sha256": "4689bebeefb692df58449bf17e04ad51c20c9022ba05954d3d21831499ea79d0"
+        },
+        "@rpath/libfecore.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfecore.dylib",
+          "sha256": "fd5b224a47ad55f12b1e1ddd804bcb84d19f6ff63caf5b6d2b4e305337e4deca"
+        }
+      },
+      "rpaths": [
+        "@loader_path",
+        "@executable_path/../lib",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib"
+      ],
+      "sha256": "4689bebeefb692df58449bf17e04ad51c20c9022ba05954d3d21831499ea79d0"
+    },
+    {
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/lipo",
+            "-archs",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiorve.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "arm64\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiorve.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiorve.dylib:\n\t@rpath/libfebiorve.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebiomech.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebioxml.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebioplot.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiorve.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiorve.dylib:\nLoad command 0\n      cmd LC_SEGMENT_64\n  cmdsize 632\n  segname __TEXT\n   vmaddr 0x0000000000000000\n   vmsize 0x000000000002c000\n  fileoff 0\n filesize 180224\n  maxprot 0x00000005\n initprot 0x00000005\n   nsects 7\n    flags 0x0\nSection\n  sectname __text\n   segname __TEXT\n      addr 0x00000000000024a8\n      size 0x0000000000024930\n    offset 9384\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000400\n reserved1 0\n reserved2 0\nSection\n  sectname __stubs\n   segname __TEXT\n      addr 0x0000000000026dd8\n      size 0x0000000000000b04\n    offset 159192\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000408\n reserved1 0 (index into indirect symbol table)\n reserved2 12 (size of stubs)\nSection\n  sectname __stub_helper\n   segname __TEXT\n      addr 0x00000000000278dc\n      size 0x0000000000000b04\n    offset 162012\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000400\n reserved1 0\n reserved2 0\nSection\n  sectname __gcc_except_tab\n   segname __TEXT\n      addr 0x00000000000283e0\n      size 0x0000000000001094\n    offset 164832\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __const\n   segname __TEXT\n      addr 0x0000000000029480\n      size 0x0000000000000bb6\n    offset 169088\n     align 2^4 (16)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __cstring\n   segname __TEXT\n      addr 0x000000000002a036\n      size 0x000000000000062c\n    offset 172086\n     align 2^0 (1)\n    reloff 0\n    nreloc 0\n     flags 0x00000002\n reserved1 0\n reserved2 0\nSection\n  sectname __unwind_info\n   segname __TEXT\n      addr 0x000000000002a664\n      size 0x0000000000000968\n    offset 173668\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 1\n      cmd LC_SEGMENT_64\n  cmdsize 232\n  segname __DATA_CONST\n   vmaddr 0x000000000002c000\n   vmsize 0x0000000000004000\n  fileoff 180224\n filesize 16384\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 2\n    flags 0x10\nSection\n  sectname __got\n   segname __DATA_CONST\n      addr 0x000000000002c000\n      size 0x0000000000000110\n    offset 180224\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000006\n reserved1 235 (index into indirect symbol table)\n reserved2 0\nSection\n  sectname __const\n   segname __DATA_CONST\n      addr 0x000000000002c110\n      size 0x0000000000002540\n    offset 180496\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 2\n      cmd LC_SEGMENT_64\n  cmdsize 312\n  segname __DATA\n   vmaddr 0x0000000000030000\n   vmsize 0x0000000000004000\n  fileoff 196608\n filesize 16384\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 3\n    flags 0x0\nSection\n  sectname __la_symbol_ptr\n   segname __DATA\n      addr 0x0000000000030000\n      size 0x0000000000000748\n    offset 196608\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000007\n reserved1 269 (index into indirect symbol table)\n reserved2 0\nSection\n  sectname __data\n   segname __DATA\n      addr 0x0000000000030748\n      size 0x0000000000000010\n    offset 198472\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __bss\n   segname __DATA\n      addr 0x0000000000030758\n      size 0x00000000000003c0\n    offset 0\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000001\n reserved1 0\n reserved2 0\nLoad command 3\n      cmd LC_SEGMENT_64\n  cmdsize 72\n  segname __LINKEDIT\n   vmaddr 0x0000000000034000\n   vmsize 0x000000000001c000\n  fileoff 212992\n filesize 109920\n  maxprot 0x00000001\n initprot 0x00000001\n   nsects 0\n    flags 0x0\nLoad command 4\n          cmd LC_ID_DYLIB\n      cmdsize 56\n         name @rpath/libfebiorve.dylib (offset 24)\n   time stamp 1 Wed Dec 31 19:00:01 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 5\n            cmd LC_DYLD_INFO_ONLY\n        cmdsize 48\n     rebase_off 212992\n    rebase_size 472\n       bind_off 213464\n      bind_size 8024\n  weak_bind_off 221488\n weak_bind_size 48\n  lazy_bind_off 221536\n lazy_bind_size 9832\n     export_off 231368\n    export_size 10104\nLoad command 6\n     cmd LC_SYMTAB\n cmdsize 24\n  symoff 242088\n   nsyms 1210\n  stroff 263456\n strsize 56792\nLoad command 7\n            cmd LC_DYSYMTAB\n        cmdsize 80\n      ilocalsym 0\n      nlocalsym 550\n     iextdefsym 550\n     nextdefsym 302\n      iundefsym 852\n      nundefsym 358\n         tocoff 0\n           ntoc 0\n      modtaboff 0\n        nmodtab 0\n   extrefsymoff 0\n    nextrefsyms 0\n indirectsymoff 261448\n  nindirectsyms 502\n      extreloff 0\n        nextrel 0\n      locreloff 0\n        nlocrel 0\nLoad command 8\n     cmd LC_UUID\n cmdsize 24\n    uuid A04A80EE-1194-3C6B-8CC1-6268BC0B86B9\nLoad command 9\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform 1\n    minos 26.0\n      sdk 26.5\n   ntools 1\n     tool 3\n  version 1267.0\nLoad command 10\n      cmd LC_SOURCE_VERSION\n  cmdsize 16\n  version 0.0\nLoad command 11\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name @rpath/libfebiomech.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 12\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name @rpath/libfebioxml.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 13\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name @rpath/libfebioplot.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 14\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name @rpath/libfecore.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 15\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name /usr/lib/libc++.1.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 2100.43.0\ncompatibility version 1.0.0\nLoad command 16\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name /usr/lib/libSystem.B.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 1356.0.0\ncompatibility version 1.0.0\nLoad command 17\n      cmd LC_FUNCTION_STARTS\n  cmdsize 16\n  dataoff 241472\n datasize 616\nLoad command 18\n      cmd LC_DATA_IN_CODE\n  cmdsize 16\n  dataoff 242088\n datasize 0\nLoad command 19\n      cmd LC_CODE_SIGNATURE\n  cmdsize 16\n  dataoff 320256\n datasize 2656\nLoad command 20\n          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 21\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\nLoad command 22\n          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\n"
+        }
+      ],
+      "dependencies": [
+        "@rpath/libfebiorve.dylib",
+        "@rpath/libfebiomech.dylib",
+        "@rpath/libfebioxml.dylib",
+        "@rpath/libfebioplot.dylib",
+        "@rpath/libfecore.dylib",
+        "/usr/lib/libc++.1.dylib",
+        "/usr/lib/libSystem.B.dylib"
+      ],
+      "path": "install/lib/libfebiorve.dylib",
+      "resolved_dependencies": {
+        "/usr/lib/libSystem.B.dylib": "system_install_name_not_loaded",
+        "/usr/lib/libc++.1.dylib": "system_install_name_not_loaded",
+        "@rpath/libfebiomech.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiomech.dylib",
+          "sha256": "a035e3e975863fa8e35629d9348f885c6e38eba4aa1ef823af014e1f0af9974f"
+        },
+        "@rpath/libfebioplot.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioplot.dylib",
+          "sha256": "4689bebeefb692df58449bf17e04ad51c20c9022ba05954d3d21831499ea79d0"
+        },
+        "@rpath/libfebiorve.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiorve.dylib",
+          "sha256": "3e6ab78be3b49d7a7e6c369662006f9eb61aad3658da4190f8ff486e38ad6711"
+        },
+        "@rpath/libfebioxml.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioxml.dylib",
+          "sha256": "0ae741248991be10ba53a8c914467b7caa725a90b8f5c4512aa570fb48778959"
+        },
+        "@rpath/libfecore.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfecore.dylib",
+          "sha256": "fd5b224a47ad55f12b1e1ddd804bcb84d19f6ff63caf5b6d2b4e305337e4deca"
+        }
+      },
+      "rpaths": [
+        "@loader_path",
+        "@executable_path/../lib",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib"
+      ],
+      "sha256": "3e6ab78be3b49d7a7e6c369662006f9eb61aad3658da4190f8ff486e38ad6711"
+    },
+    {
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/lipo",
+            "-archs",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioxml.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "arm64\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioxml.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioxml.dylib:\n\t@rpath/libfebioxml.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioxml.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioxml.dylib:\nLoad command 0\n      cmd LC_SEGMENT_64\n  cmdsize 632\n  segname __TEXT\n   vmaddr 0x0000000000000000\n   vmsize 0x0000000000068000\n  fileoff 0\n filesize 425984\n  maxprot 0x00000005\n initprot 0x00000005\n   nsects 7\n    flags 0x0\nSection\n  sectname __text\n   segname __TEXT\n      addr 0x00000000000017b0\n      size 0x000000000005595c\n    offset 6064\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000400\n reserved1 0\n reserved2 0\nSection\n  sectname __stubs\n   segname __TEXT\n      addr 0x000000000005710c\n      size 0x0000000000001200\n    offset 356620\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000408\n reserved1 0 (index into indirect symbol table)\n reserved2 12 (size of stubs)\nSection\n  sectname __stub_helper\n   segname __TEXT\n      addr 0x000000000005830c\n      size 0x0000000000001200\n    offset 361228\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000400\n reserved1 0\n reserved2 0\nSection\n  sectname __gcc_except_tab\n   segname __TEXT\n      addr 0x000000000005950c\n      size 0x00000000000076b0\n    offset 365836\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __const\n   segname __TEXT\n      addr 0x0000000000060bc0\n      size 0x0000000000000b2e\n    offset 396224\n     align 2^4 (16)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __cstring\n   segname __TEXT\n      addr 0x00000000000616ee\n      size 0x0000000000001df1\n    offset 399086\n     align 2^0 (1)\n    reloff 0\n    nreloc 0\n     flags 0x00000002\n reserved1 0\n reserved2 0\nSection\n  sectname __unwind_info\n   segname __TEXT\n      addr 0x00000000000634e0\n      size 0x0000000000001140\n    offset 406752\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 1\n      cmd LC_SEGMENT_64\n  cmdsize 232\n  segname __DATA_CONST\n   vmaddr 0x0000000000068000\n   vmsize 0x0000000000004000\n  fileoff 425984\n filesize 16384\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 2\n    flags 0x10\nSection\n  sectname __got\n   segname __DATA_CONST\n      addr 0x0000000000068000\n      size 0x00000000000001e8\n    offset 425984\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000006\n reserved1 384 (index into indirect symbol table)\n reserved2 0\nSection\n  sectname __const\n   segname __DATA_CONST\n      addr 0x00000000000681e8\n      size 0x00000000000013d8\n    offset 426472\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 2\n      cmd LC_SEGMENT_64\n  cmdsize 232\n  segname __DATA\n   vmaddr 0x000000000006c000\n   vmsize 0x0000000000004000\n  fileoff 442368\n filesize 16384\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 2\n    flags 0x0\nSection\n  sectname __la_symbol_ptr\n   segname __DATA\n      addr 0x000000000006c000\n      size 0x0000000000000bf0\n    offset 442368\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000007\n reserved1 445 (index into indirect symbol table)\n reserved2 0\nSection\n  sectname __data\n   segname __DATA\n      addr 0x000000000006cbf0\n      size 0x0000000000000008\n    offset 445424\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 3\n      cmd LC_SEGMENT_64\n  cmdsize 72\n  segname __LINKEDIT\n   vmaddr 0x0000000000070000\n   vmsize 0x0000000000034000\n  fileoff 458752\n filesize 207152\n  maxprot 0x00000001\n initprot 0x00000001\n   nsects 0\n    flags 0x0\nLoad command 4\n          cmd LC_ID_DYLIB\n      cmdsize 56\n         name @rpath/libfebioxml.dylib (offset 24)\n   time stamp 1 Wed Dec 31 19:00:01 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 5\n            cmd LC_DYLD_INFO_ONLY\n        cmdsize 48\n     rebase_off 458752\n    rebase_size 352\n       bind_off 459104\n      bind_size 1888\n  weak_bind_off 460992\n weak_bind_size 112\n  lazy_bind_off 461104\n lazy_bind_size 17688\n     export_off 478792\n    export_size 26416\nLoad command 6\n     cmd LC_SYMTAB\n cmdsize 24\n  symoff 506224\n   nsyms 2464\n  stroff 548960\n strsize 111624\nLoad command 7\n            cmd LC_DYSYMTAB\n        cmdsize 80\n      ilocalsym 0\n      nlocalsym 1310\n     iextdefsym 1310\n     nextdefsym 711\n      iundefsym 2021\n      nundefsym 443\n         tocoff 0\n           ntoc 0\n      modtaboff 0\n        nmodtab 0\n   extrefsymoff 0\n    nextrefsyms 0\n indirectsymoff 545648\n  nindirectsyms 827\n      extreloff 0\n        nextrel 0\n      locreloff 0\n        nlocrel 0\nLoad command 8\n     cmd LC_UUID\n cmdsize 24\n    uuid 58302A33-D40E-3AC0-9AA3-3FDDDD44FFB6\nLoad command 9\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform 1\n    minos 26.0\n      sdk 26.5\n   ntools 1\n     tool 3\n  version 1267.0\nLoad command 10\n      cmd LC_SOURCE_VERSION\n  cmdsize 16\n  version 0.0\nLoad command 11\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name @rpath/libfecore.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 12\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name /usr/lib/libc++.1.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 2100.43.0\ncompatibility version 1.0.0\nLoad command 13\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name /usr/lib/libSystem.B.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 1356.0.0\ncompatibility version 1.0.0\nLoad command 14\n      cmd LC_FUNCTION_STARTS\n  cmdsize 16\n  dataoff 505208\n datasize 1016\nLoad command 15\n      cmd LC_DATA_IN_CODE\n  cmdsize 16\n  dataoff 506224\n datasize 0\nLoad command 16\n      cmd LC_CODE_SIGNATURE\n  cmdsize 16\n  dataoff 660592\n datasize 5312\nLoad command 17\n          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 18\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\nLoad command 19\n          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\n"
+        }
+      ],
+      "dependencies": [
+        "@rpath/libfebioxml.dylib",
+        "@rpath/libfecore.dylib",
+        "/usr/lib/libc++.1.dylib",
+        "/usr/lib/libSystem.B.dylib"
+      ],
+      "path": "install/lib/libfebioxml.dylib",
+      "resolved_dependencies": {
+        "/usr/lib/libSystem.B.dylib": "system_install_name_not_loaded",
+        "/usr/lib/libc++.1.dylib": "system_install_name_not_loaded",
+        "@rpath/libfebioxml.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioxml.dylib",
+          "sha256": "0ae741248991be10ba53a8c914467b7caa725a90b8f5c4512aa570fb48778959"
+        },
+        "@rpath/libfecore.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfecore.dylib",
+          "sha256": "fd5b224a47ad55f12b1e1ddd804bcb84d19f6ff63caf5b6d2b4e305337e4deca"
+        }
+      },
+      "rpaths": [
+        "@loader_path",
+        "@executable_path/../lib",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib"
+      ],
+      "sha256": "0ae741248991be10ba53a8c914467b7caa725a90b8f5c4512aa570fb48778959"
+    },
+    {
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/lipo",
+            "-archs",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfecore.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "arm64\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfecore.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfecore.dylib:\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfecore.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfecore.dylib:\nLoad command 0\n      cmd LC_SEGMENT_64\n  cmdsize 792\n  segname __TEXT\n   vmaddr 0x0000000000000000\n   vmsize 0x00000000001c0000\n  fileoff 0\n filesize 1835008\n  maxprot 0x00000005\n initprot 0x00000005\n   nsects 9\n    flags 0x0\nSection\n  sectname __text\n   segname __TEXT\n      addr 0x00000000000014a8\n      size 0x0000000000195b54\n    offset 5288\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000400\n reserved1 0\n reserved2 0\nSection\n  sectname __stubs\n   segname __TEXT\n      addr 0x0000000000196ffc\n      size 0x00000000000007d4\n    offset 1667068\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000408\n reserved1 0 (index into indirect symbol table)\n reserved2 12 (size of stubs)\nSection\n  sectname __stub_helper\n   segname __TEXT\n      addr 0x00000000001977d0\n      size 0x00000000000007bc\n    offset 1669072\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000400\n reserved1 0\n reserved2 0\nSection\n  sectname __init_offsets\n   segname __TEXT\n      addr 0x0000000000197f8c\n      size 0x000000000000000c\n    offset 1671052\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000016\n reserved1 0\n reserved2 0\nSection\n  sectname __gcc_except_tab\n   segname __TEXT\n      addr 0x0000000000197f98\n      size 0x00000000000133c0\n    offset 1671064\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __const\n   segname __TEXT\n      addr 0x00000000001ab360\n      size 0x00000000000067b1\n    offset 1749856\n     align 2^4 (16)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __cstring\n   segname __TEXT\n      addr 0x00000000001b1b18\n      size 0x0000000000005baa\n    offset 1776408\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000002\n reserved1 0\n reserved2 0\nSection\n  sectname __unwind_info\n   segname __TEXT\n      addr 0x00000000001b76c4\n      size 0x0000000000007478\n    offset 1799876\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __eh_frame\n   segname __TEXT\n      addr 0x00000000001beb40\n      size 0x0000000000000048\n    offset 1829696\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x6800000b\n reserved1 0\n reserved2 0\nLoad command 1\n      cmd LC_SEGMENT_64\n  cmdsize 232\n  segname __DATA_CONST\n   vmaddr 0x00000000001c0000\n   vmsize 0x0000000000014000\n  fileoff 1835008\n filesize 81920\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 2\n    flags 0x10\nSection\n  sectname __got\n   segname __DATA_CONST\n      addr 0x00000000001c0000\n      size 0x00000000000002d8\n    offset 1835008\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000006\n reserved1 167 (index into indirect symbol table)\n reserved2 0\nSection\n  sectname __const\n   segname __DATA_CONST\n      addr 0x00000000001c02d8\n      size 0x0000000000012cd0\n    offset 1835736\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 2\n      cmd LC_SEGMENT_64\n  cmdsize 552\n  segname __DATA\n   vmaddr 0x00000000001d4000\n   vmsize 0x0000000000004000\n  fileoff 1916928\n filesize 16384\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 6\n    flags 0x0\nSection\n  sectname __la_symbol_ptr\n   segname __DATA\n      addr 0x00000000001d4000\n      size 0x0000000000000518\n    offset 1916928\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000007\n reserved1 258 (index into indirect symbol table)\n reserved2 0\nSection\n  sectname __data\n   segname __DATA\n      addr 0x00000000001d4518\n      size 0x0000000000000150\n    offset 1918232\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __thread_vars\n   segname __DATA\n      addr 0x00000000001d4668\n      size 0x00000000000000c0\n    offset 1918568\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000013\n reserved1 0\n reserved2 0\nSection\n  sectname __thread_bss\n   segname __DATA\n      addr 0x00000000001d4728\n      size 0x0000000000000270\n    offset 0\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000012\n reserved1 0\n reserved2 0\nSection\n  sectname __common\n   segname __DATA\n      addr 0x00000000001d4998\n      size 0x0000000000000278\n    offset 0\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000001\n reserved1 0\n reserved2 0\nSection\n  sectname __bss\n   segname __DATA\n      addr 0x00000000001d4c10\n      size 0x0000000000001318\n    offset 0\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000001\n reserved1 0\n reserved2 0\nLoad command 3\n      cmd LC_SEGMENT_64\n  cmdsize 72\n  segname __LINKEDIT\n   vmaddr 0x00000000001d8000\n   vmsize 0x00000000000dc000\n  fileoff 1933312\n filesize 891184\n  maxprot 0x00000001\n initprot 0x00000001\n   nsects 0\n    flags 0x0\nLoad command 4\n          cmd LC_ID_DYLIB\n      cmdsize 48\n         name @rpath/libfecore.dylib (offset 24)\n   time stamp 1 Wed Dec 31 19:00:01 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 5\n            cmd LC_DYLD_INFO_ONLY\n        cmdsize 48\n     rebase_off 1933312\n    rebase_size 2944\n       bind_off 1936256\n      bind_size 3760\n  weak_bind_off 1940016\n weak_bind_size 576\n  lazy_bind_off 1940592\n lazy_bind_size 6176\n     export_off 1946768\n    export_size 154784\nLoad command 6\n     cmd LC_SYMTAB\n cmdsize 24\n  symoff 2110256\n   nsyms 11518\n  stroff 2296232\n strsize 506208\nLoad command 7\n            cmd LC_DYSYMTAB\n        cmdsize 80\n      ilocalsym 0\n      nlocalsym 6286\n     iextdefsym 6286\n     nextdefsym 5005\n      iundefsym 11291\n      nundefsym 227\n         tocoff 0\n           ntoc 0\n      modtaboff 0\n        nmodtab 0\n   extrefsymoff 0\n    nextrefsyms 0\n indirectsymoff 2294544\n  nindirectsyms 421\n      extreloff 0\n        nextrel 0\n      locreloff 0\n        nlocrel 0\nLoad command 8\n     cmd LC_UUID\n cmdsize 24\n    uuid 6E7BE368-E460-36D1-981A-98283C80B72F\nLoad command 9\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform 1\n    minos 26.0\n      sdk 26.5\n   ntools 1\n     tool 3\n  version 1267.0\nLoad command 10\n      cmd LC_SOURCE_VERSION\n  cmdsize 16\n  version 0.0\nLoad command 11\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name /usr/lib/libc++.1.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 2100.43.0\ncompatibility version 1.0.0\nLoad command 12\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name /usr/lib/libSystem.B.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 1356.0.0\ncompatibility version 1.0.0\nLoad command 13\n      cmd LC_FUNCTION_STARTS\n  cmdsize 16\n  dataoff 2101552\n datasize 8704\nLoad command 14\n      cmd LC_DATA_IN_CODE\n  cmdsize 16\n  dataoff 2110256\n datasize 0\nLoad command 15\n      cmd LC_CODE_SIGNATURE\n  cmdsize 16\n  dataoff 2802448\n datasize 22048\nLoad command 16\n          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 17\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\nLoad command 18\n          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\n"
+        }
+      ],
+      "dependencies": [
+        "@rpath/libfecore.dylib",
+        "/usr/lib/libc++.1.dylib",
+        "/usr/lib/libSystem.B.dylib"
+      ],
+      "path": "install/lib/libfecore.dylib",
+      "resolved_dependencies": {
+        "/usr/lib/libSystem.B.dylib": "system_install_name_not_loaded",
+        "/usr/lib/libc++.1.dylib": "system_install_name_not_loaded",
+        "@rpath/libfecore.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfecore.dylib",
+          "sha256": "fd5b224a47ad55f12b1e1ddd804bcb84d19f6ff63caf5b6d2b4e305337e4deca"
+        }
+      },
+      "rpaths": [
+        "@loader_path",
+        "@executable_path/../lib",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib"
+      ],
+      "sha256": "fd5b224a47ad55f12b1e1ddd804bcb84d19f6ff63caf5b6d2b4e305337e4deca"
+    },
+    {
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/lipo",
+            "-archs",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfeimglib.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "arm64\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfeimglib.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfeimglib.dylib:\n\t@rpath/libfeimglib.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfeimglib.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfeimglib.dylib:\nLoad command 0\n      cmd LC_SEGMENT_64\n  cmdsize 712\n  segname __TEXT\n   vmaddr 0x0000000000000000\n   vmsize 0x000000000000c000\n  fileoff 0\n filesize 49152\n  maxprot 0x00000005\n initprot 0x00000005\n   nsects 8\n    flags 0x0\nSection\n  sectname __text\n   segname __TEXT\n      addr 0x0000000000001850\n      size 0x0000000000008950\n    offset 6224\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000400\n reserved1 0\n reserved2 0\nSection\n  sectname __stubs\n   segname __TEXT\n      addr 0x000000000000a1a0\n      size 0x0000000000000390\n    offset 41376\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000408\n reserved1 0 (index into indirect symbol table)\n reserved2 12 (size of stubs)\nSection\n  sectname __stub_helper\n   segname __TEXT\n      addr 0x000000000000a530\n      size 0x0000000000000378\n    offset 42288\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000400\n reserved1 0\n reserved2 0\nSection\n  sectname __gcc_except_tab\n   segname __TEXT\n      addr 0x000000000000a8a8\n      size 0x0000000000000258\n    offset 43176\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __const\n   segname __TEXT\n      addr 0x000000000000ab00\n      size 0x0000000000000207\n    offset 43776\n     align 2^4 (16)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __cstring\n   segname __TEXT\n      addr 0x000000000000ad07\n      size 0x00000000000002da\n    offset 44295\n     align 2^0 (1)\n    reloff 0\n    nreloc 0\n     flags 0x00000002\n reserved1 0\n reserved2 0\nSection\n  sectname __unwind_info\n   segname __TEXT\n      addr 0x000000000000afe4\n      size 0x00000000000002c8\n    offset 45028\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __eh_frame\n   segname __TEXT\n      addr 0x000000000000b2b0\n      size 0x00000000000000c0\n    offset 45744\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x6800000b\n reserved1 0\n reserved2 0\nLoad command 1\n      cmd LC_SEGMENT_64\n  cmdsize 232\n  segname __DATA_CONST\n   vmaddr 0x000000000000c000\n   vmsize 0x0000000000004000\n  fileoff 49152\n filesize 16384\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 2\n    flags 0x10\nSection\n  sectname __got\n   segname __DATA_CONST\n      addr 0x000000000000c000\n      size 0x0000000000000068\n    offset 49152\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000006\n reserved1 76 (index into indirect symbol table)\n reserved2 0\nSection\n  sectname __const\n   segname __DATA_CONST\n      addr 0x000000000000c068\n      size 0x0000000000000928\n    offset 49256\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 2\n      cmd LC_SEGMENT_64\n  cmdsize 312\n  segname __DATA\n   vmaddr 0x0000000000010000\n   vmsize 0x0000000000004000\n  fileoff 65536\n filesize 16384\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 3\n    flags 0x0\nSection\n  sectname __la_symbol_ptr\n   segname __DATA\n      addr 0x0000000000010000\n      size 0x0000000000000240\n    offset 65536\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000007\n reserved1 89 (index into indirect symbol table)\n reserved2 0\nSection\n  sectname __data\n   segname __DATA\n      addr 0x0000000000010240\n      size 0x0000000000000008\n    offset 66112\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __bss\n   segname __DATA\n      addr 0x0000000000010248\n      size 0x0000000000000180\n    offset 0\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000001\n reserved1 0\n reserved2 0\nLoad command 3\n      cmd LC_SEGMENT_64\n  cmdsize 72\n  segname __LINKEDIT\n   vmaddr 0x0000000000014000\n   vmsize 0x0000000000008000\n  fileoff 81920\n filesize 25648\n  maxprot 0x00000001\n initprot 0x00000001\n   nsects 0\n    flags 0x0\nLoad command 4\n          cmd LC_ID_DYLIB\n      cmdsize 56\n         name @rpath/libfeimglib.dylib (offset 24)\n   time stamp 1 Wed Dec 31 19:00:01 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 5\n            cmd LC_DYLD_INFO_ONLY\n        cmdsize 48\n     rebase_off 81920\n    rebase_size 120\n       bind_off 82040\n      bind_size 1568\n  weak_bind_off 83608\n weak_bind_size 72\n  lazy_bind_off 83680\n lazy_bind_size 2640\n     export_off 86320\n    export_size 2600\nLoad command 6\n     cmd LC_SYMTAB\n cmdsize 24\n  symoff 89112\n   nsyms 353\n  stroff 95408\n strsize 11168\nLoad command 7\n            cmd LC_DYSYMTAB\n        cmdsize 80\n      ilocalsym 0\n      nlocalsym 148\n     iextdefsym 148\n     nextdefsym 100\n      iundefsym 248\n      nundefsym 105\n         tocoff 0\n           ntoc 0\n      modtaboff 0\n        nmodtab 0\n   extrefsymoff 0\n    nextrefsyms 0\n indirectsymoff 94760\n  nindirectsyms 161\n      extreloff 0\n        nextrel 0\n      locreloff 0\n        nlocrel 0\nLoad command 8\n     cmd LC_UUID\n cmdsize 24\n    uuid 42018990-7CB4-33F4-87AB-E0D2FF2FD217\nLoad command 9\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform 1\n    minos 26.0\n      sdk 26.5\n   ntools 1\n     tool 3\n  version 1267.0\nLoad command 10\n      cmd LC_SOURCE_VERSION\n  cmdsize 16\n  version 0.0\nLoad command 11\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name @rpath/libfecore.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 12\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name /usr/lib/libc++.1.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 2100.43.0\ncompatibility version 1.0.0\nLoad command 13\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name /usr/lib/libSystem.B.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 1356.0.0\ncompatibility version 1.0.0\nLoad command 14\n      cmd LC_FUNCTION_STARTS\n  cmdsize 16\n  dataoff 88920\n datasize 192\nLoad command 15\n      cmd LC_DATA_IN_CODE\n  cmdsize 16\n  dataoff 89112\n datasize 0\nLoad command 16\n      cmd LC_CODE_SIGNATURE\n  cmdsize 16\n  dataoff 106576\n datasize 992\nLoad command 17\n          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 18\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\nLoad command 19\n          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\n"
+        }
+      ],
+      "dependencies": [
+        "@rpath/libfeimglib.dylib",
+        "@rpath/libfecore.dylib",
+        "/usr/lib/libc++.1.dylib",
+        "/usr/lib/libSystem.B.dylib"
+      ],
+      "path": "install/lib/libfeimglib.dylib",
+      "resolved_dependencies": {
+        "/usr/lib/libSystem.B.dylib": "system_install_name_not_loaded",
+        "/usr/lib/libc++.1.dylib": "system_install_name_not_loaded",
+        "@rpath/libfecore.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfecore.dylib",
+          "sha256": "fd5b224a47ad55f12b1e1ddd804bcb84d19f6ff63caf5b6d2b4e305337e4deca"
+        },
+        "@rpath/libfeimglib.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfeimglib.dylib",
+          "sha256": "13a35c45ca32da28f72644d7b2b73feaf62dbe24312e91b235a1789365d7e171"
+        }
+      },
+      "rpaths": [
+        "@loader_path",
+        "@executable_path/../lib",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib"
+      ],
+      "sha256": "13a35c45ca32da28f72644d7b2b73feaf62dbe24312e91b235a1789365d7e171"
+    },
+    {
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/lipo",
+            "-archs",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libnumcore.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "arm64\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libnumcore.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libnumcore.dylib:\n\t@rpath/libnumcore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libomp.dylib (compatibility version 5.0.0, current version 5.0.0)\n\t/System/Library/Frameworks/Accelerate.framework/Versions/A/Accelerate (compatibility version 1.0.0, current version 4.0.0)\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n"
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libnumcore.dylib"
+          ],
+          "exit_code": 0,
+          "stderr": "",
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libnumcore.dylib:\nLoad command 0\n      cmd LC_SEGMENT_64\n  cmdsize 712\n  segname __TEXT\n   vmaddr 0x0000000000000000\n   vmsize 0x0000000000018000\n  fileoff 0\n filesize 98304\n  maxprot 0x00000005\n initprot 0x00000005\n   nsects 8\n    flags 0x0\nSection\n  sectname __text\n   segname __TEXT\n      addr 0x0000000000002178\n      size 0x000000000000ffac\n    offset 8568\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000400\n reserved1 0\n reserved2 0\nSection\n  sectname __stubs\n   segname __TEXT\n      addr 0x0000000000012124\n      size 0x0000000000000594\n    offset 74020\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000408\n reserved1 0 (index into indirect symbol table)\n reserved2 12 (size of stubs)\nSection\n  sectname __stub_helper\n   segname __TEXT\n      addr 0x00000000000126b8\n      size 0x0000000000000588\n    offset 75448\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x80000400\n reserved1 0\n reserved2 0\nSection\n  sectname __gcc_except_tab\n   segname __TEXT\n      addr 0x0000000000012c40\n      size 0x0000000000000bc4\n    offset 76864\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __const\n   segname __TEXT\n      addr 0x0000000000013810\n      size 0x0000000000000590\n    offset 79888\n     align 2^4 (16)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __cstring\n   segname __TEXT\n      addr 0x0000000000013da0\n      size 0x0000000000000f98\n    offset 81312\n     align 2^0 (1)\n    reloff 0\n    nreloc 0\n     flags 0x00000002\n reserved1 0\n reserved2 0\nSection\n  sectname __oslogstring\n   segname __TEXT\n      addr 0x0000000000014d38\n      size 0x0000000000000421\n    offset 85304\n     align 2^0 (1)\n    reloff 0\n    nreloc 0\n     flags 0x00000002\n reserved1 0\n reserved2 0\nSection\n  sectname __unwind_info\n   segname __TEXT\n      addr 0x000000000001515c\n      size 0x0000000000000748\n    offset 86364\n     align 2^2 (4)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 1\n      cmd LC_SEGMENT_64\n  cmdsize 232\n  segname __DATA_CONST\n   vmaddr 0x0000000000018000\n   vmsize 0x0000000000004000\n  fileoff 98304\n filesize 16384\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 2\n    flags 0x10\nSection\n  sectname __got\n   segname __DATA_CONST\n      addr 0x0000000000018000\n      size 0x00000000000000e0\n    offset 98304\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000006\n reserved1 119 (index into indirect symbol table)\n reserved2 0\nSection\n  sectname __const\n   segname __DATA_CONST\n      addr 0x00000000000180e0\n      size 0x0000000000001cd0\n    offset 98528\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nLoad command 2\n      cmd LC_SEGMENT_64\n  cmdsize 312\n  segname __DATA\n   vmaddr 0x000000000001c000\n   vmsize 0x0000000000004000\n  fileoff 114688\n filesize 16384\n  maxprot 0x00000003\n initprot 0x00000003\n   nsects 3\n    flags 0x0\nSection\n  sectname __la_symbol_ptr\n   segname __DATA\n      addr 0x000000000001c000\n      size 0x00000000000003a0\n    offset 114688\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000007\n reserved1 147 (index into indirect symbol table)\n reserved2 0\nSection\n  sectname __data\n   segname __DATA\n      addr 0x000000000001c3a0\n      size 0x0000000000000008\n    offset 115616\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000000\n reserved1 0\n reserved2 0\nSection\n  sectname __bss\n   segname __DATA\n      addr 0x000000000001c3a8\n      size 0x0000000000000480\n    offset 0\n     align 2^3 (8)\n    reloff 0\n    nreloc 0\n     flags 0x00000001\n reserved1 0\n reserved2 0\nLoad command 3\n      cmd LC_SEGMENT_64\n  cmdsize 72\n  segname __LINKEDIT\n   vmaddr 0x0000000000020000\n   vmsize 0x0000000000014000\n  fileoff 131072\n filesize 73936\n  maxprot 0x00000001\n initprot 0x00000001\n   nsects 0\n    flags 0x0\nLoad command 4\n          cmd LC_ID_DYLIB\n      cmdsize 48\n         name @rpath/libnumcore.dylib (offset 24)\n   time stamp 1 Wed Dec 31 19:00:01 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 5\n            cmd LC_DYLD_INFO_ONLY\n        cmdsize 48\n     rebase_off 131072\n    rebase_size 328\n       bind_off 131400\n      bind_size 2744\n  weak_bind_off 134144\n weak_bind_size 64\n  lazy_bind_off 134208\n lazy_bind_size 4408\n     export_off 138616\n    export_size 11632\nLoad command 6\n     cmd LC_SYMTAB\n cmdsize 24\n  symoff 150816\n   nsyms 945\n  stroff 166992\n strsize 36288\nLoad command 7\n            cmd LC_DYSYMTAB\n        cmdsize 80\n      ilocalsym 0\n      nlocalsym 382\n     iextdefsym 382\n     nextdefsym 394\n      iundefsym 776\n      nundefsym 169\n         tocoff 0\n           ntoc 0\n      modtaboff 0\n        nmodtab 0\n   extrefsymoff 0\n    nextrefsyms 0\n indirectsymoff 165936\n  nindirectsyms 263\n      extreloff 0\n        nextrel 0\n      locreloff 0\n        nlocrel 0\nLoad command 8\n     cmd LC_UUID\n cmdsize 24\n    uuid 57B6F0D6-6FC9-3971-9E8A-D227F6A7A1F9\nLoad command 9\n      cmd LC_BUILD_VERSION\n  cmdsize 32\n platform 1\n    minos 26.0\n      sdk 26.5\n   ntools 1\n     tool 3\n  version 1267.0\nLoad command 10\n      cmd LC_SOURCE_VERSION\n  cmdsize 16\n  version 0.0\nLoad command 11\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name @rpath/libomp.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 5.0.0\ncompatibility version 5.0.0\nLoad command 12\n          cmd LC_LOAD_DYLIB\n      cmdsize 96\n         name /System/Library/Frameworks/Accelerate.framework/Versions/A/Accelerate (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 4.0.0\ncompatibility version 1.0.0\nLoad command 13\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name @rpath/libfecore.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 0.0.0\ncompatibility version 0.0.0\nLoad command 14\n          cmd LC_LOAD_DYLIB\n      cmdsize 48\n         name /usr/lib/libc++.1.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 2100.43.0\ncompatibility version 1.0.0\nLoad command 15\n          cmd LC_LOAD_DYLIB\n      cmdsize 56\n         name /usr/lib/libSystem.B.dylib (offset 24)\n   time stamp 2 Wed Dec 31 19:00:02 1969\n      current version 1356.0.0\ncompatibility version 1.0.0\nLoad command 16\n          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\nLoad command 17\n      cmd LC_FUNCTION_STARTS\n  cmdsize 16\n  dataoff 150248\n datasize 568\nLoad command 18\n      cmd LC_DATA_IN_CODE\n  cmdsize 16\n  dataoff 150816\n datasize 0\nLoad command 19\n      cmd LC_CODE_SIGNATURE\n  cmdsize 16\n  dataoff 203280\n datasize 1728\nLoad command 20\n          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 21\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\n"
+        }
+      ],
+      "dependencies": [
+        "@rpath/libnumcore.dylib",
+        "@rpath/libomp.dylib",
+        "/System/Library/Frameworks/Accelerate.framework/Versions/A/Accelerate",
+        "@rpath/libfecore.dylib",
+        "/usr/lib/libc++.1.dylib",
+        "/usr/lib/libSystem.B.dylib"
+      ],
+      "path": "install/lib/libnumcore.dylib",
+      "resolved_dependencies": {
+        "/System/Library/Frameworks/Accelerate.framework/Versions/A/Accelerate": "system_install_name_not_loaded",
+        "/usr/lib/libSystem.B.dylib": "system_install_name_not_loaded",
+        "/usr/lib/libc++.1.dylib": "system_install_name_not_loaded",
+        "@rpath/libfecore.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfecore.dylib",
+          "sha256": "fd5b224a47ad55f12b1e1ddd804bcb84d19f6ff63caf5b6d2b4e305337e4deca"
+        },
+        "@rpath/libnumcore.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libnumcore.dylib",
+          "sha256": "2c578d76fe57193494872e18d07469e6d542dbf1951d94b252ac04552514b4a3"
+        },
+        "@rpath/libomp.dylib": {
+          "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib/libomp.dylib",
+          "sha256": "38f6afed27bf1d3bd52779547c7ab53aeda9c06c3473263b5cd11ed4f04b41f8"
+        }
+      },
+      "rpaths": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib",
+        "@loader_path",
+        "@executable_path/../lib"
+      ],
+      "sha256": "2c578d76fe57193494872e18d07469e6d542dbf1951d94b252ac04552514b4a3"
+    }
+  ],
+  "solver_executed": false,
+  "status": "static_linkage_passed"
+}
