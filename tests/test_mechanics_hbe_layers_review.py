@@ -86,7 +86,9 @@ def test_paired_metric_mapping_cannot_relabel_two_compression_curves_as_two_mode
 def primitives(steps):
     for step in range(steps + 1):
         yield f"*Step = {step}\n"
-        yield f"*Time = {step / steps:.12g}\n"
+        # DataRecord.cpp headers use %.9lg; the prior fixture mistakenly used
+        # the separate numeric-row precision (12 significant digits) here.
+        yield f"*Time = {step / steps:.9g}\n"
         yield "*Data = nodes\n"
         yield f"2,{step},2,3\n"
         yield f"1,{step},4,5\n"

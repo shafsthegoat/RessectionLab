@@ -258,6 +258,15 @@ decks and measurement bytes remained unchanged. The 219 pre-execution controls
 passed; the real-output failure is retained independently of those tests. See
 `artifacts/mechanics/hbe-01-03-experiment-v1/RESULT.md`.
 
+The narrow header-format repair passed 43 focused checks and independent
+saved-output replay. All 61 states of the existing coarse compression run now
+pass its individual numerical criteria, including 60 nonlinear residual checks.
+No solver was rerun, mechanical tolerance changed or measured curve accessed.
+This establishes neither mesh convergence nor agreement with tissue measurements;
+continuation still requires its own source-bound release. The original parser
+and its reproduced failures remain in
+`artifacts/mechanics/hbe-time-header-independent-review-v1/`.
+
 For the real-anatomy displacement proof of concept, six official RESECT Case4
 files (35,068,010 bytes) were acquired and verified. This patient is permanently
 development and does not change existing cohort roles. The reviewed access

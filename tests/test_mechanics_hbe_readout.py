@@ -31,10 +31,10 @@ def fixture(root,*,reaction_sign=1,corrupt_displacement=False,mu=1000.):
         force=dW*(2*R)**2;raw=np.zeros_like(X);raw[:4,2]=force/4;raw[4:,2]=-force/4;raw*=reaction_sign
         if corrupt_displacement and step==30:u[6,0]+=.001
         values=np.column_stack((moved,u,raw))
-        nodes.extend([f'*Step = {step}',f'*Time = {t:.12g}','*Data = mechanics_nodes_si'])
+        nodes.extend([f'*Step = {step}',f'*Time = {t:.9g}','*Data = mechanics_nodes_si'])
         nodes.extend(str(i)+','+','.join(f'{v:.12g}' for v in row) for i,row in enumerate(values,1))
         W=mu/2*((2+stretch**2)*stretch**(-2/3)-3)+K/4*(stretch**2-1-2*np.log(stretch))
-        elements.extend([f'*Step = {step}',f'*Time = {t:.12g}','*Data = mechanics_elements_si',
+        elements.extend([f'*Step = {step}',f'*Time = {t:.9g}','*Data = mechanics_elements_si',
                          f'1,0,0,0,0,0,0,{stretch:.12g},{W:.12g}'])
         if step:solver.extend([f'Nonlinear solution status: time= {t:.6g}',' residual 1e-6 1e-18 1e-14'])
     solver.append('N O R M A L T E R M I N A T I O N')

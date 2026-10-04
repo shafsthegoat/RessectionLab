@@ -16,6 +16,11 @@ def iter_data_records(lines, *, expected_times, item_count, field_count, record_
     times=tuple(float(t) for t in expected_times)
     if len(times)<2 or times[0]!=0 or times[-1]!=1 or not all(math.isfinite(t) for t in times) or any(b<=a for a,b in zip(times,times[1:])):
         raise ValueError('Declared complete rest-to-load time grid required')
+    # FEBio v4.13 DataRecord.cpp prints headers with %.9lg. Numeric rows
+    # separately use stream precision(12); that precision does not apply here.
+    printed_times=tuple(float(format(t,'.9g')) for t in times)
+    if len(set(printed_times))!=len(times):
+        raise ValueError('Time grid aliases in primitive header precision')
     if not isinstance(item_count,int) or not 1<=item_count<=20000 or not isinstance(field_count,int) or not 1<=field_count<=16:
         raise ValueError('Invalid bounded output dimensions')
     count=0; total_bytes=0; record=None
@@ -23,8 +28,9 @@ def iter_data_records(lines, *, expected_times, item_count, field_count, record_
     def finish(value,index):
         if value is None or index>=len(times) or value['step']!=index or value['name']!=record_name or value['time'] is None:
             raise ValueError('Missing, extra or unbound output state')
-        # Tagged default output uses 12 significant digits, so tolerate only print rounding.
-        if not math.isfinite(value['time']) or abs(value['time']-times[index])>5e-12:
+        # Bind the printed representation to its exact declared step. Do not
+        # broaden a mechanical or physical-time tolerance to accept the header.
+        if not math.isfinite(value['time']) or value['time']!=printed_times[index]:
             raise ValueError('Unexpected physical load time')
         if not value['seen'].all():
             raise ValueError('Missing primitive node/element ID')
@@ -74,7 +80,7 @@ def check_solver_records(lines, *, expected_times, residual_floor_N2, maximum_by
     if len(times)<2 or times[0]!=0 or times[-1]!=1 or not all(math.isfinite(t) for t in times) or any(b<=a for a,b in zip(times,times[1:])) or not math.isfinite(residual_floor_N2) or residual_floor_N2<=0:
         raise ValueError('Finite declared residual floor and complete time grid required')
     # FESolidSolver2 prints status time with %lg (six significant digits), unlike
-    # the 12-digit primitive recorder. Match that pinned source format exactly.
+    # the nine-digit primitive time header. Match the pinned format exactly.
     printed_times={float(format(t,'.6g')):i for i,t in enumerate(times) if i>0}
     if len(printed_times)!=len(times)-1:raise ValueError('Time grid aliases in solver status precision')
     seen={};active=None;active_has_residual=False;normal=False;byte_count=0

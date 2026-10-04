@@ -1,5 +1,7 @@
-"""Analytical text fixtures; no actual FEM or HBE output read."""
+"""Parser contracts plus a compact saved solver-log regression; no HBE curves."""
+import hashlib
 import importlib.util
+import json
 from pathlib import Path
 
 import pytest
@@ -36,3 +38,40 @@ def test_solver_requires_every_residual_and_rejects_failure_or_bad_final_norm():
     with pytest.raises(ValueError):o.check_solver_records(lines+['negative jacobian'],**args)
     lines[-2]=' residual 1e-6 1e-5 1e-14'
     assert not o.check_solver_records(lines,**args)['passed']
+
+
+def test_actual_saved_coarse_headers_use_nine_significant_digits():
+    directory=Path(__file__).resolve().parents[1]/'artifacts/mechanics/hbe-primitive-time-format-v1'
+    provenance=json.loads((directory/'fixture-provenance.json').read_text())
+    path=Path(__file__).resolve().parents[1]/provenance['extracted_fixture']['path']
+    data=path.read_bytes()
+    assert hashlib.sha256(data).hexdigest()==provenance['extracted_fixture']['sha256']
+    records=list(o.iter_data_records(
+        data.decode().splitlines(keepends=True), expected_times=[i/60 for i in range(61)],
+        item_count=1, field_count=9, record_name='mechanics_nodes_si',
+    ))
+    assert len(records)==61
+    assert records[1]['time']==.0166666667
+    assert records[1]['declared_time']==1/60
+
+
+@pytest.mark.parametrize('steps',[60,120])
+def test_declared_grid_matches_tagged_header_format_without_broad_tolerance(steps):
+    lines='\n'.join(
+        f'*Step = {i}\n*Time = {i/steps:.9g}\n*Data = nodes\n1,1,2,3'
+        for i in range(steps+1)
+    )
+    args=dict(expected_times=[i/steps for i in range(steps+1)],item_count=1,field_count=3,record_name='nodes')
+    assert len(list(o.iter_data_records(lines.splitlines(),**args)))==steps+1
+    wrong=lines.replace(f'*Time = {1/steps:.9g}',f'*Time = {1/steps+1e-8:.9g}',1)
+    with pytest.raises(ValueError,match='physical load time'):
+        list(o.iter_data_records(wrong.splitlines(),**args))
+
+
+def test_declared_grid_alias_at_header_precision_rejected_before_read():
+    def unopened():
+        raise AssertionError('Aliased declaration must fail before primitive IO')
+        yield ''
+    with pytest.raises(ValueError,match='aliases'):
+        list(o.iter_data_records(unopened(),expected_times=[0,.5,.50000000001,1],
+                                 item_count=1,field_count=1,record_name='nodes'))

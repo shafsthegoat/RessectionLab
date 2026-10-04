@@ -8,7 +8,7 @@ These helpers implement the [fixed specimen protocol](hbe-specimen-mechanics-poc
 
 The helper requires every actual initial/converged primitive state, verifies declared loading and source identities, reconstructs signed force/torque, deformation Jacobians, three-field energy and 75 probe displacements, and checks final solver residuals. Nonpositive logged Jacobians also reject the run even if node-based samples are positive. Logged `sed` is only diagnostic: it averages pointwise material energy and is not generally the three-field total energy.
 
-`mechanics_hbe_outputs.py` owns the streaming primitive/solver parsers. Primitive times use the recorder's 12 significant digits; nonlinear solver status uses `%lg` precision. No missing state is manufactured. `mechanics_hbe_physics.py` owns independent hex8 kinematics, quadrature and numerical comparisons; it contains no equilibrium solver or mesh generator.
+`mechanics_hbe_outputs.py` owns the streaming primitive/solver parsers. Primitive time headers use `%.9lg`; the separate numeric rows use 12 significant digits. Nonlinear solver status uses `%lg` precision. Each header must match the declared step at its exact printed precision, and grids that alias at that precision are rejected. The first saved coarse run exposed the earlier mistaken 12-digit header assumption; the [preserved failure and actual-log fixture](../artifacts/mechanics/hbe-primitive-time-format-v1/negative-control.json) document its correction without changing mechanics tolerances. No missing state is manufactured. `mechanics_hbe_physics.py` owns independent hex8 kinematics, quadrature and numerical comparisons; it contains no equilibrium solver or mesh generator.
 
 ## Comparison inventory
 
