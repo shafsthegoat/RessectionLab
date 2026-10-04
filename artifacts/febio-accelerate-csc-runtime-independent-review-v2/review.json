@@ -1,0 +1,50 @@
+{
+  "blocking_findings": [],
+  "focused_controls": {
+    "all_seven_bound_files_unchanged": true,
+    "passed": 18,
+    "pytest_seconds": 0.12,
+    "receipt_sha256": "9bb0f6b990217cd7d0f93d09df03bccc9bdf4b4125ea7ec4f48db95081044ae8"
+  },
+  "independent_controls": [
+    "Completed worker plus changed final original-inventory check must fail acceptance and publish no runtime identity.",
+    "Completed worker plus matching final preservation publishes identity bound to acceptance and all stage artifacts; second attempt blocked.",
+    "Mocked compiler exit7 is preserved as CalledProcessError, worker remains failed, and original integrity is checked after failure."
+  ],
+  "limits": [
+    "Supervisor memory peak remains sampled; parent post-supervision integrity rehashing is separate read-only work outside worker caps.",
+    "Static linkage inspection does not execute dynamic symbol resolution.",
+    "Successful six positive-only sanitizer controls cover repaired pointer conversion, not full adapter factorization or physics.",
+    "A successful future build remains pending separately released same-runtime numerical controls."
+  ],
+  "prior_review_findings": [
+    {
+      "finding": "Accepted configure originally lacked explicit successful worker/supervisor stage and cap checks.",
+      "resolution": "Repaired before frozen review; owner negative controls passed."
+    },
+    {
+      "finding": "Worker Python startup/import overrides were insufficiently isolated.",
+      "resolution": "Repaired with exact pinned helper import, isolated interpreter and child-only environment removal; source control passed."
+    }
+  ],
+  "reviewed_guards": [
+    "Fixed fresh private prefix and exclusive one-attempt configure/build markers; caps120s/900s/3GiB and2jobs inherited from exact preserved v1 declaration.",
+    "Exact original2322-source inventory before patch and exact one-file patched inventory after; no fuzzy patch or new downloads. Original6164 acquisition entries, tools, installed runtime and original receipts checked before/after worker and again after supervision.",
+    "Build requires matching successful configure result, supervisor status/caps, parent acceptance, source inventory and cache. Independent parent mocks verify runtime identity appears only when post-supervision original preservation matches.",
+    "Pinned helper import and isolated worker -I -S -B; child Python/DYLD/LD overrides removed without changing parent environment or HOME/CODEX_HOME.",
+    "Fixed compiler, SDK, private OpenMP, cache options and two-job target graph retain upstream source settings. Every installed Mach-O must match original13-name set, be arm64 and resolve through declared RPATH to new libraries or pinned old OpenMP; system dependencies retained as install names.",
+    "Published runtime identity binds exact patch/source, installed inventory, linkage, configure acceptance and parent build acceptance. No executable version or model invocation is part of this declaration."
+  ],
+  "schema_version": 1,
+  "scope": "Source and declaration review plus mocked orchestration only; no configure, build, solver, patient data, curves, or original faulty diagnostic execution.",
+  "source_bindings": {
+    "artifacts/febio-accelerate-csc-independent-review-v1/positive-control-review.json": "d108db018cd98cf8a10db1d0d4bd23d787e82d9d08ca075c802e84b4e1c51e4b",
+    "manifests/experiments/febio-accelerate-csc-runtime-v1.json": "7517aa3bd9a40cce9ce2864e5118c52185448a1a3eb1bab24b42ae9e9e4026b2",
+    "manifests/experiments/febio-accelerate-csc-runtime-v2.json": "6079e2198a4c21b71354c8a23054eb6d7ec75415576168ebecdfaa9e8c19bb06",
+    "scripts/febio_accelerate_runtime.py": "a3cf6dfb0db0cdac0311607293a65cf02889f38c52ae4a537d62007b97025d7d",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "tests/test_febio_accelerate_runtime.py": "d7ef65c2ba8f7a46e5d57cf789d57e7d777cb65a222e8afa814ec56b160ea03b",
+    "tests/test_febio_accelerate_runtime_review.py": "0ef9fef94ece2cda6d9e4bd15689f6a4275f676362d635aea499a9d69c7fa17d"
+  },
+  "status": "independent_build_driver_review_passed_pending_root_release"
+}

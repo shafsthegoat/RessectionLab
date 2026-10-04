@@ -279,6 +279,16 @@ factorization, numerical and physical validation are still pending. A new isolat
 runtime declaration will bind this reduced positive-only scope. See
 `artifacts/febio-accelerate-csc-repair-v1/README.md` and its independent review.
 
+The isolated build driver and runtime-v2 preparation passed 18 focused controls,
+but root withheld the build after a further static review found uninitialized
+matrix attributes in the upstream adapter. The SDK requires defined transpose,
+triangle and reserved/allocation flags; the pointer-only patch does not provide
+them. All symbolic-factor option fields are assigned, so that separate structure
+needs no correctness change. A minimal matrix-initialization addition and a new
+combined-patch declaration are required. No replacement runtime has been built
+or executed; the previous positive offset tests and driver review remain valid
+within their stated scope. See the runtime-v2 preparation root decision.
+
 One bounded Gmsh preparation generated the three measured-specimen meshes
 (96/768/2,592 hex elements) and 18 fixed loading decks in 3.43 s, with
 140.2 MB maximum sampled memory. Independent native-mesh and deck review

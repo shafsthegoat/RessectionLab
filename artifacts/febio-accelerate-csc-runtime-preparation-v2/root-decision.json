@@ -1,0 +1,11 @@
+{
+  "status": "build_release_withheld_due_to_additional_adapter_initialization_defect",
+  "build_driver_review_status": "passed_18_controls",
+  "driver_sha256": "a3cf6dfb0db0cdac0311607293a65cf02889f38c52ae4a537d62007b97025d7d",
+  "declaration_sha256": "6079e2198a4c21b71354c8a23054eb6d7ec75415576168ebecdfaa9e8c19bb06",
+  "configure_or_build_executed": false,
+  "new_prefix_exists": false,
+  "reason": "Subsequent static SDK/source review confirmed SMS matrix attributes are not initialized in the pointer-only repaired adapter. Separate initialization repair and positive-only verification required before a new combined-patch declaration. The build-driver review and original six offset-copy controls retain their narrow validity.",
+  "original_or_repaired_adapter_executed": false,
+  "prior_declarations_preserved": true
+}

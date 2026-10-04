@@ -1,0 +1,160 @@
+{
+  "acceptance": [
+    "Reverify all 6164 original source/tool/acquisition entries, original installed inventory and exact original runtime/receipt hashes before/after each worker and again after supervision even if worker terminated.",
+    "Extract only pinned local source tarball into a fresh prefix. Verify all2322 source entries before patch; apply one exact unified hunk without fuzz; only NumCore/AccelerateSparseSolver.cpp may differ, with exact60e5a3f2 digest.",
+    "Reproduce v1 compiler/SDK/CMake/OpenMP flags, cache, generator, architecture, options and RPATH without additions or downloads. Fixed fresh configure/build attempt markers cannot restart.",
+    "Require matching successful configure worker, supervisor and parent acceptance plus immutable source/cache before build.",
+    "Inspect every installed Mach-O: exact original13 binary/library names, exclusivelyarm64, declared dependency names/RPATH and resolution to new installed libraries, exact old private OpenMP, or declared system names. No executable launch.",
+    "Publish final runtime identity only after successful worker/supervisor/preservation/artifact acceptance. Bind complete source/install/linkage/build receipts, patched source and original dependency identity.",
+    "Final runtime status is isolated_patched_runtime_built_pending_numerical_controls. runtime_version4.13.0 is pinned-source metadata, not an executed version probe. Eight explicit same-runtime numerical controls remain a separate release."
+  ],
+  "basis": {
+    "bytes": 12334,
+    "path": "manifests/experiments/febio-accelerate-csc-runtime-v1.json",
+    "sha256": "7517aa3bd9a40cce9ce2864e5118c52185448a1a3eb1bab24b42ae9e9e4026b2"
+  },
+  "declaration_id": "febio-accelerate-csc-runtime-v2",
+  "driver_path": "scripts/febio_accelerate_runtime.py",
+  "driver_sha256": "a3cf6dfb0db0cdac0311607293a65cf02889f38c52ae4a537d62007b97025d7d",
+  "execution": {
+    "attempts_per_stage": 1,
+    "automatic_retry": false,
+    "combined_build_install_seconds": 900,
+    "configure_seconds": 120,
+    "notes": [
+      "Caps include worker verification/preparation and stage subprocesses under the reviewed supervisor; post-supervision parent integrity verification is separate read-only work.",
+      "Group RSS is sampled, not an exact between-sample peak; reviewed supervisor cleanup behavior remains unchanged."
+    ],
+    "parallel_jobs": 2,
+    "private_environment": "Reuse pinned febio_runtime.private_environment; additionally remove all PYTHON* variables, __PYVENV_LAUNCHER__, LD_PRELOAD and LD_LIBRARY_PATH from children only; worker Python -I -S -B. HOME/CODEX_HOME unchanged.",
+    "process_group_sampled_rss_bytes": 3221225472,
+    "source_expanded_bytes": 536870912,
+    "stages": [
+      "configure",
+      "build"
+    ]
+  },
+  "forbidden": [
+    "original faulty bounds fixture execution",
+    "downloads or global changes",
+    "original source/runtime mutation",
+    "new dependency copies or changed RPATH",
+    "numerical controls, solver/version invocation or models",
+    "patient data/material curves",
+    "automatic retries, cap increases or fallback solver selection"
+  ],
+  "inherited_sections_exact": [
+    "upstream",
+    "patch",
+    "private_layout",
+    "tools",
+    "configure",
+    "build",
+    "caps"
+  ],
+  "inherited_sections_sha256": {
+    "build": "ea7de6b43977d1b4570a33e87ae944e01a1e7351e3c810a468122339a8eeb007",
+    "caps": "f5cadedad1feed4a60dd46c0c0f5c4326315f6eccbc60c44fe0bdfaf330890c0",
+    "configure": "5bc3683743784f67fa62216622fd4a7c270071a4da3acb7e1c02ecfa02ac4570",
+    "patch": "a57a32bd3cd1019d0ebaec2519a7d2029595434510209d976d3a481ed6848ecc",
+    "private_layout": "6240950e04fc55b9a079d4b12e51d111943a3a5ff6c3824e9a739f04d78b9c93",
+    "tools": "871b2812e2f689584991f4e65c928ad2c7d43c745f0df90609c89b45a99c419e",
+    "upstream": "b408b05ec5ab08d96f8976ef6870dabb8b13f130129451a8bfe5447d6064374a"
+  },
+  "layout": {
+    "dependency_copying": false,
+    "new_prefix": "data/optional-runtimes/febio-4.13-accelerate-csc-v1",
+    "old_prefix_preserved": "data/optional-runtimes/febio-4.13",
+    "outputs": "artifacts/febio-accelerate-csc-runtime-v2"
+  },
+  "saved_evidence": {
+    "independent_positive_review": {
+      "bytes": 3689,
+      "path": "artifacts/febio-accelerate-csc-independent-review-v1/positive-control-review.json",
+      "sha256": "d108db018cd98cf8a10db1d0d4bd23d787e82d9d08ca075c802e84b4e1c51e4b"
+    },
+    "original_bounds_release": {
+      "bytes": 713,
+      "path": "artifacts/febio-accelerate-csc-repair-v1/bounds-release.json",
+      "sha256": "723370ab0be48814538e1ba0aeddf1e42cd791aeb7032eb4ef9688486c58dfc4"
+    },
+    "original_compile_failure": {
+      "bytes": 848,
+      "path": "artifacts/febio-accelerate-csc-repair-v1/bounds-controls/summary.json",
+      "sha256": "13d8908aff3f010f4edbd9fb2c5e50b06dcbedcdd60085ec33d026d082f540f0"
+    },
+    "original_compile_log": {
+      "bytes": 261,
+      "path": "artifacts/febio-accelerate-csc-repair-v1/bounds-controls/original-compile.log",
+      "sha256": "6110ab34b884fc68b40b2e3c45f39d416a26c98a8fcf396d9faf4c95cfb74ed3"
+    },
+    "original_failed_supervision": {
+      "bytes": 889,
+      "path": "artifacts/febio-accelerate-csc-repair-v1/bounds-supervised/supervision.json",
+      "sha256": "07223f140fe11070da9dd376df5c9d7867bef5f1bf1d56ce7798d9d6019852cf"
+    },
+    "patch_identity": {
+      "bytes": 1021,
+      "path": "artifacts/febio-accelerate-csc-repair-v1/patch-identity.json",
+      "sha256": "ffa642079bdd29837ec0d49bef7402bf9f9d31719168d39d31373e63ee696294"
+    },
+    "positive_binary": {
+      "bytes": 119520,
+      "path": "build/febio-accelerate-csc-positive-v1/positive-check",
+      "sha256": "50c2dbcbe73be4e4847c624af0c393f38b92e90f2ec5ae36115fea4194217433"
+    },
+    "positive_case_log": {
+      "bytes": 216,
+      "path": "artifacts/febio-accelerate-csc-repair-v1/positive-control-v1/six-positive-cases.log",
+      "sha256": "0b399db0544aef90928b6ecb2dc02db6baa0d5f98932431352440572ea44e331"
+    },
+    "positive_compile_log": {
+      "bytes": 0,
+      "path": "artifacts/febio-accelerate-csc-repair-v1/positive-control-v1/compile.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "positive_driver": {
+      "bytes": 7226,
+      "path": "artifacts/febio-accelerate-csc-repair-v1/positive-control.py",
+      "sha256": "927cbcfe58cde972ec4bc51f350cb86556f24f5f73100ea049fa64a386c78268"
+    },
+    "positive_fixture": {
+      "bytes": 2426,
+      "path": "build/febio-accelerate-csc-positive-v1/positive.cpp",
+      "sha256": "a3bc8fd50e43806be662f9084b9c0c749a9ee213cdd0ed97db2681afcd9765dd"
+    },
+    "positive_release": {
+      "bytes": 1839,
+      "path": "artifacts/febio-accelerate-csc-repair-v1/positive-release.json",
+      "sha256": "ace4eb84973424384640e735cf69b856308226e4ceb2af435091cd574cea2d6e"
+    },
+    "positive_result": {
+      "bytes": 1448,
+      "path": "artifacts/febio-accelerate-csc-repair-v1/positive-control-v1/result.json",
+      "sha256": "d52166ffca9929473dcacdb39478011c141d89771befe6ea5295e5bcefbeb72b"
+    },
+    "positive_scope": {
+      "bytes": 2192,
+      "path": "artifacts/febio-accelerate-csc-independent-review-v1/positive-only-scope.json",
+      "sha256": "06966d79382c5f7fe63d12ba567ced7de544f6df98f8e7f35bf03c3a5ffda78e"
+    },
+    "positive_supervision": {
+      "bytes": 872,
+      "path": "artifacts/febio-accelerate-csc-repair-v1/positive-supervision-v1/supervision.json",
+      "sha256": "a7f8cc14a272b0944be3782141760232c698a5cad76039386afdc94022b54ee8"
+    },
+    "static_review": {
+      "bytes": 4532,
+      "path": "artifacts/febio-accelerate-csc-independent-review-v1/static-review.json",
+      "sha256": "66fcd978d91327d77ac62a6626e7e5e4a8533a335ec8039968ec544445fc062b"
+    }
+  },
+  "schema_version": 2,
+  "scope": "One isolated local configure and one combined build/install of exact reviewed patched FEBio; no compiler fixture execution, downloads, solver/version launch, models or patient data.",
+  "status": "prospective_driver_prepared_pending_independent_review_commit_and_separate_root_stage_release",
+  "validation_scope": {
+    "history": "Original cassert compile failure before executable creation and reported automatic cybersecurity-screen interruption remain preserved. v1 is unchanged; v2 binds successful reduced positive-only scope. No proven v1 manifest divergence is claimed.",
+    "original_defect": "Static allocator/loop/API mismatch evidence only; original faulty fixture must never be executed by this driver.",
+    "successful_evidence": "Six repaired-code-only offset conversion/zero-row controls with ASan+UBSan; no full adapter/factorization or numerical physics validation."
+  }
+}

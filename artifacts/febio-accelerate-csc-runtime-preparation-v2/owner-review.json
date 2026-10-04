@@ -1,0 +1,35 @@
+{
+  "created_at": "2026-10-04T22:03:06.190850+00:00",
+  "executed": {
+    "builds": 0,
+    "compiler_calls": 0,
+    "downloads": 0,
+    "fixture_executions": 0,
+    "models": 0,
+    "solver_or_version_launches": 0
+  },
+  "notes": [
+    "Exact reviewed original source text was transformed in memory for patch validation only; original faulty code was not compiled or executed.",
+    "No original runtime/source/tool modifications; no new real prefix created by preparation.",
+    "Fresh configure and build require separately released exact declaration SHA."
+  ],
+  "sha256": {
+    "manifests/experiments/febio-accelerate-csc-runtime-v1.json": "7517aa3bd9a40cce9ce2864e5118c52185448a1a3eb1bab24b42ae9e9e4026b2",
+    "manifests/experiments/febio-accelerate-csc-runtime-v2.json": "6079e2198a4c21b71354c8a23054eb6d7ec75415576168ebecdfaa9e8c19bb06",
+    "scripts/febio_accelerate_runtime.py": "a3cf6dfb0db0cdac0311607293a65cf02889f38c52ae4a537d62007b97025d7d",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "tests/test_febio_accelerate_runtime.py": "d7ef65c2ba8f7a46e5d57cf789d57e7d777cb65a222e8afa814ec56b160ea03b"
+  },
+  "status": "owner_source_text_and_mock_controls_passed_pending_independent_review",
+  "tests": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/test_febio_accelerate_runtime.py"
+    ],
+    "kind": "mocked and source-text controls only",
+    "result": "15 passed in 0.09s"
+  }
+}
