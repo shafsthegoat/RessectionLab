@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-04T12:15:02Z",
+  "status": "released_not_started",
+  "source_commit": "558b2e32693a002acc1afbb29a40649bc5296423",
+  "source_archive_sha256": "ccbc160e475977a4534bcba1bbd8b569679cffdc4a1ecef5866b07e61f578434",
+  "immutable_source_root": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/integrated-axis-v1/558b2e32693a002acc1afbb29a40649bc5296423/source",
+  "full_suite_receipt": "artifacts/validation/integrated-axis-v1/attempt-02/receipt.json",
+  "runner_sha256": "3edeed6e2bf2349a4aa17235f1edd50c7c4d923741179da4a6d35064348f66b4",
+  "declaration_sha256": "5299b25533e0701ca96ee99e2f50a048a205768f416e49e0275390a81e1cef71",
+  "case_bundle_sha256": "11cca797ad0216e5c8d940e7354f2dd23fb6954dc2aed7e4b0423f6adc6cefcf",
+  "output_namespace": "artifacts/preflight/native-axis-v1",
+  "gradient_steps_permitted": 0,
+  "final_or_stress_worlds_permitted": false,
+  "load_average_before_launch": [
+    1.9951171875,
+    1.8994140625,
+    1.841796875
+  ],
+  "background_scope": "Other agent compute/tests held; verified Electron app open and ordinary macOS/desktop activity uncontrolled. OS file caches not flushed; cold means a fresh worker/adapter, not cold storage.",
+  "resource_budget": {
+    "worker_wall_seconds": 600,
+    "process_peak_rss_bytes": 6442450944,
+    "hard_termination_grace_seconds": 15
+  }
+}

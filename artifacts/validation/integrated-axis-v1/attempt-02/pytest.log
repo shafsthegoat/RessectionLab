@@ -1,0 +1,24 @@
+........................................................................ [  7%]
+........................................................................ [ 15%]
+........................................................................ [ 22%]
+........................................................................ [ 30%]
+........................................................................ [ 37%]
+........................................................................ [ 45%]
+........................................................................ [ 52%]
+........................................................................ [ 60%]
+........................................................................ [ 67%]
+........................................................................ [ 75%]
+........................................................................ [ 82%]
+........................................................................ [ 90%]
+........................................................................ [ 97%]
+.......................                                                  [100%]
+=============================== warnings summary ===============================
+tests/test_diffusion.py::test_probabilistic_crop_uses_bounded_reproducible_native_world_geometry
+tests/test_diffusion.py::test_probabilistic_crop_uses_bounded_reproducible_native_world_geometry
+tests/test_diffusion.py::test_probabilistic_crop_uses_bounded_reproducible_native_world_geometry
+tests/test_diffusion.py::test_probabilistic_crop_uses_bounded_reproducible_native_world_geometry
+  /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/dipy/testing/decorators.py:192: PendingDeprecationWarning: The legacy descoteaux07 SH basis uses absolute values for negative harmonic phase factors. It is outdated and will be deprecated in a future DIPY release. Consider using the new descoteaux07 basis by settingthe `legacy` parameter to `False`.
+    return func(*args, **kwargs)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+959 passed, 4 warnings in 196.11s (0:03:16)

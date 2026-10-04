@@ -244,13 +244,16 @@ and existing procedural checkpoints and feature-unit gates remain unchanged.
 
 ## Validation record
 
-The latest root integrated run at immutable `100865f` passed **914 tests with
-one failure in 171.74 seconds** and four existing DIPY warnings. Its 2,601
-baseline files stayed byte-identical. A historical nonpatient orchestration
-fixture still supplies the current registry to an older frozen declaration; the
-production source check correctly refuses the newly extended registry. A
-test-only repair is under review. Full negative evidence is retained in
-`artifacts/validation/integrated-axis-v1/attempt-01/`.
+The latest root integrated run passed **959 tests in 196.11 seconds** from
+immutable `558b2e3`, with four existing DIPY warnings. All 2,669 baseline
+files stayed byte-identical. This includes the axis provider/adapter, tiny RAW
+learning, preflight/adversarial checks, notice collector and acquisition changes.
+The earlier 914-pass/one-failure attempt is retained: its analytic orchestration
+fixture incorrectly mixed the evolving registry with historical frozen inputs.
+The test-only repair passed 63 focused checks and retains a real production
+byte-drift rejection test. Both full attempts are in
+`artifacts/validation/integrated-axis-v1/`. The new zero-gradient public
+action-model preflight is declared and source-frozen, with execution next.
 
 The preceding complete run passed **794 tests in 176.14 seconds**, with four
 existing DIPY basis-deprecation warnings, from an immutable archive of `0bffeaa`.

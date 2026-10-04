@@ -804,3 +804,27 @@ it. Two exact-source notice gaps remain explicit; this is not distribution
 compliance or notarization approval. The original visual defect, corrected
 screenshots, native receipts and exact package identities are retained under
 `artifacts/dependency-notices-v1/`.
+
+## October 4, 2026 — integrated axis/preflight verification before public execution
+
+Immutable `100865f` passed 914 tests and failed one historical nonpatient
+orchestration fixture. The fixture accidentally copied the evolving cohort
+registry into an older frozen declaration; the production byte check correctly
+refused it. A scoped test-only repair and explicit real-preserver drift test
+passed 63 focused checks. Production source checks and historical declarations
+were not changed. The original full failure is retained.
+
+The later immutable `558b2e3` snapshot passed all 959 tests in 196.11 seconds,
+with four existing DIPY warnings. All 2,669 baseline files stayed unchanged.
+This includes 37 preflight checks, independent adversarial publication/timeout
+cases, and six tiny RAW integration tests. The latter also establish a concrete
+spatial feature alias and document incomplete generic accounting after an
+interrupted committed transition; no patient gradient experiment follows until
+that separate accounting slice is tested.
+
+The declared public preflight opens no final/stress worlds and performs no
+gradients. Its five episodes, source/runtime identities, complete inventories,
+independent certification and 600-second/6-GiB cooperative caps are frozen before
+execution. It measures cost rather than selecting a better policy. Launch
+baseline is in `artifacts/validation/native-axis-public-v1/`; execution results
+will be recorded separately without rewriting that baseline.

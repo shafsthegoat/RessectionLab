@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "revision": "558b2e32693a002acc1afbb29a40649bc5296423",
+  "archive_sha256": "ccbc160e475977a4534bcba1bbd8b569679cffdc4a1ecef5866b07e61f578434",
+  "case_sha256": "11cca797ad0216e5c8d940e7354f2dd23fb6954dc2aed7e4b0423f6adc6cefcf",
+  "source_file_count": 2669,
+  "source_manifest_sha256": "26a85d9e5f3aaff19ff554cfb401116f5a37b5cc6968e84925b0542386d2549a",
+  "source_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/integrated-axis-v1/558b2e32693a002acc1afbb29a40649bc5296423/source",
+  "started_utc": "2026-10-04T12:10:04Z",
+  "argv": [
+    "python",
+    "-m",
+    "pytest",
+    "-q",
+    "--basetemp",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/integrated-axis-v1/558b2e32693a002acc1afbb29a40649bc5296423/pytest-temp"
+  ],
+  "load_average_at_start": [
+    1.27783203125,
+    1.6220703125,
+    1.7646484375
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 197.36692612501793,
+  "source_changed": [],
+  "log_sha256": "c3b7a7a7e2bf2cfc5ba35e88daf4ab1cae46ecfcb09e31079b27c90617fc1790",
+  "finished_utc": "2026-10-04T12:13:22Z"
+}
