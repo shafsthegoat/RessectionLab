@@ -274,6 +274,7 @@ class NativeResectionEngine:
     state changes. A failed candidate therefore changes neither cavity nor cost.
     Successful previews may be committed once to their exact originating state;
     a serialized or fabricated result cannot bypass the transition checker.
+    Instances belong to one worker; concurrent search branches use ``clone``.
     """
 
     def __init__(self, config: NativeResectionConfig):
@@ -319,11 +320,12 @@ class NativeResectionEngine:
     def preview_stroke(self, tool_id: str, tip_mm: Any, *, entry_mm: Any | None = None) -> NativeStrokeResult:
         if tool_id not in self._tools:
             raise ValueError("Unknown native instrument configuration")
-        tip = np.asarray(tip_mm, dtype=float)
+        source_state_hash = self.state_hash
+        tip = np.array(tip_mm, dtype=float, copy=True)
         if tip.shape != (3,) or not np.isfinite(tip).all():
             raise ValueError("Native target tip must be a finite physical three-vector")
         tool = self._tools[tool_id]
-        entry = self.config.access.center_mm if entry_mm is None else np.asarray(entry_mm, dtype=float)
+        entry = self.config.access.center_mm if entry_mm is None else np.array(entry_mm, dtype=float, copy=True)
         if entry.shape != (3,) or not np.isfinite(entry).all():
             raise ValueError("Native entry must be a finite physical three-vector")
         plane_distance = float((entry - self.config.access.center_mm) @ self.config.access.normal_inward)
@@ -344,7 +346,7 @@ class NativeResectionEngine:
             result = NativeStrokeResult(
                 feasible, reason, tool_id, tuple(tip), tuple(axis), tuple(entry),
                 _unique(removed) if feasible else _EMPTY, _unique(contacts) if feasible else _EMPTY,
-                tuple(records), self.config.source_hash, self.state_hash, self.config.fingerprint,
+                tuple(records), self.config.source_hash, source_state_hash, self.config.fingerprint,
                 self.config.affine, self.config.tissue_mask.shape, self.config.tissue_support_provenance,
                 self.config.voxel_volume_mm3, None if failure_tip is None else tuple(failure_tip), unknowns,
             )
@@ -466,7 +468,11 @@ def native_config_from_case(case: Any, *, access: AccessWindow,
                             tools: tuple[ToolGeometry, ...] = NATIVE_GENERIC_TOOLS,
                             max_tip_step_mm: float = 0.25,
                             hard_exclusion: np.ndarray | None = None) -> NativeResectionConfig:
-    """Keep the actual source grid and explicit skull-stripped support provenance."""
+    """Keep source cells and explicit support; normalize physical coordinates to RAS+.
+
+    The supplied access is interpreted in ``case.frame``. LPS-to-RAS conversion
+    changes only physical coordinate convention, never image samples or cells.
+    """
     if not case.compartments:
         raise ValueError("Native case requires explicit source target compartments")
     labels = np.zeros(case.mri.shape, np.int16)
@@ -476,14 +482,27 @@ def native_config_from_case(case: Any, *, access: AccessWindow,
         labels[np.asarray(mask, bool)] = label
     if case.brain_mask is None:
         collection = case.metadata.get("source_collection", {})
-        if case.metadata.get("skull_stripped") is not True and collection.get("name") != "UCSF-PDGM":
+        stripped = case.metadata.get("skull_stripped")
+        if stripped is False or (stripped is not True and collection.get("name") != "UCSF-PDGM"):
             raise ValueError("Reviewed brain support is required for a case without declared skull stripping")
         tissue = binary_fill_holes(np.asarray(case.mri) != 0)
         provenance = "hole_filled_nonzero_native_MRI_support; unreviewed skull_strip_assumption; source targets retained"
     else:
         tissue = np.asarray(case.brain_mask, bool)
+        if np.any((labels > 0) & ~tissue):
+            raise ValueError("Source target lies outside the supplied brain mask; review the conflicting anatomy")
         provenance = "source_case_brain_mask; source targets retained"
     tissue = tissue | (labels > 0)
-    return NativeResectionConfig(tissue, labels, case.affine, access, tools, case.semantic_hash,
+    affine = np.asarray(case.affine)
+    frame = getattr(case, "frame", "RAS+")
+    if frame not in {"RAS+", "LPS+"}:
+        raise ValueError("Source coordinate frame must be explicit RAS+ or LPS+")
+    if frame == "LPS+":
+        conversion = np.diag([-1., -1., 1., 1.])
+        affine = conversion @ affine
+        access = AccessWindow(conversion[:3, :3] @ access.center_mm,
+                              conversion[:3, :3] @ access.normal_inward, access.radius_mm, access.window_id)
+    provenance += f"; source_frame={frame}; simulation_frame=RAS+"
+    return NativeResectionConfig(tissue, labels, affine, access, tools, case.semantic_hash,
                                  provenance, case_id=case.case_id, hard_exclusion=hard_exclusion,
                                  max_tip_step_mm=max_tip_step_mm)

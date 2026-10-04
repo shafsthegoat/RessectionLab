@@ -1,6 +1,7 @@
 """Full-cell coverage, native mass, temporal legality, and tool sensitivity."""
 
 from dataclasses import replace
+from types import SimpleNamespace
 
 import numpy as np
 import pytest
@@ -8,7 +9,7 @@ import pytest
 from resectionlab.geometry import AccessWindow, GeometryScene, ToolGeometry, capsule_voxel_indices
 from resectionlab.native_resection import (
     NATIVE_GENERIC_TOOLS, NativeResectionConfig, NativeResectionEngine,
-    _connected_surface_cells, contained_capsule_cells,
+    _connected_surface_cells, contained_capsule_cells, native_config_from_case,
 )
 
 
@@ -188,3 +189,21 @@ def test_shifted_entry_requires_declared_plane_and_full_aperture_clearance():
         engine.preview_stroke(tool, [12, 10, 15], entry_mm=[12, 10, 5])
     rejected = engine.preview_stroke(tool, [14, 10, 15], entry_mm=[14, 10, 4.5])
     assert not rejected.feasible and "ACCESS_APERTURE" in rejected.reason
+
+
+def test_native_case_helper_respects_explicit_anatomy_conflicts_and_source_frame():
+    cfg = config()
+    case = SimpleNamespace(mri=cfg.tissue_mask.astype(float), compartments={"target": cfg.target_labels > 0},
+                           brain_mask=cfg.tissue_mask, affine=cfg.affine, metadata={},
+                           case_id="analytic", semantic_hash="source-hash", frame="LPS+")
+    converted = native_config_from_case(case, access=cfg.access)
+    np.testing.assert_array_equal(converted.affine, np.diag([-1., -1., 1., 1.]))
+    np.testing.assert_array_equal(converted.access.center_mm, [-10, -10, 4.5])
+    np.testing.assert_array_equal(converted.target_labels, cfg.target_labels)
+    case.brain_mask = np.zeros_like(cfg.tissue_mask)
+    with pytest.raises(ValueError, match="outside"):
+        native_config_from_case(case, access=cfg.access)
+    case.brain_mask = None
+    case.metadata = {"skull_stripped": False, "source_collection": {"name": "UCSF-PDGM"}}
+    with pytest.raises(ValueError, match="brain"):
+        native_config_from_case(case, access=cfg.access)
