@@ -370,11 +370,14 @@ class EnsembleSupport:
 
 def anatomical_ensemble_support(masks: Sequence[np.ndarray | None], *, source: str,
                                 coverage_masks: Sequence[np.ndarray | None] | None = None,
-                                shape: tuple[int, int, int] | None = None) -> EnsembleSupport:
+                                shape: tuple[int, int, int] | None = None,
+                                empty_is_verified_absence: bool = False) -> EnsembleSupport:
     """Summarize actual supplied realizations; never fabricate missing masks.
 
     Partial or missing coverage remains NaN. Counts are retained so a viewer can
     explain why support is unknown rather than silently shrinking the denominator.
+    An entirely empty reconstruction is unknown unless its absence was explicitly
+    verified; a failed tract fit must not become an all-zero support field.
     """
     if not masks or not isinstance(source, str) or not source:
         raise ValueError("At least one realization and its source are required")
@@ -395,6 +398,8 @@ def anatomical_ensemble_support(masks: Sequence[np.ndarray | None], *, source: s
         mask = _binary_mask(mask, "Ensemble structure")
         if mask.shape != shape:
             raise ValueError("Ensemble grids differ")
+        if not mask.any() and not empty_is_verified_absence:
+            continue
         coverage = np.ones(shape, bool) if coverage_masks is None else coverage_masks[i]
         if coverage is None:
             continue
