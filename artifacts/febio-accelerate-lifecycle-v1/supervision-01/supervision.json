@@ -1,0 +1,25 @@
+{
+  "cleanup_error": null,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-S",
+    "-B",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/adapter-control.py",
+    "--declaration-sha256",
+    "d45883853df0516efeba4e0f7d21f78b91899d47f3cd1743db58b61ec66334c9",
+    "--worker"
+  ],
+  "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+  "elapsed_seconds": 5.459139916929416,
+  "error": null,
+  "exit_code": 0,
+  "kill_reason": null,
+  "no_retry": true,
+  "pid": 41638,
+  "rss_cap_bytes": 1073741824,
+  "sampled_peak_process_group_rss_bytes": 312262656,
+  "sampling_note": "Group RSS is sampled; brief between-sample peaks may be missed.",
+  "status": "completed",
+  "wall_cap_seconds": 100
+}

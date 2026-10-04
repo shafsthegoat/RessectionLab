@@ -1,0 +1,4 @@
+PASS matrix-init profile=0 rows=2 symmetric=1
+PASS matrix-init profile=1 rows=2 symmetric=0
+PASS matrix-init profile=2 rows=3 symmetric=1
+PASS matrix-init profile=3 rows=3 symmetric=0
