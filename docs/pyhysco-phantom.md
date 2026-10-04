@@ -2,6 +2,8 @@
 
 Executed locally October 4, 2026. The same-grid synthetic test recovered known distortion and the external adapter preserved its physical coordinates. **The BTC patient's 0.8-degree AP/PA PE mismatch remains unsupported. No patient correction was run, and this experiment provides no motion, eddy-current, outlier or tract validation.** The zero-distortion test also exposed a solver line-search failure, despite finite identity outputs.
 
+Subsequent independent work in [the physical-vector phantom study](vector-susceptibility-phantom.md) adds a checked analytic identity branch and tests a new native-grid, general-direction prototype. The original PyHySCO failures below remain unchanged; the follow-up does not modify patient acceptance or make this one-axis release represent nonparallel PE vectors.
+
 ## Reproducible scope and runtime
 
 `scripts/experimental_pyhysco_phantom.py` constructs synthetic images only; it has no patient-image input. The optional tool was installed with `--no-deps --target data/optional-runtimes/pyhysco-0.0.4`. Its Python code is never imported into the app or evaluator. The driver calls a separate Python process, validates every installed Python source against the reviewed wheel, and enforces its SHA-256:

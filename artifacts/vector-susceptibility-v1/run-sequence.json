@@ -1,0 +1,42 @@
+{
+  "runs": [
+    {
+      "run": "v1",
+      "coordinate_invariance": {
+        "max_field_difference_mm": 0.24978089332580566,
+        "passed": false
+      },
+      "source_sha256": "191d2c493c7129a77d4f7998c43339e802617df7f676f67337457904c3bf78b1",
+      "solver_wall_seconds": 28.9646299170563,
+      "max_sampled_rss_bytes": 483639296
+    },
+    {
+      "run": "v2-float64",
+      "coordinate_invariance": {
+        "max_field_difference_mm": 0.10443544387817383,
+        "passed": false
+      },
+      "source_sha256": "82932302f0c8b96d8175920577bb96a349c7e68b9b8a9d6acfed5fb064bf5160",
+      "solver_wall_seconds": 32.05841879185755,
+      "max_sampled_rss_bytes": 517881856
+    },
+    {
+      "run": "v3-native-pe",
+      "coordinate_invariance": {
+        "max_field_difference_mm": 0.0005697011947631836,
+        "passed": true
+      },
+      "source_sha256": "6ceee00905bf773e80b10633242568f05201320c1c44f241d279483c032732f0",
+      "solver_wall_seconds": 30.812907541985624,
+      "max_sampled_rss_bytes": 518225920
+    }
+  ],
+  "changes": [
+    "v1: initial float32 physical prototype; coordinate invariance fails",
+    "v2: float64 only; coordinate invariance still fails",
+    "v3: exact reference integer grid, full relative affine elsewhere, PE from authoritative stored image headers; coordinate invariance passes"
+  ],
+  "optimizer_hyperparameters_changed_between_runs": false,
+  "truth_or_acceptance_thresholds_changed": false,
+  "prior_source_snapshots": "Ignored local outputs/vector_susceptibility/v1/source-snapshot.py and v2-float64/source-snapshot.py retain the failed revisions"
+}
