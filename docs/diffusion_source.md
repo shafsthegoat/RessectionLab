@@ -31,7 +31,21 @@ All volumes are ignored by Git. The local root is `data/diffusion_source/ds00122
 | Gradients, acquisition JSON and release documents | 21,789 | Pinned Git content; local SHA-256 recorded |
 | **Total** | **64,808,763** | All 15 selected files downloaded |
 
-`acquisition_manifest.json` records every relative path, exact versioned download URL, byte count, source MD5 when annexed, SHA-256, release and retrieval time. `initial_qc.json` records the actual image headers and first content checks. The small acquisition prototype is `data/diffusion_source/fetch_verified_btc.py`; it intentionally lives in the ignored acquisition workspace pending incorporation into the maintained downloader. It requests only this subject's anatomy, DWI and native tumor mask, plus four release documents. It does not download fMRI, other subjects or postoperative data.
+The maintained `manifests/btc_acquisition.json` records every relative path, exact versioned download URL, byte count, source MD5 when annexed, SHA-256, release and initial verification time. The original local `acquisition_manifest.json` remains available, and `initial_qc.json` records the actual image headers and first content checks. The maintained `scripts/acquire_btc_case.py` requests only this subject's anatomy, DWI and native tumor mask, plus four release documents. It shares the bounded transfer/checksum logic with the UCSF acquisition script and adds checks for the reviewed OpenNeuro snapshot, exact case-file scope and source annex checksums. It does not download fMRI, other subjects or postoperative data.
+
+## Reproduce acquisition
+
+Run from the repository root after creating the project environment:
+
+```sh
+.venv/bin/python scripts/acquire_btc_case.py --dry-run
+.venv/bin/python scripts/acquire_btc_case.py
+.venv/bin/python scripts/acquire_btc_case.py --verify-only
+```
+
+The default output is `data/diffusion_source/ds001226-v5.0.1`; `--output-root PATH` changes only the local destination. A dry run performs no network request or directory creation. Existing matching files are reused without rewriting. Interrupted transfers retain `.partial` files and request the remaining byte range. A source or hash mismatch fails visibly; an existing corrupt final file is preserved for inspection instead of being overwritten. Check `btc_acquisition_report.json` in the output folder after a successful run. Download verification does not set anatomical acceptance flags, resample an image, threshold the source annotation, or create a functional hazard map.
+
+Verification on October 4, 2026: all 15 acquired files passed both maintained verification and an idempotent second acquisition. The 31 BTC/shared acquisition tests passed offline, covering interrupted/resumed transfers, corrupt source bytes, immutable existing files, missing gradients, wrong source identity and unpinned URLs. A real S3 transfer resumed the PA reference after 1,024 bytes with HTTP 206 and `Content-Range: bytes 1024-1106183/1106184`, then passed both SHA-256 and source MD5 checks. The temporary transfer-test copy was removed; authoritative source files were preserved.
 
 ## Initial QC findings
 
