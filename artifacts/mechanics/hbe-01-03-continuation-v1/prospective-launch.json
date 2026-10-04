@@ -1,0 +1,20 @@
+{
+  "explicit_flags": [
+    "--execute",
+    "--reuse-verified-coarse"
+  ],
+  "no_new_solver_or_measurement_access_yet": true,
+  "no_retry": true,
+  "original_parent_seconds_debited_once": 4.2655537920072675,
+  "protocol": {
+    "path": "outputs/validation/hbe-continuation-a9f2783/frozen-source/manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+    "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+  },
+  "release": {
+    "path": "artifacts/mechanics/hbe-01-03-continuation-v1/release.json",
+    "sha256": "7f9f95681a511701576b6b084625ed73faa992d678f1a8151f9356407388c2ff"
+  },
+  "remaining_solver_calls": 19,
+  "remaining_supervised_seconds": 895.7344462079927,
+  "source_commit": "a9f2783adb9ad4dbc41d9eafc29e4c11f0313388"
+}

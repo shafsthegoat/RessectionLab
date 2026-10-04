@@ -1,0 +1,21 @@
+{
+  "fine_completed_nonzero_steps": 7,
+  "fine_last_completed_reported_time": 0.116667,
+  "fine_next_step_begun": 8,
+  "fine_normal_termination_present": false,
+  "fine_solver_log": {
+    "path": "outputs/mechanics/hbe-01-03-poc-v1/continuation-header-v1/runs/compression-N12-S60-reference/solver.log",
+    "sha256": "588f49ce093e6f0539dce1c11750736a00850749812084fe27cc9f81c48cd213"
+  },
+  "interpretation": "The completed medium run reports most solve time in the linear solver. Fine run was interrupted during step8 after seven completed steps. No exact fine-stage timing profile, scaling law, extrapolated runtime, or backend performance claim is established.",
+  "medium_completed_steps": 60,
+  "medium_reported_linear_fraction_of_solve": 0.9062994477204166,
+  "medium_solver_log": {
+    "path": "outputs/mechanics/hbe-01-03-poc-v1/continuation-header-v1/runs/compression-N8-S60-reference/solver.log",
+    "sha256": "9ebe4e1f4c470c75d0ba977a332ba2363dbe4065e50bbe5635d2aedb23ce778d"
+  },
+  "medium_solver_reported_linear_solver_seconds": 32.4757,
+  "medium_solver_reported_solve_seconds": 35.8333,
+  "medium_stiffness_reformations": 60,
+  "source": "Retained existing FEBio logs only; no new solve or response read."
+}

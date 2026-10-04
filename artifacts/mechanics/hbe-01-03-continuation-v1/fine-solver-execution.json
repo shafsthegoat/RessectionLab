@@ -1,0 +1,27 @@
+{
+  "cleanup": {
+    "kill_sent": true,
+    "reaped": true
+  },
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/bin/febio4",
+    "-noconfig",
+    "-no_title",
+    "-i",
+    "specimen.feb",
+    "-o",
+    "solver.log"
+  ],
+  "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/continuation-header-v1/runs/compression-N12-S60-reference",
+  "elapsed_seconds": 90.01399054192007,
+  "error": {
+    "message": "Command '['/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/bin/febio4', '-noconfig', '-no_title', '-i', 'specimen.feb', '-o', 'solver.log']' timed out after 89.99617770803161 seconds",
+    "type": "TimeoutExpired"
+  },
+  "exit_code": -9,
+  "pid": 37164,
+  "seconds_cap": 90,
+  "started": true,
+  "status": "failed",
+  "timed_out": true
+}

@@ -1,0 +1,169 @@
+{
+  "accounting": {
+    "actual_launcher_seconds": 132.1280704580713,
+    "actual_worker_seconds": 130.10436683299486,
+    "later_unexecuted_cases": 17,
+    "new_solver_calls": 2,
+    "remaining_parent_cap_seconds": 895.7344462079927,
+    "sampled_peak_rss_bytes": 283656192,
+    "total_solver_calls_including_original": 3
+  },
+  "archive_files_verified": 4426,
+  "artifact_index_sha256": "77d71f5d5aa19490d56a058c9e31f331c325fdf143bc507a265a6b4f3a71daa1",
+  "baseline_inputs_verified": 109,
+  "coarse_readout_exact_accepted_content_match": true,
+  "fine": {
+    "elapsed_including_cleanup_seconds": 90.01399054192007,
+    "exit_code": -9,
+    "kill_and_reap_verified": {
+      "kill_sent": true,
+      "reaped": true
+    },
+    "last_log_begun_step": 8,
+    "last_primitive_step_convergence_unconfirmed_by_retained_solver_log": 8,
+    "log_confirmed_converged_nonzero_steps": 7,
+    "primitive_blocks_including_zero": 9,
+    "primitive_header_and_row_counts": {
+      "elements": [
+        {
+          "row_count": 2592,
+          "step": 0,
+          "time_header": "*Time  = 0"
+        },
+        {
+          "row_count": 2592,
+          "step": 1,
+          "time_header": "*Time  = 0.0166666667"
+        },
+        {
+          "row_count": 2592,
+          "step": 2,
+          "time_header": "*Time  = 0.0333333333"
+        },
+        {
+          "row_count": 2592,
+          "step": 3,
+          "time_header": "*Time  = 0.05"
+        },
+        {
+          "row_count": 2592,
+          "step": 4,
+          "time_header": "*Time  = 0.0666666667"
+        },
+        {
+          "row_count": 2592,
+          "step": 5,
+          "time_header": "*Time  = 0.0833333333"
+        },
+        {
+          "row_count": 2592,
+          "step": 6,
+          "time_header": "*Time  = 0.1"
+        },
+        {
+          "row_count": 2592,
+          "step": 7,
+          "time_header": "*Time  = 0.116666667"
+        },
+        {
+          "row_count": 2592,
+          "step": 8,
+          "time_header": "*Time  = 0.133333333"
+        }
+      ],
+      "nodes": [
+        {
+          "row_count": 3199,
+          "step": 0,
+          "time_header": "*Time  = 0"
+        },
+        {
+          "row_count": 3199,
+          "step": 1,
+          "time_header": "*Time  = 0.0166666667"
+        },
+        {
+          "row_count": 3199,
+          "step": 2,
+          "time_header": "*Time  = 0.0333333333"
+        },
+        {
+          "row_count": 3199,
+          "step": 3,
+          "time_header": "*Time  = 0.05"
+        },
+        {
+          "row_count": 3199,
+          "step": 4,
+          "time_header": "*Time  = 0.0666666667"
+        },
+        {
+          "row_count": 3199,
+          "step": 5,
+          "time_header": "*Time  = 0.0833333333"
+        },
+        {
+          "row_count": 3199,
+          "step": 6,
+          "time_header": "*Time  = 0.1"
+        },
+        {
+          "row_count": 3199,
+          "step": 7,
+          "time_header": "*Time  = 0.116666667"
+        },
+        {
+          "row_count": 3199,
+          "step": 8,
+          "time_header": "*Time  = 0.133333333"
+        }
+      ]
+    },
+    "requested_nonzero_steps": 60,
+    "status": "incomplete_timeout_not_a_pass"
+  },
+  "limitations": [
+    "Single-run numerical checks do not establish refinement, time-step convergence, material fit or clinical validity.",
+    "The90.63percent figure is the completed N8 solver diagnostic only; no N12 completion-time estimate, scaling law or alternate-backend result.",
+    "The existing log reports zero Total calls to linear solver despite positive elapsed solver time; its call counter is not used for conclusions.",
+    "Budget debit is conservative accounting; full recorded worker and launcher intervals are retained separately.",
+    "RESULT.md rounds launcher time to132.1285s whereas canonical launcher/outcome records are132.1280704580713s; canonical machine receipt is authoritative."
+  ],
+  "measurement_access": {
+    "access_ledger_present": false,
+    "calibration": false,
+    "fit_or_freeze_present": false,
+    "held_out": false
+  },
+  "medium": {
+    "frame_count": 61,
+    "full_readout_exact_reproduction": {
+      "path": "n8-replay.json",
+      "sha256": "d75b8ee198db59b6415253a544b586b03f2b48f8040583d2f8f822b48a1d9c48"
+    },
+    "maximum_numerical_tolerance_ratio": 0.0008248315891383011,
+    "minimum_sampled_J": 0.7910710445791459,
+    "reported_linear_fraction": 0.9062994477204166,
+    "reported_linear_seconds": 32.4757,
+    "reported_solve_seconds": 35.8333,
+    "solver_seconds": 35.90234283299651
+  },
+  "original_failure_files_unchanged": 14,
+  "prepared_files_unchanged": 52,
+  "raw_bytes_verified": 24529982,
+  "raw_files_verified": 23,
+  "reviewer_work": {
+    "cpu_threads": 1,
+    "measured_archive_members_opened": 0,
+    "new_solver_calls": 0,
+    "replay_script_sha256": "ce4b20a54f0af77ce74cc26c866b241f54dabff0f1df11dd77ed0da60e078b36",
+    "sampled_peak_rss_bytes": 46497792,
+    "saved_n8_replays": 1,
+    "setup_correction_sha256": "57b5e4b2a1a9d82a088df6fcf4ae01019c314246fcdfcebb9ef914963eba80d2",
+    "supervised_seconds": 1.1564757919404656,
+    "supervision_sha256": "1d62cd99fea59e84979aab2e28c309643202e271e1abe618ca2ef5785c15a7a4"
+  },
+  "runtime_libraries_executable_and_openmp_unchanged": true,
+  "source_commit": "a9f2783adb9ad4dbc41d9eafc29e4c11f0313388",
+  "status": "verified_terminal_fine_timeout_with_exact_medium_reproduction"
+}

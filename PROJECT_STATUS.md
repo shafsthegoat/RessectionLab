@@ -300,6 +300,21 @@ continuation still requires its own source-bound release. The original parser
 and its reproduced failures remain in
 `artifacts/mechanics/hbe-time-header-independent-review-v1/`.
 
+The single source-bound specimen continuation stopped at the finest mesh's
+unchanged 90 s per-call limit. The original coarse output was reused exactly;
+medium compression completed in 35.902 s and its 61-state readout passed an
+independent replay. Fine compression was interrupted after seven log-confirmed
+convergences; its primitive files contain states 0–8, so the last snapshot does
+not establish an eighth converged step. Total calls are three, including the
+original reused call; 17 cases remain unexecuted. No measured curves were
+opened, fitted or evaluated. Inputs and both original attempts remain unchanged.
+The completed medium log attributes 32.4757 of 35.8333 s (90.63%) to the linear
+solver. Sampled peak RSS was 283.7 MB; this identifies a runtime bottleneck,
+not a memory failure or a measured-tissue accuracy result. A repaired existing
+sparse backend needs separate verification before another experiment. See
+`artifacts/mechanics/hbe-01-03-continuation-v1/RESULT.md` and
+`artifacts/mechanics/hbe-continuation-outcome-independent-review-v1/`.
+
 For the real-anatomy displacement proof of concept, six official RESECT Case4
 files (35,068,010 bytes) were acquired and verified. This patient is permanently
 development and does not change existing cohort roles. The reviewed access

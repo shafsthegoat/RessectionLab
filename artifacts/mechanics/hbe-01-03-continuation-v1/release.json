@@ -1,0 +1,208 @@
+{
+  "archive_sha256": "be1459acf9cae0fdca5f2e0d462a4bc5bb43b1e5674b06346d1dcb46984e4e2c",
+  "authorization": "Root explicitly released exactly one case-specific continuation from committed a9f2783adb9ad4dbc41d9eafc29e4c11f0313388 after independent43controls and saved-coarse review; one original call reused and at most19new calls, no retry/tuning/cap change.",
+  "created_at_utc": "2026-10-04T21:24:19.440072+00:00",
+  "execution": {
+    "access_ledger_path": "outputs/mechanics/hbe-01-03-poc-v1/continuation-header-v1/access.jsonl",
+    "authorized_specimen_solver_calls": 20,
+    "canonical_deck_repair_verification": {
+      "path": "outputs/validation/hbe-experiment-add7e8b/frozen-source/artifacts/mechanics/hbe-mesh-preparation-independent-review-v1/canonical-order-repair-verification.json",
+      "sha256": "c7de815255449870e6357f55fb55f37a0e3696d303bd66fcc61b2127d8bb6511"
+    },
+    "caps": {
+      "aggregate_specimen_seconds": 900,
+      "call_allocation": {
+        "branches_x_three_meshes": 12,
+        "calibrated_axial_confirmations": 2,
+        "double_mu_controls": 2,
+        "fine_loadstep_repeats": 4
+      },
+      "each_active_run_output_bytes": 268435456,
+      "each_mesh_generation_seconds": 30,
+      "each_solver_seconds": 90,
+      "generated_output_bytes": 1073741824,
+      "gmsh_acquisition_bytes": 36427761,
+      "gmsh_acquisition_seconds": 60,
+      "gmsh_aggregate_preparation_seconds": 150,
+      "gmsh_expanded_bytes": 268435456,
+      "gmsh_generation_calls": 3,
+      "maximum_specimen_solver_calls": 20,
+      "on_failure": "kill_and_reap_process_group_preserve_partial_receipt_no_retry_or_budget_increase",
+      "output_budget_basis": "Metadata-only estimate: 3199 fine nodes,2592 cells,9 node+8 element fields,13 characters/value,60 or120 frames yields~828MB (~790MiB) before headers/IDs;1GiB total is a cap,not a measured footprint. Lossless compression after each run may reduce retained size;raw decompressed hash retained.",
+      "runtime_threads": 1,
+      "sampled_process_family_rss_bytes": 3221225472
+    },
+    "combined_test_receipt": {
+      "path": "artifacts/mechanics/hbe-01-03-experiment-v1/test-receipt.json",
+      "sha256": "7b7411b3af35618a845bb5f859a818ff5753576f080889e3b0854af2b7489c2c"
+    },
+    "continuation": {
+      "path": "outputs/validation/hbe-continuation-a9f2783/frozen-source/manifests/experiments/hbe-01-03-header-continuation-v1.json",
+      "sha256": "7e74bfdfd8889fd38698990c76aad0a96611fdb223ebd1d738c9d8d06b4a6c7d"
+    },
+    "continuation_independent_review": {
+      "path": "outputs/validation/hbe-continuation-a9f2783/frozen-source/artifacts/mechanics/hbe-header-continuation-independent-review-v1/review.json",
+      "sha256": "418f08849347e621f280e61a1cfcf98460a7b1015c01204069fcffc8b1f4b917"
+    },
+    "continuation_test_receipt": {
+      "path": "outputs/validation/hbe-continuation-a9f2783/frozen-source/artifacts/mechanics/hbe-header-continuation-independent-review-v1/test-receipt.json",
+      "sha256": "407cb5a77d70c34418fbf1610ec80408fdc390c2edb8a40523fb65a4cf7f86a9"
+    },
+    "csv_schema_provenance": {
+      "assumption": "Comma delimiter, no header, columns0/1. No header or curve member inspected before release.",
+      "creator_verified_content": "Two columns in declared coordinate/response order and m/N or rad/Nm units.",
+      "failure_policy": "Any parser/schema/domain mismatch is terminal; no automatic format, column, unit, sign, fit, specimen or selection change.",
+      "format_evidence_limit": "Creator README does not establish delimiter/header; paper code is available upon request.",
+      "primary_methods": "https://link.springer.com/article/10.1007/s10237-023-01739-w",
+      "status": "prospectively_fixed_unverified_format_assumption"
+    },
+    "csv_schemas": {
+      "compression": {
+        "coordinate_column": 0,
+        "coordinate_unit": "m",
+        "delimiter": ",",
+        "header": null,
+        "response_column": 1,
+        "response_unit": "N"
+      },
+      "tension": {
+        "coordinate_column": 0,
+        "coordinate_unit": "m",
+        "delimiter": ",",
+        "header": null,
+        "response_column": 1,
+        "response_unit": "N"
+      },
+      "torsion_neg": {
+        "coordinate_column": 0,
+        "coordinate_unit": "rad",
+        "delimiter": ",",
+        "header": null,
+        "response_column": 1,
+        "response_unit": "Nm"
+      },
+      "torsion_pos": {
+        "coordinate_column": 0,
+        "coordinate_unit": "rad",
+        "delimiter": ",",
+        "header": null,
+        "response_column": 1,
+        "response_unit": "Nm"
+      }
+    },
+    "external_independent_review": {
+      "bindings": {
+        "artifacts/mechanics/hbe-access-independent-review-v1/verification.json": {
+          "path": "artifacts/mechanics/hbe-access-independent-review-v1/verification.json",
+          "sha256": "6503c24e75bfc56a35e13c99ff0a570ce87873d8e177ad8ce2c00dc2cd3183a4"
+        },
+        "artifacts/mechanics/hbe-readout-independent-review-v1/integration-addendum.json": {
+          "path": "artifacts/mechanics/hbe-readout-independent-review-v1/integration-addendum.json",
+          "sha256": "75a8d13b3359d330beba452d9125d64c70dd124bf06132a4d09fca3448dba112"
+        }
+      },
+      "scope": "Review metadata committed separately after the executed source snapshot; all executing source hashes remain add7e8b.",
+      "source_commit": "d5640f2f9c958e2adfae715e49cf2ba8da5ea781"
+    },
+    "gmsh_runtime": {
+      "path": "outputs/validation/hbe-experiment-add7e8b/frozen-source/artifacts/mechanics/gmsh-4.15.2-runtime-v1/runtime-receipt.json",
+      "sha256": "705056d13e78f98fda0ab04884c0c6e3b31ead73f88d01b6dcf3bd99d5417137"
+    },
+    "header_repair_independent_review": {
+      "path": "outputs/validation/hbe-continuation-a9f2783/frozen-source/artifacts/mechanics/hbe-time-header-independent-review-v1/verification.json",
+      "sha256": "a76ee7941d52d16407c5e9f5d52bcecc3bf54a61f6ab9113abffbf836d1eaac2"
+    },
+    "interpreter": {
+      "path": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "sha256": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a"
+    },
+    "mesh_levels": {
+      "12": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/receipt.json",
+        "sha256": "923f0e8151c4c5c4dbedaa48e35c9463918049ebcfd7c9b1e17b7a1cf8c38199"
+      },
+      "4": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/receipt.json",
+        "sha256": "2701d1a0bb0fa99102ffeb16ef8a25a4eca231e19f7e073bc50890c1e540c5e3"
+      },
+      "8": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/receipt.json",
+        "sha256": "5b3de49ff4d7c4353ef675f3caa82f45a51f54cbbef7739ff85845864561ba53"
+      }
+    },
+    "mesh_preparation_record": {
+      "path": "outputs/validation/hbe-experiment-add7e8b/frozen-source/artifacts/mechanics/hbe-01-03-mesh-preparation-v1/release-and-source-binding.json",
+      "sha256": "c7a90d4e71a5c4772a33d8a50a1001e6790411c55700bf26629a1f26d1ce857b"
+    },
+    "mesh_preparation_source": {
+      "path": "outputs/validation/hbe-mesh-preparation-cb72a84/frozen-source/scripts/mechanics_hbe_mesh.py",
+      "sha256": "5b102eb74a171d41a8815e408a6473fd65032dd9b30ff5412cf7243addc7d3e2"
+    },
+    "original_mesh_inventory": {
+      "path": "outputs/validation/hbe-experiment-add7e8b/frozen-source/artifacts/mechanics/hbe-01-03-mesh-preparation-v1/raw-output-index.json",
+      "sha256": "0cb55a598e3eddaf9ec486d049343c1ccfe556b64337b1cdb580ac0eb695ad83"
+    },
+    "remaining_supervised_seconds": 895.7344462079927,
+    "source_archive": {
+      "path": "outputs/validation/hbe-continuation-a9f2783/source.tar",
+      "sha256": "ecf834b983f6cb71eba33141f24f9e0a5623619ef5c59da4e90bf96d83ddb501"
+    },
+    "source_bindings": {
+      "access": {
+        "path": "outputs/validation/hbe-continuation-a9f2783/frozen-source/scripts/mechanics_hbe_access.py",
+        "sha256": "b1e4f90b2ec84c39949ee02c1088bc0404f34904e24c2d4f328d503d96f76fe0"
+      },
+      "curve_evaluator": {
+        "path": "outputs/validation/hbe-continuation-a9f2783/frozen-source/scripts/mechanics_hbe_evaluation.py",
+        "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+      },
+      "mesh_deck": {
+        "path": "outputs/validation/hbe-continuation-a9f2783/frozen-source/scripts/mechanics_hbe_mesh.py",
+        "sha256": "3cb4d99f5d2d7fa2f66fb5af56ebffcf19342b9bee0b4cb2c9acfe98aabdd892"
+      },
+      "orchestrator": {
+        "path": "outputs/validation/hbe-continuation-a9f2783/frozen-source/scripts/mechanics_hbe_experiment.py",
+        "sha256": "ce921239857d45ac4c5d70052c515c3a7804e32e8101f14315953c8b0aa53daa"
+      },
+      "physics": {
+        "path": "outputs/validation/hbe-continuation-a9f2783/frozen-source/scripts/mechanics_hbe_physics.py",
+        "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+      },
+      "primitive_parser": {
+        "path": "outputs/validation/hbe-continuation-a9f2783/frozen-source/scripts/mechanics_hbe_outputs.py",
+        "sha256": "a372cb89ea9515186d433c74ec650dc3b5cae289619e8b35d481280f6662f473"
+      },
+      "readout": {
+        "path": "outputs/validation/hbe-continuation-a9f2783/frozen-source/scripts/mechanics_hbe_readout.py",
+        "sha256": "21700558e5cb614a11a7cc62dbd5ec8118fabb11b4fbfc88f89cb8aa02012963"
+      },
+      "runtime_driver": {
+        "path": "outputs/validation/hbe-continuation-a9f2783/frozen-source/scripts/febio_runtime.py",
+        "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+      }
+    }
+  },
+  "permitted_members": [
+    "HBE_01/HBE_01_03/compression_c3.csv",
+    "HBE_01/HBE_01_03/tension_c3.csv"
+  ],
+  "prerequisite_evidence": {
+    "analytic_verification": {
+      "path": "outputs/validation/hbe-experiment-add7e8b/frozen-source/artifacts/mechanics-febio-patch-run-v1/summary.json",
+      "sha256": "34f2207ae82a29d5bf496eb6b519a6428fedd09f943f3addad594561fccfd0fb"
+    },
+    "mesh_validation": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/receipt.json",
+      "sha256": "130f37cf55db204468bf094a1a86c769c7c29365dfa24a1deb05848669f9668a"
+    },
+    "runtime": {
+      "path": "outputs/validation/hbe-experiment-add7e8b/frozen-source/artifacts/febio-runtime-build-v1/runtime-identity.json",
+      "sha256": "f560f386726d13b399bcfb0c781a4b78104deecf41aa977e0efe205f18fabfc4"
+    }
+  },
+  "protocol_sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035",
+  "roles_sha256": "c135a65eb14001e31a849197cc5650a15e2484022bee9f950a5c1759a033a432",
+  "schema": "hbe-calibration-release-v1",
+  "source_archive_sha256": "ecf834b983f6cb71eba33141f24f9e0a5623619ef5c59da4e90bf96d83ddb501",
+  "source_commit": "a9f2783adb9ad4dbc41d9eafc29e4c11f0313388"
+}
