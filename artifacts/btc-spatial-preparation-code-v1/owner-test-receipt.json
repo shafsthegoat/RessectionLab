@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-04T17:02:38.764442+00:00",
+  "command": ".venv/bin/python -m pytest tests/test_btc_spatial_preparation.py tests/test_btc_preparation.py tests/test_btc_spatial_acquisition.py tests/test_btc_acquisition.py -q",
+  "outcome": "125 passed in 2.63s",
+  "exit_code": 0,
+  "tests_passed": 125,
+  "pytest_elapsed_seconds": 2.63,
+  "unit_fixture_data_only": true,
+  "real_case_preparation_executed": false,
+  "training_or_benchmark_executed": false,
+  "network_requests_performed": false,
+  "post_test_edits": "Docstring/comment clarification only; no executable change.",
+  "files": {
+    "scripts/prepare_btc_case.py": {
+      "bytes": 20411,
+      "sha256": "89e955051a97c80ea776dd0944266c719e755dc98951ec9a7d3bc65f1db1ef1b"
+    },
+    "tests/test_btc_spatial_preparation.py": {
+      "bytes": 12015,
+      "sha256": "8e85522a7af041bb93133ac04af49638072dbaa4719455c7f5429c4497f46422"
+    },
+    "tests/test_btc_preparation.py": {
+      "bytes": 15565,
+      "sha256": "adf492d43711f6af236652dec6311f3145a5e880ddc85602fddb4dbfee6cf318"
+    },
+    "tests/test_btc_spatial_acquisition.py": {
+      "bytes": 7488,
+      "sha256": "77d1615f67eb9678e0664b2d64a09fb0c8a4f9c2bd2288352acb36051e552b52"
+    },
+    "tests/test_btc_acquisition.py": {
+      "bytes": 15286,
+      "sha256": "f4ccbe7c621443a34e73a5d644b5cec92ec08fb0b798567dcc6d5e41d854b9af"
+    },
+    "scripts/acquire_btc_case.py": {
+      "bytes": 27807,
+      "sha256": "2978b5c7756f46aac9dc8aa9f308fdf6f84a054326a48bd704fe3addc5bca0bf"
+    },
+    "scripts/acquire_public_case.py": {
+      "bytes": 11170,
+      "sha256": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb"
+    },
+    "manifests/experiments/btc-spatial-development-cohort-v1.json": {
+      "bytes": 34626,
+      "sha256": "962d964e1d71427f3625cdbebc0f7e4759e5d2345d8f95cb211ed45810ed2985"
+    }
+  },
+  "scope": {
+    "allowed_cases": [
+      "sub-PAT22",
+      "sub-PAT25",
+      "sub-PAT26",
+      "sub-PAT27"
+    ],
+    "sealed_cases_rejected": [
+      "sub-PAT29",
+      "sub-PAT31"
+    ],
+    "threshold": 0.5,
+    "training_roles_retained": [
+      "sub-PAT22",
+      "sub-PAT25"
+    ],
+    "selection_roles_retained": [
+      "sub-PAT26",
+      "sub-PAT27"
+    ],
+    "supplied_target_scan_actor_input_allowed": false,
+    "working_brain_mask": null,
+    "clinical_or_anatomical_acceptance": false
+  }
+}

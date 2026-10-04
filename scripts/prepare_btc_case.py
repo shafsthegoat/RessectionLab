@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify one reviewed BTC development case and prepare an inspectable bundle.
+"""Verify one declared BTC development case for an inspectable bundle.
 
 The full-head T1 never supplies cortical access by nonzero-intensity threshold.
 The fractional annotation becomes a separately declared binary threshold
@@ -39,6 +39,15 @@ EXPECTED_FILES = frozenset({
 })
 REVIEWED_SUBJECTS = {"sub-PAT28": "diffusion", "sub-PAT05": "structural",
                      "sub-PAT16": "structural", "sub-PAT20": "structural"}
+# Exact acquisition receipts, established after the prospective cohort was
+# committed. A different manifest cannot silently substitute new image hashes.
+SPATIAL_SOURCE_MANIFEST_SHA256 = {
+    "sub-PAT22": "e1f6fa5c82558bdbaa245223315fac6437b09bcc0938bfe61a3081845a9c72bb",
+    "sub-PAT25": "1473ee1d337bce1d09bb0ee0bb9bf21e9d84231db83c753b1e5a5b9fcf238920",
+    "sub-PAT26": "e33f8c6fc60997b93afd2920f4590c316a3bb2a5499d5529dd4eaede7102fc01",
+    "sub-PAT27": "c95aaee50921dda1f8a5cb4ec5ea3349d9986e111c7e9be53d0dab208a9a8959",
+}
+REVIEWED_SUBJECTS.update(dict.fromkeys(SPATIAL_SOURCE_MANIFEST_SHA256, "structural"))
 
 
 def source_layout(subject: str) -> tuple[str, str, str, str, frozenset[str]]:
@@ -65,15 +74,18 @@ def _verify_sources(manifest_path: Path, data_root: Path) -> tuple[dict, dict[st
         raise ValueError("Pinned source manifest must retain the creator release's CC0 license")
     subject = manifest.get("subject")
     _, _, _, _, expected_files = source_layout(subject)
-    if subject in {"sub-PAT16", "sub-PAT20"}:
-        # Only acquisition manifests bound to the committed metadata-only
-        # queue may enable these two new cases. Pending image hashes fail.
+    if subject in SPATIAL_SOURCE_MANIFEST_SHA256:
+        if file_sha256(manifest_path) != SPATIAL_SOURCE_MANIFEST_SHA256[subject]:
+            raise ValueError("Spatial acquisition manifest differs from its frozen completed receipt")
+    if subject in {"sub-PAT16", "sub-PAT20"} or subject in SPATIAL_SOURCE_MANIFEST_SHA256:
+        # Only manifests bound to a committed metadata-only queue or cohort
+        # may enable these cases. Pending image hashes fail.
         from acquire_btc_case import AcquisitionError, validate_manifest
 
         try:
             validate_manifest(manifest, data_root)
         except AcquisitionError as error:
-            raise ValueError(f"Queued BTC source contract failed: {error}") from error
+            raise ValueError(f"Declared BTC source contract failed: {error}") from error
     entries = manifest.get("files", [])
     names = [item["path"] for item in entries]
     if len(names) != len(set(names)) or set(names) != expected_files:
@@ -97,6 +109,19 @@ def _verify_sources(manifest_path: Path, data_root: Path) -> tuple[dict, dict[st
                 raise ValueError(f"Pinned annex MD5 mismatch: {item['path']}")
         paths[item["path"]] = path
     return manifest, paths
+
+
+def _development_split(manifest: dict) -> dict:
+    subject = manifest["subject"]
+    if subject in SPATIAL_SOURCE_MANIFEST_SHA256:
+        role = manifest["development_role"]
+        return {"role": "development", "development_role": role,
+                "patient_group": manifest["patient_group"], "visit": "preop",
+                "outer_role_locked": True, "external_holdout_eligible": False,
+                "policy_training_allowed": role == "population_training"}
+    return {"role": "development_demo",
+            "patient_group": f"BTC:{subject}" if subject in {"sub-PAT16", "sub-PAT20"} else f"BTC-{subject}",
+            "visit": "preop", "external_holdout_eligible": False}
 
 
 def _context(paths: dict[str, Path], planning_as_of: datetime | None, subject: str = SUBJECT) -> tuple[PatientContext | None, dict]:
@@ -152,6 +177,17 @@ def prepare(
         raise ValueError("Prepared output must be outside the immutable source tree and manifest")
     manifest, paths = _verify_sources(manifest_path, root)
     subject = manifest["subject"]
+    spatial = subject in SPATIAL_SOURCE_MANIFEST_SHA256
+    if spatial and annotation_threshold != manifest["preoperative_information_policy"]["fractional_annotation_threshold"]:
+        raise ValueError("Spatial development preparation must retain the declared annotation threshold 0.5")
+    split = _development_split(manifest)
+    spatial_provenance = ({
+        "selection_cohort_sha256": manifest["selection_cohort_sha256"],
+        "preoperative_information_policy": manifest["preoperative_information_policy"],
+        "target_input_status": "annotation_assisted_research_input",
+        "target_policy_input_allowed": False,
+        "target_usage": "inspection_and_hidden_environment_reference_only; excluded_from_scan_only_actor_observation",
+    } if spatial else {})
     t1, annotation, ap, _, _ = source_layout(subject)
     verified_at = time.perf_counter()
     context, withheld_context = _context(paths, planning_as_of, subject)
@@ -176,14 +212,14 @@ def prepare(
             "selection_manifest_sha256": manifest.get("selection_manifest_sha256"),
             **({"selection_queue_sha256": manifest["selection_queue_sha256"]}
                if "selection_queue_sha256" in manifest else {}),
+            **spatial_provenance,
             "source_files": manifest["files"], "source_hashes_checked": len(paths),
             "source_frame_declaration": "Creator-supplied native T1 frame; stored voxel-to-world transform retained.",
             "selected_modality": "T1w", "missing_structural_modalities": ["T1ce", "T2", "FLAIR"],
             "structural_coverage": "full_head", "allow_nonzero_mri_access_support": False,
             "automatic_cortical_access_status": "blocked_without_reviewed_cerebral_mask",
             "brain_segmentation_status": "unassessed", "diffusion_input_audit": diffusion,
-            "split": {"role": "development_demo", "patient_group": f"BTC:{subject}" if subject in {"sub-PAT16", "sub-PAT20"} else f"BTC-{subject}", "visit": "preop",
-                      "external_holdout_eligible": False},
+            "split": split,
             "context_availability": withheld_context,
             "planning_cutoff_status": "historical_preoperative_cutoff_unknown" if planning_as_of is None else "declared_research_replay_cutoff",
             "planning_as_of": None if planning_as_of is None else planning_as_of.isoformat(),
@@ -207,7 +243,8 @@ def prepare(
     artifacts = {"preparation": {"source_manifest_sha256": file_sha256(manifest_path),
                                  "annotation_threshold": annotation_threshold,
                                  "threshold_sensitivity": sensitivity,
-                                 "diffusion_input_audit": diffusion}, "plans": []}
+                                 "diffusion_input_audit": diffusion,
+                                 **({"split": split, **spatial_provenance} if spatial else {})}, "plans": []}
     save_case(case, output, artifacts=artifacts)
     saved_at = time.perf_counter()
     reopened = load_case(output)
@@ -216,6 +253,11 @@ def prepare(
         raise RuntimeError("Case identity changed across save/reopen")
     if file_sha256(paths[annotation]) != next(item["sha256"] for item in manifest["files"] if item["path"] == annotation):
         raise RuntimeError("Fractional source annotation changed during preparation")
+    if spatial:
+        # The new four-case report attests every retained source, not only the
+        # annotation. This second check reads bytes without re-opening images.
+        if any(file_sha256(paths[item["path"]]) != item["sha256"] for item in manifest["files"]):
+            raise RuntimeError("Spatial source bytes changed during preparation")
     return {
         "schema_version": 1, "recorded_at": datetime.now(timezone.utc).isoformat(),
         "case_id": case.case_id, "case_hash": case.semantic_hash, "planning_hash": case.planning_hash,
@@ -233,7 +275,10 @@ def prepare(
         "planning_as_of": None if planning_as_of is None else planning_as_of.isoformat(),
         "planning_cutoff_status": case.metadata["planning_cutoff_status"],
         "visual_alignment_review": "pending", "clinical_deficit_probability": None,
-        "benchmark_role": "single_development_case", "unknowns": list(case.unknowns),
+        "benchmark_role": manifest["development_role"] if spatial else "single_development_case",
+        **({"split": split, "benchmark_track": case.metadata["benchmark_track"],
+            **spatial_provenance} if spatial else {}),
+        "unknowns": list(case.unknowns),
         "timings_seconds": {"source_verification": verified_at - started, "import_and_audit": imported_at - verified_at,
                             "sensitivity_and_save": saved_at - imported_at, "reopen": finished - saved_at},
         "interpretation": "Verified creator-source inputs, explicit annotation derivation and persistence checks; no cortical access, functional localization, resection, or clinical validation.",
