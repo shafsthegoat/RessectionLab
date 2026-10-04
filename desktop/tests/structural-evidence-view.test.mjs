@@ -7,6 +7,8 @@ import os from "node:os";
 import path from "node:path";
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
+import { routeComparisonPrompt } from "../src/route-comparison-prompt.ts";
+import { researchSupportGate } from "../src/case-support.ts";
 let server,
   Inventory,
   ReplayStepControl,
@@ -15,6 +17,8 @@ let server,
   App,
   AnnotationCenterButton,
   WorkspaceBreadcrumb,
+  RouteSelectionControls,
+  RouteComparison,
   cacheDir;
 before(async () => {
   cacheDir = await fs.mkdtemp(
@@ -36,7 +40,10 @@ before(async () => {
   const priorModule = await server.ssrLoadModule("/src/PriorInventory.tsx");
   PriorInventory = priorModule.PriorInventory;
   PriorCursorReadout = priorModule.PriorCursorReadout;
-  App = (await server.ssrLoadModule("/src/App.tsx")).default;
+  const appModule = await server.ssrLoadModule("/src/App.tsx");
+  App = appModule.default;
+  RouteSelectionControls = appModule.RouteSelectionControls;
+  RouteComparison = appModule.RouteComparison;
   AnnotationCenterButton = (
     await server.ssrLoadModule("/src/AnnotationCenterButton.tsx")
   ).AnnotationCenterButton;
@@ -285,6 +292,10 @@ test("the unloaded app owns one welcome message without mounting the viewer plac
     assert.match(html, /Local workspace · Open imaging to begin/);
     assert.doesNotMatch(html, /rl-viewer-empty|Your case, in perspective/);
     assert.doesNotMatch(html, /workspace-case-id|Current case:/);
+    assert.doesNotMatch(
+      html,
+      /aria-label="Candidate category"|aria-label="Primary route A"|aria-label="Comparison route B"/,
+    );
     assert.match(
       html,
       /<button[^>]*annotation-center-button[^>]*disabled=""[^>]*>[\s\S]*?Center on annotations<\/button>/,
@@ -293,6 +304,118 @@ test("the unloaded app owns one welcome message without mounting the viewer plac
     if (previousWindow === undefined) delete globalThis.window;
     else globalThis.window = previousWindow;
   }
+});
+
+function routeControls(routes, available, overrides = {}) {
+  return React.createElement(RouteSelectionControls, {
+    routes,
+    available,
+    category: "pareto",
+    routeA: "",
+    routeB: "",
+    onCategory: () => {},
+    onRoute: () => {},
+    ...overrides,
+  });
+}
+
+function routeGuidance(routes, available, overrides = {}) {
+  return React.createElement(RouteComparison, {
+    selected: [],
+    all: routes,
+    onFailure: () => {},
+    emptyPrompt: routeComparisonPrompt({
+      hasCase: true,
+      hasTargetAnnotations: true,
+      candidateCount: routes.length,
+      availableCount: available.length,
+      support: {
+        blocked: false,
+        requiresEstimatedSupport: false,
+        reason: null,
+      },
+      estimatedSupportChosen: false,
+      readOnly: false,
+      engineStopped: false,
+      generating: false,
+      ...overrides,
+    }),
+  });
+}
+
+test("cases without candidates show search or blocked guidance without empty category and A/B controls", () => {
+  for (const blocked of [false, true]) {
+    const state = blocked
+      ? {
+          support: researchSupportGate({
+            brainMask: null,
+            metadata: { structural_coverage: "full_head" },
+          }),
+        }
+      : {};
+    const html = renderToStaticMarkup(
+      React.createElement(
+        React.Fragment,
+        null,
+        routeControls([], []),
+        routeGuidance([], [], state),
+      ),
+    );
+    assert.doesNotMatch(
+      html,
+      /<select|Retained alternatives|Select a route|Add a comparison/,
+    );
+    assert.match(
+      html,
+      blocked ? /Access support needs review/ : /Generate routes to compare/,
+    );
+    if (blocked)
+      assert.match(html, /Full-head MRI requires reviewed research support/);
+  }
+});
+
+test("an empty filtered category keeps the category selector available when other candidates exist", () => {
+  const routes = [
+    {
+      route_id: "rejected-route",
+      tool_id: "generic_suction",
+      category: "rejected",
+    },
+  ];
+  const html = renderToStaticMarkup(
+    React.createElement(
+      React.Fragment,
+      null,
+      routeControls(routes, []),
+      routeGuidance(routes, []),
+    ),
+  );
+  const category = html.match(
+    /<select aria-label="Candidate category"[^>]*>/,
+  )?.[0];
+  assert.ok(category);
+  assert.doesNotMatch(category, /disabled/);
+  assert.match(html, /Rejected candidates/);
+  assert.match(html, /aria-label="Primary route A" disabled=""/);
+  assert.match(html, /aria-label="Comparison route B" disabled=""/);
+  assert.match(html, /No candidates in this category/);
+  assert.match(html, /Choose another candidate category/);
+});
+
+test("populated candidates retain named A/B choices and their selected alternatives", () => {
+  const routes = [
+    { route_id: "route-a", tool_id: "generic_suction", category: "pareto" },
+    { route_id: "route-b", tool_id: "generic_aspirator", category: "pareto" },
+  ];
+  const html = renderToStaticMarkup(
+    routeControls(routes, routes, { routeA: "route-a", routeB: "route-b" }),
+  );
+  assert.match(html, /aria-label="Candidate category"/);
+  assert.match(html, /aria-label="Primary route A"/);
+  assert.match(html, /aria-label="Comparison route B"/);
+  assert.doesNotMatch(html, /disabled=""/);
+  assert.match(html, /value="route-a" selected="">Route 01 · Suction/);
+  assert.match(html, /value="route-b" selected="">Route 02 · Aspirator/);
 });
 
 test("workspace breadcrumb identifies the loaded case and removes a previous case on replacement", () => {

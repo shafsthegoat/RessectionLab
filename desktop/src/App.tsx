@@ -289,7 +289,81 @@ function EvidenceDrawer({
   );
 }
 
-function RouteComparison({
+export function RouteSelectionControls({
+  routes,
+  available,
+  category,
+  routeA,
+  routeB,
+  onCategory,
+  onRoute,
+}: {
+  routes: RouteCandidate[];
+  available: RouteCandidate[];
+  category: keyof typeof categoryLabels;
+  routeA: string;
+  routeB: string;
+  onCategory: (category: keyof typeof categoryLabels) => void;
+  onRoute: (letter: "A" | "B", routeId: string) => void;
+}) {
+  if (!routes.length) return null;
+  return (
+    <>
+      <div className="category-row">
+        <div className="select-wrap category-select">
+          <select
+            aria-label="Candidate category"
+            value={category}
+            onChange={(event) =>
+              onCategory(event.target.value as typeof category)
+            }
+          >
+            {Object.entries(categoryLabels).map(([key, value]) => (
+              <option value={key} key={key}>
+                {value}
+              </option>
+            ))}
+          </select>
+          <ChevronDown size={12} />
+        </div>
+        <span className="count-pill">{available.length}</span>
+      </div>
+      <div className="route-selectors">
+        {(["A", "B"] as const).map((letter) => (
+          <label className="route-selector" key={letter}>
+            <span
+              className={`route-letter ${letter === "A" ? "route-a" : "route-b"}`}
+            >
+              {letter}
+            </span>
+            <div className="select-wrap">
+              <select
+                aria-label={
+                  letter === "A" ? "Primary route A" : "Comparison route B"
+                }
+                value={letter === "A" ? routeA : routeB}
+                onChange={(event) => onRoute(letter, event.target.value)}
+                disabled={!available.length}
+              >
+                <option value="">
+                  {letter === "A" ? "Select a route" : "Add a comparison"}
+                </option>
+                {available.map((route) => (
+                  <option value={route.route_id} key={route.route_id}>
+                    {routeName(route, routes)}
+                  </option>
+                ))}
+              </select>
+              <ChevronDown size={12} />
+            </div>
+          </label>
+        ))}
+      </div>
+    </>
+  );
+}
+
+export function RouteComparison({
   selected,
   all,
   emptyPrompt,
@@ -1538,62 +1612,17 @@ export default function App() {
               </div>
             )}
             <div className="routes-divider" />
-            <div className="category-row">
-              <div className="select-wrap category-select">
-                <select
-                  aria-label="Candidate category"
-                  value={category}
-                  onChange={(event) =>
-                    changeCategory(event.target.value as typeof category)
-                  }
-                >
-                  {Object.entries(categoryLabels).map(([key, value]) => (
-                    <option value={key} key={key}>
-                      {value}
-                    </option>
-                  ))}
-                </select>
-                <ChevronDown size={12} />
-              </div>
-              <span className="count-pill">{available.length}</span>
-            </div>
-            <div className="route-selectors">
-              {(["A", "B"] as const).map((letter) => (
-                <label className="route-selector" key={letter}>
-                  <span
-                    className={`route-letter ${letter === "A" ? "route-a" : "route-b"}`}
-                  >
-                    {letter}
-                  </span>
-                  <div className="select-wrap">
-                    <select
-                      aria-label={
-                        letter === "A"
-                          ? "Primary route A"
-                          : "Comparison route B"
-                      }
-                      value={letter === "A" ? routeA : routeB}
-                      onChange={(event) =>
-                        letter === "A"
-                          ? setRouteA(event.target.value)
-                          : setRouteB(event.target.value)
-                      }
-                      disabled={!available.length}
-                    >
-                      <option value="">
-                        {letter === "A" ? "Select a route" : "Add a comparison"}
-                      </option>
-                      {available.map((route) => (
-                        <option value={route.route_id} key={route.route_id}>
-                          {routeName(route, routes)}
-                        </option>
-                      ))}
-                    </select>
-                    <ChevronDown size={12} />
-                  </div>
-                </label>
-              ))}
-            </div>
+            <RouteSelectionControls
+              routes={routes}
+              available={available}
+              category={category}
+              routeA={routeA}
+              routeB={routeB}
+              onCategory={changeCategory}
+              onRoute={(letter, routeId) =>
+                letter === "A" ? setRouteA(routeId) : setRouteB(routeId)
+              }
+            />
             {combinedModels && (
               <div className="model-scope-note">
                 Separate tool/access models are shown together. Retained sets
