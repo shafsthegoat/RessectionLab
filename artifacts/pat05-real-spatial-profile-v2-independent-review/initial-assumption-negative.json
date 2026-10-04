@@ -1,0 +1,20 @@
+{
+  "kind": "review-script-expectation-only",
+  "initial_script_sha256": "08d9f4f1bbba090781a430dffbb78d881e0c13f3aa05f031817fc2865d38020e",
+  "passed": 51,
+  "failed": 1,
+  "failed_check": "v1_common_settings_only_declared_changes",
+  "incorrect_expected_fields": [
+    "adapter_options",
+    "source_sha256",
+    "status",
+    "study_id"
+  ],
+  "observed_fields": [
+    "adapter_options",
+    "source_sha256",
+    "study_id"
+  ],
+  "explanation": "The status string remained prospective_profile_only_pending_root_release in both sealed declarations; a separate exact-byte execution-release record authorized the run. Scientific settings did not change.",
+  "repair": "Require exactly the three actually intended changed shared fields; no source or saved outcome modification."
+}
