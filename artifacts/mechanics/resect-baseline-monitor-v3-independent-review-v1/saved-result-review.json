@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "status": "saved_V3_supervised_baseline_evidence_independently_verified_no_anatomical_acceptance",
+  "created_at_utc": "2026-10-04T21:12:03.227298+00:00",
+  "source_commit": "6e5ad08b77261825724e02e101b5978b7fae90db",
+  "V3_freeze_sha256": "29df7ec1c3b156a9edaf2d1dde5c95360ecf2b2c20f68da917909b603857144c",
+  "comparison_sha256": "605f3cdc54c6163b449d638da6ba4e9c10823727a102f333f92d1b213c05f7e1",
+  "resource_receipt_sha256": "04c9a68c1e25d50a11d46bbed2c561faaf4ddbbdf175b7f759f642269e70e7ab",
+  "probe_log_sha256": "b993a09806338cf07eace8b0d48f642af0a4cbea4718d48b1f3ba2c2ebe5696c",
+  "frozen_V3_artifacts_verified": 19,
+  "exact_Git_source_bindings_verified": 3,
+  "before_after_identity_keys_verified": 12,
+  "phase_allowed_original_files": [
+    "Case4-MRI-beforeUS.tag",
+    "Case4-FLAIR.nii.gz",
+    "Case4-T1.nii.gz",
+    "Case4-US-before.nii.gz"
+  ],
+  "input_identity_scope": "Saved before/after hashes match pinned declaration; original patient files not independently reopened",
+  "previous_attempt_checks": [
+    {
+      "version": "v1",
+      "freeze_sha256": "4395f951a35591c184f6f332f25422457598ade0cf8c69131e24a34d67f5a09e",
+      "frozen_artifacts_checked": 21,
+      "deterministic_fields_checked": 28,
+      "six_PNG_byte_hashes_identical": true,
+      "prior_failed_status_preserved": true
+    },
+    {
+      "version": "v2",
+      "freeze_sha256": "313e26eae8021976b76a4f33b18b4c2334b6850536c37e01c5220901fd3d5768",
+      "frozen_artifacts_checked": 19,
+      "deterministic_fields_checked": 28,
+      "six_PNG_byte_hashes_identical": true,
+      "prior_failed_status_preserved": true
+    }
+  ],
+  "N_baseline_pairs": 15,
+  "numerical_verification": "All deterministic data, proper fit, LOO, original-affine bounds and view definitions identical to V1 already independently recomputed; no additional fit",
+  "baseline_RMS_mm": {
+    "raw": 3.112095795074031,
+    "fit": 1.1639417029743828,
+    "leave_one_out": 1.2945054186282894
+  },
+  "resource_status": "passed",
+  "worker_exit_code": 0,
+  "elapsed_seconds": 2.519119832897559,
+  "maximum_sampled_parent_child_RSS_bytes": 628785152,
+  "probe_count": 69,
+  "all_raw_PID_RSS_rows_independently_parsed": true,
+  "single_grace_observation": {
+    "parent_pid": 35618,
+    "child_pid": 35625,
+    "returncode": 0,
+    "stdout": "35618  25808 Ss  \n35625      0 ?E  \n",
+    "stderr": "",
+    "parsed_rows": [
+      {
+        "pid": 35618,
+        "rss_KiB": 25808,
+        "state": "Ss"
+      },
+      {
+        "pid": 35625,
+        "rss_KiB": 0,
+        "state": "?E"
+      }
+    ],
+    "failure": null,
+    "query_timeout_seconds": 2,
+    "exit_code_after_query": null,
+    "termination_grace": {
+      "allowed_seconds": 0.05,
+      "confirmed_exit_code": 0,
+      "timed_out": false,
+      "elapsed_seconds": 0.003824791987426579
+    },
+    "exit_code_after_grace": 0,
+    "combined_RSS_bytes": 26427392,
+    "child_observed_exited_during_query": false,
+    "elapsed_seconds": 2.4914830829948187
+  },
+  "requested_timeout_semantics": "50ms requested ceiling; observed elapsed recorded separately. Acceptance uses direct wait/poll exit confirmation, not ?E state.",
+  "overall_wall_cap_seconds": 115,
+  "cleanup_included": true,
+  "resource_limitation": "Sampled RSS with an unmeasured termination interval, not a continuous peak guarantee",
+  "visual_QC_reuse": {
+    "source": "artifacts/mechanics/resect-case4-baseline-alignment-v1/root-visual-qc.json",
+    "sha256": "7703f86e7e91fdd3f5d523f1116a6a0895ff7a8bf5c7633fad80444170f5f2f0",
+    "all_six_image_bytes_identical": true,
+    "scope": "Reuse of the same nonexpert image observations only; historicalV1failed status and absence of anatomical/clinical acceptance are preserved"
+  },
+  "original_patient_files_reopened": false,
+  "image_arrays_decoded": false,
+  "new_patient_or_solver_run": false,
+  "closed_B_V_or_during_values_accessed": false,
+  "anatomical_alignment_accepted": false,
+  "clinical_accuracy_validated": false,
+  "brain_domain_available": false,
+  "remaining_blocking_findings_in_saved_baseline_audit": []
+}

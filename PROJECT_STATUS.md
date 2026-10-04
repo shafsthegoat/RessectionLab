@@ -328,6 +328,18 @@ attempt changed the fit, landmarks or thresholds; neither is a successful
 supervised run. All B/V motion destinations and the during-resection ultrasound
 remain closed.
 
+A third, separately declared monitor handles the brief process-exit transition
+with one bounded direct wait. Its single attempt passed in 2.519 s, with
+628.8 MB sampled combined RSS. Independent review reproduced all 69 monitoring
+records; the requested 50 ms exit wait confirmed exit zero after 3.825 ms.
+All numerical fit fields and six image bytes equal both earlier failed runs,
+whose records remain unchanged. The existing nonexpert visual inspection can
+therefore be reused for those images only. This is a completed supervised
+baseline diagnostic, not clinical or anatomical acceptance. No B/V motion or
+during-US access occurred. See
+`artifacts/mechanics/resect-case4-baseline-alignment-v3/comparison-and-outcome.json`
+and its independent saved-result review.
+
 The first real TRAIN PAT22 inference profile completed all four declared cells
 in 6.247 seconds with unchanged model parameters. One CPU call took 28–30 ms
 for a 32³ crop and 256–269 ms for a 64³ crop, with highest observed memory about

@@ -1,0 +1,259 @@
+{
+  "status": "supervised_baseline_diagnostic_complete_anatomical_acceptance_false",
+  "created_at_utc": "2026-10-04T21:09:30.504057+00:00",
+  "source_hashes_before_equal_after": true,
+  "comparisons": [
+    {
+      "prior_version": "v1",
+      "prior_status": "failed_supervised_attempt_not_relabelled",
+      "prior_frozen_files_unchanged": true,
+      "prior_freeze_sha256": "4395f951a35591c184f6f332f25422457598ade0cf8c69131e24a34d67f5a09e",
+      "all_deterministic_fields_identical": true,
+      "field_comparisons": {
+        "status": true,
+        "N": true,
+        "coordinate_justification_sha256": true,
+        "source_world_to_RAS": true,
+        "destination_world_to_RAS": true,
+        "pair_role": true,
+        "pair_binding_hash": true,
+        "row_ids": true,
+        "FLAIR_reference_RAS_mm": true,
+        "beforeUS_reference_RAS_mm": true,
+        "FLAIR_RAS_to_beforeUS_RAS_mm": true,
+        "bounds": true,
+        "raw_distances_mm": true,
+        "fit_residuals_mm": true,
+        "leave_one_out_residuals_mm": true,
+        "summaries": true,
+        "LOO_RMS_worse_than_raw": true,
+        "outliers_removed": true,
+        "alternative_fits_selected": true,
+        "clinical_accuracy_validated": true,
+        "brain_domain_available": true,
+        "anatomical_alignment_accepted": true,
+        "duringUS_or_before_during_tag_opened": true,
+        "B_or_V_motion_accessed": true,
+        "native_affines_preserved": true,
+        "resampled_volumes_saved": true,
+        "plots": true,
+        "runtime": true
+      },
+      "all_six_images_byte_identical": true,
+      "images": [
+        {
+          "path": "MRI-native-axis0.png",
+          "current_sha256": "92f5863c837c8e6390ce7684c544f9750bd85c500e7d020b19659672d985a997",
+          "prior_sha256": "92f5863c837c8e6390ce7684c544f9750bd85c500e7d020b19659672d985a997",
+          "byte_identical": true
+        },
+        {
+          "path": "MRI-native-axis1.png",
+          "current_sha256": "ad44a9d1ef3adb72960b20c34b2d53dc6bb875cddaabd637c0055d3ce7c15bb4",
+          "prior_sha256": "ad44a9d1ef3adb72960b20c34b2d53dc6bb875cddaabd637c0055d3ce7c15bb4",
+          "byte_identical": true
+        },
+        {
+          "path": "MRI-native-axis2.png",
+          "current_sha256": "f1febbbd647fe2a1505bc31a0f07337688e94e3230fb6242a7c1233154e48bc1",
+          "prior_sha256": "f1febbbd647fe2a1505bc31a0f07337688e94e3230fb6242a7c1233154e48bc1",
+          "byte_identical": true
+        },
+        {
+          "path": "US-native-axis0.png",
+          "current_sha256": "bf32d28ac60bb8254095a6358cb98a6a29913292cf74971890da87c628028441",
+          "prior_sha256": "bf32d28ac60bb8254095a6358cb98a6a29913292cf74971890da87c628028441",
+          "byte_identical": true
+        },
+        {
+          "path": "US-native-axis1.png",
+          "current_sha256": "b930c8971887bdc4a11879a2f02d5fd7a0628775da3e79efeb8c7ca53e7de7dd",
+          "prior_sha256": "b930c8971887bdc4a11879a2f02d5fd7a0628775da3e79efeb8c7ca53e7de7dd",
+          "byte_identical": true
+        },
+        {
+          "path": "US-native-axis2.png",
+          "current_sha256": "75b9973c67232cde0e6e962227943eecff451793839dee31779e32f959c3ac1f",
+          "prior_sha256": "75b9973c67232cde0e6e962227943eecff451793839dee31779e32f959c3ac1f",
+          "byte_identical": true
+        }
+      ],
+      "shared_source_bindings_identical": true,
+      "runtime_fields_distinct": {
+        "elapsed_seconds": {
+          "prior": 2.4063256670488045,
+          "v3": 2.375310916919261
+        },
+        "child_peak_RSS_bytes": {
+          "prior": 601866240,
+          "v3": 602341376
+        }
+      }
+    },
+    {
+      "prior_version": "v2",
+      "prior_status": "failed_supervised_attempt_not_relabelled",
+      "prior_frozen_files_unchanged": true,
+      "prior_freeze_sha256": "313e26eae8021976b76a4f33b18b4c2334b6850536c37e01c5220901fd3d5768",
+      "all_deterministic_fields_identical": true,
+      "field_comparisons": {
+        "status": true,
+        "N": true,
+        "coordinate_justification_sha256": true,
+        "source_world_to_RAS": true,
+        "destination_world_to_RAS": true,
+        "pair_role": true,
+        "pair_binding_hash": true,
+        "row_ids": true,
+        "FLAIR_reference_RAS_mm": true,
+        "beforeUS_reference_RAS_mm": true,
+        "FLAIR_RAS_to_beforeUS_RAS_mm": true,
+        "bounds": true,
+        "raw_distances_mm": true,
+        "fit_residuals_mm": true,
+        "leave_one_out_residuals_mm": true,
+        "summaries": true,
+        "LOO_RMS_worse_than_raw": true,
+        "outliers_removed": true,
+        "alternative_fits_selected": true,
+        "clinical_accuracy_validated": true,
+        "brain_domain_available": true,
+        "anatomical_alignment_accepted": true,
+        "duringUS_or_before_during_tag_opened": true,
+        "B_or_V_motion_accessed": true,
+        "native_affines_preserved": true,
+        "resampled_volumes_saved": true,
+        "plots": true,
+        "runtime": true
+      },
+      "all_six_images_byte_identical": true,
+      "images": [
+        {
+          "path": "MRI-native-axis0.png",
+          "current_sha256": "92f5863c837c8e6390ce7684c544f9750bd85c500e7d020b19659672d985a997",
+          "prior_sha256": "92f5863c837c8e6390ce7684c544f9750bd85c500e7d020b19659672d985a997",
+          "byte_identical": true
+        },
+        {
+          "path": "MRI-native-axis1.png",
+          "current_sha256": "ad44a9d1ef3adb72960b20c34b2d53dc6bb875cddaabd637c0055d3ce7c15bb4",
+          "prior_sha256": "ad44a9d1ef3adb72960b20c34b2d53dc6bb875cddaabd637c0055d3ce7c15bb4",
+          "byte_identical": true
+        },
+        {
+          "path": "MRI-native-axis2.png",
+          "current_sha256": "f1febbbd647fe2a1505bc31a0f07337688e94e3230fb6242a7c1233154e48bc1",
+          "prior_sha256": "f1febbbd647fe2a1505bc31a0f07337688e94e3230fb6242a7c1233154e48bc1",
+          "byte_identical": true
+        },
+        {
+          "path": "US-native-axis0.png",
+          "current_sha256": "bf32d28ac60bb8254095a6358cb98a6a29913292cf74971890da87c628028441",
+          "prior_sha256": "bf32d28ac60bb8254095a6358cb98a6a29913292cf74971890da87c628028441",
+          "byte_identical": true
+        },
+        {
+          "path": "US-native-axis1.png",
+          "current_sha256": "b930c8971887bdc4a11879a2f02d5fd7a0628775da3e79efeb8c7ca53e7de7dd",
+          "prior_sha256": "b930c8971887bdc4a11879a2f02d5fd7a0628775da3e79efeb8c7ca53e7de7dd",
+          "byte_identical": true
+        },
+        {
+          "path": "US-native-axis2.png",
+          "current_sha256": "75b9973c67232cde0e6e962227943eecff451793839dee31779e32f959c3ac1f",
+          "prior_sha256": "75b9973c67232cde0e6e962227943eecff451793839dee31779e32f959c3ac1f",
+          "byte_identical": true
+        }
+      ],
+      "shared_source_bindings_identical": true,
+      "runtime_fields_distinct": {
+        "elapsed_seconds": {
+          "prior": 2.430624832981266,
+          "v3": 2.375310916919261
+        },
+        "child_peak_RSS_bytes": {
+          "prior": 601915392,
+          "v3": 602341376
+        }
+      }
+    }
+  ],
+  "monitor": {
+    "status": "passed",
+    "elapsed_seconds": 2.519119832897559,
+    "sampled_peak_parent_child_RSS_bytes": 628785152,
+    "probe_count": 69,
+    "query_failures": 0,
+    "grace_samples": [
+      {
+        "parent_pid": 35618,
+        "child_pid": 35625,
+        "returncode": 0,
+        "stdout": "35618  25808 Ss  \n35625      0 ?E  \n",
+        "stderr": "",
+        "parsed_rows": [
+          {
+            "pid": 35618,
+            "rss_KiB": 25808,
+            "state": "Ss"
+          },
+          {
+            "pid": 35625,
+            "rss_KiB": 0,
+            "state": "?E"
+          }
+        ],
+        "failure": null,
+        "query_timeout_seconds": 2,
+        "exit_code_after_query": null,
+        "termination_grace": {
+          "allowed_seconds": 0.05,
+          "confirmed_exit_code": 0,
+          "timed_out": false,
+          "elapsed_seconds": 0.003824791987426579
+        },
+        "exit_code_after_grace": 0,
+        "combined_RSS_bytes": 26427392,
+        "child_observed_exited_during_query": false,
+        "elapsed_seconds": 2.4914830829948187
+      }
+    ],
+    "wait_overshoot_seconds": [
+      0
+    ],
+    "memory_caveat": "Sampled RSS and an unmeasured termination interval; no continuous peak bound."
+  },
+  "baseline_metrics": {
+    "raw": {
+      "rms_mm": 3.112095795074031,
+      "mean_mm": 2.9859526559956793,
+      "median_mm": 3.128488041087897,
+      "maximum_mm": 4.55145293262723
+    },
+    "fit": {
+      "rms_mm": 1.1639417029743828,
+      "mean_mm": 1.105327914728017,
+      "median_mm": 0.9635755556857091,
+      "maximum_mm": 1.7367603044630304
+    },
+    "leave_one_out": {
+      "rms_mm": 1.2945054186282894,
+      "mean_mm": 1.2387767673698038,
+      "median_mm": 1.1617847387856202,
+      "maximum_mm": 1.8708136700435898
+    }
+  },
+  "N": 15,
+  "visual_review_reuse": {
+    "path": "artifacts/mechanics/resect-case4-baseline-alignment-v1/root-visual-qc.json",
+    "sha256": "7703f86e7e91fdd3f5d523f1116a6a0895ff7a8bf5c7633fad80444170f5f2f0",
+    "eligible_because": "AllsixPNGbytesidentical topreviousreview; no new visual claim."
+  },
+  "anatomical_alignment_accepted": false,
+  "clinical_accuracy_validated": false,
+  "brain_domain_available": false,
+  "B_or_V_motion_accessed": false,
+  "duringUS_or_before_during_tag_opened": false,
+  "automatic_retries": 0,
+  "further_attempts": 0
+}

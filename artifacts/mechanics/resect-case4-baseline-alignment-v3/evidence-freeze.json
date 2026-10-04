@@ -1,0 +1,31 @@
+{
+  "status": "frozen_successful_supervised_baseline_diagnostic_no_anatomical_acceptance",
+  "files": {
+    "align.py": "a4f7761995238a05488a6cc9f1d7cfc360fc258d8c30510a40ec4e2a496c0a04",
+    "declaration.json": "765eb2048aa7e5a7814560a66c4e8d2f2796b087352cdff75ade81ab08af975f",
+    "coordinate-justification.json": "f293613dd1ca5adf58bfd768c2fe2b4d50e352fe0534ee28264225739f88c2ec",
+    "root-release.json": "72acf21da1fb878e478606ba0e67939bf3f01d4a3a11a5f55086830eb77c20aa",
+    "committed-source-binding.json": "91461c7fa2cff913d66bd9cb12e2e17097388a72dbbbd912270de1cbfc0f69bb",
+    "resource-receipt.json": "04c9a68c1e25d50a11d46bbed2c561faaf4ddbbdf175b7f759f642269e70e7ab",
+    "resource-probes.jsonl": "b993a09806338cf07eace8b0d48f642af0a4cbea4718d48b1f3ba2c2ebe5696c",
+    "alignment-receipt.json": "d5a572a7363d3830c86c68d5de9e158afdeee0026d3d2a254d87e15071fe3adb",
+    "run.log": "d9cdec72718a55c4ef55e1efeddebc867fff7b758db5f9b1444835004bdac2fa",
+    "comparison-and-outcome.json": "605f3cdc54c6163b449d638da6ba4e9c10823727a102f333f92d1b213c05f7e1",
+    "verification.json": "60dac461165615a1b4a6c4acd05b08565ea3ca4841d87c542eb86b21df74c058",
+    "README.md": "3a1e7d54392504e19392cce053fea4fdeac8b9d59afe19b43804c0e62516cf2f",
+    "real-process-controls.json": "6cfb10d0f7e2cbd27ea3650e8d226e2a9b5ce838a471af8303b4b222e2d9ba8f",
+    "MRI-native-axis0.png": "92f5863c837c8e6390ce7684c544f9750bd85c500e7d020b19659672d985a997",
+    "MRI-native-axis1.png": "ad44a9d1ef3adb72960b20c34b2d53dc6bb875cddaabd637c0055d3ce7c15bb4",
+    "MRI-native-axis2.png": "f1febbbd647fe2a1505bc31a0f07337688e94e3230fb6242a7c1233154e48bc1",
+    "US-native-axis0.png": "bf32d28ac60bb8254095a6358cb98a6a29913292cf74971890da87c628028441",
+    "US-native-axis1.png": "b930c8971887bdc4a11879a2f02d5fd7a0628775da3e79efeb8c7ca53e7de7dd",
+    "US-native-axis2.png": "75b9973c67232cde0e6e962227943eecff451793839dee31779e32f959c3ac1f"
+  },
+  "independent_pre_execution_review": {
+    "path": "artifacts/mechanics/resect-baseline-monitor-v3-independent-review-v1/verification.json",
+    "sha256": "a322e5e027c4a0f87f290766eea1e19dd1df541ac40392325afcfd68599189d0"
+  },
+  "previous_failures_preserved": true,
+  "B_V_or_during_access": false,
+  "anatomical_acceptance": false
+}

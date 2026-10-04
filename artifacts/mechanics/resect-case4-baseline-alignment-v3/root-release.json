@@ -1,0 +1,17 @@
+{
+  "script_sha256": "a4f7761995238a05488a6cc9f1d7cfc360fc258d8c30510a40ec4e2a496c0a04",
+  "declaration_sha256": "765eb2048aa7e5a7814560a66c4e8d2f2796b087352cdff75ade81ab08af975f",
+  "coordinate_justification_sha256": "f293613dd1ca5adf58bfd768c2fe2b4d50e352fe0534ee28264225739f88c2ec",
+  "authorizer": "root explicit one V3 actual attempt release",
+  "created_at_utc": "2026-10-04T21:08:17.927634+00:00",
+  "source_commit": "6e5ad08b77261825724e02e101b5978b7fae90db",
+  "committed_source_binding_sha256": "91461c7fa2cff913d66bd9cb12e2e17097388a72dbbbd912270de1cbfc0f69bb",
+  "scope": "One supervised baseline-only run; T1, FLAIR, before-US, MRI-before-US tags only; no before-during tag/during-US/B/Vmotion. Unchanged scientific fit/LOO/six views. PreserveV1/V2 failures.",
+  "wall_seconds": 115,
+  "RSS_bytes": 2147483648,
+  "threads": 1,
+  "exit_grace_max_requested_timeout_seconds": 0.05,
+  "actual_grace_duration_recorded": true,
+  "automatic_retries": 0,
+  "further_attempts_authorized": false
+}
