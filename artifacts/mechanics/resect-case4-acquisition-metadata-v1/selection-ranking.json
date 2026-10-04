@@ -1,0 +1,113 @@
+{
+  "rule": "min_total_declared_bytes_over_complete_six_file_cases_then_numeric_case_id",
+  "ranked_eligible_cases": [
+    {
+      "case_id": "Case4",
+      "bytes": 35068010
+    },
+    {
+      "case_id": "Case3",
+      "bytes": 37761219
+    },
+    {
+      "case_id": "Case17",
+      "bytes": 47663191
+    },
+    {
+      "case_id": "Case16",
+      "bytes": 52036954
+    },
+    {
+      "case_id": "Case6",
+      "bytes": 57406407
+    },
+    {
+      "case_id": "Case18",
+      "bytes": 57863214
+    },
+    {
+      "case_id": "Case7",
+      "bytes": 62355067
+    },
+    {
+      "case_id": "Case1",
+      "bytes": 68407378
+    },
+    {
+      "case_id": "Case2",
+      "bytes": 74553970
+    },
+    {
+      "case_id": "Case12",
+      "bytes": 76649041
+    },
+    {
+      "case_id": "Case25",
+      "bytes": 78330951
+    },
+    {
+      "case_id": "Case27",
+      "bytes": 79845446
+    },
+    {
+      "case_id": "Case19",
+      "bytes": 83238954
+    },
+    {
+      "case_id": "Case14",
+      "bytes": 85142687
+    },
+    {
+      "case_id": "Case15",
+      "bytes": 87893680
+    },
+    {
+      "case_id": "Case24",
+      "bytes": 90695840
+    },
+    {
+      "case_id": "Case21",
+      "bytes": 92308532
+    }
+  ],
+  "ineligible_missing_files": [
+    {
+      "case_id": "Case5",
+      "missing": [
+        "RESECT/NIFTI/Case5/Landmarks/Case5-beforeUS-duringUS-full.tag"
+      ]
+    },
+    {
+      "case_id": "Case8",
+      "missing": [
+        "RESECT/NIFTI/Case8/Landmarks/Case8-beforeUS-duringUS-full.tag"
+      ]
+    },
+    {
+      "case_id": "Case11",
+      "missing": [
+        "RESECT/NIFTI/Case11/Landmarks/Case11-beforeUS-duringUS-full.tag",
+        "RESECT/NIFTI/Case11/Landmarks/Case11-MRI-beforeUS.tag"
+      ]
+    },
+    {
+      "case_id": "Case13",
+      "missing": [
+        "RESECT/NIFTI/Case13/Landmarks/Case13-beforeUS-duringUS-full.tag"
+      ]
+    },
+    {
+      "case_id": "Case23",
+      "missing": [
+        "RESECT/NIFTI/Case23/Landmarks/Case23-beforeUS-duringUS-full.tag"
+      ]
+    },
+    {
+      "case_id": "Case26",
+      "missing": [
+        "RESECT/NIFTI/Case26/Landmarks/Case26-beforeUS-duringUS-full.tag"
+      ]
+    }
+  ],
+  "clinical_outcomes_or_coordinates_used_for_ranking": false
+}
