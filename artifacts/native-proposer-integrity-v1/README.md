@@ -27,5 +27,24 @@ tested-source hashes and hashes of the retained initial failing evidence.
 The independent reviewer separately reran all 15 mutation and batch-binding
 cases: 15 passed in 0.29 seconds. `independent-review.json` and
 `independent-review-tests.txt` preserve that separate check and its source hash.
-The native-patient cost observation remains pending a separate timing window;
-these small regression timings are not a patient performance benchmark.
+
+`actual-case-observation.json` records one local UCSF-PDGM-0004 observation in a
+brief coordinated quiet window. Native factory setup took 2.324 seconds;
+provider source-content verification and static preparation took 0.044 seconds.
+The initial integrity-only, propose and validate calls took 0.288, 0.287 and
+0.285 seconds respectively. After one paid native stroke, these took 0.300,
+0.302 and 0.302 seconds. One full native preview took 0.281 seconds and its
+certificate commit took 0.028 seconds. Initial and updated proposed rays matched
+the frozen experimental prototype exactly, and the old batch was rejected after
+the cavity changed.
+
+The process cumulative peak resident set reached 1,245,593,600 bytes (about
+1.16 GiB), including case loading and native factory setup. This is not an
+isolated allocation estimate for the provider. Each phase was observed once;
+there are no repeated distributions, cross-model timing comparisons or claims
+of controlled hardware conditions. No RL, final or stress worlds were used.
+Whole-grid/history verification is a material cost, comparable here to the
+single measured native preview. It remains enabled; any future adapter should
+account for integrity calls separately and avoid a redundant validation of a
+batch it just regenerated within one uninterrupted access path. Checking source
+and cavity integrity does not independently certify geometric clearance.

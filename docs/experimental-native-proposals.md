@@ -57,3 +57,11 @@ clinical access. A future adapter integration needs a separately hashed action
 model, a declared policy action-limit rule, replay tests, and the same proposal
 and checking budgets across comparators. It must not silently broaden an exact
 user-selected entry/target pair.
+
+The focused repair suite passed 66 tests; a separate independent run passed all
+15 mutation and batch-binding cases. Retained initial failures and repaired
+receipts are under `artifacts/native-proposer-integrity-v1`. One UCSF source
+observation measured about 0.29–0.30 seconds per complete integrity/propose or
+validation call, versus 0.28 seconds for its one measured native preview. These
+single observations are not a controlled performance comparison. The checks
+remain enabled; their cost must be counted separately in future adapters.

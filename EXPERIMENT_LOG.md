@@ -704,3 +704,26 @@ audit and `diagnostics-v1/` preserve their source and limitations. The 50,380,30
 byte native replay is retained locally and stored as an 836,680-byte lossless
 gzip in Git, with byte/semantic roundtrip checks. Gzip-only report regeneration
 reproduces the same Markdown and uncompressed evidence hashes.
+
+## October 4, 2026 — bound proposal integrity and its measured cost
+
+A standalone residual-column provider now binds the source, complete native
+model, declared ray rule and current cavity. Independent adversaries exposed
+cached-identity holes in its first implementation: source replacement before
+preparation and edits to live cavity masks could change endpoints while keeping
+old advertised hashes. Eight original failing cases and source bytes remain
+preserved. The repaired provider validates actual source contents, reconstructs
+the native V2 committed-history chain and all four cavity masks, and rejects
+stale or altered exported batches. All 66 focused checks passed; an independent
+rerun passed all 15 review cases. The native geometry engine is unchanged.
+
+A subsequent single public-case observation matched the frozen prototype's
+initial and post-cut inventories exactly and rejected a stale batch. Native
+source setup took 2.324 seconds, provider preparation 0.044 seconds, and each
+integrity/proposal/validation call approximately 0.285–0.302 seconds. One native
+preview took 0.281 seconds and its paid commit 0.028 seconds. Cumulative process
+peak RSS was 1,245,593,600 bytes; it is not an isolated allocation measure. Other
+heavy jobs were paused briefly, but these single observations do not establish
+a performance distribution or a speedup. No learning or final/stress worlds ran.
+The module remains outside selected-route refinement and learning. Exact source,
+phase timings and limits are in `artifacts/native-proposer-integrity-v1/`.

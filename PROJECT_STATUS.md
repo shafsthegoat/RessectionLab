@@ -89,8 +89,11 @@ Independent review caught changed arrays and live cavity edits that retained
 cached identities; all eight original failures are preserved. Repairs now verify
 source contents, committed history and all four cavity masks before emitting
 proposals. All 66 focused checks and a separate 15-case review pass. This module
-does not certify tool clearance or integrate with learning yet; patient-scale
-integrity cost remains to be measured.
+does not certify tool clearance or integrate with learning yet. In one actual
+case observation, integrity/proposal checks took approximately 0.29–0.30 seconds
+per call; cumulative process peak RSS was 1.16 GiB. Initial and post-cut proposal
+inventories matched the frozen prototype. These are individual local timings,
+not a latency distribution or isolated allocation measurement.
 
 ## Verified starting state
 
