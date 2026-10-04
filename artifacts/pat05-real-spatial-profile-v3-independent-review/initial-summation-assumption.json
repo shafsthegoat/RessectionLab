@@ -1,0 +1,16 @@
+{
+  "kind": "independent_check_overstrict_summation_assumption",
+  "failed_assertion": "sum(history reward) == metrics.total_reward",
+  "runtime": "Python3.12 built-in sum differs from sequential accumulator for these three floats",
+  "saved_reward_values": [
+    -0.23100069832444023,
+    -0.23300070537283163,
+    -0.23500071242122303
+  ],
+  "builtin_sum": -0.6990021161184949,
+  "sequential_addition": -0.6990021161184948,
+  "recorded_total": -0.6990021161184948,
+  "absolute_difference": 1.1102230246251565e-16,
+  "difference_in_ulps": 1.0,
+  "resolution": "Use the actually specified sequential action accumulator, preserving both raw results; no production or saved outcome changed."
+}

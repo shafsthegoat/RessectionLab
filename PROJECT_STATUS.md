@@ -154,6 +154,27 @@ second scalar phase never started; no speedup result follows. Original limits
 and failed receipts are retained, with no retry. See
 `artifacts/independent-native-batch-history-v1/RESULT.md`.
 
+The matched 64³ PAT05 proposal profiles completed in 16.35 s (fixed lattice)
+and 31.58 s (nominal/cavity). Both crops contain all 11,437 supplied target
+centers; initial legal actions increased from 48 to 70. The broader accepted
+sweep bounding box still excludes 9,124 target centers, versus 10,742 for the
+fixed lattice: these are geometric bounds, not measured reachable volume.
+Both three-action, first-inventory-order histories passed independent geometry
+checks but removed no target. They removed 26 and 3 normal source cells,
+respectively. These probes performed no search or learning and do not compare
+policy efficacy. All source/input hashes and recorded weights stayed unchanged;
+the saved-result audit found no blocking discrepancy. See
+`artifacts/pat05-real-spatial-profile-v3/outcome.json` and its independent review.
+
+The mechanics evidence review found public, measured human ex-vivo specimen
+force/displacement and torque/twist curves, plus separate patient image-landmark
+resources. FEBio is the recommended first finite-strain specimen framework;
+no solver has yet been installed or validated. The specimen check must precede
+a separate real-anatomy displacement proof of concept; neither can establish
+surgical action/force response without suitable interaction measurements.
+See `docs/tissue-mechanics-frameworks.md`, `docs/tissue-mechanics-measurements.md`
+and `docs/tissue-mechanics-validation.md` for the bounded scope and held-out rules.
+
 The first real TRAIN PAT22 inference profile completed all four declared cells
 in 6.247 seconds with unchanged model parameters. One CPU call took 28–30 ms
 for a 32³ crop and 256–269 ms for a 64³ crop, with highest observed memory about
