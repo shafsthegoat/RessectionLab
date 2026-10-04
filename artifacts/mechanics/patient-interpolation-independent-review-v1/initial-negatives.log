@@ -1,0 +1,51 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+_______ test_tiny_overlapping_interiors_are_not_promoted_by_contact_band _______
+
+    def test_tiny_overlapping_interiors_are_not_promoted_by_contact_band():
+        x, e = tet10([[0, 0, 0], [.01, 0, 0], [0, .01, 0], [0, 0, .01],
+                     [.007, 0, 0], [0, .007, 0], [0, 0, .007]], [[0, 1, 2, 3], [0, 4, 5, 6]])
+        field = m.FrozenTet10Field(x, e, np.full_like(x, .0001), frame())
+        assert field.geometry_status == "supported"
+        query_native = np.full(3, 1e-13)
+        for cell in e:
+            local = np.linalg.solve((x[cell[1:4]]-x[cell[0]]).T, query_native-x[cell[0]])
+            assert np.all(local > 0) and local.sum() < 1
+        result = m.sample_field(field, [query_native*1000])["rows"][0]
+>       assert result["status"] in ("ambiguous_reference_location", "uncertain_reference_boundary")
+E       AssertionError: assert 'supported' in ('ambiguous_reference_location', 'uncertain_reference_boundary')
+
+tests/test_mechanics_patient_interpolation_review.py:77: AssertionError
+________ test_direct_loader_requires_a_real_forward_hash_identity[None] ________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/patient-interpolation-review-initial/test_direct_loader_requires_a_0')
+bad = None
+
+    @pytest.mark.parametrize("bad", [None, "not-a-source-hash"])
+    def test_direct_loader_requires_a_real_forward_hash_identity(tmp_path, bad):
+        manifest = bundle(tmp_path)
+        manifest["forward_hash"] = bad
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_mechanics_patient_interpolation_review.py:85: Failed
+_ test_direct_loader_requires_a_real_forward_hash_identity[not-a-source-hash] __
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/patient-interpolation-review-initial/test_direct_loader_requires_a_1')
+bad = 'not-a-source-hash'
+
+    @pytest.mark.parametrize("bad", [None, "not-a-source-hash"])
+    def test_direct_loader_requires_a_real_forward_hash_identity(tmp_path, bad):
+        manifest = bundle(tmp_path)
+        manifest["forward_hash"] = bad
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_mechanics_patient_interpolation_review.py:85: Failed
+=========================== short test summary info ============================
+FAILED tests/test_mechanics_patient_interpolation_review.py::test_tiny_overlapping_interiors_are_not_promoted_by_contact_band
+FAILED tests/test_mechanics_patient_interpolation_review.py::test_direct_loader_requires_a_real_forward_hash_identity[None]
+FAILED tests/test_mechanics_patient_interpolation_review.py::test_direct_loader_requires_a_real_forward_hash_identity[not-a-source-hash]
+3 failed in 0.36s

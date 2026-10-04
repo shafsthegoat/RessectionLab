@@ -1,0 +1,27 @@
+{
+  "status": "prepared_tested_repaired_independent_final_verification_pending",
+  "created_at_utc": "2026-10-04T21:46:46.301983+00:00",
+  "tests": "57 passed in0.45s;26owner,17independent,14comparison",
+  "command": ".venv/bin/python -m pytest -q tests/test_mechanics_patient_interpolation.py tests/test_mechanics_patient_interpolation_review.py tests/test_mechanics_patient_comparison.py",
+  "files": {
+    "scripts/mechanics_patient_interpolation.py": "ce5b1639f542d1ac515ec10b8a7492f628cd704c6b011473d6c950e13772bd00",
+    "tests/test_mechanics_patient_interpolation.py": "bab1f8c4e38ea8658b9544fbbc86e84a64bc971411f346de3b30d43a9a9386a3",
+    "docs/mechanics-patient-interpolation.md": "92550d66033c39c31284516c28772cf0aaff407c9d9468d834138dcf17e9be76",
+    "scripts/mechanics_patient_comparison.py": "cacd557107fa7bca3d83873faa776f16c70864366e89c096f9f1ae09ac402587",
+    "tests/test_mechanics_patient_interpolation_review.py": "a36fb55aa8d760497eadc1fb5e106d616436073d617fa80933fd151715b36931"
+  },
+  "patient_B_V_or_arrays_read": false,
+  "solver_calls": 0,
+  "numeric_fixtures_only": true,
+  "public_case_execution": false,
+  "clinical_or_anatomical_acceptance": false,
+  "repair_history": {
+    "initial_source_sha256": "2caf861dc776c736ab38bf1fe1e258a3754ff66ec357062eb661bf933f7eaa5e",
+    "initial_negative_receipt": "artifacts/mechanics/patient-interpolation-independent-review-v1/initial-negatives.json",
+    "original_preparation_receipt_sha256": "f612d7e2bee5778b17ce9d8723ea1aacd3182fde13709780a0b378090630cc3d",
+    "repairs": [
+      "Band-only shared contact remains uncertain/null; exact contact unchanged.",
+      "Direct portable forward identity validates SHA256 syntax, including valid existing prefix."
+    ]
+  }
+}

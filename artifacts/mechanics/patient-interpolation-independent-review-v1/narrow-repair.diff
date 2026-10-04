@@ -1,0 +1,29 @@
+--- initial-2caf861d
++++ repaired-ce5b1639
+@@ -181,10 +181,16 @@
+                     for cell in cells[hit[1:], :4]:
+                         common.intersection_update(cell.tolist())
+                     conforming_contact = bool(common) and all(
+-                        all(abs(weight) <= tol for vertex,weight,tol in zip(cells[index,:4], w,bary_tolerance[index]) if int(vertex) not in common)
++                        all(weight == 0 for vertex,weight in zip(cells[index,:4], w) if int(vertex) not in common)
+                         for index,w in zip(hit,weights))
+                     if len(hit) > 1 and not conforming_contact:
+-                        row.update(status='ambiguous_reference_location', reason='multiple_cells_without_shared_containing_simplex')
++                        band_only_contact = bool(common) and all(
++                            all(abs(weight) <= tol for vertex,weight,tol in zip(cells[index,:4],w,bary_tolerance[index]) if int(vertex) not in common)
++                            for index,w in zip(hit,weights))
++                        if band_only_contact:
++                            row.update(status='uncertain_reference_boundary', reason='shared_simplex_contact_only_within_roundoff_band')
++                        else:
++                            row.update(status='ambiguous_reference_location', reason='multiple_cells_without_shared_containing_simplex')
+                     else:
+                         values = np.einsum('en,eni->ei', tet10_values(weights), field.displacement_m[cells[hit]])
+                         disagreement = float(pdist(values).max()) if len(values)>1 else 0.
+@@ -246,6 +252,7 @@
+ def load_frozen_field(root, manifest):
+     """Validate every complete field artifact before accepting query coordinates."""
+     from scripts import mechanics_patient_comparison as comparison
++    comparison._hash(manifest.get('forward_hash'))
+     comparison._check_external(root,manifest,forward_hash=manifest.get('forward_hash'),protocol_sha256=manifest.get('protocol_sha256'))
+     if manifest.get('interpolator_entrypoint') != 'sample_frozen_field':
+         raise ValueError('Frozen entrypoint differs')

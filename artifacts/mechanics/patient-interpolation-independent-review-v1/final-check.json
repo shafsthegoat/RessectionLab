@@ -1,0 +1,25 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_mechanics_patient_interpolation_review.py",
+    "tests/test_mechanics_patient_interpolation.py",
+    "tests/test_mechanics_patient_comparison.py",
+    "--basetemp=build/validation/patient-interpolation-review-final"
+  ],
+  "exit_code": 0,
+  "wall_seconds": 0.5881138329859823,
+  "source_and_test_sha256": {
+    "scripts/mechanics_patient_interpolation.py": "ce5b1639f542d1ac515ec10b8a7492f628cd704c6b011473d6c950e13772bd00",
+    "scripts/mechanics_patient_comparison.py": "cacd557107fa7bca3d83873faa776f16c70864366e89c096f9f1ae09ac402587",
+    "src/resectionlab/mechanics_landmarks.py": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc",
+    "tests/test_mechanics_patient_interpolation_review.py": "a36fb55aa8d760497eadc1fb5e106d616436073d617fa80933fd151715b36931",
+    "tests/test_mechanics_patient_interpolation.py": "bab1f8c4e38ea8658b9544fbbc86e84a64bc971411f346de3b30d43a9a9386a3",
+    "tests/test_mechanics_patient_comparison.py": "8223455a2e9771e155015cf5607ceb1aecd48c914696b4145c3d62be3aad08e8"
+  },
+  "all_six_bound_files_unchanged": true,
+  "log_sha256": "4defb533df23411ca5fe1b22f4892047e38af14c6d7ff33c1f26ae73a4c995d4",
+  "scope": "Constructed tetrahedra and temporary NPZ/JSON, no patient values, image arrays, meshing or solver"
+}

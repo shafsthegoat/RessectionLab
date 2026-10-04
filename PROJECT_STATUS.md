@@ -408,6 +408,15 @@ problems. No actual B/V motion was accessed and no patient comparison exists yet
 FEM location/interpolation and mechanics gates remain separate. See
 `docs/patient-displacement-comparison.md`.
 
+The saved tet10 field evaluator now preserves the native MRI/common ultrasound
+frame conversion and returns explicit null statuses for unsupported or ambiguous
+queries. Independent review found and fixed a tiny-overlap acceptance error and
+two malformed source-identity cases; the original failures remain recorded.
+All 57 evaluator/comparison checks pass in 0.41 s with six bound files unchanged.
+This is software interpolation evidence only. Complete fields still must freeze
+before later outcomes are opened; no patient query, field or displacement result
+exists. See `docs/mechanics-patient-interpolation.md` and its independent review.
+
 The first real TRAIN PAT22 inference profile completed all four declared cells
 in 6.247 seconds with unchanged model parameters. One CPU call took 28–30 ms
 for a 32³ crop and 256–269 ms for a 64³ crop, with highest observed memory about

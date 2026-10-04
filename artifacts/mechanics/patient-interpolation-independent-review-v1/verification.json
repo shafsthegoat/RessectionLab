@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "status": "pass_after_conservative_boundary_and_forward_identity_repairs",
+  "source_and_test_sha256": {
+    "scripts/mechanics_patient_interpolation.py": "ce5b1639f542d1ac515ec10b8a7492f628cd704c6b011473d6c950e13772bd00",
+    "scripts/mechanics_patient_comparison.py": "cacd557107fa7bca3d83873faa776f16c70864366e89c096f9f1ae09ac402587",
+    "src/resectionlab/mechanics_landmarks.py": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc",
+    "tests/test_mechanics_patient_interpolation_review.py": "a36fb55aa8d760497eadc1fb5e106d616436073d617fa80933fd151715b36931",
+    "tests/test_mechanics_patient_interpolation.py": "bab1f8c4e38ea8658b9544fbbc86e84a64bc971411f346de3b30d43a9a9386a3",
+    "tests/test_mechanics_patient_comparison.py": "8223455a2e9771e155015cf5607ceb1aecd48c914696b4145c3d62be3aad08e8"
+  },
+  "final_checks": {
+    "passed": 57,
+    "independent": 17,
+    "owner_interpolation": 26,
+    "existing_comparison": 14,
+    "pytest_seconds": 0.41,
+    "process_wall_seconds": 0.5881138329859823,
+    "all_six_bound_files_unchanged": true,
+    "receipt_sha256": "92a796b56daaa5c9bd710c2690e5a2d4098c78aaaa656d1ba5fcefccad889735",
+    "log_sha256": "4defb533df23411ca5fe1b22f4892047e38af14c6d7ff33c1f26ae73a4c995d4"
+  },
+  "original_negative": {
+    "source_sha256": "2caf861dc776c736ab38bf1fe1e258a3754ff66ec357062eb661bf933f7eaa5e",
+    "failed": 3,
+    "pytest_seconds": 0.36,
+    "receipt_sha256": "6f7b06ae2f92751149137deb6aa99b6485c8547c57f8fd655857f00a9d34fe1d",
+    "original_source_and_tests_preserved_as_gzip": true,
+    "findings": [
+      "Positive interior barycentric coordinates in two nested tetrahedra sharing only one vertex were accepted as supported because off-simplex weights fit the physical contact band.",
+      "Direct strict-manifest loader accepted forward_hash=None.",
+      "Direct strict-manifest loader accepted non-hash forward identity text."
+    ]
+  },
+  "repair": {
+    "diff_sha256": "41b3353f72eea2bed057a7720869a393fc7c55edbaaaf601508901ad41e508db",
+    "changes": [
+      "Supported shared-simplex contact now requires zero off-simplex barycentric coordinates. Band-only contact becomes uncertain_reference_boundary with null motion; wider interior overlap remains ambiguous.",
+      "Portable loader checks forward identity SHA syntax before artifact loading. Valid sha256-prefixed identities remain supported."
+    ],
+    "no_tolerance_or_physical_model_change": true
+  },
+  "independent_controls": [
+    "Analytical nested-overlap control proves both barycentric interiors strictly positive; now receives null instead of supported motion.",
+    "Quadratic field in an obliquely rotated and translated frame verifies inverse point mapping and linear-only displacement-vector mapping with m-to-mm conversion.",
+    "Three-cell shared-edge traces and reversed element order agree.",
+    "Controlled local-trace perturbations place two traces 1.5e-12 m apart although each lies 0.75e-12 m from first; all-pair continuity rejects. Only the basis-return value is monkeypatched in this isolated aggregation corruption control.",
+    "All six declared statuses survive full NPZ/JSON portable adapter; every unsupported status preserves null displacement and exact query hash.",
+    "Coherently rehashed foreign source bytes are refused before sample_field/point location.",
+    "Duplicate ZIP members, truncated numeric data, object arrays and Fortran order reject before numpy.load; allocation callback is instrumented to fail if reached."
+  ],
+  "scope": {
+    "patient_landmark_reads": 0,
+    "patient_image_reads": 0,
+    "meshing": 0,
+    "solver_runs": 0,
+    "runtime_installs": 0,
+    "artifacts": "Constructed analytical tetrahedra and temporary NPZ/JSON only."
+  },
+  "limitations": [
+    "Boundary tolerance remains 1e-12 m. Requiring exact shared-simplex barycentric zeros is deliberately conservative: a rounded oblique boundary may return null uncertainty. No query clamping, snapping or extrapolation.",
+    "Global mesh overlap/deformation validity and closed anatomical domain QC remain upstream responsibilities. Pointwise multi-cell ambiguity checks do not establish a valid patient domain.",
+    "Complete field bytes, executing source and frame are hash-bound; referenced numerical evidence is not reinterpreted as authentic solver proof. Actual source/model authority and freeze chronology are enforced by the separate comparison/release workflow.",
+    "SHA syntax validation alone is not authorization. Cooperative-host reproducibility is the scope.",
+    "Limits are 10,000 nodes, 20,000 elements, 4,096 queries/candidates and 64 MiB per encoded/expanded artifact, not measured runtime or an aggregate memory promise.",
+    "The all-pair perturbation test isolates the continuity reduction; it is not a physical discontinuity measurement.",
+    "Software interpolation coverage does not establish accurate tissue mechanics, clinical usefulness or prediction accuracy."
+  ]
+}

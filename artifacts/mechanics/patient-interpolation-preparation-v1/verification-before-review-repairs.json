@@ -1,0 +1,17 @@
+{
+  "status": "prepared_tested_no_patient_queries_independent_review_pending",
+  "created_at_utc": "2026-10-04T21:38:05.740333+00:00",
+  "tests": "39 passed in0.47s;25new evaluator and14existing comparison",
+  "command": ".venv/bin/python -m pytest -q tests/test_mechanics_patient_interpolation.py tests/test_mechanics_patient_comparison.py",
+  "files": {
+    "scripts/mechanics_patient_interpolation.py": "2caf861dc776c736ab38bf1fe1e258a3754ff66ec357062eb661bf933f7eaa5e",
+    "tests/test_mechanics_patient_interpolation.py": "c525a9c89b653c07d34c1d92b6e954a6431fb72c82ff94832dddad557a6743d6",
+    "docs/mechanics-patient-interpolation.md": "e467528b00eaa6c0c3572279102856aee5ee78afad67205f888a3527139a9893",
+    "scripts/mechanics_patient_comparison.py": "cacd557107fa7bca3d83873faa776f16c70864366e89c096f9f1ae09ac402587"
+  },
+  "patient_B_V_or_arrays_read": false,
+  "solver_calls": 0,
+  "numeric_fixtures_only": true,
+  "public_case_execution": false,
+  "clinical_or_anatomical_acceptance": false
+}
