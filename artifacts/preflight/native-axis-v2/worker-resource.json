@@ -1,0 +1,14 @@
+{
+  "budget": {
+    "hard_termination_grace_seconds": 15.0,
+    "process_peak_rss_bytes": 6442450944,
+    "worker_wall_seconds": 600.0
+  },
+  "budget_request_to_receipt_seconds": null,
+  "cancellation_callback_calls": 1983,
+  "cancellation_callback_seconds": 0.00944506167434156,
+  "cancellation_reason": null,
+  "elapsed_seconds": 148.8139820419019,
+  "observed_peak_rss_bytes": 1411072000,
+  "scope": "worker process RSS; cooperative callback CPU cost; no OS memory reservation"
+}

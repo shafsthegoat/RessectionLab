@@ -106,10 +106,19 @@ search/learner interface while retaining the native cutting engine. Twenty-nine
 new analytic checks and 29 compatibility checks pass; the independent review's
 19 cases are included in the new checks. Failed-reset integrity, preview-error
 accounting and transient-cache defects were caught, repaired and preserved as
-negative evidence. The first public preflight stopped before adapter construction on a
-configuration-identity mismatch; the adapter has not executed a patient episode
-or entered the desktop,
+negative evidence. The first public preflight stopped before adapter construction
+on a configuration-identity mismatch; two audits isolated truthful provenance
+text as the only difference. The separately declared V2 completed five patient
+episodes from immutable `6930417`: greedy return 1,098.77 and unchanged RAW
+initialization 441.60, with both distinct histories independently certified.
+A separate artifact audit and 25 adversarial checks reproduce all source-cell
+counts and rewards. The run took 149.38 seconds and 1.314-GiB peak worker RSS.
+Its 48.19-second initial policy panel exceeds the older 30-second allowance,
+though it is not an exact generic-learner cost. No gradients or final/stress
+worlds were used. Later decision features/logits were not retained; the next
+bounded update pilot must record them. The adapter remains outside the desktop,
 and existing procedural checkpoints and feature-unit gates remain unchanged.
+See `artifacts/preflight/native-axis-v2/RESULT.md`.
 
 The frozen extraction procedure has now run on PAT16 and PAT20, with two
 repetitions of both model variants per case. All eight child inferences completed
@@ -269,8 +278,16 @@ byte-drift rejection test. Both full attempts are in
 action-model preflight V1 stopped during configuration validation before
 adapter construction, simulated cuts or gradients. Its source stayed unchanged. Two actual configuration-only audits found
 identical physical inputs, with only the tissue-support provenance text
-differing between factories. A fresh declaration will bind the direct helper
+differing between factories. The fresh V2 declaration binds the direct helper
 without rewriting either provenance description or bypassing identities.
+Its immutable `6930417` launch passed 77 focused checks in 23.07 seconds; all
+2,710 baseline files remained unchanged. Five subsequent public episodes and
+two unique native audits completed; a separate artifact audit passed 25 tamper
+checks. All 46 captured source files and original/execution case bundles still
+match. Five histories compress losslessly from 39,286,826 to 665,699 bytes;
+gzip-only report regeneration is identical, and raw originals remain local.
+Executed versus returned transition accounting separately passes 19 analytic
+checks, including one real tiny gradient update and interrupted native commits.
 
 The preceding complete run passed **794 tests in 176.14 seconds**, with four
 existing DIPY basis-deprecation warnings, from an immutable archive of `0bffeaa`.

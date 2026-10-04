@@ -54,3 +54,10 @@ outputs/
 
 # New action-model preflights retain exact executable copies locally.
 /artifacts/preflight/native-axis-*/frozen-source/
+
+# Completed V2 episodes retain raw local bytes; lossless gzip is versioned.
+/artifacts/preflight/native-axis-v2/profile/greedy/episode.json
+/artifacts/preflight/native-axis-v2/profile/selection-1/episode.json
+/artifacts/preflight/native-axis-v2/profile/selection-2/episode.json
+/artifacts/preflight/native-axis-v2/profile/untrained-selection-1/episode.json
+/artifacts/preflight/native-axis-v2/profile/untrained-selection-2/episode.json

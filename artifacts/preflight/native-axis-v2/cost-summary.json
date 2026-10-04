@@ -1,0 +1,291 @@
+{
+  "background_scope": "Other agent compute/tests held; extraction batch complete. Verified Electron app open and ordinary macOS/desktop activity uncontrolled. OS file caches not flushed.",
+  "cancellation": {
+    "boundary_response_seconds": 9.750016033649445e-06,
+    "committed_state_unchanged": true,
+    "scope": "request before cached inventory; not mid-preview latency"
+  },
+  "cold_factory_seconds": 8.046592625090852,
+  "completed_episodes": 5,
+  "decision_model_hash": "sha256:1d06e7792ce78ecf7ef461ba5ff2b6f78e2367d3b3bc030a80d70b49e6e747f5",
+  "declaration_hash": "sha256:089dca680b992a5808c104a559ab562a034de9bea91de6df939da40d87650fe3",
+  "eligible_development_records": 2,
+  "episodes": [
+    {
+      "actions": [
+        "AXISv1:733fc018d7bf3838d0cdc4b8",
+        "AXISv1:655c3d5433c0c367b0806d85",
+        "AXISv1:bb274fe18711b9d4160bdc31"
+      ],
+      "certified_nonstop_inventory_sizes": [
+        26,
+        22,
+        18,
+        0
+      ],
+      "decision_seconds": 2.187688042060472,
+      "each_transition_and_next_inventory_seconds": [
+        5.971380041912198,
+        5.063832417014055,
+        0.9563177090603858
+      ],
+      "episode": "greedy",
+      "episode_before_export_seconds": 14.748200165922754,
+      "episode_export_seconds": 0.1983249590266496,
+      "episode_seconds": 14.946525124949403,
+      "history_hash": "sha256:8c6e1dd7af7ce28281f424508ee87e6fbe8983120e45f41165313093d7eacfdd",
+      "preview_calls": 66,
+      "preview_seconds": 14.881425793049857,
+      "reset_and_episode_seconds": 22.05720549984835,
+      "reset_seconds": 7.110680374898948,
+      "retained_integrity_calls": 12,
+      "retained_integrity_seconds": 3.6226965410169214,
+      "return": 1098.77,
+      "terminal_provider_proposals_uncertified": 14,
+      "transition_and_next_inventory_seconds": 11.991530167986639
+    },
+    {
+      "actions": [
+        "AXISv1:733fc018d7bf3838d0cdc4b8",
+        "AXISv1:655c3d5433c0c367b0806d85",
+        "AXISv1:bb274fe18711b9d4160bdc31"
+      ],
+      "certified_nonstop_inventory_sizes": [
+        26,
+        22,
+        18,
+        0
+      ],
+      "decision_seconds": 1.312481332803145,
+      "each_transition_and_next_inventory_seconds": [
+        6.036155667039566,
+        5.115299499942921,
+        1.002692750073038
+      ],
+      "episode": "selection-1",
+      "episode_before_export_seconds": 14.017346499953419,
+      "episode_export_seconds": 0.2027785830432549,
+      "episode_seconds": 14.220125082996674,
+      "history_hash": "sha256:8c6e1dd7af7ce28281f424508ee87e6fbe8983120e45f41165313093d7eacfdd",
+      "preview_calls": 66,
+      "preview_seconds": 15.021860169363208,
+      "reset_and_episode_seconds": 21.442346708034165,
+      "reset_seconds": 7.222221625037491,
+      "retained_integrity_calls": 12,
+      "retained_integrity_seconds": 3.6282047086860985,
+      "return": 1098.77,
+      "terminal_provider_proposals_uncertified": 14,
+      "transition_and_next_inventory_seconds": 12.154147917055525
+    },
+    {
+      "actions": [
+        "AXISv1:733fc018d7bf3838d0cdc4b8",
+        "AXISv1:655c3d5433c0c367b0806d85",
+        "AXISv1:bb274fe18711b9d4160bdc31"
+      ],
+      "certified_nonstop_inventory_sizes": [
+        26,
+        22,
+        18,
+        0
+      ],
+      "decision_seconds": 1.2959459569538012,
+      "each_transition_and_next_inventory_seconds": [
+        6.035046249977313,
+        5.16713320906274,
+        1.0705147909466177
+      ],
+      "episode": "selection-2",
+      "episode_before_export_seconds": 14.134898833930492,
+      "episode_export_seconds": 0.20194595807697624,
+      "episode_seconds": 14.336844792007469,
+      "history_hash": "sha256:8c6e1dd7af7ce28281f424508ee87e6fbe8983120e45f41165313093d7eacfdd",
+      "preview_calls": 66,
+      "preview_seconds": 15.068238204810768,
+      "reset_and_episode_seconds": 21.634711917024106,
+      "reset_seconds": 7.297867125016637,
+      "retained_integrity_calls": 12,
+      "retained_integrity_seconds": 3.674753210041672,
+      "return": 1098.77,
+      "terminal_provider_proposals_uncertified": 14,
+      "transition_and_next_inventory_seconds": 12.272694249986671
+    },
+    {
+      "actions": [
+        "AXISv1:7d80490201dfefa87afa5c64",
+        "AXISv1:bca90d31b5ab2bcce504efeb",
+        "AXISv1:33a4dac583612edc37d059f8"
+      ],
+      "certified_nonstop_inventory_sizes": [
+        26,
+        24,
+        22,
+        0
+      ],
+      "decision_seconds": 2.703590999939479,
+      "each_transition_and_next_inventory_seconds": [
+        6.604162749950774,
+        5.967765457928181,
+        0.8862806659890339
+      ],
+      "episode": "untrained-selection-1",
+      "episode_before_export_seconds": 16.63029025006108,
+      "episode_export_seconds": 0.10651700000744313,
+      "episode_seconds": 16.736807250068523,
+      "history_hash": "sha256:6173f430dfc684ffc006606f3a11a49fc1bebd46a665ba046a34b035d6d25aa7",
+      "preview_calls": 72,
+      "preview_seconds": 16.51891129219439,
+      "reset_and_episode_seconds": 23.9728207080625,
+      "reset_seconds": 7.236013457993977,
+      "retained_integrity_calls": 15,
+      "retained_integrity_seconds": 4.433841209043749,
+      "return": 441.6,
+      "terminal_provider_proposals_uncertified": 20,
+      "transition_and_next_inventory_seconds": 13.458208873867989
+    },
+    {
+      "actions": [
+        "AXISv1:7d80490201dfefa87afa5c64",
+        "AXISv1:bca90d31b5ab2bcce504efeb",
+        "AXISv1:33a4dac583612edc37d059f8"
+      ],
+      "certified_nonstop_inventory_sizes": [
+        26,
+        24,
+        22,
+        0
+      ],
+      "decision_seconds": 2.74973837507423,
+      "each_transition_and_next_inventory_seconds": [
+        6.620584083953872,
+        6.05636091704946,
+        0.8759101249743253
+      ],
+      "episode": "untrained-selection-2",
+      "episode_before_export_seconds": 16.76324195798952,
+      "episode_export_seconds": 0.10760520794428885,
+      "episode_seconds": 16.87084716593381,
+      "history_hash": "sha256:6173f430dfc684ffc006606f3a11a49fc1bebd46a665ba046a34b035d6d25aa7",
+      "preview_calls": 72,
+      "preview_seconds": 16.68956741504371,
+      "reset_and_episode_seconds": 24.22109699889552,
+      "reset_seconds": 7.350249832961708,
+      "retained_integrity_calls": 15,
+      "retained_integrity_seconds": 4.42208179528825,
+      "return": 441.6,
+      "terminal_provider_proposals_uncertified": 20,
+      "transition_and_next_inventory_seconds": 13.552855125977658
+    }
+  ],
+  "final_worlds_used": false,
+  "future_training_budget": null,
+  "geometry_accounting": {
+    "actual_preview_calls": 368,
+    "complete_inventory_receipts": 21,
+    "observed_repeated_preview_seconds_after_first": 58.62889433093369,
+    "phases": {
+      "primary": 368
+    },
+    "preview_seconds": 84.02672278985847,
+    "reconstructed_initial_inventories": 6,
+    "repeated_preview_calls": 256,
+    "retained_integrity_calls": 71,
+    "retained_integrity_seconds": 21.19785667315591,
+    "scope": "Previews count all retained complete inventories. Integrity counters are reset-local and omit checks immediately before reset plus other unretained checks; not the exact global integrity total. Repetition is measured work, not a cache speedup estimate.",
+    "unique_full_model_cavity_proposal_phase_identities": 112
+  },
+  "gradient_steps": 0,
+  "independent_audit_seconds": 23.854998666909523,
+  "individual_audit_seconds": [
+    14.96656787500251,
+    8.888430791907012
+  ],
+  "initial_clone_seconds": 0.2930660831043497,
+  "initial_inventory_inspection_seconds": 1.403560291044414,
+  "initialization_components": {
+    "native_engine_setup_seconds": 0.3382485839538276,
+    "proposer_preparation_seconds": 0.04350999998860061,
+    "scope": "includes initial complete inventory; local diagnostic only",
+    "total_seconds": 8.046174374991097
+  },
+  "launcher_seconds": 149.37558004097082,
+  "load_average_before_launch": [
+    1.6533203125,
+    1.48828125,
+    1.55712890625
+  ],
+  "native_config_hash": "sha256:6d817c5c7441cc7d6c6bcaeac4542cfd3266f2474c9c1904a2d6279870b3143b",
+  "outcomes": {
+    "greedy": {
+      "clinical_deficit_probability": null,
+      "cumulative_partial_normal_contact_mm3": 177.0,
+      "history_hash": "sha256:8c6e1dd7af7ce28281f424508ee87e6fbe8983120e45f41165313093d7eacfdd",
+      "normal_removed_mm3": 62.0,
+      "residual_target_mm3": 40806.0,
+      "return": 1098.77,
+      "source_target_mm3": 41919.0,
+      "target_fraction_removed": 0.02655120589708724,
+      "target_removed_mm3": 1113.0
+    },
+    "untrained": {
+      "clinical_deficit_probability": null,
+      "cumulative_partial_normal_contact_mm3": 72.0,
+      "history_hash": "sha256:6173f430dfc684ffc006606f3a11a49fc1bebd46a665ba046a34b035d6d25aa7",
+      "normal_removed_mm3": 13.0,
+      "residual_target_mm3": 41474.0,
+      "return": 441.6,
+      "source_target_mm3": 41919.0,
+      "target_fraction_removed": 0.010615711252653927,
+      "target_removed_mm3": 445.0
+    }
+  },
+  "panels": {
+    "frozen_greedy_sequence": {
+      "episode_json_export_seconds": 0.40472454112023115,
+      "episode_seconds_including_json_export": 28.556969875004143,
+      "reset_seconds": 14.520088750054128,
+      "scope": "sum of two measured resets and episodes, including explicit preflight inventory re-reads and JSON export; excludes caller panel bookkeeping and per-world clone/factory setup; not an exact generic-learner cost or rigorous lower bound",
+      "total_reset_plus_episode_seconds": 43.07705862505827
+    },
+    "untrained_raw_policy": {
+      "episode_json_export_seconds": 0.21412220795173198,
+      "episode_seconds_including_json_export": 33.60765441600233,
+      "reset_seconds": 14.586263290955685,
+      "scope": "sum of two measured resets and episodes, including explicit preflight inventory re-reads and JSON export; excludes caller panel bookkeeping and per-world clone/factory setup; not an exact generic-learner cost or rigorous lower bound",
+      "total_reset_plus_episode_seconds": 48.19391770695802
+    }
+  },
+  "policy_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322",
+  "profile_seconds_before_final_status_export": 148.1825368750142,
+  "proposal_model_hash": "sha256:b9cc28313cba81017718bb884bd90042c0c64432bd2a2901b4f97e3485cc1135",
+  "raw_initialization_and_checkpoint_seconds": 0.7409825409995392,
+  "resource": {
+    "budget": {
+      "hard_termination_grace_seconds": 15.0,
+      "process_peak_rss_bytes": 6442450944,
+      "worker_wall_seconds": 600.0
+    },
+    "budget_request_to_receipt_seconds": null,
+    "cancellation_callback_calls": 1983,
+    "cancellation_callback_seconds": 0.00944506167434156,
+    "cancellation_reason": null,
+    "elapsed_seconds": 148.8139820419019,
+    "observed_peak_rss_bytes": 1411072000,
+    "scope": "worker process RSS; cooperative callback CPU cost; no OS memory reservation"
+  },
+  "runtime_content_hash": "sha256:ee931752f4af906c8561a8ea334bf4233fad0dd78b68fdc8f22846c17d4151f3",
+  "source_archive_sha256": "a4f24a49dd0d30ad872e80260f6b1275c5cd1756d0261ae3eda1745b72e5c9c5",
+  "source_commit": "69304172a74c50a8b83025c863edd979ff26e4fd",
+  "source_preparation_seconds": 0.5596650409279391,
+  "status": "completed_preflight_cost_report",
+  "storage": {
+    "large_episode_raw_bytes": 39286826
+  },
+  "stress_worlds_used": false,
+  "timing_reconciliation": {
+    "profile_residual_seconds": 0.515145085984841,
+    "scope": "Residual includes unseparated source/integrity checks, receipt serialization and orchestration. Nested preview/integrity timings must not be added again.",
+    "sum_named_profile_phase_seconds": 147.66739178902935
+  },
+  "worker_seconds_before_final_resource_export": 148.8139820419019
+}

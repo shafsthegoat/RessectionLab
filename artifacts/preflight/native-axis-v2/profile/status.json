@@ -1,0 +1,33 @@
+{
+  "candidate_records_sha256": "f24b59cde092ddd67f099e581b3f01cbef0caeef94681c78d07f5d30e4857e05",
+  "certified_complete_episodes": 5,
+  "completed_selection_worlds": 2,
+  "completed_untrained_policy_worlds": 2,
+  "eligible_candidate_count": 2,
+  "expected_selection_worlds": 2,
+  "expected_untrained_policy_worlds": 2,
+  "final_worlds_used": false,
+  "full_preflight_seconds": 148.1825368750142,
+  "gradient_steps": 0,
+  "independent_audit_seconds": 23.854998666909523,
+  "mean_selection_return": 1098.77,
+  "resource": {
+    "budget": {
+      "hard_termination_grace_seconds": 15.0,
+      "process_peak_rss_bytes": 6442450944,
+      "worker_wall_seconds": 600.0
+    },
+    "budget_request_to_receipt_seconds": null,
+    "cancellation_callback_calls": 1982,
+    "cancellation_callback_seconds": 0.00943197775632143,
+    "cancellation_reason": null,
+    "elapsed_seconds": 148.79604583291803,
+    "observed_peak_rss_bytes": 1411072000,
+    "scope": "worker process RSS; cooperative callback CPU cost; no OS memory reservation"
+  },
+  "stage": "complete",
+  "status": "completed",
+  "stress_worlds_used": false,
+  "unique_native_audits": 2,
+  "untrained_mean_selection_return": 441.6
+}

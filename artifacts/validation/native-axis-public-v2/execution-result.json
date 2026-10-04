@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "status": "completed_independently_audited",
+  "source_commit": "69304172a74c50a8b83025c863edd979ff26e4fd",
+  "source_files_verified_in_each_of_archive_and_worker_copy": 46,
+  "source_changed": [],
+  "original_and_execution_case_sha256": "11cca797ad0216e5c8d940e7354f2dd23fb6954dc2aed7e4b0423f6adc6cefcf",
+  "versionable_result_files_verified": 44,
+  "result_index_sha256": "31ee320d6486e671ae2bcf39eaace8f088d194a23d58341e4525edd6b9dcd17e",
+  "full_launcher_seconds": 149.37558004097082,
+  "peak_worker_rss_bytes": 1411072000,
+  "certified_complete_episodes": 5,
+  "unique_native_audits": 2,
+  "eligible_development_diagnostic_records": 2,
+  "greedy_return": 1098.77,
+  "untrained_return": 441.6,
+  "gradients": 0,
+  "final_or_stress_worlds_used": false,
+  "independent_artifact_audit_sha256": "45b70f59083e2073320a332d78d727e1b7606740bca346bba5a96a7ef5db1bbb",
+  "interpretation": "Five completed development episodes; zero patient updates. Full geometry and source-cell reward checks passed. Later pre-action feature matrices/logits were not persisted; no independent later argmax replay claimed. Timing panels include resets/export but omit repeated clone/factory setup and differ in observation reads from generic learning."
+}

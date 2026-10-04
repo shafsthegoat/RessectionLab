@@ -1,0 +1,51 @@
+{
+  "partition": {
+    "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "generator": {
+      "family": "rigid_gaussian",
+      "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+      "rotation_center_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_scale_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "translation_scale_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "version": "rigid-registration-v1"
+    },
+    "interpretation": "deterministic_optimization",
+    "planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+    "role": "selection",
+    "seeds": [
+      8109736527858856845,
+      8342823306791655420
+    ]
+  },
+  "status": "complete",
+  "worlds": [
+    {
+      "episode_seconds": 14.220125082996674,
+      "episode_world_hash": "sha256:92e4e0aa2e43ed4da13b22bc474efe42ff07e1f7ba90dc8a2c6fe3e04744c95a",
+      "history_hash": "sha256:8c6e1dd7af7ce28281f424508ee87e6fbe8983120e45f41165313093d7eacfdd",
+      "reset_seconds": 7.222221625037491,
+      "return": 1098.77,
+      "seed": 8109736527858856845
+    },
+    {
+      "episode_seconds": 14.336844792007469,
+      "episode_world_hash": "sha256:55501692a1a85f822fd2d131398414834207c56f5a797a1632fa95f94180a156",
+      "history_hash": "sha256:8c6e1dd7af7ce28281f424508ee87e6fbe8983120e45f41165313093d7eacfdd",
+      "reset_seconds": 7.297867125016637,
+      "return": 1098.77,
+      "seed": 8342823306791655420
+    }
+  ]
+}

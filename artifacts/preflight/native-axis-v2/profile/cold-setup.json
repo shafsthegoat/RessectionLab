@@ -1,0 +1,16 @@
+{
+  "adapter_initialization": {
+    "native_engine_setup_seconds": 0.3382485839538276,
+    "proposer_preparation_seconds": 0.04350999998860061,
+    "scope": "includes initial complete inventory; local diagnostic only",
+    "total_seconds": 8.046174374991097
+  },
+  "factory_seconds": 8.046592625090852,
+  "initial_proposal_accounting": {
+    "integrity_calls": 5,
+    "integrity_seconds": 1.416279209079221,
+    "preview_calls": 26,
+    "preview_seconds": 5.846719915396534
+  },
+  "scope": "source configuration is prepared separately; cold factory includes complete initial inventory"
+}

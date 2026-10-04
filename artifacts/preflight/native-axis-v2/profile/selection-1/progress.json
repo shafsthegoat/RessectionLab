@@ -1,0 +1,29 @@
+{
+  "status": "running",
+  "transitions": [
+    {
+      "action_id": "AXISv1:733fc018d7bf3838d0cdc4b8",
+      "committed": true,
+      "decision_seconds": 0.4273399579105899,
+      "reward": 373.24,
+      "terminated": false,
+      "transition_and_next_inventory_seconds": 6.036155667039566
+    },
+    {
+      "action_id": "AXISv1:655c3d5433c0c367b0806d85",
+      "committed": true,
+      "decision_seconds": 0.4239232079125941,
+      "reward": 364.03000000000003,
+      "terminated": false,
+      "transition_and_next_inventory_seconds": 5.115299499942921
+    },
+    {
+      "action_id": "AXISv1:bb274fe18711b9d4160bdc31",
+      "committed": true,
+      "decision_seconds": 0.4612181669799611,
+      "reward": 361.5,
+      "terminated": true,
+      "transition_and_next_inventory_seconds": 1.002692750073038
+    }
+  ]
+}

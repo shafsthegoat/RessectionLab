@@ -1,0 +1,118 @@
+{
+  "access": {
+    "center_mm": [
+      -181.5,
+      85.0,
+      105.0
+    ],
+    "normal_inward": [
+      1.0,
+      0.0,
+      -0.0
+    ],
+    "radius_mm": 6.0,
+    "window_id": "native_hypothetical_nearest_envelope_axis"
+  },
+  "adapter_version": "experimental-native-axis-column-policy-v1",
+  "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+  "decision_model_hash": "sha256:1d06e7792ce78ecf7ef461ba5ff2b6f78e2367d3b3bc030a80d70b49e6e747f5",
+  "evidence_available": [
+    false,
+    false
+  ],
+  "input_profile": "RAW",
+  "max_actions": 27,
+  "max_steps": 3,
+  "native_config_hash": "sha256:6d817c5c7441cc7d6c6bcaeac4542cfd3266f2474c9c1904a2d6279870b3143b",
+  "partial_contact_weight": 0.05,
+  "planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+  "proposal_model_hash": "sha256:b9cc28313cba81017718bb884bd90042c0c64432bd2a2901b4f97e3485cc1135",
+  "proposal_rule": {
+    "max_primary_rays": 26,
+    "offsets_source_voxels": [
+      [
+        0,
+        0
+      ],
+      [
+        -2,
+        0
+      ],
+      [
+        2,
+        0
+      ],
+      [
+        0,
+        -2
+      ],
+      [
+        0,
+        2
+      ],
+      [
+        -2,
+        -2
+      ],
+      [
+        -2,
+        2
+      ],
+      [
+        2,
+        -2
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        -3,
+        0
+      ],
+      [
+        3,
+        0
+      ],
+      [
+        0,
+        -3
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    "version": "experimental-residual-axis-columns-v1"
+  },
+  "reward": {
+    "action_cost": 0.02,
+    "graph_edge_cost": 1.0,
+    "language_per_mm3": 2.0,
+    "motion_per_mm": 0.0,
+    "motor_per_mm3": 2.0,
+    "normal_per_mm3": 0.2,
+    "target_per_mm3": 1.0,
+    "tool_change_cost": 0.02
+  },
+  "tools": [
+    {
+      "max_access_angle_deg": 35.0,
+      "parameter_source": "generic research geometry; not a verified commercial device",
+      "shaft_radius_mm": 0.45,
+      "tip_length_mm": 2.0,
+      "tip_radius_mm": 1.25,
+      "tool_id": "native-fine-aspiration",
+      "working_length_mm": 120.0
+    },
+    {
+      "max_access_angle_deg": 35.0,
+      "parameter_source": "generic research geometry; not a verified commercial device",
+      "shaft_radius_mm": 1.1,
+      "tip_length_mm": 3.0,
+      "tip_radius_mm": 2.25,
+      "tool_id": "native-wide-aspiration",
+      "working_length_mm": 120.0
+    }
+  ]
+}

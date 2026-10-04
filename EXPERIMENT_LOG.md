@@ -888,3 +888,40 @@ but historical interpreter/package binary identities were not preregistered.
 Execution snapshots and logs remain under `artifacts/brain-extraction/`;
 `docs/brain-extraction-pat16-pat20-independent-review.md` links the independent
 array/visual reports, exact source hashes and limitations.
+
+## October 4, 2026 — corrected native axis V2 completes before patient updates
+
+A fresh declaration bound the truthful direct configuration after the V1
+provenance-only diagnosis. Immutable `6930417` passed 77 focused checks in
+23.07 seconds before its launch baseline was committed. The full V2 launcher
+completed in 149.376 seconds with 1,411,072,000-byte peak worker RSS. All 46
+captured source files and both original/execution case bundles remain unchanged.
+No gradients, final worlds or stress worlds were used.
+
+All five complete episodes passed native checking across two distinct frozen
+histories. Greedy removes 1,113 target and 62 normal mm³, with 177 mm³ cumulative
+partial normal contact, returning 1,098.77. The unchanged seed-11 RAW policy
+removes 445 target and 13 normal mm³, with 72 mm³ partial normal contact,
+returning 441.60. Independent source-cell arithmetic and 25 adversarial artifact
+checks agree. These are deterministic development replays on one reused case,
+not uncertainty samples or evidence of a trained-policy improvement. Every path
+stops at the three-cut cap; terminal unpreviewed proposals do not demonstrate
+that all feasible actions were exhausted.
+
+The reused-instance greedy replay panel took 43.077 seconds and the unchanged
+policy panel 48.194 seconds, including measured resets and episode exports.
+The preflight reads observations more often than the generic learner; repeated
+clone/factory setup is excluded, so this is not an exact training cost or lower
+bound. Native audits took 23.855 seconds. Of 368 primary previews, 112 had unique
+model/cavity/proposal/phase identities. Repetition identifies an optimization
+candidate but establishes no cache speedup. Full cost scopes and nested counter
+limits are in the source-derived RESULT and cost summary.
+
+Both publication authorities and the candidate payload hash verify. Five raw
+histories remain unchanged locally; lossless gzip reduces 39,286,826 bytes to
+665,699. Byte/JSON roundtrip and gzip-only report reproduction pass. Initial
+saved-value argmax can be independently checked, but later observation matrices
+and logits were not persisted. A separate one-update pilot requires exact
+per-decision logging and executed/returned transition accounting before launch.
+Records are in `artifacts/preflight/native-axis-v2/` and the independent
+`artifacts/native-axis-v2-result-audit/`; V1 failure evidence remains intact.
