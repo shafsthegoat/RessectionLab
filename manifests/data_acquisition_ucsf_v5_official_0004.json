@@ -1,0 +1,86 @@
+{
+  "schema_version": "1.0",
+  "declaration": "Targeted official v5 acquisition; not a downloaded-case manifest",
+  "selected_at_utc": "2026-10-04T17:05:28Z",
+  "case_id": "UCSF-PDGM-0004",
+  "source_metadata_id": "UCSF-PDGM-004",
+  "patient_cluster_id": "UCSF-PDGM-0004",
+  "requested_visit": "baseline_preoperative",
+  "exact_exam_identity": null,
+  "selection_rule": "Reuse the already-consulted development/demo patient; never select a fresh final-evaluation case to resolve access trouble.",
+  "split": {
+    "role": "development_demo",
+    "previously_consulted": true,
+    "outer_test_eligible": false,
+    "brats2021_id": "BraTS2021_00097",
+    "brats2021_segmentation_cohort": "Training",
+    "source_registry": "manifests/data_acquisition_ucsf.json"
+  },
+  "source": {
+    "collection": "UCSF-PDGM",
+    "doi": "10.7937/tcia.bdgf-8v37",
+    "official_url": "https://www.cancerimagingarchive.net/collection/ucsf-pdgm/",
+    "release": 5,
+    "release_date": "2025-05-30",
+    "public_aspera_package_id": "1065",
+    "collection_html_sha256": "418408a5734ad96db3df297e6dd7a4eb1c64290b65fe5344df72ac0e6bf24c99",
+    "license": "CC-BY-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "usage_policy_url": "https://www.cancerimagingarchive.net/data-usage-policies-and-restrictions/"
+  },
+  "requested_files": [
+    "Selected baseline exam structural T1/T1c/T2/FLAIR images",
+    "Matching source tumor annotations",
+    "Version-5 DTI_eddy_noreg directional diffusion volume",
+    "That exact exam's FSL-eddy-rotated b-vectors",
+    "Matching b-values with verified volume count and exam/release mapping"
+  ],
+  "source_processing_claims": {
+    "v5_dwi_geometry": "Original orientation and spacing after DICOM conversion and FSL eddy; no further processing of DTI_eddy_noreg claimed by the version-5 note.",
+    "eddy": "Collection reports FSL 6.0.2 with outlier replacement enabled.",
+    "topup": "Collection explicitly reports TOPUP correction off.",
+    "structural": "Collection describes nonlinear registration/resampling to 1-mm T2/FLAIR space and skull stripping; this does not place native DTI_eddy_noreg on the structural grid.",
+    "patient_level_pipeline_qc": "Unverified until exact exam files and processing provenance are available."
+  },
+  "gradient_contract": {
+    "generic_historical_bvec_allowed_as_rotated_exam_vector": false,
+    "required_checks": [
+      "Exact exam identifier and release-specific file paths",
+      "DWI 4D volume count equals b-value and b-vector counts",
+      "Finite b-values/vectors, b0 handling and non-b0 norms",
+      "Source gradient convention, handedness and image-axis frame",
+      "Per-exam rotated-gradient provenance from released eddy output",
+      "Independent physical DWI-to-structural alignment and coverage QC"
+    ],
+    "clinical_probability": null
+  },
+  "files": [],
+  "max_imaging_download_bytes": 1073741824,
+  "bulk_download_allowed": false,
+  "paid_infrastructure_allowed": false,
+  "access_status": "blocked_official_source_files_unavailable",
+  "official_imaging_acquired": false,
+  "primary_source_byte_match_for_existing_mirror": null,
+  "clinical_metadata_cutoff": "Unknown-timed molecular/pathology and postoperative fields remain unavailable to the preoperative planner.",
+  "source_annotation_review": "not_performed",
+  "access_report": "artifacts/ucsf-v5-targeted-access-2026-10-04/access-report.json",
+  "access_report_sha256": "9ab1e66887009603f2ed6b825b1075bcfbb31a0fcaa8402a83b6e0f601b08ed6",
+  "live_access_observations": {
+    "public_authentication": "successful_public_link_OAuth_HTTP201_token_creation",
+    "package_http_status": 200,
+    "files_on_server": "no",
+    "listing_http_status": 500,
+    "listing_error_code": "1202",
+    "connect_transfer_spec_method": "POST",
+    "connect_transfer_spec_http_status": 400,
+    "connect_transfer_spec_error_code": "1228",
+    "actual_transfer_started": false
+  },
+  "unavailable_fields": [
+    "Official per-exam imaging inventory and file hashes",
+    "Exact baseline exam path and original image/header bytes",
+    "Per-exam rotated b-vector file and gradient convention verification",
+    "Matching b-value-to-volume mapping",
+    "DWI-to-structural registration and patient preprocessing QC"
+  ]
+}
