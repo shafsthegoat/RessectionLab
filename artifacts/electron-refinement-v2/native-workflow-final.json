@@ -30,7 +30,8 @@
       "normal": 11,
       "residual_target": 41745
     },
-    "viewer_banner_and_slider_and_quantities_agree": true
+    "viewer_banner_and_slider_and_quantities_agree": true,
+    "source_annotations_restored_after_final_replay": true
   },
   "run_id": "38e17ad4-0d07-4973-8642-8669fab84cf6",
   "cancelled_checkpoint_updates": 6,
@@ -45,11 +46,14 @@
   "screenshots": [
     "source-normals-after.jpg",
     "replay-zero-checked.jpg",
-    "resumed-replay-final.jpg"
+    "resumed-replay-final.jpg",
+    "source-restored-final.jpg"
   ],
   "validation_limits": [
     "Transient pending replay state resolved before screenshot; source tests cover queue and pending labels",
     "Exact engine bytes match the separately recorded packaged protocol verification; final renderer is identified independently",
     "Local ad hoc signing only; notarization and distribution signing not performed"
-  ]
+  ],
+  "cancellation_updates_visible_at_request": 4,
+  "cancellation_checkpoint_note": "Cancellation was requested after four updates were visible in the native interface. The signed checkpoint retained six updates after in-flight work settled; resume restored those six updates and performed twenty-six additional updates."
 }

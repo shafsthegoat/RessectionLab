@@ -151,7 +151,7 @@ selected score. SEARCH remained best. Renderer hydration decreased from a
 See `EXPERIMENT_LOG.md` for executed experiments, including negative results.
 The Qt prototype passed its initial standalone runtime and GUI checks. Its next
 build was stopped following the user's Electron decision. The React/Electron
-package passed its own imaging/search checks and 26 main-process boundary and
+package passed its own imaging/search checks and 31 main-process boundary and
 lifecycle tests. The 36 renderer tests and 15 viewer tests cover source hydration, evidence
 status, A/B identity and independently accepted removal overlays. The complete
 training bundle has its own source-bound verification receipts. Qt results do

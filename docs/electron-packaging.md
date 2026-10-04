@@ -109,9 +109,10 @@ JSONL event record the cancellation. No final-evaluation operation was invoked.
 Finder launches write local diagnostic logs to the application logs directory.
 No logs or patient data are transmitted.
 
-The 26 main-process tests cover opaque IDs, checksums, traversal,
+The 31 main-process tests cover opaque IDs, checksums, traversal,
 symlink replacement, layout limits, trusted frame checks, atomic publication
-rollback, bounded logging, and structural-import file grants. Renderer tests
+rollback, bounded logging, structural-import file grants, and matching the
+installed Electron version to the captured lockfile. Renderer tests
 independently enforce imaging dtype, shape, coordinate and volume contracts.
 
 `verify-cancellation.cjs --bundle` targets the engine inside the actual `.app`
@@ -158,7 +159,8 @@ entry, target, window and instrument. It does not establish a free-form learned
 trajectory, a clinical outcome probability, or superiority over search.
 
 Native export and source restoration passed. A second native run was cancelled
-after four visible updates and retained its checkpoint; all 56 route alternatives
+after four visible updates; its signed checkpoint retained six updates after
+in-flight work settled. All 56 route alternatives
 and the selected comparison were saved through the native dialog. The initial
 replay-slider accessibility test exposed a label/certified-replay mismatch.
 `native-workflow-before-slider-fix.json` deliberately preserves that partial
@@ -169,3 +171,36 @@ build receipts can coexist. The v2 packaged engine checks passed: real MRI/searc
 and persistence in 6.72 seconds, synthetic training/replay in 8.59 seconds, and
 signed cancellation/restart/resume in 13.79 seconds. Their machine-local timings
 are verification measurements rather than standardized performance benchmarks.
+
+The final renderer capture `5fe94739…` rebuilt in 10.37 seconds and retains
+exactly the same numerical engine bytes as the earlier v2 protocol receipts.
+`native-workflow-final.json` identifies the renderer archive and executable
+separately. After a full native-app restart, resuming the cancelled run restored
+its six saved updates and completed 26 more, reaching 32 with the original
+signed request and world contract preserved. Independent selection accepted the
+same 174/11 mm³ modeled removal. Native accessibility decrement and increment
+now load the certified zero- and one-stroke states: slider, viewer banner and
+volume totals agree. Returning to the source annotations also passed, recorded
+in `source-restored-final.jpg`. The earlier export and original-route rejection
+belong to the explicitly identified pre-fix renderer receipt. No final-evaluation
+operation or clinical probability was introduced.
+
+The matched `source-baseline.jpg` and `source-normals-after.jpg` images document
+a display-only shading adjustment. It averages surface normals at coincident
+vertices; positions, triangles, source-cell quantities and the original voxel
+steps remain unchanged. A transient pending-replay state completed before a
+native screenshot could capture it; focused renderer tests cover that queue
+and its pending/applied labels.
+
+One renderer rebuild failed while fetching Electron checksum metadata despite
+a cached archive; the prior app stayed available. The builder now passes the
+official installed Electron package's checksums to its supported downloader,
+which validates cache hits and downloads without weakening TLS or integrity
+checks. An independent no-network test verified the actual cached arm64 archive;
+corrupt archives and absent checksums were refused. A subsequent packaging-only
+guard also requires the installed version to match the captured pnpm v9 root
+lockfile and fails on unsupported or ambiguous entries. That guard was added
+after the final app capture; it independently accepted that exact capture's
+44.5.1 lockfile, and all 31 main-process tests passed. The validated app itself
+was not rebuilt for this build-tool-only change. Local ad hoc signing passed;
+distribution signing and notarization remain unperformed.
