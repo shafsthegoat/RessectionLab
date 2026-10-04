@@ -1,0 +1,35 @@
+.........F...............                                                [100%]
+=================================== FAILURES ===================================
+________ test_committed_interruption_records_paid_history_and_restores _________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b091a90>
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-280/test_committed_interruption_re0')
+
+    def test_committed_interruption_records_paid_history_and_restores(monkeypatch, tmp_path):
+        sim = tiny_simulator()
+        actions = (sim.proposed_actions()[1].action_id,)
+        original = sim.step
+        class InterruptedAfterCommit(RuntimeError):
+            committed = True
+        def interrupted(action):
+            original(action)
+            raise InterruptedAfterCommit("synthetic failure after a real native commit")
+        monkeypatch.setattr(sim, "step", interrupted)
+        guard = probe.pre.ResourceGuard(probe.pre.PreflightBudget(worker_wall_seconds=60.))
+        folder = tmp_path / "committed-failure"
+        with pytest.raises(InterruptedAfterCommit):
+            probe.run_fixed_trace(sim, actions, 13, guard, folder)
+        record = json.loads((folder / "failure.json").read_text())
+        assert record["status"] == "incomplete" and record["committed_transition_after_interruption"]
+        assert record["raw_state"]["committed_cut_count"] == 1
+>       assert record["raw_state"]["history"] == sim._history and sim.engine.removed_mask.any()
+E       AssertionError: assert ([{'action_id'...': None, ...}] == [{'tool_id': ...4(0.5)), ...}]
+E         
+E         At index 0 diff: {'action_id': 'AXISv1:ea7a4f2a44a39b50d0f709e9', 'axis_proposal': {'cavity_state_hash': 'sha256:68a1c1ae77931b744942edd94912847f18805cb200376659f0d09edf057ee74a', 'entry_mm': [3.0, 3.0, 0.5], 'feasible': True, 'phase': 'primary', 'proposal_id': 'axis-column-80ec0689df0364f1e0abe935', 'proposal_model_hash': 'sha256:86f4fd2eedaf3d40bbad52f7723b89376fa13dbbc773a8e50dc127d8e819a535', 'reason': 'NATIVE_CONNECTED_STROKE', 'status': 'complete', 'tip_mm': [3.0, 3.0, 4.0], 'tool_id': 'native-fine-aspiration'}, 'axis_unit': [0.0, 0.0, 1.0], 'clinical_deficit_prob...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show)
+
+tests/test_public_capsule_probe_review.py:200: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_public_capsule_probe_review.py::test_committed_interruption_records_paid_history_and_restores
+1 failed, 24 passed in 1.52s

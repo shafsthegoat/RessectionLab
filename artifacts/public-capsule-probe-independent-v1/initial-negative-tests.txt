@@ -1,0 +1,46 @@
+FFFFF                                                                    [100%]
+=================================== FAILURES ===================================
+______________ test_common_uncached_setup_preview_count_is_bound _______________
+tests/test_public_capsule_probe_review.py:120: in test_common_uncached_setup_preview_count_is_bound
+    with pytest.raises(RuntimeError, match="template|denominator"):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE RuntimeError
+_______ test_trace_hook_restoration_failure_keeps_incomplete_diagnostic ________
+tests/test_public_capsule_probe_review.py:180: in test_trace_hook_restoration_failure_keeps_incomplete_diagnostic
+    assert (folder / "failure.json").exists()
+E   AssertionError: assert False
+E    +  where False = exists()
+E    +    where exists = (PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-278/test_trace_hook_restoration_fa0/restoration-failure') / 'failure.json').exists
+___ test_launcher_never_publishes_failed_or_timed_out_payload[result_failed] ___
+tests/test_public_capsule_probe_review.py:306: in test_launcher_never_publishes_failed_or_timed_out_payload
+    with pytest.raises(SystemExit):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE SystemExit
+_ test_launcher_never_publishes_failed_or_timed_out_payload[worker_runtime_hash] _
+tests/test_public_capsule_probe_review.py:306: in test_launcher_never_publishes_failed_or_timed_out_payload
+    with pytest.raises(SystemExit):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE SystemExit
+_ test_launcher_never_publishes_failed_or_timed_out_payload[malformed_result] __
+tests/test_public_capsule_probe_review.py:307: in test_launcher_never_publishes_failed_or_timed_out_payload
+    probe.main()
+artifacts/public-capsule-probe-review-v1/pre-review-script.py:391: in main
+    result = json.loads(result_path.read_text()) if result_path.exists() else {}
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/__init__.py:346: in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py:338: in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/decoder.py:354: in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+E   json.decoder.JSONDecodeError: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+=========================== short test summary info ============================
+FAILED tests/test_public_capsule_probe_review.py::test_common_uncached_setup_preview_count_is_bound
+FAILED tests/test_public_capsule_probe_review.py::test_trace_hook_restoration_failure_keeps_incomplete_diagnostic
+FAILED tests/test_public_capsule_probe_review.py::test_launcher_never_publishes_failed_or_timed_out_payload[result_failed]
+FAILED tests/test_public_capsule_probe_review.py::test_launcher_never_publishes_failed_or_timed_out_payload[worker_runtime_hash]
+FAILED tests/test_public_capsule_probe_review.py::test_launcher_never_publishes_failed_or_timed_out_payload[malformed_result]
+5 failed in 0.33s
