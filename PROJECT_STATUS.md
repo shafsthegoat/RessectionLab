@@ -16,6 +16,14 @@ preflight, exact-stroke training, replay/export, cancellation and full-app
 restart/resume. Accessible replay controls were fixed after a native regression
 and now keep the image, displayed step and quantities synchronized.
 
+The next committed renderer adds separate, explicitly unreviewed brain-envelope
+contours on the original MRI planes. Source/frame/mask checks and lazy loading
+pass for both BTC cases: the no-CSF estimates exclude 214 PAT28 annotation voxels
+and 538 PAT05 annotation voxels. These are overlap checks, not accuracy scores.
+All 97 desktop checks and the production build pass; native visual verification
+of this new inspection slice is underway. Working anatomy and access gates stay
+unchanged.
+
 ## Verified starting state
 
 - Repository initially contained only the three specifications and two commits.

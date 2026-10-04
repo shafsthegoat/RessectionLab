@@ -361,3 +361,26 @@ measured 332.0 ms source mesh preparation plus 75.5 ms additional worker normal
 preparation (+22.8%). It excludes GPU, IPC and visible latency. Matched native
 screenshots show improved shading; source voxel stair steps remain. Evidence:
 `artifacts/performance/viewer-normal-shading-v1/`.
+
+## October 4, 2026 — source-bound structural proposal inspection
+
+The Electron renderer now loads one selected estimated envelope separately from
+working anatomy and source annotations. It verifies current image, physical
+frame and mask hashes, then draws a dashed contour on the three original MRI
+planes. Clearing, case changes and replay invalidate the estimate display. An
+inspection control jumps to an actual supplied annotation cell outside the mask.
+Actual PAT28/PAT05 hydration reproduces no-CSF outside counts of 214/538 and main
+counts of zero, with both proposals still awaiting review. These counts do not
+measure segmentation accuracy or certify cortical access. Local hydration was
+245–299 ms for PAT28 and 234–239 ms for PAT05; this excludes native rendering and
+visible interaction latency. All 47 renderer, 31 main-process and 19 viewer
+checks pass, as does the production build. Native visual checks are pending.
+Receipts: `artifacts/desktop-renderer/pat28-proposal-hydration.json` and
+`pat05-proposal-hydration.json` in the same directory.
+
+Before the registered procedural transfer experiment, independent review found
+that adaptation checkpoint setup consumed the learning allowance, and that an
+incomplete initial selection could be extracted as a selected candidate. Both
+are being corrected before execution, with separate setup accounting and a
+complete-selection gate. No registered training has run yet; construction-only
+preflight passed with zero gradients and final/stress worlds closed.
