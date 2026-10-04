@@ -1196,3 +1196,20 @@ byte-identical. Original reports and the initial test/audit harness errors remai
 preserved. No model, simulator, geometry, RNG, gradient or new-world execution
 was performed. See `artifacts/native-axis-decision-diagnostics-v2/` and
 `artifacts/native-axis-decision-diagnostics-independent-v1/`.
+
+## October 4, 2026 — read-only expanded-axis inspection boundary
+
+A separate backend facade exposes the full initial proposal and preview ledger,
+including omissions and rejected primaries/fallback attempts, without transitions,
+removals or gradients. Exact geometry, support assumptions and source/tool/world/
+reward bindings accompany every inventory; candidate and removal authority remain
+false. Supported empty inventories retain their full denominator, while unsupported
+or interrupted work raises without publishing partial success.
+
+Sixteen owner checks and 33 independent synthetic checks pass. Review retained a
+cached-source mutation failure and a valid LPS normal changed by 1.11e-16 during
+normalization. Uncached entry/exit source seals and a recorded LPS-only four-epsilon
+direction bound repair those issues; centers, radii and IDs remain exact, and larger
+geometry drift still rejects. Existing selected-route readiness is unchanged.
+The preparation timer excludes serialization and final checks; no patient latency
+or desktop workflow claim is made. See `artifacts/native-axis-inspection-independent-v1/`.

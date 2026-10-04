@@ -446,6 +446,19 @@ Display-normal averaging improves shading without moving any source triangles;
 a separate local probe adds 75.5 ms of worker preparation to 332.0 ms of source
 mesh preparation. This is a display tradeoff, not a GPU speedup claim.
 
+## New backend inspection boundary
+
+A separate read-only facade now returns the complete initial expanded-axis
+proposal and native-preview inventory with exact RAS geometry, full tool and
+source bindings, and explicit unknowns. It requires separate neighboring-column
+and estimated-support acknowledgments. It performs no transitions or policy
+updates and grants no removal or candidate authority. Sixteen owner and 33
+independent synthetic checks pass. Review reproduced and repaired stale cached
+source identity after callbacks and a valid LPS normalization roundoff refusal;
+both failures remain preserved. Existing selected-route readiness is unchanged.
+No public inspection or Electron integration is claimed for this slice. See
+`docs/native-axis-inspection.md` and its independent review artifacts.
+
 ## Completion gates still open
 
 Native-resolution geometric simulation now works under explicit hypothetical

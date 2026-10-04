@@ -1,0 +1,98 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____ test_known_oblique_lps_roundtrip_does_not_reject_one_ulp_normal_change ____
+
+    def test_known_oblique_lps_roundtrip_does_not_reject_one_ulp_normal_change():
+        raw = np.array([-1.168650074969459, .3986177272005879, .32715561200889304])
+        normal = raw / np.linalg.norm(raw)
+        first_axis = np.cross([0., 0., 1.], normal)
+        first_axis /= np.linalg.norm(first_axis)
+        second_axis = np.cross(normal, first_axis)
+        affine = np.eye(4)
+        affine[:3, :3] = np.column_stack((first_axis, second_axis, normal))
+        affine[:3, 3] = [17., -26., 4.]
+        center = affine[:3, :3] @ [4, 4, .5] + affine[:3, 3]
+        access = AccessWindow(center, raw, 6)
+        ras = replace(case_fixture(), affine=affine)
+        lps = replace(ras, affine=np.diag([-1., -1., 1., 1.]) @ affine, frame="LPS+")
+>       first, second = (inspect(case, access_ras=access).to_dict() for case in (ras, lps))
+        ^^^^^^^^^^^^^
+
+tests/test_native_axis_refinement_review.py:83: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_native_axis_refinement_review.py:83: in <genexpr>
+    first, second = (inspect(case, access_ras=access).to_dict() for case in (ras, lps))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_native_axis_refinement_review.py:34: in inspect
+    return facade.inspect_axis_planning(case, **(arguments(case) | changes))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+case = CaseData(case_id='axis-inspection-independent', mri=array([[[0., 0., 0., 0., 0., 0., 0., 0., 0., 0.],
+        [0., 0.,...False, False, False, False,
+         False]]]), structural_evidence=mappingproxy({}), prior_proposals=mappingproxy({}))
+access_ras = AccessWindow(center_mm=_ImmutableArray([ 16.22085264, -29.96052609,   7.99464172]), normal_inward=_ImmutableArray([-0.91488887,  0.31206169,  0.25611689]), radius_mm=6.0, window_id='hypothetical-access')
+tools = (ToolGeometry(tool_id='native-fine-aspiration', tip_radius_mm=1.25, shaft_radius_mm=0.45, working_length_mm=120.0, max...ss_angle_deg=35.0, tip_length_mm=2.0, parameter_source='generic research geometry; not a verified commercial device'),)
+acknowledge_neighboring_columns = True
+expected_case_hash = 'sha256:4cbb9b10207c407660d3a582f18d25c71beb0a361c51444149106350b6d3bfe2'
+expected_planning_hash = 'sha256:a9e80af0abf65fed587607ed64b4460705166a1cebbe0c97e8731751bfcaac36'
+reward = RewardSpec(target_per_mm3=1.0, normal_per_mm3=0.2, motor_per_mm3=2.0, language_per_mm3=2.0, action_cost=0.02, motion_per_mm=0.0, tool_change_cost=0.02, graph_edge_cost=1.0)
+world_generator = WorldGeneratorConfig(family='rigid_gaussian', translation_scale_mm=(0.0, 0.0, 0.0), rotation_scale_deg=(0.0, 0.0, 0.0)...nter_mm=(0.0, 0.0, 0.0), version='rigid-registration-v1', parameter_basis='declared_uncalibrated_sensitivity_scenario')
+acknowledge_estimated_support = False
+proposal_config = AxisColumnProposalConfig(offsets_source_voxels=((0, 0),), max_primary_rays=1, version='experimental-residual-axis-columns-v1')
+max_steps = 3, partial_contact_weight = 0.05, max_tip_step_mm = 0.25
+hard_exclusion = None, hard_exclusion_provenance = None
+expected_binding_hash = None, cancelled = None
+
+    def inspect_axis_planning(
+        case: CaseData, *, access_ras: AccessWindow, tools: tuple[ToolGeometry, ...],
+        acknowledge_neighboring_columns: bool, expected_case_hash: str,
+        expected_planning_hash: str, reward: RewardSpec, world_generator: WorldGeneratorConfig,
+        acknowledge_estimated_support: bool = False,
+        proposal_config: AxisColumnProposalConfig | None = None,
+        max_steps: int = 3, partial_contact_weight: float = .05, max_tip_step_mm: float = .25,
+        hard_exclusion: np.ndarray | None = None, hard_exclusion_provenance: str | None = None,
+        expected_binding_hash: str | None = None, cancelled: Callable[[], bool] | None = None,
+    ) -> AxisPlanningInspection:
+        """Inspect all initial actions, with no policy, transition or clinical claim.
+    
+        Unsupported access, stale inputs, failed previews and cancellation raise;
+        none returns an incomplete inventory or a synthetic successful STOP result.
+        A supported model whose complete inventory has no legal cut is reported as
+        ``no_actionable_moves``. Model identity is separate from timed observations.
+        """
+        started = time.perf_counter()
+    
+        def check() -> None:
+            if cancelled is not None and cancelled():
+                raise InterruptedError("Native axis inspection cancelled; no inventory published")
+            if case.semantic_hash != expected_case_hash or case.planning_hash != expected_planning_hash:
+                raise ValueError("Stale source case or planning identity")
+    
+        if not isinstance(case, CaseData):
+            raise TypeError("A source-bound CaseData is required")
+        if acknowledge_neighboring_columns is not True:
+            raise ValueError("Explicit neighboring-column acknowledgement is required")
+        if not isinstance(access_ras, AccessWindow) or not isinstance(reward, RewardSpec) or not isinstance(world_generator, WorldGeneratorConfig):
+            raise TypeError("Explicit RAS+ access, reward and world-generator configurations are required")
+        if not tools or any(not isinstance(tool, ToolGeometry) for tool in tools):
+            raise TypeError("An explicit complete tool catalog is required")
+        if expected_binding_hash is not None and (not isinstance(expected_binding_hash, str) or not expected_binding_hash):
+            raise ValueError("Expected binding hash must be a nonempty string")
+        check()
+        support = _support_record(case, acknowledge_estimated_support)
+        if (hard_exclusion is None) != (hard_exclusion_provenance is None):
+            raise ValueError("A supplied hard-exclusion mask requires its own provenance")
+        if hard_exclusion_provenance is not None and (not isinstance(hard_exclusion_provenance, str) or not hard_exclusion_provenance.strip()):
+            raise ValueError("Hard-exclusion provenance must be a nonempty string")
+        requested_access = json.loads(_json(asdict(access_ras)))
+        native = native_config_from_case(case, access=_access_in_source_frame(access_ras, case.frame),
+            tools=tuple(tools), hard_exclusion=hard_exclusion, max_tip_step_mm=max_tip_step_mm)
+        if json.loads(_json(asdict(native.access))) != requested_access:
+>           raise ValueError("Native configuration did not preserve the exact canonical RAS+ access")
+E           ValueError: Native configuration did not preserve the exact canonical RAS+ access
+
+artifacts/native-axis-inspection-independent-v1/pre-review-source.py:119: ValueError
+=========================== short test summary info ============================
+FAILED tests/test_native_axis_refinement_review.py::test_known_oblique_lps_roundtrip_does_not_reject_one_ulp_normal_change
+1 failed, 23 deselected in 0.09s

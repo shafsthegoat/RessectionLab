@@ -1,0 +1,30 @@
+......................F                                                  [100%]
+=================================== FAILURES ===================================
+_ test_final_callback_source_metadata_mutation_cannot_reuse_cached_case_identity _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10ae826c0>
+
+    def test_final_callback_source_metadata_mutation_cannot_reuse_cached_case_identity(monkeypatch):
+        case = case_fixture()
+        kwargs = arguments(case)
+        original = facade._json
+        state = {"serialized": False, "changed": False}
+        def serialize(value):
+            result = original(value)
+            if isinstance(value, dict) and value.get("role") == "inspection":
+                state["serialized"] = True
+            return result
+        def cancelled():
+            if state["serialized"] and not state["changed"]:
+                object.__setattr__(case, "case_id", "changed-during-final-callback")
+                state["changed"] = True
+            return False
+        monkeypatch.setattr(facade, "_json", serialize)
+>       with pytest.raises((RuntimeError, ValueError), match="(?i)(changed|stale|source|frozen)"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE any of (RuntimeError, ValueError)
+
+tests/test_native_axis_refinement_review.py:190: Failed
+=========================== short test summary info ============================
+FAILED tests/test_native_axis_refinement_review.py::test_final_callback_source_metadata_mutation_cannot_reuse_cached_case_identity
+1 failed, 22 passed in 0.88s
