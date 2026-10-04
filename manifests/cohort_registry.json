@@ -1,0 +1,414 @@
+{
+  "schema_version": 1,
+  "checked_on": "2026-10-04",
+  "scope": "Explicit source identity and outer cohort registry. Only two acquired development records are instantiated. Dataset release counts describe source resources and are never summed into training or final-evaluation counts.",
+  "collections": [
+    {
+      "collection_id": "UCSF-PDGM",
+      "role": "development_source",
+      "release": "5",
+      "release_updated": "2025-05-30",
+      "source_url": "https://www.cancerimagingarchive.net/collection/ucsf-pdgm/",
+      "doi": "10.7937/tcia.bdgf-8v37",
+      "license": "CC-BY-4.0",
+      "published_unique_patients": 495,
+      "published_exams": 501,
+      "eligible_patient_count": null,
+      "access": "public_official_imaging_HSTS_unavailable_2026-10-04",
+      "acquisition_status": "one_unverified_structural_mirror_case_only",
+      "required_gates": [
+        "corrected_v5_DWI_and_per_exam_rotated_bvecs",
+        "diffusion_to_structural_frame_QC",
+        "source_mask_QC",
+        "known_repeat_and_BraTS_overlap_grouping",
+        "functional_evidence_and_unknown_coverage_QC"
+      ],
+      "evidence_note": "Official v5 corrects diffusion orientation/spacing; supplied specification cited v4. The source release counts do not establish locally eligible counts."
+    },
+    {
+      "collection_id": "BTC_preop",
+      "role": "development_diffusion_fallback",
+      "release": "5.0.1",
+      "source_url": "https://openneuro.org/datasets/ds001226/versions/5.0.1",
+      "git_commit": "359d372c5e972a161966312128adb365870df949",
+      "doi": "10.18112/openneuro.ds001226.v5.0.1",
+      "license": "CC0",
+      "published_unique_patients": null,
+      "eligible_patient_count": null,
+      "access": "public_creator_linked_OpenNeuro_git_and_S3",
+      "acquisition_status": "one_primary_source_subject_acquired",
+      "required_gates": [
+        "glioma_subject_filter",
+        "native_mask_affine_and_fractional_annotation_QC",
+        "diffusion_preprocessing_and_gradient_frame_QC",
+        "intracranial_representation_review"
+      ],
+      "longitudinal_note": "BTC_postop ds002080 is a related longitudinal dataset, not an independent cohort. No postoperative files or subject-level matches were opened or acquired for this registry. A future record must obtain verified correspondence or be excluded from independence claims."
+    },
+    {
+      "collection_id": "UPENN-GBM",
+      "role": "reserved_final_candidate",
+      "release": "2",
+      "release_updated": "2022-10-24",
+      "source_url": "https://www.cancerimagingarchive.net/collection/upenn-gbm/",
+      "doi": "10.7937/TCIA.709X-DN49",
+      "license": "CC-BY-4.0",
+      "published_unique_patients": 630,
+      "eligible_patient_count": null,
+      "access": "public_TCIA_DICOM_and_NIfTI_listing_only_transfer_not_tested",
+      "acquisition_status": "no_patient_data_or_patient_availability_tables_opened_or_downloaded",
+      "required_gates": [
+        "freeze_global_method_and_adaptation_rule_before_case_review",
+        "baseline_glioma_and_raw_directional_diffusion_availability",
+        "patient_and_repeat_visit_identity",
+        "DICOM_to_processed_NIfTI_transform",
+        "pretraining_overlap_audit",
+        "preoperative_cutoff_audit"
+      ],
+      "evidence_note": "Dataset record lists139.4GB DICOM and69GB NIfTI; per-patient eligible diffusion count is unknown. Original DICOM and processed NIfTI frames require independent resolution. Pathology is outside the intended acquisition."
+    },
+    {
+      "collection_id": "UTSW-Glioma",
+      "role": "future_external_structural_candidate",
+      "release": "1",
+      "release_updated": "2026-03-18",
+      "source_url": "https://www.cancerimagingarchive.net/collection/utsw-glioma/",
+      "descriptor_url": "https://www.nature.com/articles/s41597-026-07274-4",
+      "doi": "10.7937/DFAE-1B86",
+      "license": "CC-BY-4.0",
+      "published_unique_patients": 625,
+      "published_manually_refined_masks": 362,
+      "eligible_patient_count": null,
+      "access": "public_TCIA_NIfTI_listing_only_transfer_not_tested",
+      "acquisition_status": "metadata_description_only_no_subject_records",
+      "required_gates": [
+        "identify_manually_refined_subset_for_reference_segmentation",
+        "structural_input_and_frame_QC",
+        "pretraining_overlap_audit",
+        "patient_identity_and_preoperative_cutoff"
+      ],
+      "evidence_note": "External structural upload/segmentation validation only. Automatic masks for the wider release are not all independent expert reference labels; directional diffusion is not established by this input contract."
+    }
+  ],
+  "evidence": [
+    {
+      "id": "ucsf-0004-official-identity",
+      "path": "data/provenance/ucsf-pdgm/UCSF-PDGM-metadata_v5.csv",
+      "sha256": "afc1c23a0eb0597b56e603741e72f2308b4860281187cd3808e05b7a0116fd78",
+      "kind": "delimited_row",
+      "delimiter": ",",
+      "match": {
+        "ID": "UCSF-PDGM-004"
+      },
+      "expect": {
+        "BraTS21 ID": "BraTS2021_00097",
+        "BraTS21 Segmentation Cohort": "Training"
+      },
+      "source_url": "https://www.cancerimagingarchive.net/wp-content/uploads/UCSF-PDGM-metadata_v5.csv",
+      "supports_identities": [
+        "UCSF-PDGM:UCSF-PDGM-0004",
+        "UCSF-PDGM:UCSF-PDGM-004",
+        "BraTS2021:BraTS2021_00097"
+      ]
+    },
+    {
+      "id": "ucsf-release-aliases",
+      "path": "data/provenance/ucsf-pdgm/official_collection_2026-10-04.html",
+      "sha256": "418408a5734ad96db3df297e6dd7a4eb1c64290b65fe5344df72ac0e6bf24c99",
+      "kind": "contains_text",
+      "texts": [
+        "UCSF-PDGM-0433_FU007d",
+        "UCSF-PDGM-0431_FU001d",
+        "UCSF-PDGM-0396_FU175d",
+        "UCSF-PDGM-0429_FU003d",
+        "UCSF-PDGM-0409_FU001d",
+        "UCSF-PDGM-0391_FU016d"
+      ],
+      "source_url": "https://www.cancerimagingarchive.net/collection/ucsf-pdgm/",
+      "supports_identities": []
+    },
+    {
+      "id": "btc-pat28-identity",
+      "path": "data/diffusion_source/ds001226-v5.0.1/participants.tsv",
+      "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d",
+      "kind": "delimited_row",
+      "delimiter": "\t",
+      "match": {
+        "participant_id": "sub-PAT28"
+      },
+      "expect": {
+        "tumor type & grade": "Oligodendroglioma II"
+      },
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/participants.tsv",
+      "supports_identities": [
+        "BTC:sub-PAT28"
+      ]
+    },
+    {
+      "id": "btc-release",
+      "path": "data/diffusion_source/ds001226-v5.0.1/dataset_description.json",
+      "sha256": "84185f9c387ae232ddbe87e20b329bacf82b9b5dafe9bde63b64c9bc78bed6f2",
+      "kind": "json_fields",
+      "expect": {
+        "Name": "BTC_preop",
+        "License": "CC0",
+        "DatasetDOI": "doi:10.18112/openneuro.ds001226.v5.0.1"
+      },
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/dataset_description.json",
+      "supports_identities": []
+    },
+    {
+      "id": "btc-pat28-primary-image",
+      "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT28/ses-preop/anat/sub-PAT28_ses-preop_T1w.nii.gz",
+      "sha256": "70c5c1e4e28143318d2820788343e239efdc205344204f8f50497b81281b32c6",
+      "kind": "sha256",
+      "source_manifest": "manifests/btc_acquisition.json",
+      "source_verification": "SHA256 plus pinned Git annex MD5 and exact S3 object version previously verified by acquisition",
+      "supports_identities": [
+        "BTC:sub-PAT28"
+      ]
+    }
+  ],
+  "identity_links": [
+    {
+      "id": "ucsf-0004-brats21",
+      "identities": [
+        "UCSF-PDGM:UCSF-PDGM-0004",
+        "UCSF-PDGM:UCSF-PDGM-004",
+        "BraTS2021:BraTS2021_00097"
+      ],
+      "evidence_ids": [
+        "ucsf-0004-official-identity"
+      ],
+      "meaning": "Same source patient; known segmentation training overlap. The structural mirror is still not byte-equivalent to an official release by evidence currently available."
+    },
+    {
+      "id": "ucsf-repeat-0433",
+      "identities": [
+        "UCSF-PDGM:UCSF-PDGM-0433",
+        "UCSF-PDGM:UCSF-PDGM-0315",
+        "UCSF-PDGM:UCSF-PDGM-0433_FU007d"
+      ],
+      "evidence_ids": [
+        "ucsf-release-aliases"
+      ],
+      "meaning": "Public release-documented repeated exams; no corresponding images acquired here."
+    },
+    {
+      "id": "ucsf-repeat-0431",
+      "identities": [
+        "UCSF-PDGM:UCSF-PDGM-0431",
+        "UCSF-PDGM:UCSF-PDGM-0278",
+        "UCSF-PDGM:UCSF-PDGM-0431_FU001d"
+      ],
+      "evidence_ids": [
+        "ucsf-release-aliases"
+      ],
+      "meaning": "Public release-documented repeated exams; no corresponding images acquired here."
+    },
+    {
+      "id": "ucsf-repeat-0396",
+      "identities": [
+        "UCSF-PDGM:UCSF-PDGM-0396",
+        "UCSF-PDGM:UCSF-PDGM-0175",
+        "UCSF-PDGM:UCSF-PDGM-0396_FU175d"
+      ],
+      "evidence_ids": [
+        "ucsf-release-aliases"
+      ],
+      "meaning": "Public release-documented repeated exams; no corresponding images acquired here."
+    },
+    {
+      "id": "ucsf-repeat-0429",
+      "identities": [
+        "UCSF-PDGM:UCSF-PDGM-0429",
+        "UCSF-PDGM:UCSF-PDGM-0138",
+        "UCSF-PDGM:UCSF-PDGM-0429_FU003d"
+      ],
+      "evidence_ids": [
+        "ucsf-release-aliases"
+      ],
+      "meaning": "Public release-documented repeated exams; no corresponding images acquired here."
+    },
+    {
+      "id": "ucsf-repeat-0409",
+      "identities": [
+        "UCSF-PDGM:UCSF-PDGM-0409",
+        "UCSF-PDGM:UCSF-PDGM-0181",
+        "UCSF-PDGM:UCSF-PDGM-0409_FU001d"
+      ],
+      "evidence_ids": [
+        "ucsf-release-aliases"
+      ],
+      "meaning": "Public release-documented repeated exams; no corresponding images acquired here."
+    },
+    {
+      "id": "ucsf-repeat-0391",
+      "identities": [
+        "UCSF-PDGM:UCSF-PDGM-0391",
+        "UCSF-PDGM:UCSF-PDGM-0289",
+        "UCSF-PDGM:UCSF-PDGM-0391_FU016d"
+      ],
+      "evidence_ids": [
+        "ucsf-release-aliases"
+      ],
+      "meaning": "Public release-documented repeated exams; no corresponding images acquired here."
+    }
+  ],
+  "records": [
+    {
+      "record_id": "ucsf0004-structural-mirror-development",
+      "collection_id": "UCSF-PDGM",
+      "identity": "UCSF-PDGM:UCSF-PDGM-0004",
+      "identity_status": "mirror_attributed",
+      "identity_evidence_ids": [
+        "ucsf-0004-official-identity"
+      ],
+      "visit_id": "baseline_preoperative",
+      "derivative_of": null,
+      "outer_split": "development",
+      "uses": [
+        "global_development",
+        "viewer_qc",
+        "case_optimization"
+      ],
+      "source_manifest": "manifests/data_acquisition_ucsf.json",
+      "planning_as_of": null,
+      "inputs": [
+        {
+          "input_id": "preoperative_structural_imaging",
+          "kind": "imaging",
+          "source_evidence_ids": [
+            "ucsf-0004-official-identity"
+          ],
+          "operative_phase": "preoperative",
+          "availability_basis": "source_declares_preoperative_images",
+          "available_at": null,
+          "measurement_at": null,
+          "evidence_type": "observed",
+          "used_by_primary_optimizer": false
+        },
+        {
+          "input_id": "source_tumor_annotation",
+          "kind": "source_annotation",
+          "source_evidence_ids": [
+            "ucsf-0004-official-identity"
+          ],
+          "operative_phase": "preoperative",
+          "availability_basis": "source_declares_preoperative_images",
+          "available_at": null,
+          "measurement_at": null,
+          "evidence_type": "observed",
+          "used_by_primary_optimizer": false,
+          "track": "annotation_assisted"
+        },
+        {
+          "input_id": "molecular_context",
+          "kind": "molecular",
+          "source_evidence_ids": [
+            "ucsf-0004-official-identity"
+          ],
+          "operative_phase": "unknown",
+          "availability_basis": "unknown",
+          "available_at": null,
+          "measurement_at": null,
+          "evidence_type": "observed",
+          "used_by_primary_optimizer": false
+        },
+        {
+          "input_id": "survival_and_EOR",
+          "kind": "outcome",
+          "source_evidence_ids": [
+            "ucsf-0004-official-identity"
+          ],
+          "operative_phase": "unknown",
+          "availability_basis": "unknown",
+          "available_at": null,
+          "measurement_at": null,
+          "evidence_type": "observed",
+          "used_by_primary_optimizer": false
+        }
+      ]
+    },
+    {
+      "record_id": "btc-pat28-preop-development",
+      "collection_id": "BTC_preop",
+      "identity": "BTC:sub-PAT28",
+      "identity_status": "verified_primary",
+      "identity_evidence_ids": [
+        "btc-pat28-identity",
+        "btc-release",
+        "btc-pat28-primary-image"
+      ],
+      "visit_id": "ses-preop",
+      "derivative_of": null,
+      "outer_split": "development",
+      "uses": [
+        "global_development",
+        "viewer_qc",
+        "case_optimization"
+      ],
+      "source_manifest": "manifests/btc_acquisition.json",
+      "planning_as_of": null,
+      "inputs": [
+        {
+          "input_id": "preoperative_T1_and_DWI",
+          "kind": "imaging",
+          "source_evidence_ids": [
+            "btc-pat28-identity",
+            "btc-release",
+            "btc-pat28-primary-image"
+          ],
+          "operative_phase": "preoperative",
+          "availability_basis": "source_declares_preoperative_images",
+          "available_at": null,
+          "measurement_at": null,
+          "evidence_type": "observed",
+          "used_by_primary_optimizer": false
+        },
+        {
+          "input_id": "source_tumor_annotation",
+          "kind": "source_annotation",
+          "source_evidence_ids": [
+            "btc-pat28-identity",
+            "btc-release",
+            "btc-pat28-primary-image"
+          ],
+          "operative_phase": "preoperative",
+          "availability_basis": "source_declares_preoperative_images",
+          "available_at": null,
+          "measurement_at": null,
+          "evidence_type": "observed",
+          "used_by_primary_optimizer": false,
+          "track": "annotation_assisted"
+        },
+        {
+          "input_id": "retrospective_diagnosis",
+          "kind": "molecular",
+          "source_evidence_ids": [
+            "btc-pat28-identity"
+          ],
+          "operative_phase": "unknown",
+          "availability_basis": "unknown",
+          "available_at": null,
+          "measurement_at": null,
+          "evidence_type": "observed",
+          "used_by_primary_optimizer": false
+        }
+      ]
+    }
+  ],
+  "preoperative_policy": {
+    "images": "Documented preoperative source images may support an imaging-only research replay without inventing calendar dates.",
+    "annotations": "Source labels require annotation_assisted track; do not call them inference-only predictions.",
+    "molecular_and_clinical": "Unknown field-level availability excludes the field from primary optimizer input. Diagnosis used retrospectively for cohort inclusion is distinct from planner input.",
+    "outcomes": "Postoperative survival, EOR and neurological outcomes are excluded from preoperative optimization.",
+    "frozen_adaptation": "Per-case optimization and checkpoint selection can occur within an outer-final case under the separately frozen protocol; population pretraining and global method development cannot."
+  },
+  "completion_state": {
+    "cohort_frozen": false,
+    "population_checkpoint_exists": false,
+    "outer_final_patients_registered": 0,
+    "larger_benchmark_claim": "not_established"
+  }
+}
