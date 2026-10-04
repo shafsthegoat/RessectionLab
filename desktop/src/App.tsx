@@ -33,6 +33,8 @@ import {
 } from "./case-data";
 import { readOnlyPreview } from "./preview-api";
 import { RefinementPanel } from "./RefinementPanel";
+import { hydratePriorProposal } from "./prior-data";
+import { PriorInventory, PriorProvenance } from "./PriorInventory";
 import { hydrateStructuralProposal } from "./structural-proposal-data";
 import { isOperationCancelled, operationMessage } from "./operation-feedback";
 import { StructuralEvidenceInventory } from "./StructuralEvidenceInventory";
@@ -47,6 +49,7 @@ import type {
   ResectionApi,
   RouteCandidate,
   StructuralProposalView,
+  PriorLayerView,
   SearchResult,
   Vec3,
   ViewerCase,
@@ -91,7 +94,9 @@ function EvidenceDrawer({
   routes,
   canImport,
   onImport,
+  priorView,
 }: {
+  priorView: PriorLayerView | null;
   caseData: CasePayload | null;
   routes: RouteCandidate[];
   canImport: boolean;
@@ -243,6 +248,7 @@ function EvidenceDrawer({
                 detailed
                 evidence={caseData.structuralEvidence ?? []}
               />
+              {priorView && <PriorProvenance proposal={priorView.proposal} />}
               <section className="record-section">
                 <h3>Unresolved inputs</h3>
                 <ul className="unknown-list">
@@ -451,12 +457,25 @@ export default function App() {
     setProposalLoadingId(null);
     setProposalView(null);
   }, []);
+  const [priorView, setPriorView] = useState<PriorLayerView | null>(null);
+  const [priorLoadingId, setPriorLoadingId] = useState<string | null>(null);
+  const priorRequest = useRef<AbortController | null>(null);
+  const clearPrior = useCallback(() => {
+    priorRequest.current?.abort();
+    priorRequest.current = null;
+    setPriorLoadingId(null);
+    setPriorView(null);
+  }, []);
+  useEffect(() => () => priorRequest.current?.abort(), []);
   const receiveReplay = useCallback(
     (replay: CertifiedReplay | null) => {
-      if (replay) clearProposal();
+      if (replay) {
+        clearProposal();
+        clearPrior();
+      }
       setCertifiedReplay(replay);
     },
-    [clearProposal],
+    [clearProposal, clearPrior],
   );
   useEffect(() => () => proposalRequest.current?.abort(), []);
   const [category, setCategory] = useState<"pareto" | "dominated" | "rejected">(
@@ -487,6 +506,7 @@ export default function App() {
   const readonly = !!api?.readOnly;
   const controlsBlocked = busy || engineStopped;
   const restoreSourceView = () => {
+    clearPrior();
     clearProposal();
     setCertifiedReplay(null);
     setMessage("Source imaging restored · Source annotations preserved");
@@ -535,6 +555,7 @@ export default function App() {
         if (!mounted.current || generation !== caseGeneration.current)
           return false;
         activeCaseHash.current = source.caseHash;
+        clearPrior();
         clearProposal();
         setPayload(source);
         setCaseData(loaded);
@@ -677,6 +698,7 @@ export default function App() {
     if (!api) return;
     return api.onEvent((event: BridgeEvent) => {
       if (event.event === "engineStopped") {
+        clearPrior();
         clearProposal();
         stoppedEngine.current = true;
         setEngineStopped(true);
@@ -755,13 +777,57 @@ export default function App() {
       const source = await api[kind]();
       if (source) await installCase(source, api);
     });
+  const viewPrior = async (proposalId: string) => {
+    if (!payload || !caseData || !api || certifiedReplay || controlsBlocked)
+      return;
+    clearPrior();
+    clearProposal();
+    const controller = new AbortController();
+    priorRequest.current = controller;
+    setPriorLoadingId(proposalId);
+    setMessage("Loading selected population prior · Source imaging preserved");
+    setError(null);
+    try {
+      const view = await hydratePriorProposal(
+        payload,
+        caseData,
+        proposalId,
+        api,
+        controller.signal,
+      );
+      if (
+        controller.signal.aborted ||
+        priorRequest.current !== controller ||
+        activeCaseHash.current !== view.caseHash
+      )
+        return;
+      setPriorView(view);
+      setMessage(
+        "Population prior shown · alignment review required · not used in route scoring",
+      );
+    } catch (failure) {
+      if (!controller.signal.aborted && priorRequest.current === controller) {
+        setMessage("Prior withheld · Source imaging preserved");
+        reportError(failure);
+      }
+    } finally {
+      if (priorRequest.current === controller) {
+        priorRequest.current = null;
+        setPriorLoadingId(null);
+      }
+    }
+  };
   const viewProposal = async (evidenceId: string) => {
     if (!payload || !caseData || !api || certifiedReplay || controlsBlocked)
       return;
+    clearPrior();
     clearProposal();
     const controller = new AbortController();
     proposalRequest.current = controller;
     setProposalLoadingId(evidenceId);
+    setMessage(
+      "Loading selected brain-envelope estimate · Source imaging preserved",
+    );
     setError(null);
     try {
       const view = await hydrateStructuralProposal(
@@ -782,8 +848,13 @@ export default function App() {
         "Estimated envelope shown on source MRI · display only · no working anatomy changed",
       );
     } catch (failure) {
-      if (!controller.signal.aborted && proposalRequest.current === controller)
+      if (
+        !controller.signal.aborted &&
+        proposalRequest.current === controller
+      ) {
+        setMessage("Estimate withheld · Source imaging preserved");
         reportError(failure);
+      }
     } finally {
       if (proposalRequest.current === controller) {
         proposalRequest.current = null;
@@ -1168,21 +1239,32 @@ export default function App() {
             Return to source view to inspect structural estimates.
           </p>
         )}
-        <section className="case-section functional-section">
-          <h2>Functional evidence</h2>
-          <div className="evidence-line">
-            <span>Motor network</span>
-            <span className="unassessed-pill">Unassessed</span>
-          </div>
-          <div className="evidence-line">
-            <span>Language network</span>
-            <span className="unassessed-pill">Unassessed</span>
-          </div>
-          <p className="muted-note">
-            Missing evidence remains unknown. Population priors require
-            registration and review.
-          </p>
-        </section>
+        <PriorInventory
+          items={payload?.priorProposals ?? []}
+          selected={priorView}
+          loadingId={priorLoadingId}
+          disabled={controlsBlocked || !!certifiedReplay}
+          onSelect={(id) => void viewPrior(id)}
+          onClear={restoreSourceView}
+          cursor={cursor}
+        />
+        {!payload?.priorProposals?.length && (
+          <section className="case-section functional-section">
+            <h2>Functional evidence</h2>
+            <div className="evidence-line">
+              <span>Motor network</span>
+              <span className="unassessed-pill">Unassessed</span>
+            </div>
+            <div className="evidence-line">
+              <span>Language network</span>
+              <span className="unassessed-pill">Unassessed</span>
+            </div>
+            <p className="muted-note">
+              Missing evidence remains unknown. Population priors require
+              registration and review.
+            </p>
+          </section>
+        )}
         <div className="case-panel-bottom">
           <EvidenceDrawer
             caseData={payload}
@@ -1194,6 +1276,7 @@ export default function App() {
               !readonly
             }
             onImport={importStructural}
+            priorView={priorView}
           />
           <div className="local-note">
             <span className="status-dot" />
@@ -1234,6 +1317,21 @@ export default function App() {
             </button>
           </div>
         </div>
+        {priorView && (
+          <div className="prior-view-notice">
+            <span className="prior-population-badge">Population prior</span>
+            <div>
+              <strong>{priorView.title}</strong>
+              <span>
+                Alignment review required · inspection only · not used in route
+                scoring
+              </span>
+            </div>
+            <button className="text-button" onClick={restoreSourceView}>
+              Source view <X size={12} />
+            </button>
+          </div>
+        )}
         {proposalView && (
           <div className="proposal-view-notice" role="status">
             <span className="proposal-contour-key" />
@@ -1276,6 +1374,7 @@ export default function App() {
             cameraMode={cameraMode}
             replay={viewerReplay}
             structuralProposal={proposalView}
+            priorLayer={priorView}
           />
           {!caseData && (
             <div className="welcome-overlay">

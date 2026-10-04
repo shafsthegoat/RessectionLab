@@ -9,10 +9,12 @@ import {
   rasAffine,
   slicePoint,
   sliceRect,
+  transformPoint,
   volumeBounds,
 } from "./coordinates";
 import type { Point3, SlicePlane } from "./coordinates";
-import type { ViewerWorkspaceProps } from "./contracts";
+import type { ViewerPriorLayer, ViewerWorkspaceProps } from "./contracts";
+import { formatPriorValue, samplePriorVoxel } from "./priorLayer";
 import { FAILURE_COLOR, routeAppearance } from "./routeAppearance";
 import {
   STRUCTURAL_PROPOSAL_COLOR,
@@ -38,6 +40,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     cameraMode,
     replay,
     structuralProposal,
+    priorLayer,
   } = props;
   const container = useRef<HTMLDivElement>(null),
     canvas = useRef<HTMLCanvasElement>(null),
@@ -61,6 +64,10 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     );
   const [layout, setLayout] = useState<"3d-focus" | "mri-review">("3d-focus"),
     [expanded, setExpanded] = useState<SlicePlane | null>(null);
+  const [displayedPrior, setDisplayedPrior] = useState<ViewerPriorLayer | null>(
+      null,
+    ),
+    [priorError, setPriorError] = useState<string | null>(null);
   const [paneSizes, setPaneSizes] = useState<
     Record<SlicePlane, [number, number]>
   >({ axial: [1, 1], coronal: [1, 1], sagittal: [1, 1] });
@@ -84,6 +91,20 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
           (v, i) => (v + geometry.bounds[1][i]) / 2,
         ) as Point3)
       : [0, 0, 0]);
+  const priorSample = useMemo(() => {
+    if (!displayedPrior || displayedPrior.caseHash !== caseData?.caseHash)
+      return null;
+    return samplePriorVoxel(
+      displayedPrior,
+      transformPoint(inverseAffine(displayedPrior.affine), currentCursor),
+    );
+  }, [
+    displayedPrior,
+    caseData?.caseHash,
+    currentCursor[0],
+    currentCursor[1],
+    currentCursor[2],
+  ]);
 
   useEffect(() => {
     if (
@@ -257,6 +278,44 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     };
   }, [caseData]);
 
+  useEffect(() => {
+    if (!engine.current) return;
+    setPriorError(null);
+    setDisplayedPrior(null);
+    try {
+      setDisplayedPrior(
+        engine.current.setPriorLayer(
+          replay || structuralProposal ? null : (priorLayer ?? null),
+        ),
+      );
+    } catch (cause) {
+      setPriorError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }, [
+    ready,
+    caseData,
+    Boolean(replay),
+    Boolean(structuralProposal),
+    priorLayer?.caseHash,
+    priorLayer?.proposalId,
+    priorLayer?.mapId,
+    priorLayer?.title,
+    priorLayer?.component,
+    priorLayer?.values,
+    priorLayer?.coverage,
+    priorLayer?.affine,
+    priorLayer?.shape,
+    priorLayer?.frame,
+    priorLayer?.mapKind,
+    priorLayer?.scope,
+    priorLayer?.provenance,
+    priorLayer?.reviewStatus,
+    priorLayer?.planningEligible,
+    priorLayer?.patientSpecificFunction,
+    priorLayer?.valueUnits,
+    priorLayer?.spatialUnits,
+  ]);
+
   function moveCursor(
     event: PointerEvent<HTMLDivElement>,
     plane: SlicePlane,
@@ -395,6 +454,28 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
             {TITLES[expanded]} MRI expanded
           </span>
         )}
+        {displayedPrior && priorSample && (
+          <div
+            className="rl-viewer-prior-readout"
+            role="status"
+            aria-live="polite"
+          >
+            <span>
+              <strong>Population prior</strong> · alignment review required
+            </span>
+            <span className="rl-viewer-prior-value">
+              {priorSample.covered
+                ? `${displayedPrior.mapKind === "functional_concordance" ? "Interpolated atlas sample" : "Nearest released-mask cell"}: ${priorSample.value === 0 ? "covered zero · " : ""}${formatPriorValue(priorSample.value!)} · unitless`
+                : priorSample.reason === "incomplete-interpolation-support"
+                  ? "Interpolation support unavailable · no value"
+                  : "Outside sampled atlas · no value"}
+            </span>
+            <span className="rl-viewer-prior-note">
+              Patient function unknown · hatching marks unavailable atlas
+              support
+            </span>
+          </div>
+        )}
       </div>
       <div className="rl-viewer-anatomy rl-viewer-pane">
         <div className="rl-viewer-heading">
@@ -524,7 +605,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               ref={refs[plane]}
               className="rl-viewer-slice-image"
               tabIndex={0}
-              aria-label={`${TITLES[plane]} source MRI, neurological convention, slice position ${currentCursor[axis].toFixed(1)} millimeters. ${proposalReviewLabel ? `Estimated envelope contour, view only: ${proposalReviewLabel}. ` : ""}Click to set cursor; scroll or arrow keys change slice.`}
+              aria-label={`${TITLES[plane]} source MRI, neurological convention, slice position ${currentCursor[axis].toFixed(1)} millimeters. ${proposalReviewLabel ? `Estimated envelope contour, view only: ${proposalReviewLabel}. ` : ""}${displayedPrior ? "Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. " : ""}Click to set cursor; scroll or arrow keys change slice.`}
               onPointerDown={(event) => {
                 if (event.button === 0) {
                   event.currentTarget.focus({ preventScroll: true });
@@ -553,7 +634,12 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
                 {scaleMm} mm
               </span>
               <span className="rl-viewer-slice-note">
-                SOURCE MRI{proposalReviewLabel ? " · ESTIMATE" : ""}
+                SOURCE MRI
+                {proposalReviewLabel
+                  ? " · ESTIMATE"
+                  : displayedPrior
+                    ? " · PRIOR"
+                    : ""}
               </span>
             </div>
           </div>
@@ -581,10 +667,10 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         </label>
         <span>Neurological convention</span>
       </div>
-      {(error || replayError || proposalError) && (
+      {(error || replayError || proposalError || priorError) && (
         <div className="rl-viewer-error" role="alert">
           <strong>Imaging view needs attention</strong>
-          <p>{error || replayError || proposalError}</p>
+          <p>{error || replayError || proposalError || priorError}</p>
         </div>
       )}
     </div>

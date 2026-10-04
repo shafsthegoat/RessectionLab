@@ -50,6 +50,30 @@
   font-size: 10px;
   color: #94aaa9;
 }
+.rl-viewer-prior-readout {
+  flex-basis: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  padding: 5px 2px 1px;
+  border-top: 1px solid #2b3943;
+  font-size: 9px;
+  line-height: 1.4;
+  color: #a4b6bd;
+}
+.rl-viewer-prior-readout strong {
+  color: #c9d9db;
+  font-weight: 600;
+}
+.rl-viewer-prior-value {
+  color: #d8c5a5;
+  font-variant-numeric: tabular-nums;
+}
+.rl-viewer-prior-note {
+  flex-basis: 100%;
+  color: #8a9da6;
+  font-size: 8px;
+}
 .rl-viewer-anatomy {
   grid-column: 1;
   grid-row: 2/5;
@@ -160,6 +184,7 @@
 }
 .rl-viewer-toolbar {
   display: flex;
+  flex: 0 0 auto;
   align-items: center;
   gap: 6px;
   cursor: default;
@@ -225,6 +250,8 @@
 }
 .rl-viewer-reset {
   color: #a1b8c0;
+  white-space: nowrap;
+  flex: 0 0 auto;
   border: 1px solid #253945;
   background: #0e1b23d9;
   backdrop-filter: blur(8px);

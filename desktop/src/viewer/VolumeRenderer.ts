@@ -11,6 +11,7 @@ import {
 import type { Affine, Bounds3, Point3, SlicePlane } from "./coordinates";
 import type {
   ViewerReplay,
+  ViewerPriorLayer,
   ViewerRoute,
   ViewerStructuralProposal,
   ViewerVolume,
@@ -18,6 +19,7 @@ import type {
 import { fragmentShader, vertexShader } from "./shaders";
 import { physicalBounds, placeInSourceFrame } from "./sceneGeometry";
 import { paneViewport } from "./layout";
+import { PRIOR_COLORS, validatePriorLayer } from "./priorLayer";
 import { residualMask, validateReplay } from "./replay";
 import {
   STRUCTURAL_PROPOSAL_COLOR,
@@ -120,6 +122,8 @@ export class VolumeRenderer {
   private activeRouteCount = 0;
   private removedTexture: THREE.Data3DTexture;
   private proposalTexture: THREE.Data3DTexture;
+  private priorTexture: THREE.Data3DTexture;
+  private priorCoverageTexture: THREE.Data3DTexture;
   private readonly surfaces = new Map<string, THREE.Mesh>();
   private readonly mriTexture: THREE.Data3DTexture;
   private readonly labelTexture: THREE.Data3DTexture;
@@ -213,6 +217,8 @@ export class VolumeRenderer {
     this.labelTexture = dataTexture(packed, volume.shape);
     this.removedTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
     this.proposalTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
+    this.priorTexture = dataTexture(new Float32Array(1), [1, 1, 1]);
+    this.priorCoverageTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
     const material = (threeD: boolean, plane: SlicePlane) =>
       new THREE.ShaderMaterial({
         vertexShader,
@@ -233,6 +239,17 @@ export class VolumeRenderer {
             value: new THREE.Color(
               STRUCTURAL_PROPOSAL_COLOR,
             ).convertLinearToSRGB(),
+          },
+          uPrior: { value: this.priorTexture },
+          uPriorCoverage: { value: this.priorCoverageTexture },
+          uPriorActive: { value: 0 },
+          uPriorKind: { value: 0 },
+          uWorldToPrior: { value: new THREE.Matrix4() },
+          uPriorShape: { value: new THREE.Vector3(1, 1, 1) },
+          uPriorColors: {
+            value: PRIOR_COLORS.map((color) =>
+              new THREE.Color(color).convertLinearToSRGB(),
+            ),
           },
           uWorldToVoxel: { value: matrix(inverse) },
           uShape: { value: new THREE.Vector3(...volume.shape) },
@@ -485,6 +502,7 @@ export class VolumeRenderer {
     if (!replay) return;
     validateReplay(this.volume, replay);
     this.setStructuralProposal(null);
+    this.setPriorLayer(null);
 
     // Snapshot the accepted effect so later UI updates cannot mutate this replay.
     const removed = replay.removedMask.slice();
@@ -618,6 +636,7 @@ export class VolumeRenderer {
     this.requestRender();
     if (!proposal || this.replayActive) return;
     validateStructuralProposal(this.volume, proposal);
+    this.setPriorLayer(null);
     const snapshot = proposal.mask.slice();
     this.proposalTexture.dispose();
     this.proposalTexture = dataTexture(snapshot, this.volume.shape);
@@ -626,6 +645,49 @@ export class VolumeRenderer {
       shader.uniforms.uProposalActive.value = 1;
     });
     this.requestRender();
+  }
+
+  /** Population maps have independent values, FOV coverage, and physical frame. */
+  setPriorLayer(layer: ViewerPriorLayer | null): ViewerPriorLayer | null {
+    this.materials().forEach((shader) => {
+      shader.uniforms.uPriorActive.value = 0;
+    });
+    this.priorTexture.dispose();
+    this.priorCoverageTexture.dispose();
+    this.priorTexture = dataTexture(new Float32Array(1), [1, 1, 1]);
+    this.priorCoverageTexture = dataTexture(new Uint8Array(1), [1, 1, 1]);
+    this.materials().forEach((shader) => {
+      shader.uniforms.uPrior.value = this.priorTexture;
+      shader.uniforms.uPriorCoverage.value = this.priorCoverageTexture;
+    });
+    this.requestRender();
+    if (!layer || this.replayActive) return null;
+    validatePriorLayer(this.volume, layer);
+    const snapshot: ViewerPriorLayer = {
+      ...layer,
+      values: layer.values.slice(),
+      coverage: layer.coverage.slice(),
+      shape: [...layer.shape],
+      affine: layer.affine.map((row) => [...row]),
+    };
+    // A selected prior and an estimated envelope are separate inspection modes.
+    this.setStructuralProposal(null);
+    this.priorTexture.dispose();
+    this.priorCoverageTexture.dispose();
+    this.priorTexture = dataTexture(snapshot.values, snapshot.shape);
+    this.priorCoverageTexture = dataTexture(snapshot.coverage, snapshot.shape);
+    const inverse = inverseAffine(snapshot.affine);
+    this.materials().forEach((shader) => {
+      shader.uniforms.uPrior.value = this.priorTexture;
+      shader.uniforms.uPriorCoverage.value = this.priorCoverageTexture;
+      shader.uniforms.uPriorActive.value = 1;
+      shader.uniforms.uPriorKind.value =
+        snapshot.mapKind === "structural_mask" ? 1 : 0;
+      shader.uniforms.uWorldToPrior.value.copy(matrix(inverse));
+      shader.uniforms.uPriorShape.value.set(...snapshot.shape);
+    });
+    this.requestRender();
+    return snapshot;
   }
 
   private updateSourcePlane(): void {
@@ -926,6 +988,8 @@ export class VolumeRenderer {
     this.labelTexture.dispose();
     this.removedTexture.dispose();
     this.proposalTexture.dispose();
+    this.priorTexture.dispose();
+    this.priorCoverageTexture.dispose();
     this.renderer.dispose();
   }
 }

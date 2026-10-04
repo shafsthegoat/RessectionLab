@@ -7,51 +7,15 @@ import type {
   ViewerCase,
 } from "./types";
 
+import {
+  sha256Bytes,
+  arrayDigest,
+  sourceFrameDigest,
+  sourceImageDigest,
+  throwIfAborted,
+} from "./source-integrity.ts";
+export { pythonAffineFloat } from "./source-integrity.ts";
 const hashPattern = /^sha256:[a-f0-9]{64}$/;
-const sourceDigests = new WeakMap<ViewerCase, Promise<string>>();
-const hex = (bytes: ArrayBuffer) =>
-  Array.from(new Uint8Array(bytes), (value) =>
-    value.toString(16).padStart(2, "0"),
-  ).join("");
-async function digest(bytes: Uint8Array): Promise<string> {
-  return hex(await crypto.subtle.digest("SHA-256", bytes.slice().buffer));
-}
-function checkCancelled(signal?: AbortSignal) {
-  if (signal?.aborted)
-    throw new DOMException("Proposal viewing cancelled.", "AbortError");
-}
-/** Match the existing Python source-array digest header; array values are never resampled. */
-async function arrayDigest(
-  bytes: Uint8Array,
-  shape: Vec3,
-  dtype: "<f4" | "|b1",
-): Promise<string> {
-  const header = new TextEncoder().encode(
-    `{"dtype": "${dtype}", "shape": [${shape.join(", ")}]}`,
-  );
-  const framed = new Uint8Array(header.length + bytes.byteLength);
-  framed.set(header);
-  framed.set(bytes, header.length);
-  return `sha256:${await digest(framed)}`;
-}
-/** Python JSON retains .0 on floats and uses scientific notation outside this interval. */
-export function pythonAffineFloat(value: number): string {
-  if (!Number.isFinite(value))
-    throw new Error("Non-finite proposal source frame.");
-  if (Object.is(value, -0)) return "-0.0";
-  const magnitude = Math.abs(value);
-  if (magnitude !== 0 && (magnitude < 1e-4 || magnitude >= 1e16)) {
-    const [fraction, exponent] = value.toExponential().split("e");
-    const power = Number(exponent);
-    return `${fraction}e${power < 0 ? "-" : "+"}${Math.abs(power).toString().padStart(2, "0")}`;
-  }
-  return Number.isInteger(value) ? `${value}.0` : value.toString();
-}
-async function frameDigest(source: CasePayload): Promise<string> {
-  const affine = `[${source.affine.map((row) => `[${row.map(pythonAffineFloat).join(",")}]`).join(",")}]`;
-  const text = `{"affine":${affine},"frame":"${source.frame}","physical_units":"mm","shape":[${source.shape.join(",")}]}`;
-  return `sha256:${await digest(new TextEncoder().encode(text))}`;
-}
 
 export async function hydrateStructuralProposal(
   source: CasePayload,
@@ -60,7 +24,7 @@ export async function hydrateStructuralProposal(
   api: Pick<ResectionApi, "readAsset">,
   signal?: AbortSignal,
 ): Promise<StructuralProposalView> {
-  checkCancelled(signal);
+  throwIfAborted(signal);
   const { voxelCount } = validateCaseDescriptor(source);
   if (
     viewer.caseHash !== source.caseHash ||
@@ -155,39 +119,26 @@ export async function hydrateStructuralProposal(
     viewer.compartments.some((layer) => layer.mask.length !== voxelCount)
   )
     throw new Error("Visible source arrays no longer match their grid.");
-  let sourceDigest = sourceDigests.get(viewer);
-  if (!sourceDigest) {
-    sourceDigest = arrayDigest(
-      new Uint8Array(
-        viewer.mri.buffer,
-        viewer.mri.byteOffset,
-        viewer.mri.byteLength,
-      ),
-      source.shape,
-      "<f4",
-    );
-    sourceDigests.set(viewer, sourceDigest);
-  }
   const [imageHash, physicalHash] = await Promise.all([
-    sourceDigest,
-    frameDigest(source),
+    sourceImageDigest(viewer, source.shape),
+    sourceFrameDigest(source),
   ]);
-  checkCancelled(signal);
+  throwIfAborted(signal);
   if (imageHash !== item.sourceHash || physicalHash !== item.sourceFrameHash)
     throw new Error(
       "Proposal belongs to another source image or physical frame.",
     );
   const transferred = await api.readAsset(descriptor.assetId);
-  checkCancelled(signal);
+  throwIfAborted(signal);
   if (transferred.byteLength !== voxelCount)
     throw new Error("Proposal mask transfer is incomplete.");
   // Own the display buffer, so source masks and later IPC buffers cannot be changed through it.
   const mask = transferred.slice();
   const [transferHash, maskHash] = await Promise.all([
-    digest(mask),
+    sha256Bytes(mask),
     arrayDigest(mask, source.shape, "|b1"),
   ]);
-  checkCancelled(signal);
+  throwIfAborted(signal);
   if (transferHash !== descriptor.sha256 || maskHash !== item.maskHash)
     throw new Error(
       "Proposal mask checksum does not match its recorded evidence.",
@@ -219,7 +170,7 @@ export async function hydrateStructuralProposal(
     }
     if (index > 0 && index % 262144 === 0) {
       await new Promise<void>((resolve) => setTimeout(resolve, 0));
-      checkCancelled(signal);
+      throwIfAborted(signal);
     }
   }
   if (!count) throw new Error("Proposal mask has no estimated source cells.");

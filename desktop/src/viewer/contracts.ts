@@ -41,6 +41,28 @@ export interface ViewerWorkspaceProps {
   cameraMode: "anatomy" | "instruments";
   replay?: ViewerReplay | null;
   structuralProposal?: ViewerStructuralProposal | null;
+  priorLayer?: ViewerPriorLayer | null;
+}
+
+export interface ViewerPriorLayer {
+  caseHash: string;
+  proposalId: string;
+  mapId: string;
+  title: string;
+  component: string;
+  mapKind: "functional_concordance" | "structural_mask";
+  values: Float32Array;
+  coverage: Uint8Array;
+  shape: Shape3;
+  affine: Affine;
+  frame: "RAS+";
+  scope: "view-only-population-prior";
+  provenance: "prior";
+  reviewStatus: "alignment_review_required";
+  planningEligible: false;
+  patientSpecificFunction: false;
+  valueUnits: "unitless";
+  spatialUnits: "mm";
 }
 
 export interface ViewerStructuralProposal {

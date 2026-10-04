@@ -7,7 +7,12 @@ import os from "node:os";
 import path from "node:path";
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-let server, Inventory, ReplayStepControl, cacheDir;
+let server,
+  Inventory,
+  ReplayStepControl,
+  PriorInventory,
+  PriorCursorReadout,
+  cacheDir;
 before(async () => {
   cacheDir = await fs.mkdtemp(
     path.join(os.tmpdir(), "resection-renderer-test-"),
@@ -25,6 +30,9 @@ before(async () => {
   ).StructuralEvidenceInventory;
   ReplayStepControl = (await server.ssrLoadModule("/src/ReplayStepControl.tsx"))
     .ReplayStepControl;
+  const priorModule = await server.ssrLoadModule("/src/PriorInventory.tsx");
+  PriorInventory = priorModule.PriorInventory;
+  PriorCursorReadout = priorModule.PriorCursorReadout;
 });
 after(async () => {
   await server?.close();
@@ -130,4 +138,93 @@ test("selected proposal can clear and jump to a computed outside-annotation poin
   assert.match(html, /Hide estimate/);
   assert.match(html, /aria-pressed="true"/);
   assert.match(html, /Inspect annotation outside \(214\)/);
+});
+
+function priorView(kind = "functional_concordance", coverage = 1, value = 0) {
+  return {
+    mapKind: kind,
+    shape: [1, 1, 1],
+    affine: [
+      [1, 0, 0, 0],
+      [0, 1, 0, 0],
+      [0, 0, 1, 0],
+      [0, 0, 0, 1],
+    ],
+    values: new Float32Array([value]),
+    coverage: new Uint8Array([coverage]),
+  };
+}
+test("covered prior zero explicitly leaves patient function unknown", () => {
+  const html = renderToStaticMarkup(
+    React.createElement(PriorCursorReadout, {
+      layer: priorView(),
+      cursor: [0, 0, 0],
+    }),
+  );
+  assert.match(html, /Within atlas field of view/);
+  assert.match(html, /0.0000/);
+  assert.match(
+    html,
+    /No signal in this released map; patient function unknown/,
+  );
+});
+test("uncovered prior cell shows unknown without presenting a zero map value", () => {
+  const html = renderToStaticMarkup(
+    React.createElement(PriorCursorReadout, {
+      layer: priorView("functional_concordance", 0),
+      cursor: [0, 0, 0],
+    }),
+  );
+  assert.match(html, /Outside atlas field of view — unknown/);
+  assert.doesNotMatch(html, /0.0000|prior-cursor-value/);
+});
+test("prior inventory distinguishes all seven maps and does not claim patient function or language dominance", () => {
+  const items = [
+    { component: "motor", mapKind: "functional_concordance" },
+    ...["phonology", "semantics", "speech_articulation"].flatMap((component) =>
+      ["functional_concordance", "structural_mask"].map((mapKind) => ({
+        component,
+        mapKind,
+      })),
+    ),
+  ].map((item, index) => ({ ...item, proposalId: String(index) }));
+  const html = renderToStaticMarkup(
+    React.createElement(PriorInventory, {
+      items,
+      selected: null,
+      loadingId: null,
+      disabled: false,
+      onSelect: () => {},
+      onClear: () => {},
+      cursor: null,
+    }),
+  );
+  assert.equal((html.match(/<option /g) ?? []).length, 8);
+  assert.match(html, /Speech arrest \/ articulation · structural network mask/);
+  assert.match(html, /Not used in route scoring/);
+  assert.match(html, /Patient language dominance: unknown/);
+  assert.doesNotMatch(html, />Accept|>Approve/);
+});
+
+test("a partly covered interpolation footprint is unknown rather than a covered zero", () => {
+  const layer = priorView();
+  layer.shape = [2, 1, 1];
+  layer.values = new Float32Array([0, 0]);
+  layer.coverage = new Uint8Array([1, 0]);
+  const html = renderToStaticMarkup(
+    React.createElement(PriorCursorReadout, { layer, cursor: [0.25, 0, 0] }),
+  );
+  assert.match(html, /Incomplete atlas sampling support — unknown/);
+  assert.doesNotMatch(html, /0.0000|prior-cursor-value/);
+});
+
+test("tiny positive concordance cannot be displayed as a covered zero", () => {
+  const html = renderToStaticMarkup(
+    React.createElement(PriorCursorReadout, {
+      layer: priorView("functional_concordance", 1, 0.00001),
+      cursor: [0, 0, 0],
+    }),
+  );
+  assert.match(html, /1.00e-5/);
+  assert.doesNotMatch(html, /0.0000|No signal in this released map/);
 });

@@ -2224,3 +2224,130 @@ h3 {
   line-height: 1.5;
   color: #a99bb9;
 }
+
+.prior-population-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 7px;
+  border-radius: 5px;
+  border: 1px solid #58617c;
+  background: #293143;
+  color: #c2cee9;
+  font-size: 10px;
+  line-height: 1.3;
+}
+.prior-review-note {
+  font-size: 11px;
+  line-height: 1.5;
+  color: #afb9ce;
+}
+.prior-inventory .select-wrap {
+  margin: 7px 0 12px;
+}
+.prior-inventory select {
+  white-space: normal;
+  font-size: 11px;
+}
+.prior-value-legend {
+  padding: 10px 0;
+  font-size: 10px;
+  line-height: 1.5;
+}
+.prior-value-legend strong {
+  font-size: 11px;
+  color: #cbd4e4;
+}
+.prior-value-legend p {
+  color: #9daabc;
+  margin: 6px 0;
+}
+.prior-concordance-scale {
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #415577, #749daf, #e1bc82);
+  margin-top: 10px;
+}
+.prior-scale-ticks {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  color: #95a5b8;
+  margin-top: 4px;
+}
+.prior-cursor-readout {
+  border: 1px solid #3b465a;
+  background: #1c2532;
+  border-radius: 7px;
+  padding: 11px;
+  margin-bottom: 9px;
+}
+.prior-cursor-readout .eyebrow {
+  display: block;
+  font-size: 8px;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  margin-bottom: 7px;
+}
+.prior-cursor-readout strong {
+  font-size: 11px;
+  line-height: 1.5;
+  display: block;
+  color: #cfdaeb;
+}
+.prior-cursor-value {
+  display: flex;
+  justify-content: space-between;
+  gap: 7px;
+  padding: 9px 0;
+  color: #b9c9dc;
+  font-size: 10px;
+}
+.prior-cursor-value b {
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+}
+.prior-cursor-readout p {
+  color: #a1b1c5;
+  font-size: 10px;
+  line-height: 1.5;
+  margin: 5px 0 0;
+}
+.prior-use-note {
+  display: grid;
+  gap: 5px;
+  margin-top: 12px;
+  font-size: 10px;
+  line-height: 1.4;
+  color: #9baabf;
+}
+.prior-use-note strong {
+  color: #b8c5d9;
+  font-weight: 500;
+}
+.prior-view-notice {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 16px;
+  border-block: 1px solid #49566e;
+  background: #202b3a;
+  flex: none;
+}
+.prior-view-notice > div {
+  flex: 1;
+  display: grid;
+  gap: 3px;
+}
+.prior-view-notice strong {
+  font-size: 11px;
+  color: #d0dcec;
+}
+.prior-view-notice > div span {
+  font-size: 10px;
+  color: #9fb1c9;
+}
+.prior-view-notice .text-button {
+  font-size: 10px;
+  color: #c4d2e7;
+}

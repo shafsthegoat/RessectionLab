@@ -48,6 +48,74 @@ export interface StructuralProposalView {
   estimatedVoxelCount: number;
 }
 
+export type PriorComponent =
+  | "motor"
+  | "phonology"
+  | "semantics"
+  | "speech_articulation";
+export type PriorMapKind = "functional_concordance" | "structural_mask";
+export interface PriorProposal {
+  proposalId: string;
+  mapId: string;
+  component: PriorComponent;
+  mapKind: PriorMapKind;
+  title: string;
+  provenance: "prior";
+  reviewStatus: "alignment_review_required";
+  viewOnly: true;
+  planningEligible: false;
+  patientSpecificFunction: false;
+  clinicalDeficitProbability: null;
+  clinicalRiskReason: string;
+  frame: "RAS+";
+  spatialUnits: "mm";
+  valueUnits: "unitless";
+  affine: Mat4;
+  shape: Vec3;
+  data: ArrayDescriptor;
+  samplingCoverage: ArrayDescriptor;
+  samplingCoverageFraction: number;
+  coverageMeaning: "atlas field of view, not patient functional coverage";
+  interpolation: "linear" | "nearest_neighbor";
+  evidenceHash: string;
+  registrationHash: string;
+  sourceImageHash: string;
+  sourceFrameHash: string;
+  sourcePlanningHash: string;
+  registrationCaseHash: string;
+  source: {
+    source_id: string;
+    uri: string;
+    sha256: string;
+    license?: string;
+    native_frame: string;
+    provenance: "prior";
+  };
+  metadata: Record<string, unknown>;
+  provenanceRecord: Record<string, unknown>;
+}
+export interface PriorLayerView {
+  caseHash: string;
+  proposalId: string;
+  mapId: string;
+  title: string;
+  component: PriorComponent;
+  mapKind: PriorMapKind;
+  values: Float32Array;
+  coverage: Uint8Array;
+  shape: Vec3;
+  affine: Mat4;
+  frame: "RAS+";
+  scope: "view-only-population-prior";
+  provenance: "prior";
+  reviewStatus: "alignment_review_required";
+  planningEligible: false;
+  patientSpecificFunction: false;
+  valueUnits: "unitless";
+  spatialUnits: "mm";
+  proposal: PriorProposal;
+}
+
 export interface CasePayload {
   caseId: string;
   caseHash: string;
@@ -65,6 +133,7 @@ export interface CasePayload {
     reason?: string;
   };
   structuralEvidence?: StructuralEvidence[];
+  priorProposals?: PriorProposal[];
   compartments: {
     name: string;
     volumeMm3: number;

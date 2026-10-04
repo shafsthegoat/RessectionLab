@@ -1,0 +1,471 @@
+{
+  "caseId": "UCSF-PDGM-0004",
+  "sourceArraysUnchanged": true,
+  "sourceChecksumsVerified": true,
+  "cursorSampler": "shared renderer reference; linear with complete contributing coverage / nearest binary",
+  "scope": "Local Node hydration and shared cursor sampling; not GPU or native application validation",
+  "results": [
+    {
+      "mapId": "motor_functional_concordance",
+      "title": "Motor · functional network",
+      "scope": "view-only-population-prior",
+      "reviewStatus": "alignment_review_required",
+      "caseHash": "sha256:2dd4c1ccc72a3ee6f821cf8f23a8c32996ec74fe1d616411863d5197bf3d2547",
+      "registrationCaseHash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "coverageFraction": 0.4924369399641577,
+      "valuesBytes": 35712000,
+      "coverageBytes": 8928000,
+      "assetReads": 2,
+      "examples": {
+        "outsideFov": {
+          "world": [
+            0,
+            239,
+            0
+          ],
+          "sample": {
+            "covered": false,
+            "value": null,
+            "reason": "outside-atlas-coverage",
+            "voxel": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "coveredZero": {
+          "world": [
+            -32,
+            24,
+            18
+          ],
+          "sample": {
+            "covered": true,
+            "value": 0,
+            "reason": null,
+            "voxel": [
+              32,
+              215,
+              18
+            ]
+          }
+        },
+        "coveredNonzero": {
+          "world": [
+            -54,
+            106,
+            77
+          ],
+          "sample": {
+            "covered": true,
+            "value": 0.00014824711252003908,
+            "reason": null,
+            "voxel": [
+              54,
+              133,
+              77
+            ]
+          }
+        }
+      },
+      "elapsedMs": 221.63458299999996
+    },
+    {
+      "mapId": "phonology_functional_concordance",
+      "title": "Phonology · functional network",
+      "scope": "view-only-population-prior",
+      "reviewStatus": "alignment_review_required",
+      "caseHash": "sha256:2dd4c1ccc72a3ee6f821cf8f23a8c32996ec74fe1d616411863d5197bf3d2547",
+      "registrationCaseHash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "coverageFraction": 0.4924369399641577,
+      "valuesBytes": 35712000,
+      "coverageBytes": 8928000,
+      "assetReads": 2,
+      "examples": {
+        "outsideFov": {
+          "world": [
+            0,
+            239,
+            0
+          ],
+          "sample": {
+            "covered": false,
+            "value": null,
+            "reason": "outside-atlas-coverage",
+            "voxel": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "coveredZero": {
+          "world": [
+            -32,
+            24,
+            18
+          ],
+          "sample": {
+            "covered": true,
+            "value": 0,
+            "reason": null,
+            "voxel": [
+              32,
+              215,
+              18
+            ]
+          }
+        },
+        "coveredNonzero": {
+          "world": [
+            -54,
+            106,
+            77
+          ],
+          "sample": {
+            "covered": true,
+            "value": 0.001675472129136324,
+            "reason": null,
+            "voxel": [
+              54,
+              133,
+              77
+            ]
+          }
+        }
+      },
+      "elapsedMs": 177.48974999999996
+    },
+    {
+      "mapId": "phonology_structural_mask",
+      "title": "Phonology · structural network mask",
+      "scope": "view-only-population-prior",
+      "reviewStatus": "alignment_review_required",
+      "caseHash": "sha256:2dd4c1ccc72a3ee6f821cf8f23a8c32996ec74fe1d616411863d5197bf3d2547",
+      "registrationCaseHash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "coverageFraction": 0.497322020609319,
+      "valuesBytes": 35712000,
+      "coverageBytes": 8928000,
+      "assetReads": 2,
+      "examples": {
+        "outsideFov": {
+          "world": [
+            0,
+            239,
+            0
+          ],
+          "sample": {
+            "covered": false,
+            "value": null,
+            "reason": "outside-atlas-coverage",
+            "voxel": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "coveredZero": {
+          "world": [
+            -32,
+            24,
+            18
+          ],
+          "sample": {
+            "covered": true,
+            "value": 0,
+            "reason": null,
+            "voxel": [
+              32,
+              215,
+              18
+            ]
+          }
+        },
+        "coveredNonzero": {
+          "world": [
+            -64,
+            92,
+            79
+          ],
+          "sample": {
+            "covered": true,
+            "value": 1,
+            "reason": null,
+            "voxel": [
+              64,
+              147,
+              79
+            ]
+          }
+        }
+      },
+      "elapsedMs": 211.78266599999995
+    },
+    {
+      "mapId": "semantics_functional_concordance",
+      "title": "Semantics · functional network",
+      "scope": "view-only-population-prior",
+      "reviewStatus": "alignment_review_required",
+      "caseHash": "sha256:2dd4c1ccc72a3ee6f821cf8f23a8c32996ec74fe1d616411863d5197bf3d2547",
+      "registrationCaseHash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "coverageFraction": 0.4924369399641577,
+      "valuesBytes": 35712000,
+      "coverageBytes": 8928000,
+      "assetReads": 2,
+      "examples": {
+        "outsideFov": {
+          "world": [
+            0,
+            239,
+            0
+          ],
+          "sample": {
+            "covered": false,
+            "value": null,
+            "reason": "outside-atlas-coverage",
+            "voxel": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "coveredZero": {
+          "world": [
+            -32,
+            24,
+            18
+          ],
+          "sample": {
+            "covered": true,
+            "value": 0,
+            "reason": null,
+            "voxel": [
+              32,
+              215,
+              18
+            ]
+          }
+        },
+        "coveredNonzero": {
+          "world": [
+            -54,
+            106,
+            77
+          ],
+          "sample": {
+            "covered": true,
+            "value": 0.0013888566754758358,
+            "reason": null,
+            "voxel": [
+              54,
+              133,
+              77
+            ]
+          }
+        }
+      },
+      "elapsedMs": 187.12508300000013
+    },
+    {
+      "mapId": "semantics_structural_mask",
+      "title": "Semantics · structural network mask",
+      "scope": "view-only-population-prior",
+      "reviewStatus": "alignment_review_required",
+      "caseHash": "sha256:2dd4c1ccc72a3ee6f821cf8f23a8c32996ec74fe1d616411863d5197bf3d2547",
+      "registrationCaseHash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "coverageFraction": 0.497322020609319,
+      "valuesBytes": 35712000,
+      "coverageBytes": 8928000,
+      "assetReads": 2,
+      "examples": {
+        "outsideFov": {
+          "world": [
+            0,
+            239,
+            0
+          ],
+          "sample": {
+            "covered": false,
+            "value": null,
+            "reason": "outside-atlas-coverage",
+            "voxel": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "coveredZero": {
+          "world": [
+            -32,
+            24,
+            18
+          ],
+          "sample": {
+            "covered": true,
+            "value": 0,
+            "reason": null,
+            "voxel": [
+              32,
+              215,
+              18
+            ]
+          }
+        },
+        "coveredNonzero": {
+          "world": [
+            -110,
+            140,
+            106
+          ],
+          "sample": {
+            "covered": true,
+            "value": 1,
+            "reason": null,
+            "voxel": [
+              110,
+              99,
+              106
+            ]
+          }
+        }
+      },
+      "elapsedMs": 205.682542
+    },
+    {
+      "mapId": "speech_articulation_functional_concordance",
+      "title": "Speech arrest / articulation · functional network",
+      "scope": "view-only-population-prior",
+      "reviewStatus": "alignment_review_required",
+      "caseHash": "sha256:2dd4c1ccc72a3ee6f821cf8f23a8c32996ec74fe1d616411863d5197bf3d2547",
+      "registrationCaseHash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "coverageFraction": 0.4924369399641577,
+      "valuesBytes": 35712000,
+      "coverageBytes": 8928000,
+      "assetReads": 2,
+      "examples": {
+        "outsideFov": {
+          "world": [
+            0,
+            239,
+            0
+          ],
+          "sample": {
+            "covered": false,
+            "value": null,
+            "reason": "outside-atlas-coverage",
+            "voxel": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "coveredZero": {
+          "world": [
+            -32,
+            24,
+            18
+          ],
+          "sample": {
+            "covered": true,
+            "value": 0,
+            "reason": null,
+            "voxel": [
+              32,
+              215,
+              18
+            ]
+          }
+        },
+        "coveredNonzero": {
+          "world": [
+            -54,
+            106,
+            77
+          ],
+          "sample": {
+            "covered": true,
+            "value": 0.0008880002424120903,
+            "reason": null,
+            "voxel": [
+              54,
+              133,
+              77
+            ]
+          }
+        }
+      },
+      "elapsedMs": 171.63987500000007
+    },
+    {
+      "mapId": "speech_articulation_structural_mask",
+      "title": "Speech arrest / articulation · structural network mask",
+      "scope": "view-only-population-prior",
+      "reviewStatus": "alignment_review_required",
+      "caseHash": "sha256:2dd4c1ccc72a3ee6f821cf8f23a8c32996ec74fe1d616411863d5197bf3d2547",
+      "registrationCaseHash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "coverageFraction": 0.497322020609319,
+      "valuesBytes": 35712000,
+      "coverageBytes": 8928000,
+      "assetReads": 2,
+      "examples": {
+        "outsideFov": {
+          "world": [
+            0,
+            239,
+            0
+          ],
+          "sample": {
+            "covered": false,
+            "value": null,
+            "reason": "outside-atlas-coverage",
+            "voxel": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "coveredZero": {
+          "world": [
+            -32,
+            24,
+            18
+          ],
+          "sample": {
+            "covered": true,
+            "value": 0,
+            "reason": null,
+            "voxel": [
+              32,
+              215,
+              18
+            ]
+          }
+        },
+        "coveredNonzero": {
+          "world": [
+            -84,
+            126,
+            116
+          ],
+          "sample": {
+            "covered": true,
+            "value": 1,
+            "reason": null,
+            "voxel": [
+              84,
+              113,
+              116
+            ]
+          }
+        }
+      },
+      "elapsedMs": 206.99733300000003
+    }
+  ]
+}

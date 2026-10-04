@@ -22,6 +22,13 @@ uniform int uReplayActive;
 uniform sampler3D uProposal;
 uniform int uProposalActive;
 uniform vec3 uProposalColor;
+uniform sampler3D uPrior;
+uniform sampler3D uPriorCoverage;
+uniform int uPriorActive;
+uniform int uPriorKind;
+uniform mat4 uWorldToPrior;
+uniform vec3 uPriorShape;
+uniform vec3 uPriorColors[3];
 uniform mat4 uWorldToVoxel;
 uniform vec3 uShape;
 uniform vec3 uLow;
@@ -69,6 +76,26 @@ bool proposalAt(vec3 voxel) {
   if(any(lessThan(index,ivec3(0)))||any(greaterThanEqual(index,ivec3(uShape)))) return false;
   return texelFetch(uProposal,index.zyx,0).r>0.0;
 }
+bool priorAt(vec3 world,out float result) {
+  vec3 voxel=(uWorldToPrior*vec4(world,1.0)).xyz;
+  result=0.0;
+  if(any(lessThan(voxel,vec3(-0.5)))||any(greaterThanEqual(voxel,uPriorShape-0.5)))return false;
+  voxel=clamp(voxel,vec3(0.0),uPriorShape-1.0);
+  if(uPriorKind==1) {
+    ivec3 index=ivec3(floor(voxel+0.5));
+    if(texelFetch(uPriorCoverage,index.zyx,0).r<=0.0)return false;
+    result=texelFetch(uPrior,index.zyx,0).r;return true;
+  }
+  ivec3 base=ivec3(floor(voxel));vec3 f=fract(voxel);
+  for(int x=0;x<=1;x++)for(int y=0;y<=1;y++)for(int z=0;z<=1;z++) {
+    float weight=(x==1?f.x:1.0-f.x)*(y==1?f.y:1.0-f.y)*(z==1?f.z:1.0-f.z);
+    if(weight<=0.0000001)continue;
+    ivec3 index=min(base+ivec3(x,y,z),ivec3(uPriorShape)-1);
+    if(texelFetch(uPriorCoverage,index.zyx,0).r<=0.0)return false;
+    result+=weight*texelFetch(uPrior,index.zyx,0).r;
+  }
+  return true;
+}
 void main() {
   vec3 world=vWorld;
   vec2 point=(vUv-uRect.xy)/uRect.zw;
@@ -88,6 +115,20 @@ void main() {
   if (uThreeD==1 && abs(signal)<0.000001) discard;
   float gray=clamp((signal-uWindow.x)/max(uWindow.y-uWindow.x,0.000001),0.0,1.0);
   vec3 color=vec3(gray);
+  if(uThreeD==0 && uPriorActive==1 && uReplayActive==0) {
+    float priorValue;
+    bool covered=priorAt(world,priorValue);
+    if(covered) {
+      if(uPriorKind==0 || priorValue>0.5) {
+        vec3 tint=priorValue<0.5?mix(uPriorColors[0],uPriorColors[1],priorValue*2.0):mix(uPriorColors[1],uPriorColors[2],priorValue*2.0-1.0);
+        color=mix(color,tint,min(uOverlay,0.65));
+      }
+    } else {
+      // Missing atlas support is a separate neutral hatch, never scalar zero.
+      bool hatch=mod(floor(gl_FragCoord.x)-floor(gl_FragCoord.y),13.0)<1.2;
+      if(hatch)color=mix(color,vec3(0.62,0.66,0.69),0.32);
+    }
+  }
   // Display-only estimate contour in the physical MPR plane. Neighbours are
   // one screen pixel apart in RAS, transformed into the unchanged source grid.
   // Tumor label colors are composited afterwards and retain their own identity.
