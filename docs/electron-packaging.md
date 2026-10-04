@@ -139,3 +139,33 @@ disabled. Structural import uses three native selections (source MRI, proposed
 mask, provenance report); cancelling any selection leaves the case untouched.
 Import stores evidence without certifying cortex or promoting the estimate into
 working anatomy. This source inspection is separate from packaged validation.
+
+The `artifacts/electron-refinement-v2/` receipts identify the subsequent arm64
+build with Python source `377284f6…` and the unique Electron bundle identifier
+`org.ressectionlab.electron`. The historical Qt app retains its earlier identity;
+the Electron application keeps its existing local research-run directory.
+The numerical snapshot built in 80.20 seconds; the first updated shell built in
+10.91 seconds. All 41 bundled symlinks were internal and valid, and local deep
+strict signature verification passed.
+
+In the actual native interface, the original generic route was blocked before
+learning. An explicitly generated native-axis alternative, with its own tool
+and 6 mm hypothetical access window, exposed one legal initial cutting action.
+A seed-11 run reached 32 updates and independently accepted one fixed stroke:
+174 mm³ modeled target removal, 11 mm³ modeled normal removal, and 41,745 mm³
+residual target. This is a STOP-versus-declared-stroke optimization with fixed
+entry, target, window and instrument. It does not establish a free-form learned
+trajectory, a clinical outcome probability, or superiority over search.
+
+Native export and source restoration passed. A second native run was cancelled
+after four visible updates and retained its checkpoint; all 56 route alternatives
+and the selected comparison were saved through the native dialog. The initial
+replay-slider accessibility test exposed a label/certified-replay mismatch.
+`native-workflow-before-slider-fix.json` deliberately preserves that partial
+result; later UI validation must identify the rebuilt renderer separately.
+
+All three development verifiers accept `--report-dir <directory>` so subsequent
+build receipts can coexist. The v2 packaged engine checks passed: real MRI/search
+and persistence in 6.72 seconds, synthetic training/replay in 8.59 seconds, and
+signed cancellation/restart/resume in 13.79 seconds. Their machine-local timings
+are verification measurements rather than standardized performance benchmarks.

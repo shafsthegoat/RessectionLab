@@ -68,5 +68,24 @@
   "native_export_sha256": "22c00c64f877d3407399ea8e9dbfc765e39388fef6a074edfd5de1ef6511fea0",
   "known_ui_issue": "AX slider decrease updates requested step label before certified replay; source fix pending",
   "clinical_deficit_probability": null,
-  "final_evaluation": false
+  "final_evaluation": false,
+  "saved_workspace": {
+    "path": "outputs/cases/electron-native-v2-workspace.ressectionlab",
+    "candidate_count": 56,
+    "selected_route_ids": [
+      "native-axis-e14f440173a8b13f",
+      "search-7c5a737c2a8f76ed"
+    ],
+    "case_semantic_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "sha256": "2bce0048a3b1e2a6eeb7014c2583d37ff12a7a183b161080586dca2de4ea21ad"
+  },
+  "cancelled_checkpoint": {
+    "checkpointSha256": "3eb65dfadcc36b9461d0a1bde39c7c0437b421c000165935e94f1617acec7fb3",
+    "contractSha256": "90c57fc6ef846c56c72dec5b9505fa399d1abad9048c7e76481803077cbadea6",
+    "nativeRequestSha256": "6a770edea3d1db0933ace826e6cde78fd3faa496154f90dfc152136518cc04dc",
+    "integrity": "acea864a34bff98cf05bc129dd04f6dcf57b85cbaa388572bfab373e5a83350e",
+    "status": "cancelled",
+    "gradient_steps": 6,
+    "actor_parameters_changed": true
+  }
 }
