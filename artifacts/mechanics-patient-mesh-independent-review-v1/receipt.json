@@ -1,0 +1,71 @@
+{
+  "anatomical_registration_accepted": false,
+  "clinical_validation": false,
+  "completed_at": "2026-10-04T21:40:25.860900+00:00",
+  "findings": [
+    {
+      "finding": "Already-computed quality/fidelity metrics were absent on rejection",
+      "owner_repair": "Persist each completed diagnostic before its gate; source nowd8aae815; owner before-fix failure retained",
+      "status": "resolved"
+    },
+    {
+      "finding": "Reviewer expected120 triangle samples but geometricceil yields105",
+      "scope": "reviewer assertion only",
+      "status": "corrected; original failure retained"
+    }
+  ],
+  "focused_checks": {
+    "count": 37,
+    "elapsed_seconds": 0.37,
+    "log": "focused-tests.txt",
+    "status": "passed"
+  },
+  "independent_test_sha256": "2bb5f8d7dca5f9f2c0ff7df21fba0b887e892cb9653b4cd9028d12611b2de3c7",
+  "limitations": [
+    "No patient meshing or fidelity evidence; coarse targets may fail size, topology, surface/volume fidelity, resource or operator gates.",
+    "Native cube passes both distance bounds but fails volume fidelity; no retry or parameter rescue was run.",
+    "Mask remains an estimated computational domain with known inferior/cerebellar exclusions, not a whole-brain/pial surface.",
+    "Triangle covering uses finite-precision nearest-triangle distances; it is not interval arithmetic.",
+    "RSS is sampled and numeric thread limits do not establish exact CPU affinity.",
+    "Ordinary quadratic geometry is checked at19sites plus midpoint constraints; no patient mechanics solve or convergence result exists.",
+    "Package version checks and exact Gmsh module/library pins are not full dependency binary attestation."
+  ],
+  "manifest_sha256": "b6b3fd278df85fb0ea89c72dcff37cc5f229644602f5288c81e8ce6e7653173c",
+  "native_control": {
+    "API_execution_is_not_fidelity_success": true,
+    "actual_library_calls_completed": true,
+    "attempts": 1,
+    "declared_maximum_relative_volume_error": 0.03,
+    "geometry_quality_and_overlap_checks_passed": true,
+    "mesh_to_source_full_cover_bound_mm": 1.5770613152748014,
+    "overall_fidelity_status": "failed_fixed_volume_gate",
+    "probe_sha256": "dff786bfe073782e260a7374cbe9265c54e55c45317dc3fbbff1613a66e7970c",
+    "raw_output_directory": "outputs/validation/mechanics-patient-mesh-native-cube-v1",
+    "relative_volume_error": 0.08499022677808099,
+    "retries": 0,
+    "sampled_group_peak_rss_bytes": 157384704,
+    "settings_sha256": "00fcf508ef3810f2984fe23bc566666342cc8143d0ac9d2af2723b1a2e7ac06f",
+    "source_to_mesh_full_cover_bound_mm": 1.5999678120644842,
+    "source_triangles": 584,
+    "source_unchanged": true,
+    "supervised_seconds": 1.536644082982093,
+    "tet10_elements": 249,
+    "tet10_nodes": 510
+  },
+  "owner_test_sha256": "8846b274d617cb8a615e5a8a4f28196f84f00b2c948d765213cf69f46ccb1f4c",
+  "patient_execution_authorized_by_this_review": false,
+  "patient_image_or_landmark_or_mask_reads": 0,
+  "reviewed_source_sha256": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+  "schema": "mechanics-patient-mesh-independent-review-v1",
+  "solver_calls": 0,
+  "status": "source_review_cleared_with_retained_native_fixture_fidelity_failure",
+  "training_updates": 0,
+  "validated_scope": [
+    "whole triangle barycentric covering radius and analytic interior-distance counterexample",
+    "edge and vertex manifold checks plus positive-volume tet overlap and touching contact tolerance",
+    "native affine transform, genuine tet10 local ordering, shared midside identity and reference Jacobian witnesses",
+    "source archive/file closure and root release prerequisite flags reject changed source, receipt, commit, clinical claims or attempt path",
+    "fresh top-level attempt and stop-first-failure retain original/remaining statuses",
+    "actual library paths on one small analytic cube, with geometry fidelity failure retained"
+  ]
+}

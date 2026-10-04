@@ -1,0 +1,7 @@
+{
+  "scope": "reviewer test setup, no patient/native API execution",
+  "status": "one failed, eleven passed in 0.32s",
+  "test": "test_full_triangle_cover_catches_an_interior_miss_despite_zero_vertex_distances",
+  "failure": "Assertion expected120 samples, actual105. Reviewer arithmetic error: ceil(sqrt(2)*9)=13, so lattice count is14*15/2=105.",
+  "repair": "Corrected reviewer assertion to105; no production change."
+}

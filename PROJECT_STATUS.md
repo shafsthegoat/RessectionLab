@@ -355,6 +355,15 @@ cortical access, later motion data and actual meshing remain separate gates.
 No mask enlargement or landmark-guided correction is permitted. See
 `artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/`.
 
+The fixed estimated-domain mesh utility passed 37 analytical/mocked checks.
+One actual library control on a small cube completed in 1.537 s with 157.4 MB
+sampled memory, but lost 8.499% volume against the fixed 3% limit. Both surface
+distance bounds passed; this confirms that distance alone misses an important
+fidelity error. The failure and raw output remain preserved. The patient mask,
+24/20/16 mm target sizes and all rejection limits stay unchanged; no patient
+mesh or equilibrium solve has run. See `docs/mechanics-patient-mesh.md` and
+`artifacts/mechanics-patient-mesh-independent-review-v1/`.
+
 The first baseline alignment worker produced all six declared views and the
 15-pair proper rigid fit, but its supervisor failed with `RSS_MONITOR_FAILED`
 after 2.536 s. The cause is unconfirmed because the failed monitoring query's
