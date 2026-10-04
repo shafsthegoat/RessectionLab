@@ -1,0 +1,281 @@
+{
+  "created_at": "2026-10-04T10:55:47.258706+00:00",
+  "python_version": "3.12.14",
+  "default_pin_count": 51,
+  "legacy_pin_count": 5,
+  "pinned_versions_match_installed": true,
+  "versions": {
+    "altgraph": "0.17.5",
+    "annotated-doc": "0.0.5",
+    "cachebox": "5.2.3",
+    "contourpy": "1.4.0",
+    "cycler": "0.12.1",
+    "deepdiff": "9.1.0",
+    "dipy": "1.12.1",
+    "filelock": "4.0.10",
+    "fonttools": "4.66.1",
+    "fsspec": "2026.9.0",
+    "h5py": "3.16.0",
+    "ImageIO": "2.38.0",
+    "iniconfig": "2.3.0",
+    "Jinja2": "3.1.6",
+    "kiwisolver": "1.5.1",
+    "lazy-loader": "0.6",
+    "macholib": "1.16.4",
+    "markdown-it-py": "4.2.0",
+    "MarkupSafe": "3.0.4",
+    "matplotlib": "3.11.2",
+    "mdurl": "0.1.2",
+    "mpmath": "1.3.0",
+    "networkx": "3.7",
+    "nibabel": "5.4.2",
+    "numpy": "2.5.3",
+    "orderly-set": "5.5.0",
+    "packaging": "26.3",
+    "pillow": "12.3.0",
+    "pluggy": "1.6.0",
+    "Pygments": "2.21.0",
+    "pyinstaller": "6.22.3",
+    "pyinstaller-hooks-contrib": "2026.8",
+    "pyparsing": "3.3.3",
+    "pytest": "9.1.1",
+    "python-dateutil": "2.9.0.post0",
+    "rich": "15.0.0",
+    "scikit-image": "0.26.0",
+    "scipy": "1.18.1",
+    "setuptools": "84.0.0",
+    "shellingham": "1.5.4",
+    "simpleitk": "2.5.6",
+    "six": "1.17.0",
+    "surfa": "0.6.3",
+    "sympy": "1.14.0",
+    "tifffile": "2026.9.20",
+    "torch": "2.14.1",
+    "tqdm": "4.70.1",
+    "trx-python": "0.6",
+    "typer": "0.27.2",
+    "typing_extensions": "4.16.0",
+    "xxhash": "4.0.1",
+    "PySide6": "6.11.2",
+    "PySide6_Addons": "6.11.2",
+    "PySide6_Essentials": "6.11.2",
+    "shiboken6": "6.11.2",
+    "vtk": "9.7.1"
+  },
+  "file_hashes": {
+    "requirements-lock.txt": "836f3d9ada81d5a710e6690f9657ff73e5fa0f12f051d9aa4834e12332d55e5a",
+    "requirements-legacy-qt-lock.txt": "25198c1b8e9901156831b43ec53abedd0078df38272a0ad4d6ba8195502e0d46",
+    "pyproject.toml": "7b2ea11f08bcba66915eac703244a2e07c4de38c2c364aadf26830f6c35bb053",
+    "tests/test_app_workers.py": "2c962b497ef617899400ab114b8b4647fa97bd89fd5f8e8e3eb0140110c02795"
+  },
+  "static_legacy_imports": [
+    {
+      "file": "src/resectionlab/app/desktop.py",
+      "line": 19,
+      "module": "PySide6.QtCore"
+    },
+    {
+      "file": "src/resectionlab/app/desktop.py",
+      "line": 20,
+      "module": "PySide6.QtGui"
+    },
+    {
+      "file": "src/resectionlab/app/desktop.py",
+      "line": 21,
+      "module": "PySide6.QtWidgets"
+    },
+    {
+      "file": "src/resectionlab/app/scene.py",
+      "line": 4,
+      "module": "vtkmodules.util.numpy_support"
+    },
+    {
+      "file": "src/resectionlab/app/scene.py",
+      "line": 5,
+      "module": "vtkmodules.vtkCommonCore"
+    },
+    {
+      "file": "src/resectionlab/app/scene.py",
+      "line": 6,
+      "module": "vtkmodules.vtkCommonDataModel"
+    },
+    {
+      "file": "src/resectionlab/app/scene.py",
+      "line": 7,
+      "module": "vtkmodules.vtkCommonMath"
+    },
+    {
+      "file": "src/resectionlab/app/scene.py",
+      "line": 8,
+      "module": "vtkmodules.vtkFiltersCore"
+    },
+    {
+      "file": "src/resectionlab/app/scene.py",
+      "line": 9,
+      "module": "vtkmodules.vtkFiltersSources"
+    },
+    {
+      "file": "src/resectionlab/app/scene.py",
+      "line": 10,
+      "module": "vtkmodules.vtkRenderingCore"
+    },
+    {
+      "file": "src/resectionlab/app/scene.py",
+      "line": 11,
+      "module": "vtkmodules.vtkRenderingAnnotation"
+    },
+    {
+      "file": "src/resectionlab/app/scene.py",
+      "line": 12,
+      "module": "vtkmodules.vtkInteractionWidgets"
+    },
+    {
+      "file": "src/resectionlab/app/scene.py",
+      "line": 13,
+      "module": "vtkmodules.vtkRenderingOpenGL2"
+    },
+    {
+      "file": "src/resectionlab/app/scene.py",
+      "line": 14,
+      "module": "vtkmodules.vtkInteractionStyle"
+    },
+    {
+      "file": "src/resectionlab/app/scene.py",
+      "line": 15,
+      "module": "vtkmodules.qt.QVTKRenderWindowInteractor"
+    },
+    {
+      "file": "src/resectionlab/app/slice_view.py",
+      "line": 4,
+      "module": "PySide6.QtCore"
+    },
+    {
+      "file": "src/resectionlab/app/slice_view.py",
+      "line": 5,
+      "module": "PySide6.QtGui"
+    },
+    {
+      "file": "src/resectionlab/app/slice_view.py",
+      "line": 6,
+      "module": "PySide6.QtWidgets"
+    },
+    {
+      "file": "src/resectionlab/app/training_view.py",
+      "line": 3,
+      "module": "PySide6.QtCore"
+    },
+    {
+      "file": "src/resectionlab/app/training_view.py",
+      "line": 4,
+      "module": "PySide6.QtGui"
+    },
+    {
+      "file": "src/resectionlab/app/training_view.py",
+      "line": 5,
+      "module": "PySide6.QtWidgets"
+    },
+    {
+      "file": "src/resectionlab/app/workers.py",
+      "line": 6,
+      "module": "PySide6.QtCore"
+    },
+    {
+      "file": "scripts/build_macos.py",
+      "line": 108,
+      "module": "PySide6.QtCore"
+    },
+    {
+      "file": "scripts/build_macos.py",
+      "line": 109,
+      "module": "PySide6.QtGui"
+    },
+    {
+      "file": "scripts/build_macos.py",
+      "line": 110,
+      "module": "PySide6.QtSvg"
+    },
+    {
+      "file": "packaging/macos_entry.py",
+      "line": 46,
+      "module": "PySide6"
+    },
+    {
+      "file": "packaging/macos_entry.py",
+      "line": 47,
+      "module": "vtkmodules.vtkCommonCore"
+    },
+    {
+      "file": "packaging/macos_entry.py",
+      "line": 48,
+      "module": "vtkmodules.vtkRenderingCore"
+    },
+    {
+      "file": "packaging/macos_entry.py",
+      "line": 49,
+      "module": "vtkmodules.vtkRenderingOpenGL2"
+    }
+  ],
+  "nonlegacy_installed_metadata_requiring_legacy_gui": [
+    {
+      "distribution": "resectionlab",
+      "version": "0.1.0",
+      "requirement": "PySide6<7,>=6.8"
+    },
+    {
+      "distribution": "resectionlab",
+      "version": "0.1.0",
+      "requirement": "vtk<10,>=9.4"
+    }
+  ],
+  "stale_editable_metadata_note": "Installed resectionlab metadata predates optional Qt split; current pyproject declares Qt/VTK only under legacy-qt. Environment was not regenerated.",
+  "commands": {
+    "import_all_numerical_modules": {
+      "returncode": 0,
+      "last_output_lines": [
+        "{\"imported_modules\": [\"resectionlab\", \"resectionlab.anatomy\", \"resectionlab.app\", \"resectionlab.app.annotation\", \"resectionlab.app.refinement\", \"resectionlab.app.reslice\", \"resectionlab.app.style\", \"resectionlab.brain_extraction\", \"resectionlab.cohort\", \"resectionlab.core\", \"resectionlab.desktop_bridge\", \"resectionlab.diffusion\", \"resectionlab.evaluation\", \"resectionlab.geometry\", \"resectionlab.imaging\", \"resectionlab.learning\", \"resectionlab.learning_ppo\", \"resectionlab.native_refinement\", \"resectionlab.native_resection\", \"resectionlab.native_routes\", \"resectionlab.native_simulation\", \"resectionlab.planning\", \"resectionlab.policy_inputs\", \"resectionlab.population_learning\", \"resectionlab.preprocessing\", \"resectionlab.prior_proposals\", \"resectionlab.prior_registration\", \"resectionlab.procedural_learning\", \"resectionlab.route_native_diagnostics\", \"resectionlab.selection_contract\", \"resectionlab.simulation\", \"resectionlab.structural_evidence\", \"resectionlab.worlds\"], \"legacy_gui_loaded\": false}"
+      ]
+    },
+    "default_collection": {
+      "returncode": 0,
+      "last_output_lines": [
+        "tests/test_worlds_evaluation.py::test_incremental_free_space_exactly_matches_full_flood_when_a_sealed_cavity_opens[4096]",
+        "tests/test_worlds_evaluation.py::test_incremental_free_space_preserves_unopened_cavities_and_handles_boundary_cuts",
+        "tests/test_worlds_evaluation.py::test_incremental_free_space_matches_full_flood_across_random_grids_and_multiple_entries",
+        "",
+        "780 tests collected in 1.44s"
+      ]
+    },
+    "focused_engine_tests": {
+      "returncode": 0,
+      "last_output_lines": [
+        ".............                                                            [100%]",
+        "13 passed, 1 skipped in 1.11s"
+      ]
+    },
+    "installed_legacy_worker_tests": {
+      "returncode": 0,
+      "last_output_lines": [
+        "...                                                                      [100%]",
+        "3 passed in 0.09s"
+      ]
+    }
+  },
+  "clean_environment_install_performed": false,
+  "environment_mutations": false,
+  "new_packages_or_upgrades": false,
+  "scope": "Source/dependency metadata plus subprocess import blockers; no clean environment or rebuilt package claim.",
+  "probe_sha256": "2cc26ffd505ca34a22d4c91471942a6fa4db7d881c303032e481ac990e5a6e33",
+  "packaging_builder_sha256": "0173d5bb952da3b4b59b65232e43e3640d543cf457fbeb03d1f9fd4e46580507",
+  "packaging_exclusions": [
+    "PySide6",
+    "PyQt6",
+    "vtk",
+    "vtkmodules"
+  ],
+  "existing_frozen_engine_payload_scan": {
+    "root": "desktop/sidecar/ressectionlab-engine/_internal",
+    "entries_scanned": 3374,
+    "legacy_toolkit_payload_matches": [],
+    "scope": "Existing frozen engine only; not a rebuild of the separated lock; retained legacy source is not runtime toolkit binaries."
+  }
+}

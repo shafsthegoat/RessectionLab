@@ -33,11 +33,24 @@ python3.12 -m venv .venv
 .venv/bin/python -m pytest
 ```
 
-`requirements-lock.txt` records exact versions installed on the development
-machine. It is not evidence that every dependency combination or platform is
-validated. It includes historical Qt development dependencies, which are now a
-separate `legacy-qt` optional extra and are not required by the numerical engine.
-Mac application packaging is a separate acceptance gate for each interface.
+`requirements-lock.txt` pins the current numerical engine, research tools,
+tests and build tools without Qt or VTK. The active Electron app does not need
+either toolkit. Versions were retained from the installed development
+environment; a new clean-environment installation of this separated lock has not
+been performed. See [dependency validation](docs/dependency-lock-separation.md)
+for the import checks and their limits. Mac packaging remains a separate
+acceptance gate for each complete app snapshot.
+
+Only when reproducing the historical Qt prototype, additionally use:
+
+```sh
+.venv/bin/python -m pip install -r requirements-legacy-qt-lock.txt
+```
+
+That optional file includes the default lock plus the five pinned Qt/VTK
+packages. The older `scripts/build_macos.py` and `scripts/launch_app.sh` use
+that historical interface; the current Electron commands are below. Historical
+Qt worker tests skip when the optional toolkit is absent.
 
 For the current desktop interface, install Node and pnpm, then run:
 

@@ -1,5 +1,9 @@
 """A cancelled worker must not publish a result over the inspected case."""
 
+import pytest
+
+pytest.importorskip("PySide6.QtCore", reason="Historical Qt workers require the optional legacy Qt dependencies")
+
 from resectionlab.app.workers import BackgroundJob
 
 
