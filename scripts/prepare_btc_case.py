@@ -37,7 +37,8 @@ EXPECTED_FILES = frozenset({
     T1, T1.removesuffix(".nii.gz") + ".json",
     *(base + extension for base in (AP, PA) for extension in (".nii.gz", ".json", ".bval", ".bvec")),
 })
-REVIEWED_SUBJECTS = {"sub-PAT28": "diffusion", "sub-PAT05": "structural"}
+REVIEWED_SUBJECTS = {"sub-PAT28": "diffusion", "sub-PAT05": "structural",
+                     "sub-PAT16": "structural", "sub-PAT20": "structural"}
 
 
 def source_layout(subject: str) -> tuple[str, str, str, str, frozenset[str]]:
@@ -64,6 +65,15 @@ def _verify_sources(manifest_path: Path, data_root: Path) -> tuple[dict, dict[st
         raise ValueError("Pinned source manifest must retain the creator release's CC0 license")
     subject = manifest.get("subject")
     _, _, _, _, expected_files = source_layout(subject)
+    if subject in {"sub-PAT16", "sub-PAT20"}:
+        # Only acquisition manifests bound to the committed metadata-only
+        # queue may enable these two new cases. Pending image hashes fail.
+        from acquire_btc_case import AcquisitionError, validate_manifest
+
+        try:
+            validate_manifest(manifest, data_root)
+        except AcquisitionError as error:
+            raise ValueError(f"Queued BTC source contract failed: {error}") from error
     entries = manifest.get("files", [])
     names = [item["path"] for item in entries]
     if len(names) != len(set(names)) or set(names) != expected_files:
@@ -164,13 +174,15 @@ def prepare(
                                   "descriptor_doi": "10.1038/s41597-022-01806-4"},
             "source_distribution": "creator_release_pinned_OpenNeuro_git_and_annex_S3_versions",
             "selection_manifest_sha256": manifest.get("selection_manifest_sha256"),
+            **({"selection_queue_sha256": manifest["selection_queue_sha256"]}
+               if "selection_queue_sha256" in manifest else {}),
             "source_files": manifest["files"], "source_hashes_checked": len(paths),
             "source_frame_declaration": "Creator-supplied native T1 frame; stored voxel-to-world transform retained.",
             "selected_modality": "T1w", "missing_structural_modalities": ["T1ce", "T2", "FLAIR"],
             "structural_coverage": "full_head", "allow_nonzero_mri_access_support": False,
             "automatic_cortical_access_status": "blocked_without_reviewed_cerebral_mask",
             "brain_segmentation_status": "unassessed", "diffusion_input_audit": diffusion,
-            "split": {"role": "development_demo", "patient_group": f"BTC-{subject}", "visit": "preop",
+            "split": {"role": "development_demo", "patient_group": f"BTC:{subject}" if subject in {"sub-PAT16", "sub-PAT20"} else f"BTC-{subject}", "visit": "preop",
                       "external_holdout_eligible": False},
             "context_availability": withheld_context,
             "planning_cutoff_status": "historical_preoperative_cutoff_unknown" if planning_as_of is None else "declared_research_replay_cutoff",

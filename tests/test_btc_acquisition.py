@@ -198,3 +198,111 @@ def test_pat28_diffusion_cannot_be_silently_dropped(manifest, tmp_path):
     manifest["subject"] = "sub-PAT05"
     with pytest.raises(acquisition.AcquisitionError, match="7 reviewed"):
         acquisition.validate_manifest(manifest, tmp_path)
+
+
+@pytest.mark.parametrize("subject,total", [("sub-PAT16", 18_210_576), ("sub-PAT20", 17_546_223)])
+def test_queue_is_exact_structural_scope_with_uninvented_image_hashes(subject, total, tmp_path):
+    manifest = acquisition.queued_manifest(subject)
+    entries = acquisition.validate_manifest(manifest, tmp_path, allow_pending_annex=True)
+    assert len(entries) == 7 and sum(entry["bytes"] for entry in entries) == total
+    assert sum(entry["sha256"] is None for entry in entries) == 2
+    assert all("/dwi/" not in entry["path"] and "postop" not in entry["path"] for entry in entries)
+    assert manifest["role"] == "development" and manifest["outer_role_locked"] is True
+    assert manifest["eligible_for_outer_final"] is False
+    with pytest.raises(acquisition.AcquisitionError, match="pending annex"):
+        acquisition.validate_manifest(manifest, tmp_path)
+
+
+def test_queue_cannot_be_edited_after_freeze(tmp_path, monkeypatch):
+    changed = tmp_path / "queue.json"
+    changed.write_bytes(acquisition.QUEUE_MANIFEST.read_bytes() + b" ")
+    monkeypatch.setattr(acquisition, "QUEUE_MANIFEST", changed)
+    with pytest.raises(acquisition.AcquisitionError, match="frozen identity"):
+        acquisition.queued_manifest("sub-PAT16")
+
+
+@pytest.mark.parametrize("subject", ["sub-PAT05", "sub-PAT22", "sub-PAT28", "../../other"])
+def test_queue_never_generalizes_unselected_subjects(subject):
+    with pytest.raises(acquisition.AcquisitionError, match="outside the frozen"):
+        acquisition.queued_manifest(subject)
+
+
+@pytest.mark.parametrize("mutation", ["role", "queue_hash", "md5", "object_version", "metadata_sha", "diffusion"])
+def test_queued_manifest_cannot_rebind_selection_or_source(tmp_path, mutation):
+    manifest = acquisition.queued_manifest("sub-PAT16")
+    image = next(item for item in manifest["files"] if "expected_md5" in item)
+    if mutation == "role":
+        manifest["role"] = "final_evaluation"
+    elif mutation == "queue_hash":
+        manifest["selection_queue_sha256"] = "0" * 64
+    elif mutation == "md5":
+        image["expected_md5"] = "0" * 32
+    elif mutation == "object_version":
+        image["source_url"] += "-different"
+    elif mutation == "metadata_sha":
+        manifest["files"][0]["sha256"] = "0" * 64
+    else:
+        manifest["files"].append({"path": "sub-PAT16/ses-preop/dwi/unrequested.nii.gz"})
+    with pytest.raises(acquisition.AcquisitionError):
+        acquisition.validate_manifest(manifest, tmp_path, allow_pending_annex=True)
+
+
+def test_queue_selection_is_source_metadata_only_and_order_independent():
+    rows = ["sub-PAT28\tGlioma II", "sub-PAT20\tAnaplastic astrocytoma III",
+            "sub-PAT05\tOligo-astrocytoma II", "sub-PAT01\tMeningioma I",
+            "sub-PAT22\tOligodendroglioma II", "sub-PAT16\tAnaplastic astrocytoma II-III"]
+    for ordered in (rows, list(reversed(rows))):
+        metadata = "participant_id\ttumor type & grade\n" + "\n".join(ordered)
+        assert acquisition.selected_queued_subjects(metadata) == ["sub-PAT16", "sub-PAT20"]
+
+
+@pytest.mark.parametrize("subject,total", [("sub-PAT16", 18_210_576), ("sub-PAT20", 17_546_223)])
+def test_queued_dry_run_is_offline_and_nonmutating(subject, total, tmp_path, capsys, monkeypatch):
+    monkeypatch.setattr(acquisition, "acquire_file", lambda *a, **k: pytest.fail("Unexpected fetch"))
+    output = tmp_path / "unused"
+    assert acquisition.main(["--queued-subject", subject, "--dry-run", "--output-root", str(output)]) == 0
+    assert json.loads(capsys.readouterr().out)["bytes"] == total
+    assert not output.exists()
+
+
+def test_pending_annex_download_verifies_before_publish_and_reuses_existing(tmp_path, entry, content):
+    entry["sha256"] = None
+    headers = {"x-amz-version-id": "fixed", "Content-Length": str(len(content))}
+    assert acquisition.acquire_file(entry, tmp_path, opener=lambda *a, **k: Response(content, headers=headers)) == "downloaded_and_verified"
+    target = tmp_path / entry["path"]
+    assert hashlib.sha256(target.read_bytes()).hexdigest() == hashlib.sha256(content).hexdigest()
+    original_mtime = target.stat().st_mtime_ns
+    assert acquisition.acquire_file(entry, tmp_path, opener=lambda *a, **k: pytest.fail("Unexpected fetch")) == "already_verified"
+    assert target.stat().st_mtime_ns == original_mtime
+    assert entry["sha256"] is None  # The caller records the measured hash explicitly.
+
+
+@pytest.mark.parametrize("failure", ["checksum", "version", "length", "compressed"])
+def test_pending_annex_rejects_wrong_content_before_publication(tmp_path, entry, content, failure):
+    entry["sha256"] = None
+    body = b"x" * len(content) if failure == "checksum" else content
+    headers = {"x-amz-version-id": "other" if failure == "version" else "fixed",
+               "Content-Length": str(len(content) - (failure == "length"))}
+    if failure == "compressed":
+        headers["Content-Encoding"] = "gzip"
+    with pytest.raises(acquisition.AcquisitionError):
+        acquisition.acquire_file(entry, tmp_path, opener=lambda *a, **k: Response(body, headers=headers))
+    assert not (tmp_path / entry["path"]).exists()
+
+
+def test_pending_annex_resume_rejects_wrong_ranges_then_completes(tmp_path, entry, content):
+    entry["sha256"] = None
+    partial = tmp_path / (entry["path"] + ".partial")
+    partial.parent.mkdir()
+    partial.write_bytes(content[:8])
+    headers = {"x-amz-version-id": "fixed", "Content-Length": str(len(content) - 8),
+               "Content-Range": f"bytes 0-{len(content) - 1}/{len(content)}"}
+    with pytest.raises(acquisition.AcquisitionError, match="Content-Range"):
+        acquisition.acquire_file(entry, tmp_path, opener=lambda *a, **k: Response(content[8:], status=206, headers=headers))
+    assert partial.read_bytes() == content[:8]
+    headers["Content-Range"] = f"bytes 8-{len(content) - 1}/{len(content)}"
+    def resume(request, timeout):
+        assert request.headers["Range"] == "bytes=8-"
+        return Response(content[8:], status=206, headers=headers)
+    assert acquisition.acquire_file(entry, tmp_path, opener=resume) == "downloaded_and_verified"
+    assert (tmp_path / entry["path"]).read_bytes() == content

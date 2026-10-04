@@ -212,3 +212,86 @@ def test_pat05_structural_preparation_preserves_source_and_missingness(source_tr
     assert case.context.planner_values() == {}
     assert (root / annotation).read_bytes() == original_annotation
     assert read_case_artifacts(output)["plans"] == []
+
+
+@pytest.mark.parametrize("subject", ["sub-PAT16", "sub-PAT20"])
+def test_queued_preparation_rejects_unacquired_images_before_opening(subject, tmp_path, monkeypatch):
+    monkeypatch.syspath_prepend(str(SCRIPT.parent))
+    import acquire_btc_case as acquisition
+
+    manifest = tmp_path / "pending.json"
+    manifest.write_text(json.dumps(acquisition.queued_manifest(subject)))
+    monkeypatch.setattr(preparation, "load_fractional_annotation_case",
+                        lambda *a, **k: pytest.fail("Pending sources must not be opened"))
+    with pytest.raises(ValueError, match="pending annex"):
+        preparation.prepare(manifest, tmp_path / "absent", tmp_path / "case.rslcase")
+
+
+@pytest.mark.parametrize("subject", ["sub-PAT16", "sub-PAT20"])
+def test_queued_preparation_rejects_role_or_source_relabeling(subject, tmp_path, monkeypatch):
+    monkeypatch.syspath_prepend(str(SCRIPT.parent))
+    import acquire_btc_case as acquisition
+
+    manifest = acquisition.queued_manifest(subject)
+    manifest["role"] = "final_evaluation"
+    path = tmp_path / "forged.json"
+    path.write_text(json.dumps(manifest))
+    with pytest.raises(ValueError, match="frozen development selection"):
+        preparation.prepare(path, tmp_path / "absent", tmp_path / "case.rslcase")
+
+
+@pytest.mark.parametrize("subject", ["sub-PAT16", "sub-PAT20"])
+def test_queued_structural_preparation_retains_all_gates(source_tree, tmp_path, monkeypatch, subject):
+    """Tiny explicit synthetic queue fixture; no real candidate image is read."""
+    monkeypatch.syspath_prepend(str(SCRIPT.parent))
+    import acquire_btc_case as acquisition
+
+    root, manifest_path, _ = source_tree
+    t1, annotation, _, _, names = preparation.source_layout(subject)
+    for name in names:
+        if subject in name:
+            original = root / name.replace(subject, "sub-PAT28")
+            target = root / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes(original.read_bytes())
+    participants = root / "participants.tsv"
+    participants.write_text(participants.read_text() +
+                           "sub-PAT05\t40\tOligo-astrocytoma II\t8\tFrontal\t1\n"
+                           "sub-PAT16\t39\tAnaplastic astrocytoma II-III\t8\tFrontal\t1\n"
+                           "sub-PAT20\t70\tAnaplastic astrocytoma III\t8\tParietal\t1\n")
+    queue = json.loads(acquisition.QUEUE_MANIFEST.read_text())
+    for entry in queue["shared_release_files"]:
+        payload = (root / entry["path"]).read_bytes()
+        entry.update(bytes=len(payload), sha256=sha256(payload).hexdigest())
+    candidate = next(item for item in queue["candidates"] if item["subject"] == subject)
+    for entry in candidate["files"]:
+        if entry["scope"] != "structural_minimum":
+            continue
+        payload = (root / entry["path"]).read_bytes()
+        entry["expected_bytes"] = len(payload)
+        if "expected_annex_md5" in entry:
+            entry["expected_annex_md5"] = md5(payload, usedforsecurity=False).hexdigest()
+        else:
+            entry["sha256"] = sha256(payload).hexdigest()
+    synthetic_queue = tmp_path / "synthetic-only-queue.json"
+    synthetic_queue.write_text(json.dumps(queue))
+    monkeypatch.setattr(acquisition, "QUEUE_MANIFEST", synthetic_queue)
+    monkeypatch.setattr(acquisition, "QUEUE_SHA256", sha256(synthetic_queue.read_bytes()).hexdigest())
+    manifest = acquisition.queued_manifest(subject)
+    for entry in manifest["files"]:
+        entry["sha256"] = sha256((root / entry["path"]).read_bytes()).hexdigest()
+    manifest_path.write_text(json.dumps(manifest))
+    original_annotation = (root / annotation).read_bytes()
+    monkeypatch.setattr(preparation, "audit_diffusion", lambda *a, **k: pytest.fail("Unrequested DWI"))
+    output = tmp_path / "queued.rslcase"
+    report = preparation.prepare(manifest_path, root, output, planning_as_of=datetime(2026, 10, 4, tzinfo=timezone.utc))
+    case = load_case(output)
+    assert report["source_hashes_checked"] == 7 and report["reopened_identical"]
+    assert case.brain_mask is None and case.metadata["allow_nonzero_mri_access_support"] is False
+    assert case.metadata["split"]["patient_group"] == f"BTC:{subject}"
+    assert case.metadata["split"]["external_holdout_eligible"] is False
+    assert case.metadata["selection_queue_sha256"] == acquisition.QUEUE_SHA256
+    assert case.context.planner_values() == {}
+    assert report["diffusion_input_audit"]["issues"] == ["MISSING_DIRECTIONAL_DIFFUSION"]
+    assert (root / annotation).read_bytes() == original_annotation
+    assert read_case_artifacts(output)["plans"] == []

@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "receipt_kind": "retrospective_receipt_of_captured_test_output",
+  "recorded_at": "2026-10-04T11:34:24.550685+00:00",
+  "command": ".venv/bin/python -m pytest tests/test_btc_acquisition.py tests/test_btc_preparation.py tests/test_data_acquisition.py -q",
+  "working_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+  "result": {
+    "exit_code": 0,
+    "passed": 77,
+    "pytest_elapsed_seconds": 2.15,
+    "captured_summary": "77 passed in 2.15s",
+    "evidence": "Previously observed exec/write_stdin output; session_id 14401, final chunk_id 420a9a.",
+    "raw_log_file": null,
+    "rerun_for_receipt": false
+  },
+  "hashes_captured_at": "receipt_creation_after_test_run",
+  "source_binding_scope": "Direct acquisition/preparation implementation, invoked tests and pinned manifests. Agent-owned implementation/tests were unchanged after the reported run. This is not a frozen snapshot of every imported dependency or environment.",
+  "head_at_receipt_creation": "b4068b0bd3e7a586041d6d32cc4143a39eeef5df",
+  "files": [
+    {
+      "path": "scripts/acquire_btc_case.py",
+      "sha256": "e40697ce66236652a081d03d5c659997d1133bf6fc1085cac46cc53657685399"
+    },
+    {
+      "path": "scripts/prepare_btc_case.py",
+      "sha256": "ebddbbabaf027115ca2609736b0256a40a6debc5a423370365793ae209b56ca1"
+    },
+    {
+      "path": "scripts/acquire_public_case.py",
+      "sha256": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb"
+    },
+    {
+      "path": "tests/test_btc_acquisition.py",
+      "sha256": "c5c5de7fa86d4405f1c92fb226f9048524cb3da95759e70e80b52b70e71de3d2"
+    },
+    {
+      "path": "tests/test_btc_preparation.py",
+      "sha256": "adf492d43711f6af236652dec6311f3145a5e880ddc85602fddb4dbfee6cf318"
+    },
+    {
+      "path": "tests/test_data_acquisition.py",
+      "sha256": "a6a98560e4c2abc453fb27a44566d6bb86b0a9a22aebc6d4d9b14852403de372"
+    },
+    {
+      "path": "manifests/development_acquisition_queue.json",
+      "sha256": "a768aaefd78146540cf20c13193e22268344206a4a396ffb654e7d40af7b8898"
+    },
+    {
+      "path": "manifests/btc_acquisition.json",
+      "sha256": "f88d3a01a06e4e21c29de6ba49aff4a54bd230c9fdba4787170b10e19bdd18c4"
+    },
+    {
+      "path": "manifests/btc_pat05_acquisition.json",
+      "sha256": "09df59d9ac8b1c8d8d555f0e165148c79c0a2d1a404180451d0b9e90b814badf"
+    },
+    {
+      "path": "manifests/btc_pat05_selection.json",
+      "sha256": "edd2d5ace4db04615ac948f339beb058eb5f637a7a588325fb714e360fd887f3"
+    }
+  ],
+  "real_candidate_image_gets_during_validation": 0,
+  "real_candidate_images_opened_during_validation": 0,
+  "candidate_image_absence_at_receipt_creation": {
+    "sub-PAT16": {
+      "sub-PAT16/ses-preop/anat/sub-PAT16_ses-preop_T1w.nii.gz": true,
+      "derivatives/tumor_masks/sub-PAT16/anat/sub-PAT16_space_T1_label-tumor.nii": true
+    },
+    "sub-PAT20": {
+      "sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.nii.gz": true,
+      "derivatives/tumor_masks/sub-PAT20/anat/sub-PAT20_space_T1_label-tumor.nii": true
+    }
+  },
+  "synthetic_preparation_only": true,
+  "frozen_queue_sha256": "a768aaefd78146540cf20c13193e22268344206a4a396ffb654e7d40af7b8898",
+  "remaining_gate": "Root implementation checkpoint and explicit release before structural candidate image acquisition."
+}
