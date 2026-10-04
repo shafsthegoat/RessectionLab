@@ -14,6 +14,8 @@ import {
 } from "./coordinates";
 import type { Point3, SlicePlane } from "./coordinates";
 import type { ViewerPriorLayer, ViewerWorkspaceProps } from "./contracts";
+import { INSPECTION_TOOL_COLOR, InspectionSelectionGate } from "./inspectionTool";
+import type { InspectionToolDisplay } from "./inspectionTool";
 import { formatPriorValue, samplePriorVoxel } from "./priorLayer";
 import { FAILURE_COLOR, routeAppearance } from "./routeAppearance";
 import {
@@ -50,6 +52,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     replay,
     structuralProposal,
     priorLayer,
+    inspectionTool,
   } = props;
   const container = useRef<HTMLDivElement>(null),
     canvas = useRef<HTMLCanvasElement>(null),
@@ -60,6 +63,9 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
   const engine = useRef<VolumeRenderer | null>(null),
     latestProps = useRef(props);
   latestProps.current = props;
+  const inspectionSelection = useRef(new InspectionSelectionGate());
+  const [displayedInspection, setDisplayedInspection] = useState<InspectionToolDisplay | null>(null);
+  const [inspectionError, setInspectionError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null),
     [remaining, setRemaining] = useState(0),
     [ready, setReady] = useState(false);
@@ -204,6 +210,26 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
     replay?.removedNormalVolumeMm3,
     replay?.residualTargetVolumeMm3,
   ]);
+
+  useEffect(() => {
+    const renderer = engine.current;
+    if (!renderer) return;
+    setInspectionError(null);
+    setDisplayedInspection(null);
+    const suppressed = Boolean(replay || structuralProposal || priorLayer);
+    if (inspectionTool && suppressed) {
+      if (inspectionSelection.current.clear(inspectionTool)) latestProps.current.onClearInspection?.();
+    }
+    try {
+      setDisplayedInspection(renderer.setInspectionTool(
+        inspectionSelection.current.select(inspectionTool ?? null, suppressed),
+      ));
+    } catch (cause) {
+      inspectionSelection.current.clear(inspectionTool ?? null);
+      setInspectionError(cause instanceof Error ? cause.message : String(cause));
+      latestProps.current.onClearInspection?.();
+    }
+  }, [ready, caseData, inspectionTool, Boolean(replay), Boolean(structuralProposal), Boolean(priorLayer)]);
 
   useEffect(() => {
     const renderer = engine.current;
@@ -385,6 +411,15 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
 
   const refs = { axial, coronal, sagittal };
   const modeled = replay && !replayError;
+  const inspected = !replay && !structuralProposal && !priorLayer &&
+    displayedInspection?.caseHash === caseData.caseHash ? displayedInspection : null;
+  const clearInspection = () => {
+    inspectionSelection.current.clear(inspectionTool ?? null);
+    engine.current?.setInspectionTool(null);
+    setDisplayedInspection(null);
+    setInspectionError(null);
+    latestProps.current.onClearInspection?.();
+  };
   return (
     <div
       className={`rl-viewer rl-layout-${layout}${expanded ? " has-expanded" : ""}`}
@@ -511,7 +546,16 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
                 Mint mesh: modeled removal · source MRI unchanged
               </span>
             )}
-            {!modeled &&
+            {inspected && (
+              <span className="rl-viewer-route-key" style={{ color: INSPECTION_TOOL_COLOR }}>
+                ● Inspection tool · unexecuted preview · no tissue removed
+                <button className="rl-viewer-inspection-clear" onClick={clearInspection}>Clear tool</button>
+              </span>
+            )}
+            {inspected?.unknowns.includes("tool_geometry_outside_image_unassessed") && (
+              <span className="rl-viewer-route-key">Tool extends beyond imaged anatomy · outside tissue unassessed</span>
+            )}
+            {!modeled && !inspected &&
               routes.slice(0, 2).map((route, index) => {
                 const { slot, color } = routeAppearance(route, index);
                 return (
@@ -525,7 +569,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
                   </span>
                 );
               })}
-            {!modeled &&
+            {!modeled && !inspected &&
               routes.some((route) => route.geometry?.failures?.length) && (
                 <span
                   className="rl-viewer-route-key"
@@ -613,7 +657,7 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               ref={refs[plane]}
               className="rl-viewer-slice-image"
               tabIndex={0}
-              aria-label={`${TITLES[plane]} source MRI, neurological convention, slice position ${currentCursor[axis].toFixed(1)} millimeters. ${proposalReviewLabel ? `Estimated envelope contour, view only: ${proposalReviewLabel}. ` : ""}${displayedPrior ? "Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. " : ""}Click to set cursor; scroll or arrow keys change slice.`}
+              aria-label={`${TITLES[plane]} source MRI, neurological convention, slice position ${currentCursor[axis].toFixed(1)} millimeters. ${inspected ? "Inspection tool, unexecuted initial preview. No tissue removed. " : ""}${proposalReviewLabel ? `Estimated envelope contour, view only: ${proposalReviewLabel}. ` : ""}${displayedPrior ? "Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. " : ""}Click to set cursor; scroll or arrow keys change slice.`}
               onPointerDown={(event) => {
                 if (event.button === 0) {
                   event.currentTarget.focus({ preventScroll: true });
@@ -643,7 +687,9 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
               </span>
               <span className="rl-viewer-slice-note">
                 SOURCE MRI
-                {proposalReviewLabel
+                {inspected
+                  ? " · UNEXECUTED TOOL PREVIEW"
+                  : proposalReviewLabel
                   ? " · ESTIMATE"
                   : displayedPrior
                     ? " · PRIOR"
@@ -675,10 +721,10 @@ export function ViewerWorkspace(props: ViewerWorkspaceProps) {
         </label>
         <span>Neurological convention</span>
       </div>
-      {(error || replayError || proposalError || priorError) && (
+      {(error || replayError || proposalError || priorError || inspectionError) && (
         <div className="rl-viewer-error" role="alert">
           <strong>Imaging view needs attention</strong>
-          <p>{error || replayError || proposalError || priorError}</p>
+          <p>{error || replayError || proposalError || priorError || inspectionError}</p>
         </div>
       )}
     </div>

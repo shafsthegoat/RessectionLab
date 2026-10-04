@@ -15,7 +15,11 @@ import type {
   ViewerRoute,
   ViewerStructuralProposal,
   ViewerVolume,
+  ViewerInspectionTool,
 } from "./contracts";
+import { InstrumentDisplayState } from "./inspectionTool";
+import type { InspectionToolDisplay, InstrumentCapsuleDisplay } from "./inspectionTool";
+import { inspectionToolMeshes } from "./inspectionToolGeometry";
 import { fragmentShader, vertexShader } from "./shaders";
 import { physicalBounds, placeInSourceFrame } from "./sceneGeometry";
 import { paneViewport } from "./layout";
@@ -118,12 +122,13 @@ export class VolumeRenderer {
   >();
   private readonly anatomy = new THREE.Group();
   private readonly tools = new THREE.Group();
+  private readonly inspectionTools = new THREE.Group();
+  private readonly instrumentDisplay = new InstrumentDisplayState();
   private readonly replayGroup = new THREE.Group();
   private replayWorker: Worker | null = null;
   private replayGeneration = 0;
   private pendingReplayGroup: THREE.Group | null = null;
   private replayActive = false;
-  private activeRouteCount = 0;
   private removedTexture: THREE.Data3DTexture;
   private proposalTexture: THREE.Data3DTexture;
   private priorTexture: THREE.Data3DTexture;
@@ -311,6 +316,7 @@ export class VolumeRenderer {
       this.sourcePlane,
       this.anatomy,
       this.tools,
+      this.inspectionTools,
       this.replayGroup,
     );
     this.scene.add(new THREE.HemisphereLight(0xb7d6df, 0x142738, 2.1));
@@ -488,6 +494,8 @@ export class VolumeRenderer {
 
   /** A certified effect overlays the original MRI; source labels remain immutable. */
   setReplay(replay: ViewerReplay | null): void {
+    // A requested mode switch clears an unexecuted tool even if replay rejects.
+    if (replay) this.setInspectionTool(null);
     if (this.replayActive) this.onSurfaceStatus(0);
     const generation = ++this.replayGeneration;
     this.replayWorker?.terminate();
@@ -498,10 +506,10 @@ export class VolumeRenderer {
     this.replayGroup.clear();
     this.replayActive = false;
     this.anatomy.visible = true;
-    this.tools.visible = true;
+    this.instrumentDisplay.setReplay(false);
+    this.syncInstrumentDisplay();
     this.materials().forEach((shader) => {
       shader.uniforms.uReplayActive.value = 0;
-      shader.uniforms.uRouteCount.value = this.activeRouteCount;
     });
     this.requestRender();
     if (!replay) return;
@@ -520,6 +528,10 @@ export class VolumeRenderer {
       shader.uniforms.uRouteCount.value = 0;
     });
     this.replayActive = true;
+    this.instrumentDisplay.setReplay(true);
+    disposeObject(this.inspectionTools);
+    this.inspectionTools.clear();
+    this.syncInstrumentDisplay();
     this.anatomy.visible = false;
     // Route candidates show terminal approach poses, not certified replay motions.
     this.tools.visible = false;
@@ -726,14 +738,7 @@ export class VolumeRenderer {
     disposeObject(this.tools);
     this.tools.clear();
     const shown = routes.slice(0, 2);
-    this.activeRouteCount = shown.length;
-    this.tools.visible = !this.replayActive;
-    this.materials().forEach(
-      (shader) =>
-        (shader.uniforms.uRouteCount.value = this.replayActive
-          ? 0
-          : shown.length),
-    );
+    const capsules: InstrumentCapsuleDisplay[] = [];
     shown.forEach((route, index) => {
       const entry = this.sourceToRas(route.entry_mm),
         tip = this.sourceToRas(route.target_mm),
@@ -822,20 +827,50 @@ export class VolumeRenderer {
         marker.userData.failure = failure.reason;
         addPart(marker);
       }
-      this.materials().forEach((shader) => {
-        shader.uniforms.uShaftStart.value[index].copy(shaftStart);
-        shader.uniforms.uShaftEnd.value[index].copy(shaftEnd);
-        shader.uniforms.uTipEnd.value[index].copy(tip);
-        shader.uniforms.uRadii.value[index].set(
-          route.tool.shaft_radius_mm,
-          route.tool.tip_radius_mm,
-        );
-        shader.uniforms.uRouteColors.value[index]
-          .set(color)
-          .convertLinearToSRGB();
+      capsules.push({ shaftStart: shaftStart.toArray(), shaftEnd: shaftEnd.toArray(), tip: tip.toArray(),
+        shaftRadius: route.tool.shaft_radius_mm, tipRadius: route.tool.tip_radius_mm, color });
+    });
+    this.instrumentDisplay.setRoutes(capsules);
+    this.syncInstrumentDisplay();
+    if (this.mode === "instruments") this.fitCamera("instruments");
+  }
+
+  /** Canonical RAS initial pose only; no route conversion, motion or tissue effect. */
+  setInspectionTool(input: ViewerInspectionTool | null): InspectionToolDisplay | null {
+    disposeObject(this.inspectionTools);
+    this.inspectionTools.clear();
+    try {
+      const display = this.instrumentDisplay.setInspection(this.volume, input);
+      if (!display) return null;
+      this.inspectionTools.add(inspectionToolMeshes(display));
+      return display;
+    } catch (cause) {
+      this.instrumentDisplay.setInspection(this.volume, null);
+      disposeObject(this.inspectionTools);
+      this.inspectionTools.clear();
+      throw cause;
+    } finally {
+      this.syncInstrumentDisplay();
+      this.requestRender();
+    }
+  }
+
+  /** Shader slots describe visible capsules, independently of A/B route identity. */
+  private syncInstrumentDisplay(): void {
+    this.tools.visible = this.instrumentDisplay.routeVisible;
+    this.inspectionTools.visible = this.instrumentDisplay.inspected !== null;
+    const shown = this.instrumentDisplay.displayed;
+    this.materials().forEach((shader) => {
+      shader.uniforms.uRouteCount.value = shown.length;
+      shown.forEach((capsule, index) => {
+        const set = (name: string, point: readonly number[]) => shader.uniforms[name].value[index].set(point[0], point[1], point[2]);
+        set("uShaftStart", capsule.shaftStart);
+        set("uShaftEnd", capsule.shaftEnd);
+        set("uTipEnd", capsule.tip);
+        shader.uniforms.uRadii.value[index].set(capsule.shaftRadius, capsule.tipRadius);
+        shader.uniforms.uRouteColors.value[index].set(capsule.color).convertLinearToSRGB();
       });
     });
-    if (this.mode === "instruments") this.fitCamera("instruments");
   }
 
   fitCamera(mode: "anatomy" | "instruments" = this.mode): void {
@@ -852,11 +887,9 @@ export class VolumeRenderer {
         new THREE.Vector3(...this.bounds[1]),
       );
     else box.expandByScalar(12);
-    if (
-      mode === "instruments" &&
-      !new THREE.Box3().setFromObject(this.tools).isEmpty()
-    )
-      box.union(new THREE.Box3().setFromObject(this.tools)).expandByScalar(8);
+    const visibleTools = this.instrumentDisplay.inspected ? this.inspectionTools : this.tools;
+    if (mode === "instruments" && visibleTools.visible && !new THREE.Box3().setFromObject(visibleTools).isEmpty())
+      box.union(new THREE.Box3().setFromObject(visibleTools)).expandByScalar(8);
     const centre = box.getCenter(new THREE.Vector3()),
       size = box.getSize(new THREE.Vector3());
     const aspect = Math.max(0.2, pane.width / Math.max(pane.height, 1));

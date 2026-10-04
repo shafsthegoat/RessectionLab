@@ -3,4 +3,5 @@ export type {
   ViewerWorkspaceProps,
   ViewerVolume,
   ViewerRoute,
+  ViewerInspectionTool,
 } from "./contracts";

@@ -22,7 +22,17 @@ CPU and GPU sampling share an explicit display precision convention. Each instal
 
 Within this bounded band, functional samples snap to integer source centers; binary samples snap to half-cell boundaries with upward ties. Every positive interpolation weight outside the axis bands still requires atlas coverage, even when the weight product is tiny. Both samplers abstain within the tolerance of an outer half-cell field face and identify this as display precision uncertainty; this deliberately withholds the exact lower face that an ideal half-open field would include. No source cell or affine is changed. This numerical display convention is not anatomical registration accuracy or clinical uncertainty.
 
-## Modeled removal
+## Unexecuted neighboring-tool inspection
+
+`inspectionTool` is a separate `ViewerInspectionTool` prop: the host-validated complete backend report, selected accepted action ID, and expected case, planning, binding and inspection hashes. The host validates the response and user-selected access/tool assumptions; the viewer checks source-grid and canonical RAS affine equality, model/cavity joins, accepted action membership, proposal/attempt/ledger geometry, and the exact bound instrument catalog. The current volume must supply its planning hash for this feature. This is a display integrity gate, not another geometry checker or a clinical certificate. Partial/rejected/STOP records, stale identities, execution or removal claims are withheld. The display snapshot is detached and deeply frozen.
+
+The dedicated blue tool group contains the entire proximal shaft capsule and distal active-tip capsule. Linked MRI uses the same physical capsule endpoints and radii in the existing two-slot shader. Inspector coordinates are already RAS and bypass route/source coordinate conversion, including for LPS source images. The unexecuted-preview label and that selected preview's outside-image uncertainty remain visible; another action's warning is not attached to the selected tool. No cells or tissue-effect meshes are drawn. The host can clear through `onClearInspection`; a local clear also removes the overlay immediately.
+
+A/B selections and their display geometry remain separate and restore when inspection clears. Updates to A/B while inspecting are retained. Invalid replacements dispose the old tool before validation. Case changes reject stale reports. Replay, structural-envelope inspection and prior inspection suppress the tool and notify the host to clear it; leaving those modes does not resurrect the same inspection identity, even in a cloned prop wrapper. Pass a null selection before explicitly selecting that same action again. Selection does not move the camera or linked cursor. The existing fit-instruments control includes the inspection tool when it is displayed. No application wiring or route-selection behavior is changed in this viewer-only slice.
+
+`inspectionTool.test.mjs` exercises source identity, exact RAS/LPS alignment, oblique/mirrored grids, whole-tool endpoints and mesh bounds, immutable snapshots, accepted/rejected/fallback joins, loss of uncertainty, A/B restoration and replay suppression using small analytic fixtures. These checks do not establish GPU appearance, patient access feasibility or independent motion certification.
+
+## Modeled removal display
 
 The host first verifies the independent native replay certificate. `validateReplay` then checks the accepted effect's case version, grid, RAS affine, binary cells, and target/normal/residual cell accounting. It is a display integrity gate, not an independent trajectory checker.
 

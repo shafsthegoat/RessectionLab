@@ -585,3 +585,14 @@
     gap: 5px;
   }
 }
+.rl-viewer-inspection-clear {
+  margin-left: 8px;
+  padding: 2px 7px;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  pointer-events: auto;
+}

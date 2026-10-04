@@ -3,6 +3,7 @@ import type { Affine, Point3, Shape3 } from "./coordinates";
 export interface ViewerVolume {
   caseId: string;
   caseHash: string;
+  planningHash?: string;
   frame: string;
   affine: Affine;
   shape: Shape3;
@@ -42,6 +43,19 @@ export interface ViewerWorkspaceProps {
   replay?: ViewerReplay | null;
   structuralProposal?: ViewerStructuralProposal | null;
   priorLayer?: ViewerPriorLayer | null;
+  inspectionTool?: ViewerInspectionTool | null;
+  onClearInspection?: () => void;
+}
+
+/** Host-validated complete inspector report; never a route or replay payload. */
+export interface ViewerInspectionTool {
+  scope: "unexecuted-native-axis-inspection";
+  caseHash: string;
+  planningHash: string;
+  bindingHash: string;
+  inspectionHash: string;
+  actionId: string;
+  report: unknown;
 }
 
 export interface ViewerPriorLayer {
