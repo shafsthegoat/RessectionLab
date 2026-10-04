@@ -196,3 +196,86 @@ display volume from source-cell volumes by under 0.6%; quantitative volumes stil
 use source cells. Binary hydration rejects shape, frame, dtype and accounting
 corruption. Model refinement and removal replay are being integrated into the
 new interface; the initial Qt workflow is preserved as historical evidence.
+
+## October 4, 2026 — measured throughput and shared-policy comparisons
+
+A bounded cache reuses only the certified initial native geometry inside one
+simulator. Each fresh experiment arm still pays cold preparation, and hidden
+cost worlds are sampled independently. Five profiled resets decreased from a
+0.462-second median to 0.0259 seconds with byte-identical observations, removal
+records and rewards. Peak RSS increased by about 35 MiB to 1.20 GiB. Raw profiles,
+snapshots and independent certificate: `artifacts/performance/native-reset-cache-v1/`.
+
+The original patient runner was frozen again with only that cache implementation
+changed. With the same seeds and 30-second budgets, updates rose from 7/6/5 to
+14/11/11 and selected returns were 245.24/171.42/245.16. Seed 47 improved by
+105.54; seed 23 still retained its initial checkpoint. All native audits passed.
+SEARCH reached 245.24 in 6.22 seconds and GREEDY in 0.75 seconds, excluding their
+reported preparation. No RL advantage or final-world evaluation is claimed.
+Records: `artifacts/learning/native-ucsf0004-cache-v2/`.
+
+The first complete synthetic population experiment trained one shared policy
+across two explicitly procedural development groups, with eight offline updates.
+Each of three scratch/adapted seeds then received eight online updates and the
+same transition/time limits. Frozen inference made no updates; adapted learners
+started from the exact shared weights with fresh optimizers. SEARCH scored 1.30,
+scratch [0, 0, 1.24], frozen 0 and adapted [0, 0, 0]. Every online actor changed,
+but all adapted runs retained the initial shared checkpoint under selection.
+All ten independent synthetic geometry checks passed. Offline cost was 1.374
+seconds; the first frozen load/copy cost was not separately timed, a limitation
+fixed in the subsequent runner instrumentation without relabeling the run.
+No final/stress worlds were opened. This is a negative analytic experiment,
+not patient-population generalization. Full records and exclusions:
+`artifacts/learning/population-synthetic-v1/`.
+
+## October 4, 2026 — native UI falsifies the route-to-cutting assumption
+
+The complete Electron app trained the selected original Route 02 for 32 updates,
+but actor gradients were zero: only STOP was available. The interface correctly
+showed unchanged actor weights, zero removal and an accepted zero-action replay;
+native JSON export and source-view restoration passed. The dedicated diagnostic
+screen then tested all 54 original rays without spending training transitions.
+Thirty-one passed static route geometry, but zero admitted the exact native
+cutting stroke. The factory also dropped every selected entry/target pair in
+favor of its parallel centroid proposal pool. For Route 02, it moved the entry
+11.934 mm outside a 4-mm aperture. Restoring that entry still correctly rejected
+shaft movement after three microsteps: the declared tip is narrower than its
+shaft. A static access check is not a constructive cutting sequence.
+
+An explicit alternative study retained the original rays but tested the two
+named native profiles as additional instruments: 108 total combinations, still
+zero accepted exact strokes. A separately declared source-grid-aligned window
+and ray did pass with those profiles: 19 target + 1 normal mm³ for the fine
+profile and 174 target + 11 normal mm³ for the wide profile, with independent
+whole-tool and source-cell checks. This changes both access geometry and tool;
+it does not repair or certify the original 54 routes. Diagnostics and preserved
+source: `artifacts/route-native-screen-v1/`. Exact selected-ray pass-through,
+preflight and explicitly labeled alternative generation are the corrective slice.
+
+## October 4, 2026 — evidence QC and native interface boundaries
+
+Four actual MPS extraction runs on PAT28 produced identical main/no-CSF masks
+and distance maps. Independent native-grid, output-hash, finite-distance and
+annotation-reindex checks passed. No-CSF excludes 214 supplied annotation voxels;
+the main envelope includes them all, which is not an accuracy measurement.
+Both proposals save/reopen separately from working anatomy and remain unreviewed.
+Their addition leaves planning seeds unchanged. Native Electron inspection shows
+the warning, threshold-derived source annotation and disabled cortical planning.
+Adversarial review caught and fixed free-form provenance bypasses, descriptor
+mutation, explicit prohibition precedence and silent enlargement of a reviewed
+envelope. Model estimates remain estimated after review.
+
+PAT05 was selected by a metadata-only rule before image acquisition and assigned
+to development. Seven pinned creator-source files total 17,862,831 bytes. All
+checksums and independent physical reindexing agree on 11,437 threshold-derived
+annotation voxels. Full-head planning remains gated and diffusion is missing.
+The registry now contains three development groups, two primary-source identities
+and no final patients. Source images remain outside Git.
+
+An isolated PyHySCO known-field phantom improved image error from 9.68% to 0.40%
+with 0.395-mm field error. Three solver runs totaled 21.4 seconds and stayed below
+416 MiB sampled RSS. Header and staggered-field-origin corrections passed tests.
+Zero-distortion internal solver failure and BTC's unsupported transported PE
+direction remain blockers. A rotated negative control also had low image error,
+showing why similarity alone cannot approve unsupported geometry. No patient
+correction or FSL execution occurred. Records: `artifacts/pyhysco-phantom-v1/`.

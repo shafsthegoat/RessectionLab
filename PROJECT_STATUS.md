@@ -9,8 +9,10 @@ the current Mac UI target. Further PySide/PyQt interface work has stopped. The
 validated Qt prototype is preserved as an earlier experiment; Python planning,
 learning, provenance and evaluation remain the shared backend. The new renderer
 communicates through a narrow local sidecar interface. The first standalone
-Electron package has passed real MRI, route comparison and native-save checks;
-patient-training controls and source-native replay are the next integrated build.
+Electron package has passed real MRI, route comparison and native-save checks.
+The full training package has passed actual updates, cancellation/resume and
+restart checks; its native patient UI has passed honest STOP replay and export.
+The selected-route-to-native-cutting connection is the current integration slice.
 
 ## Verified starting state
 
@@ -36,6 +38,11 @@ patient-training controls and source-native replay are the next integrated build
 - Creator-source OpenNeuro BTC `sub-PAT28`, ds001226 v5.0.1, has 15 verified
   files including T1, fractional tumor annotation, AP DWI, PA references and
   gradients. Its full-head T1 does not provide a reviewed cortical access mask.
+- A second creator-source BTC case, `sub-PAT05`, was selected by a recorded
+  metadata-only rule before image acquisition. Seven pinned files total 17.86 MB;
+  independent checks agree on all 11,437 threshold-derived annotation voxels.
+  The registry has three development groups, two primary-source identities and
+  zero final patients. Unknown clinical timing remains excluded from planning.
 - Seven licensed motor/language population maps load with source hashes and
   explicit registration-review contracts. Patient alignment remains unaccepted.
 - Full-tip/shaft/swept-envelope route search retains feasible, dominated and
@@ -64,38 +71,67 @@ patient-training controls and source-native replay are the next integrated build
 - PPO at 32 and 128 actual optimizer updates failed to outperform SEARCH on the
   branching development fixture. Exact source snapshots, initial weights,
   transition counts and negative results are preserved.
+- Shared pretraining, frozen inference and isolated adaptation now execute with
+  explicit cohort exclusions and separate offline costs. The first two-group
+  synthetic experiment used eight offline updates and eight online updates per
+  seed. SEARCH scored 1.30, scratch [0, 0, 1.24], frozen 0 and adapted [0, 0, 0].
+  All ten independent synthetic geometry checks passed; no final worlds opened.
+  This is a negative analytic experiment, not a clinical population policy.
 - The Electron training bridge executes real updates, resumable cancellation,
   independently checked replay and export. A 30-second patient-learning budget
   yielded the two-stroke sequence in 37.77 seconds total including setup/checks;
   a 5-second run retained STOP. Resume binds checkpoint bytes, source/runtime
   contract and original budgets; unsigned crash recovery is refused.
+- Native UI testing exposed a selected-route mismatch: the factory discarded
+  the selected entry/target in favor of parallel global-centroid proposals.
+  Exact-ray diagnostics also found that none of the original 54 straight routes
+  could cut their own corridor with the declared generic instruments. Merely
+  substituting the two named native profiles did not fix those original rays.
+  Two explicitly different, source-grid-aligned research tool/access candidates
+  pass independent checks. Their addition and exact selection pass-through are
+  in progress; original negative results are preserved.
 - Raw BTC diagnostic tensor fitting ran on 101,311 voxels; bounded CSA tracking
   produced 176 unlabeled diagnostic paths. Uncorrected DWI is correctly refused
   for tract-aware planning. Correction and alignment are current work.
 - Pinned SynthStrip main/no-CSF models ran locally on MPS in roughly 6–7 seconds
-  per variant with identical outputs in three repeats. No-CSF excludes 214
+  per variant with identical outputs in four runs. No-CSF excludes 214
   source tumor-annotation voxels; main includes them all. Neither is reviewed
   brain/cortex or an accepted cortical-access mask. CPU failure is preserved.
+- Structural proposals now save/reopen separately from working anatomy, with
+  immutable source/model/run provenance and review-required status. Adding unused
+  proposals leaves planning seeds unchanged. Explicit anatomy prohibitions take
+  precedence over collection defaults; reviews cannot silently enlarge masks or
+  relabel model estimates as observations. Native UI inspection confirms the
+  BTC proposal inventory leaves route generation disabled.
+- Isolated PyHySCO phantom testing reduced a known-distortion image error from
+  9.68% to 0.40%, with 0.395-mm displacement error. The zero-distortion solver
+  failure and unsupported BTC phase-encoding geometry remain explicit blockers;
+  no patient correction or FSL execution was performed.
 
 ## Validation record
 
-The latest root integrated run passed 417 tests and exposed one test-isolation
-failure: a subprocess import check incorrectly inspected the parent process.
-That test now checks the actual engine process. The subsequent focused bridge,
-native-refinement and independent adversarial suite passed all 37 tests. A fresh
-integrated run remains due after the current UI slice. Four existing DIPY
-basis-deprecation warnings remain. Native adversaries caught and fixed temporal
-shaft borrowing, mutable preview descriptors and checkpoint-resume tampering.
+The latest root integrated run passed **518 tests in 52.35 seconds**, with four
+existing DIPY basis-deprecation warnings. Subsequent structural adversarial
+checks found and fixed metadata precedence, mask-enlargement and provenance
+problems; their focused checks passed before each incremental commit. Native
+adversaries also caught temporal shaft borrowing, mutable preview descriptors
+and checkpoint-resume tampering. Test counts describe their recorded snapshots.
 The independent native checker improved from 17.638 to 4.310 seconds on the same
 saved patient history, with identical geometric certificates and 91 regression
 tests. These are local single-run timings, not a latency distribution.
+Native initial-geometry reuse lowered median profiled reset time from 0.462 to
+0.0259 seconds without changing captured outputs. Three further 30-second runs
+completed 14/11/11 updates versus 7/6/5 previously; only seed 47 improved its
+selected score. SEARCH remained best. Renderer hydration decreased from a
+352-ms median to 134 ms in a warm-cache V8 benchmark; this is not GPU latency.
 See `EXPERIMENT_LOG.md` for executed experiments, including negative results.
 The Qt prototype passed its initial standalone runtime and GUI checks. Its next
 build was stopped following the user's Electron decision. The React/Electron
-package passed its own imaging/search checks and 20 main-process boundary tests;
-the React renderer passed eight source-hydration and seven viewer-geometry tests.
-The next build includes the separately tested training engine. Qt results do not
-certify Electron. No second-Mac test is claimed.
+package passed its own imaging/search checks and 23 main-process boundary and
+lifecycle tests. Renderer and viewer tests cover source hydration, evidence
+status, A/B identity and independently accepted removal overlays. The complete
+training bundle has its own source-bound verification receipts. Qt results do
+not certify Electron. No second-Mac test is claimed.
 
 ## Completion gates still open
 
@@ -103,7 +139,8 @@ Native-resolution geometric simulation now works under explicit hypothetical
 access assumptions; reviewed anatomy and surgical validity remain open.
 Corrected/accepted functional reconstruction, fully integrated comparison and
 refinement interaction, broader cohort benchmark and release remain incomplete.
-Population frozen/adapted arms have not been trained/evaluated. Developer ID
+Population frozen/adapted arms have only been tested on analytic fixtures;
+patient-population training and external evaluation remain open. Developer ID
 signing/notarization and independent physical-Mac
 validation remain open. No locked final cohort has been opened. Clinical deficit
 probabilities remain unavailable; simulator success cannot establish clinical
