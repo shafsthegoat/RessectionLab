@@ -1,0 +1,14 @@
+{
+  "package_build_failures": [],
+  "verification_harness_correction": {
+    "initial_attempt": "One-off archive verification incorrectly required @electron/asar from top-level node_modules; pnpm stores this transitive dependency under @electron/packager.",
+    "observed_error": "MODULE_NOT_FOUND before any publication or artifact mutation",
+    "correction": "Resolved @electron/asar through createRequire at the actual installed @electron/packager package.",
+    "corrected_result": "All source, engine and notice bindings passed before safe publication."
+  },
+  "renderer_build_warnings": [
+    "The existing minified main JavaScript chunk exceeds500kB.",
+    "Electron packager did not find optional .icon format; existing .icns remains captured."
+  ],
+  "concurrent_work": "Root Python suite was running during the final build/native sanity; no speed benchmark claim."
+}

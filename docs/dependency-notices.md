@@ -4,7 +4,7 @@ The notice collector preserves upstream text and records its origin and SHA-256.
 It does not select a license for RessectionLab or decide whether all distribution
 obligations have been satisfied. Missing source material remains explicit.
 
-The next package built with this source will contain
+Packages built with this source contain
 `RessectionLab.app/Contents/Resources/ThirdPartyNotices/`, outside `app.asar`.
 This directory stays with the application when the `.app` alone is copied:
 
@@ -98,8 +98,28 @@ separate provenance and terms; they are not included by this software collector.
 
 Seven JavaScript and five Python focused tests cover closure selection,
 missing-text reporting, exact engine/payload binding, source-code mismatch,
-upstream-byte preservation and path boundaries. The notice capture and these
-tests did not rebuild or launch the Mac app. Its prior renderer and numerical
-checksums remained unchanged, recorded in `unchanged-native-baseline.json`.
-An actual rebuilt app still needs independent inspection of the in-app notice
-location after the orchestrator commits and authorizes its next snapshot.
+upstream-byte preservation and path boundaries. The initial source capture
+left the prior app unchanged, recorded in `unchanged-native-baseline.json`.
+
+The first actual notice-bearing app was built from exact commit `bee43c9`.
+Its 142 desktop tests and production build passed. The package verification
+receipt `app-capture-verification.json` checks all 292 notice-tree entries
+inside the application against the immutable capture, and all 2,809 numerical
+payload entries against the retained engine. The engine executable remains
+`85a92eff…`; its original source revision remains `0b4e334`. Local ad hoc deep
+strict signature verification passed. The native receipt
+`native-workflow-bee43c9.json` records successful loaded-case guidance,
+minimum-width motor MRI inspection and source restoration, plus a visible
+duplicate unloaded welcome that required a subsequent renderer correction.
+These observations do not close the two source-completeness gaps above.
+
+The corrected native app uses exact renderer commit `100865f`: capture
+`34285015…`, archive `b99ba3da…`, with all 71 source inputs checked against
+that commit. All 143 aggregate desktop tests and the production build passed.
+The full notice and numerical payload trees are byte-identical to the first
+notice-bearing package. `app-capture-verification-final.json` binds those
+contents to the actual signed application; `native-workflow-final.json`
+records the single welcome at normal/minimum widths, real-case loading,
+representative motor atlas inspection and source restoration. The previous
+partial receipt and overlapping-text screenshots remain unchanged. No new
+patient training or final evaluation was run.

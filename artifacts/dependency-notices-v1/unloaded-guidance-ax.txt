@@ -1,0 +1,97 @@
+Window: "RessectionLab", App: RessectionLab.
+0 standard window RessectionLab, Secondary Actions: Raise
+	1 container RessectionLab
+		2 container
+			3 HTML content RessectionLab, URL: file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/dist/index.html
+				4 container
+					5 text Ressection Lab Patient-specific planning Research workspace
+					6 button Open case ⌘O
+						7 text Open case
+						8 text ⌘O
+					9 button Import MRI
+					10 button (disabled) Save
+					11 container Workspace navigation
+						12 button Toggle case and evidence panel
+						13 button Focus route comparison
+					14 text CASE & EVIDENCE
+					15 button Collapse case panel
+					16 heading No case open
+						17 text No case open
+					18 text A focused workspace for inspecting anatomy and candidate routes.
+					19 button Explore synthetic fixture
+					20 container
+						21 heading Source imaging —
+							22 text Source imaging —
+						23 text No MRI loaded NIfTI source volume
+					24 container
+						25 heading Target annotations —
+							26 text Target annotations —
+						27 text Import a supplied mask to inspect its target compartments. Overlay opacity 32 %
+						28 slider (disabled) Overlay opacity 32%, Value: 0.32, Secondary Actions: Increment, Decrement
+					29 container
+						30 heading Functional evidence
+							31 text Functional evidence
+						32 text Motor network Unassessed Language network Unassessed Missing evidence remains unknown. Population priors require registration and review.
+					33 pop up button (disabled) Inspect evidence
+					34 text Local processing · source preserved Workspace Route comparison
+					35 heading Anatomy, in context
+						36 text Anatomy, in context
+					37 container Camera framing
+						38 toggle button Focus anatomy
+						39 toggle button Fit instruments
+					40 container
+						41 container Imaging workspace awaiting a case
+							42 heading Your case, in perspective.
+								43 text Your case, in perspective.
+							44 text Open a prepared case to inspect the source MRI, its annotations and instrument-aware routes.
+							45 text LOCAL IMAGING · LINKED 3D + MRI · PHYSICAL COORDINATES
+						46 text YOUR CASE IS THE STARTING POINT
+						47 heading From source imaging to inspectable alternatives.
+							48 text From source imaging to inspectable alternatives.
+						49 text Load a case to explore linked MRI views, source annotations and complete instrument geometry.
+						50 button Open a case
+						51 button Explore the synthetic fixture
+					52 text Linked physical coordinates · RAS+ mm Anatomy focus may crop instruments
+					53 tab group Planning workflows
+						54 tab (selected) Routes, Value: 1
+						55 tab (settable, integer) Refine, Value: 0
+					56 container Routes
+						57 text INSTRUMENT-AWARE SEARCH
+						58 heading Compare the alternatives
+							59 text Compare the alternatives
+						60 text Inspect modeled access under shared geometric assumptions.
+						61 container
+							62 disclosure triangle Search settings
+								63 text Search settings
+							64 text Instrument configuration
+							65 pop up button Instrument configuration, Value: Compare both generic tools
+								66 (selected) Compare both generic tools
+							67 text Generic research geometry · whole shaft and active tip
+							68 button (disabled) Generate candidate routes
+						69 pop up button Description: Candidate category, Value: Retained alternatives
+							70 (selected) Retained alternatives
+						71 text 0
+						72 container
+							73 text A
+							74 pop up button (disabled) Description: Primary route A, Value: Select a route
+						75 container
+							76 text B
+							77 pop up button (disabled) Description: Comparison route B, Value: Add a comparison
+						78 heading Open a case to begin
+							79 text Open a case to begin
+						80 text Use Open case or Import MRI to inspect source imaging and target annotations.
+					81 text Research use only
+					82 text Clinical outcomes are not predicted. Functional and vascular anatomy remain unassessed.
+					83 text Local workspace · Open imaging to begin
+					84 text RAS+ · millimeters
+	85 close button
+	86 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	87 minimize button
+88 menu bar
+	89 RessectionLab
+	90 File
+	91 Edit
+	92 View
+	93 Window
+
+The focused UI element is 3 HTML content RessectionLab, URL: file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/dist/index.html

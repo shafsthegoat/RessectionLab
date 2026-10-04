@@ -778,3 +778,29 @@ selected-route and policy-profile compatibility tests. Independent native replay
 passed on the analytic fixture. No patient execution, training or throughput
 claim is made. Source, limits and review records are in
 `docs/native-axis-adapter-design.md` and `artifacts/native-axis-independent-v1/`.
+
+## October 4, 2026 — native guidance correction and packaged dependency notices
+
+The notice-bearing `bee43c9` renderer passed 142 desktop checks, real-case
+search (54 alternatives), estimated-support guidance, cleared A/B guidance,
+blocked full-head guidance, minimum-width motor-prior inspection and source
+restoration. Native screenshots exposed two overlapping unloaded welcome
+messages. That failure is retained. A regression using the actual React App
+reproduced it; the shell now owns the unloaded welcome and mounts the viewer
+when a case exists.
+
+The corrected `100865f` renderer passed all 143 desktop checks and its production
+build. Native inspection confirmed the fix at 1460 and 1050 points, then loaded
+the actual UCSF case, displayed the motor prior at the declared view-only
+landmark (0.9969), and restored source MRI. The renderer digest is `34285015…`;
+71 captured source files match the exact commit. All 2,809 numerical payload
+entries and 292 notice-tree entries match the retained engine/capture. The
+engine remains `85a92eff…` from `0b4e334`; later experimental adapter/learner
+changes were not added to this package. Local ad hoc strict signature checking
+passed. Native verification ran no training and opened no final worlds.
+
+Available upstream notice text is now inside the actual app and travels with
+it. Two exact-source notice gaps remain explicit; this is not distribution
+compliance or notarization approval. The original visual defect, corrected
+screenshots, native receipts and exact package identities are retained under
+`artifacts/dependency-notices-v1/`.

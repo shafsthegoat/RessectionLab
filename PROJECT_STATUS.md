@@ -33,14 +33,20 @@ bindings, and unchanged planning inputs. They remain view-only population
 evidence requiring alignment review. Their Electron controls now display one
 selected layer with separate atlas coverage, scalar/binary sampling and cursor
 values. Source restoration, stale loads and case changes clear the layer.
-All 135 desktop checks and the production build pass after removing an unsafe
+All 143 desktop checks and the production build pass after removing an unsafe
 source-image hash cache, correcting float32 atlas boundary sampling and adding
-context-aware route-comparison guidance. The new guidance awaits native package
-verification; the existing verified app is identified below. An
+context-aware route-comparison guidance. Native inspection caught overlapping
+unloaded welcome text; a regression test and shell correction now pass at both
+1460- and 1050-point window widths. The final notice-bearing renderer is
+`34285015…` from `100865f`, with the unchanged verified `85a92eff…` engine. Its
+source, complete engine payload and packaged upstream notices match the captured
+bytes. Loaded-case guidance, real search, motor-prior inspection and source
+restoration pass; screenshots and receipts are in `artifacts/dependency-notices-v1/`.
+Two notice-source completeness gaps and distribution signing remain open. An
 independent actual GPU probe passes 487 cases, with the earlier failures retained.
 The new complete engine and renderer passed native inspection. All seven layers,
 covered zero, positive values, outside/incomplete support, minimum-width layouts,
-save/reopen and historical checked replay were exercised. Final renderer
+save/reopen and historical checked replay were exercised. The preceding renderer
 `762973e2…` from `c194a8b` repeats the corrected sampler and source-restoration
 checks with engine `85a92eff…` from the verified `0b4e334` Python snapshot.
 Later experimental learning changes are not in this app snapshot. Native
@@ -238,7 +244,15 @@ and existing procedural checkpoints and feature-unit gates remain unchanged.
 
 ## Validation record
 
-The latest root integrated run passed **794 tests in 176.14 seconds**, with four
+The latest root integrated run at immutable `100865f` passed **914 tests with
+one failure in 171.74 seconds** and four existing DIPY warnings. Its 2,601
+baseline files stayed byte-identical. A historical nonpatient orchestration
+fixture still supplies the current registry to an older frozen declaration; the
+production source check correctly refuses the newly extended registry. A
+test-only repair is under review. Full negative evidence is retained in
+`artifacts/validation/integrated-axis-v1/attempt-01/`.
+
+The preceding complete run passed **794 tests in 176.14 seconds**, with four
 existing DIPY basis-deprecation warnings, from an immutable archive of `0bffeaa`.
 Its bytes stayed unchanged throughout testing. The real public-case preflight
 also passed both policy profiles and all three seeds with zero gradients before
@@ -247,8 +261,8 @@ registered feature-unit execution. Exact identities and results are in
 743-pass/one-failure sweep is retained: its orchestration fixture needed to
 isolate a newly added earlier preflight, while production rejection was correct.
 The test-only repair passed focused checks before the earlier 749-pass sweep and
-this latest complete validation. The new standalone proposal module is outside
-this archived test snapshot and is being independently reviewed.
+this latest complete validation. The newer standalone provider and axis adapter have separate independent
+reviews and are included in the latest integrated attempt.
 Structural adversarial checks found
 and fixed metadata precedence, mask-enlargement and provenance problems;
 their focused checks passed before each incremental commit. Native
@@ -266,7 +280,8 @@ See `EXPERIMENT_LOG.md` for executed experiments, including negative results.
 The Qt prototype passed its initial standalone runtime and GUI checks. Its next
 build was stopped following the user's Electron decision. The React/Electron
 package passed its own imaging/search checks and 31 main-process boundary and
-lifecycle tests. The current 73 renderer tests and 31 viewer tests cover source
+lifecycle tests. The current snapshot passes 38 main-process, 74 renderer and
+31 viewer checks covering source
 hydration, evidence status, A/B identity, independently accepted removal overlays
 and population-prior sampling. The complete
 training bundle has its own source-bound verification receipts. Qt results do

@@ -1,0 +1,154 @@
+Window: "RessectionLab", App: RessectionLab.
+0 standard window RessectionLab, Secondary Actions: Raise
+	1 container RessectionLab
+		2 container
+			3 HTML content RessectionLab, URL: file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/dist/index.html
+				4 container
+					5 text Ressection Lab Patient-specific planning Research workspace
+					6 button Open case ⌘O
+						7 text Open case
+						8 text ⌘O
+					9 button Import MRI
+					10 button Save
+					11 container Workspace navigation
+						12 button Toggle case and evidence panel
+						13 button Focus route comparison
+					14 text CASE & EVIDENCE
+					15 button Collapse case panel
+					16 heading BTC-ds001226-sub-PAT05-preop, Value: 1
+						17 text BTC-ds001226-sub-PAT05-preop
+					18 text Annotation-assisted structural workspace
+					19 container
+						20 heading Source imaging 01, Value: 2
+							21 text Source imaging 01
+						22 text T1w 160 × 256 × 256 voxels 1.0 × 1.0 × 1.0 mm ·  RAS+
+					23 container
+						24 heading Target annotations 01, Value: 2
+							25 text Target annotations 01
+						26 checkbox Fractional Source Target Threshold Scenario 11.44 mL · threshold-derived annotation, Value: 1
+						27 text Fractional Source Target Threshold Scenario
+						28 text 11.44  mL · threshold-derived annotation Overlay opacity 32 %
+						29 slider Overlay opacity 32%, Value: 0.32, Secondary Actions: Increment, Decrement
+					30 container
+						31 heading Structural proposals 02, Value: 2
+							32 text Structural proposals 02
+						33 text Brain envelope Model estimate Review required
+						34 toggle button View on MRI, Value: 0
+						35 text Brain envelope · no CSF Model estimate Review required 538  supplied annotation voxels lie outside this estimate.
+						36 toggle button View on MRI, Value: 0
+						37 text Stored separately from working anatomy. A whole-brain envelope does not certify cortex or permit cortical access.
+					38 container
+						39 heading Functional evidence, Value: 2
+							40 text Functional evidence
+						41 text Motor network Unassessed Language network Unassessed Missing evidence remains unknown. Population priors require registration and review.
+					42 pop up button Inspect evidence
+					43 text Local processing · source preserved Workspace Route comparison
+					44 heading Anatomy, in context, Value: 2
+						45 text Anatomy, in context
+					46 container Camera framing
+						47 toggle button Focus anatomy, Value: 1
+						48 toggle button Fit instruments, Value: 0
+					49 container Linked patient imaging workspace
+						50 toolbar Imaging layout and 3D controls
+							51 container View layout
+								52 toggle button 3D focus, Value: 1
+								53 toggle button MRI review, Value: 0
+							54 toggle button MRI plane off, Help: Show or hide the source MRI plane in 3D; linked MRI views remain visible, Value: 0
+							55 pop up button Description: MRI plane shown in 3D, Value: Axial
+								56 (selected) Axial
+							57 button Description: Fit 3D view, Help: Fit anatomy and the selected 3D camera preset
+								58 text ↺ 
+								59 text Fit 3D
+						60 container
+							61 text 3D Spatial workspace RAS · mm
+							62 container 3-D source anatomy. Drag to rotate, scroll to zoom, double-click to set linked cursor.
+								63 text Source annotation surfaces
+								64 container 3-D patient coordinates: R is right, A anterior, S superior
+									65 text R A S
+									66 text Patient axes
+								67 container
+									68 text Drag to rotate  ·  Scroll to zoom Double-click to link cursor
+						69 container
+							70 text Axial 8.8 mm
+							71 toggle button Description: Expand Axial MRI, Value: 0
+							72 container Axial source MRI, neurological convention, slice position 8.8 millimeters. Click to set cursor; scroll or arrow keys change slice.
+								73 text L
+								74 text R
+								75 text A
+								76 text P
+								77 text 20
+								78 text  mm
+								79 text SOURCE MRI
+						80 container
+							81 text Coronal 25.7 mm
+							82 toggle button Description: Expand Coronal MRI, Value: 0
+							83 container Coronal source MRI, neurological convention, slice position 25.7 millimeters. Click to set cursor; scroll or arrow keys change slice.
+								84 text L
+								85 text R
+								86 text S
+								87 text I
+								88 text 20
+								89 text  mm
+								90 text SOURCE MRI
+						91 container
+							92 text Sagittal -29.2 mm
+							93 toggle button Description: Expand Sagittal MRI, Value: 0
+							94 container Sagittal source MRI, neurological convention, slice position -29.2 millimeters. Click to set cursor; scroll or arrow keys change slice.
+								95 text P
+								96 text A
+								97 text S
+								98 text I
+								99 text 20
+								100 text  mm
+								101 text SOURCE MRI
+						102 text Linked views
+						103 text RAS
+						104 text -29.2 / 25.7 / 8.8  mm
+						105 container
+							106 text Contrast
+							107 slider Description: Source MRI window width, Value: 1, Secondary Actions: Increment, Decrement
+						108 text Neurological convention
+					109 text Linked physical coordinates · RAS+ mm Anatomy focus may crop instruments
+					110 tab group Planning workflows
+						111 tab (selected) Routes, Value: 1
+						112 tab (settable, integer) Refine, Value: 0
+					113 container Routes
+						114 text INSTRUMENT-AWARE SEARCH
+						115 heading Compare the alternatives, Value: 2
+							116 text Compare the alternatives
+						117 text Inspect modeled access under shared geometric assumptions.
+						118 container
+							119 disclosure triangle Search settings
+								120 text Search settings
+							121 text Instrument configuration
+							122 pop up button Instrument configuration, Value: Compare both generic tools
+								123 (selected) Compare both generic tools
+							124 text Generic research geometry · whole shaft and active tip Full-head MRI requires reviewed research support before hypothetical route generation.
+							125 button (disabled) Generate candidate routes
+						126 pop up button Description: Candidate category, Value: Retained alternatives
+							127 (selected) Retained alternatives
+						128 text 0
+						129 container
+							130 text A
+							131 pop up button (disabled) Description: Primary route A, Value: Select a route
+						132 container
+							133 text B
+							134 pop up button (disabled) Description: Comparison route B, Value: Add a comparison
+						135 heading Access support needs review, Value: 3
+							136 text Access support needs review
+						137 text Full-head MRI requires reviewed research support before hypothetical route generation.
+					138 text Research use only
+					139 text Clinical outcomes are not predicted. Functional and vascular anatomy remain unassessed.
+					140 text BTC-ds001226-sub-PAT05-preop ready · Source imaging preserved
+					141 text RAS -29.2 / 25.7 / 8.8 mm
+	142 close button
+	143 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	144 minimize button
+145 menu bar
+	146 RessectionLab
+	147 File
+	148 Edit
+	149 View
+	150 Window
+
+The focused UI element is 3 HTML content RessectionLab, URL: file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/dist/index.html

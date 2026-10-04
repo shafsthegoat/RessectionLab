@@ -326,9 +326,38 @@ software behavior, not anatomical accuracy or clinical readiness. Local deep
 strict signature verification passed; distribution signing and notarization
 remain unperformed.
 
-The next packaging source includes reproducible upstream notices inside
-`Contents/Resources/ThirdPartyNotices`, with their hashes in the build manifest.
-See [dependency-notices.md](dependency-notices.md) for collection prerequisites,
-the exact verified-engine inventory and unresolved upstream material. This
-source change has not yet been rebuilt into the validated app described above;
-copying available notices does not establish complete distribution compliance.
+The current notice-bearing application uses exact renderer commit `100865f`,
+with capture `34285015…` and archive `b99ba3da…`. Its 143 aggregate desktop
+checks and production build passed. The complete numerical payload remains
+identical to the verified `0b4e334` engine: executable `85a92eff…`, original
+source digest `afd24365…`. No later experimental learner was captured.
+
+The actual `.app` now contains `Contents/Resources/ThirdPartyNotices`, outside
+`app.asar`. All 292 notice entries and 2,809 numerical payload entries match
+the immutable capture after local ad hoc signing. The inventories cover 28
+actual frozen Python distribution owners, 35 renderer runtime packages and
+complete Electron/Chromium upstream notices. See
+[dependency-notices.md](dependency-notices.md) for the collection prerequisites
+and two unresolved source-completeness gaps. Notice capture does not establish
+complete distribution compliance, and notarization remains unperformed.
+
+`artifacts/dependency-notices-v1/` retains both builds and their identities.
+The initial `bee43c9` native check confirmed context-specific unloaded,
+estimated-support, blocked full-head and cleared-selection guidance. Real
+UCSF search evaluated 54 candidates; clearing both choices prompted selecting
+a route. PAT05 full-head route search remained disabled pending reviewed
+support. Motor atlas inspection at RAS (-173, 137, 112) mm displayed 0.9969
+with patient function unknown, at 1460- and 1050-point window widths. Source
+restoration cleared the overlay and preserved the cursor and annotations.
+That check also found overlapping unloaded welcome text; the partial receipt
+and screenshot preserve the failure.
+
+The corrected `100865f` app repeated native startup at both widths, the
+no-case to actual-MRI transition, motor inspection and source restoration.
+The welcome now appears once. No renderer warning, shader error or crash was
+observed. `native-workflow-final.json` and
+`app-capture-verification-final.json` record the focused passing scope. The
+historical seven-map/native-replay evidence remains associated with its
+original package; it was not represented as a full repetition here. No new
+patient training or final evaluation was invoked. Previous application
+bundles remain recoverable through the recorded publication paths.
