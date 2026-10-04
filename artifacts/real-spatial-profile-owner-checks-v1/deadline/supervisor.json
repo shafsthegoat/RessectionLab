@@ -1,0 +1,16 @@
+{
+  "automatic_retry": false,
+  "declaration_sha256": "frozen-declaration",
+  "measurement_timeout_seconds": 2,
+  "returncode": -15,
+  "rss_samples": 3,
+  "rss_scope": "worker process RSS; native work uses threads, not subprocess workers",
+  "sampled_peak_rss_bytes": 15548416,
+  "sampling_interval_seconds": 0.2,
+  "sampling_limit": "transient peaks between samples can be missed",
+  "seconds": 0.6816179580055177,
+  "status": "failed",
+  "termination_grace_seconds": 2,
+  "termination_reason": "parent_wall_budget_exceeded",
+  "timed_out": true
+}

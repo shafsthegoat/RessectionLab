@@ -2,6 +2,7 @@
 import importlib.util
 import json
 from pathlib import Path
+import sys
 
 import pytest
 
@@ -88,3 +89,35 @@ def test_committed_history_is_persisted_before_independent_rejection():
     assert any(row.get("latest_transition_info", {}).get("committed") for row in records)
     assert any(row.get("metrics", {}).get("history") for row in records)
     assert records[-1]["independent_geometry_check"]["failures"] == ("deliberate_checker_rejection",)
+
+
+def test_live_memory_watchdog_stops_child_and_preserves_partial_output(tmp_path):
+    child = (
+        "import pathlib,time; "
+        "pathlib.Path('partial.json').write_text('{\"phase\":\"before_allocation\"}'); "
+        "payload=bytearray(96*1024*1024); print('allocated',flush=True); time.sleep(20)"
+    )
+    # Only the child changes directory, leaving concurrently running tests alone.
+    command = [sys.executable, "-c", "import os; os.chdir(" + repr(str(tmp_path)) + "); " + child]
+    result = runner.supervise_worker(command, tmp_path,
+        {"max_wall_seconds": 5, "max_rss_bytes": 48 * 1024 * 1024}, "frozen-declaration")
+    assert result["termination_reason"] == "parent_sampled_rss_budget_exceeded"
+    assert result["sampled_peak_rss_bytes"] > 48 * 1024 * 1024
+    assert result["status"] == "failed" and result["returncode"] != 0
+    assert result["seconds"] < 5
+    assert json.loads((tmp_path / "partial.json").read_text()) == {"phase": "before_allocation"}
+    assert json.loads((tmp_path / "supervisor-failure.json").read_text()) == result
+    assert result["declaration_sha256"] == "frozen-declaration"
+    assert "allocated" in (tmp_path / "worker.log").read_text()
+
+
+def test_live_deadline_watchdog_stops_child_and_retains_logs(tmp_path):
+    result = runner.supervise_worker([sys.executable, "-c",
+        "import time; print('child-started',flush=True); time.sleep(20)"], tmp_path,
+        {"max_wall_seconds": .6, "max_rss_bytes": 512 * 1024 * 1024}, "frozen-declaration")
+    assert result["termination_reason"] == "parent_wall_budget_exceeded"
+    assert result["timed_out"] and result["returncode"] != 0
+    assert .6 <= result["seconds"] < 5
+    assert result["rss_samples"] > 0
+    assert json.loads((tmp_path / "supervisor-failure.json").read_text()) == result
+    assert "child-started" in (tmp_path / "worker.log").read_text()

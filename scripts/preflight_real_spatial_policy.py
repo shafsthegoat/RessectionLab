@@ -10,8 +10,10 @@ import argparse
 from dataclasses import asdict
 import hashlib
 import json
+import os
 from pathlib import Path
 import resource
+import signal
 import subprocess
 import sys
 import time
@@ -114,13 +116,24 @@ def peak_rss_bytes():
     return int(peak if sys.platform == "darwin" else peak * 1024)
 
 
-def episode(base, policy, generator, *, stochastic, profile_actions=False, checkpoint=lambda row: None):
+def episode(base, policy, generator, *, stochastic, profile_actions=False, checkpoint=lambda row: None,
+            diagnostics=False, profiler=None):
     from resectionlab.spatial_policy import SpatialTransition, parameter_hash
     before = parameter_hash(policy)
     started = time.perf_counter()
     task = base.fresh()
     setup_seconds = time.perf_counter() - started
     transitions, decisions = [], []
+    coverage = None
+    if diagnostics:
+        from resectionlab.spatial_policy_diagnostics import spatial_coverage
+
+        def covered(observation):
+            return spatial_coverage(observation, source_shape=task.case.structural_intensity.shape,
+                source_affine=task.case.affine_ras_mm, nominal_target=task.case.nominal_target,
+                ray_samples=policy.config.ray_samples)
+
+        coverage = covered(task.observation())
     while not task.terminated:
         observation_start = time.perf_counter()
         observation = task.observation()
@@ -139,6 +152,13 @@ def episode(base, policy, generator, *, stochastic, profile_actions=False, check
             "candidate_count_including_stop": len(observation.action_ids),
             "observation_fingerprint": observation.fingerprint, "observation_seconds": observation_seconds,
             "forward_seconds": forward_seconds, "native_step_seconds": time.perf_counter() - transition_start})
+        if diagnostics:
+            diagnostic_start = time.perf_counter()
+            decisions[-1]["before_observation_coverage"] = coverage
+            coverage = covered(result.observation)
+            decisions[-1]["after_observation_coverage"] = coverage
+            decisions[-1]["after_candidate_inventory"] = task.candidate_inventory()
+            decisions[-1]["diagnostic_seconds"] = time.perf_counter() - diagnostic_start
         checkpoint({"status": "collecting", "decisions": decisions,
                     "committed_transition_count": len(transitions), "latest_transition_info": result.info})
     metrics = task.metrics()
@@ -146,7 +166,11 @@ def episode(base, policy, generator, *, stochastic, profile_actions=False, check
     checkpoint({"status": "awaiting_independent_audit", "metrics": metrics, "decisions": decisions,
                 "online_seconds": online_seconds})
     check_start = time.perf_counter()
-    checked = task.independent_geometry_check()
+    if profiler is None:
+        checked = task.independent_geometry_check()
+    else:
+        with profiler.phase(profiler.phase_name + ":independent_audit"):
+            checked = task.independent_geometry_check()
     audit = asdict(checked)
     checkpoint({"independent_geometry_check": audit})
     if not checked.feasible:
@@ -162,11 +186,19 @@ def episode(base, policy, generator, *, stochastic, profile_actions=False, check
 
 def worker(declaration, output):
     validate_declaration(declaration)
+    from resectionlab.native_resection import NativeResectionEngine
+    from resectionlab.spatial_policy_diagnostics import NativePreviewProfiler
+    with NativePreviewProfiler(NativeResectionEngine) as profiler:
+        return _worker_with_profiler(declaration, output, profiler)
+
+
+def _worker_with_profiler(declaration, output, profiler):
     import torch
     from resectionlab.geometry import AccessWindow, ToolGeometry
     from resectionlab.native_spatial_task import native_spatial_task_from_case
     from resectionlab.spatial_policy import (SpatialPolicy, SpatialPolicyConfig,
         gradient_step, parameter_hash, reinforce_loss)
+    from resectionlab.spatial_policy_diagnostics import nominal_depth_coverage, spatial_coverage
 
     started = time.perf_counter()
     settings = declaration["settings"]
@@ -177,21 +209,36 @@ def worker(declaration, output):
     torch.use_deterministic_algorithms(True)
     torch.manual_seed(settings["seed"])
     policy = SpatialPolicy(SpatialPolicyConfig(**declaration["policy_config"]))
+    if policy.architecture_hash != declaration["expected_policy_architecture_hash"]:
+        raise ValueError("Policy architecture differs from the declared spatial/candidate model")
     generator = torch.Generator().manual_seed(settings["seed"] + 100000)
     preparation_start = time.perf_counter()
-    task = native_spatial_task_from_case(case, access=AccessWindow(**declaration["access"]),
-        tools=tuple(ToolGeometry(**row) for row in declaration["tools"]),
-        max_steps=settings["max_steps"], track=declaration["track"], **declaration.get("adapter_options", {}))
+    with profiler.phase("initial_task_preparation"):
+        task = native_spatial_task_from_case(case, access=AccessWindow(**declaration["access"]),
+            tools=tuple(ToolGeometry(**row) for row in declaration["tools"]),
+            max_steps=settings["max_steps"], track=declaration["track"], **declaration.get("adapter_options", {}))
     preparation_seconds = time.perf_counter() - preparation_start
+    reward_weights = asdict(task.reward_spec)
+    if any(declaration["objective"].get(key) != value for key, value in reward_weights.items()):
+        raise ValueError("Executed geometric objective differs from its declared physical weights")
     receipt = {"version": VERSION, "mode": declaration["mode"], "subject": declaration["subject"],
         "patient_group": group, "independent_human_patients": 1, "population_generalization_measured": False,
         "source_sha256": sources, "input_seconds": input_seconds, "preparation_seconds": preparation_seconds,
-        "architecture": policy.architecture_record(), "initial_parameter_hash": parameter_hash(policy),
+        "architecture": policy.architecture_record(), "architecture_hash": policy.architecture_hash,
+        "reward_weights": reward_weights, "initial_parameter_hash": parameter_hash(policy),
         "optimizer_updates": 0, "episodes": [], "scope": "real anatomy; simulated actions and outcomes; pipeline preflight only"}
+    receipt["initial_task_metrics"] = task.metrics()
+    initial_observation = task.observation()
+    receipt["initial_candidate_inventory"] = task.candidate_inventory()
+    receipt["nominal_depth_coverage"] = nominal_depth_coverage(task.case)
+    receipt["initial_observation_coverage"] = spatial_coverage(initial_observation,
+        source_shape=task.case.structural_intensity.shape, source_affine=task.case.affine_ras_mm,
+        nominal_target=task.case.nominal_target, ray_samples=policy.config.ray_samples)
     write_json(output / "declaration.json", declaration)
 
     def preserve():
         receipt.update(elapsed_seconds=time.perf_counter() - started, peak_rss_bytes=peak_rss_bytes())
+        receipt["native_preview_cost"] = profiler.snapshot()
         write_json(output / "receipt.json", receipt)
         if receipt["peak_rss_bytes"] > settings["max_rss_bytes"]:
             raise RuntimeError("Declared real preflight memory limit exceeded")
@@ -199,6 +246,10 @@ def worker(declaration, output):
             raise RuntimeError("Declared real preflight wall limit exceeded")
 
     preserve()
+    if declaration["mode"] == "one_update" and len(initial_observation.action_ids) <= 1:
+        receipt.update(status="abstained", reason="no_initial_legal_nonstop_action", optimizer_updates=0)
+        preserve()
+        return
 
     def run_episode(phase, *, stochastic=False, profile_actions=False):
         saved = {"phase": phase, "status": "starting"}
@@ -209,8 +260,9 @@ def worker(declaration, output):
             saved.update(row)
             preserve()
 
-        transitions, row = episode(task, policy, generator, stochastic=stochastic,
-            profile_actions=profile_actions, checkpoint=checkpoint)
+        with profiler.phase(phase):
+            transitions, row = episode(task, policy, generator, stochastic=stochastic,
+                profile_actions=profile_actions, checkpoint=checkpoint, diagnostics=True, profiler=profiler)
         saved.update(row, status="complete")
         preserve()
         return transitions
@@ -239,6 +291,74 @@ def worker(declaration, output):
     preserve()
 
 
+def supervise_worker(command, output, settings, declaration_sha256):
+    """Enforce sampled worker RSS and wall limits while native work is running."""
+    output = Path(output)
+    started, maximum, samples, reason = time.perf_counter(), 0, 0, None
+    environment = {**os.environ, "OMP_NUM_THREADS": "1", "OPENBLAS_NUM_THREADS": "1",
+                   "MKL_NUM_THREADS": "1", "VECLIB_MAXIMUM_THREADS": "1", "NUMEXPR_NUM_THREADS": "1"}
+
+    def stop(process):
+        if process.poll() is not None:
+            return
+        try:
+            os.killpg(process.pid, signal.SIGTERM)
+        except ProcessLookupError:
+            return
+        try:
+            process.wait(timeout=2)
+        except subprocess.TimeoutExpired:
+            try:
+                os.killpg(process.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+            process.wait(timeout=2)
+
+    with (output / "worker.log").open("w") as log:
+        process = subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT,
+                                   env=environment, start_new_session=True)
+        try:
+            while process.poll() is None:
+                elapsed = time.perf_counter() - started
+                if elapsed >= settings["max_wall_seconds"]:
+                    reason = "parent_wall_budget_exceeded"
+                    break
+                measurement = subprocess.run(["ps", "-o", "rss=", "-p", str(process.pid)],
+                    capture_output=True, text=True, timeout=2, check=False)
+                try:
+                    current = int(measurement.stdout.strip()) * 1024
+                except ValueError:
+                    if process.poll() is None:
+                        raise RuntimeError("Worker RSS unavailable while process remains running")
+                    current = 0
+                maximum, samples = max(maximum, current), samples + 1
+                if current > settings["max_rss_bytes"]:
+                    reason = "parent_sampled_rss_budget_exceeded"
+                write_json(output / "supervisor-progress.json", {"pid": process.pid,
+                    "elapsed_seconds": time.perf_counter() - started, "sampled_peak_rss_bytes": maximum,
+                    "samples": samples, "termination_reason": reason, "declaration_sha256": declaration_sha256})
+                if reason:
+                    break
+                time.sleep(.2)
+        except BaseException as error:
+            reason = "parent_supervision_error:" + type(error).__name__ + ":" + str(error)
+        finally:
+            stop(process)
+        code = process.wait()
+    result = {"status": "complete" if code == 0 and reason is None else "failed",
+        "returncode": code, "timed_out": reason == "parent_wall_budget_exceeded",
+        "termination_reason": reason, "seconds": time.perf_counter() - started,
+        "sampled_peak_rss_bytes": maximum, "rss_samples": samples,
+        "rss_scope": "worker process RSS; native work uses threads, not subprocess workers",
+        "sampling_interval_seconds": .2, "measurement_timeout_seconds": 2,
+        "termination_grace_seconds": 2, "sampling_limit": "transient peaks between samples can be missed",
+        "automatic_retry": False, "declaration_sha256": declaration_sha256}
+    write_json(output / "supervisor.json", result)
+    if result["status"] != "complete":
+        write_json(output / "supervisor-failure.json", result)
+    return result
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--declaration", type=Path, required=True)
@@ -264,23 +384,12 @@ def main():
     args.output.mkdir(parents=True)
     snapshot = args.output / "declaration-input.json"
     snapshot.write_bytes(declaration_bytes)
-    started = time.perf_counter()
-    timed_out, code = False, None
-    with (args.output / "worker.log").open("w") as log:
-        try:
-            completed = subprocess.run([sys.executable, str(Path(__file__).resolve()), "--worker",
-                "--declaration", str(snapshot.resolve()), "--expected-declaration-sha256", declaration_sha256,
-                "--output", str(args.output.resolve())],
-                stdout=log, stderr=subprocess.STDOUT, timeout=declaration["settings"]["max_wall_seconds"])
-            code = completed.returncode
-        except subprocess.TimeoutExpired:
-            timed_out = True
-    write_json(args.output / "supervisor.json", {"returncode": code, "timed_out": timed_out,
-        "seconds": time.perf_counter() - started, "automatic_retry": False,
-        "declaration_sha256": declaration_sha256})
+    result = supervise_worker([sys.executable, str(Path(__file__).resolve()), "--worker",
+        "--declaration", str(snapshot.resolve()), "--expected-declaration-sha256", declaration_sha256,
+        "--output", str(args.output.resolve())], args.output, declaration["settings"], declaration_sha256)
     write_json(args.output / "output-sha256.json", {path.name: sha256(path) for path in sorted(args.output.iterdir())
         if path.is_file() and path.name != "output-sha256.json"})
-    if timed_out or code != 0:
+    if result["status"] != "complete":
         raise SystemExit(1)
 
 

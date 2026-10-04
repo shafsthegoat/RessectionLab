@@ -1,0 +1,49 @@
+{
+  "schema": "spatial-policy-diagnostics-independent-review-v1",
+  "status": "no_blocking_findings_in_scoped_profile_delta",
+  "tested_checkout_head": "3fc3c90adba8de4ee69de9edfbd269f6cbeb8d47",
+  "focused_tests": {
+    "passed": 6,
+    "failed": 0,
+    "pytest_seconds": 1.12,
+    "process_elapsed_seconds": 1.5876115419669077,
+    "source_unchanged": true
+  },
+  "static_declaration_checks": {
+    "passed": 14,
+    "failed": 0,
+    "source_count": 53,
+    "declaration_sha256": "b6df568ba40a2102be633acc1c896985b692e44a19313857021144b37c13c732"
+  },
+  "source_and_tests_sha256": {
+    "scripts/preflight_real_spatial_policy.py": "2e6ed1bd7da3d60b2ff73c00f149360a6858cedd2b009c95f23b6a1440cae5aa",
+    "src/resectionlab/spatial_policy_diagnostics.py": "2f352e4e803c7b338faf4d0f801d40f7611eb39b65c2afa60804424c29b89bfd",
+    "tests/test_spatial_policy_diagnostics.py": "5b7869b5f77dc269b45d7da83945aa37a5d4ca9c1dd9092f8fe94cd76733ffb4",
+    "tests/test_real_spatial_preflight.py": "282aea5bb9f3f5c2ea7cdf0323ec626e09fc505843e0203137b44314c575170c",
+    "tests/test_spatial_policy_diagnostics_review.py": "b71ab740f85f6b336fad2f10ecabb11ea56491244a94c631ba3ed7a77dd15c3e",
+    "manifests/experiments/pat05-real-spatial-profile-v1.json": "b6df568ba40a2102be633acc1c896985b692e44a19313857021144b37c13c732"
+  },
+  "evidence_sha256": {
+    "declaration-review.json": "f860f86fa21b041e5201e9429fc7665d0c686eaafdd88262e7144dbf73f66b54",
+    "final-test-receipt.json": "ed3f90e9651f3d1a92b045af3ef92623079ab7e8afabb89db32ee4cc0c1cf480",
+    "final-test.log": "609c5f7496c9a43bbf924e6da6ea0a7a93582d21142b13476d8cece179f8d3d9",
+    "geometry-test.log": "1c31650fa6d3e1e9c6c1810bd21fe745198f8a1bc02524dc07c137db67d88964"
+  },
+  "findings": [
+    "Oblique/reflected source and crop affines preserve exact center bounds; material outside rays remain outside.",
+    "Continuous segment coverage differs correctly from sampled-point fraction.",
+    "Depth diagnostics use physical millimeters and declared tip radius, with explicit geometric upper-bound limitations.",
+    "Profiler preserves call arguments, result and exception identity, nested phases, detached counters and method restoration.",
+    "Fake profile worker cannot enter Adam, loss, gradient or checkpoint paths.",
+    "Unavailable RSS sampling triggers process-group termination and a durable failure record; command/declaration identity is retained.",
+    "Actual declaration matches original TRAIN role and reviewed input-binding, access/options, unchanged physical objective/tools and candidate-critic metadata."
+  ],
+  "execution_scope": "Artificial arrays and mocked worker/supervisor tests; JSON/source-only real declaration review. No patient image or bundle opened, model instantiated, real profile, training or evaluation run.",
+  "limitations": [
+    "RSS is sampled on the worker process at 0.2 second intervals with 2 second measurement/termination grace; transient peaks may be missed.",
+    "Owner performed actual allocation/sleeping child watchdog tests; this independent review adds the mocked unavailable-measurement failure branch.",
+    "Shared-checkout focused tests, not a full immutable suite; root controls commit, full-suite completion and actual patient release.",
+    "The 32³ local crop covers 2786/11437 supplied target cells; no whole-tumor coverage, segmentation accuracy or clinical benefit is established."
+  ],
+  "new_source_archives_created": false
+}
