@@ -22,11 +22,13 @@ Median distance-kernel time per 1,024 boxes, two repetitions per phase:
 | Common translation of 1e9 mm | 55.411 ms | 3.992 ms | 55.492 ms |
 | Exact tangency | 49.582 ms | 1.690 ms | 49.425 ms |
 
-The contact helper is **not uniformly faster**. Large-coordinate contact calls
-took 60.14–60.77 ms because the conservative numerical guard invoked scalar
-fallback. Exact tangency with zero tolerance took 51.60 ms. With the original
+The contact helper's fallback cases lost the observed distance-kernel timing
+advantage. Large-coordinate contact calls took 60.14–60.77 ms. Exact tangency
+with zero tolerance took 51.60 ms. These negative observations are consistent
+with the conservative scalar fallback; invocation counts were not recorded.
+With the original
 1e-10/1e-9 contact tolerances, that tangency workload took 1.79/1.75 ms. These are
-single contact-call observations, not paired estimates or claims about complete
+single contact-call observations, not paired same-API estimates or claims about complete
 audit performance. The larger distance-kernel reductions exclude enumeration,
 coordinate transforms, frontier checks, full tools, and causal tissue histories.
 
