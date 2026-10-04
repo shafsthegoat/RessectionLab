@@ -1,0 +1,78 @@
+"""Real native updates reach the desktop only through an independent replay gate."""
+import copy
+
+import numpy as np
+import pytest
+
+from resectionlab.core import CaseData, SourceRef
+from resectionlab.geometry import AccessWindow
+from resectionlab.native_resection import NATIVE_GENERIC_TOOLS, NativeResectionConfig
+from resectionlab.native_simulation import NativeSequentialSimulator
+from resectionlab.native_refinement import (native_replay_mask, replay_artifact_hash,
+    run_native_refinement, validate_native_replay)
+
+
+@pytest.fixture
+def native_case(monkeypatch):
+    tissue = np.ones((5, 5, 4), bool)
+    target = np.zeros(tissue.shape, bool)
+    target[1:4, 1:4, 2:] = True
+    case = CaseData(case_id="desktop-native-fixture", mri=tissue.astype(np.float32),
+        compartments={"target": target}, affine=np.eye(4), brain_mask=tissue,
+        source_refs=(SourceRef("fixture", "synthetic://native-refinement", provenance="simulated"),))
+    def factory(case, **kwargs):
+        config = NativeResectionConfig(tissue, target.astype(np.int16), np.eye(4),
+            AccessWindow((2, 2, -.5), (0, 0, 1), 3.), NATIVE_GENERIC_TOOLS,
+            case.semantic_hash, "synthetic solid cube")
+        return NativeSequentialSimulator(config, [(2, 2, 3)], max_steps=kwargs["max_steps"],
+            max_actions=kwargs["max_actions"], cancelled=kwargs["cancelled"])
+    monkeypatch.setattr("resectionlab.native_simulation.make_native_patient_simulator", factory)
+    return case
+
+
+def test_actual_updates_and_source_grid_replay_are_certified(native_case, tmp_path):
+    report = run_native_refinement(native_case, tmp_path, budget_seconds=3., seed=11, max_steps=1)
+    assert report["gradient_steps"] > 0
+    assert report["actor_parameters_changed"] is True
+    assert report["role"] == "selection" and report["final_evaluation"] is False
+    assert report["replay_status"] == "accepted_independent_geometry"
+    replay = report["replay"]
+    assert validate_native_replay(native_case, replay)
+    removed = native_replay_mask(replay, len(replay["metrics"]["history"]))
+    assert removed.sum() == pytest.approx(replay["metrics"]["simulated_removed_target_volume_mm3"] +
+                                          replay["metrics"]["simulated_removed_normal_volume_mm3"])
+    changed = copy.deepcopy(replay)
+    changed["role"] = "final_evaluation"
+    changed["artifact_hash"] = replay_artifact_hash(changed)
+    with pytest.raises(ValueError, match="selection artifact"):
+        validate_native_replay(native_case, changed)
+    changed = copy.deepcopy(replay)
+    changed["metrics"]["simulated_removed_target_volume_mm3"] += 1
+    with pytest.raises(ValueError, match="changed after"):
+        validate_native_replay(native_case, changed)
+
+
+def test_cancelled_training_exposes_no_uncertified_replay_and_resumes(native_case, tmp_path):
+    state = {"cancelled": False}
+    first = run_native_refinement(native_case, tmp_path, budget_seconds=3., seed=11, max_steps=1,
+        cancelled=lambda: state["cancelled"], progress=lambda _: state.update(cancelled=True))
+    assert first["status"] == "cancelled" and first["gradient_steps"] == 2
+    assert first["replay"] is None
+    state["cancelled"] = False
+    resumed = run_native_refinement(native_case, tmp_path, budget_seconds=3., seed=11,
+                                    max_steps=1, resume=True)
+    assert resumed["gradient_steps"] >= first["gradient_steps"]
+    assert resumed["replay_status"] == "accepted_independent_geometry"
+
+
+def test_failed_independent_check_never_releases_native_replay(native_case, tmp_path, monkeypatch):
+    from resectionlab.evaluation import NativeRemovalAudit
+    def rejected(*args, **kwargs):
+        return NativeRemovalAudit(False, ("injected_independent_failure",), None, None, None,
+                                  0., 0., 0., native_case.semantic_hash, 1., 0)
+    monkeypatch.setattr("resectionlab.evaluation.independent_check_native_history", rejected)
+    report = run_native_refinement(native_case, tmp_path, budget_seconds=1., seed=11, max_steps=1)
+    assert report["replay"] is None
+    assert report["replay_status"] == "rejected_independent_geometry"
+    assert (tmp_path / "native-candidate-freeze.json").exists()
+    assert not (tmp_path / "native-selection-replay.json").exists()

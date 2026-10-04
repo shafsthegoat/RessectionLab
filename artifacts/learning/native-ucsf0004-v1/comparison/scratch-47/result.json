@@ -1,0 +1,92 @@
+{
+  "actor_parameters_changed": true,
+  "clinical_deficit_probability": null,
+  "completed_episodes": 11,
+  "decision_model_hash": "sha256:dd81bd59566ead4e42916c8ede3d48d5615837e523d23d359b268d9a90f63f0b",
+  "discarded_partial_batches": 1,
+  "elapsed_seconds": 30.013070333981887,
+  "episode_index": 12,
+  "gradient_steps": 5,
+  "initial_actor_hash": "sha256:4c16df6644e124b34c9a4d6e2f507b22de0ae4d83f1eec8de07ddd96ce0cedcc",
+  "initial_checkpoint_hash": "sha256:df38b5264d3ee1df4f133ea9e01d5d44e6d4fe896106e3696950fb9e4c19e215",
+  "initial_selection_return": 139.62,
+  "latest_actor_hash": "sha256:1acf8468077f4c4bb92a73cb992f9a039903b68a3a814be45e17bfebdcc6756c",
+  "latest_checkpoint_hash": "sha256:334a8c452bbbec5196acc4afafab774ca8e44418889cbbe1c66c6744585aa791",
+  "learning_improvement_guaranteed": false,
+  "optimization_environment_steps": 30,
+  "optimization_history": [
+    {
+      "actor_gradient_norm_after_clip": 3.8753747177258964,
+      "gradient_norm_before_clip": 803.5872802734375,
+      "gradient_steps": 1,
+      "loss": 27213.14453125,
+      "mean_return": 192.415,
+      "optimization_environment_steps": 6
+    },
+    {
+      "actor_gradient_norm_after_clip": 2.90035395358245,
+      "gradient_norm_before_clip": 1141.3837890625,
+      "gradient_steps": 2,
+      "loss": 60414.140625,
+      "mean_return": 245.13,
+      "optimization_environment_steps": 12
+    },
+    {
+      "actor_gradient_norm_after_clip": 2.954211736468893,
+      "gradient_norm_before_clip": 860.8883056640625,
+      "gradient_steps": 3,
+      "loss": 39607.5546875,
+      "mean_return": 192.43,
+      "optimization_environment_steps": 18
+    },
+    {
+      "actor_gradient_norm_after_clip": 4.703324559740768,
+      "gradient_norm_before_clip": 229.591796875,
+      "gradient_steps": 4,
+      "loss": 717.2442016601562,
+      "mean_return": 33.4,
+      "optimization_environment_steps": 24
+    },
+    {
+      "actor_gradient_norm_after_clip": 4.472151766982075,
+      "gradient_norm_before_clip": 339.2857360839844,
+      "gradient_steps": 5,
+      "loss": 7543.93994140625,
+      "mean_return": 93.135,
+      "optimization_environment_steps": 28
+    }
+  ],
+  "optimizer_mode": "PATIENT_SCRATCH_RL",
+  "output_dir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/native-ucsf0004-v1/comparison/scratch-47",
+  "selected_checkpoint_hash": "sha256:df38b5264d3ee1df4f133ea9e01d5d44e6d4fe896106e3696950fb9e4c19e215",
+  "selected_selection_return": 139.62,
+  "selection_environment_steps": 18,
+  "selection_history": [
+    {
+      "checkpoint_hash": "sha256:df38b5264d3ee1df4f133ea9e01d5d44e6d4fe896106e3696950fb9e4c19e215",
+      "gradient_steps": 0,
+      "mean_return": 139.62,
+      "optimization_environment_steps": 0,
+      "world_count": 2
+    },
+    {
+      "checkpoint_hash": "sha256:8921240878fc639b944fd30cab73c3f05369ee717f5be953d32aceb04cbcf4d2",
+      "gradient_steps": 2,
+      "mean_return": 139.62,
+      "optimization_environment_steps": 12,
+      "world_count": 2
+    },
+    {
+      "checkpoint_hash": "sha256:4c2ab60934b475913c45fe040bde567a639c4378feee10401087102a23b8fe37",
+      "gradient_steps": 4,
+      "mean_return": 139.62,
+      "optimization_environment_steps": 24,
+      "world_count": 2
+    }
+  ],
+  "selection_rule": "maximum mean deterministic selection return; earliest wins ties",
+  "selection_seconds": 12.087152293068357,
+  "shared_checkpoint_hash": null,
+  "status": "wall_time_budget",
+  "wall_limit_semantics": "cooperative; a simulator/gradient call may overrun the deadline"
+}

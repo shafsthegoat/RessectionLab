@@ -1,0 +1,162 @@
+{
+  "candidate_hashes": [
+    [
+      "GREEDY",
+      "sha256:59ddd565403b46cab350283e471977b9455c6bf84d0cd0d1946b1412563f4306"
+    ],
+    [
+      "INITIAL:11",
+      "sha256:e6462525dc8acf72b96df40da584562f1e661215a470922006f720cffc878e58"
+    ],
+    [
+      "INITIAL:23",
+      "sha256:123faf7833fd1ebddf7127eec22d387d4f450706357a8cd54cbf72e67a406c04"
+    ],
+    [
+      "INITIAL:47",
+      "sha256:d453a39cdb38bb866d5b9487c33deb6907734685583bab30ca5dacef6c59df7b"
+    ],
+    [
+      "PATIENT_SCRATCH_RL:11",
+      "sha256:7ff798015e8566884dbfab4ce8edadf830ca6db941dca2d0f65fc2ed53825ba4"
+    ],
+    [
+      "PATIENT_SCRATCH_RL:23",
+      "sha256:899b5e7c23b351290d94d050e64970eaadec6af1b19682edba70904bfcf1fa7f"
+    ],
+    [
+      "PATIENT_SCRATCH_RL:47",
+      "sha256:5724036ceaf83309b711d0bca6452c281f1ca92907388692d75a0df822ab93b7"
+    ],
+    [
+      "SEARCH",
+      "sha256:1e553babb6bf0861e62d2d26fc827e75633e35c725dc477384ebf473126b4739"
+    ],
+    [
+      "STOP",
+      "sha256:7cddb09e6a70b82c6b19afac61aa13b813fbc3c75163397ac8f6604b0e344176"
+    ]
+  ],
+  "candidates": [
+    {
+      "actions": [
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "STOP",
+      "plan_id": "STOP",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "NATIVE:native-wide-aspiration:0",
+        "NATIVE:native-wide-aspiration:3",
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "GREEDY",
+      "plan_id": "GREEDY",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "NATIVE:native-wide-aspiration:0",
+        "NATIVE:native-wide-aspiration:3",
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "SEARCH",
+      "plan_id": "SEARCH",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "NATIVE:native-wide-aspiration:0",
+        "NATIVE:native-wide-aspiration:3",
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PATIENT_SCRATCH_RL",
+      "plan_id": "PATIENT_SCRATCH_RL:11",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:9356db7deb702a192ceba1b538385c6dd635844afd05b90ebaa7ae001010cb8d"
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "INITIAL_POLICY",
+      "plan_id": "INITIAL:11",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322"
+    },
+    {
+      "actions": [
+        "NATIVE:native-fine-aspiration:0",
+        "NATIVE:native-fine-aspiration:3",
+        "NATIVE:native-wide-aspiration:0"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PATIENT_SCRATCH_RL",
+      "plan_id": "PATIENT_SCRATCH_RL:23",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:435e605ae7df4d64e5929702a690098954baf7a962fdf4218133dab6494fd326"
+    },
+    {
+      "actions": [
+        "NATIVE:native-fine-aspiration:0",
+        "NATIVE:native-fine-aspiration:3",
+        "NATIVE:native-wide-aspiration:0"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "INITIAL_POLICY",
+      "plan_id": "INITIAL:23",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:435e605ae7df4d64e5929702a690098954baf7a962fdf4218133dab6494fd326"
+    },
+    {
+      "actions": [
+        "NATIVE:native-fine-aspiration:0",
+        "NATIVE:native-fine-aspiration:3",
+        "NATIVE:native-wide-aspiration:3"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PATIENT_SCRATCH_RL",
+      "plan_id": "PATIENT_SCRATCH_RL:47",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:df38b5264d3ee1df4f133ea9e01d5d44e6d4fe896106e3696950fb9e4c19e215"
+    },
+    {
+      "actions": [
+        "NATIVE:native-fine-aspiration:0",
+        "NATIVE:native-fine-aspiration:3",
+        "NATIVE:native-wide-aspiration:3"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "INITIAL_POLICY",
+      "plan_id": "INITIAL:47",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:df38b5264d3ee1df4f133ea9e01d5d44e6d4fe896106e3696950fb9e4c19e215"
+    }
+  ],
+  "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+  "decision_model_fingerprint": "sha256:809e8e606f6974fe0b759f9572993b5bc2d6a719284cf96227c694418c8d7709",
+  "development_seeds": [
+    17944101631498118750,
+    16050408593453808557,
+    16285456173753334256,
+    8109736527858856845,
+    8342823306791655420
+  ],
+  "fingerprint": "sha256:f9333336b9ba23d0c4b6972c137e117b83c1a1da04a24dbdfca84fed7b1d6cb1",
+  "frozen_at": "2026-10-04T07:42:09.924970+00:00",
+  "generator_family": "rigid_gaussian",
+  "generator_fingerprint": "sha256:65178826778d6f02e623f38390d72c121c9e2cd84e5c0b69f882353a64f09a48",
+  "optimization_partition_hash": "sha256:aa8de3098a046f59a463eca08667916b6e4619417da135a473405457b94b0a1c",
+  "selection_partition_hash": "sha256:62f80e45baec7c506272e1b04037c8551267969fdbd2fdb650a61bb720df8dc2",
+  "selection_rule": "all baseline sequences and one selected checkpoint per prespecified seed; native runs include initial policies; max selection mean, earliest tie"
+}

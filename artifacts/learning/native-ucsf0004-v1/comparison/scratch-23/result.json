@@ -1,0 +1,107 @@
+{
+  "actor_parameters_changed": true,
+  "clinical_deficit_probability": null,
+  "completed_episodes": 13,
+  "decision_model_hash": "sha256:dd81bd59566ead4e42916c8ede3d48d5615837e523d23d359b268d9a90f63f0b",
+  "discarded_partial_batches": 1,
+  "elapsed_seconds": 30.50949020893313,
+  "episode_index": 14,
+  "gradient_steps": 6,
+  "initial_actor_hash": "sha256:c4e3149dd154753c3f9ed47fc704f77e20c8e7c6ddea31c10aaf7f80bb57c7ba",
+  "initial_checkpoint_hash": "sha256:435e605ae7df4d64e5929702a690098954baf7a962fdf4218133dab6494fd326",
+  "initial_selection_return": 171.42,
+  "latest_actor_hash": "sha256:f3dd0be454ced6b6c192fc9b25853df6f1971ecaf957ff640c07e4586019c2a3",
+  "latest_checkpoint_hash": "sha256:2e115da4832a545c0ef5ddc09e4944001283ecf104427c6d6a303b9605791997",
+  "learning_improvement_guaranteed": false,
+  "optimization_environment_steps": 35,
+  "optimization_history": [
+    {
+      "actor_gradient_norm_after_clip": 3.730658897327229,
+      "gradient_norm_before_clip": 670.5482177734375,
+      "gradient_steps": 1,
+      "loss": 18628.134765625,
+      "mean_return": 95.05,
+      "optimization_environment_steps": 5
+    },
+    {
+      "actor_gradient_norm_after_clip": 3.4189988660281987,
+      "gradient_norm_before_clip": 528.0302734375,
+      "gradient_steps": 2,
+      "loss": 15983.978515625,
+      "mean_return": 153.61,
+      "optimization_environment_steps": 10
+    },
+    {
+      "actor_gradient_norm_after_clip": 3.282037432736732,
+      "gradient_norm_before_clip": 1256.1513671875,
+      "gradient_steps": 3,
+      "loss": 52823.84765625,
+      "mean_return": 245.135,
+      "optimization_environment_steps": 16
+    },
+    {
+      "actor_gradient_norm_after_clip": 4.216778496741516,
+      "gradient_norm_before_clip": 1144.9239501953125,
+      "gradient_steps": 4,
+      "loss": 34754.87890625,
+      "mean_return": 190.46999999999997,
+      "optimization_environment_steps": 21
+    },
+    {
+      "actor_gradient_norm_after_clip": 4.100587182341188,
+      "gradient_norm_before_clip": 1168.127685546875,
+      "gradient_steps": 5,
+      "loss": 23333.19140625,
+      "mean_return": 139.62,
+      "optimization_environment_steps": 27
+    },
+    {
+      "actor_gradient_norm_after_clip": 4.857551450270377,
+      "gradient_norm_before_clip": 693.013916015625,
+      "gradient_steps": 6,
+      "loss": 7579.2646484375,
+      "mean_return": 93.135,
+      "optimization_environment_steps": 31
+    }
+  ],
+  "optimizer_mode": "PATIENT_SCRATCH_RL",
+  "output_dir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/native-ucsf0004-v1/comparison/scratch-23",
+  "selected_checkpoint_hash": "sha256:435e605ae7df4d64e5929702a690098954baf7a962fdf4218133dab6494fd326",
+  "selected_selection_return": 171.42,
+  "selection_environment_steps": 24,
+  "selection_history": [
+    {
+      "checkpoint_hash": "sha256:435e605ae7df4d64e5929702a690098954baf7a962fdf4218133dab6494fd326",
+      "gradient_steps": 0,
+      "mean_return": 171.42,
+      "optimization_environment_steps": 0,
+      "world_count": 2
+    },
+    {
+      "checkpoint_hash": "sha256:674f367dce7343893523ca99437bd4c302551499d087c8a279e664d31950de27",
+      "gradient_steps": 2,
+      "mean_return": 171.42,
+      "optimization_environment_steps": 10,
+      "world_count": 2
+    },
+    {
+      "checkpoint_hash": "sha256:81e3c9621f376393111ff52b059adc5adf6536984487894575cdf68898f63971",
+      "gradient_steps": 4,
+      "mean_return": 171.42,
+      "optimization_environment_steps": 21,
+      "world_count": 2
+    },
+    {
+      "checkpoint_hash": "sha256:2e115da4832a545c0ef5ddc09e4944001283ecf104427c6d6a303b9605791997",
+      "gradient_steps": 6,
+      "mean_return": 171.42,
+      "optimization_environment_steps": 31,
+      "world_count": 2
+    }
+  ],
+  "selection_rule": "maximum mean deterministic selection return; earliest wins ties",
+  "selection_seconds": 12.102707417099737,
+  "shared_checkpoint_hash": null,
+  "status": "wall_time_budget",
+  "wall_limit_semantics": "cooperative; a simulator/gradient call may overrun the deadline"
+}
