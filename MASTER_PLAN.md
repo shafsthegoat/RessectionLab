@@ -2,9 +2,11 @@
 
 ## Research and product master plan
 
-Prepared for Shafrir | Research snapshot: **October 2, 2026**
+Prepared for Shafrir | Original research snapshot: **October 2, 2026**
 
-**Working project name:** ResectionLab. This is a placeholder, not a claim about name availability.
+**Patient-specific planning revision: October 4, 2026.** This revision makes single-patient simulation-based optimization a core workflow, specifies an implementable uncertainty-halo ladder, and adds time-aware molecular and clinical context. The original detailed plan is retained except where explicitly revised. These are design requirements, not completed experiments. New literature checks are identified in the bibliography; the original source library was not exhaustively re-audited in this revision.
+
+**Repository and project name:** `RessectionLab`, using the owner's exact spelling. This is not a claim about trademark or name availability. Do not rename an existing working package merely to change its display name.
 
 **Goal:** Build an original, technically impressive desktop research application that transforms multimodal glioma imaging into an inspectable planning environment; generates diverse, instrument-aware resection strategies using reinforcement learning and strong classical competitors; and explains the tradeoffs between modeled tumor removal, motor/language hazards, uncertainty and physical feasibility. The public software and evaluation should be credible enough for Medivis engineers to inspect and for a methods-oriented publication to be considered.
 
@@ -12,7 +14,7 @@ Prepared for Shafrir | Research snapshot: **October 2, 2026**
 
 **Evidence status:** Source documentation, research papers and dataset listings were investigated for this plan. Full imaging cohorts were not downloaded, reconstructed or experimentally validated. Some literature entries were verified only at the abstract/metadata level; the annotated bibliography explicitly says so. Dataset counts are release counts, not guaranteed usable training counts. The search is substantial and targeted, not an exhaustive systematic review.
 
-**How to use this package:** Read this plan first, use `DATASET_MANIFEST.json` for acquisition decisions, `ANNOTATED_REFERENCES.md` for what each source contributes and does not establish, and `IMPLEMENTING_AGENT_HANDOFF.md` for execution priorities. Citations such as [D01] resolve to the reference directory at the end and the detailed bibliography.
+**How to use these three documents:** Read this plan, `ANNOTATED_REFERENCES.md` and `IMPLEMENTING_AGENT_HANDOFF.md` together. They are sufficient to begin. `DATASET_MANIFEST.json`, `EXPERIMENT_PROTOCOL.md` and earlier acquisition checklists are optional supporting artifacts: reuse them when present, or create their minimal equivalents from this plan when absent. Missing ancillary files are not a blocker. Citations such as [D01] resolve to the reference directory and detailed bibliography. For project-design conflicts, this dated revision supersedes older chat prompts; it does not override repository security, permissions or applicable `AGENTS.md` instructions.
 
 ---
 
@@ -54,6 +56,15 @@ The differentiator should be the integrity of the whole chain: native imaging co
 
 A successful demonstration could show a short corridor losing to a slightly longer corridor because the short one admits the tip but not the shaft; a larger instrument reducing the number of removal actions but losing access to a corner; or a policy requesting an observation before deciding whether to continue. These are proposed demonstrations, not claims that any current model has achieved them.
 
+### 1.4 Route planning is the first product; patient-specific rehearsal is the core learning workflow
+
+The immediate user-facing purpose is to **help a surgeon inspect candidate routes for glioma resection**. Deliver a route-comparison workspace before attempting a complete surgical digital twin. It must compare access windows, full instrument envelopes, reachable target compartments, motor/language evidence, uncertainty and missing anatomical information. Static accessible volume is not simulated removed volume; label those quantities separately.
+
+The intended learning workflow is: upload and review the case; create its simulation and uncertainty ensemble; obtain initial candidates from search; train or refine a policy inside that particular patient's environment; independently evaluate the resulting candidates; and present an inspectable collection of alternatives. Actual patient-specific gradient updates are part of the research scope, not merely a renamed inference call. A pretrained policy can accelerate this workflow, but it is not a prerequisite for trying it on one patient.
+
+An initial route planner need not solve tissue forces, hemorrhage, every instrument, or postoperative deficit prediction. It does need correct geometry and explicit limits. Missing vessels, functional evidence or skull anatomy remain unassessed, not automatically safe. Later stages add connected resection sequences, changing access, information gathering and evidence-constrained deformation. Do not let those extensions delay the first useful route comparison.
+
+Return the **best evaluated candidates found under the stated model and compute budget**, not a guaranteed globally optimal or clinically safest operation. A local optimum or a sampled non-dominated set is not the complete clinical decision space.
 ---
 
 ## 2. Medivis alignment without making a copy of Medivis
@@ -155,6 +166,13 @@ No verified core resource couples the complete set of patient-specific multimoda
 
 Therefore, the main RL trajectories must be **generated inside a declared simulator**. They are not historical surgeon trajectories. The scientific question becomes whether the proposed learning/planning method performs robustly under increasingly evidence-constrained simulation, with honest limits on clinical transfer.
 
+### 3.8 How one patient's scans become RL training data
+
+A single eligible public case can instantiate many simulator episodes: alternative access windows, feasible tool configurations, action sequences, preferences and coherent plausible anatomical realizations. These episodes supply interaction data for optimizing that case. A large historical collection of surgeon action trajectories is not required to test this form of RL.
+
+This does not turn one patient into many independent patients. Cohorts still support population priors, optional shared-policy training, algorithm selection and evaluation of the entire planning procedure across anatomies. They do not automatically identify the consequences of actions never observed clinically. The current UCSF/UPenn-centered stack remains appropriate; this revision changes its use rather than inventing a new complete surgical-outcome dataset.
+
+Begin with one inspected patient for the closed-loop prototype, then a small multi-case development pilot. Do not bulk-download a cohort or finish population pretraining before the first patient-specific learning experiment. Conversely, do not claim general utility from success on that one case. Source images, derived models and simulated experience must remain separate in the data registry.
 ---
 
 ## 4. Data contracts, provenance and leakage prevention
@@ -181,6 +199,8 @@ Create a frozen split by unique patient before model tuning. A reasonable initia
 For policy research, the supplied tumor annotations may define the environment even when an upload segmenter was pretrained elsewhere. Report this as the **annotation-assisted benchmark track**. Report a separate **end-to-end inference track** using model-generated anatomy. This prevents segmentation failures from being hidden while also avoiding a paper that confounds every planning result with an upstream model change.
 
 Record any overlap between upstream segmentation training and evaluation patients. A novel policy test can still be informative with an existing segmenter, but “fully unseen end-to-end patients” requires a stronger provenance claim.
+
+For patient-specific optimization, distinguish **global method development** from **predeclared adaptation on a new patient's permitted inputs**. A frozen adaptation algorithm may train inside a held-out patient's preoperative simulator as part of its evaluated inference procedure. That is not zero-shot evaluation, and it must not consume postoperative outcomes, hidden evaluation worlds or cross-patient test feedback. Section 15.8 specifies the nested evaluation needed for this distinction.
 
 ### 4.3 Exact spatial semantics
 
@@ -298,6 +318,31 @@ A transparent penalized logistic or hierarchical model should be the first clini
 
 Importantly, prediction for historical surgeries does not by itself identify the outcome of surgeries doctors almost never attempt. Selection, confounding and poor support for risky counterfactuals remain even after adding a neural network. Do not use synthetic deficit labels to conceal this gap. [F05–F07]
 
+### 6.6 Implementable halos: geometry first, uncertainty second, consequences third
+
+A useful halo does not require an already validated clinical deficit predictor. Implement three increasingly informative layers and keep their meanings separate.
+
+**Layer H0: geometric proximity.** Given an estimated tract/cortical structure, compute physical distance in millimeters. A reference proximity field is
+
+\[
+h(v;s)=\exp\{-d(v,\mathcal A)^2/(2s^2)\},\quad s>0,
+\]
+
+with distance zero inside the estimated structure. A signed-distance band or dilation is an equally valid first implementation. This is a chosen distance penalty, not a probability. Its scale is a documented sensitivity parameter, not a universal safe surgical margin. Show the original structure beneath the halo and permit inspection of distance and units.
+
+**Layer H1: uncertain anatomical support.** Reconstruct coherent alternative tract/segmentation/registration realizations, using bootstrap or probabilistic diffusion methods where the acquisition supports them. For structure masks A_m, the empirical support field is `sum_m 1[v in A_m] / M`. It describes this reconstruction ensemble, not the chance of losing motor or language function. Resampling streamlines from one biased fit captures less uncertainty than varying supported reconstruction assumptions. Bootstrap tractography and the official DIPY implementation are concrete starting references. [F13, E06] Simulation-based diffusion inference is a later optional method, not required infrastructure. [F14]
+
+**Layer H2: action- and plan-conditioned events.** For each sampled world, intersect the full swept tool/contact envelope and the proposed removal sequence with the relevant structures; evaluate network interruption separately. Store counts for explicitly named events such as `motor_structure_contact`, `language_bundle_intersection` and `modeled_connection_disconnection`. Do not sum voxel occupancies and call the result a plan-level probability. Nearby voxels and streamline segments are not independent.
+
+Treat instrument size, pose uncertainty, anatomical localization error and tissue-interaction assumptions as different quantities. Do not inflate the tract for shaft radius and then apply the full shaft again without accounting for double counting. Uncertainty is usually spatially correlated and may be directional; a spherical blur is an initial sensitivity model, not a physiological truth.
+
+A missing or implausible tract reconstruction produces an unknown-coverage region or failed eligibility gate, not an empty low-risk field. The known ambiguities in diffusion reconstruction make this essential. [F09] More sampled worlds can reduce Monte Carlo noise without correcting a systematically wrong anatomical model.
+
+### 6.7 Halo and event-model acceptance tests
+
+Verify distance fields against analytic objects at several voxel spacings; report physical rather than voxel distances. A fixed straight tool must fail clearance when its shaft, but not its tip, crosses a known obstacle. For a fixed plan and nested geometric uncertainty envelopes, conservative encounter checks must not decrease merely because the envelope expanded. This monotonicity test does not imply that a newly optimized plan or every ensemble probability must be monotone.
+
+Every rendered halo needs a source, frame, generation method, parameter values, QC state and meaning. Every probability needs an event, world-model version, numerator, denominator and sampling uncertainty. Fit/selection worlds and final evaluation worlds must be disjoint. Inspect alternative perturbation families, since a perfectly calibrated frequency inside the same simulator says little about model misspecification.
 ---
 
 ## 7. Instrument-aware simulation: make the tools change the answer
@@ -426,23 +471,50 @@ Take care with discounting, normalization and terminal terms. Do not count the s
 
 `STOP` is always available. A plan leaving substantial residual target can be valid under the declared constraints. Compare it to a baseline that stops immediately so the reward does not make universal abstention look like a successful learned strategy. Conversely, a reward that always favors complete mask removal is also a failure.
 
-### 8.5 Do not invent a genetics-to-resection benefit equation
+### 8.5 Include tumor biology without inventing a genetics-to-injury equation
 
-Store verified molecular metadata with timestamps and missingness. Use subtype to stratify experiments and potentially compare declared research preference scenarios. Do not train a voxelwise survival-benefit reward from observational survival/EOR metadata and present it as causal.
+Make molecular context part of the case schema now, while keeping a learned biological-benefit model optional. Relevant fields include assayed IDH1/IDH2 status, 1p/19q codeletion, MGMT promoter methylation and the integrated diagnosis where available. MGMT methylation is an epigenetic measurement, not a germline variant. Molecular diagnosis and extent-of-resection decisions are related clinical contexts, but neither guideline supplies a validated genotype-to-voxel-injury function. [C01, C02]
 
-For a newly uploaded preoperative case, molecular status may not yet be known. A radiogenomic prediction must remain a prediction, not be silently converted into pathology. Genetics is a later separately evaluated module, not a prerequisite for the first paper. [D02, D04, D07]
+Separate three uses. **Context and stratification:** display verified metadata and report results by supported subgroups. **Research objective scenarios:** compare declared compartment priorities under alternative biological assumptions, labeling these as scenarios. **Clinical benefit prediction:** defer numerical survival or individualized treatment-benefit rewards until suitable data, causal assumptions and validation exist. Retrospective survival/EOR associations are not a license to assign a survival gain to every additionally removed voxel.
+
+The primary benefit term remains declared radiological target removal with residual volume reported by compartment. The EANS-EANO guideline favors absolute residual postoperative tumor volume for describing resection completeness and distinguishes integrated tumor types; it does not make FLAIR abnormality synonymous with disposable tumor. [C01] In a simulation, call the metric **modeled residual target volume**, not an observed postoperative result.
+
+A molecular label alone must never relax motor/language protection constraints, shrink a hazard halo or imply that a more aggressive tumor makes functional tissue less important. Whole-genome or inherited-risk modeling is outside the initial scope unless a specific validated relationship and usable data justify it.
+
+### 8.6 Patient physiology and the preoperative information cutoff
+
+Use a versioned `PatientContext` with `planning_as_of` and a per-field record of value, unit, source, measurement time, availability time and evidence type. Distinguish `observed`, `estimated`, `unknown`, `not_yet_available` and `scenario_assumption`. A dataset column being populated does not prove it was known before the operation.
+
+When actually available, retain baseline motor/language assessments, prior surgery/radiotherapy, edema and other relevant clinical/imaging context. Handedness is not a patient-specific language-localization measurement. Age or a performance score is not a direct mechanical tissue parameter. Do not invent compliance, vascular reserve, functional reorganization or deficit tolerance from an incomplete record.
+
+For an initial operation, a molecular result obtained from the eventual resection cannot be fed retrospectively into the preoperative planner. Results from a prior biopsy can be used only when availability is established. When timing is absent, the primary analysis must treat the value as unavailable; a separate oracle-context or exploratory scenario must be labeled accordingly. An imaging-predicted genotype remains an uncertain prediction, not confirmed pathology.
+
+The ordinary plan must run with missing molecular metadata. Context may justify a declared research scenario or stratification, but geometry, functional evidence and clinician-inspected assumptions remain the basis of route comparison. These proposed data contracts prevent information leakage; they are not claims that the public datasets contain every listed measurement.
 
 ---
 
 ## 9. The RL problem and a local-first model architecture
 
-### 9.1 A patient is an environment, not a complete training dataset
+### 9.1 Single-patient RL is a legitimate optimization mode
 
-Use many public patient-derived environments to train a reusable policy. After upload, construct the new patient's environment, run the policy under multiple preferences, evaluate its candidates in uncertainty worlds, and optionally refine them with local search or limited patient-specific adaptation.
+**Train or adapt inside the uploaded patient's simulator.** One anatomy can generate enough simulated interactions to test instance-specific RL. Learning a strategy for a known case is different from estimating a clinical injury law from one person. The former is a valid computational formulation; the latter is not established by repeatedly replaying synthetic actions.
 
-Training from scratch on each patient is an optional experiment, not the default product workflow. It may overfit the simulator and require unnecessary computation. More importantly, optimizing longer on one patient's imaging cannot reveal unobserved surgical physiology.
+This is a substantive correction to the earlier population-policy-first recommendation. Population pretraining may be useful, but it must not be a gate that prevents single-patient experiments. Case-specific training is not automatically a statistical mistake merely because the anatomy repeats. The dangerous overfitting is to reconstruction errors, a narrow uncertainty model, reward loopholes or a repeatedly consulted evaluation set.
 
-The app can still visibly “run RL” after upload: it performs policy rollouts, evaluates alternatives and can show planning progress. Be precise about which steps are inference, optimization or actual gradient updates.
+An adjacent-domain precedent is the 2025 patient-specific RL proton-therapy replanning study, which trains an agent using one patient's planning CT and augmented anatomies. It supports investigating the architecture, not claiming that radiotherapy results validate surgical tissue simulation. Its scoring and transitions belong to another intervention. [R09]
+
+Compare these four modes without assuming the winner:
+
+| Mode | What happens after a new case is prepared | Role |
+|---|---|---|
+| `SEARCH` | Per-case search, trajectory optimization or MPC | Strong non-learning reference and initial candidate generator |
+| `PATIENT_SCRATCH_RL` | Initialize a compact policy and train using only this case's permitted simulator | Required instance-specific learning comparator; feasible before population pretraining exists |
+| `POPULATION_FROZEN` | Run a policy trained on development patients without case-specific gradient updates | Measures amortized inference/generalization |
+| `POPULATION_ADAPTED` | Clone the frozen shared policy and refine the clone on this case under a fixed budget | Tests whether warm-started patient-specific learning improves the quality/time tradeoff |
+
+The first two modes can be implemented and compared on one case. Add the population arms once development data and a shared checkpoint exist; the full benchmark should contain all four. Do not represent a missing arm as an evaluated failure. The product can default to the strongest measured mode, with a transparent option to refine further within an explicit budget.
+
+The UI must distinguish policy inference, tree/trajectory search and actual gradient updates. Show the data/model version, optimization budget and checkpoint provenance. A moving progress bar or repeated rollout of a frozen policy is not patient-specific training.
 
 ### 9.2 Formal environment specification
 
@@ -503,11 +575,11 @@ A preference-conditioned policy is a candidate way to expose tradeoffs continuou
 
 **Stage 1: synthetic geometry.** Spheres, branching tubes, narrow access, known targets and exact small-problem solutions. The agent must learn that some short paths are impossible, that removal changes access, and that STOP can be correct.
 
-**Stage 2: static real patient-derived anatomy.** Fixed tool family, supplied labels, deterministic geometric interactions. Establish that learning generalizes across held-out patients rather than memorizing coordinate layouts.
+**Stage 2: one real patient-derived anatomy.** Fixed tool family, supplied labels and deterministic geometric interactions. Train a compact patient-specific policy and compare it with search on this same case under a fixed budget. Use independent simulation realizations for evaluation once uncertainty is enabled. This establishes only within-case optimization, not clinical validity or generalization. Then test the frozen learning procedure across additional development cases; add shared-policy training when justified.
 
 **Stage 3: instrument-aware sequential resection.** Add tool changes, shaft clearance, cavity evolution, bimanual constraints and accessible patch choice. This is the first major project milestone where RL has more to do than route finding.
 
-**Stage 4: uncertain anatomy.** Add coherent registration, tract and segmentation perturbations. Optimize adverse-tail behavior and evaluate outside the training perturbation family.
+**Stage 4: robust patient-specific optimization.** Add coherent registration, tract and segmentation perturbations. Compare scratch, frozen and adapted policies with search under matched online budgets. Optimize adverse-tail behavior and evaluate with withheld realizations and alternative perturbation families. Lightweight uncertainty is already needed for robust route comparison; this stage expands it, rather than postponing all uncertainty until after RL.
 
 **Stage 5: information and deformation.** Introduce noisy mapping/imaging actions and evidence-constrained anatomy updates. Replanning must use only revealed observations.
 
@@ -519,6 +591,28 @@ If RL fails to beat a strong search/MPC baseline after a bounded, logged compari
 
 The most interesting RL advantage may be fast conditional replanning across many patients/preferences, not better one-shot optimization with unlimited compute. Measure both solution quality and total computational cost, including policy training.
 
+### 9.8 The per-patient optimization contract
+
+Implement the following as a headless, resumable procedure callable from the desktop application.
+
+1. **Prepare and review the case.** Validate modalities, transforms, target labels, tract evidence, access assumptions and the preoperative information cutoff. A failed essential input stops that analysis mode, not necessarily the whole viewer.
+2. **Freeze the decision model.** Version the geometry, action primitives, reward/objective definitions, uncertainty generator and clinician/researcher-declared constraints before optimizing. Training may update the policy, not make the world easier to obtain a better score.
+3. **Partition simulated experience.** Create separate optimization, checkpoint-selection and final-evaluation world/seed manifests. Preserve spatially coherent anatomy within each episode. Withhold independent model-family stress tests. Purely deterministic one-case tests must be described as deterministic optimization, not fabricated uncertainty validation.
+4. **Produce initial routes.** Run instrument-aware search so the case has useful candidates even before a policy exists. Search-derived demonstrations or warm starts are optional; record their generation cost and do not secretly give only RL a richer action set.
+5. **Train or adapt.** Use bounded wall time, environment steps and checkpoint intervals on a compact macro-action policy. For adaptation, copy the shared checkpoint; never overwrite it with one patient's updates. Log actual gradient steps and evaluate checkpoint selection only on its designated worlds.
+6. **Select and freeze candidates.** Retain a diverse non-dominated set across predefined preferences. Reject plans failing physical/model constraints. Compare against initial search and STOP; improved training return alone is not sufficient.
+7. **Independently evaluate.** Use untouched worlds and finer or independently implemented geometry checks. Do not send final evaluation rewards back into checkpoint selection or policy improvement. Report all failed checks and unsupported anatomical factors.
+8. **Return an inspectable plan package.** Include initial routes, refined routes/sequences, tool settings, objective tradeoffs, model-event frequencies, stopping reasons, assumptions, runtime and reproducible replay. Actual clinical probabilities remain unavailable unless their separate gate has been met.
+
+A user edit or genuinely acquired new image creates a new case version and invalidates dependent results. An observation may update a declared belief model, but that is separate from silently changing the reward or learning clinical physiology from simulated outcomes. Reusing a previously revealed final evaluation set for tuning converts it to development data; it cannot keep its held-out label.
+
+### 9.9 What the agent can learn and what stays supplied
+
+The agent can learn entry/tool selection within permitted access regions, target ordering, local feasible motions, stopping and later observation timing. The simulator supplies legal transitions and measurable surrogate consequences. A learned world model is optional and requires its own validation; it is not necessary to make single-patient RL genuine.
+
+Do not jointly let the optimizer rewrite the motor/language cost definition, shorten tools, reduce uncertainty or alter cohort eligibility in response to poor scores. Research revisions to those assumptions are allowed only as new versioned experiments with their own evaluation, never as hidden changes within a successful run.
+
+The phrase "maximize resection without affecting the patient much" therefore becomes a **declared constrained research objective**, not a complete physiological specification. Explicitly retain what is unmodeled, including unresolved vascular effects, tissue forces, postoperative function and microscopic infiltration. Optimization can identify useful modeled tradeoffs without claiming these unknowns have been solved.
 ---
 
 ## 10. Information gathering and brain shift: the strongest research extension
@@ -566,12 +660,16 @@ Use the same anatomies, tool models, action proposals, hard constraints and eval
 | Greedy accessible-patch removal | Whether sequential lookahead is actually needed |
 | Beam search or cross-entropy trajectory search | Whether an inexpensive non-learning method is competitive |
 | Receding-horizon/MPC planner | Whether RL adds value against strong dynamic planning |
+| Patient-specific scratch RL | Whether fresh optimization on this anatomy is useful without population pretraining |
+| Frozen population policy | Whether amortized inference already provides competitive plans |
+| Population policy plus bounded case-specific adaptation | Whether per-case gradient updates add value over the same starting policy |
 | Oracle-information controller in synthetic worlds | A bounded reference for the value of missing information, not a deployable competitor |
 
 P01 and P02 are particularly important prior art for anatomy/connectional risk planning. P03 is a direct learned glioma-planning reference. P04 establishes relevant RL and deformation work in a different neurosurgical instrument task. Read their full available methods before asserting a first-of-its-kind contribution. [P01–P04]
 
 A nearest-equivalent implementation is not an exact reproduction. Mark it as an inspired baseline when code, data or full methods are unavailable, and state the departures.
 
+Compare quality as a function of online planning time and environment evaluations, not only one final reward. Include candidate-generation, adaptation and validation costs consistently. Report shared-policy pretraining separately and give explicit amortization assumptions when claiming speed benefits. Run comparisons under the same declared observability protocol; any privileged training critic or oracle advantage must be separately disclosed and controlled.
 ---
 
 ## 12. Desktop application architecture
@@ -631,6 +729,8 @@ An example output contract is:
 
 This is an illustrative schema, not an implemented API. All actual scalar results must include units, definitions and source versions.
 
+Extend the contract with `planning_as_of`, `patient_context_version`, `optimizer_mode`, `shared_checkpoint_hash`, `adapted_checkpoint_hash`, `gradient_steps`, `environment_steps`, `optimization_budget`, `world_partition_manifest`, `selection_rule`, `evaluator_version`, `accessible_target_volume` and nullable `simulated_removed_target_volume`. Record source/availability timestamps for molecular and clinical fields. A route-only plan must not populate a removal result by copying its accessibility estimate. Use explicit JSON nulls for unavailable clinical predictions.
+
 ### 12.4 Worker model and persistence
 
 The GUI must stay responsive during import, reconstruction and optimization. Use background workers with progress, cancellation and checkpointing. Heavy inference should not block the render loop or require the entire application to restart after one failed case.
@@ -685,6 +785,13 @@ A later command-space explanation can show what preference change would make the
 
 Set measured targets for common interactions on the actual machine: smooth manipulation of a cached case, prompt feedback after selecting a plan, cancellable long jobs, and reproducible save/reopen. These are engineering targets, not performance already achieved. Record median and high-percentile timings for named case sizes rather than advertising “real time” without a workload definition.
 
+### 13.7 Patient-specific refinement and surgeon inspection
+
+Expose distinct actions: **Generate candidate routes**, **Refine for this case**, **Compare assumptions**, and **Replay modeled resection** when the sequential mode exists. The refinement view shows the current measured mode, actual updates, elapsed resource use, best selection-set candidate and a cancel/resume control. Label optimization/selection curves as such; keep final benchmark evaluation separate from the tuning loop.
+
+Retain original search candidates next to learned candidates so improvement is inspectable rather than implied. Show the access window, complete instrument geometry, contact locations, remaining target compartments, evidence provenance and unresolved constraints for each alternative. A surgeon can supply or edit a route/access region and compare it under the same model without the system claiming authority over the surgical decision.
+
+For a route-only result, show reachable target volume and geometric exposure. For a simulated resection, additionally show removal order, modeled residual volume and stopping decision. The roadmap aims toward clinician usefulness, but public-data and simulator evaluation alone do not establish readiness for clinical use. A later workflow/usability study with qualified reviewers would test usefulness without substituting for outcome validation.
 ---
 
 ## 14. Local compute and storage plan
@@ -702,6 +809,8 @@ Run a hardware probe for CPU, RAM, GPU/backend and disk. Scale worker count to m
 First run deterministic geometry tests and a tiny synthetic policy. Then profile five real cases end-to-end. Expand to a roughly 20–30-case pilot for debugging and model selection. Expand to a larger development cohort only after measuring memory, preprocessing time, rollout throughput and learning curves.
 
 Do not launch a full cross-validation sweep before knowing whether the environment is computationally tractable. Start with three training seeds for a pilot; use more for the final core comparison where affordable. Log total environment steps, gradient updates, CPU/GPU time and preprocessing cost.
+
+Do not confuse population training cost with patient-specific training cost. Benchmark a compact scratch policy on one case before declaring local case adaptation infeasible. Cache anatomy and distance fields, use frontier macro-actions, and profile collisions independently of the neural network. High-fidelity full-brain mechanics is not required for this pilot. If meaningful refinement exceeds a practical local budget, retain search or frozen-policy planning and report the observed limitation; do not claim interactive training without measured evidence.
 
 ### 14.3 Storage discipline
 
@@ -767,6 +876,21 @@ Compare removal planning with and without instrument geometry, graph features, u
 
 Ablations should test claims, not create a combinatorial experiment explosion. Choose a small primary set before the final evaluation, then label additional investigations exploratory.
 
+Include a primary `POPULATION_FROZEN` versus `POPULATION_ADAPTED` comparison and a matched-budget `PATIENT_SCRATCH_RL` comparison. When molecular/context-conditioned objectives are studied, compare known-as-of metadata with the same method lacking that metadata and separate scenario-conditioned changes from validated benefit. An unchanged plan is an acceptable result; biology must not be forced to change geometry simply to make a demonstration more dramatic.
+
+### 15.8 Nested evaluation for a planner that learns on each patient
+
+**Outer split:** Freeze global algorithms, shared weights, hyperparameters, adaptation budget, stopping/checkpoint rule, uncertainty-model families and primary endpoints using development patients. Keep repeated visits, derivatives and relevant pretraining overlaps grouped. The test evaluates the entire frozen procedure, not just a neural checkpoint.
+
+**Within a test case:** The frozen procedure may use the permitted preoperative images to create that patient's simulator and perform its predeclared scratch training or adaptation. Those training worlds are distinct from the case's checkpoint-selection worlds and final evaluation worlds. This is case-adapted evaluation, not zero-shot evaluation. No actual postoperative cavity, timed clinical outcome, future intraoperative image or held-out simulator realization may guide adaptation unless the experiment explicitly evaluates a later information state with an appropriate cutoff.
+
+**Isolation:** Restart every test case from the specified initialization. Do not carry adapted parameters, hyperparameter changes or discoveries from one test patient into the next. Keep the shared model and uncertainty generator frozen. Genuinely online cross-patient learning is a different protocol and cannot be silently mixed into this benchmark.
+
+**Independent checks:** Randomly withheld worlds from one generator test performance under that generator. Separately test reconstruction/model-family misspecification and high-resolution geometry. Neither establishes real postoperative safety; that requires other evidence. A planner capable of exploiting one simulator should be evaluated with assumptions it was not rewarded for exploiting.
+
+**Analysis:** Use paired patient-level effects and uncertainty intervals, with prespecified repeated optimization seeds as within-patient replicates. Report target removal or accessibility at matched functional-surrogate budgets, invalid-plan rates, robust tails, retained-plan diversity and quality versus total online time. Count all cases and failures. A million episodes on one patient still supply one patient for between-patient inference.
+
+**First acceptance experiment:** On one verified case, demonstrate actual learning, legal actions, independent candidate evaluation and a comparison with search; make no population claim. Repeat the frozen pilot procedure across a small development set before committing to the larger four-arm external benchmark. No rule requires population pretraining to precede the first patient-specific experiment.
 ---
 
 ## 16. Publication strategy and a defensible novelty claim
@@ -775,17 +899,15 @@ Ablations should test claims, not create a combinatorial experiment explosion. C
 
 A candidate title is:
 
-> Instrument-conditioned, uncertainty-aware sequential glioma resection planning in public patient-derived simulation environments.
+> Patient-specific learning for instrument-aware glioma access and resection planning under anatomical uncertainty.
 
-The potential contribution is a reproducible benchmark and method joining evolving access/cavity geometry, tool constraints, motor/language network surrogates and information-aware replanning. The claim is not that RL, glioma segmentation, tractography, risk maps or a planning GUI are individually new. Close prior art makes that distinction necessary. [P01–P04]
+The proposed primary question is whether bounded patient-specific optimization improves the quality/time tradeoff over frozen population policies, scratch policies and strong search/MPC, using a shared instrument-feasible simulator and independent checks. Instrument conditioning and uncertainty are substantive parts of the task, not decorative input channels.
 
-Three focused research questions are enough:
+Close risk-map and learned glioma-planning work already exists, and patient-specific RL is not new across all medicine. Do not claim novelty merely from those phrases. A defensible contribution needs an actual method, evaluation or benchmark advance at their intersection. [P01–P04, R09]
 
-1. Does explicit instrument conditioning change feasible resection frontiers relative to point-trajectory or fixed-tool planning?
-2. Does uncertainty-aware sequential planning improve adverse-tail surrogate outcomes at comparable target removal and compute?
-3. Does a learned information-gathering policy add value beyond strong heuristic and MPC observation schedules?
+Use two supporting questions: whether full-tool constraints change the accessible/resectable frontier, and whether uncertainty-aware optimization reduces adverse-tail surrogate costs at matched target benefit. Active information gathering and brain-shift updating remain strong later extensions, not prerequisites for the first route-planning or case-adaptation paper.
 
-Select one as the primary paper claim. The other two can be supporting experiments or extensions. Do not attempt a new segmentation network, new tractography model, new tissue constitutive law, new RL algorithm and new clinical risk model in the same initial manuscript.
+Select one primary claim and preregister the comparison before final testing. Do not attempt to invent segmentation, tractography, tissue mechanics, a new RL algorithm and a clinical outcome model simultaneously.
 
 ### 16.2 What would count as an actual result
 
@@ -849,39 +971,39 @@ The paper should explicitly distinguish validity of anatomy reconstruction, vali
 
 **Completion:** A synthetic connection-cut test behaves correctly; repeated intersection of one severed connection is not double-counted; every probability field has a named simulated event; clinical deficit probability remains unavailable.
 
-### Milestone 4: Instrument-aware corridors and classical plans
+### Milestone 4: Route-planning product milestone
 
-**Goal:** Demonstrate that tool choice changes feasibility.
+**Goal:** Produce an inspectable, instrument-aware glioma route-comparison workspace before complete surgical simulation exists.
 
-**Data:** Pilot cases plus generic, documented tool configurations.
+**Data:** QC-passing pilot cases, source annotations and generic documented instruments.
 
-**Deliverables:** Full-shaft collision checking, access-window selection, reachable-target analysis, multiple candidate plans and rejected-plan explanations.
+**Deliverables:** Full-tool swept-envelope checks, specified access windows, reachable-target analysis, distinct candidate corridors, motor/language evidence, uncertainty halos, missing-data warnings and rejected-plan explanations.
 
-**Completion:** The analytic tool fixtures pass; the app shows at least one case where a point path is misleading and a different tool changes the feasible region. Results are not called clinically safe.
+**Completion:** Analytic fixtures pass; a real case shows how tool geometry changes access; alternatives can be compared and saved. Accessible volume is not labeled removed volume, modeled feasibility is not called clinical safety, and absent vascular/functional inputs remain explicitly unassessed. The product remains useful for research inspection without claiming whole-operation prediction.
 
 ### Milestone 5: A sequential resection environment
 
 **Goal:** Make the next decision depend on previous actions.
 
-**Data:** Synthetic fixtures and a roughly 20–30-case development pilot, subject to resource profiling.
+**Data:** Synthetic fixtures and one verified real case first. Expand toward a roughly 20–30-case development pilot only after profiling and a reproducible single-case loop; that cohort is not a prerequisite for first training.
 
 **Deliverables:** Cavity evolution, accessible frontier, removal bookkeeping, tool changes, STOP, deterministic replay and greedy/beam baselines.
 
 **Completion:** No teleporting removal, free corridor creation, impossible shaft motion, duplicated rewards or nondeterministic replay. A small toy problem has a known optimum or exhaustive reference.
 
-### Milestone 6: Genuine RL, not a hard-coded animation
+### Milestone 6: Genuine patient-specific learning and fair comparison
 
-**Goal:** Learn a reusable policy and establish a fair comparison.
+**Goal:** Train inside a patient's environment and establish whether that optimization improves useful modeled decisions.
 
-**Data:** Frozen development patients and generated episodes, never final external patients.
+**Data:** Start with one development patient and independently partitioned simulated worlds. Add other development patients, optional population training and the frozen nested-evaluation protocol as capacity permits.
 
-**Deliverables:** Policy checkpoint, training ledger, held-out rollouts, preference settings, search/MPC comparison and per-patient results.
+**Deliverables:** Actual scratch-policy updates, checkpoints, resource/selection curves, independent event/geometry evaluation, initial-search comparisons and replay. Add frozen-population and adapted-population arms for the complete benchmark once their prerequisite checkpoint exists.
 
-**Completion:** Training is reproducible; actor observations exclude hidden truth; policy performance is measured against strong baselines; both success and failure cases replay in the app.
+**Completion:** Legal actions and STOP remain enforced; no optimizer can weaken the world or reward; selection and evaluation remain separate; successes and failures are retained. A single-case demonstration is labeled single-case. The final method is judged at the patient level across held-out cases using the permitted adaptation protocol, not by insisting that every test case be zero-shot.
 
 ### Milestone 7: Uncertainty, observations and dynamic replanning
 
-**Goal:** Test the research differentiator.
+**Goal:** Extend the route/adaptation core with active information and dynamic anatomy when the earlier comparison is trustworthy.
 
 **Data:** ReMIND for intraoperative-image/shift work, RESECT for independent registration checks, simulated observation worlds.
 
@@ -907,7 +1029,7 @@ The paper should explicitly distinguish validity of anatomy reconstruction, vali
 
 **Deliverables:** Cohort flow, leakage audit, primary statistical analysis, ablations, resource report, failure analysis and independent evaluator results.
 
-**Completion:** No post-hoc tuning on the final test set; every claimed improvement has a comparator, unit of analysis and interval; clinical outcomes are not fabricated.
+**Completion:** No post-hoc changes to the global method or predeclared adaptation rule based on final test feedback. Per-case updates use only permitted inputs and optimization worlds under Section 15.8. Every claimed improvement has a comparator, unit of analysis and interval; clinical outcomes are not fabricated.
 
 ### Milestone 10: Public release and manuscript package
 
@@ -917,7 +1039,7 @@ The paper should explicitly distinguish validity of anatomy reconstruction, vali
 
 **Completion:** Another machine can reproduce a synthetic case and a documented public case; all displayed results come from saved runs; licensing is clear; the README explains exactly what is novel and what remains unvalidated.
 
-Milestones 1–4 should already yield something worth showing. Milestones 5–7 establish the RL research substance. Milestones 9–10 establish the strongest publication case. The interface develops throughout, not after all research is finished.
+Milestones 1–4 yield the first route-planning product. Milestones 5–6 establish the patient-specific RL investigation; Milestone 7 is a staged extension rather than a blocker. Milestones 9–10 establish the strongest publication case. The interface develops throughout, not after all research is finished.
 
 ---
 
@@ -939,6 +1061,10 @@ Milestones 1–4 should already yield something worth showing. Milestones 5–7 
 | App resembles a research toolbox dump | Task-based usability checks | Hide irrelevant controls; prioritize one coherent case workflow |
 | Local GPU absent or insufficient | Hardware probe and five-case profiling | CPU/pretrained/cached path first; bounded authorized cloud fallback only when useful |
 | Public download or license unclear | Source/terms audit | Keep resource optional; use a verified alternative; never stall all milestones |
+| Case-specific optimizer shrinks hazards or changes rewards | Hash frozen objective, world generator and tool models at every checkpoint | Reject incomparable runs; treat model revisions as new experiments |
+| Same-patient simulation score is mistaken for clinical validation | Separate optimization, selection and evaluation reports | Report model-conditioned evidence and retain null clinical probabilities |
+| Molecular result was learned only after surgery | Audit measurement and availability timestamps | Exclude from the preoperative primary analysis; label oracle/scenario tracks |
+| Reachable volume is reported as tissue removed | Separate route and sequential-plan schemas | Require legal removal replay before reporting modeled resection |
 
 Do not respond to a blocked component by building unrelated infrastructure. Continue on an independent milestone, keep a clear unresolved item, and return when the missing evidence or resource genuinely becomes necessary.
 
@@ -968,6 +1094,7 @@ For each major choice, record the alternatives, local resource cost, empirical r
 
 The first execution should complete Milestone 0 and the beginning of Milestone 1, not scaffold every module or train a large model. The earliest artifact should be a real, correctly aligned public case in an inspectable application.
 
+The revised core requirements include a route-first deliverable and a genuine single-patient optimization experiment. The agent may choose the best measured default, but must not quietly delete the scratch-RL comparison or make population pretraining a mandatory entry gate. Preserve working repository code and reconcile it with this revision before refactoring. The original three Markdown files are the necessary specification; create missing lightweight manifests/protocols rather than blocking on ancillary files mentioned by an older package.
 ---
 
 ## 21. Research coverage and how to extend it responsibly
@@ -1052,3 +1179,10 @@ For per-source limitations, access status and proposed uses, see `ANNOTATED_REFE
 - **[E03]** 3D Slicer contributors (2026). *3D Slicer extension development documentation*. https://slicer.readthedocs.io/en/latest/developer_guide/extensions.html
 - **[E04]** Google Cloud (2026). *Google Cloud free features and trial restrictions*. https://docs.cloud.google.com/free/docs/free-cloud-features
 - **[E05]** Springer Nature (2026). *International Journal of Computer Assisted Radiology and Surgery: aims and scope*. https://link.springer.com/journal/11548/aims-and-scope
+
+- **[R09]** Madondo et al. (2025). *Patient-Specific Deep Reinforcement Learning for Automatic Replanning in Head-and-Neck Cancer Proton Therapy*. https://proceedings.mlr.press/v298/madondo25a.html
+- **[C01]** Goldbrunner et al. (online 2025; issue 2026). *EANS-EANO guidelines on the extent of resection in gliomas*. https://academic.oup.com/neuro-oncology/article/28/1/38/8256732
+- **[C02]** Sahm et al. (2023). *Molecular diagnostic tools for the WHO 2021 classification ...; an EANO guideline*. https://pubmed.ncbi.nlm.nih.gov/37279174/
+- **[F13]** Campbell et al. (2014). *Beyond Crossing Fibers: Bootstrap Probabilistic Tractography Using Complex Subvoxel Fiber Geometries*. https://pmc.ncbi.nlm.nih.gov/articles/PMC4211389/
+- **[F14]** Manzano-Patrón et al. (2025; correction 2026). *Uncertainty mapping and probabilistic tractography using Simulation-based Inference in diffusion MRI*. https://pubmed.ncbi.nlm.nih.gov/40311303/ ; correction: https://pubmed.ncbi.nlm.nih.gov/41986194/
+- **[E06]** DIPY contributors. *Probabilistic tractography example*. https://docs.dipy.org/stable/examples_built/fiber_tracking/tracking_probabilistic.html

@@ -1,8 +1,10 @@
 # Brain RL: annotated sources
 
-Research snapshot: October 2, 2026. These are primary papers, original dataset records, author-maintained resources and official documentation. This is a targeted research map, not a claim that every relevant publication has been found. Entries distinguish accessible content from metadata-only leads. No full imaging cohort was downloaded or tested for this planning deliverable.
+Original research snapshot: October 2, 2026. **Patient-specific planning revision: October 4, 2026.** These are primary papers, original dataset records, author-maintained resources and official documentation. This is a targeted research map, not a claim that every relevant publication has been found. Entries distinguish accessible content from metadata-only leads. No full imaging cohort was downloaded or tested for this planning deliverable.
 
 The master plan cites the stable IDs below. “Use in project” is a proposed adaptation, not a claim made by the cited author. Dataset sample counts describe source releases, not the final number eligible after quality control.
+
+**Revision reading path:** Read R09 for patient-specific RL precedent, C01–C02 for clinical/molecular framing, and F13/E06 for an implementable halo pipeline; F14 is optional. Original IDs and annotations are retained. New checks do not imply that all original sources were reverified. A source motivating a design does not validate the resulting glioma planner.
 
 ## M01 | Medivis Studio
 
@@ -695,3 +697,76 @@ The master plan cites the stable IDs below. “Use in project” is a proposed a
 
 **Important limit / verification:** Venue fit is not an acceptance forecast. This project alone would not justify a clinical efficacy paper.
 
+## R09 | Patient-specific RL for proton-therapy replanning
+
+**Source:** Madondo et al. (2025). *Patient-Specific Deep Reinforcement Learning for Automatic Replanning in Head-and-Neck Cancer Proton Therapy*. Machine Learning for Healthcare, PMLR 298.
+
+**Reference:** https://proceedings.mlr.press/v298/madondo25a.html
+
+**Author manuscript:** https://arxiv.org/html/2506.10073v2
+
+**Use in project:** Adjacent-domain precedent for optimizing a policy from one patient's imaging and augmented anatomical instances. Motivates the scratch-versus-warm-start patient-specific experiment, not a requirement to reproduce its dose-control algorithm.
+
+**Important limit / verification:** Proceedings abstract and author-manuscript HTML inspected October 4, 2026. The proceedings landing abstract reports five patients, while arXiv v2 reports eight; do not merge their sample sizes or numerical results. No efficacy numbers from either version are adopted here. Radiotherapy dosimetry is not a validated surgical tissue-response or neurological-outcome model. This is not a public glioma action dataset.
+
+## C01 | EANS-EANO extent-of-resection guideline
+
+**Source:** Goldbrunner et al. *EANS-EANO guidelines on the extent of resection in gliomas*. Neuro-Oncology 28(1):38–54. Online September 17, 2025; issue January 2026.
+
+**Reference:** https://academic.oup.com/neuro-oncology/article/28/1/38/8256732
+
+**DOI:** 10.1093/neuonc/noaf217
+
+**Use in project:** Clinical framing for type-aware resection goals and reporting residual volume, while preserving function. Inform compartment definitions and context fields rather than inventing a universal percentage-removal reward.
+
+**Important limit / verification:** Relevant full-text HTML sections inspected October 4, 2026. A guideline is not an action-labeled training cohort, a voxelwise causal survival model or a source of numeric motor/language risk budgets for this simulator. Research preference scenarios remain scenarios.
+
+## C02 | EANO molecular diagnostic tools guideline
+
+**Source:** Sahm et al. (2023). *Molecular diagnostic tools for the WHO 2021 classification ...; an EANO guideline*. Neuro-Oncology 25(10):1731–1749.
+
+**Reference:** https://pubmed.ncbi.nlm.nih.gov/37279174/
+
+**DOI:** 10.1093/neuonc/noad100
+
+**Use in project:** Specify molecular evidence as assayed diagnostic information, with test provenance and availability. Keep observed molecular results separate from imaging predictions and unknown fields.
+
+**Important limit / verification:** PubMed abstract/metadata and the official EANO guideline index checked October 4, 2026; full-text retrieval was blocked in this pass. Consult the full guideline before implementing assay-specific interpretation. This source does not establish a genotype-dependent tool tolerance or a surgical injury-probability map.
+
+## F13 | Bootstrap probabilistic tractography
+
+**Source:** Campbell et al. (2014). *Beyond Crossing Fibers: Bootstrap Probabilistic Tractography Using Complex Subvoxel Fiber Geometries*. Frontiers in Neurology 5:216.
+
+**Reference:** https://pmc.ncbi.nlm.nih.gov/articles/PMC4211389/
+
+**DOI:** 10.3389/fneur.2014.00216
+
+**Use in project:** A concrete methodological basis for uncertainty in reconstructed fiber geometry. Adapt the idea into coherent structural ensembles and compare against a simpler distance-buffer baseline.
+
+**Important limit / verification:** Full-text HTML inspected October 4, 2026. The article concerns reconstruction uncertainty, not individualized glioma injury probabilities. Bootstrap assumptions and acquisition suitability require testing; agreement among resamples does not eliminate systematic reconstruction errors.
+
+## F14 | Simulation-based inference for diffusion uncertainty
+
+**Source:** Manzano-Patrón et al. (2025). *Uncertainty mapping and probabilistic tractography using Simulation-based Inference in diffusion MRI: A comparison with classical Bayes*. Medical Image Analysis 103:103580.
+
+**Reference:** https://pubmed.ncbi.nlm.nih.gov/40311303/
+
+**Full text:** https://pmc.ncbi.nlm.nih.gov/articles/PMC7619459/
+
+**DOI:** 10.1016/j.media.2025.103580
+
+**Correction:** https://pubmed.ncbi.nlm.nih.gov/41986194/ ; DOI 10.1016/j.media.2026.104071.
+
+**Use in project:** Optional later alternative for efficient posterior fiber-parameter sampling after a simple uncertainty pipeline works. Not a requirement to train another large network before building the route planner.
+
+**Important limit / verification:** Original article HTML and 2026 correction metadata checked October 4, 2026; correction contents were not inspected. Review the correction before reproducing the method or adopting numerical claims. This is diffusion-model uncertainty, not motor/language impairment calibration; no reported performance number is adopted in this plan.
+
+## E06 | DIPY probabilistic tractography implementation
+
+**Source:** DIPY contributors. Official documentation, accessed October 4, 2026.
+
+**Reference:** https://docs.dipy.org/stable/examples_built/fiber_tracking/tracking_probabilistic.html
+
+**Use in project:** A concrete executable starting point for probabilistic direction sampling and streamline generation. Pin the installed software/documentation version, validate gradient/frame handling and adapt seeds/constraints to the actual acquisition.
+
+**Important limit / verification:** Official example inspected. An example pipeline is not a validated glioma tract reconstruction; streamline sampling frequency alone must not be presented as a calibrated probability of anatomy or postoperative impairment.
