@@ -13,6 +13,7 @@ let server,
   PriorInventory,
   PriorCursorReadout,
   App,
+  AnnotationCenterButton,
   cacheDir;
 before(async () => {
   cacheDir = await fs.mkdtemp(
@@ -35,6 +36,9 @@ before(async () => {
   PriorInventory = priorModule.PriorInventory;
   PriorCursorReadout = priorModule.PriorCursorReadout;
   App = (await server.ssrLoadModule("/src/App.tsx")).default;
+  AnnotationCenterButton = (
+    await server.ssrLoadModule("/src/AnnotationCenterButton.tsx")
+  ).AnnotationCenterButton;
 });
 after(async () => {
   await server?.close();
@@ -276,8 +280,44 @@ test("the unloaded app owns one welcome message without mounting the viewer plac
     assert.match(html, /Open a case/);
     assert.match(html, /Local workspace · Open imaging to begin/);
     assert.doesNotMatch(html, /rl-viewer-empty|Your case, in perspective/);
+    assert.match(
+      html,
+      /<button[^>]*annotation-center-button[^>]*disabled=""[^>]*>[\s\S]*?Center on annotations<\/button>/,
+    );
   } finally {
     if (previousWindow === undefined) delete globalThis.window;
     else globalThis.window = previousWindow;
   }
+});
+
+test("centering annotations is an accessible navigation action that publishes only a copied MRI point", () => {
+  const center = Object.freeze([-12, 2, 11]);
+  const calls = [];
+  const element = AnnotationCenterButton({
+    center,
+    onCenter: (point) => calls.push(point),
+  });
+  const html = renderToStaticMarkup(element);
+  assert.match(html, /Center on annotations/);
+  assert.match(
+    html,
+    /Move the linked MRI slices to the source annotation center/,
+  );
+  assert.doesNotMatch(html, /disabled=""/);
+  element.props.onClick();
+  assert.deepEqual(calls, [[-12, 2, 11]]);
+  assert.notEqual(calls[0], center);
+  calls[0][0] = 99;
+  assert.deepEqual(center, [-12, 2, 11]);
+});
+
+test("centering without annotations stays disabled and cannot publish an invented MRI midpoint", () => {
+  const calls = [];
+  const element = AnnotationCenterButton({
+    center: null,
+    onCenter: (point) => calls.push(point),
+  });
+  assert.match(renderToStaticMarkup(element), /disabled=""/);
+  element.props.onClick();
+  assert.deepEqual(calls, []);
 });

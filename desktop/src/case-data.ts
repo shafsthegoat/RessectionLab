@@ -31,6 +31,24 @@ export function rasPoint(point: Vec3, frame: string): Vec3 {
     : [...point];
 }
 
+/** Source annotation navigation uses the same physical center as initial case loading. */
+export function annotationCenter(
+  payload: CasePayload | null,
+  caseData: ViewerCase | null,
+): Vec3 | null {
+  if (
+    !payload ||
+    !caseData ||
+    payload.caseHash !== caseData.caseHash ||
+    (payload.frame !== "RAS+" && payload.frame !== "LPS+") ||
+    !caseData.compartments.some((layer) => layer.volumeMm3 > 0)
+  )
+    return null;
+  return payload.targetCentroidMm
+    ? rasPoint(payload.targetCentroidMm, payload.frame)
+    : initialCursor(caseData);
+}
+
 /** Validate the physical/data contract before fetching or allocating any renderer arrays. */
 export function validateCaseDescriptor(payload: CasePayload): {
   voxelCount: number;

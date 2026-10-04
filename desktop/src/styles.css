@@ -1020,6 +1020,11 @@ h3 {
   color: #91bfb6;
   padding: 5px 0;
 }
+.annotation-center-button {
+  font-size: 11px;
+  margin: -5px 0 2px;
+  min-height: 28px;
+}
 .viewer-loading {
   position: absolute;
   inset: 0;

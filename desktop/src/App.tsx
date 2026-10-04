@@ -26,11 +26,13 @@ import {
   X,
 } from "lucide-react";
 import {
+  annotationCenter,
   hydrateCase,
   initialCursor,
   readableName,
   rasPoint,
 } from "./case-data";
+import { AnnotationCenterButton } from "./AnnotationCenterButton";
 import { readOnlyPreview } from "./preview-api";
 import { RefinementPanel } from "./RefinementPanel";
 import { hydratePriorProposal } from "./prior-data";
@@ -439,6 +441,10 @@ export default function App() {
   );
   const [overlayOpacity, setOverlayOpacity] = useState(0.32);
   const [cursor, setCursor] = useState<Vec3 | null>(null);
+  const annotationCenterMm = useMemo(
+    () => annotationCenter(payload, caseData),
+    [payload, caseData],
+  );
   const [cameraMode, setCameraMode] = useState<"anatomy" | "instruments">(
     "anatomy",
   );
@@ -1172,6 +1178,10 @@ export default function App() {
               {caseData?.compartments.length.toString().padStart(2, "0") ?? "—"}
             </span>
           </h2>
+          <AnnotationCenterButton
+            center={annotationCenterMm}
+            onCenter={setCursor}
+          />
           {caseData?.compartments.map((layer) => (
             <label className="layer-row" key={layer.name}>
               <input

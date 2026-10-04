@@ -5,6 +5,7 @@ import {
   initialCursor,
   validateCaseDescriptor,
   anatomyColor,
+  annotationCenter,
 } from "../src/case-data.ts";
 
 const hash = "a".repeat(64);
@@ -65,6 +66,56 @@ test("LPS is converted once without resampling voxel data", async () => {
   assert.deepEqual(initialCursor(data), [-12, 2, 11]);
   assert.deepEqual([...data.compartments[0].mask], [0, 0, 0, 0, 0, 0, 0, 1]);
   assert.equal(input.affine[0][0], 2);
+});
+test("annotation centering preserves the recorded source point and converts LPS exactly once", async () => {
+  for (const frame of ["RAS+", "LPS+"]) {
+    const input = fixture();
+    input.frame = frame;
+    input.targetCentroidMm = [12, -2, 11];
+    const data = await hydrateCase(input, api());
+    const beforeMask = data.compartments[0].mask.slice();
+    const beforeAffine = structuredClone(data.affine);
+    const center = annotationCenter(input, data);
+    assert.deepEqual(center, frame === "LPS+" ? [-12, 2, 11] : [12, -2, 11]);
+    assert.notEqual(center, input.targetCentroidMm);
+    assert.deepEqual(input.targetCentroidMm, [12, -2, 11]);
+    assert.deepEqual(data.compartments[0].mask, beforeMask);
+    assert.deepEqual(data.affine, beforeAffine);
+  }
+});
+test("annotation centering without a recorded point uses source-grid affine, including oblique LPS", async () => {
+  for (const frame of ["RAS+", "LPS+"]) {
+    const input = fixture();
+    input.frame = frame;
+    input.affine = [
+      [0, -3, 0, 10],
+      [2, 0, 0, -5],
+      [0, 0, 4, 7],
+      [0, 0, 0, 1],
+    ];
+    const data = await hydrateCase(input, api());
+    assert.deepEqual(
+      annotationCenter(input, data),
+      frame === "LPS+" ? [-7, 3, 11] : [7, -3, 11],
+    );
+  }
+});
+test("annotation centering is unavailable for absent, empty or stale-case annotations", async () => {
+  const input = fixture();
+  const data = await hydrateCase(input, api());
+  assert.equal(annotationCenter(null, data), null);
+  assert.equal(annotationCenter(input, null), null);
+  assert.equal(
+    annotationCenter({ ...input, caseHash: `sha256:${"b".repeat(64)}` }, data),
+    null,
+  );
+  input.compartments[0].volumeMm3 = 0;
+  input.targetCentroidMm = [12, -2, 11];
+  const empty = await hydrateCase(input, api({ mask: new Uint8Array(8) }));
+  assert.equal(annotationCenter(input, empty), null);
+  input.compartments = [];
+  const absent = await hydrateCase(input, api());
+  assert.equal(annotationCenter(input, absent), null);
 });
 test("MRI and mask encodings are rejected before transfer", async () => {
   const mutations = [
