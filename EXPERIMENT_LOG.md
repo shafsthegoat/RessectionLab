@@ -925,3 +925,22 @@ and logits were not persisted. A separate one-update pilot requires exact
 per-decision logging and executed/returned transition accounting before launch.
 Records are in `artifacts/preflight/native-axis-v2/` and the independent
 `artifacts/native-axis-v2-result-audit/`; V1 failure evidence remains intact.
+
+## October 4, 2026 — portable envelope proposals for PAT16 and PAT20
+
+Both first-repetition main/no-CSF outputs now travel in separate portable case
+copies through the existing tested persistence path. No common source change,
+inference or download was needed. Original MRI, thresholded annotations,
+physical frame and planning identity remain unchanged; full semantic identity
+changes and revision advances from 2 to 4. All four estimates remain review
+required with every annotation omission retained. Neither becomes working brain,
+cortex or legal access. Exact report text and artifact hashes are embedded;
+predicted signed-distance arrays remain external and are not surgical clearance.
+
+Twenty-eight existing structural/persistence checks pass. A separate actual
+save/reopen/source audit passed in 11.921 seconds with 636,518,400-byte process
+peak RSS and reverified all 37 retained inputs unchanged. Fifteen adversarial
+provenance tests passed in 0.25 seconds. Each proposed-as-working-support attempt
+is rejected with BRAIN_MASK_REVIEW_REQUIRED. Historical runtime version agreement
+does not attest extraction-time binary identity. Native UI inspection remains
+separate. Receipts are linked from the portable independent review in `docs/`.

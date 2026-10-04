@@ -130,6 +130,11 @@ Working anatomy and portable source cases are unchanged. The estimates still
 require anatomical review, and runtime version pins are not historical binary
 attestation. Exact execution/QC records are linked from
 `docs/brain-extraction-pat16-pat20-independent-review.md`.
+Separate portable copies now include both r1 envelope proposals and exact report
+provenance. An independent 11.92-second audit and 15 adversarial checks confirm
+unchanged source/planning inputs, exact mask persistence and enforced review
+gates; native app inspection is pending. Predicted distance arrays remain
+external diagnostic files. See `docs/brain-extraction-pat16-pat20-bundles.md`.
 
 ## Verified starting state
 
