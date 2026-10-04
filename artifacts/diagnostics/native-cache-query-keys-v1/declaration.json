@@ -1,0 +1,45 @@
+{
+  "acceptance": "All66 attempts accepted with complete ordered certificates;22364 queries and matching source experiment counts; reject rejected/partial/missing/mismatched evidence. Synthetic independent instrumentation must match every argument byte and call order.",
+  "declaration_content_hash": "sha256:ff027ab3c2cea8b791841c89945a0839817144b80b0b5f8aaf9e6807e4f83af8",
+  "entry_capacities": [
+    0,
+    1024,
+    4096,
+    8192,
+    16384,
+    32768
+  ],
+  "expected_queries_per_phase": 22364,
+  "experiment_id": "native-cache-query-keys-v1",
+  "frozen_native_source_sha256": {
+    "src/resectionlab/experimental_capsule_cache.py": "7b47cf36493c4baeb305beb7f18d4f5acf5bd0fa08b0e80738e948a20bd58869",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c"
+  },
+  "input_run": "artifacts/benchmarks/native-axis-cache-v1",
+  "input_sha256": {
+    "artifacts/benchmarks/native-axis-cache-v1/cached_cold/receipt.json": "c4e9614544506ce34e2c6f2f7b3f65198a500f3a51e30974d79710f09696b93a",
+    "artifacts/benchmarks/native-axis-cache-v1/cached_cold/scientific-trace.json.gz": "47dd135c0869179252042325e6b663aa3c77f7e7be81484ce71f03315a264021",
+    "artifacts/benchmarks/native-axis-cache-v1/cached_warm/receipt.json": "53d23e8b7557cbd384bbd9a77ff18abbfd313d706acac82a4bac45e759b12e99",
+    "artifacts/benchmarks/native-axis-cache-v1/cached_warm/scientific-trace.json.gz": "47dd135c0869179252042325e6b663aa3c77f7e7be81484ce71f03315a264021",
+    "artifacts/benchmarks/native-axis-cache-v1/launch-source.json": "c067100c907adba159a66af4ac0dc3816555a0ee4f641447bb4c56d28cbfb60e",
+    "artifacts/benchmarks/native-axis-cache-v1/launcher-status.json": "0f9476caad4825590c5edbf4c4eb55870c2a594b08830d658a3bb5ce13aaa0d6",
+    "artifacts/benchmarks/native-axis-cache-v1/preparation.json": "621b5f0b49fb7dc87e7d8e41312af6f48c0b86176c80e1ce4c20bc24c831a62c",
+    "artifacts/benchmarks/native-axis-cache-v1/reference_after/scientific-trace.json.gz": "47dd135c0869179252042325e6b663aa3c77f7e7be81484ce71f03315a264021",
+    "artifacts/benchmarks/native-axis-cache-v1/reference_before/scientific-trace.json.gz": "47dd135c0869179252042325e6b663aa3c77f7e7be81484ce71f03315a264021",
+    "artifacts/benchmarks/native-axis-cache-v1/result.json": "0e42d6bc19dd1d4d20ee66873fafe3b779cef43294d43120eb7a4d1938f3e3e7",
+    "artifacts/benchmarks/native-axis-cache-v1/worker-status.json": "dfcfcc86a122ac30e4a199acabdd39d45101fb898e0ef91bdc721c294623e3b9"
+  },
+  "limits": "Stored filtered active contacts and absent shaft covers cannot supply raw payload sizes. Reuse distances count distinct keys, not bytes. Entry-only hit bounds require the same no-bypass admission policy; oversized-query bypass can change pollution. Arbitrary byte-capacity predictions remain unknown. Full unsaved derived frame bytes are not fabricated.",
+  "maximum_process_peak_rss_bytes": 536870912,
+  "maximum_queries": 22364,
+  "maximum_uncompressed_trace_bytes": 33554432,
+  "maximum_wall_seconds": 60,
+  "output_namespace": "artifacts/diagnostics/native-cache-query-keys-v1",
+  "release_requirement": "Commit this declaration/script/synthetic evidence before root authorizes the public saved-artifact diagnostic. --execute is explicit; existing output is never overwritten.",
+  "schema_version": 1,
+  "scope": "Offline exact argument reconstruction and distinct-key reuse only; no cover geometry, patient loading, simulator stepping, policies or gradients. Original little-endian float64 argument bytes are reconstructed within one provenance-bound constant frame.",
+  "source_runtime_content_hash": "sha256:55fe17e6a1e5811f606713e857ee8c3142ae44573f4c30f409aa142d3656c92e",
+  "status": "declared_not_executed",
+  "version": "saved-native-exact-query-arguments-v1"
+}

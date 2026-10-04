@@ -459,18 +459,19 @@ both failures remain preserved. Existing selected-route readiness is unchanged.
 No public inspection or Electron integration is claimed for this slice. See
 `docs/native-axis-inspection.md` and its independent review artifacts.
 
-## Declared saved-cache diagnostic
+## Completed saved-cache diagnostic
 
-A separately reviewed stdlib-only reader can reconstruct ordered float64 cover
-arguments from saved accepted certificates without loading a patient or calling
-geometry. Fifty-three synthetic checks pass, including all 114 independently
-instrumented tiny-fixture calls. Duplicate action IDs and inconsistent runtime
-identities were caught, repaired and retained. The declaration remains unexecuted:
-22,364 public queries, 60 seconds, 512 MiB and 32 MiB decompressed-input limits.
-It will report variable-argument reuse within the bound invariant frame, not
-invent unsaved full key bytes or raw payload sizes. Entry-only hit bounds require
-unchanged no-bypass admission; byte-capacity predictions remain unknown.
-See `docs/native-cache-query-reconstruction.md`.
+The released saved-only reconstruction completed once from immutable `b0f5635`:
+22,364 ordered calls contain 8,812 distinct argument keys and 13,552 first-pass
+repeats. A separate audit reproduces every byte/order and reuse/LRU statistic;
+33 audit tests pass. The full key set is below the existing 16,384-entry cap,
+so increasing that count alone cannot help this fixed trace. Full cover payload
+sizes and byte-weighted reuse remain unknown; no larger memory capacity or
+speedup is established. External child wall time was 1.108 seconds, with all
+16 archived inputs unchanged. Cooperative limits passed, but exact peak RSS
+was not retained. No geometry, patient, simulation, policy or gradient ran.
+See `artifacts/validation/native-cache-query-keys-v1/RESULT.md` and
+`artifacts/native-cache-query-result-audit-v1/`.
 
 ## Expanded-axis policy input profiles
 

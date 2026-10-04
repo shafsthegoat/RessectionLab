@@ -1249,3 +1249,29 @@ an independent missing temporary-directory setup failure are retained. Final
 source/docs and compact actual receipts are frozen under
 `artifacts/native-axis-input-profile-prerequisites-v1/` and
 `artifacts/native-axis-input-profile-review-v1/`; full integrated validation is pending.
+
+## October 4, 2026 — cache argument reuse is substantial
+
+The prospectively declared saved-artifact diagnostic completed once from immutable
+`b0f5635`, with zero new cover computations, patient loads, simulator steps or
+gradients. All 22,364 ordered argument byte strings match the saved certificates.
+There are 8,812 distinct keys and 13,552 first-phase repeated accesses; the four
+inventories account for 8,812 / 7,444 / 6,108 / 0 calls. Distinct-key frequencies
+are 1,368 once, 1,336 twice and 6,108 three times.
+
+Because the complete key set is smaller than the old 16,384-entry cap, raising
+that cap alone cannot help this fixed trace. With unlimited payload and unchanged
+no-bypass admission, the entry-only model yields 13,552 first-pass and 22,364
+repeat-pass hits. These are hypothetical counts; exact raw cover payload sizes,
+byte-weighted reuse and performance under a larger memory cap remain unknown.
+
+External child wall time was 1.108213417 seconds; the producer's 1.022518917-second
+field excludes final summary/status writes. Archive setup and final hash checks
+are outside both. All 16 copied source/input files remained unchanged. Cooperative
+60-second/512-MiB checks passed; exact peak RSS was not retained and no rerun was
+performed. The compressed ordered arguments occupy 1,197,360 bytes. An independent
+saved-only audit uses different arithmetic/LRU implementations, passes all exact
+checks and 33 tamper tests, and records no discrepancies. Original output is under
+`artifacts/diagnostics/native-cache-query-keys-v1/`, execution evidence under
+`artifacts/validation/native-cache-query-keys-v1/`, and the separate audit under
+`artifacts/native-cache-query-result-audit-v1/`.

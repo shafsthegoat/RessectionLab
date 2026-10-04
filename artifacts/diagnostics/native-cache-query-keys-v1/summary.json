@@ -1,0 +1,143 @@
+{
+  "binding_hash": "sha256:60067f4640ce5772357e3bfe24736b43fd88cec2c5afc6e42ec73374cbe109e7",
+  "cover_geometry_calls": 0,
+  "declaration_content_hash": "sha256:ff027ab3c2cea8b791841c89945a0839817144b80b0b5f8aaf9e6807e4f83af8",
+  "distinct_argument_keys": 8812,
+  "elapsed_seconds": 1.0225189169868827,
+  "entry_capacity_for_all_repeat_accesses_to_hit_without_payload_limit": 8812,
+  "entry_only_lru_unlimited_payload": {
+    "0": {
+      "first": {
+        "entries": 0,
+        "evictions": 0,
+        "hits": 0,
+        "misses": 22364
+      },
+      "repeated_increment": {
+        "evictions": 0,
+        "hits": 0,
+        "misses": 22364
+      }
+    },
+    "1024": {
+      "first": {
+        "entries": 1024,
+        "evictions": 21340,
+        "hits": 0,
+        "misses": 22364
+      },
+      "repeated_increment": {
+        "evictions": 22364,
+        "hits": 0,
+        "misses": 22364
+      }
+    },
+    "16384": {
+      "first": {
+        "entries": 8812,
+        "evictions": 0,
+        "hits": 13552,
+        "misses": 8812
+      },
+      "repeated_increment": {
+        "evictions": 0,
+        "hits": 22364,
+        "misses": 0
+      }
+    },
+    "32768": {
+      "first": {
+        "entries": 8812,
+        "evictions": 0,
+        "hits": 13552,
+        "misses": 8812
+      },
+      "repeated_increment": {
+        "evictions": 0,
+        "hits": 22364,
+        "misses": 0
+      }
+    },
+    "4096": {
+      "first": {
+        "entries": 4096,
+        "evictions": 18268,
+        "hits": 0,
+        "misses": 22364
+      },
+      "repeated_increment": {
+        "evictions": 22364,
+        "hits": 0,
+        "misses": 22364
+      }
+    },
+    "8192": {
+      "first": {
+        "entries": 8192,
+        "evictions": 1304,
+        "hits": 12868,
+        "misses": 9496
+      },
+      "repeated_increment": {
+        "evictions": 3404,
+        "hits": 18960,
+        "misses": 3404
+      }
+    }
+  },
+  "exact_total_cover_payload_bytes": null,
+  "final_worlds_used": false,
+  "gradient_updates": 0,
+  "interpretation": "Exact variable-argument reuse for one bound invariant frame. Entry-only hit upper bounds require the same no-bypass admission policy; oversized-query bypass can change cache pollution. Byte-limited predictions remain unknown. This is not measured speedup or a cache-capacity recommendation.",
+  "inventory_query_counts": [
+    8812,
+    7444,
+    6108,
+    0
+  ],
+  "occurrence_frequency_histogram": {
+    "1": 1368,
+    "2": 1336,
+    "3": 6108
+  },
+  "patient_loads": 0,
+  "payload_limitation": "Saved active contacts were filtered by tissue and shaft covers were not saved; neither full cover sizes nor byte-capacity hit rates follow from this trace.",
+  "payload_weighted_reuse_distances": null,
+  "phases": [
+    {
+      "calls": 22364,
+      "compulsory_misses": 8812,
+      "distinct_key_reuse_distance_histogram": {
+        "6107": 684,
+        "6775": 4056,
+        "7443": 3388,
+        "8127": 4740,
+        "8811": 684
+      },
+      "maximum_distinct_key_reuse_distance": 8811,
+      "phase": "first"
+    },
+    {
+      "calls": 22364,
+      "compulsory_misses": 0,
+      "distinct_key_reuse_distance_histogram": {
+        "6107": 1368,
+        "6775": 4056,
+        "6791": 684,
+        "7443": 3388,
+        "7459": 3388,
+        "8127": 5408,
+        "8143": 668,
+        "8811": 3404
+      },
+      "maximum_distinct_key_reuse_distance": 8811,
+      "phase": "repeated"
+    }
+  ],
+  "queries_per_phase": 22364,
+  "query_artifact_sha256": "534759de882aa54cde6170a689f35d18f61a15e3ce96b690cc9fe56f10517cb5",
+  "script_sha256": "3d4659cadeb33027b2d889bef068591aaa6b10491037e0795224e8d352e4c2ff",
+  "simulator_steps": 0,
+  "stress_worlds_used": false,
+  "within_first_phase_repeat_count": 13552
+}

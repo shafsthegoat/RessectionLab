@@ -1,0 +1,45 @@
+{
+  "actual_audit_first_attempt_passed": true,
+  "declaration_content_hash": "sha256:ff027ab3c2cea8b791841c89945a0839817144b80b0b5f8aaf9e6807e4f83af8",
+  "file_sha256": {
+    "artifacts/native-cache-query-result-audit-v1/audit-01.json": "cc716d7b12a54a4c3f899b974b23ee4bd520f8ea8947d57320241d3d29128797",
+    "artifacts/native-cache-query-result-audit-v1/auditor.py.txt": "25864ebbb03493ea06920a14f16f162c350ef37f7bd8c8a3f4b982a70812ebde",
+    "artifacts/native-cache-query-result-audit-v1/tests-01.txt": "17c11149c581daee2e7d57b4acf89cffaab28d810311d625fe73b0c94b2209f4",
+    "artifacts/native-cache-query-result-audit-v1/tests.py.txt": "e52aed33ab8221e619195b70e4d2c91d8a59543f9bcd5be9e4d430d361537e86",
+    "scripts/audit_native_cache_query_results.py": "25864ebbb03493ea06920a14f16f162c350ef37f7bd8c8a3f4b982a70812ebde",
+    "tests/test_native_cache_query_result_audit.py": "e52aed33ab8221e619195b70e4d2c91d8a59543f9bcd5be9e4d430d361537e86"
+  },
+  "final_worlds_used": false,
+  "independent_methods": {
+    "entry_lru": "recency timestamps and lazy min-heap, independent of producer OrderedDict",
+    "query_bytes": "array module binary64 verification against saved certificate endpoints and separately rounded tool-axis arithmetic; no producer import",
+    "reuse_distances": "sorted last-access positions with bisect, independent of producer Fenwick tree"
+  },
+  "limits": [
+    "Full inverse/derived frame bytes were not saved; exact equality concerns variable arguments inside one source-bound invariant frame.",
+    "Full cover payload bytes and byte-weighted reuse remain unknown. Entry-only counts assume unchanged no-bypass admission and are not speed measurements or a capacity recommendation.",
+    "The producer checked wall/RSS cooperatively. Its summary records elapsed analysis time, not an independently measured peak-RSS field; external execution receipts must establish any peak memory claim.",
+    "Original native callable restoration and frame-guard execution are source-bound completed-run observations, not rerun here."
+  ],
+  "producer_sha256": "3d4659cadeb33027b2d889bef068591aaa6b10491037e0795224e8d352e4c2ff",
+  "result": {
+    "capacity_recommendation": null,
+    "distinct_argument_keys": 8812,
+    "no_bypass_source_phases_verified": true,
+    "peak_process_rss_bytes": null,
+    "public_source_queries_recomputed_geometry": 0,
+    "queries": 22364,
+    "raw_payload_bytes": null,
+    "speedup_claimed": false,
+    "within_first_phase_repeated_calls": 13552
+  },
+  "scope": "One independent saved-artifact audit; no producer rerun, geometry, patient, simulator, policy or gradient work. Original diagnostic outputs unchanged.",
+  "status": "passed",
+  "stress_worlds_used": false,
+  "test_result": {
+    "failed": 0,
+    "first_run": true,
+    "passed": 33,
+    "seconds": 0.06
+  }
+}
