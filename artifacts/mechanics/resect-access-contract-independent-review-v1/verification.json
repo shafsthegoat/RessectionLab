@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "review_kind": "independent_static_access_and_partition_contract_review",
+  "status": "design_access_contract_ready_for_commit_not_data_access_release",
+  "acquisition_commit": "4d1d5123572370e8af06730f17ea993813053dfc",
+  "reviewed_files": [
+    {
+      "path": "manifests/experiments/resect-case4-displacement-acquisition-v1.json",
+      "sha256": "2babb675a77d48bfd7f7df2748956b0de7e268a6a4ee731df508b3376401830d",
+      "present_at_acquisition_commit": true,
+      "bytes": 11558
+    },
+    {
+      "path": "docs/resect-conditional-displacement-poc.md",
+      "sha256": "f5489e8e4fa944db4a9b4f66cbfe5be32bc450b3b65cf6c7298611bc4f597b9b",
+      "present_at_acquisition_commit": false,
+      "bytes": 8549
+    },
+    {
+      "path": "docs/resect-selective-acquisition.md",
+      "sha256": "9d5759e30a24d6bb1c74f7d77da8c988e838098068f7994b6adaa5b6b02daa8c",
+      "present_at_acquisition_commit": true,
+      "bytes": 3427
+    },
+    {
+      "path": "docs/tissue-mechanics-validation.md",
+      "sha256": "aa28160f5f2459da550bfea8b8c8961f881c77cbf1270bbcbb5ee0c8a6509886",
+      "present_at_acquisition_commit": true,
+      "bytes": 10144
+    }
+  ],
+  "actions": {
+    "patient_images_loaded": false,
+    "patient_landmark_coordinates_read": false,
+    "patient_payload_downloads": 0,
+    "experiments_or_solver_runs": 0,
+    "module_tests_executed": 0,
+    "external_reference_retrievals": 0,
+    "metadata_only_hash_checks": true
+  },
+  "verified_metadata": {
+    "manifest_exactly_matches_acquisition_commit": true,
+    "provider_snapshot_sha256": "ee61c4c3382abbc3c9cc9905f11154cb4a36d9d48ed2e30acb5d8ce23e394796",
+    "selection_ranking_sha256": "5e94afa20862dce8df20258b60280ae4d13b6d67ab7f05db1987d8ccba3cbdb4",
+    "head_receipt_sha256": "9f721f0d9d366eba06687d9621edf48d879156538033a54049f8cf36c30979d1",
+    "decompressed_table_of_contents_sha256": "e635116017475a5253908598f9ad56ffb386e0fe74406abcbb6355444fdbb0ee",
+    "six_file_total_expected_bytes": 35068010
+  },
+  "contract_findings": [
+    "N >= 12 source rows; exactly six B; every other row V with at least six V. FPS uses source-world squared physical distances, lowest original one-based ID initialization and exact-tie precedence. Centered B singular-value ratio must be strictly greater than 1e-6.",
+    "Destinations cannot influence partition selection. Selected IDs, source coordinates, paired-file/frame provenance and algorithm freeze precede B destination access. V sources and destinations remain evaluator-owned; later US intensities and warps cannot tune model or alignment.",
+    "MRI-before-US is a separate baseline alignment input role, not an independent displacement outcome. Its all-pair proper rigid fit and source-only alignment QC freeze precede B or V displacement access.",
+    "Case4 remains DEVELOPMENT after the disclosed post-selection published aggregate exposure. Existing cohorts and unopened reserved patients retain their roles; overlapping landmark sets and aliases do not become independent samples.",
+    "World millimetres and reported column order do not establish actual anatomical axes or native image/point binding. The contract leaves those unverified until a source-bound header/frame audit.",
+    "Original acquisition supplies no accepted brain/cavity boundary. US coverage, nonzero head MRI, landmark-driven mask dilation and invented skull constraints cannot supply one.",
+    "The candidate material, traction-free exterior and averaged displacement supports are prospective interpolation assumptions. Sparse conditional displacement cannot validate tool action, retraction, cutting, force, injury or clinical use."
+  ],
+  "clarification": {
+    "acquisition_manifest_unchanged": true,
+    "generic_calibration_partition_purpose": "Permits a general partition but does not require nonempty C. The specific companion experiment prospectively chooses six B and all remaining V, explicitly no C. No conflicting role assignment or values access found.",
+    "design_document_commit_status": "Not present at acquisition commit; exact reviewed draft hash recorded above. Root owns later commitment and release."
+  },
+  "independent_controls_proposed_not_executed": [
+    "Destination-only changes preserve source selection and allowed B forward input while changing paired-file audit provenance; malformed/nonfinite V tokens are not converted until evaluator reveal.",
+    "One-based exact FPS ties; N11 rejection/N12 eligibility; exactly six B and at least six V; duplicate/nonfinite source and rank-ratio boundary rejection.",
+    "Partition, source/image/frame, forward and model/prediction-freeze tampering reject before V numeric conversion; frozen numeric arrays resist mutation.",
+    "MRI-before-US role cannot enter displacement partition/forward/reveal path; unverified frame cannot become a RAS forward input.",
+    "Forward payload contains only the six allowed observations and required transforms/identities, with no paired file, V coordinates, later-image payload or anatomy boundary."
+  ],
+  "remaining_gates": [
+    "Owner parser source and tests are still draft; this receipt does not certify implementation.",
+    "A future execution runner must persist the partition and baseline alignment/QC before B reveal, and verify exact persisted model/prediction bytes and freeze before evaluator V access. Hash-shaped caller strings alone do not prove these workflow events.",
+    "Acquisition and measurement access remain unreleased. Actual native header/pair QC, anatomy extraction, domain/mesh acceptance, solver/material/constraint verification, three-mesh budgets and evaluator implementation require their separate bounded declarations."
+  ],
+  "blocking_contract_findings": []
+}

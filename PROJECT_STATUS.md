@@ -215,6 +215,24 @@ establish patient stiffness, retractor forces or cutting response. See
 `docs/mechanics-hbe-acquisition.md` and
 `manifests/experiments/hbe-01-03-specimen-roles-v1.json`.
 
+The measured-specimen protocol now fixes one finite-strain material law, one
+positive stiffness fit, three mesh levels and withheld torsion prediction.
+Analytical FEBio deck/output checks pass 43 controls, and the isolated runtime
+driver passes 19 controls; these are software checks, not executed solver or
+measurement agreement. The pinned source runtime is being built separately.
+See `docs/hbe-specimen-mechanics-poc.md` and `docs/mechanics-febio-verification.md`.
+
+For the real-anatomy displacement proof of concept, six official RESECT Case4
+files (35,068,010 bytes) were acquired and verified. This patient is permanently
+development and does not change existing cohort roles. The reviewed access
+contract selects six supplied motions using source coordinates only, leaving at
+least six destination measurements withheld. Baseline MRI/ultrasound alignment
+cannot use the later ultrasound or those outcomes. No patient arrays or landmark
+values have been opened yet; brain/cavity boundaries are not supplied. The task
+is conditional displacement interpolation with declared mechanical assumptions,
+not a validated surgical action, retractor force or cutting response. See
+`docs/resect-conditional-displacement-poc.md` and the acquisition receipts.
+
 The first real TRAIN PAT22 inference profile completed all four declared cells
 in 6.247 seconds with unchanged model parameters. One CPU call took 28–30 ms
 for a 32³ crop and 256–269 ms for a 64³ crop, with highest observed memory about
