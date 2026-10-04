@@ -1,0 +1,90 @@
+{
+  "declaration_content_hash": "sha256:ff027ab3c2cea8b791841c89945a0839817144b80b0b5f8aaf9e6807e4f83af8",
+  "file_sha256": {
+    "artifacts/native-cache-query-review-v1/final-combined-tests.txt": "02cbb0854c218b4f99274a2a9599ea7226ac00d463eb17db7fddbf94016e69c8",
+    "artifacts/native-cache-query-review-v1/synthetic-instrumented-fixture.json.gz": "e8128dd27addc64e3a7d7b0f340f805c97ddc3386172358d728d8cc80ea23dab",
+    "artifacts/native-cache-query-review-v1/wording-assertion-tests.txt": "b05144c39b00b2e3a2fe76690afd280b1267160f0ad76c86a2fbc5a116dc9969",
+    "artifacts/validation/native-cache-query-reconstruction-independent-v1/final-script.py.txt": "3d4659cadeb33027b2d889bef068591aaa6b10491037e0795224e8d352e4c2ff",
+    "artifacts/validation/native-cache-query-reconstruction-independent-v1/final-tests.py.txt": "fdc1280859758f4308dc376f21f15060baedfb1ad52fca8693054543f573468c",
+    "artifacts/validation/native-cache-query-reconstruction-independent-v1/first-run.txt": "24cc146b918e0a8384cf8e86ab7ccb9c90fbc4f72d54e61fa19a2507f97f92e7",
+    "artifacts/validation/native-cache-query-reconstruction-independent-v1/initial-script.py.txt": "748e1fc1f35c7b70d22e4e35a10969ddc5d880639dee4f2f283002da699899ef",
+    "artifacts/validation/native-cache-query-reconstruction-independent-v1/initial-tests.py.txt": "de667a6f7856ce7e1e67b7bdc6504f3bb78077efb9ed28d49cd02b60acae6966",
+    "docs/native-cache-query-reconstruction.md": "de9d63d99a4978a742401a0f9fa52744643adcf626482a3548cac23413072ba4",
+    "manifests/experiments/native-cache-query-keys-v1.json": "28096bde87eca2cac3c2b66590c81905d8729cb7e135ebd0c39563bd4ef18a78",
+    "scripts/reconstruct_native_cache_queries.py": "3d4659cadeb33027b2d889bef068591aaa6b10491037e0795224e8d352e4c2ff",
+    "tests/test_native_cache_query_reconstruction.py": "e22feccf6a841048eefff92398aa0a66f28f650ec782243d25eddff81624c1cf",
+    "tests/test_native_cache_query_reconstruction_review.py": "fdc1280859758f4308dc376f21f15060baedfb1ad52fca8693054543f573468c"
+  },
+  "final_worlds_used": false,
+  "inspected_frozen_callsite_sha256": {
+    "src/resectionlab/experimental_capsule_cache.py": "7b47cf36493c4baeb305beb7f18d4f5acf5bd0fa08b0e80738e948a20bd58869",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c"
+  },
+  "limits": [
+    "This is exact variable-argument reconstruction within a provenance-bound invariant frame, not serialization of the full original cache key.",
+    "The full original frame includes unsaved inverse/derived values; its constancy is supported by frozen source and source guards, not recovered bytes.",
+    "Shaft working length provenance is the hash-bound preparation model. Saved active microsteps alone cannot independently recover that dimension.",
+    "Raw capsule-cover payload sizes, payload-weighted reuse distances, arbitrary byte-capacity hits, speedup and capacity recommendations remain unknown.",
+    "The prospective public denominator 22364 was not reconstructed in this review. Only the saved synthetic 114-call fixture was reconstructed.",
+    "Caps are cooperative checks, not a hard isolated process limit; test times are validation runtime, not performance measurements."
+  ],
+  "public_reconstruction_executed": false,
+  "retained_findings": [
+    {
+      "finding": "Duplicate action IDs could reuse one accepted certificate as another measured attempt.",
+      "regression": "test_duplicate_action_id_is_not_a_second_measured_attempt",
+      "repair": "Require unique complete action IDs including STOP.",
+      "reproduced_before_repair": true
+    },
+    {
+      "finding": "Declared runtime identity was not compared to launch-source, worker, or result.",
+      "regression": "test_resealed_private_inputs_cannot_change_declared_runtime[source/worker/result]",
+      "repair": "Require all three runtime identities to equal the prospective declaration.",
+      "reproduced_before_repair": true
+    },
+    {
+      "evidence": "Static prototype review and a separate small-key/oversized-key/small-key mathematical counterexample.",
+      "finding": "An unconditional entry-only hit upper bound is invalid if changing byte limits changes oversized-query bypass admission.",
+      "repair": "Qualify the bound by the same no-bypass admission policy; retain byte-limited predictions as unknown.",
+      "reproduced_before_repair": false
+    }
+  ],
+  "schema_version": 1,
+  "scope": "Independent synthetic saved-JSON reconstruction review and static frozen callsite/key inspection. No public reconstruction, new public geometry, patient loading, simulator episode, gradient, final-world, or stress-world use.",
+  "status": "independent_synthetic_review_passed_public_execution_not_performed",
+  "stress_worlds_used": false,
+  "test_results": {
+    "final_combined": {
+      "execution": "Owner ran both frozen test files once after the final wording change; independent reviewer read and hash-bound the exact log, avoiding duplicate execution.",
+      "failed": 0,
+      "independent_saved_JSON_tests": 38,
+      "log": "artifacts/native-cache-query-review-v1/final-combined-tests.txt",
+      "owner_synthetic_instrumentation_tests": 15,
+      "passed": 53,
+      "seconds": 1.3
+    },
+    "initial_independent": {
+      "failed": 4,
+      "log": "artifacts/validation/native-cache-query-reconstruction-independent-v1/first-run.txt",
+      "passed": 29,
+      "seconds": 0.19
+    },
+    "intermediate_reporting_string_assertion": {
+      "failed": 1,
+      "interpretation": "The intended no-bypass qualification said hit bounds while the existing assertion required upper bounds; wording was repaired, with no numerical change.",
+      "log": "artifacts/native-cache-query-review-v1/wording-assertion-tests.txt",
+      "passed": 52,
+      "seconds": 1.32
+    }
+  },
+  "verified": [
+    "All 114 independently instrumented synthetic argument byte strings, exact sequence, active/shaft pairing, per-inventory counts 76/38/0, and query indices.",
+    "Mapping insertion order cannot change saved action order; duplicate IDs, mismatched ordered attempts, frame/source, endpoints, tools, and microstep continuity reject.",
+    "Little-endian float64 signed zero, one-ULP differences and smallest positive subnormal remain byte-distinct; nonfinite, boolean and nonnumeric values reject.",
+    "Common affine signed-zero change modifies the bound projection while preserving variable argument reuse; no inverse affine, cell radius, or spacing bytes are invented.",
+    "Exhaustive length-one-through-six three-key sequences independently agree with distinct-other-key reuse distance and entry-LRU definitions across capacities zero through four.",
+    "Repeated-pass boundaries, hash-collision independence, count denominators, input/source/runtime hashes, decompression cap, cooperative wall/RSS failures and late input changes preserve failed authority.",
+    "Default invocation opens no bound input; successful private synthetic CLI imports no resectionlab or numerical packages and reports zero geometry/patient/step/gradient work."
+  ]
+}

@@ -459,6 +459,19 @@ both failures remain preserved. Existing selected-route readiness is unchanged.
 No public inspection or Electron integration is claimed for this slice. See
 `docs/native-axis-inspection.md` and its independent review artifacts.
 
+## Declared saved-cache diagnostic
+
+A separately reviewed stdlib-only reader can reconstruct ordered float64 cover
+arguments from saved accepted certificates without loading a patient or calling
+geometry. Fifty-three synthetic checks pass, including all 114 independently
+instrumented tiny-fixture calls. Duplicate action IDs and inconsistent runtime
+identities were caught, repaired and retained. The declaration remains unexecuted:
+22,364 public queries, 60 seconds, 512 MiB and 32 MiB decompressed-input limits.
+It will report variable-argument reuse within the bound invariant frame, not
+invent unsaved full key bytes or raw payload sizes. Entry-only hit bounds require
+unchanged no-bypass admission; byte-capacity predictions remain unknown.
+See `docs/native-cache-query-reconstruction.md`.
+
 ## Completion gates still open
 
 Native-resolution geometric simulation now works under explicit hypothetical

@@ -1,0 +1,69 @@
+..F......................FFF.....                                        [100%]
+=================================== FAILURES ===================================
+__________ test_duplicate_action_id_is_not_a_second_measured_attempt ___________
+
+saved = {'fixture': {'cache_metadata': {'bypasses': 0, 'cache_version': 'experimental-exact-capsule-cover-cache-v1', 'calls': ...f29aaf5d11a1dad9b044', 'saved_fixture_sha256': '67bbd8cb1023c6d5c5e1083def120951c72f49a05106b01bfeac036b6335d280', ...}
+
+    def test_duplicate_action_id_is_not_a_second_measured_attempt(saved):
+        fixture = saved["fixture"]
+        snapshot = fixture["trace"]["snapshots"][0]
+        action = snapshot["action_ids"][1]
+        snapshot["action_ids"].append(action)
+        snapshot["inventory"]["certified_action_ids"].append(action)
+        snapshot["inventory"]["attempts"].append(copy.deepcopy(snapshot["inventory"]["attempts"][0]))
+>       with pytest.raises(ValueError, match="(?i)(unique|duplicate|complete)"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_native_cache_query_reconstruction_review.py:118: Failed
+_____ test_resealed_private_inputs_cannot_change_declared_runtime[source] ______
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-296/test_resealed_private_inputs_c0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1091059d0>
+saved = {'fixture': {'cache_metadata': {'bypasses': 0, 'cache_version': 'experimental-exact-capsule-cover-cache-v1', 'calls': ...f29aaf5d11a1dad9b044', 'saved_fixture_sha256': '67bbd8cb1023c6d5c5e1083def120951c72f49a05106b01bfeac036b6335d280', ...}
+authority = 'source'
+
+    @pytest.mark.parametrize("authority", ["source", "worker", "result"])
+    def test_resealed_private_inputs_cannot_change_declared_runtime(tmp_path, monkeypatch, saved, authority):
+        _, output, _ = private_cli(tmp_path, monkeypatch, saved, runtime_mismatch=authority)
+>       with pytest.raises(ValueError, match="(?i)runtime"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_native_cache_query_reconstruction_review.py:247: Failed
+_____ test_resealed_private_inputs_cannot_change_declared_runtime[worker] ______
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-296/test_resealed_private_inputs_c1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109097a70>
+saved = {'fixture': {'cache_metadata': {'bypasses': 0, 'cache_version': 'experimental-exact-capsule-cover-cache-v1', 'calls': ...f29aaf5d11a1dad9b044', 'saved_fixture_sha256': '67bbd8cb1023c6d5c5e1083def120951c72f49a05106b01bfeac036b6335d280', ...}
+authority = 'worker'
+
+    @pytest.mark.parametrize("authority", ["source", "worker", "result"])
+    def test_resealed_private_inputs_cannot_change_declared_runtime(tmp_path, monkeypatch, saved, authority):
+        _, output, _ = private_cli(tmp_path, monkeypatch, saved, runtime_mismatch=authority)
+>       with pytest.raises(ValueError, match="(?i)runtime"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_native_cache_query_reconstruction_review.py:247: Failed
+_____ test_resealed_private_inputs_cannot_change_declared_runtime[result] ______
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-296/test_resealed_private_inputs_c2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10911bcb0>
+saved = {'fixture': {'cache_metadata': {'bypasses': 0, 'cache_version': 'experimental-exact-capsule-cover-cache-v1', 'calls': ...f29aaf5d11a1dad9b044', 'saved_fixture_sha256': '67bbd8cb1023c6d5c5e1083def120951c72f49a05106b01bfeac036b6335d280', ...}
+authority = 'result'
+
+    @pytest.mark.parametrize("authority", ["source", "worker", "result"])
+    def test_resealed_private_inputs_cannot_change_declared_runtime(tmp_path, monkeypatch, saved, authority):
+        _, output, _ = private_cli(tmp_path, monkeypatch, saved, runtime_mismatch=authority)
+>       with pytest.raises(ValueError, match="(?i)runtime"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_native_cache_query_reconstruction_review.py:247: Failed
+=========================== short test summary info ============================
+FAILED tests/test_native_cache_query_reconstruction_review.py::test_duplicate_action_id_is_not_a_second_measured_attempt
+FAILED tests/test_native_cache_query_reconstruction_review.py::test_resealed_private_inputs_cannot_change_declared_runtime[source]
+FAILED tests/test_native_cache_query_reconstruction_review.py::test_resealed_private_inputs_cannot_change_declared_runtime[worker]
+FAILED tests/test_native_cache_query_reconstruction_review.py::test_resealed_private_inputs_cannot_change_declared_runtime[result]
+4 failed, 29 passed in 0.19s

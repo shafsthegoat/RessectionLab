@@ -1,0 +1,68 @@
+{
+  "command": ".venv/bin/python -m pytest tests/test_native_cache_query_reconstruction.py tests/test_native_cache_query_reconstruction_review.py -q",
+  "declaration_content_hash": "sha256:ff027ab3c2cea8b791841c89945a0839817144b80b0b5f8aaf9e6807e4f83af8",
+  "file_sha256": {
+    "artifacts/native-cache-query-review-v1/final-combined-tests.txt": "02cbb0854c218b4f99274a2a9599ea7226ac00d463eb17db7fddbf94016e69c8",
+    "artifacts/native-cache-query-review-v1/focused-tests.txt": "949ebe3851c55cc26250c03210fbcda383894d3ed3a45f1ec87d321921ce5b87",
+    "artifacts/native-cache-query-review-v1/initial-tests.txt": "dba9aa5bad917bf17d50688b8043eff465fe886aa2361e4416da7a4be3354efc",
+    "artifacts/native-cache-query-review-v1/pre-review-script.py": "748e1fc1f35c7b70d22e4e35a10969ddc5d880639dee4f2f283002da699899ef",
+    "artifacts/native-cache-query-review-v1/synthetic-instrumented-fixture.json.gz": "e8128dd27addc64e3a7d7b0f340f805c97ddc3386172358d728d8cc80ea23dab",
+    "artifacts/native-cache-query-review-v1/wording-assertion-tests.txt": "b05144c39b00b2e3a2fe76690afd280b1267160f0ad76c86a2fbc5a116dc9969",
+    "artifacts/validation/native-cache-query-reconstruction-independent-v1/first-run.txt": "24cc146b918e0a8384cf8e86ab7ccb9c90fbc4f72d54e61fa19a2507f97f92e7",
+    "docs/native-cache-query-reconstruction.md": "de9d63d99a4978a742401a0f9fa52744643adcf626482a3548cac23413072ba4",
+    "manifests/experiments/native-cache-query-keys-v1.json": "28096bde87eca2cac3c2b66590c81905d8729cb7e135ebd0c39563bd4ef18a78",
+    "scripts/reconstruct_native_cache_queries.py": "3d4659cadeb33027b2d889bef068591aaa6b10491037e0795224e8d352e4c2ff",
+    "src/resectionlab/experimental_capsule_cache.py": "7b47cf36493c4baeb305beb7f18d4f5acf5bd0fa08b0e80738e948a20bd58869",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/native_axis_simulation.py": "e1b8306050b53e636e1d602290720655d1f06fe72bf8309ba80afb2025122b70",
+    "src/resectionlab/native_proposals.py": "6a173851ad383c32b84121cd0d8871535fffa9174d95aa27bdb08ca4b8a7e5f9",
+    "src/resectionlab/native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+    "tests/test_native_cache_query_reconstruction.py": "e22feccf6a841048eefff92398aa0a66f28f650ec782243d25eddff81624c1cf",
+    "tests/test_native_cache_query_reconstruction_review.py": "fdc1280859758f4308dc376f21f15060baedfb1ad52fca8693054543f573468c"
+  },
+  "final_worlds_used": false,
+  "gradient_updates": 0,
+  "independent_review": "artifacts/validation/native-cache-query-reconstruction-independent-v1/",
+  "key_scope": "Exact variable float64 start/end/radius bytes under one invariant source/config/frame/namespace binding; unsaved inverse and derived frame bytes are not fabricated. All accepted action IDs must be unique and all runtime authorities must match the declaration.",
+  "negative_evidence": {
+    "final": "53 passed in1.30s",
+    "post_repair_interim": "48 passed in1.31s before five additional independent cases.",
+    "pre_repair": "4 failed,29 passed in0.19s: duplicate accepted action ID; mismatching launch-source,worker,result runtime authorities. Initial script and tests preserved by independent reviewer.",
+    "wording_assertion": "1 failed,52 passed in1.32s: summary said hit bounds rather than expected upper bounds. Added upper while preserving the explicit same-no-bypass qualification; no numerical change."
+  },
+  "passed": 53,
+  "payload_scope": "Raw active and shaft cover payload sizes remain unknown and are not inferred from filtered contacts. Entry-only upper bounds require the same no-bypass admission policy; oversized-query bypass can change pollution.",
+  "prior_incremental_result": "12 passed in1.08s before CLI and import-scope regressions were added",
+  "protected_source_byte_identity": {
+    "src/resectionlab/experimental_capsule_cache.py": true,
+    "src/resectionlab/geometry.py": true,
+    "src/resectionlab/native_axis_simulation.py": true,
+    "src/resectionlab/native_proposals.py": true,
+    "src/resectionlab/native_resection.py": true
+  },
+  "protected_source_commit": "43857b5a4931a9b4c3909f9c2914833e795b685b",
+  "public_cover_geometry_calls": 0,
+  "public_patient_loads": 0,
+  "public_saved_query_reconstruction_executed": false,
+  "public_simulator_steps": 0,
+  "pytest_seconds": 1.3,
+  "review_scope": "Only tiny synthetic native geometry was executed to create an independently instrumented saved fixture. The diagnostic then reads that fixture with cover functions explicitly forbidden. Signedzero/ULP, incomplete-evidence rejection, budget count bounds, brute-force reuse distances, entry-only LRU, and safe default/nooverwrite CLI are tested.",
+  "status": "owner_and_independent_synthetic_validation_passed_public_diagnostic_unexecuted",
+  "stress_worlds_used": false,
+  "synthetic_fixture": {
+    "committed_native_cuts": 2,
+    "exact_ordered_reconstructed_argument_bytes_match": true,
+    "file": "synthetic-instrumented-fixture.json.gz",
+    "full_scene_descriptor_constant_during_instrumentation": true,
+    "grid_shape": [
+      9,
+      9,
+      9
+    ],
+    "independently_observed_capsule_calls": 114
+  },
+  "test_split": {
+    "independent": 38,
+    "owner": 15
+  }
+}

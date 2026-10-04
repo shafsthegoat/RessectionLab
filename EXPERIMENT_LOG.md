@@ -1213,3 +1213,19 @@ direction bound repair those issues; centers, radii and IDs remain exact, and la
 geometry drift still rejects. Existing selected-route readiness is unchanged.
 The preparation timer excludes serialization and final checks; no patient latency
 or desktop workflow claim is made. See `artifacts/native-axis-inspection-independent-v1/`.
+
+## October 4, 2026 — prospective saved-query reconstruction
+
+The frozen cache experiment's accepted certificates can support an exact ordered
+projection of variable cover arguments, without new capsule geometry, simulation
+or gradients. A prospective declaration caps the read-only public diagnostic at
+22,364 queries, 60 seconds, 512 MiB peak process RSS and a 32 MiB uncompressed
+trace. Full unsaved frame-key bytes and raw cover payload sizes remain unknown.
+Entry-only reuse bounds explicitly retain the unchanged no-bypass assumption.
+
+All 53 synthetic tests pass, including exact bytes/order for 114 independently
+instrumented calls and exhaustive small LRU/reuse-distance comparisons. Review
+preserved four failures involving duplicate accepted IDs and unchecked runtime
+authorities, plus a later wording-only assertion. Final source and evidence are
+hash-bound in `artifacts/native-cache-query-review-v1/` and the independent review.
+Public reconstruction has not run; commit precedes a separate execution release.

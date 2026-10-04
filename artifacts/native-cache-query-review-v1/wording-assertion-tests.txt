@@ -1,0 +1,22 @@
+.......................................F.............                    [100%]
+=================================== FAILURES ===================================
+_____ test_repeated_pass_boundary_and_hash_collision_keep_payload_unknown ______
+
+    def test_repeated_pass_boundary_and_hash_collision_keep_payload_unknown():
+        keys = ["a", "b", "a", "c", "a", "b"]
+        result = MOD.summarize({"queries": [{"argument_float64_le_hex": k, "key_projection_hash": "collision"} for k in keys]}, (0, 1, 2, 3))
+        assert result["distinct_argument_keys"] == 3
+        assert result["within_first_phase_repeat_count"] == 3
+        assert result["phases"][0]["compulsory_misses"] == 3
+        assert result["phases"][1]["compulsory_misses"] == 0
+        assert result["entry_capacity_for_all_repeat_accesses_to_hit_without_payload_limit"] == 3
+        assert result["entry_only_lru_unlimited_payload"]["3"]["repeated_increment"] == {"hits": 6, "misses": 0, "evictions": 0}
+        assert result["exact_total_cover_payload_bytes"] is None
+        assert result["payload_weighted_reuse_distances"] is None
+>       assert "upper bounds" in result["interpretation"]
+E       AssertionError: assert 'upper bounds' in 'Exact variable-argument reuse for one bound invariant frame. Entry-only hit bounds require the same no-bypass admissi...e pollution. Byte-limited predictions remain unknown. This is not measured speedup or a cache-capacity recommendation.'
+
+tests/test_native_cache_query_reconstruction_review.py:240: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_native_cache_query_reconstruction_review.py::test_repeated_pass_boundary_and_hash_collision_keep_payload_unknown
+1 failed, 52 passed in 1.32s
