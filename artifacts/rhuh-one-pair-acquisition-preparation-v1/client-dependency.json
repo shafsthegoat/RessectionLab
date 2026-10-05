@@ -1,0 +1,21 @@
+{
+  "checked_utc": "2026-10-05T04:56:52.742943+00:00",
+  "path_executables": {
+    "ascp": null,
+    "ascli": null,
+    "aspera": null
+  },
+  "standard_app_locations": {
+    "/Applications/IBM Aspera Connect.app": false,
+    "/Applications/Aspera Connect.app": false,
+    "/Users/sayemkamal/Applications/IBM Aspera Connect.app": false,
+    "/Users/sayemkamal/Applications/Aspera Connect.app": false
+  },
+  "installed_any_client": false,
+  "attempted_any_payload_transfer": false,
+  "client_documentation": [
+    "https://www.ibm.com/docs/en/aspera-faspex/5.0.x?topic=packages-downloading-package-connect",
+    "https://www.ibm.com/docs/en/aspera-faspex/5.0.x?topic=packages-downloading-package-http-gateway"
+  ],
+  "conclusion": "Provider creates exact selected-path Connect transfer specifications successfully. A supported Connect/FASP client is required for the next checksum-only transfer because provider public configuration has no HTTP Gateway URL. Client compatibility and runtime support have not been established by installation or execution."
+}

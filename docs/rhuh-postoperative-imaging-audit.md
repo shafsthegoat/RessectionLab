@@ -104,3 +104,30 @@ injury-region review and outcome-timing clarification—not a larger neural netw
 
 Dataset attribution: Cepeda and colleagues (2023), *RHUH-GBM*, TCIA,
 [DOI 10.7937/4545-C905](https://doi.org/10.7937/4545-c905).
+
+## October 5: fixed one-pair transfer preparation
+
+The integration owner fixed **RHUH-0001, visits 0/1**, before this preparation;
+this preparation did not consult clinical outcome rows. Cohort outcomes were
+previously inspected and a baseline fit completed, so this is neither a blinded
+nor held-out cohort. Exact-path requests for the 12 images and,
+separately, the checksum file produced supported Connect transfer specifications
+(HTTP 201). Specifications contain transfer credentials, which were kept in
+memory and omitted from receipts. No transfer was started.
+
+The provider's public configuration reports `http_gateway_url=null` and prompts
+users to install Connect. An HTTP-Gateway specification returning 201 therefore
+does **not** establish an available HTTP download service. No Connect/ascp client
+was found locally. A selected-file query to the directory-browse endpoint failed
+with HSTS code 1202; it neither resolved the symbolic link size nor proved that
+the file is unavailable.
+
+`artifacts/rhuh-one-pair-acquisition-preparation-v1/bounded-pair-manifest.json`
+fixes the 12 source paths, ignored output destination and **256 MiB compressed
+image ceiling**. Acquisition remains disabled: lengths/checksums are unknown,
+the 61,787-byte checksum file is still unfetched, and root review is required
+before image acquisition. The next concrete dependency is a supported
+[Connect/FASP client](https://www.ibm.com/docs/en/aspera-faspex/5.0.x?topic=packages-downloading-package-connect)
+for checksum-only retrieval, or a provider-offered HTTP service. No access grant,
+account signup, controlled DICOM request, billing change or outcome lookup was
+attempted. Every eventual image must pass size/checksum checks before decoding.

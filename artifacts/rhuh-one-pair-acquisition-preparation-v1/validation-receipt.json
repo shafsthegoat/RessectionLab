@@ -1,0 +1,33 @@
+{
+  "checked_utc": "2026-10-05T05:05:27.718918+00:00",
+  "selected_paths_match_fixed_one_pair": true,
+  "selected_paths_found_in_prior_live_directory_listing": 12,
+  "selected_image_entries_are_symlinks_with_unknown_payload_bytes": true,
+  "all_payload_destinations_git_ignored": true,
+  "image_release_remains_false": true,
+  "unknown_size_and_checksum_fields_remain_null": true,
+  "image_cap_bytes": 268435456,
+  "doc_previous_HEAD_preserved_as_prefix": true,
+  "doc_append_word_count": 214,
+  "json_credential_field_and_signed_url_scan": "passed; key-name documentation is allowed, credential values are not stored",
+  "source_receipts": {
+    "bounded-pair-manifest.json": {
+      "bytes": 11355,
+      "sha256": "24f7aae2763a037aec0055e946380b0053de156507273dc3697db3ea77eb422d"
+    },
+    "client-dependency.json": {
+      "bytes": 1056,
+      "sha256": "6f6a078bcbc2e54d8856877c7f56b6197f09450b00ed3b23c3070ed6ab9ed217"
+    },
+    "public-transport-config-receipt.json": {
+      "bytes": 992,
+      "sha256": "ff9da962fc7650540bd808d85e777402ac8f5cdb5622054ff0d19935e5ec2a42"
+    },
+    "transfer-metadata-receipt.json": {
+      "bytes": 5446,
+      "sha256": "b24ca74e25c1201013fd6cae597ef00eb2c54583d086766118855ef3ba89df2d"
+    }
+  },
+  "prior_cohort_outcome_inspection_explicit": true,
+  "no_untouched_test_claim": true
+}
