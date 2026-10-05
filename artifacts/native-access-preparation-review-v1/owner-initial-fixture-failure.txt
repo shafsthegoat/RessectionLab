@@ -1,0 +1,20 @@
+................F                                                        [100%]
+=================================== FAILURES ===================================
+______ test_later_selected_motion_outcomes_cannot_influence_source_choice ______
+
+initial = (<resectionlab.native_spatial_task.NativeSpatialTask object at 0x10ad11130>, {'subject': 'sub-PAT25', 'cohort_json': b...6067f6c9d8402', 'expected_model_hash': 'sha256:f5045ba398b4a6795ea517a3a838c71fa00f1c6b0c15c7678a7edb67659d4cc1', ...})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b1fae40>
+
+    def test_later_selected_motion_outcomes_cannot_influence_source_choice(initial, monkeypatch):
+        task, kwargs = initial
+        monkeypatch.setattr(access, "screen_axis_accesses", lambda *a, **k: IngressScreeningResult("selected", (2, 1), (), 0))
+        result = access.prepare_native_access(task, **kwargs)
+>       assert result.receipt["selected_exit"] == [2, 1]
+E       assert (2, 1) == [2, 1]
+E         
+E         Use -v to get more diff
+
+tests/test_native_access_preparation.py:143: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_native_access_preparation.py::test_later_selected_motion_outcomes_cannot_influence_source_choice
+1 failed, 16 passed in 1.42s
