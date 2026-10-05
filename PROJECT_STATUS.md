@@ -44,9 +44,12 @@ N16 compression passed in 88.59 seconds; N24 compression timed out at the fixed
 required mesh comparison ran. Supervised elapsed time was 517.52 seconds and
 sampled peak RSS 1,491 MiB. All partial outputs and previous evidence are retained;
 there was no retry, measured-response access or material fitting. The completed
-case reported 60.78 seconds in its linear solver. A saved-mesh eligibility
-check is investigating whether symmetry can reduce cost without changing the
-discretization; no reduced model is accepted or released. See
+case reported 60.78 seconds in its linear solver. Saved-mesh checks rejected
+exact Cartesian quarter extraction: tiny coordinate departures exceed its
+declared tolerance. The separate midheight plane passes that same geometric
+criterion on both N8/N12 meshes. A half-height axial equivalence comparison is
+in preparation; no reduced model is accepted or released. See
+`artifacts/mechanics/hbe-quarter-eligibility-diagnosis-v1/README.md` and
 `artifacts/mechanics/hbe-resolution-experiment-result-v1/RESULT.md`.
 
 One analytical Gmsh control confirmed that the existing discrete-surface path
