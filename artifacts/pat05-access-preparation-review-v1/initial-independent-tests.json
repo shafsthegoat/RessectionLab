@@ -1,0 +1,30 @@
+{
+  "checkpoint_reads": 0,
+  "elapsed_seconds": 0.9524871250614524,
+  "exit_code": 0,
+  "native_constructors": 0,
+  "native_previews": 0,
+  "optimizer_steps": 0,
+  "patient_arrays": 0,
+  "patient_decodes": 0,
+  "policy_forwards": 0,
+  "scope": "saved JSON dictionaries/lists plus mocked task/nominal/support/affine boundaries; no arrays or native construction",
+  "source_and_historical_metadata_hashes_after": {
+    "artifacts/pat05-real-geometric-learning-v1/declaration-input.json": "d69c9b6cf1f0f329d698c3857bca13efaa4a4a9a7b424208711affd4ac8480f4",
+    "artifacts/pat05-real-geometric-learning-v1/receipt.json": "fdc575e6695a7f949f65de93e7165f7833b514fcd193094a24ac3e0f94e7ee77",
+    "artifacts/pat05-real-spatial-profile-v3/nominal64/declaration-input.json": "5a27d1815a728d05c9d6d69d3f04e7ac9b87edb61c5f7ff752ab9bcb0b00df64",
+    "scripts/diagnose_training_observation_coverage.py": "9c4432777fb1556b58693f652af94b8f292045c00cf54d04e954c239c5979daf",
+    "scripts/pat05_access_preparation.py": "cf951f2e29f912427f6d3a1a12214dc7d3ffdff46e4dbf8cb9a10f2d40a49b6d",
+    "src/resectionlab/native_access_preparation.py": "898f8ea389a251faeab9efe296f523560b7fe61fe459c07ef7b269345e4b5ecd",
+    "tests/test_pat05_access_preparation_review.py": "e1f5a1687639b638d1b05b302da7d54eeb05088287ec3ed796a4fb6ec56b585e"
+  },
+  "source_and_historical_metadata_hashes_before": {
+    "artifacts/pat05-real-geometric-learning-v1/declaration-input.json": "d69c9b6cf1f0f329d698c3857bca13efaa4a4a9a7b424208711affd4ac8480f4",
+    "artifacts/pat05-real-geometric-learning-v1/receipt.json": "fdc575e6695a7f949f65de93e7165f7833b514fcd193094a24ac3e0f94e7ee77",
+    "artifacts/pat05-real-spatial-profile-v3/nominal64/declaration-input.json": "5a27d1815a728d05c9d6d69d3f04e7ac9b87edb61c5f7ff752ab9bcb0b00df64",
+    "scripts/diagnose_training_observation_coverage.py": "9c4432777fb1556b58693f652af94b8f292045c00cf54d04e954c239c5979daf",
+    "scripts/pat05_access_preparation.py": "cf951f2e29f912427f6d3a1a12214dc7d3ffdff46e4dbf8cb9a10f2d40a49b6d",
+    "src/resectionlab/native_access_preparation.py": "898f8ea389a251faeab9efe296f523560b7fe61fe459c07ef7b269345e4b5ecd",
+    "tests/test_pat05_access_preparation_review.py": "e1f5a1687639b638d1b05b302da7d54eeb05088287ec3ed796a4fb6ec56b585e"
+  }
+}
