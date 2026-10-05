@@ -1,0 +1,19 @@
+{
+  "version": "pat25-screened-ingress-initial-comparison-v1-release",
+  "authorized": true,
+  "phase": "initial_inventory_diagnostic",
+  "subject": "sub-PAT25",
+  "role": "TRAIN",
+  "declaration_sha256": "12416c632ae5f297ef0d5fec282e9922c55c688c88e2a492a37bdea7f106b994",
+  "manifest_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/pat25-ingress-access-v1/declaration.json",
+  "source_commit": "fd32d20a9fad710e5e05e29d18c036cf22248ebf",
+  "repository_root": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+  "archive_root": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source",
+  "output": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/pat25-ingress-access-v1",
+  "released_utc": "2026-10-05T06:44:03.928414+00:00",
+  "source_archive_sha256": "0c3d4d9c0d36da438283f5931c1e746a4bbb1a86134e5c649817d955c41029e9",
+  "declaration_and_archive_commit": "d67887bd3431ede6dcaa90b2384c331eaa2f6c74",
+  "maximum_attempts": 1,
+  "new_learning_or_cuts_authorized": false,
+  "scope": "One initial-inventory comparison only. Preserve original baseline; no alternate exit fallback, no other patient decode, no clinical inference."
+}
