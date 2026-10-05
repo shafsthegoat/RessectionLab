@@ -393,6 +393,16 @@ candidate is limited to 180 s, 3 GiB sampled group memory, one numerical thread,
 no new patient mesh or solver has run. See
 `docs/mechanics-patient-mesh-candidate-launcher.md`.
 
+The single released graded Case4 attempt returned 5,223 nodes and 2,761 tet10
+elements in 10.479 s at 647.6 MB sampled group memory. Count, topology, quality,
+midside and overlap checks passed, but sampled source-to-mesh and reverse
+surface distances reached 5.460 mm and 3.834 mm, exceeding the unchanged 2 mm
+limit. Volume difference was 1.208%; it does not override this local failure.
+The complete 413,290-byte diagnostic packet is preserved, all 28 input/context
+bindings stayed unchanged, and no retry, MRI re-extraction, B/V access or solve
+occurred. The patient mesh remains unaccepted. See
+`artifacts/mechanics/resect-case4-patient-mesh-graded-v2/RESULT.md`.
+
 One bounded Gmsh preparation generated the three measured-specimen meshes
 (96/768/2,592 hex elements) and 18 fixed loading decks in 3.43 s, with
 140.2 MB maximum sampled memory. Independent native-mesh and deck review

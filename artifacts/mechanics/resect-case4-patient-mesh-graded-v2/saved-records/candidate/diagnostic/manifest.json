@@ -1,0 +1,91 @@
+{
+  "schema": "complete-rejected-mesh-diagnostic-v1",
+  "diagnostic_complete": true,
+  "candidate_accepted": false,
+  "interpretation": "Full available diagnostic arrays only; no eligibility, geometry, fidelity or solver approval.",
+  "coordinate_frame": "native Case4 T1 RAS",
+  "coordinate_units": "m",
+  "connectivity": "zero-based FEBio tet10; corner nodes followed by edges12,23,31,14,24,34",
+  "gmsh_to_febio_permutation": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    9,
+    8
+  ],
+  "context": {
+    "candidate_id": "case4_boundary12_interior24_single",
+    "declaration_sha256": "ff27037c4141c5da99266da0c92efd5f6a673f5eb0bba6ac3032e916ba5db54e",
+    "source_surface_binding": {
+      "path": "outputs/mechanics/resect-case4-patient-mesh-v1/native-surface.npz",
+      "sha256": "dca30aacd485fb6c5a23fdfa2785e6ebead42a071f77d989c684e65a0360787f",
+      "mask_sha256": "7902cfbcb5fad15144181c06883bac7f4800e842f7ff05a540f56bac4eb38759"
+    },
+    "source_binding_scope": "Declared file identity must be verified by released caller; actual provided array digests follow.",
+    "source_arrays": {
+      "vertices_m": {
+        "shape": [
+          91951,
+          3
+        ],
+        "dtype": "float64",
+        "sha256": "47e667fbe8c8579010d901757761fe3e0482afde477665fc418cbe2a7f0e8e8f"
+      },
+      "triangles": {
+        "shape": [
+          183902,
+          3
+        ],
+        "dtype": "int64",
+        "sha256": "55a5b95b232a1a8726164e5043ccdb50a00daaa48ef12d6ec6c2513a7e694acc"
+      }
+    },
+    "source_case": "Case4 unchanged estimated native T1 envelope; known inferior/cerebellar exclusions; no whole-brain or pial truth",
+    "helper_v1_sha256": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d"
+  },
+  "counts": {
+    "nodes": 5223,
+    "tet10_elements": 2761
+  },
+  "files": {
+    "nodes_m.npy": {
+      "bytes": 125480,
+      "sha256": "0ecb287d96219344e6063f94e760f5088b7e340d9eb43b1bbe5065323251aec3",
+      "dtype": "float64",
+      "shape": [
+        5223,
+        3
+      ]
+    },
+    "tet10_indices.npy": {
+      "bytes": 221008,
+      "sha256": "2b86eccf2565ab7e9819a31f905bad9d05db4b0dad2b2665f987e3c05643a2bc",
+      "dtype": "int64",
+      "shape": [
+        2761,
+        10
+      ]
+    },
+    "gmsh_node_ids.npy": {
+      "bytes": 41912,
+      "sha256": "45508c64dd878f5b127234db252095b595434c456191ee512678cd89ab25d1d1",
+      "dtype": "int64",
+      "shape": [
+        5223
+      ]
+    },
+    "gmsh_element_ids.npy": {
+      "bytes": 22216,
+      "sha256": "a5369e41076f36f035b6991ae71d17b72ef10498c18a639daeda8e6d1ee5feaf",
+      "dtype": "int64",
+      "shape": [
+        2761
+      ]
+    }
+  }
+}
