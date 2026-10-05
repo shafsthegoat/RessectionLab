@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_render_rhuh_fixed_planes_review.py"
+  ],
+  "exit_code": 0,
+  "schema": "rhuh-fixed-plane-independent-controls.v1",
+  "scope": "Asymmetric analytical arrays and one changed synthetic byte fixture; no MRI payload, metadata preflight, native decoder or patient rendering invoked.",
+  "sources_after": {
+    "scripts/render_rhuh_fixed_planes.py": "fffd3ce06b9bbf4ad7272b56f51c772cf807443c238b20395c468ce792e62926",
+    "tests/test_render_rhuh_fixed_planes.py": "cda0d331e333bf3858126343a1c7d7b050639cb16087c16a9b0f8f3bca0a94bb",
+    "tests/test_render_rhuh_fixed_planes_review.py": "7d8d9b257cdaa5a74a3db3172894857e6b31b8dfeeac91d73fd7f0b4db1aef3f"
+  },
+  "sources_before": {
+    "scripts/render_rhuh_fixed_planes.py": "fffd3ce06b9bbf4ad7272b56f51c772cf807443c238b20395c468ce792e62926",
+    "tests/test_render_rhuh_fixed_planes.py": "cda0d331e333bf3858126343a1c7d7b050639cb16087c16a9b0f8f3bca0a94bb",
+    "tests/test_render_rhuh_fixed_planes_review.py": "7d8d9b257cdaa5a74a3db3172894857e6b31b8dfeeac91d73fd7f0b4db1aef3f"
+  },
+  "test_output_sha256": "eae2088e1f4b9503cd3bd993ff9ac6b1418fdbc7b50e99d0cc5bc861db5934a7",
+  "wall_seconds": 0.64246637490578
+}

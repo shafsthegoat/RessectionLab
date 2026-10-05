@@ -1,0 +1,109 @@
+{
+  "accepted_for_scientific_display_implementation_review": true,
+  "anatomical_validation": false,
+  "controls": {
+    "failed": 0,
+    "output": {
+      "bytes": 98,
+      "path": "artifacts/rhuh-fixed-plane-review-v1/independent-tests.txt",
+      "sha256": "eae2088e1f4b9503cd3bd993ff9ac6b1418fdbc7b50e99d0cc5bc861db5934a7"
+    },
+    "passed": 7,
+    "pytest_seconds": 0.42,
+    "run_receipt": {
+      "bytes": 1336,
+      "path": "artifacts/rhuh-fixed-plane-review-v1/test-run.json",
+      "sha256": "b670cf102b2127406dca25cc4aa10cc733889ec5c8c90c363233dc64dd11e518"
+    }
+  },
+  "evidence_scope": [
+    "Independent nested coordinate-loop oracle and bitwise float32 comparison on a signed asymmetric 5x7x9 analytical array.",
+    "Axis-permuted reflected anisotropic affine tests check edge labels, physical aspect and full field of view.",
+    "Static original-byte inspection and source joins; synthetic changed-byte rejection only.",
+    "Caption and documentation explicitly limit three sampled planes and unverified unsampled anatomy/physical intensity units."
+  ],
+  "findings": [],
+  "limitations": [
+    "No actual RHUH metadata preflight, payload access, MRI decode or rendering occurred in this review.",
+    "No exported patient figure was viewed; owner analytical layout check is separate.",
+    "The review establishes neither whole-volume anatomical validity nor scanner/template provenance, a support mask, clinical validity or release for learning.",
+    "The constant cardinal qform is the declared display frame; oblique affines are refused."
+  ],
+  "notes": [
+    "An initial static wording suggestion distinguished MRI volume resampling from nearest display rasterization; owner incorporated it before review freeze. This was not a reproduced numerical defect.",
+    "No failing independent test or owner-source repair was needed in this review."
+  ],
+  "patient_rendering_released": false,
+  "reviewed_contract": {
+    "byte_binding": "Reviewed exact compressed SHA/MD5 snapshot and pinned reviewed inspector; synthetic changed-byte test rejects before decoding.",
+    "display_rasterization": "nearest; exported pixels need not map one-to-one to MRI voxels",
+    "expected_edges_left_right_bottom_top": [
+      [
+        "A",
+        "P",
+        "I",
+        "S"
+      ],
+      [
+        "R",
+        "L",
+        "I",
+        "S"
+      ],
+      [
+        "R",
+        "L",
+        "A",
+        "P"
+      ]
+    ],
+    "fixed_indices": [
+      120,
+      120,
+      77
+    ],
+    "fixed_shape": [
+      240,
+      240,
+      155
+    ],
+    "intensity": "stored values are unchanged; explicit fixed grayscale clipping only; no hidden normalization",
+    "native_axis_display": "positive voxel indices right/up; copied plane transpose; no flips or crop",
+    "physical_aspect": "vertical affine-column norm divided by horizontal norm",
+    "volume_resampling": false,
+    "windows": [
+      [
+        -8.976038932800293,
+        10.492466926574707
+      ],
+      [
+        -3.0,
+        3.0
+      ]
+    ]
+  },
+  "schema": "rhuh-fixed-plane-independent-scientific-display-review.v1",
+  "sources": [
+    {
+      "bytes": 16196,
+      "path": "scripts/render_rhuh_fixed_planes.py",
+      "sha256": "fffd3ce06b9bbf4ad7272b56f51c772cf807443c238b20395c468ce792e62926"
+    },
+    {
+      "bytes": 11473,
+      "path": "tests/test_render_rhuh_fixed_planes.py",
+      "sha256": "cda0d331e333bf3858126343a1c7d7b050639cb16087c16a9b0f8f3bca0a94bb"
+    },
+    {
+      "bytes": 6749,
+      "path": "tests/test_render_rhuh_fixed_planes_review.py",
+      "sha256": "7d8d9b257cdaa5a74a3db3172894857e6b31b8dfeeac91d73fd7f0b4db1aef3f"
+    },
+    {
+      "bytes": 4048,
+      "path": "docs/rhuh-fixed-plane-qc.md",
+      "sha256": "59497c747fd1b8973593594fead685aa77879b2d1e2371c7e950897cc11a310e"
+    }
+  ],
+  "status": "passed_analytical_and_static_scope"
+}
