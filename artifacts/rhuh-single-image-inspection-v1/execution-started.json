@@ -1,0 +1,19 @@
+{
+  "started_utc": "2026-10-05T07:01:51.213884+00:00",
+  "release_commit": "dd633a21edfb48b27cacb72da1c2e042f6cd7c21",
+  "manifest_sha256": "a8d5770eabaad9cad264df46e2e1fea82bc12617e0d17800914ed011407ec9fa",
+  "release_sha256": "56ed79b17e0125800657a4eaaf4d60bd5897548bb9db466f030f1b9f975578d2",
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/rhuh-single-image-inspection-v1/run_once.py",
+    "--manifest",
+    "artifacts/rhuh-single-image-inspection-v1/launch-manifest.json",
+    "--manifest-sha256",
+    "a8d5770eabaad9cad264df46e2e1fea82bc12617e0d17800914ed011407ec9fa",
+    "--request-sha256",
+    "52c641a59a27adc90fa2782bb0d3ce83cacbd9e8eaf43bed8b3295c7b5c71ab0",
+    "--release-sha256",
+    "56ed79b17e0125800657a4eaaf4d60bd5897548bb9db466f030f1b9f975578d2"
+  ],
+  "maximum_attempts": 1
+}
