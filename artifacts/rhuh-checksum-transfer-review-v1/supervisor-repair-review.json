@@ -1,0 +1,8 @@
+{
+  "source_sha256": "0b85352a837f87185368f80ffd085b2370cbc2791047052b6ede62726dda0e3f",
+  "tests_sha256": "a41a622a22df5107fc562de9444894cde3f4c46dbee64bd8d417b288895e8128",
+  "source_unchanged": true,
+  "exit_code": 1,
+  "scope": "Fully simulated lifecycle and inert fixture bytes; no actual --execute, network, client, installation or real credentials.",
+  "finding": "Earlier local hash remains accepted after simulated surviving descendant changes bytes during group cleanup."
+}

@@ -1,0 +1,11 @@
+{
+  "source_url": "https://raw.githubusercontent.com/IBM/aspera-cli/5676d597ec90be0b3c94efba5d12a35b77f5a900/lib/aspera/data/2",
+  "source_commit": "5676d597ec90be0b3c94efba5d12a35b77f5a900",
+  "source_der_bytes": 2348,
+  "source_der_sha256": "0ffb27243d7e77fd2c565a25f910b9dad305750cda96c959be8605b292a8c3d0",
+  "local_pem_path": "build/rhuh-checksum-transfer-preparation-v1/ibm-public-token-client-rsa.pem",
+  "local_pem_sha256": "4481cc956592f2caae6fe66be06a11f3ed69b88f2c9da4ae99e5c1297d48ed43",
+  "openssl_static_key_structure_check_exit_code": 0,
+  "credential_role": "IBM-published common client SSH bootstrap used by official aspera-cli for token authentication; grants no TCIA file access without a fresh provider-issued transfer token. This is not a personal or provider-private credential.",
+  "contents_committed": false
+}
