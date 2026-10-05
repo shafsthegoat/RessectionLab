@@ -1,0 +1,26 @@
+{
+  "url": "https://production-transfer-sdk.s3.us-west-2.amazonaws.com/1.1.9/ibm-aspera-transfer-sdk-macos-arm64-1.1.9.zip",
+  "http_status": 200,
+  "headers": {
+    "Last-Modified": "Tue, 11 Aug 2026 05:31:21 GMT",
+    "ETag": "\"b5d7335a7a8431d47bfd01529fbb34e2-2\"",
+    "Content-Length": "25582806",
+    "Content-Type": "application/zip"
+  },
+  "max_package_bytes": 157286400,
+  "downloaded": true,
+  "downloaded_utc": "2026-10-05T05:12:57.339302+00:00",
+  "local_ignored_path": "build/rhuh-transfer-client-inspection-v1/ibm-aspera-transfer-sdk-macos-arm64-1.1.9.zip",
+  "actual_bytes": 25582806,
+  "local_sha256": "5101c4cff354b5021b57ca28bd48894254f237b6894e4c9967a0e15a40eda6fa",
+  "publisher_sha256": null,
+  "publisher_checksum_status": "No cryptographic payload checksum supplied by selected official catalog or HEAD; multipart ETag is not SHA256 or plain MD5.",
+  "package_executed": false,
+  "system_installed": false,
+  "selected_version": "1.1.9",
+  "selected_platform": "macos-arm64",
+  "sdk_catalog_commit": "5676d597ec90be0b3c94efba5d12a35b77f5a900",
+  "sdk_catalog_url": "https://github.com/IBM/aspera-cli/blob/5676d597ec90be0b3c94efba5d12a35b77f5a900/docs/sdk_location.yaml",
+  "runtime_execution_released": false,
+  "rhuh_payload_transfer_released": false
+}

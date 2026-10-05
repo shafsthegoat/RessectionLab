@@ -1,0 +1,930 @@
+{
+  "members": [
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/bin/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/bin/async",
+      "compressed_bytes": 6015609,
+      "uncompressed_bytes": 13019056,
+      "crc32": "4ae31b13",
+      "mode": "0o100755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/bin/ascp",
+      "compressed_bytes": 5277465,
+      "uncompressed_bytes": 11039728,
+      "crc32": "c4715204",
+      "mode": "0o100755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/lib/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/lib/libafwsfeed.dylib",
+      "compressed_bytes": 2978311,
+      "uncompressed_bytes": 6853792,
+      "crc32": "e7a64c44",
+      "mode": "0o100755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/sbin/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/sbin/transferd",
+      "compressed_bytes": 10724374,
+      "uncompressed_bytes": 21435952,
+      "crc32": "ca76c64f",
+      "mode": "0o100755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/etc/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/etc/aspera-license",
+      "compressed_bytes": 986,
+      "uncompressed_bytes": 1627,
+      "crc32": "b9cbcbf9",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/etc/aspera.conf",
+      "compressed_bytes": 142,
+      "uncompressed_bytes": 207,
+      "crc32": "fc622e32",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/etc/transferd-sample.json",
+      "compressed_bytes": 366,
+      "uncompressed_bytes": 822,
+      "crc32": "1eb6a3b4",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/etc/transferd-sample.yaml",
+      "compressed_bytes": 312,
+      "uncompressed_bytes": 619,
+      "crc32": "9e42bdff",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/etc/transferd.json",
+      "compressed_bytes": 149,
+      "uncompressed_bytes": 226,
+      "crc32": "6b5b6ec3",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/cpp/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/cpp/CMakeLists.txt",
+      "compressed_bytes": 523,
+      "uncompressed_bytes": 1175,
+      "crc32": "cb8dac1a",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/cpp/README.md",
+      "compressed_bytes": 312,
+      "uncompressed_bytes": 596,
+      "crc32": "9c3e0c08",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/cpp/file_to_stream_download_example.cpp",
+      "compressed_bytes": 1178,
+      "uncompressed_bytes": 4485,
+      "crc32": "4e6b2df9",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/cpp/regular_file_example.cpp",
+      "compressed_bytes": 1284,
+      "uncompressed_bytes": 4491,
+      "crc32": "005b9fd1",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/cpp/transferd.grpc.pb.cc",
+      "compressed_bytes": 3391,
+      "uncompressed_bytes": 49796,
+      "crc32": "adcdc21a",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/cpp/transferd.grpc.pb.h",
+      "compressed_bytes": 10332,
+      "uncompressed_bytes": 180633,
+      "crc32": "6c64296d",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/cpp/transferd.pb.cc",
+      "compressed_bytes": 94138,
+      "uncompressed_bytes": 1236882,
+      "crc32": "d9ab8a16",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/cpp/transferd.pb.h",
+      "compressed_bytes": 103806,
+      "uncompressed_bytes": 1379749,
+      "crc32": "fb2b205c",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/csharp/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/csharp/TransferService/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/csharp/TransferService/TransferService.csproj",
+      "compressed_bytes": 342,
+      "uncompressed_bytes": 748,
+      "crc32": "a3553bdf",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/csharp/TransferService/Transferd.cs",
+      "compressed_bytes": 88247,
+      "uncompressed_bytes": 1077198,
+      "crc32": "0d92c9bf",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/csharp/TransferService/transferd.grpc.pb.cc",
+      "compressed_bytes": 3391,
+      "uncompressed_bytes": 49796,
+      "crc32": "adcdc21a",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/csharp/TransferService/transferd.grpc.pb.h",
+      "compressed_bytes": 10332,
+      "uncompressed_bytes": 180633,
+      "crc32": "6c64296d",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/csharp/TransferServiceExamples/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/csharp/TransferServiceExamples/RegularFileExample.cs",
+      "compressed_bytes": 1106,
+      "uncompressed_bytes": 3350,
+      "crc32": "9ef9fb68",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/csharp/TransferServiceExamples/TransferServiceExamples.csproj",
+      "compressed_bytes": 251,
+      "uncompressed_bytes": 508,
+      "crc32": "fbd02002",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/csharp/README.md",
+      "compressed_bytes": 258,
+      "uncompressed_bytes": 455,
+      "crc32": "4bd08da3",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/csharp/TransferManager.sln",
+      "compressed_bytes": 508,
+      "uncompressed_bytes": 1739,
+      "crc32": "5f132a6d",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/go/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/go/examples/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/go/examples/file_to_stream_download_example.go",
+      "compressed_bytes": 1338,
+      "uncompressed_bytes": 3346,
+      "crc32": "68327987",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/go/examples/go.mod",
+      "compressed_bytes": 216,
+      "uncompressed_bytes": 448,
+      "crc32": "fc76c736",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/go/examples/go.sum",
+      "compressed_bytes": 1685,
+      "uncompressed_bytes": 3297,
+      "crc32": "3f97e1ea",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/go/examples/regular_file_example.go",
+      "compressed_bytes": 1255,
+      "uncompressed_bytes": 3687,
+      "crc32": "ccb3b46e",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/go/README.md",
+      "compressed_bytes": 916,
+      "uncompressed_bytes": 2061,
+      "crc32": "fc3a04db",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/go/go.mod",
+      "compressed_bytes": 185,
+      "uncompressed_bytes": 347,
+      "crc32": "8d14fbe1",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/go/go.sum",
+      "compressed_bytes": 1685,
+      "uncompressed_bytes": 3297,
+      "crc32": "b309ece0",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/go/transferd.pb.go",
+      "compressed_bytes": 40763,
+      "uncompressed_bytes": 274611,
+      "crc32": "6b3ab401",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/go/transferd_grpc.pb.go",
+      "compressed_bytes": 4191,
+      "uncompressed_bytes": 35365,
+      "crc32": "c47c2e36",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/java/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/java/gradle/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/java/gradle/wrapper/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/java/gradle/wrapper/gradle-wrapper.jar",
+      "compressed_bytes": 53637,
+      "uncompressed_bytes": 59536,
+      "crc32": "e8ce1f9a",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/java/gradle/wrapper/gradle-wrapper.properties",
+      "compressed_bytes": 125,
+      "uncompressed_bytes": 203,
+      "crc32": "c86cdf6d",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/java/src/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/java/src/main/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/java/src/main/java/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/java/src/main/java/client/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/java/src/main/java/client/FilePersistentExample.java",
+      "compressed_bytes": 1127,
+      "uncompressed_bytes": 4274,
+      "crc32": "eac77506",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/java/src/main/java/client/FileRegularDownloadExample.java",
+      "compressed_bytes": 978,
+      "uncompressed_bytes": 3245,
+      "crc32": "9c4047f3",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/java/src/main/java/client/FileRegularUploadExample.java",
+      "compressed_bytes": 1174,
+      "uncompressed_bytes": 4050,
+      "crc32": "f957e49e",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/java/src/main/java/client/FileToStreamDownloadExample.java",
+      "compressed_bytes": 1201,
+      "uncompressed_bytes": 4446,
+      "crc32": "195ff115",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/java/src/main/java/client/GetApiVersionExample.java",
+      "compressed_bytes": 357,
+      "uncompressed_bytes": 776,
+      "crc32": "6d04ccaf",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/java/src/main/java/client/GetInfoExample.java",
+      "compressed_bytes": 346,
+      "uncompressed_bytes": 759,
+      "crc32": "a610e926",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/java/src/main/java/client/IsPeerReachableExample.java",
+      "compressed_bytes": 471,
+      "uncompressed_bytes": 1195,
+      "crc32": "0199cc36",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/java/src/main/java/client/StreamToFileUploadExample.java",
+      "compressed_bytes": 1467,
+      "uncompressed_bytes": 5409,
+      "crc32": "ff556799",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/java/src/main/protobuf/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/java/src/main/protobuf/README.txt",
+      "compressed_bytes": 65,
+      "uncompressed_bytes": 73,
+      "crc32": "9fa82b90",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/java/src/main/protobuf/transferd.proto",
+      "compressed_bytes": 14518,
+      "uncompressed_bytes": 73772,
+      "crc32": "606d13ee",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/java/README.md",
+      "compressed_bytes": 281,
+      "uncompressed_bytes": 477,
+      "crc32": "e2dc3429",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/java/build.gradle",
+      "compressed_bytes": 591,
+      "uncompressed_bytes": 1421,
+      "crc32": "c1a2d423",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/java/gradlew",
+      "compressed_bytes": 3480,
+      "uncompressed_bytes": 8070,
+      "crc32": "6b23274e",
+      "mode": "0o100755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/java/gradlew.bat",
+      "compressed_bytes": 1169,
+      "uncompressed_bytes": 2674,
+      "crc32": "1d8275ee",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/java/settings.gradle",
+      "compressed_bytes": 101,
+      "uncompressed_bytes": 130,
+      "crc32": "4959544c",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/js/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/js/README.md",
+      "compressed_bytes": 246,
+      "uncompressed_bytes": 406,
+      "crc32": "01bee7eb",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/js/file_to_stream_download_example.js",
+      "compressed_bytes": 774,
+      "uncompressed_bytes": 1931,
+      "crc32": "9da4babf",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/js/regular_file_upload_example.js",
+      "compressed_bytes": 776,
+      "uncompressed_bytes": 1823,
+      "crc32": "1d7aa527",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/python/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/python/examples/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/python/examples/async_example.py",
+      "compressed_bytes": 674,
+      "uncompressed_bytes": 1883,
+      "crc32": "a66548a1",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/python/examples/file_persistent_example_download.py",
+      "compressed_bytes": 814,
+      "uncompressed_bytes": 2359,
+      "crc32": "9fd5d56c",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/python/examples/file_to_stream_download.py",
+      "compressed_bytes": 693,
+      "uncompressed_bytes": 1947,
+      "crc32": "0e36013f",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/python/examples/regular_file_example.py",
+      "compressed_bytes": 782,
+      "uncompressed_bytes": 2102,
+      "crc32": "01ee51b1",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/python/examples/stream_to_file_upload.py",
+      "compressed_bytes": 1111,
+      "uncompressed_bytes": 3318,
+      "crc32": "0f9dab37",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/python/README.md",
+      "compressed_bytes": 385,
+      "uncompressed_bytes": 823,
+      "crc32": "5dabbadc",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/python/pyproject.toml",
+      "compressed_bytes": 282,
+      "uncompressed_bytes": 463,
+      "crc32": "bb8cba99",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/python/setup.cfg",
+      "compressed_bytes": 65,
+      "uncompressed_bytes": 104,
+      "crc32": "3e4c6f6d",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/python/setup.py",
+      "compressed_bytes": 144,
+      "uncompressed_bytes": 266,
+      "crc32": "9c04d588",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/python/transferd_pb2.py",
+      "compressed_bytes": 7383,
+      "uncompressed_bytes": 34462,
+      "crc32": "51981d88",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/python/transferd_pb2_grpc.py",
+      "compressed_bytes": 2602,
+      "uncompressed_bytes": 27188,
+      "crc32": "3c12d92a",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/examples/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/examples/Gemfile",
+      "compressed_bytes": 63,
+      "uncompressed_bytes": 63,
+      "crc32": "6eb0b86b",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/examples/Gemfile.lock",
+      "compressed_bytes": 363,
+      "uncompressed_bytes": 1559,
+      "crc32": "feb17368",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/examples/faspex_send_package.rb",
+      "compressed_bytes": 1628,
+      "uncompressed_bytes": 4174,
+      "crc32": "45bb307d",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/examples/file_persistent_example.rb",
+      "compressed_bytes": 1009,
+      "uncompressed_bytes": 2859,
+      "crc32": "fefa300e",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/examples/file_regular_download_example.rb",
+      "compressed_bytes": 852,
+      "uncompressed_bytes": 1917,
+      "crc32": "a5d07401",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/examples/file_regular_icos_example.rb",
+      "compressed_bytes": 892,
+      "uncompressed_bytes": 2083,
+      "crc32": "fd6e7a4c",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/examples/file_regular_multiple_sessions_example.rb",
+      "compressed_bytes": 1156,
+      "uncompressed_bytes": 2977,
+      "crc32": "2f5ed0d8",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/examples/file_regular_to_s3_example.rb",
+      "compressed_bytes": 1012,
+      "uncompressed_bytes": 2343,
+      "crc32": "2a87a197",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/examples/file_regular_upload_example.rb",
+      "compressed_bytes": 941,
+      "uncompressed_bytes": 2481,
+      "crc32": "16ad93e7",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/examples/file_to_stream_download_example.rb",
+      "compressed_bytes": 795,
+      "uncompressed_bytes": 1907,
+      "crc32": "10b97545",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/examples/get_api_version_example.rb",
+      "compressed_bytes": 280,
+      "uncompressed_bytes": 460,
+      "crc32": "6f1f234a",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/examples/get_info_example.rb",
+      "compressed_bytes": 257,
+      "uncompressed_bytes": 428,
+      "crc32": "9a4e03fb",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/examples/is_peer_reachable_example.rb",
+      "compressed_bytes": 401,
+      "uncompressed_bytes": 757,
+      "crc32": "d7f8b732",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/examples/socket_tcp_recv_data_as_server.rb",
+      "compressed_bytes": 164,
+      "uncompressed_bytes": 246,
+      "crc32": "f8a8a19f",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/examples/socket_tcp_send_data_as_server.rb",
+      "compressed_bytes": 200,
+      "uncompressed_bytes": 303,
+      "crc32": "017f2b88",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/examples/stream_to_file_upload_example.rb",
+      "compressed_bytes": 1055,
+      "uncompressed_bytes": 2629,
+      "crc32": "3449c5f2",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/examples/utils.rb",
+      "compressed_bytes": 157,
+      "uncompressed_bytes": 234,
+      "crc32": "5c44d458",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/examples/validation_example.rb",
+      "compressed_bytes": 521,
+      "uncompressed_bytes": 1022,
+      "crc32": "7d3e82a0",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/lib/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/lib/transferd-api.rb",
+      "compressed_bytes": 41,
+      "uncompressed_bytes": 41,
+      "crc32": "5d2dde7e",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/lib/transferd_pb.rb",
+      "compressed_bytes": 5215,
+      "uncompressed_bytes": 35071,
+      "crc32": "9a7a2b24",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/lib/transferd_services_pb.rb",
+      "compressed_bytes": 1306,
+      "uncompressed_bytes": 4953,
+      "crc32": "73eb5291",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/Gemfile",
+      "compressed_bytes": 225,
+      "uncompressed_bytes": 411,
+      "crc32": "3849e8b5",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/Gemfile.lock",
+      "compressed_bytes": 325,
+      "uncompressed_bytes": 651,
+      "crc32": "a38cdf67",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/README.md",
+      "compressed_bytes": 920,
+      "uncompressed_bytes": 2117,
+      "crc32": "3740581e",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/Rakefile",
+      "compressed_bytes": 253,
+      "uncompressed_bytes": 480,
+      "crc32": "f680ae60",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/ruby/transferd-api.gemspec",
+      "compressed_bytes": 325,
+      "uncompressed_bytes": 604,
+      "crc32": "9d80da79",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/rust/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/rust/examples/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/rust/examples/get_info_example.rs",
+      "compressed_bytes": 415,
+      "uncompressed_bytes": 838,
+      "crc32": "8120835e",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/rust/scripts/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/rust/scripts/clippy",
+      "compressed_bytes": 344,
+      "uncompressed_bytes": 569,
+      "crc32": "c211ab24",
+      "mode": "0o100755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/rust/src/",
+      "compressed_bytes": 0,
+      "uncompressed_bytes": 0,
+      "crc32": "00000000",
+      "mode": "0o40755"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/rust/src/lib.rs",
+      "compressed_bytes": 30,
+      "uncompressed_bytes": 30,
+      "crc32": "3a8287ba",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/rust/Cargo.toml",
+      "compressed_bytes": 350,
+      "uncompressed_bytes": 665,
+      "crc32": "93d9a2c2",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/rust/LICENSE",
+      "compressed_bytes": 3949,
+      "uncompressed_bytes": 11358,
+      "crc32": "86e2b4b4",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/rust/README.md",
+      "compressed_bytes": 1091,
+      "uncompressed_bytes": 2420,
+      "crc32": "84b3f6d3",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/rust/build.rs",
+      "compressed_bytes": 661,
+      "uncompressed_bytes": 1824,
+      "crc32": "71d131a5",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/rust/rust-toolchain.toml",
+      "compressed_bytes": 67,
+      "uncompressed_bytes": 68,
+      "crc32": "9e64ec1e",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/transferd.html",
+      "compressed_bytes": 21859,
+      "uncompressed_bytes": 192736,
+      "crc32": "5bb8d1dd",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/transferd.md",
+      "compressed_bytes": 16468,
+      "uncompressed_bytes": 88446,
+      "crc32": "2e9cd3dd",
+      "mode": "0o100644"
+    },
+    {
+      "path": "ibm-aspera-transfer-sdk-macos-arm64-1.1.9/api/transferd.proto",
+      "compressed_bytes": 14518,
+      "uncompressed_bytes": 73772,
+      "crc32": "606d13ee",
+      "mode": "0o100644"
+    }
+  ],
+  "archive_internal_crc_check": "passed",
+  "archive_paths_check": "passed"
+}
