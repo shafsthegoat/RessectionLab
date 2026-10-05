@@ -1,0 +1,96 @@
+{
+  "schema": "mechanics-accelerate-controls-v1-declaration",
+  "status": "prepared_not_executed",
+  "solver_backend": "accelerate",
+  "profile_id": "accelerate_csc_v1",
+  "case_order": [
+    "zero",
+    "translation",
+    "finite_stretch",
+    "shear",
+    "shear_double_stiffness",
+    "tet10_affine",
+    "mpc_translation",
+    "mpc_nonrigid"
+  ],
+  "caps": {
+    "aggregate_seconds": 60,
+    "process_group_rss_bytes": 3221225472,
+    "numerical_threads": 1,
+    "maximum_cases": 8,
+    "time_steps": 4,
+    "retries": 0
+  },
+  "cases": {
+    "zero": {
+      "original_path": "artifacts/mechanics-febio-verification-v1/decks/zero.feb",
+      "original_sha256": "d202aa532e5cc2ec9f8219ba672d37c4606b74cbfeca9b6ea1ebbcd40a061f67",
+      "adapted_path": "artifacts/mechanics-accelerate-controls-v1/decks/zero.feb",
+      "adapted_sha256": "a20221e487f4a192924d28791aa077fbf268756f42367e48db6b6990d8cace9d",
+      "checker": "hex8"
+    },
+    "translation": {
+      "original_path": "artifacts/mechanics-febio-verification-v1/decks/translation.feb",
+      "original_sha256": "98a34f49115f260feff3ce45a231c3dfcb3d5f7bcd15edf1777cd230566a8481",
+      "adapted_path": "artifacts/mechanics-accelerate-controls-v1/decks/translation.feb",
+      "adapted_sha256": "1b5fa399cc71e2561647b3f9a6baf2f18b5428e62650898fc8e330fc146fe93d",
+      "checker": "hex8"
+    },
+    "finite_stretch": {
+      "original_path": "artifacts/mechanics-febio-verification-v1/decks/finite_stretch.feb",
+      "original_sha256": "51f7966c5054f009f7e1bf8cefa3306364196b58ede0170b39cbeab18391dee6",
+      "adapted_path": "artifacts/mechanics-accelerate-controls-v1/decks/finite_stretch.feb",
+      "adapted_sha256": "0d72a0ee80fb6a8ad88f8bae84c3771321345ef43fa2311786b488ad67c58b22",
+      "checker": "hex8"
+    },
+    "shear": {
+      "original_path": "artifacts/mechanics-febio-verification-v1/decks/shear.feb",
+      "original_sha256": "509c6ea97211d44d81e00d35d004e0e503517c0d0d5d8857a4af89abbec2b5b6",
+      "adapted_path": "artifacts/mechanics-accelerate-controls-v1/decks/shear.feb",
+      "adapted_sha256": "fa8c1c1f5bac69cb310c72c3fa590e83a87576ac62a99cbd0a6201f029b9c593",
+      "checker": "hex8"
+    },
+    "shear_double_stiffness": {
+      "original_path": "artifacts/mechanics-febio-verification-v1/decks/shear_double_stiffness.feb",
+      "original_sha256": "af78dc2a965892293d20786149224ae8337392347fdca19ec7e3ced8db987ac5",
+      "adapted_path": "artifacts/mechanics-accelerate-controls-v1/decks/shear_double_stiffness.feb",
+      "adapted_sha256": "7e8e6c73909f544ef1cce49f1d83aea2a9050ae2db467c913a027c405ea56dba",
+      "checker": "hex8"
+    },
+    "tet10_affine": {
+      "original_path": "artifacts/mechanics-patient-constraints-runtime-v1/decks/tet10_affine.feb",
+      "original_sha256": "8a75158a97750f3db57a5a2a48ab3f03760a4a95a8818ff3d30218ceca262f62",
+      "adapted_path": "artifacts/mechanics-accelerate-controls-v1/decks/tet10_affine.feb",
+      "adapted_sha256": "dfafcfde8075aacb36e2014d6abe755470e04667bcbfd69c6857edfb63833d50",
+      "checker": "tet10_mpc"
+    },
+    "mpc_translation": {
+      "original_path": "artifacts/mechanics-patient-constraints-runtime-v1/decks/mpc_translation.feb",
+      "original_sha256": "dad1653d2015d04f3499ea87f37246e5fce3c86f849ffc363e99cddd230386fa",
+      "adapted_path": "artifacts/mechanics-accelerate-controls-v1/decks/mpc_translation.feb",
+      "adapted_sha256": "956b66dc6cae4904e3a124a8b5e81bec66128d015e1ce85d6b96e533f76d996b",
+      "checker": "tet10_mpc"
+    },
+    "mpc_nonrigid": {
+      "original_path": "artifacts/mechanics-patient-constraints-runtime-v1/decks/mpc_nonrigid.feb",
+      "original_sha256": "40900e8761e663ca37568f9b911a06bfb34acb3db2bd5b1fd4840c7d55fadb93",
+      "adapted_path": "artifacts/mechanics-accelerate-controls-v1/decks/mpc_nonrigid.feb",
+      "adapted_sha256": "771f3a99d7a428d84b737c21bccf5c22a60ede8542d82a31310aaa0b074e66f8",
+      "checker": "tet10_mpc"
+    }
+  },
+  "sources": {
+    "scripts/mechanics_accelerate_controls.py": "f2ad929648b2804fa047a0d0840a693cfd16302268c5e1b76342f85293b499ec",
+    "scripts/mechanics_hbe_backend.py": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "scripts/mechanics_patient_constraints_run.py": "8ca55cf54730c91ae47e573999041cb0c8b84fb4676842e0d1c0e7407ee8843f",
+    "scripts/mechanics_patient_constraints.py": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66",
+    "scripts/mechanics_febio_verification.py": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+  },
+  "change_scope": "Only exact existing Skyline linear_solver subtree replaced; all other original deck bytes preserved.",
+  "runtime_requirement": "Separate release binds existing repaired runtime identity SHA; missing identity is a refusal.",
+  "backend_use_evidence": "Each case requires actual selecting-linear-solver accelerate console line, verified exact solver XML, executed deck hash and same runtime identity.",
+  "authority": "Prepared analytical software controls only; no execution authorization or material/patient validation."
+}
