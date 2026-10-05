@@ -1,0 +1,99 @@
+#!/usr/bin/env python3
+"""Bounded axial quarter/full equivalence runner; preparation is not execution.
+
+This module remains disabled until the extraction contract is frozen. It reuses
+existing supervision, execution and output guards; no response-data API is used.
+"""
+from __future__ import annotations
+
+import hashlib
+from pathlib import Path
+import sys
+import tarfile
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+from scripts import mechanics_hbe_experiment as old
+
+access, backend, runtime = old.access, old.backend, old.runtime
+DECLARATION_PATH = 'manifests/experiments/hbe-01-03-quarter-equivalence-v1.json'
+# An unresolved saved-mesh extraction check prevents a prospective draft from
+# becoming an executable contract. Set only after parent-reviewed source freeze.
+DECLARATION_SHA = None
+
+
+def declaration(root, binding):
+    if DECLARATION_SHA is None or binding.get('sha256') != DECLARATION_SHA:
+        raise ValueError('Quarter extraction contract is not frozen for execution')
+    return access.verify_binding(root, binding, maximum_bytes=1024**2, read_json=True)
+
+
+def source_inventory(root, release, study, quarter_mesh, quarter_readout):
+    """Exact inherited nine modules plus these three additions and two specs."""
+    sources = release['source_bindings']
+    extra = {'quarter_mesh': Path(quarter_mesh.__file__).resolve(),
+             'quarter_readout': Path(quarter_readout.__file__).resolve(),
+             'quarter_runner': Path(__file__).resolve()}
+    inherited = {key: value for key, value in sources.items() if key not in extra}
+    archive_binding = release['source_archive']
+    old.source_inventory(root, inherited, archive_binding, archive_binding['sha256'])
+    for key, path in extra.items():
+        if access.local_path(root, sources[key]['path']) != path:
+            raise ValueError('Quarter helper source origin differs')
+        access.verify_binding(root, sources[key], maximum_bytes=1024**2)
+    wanted = {f'scripts/{Path(value["path"]).name}': value['sha256'] for value in sources.values()}
+    wanted.update({DECLARATION_PATH: DECLARATION_SHA,
+                   study['original_protocol']['path']: study['original_protocol']['sha256']})
+    seen = set()
+    with tarfile.open(access.local_path(root, archive_binding['path']), 'r:*') as archive:
+        if archive.pax_headers.get('comment') != release['source_commit']:
+            raise ValueError('Quarter source archive commit differs')
+        for member in archive:
+            if member.isdir():
+                continue
+            if member.name not in wanted or member.name in seen or not member.isfile() or member.size > 1024**2:
+                raise ValueError('Unexpected quarter source archive member')
+            stream = archive.extractfile(member)
+            if stream is None or hashlib.sha256(stream.read()).hexdigest() != wanted[member.name]:
+                raise ValueError('Quarter archived source or declaration differs')
+            seen.add(member.name)
+    if seen != set(wanted):
+        raise ValueError('Incomplete quarter source archive')
+
+
+def full_references(root, study, context, bound):
+    """Bind every saved full primitive before any quarter extraction or solve."""
+    if set(study['full_references']) != set(study['ordered_runs']):
+        raise ValueError('Exact four full-model references required')
+    result = {}
+    for key in study['ordered_runs']:
+        source = study['full_references'][key]
+        reference = bound(source['readout'])
+        execution = bound(source['execution'])
+        branch, mesh_id, _, _ = key.split(':')
+        if (reference.get('passed') is not True
+                or (reference['branch'], reference['mesh_N'], reference['steps'],
+                    reference['mu_Pa'], reference['frame_count']) != (branch, int(mesh_id[1:]), 60, 1000., 61)
+                or reference['protocol_sha256'] != study['original_protocol']['sha256']
+                or reference['primitive_bindings'] != source['primitive_bindings']
+                or reference['execution_binding'] != source['execution']
+                or execution['run_id'] != key or execution['primitive_bindings'] != source['primitive_bindings']
+                or execution['runtime_identity'] != context['runtime_identity']
+                or execution['backend_profile'] != study['original_backend_profile']):
+            raise ValueError('Saved full-model reference identity differs')
+        solved = execution['execution']
+        if (solved.get('status') != 'completed' or type(solved.get('exit_code')) is not int
+                or solved['exit_code'] != 0 or solved.get('timed_out') is not False
+                or solved.get('cleanup', {}).get('reaped') is not True
+                or not 0 <= solved['elapsed_seconds'] < 90):
+            raise ValueError('Completed bounded full-model reference execution required')
+        if set(source['primitive_bindings']) != {'mesh', 'deck', 'loading', 'nodes', 'elements', 'solver'}:
+            raise ValueError('All six original full primitive bindings are required')
+        for record in source['primitive_bindings'].values():
+            bound(record, json_value=False)
+        bound(execution['backend_source_deck'], json_value=False)
+        backend.verify_deck(access.local_path(root, execution['backend_source_deck']['path']).read_bytes(),
+                            access.local_path(root, source['primitive_bindings']['deck']['path']).read_bytes())
+        result[key] = source
+    return result
