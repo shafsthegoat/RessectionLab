@@ -32,6 +32,7 @@ one bounded geometric experiment does not inherit clinical or transfer guarantee
 Cheapest next discriminating work: bind the complete historical PAT05 task record
 without relaxing equality, declare whole-shaft-screened access selection before
 angular action expansion, and verify one real pre/post imaging pair's measurement
-feasibility. The checksum-only transfer helper is reviewed but unexecuted.
+feasibility. One checksum-only transfer succeeded; all 12 image paths are listed,
+while actual file lengths and digest semantics remain unresolved.
 Observation coverage, full-tool ingress and action coverage remain separate gaps.
 No RL sweep, neurological reward or UI expansion is justified by current evidence.

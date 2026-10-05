@@ -35,13 +35,14 @@ and bind a complete historical record before a separately declared correction.
 See `artifacts/training-observation-coverage-v1/RESULT.md`.
 
 The isolated, signed native public-transfer client passes a version-only smoke
-check. A checksum-only acquisition helper and 37 offline controls are committed;
-three timing/cleanup/integrity review failures were repaired and retained. No
-checksum payload or patient image has been transferred by this work. The helper
-still requires a separate execution release; patient-image acquisition remains
-disabled. The combined observation and acquisition integration check passed all
-109 focused tests in 4.81 seconds. See
-`artifacts/rhuh-checksum-transfer-preparation-v1/README.md` and
+check. The checksum-only helper has 37 passing offline controls; three lifecycle
+review failures were repaired and retained. After a separate source-bound release,
+one public checksum transfer succeeded in 5.324132 seconds with 61,787 bytes and
+parent acceptance. All 12 selected image paths occur in the 720-path index, but
+the file gives neither payload lengths nor a checksum algorithm label. No patient
+image was transferred; image acquisition remains disabled pending those gates.
+The combined observation and acquisition integration check passed all 109 focused
+tests in 4.81 seconds. See `artifacts/rhuh-checksum-transfer-v1/RESULT.md` and
 `artifacts/validation/observation-acquisition-integration-v1/verification.json`.
 
 The RHUH public table has 40 patients and 14 recorded postoperative deficits

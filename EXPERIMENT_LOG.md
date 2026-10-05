@@ -1419,3 +1419,16 @@ process lifetime, enforces file size, kills descendants and reconciles final byt
 before acceptance. Fresh public metadata passed the source guards, but no checksum
 or patient-image transfer was executed. The combined six-file integration check
 passed 109 tests in 4.81 seconds. No patient experiment was rerun for integration.
+
+## October 5, 2026 — first public checksum transfer succeeds
+
+After the separate execution-release commit, one metadata transfer completed with
+parent acceptance and exit 0 in 5.324132 seconds (5.402919 seconds at the outer
+launcher). The exact 61,787 bytes have local SHA256
+`7c6ba3fa767bf169679db30caa854e671796416ca365fac6e57662796177c130`.
+The public file lists 720 unique image paths, including all 12 predeclared files
+for RHUH-0001 visits 0/1. Every token has 32 hexadecimal digits, but the file has
+no algorithm header or image lengths. These remain acquisition dependencies;
+image payloads were not requested. The original pair declaration is unchanged.
+Source, release, local preflight, parent/worker receipts and the received public
+metadata are preserved in `artifacts/rhuh-checksum-transfer-v1/`.

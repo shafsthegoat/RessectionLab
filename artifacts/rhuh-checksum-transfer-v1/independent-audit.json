@@ -1,0 +1,329 @@
+{
+  "schema": "rhuh-checksum-saved-byte-audit-v1",
+  "status": "passed_saved_record_consistency_checks",
+  "audit_source_sha256": "483152d47231a65a8a53da8aac4d3c51f48418ba8dc2c752eae10a1b8685c570",
+  "consulted_input_bindings": {
+    "artifacts/rhuh-checksum-transfer-v1/parent-execution.json": {
+      "bytes": 834,
+      "sha256": "96a5c21976e746206c0778bf82daa4f89c46b437c44265a91e85730faa7e082f"
+    },
+    "artifacts/rhuh-checksum-transfer-v1/release.json": {
+      "bytes": 1329,
+      "sha256": "9e09e283de8b1cc2695c22f6f01fa22e84ea4c2e7c895588473e6d529c5902c3"
+    },
+    "artifacts/rhuh-checksum-transfer-v1/execution-started.json": {
+      "bytes": 232,
+      "sha256": "dae0a2b044fecc35773de4276954f9341c7fa1d7c75d7baa3b28a62a386d8220"
+    },
+    "artifacts/rhuh-checksum-transfer-v1/preflight.json": {
+      "bytes": 309,
+      "sha256": "4115f131a057f6765459a6cb87e17de3ed94388954be6006a20bb60c50598cb2"
+    },
+    "artifacts/rhuh-checksum-transfer-v1/source.tar.gz": {
+      "bytes": 42479,
+      "sha256": "c800c5b7d6e93362510c0f5ea76c5b948a3f8d6656ee1b38b1464fe6d9d924b0"
+    },
+    "artifacts/rhuh-checksum-transfer-preparation-v1/README.md": {
+      "bytes": 2639,
+      "sha256": "cbbd093c1e4271942434d5c20add807014b68a07712e0675e46b558afabeb0ab"
+    },
+    "artifacts/rhuh-checksum-transfer-preparation-v1/live-metadata-guard-check-after-source-mapping.json": {
+      "bytes": 383,
+      "sha256": "6afc641bf2f40c3a416e27dc9c70dcc6837c7cb5b0dff47cb30c314e07284526"
+    },
+    "artifacts/rhuh-checksum-transfer-preparation-v1/live-metadata-guard-check.json": {
+      "bytes": 284,
+      "sha256": "8454e8e24bedaad82d69b8042798f09a04eb4610788af7800a4df25031e6bcd3"
+    },
+    "artifacts/rhuh-checksum-transfer-preparation-v1/preparation-manifest.json": {
+      "bytes": 3516,
+      "sha256": "d5cc4db024794e79d0bd7fa8ada16192dec455422b64c5ca0044528486567777"
+    },
+    "artifacts/rhuh-checksum-transfer-preparation-v1/public-client-key-source.json": {
+      "bytes": 835,
+      "sha256": "b59f8d32df1835ad15e1d128b784942d3a9bbb0badf7e81198942cd33a8d2f85"
+    },
+    "artifacts/rhuh-checksum-transfer-preparation-v1/resolved-source-mapping.json": {
+      "bytes": 452,
+      "sha256": "4df2efbe544984f32f4fc1b4d8e6fef779db39a1515735c160565e8f343dd115"
+    },
+    "artifacts/rhuh-checksum-transfer-preparation-v1/retry-semantics.json": {
+      "bytes": 857,
+      "sha256": "2e9c4a2afad6352ca7d0969b89e5c82131758c56058d2808d81fbd57a60e8174"
+    },
+    "artifacts/rhuh-checksum-transfer-preparation-v1/validation-receipt.json": {
+      "bytes": 1793,
+      "sha256": "13f04efb87355dcd4eb66c53615de6ac8ddad9cfefc61dcfb6ed27d81979fe1e"
+    },
+    "artifacts/rhuh-checksum-transfer-review-v1/final-run.json": {
+      "bytes": 459,
+      "sha256": "5e5510395fc62d7221282035bf4dcc32acb8eb60325c7c51a4092430cb9e8a79"
+    },
+    "artifacts/rhuh-checksum-transfer-review-v1/final-source.py.gz": {
+      "bytes": 6641,
+      "sha256": "303c3598e21adfc30f5e4a3f91c2b95c955c7e4ad57c4d265b14deac63bb01e2"
+    },
+    "artifacts/rhuh-checksum-transfer-review-v1/final-tests.txt": {
+      "bytes": 99,
+      "sha256": "9a340df7b528adb468182723e1619e9cabd095b22bb399376957fda62b00337f"
+    },
+    "artifacts/rhuh-checksum-transfer-review-v1/initial-review.json": {
+      "bytes": 571,
+      "sha256": "8117052897a108faf6d359df4c5a152be5f37a1d9d5d3ea167df406aa20fecb1"
+    },
+    "artifacts/rhuh-checksum-transfer-review-v1/initial-source.py.gz": {
+      "bytes": 4986,
+      "sha256": "7e744d8399ce6368a1f428a902f6e601aeff17426aaba9b737e129e087ded936"
+    },
+    "artifacts/rhuh-checksum-transfer-review-v1/initial-tests.txt": {
+      "bytes": 3093,
+      "sha256": "e35eadf4a9b109df802e2e2995ace2257db08c4adfcad443a77deb69048f980a"
+    },
+    "artifacts/rhuh-checksum-transfer-review-v1/supervisor-repair-review.json": {
+      "bytes": 484,
+      "sha256": "70673bbe4b789212f12d09bddea15fda4c6e75ca8b2c4fbbcd7c4d9b23ec2d1f"
+    },
+    "artifacts/rhuh-checksum-transfer-review-v1/supervisor-repair-source.py.gz": {
+      "bytes": 5922,
+      "sha256": "8785451879c6e5fdff1660aa235b57aa2adec6237cb59be37d68e1010aa42a72"
+    },
+    "artifacts/rhuh-checksum-transfer-review-v1/supervisor-repair-tests.py.gz": {
+      "bytes": 3043,
+      "sha256": "518210af47c141340b3fd9083a3f85b2048b713dff72604769c10b4d6899114b"
+    },
+    "artifacts/rhuh-checksum-transfer-review-v1/supervisor-repair-tests.txt": {
+      "bytes": 2872,
+      "sha256": "1eb45c2f641a9d8b3c1682f5505622e5eea47b51cceb732bc2127071fc13b3c2"
+    },
+    "artifacts/rhuh-checksum-transfer-review-v1/verification.json": {
+      "bytes": 4608,
+      "sha256": "6866f9db73f4a904a72a1a09420982218501405e0e0a31e377851112530301e5"
+    },
+    "scripts/acquire_rhuh_checksum.py": {
+      "bytes": 20796,
+      "sha256": "f9ad9f4d64cab2314be865aad47e4300e23aa8b83457ee83656a6921e12edaf0"
+    },
+    "tests/test_acquire_rhuh_checksum_review.py": {
+      "bytes": 12351,
+      "sha256": "ae93ae0588cb0c3c1ebe24fa6e29245496759229b605dd13c0c1cca9dc9ac740"
+    },
+    "tests/test_rhuh_checksum_acquisition.py": {
+      "bytes": 5282,
+      "sha256": "0c346b4472d1dcf9be2e4089a4405d1bb2317c47a1b7dd80c017954af890873f"
+    },
+    "outputs/rhuh-one-pair/metadata/checksum-quarantine/run-1jjo0q5c-receipt.json": {
+      "bytes": 859,
+      "sha256": "3bbf028b9a323303e4e153e53facb14299c839783f4849dadf3ececa4a500361"
+    },
+    "artifacts/rhuh-checksum-transfer-v1/worker-receipt.json": {
+      "bytes": 859,
+      "sha256": "3bbf028b9a323303e4e153e53facb14299c839783f4849dadf3ececa4a500361"
+    },
+    "outputs/rhuh-one-pair/metadata/checksum-quarantine/run-1jjo0q5c/RHUH-GBM-nii-v1.sums": {
+      "bytes": 61787,
+      "sha256": "7c6ba3fa767bf169679db30caa854e671796416ca365fac6e57662796177c130"
+    },
+    "artifacts/rhuh-checksum-transfer-v1/received-checksums.sums": {
+      "bytes": 61787,
+      "sha256": "7c6ba3fa767bf169679db30caa854e671796416ca365fac6e57662796177c130"
+    },
+    "artifacts/rhuh-one-pair-acquisition-preparation-v1/bounded-pair-manifest.json": {
+      "bytes": 11355,
+      "sha256": "24f7aae2763a037aec0055e946380b0053de156507273dc3697db3ea77eb422d"
+    }
+  },
+  "source_closure": {
+    "archived_regular_files": 22,
+    "all_match_committed_source_and_current_bytes": true,
+    "source_checkpoint": "1d6823b765f62d30ff516b14f9c664a505e0c00f",
+    "release_commit": "6f546516fa59b6283306a9f576148dd8287821a5"
+  },
+  "transfer": {
+    "recorded_attempts": 1,
+    "parent_accepted": true,
+    "exit_code": 0,
+    "launcher_seconds": 5.402918542,
+    "parent_seconds": 5.324132,
+    "worker_seconds": 5.176875,
+    "payload": {
+      "path": "outputs/rhuh-one-pair/metadata/checksum-quarantine/run-1jjo0q5c/RHUH-GBM-nii-v1.sums",
+      "bytes": 61787,
+      "sha256": "7c6ba3fa767bf169679db30caa854e671796416ca365fac6e57662796177c130"
+    },
+    "publisher_digest_for_index_known": false
+  },
+  "index": {
+    "rows": 720,
+    "fields_per_row": 2,
+    "digest_width_histogram": {
+      "32": 720
+    },
+    "all_tokens_lowercase_hex": true,
+    "duplicate_paths": [],
+    "unsafe_paths": [],
+    "duplicate_digest_tokens": 0,
+    "separator_histogram": {
+      "' '": 720
+    },
+    "algorithm_header_present": false,
+    "size_fields_present": false,
+    "source_checksum_algorithm": null,
+    "checksum_byte_domain": null,
+    "noncanonical_basename_rows": [
+      {
+        "line": 45,
+        "path": "RHUH-GBM_nii_v1/RHUH-0035/2/segmentation.nii.gz"
+      }
+    ],
+    "checksum_tokens_padded_or_modified": false
+  },
+  "selection": {
+    "expected": 12,
+    "present": 12,
+    "missing": [],
+    "rows": [
+      {
+        "line": 147,
+        "path": "RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_adc.nii.gz",
+        "raw_digest_token": "91e6504a5c533bf7e1fee1dc2a810777",
+        "digest_width": 32,
+        "public_package_path": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_adc.nii.gz",
+        "visit": 0,
+        "modality": "adc",
+        "source_checksum_algorithm": null,
+        "compressed_bytes": null
+      },
+      {
+        "line": 404,
+        "path": "RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_flair.nii.gz",
+        "raw_digest_token": "1c3ef3640848ef124fb82b63da1320f6",
+        "digest_width": 32,
+        "public_package_path": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_flair.nii.gz",
+        "visit": 0,
+        "modality": "flair",
+        "source_checksum_algorithm": null,
+        "compressed_bytes": null
+      },
+      {
+        "line": 270,
+        "path": "RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t1.nii.gz",
+        "raw_digest_token": "a5c579950d0431d04928e5b59e91ce9d",
+        "digest_width": 32,
+        "public_package_path": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t1.nii.gz",
+        "visit": 0,
+        "modality": "t1",
+        "source_checksum_algorithm": null,
+        "compressed_bytes": null
+      },
+      {
+        "line": 226,
+        "path": "RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t1ce.nii.gz",
+        "raw_digest_token": "5bdeca3efc545e6ab07e18f33fc79449",
+        "digest_width": 32,
+        "public_package_path": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t1ce.nii.gz",
+        "visit": 0,
+        "modality": "t1ce",
+        "source_checksum_algorithm": null,
+        "compressed_bytes": null
+      },
+      {
+        "line": 245,
+        "path": "RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t2.nii.gz",
+        "raw_digest_token": "e0e2e963b03f0fa819058878c849dbd6",
+        "digest_width": 32,
+        "public_package_path": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t2.nii.gz",
+        "visit": 0,
+        "modality": "t2",
+        "source_checksum_algorithm": null,
+        "compressed_bytes": null
+      },
+      {
+        "line": 555,
+        "path": "RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_segmentations.nii.gz",
+        "raw_digest_token": "9e4011a7a01f5f9ac23c87d51873f41c",
+        "digest_width": 32,
+        "public_package_path": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_segmentations.nii.gz",
+        "visit": 0,
+        "modality": "segmentations",
+        "source_checksum_algorithm": null,
+        "compressed_bytes": null
+      },
+      {
+        "line": 150,
+        "path": "RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_adc.nii.gz",
+        "raw_digest_token": "38e7431a8c8c124b55fc6102a20dc89b",
+        "digest_width": 32,
+        "public_package_path": "/RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_adc.nii.gz",
+        "visit": 1,
+        "modality": "adc",
+        "source_checksum_algorithm": null,
+        "compressed_bytes": null
+      },
+      {
+        "line": 118,
+        "path": "RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_flair.nii.gz",
+        "raw_digest_token": "f325c68dd9ab696babd2d725e8cab942",
+        "digest_width": 32,
+        "public_package_path": "/RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_flair.nii.gz",
+        "visit": 1,
+        "modality": "flair",
+        "source_checksum_algorithm": null,
+        "compressed_bytes": null
+      },
+      {
+        "line": 489,
+        "path": "RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_t1.nii.gz",
+        "raw_digest_token": "b93c74c993a9ce680ae7a163b4b0cd0c",
+        "digest_width": 32,
+        "public_package_path": "/RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_t1.nii.gz",
+        "visit": 1,
+        "modality": "t1",
+        "source_checksum_algorithm": null,
+        "compressed_bytes": null
+      },
+      {
+        "line": 423,
+        "path": "RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_t1ce.nii.gz",
+        "raw_digest_token": "3b08962226372f5d39542ddd188ab23f",
+        "digest_width": 32,
+        "public_package_path": "/RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_t1ce.nii.gz",
+        "visit": 1,
+        "modality": "t1ce",
+        "source_checksum_algorithm": null,
+        "compressed_bytes": null
+      },
+      {
+        "line": 515,
+        "path": "RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_t2.nii.gz",
+        "raw_digest_token": "0d582e80faaf1c88529d02a4dc332eae",
+        "digest_width": 32,
+        "public_package_path": "/RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_t2.nii.gz",
+        "visit": 1,
+        "modality": "t2",
+        "source_checksum_algorithm": null,
+        "compressed_bytes": null
+      },
+      {
+        "line": 585,
+        "path": "RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_segmentations.nii.gz",
+        "raw_digest_token": "75b7bb7f08e82693ddab54ad72279222",
+        "digest_width": 32,
+        "public_package_path": "/RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_segmentations.nii.gz",
+        "visit": 1,
+        "modality": "segmentations",
+        "source_checksum_algorithm": null,
+        "compressed_bytes": null
+      }
+    ],
+    "compressed_sizes_known": 0,
+    "total_compressed_image_bytes": null,
+    "image_acquisition_ready": false
+  },
+  "scope": [
+    "Read only saved metadata, checksum bytes, source archive and local Git objects; no network, transfers, image decoding or clinical outcome lookup.",
+    "The 32-character hex format is consistent with several possible algorithms; width alone does not establish MD5 or any other algorithm or establish compressed versus decompressed byte domain. No digest padding or reinterpretation was performed.",
+    "Release, source and receipts are internally consistent with declared bounds. Saved records cannot independently reconstruct process-group cleanup, OS resource enforcement, network requests or absence of an unrecorded attempt.",
+    "The 12-image manifest remains unchanged and unreleased; actual compressed sizes and authoritative digest-algorithm evidence remain missing."
+  ],
+  "checker_development_note": "The initial checker incorrectly required uniform patient_visit_modality basenames across all 720 rows. It stopped at row 45 RHUH-0035/2/segmentation.nii.gz. The corrected checker retains that safe, nonselected naming exception; all 12 selected exact names remain required. This was a checker assumption, not a transfer failure; no input bytes were changed."
+}

@@ -25,7 +25,11 @@ The committed release preceded execution and bound the exact reviewed source
 archive. The local preflight involved no network. Parent/worker receipts, the
 received public index and a metadata-only intake record are preserved alongside
 that archive. No tokens, cookies, private keys, raw client logs or transfer
-specifications are included. Independent saved-evidence audit is pending.
+specifications are included. The independent saved-evidence audit passed: source,
+release, recorded bounds, final bytes and all selected paths agree. It cannot
+reconstruct OS enforcement or independently prove the absence of unrecorded work.
+A safe nonselected filename exception at row 45 and the checker's initial naming
+assumption are retained; no source bytes or selected paths changed.
 
 Source: [TCIA RHUH-GBM](https://www.cancerimagingarchive.net/collection/rhuh-gbm/),
 [dataset DOI](https://doi.org/10.7937/4545-C905), CC BY 4.0 per the bound source manifest.
