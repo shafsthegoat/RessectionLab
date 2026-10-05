@@ -42,12 +42,19 @@ The isolated RHUH outcome adapter now passes 53 owner/independent controls.
 It preserves raw labels and unknown timing, while its permitted preoperative
 projection contains only KPS and contrast-enhancing volume and excludes the mixed
 source hash. Postoperative-field changes cannot alter that projection or its
-identity. A separately committed 40-patient leave-one-out baseline protocol fixes
-three simple comparators and bounded falsification/influence diagnostics before
-fitting. Its isolated statistics runtime passes an analytical fixture; runner
-review is still in progress. No patient outcome model or planner reward has been
-fitted. See `docs/neurological-outcome-contract.md` and
-`docs/rhuh-preoperative-baseline.md`.
+identity. The separately committed 40-patient leave-one-out protocol and execution
+release have now completed one run: all 9,092 declared logistic fits, 99 label
+permutations and 14 positive-patient deletion analyses. Adding enhancing volume
+to preoperative KPS worsened the primary Brier score by **+0.00120647**; the combined
+model detected only 3/14 recorded deficits at the fixed threshold. The independent
+saved-record audit reconstructed all 13,638 predictions across 4,546 folds within
+the fixed absolute 1e-12 tolerance, without refitting. All 3,660 bound inputs and
+13 raw outputs stayed unchanged. Supervision took 13.897940 seconds with sampled
+peak process-group memory of 125.890625 MiB. No external or clinical calibration
+validation was performed. These covariates are constant across alternative routes
+and cannot rank them; no planner reward was added. See
+`artifacts/rhuh-preoperative-baseline-v1/RESULT.md`,
+`docs/neurological-outcome-contract.md` and `docs/rhuh-preoperative-baseline.md`.
 
 The task is annotation-assisted target access with at most three decisions
 (a certified native tool stroke or STOP). Initial learning used TRAIN patient

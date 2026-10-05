@@ -1,0 +1,330 @@
+{
+  "endpoint": {
+    "clinical_assessment_time_known": false,
+    "negative": 26,
+    "new_or_worsened_deficit_established": false,
+    "positive": 14,
+    "recorded_category_counts": {
+      "Major Persistent": 2,
+      "Minor Persistent": 6,
+      "No": 26,
+      "Transient": 6
+    },
+    "total": 40
+  },
+  "execution": {
+    "evaluation_seconds": 11.566547417081892,
+    "influence_logistic_fits": 1092,
+    "local_cost": "no paid service; no monetary estimate for local computation",
+    "logistic_fits": {
+      "attempted": 9092,
+      "completed": 9092
+    },
+    "memory_cap_bytes": 1073741824,
+    "numerical_threads": 1,
+    "observed_logistic_fits": 80,
+    "permuted_logistic_fits": 7920,
+    "retry_count": 0,
+    "sampled_peak_group_rss_MiB": 125.890625,
+    "sampled_peak_group_rss_bytes": 132005888,
+    "stage_seconds": {
+      "influence": 1.3514040830777958,
+      "observed": 0.26369683304801583,
+      "permutation": 9.950487833004445
+    },
+    "supervised_seconds": 13.897939832997508,
+    "supervisor_cap_seconds": 195,
+    "worker_cap_seconds": 180,
+    "worker_seconds": 13.676998334005475
+  },
+  "independent_audit": {
+    "absolute_numeric_tolerance": 1e-12,
+    "checker": {
+      "bytes": 23385,
+      "path": "artifacts/rhuh-preoperative-baseline-v1/post-run-check.py",
+      "sha256": "716265b406312a8108229292c0da8a3d7624f5f9d7dd1fb32f5a50b7583b02ab"
+    },
+    "counts": {
+      "all_predictions_checked": 13638,
+      "folds_checked": 4546,
+      "logistic_predictions_reconstructed": 9092
+    },
+    "fits_executed": 0,
+    "maximum_absolute_differences": {
+      "metric": 1.6653345369377348e-16,
+      "probability": 1.1102230246251565e-16,
+      "scaler_mean": 7.105427357601002e-15,
+      "scaler_scale": 7.105427357601002e-15,
+      "scaler_variance": 4.547473508864641e-13,
+      "squared_error": 2.7755575615628914e-16
+    },
+    "receipt": {
+      "bytes": 7519,
+      "path": "artifacts/rhuh-preoperative-baseline-v1/post-run-check.json",
+      "sha256": "b16ee5384240b6d06dcf9fcaaecdad1a77b7eff41cfd86569c88cce125f140c5"
+    }
+  },
+  "independent_audit_status": "passed_saved_output_audit",
+  "influence": {
+    "completed": 14,
+    "denominator_each_deletion": 39,
+    "elapsed_seconds": 1.3514040830777958,
+    "planned": 14,
+    "positive_each_deletion": 13,
+    "records": [
+      {
+        "change_from_full_cohort": 0.0033598274613010903,
+        "deleted_patient_id": "RHUH-0005",
+        "paired_difference": 0.004566297575087225
+      },
+      {
+        "change_from_full_cohort": 0.0028608671713888922,
+        "deleted_patient_id": "RHUH-0010",
+        "paired_difference": 0.004067337285175027
+      },
+      {
+        "change_from_full_cohort": -0.003045328333656727,
+        "deleted_patient_id": "RHUH-0011",
+        "paired_difference": -0.0018388582198705927
+      },
+      {
+        "change_from_full_cohort": 0.0030702345338941284,
+        "deleted_patient_id": "RHUH-0015",
+        "paired_difference": 0.004276704647680263
+      },
+      {
+        "change_from_full_cohort": -0.005391001789030181,
+        "deleted_patient_id": "RHUH-0016",
+        "paired_difference": -0.0041845316752440465
+      },
+      {
+        "change_from_full_cohort": 0.0042816339133292525,
+        "deleted_patient_id": "RHUH-0017",
+        "paired_difference": 0.005488104027115387
+      },
+      {
+        "change_from_full_cohort": -0.0008568466587806078,
+        "deleted_patient_id": "RHUH-0022",
+        "paired_difference": 0.0003496234550055266
+      },
+      {
+        "change_from_full_cohort": -0.0007799130282013234,
+        "deleted_patient_id": "RHUH-0023",
+        "paired_difference": 0.0004265570855848111
+      },
+      {
+        "change_from_full_cohort": 0.004469747668342433,
+        "deleted_patient_id": "RHUH-0024",
+        "paired_difference": 0.0056762177821285675
+      },
+      {
+        "change_from_full_cohort": 0.004010001949473957,
+        "deleted_patient_id": "RHUH-0026",
+        "paired_difference": 0.005216472063260091
+      },
+      {
+        "change_from_full_cohort": -0.023257474756680774,
+        "deleted_patient_id": "RHUH-0032",
+        "paired_difference": -0.02205100464289464
+      },
+      {
+        "change_from_full_cohort": 0.0019760809199460827,
+        "deleted_patient_id": "RHUH-0034",
+        "paired_difference": 0.003182551033732217
+      },
+      {
+        "change_from_full_cohort": -0.0005548079576653819,
+        "deleted_patient_id": "RHUH-0035",
+        "paired_difference": 0.0006516621561207525
+      },
+      {
+        "change_from_full_cohort": 0.003978901891831116,
+        "deleted_patient_id": "RHUH-0040",
+        "paired_difference": 0.00518537200561725
+      }
+    ],
+    "summary": {
+      "maximum": 0.0056762177821285675,
+      "minimum": -0.02205100464289464,
+      "negative": 3,
+      "positive": 11,
+      "zero": 0
+    }
+  },
+  "observed": {
+    "clinical_calibration_validated": false,
+    "confidence_intervals": null,
+    "models": {
+      "FOLD_PREVALENCE": {
+        "accuracy": 0.65,
+        "auc_null_reason": "LOO_prevalence_inverse_label_ordering_artifact",
+        "balanced_accuracy": 0.5,
+        "brier": 0.23931623931623935,
+        "confusion": {
+          "FN": 14,
+          "FP": 0,
+          "TN": 26,
+          "TP": 0
+        },
+        "n": 40,
+        "negative_predictive_value": {
+          "null_reason": null,
+          "value": 0.65
+        },
+        "precision": {
+          "null_reason": "zero_denominator",
+          "value": null
+        },
+        "roc_auc": null,
+        "sensitivity": {
+          "null_reason": null,
+          "value": 0.0
+        },
+        "specificity": {
+          "null_reason": null,
+          "value": 1.0
+        }
+      },
+      "KPS": {
+        "accuracy": 0.65,
+        "auc_null_reason": null,
+        "balanced_accuracy": 0.532967032967033,
+        "brier": 0.23327217045894608,
+        "confusion": {
+          "FN": 12,
+          "FP": 2,
+          "TN": 24,
+          "TP": 2
+        },
+        "n": 40,
+        "negative_predictive_value": {
+          "null_reason": null,
+          "value": 0.6666666666666666
+        },
+        "precision": {
+          "null_reason": null,
+          "value": 0.5
+        },
+        "roc_auc": 0.5137362637362637,
+        "sensitivity": {
+          "null_reason": null,
+          "value": 0.14285714285714285
+        },
+        "specificity": {
+          "null_reason": null,
+          "value": 0.9230769230769231
+        }
+      },
+      "KPS_CE_VOLUME": {
+        "accuracy": 0.675,
+        "auc_null_reason": null,
+        "balanced_accuracy": 0.5686813186813187,
+        "brier": 0.2344786405727322,
+        "confusion": {
+          "FN": 11,
+          "FP": 2,
+          "TN": 24,
+          "TP": 3
+        },
+        "n": 40,
+        "negative_predictive_value": {
+          "null_reason": null,
+          "value": 0.6857142857142857
+        },
+        "precision": {
+          "null_reason": null,
+          "value": 0.6
+        },
+        "roc_auc": 0.6071428571428571,
+        "sensitivity": {
+          "null_reason": null,
+          "value": 0.21428571428571427
+        },
+        "specificity": {
+          "null_reason": null,
+          "value": 0.9230769230769231
+        }
+      }
+    },
+    "paired_brier": {
+      "KPS_CE_VOLUME_minus_FOLD_PREVALENCE": -0.004837598743507143,
+      "KPS_CE_VOLUME_minus_KPS": 0.0012064701137861344,
+      "KPS_minus_FOLD_PREVALENCE": -0.006044068857293278
+    }
+  },
+  "outputs_archive": {
+    "bytes": 998633,
+    "path": "artifacts/rhuh-preoperative-baseline-v1/outputs.tar.gz",
+    "sha256": "efefe72811ce37daddf2884591da97d2b0a1d11a9d5521d3d5270f67955c5936"
+  },
+  "permutation": {
+    "completed": 99,
+    "elapsed_seconds": 9.950487833004445,
+    "generator": "PCG64",
+    "less_or_equal_count": 4,
+    "null": "unconditional label exchangeability; diagnostic for full model minus fold prevalence",
+    "p_value": 0.05,
+    "planned": 99,
+    "resolution": 0.01,
+    "seed": 20261005,
+    "statistic": -0.004837598743507143,
+    "tests_incremental_volume_contribution": false
+  },
+  "primary_difference_definition": "KPS_CE_VOLUME Brier minus KPS Brier; positive means worse with volume",
+  "raw_index": {
+    "bytes": 1985,
+    "path": "artifacts/rhuh-preoperative-baseline-v1/raw-output-index.json",
+    "sha256": "f1c0de17011e3c2318e7a47accc80a15ece882999f877d89ca1cc171e6d3bf96"
+  },
+  "release_binding": {
+    "path": "manifests/experiments/rhuh-preoperative-baseline-v1.release.json",
+    "sha256": "a87dd3457e8aa33fd043e9df71cf58fe3aee3cbc26b22f2a9766159f404682df"
+  },
+  "schema": "rhuh-baseline-compact-results-v1",
+  "scope": "Exploratory internal observational association with the recorded postoperative deficit category; no surgery causality, route effects, clinical deployment, or planner reward.",
+  "source_archive": {
+    "bytes": 24582,
+    "path": "artifacts/rhuh-preoperative-baseline-v1/source.tar.gz",
+    "sha256": "cbfa442eb95a1972d1d3402e2d4109058d9706b803a79a4baf9a3ba90ca2fbd3"
+  },
+  "source_bindings": {
+    "adapter": {
+      "path": "src/resectionlab/rhuh_outcomes.py",
+      "sha256": "82981de054aca89789b9065620844cd8a8842120df71cdb89bdd147c0bc57d36"
+    },
+    "package_init": {
+      "path": "src/resectionlab/__init__.py",
+      "sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5"
+    },
+    "runner": {
+      "path": "scripts/run_rhuh_preoperative_baseline.py",
+      "sha256": "39a48841a882056cbe33f0f248cb548c0eb6f518d3eee260199eb4eba9bf2997"
+    },
+    "supervisor": {
+      "path": "scripts/febio_runtime.py",
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+    }
+  },
+  "status": "completed_observational_baseline",
+  "study_binding": {
+    "path": "manifests/experiments/rhuh-preoperative-baseline-v1.json",
+    "sha256": "c73547faa86074a1293787c56f623a8d665ee61455085dd7eccb50be8857e87b"
+  },
+  "verification_controls": {
+    "convergence_warnings": 0,
+    "features_hashes_labels_invariant": true,
+    "iteration_range": [
+      5,
+      9
+    ],
+    "observed_invariant_predictions": 120,
+    "observed_total_predictions": 120,
+    "warnings": [
+      {
+        "category": "FutureWarning",
+        "count": 9092,
+        "message": "'penalty' was deprecated in version 1.8 and will be removed in 1.10. To avoid this warning, leave 'penalty' set to its default value and use 'l1_ratio' or 'C' instead. Use l1_ratio=0 instead of penalty='l2', l1_ratio=1 instead of penalty='l1', l1_ratio set to a float between 0 and 1 instead of penalty='elasticnet', and C=np.inf instead of penalty=None."
+      }
+    ]
+  }
+}

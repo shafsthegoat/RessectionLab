@@ -1,0 +1,18 @@
+# Retain compact evidence and lossless archives; exclude accidental expanded copies.
+/*
+!/.gitignore
+!/.gitattributes
+!/RESULT.md
+!/compact-summary.json
+!/raw-output-index.json
+!/archive-verification.json
+!/collection-receipt.json
+!/artifact-index.json
+!/source.tar.gz
+!/outputs.tar.gz
+!/plot_saved_results.py
+!/comparison.png
+!/comparison.pdf
+!/comparison.svg
+!/post-run-check.py
+!/post-run-check.json

@@ -1,0 +1,17 @@
+{
+  "all_original_file_bytes_roundtrip": true,
+  "archive": {
+    "bytes": 998633,
+    "path": "artifacts/rhuh-preoperative-baseline-v1/outputs.tar.gz",
+    "sha256": "efefe72811ce37daddf2884591da97d2b0a1d11a9d5521d3d5270f67955c5936"
+  },
+  "file_count": 13,
+  "metadata_note": "File content and relative paths preserved exactly; tar metadata canonicalized. Originals retained locally unchanged.",
+  "original_bytes_unchanged": true,
+  "raw_index": {
+    "bytes": 1985,
+    "path": "artifacts/rhuh-preoperative-baseline-v1/raw-output-index.json",
+    "sha256": "f1c0de17011e3c2318e7a47accc80a15ece882999f877d89ca1cc171e6d3bf96"
+  },
+  "schema": "rhuh-baseline-lossless-archive-v1"
+}

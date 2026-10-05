@@ -6,6 +6,6 @@ The initial run reproduced two failures: a subclassed convergence warning was ac
 
 Independent controls also cover analytical constant-feature predictions, Brier/AUC arithmetic, fixed fit allocation, the complete forbidden-column rotation, final influence-job failure, source/runtime/archive tampering and parent resource/completion authority. The actual resource watchdog was not run again: its existing source was inspected and its invocation/failure handling tested with mocks.
 
-No public clinical CSV rows, patient images or protected BTC outcomes were read. Only small analytical sklearn fits and constructed estimator/phase fixtures were used. No installation, native run, shared-environment change or retry occurred. The final immutable archive and real execution release remain root responsibilities.
+No public clinical CSV rows, patient images or protected BTC outcomes were read. Only small analytical sklearn fits and constructed estimator/phase fixtures were used. No installation, native run, shared-environment change or experiment retry occurred. The final immutable archive and real execution release remain root responsibilities.
 
 `verification.json` binds final hashes and limitations. The original source and tests are compact gzip snapshots because their genuine failures preceded the production repair. `initial-negatives.json` distinguishes those failures from the existing optional NumPy configuration warning; no test-harness correction was needed.

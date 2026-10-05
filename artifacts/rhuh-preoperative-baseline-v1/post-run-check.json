@@ -1,0 +1,213 @@
+{
+  "absolute_numeric_tolerance": 1e-12,
+  "attempts": [
+    {
+      "checked_at_utc": "2026-10-05T05:00:28.737480+00:00",
+      "checker_sha256": "716265b406312a8108229292c0da8a3d7624f5f9d7dd1fb32f5a50b7583b02ab",
+      "counts": {
+        "all_predictions_checked": 13638,
+        "folds_checked": 4546,
+        "logistic_predictions_reconstructed": 9092
+      },
+      "maximum_absolute_differences": {
+        "metric": 1.6653345369377348e-16,
+        "probability": 1.1102230246251565e-16,
+        "scaler_mean": 7.105427357601002e-15,
+        "scaler_scale": 7.105427357601002e-15,
+        "scaler_variance": 4.547473508864641e-13,
+        "squared_error": 2.7755575615628914e-16
+      },
+      "status": "passed"
+    }
+  ],
+  "audit_elapsed_seconds": 2.112955625052564,
+  "bound_inputs_verified_before_and_after": 3660,
+  "checked_at_utc": "2026-10-05T05:00:28.737480+00:00",
+  "checker_sha256": "716265b406312a8108229292c0da8a3d7624f5f9d7dd1fb32f5a50b7583b02ab",
+  "clinical_calibration_validated": false,
+  "counts": {
+    "all_predictions_checked": 13638,
+    "folds_checked": 4546,
+    "logistic_predictions_reconstructed": 9092
+  },
+  "fits_executed_by_this_checker": 0,
+  "influence": {
+    "completed": 14,
+    "summary": {
+      "maximum": 0.0056762177821285675,
+      "minimum": -0.022051004642894667,
+      "negative": 3,
+      "positive": 11,
+      "zero": 0
+    }
+  },
+  "limits": [
+    "Checks saved evidence and declared byte inventories; no claim of hostile-host tamper resistance or per-instant monitoring.",
+    "Frozen executed source records the fixed estimator configuration; saved coefficients do not independently prove the optimizer optimum.",
+    "Forty previously QA-inspected patients, fourteen recorded category-positive labels; no untouched external test.",
+    "Added volume worsens primary Brier versus KPS; secondary AUC/accuracy does not supersede this.",
+    "Outcome domain, exact assessment time, and whether new or worsened remain unknown; no route or causal harm conclusion."
+  ],
+  "maximum_absolute_differences": {
+    "metric": 1.6653345369377348e-16,
+    "probability": 1.1102230246251565e-16,
+    "scaler_mean": 7.105427357601002e-15,
+    "scaler_scale": 7.105427357601002e-15,
+    "scaler_variance": 4.547473508864641e-13,
+    "squared_error": 2.7755575615628914e-16
+  },
+  "observed_recomputed": {
+    "clinical_calibration_validated": false,
+    "confidence_intervals": null,
+    "models": {
+      "FOLD_PREVALENCE": {
+        "accuracy": 0.65,
+        "auc_null_reason": "LOO_prevalence_inverse_label_ordering_artifact",
+        "balanced_accuracy": 0.5,
+        "brier": 0.23931623931623935,
+        "confusion": {
+          "FN": 14,
+          "FP": 0,
+          "TN": 26,
+          "TP": 0
+        },
+        "n": 40,
+        "negative_predictive_value": {
+          "null_reason": null,
+          "value": 0.65
+        },
+        "precision": {
+          "null_reason": "zero_denominator",
+          "value": null
+        },
+        "roc_auc": null,
+        "sensitivity": {
+          "null_reason": null,
+          "value": 0.0
+        },
+        "specificity": {
+          "null_reason": null,
+          "value": 1.0
+        }
+      },
+      "KPS": {
+        "accuracy": 0.65,
+        "auc_null_reason": null,
+        "balanced_accuracy": 0.532967032967033,
+        "brier": 0.23327217045894608,
+        "confusion": {
+          "FN": 12,
+          "FP": 2,
+          "TN": 24,
+          "TP": 2
+        },
+        "n": 40,
+        "negative_predictive_value": {
+          "null_reason": null,
+          "value": 0.6666666666666666
+        },
+        "precision": {
+          "null_reason": null,
+          "value": 0.5
+        },
+        "roc_auc": 0.5137362637362637,
+        "sensitivity": {
+          "null_reason": null,
+          "value": 0.14285714285714285
+        },
+        "specificity": {
+          "null_reason": null,
+          "value": 0.9230769230769231
+        }
+      },
+      "KPS_CE_VOLUME": {
+        "accuracy": 0.675,
+        "auc_null_reason": null,
+        "balanced_accuracy": 0.5686813186813187,
+        "brier": 0.2344786405727322,
+        "confusion": {
+          "FN": 11,
+          "FP": 2,
+          "TN": 24,
+          "TP": 3
+        },
+        "n": 40,
+        "negative_predictive_value": {
+          "null_reason": null,
+          "value": 0.6857142857142857
+        },
+        "precision": {
+          "null_reason": null,
+          "value": 0.6
+        },
+        "roc_auc": 0.6071428571428571,
+        "sensitivity": {
+          "null_reason": null,
+          "value": 0.21428571428571427
+        },
+        "specificity": {
+          "null_reason": null,
+          "value": 0.9230769230769231
+        }
+      }
+    },
+    "paired_brier": {
+      "KPS_CE_VOLUME_minus_FOLD_PREVALENCE": -0.004837598743507143,
+      "KPS_CE_VOLUME_minus_KPS": 0.0012064701137861344,
+      "KPS_minus_FOLD_PREVALENCE": -0.006044068857293278
+    }
+  },
+  "permutation": {
+    "completed": 99,
+    "denominator": 100,
+    "p_value": 0.05,
+    "scope": "Unconditional full-model versus prevalence chance diagnostic; not incremental volume significance.",
+    "tail_count": 4
+  },
+  "planner_reward_authorized": false,
+  "raw_output_before_after_sha256": {
+    "baseline.json": "971fef38308050e5769c087f8c7b2ba8e7165fa8e24c886b80a3aecb45f2b28e",
+    "cohort.json": "da7e35e3e6470f5cfbd7ef7e442a99a20f1ff9895ee97e80245bea074d37cf46",
+    "influence-folds.jsonl": "340d56d3b51ba5bd86f5e96792d29ff94af8a986de4d6bd82627b26ba8b16dda",
+    "influence.jsonl": "fafee08ce6531c916b5ad696120a008178bb429210bd15f01a78eb2aa4571ee8",
+    "observed-folds.jsonl": "368437ddec0062783f4bcc28696d1cc6d768db0eaaf72b864b27dbe433aa83da",
+    "permutation-folds.jsonl": "9ef8f59847b53a5a0381db033f6711ecd813fda7676640d6da6869a9087dc776",
+    "permutations.jsonl": "01a68793176ef8ba2acce1f5137728bbf89c72047781048afbfdfb28322eef14",
+    "result.json": "3d967c71150b105b198f5213bc5708554540f9a375aa887672ec203f9af90cf4",
+    "runtime.json": "b3b6a297dcc2211ed36262ee81be41edaa9afe3faf3109ea9aaee75b84ce0118",
+    "state.json": "dde6409cbfe17b15378b96b7bfe4c313df88314796410faacde6e36aae19a9d3",
+    "supervision/combined.log": "237d6b09b624ae3aff0f6221dc509590c3ff1602163c2b8fa0f8180cb3fa1950",
+    "supervision/supervision.json": "2def8e86d476f0d7c557bf4fbf55ae37b47e9794b0623782860dc17c75f2be7b",
+    "worker-result.json": "0e462b5dbf5b347bfb095946c411400903f98eccdd19584226cf493f44660db0"
+  },
+  "relative_tolerance": 0,
+  "release": {
+    "path": "manifests/experiments/rhuh-preoperative-baseline-v1.release.json",
+    "sha256": "a87dd3457e8aa33fd043e9df71cf58fe3aee3cbc26b22f2a9766159f404682df"
+  },
+  "runtime_inventory_counts": {
+    "isolated": 1323,
+    "numpy": 902,
+    "scipy": 1425
+  },
+  "runtime_receipt": {
+    "path": "artifacts/rhuh-baseline-runtime-v1/receipt.json",
+    "sha256": "36880140d03e2edad227f568bf43f07cdbced006bc74638613a845071006d643"
+  },
+  "source_archive": {
+    "path": "artifacts/rhuh-preoperative-baseline-v1/source.tar.gz",
+    "sha256": "cbfa442eb95a1972d1d3402e2d4109058d9706b803a79a4baf9a3ba90ca2fbd3"
+  },
+  "source_commit": "e5272a8fe76b257ce7b3c8c64f8f0cdd5b76c069",
+  "status": "passed",
+  "timing": {
+    "evaluation_seconds": 11.566547417081892,
+    "parent_seconds": 13.897939832997508,
+    "sampled_peak_process_group_rss_bytes": 132005888,
+    "scope": "Nested intervals, not additive; sampled RSS may miss brief peaks.",
+    "worker_seconds": 13.676998334005475
+  },
+  "warnings": {
+    "FutureWarning": 9092
+  }
+}
