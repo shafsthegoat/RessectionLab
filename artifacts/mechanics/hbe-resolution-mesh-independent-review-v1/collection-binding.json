@@ -1,0 +1,27 @@
+{
+  "schema": "hbe-resolution-mesh-collection-binding-v1",
+  "raw_index": {
+    "path": "artifacts/mechanics/hbe-resolution-mesh-result-v1/raw-output-index.json",
+    "sha256": "96a1617c30cdd8f20c5e5014810f0ee1f715ff362a79576ed71cacedf309d382"
+  },
+  "exact_files": 28,
+  "exact_bytes": 39177774,
+  "all_file_and_directory_write_bits_absent": true,
+  "data_recomputed_or_changed": false,
+  "outcome.json": {
+    "path": "artifacts/mechanics/hbe-resolution-mesh-result-v1/outcome.json",
+    "sha256": "f381740868395cc8ce43585874bde316fce85409194c508812a224f1de74f32a"
+  },
+  "preservation.json": {
+    "path": "artifacts/mechanics/hbe-resolution-mesh-result-v1/preservation.json",
+    "sha256": "b09c1271319b42d105a9134b64179b01da7addbc2c5d5482a2d44e395b3f9658"
+  },
+  "readonly-freeze.json": {
+    "path": "artifacts/mechanics/hbe-resolution-mesh-result-v1/readonly-freeze.json",
+    "sha256": "7f7c230a96d2876e33c8441edf768483208df36ffbeab89007754d31099ddef7"
+  },
+  "collector_artifact_index": {
+    "path": "artifacts/mechanics/hbe-resolution-mesh-result-v1/artifact-index.json",
+    "sha256": "d30ea740a4dd65dec23460c78dd13fff98f6a09402e04344cb5e4daba91b6981"
+  }
+}
