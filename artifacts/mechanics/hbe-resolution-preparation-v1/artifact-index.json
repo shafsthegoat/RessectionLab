@@ -1,0 +1,34 @@
+{
+  "archive_members": 12,
+  "files": {
+    "initial-test-fixture-error.json": {
+      "bytes": 507,
+      "sha256": "bd7d9696219644a1ffbcd0686bf582083fe246ccefd011fb53cad4f5f9979eff"
+    },
+    "owner-checks.json": {
+      "bytes": 2245,
+      "sha256": "20133303b12bdb52c1443eef001e1d4589fceb01f46865559094afa44c71e03a"
+    },
+    "prepare-release-draft.json": {
+      "bytes": 3020,
+      "sha256": "8c56950f73a3e5906dbe921f4f8ecb7a6a691a77d418c34bd63d4dcc025dea7b"
+    },
+    "source-files.txt": {
+      "bytes": 438,
+      "sha256": "e5de83aea3fd19098c8e6cbd3f0f174b116d5ee36e95c39409b3803a7d8104f5"
+    }
+  },
+  "independent_review": {
+    "path": "artifacts/mechanics/hbe-resolution-independent-review-v1/verification.json",
+    "sha256": "800f9ea3b3c58d5cce3c29c974bbee66e6657909373cee9aacceb167547fdaba"
+  },
+  "measured_curve_members_read": 0,
+  "native_meshes_generated": 0,
+  "release_draft_refuses_execution": true,
+  "root_commit_required": true,
+  "runner_sha256": "f6c75e1b8223355b90d06b100f538f3feb28e58f7e1be4ae2f13ed075bd8bdad",
+  "schema": "hbe-resolution-preparation-index-v1",
+  "solver_calls": 0,
+  "source_closure_list": "source-files.txt",
+  "status": "source_preparation_independently_reviewed_pending_separate_execution_release"
+}
