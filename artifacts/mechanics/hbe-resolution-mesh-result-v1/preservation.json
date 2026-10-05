@@ -1,0 +1,741 @@
+{
+  "all_baseline_inputs_unchanged": true,
+  "baseline": {
+    "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/baseline.json",
+    "sha256": "2157ab05bca33220130d30c49135028161d633875b9d0b8b92c662014258b336"
+  },
+  "baseline_input_count": 168,
+  "baseline_inputs": {
+    "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12": {
+      "sha256": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a",
+      "unchanged": true
+    },
+    "artifacts/febio-accelerate-csc-runtime-v3/build-01/acceptance.json": {
+      "sha256": "a5ca0b26e65c3240f04d635702fee15518f56634a1f6d0391db811a79ed1efa1",
+      "unchanged": true
+    },
+    "artifacts/febio-accelerate-csc-runtime-v3/build-01/commands.json": {
+      "sha256": "570efa69ef4f0acebd89db93fdb17ccb411282a6694fc05caaa4aa4830b09554",
+      "unchanged": true
+    },
+    "artifacts/febio-accelerate-csc-runtime-v3/build-01/installed-inventory.json": {
+      "sha256": "17d5d580f359c88dc83e743d0a128ac19ea9387ff10c09a816cb130f5cc397b6",
+      "unchanged": true
+    },
+    "artifacts/febio-accelerate-csc-runtime-v3/build-01/linkage.json": {
+      "sha256": "0e87aebf450f6b1d37b9fbdf22e10c26d0531230564903486b3fe3bf0057d581",
+      "unchanged": true
+    },
+    "artifacts/febio-accelerate-csc-runtime-v3/build-01/result.json": {
+      "sha256": "ad17d726acf792c05d33ab598d7d1bd3b96b950b273d654144b160a283f290c3",
+      "unchanged": true
+    },
+    "artifacts/febio-accelerate-csc-runtime-v3/build-01/runtime-identity-candidate.json": {
+      "sha256": "1665a6640c1d92fa7ee01c3960a50c104c11aaef63b8cb6b88f294be07ea0eed",
+      "unchanged": true
+    },
+    "artifacts/febio-accelerate-csc-runtime-v3/build-01/supervision.json": {
+      "sha256": "47683a320f3c0df24533a6b98d81d8f945177be6589a4cbba7a5a812fd08ba60",
+      "unchanged": true
+    },
+    "artifacts/febio-accelerate-csc-runtime-v3/configure-01/source-inventory.json": {
+      "sha256": "4245a2b18b0e34188aa451bea3b5f568e01ade4ac6b20fcdcbcc855813f04b20",
+      "unchanged": true
+    },
+    "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json": {
+      "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57",
+      "unchanged": true
+    },
+    "artifacts/febio-accelerate-lifecycle-independent-review-v1/saved-control-review.json": {
+      "sha256": "a0e377ac4ea8d8fc380afb2efe1045993b4ada90cb262f61b83414be5a2e62d2",
+      "unchanged": true
+    },
+    "artifacts/febio-accelerate-lifecycle-v1/accelerate-correctness.patch": {
+      "sha256": "67a1858f2d55046796d7ccb46758ca06e5bfb673e75a539d158b1a17652f3340",
+      "unchanged": true
+    },
+    "artifacts/febio-accelerate-lifecycle-v1/control-01/result.json": {
+      "sha256": "245e48859244fa93ab51ce03db73cb78e128d9f3bdf6a187f91fa3980767b74d",
+      "unchanged": true
+    },
+    "artifacts/febio-accelerate-lifecycle-v1/control-acceptance.json": {
+      "sha256": "eb2e390574896c175a1f240a6aa43e03737e2201b9c9823f243d9ef3da935757",
+      "unchanged": true
+    },
+    "artifacts/febio-accelerate-lifecycle-v1/control-declaration.json": {
+      "sha256": "d45883853df0516efeba4e0f7d21f78b91899d47f3cd1743db58b61ec66334c9",
+      "unchanged": true
+    },
+    "artifacts/febio-accelerate-lifecycle-v1/patch-identity.json": {
+      "sha256": "54198366eccb90a9fcdf4fcbf2a5055919a5658a1db0fdd7db8cfeede3b49eee",
+      "unchanged": true
+    },
+    "artifacts/febio-accelerate-lifecycle-v1/patched-AccelerateSparseSolver.cpp": {
+      "sha256": "476ac8471ea681a99c298352a50aba2a7a5baa71635e1678155a7f58b72ba04a",
+      "unchanged": true
+    },
+    "artifacts/febio-accelerate-lifecycle-v1/supervision-01/supervision.json": {
+      "sha256": "3ecf797d197caa537834f73ac4c6d46d58eb9423490c152b735e6f621b1fff54",
+      "unchanged": true
+    },
+    "artifacts/mechanics-accelerate-controls-run-v1/release.json": {
+      "sha256": "949f4d808064c56b5539698933e04e59881b03a09d42340c87a87c4b10279d14",
+      "unchanged": true
+    },
+    "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json": {
+      "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1",
+      "unchanged": true
+    },
+    "artifacts/mechanics/hbe-accelerate-experiment-result-v1/aggregate-gates.json": {
+      "sha256": "b0bd14decf8e756aa8d8aef170380e4d0f8d9efa21d3062fc56198d927cd18ae",
+      "unchanged": true
+    },
+    "artifacts/mechanics/hbe-accelerate-experiment-result-v1/outcome.json": {
+      "sha256": "fc3f5211e40beee246f1ceb2d9dfb0ff08f19840d61d9d6699c3cde2e1db2b4f",
+      "unchanged": true
+    },
+    "artifacts/mechanics/hbe-cross-mesh-diagnosis-v1/receipt.json": {
+      "sha256": "c75e36e28a1e54c328cb698c362defaf13a3ef1cb102ba7959d435fe7bb02f3c",
+      "unchanged": true
+    },
+    "artifacts/mechanics/hbe-resolution-assembly-v1/prepare-release.json": {
+      "sha256": "43d21dc6c23fb9bc1e3aa319810262a9edbee99e6d437b5910250397e6820bbd",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/febio-runtime-investigation-v1/prospective-runtime.json": {
+      "sha256": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/decks/finite_stretch.feb": {
+      "sha256": "0d72a0ee80fb6a8ad88f8bae84c3771321345ef43fa2311786b488ad67c58b22",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/decks/mpc_nonrigid.feb": {
+      "sha256": "771f3a99d7a428d84b737c21bccf5c22a60ede8542d82a31310aaa0b074e66f8",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/decks/mpc_translation.feb": {
+      "sha256": "956b66dc6cae4904e3a124a8b5e81bec66128d015e1ce85d6b96e533f76d996b",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/decks/shear.feb": {
+      "sha256": "fa8c1c1f5bac69cb310c72c3fa590e83a87576ac62a99cbd0a6201f029b9c593",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/decks/shear_double_stiffness.feb": {
+      "sha256": "7e8e6c73909f544ef1cce49f1d83aea2a9050ae2db467c913a027c405ea56dba",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/decks/tet10_affine.feb": {
+      "sha256": "dfafcfde8075aacb36e2014d6abe755470e04667bcbfd69c6857edfb63833d50",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/decks/translation.feb": {
+      "sha256": "1b5fa399cc71e2561647b3f9a6baf2f18b5428e62650898fc8e330fc146fe93d",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/decks/zero.feb": {
+      "sha256": "a20221e487f4a192924d28791aa077fbf268756f42367e48db6b6990d8cace9d",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/declaration.json": {
+      "sha256": "46a538f54471b76f3b75f50c31be2de6530b94450f88d2b6f9f8698ac27a54fd",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-febio-verification-v1/decks/finite_stretch.feb": {
+      "sha256": "51f7966c5054f009f7e1bf8cefa3306364196b58ede0170b39cbeab18391dee6",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-febio-verification-v1/decks/manifest.json": {
+      "sha256": "2492e1d20c25a3d0adfc34faf51d88206fe43c4d6897e63db4cf7ea26c96c3d7",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-febio-verification-v1/decks/shear.feb": {
+      "sha256": "509c6ea97211d44d81e00d35d004e0e503517c0d0d5d8857a4af89abbec2b5b6",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-febio-verification-v1/decks/shear_double_stiffness.feb": {
+      "sha256": "af78dc2a965892293d20786149224ae8337392347fdca19ec7e3ced8db987ac5",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-febio-verification-v1/decks/translation.feb": {
+      "sha256": "98a34f49115f260feff3ce45a231c3dfcb3d5f7bcd15edf1777cd230566a8481",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-febio-verification-v1/decks/zero.feb": {
+      "sha256": "d202aa532e5cc2ec9f8219ba672d37c4606b74cbfeca9b6ea1ebbcd40a061f67",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-patient-constraints-runtime-v1/decks/manifest.json": {
+      "sha256": "73a20d14551742159f05145bfd39444fde4d8bc81415d6139d85e8d890d0c330",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-patient-constraints-runtime-v1/decks/mpc_nonrigid.feb": {
+      "sha256": "40900e8761e663ca37568f9b911a06bfb34acb3db2bd5b1fd4840c7d55fadb93",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-patient-constraints-runtime-v1/decks/mpc_translation.feb": {
+      "sha256": "dad1653d2015d04f3499ea87f37246e5fce3c86f849ffc363e99cddd230386fa",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-patient-constraints-runtime-v1/decks/tet10_affine.feb": {
+      "sha256": "8a75158a97750f3db57a5a2a48ab3f03760a4a95a8818ff3d30218ceca262f62",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/febio_runtime.py": {
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_accelerate_controls.py": {
+      "sha256": "f2ad929648b2804fa047a0d0840a693cfd16302268c5e1b76342f85293b499ec",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_febio_verification.py": {
+      "sha256": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_hbe_access.py": {
+      "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_hbe_backend.py": {
+      "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_hbe_evaluation.py": {
+      "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_patient_constraints.py": {
+      "sha256": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66",
+      "unchanged": true
+    },
+    "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_patient_constraints_run.py": {
+      "sha256": "8ca55cf54730c91ae47e573999041cb0c8b84fb4676842e0d1c0e7407ee8843f",
+      "unchanged": true
+    },
+    "data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4": {
+      "sha256": "d7d4855d1d541a6407f22efd4381e23d7057cc49ec726144f06599aa5184f7b6",
+      "unchanged": true
+    },
+    "data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfeamr.dylib": {
+      "sha256": "7328649aa6a1e21359e9b470464306970b4bc475bab6a176ae769d0455aa1811",
+      "unchanged": true
+    },
+    "data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiofluid.dylib": {
+      "sha256": "c64d397056fcf024e1d2e10ba7872e98590a440d406062d7b66a49e90b88bc7f",
+      "unchanged": true
+    },
+    "data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiolib.dylib": {
+      "sha256": "c44341895c567529c6917fa51ed4d0cfc6a826aebbe02ff410f4f9b89455d69d",
+      "unchanged": true
+    },
+    "data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiomech.dylib": {
+      "sha256": "a035e3e975863fa8e35629d9348f885c6e38eba4aa1ef823af014e1f0af9974f",
+      "unchanged": true
+    },
+    "data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiomix.dylib": {
+      "sha256": "69dd24a13c299b5f8eb66a9d4e5348579815dea1b49f3a6494a647dd1df1f2e8",
+      "unchanged": true
+    },
+    "data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioopt.dylib": {
+      "sha256": "9261f2d2d175590bf957759d65b575bdc1fb9598bb7a29ecbf1b89e2a4268da0",
+      "unchanged": true
+    },
+    "data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioplot.dylib": {
+      "sha256": "4689bebeefb692df58449bf17e04ad51c20c9022ba05954d3d21831499ea79d0",
+      "unchanged": true
+    },
+    "data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiorve.dylib": {
+      "sha256": "3e6ab78be3b49d7a7e6c369662006f9eb61aad3658da4190f8ff486e38ad6711",
+      "unchanged": true
+    },
+    "data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioxml.dylib": {
+      "sha256": "0ae741248991be10ba53a8c914467b7caa725a90b8f5c4512aa570fb48778959",
+      "unchanged": true
+    },
+    "data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfecore.dylib": {
+      "sha256": "fd5b224a47ad55f12b1e1ddd804bcb84d19f6ff63caf5b6d2b4e305337e4deca",
+      "unchanged": true
+    },
+    "data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfeimglib.dylib": {
+      "sha256": "13a35c45ca32da28f72644d7b2b73feaf62dbe24312e91b235a1789365d7e171",
+      "unchanged": true
+    },
+    "data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libnumcore.dylib": {
+      "sha256": "2c578d76fe57193494872e18d07469e6d542dbf1951d94b252ac04552514b4a3",
+      "unchanged": true
+    },
+    "data/optional-runtimes/febio-4.13-accelerate-csc-v1/source/NumCore/AccelerateSparseSolver.cpp": {
+      "sha256": "476ac8471ea681a99c298352a50aba2a7a5baa71635e1678155a7f58b72ba04a",
+      "unchanged": true
+    },
+    "data/optional-runtimes/febio-4.13/openmp/lib/libomp.dylib": {
+      "sha256": "38f6afed27bf1d3bd52779547c7ab53aeda9c06c3473263b5cd11ed4f04b41f8",
+      "unchanged": true
+    },
+    "data/optional-runtimes/gmsh-4.15.2/runtime/gmsh.py": {
+      "sha256": "f4b0935cebde899750293d87a643090e5ea33c9b18d249267f507db68a0e01c3",
+      "unchanged": true
+    },
+    "data/optional-runtimes/gmsh-4.15.2/runtime/lib/libgmsh.4.15.dylib": {
+      "sha256": "def0f5c10988a986e5e879b3db9669d8fe016a81e2d994bbaf2b8497c6b8a58a",
+      "unchanged": true
+    },
+    "data/optional-runtimes/gmsh-4.15.2/runtime/share/doc/gmsh/LICENSE.txt": {
+      "sha256": "32085d8c954e2e22dc667c089f360049e8f1af955f946fb0a18f29d70390276a",
+      "unchanged": true
+    },
+    "manifests/experiments/hbe-01-03-axial-resolution-v1.json": {
+      "sha256": "23b4f5e4d8a0b5ff05fcd45fbca88463a32460793d5b0f27d1a913a5e0a2443c",
+      "unchanged": true
+    },
+    "manifests/experiments/hbe-01-03-mechanics-poc-v1.json": {
+      "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/execution-baseline.json": {
+      "sha256": "2a5c447b3d5bc407e71c189bce81fa374b2daeb88d9d95069e1ff6d924ae6a94",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/execution.json": {
+      "sha256": "7b3a15d237b034ec1988c5088f09b81adb935974b50dde59d2e87b028e61c0a5",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/finite_stretch/checked.json": {
+      "sha256": "b1c6a350dab731cd54f37ddd9ebb5c0ef62094959cd16ad3a0a118755dadee72",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/finite_stretch/console.txt": {
+      "sha256": "8accdd12df1e9e67aa8e14c6352a89d9029c98c6457705b7f97f88ad8f1357de",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/finite_stretch/finite_stretch.elements.log": {
+      "sha256": "6ea157973658d3c7fe40cf01acf1dd54a84b3d995daa7d2286b659e072825aa8",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/finite_stretch/finite_stretch.feb": {
+      "sha256": "0d72a0ee80fb6a8ad88f8bae84c3771321345ef43fa2311786b488ad67c58b22",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/finite_stretch/finite_stretch.log": {
+      "sha256": "14d683113e74ca7ce7f624392984dcdfc8548ab2f9fddb2485e85c90bee02af8",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/finite_stretch/finite_stretch.nodes.log": {
+      "sha256": "3b72774c5dec70762594cca01a69df7bf1be9ae6c3e05fe05e72751069689e93",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/hex8-summary.json": {
+      "sha256": "4882279a8f0e89a1118265a4cd09ca2658529a15498c6ceb7da8d5b760c40d2b",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_nonrigid/checked.json": {
+      "sha256": "851bdd30410e5dc68ac0dff0fc4ce82bdc44acb47ab0dc28ee8a1fe5d86cbabb",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_nonrigid/console.txt": {
+      "sha256": "00fbed3ebc09cab37b7651ac2b1fc9bb928c8247e8aa180fc8ec9a67ce800629",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_nonrigid/mpc_nonrigid.elements.log": {
+      "sha256": "734f781f8e9dd9e7e9f3b8e289e0264d95f162831cf1bb3a4992542bbf1f2498",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_nonrigid/mpc_nonrigid.feb": {
+      "sha256": "771f3a99d7a428d84b737c21bccf5c22a60ede8542d82a31310aaa0b074e66f8",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_nonrigid/mpc_nonrigid.log": {
+      "sha256": "aeb31ae7258135419f2c96b7ac561d1b53dd599ed26ff2112d0b3e511bab8b3f",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_nonrigid/mpc_nonrigid.nodes.log": {
+      "sha256": "c3197dc5a75bcc8f5fa805e28764807557519b283381818d64b5eefe5e227273",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_translation/checked.json": {
+      "sha256": "3e00b7c394a52e2b3f0d0395f1f6d1c5126005ddbc71329f2183ee8b4c998347",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_translation/console.txt": {
+      "sha256": "2cd154f5c989025c02c02b78436ccca42d01ba1e85c0e754f3a7c94e745b8b2f",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_translation/mpc_translation.elements.log": {
+      "sha256": "f6b35c01ef594ea29695d9fc36e12def945a87ad7857c1f2e98648c635213a78",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_translation/mpc_translation.feb": {
+      "sha256": "956b66dc6cae4904e3a124a8b5e81bec66128d015e1ce85d6b96e533f76d996b",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_translation/mpc_translation.log": {
+      "sha256": "02cfac3e0090dbd595c4e0dce4524a964fb45de396005ec2efa06f99ca383d16",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_translation/mpc_translation.nodes.log": {
+      "sha256": "7b981afd223479f12d3deef891b6fdc494f0c2379b7ed1057b5c36ce0d1c0654",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/results.json": {
+      "sha256": "765dc5ae422ac66d399b095a6f4df95e2e108e2276583441c13210d7440e24cf",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/shear/checked.json": {
+      "sha256": "b01f3ac1d2a0100379d870341c8da97d02d97de7fcfa55e9f6a37f5d9aa345c9",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/shear/console.txt": {
+      "sha256": "24110f91138c7711b0aa1f7772213e2435919c397c0a9aea0dd33111e851e78e",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/shear/shear.elements.log": {
+      "sha256": "d86f10d2e8475da91e98ef2e9f34ebfef625a9dde733dc1588b91cd004cb82cd",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/shear/shear.feb": {
+      "sha256": "fa8c1c1f5bac69cb310c72c3fa590e83a87576ac62a99cbd0a6201f029b9c593",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/shear/shear.log": {
+      "sha256": "2145982f6336447e71aed39e0753118b4eafce7fed8853f50c0c51c003eaf6cb",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/shear/shear.nodes.log": {
+      "sha256": "49d68b3b66abec99fe7026a6a85c8336d478c88af2935c6b12901f9599fb4469",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/shear_double_stiffness/checked.json": {
+      "sha256": "d831db77aacff7a86545484fc9e2d9328693b93463e3a293e3af479d2b6293a6",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/shear_double_stiffness/console.txt": {
+      "sha256": "cf23fb9697746ccfe5614ce4cbd5cd4b58a343de8dc1dfe544cc78f939490d8a",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/shear_double_stiffness/shear_double_stiffness.elements.log": {
+      "sha256": "d40640b320c8272696c94b29e85f412821ea97c77b0bd1a0fff2049326295bed",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/shear_double_stiffness/shear_double_stiffness.feb": {
+      "sha256": "7e8e6c73909f544ef1cce49f1d83aea2a9050ae2db467c913a027c405ea56dba",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/shear_double_stiffness/shear_double_stiffness.log": {
+      "sha256": "619084b2172ed2beb1e00e22357a993003d7d985f7d64540637e5825eded2b47",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/shear_double_stiffness/shear_double_stiffness.nodes.log": {
+      "sha256": "6ac397c1ba84c2dc2b76994d01006475382f93ff864e52f120b5a77da3d6d2f5",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_affine/checked.json": {
+      "sha256": "5aa1d6484a098af615c22a98a085930322b674100a881d32f54907de752c5fb7",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_affine/console.txt": {
+      "sha256": "83a6249de8f94d0b0b1801b4cdeb1c58b6d78ffdf328f0121d3671e510621495",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_affine/tet10_affine.elements.log": {
+      "sha256": "1389f65aa1ea44eb98514e7241ecf21ba8fe641c083754553a6ef76ca51397c6",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_affine/tet10_affine.feb": {
+      "sha256": "dfafcfde8075aacb36e2014d6abe755470e04667bcbfd69c6857edfb63833d50",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_affine/tet10_affine.log": {
+      "sha256": "b5c8faf3f9d961ab8f6f45940c0b90eb298e59f72849fc483f2d9417e8f241fc",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_affine/tet10_affine.nodes.log": {
+      "sha256": "7956ee9d0c797066adaa58971a333d49553e6fb737afc6770dc509e17d0ad8e2",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_mpc-summary.json": {
+      "sha256": "ea2c997006b1bf3eab1ed6859daa1277b14442b8564a8b18a00b088d7910c7c0",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/translation/checked.json": {
+      "sha256": "01bd99f36f8b52143ab13c290ee1220605c3079a46460a1db903d5e1baf86a5f",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/translation/console.txt": {
+      "sha256": "4386db19eb7b6c1de5877560124968391e84fbc311c6f5fee3df2862d794db08",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/translation/translation.elements.log": {
+      "sha256": "a5ba50416863d872ccd0a9cfafa7722191cb2295bb82e7425087f3eadfc25e26",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/translation/translation.feb": {
+      "sha256": "1b5fa399cc71e2561647b3f9a6baf2f18b5428e62650898fc8e330fc146fe93d",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/translation/translation.log": {
+      "sha256": "f4e31f67f20ea268b009af5739d48e1d1f9de36bd51ac1d07e2a1ad7d64b1d61",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/translation/translation.nodes.log": {
+      "sha256": "a3e367341989c71db0f6ae3d56b99f1c9516b0f88031020a9a128bdbeff35569",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/zero/checked.json": {
+      "sha256": "cf1fe679155ffc40803de5a143825fd91e24a79442a64d6d1463b31402a07937",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/zero/console.txt": {
+      "sha256": "785124fd601fcea82278f5564bb296c0e14f4373a07f8120856301b39536ece9",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/zero/zero.elements.log": {
+      "sha256": "1547e3a2e60b48cd581d14f32a7ea2b92df09e9d31e3edd2d22d2fe9942818d3",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/zero/zero.feb": {
+      "sha256": "a20221e487f4a192924d28791aa077fbf268756f42367e48db6b6990d8cace9d",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/zero/zero.log": {
+      "sha256": "c7c370f91397f5f42774eb181e3a6c1cc797f04866652f4659e450a299808bbb",
+      "unchanged": true
+    },
+    "outputs/mechanics/accelerate-controls-v1/attempt-01/zero/zero.nodes.log": {
+      "sha256": "b28810dc7b15ddb5c0467c4e588038148074c2d3d1c11be26c2940ca8c269bd9",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S60-reference/elements.log": {
+      "sha256": "968e43dab11576d0a1828767da80b8b7a1e98b789d24930f2d7c3aab8f5217a1",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S60-reference/execution.json": {
+      "sha256": "458ebfdcc9c28952c70e7c720af7818d8642480c7e2369932b7c537ee24db6ff",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S60-reference/loading.json": {
+      "sha256": "48dcbd091401d151443e81bb0ec4dc101f47d1cede01d450dd08aabdb61633b0",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S60-reference/nodes.log": {
+      "sha256": "f875239091e2c819b085d11a611edcda7290ee6b45e7c868075ed1731bc1a339",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S60-reference/readout.json": {
+      "sha256": "f000ebd0e22d64923fe88fd3d1d53e8a260f240af0cb45368cf7708425014538",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S60-reference/solver.log": {
+      "sha256": "e37c4a9b970d6af3e568dad7f53bbb14435a87e757acf9c7f95dfcea6e8912e5",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S60-reference/specimen.feb": {
+      "sha256": "6105632d45d2212d5e25f6a8cb3c011ff70a95ffdf342e0583a90e46d8f8bb57",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/elements.log": {
+      "sha256": "a94c3d38029350710eede95ee6f2584b018df8f2ca1f564bc83cb194b9e58147",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/execution.json": {
+      "sha256": "901c1c701a95730abc5d6ff25083733f66471ef67d7d6e82d050d59494c2b1b4",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/loading.json": {
+      "sha256": "3d43d7143088803a5c732c85b22c259de6d2327b2fe7a92db3cf0e88909dd700",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/nodes.log": {
+      "sha256": "f661e96e0175b804b8d92191301236037d01f20a03605122a165aae5f3071d48",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/readout.json": {
+      "sha256": "41e38786c9a07d045270f1a5a7da656bd3eddd9abed16d6fbc6fe30149a2d03d",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/solver.log": {
+      "sha256": "4bc1fd13b1ad669d9b3556b3b41edfb1b916ed84ed1af5ae3d3c9e4a19b6ec8a",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/specimen.feb": {
+      "sha256": "4145e40a52be05f1418592ef1ecf02b7ef64c9dbe03a83241cab349ef161a665",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S60-reference/elements.log": {
+      "sha256": "d4d352ba0bab247541284e17c372d156f1aedf5d45b64ba91fbd9f6634962250",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S60-reference/execution.json": {
+      "sha256": "883c197bc8c347523e23de96aad830ef447a14d817058e8cb67961aceeb11168",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S60-reference/loading.json": {
+      "sha256": "637746d8302259447d43d741e85b0730f4cc614f3feab27f3b366d8b4bbbe23e",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S60-reference/nodes.log": {
+      "sha256": "6e13550b4c3c76c09e4e8bc9eef15e07f5f91d3265b0ad10ea15f03f4d07ad23",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S60-reference/readout.json": {
+      "sha256": "7a269ca2c1f7a4a9225b84d7660455a8832e0ed593867821d5c8a25cc9401d6a",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S60-reference/solver.log": {
+      "sha256": "527734fefe6922468788ef894e5db3d5be6e001e306471bb2e5080c7b13e87d7",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S60-reference/specimen.feb": {
+      "sha256": "31f1ad9c050ea2c17a96c0a1441faa4b2c312f7b7a616d556497057e32220452",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N8-S60-reference/elements.log": {
+      "sha256": "d93b6a4a20233c2b3b2a5bbe8f201fb6fb07f8f902f0c5c6f6714cff6e924b9a",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N8-S60-reference/execution.json": {
+      "sha256": "a72afec40b1f0c2f9a89a6eade8c8dca6301c976bc06e202fbf1f7c88efa96f8",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N8-S60-reference/loading.json": {
+      "sha256": "3a0d486bf667346fe4c606e5881edb44d0f521db0c3639683065308f743a5f82",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N8-S60-reference/nodes.log": {
+      "sha256": "6ccab98630a0df79f0d9f255a1ff2779519d5ef96ff410c097874dfbc3d9a2c5",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N8-S60-reference/readout.json": {
+      "sha256": "a9cb82b68a52d7b7f3267d83df741d6f416bb8569e3dbb2bbf7d7a94d9e50e18",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N8-S60-reference/solver.log": {
+      "sha256": "e5f8008391c5635a392476b012371ae1401132440d782939c8dc089ba6487c97",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N8-S60-reference/specimen.feb": {
+      "sha256": "f4b69389104dac4cd58ad39021b64e46ce6436cfabc64ee866b84f00350a41ea",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/state.json": {
+      "sha256": "d984a8213a0a6799fa1c51ae5ac6872b7ec36af6c810b9338736613d60f904f8",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/mesh.json": {
+      "sha256": "0ed154be0d17c8baaac6ee0288381a53ec100f93cd936a194202f69ef32ae033",
+      "unchanged": true
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/mesh.json": {
+      "sha256": "3a6b5bb720bd3998f035abecf15d5c603d46c5ed281ce1d08c4aadec69c1dab9",
+      "unchanged": true
+    },
+    "outputs/validation/hbe-experiment-add7e8b/frozen-source/artifacts/mechanics/gmsh-4.15.2-runtime-v1/runtime-receipt.json": {
+      "sha256": "705056d13e78f98fda0ab04884c0c6e3b31ead73f88d01b6dcf3bd99d5417137",
+      "unchanged": true
+    },
+    "outputs/validation/hbe-resolution-5b80e3f/frozen-source/scripts/febio_runtime.py": {
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+      "unchanged": true
+    },
+    "outputs/validation/hbe-resolution-5b80e3f/frozen-source/scripts/mechanics_hbe_access.py": {
+      "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+      "unchanged": true
+    },
+    "outputs/validation/hbe-resolution-5b80e3f/frozen-source/scripts/mechanics_hbe_backend.py": {
+      "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+      "unchanged": true
+    },
+    "outputs/validation/hbe-resolution-5b80e3f/frozen-source/scripts/mechanics_hbe_evaluation.py": {
+      "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+      "unchanged": true
+    },
+    "outputs/validation/hbe-resolution-5b80e3f/frozen-source/scripts/mechanics_hbe_experiment.py": {
+      "sha256": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa",
+      "unchanged": true
+    },
+    "outputs/validation/hbe-resolution-5b80e3f/frozen-source/scripts/mechanics_hbe_mesh.py": {
+      "sha256": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414",
+      "unchanged": true
+    },
+    "outputs/validation/hbe-resolution-5b80e3f/frozen-source/scripts/mechanics_hbe_outputs.py": {
+      "sha256": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19",
+      "unchanged": true
+    },
+    "outputs/validation/hbe-resolution-5b80e3f/frozen-source/scripts/mechanics_hbe_physics.py": {
+      "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+      "unchanged": true
+    },
+    "outputs/validation/hbe-resolution-5b80e3f/frozen-source/scripts/mechanics_hbe_readout.py": {
+      "sha256": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0",
+      "unchanged": true
+    },
+    "outputs/validation/hbe-resolution-5b80e3f/frozen-source/scripts/mechanics_hbe_resolution.py": {
+      "sha256": "f6c75e1b8223355b90d06b100f538f3feb28e58f7e1be4ae2f13ed075bd8bdad",
+      "unchanged": true
+    },
+    "outputs/validation/hbe-resolution-5b80e3f/source.tar": {
+      "sha256": "29f5866817a260e49275e51510a1937f432cc1bc40762009025748092e8eefdb",
+      "unchanged": true
+    }
+  },
+  "historical_failed_experiment": {
+    "all_hashes_and_sizes_unchanged": true,
+    "bytes": 914390988,
+    "file_count": 169,
+    "index": {
+      "path": "artifacts/mechanics/hbe-accelerate-experiment-result-v1/raw-output-index.json",
+      "sha256": "385fdbf2a52972509a18a31a693aa139553ee02e99a62decfc0391fda8fe94e9"
+    },
+    "inventory_unchanged": true
+  },
+  "level_and_case_bindings_match_saved_state": true,
+  "measured_archive_members_opened": 0,
+  "source_archive": {
+    "path": "outputs/validation/hbe-resolution-5b80e3f/source.tar",
+    "sha256": "29f5866817a260e49275e51510a1937f432cc1bc40762009025748092e8eefdb"
+  },
+  "source_bindings": {
+    "access": {
+      "path": "outputs/validation/hbe-resolution-5b80e3f/frozen-source/scripts/mechanics_hbe_access.py",
+      "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+    },
+    "backend_profile": {
+      "path": "outputs/validation/hbe-resolution-5b80e3f/frozen-source/scripts/mechanics_hbe_backend.py",
+      "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae"
+    },
+    "curve_evaluator": {
+      "path": "outputs/validation/hbe-resolution-5b80e3f/frozen-source/scripts/mechanics_hbe_evaluation.py",
+      "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+    },
+    "mesh_deck": {
+      "path": "outputs/validation/hbe-resolution-5b80e3f/frozen-source/scripts/mechanics_hbe_mesh.py",
+      "sha256": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414"
+    },
+    "orchestrator": {
+      "path": "outputs/validation/hbe-resolution-5b80e3f/frozen-source/scripts/mechanics_hbe_experiment.py",
+      "sha256": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa"
+    },
+    "physics": {
+      "path": "outputs/validation/hbe-resolution-5b80e3f/frozen-source/scripts/mechanics_hbe_physics.py",
+      "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+    },
+    "primitive_parser": {
+      "path": "outputs/validation/hbe-resolution-5b80e3f/frozen-source/scripts/mechanics_hbe_outputs.py",
+      "sha256": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19"
+    },
+    "readout": {
+      "path": "outputs/validation/hbe-resolution-5b80e3f/frozen-source/scripts/mechanics_hbe_readout.py",
+      "sha256": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0"
+    },
+    "resolution": {
+      "path": "outputs/validation/hbe-resolution-5b80e3f/frozen-source/scripts/mechanics_hbe_resolution.py",
+      "sha256": "f6c75e1b8223355b90d06b100f538f3feb28e58f7e1be4ae2f13ed075bd8bdad"
+    },
+    "runtime_driver": {
+      "path": "outputs/validation/hbe-resolution-5b80e3f/frozen-source/scripts/febio_runtime.py",
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+    }
+  },
+  "source_commit": "5b80e3fee2349bc78d3f2ceb9b211efb305a1fc9"
+}

@@ -1,0 +1,46 @@
+{
+  "files": {
+    "RESULT.md": {
+      "bytes": 3189,
+      "sha256": "917d1ef57db9870241980f863089f4f74c40018107434120b019760590e0793b"
+    },
+    "collect.py": {
+      "bytes": 7237,
+      "sha256": "136375f3a15d0969a3f1a92e2acda07b17601348eb72bd0c77afc4b0d8caac5c"
+    },
+    "collection-path-setup-error.json": {
+      "bytes": 392,
+      "sha256": "0864812e5906ed264dbe72e0be17f2c9080d9abc71bcad7e655056bca59efb27"
+    },
+    "collection-setup-error.json": {
+      "bytes": 345,
+      "sha256": "7c20c10d5ffaa40867e7c39e86db0673146e3296a87f2e89716d87d6caf6dbcd"
+    },
+    "mesh-quality-summary.json": {
+      "bytes": 7397,
+      "sha256": "1246a38fb65112d46497d362833c80ed7e10bcb55c2a05184bb2e936b2a075ad"
+    },
+    "outcome.json": {
+      "bytes": 3844,
+      "sha256": "f381740868395cc8ce43585874bde316fce85409194c508812a224f1de74f32a"
+    },
+    "preservation.json": {
+      "bytes": 39548,
+      "sha256": "b09c1271319b42d105a9134b64179b01da7addbc2c5d5482a2d44e395b3f9658"
+    },
+    "raw-output-index.json": {
+      "bytes": 4571,
+      "sha256": "96a1617c30cdd8f20c5e5014810f0ee1f715ff362a79576ed71cacedf309d382"
+    },
+    "readonly-freeze.json": {
+      "bytes": 562,
+      "sha256": "7f7c230a96d2876e33c8441edf768483208df36ffbeab89007754d31099ddef7"
+    }
+  },
+  "measured_data_accessed": false,
+  "raw_bytes": 39177774,
+  "raw_file_count": 28,
+  "schema": "hbe-resolution-mesh-result-index-v1",
+  "solver_calls": 0,
+  "status": "frozen_actual_preparation_evidence_pending_separate_saved_review"
+}
