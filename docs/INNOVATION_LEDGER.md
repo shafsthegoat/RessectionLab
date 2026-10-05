@@ -9,6 +9,7 @@ by this ledger. Updated October 5, 2026 UTC; existing patient splits remain fixe
 | Search labels teach useful choices / baseline adaptation | BC8 raises PAT05 score to139.90; later choices still remove other tissue without target | PROMOTE diagnostic, not efficacy | Match extra optimization against new state coverage |
 | Learner-visited states repair later choices / DAgger adaptation | Same starting weights/Adam;8 extra updates×6 examples each:290.51 augmented vs239.11 control; search410.31 | PROMOTE development transfer | Separate real TRAIN anatomy; no repeated PAT05-only tuning |
 | Frozen ranking helps on different anatomy / adaptation | Precision repeat: PAT22 672.30 vs greedy789.10; PAT28 493.53 vs612.54; PAT25 no legal motions; PAT16/20 support conflicts; all nine episodes audited | HOLD population training | Diagnose access/proposal coverage from saved records; preserve failures and all five patients in the denominator |
+| Fixed preparation allows an informative speed–quality comparison / baseline comparison | V2: twelve accepted STOP/IL/greedy episodes on four of six TRAIN patients; two historical blocks retained. Search wins all four returns; IL uses140 vs264–280 previews and16.55–22.35 vs30.77–42.62 online seconds | RETAIN search and frozen IL tradeoff; no RL superiority | Single fixed-order timing and crop/full-field representation differ; separate shared preparation/audit. V1 complete metrics/history match exactly, as do decisions apart from timing/status fields; failed outcomes remain unchanged |
 | Weakly separated sequential rankings explain part of transfer failure / diagnostic hypothesis | Saved first-state greedy choices rank8/77 and4/71; entropy fractions0.997152/0.996870; independent arithmetic audit passes | INVESTIGATE after fixed preparation comparison | Later states diverge; large later reward remainders are descriptive, not causal. No new training or architecture conclusion |
 | Shortest local exit supplies a useful full-tool access / geometric assumption | PAT25 original78shaft failures all occur before insertion; other five fixed exits accept58–78 previews, but two hide the whole target from the actor crop | REVISE prospective access/input contract | Whole-shaft ingress plus explicit actor coverage; same allowed alternatives for every method; original STOP-only result stays unchanged |
 | Fixed initial whole-tool ingress screening restores action availability / preparation repair | PAT25 committed comparison: all6 exits/468 static checks; shortest of5 eligible exits yields78/78 native previews vs original0/78; target remains100% visible; independent saved audit passes | PROMOTE identical TRAIN preparation comparison | Apply same rule to other permitted TRAIN cases before zero-learning methods comparison; retain outside-image/exposure unknowns and decreased deepest-shaft visibility; no policy gain yet |
@@ -31,16 +32,17 @@ The state-aggregation mechanism draws on
 [Ross, Gordon and Bagnell (2011)](https://proceedings.mlr.press/v15/ross11a.html);
 one bounded geometric experiment does not inherit clinical or transfer guarantees.
 
-Cheapest next discriminating work: apply the unchanged versus screened-access
-comparison to the other permitted TRAIN cases. PAT25's completed preparation
-repair restored initial action availability without learning; it does not replace
-the original baseline. Exact PAT05 binding and isolated ingress helpers pass
-155 and 43 focused checks; the bounded PAT25 runner passed 89 before execution.
-See [PAT25 comparison](../artifacts/pat25-ingress-access-v1/RESULT.md).
-The shared opt-in source helper now passes 81 focused checks while preserving the
-legacy default and exact derivation; it has not yet been exercised on other patients.
-Access diagnosis precedes multiscale policy integration because the completed
-legacy crops already retained the target. One checksum transfer and the separately
+The fixed preparation comparison now completed on PAT05/PAT22/PAT25/PAT28;
+only PAT25 changed access, and all four crops retain the nominal target. The
+separate saved-record audit accepts twelve episodes and preserves both historical
+support blocks. See [V2 results](../artifacts/prepared-training-planner-comparison-v2/RESULT.md).
+No further architecture sweep follows from this result. The next bounded RL
+diagnostic should separate actor and critic contributions on the already retained
+PAT05 development episodes and measure actual parameter/logit changes; a large
+critic gradient plus global clipping alone does not establish suppressed Adam
+updates. This diagnostic has not run and must preserve the baseline checkpoint.
+Improved context remains a candidate, not a demonstrated explanation: the
+completed legacy crops already retained the target. One checksum transfer and the separately
 released single-image compatibility experiment succeeded. The latter received
 6,337,221 compressed bytes under its 64-MiB retained-file cap and matched the
 predeclared compressed-byte MD5 candidate; an independent byte/provenance audit

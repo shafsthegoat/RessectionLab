@@ -1,0 +1,15 @@
+{
+  "started_at_utc": "2026-10-05T08:01:12.965514+00:00",
+  "release_commit": "0246d1aba3dc39a13c3882a4f88587cce9b355a0",
+  "declaration_sha256": "ddb5e69f831bb691ff76bfa667a4b43c8b17eabfee7e8f166a2115c08a01abd4",
+  "release_sha256": "10181cc719f4e6131ba92a32fbadb7594b1d120e6cecace43a53f85c0afbd8f7",
+  "command": [
+    ".venv/bin/python",
+    "scripts/compare_prepared_training_planners.py",
+    "--declaration",
+    "manifests/experiments/prepared-training-planner-comparison-v2.json",
+    "--execute",
+    "--output",
+    "outputs/prepared-training-planner-comparison-v2"
+  ]
+}

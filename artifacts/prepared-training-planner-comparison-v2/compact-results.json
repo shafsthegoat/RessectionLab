@@ -1,0 +1,1031 @@
+{
+  "accepted_arms": 12,
+  "checkpoint": {
+    "architecture_hash": "sha256:a3b6740ab188f01016610c566e2009c57ba422c8f9be24adca014f695ae9c917",
+    "parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+    "path": "artifacts/pat05-real-visited-imitation-v1/augmented_latest.pt",
+    "sha256": "7019ded14f17e5a9a88fde089c8e357b6edae65004f495bcfaeb34171b7101bc"
+  },
+  "clinical_efficacy_measured": false,
+  "complete_comparisons": 4,
+  "fixed_arm_order": [
+    "STOP",
+    "frozen_il",
+    "greedy_search"
+  ],
+  "independent_audit": {
+    "path": "artifacts/prepared-training-planner-comparison-v2/independent-check.json",
+    "scope": "Software/simulation records only; no physical or clinical validation.",
+    "sha256": "b98dd4141082c9a88b2caf0ecc8a224b318f0cca58568a4a48657eb60401710f",
+    "status": "saved_records_verified"
+  },
+  "interpretation": [
+    "All six cases are TRAIN: PAT05 is the trained case; PAT22/25/28 are development transfer.",
+    "Historical PAT16/20 support blocks remain null, not zero-valued episodes.",
+    "Frozen imitation uses a fixed64 crop; greedy search uses full permitted nominal fields.",
+    "Online cost includes clone/decisions/search/replay/successor inventories/export; shared preparation and audit are separate.",
+    "Fixed-order single-run times are descriptive, not a randomized speed benchmark.",
+    "Geometric normal removal is not neurological harm; clinical deficit probability remains null.",
+    "Prior V1 durable-history failures are retained; V2 has exact matching saved behavior aside from timing/status."
+  ],
+  "optimizer_updates": 0,
+  "patients": [
+    {
+      "analysis_role": "trained_case",
+      "arms": {
+        "STOP": {
+          "actions": [
+            "STOP"
+          ],
+          "actor_decision_seconds": 5.542067810893059e-06,
+          "cache_hits": null,
+          "episode_sha256": "9f72440fc795179624d5da2f894e8899c3e411d552efe2572fbf313331f3f408",
+          "final_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "full_arm_seconds_including_audit": 1.5698001661803573,
+          "independent_audit_seconds": 0.43548491690307856,
+          "independent_evaluation_accepted": true,
+          "initial_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "native_preview_profile": {
+            "phases": {},
+            "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+            "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+          },
+          "native_previews": 0,
+          "native_transition_seconds": 0.09098479081876576,
+          "online_seconds": 0.3263443340547383,
+          "optimizer_updates": 0,
+          "outcomes": {
+            "clinical_deficit_probability": null,
+            "complete_tool_path_length_mm": 0.0,
+            "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+            "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+            "language_surrogate": null,
+            "motor_surrogate": null,
+            "nonstop_actions": 0,
+            "normal_removed_mm3": 0.0,
+            "partial_contact_reward_weight": 0.0,
+            "positive_target_source_cells_removed": 0,
+            "reference_target_fraction_removed": 0.0,
+            "simulated_removed_volume_mm3": 0.0,
+            "target_removed_mm3": 0.0,
+            "tool_changes": 0,
+            "total_reference_target_mm3": 11437.039733588736,
+            "total_reward": 0.0
+          },
+          "status": "complete",
+          "terminal_history_sha256": "31453d39afbd04537cab6298f101f32d67b3ebff6846fad1761806a1d6e6a04e",
+          "terminal_metrics_hash": "236685da1b2952291be9fc4001944b8ca5fe31a9c74d8472ae898f5bbbee2b48"
+        },
+        "frozen_il": {
+          "actions": [
+            "nominal-cavity-6b6f1c9366f711d60f003d6a",
+            "nominal-cavity-696a744a3ac4120d20d520bc",
+            "nominal-cavity-7fb264c34c65636d12e1c356"
+          ],
+          "actor_decision_seconds": 0.9708768341224641,
+          "cache_hits": null,
+          "episode_sha256": "bd3b31b76a2d0332a2651ebd4d4904d67367b51657256a9d044013f0df4d1720",
+          "final_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "full_arm_seconds_including_audit": 23.753173042088747,
+          "independent_audit_seconds": 3.7885118341073394,
+          "independent_evaluation_accepted": true,
+          "initial_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "native_preview_profile": {
+            "phases": {
+              "execution": {
+                "feasible": 124,
+                "raised": 0,
+                "rejected": 16,
+                "rejection_reasons": {
+                  "HARD_GEOMETRY:WORKING_REACH": 16
+                },
+                "returned": 140,
+                "returned_microsteps": 10280,
+                "seconds": 10.916665413882583,
+                "started": 140
+              }
+            },
+            "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+            "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+          },
+          "native_previews": 140,
+          "native_transition_seconds": 14.655713374027982,
+          "online_seconds": 18.833501041168347,
+          "optimizer_updates": 0,
+          "outcomes": {
+            "clinical_deficit_probability": null,
+            "complete_tool_path_length_mm": 205.00072239040344,
+            "cumulative_contacted_tissue_upper_bound_mm3": 1432.0049749496432,
+            "currently_retained_contacted_tissue_upper_bound_mm3": 816.0028348875062,
+            "language_surrogate": null,
+            "motor_surrogate": null,
+            "nonstop_actions": 3,
+            "normal_removed_mm3": 271.0009414883752,
+            "partial_contact_reward_weight": 0.0,
+            "positive_target_source_cells_removed": 345,
+            "reference_target_fraction_removed": 0.030165253125819705,
+            "simulated_removed_volume_mm3": 616.002140062137,
+            "target_removed_mm3": 345.00119857376177,
+            "tool_changes": 0,
+            "total_reference_target_mm3": 11437.039733588736,
+            "total_reward": 290.50600955369634
+          },
+          "status": "complete",
+          "terminal_history_sha256": "e6a0219cbe04f90486a04b777ec46067e8733ec0da88c90505587983f901158f",
+          "terminal_metrics_hash": "70eb8e2b412ac2a764b1326579a14b8b0400f9ae589e40f74af80e9a989243b7"
+        },
+        "greedy_search": {
+          "actions": [
+            "nominal-cavity-417f590381bc98e52ed7bc77",
+            "nominal-cavity-563784d38bcd84f57f40246a",
+            "nominal-cavity-fd1777adffbf91c8e0f66b62"
+          ],
+          "actor_decision_seconds": 1.254095695912838e-05,
+          "cache_hits": null,
+          "episode_sha256": "e520af887f3ee19b3fe8daaeae91cb4a7c9ad70f23ef98256fceadeeaa74b9ee",
+          "final_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "full_arm_seconds_including_audit": 40.74131879210472,
+          "independent_audit_seconds": 3.7528173339087516,
+          "independent_evaluation_accepted": true,
+          "initial_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "native_preview_profile": {
+            "phases": {
+              "execution": {
+                "feasible": 118,
+                "raised": 0,
+                "rejected": 14,
+                "rejection_reasons": {
+                  "HARD_GEOMETRY:WORKING_REACH": 14
+                },
+                "returned": 132,
+                "returned_microsteps": 10048,
+                "seconds": 10.774498789338395,
+                "started": 132
+              },
+              "planning": {
+                "feasible": 118,
+                "raised": 0,
+                "rejected": 14,
+                "rejection_reasons": {
+                  "HARD_GEOMETRY:WORKING_REACH": 14
+                },
+                "returned": 132,
+                "returned_microsteps": 10048,
+                "seconds": 10.883096911013126,
+                "started": 132
+              }
+            },
+            "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+            "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+          },
+          "native_previews": 264,
+          "native_transition_seconds": 14.321099791908637,
+          "online_seconds": 35.87543133390136,
+          "optimizer_updates": 0,
+          "outcomes": {
+            "clinical_deficit_probability": null,
+            "complete_tool_path_length_mm": 199.00070124296786,
+            "cumulative_contacted_tissue_upper_bound_mm3": 1919.0066668494171,
+            "currently_retained_contacted_tissue_upper_bound_mm3": 1014.0035227646216,
+            "language_surrogate": null,
+            "motor_surrogate": null,
+            "nonstop_actions": 3,
+            "normal_removed_mm3": 412.0014313402604,
+            "partial_contact_reward_weight": 0.0,
+            "positive_target_source_cells_removed": 493,
+            "reference_target_fraction_removed": 0.04310570953921483,
+            "simulated_removed_volume_mm3": 905.0031440847954,
+            "target_removed_mm3": 493.001712744535,
+            "tool_changes": 0,
+            "total_reference_target_mm3": 11437.039733588736,
+            "total_reward": 410.31242577523983
+          },
+          "search": {
+            "complete": true,
+            "evaluated_nonstop_actions": 188,
+            "global_optimality_proven": false,
+            "model_transition_calls": 3,
+            "objective_source": "permitted_nominal_target_and_frozen_geometric_costs",
+            "planning_seconds": 18.165491749998182,
+            "within_call_costs": "nominal clone, certificate checks, all candidate scoring, selected commits and needed inventories"
+          },
+          "status": "complete",
+          "terminal_history_sha256": "a91f33a714260f7bdc1c39623530cc7a0e07b8029ba980214017c609473a33f2",
+          "terminal_metrics_hash": "c977a5c616214b9c04c2852b8adc21d5e59be6d5347c49f10978b2595ae1084b"
+        }
+      },
+      "greedy_minus_il_reward": 119.80641622154349,
+      "policy_load_seconds": 0.010584416799247265,
+      "role": "TRAIN",
+      "shared_preparation": {
+        "access_preparation_seconds": 11.572400042088702,
+        "actor_nominal_target_fraction_visible": 1.0,
+        "candidate_setup_seconds": 5.10838829097338,
+        "native_previews": 156,
+        "original_loader_seconds": 7.903663333039731,
+        "scope": "Shared once across arms; outside their online guards. Subintervals are nested.",
+        "selected_exit": [
+          0,
+          -1
+        ],
+        "selected_initial_inventory_seconds": 6.788520667003468,
+        "static_screening_seconds": 5.637156541924924,
+        "total_seconds": 26.807027000002563
+      },
+      "status": "complete",
+      "subject": "sub-PAT05",
+      "supervisor": {
+        "automatic_retry": false,
+        "declaration_sha256": "ddb5e69f831bb691ff76bfa667a4b43c8b17eabfee7e8f166a2115c08a01abd4",
+        "measurement_timeout_seconds": 2,
+        "returncode": 0,
+        "rss_samples": 474,
+        "rss_scope": "worker process RSS; native work uses threads, not subprocess workers",
+        "sampled_peak_rss_bytes": 2568159232,
+        "sampling_interval_seconds": 0.2,
+        "sampling_limit": "transient peaks between samples can be missed",
+        "seconds": 101.02067483309656,
+        "status": "complete",
+        "termination_grace_seconds": 2,
+        "termination_reason": null,
+        "timed_out": false
+      },
+      "worker_elapsed_seconds": 94.38918325002305,
+      "worker_recorded_peak_rss_bytes": 2623963136
+    },
+    {
+      "analysis_role": "historical_support_block",
+      "arms": {
+        "STOP": {
+          "native_previews": null,
+          "online_seconds": null,
+          "outcomes": null,
+          "status": "not_executed"
+        },
+        "frozen_il": {
+          "native_previews": null,
+          "online_seconds": null,
+          "outcomes": null,
+          "status": "not_executed"
+        },
+        "greedy_search": {
+          "native_previews": null,
+          "online_seconds": null,
+          "outcomes": null,
+          "status": "not_executed"
+        }
+      },
+      "failure_code": "TARGET_OUTSIDE_SUPPORT",
+      "policy_load_seconds": null,
+      "role": "TRAIN",
+      "shared_preparation": null,
+      "status": "historical_support_block",
+      "subject": "sub-PAT16",
+      "supervisor": null,
+      "support_conflict": {
+        "full_target_source_cells": 45400,
+        "reference_or_nominal_clipped": false,
+        "support_expanded": false,
+        "target_inside_support_source_cells": 45381,
+        "target_outside_support_source_cells": 19
+      },
+      "worker_elapsed_seconds": null,
+      "worker_recorded_peak_rss_bytes": null
+    },
+    {
+      "analysis_role": "historical_support_block",
+      "arms": {
+        "STOP": {
+          "native_previews": null,
+          "online_seconds": null,
+          "outcomes": null,
+          "status": "not_executed"
+        },
+        "frozen_il": {
+          "native_previews": null,
+          "online_seconds": null,
+          "outcomes": null,
+          "status": "not_executed"
+        },
+        "greedy_search": {
+          "native_previews": null,
+          "online_seconds": null,
+          "outcomes": null,
+          "status": "not_executed"
+        }
+      },
+      "failure_code": "TARGET_OUTSIDE_SUPPORT",
+      "policy_load_seconds": null,
+      "role": "TRAIN",
+      "shared_preparation": null,
+      "status": "historical_support_block",
+      "subject": "sub-PAT20",
+      "supervisor": null,
+      "support_conflict": {
+        "full_target_source_cells": 12451,
+        "reference_or_nominal_clipped": false,
+        "support_expanded": false,
+        "target_inside_support_source_cells": 12326,
+        "target_outside_support_source_cells": 125
+      },
+      "worker_elapsed_seconds": null,
+      "worker_recorded_peak_rss_bytes": null
+    },
+    {
+      "analysis_role": "development_transfer",
+      "arms": {
+        "STOP": {
+          "actions": [
+            "STOP"
+          ],
+          "actor_decision_seconds": 4.375120624899864e-06,
+          "cache_hits": null,
+          "episode_sha256": "ebdfff31187580a7c07b2dfc07a070e7a06483b9e5ababa908887087a5a7b325",
+          "final_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "full_arm_seconds_including_audit": 1.5572973750531673,
+          "independent_audit_seconds": 0.4368122909218073,
+          "independent_evaluation_accepted": true,
+          "initial_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "native_preview_profile": {
+            "phases": {},
+            "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+            "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+          },
+          "native_previews": 0,
+          "native_transition_seconds": 0.09048637514933944,
+          "online_seconds": 0.3161637911107391,
+          "optimizer_updates": 0,
+          "outcomes": {
+            "clinical_deficit_probability": null,
+            "complete_tool_path_length_mm": 0.0,
+            "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+            "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+            "language_surrogate": null,
+            "motor_surrogate": null,
+            "nonstop_actions": 0,
+            "normal_removed_mm3": 0.0,
+            "partial_contact_reward_weight": 0.0,
+            "positive_target_source_cells_removed": 0,
+            "reference_target_fraction_removed": 0.0,
+            "simulated_removed_volume_mm3": 0.0,
+            "target_removed_mm3": 0.0,
+            "tool_changes": 0,
+            "total_reference_target_mm3": 13914.958718707872,
+            "total_reward": 0.0
+          },
+          "status": "complete",
+          "terminal_history_sha256": "67f7e8fece888a3aeb7e38b8df20b7f7114a7de4bf51e4864dc718495ff68f80",
+          "terminal_metrics_hash": "e1a6dad1838512f12bb01a8cc4cb7a9c47c78759dc430e293c3124485afd597e"
+        },
+        "frozen_il": {
+          "actions": [
+            "nominal-cavity-52a752d3bf00dba2333c7b71",
+            "nominal-cavity-4034615eee076d69ba939e5d",
+            "nominal-cavity-8e5e81cd33cc9e77321b3370"
+          ],
+          "actor_decision_seconds": 0.7745812078937888,
+          "cache_hits": null,
+          "episode_sha256": "2447004be0be19a0da13ca93e59a76ace5e02f07cdde8756038ffc429f96af8b",
+          "final_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "full_arm_seconds_including_audit": 22.407677833922207,
+          "independent_audit_seconds": 3.9261422080453485,
+          "independent_evaluation_accepted": true,
+          "initial_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "native_preview_profile": {
+            "phases": {
+              "execution": {
+                "feasible": 136,
+                "raised": 0,
+                "rejected": 4,
+                "rejection_reasons": {
+                  "HARD_GEOMETRY:WORKING_REACH": 4
+                },
+                "returned": 140,
+                "returned_microsteps": 8552,
+                "seconds": 9.382193252211437,
+                "started": 140
+              }
+            },
+            "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+            "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+          },
+          "native_previews": 140,
+          "native_transition_seconds": 13.044764708261937,
+          "online_seconds": 17.28763529099524,
+          "optimizer_updates": 0,
+          "outcomes": {
+            "clinical_deficit_probability": null,
+            "complete_tool_path_length_mm": 210.9999967756287,
+            "cumulative_contacted_tissue_upper_bound_mm3": 1851.9945057166353,
+            "currently_retained_contacted_tissue_upper_bound_mm3": 1026.9969532240736,
+            "language_surrogate": null,
+            "motor_surrogate": null,
+            "nonstop_actions": 3,
+            "normal_removed_mm3": 126.9996232321883,
+            "partial_contact_reward_weight": 0.0,
+            "positive_target_source_cells_removed": 698,
+            "reference_target_fraction_removed": 0.050161696011498384,
+            "simulated_removed_volume_mm3": 824.9975524925616,
+            "target_removed_mm3": 697.9979292603733,
+            "tool_changes": 0,
+            "total_reference_target_mm3": 13914.958718707872,
+            "total_reward": 672.29700461716
+          },
+          "status": "complete",
+          "terminal_history_sha256": "c535c54d14d083517e9c4da316fc67e71ceeb5b36923e50b51d1d178fdf3372b",
+          "terminal_metrics_hash": "24a9bdd6ddc3aaaebe12731d68e258cf0c40eca4f97ccb9dc79ccf915025a7e8"
+        },
+        "greedy_search": {
+          "actions": [
+            "nominal-cavity-b68d498f9fe1af412016ab9f",
+            "nominal-cavity-26f54c4dc1687520e979a8d0",
+            "nominal-cavity-0c1f9f80cb58de10b5ecad46"
+          ],
+          "actor_decision_seconds": 1.158192753791809e-05,
+          "cache_hits": null,
+          "episode_sha256": "6fb780b73208170207530d081a2523d2de4bd21284ea5f8d3fef7acb39353b80",
+          "final_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "full_arm_seconds_including_audit": 37.724939540959895,
+          "independent_audit_seconds": 4.046548750018701,
+          "independent_evaluation_accepted": true,
+          "initial_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "native_preview_profile": {
+            "phases": {
+              "execution": {
+                "feasible": 138,
+                "raised": 0,
+                "rejected": 2,
+                "rejection_reasons": {
+                  "HARD_GEOMETRY:WORKING_REACH": 2
+                },
+                "returned": 140,
+                "returned_microsteps": 8576,
+                "seconds": 9.318993129767478,
+                "started": 140
+              },
+              "planning": {
+                "feasible": 138,
+                "raised": 0,
+                "rejected": 2,
+                "rejection_reasons": {
+                  "HARD_GEOMETRY:WORKING_REACH": 2
+                },
+                "returned": 140,
+                "returned_microsteps": 8576,
+                "seconds": 9.432635707315058,
+                "started": 140
+              }
+            },
+            "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+            "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+          },
+          "native_previews": 280,
+          "native_transition_seconds": 13.092523999977857,
+          "online_seconds": 32.54689237498678,
+          "optimizer_updates": 0,
+          "outcomes": {
+            "clinical_deficit_probability": null,
+            "complete_tool_path_length_mm": 210.999996783225,
+            "cumulative_contacted_tissue_upper_bound_mm3": 2463.9926901111176,
+            "currently_retained_contacted_tissue_upper_bound_mm3": 1490.995576686557,
+            "language_surrogate": null,
+            "motor_surrogate": null,
+            "nonstop_actions": 3,
+            "normal_removed_mm3": 152.9995460986205,
+            "partial_contact_reward_weight": 0.0,
+            "positive_target_source_cells_removed": 820,
+            "reference_target_fraction_removed": 0.05892921307941071,
+            "simulated_removed_volume_mm3": 972.9971134245606,
+            "target_removed_mm3": 819.99756732594,
+            "tool_changes": 0,
+            "total_reference_target_mm3": 13914.958718707872,
+            "total_reward": 789.0966581094328
+          },
+          "search": {
+            "complete": true,
+            "evaluated_nonstop_actions": 214,
+            "global_optimality_proven": false,
+            "model_transition_calls": 3,
+            "objective_source": "permitted_nominal_target_and_frozen_geometric_costs",
+            "planning_seconds": 15.951181875076145,
+            "within_call_costs": "nominal clone, certificate checks, all candidate scoring, selected commits and needed inventories"
+          },
+          "status": "complete",
+          "terminal_history_sha256": "d4407838a5314d5cd417df0d3ba27b931ab538cf1f57860d2bf1713bd446882e",
+          "terminal_metrics_hash": "3b5f4de7e412d59b782e16c6a333925ae48621b0b8831a1c94dd3d7e862da158"
+        }
+      },
+      "greedy_minus_il_reward": 116.7996534922728,
+      "policy_load_seconds": 0.008477082941681147,
+      "role": "TRAIN",
+      "shared_preparation": {
+        "access_preparation_seconds": 11.445931249996647,
+        "actor_nominal_target_fraction_visible": 1.0,
+        "candidate_setup_seconds": 4.986903875134885,
+        "native_previews": 156,
+        "original_loader_seconds": 6.942986333975568,
+        "scope": "Shared once across arms; outside their online guards. Subintervals are nested.",
+        "selected_exit": [
+          2,
+          1
+        ],
+        "selected_initial_inventory_seconds": 5.76117108296603,
+        "static_screening_seconds": 5.641384250018746,
+        "total_seconds": 24.706589041044936
+      },
+      "status": "complete",
+      "subject": "sub-PAT22",
+      "supervisor": {
+        "automatic_retry": false,
+        "declaration_sha256": "ddb5e69f831bb691ff76bfa667a4b43c8b17eabfee7e8f166a2115c08a01abd4",
+        "measurement_timeout_seconds": 2,
+        "returncode": 0,
+        "rss_samples": 426,
+        "rss_scope": "worker process RSS; native work uses threads, not subprocess workers",
+        "sampled_peak_rss_bytes": 2514288640,
+        "sampling_interval_seconds": 0.2,
+        "sampling_limit": "transient peaks between samples can be missed",
+        "seconds": 90.5509730828926,
+        "status": "complete",
+        "termination_grace_seconds": 2,
+        "termination_reason": null,
+        "timed_out": false
+      },
+      "worker_elapsed_seconds": 87.8237695840653,
+      "worker_recorded_peak_rss_bytes": 2543697920
+    },
+    {
+      "analysis_role": "development_transfer",
+      "arms": {
+        "STOP": {
+          "actions": [
+            "STOP"
+          ],
+          "actor_decision_seconds": 4.667090252041817e-06,
+          "cache_hits": null,
+          "episode_sha256": "3ae0d73c274339271a53f99ab8b76eff4ed848af2b807a1b93ae117e2e1e2c33",
+          "final_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "full_arm_seconds_including_audit": 1.56737224990502,
+          "independent_audit_seconds": 0.43936879211105406,
+          "independent_evaluation_accepted": true,
+          "initial_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "native_preview_profile": {
+            "phases": {},
+            "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+            "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+          },
+          "native_previews": 0,
+          "native_transition_seconds": 0.09073937498033047,
+          "online_seconds": 0.3189672918524593,
+          "optimizer_updates": 0,
+          "outcomes": {
+            "clinical_deficit_probability": null,
+            "complete_tool_path_length_mm": 0.0,
+            "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+            "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+            "language_surrogate": null,
+            "motor_surrogate": null,
+            "nonstop_actions": 0,
+            "normal_removed_mm3": 0.0,
+            "partial_contact_reward_weight": 0.0,
+            "positive_target_source_cells_removed": 0,
+            "reference_target_fraction_removed": 0.0,
+            "simulated_removed_volume_mm3": 0.0,
+            "target_removed_mm3": 0.0,
+            "tool_changes": 0,
+            "total_reference_target_mm3": 16526.089731668915,
+            "total_reward": 0.0
+          },
+          "status": "complete",
+          "terminal_history_sha256": "3d57d8473c059cd31d2138966fac04038aa55ec8910899b47eca2bd7c1ad402a",
+          "terminal_metrics_hash": "782bcc114affcaef1ecbd5c87cab2a11a909075964d7856e451116647387784a"
+        },
+        "frozen_il": {
+          "actions": [
+            "nominal-cavity-bbc30bc4a08e2658f68a69bc",
+            "nominal-cavity-854d2c3581bfb854d13dcdf7",
+            "nominal-cavity-372cd9a91423ee53d5f3039e"
+          ],
+          "actor_decision_seconds": 0.7982636666856706,
+          "cache_hits": null,
+          "episode_sha256": "ce6c81bee9933814ae4d7a97f7bd41aeccc5782a74d83be02091629b676d6356",
+          "final_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "full_arm_seconds_including_audit": 27.143240916077048,
+          "independent_audit_seconds": 3.6626997920684516,
+          "independent_evaluation_accepted": true,
+          "initial_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "native_preview_profile": {
+            "phases": {
+              "execution": {
+                "feasible": 140,
+                "raised": 0,
+                "rejected": 0,
+                "rejection_reasons": {},
+                "returned": 140,
+                "returned_microsteps": 8872,
+                "seconds": 14.916914289817214,
+                "started": 140
+              }
+            },
+            "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+            "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+          },
+          "native_previews": 140,
+          "native_transition_seconds": 18.59458691533655,
+          "online_seconds": 22.352284625172615,
+          "optimizer_updates": 0,
+          "outcomes": {
+            "clinical_deficit_probability": null,
+            "complete_tool_path_length_mm": 198.9999968956032,
+            "cumulative_contacted_tissue_upper_bound_mm3": 1727.0093771385827,
+            "currently_retained_contacted_tissue_upper_bound_mm3": 963.005228827131,
+            "language_surrogate": null,
+            "motor_surrogate": null,
+            "nonstop_actions": 3,
+            "normal_removed_mm3": 149.00080902932757,
+            "partial_contact_reward_weight": 0.0,
+            "positive_target_source_cells_removed": 615,
+            "reference_target_fraction_removed": 0.03721408689338013,
+            "simulated_removed_volume_mm3": 764.0041483114518,
+            "target_removed_mm3": 615.0033392821241,
+            "tool_changes": 0,
+            "total_reference_target_mm3": 16526.089731668915,
+            "total_reward": 584.914177479363
+          },
+          "status": "complete",
+          "terminal_history_sha256": "1ac4d5b9abc99540f50d725f5d09bf15caf1d900c5a46abbc1a3437b9d49b75a",
+          "terminal_metrics_hash": "3b300a0b468f28000c7fd86754d36436439d6f0876669f29308202996412feb9"
+        },
+        "greedy_search": {
+          "actions": [
+            "nominal-cavity-c39b0436871255a6466012f4",
+            "nominal-cavity-9854fbecc5b7a43d6d4de770",
+            "nominal-cavity-e044ba705727d027c7f86e55"
+          ],
+          "actor_decision_seconds": 1.2374017387628555e-05,
+          "cache_hits": null,
+          "episode_sha256": "5a4d7c7f0cf29da88ec5d9a2fa1f731b832e72a2019a170ddc1ea8e5a299e3f1",
+          "final_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "full_arm_seconds_including_audit": 47.64129283395596,
+          "independent_audit_seconds": 3.906170125119388,
+          "independent_evaluation_accepted": true,
+          "initial_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "native_preview_profile": {
+            "phases": {
+              "execution": {
+                "feasible": 132,
+                "raised": 0,
+                "rejected": 0,
+                "rejection_reasons": {},
+                "returned": 132,
+                "returned_microsteps": 8814,
+                "seconds": 14.456815202720463,
+                "started": 132
+              },
+              "planning": {
+                "feasible": 132,
+                "raised": 0,
+                "rejected": 0,
+                "rejection_reasons": {},
+                "returned": 132,
+                "returned_microsteps": 8814,
+                "seconds": 14.481065460015088,
+                "started": 132
+              }
+            },
+            "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+            "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+          },
+          "native_previews": 264,
+          "native_transition_seconds": 18.162309043109417,
+          "online_seconds": 42.61824308289215,
+          "optimizer_updates": 0,
+          "outcomes": {
+            "clinical_deficit_probability": null,
+            "complete_tool_path_length_mm": 208.99999673642336,
+            "cumulative_contacted_tissue_upper_bound_mm3": 2200.0119453994685,
+            "currently_retained_contacted_tissue_upper_bound_mm3": 1249.006781729062,
+            "language_surrogate": null,
+            "motor_surrogate": null,
+            "nonstop_actions": 3,
+            "normal_removed_mm3": 164.00089047523312,
+            "partial_contact_reward_weight": 0.0,
+            "positive_target_source_cells_removed": 787,
+            "reference_target_fraction_removed": 0.04762192908144742,
+            "simulated_removed_volume_mm3": 951.0051636704065,
+            "target_removed_mm3": 787.0042731951735,
+            "tool_changes": 0,
+            "total_reference_target_mm3": 16526.089731668915,
+            "total_reward": 753.9050951033904
+          },
+          "search": {
+            "complete": true,
+            "evaluated_nonstop_actions": 210,
+            "global_optimality_proven": false,
+            "model_transition_calls": 3,
+            "objective_source": "permitted_nominal_target_and_frozen_geometric_costs",
+            "planning_seconds": 21.029236249858513,
+            "within_call_costs": "nominal clone, certificate checks, all candidate scoring, selected commits and needed inventories"
+          },
+          "status": "complete",
+          "terminal_history_sha256": "47447212966afd01303b3e20a94af282a0cbecbd49d7da0a114451c437f54db3",
+          "terminal_metrics_hash": "517ec4ffad3afefa7778ec2f9f61427fb8dadfa83958bb6baf4b686239139601"
+        }
+      },
+      "greedy_minus_il_reward": 168.99091762402736,
+      "policy_load_seconds": 0.008792459033429623,
+      "role": "TRAIN",
+      "shared_preparation": {
+        "access_preparation_seconds": 11.537095250096172,
+        "actor_nominal_target_fraction_visible": 1.0,
+        "candidate_setup_seconds": 5.0285394170787185,
+        "native_previews": 156,
+        "original_loader_seconds": 2.388247499940917,
+        "scope": "Shared once across arms; outside their online guards. Subintervals are nested.",
+        "selected_exit": [
+          2,
+          -1
+        ],
+        "selected_initial_inventory_seconds": 8.470370415830985,
+        "static_screening_seconds": 5.701888458104804,
+        "total_seconds": 22.94571699993685
+      },
+      "status": "complete",
+      "subject": "sub-PAT25",
+      "supervisor": {
+        "automatic_retry": false,
+        "declaration_sha256": "ddb5e69f831bb691ff76bfa667a4b43c8b17eabfee7e8f166a2115c08a01abd4",
+        "measurement_timeout_seconds": 2,
+        "returncode": 0,
+        "rss_samples": 487,
+        "rss_scope": "worker process RSS; native work uses threads, not subprocess workers",
+        "sampled_peak_rss_bytes": 2561474560,
+        "sampling_interval_seconds": 0.2,
+        "sampling_limit": "transient peaks between samples can be missed",
+        "seconds": 103.3690404589288,
+        "status": "complete",
+        "termination_grace_seconds": 2,
+        "termination_reason": null,
+        "timed_out": false
+      },
+      "worker_elapsed_seconds": 100.7123944577761,
+      "worker_recorded_peak_rss_bytes": 2612658176
+    },
+    {
+      "analysis_role": "development_transfer",
+      "arms": {
+        "STOP": {
+          "actions": [
+            "STOP"
+          ],
+          "actor_decision_seconds": 4.250090569257736e-06,
+          "cache_hits": null,
+          "episode_sha256": "de914f1ee9d52a6cf0cfd6ff940539067ccf3fd421c197067c7829f09badea07",
+          "final_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "full_arm_seconds_including_audit": 1.5803453330881894,
+          "independent_audit_seconds": 0.43780674994923174,
+          "independent_evaluation_accepted": true,
+          "initial_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "native_preview_profile": {
+            "phases": {},
+            "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+            "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+          },
+          "native_previews": 0,
+          "native_transition_seconds": 0.09111312497407198,
+          "online_seconds": 0.32471770886331797,
+          "optimizer_updates": 0,
+          "outcomes": {
+            "clinical_deficit_probability": null,
+            "complete_tool_path_length_mm": 0.0,
+            "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+            "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+            "language_surrogate": null,
+            "motor_surrogate": null,
+            "nonstop_actions": 0,
+            "normal_removed_mm3": 0.0,
+            "partial_contact_reward_weight": 0.0,
+            "positive_target_source_cells_removed": 0,
+            "reference_target_fraction_removed": 0.0,
+            "simulated_removed_volume_mm3": 0.0,
+            "target_removed_mm3": 0.0,
+            "tool_changes": 0,
+            "total_reference_target_mm3": 10268.979472767844,
+            "total_reward": 0.0
+          },
+          "status": "complete",
+          "terminal_history_sha256": "bbe6354d9b443ce01f65f265fb4186a7c5a55e1bf88b188be45b3ad252856b10",
+          "terminal_metrics_hash": "c1dbd23406ac523180838083255fa6bc9375086f27743ae772f11baa97f32995"
+        },
+        "frozen_il": {
+          "actions": [
+            "nominal-cavity-e5bed1ae7e6f601a97e2f46d",
+            "nominal-cavity-aa58cda86af504c0d66253a2",
+            "nominal-cavity-2f9ca918ad31074d304e7a0b"
+          ],
+          "actor_decision_seconds": 0.8079100414179265,
+          "cache_hits": null,
+          "episode_sha256": "88b29db622f9c69e7b8edb23581289339da95ce656ee7751aedd7dec5825e1a8",
+          "final_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "full_arm_seconds_including_audit": 21.059975833864883,
+          "independent_audit_seconds": 3.4094975830521435,
+          "independent_evaluation_accepted": true,
+          "initial_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "native_preview_profile": {
+            "phases": {
+              "execution": {
+                "feasible": 138,
+                "raised": 0,
+                "rejected": 2,
+                "rejection_reasons": {
+                  "HARD_GEOMETRY:WORKING_REACH": 2
+                },
+                "returned": 140,
+                "returned_microsteps": 7320,
+                "seconds": 9.494101218180731,
+                "started": 140
+              }
+            },
+            "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+            "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+          },
+          "native_previews": 140,
+          "native_transition_seconds": 12.714129708707333,
+          "online_seconds": 16.547934959176928,
+          "optimizer_updates": 0,
+          "outcomes": {
+            "clinical_deficit_probability": null,
+            "complete_tool_path_length_mm": 174.99999834899353,
+            "cumulative_contacted_tissue_upper_bound_mm3": 1612.9967756913557,
+            "currently_retained_contacted_tissue_upper_bound_mm3": 895.9982089395255,
+            "language_surrogate": null,
+            "motor_surrogate": null,
+            "nonstop_actions": 3,
+            "normal_removed_mm3": 185.99962819503548,
+            "partial_contact_reward_weight": 0.0,
+            "positive_target_source_cells_removed": 531,
+            "reference_target_fraction_removed": 0.051709027169149865,
+            "simulated_removed_volume_mm3": 716.9985667518301,
+            "target_removed_mm3": 530.9989385567947,
+            "tool_changes": 0,
+            "total_reference_target_mm3": 10268.979472767844,
+            "total_reward": 493.53401291943857
+          },
+          "status": "complete",
+          "terminal_history_sha256": "4de4fab8fc92be337cdcf416c926a81e334a801ddb5f89f0d6ae35aa687b69a4",
+          "terminal_metrics_hash": "24951a52557e1dd54f6ad2becfdc450dd8ebc3f4553e7875ffc066871e61a28c"
+        },
+        "greedy_search": {
+          "actions": [
+            "nominal-cavity-2acb00f30b55cdc9f11c9038",
+            "nominal-cavity-1457065a3b09cc1e135ec8e1",
+            "nominal-cavity-2000b59be07f40c875b84149"
+          ],
+          "actor_decision_seconds": 1.2291129678487778e-05,
+          "cache_hits": null,
+          "episode_sha256": "0e9c5a4f8f5b9dbfc2f68db034ca02367be47ba3e6080c3e590f42cd3493b5ee",
+          "final_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "full_arm_seconds_including_audit": 35.20931166596711,
+          "independent_audit_seconds": 3.3525266661308706,
+          "independent_evaluation_accepted": true,
+          "initial_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "native_preview_profile": {
+            "phases": {
+              "execution": {
+                "feasible": 122,
+                "raised": 0,
+                "rejected": 10,
+                "rejection_reasons": {
+                  "HARD_GEOMETRY:WORKING_REACH": 10
+                },
+                "returned": 132,
+                "returned_microsteps": 7292,
+                "seconds": 9.550994834396988,
+                "started": 132
+              },
+              "planning": {
+                "feasible": 122,
+                "raised": 0,
+                "rejected": 10,
+                "rejection_reasons": {
+                  "HARD_GEOMETRY:WORKING_REACH": 10
+                },
+                "returned": 132,
+                "returned_microsteps": 7292,
+                "seconds": 9.623256627004594,
+                "started": 132
+              }
+            },
+            "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+            "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+          },
+          "native_previews": 264,
+          "native_transition_seconds": 12.700455958023667,
+          "online_seconds": 30.771239042049274,
+          "optimizer_updates": 0,
+          "outcomes": {
+            "clinical_deficit_probability": null,
+            "complete_tool_path_length_mm": 170.9999983900613,
+            "cumulative_contacted_tissue_upper_bound_mm3": 2031.9959381307096,
+            "currently_retained_contacted_tissue_upper_bound_mm3": 1231.9975372918477,
+            "language_surrogate": null,
+            "motor_surrogate": null,
+            "nonstop_actions": 3,
+            "normal_removed_mm3": 155.99968816357807,
+            "partial_contact_reward_weight": 0.0,
+            "positive_target_source_cells_removed": 644,
+            "reference_target_fraction_removed": 0.06271301976823448,
+            "simulated_removed_volume_mm3": 799.998400838862,
+            "target_removed_mm3": 643.998712675284,
+            "tool_changes": 0,
+            "total_reference_target_mm3": 10268.979472767844,
+            "total_reward": 612.5377750441784
+          },
+          "search": {
+            "complete": true,
+            "evaluated_nonstop_actions": 192,
+            "global_optimality_proven": false,
+            "model_transition_calls": 3,
+            "objective_source": "permitted_nominal_target_and_frozen_geometric_costs",
+            "planning_seconds": 15.15383187495172,
+            "within_call_costs": "nominal clone, certificate checks, all candidate scoring, selected commits and needed inventories"
+          },
+          "status": "complete",
+          "terminal_history_sha256": "440a290b8dfeea67500dc1ac900d2a2e3e2be369f5f850af7f90c027906f6aca",
+          "terminal_metrics_hash": "f15d1485a3f887e30d6b5d607526855cc2a892ddcfbd38a70231214c0c2ca7f0"
+        }
+      },
+      "greedy_minus_il_reward": 119.00376212473981,
+      "policy_load_seconds": 0.005963209085166454,
+      "role": "TRAIN",
+      "shared_preparation": {
+        "access_preparation_seconds": 11.354531249962747,
+        "actor_nominal_target_fraction_visible": 1.0,
+        "candidate_setup_seconds": 4.9478770000860095,
+        "native_previews": 156,
+        "original_loader_seconds": 7.074736666865647,
+        "scope": "Shared once across arms; outside their online guards. Subintervals are nested.",
+        "selected_exit": [
+          2,
+          1
+        ],
+        "selected_initial_inventory_seconds": 5.875705458922312,
+        "static_screening_seconds": 5.601199917029589,
+        "total_seconds": 24.849664291832596
+      },
+      "status": "complete",
+      "subject": "sub-PAT28",
+      "supervisor": {
+        "automatic_retry": false,
+        "declaration_sha256": "ddb5e69f831bb691ff76bfa667a4b43c8b17eabfee7e8f166a2115c08a01abd4",
+        "measurement_timeout_seconds": 2,
+        "returncode": 0,
+        "rss_samples": 408,
+        "rss_scope": "worker process RSS; native work uses threads, not subprocess workers",
+        "sampled_peak_rss_bytes": 2751889408,
+        "sampling_interval_seconds": 0.2,
+        "sampling_limit": "transient peaks between samples can be missed",
+        "seconds": 86.79862791695632,
+        "status": "complete",
+        "termination_grace_seconds": 2,
+        "termination_reason": null,
+        "timed_out": false
+      },
+      "worker_elapsed_seconds": 84.18055491684936,
+      "worker_recorded_peak_rss_bytes": 2786803712
+    }
+  ],
+  "patients_prescribed": 6,
+  "representation": "same permitted source/task; CNN fixed64crop versus greedy full nominal fields",
+  "root_terminal": {
+    "declaration_unchanged": true,
+    "exit_code": 0,
+    "finished_at_utc": "2026-10-05T08:07:36.613180+00:00",
+    "release_unchanged": true,
+    "scope": "Root process completion; each patient/method still requires recorded parent closure and independent evaluation.",
+    "source_unchanged": true,
+    "started_at_utc": "2026-10-05T08:01:12.965514+00:00",
+    "whole_call_seconds": 383.645944417
+  },
+  "saved_input_hashes": {
+    "artifacts/prepared-training-planner-comparison-v2/independent-check.json": "b98dd4141082c9a88b2caf0ecc8a224b318f0cca58568a4a48657eb60401710f",
+    "artifacts/prepared-training-planner-comparison-v2/root-terminal.json": "47960e80d3e415675a076947235023fdf1bff3bc7b1fecebd8b9c46bb1ec34fb",
+    "outputs/prepared-training-planner-comparison-v2/declaration-input.json": "ddb5e69f831bb691ff76bfa667a4b43c8b17eabfee7e8f166a2115c08a01abd4",
+    "outputs/prepared-training-planner-comparison-v2/sub-PAT05/preparation.json": "584e96d7df14dbbce19acd8a03f7f8672972a69e5c48a7182154d933231e299c",
+    "outputs/prepared-training-planner-comparison-v2/sub-PAT22/preparation.json": "da99bd60c91fd21bf6ddb96c373c35c0918bfee8ab2592bf09f11873d3227592",
+    "outputs/prepared-training-planner-comparison-v2/sub-PAT25/preparation.json": "ae917f7bf98209838a54f15340e35bd515a9adba1ad091f976f2ccc47dc1f168",
+    "outputs/prepared-training-planner-comparison-v2/sub-PAT28/preparation.json": "339ac9b4227729ae91fc14edd57d6c61aed9150af0f07dbd033c6fe118559ef6",
+    "outputs/prepared-training-planner-comparison-v2/summary.json": "66b6f55a8a80b2fbf91090fd952d96195caf8f399dd061f597568a7798afede0"
+  },
+  "schema": "prepared-training-planner-v2-saved-report-v1",
+  "settings": {
+    "arm_native_preview_entries": 468,
+    "arm_seconds": 90.0,
+    "device": "cpu",
+    "max_rss_bytes": 6442450944,
+    "max_steps": 3,
+    "max_wall_seconds": 600.0,
+    "optimizer_updates": 0,
+    "torch_threads": 1
+  }
+}

@@ -73,7 +73,23 @@ support blocks remain, and exact V1 histories/sources are archived. An independe
 saved-record audit confirms the failure disposition and preparation evidence.
 The narrow whole-record canonical JSON correction passes61 checks, including
 actual tiny native STOP/removal episodes and independent audits. A separately
-released V2 is running with unchanged patients, checkpoint, task and budgets.
+released V2 completed in 383.646 root seconds with unchanged patients, checkpoint,
+task and budgets. All twelve episodes passed independent evaluation; the separate
+saved-record audit passed on its first execution. Four comparisons completed out
+of six prescribed TRAIN patients, with PAT16/PAT20 still support-blocked. Frozen
+imitation versus greedy returns were 290.506/410.312 on PAT05, 672.297/789.097 on
+PAT22, 584.914/753.905 on PAT25 and 493.534/612.538 on PAT28. STOP returned zero.
+Search wins all four geometric-return comparisons; the frozen policy uses 140
+online previews per case versus 264–280 and 16.55–22.35 online seconds versus
+30.77–42.62. These are single fixed-order measurements, excluding separately
+reported shared preparation and independent audit. The CNN's fixed crop and
+search's full nominal fields remain a representation difference. No optimization
+occurred; all final policy hashes matched. PAT05 is the training case and the
+other cases are inspected development patients, not untouched validation.
+All twelve complete metrics/history records match V1 exactly; decision records
+also match apart from timing/status fields. The correction changed evaluation
+acceptance, not behavior. Original failures remain
+unchanged. See `artifacts/prepared-training-planner-comparison-v2/RESULT.md`.
 
 A post-hoc saved-record diagnostic independently reproduces the frozen model's
 initial greedy-action ranks: eighth of 77 legal actions on PAT22 and fourth of 71

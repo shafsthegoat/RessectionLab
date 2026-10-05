@@ -1569,3 +1569,40 @@ worker peak302,055,424 bytes. Both saved-image visual reviews and the saved-resu
 audit passed within their scope. Inferior anatomical coverage remains unresolved;
 no registration, mask, injury label or planning eligibility was accepted. Exact
 figures and scope are in `artifacts/rhuh-fixed-plane-qc-v1/RESULT.md`.
+
+## October 5, 2026 — corrected comparison accepted; search retains quality advantage
+
+V2 completed once in 383.645944 root seconds with all declared numerical sources,
+inputs and the frozen checkpoint unchanged. All twelve STOP/frozen-imitation/
+greedy episodes passed independent evaluation across PAT05/PAT22/PAT25/PAT28.
+PAT16/PAT20 retain historical support blocks in the six-patient denominator;
+their arrays were not reopened. No optimizer updates or patient adaptation ran.
+
+| TRAIN patient | STOP return | Frozen imitation return | Greedy return | Imitation / greedy online seconds | Imitation / greedy preview entries |
+|---|---:|---:|---:|---:|---:|
+| PAT05, training case | 0 | 290.506010 | 410.312426 | 18.834 / 35.875 | 140 / 264 |
+| PAT22, development transfer | 0 | 672.297005 | 789.096658 | 17.288 / 32.547 | 140 / 280 |
+| PAT25, development transfer | 0 | 584.914177 | 753.905095 | 22.352 / 42.618 | 140 / 264 |
+| PAT28, development transfer | 0 | 493.534013 | 612.537775 | 16.548 / 30.771 | 140 / 264 |
+| PAT16 / PAT20 | — | — | — | Historical support blocks | No new execution |
+
+All arms stayed within the common 90-second cooperative planning/replay guard
+and 468-entry cap. Shared preparation and independent audit are separate costs;
+the root total includes the complete run. Timing is descriptive from one fixed
+execution order, not a replicated speed estimate. The same prepared task and
+permitted sources were used, with a fixed 64-voxel CNN crop versus search's full
+nominal fields. This is an explicit representation difference. The geometric
+reward is not neurological harm; target and non-target removal remain separately
+reported. Search has higher reward on every completed case; PAT28 also has less
+non-target removal. No global optimality, RL improvement or clinical efficacy is
+established.
+
+The independent saved-result checker passed on its first execution in 5.519
+seconds: 70 exact source snapshots, 214 unchanged bound files, all terminal audit
+records, final policy/base-task closures and parent resource receipts reconciled.
+All twelve complete metrics/history records match V1 exactly; decision records
+also match after excluding only their timing/status fields. V1's twelve failed
+outcomes remain failed. All 136 V2 output
+files are retained in a losslessly read-back archive (242,388,356 raw bytes;
+6,236,986 compressed bytes), without patient images. See
+`artifacts/prepared-training-planner-comparison-v2/RESULT.md`.
