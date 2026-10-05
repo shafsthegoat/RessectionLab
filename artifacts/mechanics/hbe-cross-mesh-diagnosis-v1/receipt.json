@@ -1,0 +1,16 @@
+{
+  "conclusion": "No mapping defect found; broad spatial discretization sensitivity including changes at shared physical nodes. Domain and FE field errors vary together, so force trend cause not uniquely identifiable.",
+  "files": {
+    "artifacts/mechanics/hbe-cross-mesh-diagnosis-v1/DIAGNOSIS.md": "323207052d03ad60e42df8dedd0c06025278db68936c3c4ef64cf9d40812b6f8",
+    "artifacts/mechanics/hbe-cross-mesh-diagnosis-v1/diagnose.py": "f6756aa3d620819fe00c244782cd48adfd72510bce84456d36c625ab64ae4029",
+    "artifacts/mechanics/hbe-cross-mesh-diagnosis-v1/diagnosis.json": "c76847fb705aef44070ad829fb799b3cc4709cbccabd0acd473889404ec8718a",
+    "artifacts/mechanics/hbe-cross-mesh-diagnosis-v1/resource-projection.json": "e8c86bcfb06e434d61ad505b607b6db3f409fa941698b9f05242769e375f4567"
+  },
+  "measured_curve_or_new_data_reads": 0,
+  "new_fe_solver_calls": 0,
+  "new_meshing_calls": 0,
+  "production_source_edits": false,
+  "scope": "Post hoc diagnostic only; proposed subsequent resolutions/resources require a new prospective declaration and release.",
+  "status": "saved_outputs_diagnosis_complete_original_failure_unchanged",
+  "terminology_note": "Shared-node diagnostics exclude end planes but include free lateral surface nodes; keys and prose use non_end_plane. No numerical result changed."
+}
