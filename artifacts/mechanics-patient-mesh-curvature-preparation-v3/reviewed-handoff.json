@@ -1,0 +1,25 @@
+{
+  "status": "reviewed_preparation_no_execution_release",
+  "source_commit": "b8de4416e777b11d31f1b75adbf164522a92eaa3",
+  "independent_review": {
+    "path": "artifacts/mechanics-patient-mesh-curvature-independent-review-v3/receipt.json",
+    "sha256": "2d23ba7c5400ebdc6ae37b10d3045f7e21af80ff38cc73a00280e0731473a142",
+    "passed": 95,
+    "seconds": 1.16
+  },
+  "archive_members": {
+    "path": "artifacts/mechanics-patient-mesh-curvature-preparation-v3/archive-members.txt",
+    "sha256": "67e1721ed9e0bdbe940b3f49ce0ad987b282d05092005045258fcf7b278e5031",
+    "count": 10
+  },
+  "unauthorized_release_draft": {
+    "path": "artifacts/mechanics-patient-mesh-curvature-preparation-v3/release.draft.json",
+    "sha256": "f3df76a8f5fab8b8ab153300ff99255d32e590206f2b1b9b8bb43172d973c985",
+    "authorized": false
+  },
+  "reviewed_owner_source_docs_receipts_preserved": true,
+  "native_calls": 0,
+  "patient_array_reads": 0,
+  "solver_calls": 0,
+  "next_step": "Root may create the exact committed archive and separately authorize one attempt. This receipt grants no execution authority."
+}

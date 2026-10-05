@@ -1,0 +1,160 @@
+{
+  "schema": "curvature-patient-mesh-preparation-independent-review-v3",
+  "status": "passed_scoped_preparation_review_no_execution_release",
+  "reviewed_commit": "b8de4416e777b11d31f1b75adbf164522a92eaa3",
+  "review_scope": "Static source and declared bindings plus analytic serialization and mocked controls; no anatomy or native runtime access.",
+  "owner_preparation": {
+    "path": "artifacts/mechanics-patient-mesh-curvature-preparation-v3/preparation.json",
+    "sha256": "26a1ab63863011d4c369ab240020cb5904813aede78dcb40b9fa36a58ad7deac"
+  },
+  "source_bindings": {
+    "scripts/mechanics_patient_mesh_candidate.py": {
+      "sha256": "e1d45b6371bc64baaf6cacbc6f98926728dcf7699c0dffb00bea67df167edc4c",
+      "matches_owner_preparation": true,
+      "matches_commit": true
+    },
+    "scripts/mechanics_patient_mesh_candidate_run.py": {
+      "sha256": "cfee357faf585f78afccf812d06c00de9022494e8ed4d82ef3fa68a97eaa38cb",
+      "matches_owner_preparation": true,
+      "matches_commit": true
+    },
+    "scripts/mechanics_patient_mesh_curvature.py": {
+      "sha256": "6b5aff2ee96be527f9824109e19522aa31b004c4a5a049f077cc1179e822af79",
+      "matches_owner_preparation": true,
+      "matches_commit": true
+    },
+    "scripts/mechanics_patient_mesh_curvature_run.py": {
+      "sha256": "90399dcd4b863edd3b28d57173603befceb9f4c37c2571c30b2cd89c33138468",
+      "matches_owner_preparation": true,
+      "matches_commit": true
+    },
+    "manifests/experiments/resect-case4-patient-mesh-curvature-v3.json": {
+      "sha256": "4aa5c95f22ccfe89ab49c376a3437f8d1f7184004481f1d4d6404e978510da8d",
+      "matches_owner_preparation": true,
+      "matches_commit": true
+    },
+    "tests/test_mechanics_patient_mesh_curvature.py": {
+      "sha256": "7c1ff012bf9568d8ec2d0ad4b3de9d031f1b8e8d4467f75b0d23a5db9bcf37c3",
+      "matches_owner_preparation": true,
+      "matches_commit": true
+    },
+    "docs/mechanics-patient-mesh-curvature.md": {
+      "sha256": "9fdf78c81ab66641278a993ae56fa941918c476103e5e3b3ba144c9678cd3b81",
+      "matches_owner_preparation": true,
+      "matches_commit": true
+    },
+    "manifests/experiments/resect-case4-patient-mesh-v1.json": {
+      "sha256": "b6b3fd278df85fb0ea89c72dcff37cc5f229644602f5288c81e8ce6e7653173c",
+      "matches_owner_preparation": true,
+      "matches_commit": true
+    },
+    "manifests/experiments/resect-case4-patient-mesh-graded-v2.json": {
+      "sha256": "ff27037c4141c5da99266da0c92efd5f6a673f5eb0bba6ac3032e916ba5db54e",
+      "matches_owner_preparation": true,
+      "matches_commit": true
+    },
+    "scripts/mechanics_patient_mesh.py": {
+      "sha256": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+      "matches_owner_preparation": true,
+      "matches_commit": true
+    }
+  },
+  "preceding_compact_evidence_bindings": {
+    "artifacts/mechanics/gmsh-discrete-curvature-capability-v1/declaration.json": "05c356691e809c53f846d23fee5ef78cbc99a90971087a7791117741cc9a4b8e",
+    "artifacts/mechanics/gmsh-discrete-curvature-capability-v1/summary.json": "e10e1c5c3ece08ff46de3eecf253fbcd4ac4e909042828ba383ca4fbd12900f0",
+    "artifacts/mechanics/gmsh-discrete-curvature-capability-independent-review-v1/verification.json": "4706e9dbd581303a393f22ed68846b48e1cd1fde4bf46a0a0d902f9489d640e9",
+    "artifacts/mechanics/resect-case4-saved-mesh-diagnostic-v1/summary.json": "875c25269be2f1a44c91d9744822fb7e448af9f662fdea6b03cc45edd90bab10",
+    "artifacts/mechanics/resect-case4-patient-mesh-graded-independent-audit-v2/verification.json": "faaa14716d937535d29107f1aea7db5be576200efa4da7e0cd820171d29f94b3"
+  },
+  "tests": {
+    "command": ".venv/bin/python -B -m pytest -q tests/test_mechanics_patient_mesh_candidate.py tests/test_mechanics_patient_mesh_candidate_review.py tests/test_mechanics_patient_mesh_candidate_run.py tests/test_mechanics_patient_mesh_candidate_run_review.py tests/test_mechanics_patient_mesh_curvature.py tests/test_mechanics_patient_mesh_curvature_review.py",
+    "passed": 95,
+    "new_independent_cases": 13,
+    "seconds": 1.16,
+    "source_sha256": {
+      "tests/test_mechanics_patient_mesh_candidate.py": "62fb655c30c28f91d4a56680e84dcf9fa49e1a512ea45002e4674a9cd87ed238",
+      "tests/test_mechanics_patient_mesh_candidate_review.py": "f87f99180db5727771729b6323ba2c6c26f552809e1132ba5d761d15b2b82bfb",
+      "tests/test_mechanics_patient_mesh_candidate_run.py": "cd6380ff882b07e60818e282473826d7fb042e4c6dc97705d1b36feecb4cfbc8",
+      "tests/test_mechanics_patient_mesh_candidate_run_review.py": "5dbcd6ee6e9d65ee0a22d24945afd156f628936e6b5827d5449537b6f451ad01",
+      "tests/test_mechanics_patient_mesh_curvature.py": "7c1ff012bf9568d8ec2d0ad4b3de9d031f1b8e8d4467f75b0d23a5db9bcf37c3",
+      "tests/test_mechanics_patient_mesh_curvature_review.py": "8bf8dc9f5d346c313c78567bdb586c1b7ce37d43ce308c4afc9e2c642f612a99"
+    },
+    "output_path": "artifacts/mechanics-patient-mesh-curvature-independent-review-v3/focused-tests.txt",
+    "output_sha256": "5d3cb9e42013d0a893e1652457f546e4c8a50fccb0ee1f4dc8ea7b313337f6d2",
+    "failed_controls": 0
+  },
+  "independent_controls": [
+    "Actually wrote and reopened all four maximum-count diagnostic arrays: 80000 nodes,100000 tet10 records; analytic serialization fixture only.",
+    "Each array byte length, original values, full native IDs, FEBio permutation, and saved SHA agree; reserve is11368704bytes including headers and8192byte metadata allowance; largest file8000128bytes.",
+    "80001-node and100001-element diagnostic refusals retain original counts, write no packet, and do not truncate.",
+    "Altered source digest/frame/evidence or unknown declaration field rejects before output creation or generation.",
+    "Alternating explicit new/legacy profile requests preserve old12mm floor and old4/8MiB caller defaults; same Distance/Threshold fields remain.",
+    "Mocked final parent receipt pushes otherwise-valid output past either32MiB or32files; both cases fail instead of publishing success.",
+    "Mocked worker applies8MiB child hard per-file limit and only selected helper; false solver-admission claim causes failure, with one assess/finalize and no image or B/V access.",
+    "Missing new helper from ten-file closure fails before hashing source or anatomy."
+  ],
+  "static_conclusions": {
+    "explicit_callbacks_and_immutable_namedtuple": true,
+    "new_profile_does_not_patch_shared_module_globals": true,
+    "existing_private_supervisor_observer_wrapper_preserved_and_restored": true,
+    "straight_reference_tet10_quality_topology_nonoverlap_and_independent_fidelity_gates_unchanged": true,
+    "fixed_curvature_per_two_pi": 24,
+    "fixed_minimum_m": 0.003,
+    "fixed_maximum_m": 0.024,
+    "size_field": {
+      "kind": "Distance(discreteSurfaces)+Threshold",
+      "boundary_size_m": 0.012,
+      "interior_size_m": 0.024,
+      "sampling_per_dimension": 100,
+      "distance_min_m": 0.002,
+      "distance_max_m": 0.024,
+      "sigmoid": false,
+      "meaning": "Untested sizing requests; sampled Distance is not the independent surface-error oracle."
+    },
+    "count_eligibility": {
+      "nodes": 64000,
+      "tet10_elements": 80000,
+      "solver_admission": false
+    },
+    "diagnostic_caps": {
+      "nodes": 80000,
+      "tet10_elements": 100000,
+      "bytes": 16777216
+    },
+    "execution_caps": {
+      "seconds": 180,
+      "process_group_rss_bytes": 3221225472,
+      "numerical_threads": 1,
+      "generations": 1,
+      "retries": 0,
+      "whole_output_bytes": 33554432,
+      "per_file_bytes": 8388608,
+      "files": 32
+    },
+    "caps_semantics": "Whole-output and process-group RSS are sampled with final output recheck; child file size has RLIMIT_FSIZE. No hard aggregate-disk or instantaneous-RSS guarantee.",
+    "exact_ten_file_archive_release_and_fresh_attempt_required": true,
+    "old_attempts_and_original_v1_v2_declarations_unchanged": true
+  },
+  "limitations": [
+    "No patient fidelity, native runtime, count forecast, solver memory or clinical validation result is produced by this review.",
+    "Analytical pair demonstrated a joint curvature-plus-floor profile effect; it does not isolate curvature causality or establish patient performance.",
+    "Known estimated-domain inferior/cerebellar omissions remain;2mm/3percent gates concern mask-discretization fidelity only.",
+    "Higher preparation counts do not authorize a solve; backend patient suitability remains outside this review.",
+    "Final acceptance still depends on a separately released one-attempt actual run and saved independent audit."
+  ],
+  "access_and_actions": {
+    "patient_array_reads": 0,
+    "images_or_landmarks_read": 0,
+    "native_gmsh_vtk_calls": 0,
+    "native_mesh_generations": 0,
+    "solver_calls": 0,
+    "training_runs": 0,
+    "reruns_of_prior_attempts": 0,
+    "source_edits_by_reviewer": 0,
+    "commits_by_reviewer": 0
+  },
+  "findings": {
+    "remaining_scoped_blockers": [],
+    "source_repairs_requested": []
+  }
+}

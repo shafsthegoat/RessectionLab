@@ -1,0 +1,51 @@
+{
+  "schema": "resect-case4-patient-mesh-curvature-v3-release",
+  "authorized": false,
+  "source_commit": "b8de4416e777b11d31f1b75adbf164522a92eaa3",
+  "source_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source",
+  "repository_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+  "attempt_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-curvature-v3",
+  "clinical_validation": false,
+  "anatomical_registration_accepted": false,
+  "solver_authorized": false,
+  "reuse_saved_native_surface_only": true,
+  "source_sha256": {
+    "artifacts/febio-runtime-investigation-v1/prospective-runtime.json": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48",
+    "manifests/experiments/resect-case4-patient-mesh-curvature-v3.json": "4aa5c95f22ccfe89ab49c376a3437f8d1f7184004481f1d4d6404e978510da8d",
+    "manifests/experiments/resect-case4-patient-mesh-graded-v2.json": "ff27037c4141c5da99266da0c92efd5f6a673f5eb0bba6ac3032e916ba5db54e",
+    "manifests/experiments/resect-case4-patient-mesh-v1.json": "b6b3fd278df85fb0ea89c72dcff37cc5f229644602f5288c81e8ce6e7653173c",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "scripts/mechanics_patient_mesh.py": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+    "scripts/mechanics_patient_mesh_candidate.py": "e1d45b6371bc64baaf6cacbc6f98926728dcf7699c0dffb00bea67df167edc4c",
+    "scripts/mechanics_patient_mesh_candidate_run.py": "cfee357faf585f78afccf812d06c00de9022494e8ed4d82ef3fa68a97eaa38cb",
+    "scripts/mechanics_patient_mesh_curvature.py": "6b5aff2ee96be527f9824109e19522aa31b004c4a5a049f077cc1179e822af79",
+    "scripts/mechanics_patient_mesh_curvature_run.py": "90399dcd4b863edd3b28d57173603befceb9f4c37c2571c30b2cd89c33138468"
+  },
+  "context_bindings": [
+    {
+      "role": "mask_qc",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/qc-receipt.json",
+      "sha256": "f1a3ad984233fd121af37cb463e1d88ebb443f0506a0d183f0acb298116f6c23"
+    },
+    {
+      "role": "baseline_diagnostic",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-baseline-alignment-v3/comparison-and-outcome.json",
+      "sha256": "605f3cdc54c6163b449d638da6ba4e9c10823727a102f333f92d1b213c05f7e1"
+    },
+    {
+      "role": "root_visual_decision",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/root-visual-decision.json",
+      "sha256": "5ed4158a8247eb731175b70d8194ac290731455cc6ce34ed08056dc3f715a2c2"
+    },
+    {
+      "role": "prior_mesh_worker",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-v1/saved-records/worker.json",
+      "sha256": "b3485944aa760b3d5a360660835471b06981ac59024d6f465b8285f35bda5f56"
+    },
+    {
+      "role": "independent_candidate_review",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics-patient-mesh-curvature-independent-review-v3/receipt.json",
+      "sha256": "2d23ba7c5400ebdc6ae37b10d3045f7e21af80ff38cc73a00280e0731473a142"
+    }
+  ]
+}
