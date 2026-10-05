@@ -1,0 +1,11 @@
+# Independent integration review
+
+The final implementation review is clear; this is not an execution release or a patient result. `review.json` pins the reviewed runner, owner and independent tests, dependencies, and retained pre-repair evidence. All checks used source text, constructed metadata, toy engine calls or virtual clocks. No patient arrays, checkpoint bytes, model forwards, native geometry or gradients were read or executed by this review.
+
+The initial nine-case run returned **8 failed / 1 passed**: incomplete method dictionaries, incorrect patient identity, failed supervision and contradictory budget receipts were accepted. Subsequent controls exposed an outside-archive module-origin gap and two remaining summary identity gaps. All were repaired. Exact source/test snapshots and failure logs remain here; these are software failures, not negative patient outcomes.
+
+One intermediate review harness replaced global `sys.modules`, disrupting pytest's own error reporting after 14 passing cases. That harness failure is retained and was corrected to replace only the runner's local `sys` reference. The positive constructed binding was also updated to include the real required three-action horizon; no production gate was relaxed.
+
+The owner reported the final combined suite as **51 passed in 0.96 s**, exit 0, comprising 34 owner and 17 independent cases (tool session 46214, chunk 3df5b3). This final combined result is owner-reported tool evidence; there was no separate final log or redundant independent rerun. The final runner bytes were checked against its reported digest before this receipt was written.
+
+The real budget guard was exercised around toy calls: planning plus replay shares one clock, a 60+31 second virtual workload fails, call 469 is refused before execution, and a separate 400-second virtual audit does not consume online time. Durable terminal-history disagreement prevents audit. Successful publication now requires the exact attempted patient, all three correctly named arms, unchanged task/policy/source identities, valid budget accounting, accepted independent audit and successful parent supervision. The clinical and representation limits remain unchanged.

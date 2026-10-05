@@ -1,0 +1,98 @@
+{
+  "created_at": "2026-10-05T07:39:36.058320+00:00",
+  "evidence_sha256": {
+    "expanded-review-tests.py.txt": "233e1d472b7f3263ae15f867a41b227575a0ca50924f33937bcc6813f50a08eb",
+    "final-review-tests.py.txt": "233e1d472b7f3263ae15f867a41b227575a0ca50924f33937bcc6813f50a08eb",
+    "final-runner.py.txt": "1caf069210347f75e42ceabe05b282118fcc6ce3fbbdc5d1e4146739f8c1966d",
+    "fourth-review.log": "ed184a570f4b14cf8ee3bb4526a6223799bcd8e5175812c1b4f3b21eeab1f132",
+    "fourth-review.xml": "e1fe6973783e640a409ec6b88fc118ccf15e9532bbfdb52d124d4cb0144071b2",
+    "initial-review-tests.py.txt": "fe1dfbff4979ebd255757ce3a75d1b8f35c659135c1861c76e63249d21d0fe17",
+    "initial-review.log": "9f61ed93e3bc7e003a8f2ada3d481f4e39f4fe2534dde0b40e469e923bcbe41e",
+    "initial-review.xml": "24d15ddc1c9f20629da511d97319d79e7ecb600f5ffc9b9b2bc994a1d937afe8",
+    "initial-runner.py.txt": "de0acc710069af0cccd7f69d0b227d53a5be7e8cea6a212b1358aba8d5649daf",
+    "pre-final-repair-runner.py.txt": "1caf069210347f75e42ceabe05b282118fcc6ce3fbbdc5d1e4146739f8c1966d",
+    "second-review-tests.py.txt": "1783fcb6f628080a082b3aa455482a556d00c23f4dca9e46e7c7910a76a4c004",
+    "second-review.log": "222ed4c4722f9e68181789c89c5e9b14bfae75742d5a2814c40862d7646670bf",
+    "second-runner.py.txt": "7ad6f7110863a6689f58dd616733035b94cfb4d9789762e873b771c0198779a3",
+    "third-review.log": "b4e409d9db8fa506f15225421979e4ba7dfc583f3186289fbb897b2a47fbbfdb",
+    "third-review.xml": "f6613a669fd5f3a7a69bb91497d7dee092242f10cef496e03341c2e021c08b90"
+  },
+  "final_combined_validation": {
+    "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONPATH=src .venv/bin/python -m pytest -q tests/test_compare_prepared_training_planners.py tests/test_compare_prepared_training_planners_review.py",
+    "exit_code": 0,
+    "failed": 0,
+    "independent_final_rerun": false,
+    "independent_test_cases": 17,
+    "owner_test_cases": 34,
+    "passed": 51,
+    "pytest_seconds": 0.96,
+    "reported_by": "patient_rl (owner), final tool session46214 chunk3df5b3; no separate logfile"
+  },
+  "limits": [
+    "Software review and constructed controls only, no patient experiment authorized",
+    "Capped action catalog, annotation-assisted observations, unknown functional/vascular fields unchanged",
+    "CNN crop and greedy full nominal field are distinct declared representations",
+    "Budget is cooperative; process supervision still required",
+    "Accepted preview/geometry does not validate clinical safety or neurological harm"
+  ],
+  "observed_runs": [
+    {
+      "file": "initial-review.log",
+      "result": "8 failed, 1 passed in 0.13s",
+      "scope": "actual acceptance of malformed summary/resource receipts; source held before repair"
+    },
+    {
+      "file": "second-review.log",
+      "result": "14 dots then pytest internal error",
+      "scope": "review harness incorrectly replaced global sys.modules; corrected runner-local sys proxy; not a production failure"
+    },
+    {
+      "file": "third-review.log",
+      "result": "1 failed, 14 passed in 0.88s",
+      "scope": "remaining outside-archive module import accepted; actual PlanningBudget integration controls pass"
+    },
+    {
+      "file": "fourth-review.log",
+      "result": "2 failed, 15 deselected in 0.13s",
+      "scope": "method row identity mismatch and historical blocked patient incorrectly eligible"
+    }
+  ],
+  "resolved_findings": [
+    "Require exact three method keys and each row name matched to its key",
+    "Require attempted patient identity/TRAIN role; historical blocks cannot become comparisons",
+    "Require successful parent supervisor even when worker payload says complete",
+    "Reject recorded failure, blocked previews or time overshoot despite completed budget label",
+    "Runtime hashes frozen source paths without Git discovery; package/script import origins must stay in frozen root",
+    "Include initial binding/hash work in full-arm timer; remove trailing unguarded successful export"
+  ],
+  "reviewed_boundaries": [
+    "One uninterrupted 90-second/468-entry budget across greedy planning and replay",
+    "Shared original preparation/static ingress/selected initial inventory measured separately",
+    "Durable complete terminal metrics checked before guard exit; separate terminal receipt retained",
+    "Independent audit begins after preview wrapper restoration; audited outputs required",
+    "Virtual 60+31 seconds fails; 469th toy preview never enters engine; no partial score",
+    "Post-audit/export/source/policy/state failures remain ineligible",
+    "Same selected task shared across STOP, frozen imitation and greedy; no optimizer",
+    "PAT05 canonical metadata adapter and full historical grid gate; PAT16/PAT20 retained without loading"
+  ],
+  "schema": "prepared-training-planner-comparison-independent-review-v1",
+  "scope": {
+    "checkpoint_bytes_read": false,
+    "gradient_updates": 0,
+    "native_geometry_execution": false,
+    "patient_bytes_read": false,
+    "patient_decode": false,
+    "policy_construction_or_forward": false,
+    "simulated_work": "toy Engine calls and virtual clocks only"
+  },
+  "source_sha256": {
+    "docs/prepared-training-planner-comparison.md": "94a3b44d42db9d3a525aaec798d72564d5481e79537fb35c21a4f934880d5cbb",
+    "scripts/compare_prepared_training_planners.py": "1caf069210347f75e42ceabe05b282118fcc6ce3fbbdc5d1e4146739f8c1966d",
+    "scripts/pat05_access_preparation.py": "cf951f2e29f912427f6d3a1a12214dc7d3ffdff46e4dbf8cb9a10f2d40a49b6d",
+    "src/resectionlab/native_access_preparation.py": "898f8ea389a251faeab9efe296f523560b7fe61fe459c07ef7b269345e4b5ecd",
+    "src/resectionlab/planning_budget.py": "c0b00319c0240ec57d6ef9e466ac0bfc8b1a781743f2bec92a8cc8ac517d0e8c",
+    "tests/test_compare_prepared_training_planners.py": "ab81816116bda7dd8db69ae46df655e83ae2c6b83b39ebefff5211f340012ab3",
+    "tests/test_compare_prepared_training_planners_review.py": "233e1d472b7f3263ae15f867a41b227575a0ca50924f33937bcc6813f50a08eb"
+  },
+  "status": "implementation_review_clear_no_execution_release"
+}

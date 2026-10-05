@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="15" time="0.868" timestamp="2026-10-05T03:34:34.666281-04:00" hostname="Sayems-MacBook-Pro-6.local"><testcase classname="tests.test_compare_prepared_training_planners_review" name="test_constructed_complete_three_arm_authority_retains_six_denominator" time="0.003" /><testcase classname="tests.test_compare_prepared_training_planners_review" name="test_missing_arm_or_wrong_patient_cannot_publish_complete_comparison[empty]" time="0.001" /><testcase classname="tests.test_compare_prepared_training_planners_review" name="test_missing_arm_or_wrong_patient_cannot_publish_complete_comparison[missing_stop]" time="0.001" /><testcase classname="tests.test_compare_prepared_training_planners_review" name="test_missing_arm_or_wrong_patient_cannot_publish_complete_comparison[wrong_subject]" time="0.001" /><testcase classname="tests.test_compare_prepared_training_planners_review" name="test_failed_parent_authority_cannot_publish_even_if_worker_payload_completed[supervisor0]" time="0.001" /><testcase classname="tests.test_compare_prepared_training_planners_review" name="test_failed_parent_authority_cannot_publish_even_if_worker_payload_completed[supervisor1]" time="0.002" /><testcase classname="tests.test_compare_prepared_training_planners_review" name="test_completed_budget_label_cannot_override_recorded_resource_violation[failure-native_preview_entry_limit]" time="0.000" /><testcase classname="tests.test_compare_prepared_training_planners_review" name="test_completed_budget_label_cannot_override_recorded_resource_violation[blocked_preview_attempts-1]" time="0.000" /><testcase classname="tests.test_compare_prepared_training_planners_review" name="test_completed_budget_label_cannot_override_recorded_resource_violation[time_overshoot_seconds-0.001]" time="0.000" /><testcase classname="tests.test_compare_prepared_training_planners_review" name="test_actual_guard_one_clock_covers_planning_and_replay_but_not_audit" time="0.749" /><testcase classname="tests.test_compare_prepared_training_planners_review" name="test_actual_guard_cumulative_planning_plus_execution_timeout_is_not_reset" time="0.002" /><testcase classname="tests.test_compare_prepared_training_planners_review" name="test_actual_guard_refuses_entry_469_before_engine_and_keeps_partial_unscored" time="0.003" /><testcase classname="tests.test_compare_prepared_training_planners_review" name="test_actual_guard_mismatched_saved_history_never_reaches_audit" time="0.002" /><testcase classname="tests.test_compare_prepared_training_planners_review" name="test_runtime_source_inventory_uses_frozen_paths_without_git_discovery" time="0.004" /><testcase classname="tests.test_compare_prepared_training_planners_review" name="test_imported_resectionlab_module_outside_frozen_root_is_rejected" time="0.001"><failure message="Failed: DID NOT RAISE ValueError">tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-608/test_imported_resectionlab_mod0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x110635d30&gt;
+
+    def test_imported_resectionlab_module_outside_frozen_root_is_rejected(tmp_path, monkeypatch):
+        from types import ModuleType
+        root = tmp_path / "archive"
+        root.mkdir()
+        external = tmp_path / "mutable_checkout" / "intruder.py"
+        external.parent.mkdir()
+        external.write_text("# outside captured source root\n")
+        module = ModuleType("resectionlab._independent_external_probe")
+        module.__file__ = str(external)
+        monkeypatch.setattr(runner, "ROOT", root)
+        # Limit inspection to this explicit test module; no real module is imported.
+        monkeypatch.setattr(runner, "sys", SimpleNamespace(modules={module.__name__: module}))
+&gt;       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_compare_prepared_training_planners_review.py:223: Failed</failure></testcase></testsuite></testsuites>
