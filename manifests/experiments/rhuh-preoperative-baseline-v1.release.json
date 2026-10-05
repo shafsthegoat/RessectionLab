@@ -1,0 +1,46 @@
+{
+  "schema": "rhuh-baseline-release-v1",
+  "authorized": true,
+  "created_at": "2026-10-05T04:49:39.574660+00:00",
+  "study": {
+    "path": "manifests/experiments/rhuh-preoperative-baseline-v1.json",
+    "sha256": "c73547faa86074a1293787c56f623a8d665ee61455085dd7eccb50be8857e87b"
+  },
+  "source_commit": "e5272a8fe76b257ce7b3c8c64f8f0cdd5b76c069",
+  "source_archive": {
+    "path": "artifacts/rhuh-preoperative-baseline-v1/source.tar.gz",
+    "sha256": "cbfa442eb95a1972d1d3402e2d4109058d9706b803a79a4baf9a3ba90ca2fbd3"
+  },
+  "source_bindings": {
+    "runner": {
+      "path": "scripts/run_rhuh_preoperative_baseline.py",
+      "sha256": "39a48841a882056cbe33f0f248cb548c0eb6f518d3eee260199eb4eba9bf2997"
+    },
+    "adapter": {
+      "path": "src/resectionlab/rhuh_outcomes.py",
+      "sha256": "82981de054aca89789b9065620844cd8a8842120df71cdb89bdd147c0bc57d36"
+    },
+    "package_init": {
+      "path": "src/resectionlab/__init__.py",
+      "sha256": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5"
+    },
+    "supervisor": {
+      "path": "scripts/febio_runtime.py",
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+    }
+  },
+  "interpreter": {
+    "path": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "sha256": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a"
+  },
+  "dependency_manifest": {
+    "path": "artifacts/rhuh-baseline-runtime-v1/receipt.json",
+    "sha256": "36880140d03e2edad227f568bf43f07cdbced006bc74638613a845071006d643"
+  },
+  "output_directory": "outputs/rhuh-preoperative-baseline-v1/run-01",
+  "scope": "One bounded exploratory observational run only; no tuning, clinical/route-risk model, planner reward or automatic retry.",
+  "independent_review": {
+    "path": "artifacts/rhuh-preoperative-baseline-review-v1/verification.json",
+    "sha256": "50cabf462ffedfbc789d2a26251262d0e5625d6e8ba037b9db8e42d4a6fe7694"
+  }
+}
