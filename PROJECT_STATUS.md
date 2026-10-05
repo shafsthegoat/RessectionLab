@@ -367,6 +367,14 @@ inputs. Complete analytical records are preserved for independent saved-output
 replay. This is numerical verification, not measured tissue or patient accuracy.
 See `artifacts/mechanics-accelerate-controls-run-v1/RESULT.md`.
 
+Independent saved-output replay reproduced all eight original checker results
+and five-state stiffness scaling exactly, reverified both summaries, 58 run
+inputs and 28 archived source files, and made no solver call. Minimum sampled
+Jacobian was 0.9966851963; maximum multipoint constraint error was about 2e-16 m.
+The 60 raw analytical files are preserved byte-for-byte. This supports the
+next fixed specimen experiment, not measured-force or patient acceptance.
+See `artifacts/mechanics-accelerate-controls-saved-review-v1/review.json`.
+
 A separate patient-mesh candidate helper passed 52 analytical/mocked checks.
 It preserves complete bounded coordinate/connectivity/ID diagnostics before
 count rejection, and rejects same-length corrupted writes; the original
