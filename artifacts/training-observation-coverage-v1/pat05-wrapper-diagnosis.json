@@ -1,0 +1,183 @@
+{
+  "attempt01_remains_failed": true,
+  "checked_at": "2026-10-05T05:36:56.621740+00:00",
+  "complete_field_count": 20,
+  "complete_original_record": {
+    "corner_domain": "full_source_cell_extent_minus_half_to_shape_minus_half",
+    "derived_affine_hash": "sha256:4e62c7cb6b1a5b405cc54cda8ddaa9e933896603fd37ed9dbf13e6d1e7154a76",
+    "derived_affine_ras_mm": [
+      [
+        0.9991455674090443,
+        0.03670010681805703,
+        0.019190453219683344,
+        -83.10478973388672
+      ],
+      [
+        -0.036693469029287086,
+        0.9993262887125605,
+        -0.0007048095092985703,
+        -110.23243713378906
+      ],
+      [
+        -0.019203459617015493,
+        4.299605653764695e-08,
+        0.9998155832247058,
+        -141.11172485351562
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "derived_spacing_mm": [
+      1.0000035241956933,
+      0.9999999645762386,
+      0.9999999853550898
+    ],
+    "handedness_preserved": true,
+    "maximum_allowed_corner_displacement_mm": 1e-06,
+    "maximum_allowed_gram_error": 1e-08,
+    "maximum_corner_displacement_mm": 1.0842083020239977e-07,
+    "method": "orthogonal_roundoff_1e-6mm",
+    "native_and_actor_physical_grid": "derived_affine_ras_mm",
+    "origin_preserved": true,
+    "original_affine_hash": "sha256:20f06ec45e8f37414c2b0629104589e19cc7bd41692252898f95bf9bb4db795e",
+    "original_affine_ras_mm": [
+      [
+        0.9991455674171448,
+        0.03670010715723038,
+        0.019190452992916107,
+        -83.10478973388672
+      ],
+      [
+        -0.03669346868991852,
+        0.9993262887001038,
+        -0.0007048094994388521,
+        -110.23243713378906
+      ],
+      [
+        -0.019203459843993187,
+        4.299106848293377e-08,
+        0.9998155832290649,
+        -141.11172485351562
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "original_spacing_mm": [
+      1.000003524195693,
+      0.999999964576238,
+      0.9999999853550895
+    ],
+    "proposal_and_crop_indices_basis": "original_source_affine",
+    "resampled": false,
+    "shape": [
+      160,
+      256,
+      256
+    ],
+    "source_axis_gram_max_error": 6.788716003576174e-10,
+    "source_image_hash": "sha256:93e2812263872cbbd3f24de845c015b7dd418a4a89223887437a5f44fff35359",
+    "support_hash": "sha256:436199eb3abc24e818e13e342f69bbae45b76b8be1dd6c2ce1071013fce43949"
+  },
+  "conclusion": "The new wrapper necessarily rejects different record schemas; this is not evidence of changed patient geometry.",
+  "current_run_actual_grid_numeric_equality_verified": false,
+  "current_run_actual_grid_values_saved": false,
+  "declared_subset": {
+    "derived_affine_ras_mm": [
+      [
+        0.9991455674090443,
+        0.03670010681805703,
+        0.019190453219683344,
+        -83.10478973388672
+      ],
+      [
+        -0.036693469029287086,
+        0.9993262887125605,
+        -0.0007048095092985703,
+        -110.23243713378906
+      ],
+      [
+        -0.019203459617015493,
+        4.299605653764695e-08,
+        0.9998155832247058,
+        -141.11172485351562
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "maximum_corner_displacement_mm": 1.0842083020239977e-07,
+    "method": "orthogonal_roundoff_1e-6mm",
+    "native_and_actor_physical_grid": "derived_affine_ras_mm",
+    "original_affine_ras_mm": [
+      [
+        0.9991455674171448,
+        0.03670010715723038,
+        0.019190452992916107,
+        -83.10478973388672
+      ],
+      [
+        -0.03669346868991852,
+        0.9993262887001038,
+        -0.0007048094994388521,
+        -110.23243713378906
+      ],
+      [
+        -0.019203459843993187,
+        4.299106848293377e-08,
+        0.9998155832290649,
+        -141.11172485351562
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "proposal_and_crop_indices_basis": "original_source_affine",
+    "resampled": false,
+    "shape": [
+      160,
+      256,
+      256
+    ]
+  },
+  "extra_fields": [
+    "corner_domain",
+    "derived_affine_hash",
+    "derived_spacing_mm",
+    "handedness_preserved",
+    "maximum_allowed_corner_displacement_mm",
+    "maximum_allowed_gram_error",
+    "origin_preserved",
+    "original_affine_hash",
+    "original_spacing_mm",
+    "source_axis_gram_max_error",
+    "source_image_hash",
+    "support_hash"
+  ],
+  "inputs": {
+    "artifacts/pat05-real-geometric-learning-v1/declaration-input.json": "d69c9b6cf1f0f329d698c3857bca13efaa4a4a9a7b424208711affd4ac8480f4",
+    "artifacts/pat05-real-geometric-learning-v1/receipt.json": "fdc575e6695a7f949f65de93e7165f7833b514fcd193094a24ac3e0f94e7ee77",
+    "scripts/diagnose_training_observation_coverage.py": "b85805c69821e8ca12fb28f0e6c48b500dc00329685853cef4064a5c2179c1b2"
+  },
+  "native_calls_by_diagnosis": 0,
+  "new_wrapper_compared_entire_records_for_equality": true,
+  "next_correction": "Bind the complete original 20-field record, independently verify its eight-field projection/source hashes, compare the complete runtime record, and log mismatched fields. No gate relaxation or rerun is included in this diagnosis.",
+  "original_subset_projection_exactly_matches": true,
+  "patient_arrays_decoded_by_diagnosis": false,
+  "runtime_constructor_always_adds_full_provenance_fields": true,
+  "schema": "pat05-observation-wrapper-record-mismatch-v1",
+  "subset_field_count": 8
+}

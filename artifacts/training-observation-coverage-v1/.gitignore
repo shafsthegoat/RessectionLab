@@ -1,0 +1,20 @@
+# Keep exact source and terminated-attempt archives plus compact evidence.
+/*
+!/.gitignore
+!/.gitattributes
+!/source.tar.gz
+!/attempt-01.tar.gz
+!/RESULT.md
+!/compact-summary.json
+!/raw-output-index.json
+!/archive-verification.json
+!/collection-receipt.json
+!/pat05-wrapper-diagnosis.json
+!/post-run-check.py
+!/post-run-check.json
+!/artifact-index.json
+!/summarize_saved_receipt.py
+!/plot_saved_summary.py
+!/coverage-comparison.png
+!/coverage-comparison.pdf
+!/coverage-comparison.svg

@@ -1,0 +1,77 @@
+{
+  "count": 17,
+  "files": {
+    ".gitattributes": {
+      "bytes": 91,
+      "sha256": "755df36d0a6cc62afe1dcee1407580fb315dc9fe3bdcd5ec89702fe931fe2722"
+    },
+    ".gitignore": {
+      "bytes": 483,
+      "sha256": "53eebd001006eef6e9aba64616fda51069b90d94064cef6f2699233cfc771053"
+    },
+    "RESULT.md": {
+      "bytes": 7902,
+      "sha256": "577173626cb1319da97b9561bc222def564efd6039c9d6a90ea5f4c419194ea2"
+    },
+    "archive-verification.json": {
+      "bytes": 669,
+      "sha256": "667034220d25acc99be10ce2b8ee288e71c6212aee4637e5dde32a96b5a8b417"
+    },
+    "attempt-01.tar.gz": {
+      "bytes": 343824,
+      "sha256": "28d47c3cbec9a90710b1a57a5d84d6b8a6846d779edb51c98311f85f7d61a17f"
+    },
+    "collection-receipt.json": {
+      "bytes": 3331,
+      "sha256": "260082ca2ebe648d79ae526c0209699387312fc9e8f46a03d6b0d2a7168cdf40"
+    },
+    "compact-summary.json": {
+      "bytes": 41216,
+      "sha256": "d7ecf2d33ee433e9396163316293bdc887a3171470fa7210d8d28fc6d6bad763"
+    },
+    "coverage-comparison.pdf": {
+      "bytes": 43552,
+      "sha256": "1ab332ca66aa8ef16cbda7714fb530159b18a0bab93d7de4ff2b237600f16a4e"
+    },
+    "coverage-comparison.png": {
+      "bytes": 352712,
+      "sha256": "6d8f568565dd5626e422c91d1c26c7f7f9edec4f87cb610cfda177355a6cbf10"
+    },
+    "coverage-comparison.svg": {
+      "bytes": 53571,
+      "sha256": "7ed46c2fe603fbae2b947043865fc82897e3a2fb6bd83784d87e3bdfe6a7f02f"
+    },
+    "pat05-wrapper-diagnosis.json": {
+      "bytes": 5377,
+      "sha256": "43b5c1456660db550b3c55e344e12b454fc8476d30d278a47faeeecc62f25d76"
+    },
+    "plot_saved_summary.py": {
+      "bytes": 3962,
+      "sha256": "a520f1d21236fa1a0dc97a3179ea2806f691acf82325e4b90a6d35101e09741d"
+    },
+    "post-run-check.json": {
+      "bytes": 26024,
+      "sha256": "ca78b2018cf7f06fe26f113609fb59f55e13427021b04815cd6e674935babcc4"
+    },
+    "post-run-check.py": {
+      "bytes": 24557,
+      "sha256": "46a61588efeb4cf306eb069c62a878486b54655b39ed96d85ee3e602d1d89ad3"
+    },
+    "raw-output-index.json": {
+      "bytes": 1153,
+      "sha256": "7cc280db414fd828e32ca804a4c062ebbe587dab3d9a53bf91925b1fbf1d3cf9"
+    },
+    "source.tar.gz": {
+      "bytes": 351503,
+      "sha256": "9fa13cb8ec0f79f07d202d26081d7fe2156ed288eb0e6fd97abe3be56c20187a"
+    },
+    "summarize_saved_receipt.py": {
+      "bytes": 4978,
+      "sha256": "f88b99f06c5586576e4a0e3ede461bfef81c986072c68fbdf6cd40d559c00ee0"
+    }
+  },
+  "saved_evidence_status": "three_completed_records_independently_verified",
+  "schema": "training-observation-coverage-artifact-index-v1",
+  "study_status": "incomplete",
+  "total_bytes": 1264905
+}

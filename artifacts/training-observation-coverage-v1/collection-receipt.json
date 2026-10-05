@@ -1,0 +1,80 @@
+{
+  "archive_verification": {
+    "bytes": 669,
+    "path": "artifacts/training-observation-coverage-v1/archive-verification.json",
+    "sha256": "667034220d25acc99be10ce2b8ee288e71c6212aee4637e5dde32a96b5a8b417"
+  },
+  "compact_summary": {
+    "bytes": 41216,
+    "path": "artifacts/training-observation-coverage-v1/compact-summary.json",
+    "sha256": "d7ecf2d33ee433e9396163316293bdc887a3171470fa7210d8d28fc6d6bad763"
+  },
+  "independent_audit": {
+    "bytes": 26024,
+    "path": "artifacts/training-observation-coverage-v1/post-run-check.json",
+    "sha256": "ca78b2018cf7f06fe26f113609fb59f55e13427021b04815cd6e674935babcc4"
+  },
+  "method": "Saved JSON/log byte collection and summary only; no patient arrays or task reconstruction",
+  "new_decodes": 0,
+  "new_optimizer_updates": 0,
+  "new_policy_forwards": 0,
+  "new_previews": 0,
+  "pat05_wrapper_diagnosis": {
+    "bytes": 5377,
+    "path": "artifacts/training-observation-coverage-v1/pat05-wrapper-diagnosis.json",
+    "sha256": "43b5c1456660db550b3c55e344e12b454fc8476d30d278a47faeeecc62f25d76"
+  },
+  "plot": {
+    "formats": [
+      {
+        "bytes": 352712,
+        "path": "artifacts/training-observation-coverage-v1/coverage-comparison.png",
+        "sha256": "6d8f568565dd5626e422c91d1c26c7f7f9edec4f87cb610cfda177355a6cbf10"
+      },
+      {
+        "bytes": 43552,
+        "path": "artifacts/training-observation-coverage-v1/coverage-comparison.pdf",
+        "sha256": "1ab332ca66aa8ef16cbda7714fb530159b18a0bab93d7de4ff2b237600f16a4e"
+      },
+      {
+        "bytes": 53571,
+        "path": "artifacts/training-observation-coverage-v1/coverage-comparison.svg",
+        "sha256": "7ed46c2fe603fbae2b947043865fc82897e3a2fb6bd83784d87e3bdfe6a7f02f"
+      }
+    ],
+    "source": {
+      "bytes": 3962,
+      "path": "artifacts/training-observation-coverage-v1/plot_saved_summary.py",
+      "sha256": "a520f1d21236fa1a0dc97a3179ea2806f691acf82325e4b90a6d35101e09741d"
+    },
+    "visual_review": "PNG inspected; all six rows visible including three null rows; center/full-cell markers separately keyed; emitted denominator78 per complete case"
+  },
+  "raw_index": {
+    "bytes": 1153,
+    "path": "artifacts/training-observation-coverage-v1/raw-output-index.json",
+    "sha256": "7cc280db414fd828e32ca804a4c062ebbe587dab3d9a53bf91925b1fbf1d3cf9"
+  },
+  "raw_originals_unchanged": true,
+  "recorded_scope": "Three partial coverage records independently verified; overall experiment remains incomplete/exit1",
+  "report": {
+    "bytes": 7902,
+    "path": "artifacts/training-observation-coverage-v1/RESULT.md",
+    "sha256": "577173626cb1319da97b9561bc222def564efd6039c9d6a90ea5f4c419194ea2"
+  },
+  "schema": "training-observation-coverage-collection-v1",
+  "source_archive": {
+    "bytes": 351503,
+    "path": "artifacts/training-observation-coverage-v1/source.tar.gz",
+    "sha256": "9fa13cb8ec0f79f07d202d26081d7fe2156ed288eb0e6fd97abe3be56c20187a"
+  },
+  "supervisor": {
+    "bytes": 572,
+    "path": "outputs/training-observation-coverage-v1/run-01/supervisor.json",
+    "sha256": "9cd6eb7a47912617cc75f89af06fe051528ecc50a7ad403e866e32daf404ef3b"
+  },
+  "worker_receipt": {
+    "bytes": 8582114,
+    "path": "outputs/training-observation-coverage-v1/run-01/receipt.json",
+    "sha256": "d6e21ed006698124a2678a9dd52f0f85b7f6140dc24a259a375cec640b45efd2"
+  }
+}
