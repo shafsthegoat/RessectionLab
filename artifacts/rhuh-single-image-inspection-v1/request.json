@@ -1,0 +1,60 @@
+{
+  "acquisition_sources": {
+    "checksum_helper": {
+      "path": "scripts/acquire_rhuh_checksum.py",
+      "sha256": "1c22f81aebd654c967260d0f1c01465904508416f4fd0e4026cf8f69e8ba773b"
+    },
+    "image_helper": {
+      "path": "scripts/acquire_rhuh_single_image.py",
+      "sha256": "ffbea033b805a4e52e7705bdfaf7acab842911de2971a09515cbb9e0433b2bba"
+    },
+    "public_transfer": {
+      "path": "scripts/rhuh_public_transfer.py",
+      "sha256": "a4a1f775b6c0798b3ea2b721289590057ec388e479ec071961bd3616f83eea9d"
+    }
+  },
+  "checksum_index": {
+    "path": "outputs/rhuh-one-pair/metadata/checksum-quarantine/run-1jjo0q5c/RHUH-GBM-nii-v1.sums",
+    "sha256": "7c6ba3fa767bf169679db30caa854e671796416ca365fac6e57662796177c130"
+  },
+  "parent_execution": {
+    "path": "artifacts/rhuh-single-image-acquisition-v2/parent-execution.json",
+    "sha256": "a59e7753a801347515a8e8e1005813a6263df133d8f753c8eb67f0d5dc329cdc"
+  },
+  "parent_summary": {
+    "path": "artifacts/rhuh-single-image-acquisition-v2/parent-summary.json",
+    "sha256": "5853796ca7eba872e798bba56eadf02eb38e8fa7cd19c1cf6a7cd2c284ccabac"
+  },
+  "payload": {
+    "acceptance_scope": "format_byte_domain_compatibility_only",
+    "candidate_matches_published_token": true,
+    "candidate_md5_of_original_compressed_bytes": "a5c579950d0431d04928e5b59e91ce9d",
+    "decoded": false,
+    "expected_compressed_bytes": null,
+    "measured_compressed_bytes": 6337221,
+    "path": "outputs/rhuh-single-image-v2/quarantine/run-kxn_jecp/RHUH-0001_0_t1.nii.gz",
+    "prior_length_match_claim": false,
+    "published_checksum_token": "a5c579950d0431d04928e5b59e91ce9d",
+    "publisher_algorithm_confirmed": false,
+    "scientific_use_released": false,
+    "sha256": "b3b9fa69b87221062261b8b16fbddfdac2c678104b354ba371b069fd784e3625"
+  },
+  "proposal": {
+    "path": "artifacts/rhuh-single-image-acquisition-proposal-v2/proposal.json",
+    "sha256": "d1d8fea9771865bf33f282dfa5edfbd217021e01c7cd3212a513e5db9e8da9b2"
+  },
+  "reconciliation": {
+    "path": "artifacts/rhuh-single-image-acquisition-v2/independent-byte-audit.json",
+    "sha256": "281b2307bcbdc8b1e48962bb1a1ee0e3a2b3575a2f309cfed80ca3640811a8cf"
+  },
+  "schema": "resectionlab.rhuh-image-inspection-request.v1",
+  "source": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t1.nii.gz",
+  "transfer_release": {
+    "path": "artifacts/rhuh-single-image-acquisition-v2/release.json",
+    "sha256": "caf8df79f86383eaa35a7814a0620ddbfed901d45a2f353b9c9ae160839dad4a"
+  },
+  "worker_receipt": {
+    "path": "artifacts/rhuh-single-image-acquisition-v2/worker-receipt.json",
+    "sha256": "d1f7375193e3d2afb9e9fc761a95bdc86fea4431c1f5f40ee09293ae73f8a426"
+  }
+}
