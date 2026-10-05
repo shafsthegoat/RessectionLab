@@ -1,0 +1,50 @@
+{
+  "schema": "prepared-training-planner-comparison-release-v1",
+  "released_at_utc": "2026-10-05T07:46:59.219797+00:00",
+  "released": true,
+  "source_commit": "981f6c9c0d94291db5fc199b3ec145e5e9bb15d0",
+  "declaration": {
+    "path": "manifests/experiments/prepared-training-planner-comparison-v1.json",
+    "sha256": "9e4447bbad9f6d77040bfcd51e1d446abb6f57c1821e1fdfa3b2096994e7fc21"
+  },
+  "source_archive_sha256": "4476c1fc82015da9035511aafd41ad5857d1b115a50bb9467db77c422781b9b5",
+  "attempted_subjects": [
+    "sub-PAT05",
+    "sub-PAT22",
+    "sub-PAT25",
+    "sub-PAT28"
+  ],
+  "historical_blocks": [
+    "sub-PAT16",
+    "sub-PAT20"
+  ],
+  "methods": [
+    "STOP",
+    "frozen_il",
+    "greedy_search"
+  ],
+  "settings": {
+    "arm_native_preview_entries": 468,
+    "arm_seconds": 90.0,
+    "device": "cpu",
+    "max_rss_bytes": 6442450944,
+    "max_steps": 3,
+    "max_wall_seconds": 600.0,
+    "optimizer_updates": 0,
+    "torch_threads": 1
+  },
+  "output_directory": "outputs/prepared-training-planner-comparison-v1",
+  "command": [
+    ".venv/bin/python",
+    "scripts/compare_prepared_training_planners.py",
+    "--declaration",
+    "manifests/experiments/prepared-training-planner-comparison-v1.json",
+    "--execute",
+    "--output",
+    "outputs/prepared-training-planner-comparison-v1"
+  ],
+  "working_tree_has_unrelated_changes": true,
+  "execution_basis": "Committed numerical sources verified byte-for-byte against source archive; each worker and parent enforce unchanged source/input/checkpoint closure. Existing desktop changes are outside numerical sources.",
+  "resource_scope": "Per-patient600s/6GiB sampled-worker supervisor; each arm cooperative90s/468actualpreviews for planning+replay; common preparation and independent audit charged separately; no total-process hard bound claimed.",
+  "scope": "One fixed TRAIN development comparison, no optimizer updates, no automatic retry, no protected patient access or clinical efficacy claim."
+}
