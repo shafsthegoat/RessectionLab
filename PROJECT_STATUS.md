@@ -36,9 +36,13 @@ Independent specimen diagnosis reproduced all 75 endpoint probes within
 5.85e-14 m using a separate interpolation calculation. Shared physical nodes
 still differ by 25–28 µm, supporting unresolved spatial discretization. The
 original failure is retained. A separate four-run N16/N24 axial resolution
-extension is in preparation only; both 12→16→24 and 8→16→24 comparisons will
-have to pass unchanged criteria. No new mesh or solve is released at this
-checkpoint. See `artifacts/mechanics/hbe-cross-mesh-diagnosis-v1/DIAGNOSIS.md`.
+extension prepared both meshes in 5.69 seconds: 7,209 and 23,101 nodes. Independent
+reconstruction passed both geometry reports and verified the frozen solver
+decks. Exactly four new reference solves are now released, with both 12→16→24
+and 8→16→24 comparisons required to pass unchanged criteria. Results are pending;
+this release permits no measured-response access or material fitting. See
+`artifacts/mechanics/hbe-resolution-assembly-v1/solve-release.json` and
+`artifacts/mechanics/hbe-cross-mesh-diagnosis-v1/DIAGNOSIS.md`.
 
 One analytical Gmsh control confirmed that the existing discrete-surface path
 supports curvature sizing. A joint curvature-24 / minimum-3-mm profile reduced
@@ -46,8 +50,9 @@ bidirectional covering bounds from 5.302/4.935 mm to 0.936/0.920 mm on a fixed
 ellipsoid triangulation, with node counts increasing from 269 to 2,806. It took
 2.795 seconds and used no patient inputs or physics solver. This is a framework
 capability check, not patient validation or a patient resource prediction. A new
-patient candidate using that profile is in preparation only; existing anatomy,
-physical-fidelity criteria and prior failed results remain fixed. See
+patient candidate using that profile passed 95 focused preparation checks,
+including independent review. Patient execution is not yet released; existing
+anatomy, physical-fidelity criteria and prior failed results remain fixed. See
 `artifacts/mechanics/gmsh-discrete-curvature-capability-v1/RESULT.md`.
 
 **Latest steering (October 4): real-patient learning and probability-aware planning.**
