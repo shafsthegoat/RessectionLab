@@ -1,0 +1,16 @@
+{
+  "source_commit": "afd0226be1b2619780cc9f8b6f5668ef0ba2b6fa",
+  "source_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-saved-mesh-diagnostic-v1/source",
+  "source_tar_sha256": "fcdfd7e2b0940b171e3a30b11be2e86c12da05f791cdce112845ae0826870cd6",
+  "source_files": {
+    "scripts/mechanics_patient_mesh_diagnostic.py": "7f977dff17acbd4f4bc93e6f20b8ebc3a7f6d2b1affd64ccdacd7235986eb1de",
+    "manifests/experiments/resect-case4-saved-mesh-diagnostic-v1.json": "c003aac7f72f87d2293cbe15a15f6ccfd6a9d04acfba1bb7baec757f7cbc37a2",
+    "scripts/mechanics_patient_mesh.py": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+    "scripts/mechanics_patient_mesh_candidate_run.py": "3eb34cb35cb1bfe41cf12cb55f7df35e61efe452eb747411c64b1b8ff87173bd",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "artifacts/febio-runtime-investigation-v1/prospective-runtime.json": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48"
+  },
+  "file_count": 6,
+  "source_files_read_only": true,
+  "solver_or_mesher_calls": 0
+}

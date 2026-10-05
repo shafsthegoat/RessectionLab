@@ -1,0 +1,47 @@
+{
+  "schema": "case4-saved-mesh-diagnostic-result-index-v1",
+  "files": {
+    "RESULT.md": {
+      "sha256": "e04184fac8f4b7e655e54026c49af3853f340a1581b80eb78bf380c4b104c8e2",
+      "bytes": 3607
+    },
+    "archive-binding.json": {
+      "sha256": "1d6f0a742c7c09a2aabafc6ece6665d95e47c788b21029e754c876d1c6b5e172",
+      "bytes": 1179
+    },
+    "post-execution-verification.json": {
+      "sha256": "f0fe846668eeb59c0ca5627a0ed12711e2de8dcf485d85bc899a41adfbce0d23",
+      "bytes": 9332
+    },
+    "raw-output-index.json": {
+      "sha256": "2ab60b5feb027697bccb83d4b7e72084a1c975d5966ee69c61918e94c29dbdc5",
+      "bytes": 960
+    },
+    "release.json": {
+      "sha256": "4a9a40307b0c5ad913b8c1f3ef29c894dee9af53a6cc2cce39ad10942577734c",
+      "bytes": 911
+    },
+    "saved-records/acceptance.json": {
+      "sha256": "11189feed7f2d27f98aac3e6409295642c4698955c623462f4b0c7673c39e25e",
+      "bytes": 1841
+    },
+    "saved-records/report.json": {
+      "sha256": "f62535e4534f22114390849668094623c7396e3d62f84b4469e91a2c5ad68087",
+      "bytes": 34168
+    },
+    "saved-records/supervision/combined.log": {
+      "sha256": "3fde21c04070404d00ed697f684827f810a05894c00fbfb4563a26066e28f024",
+      "bytes": 487
+    },
+    "saved-records/supervision/supervision.json": {
+      "sha256": "2b55e05a02eada48c4993c87e965aad8c09f62b346d4c609d8773a9c7805bbb9",
+      "bytes": 1283
+    },
+    "summary.json": {
+      "sha256": "875c25269be2f1a44c91d9744822fb7e448af9f662fdea6b03cc45edd90bab10",
+      "bytes": 2821
+    }
+  },
+  "total_bytes": 56589,
+  "scope": "Compact results and raw-file hashes only; no duplicate raw mesh or source tree."
+}

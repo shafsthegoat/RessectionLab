@@ -1,0 +1,143 @@
+{
+  "all_inputs_unchanged": true,
+  "input_count": 17,
+  "inputs": {
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-saved-mesh-diagnostic-v1/release.json": {
+      "sha256": "4a9a40307b0c5ad913b8c1f3ef29c894dee9af53a6cc2cce39ad10942577734c",
+      "expected_sha256": "4a9a40307b0c5ad913b8c1f3ef29c894dee9af53a6cc2cce39ad10942577734c",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-saved-mesh-diagnostic-v1/source/scripts/mechanics_patient_mesh_diagnostic.py": {
+      "sha256": "7f977dff17acbd4f4bc93e6f20b8ebc3a7f6d2b1affd64ccdacd7235986eb1de",
+      "expected_sha256": "7f977dff17acbd4f4bc93e6f20b8ebc3a7f6d2b1affd64ccdacd7235986eb1de",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-saved-mesh-diagnostic-v1/source/manifests/experiments/resect-case4-saved-mesh-diagnostic-v1.json": {
+      "sha256": "c003aac7f72f87d2293cbe15a15f6ccfd6a9d04acfba1bb7baec757f7cbc37a2",
+      "expected_sha256": "c003aac7f72f87d2293cbe15a15f6ccfd6a9d04acfba1bb7baec757f7cbc37a2",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-saved-mesh-diagnostic-v1/source/scripts/mechanics_patient_mesh.py": {
+      "sha256": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+      "expected_sha256": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-saved-mesh-diagnostic-v1/source/scripts/mechanics_patient_mesh_candidate_run.py": {
+      "sha256": "3eb34cb35cb1bfe41cf12cb55f7df35e61efe452eb747411c64b1b8ff87173bd",
+      "expected_sha256": "3eb34cb35cb1bfe41cf12cb55f7df35e61efe452eb747411c64b1b8ff87173bd",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-saved-mesh-diagnostic-v1/source/scripts/febio_runtime.py": {
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+      "expected_sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-saved-mesh-diagnostic-v1/source/artifacts/febio-runtime-investigation-v1/prospective-runtime.json": {
+      "sha256": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48",
+      "expected_sha256": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-v1/native-surface.npz": {
+      "sha256": "dca30aacd485fb6c5a23fdfa2785e6ebead42a071f77d989c684e65a0360787f",
+      "expected_sha256": "dca30aacd485fb6c5a23fdfa2785e6ebead42a071f77d989c684e65a0360787f",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-graded-v2/candidate/diagnostic/nodes_m.npy": {
+      "sha256": "0ecb287d96219344e6063f94e760f5088b7e340d9eb43b1bbe5065323251aec3",
+      "expected_sha256": "0ecb287d96219344e6063f94e760f5088b7e340d9eb43b1bbe5065323251aec3",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-graded-v2/candidate/diagnostic/tet10_indices.npy": {
+      "sha256": "2b86eccf2565ab7e9819a31f905bad9d05db4b0dad2b2665f987e3c05643a2bc",
+      "expected_sha256": "2b86eccf2565ab7e9819a31f905bad9d05db4b0dad2b2665f987e3c05643a2bc",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-graded-v2/candidate/diagnostic/gmsh_node_ids.npy": {
+      "sha256": "45508c64dd878f5b127234db252095b595434c456191ee512678cd89ab25d1d1",
+      "expected_sha256": "45508c64dd878f5b127234db252095b595434c456191ee512678cd89ab25d1d1",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-graded-v2/candidate/diagnostic/gmsh_element_ids.npy": {
+      "sha256": "a5369e41076f36f035b6991ae71d17b72ef10498c18a639daeda8e6d1ee5feaf",
+      "expected_sha256": "a5369e41076f36f035b6991ae71d17b72ef10498c18a639daeda8e6d1ee5feaf",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-graded-v2/saved-records/candidate/diagnostic/manifest.json": {
+      "sha256": "ed7eee73e0b5fad1f2d16815ac369df57c232abe1f00bb24e19c9f0cd50f98c3",
+      "expected_sha256": "ed7eee73e0b5fad1f2d16815ac369df57c232abe1f00bb24e19c9f0cd50f98c3",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-graded-v2/saved-records/candidate/result.json": {
+      "sha256": "d7d670ff3a35db3521ffa67032481bc7df313ae290ba0c09b86da3e7b242b151",
+      "expected_sha256": "d7d670ff3a35db3521ffa67032481bc7df313ae290ba0c09b86da3e7b242b151",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-graded-v2/raw-output-index.json": {
+      "sha256": "5216805b05ee5cb505c2fac199bab0d84bd96c586d407d0279bc3d2e379e9b49",
+      "expected_sha256": "5216805b05ee5cb505c2fac199bab0d84bd96c586d407d0279bc3d2e379e9b49",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-graded-v2/artifact-index.json": {
+      "sha256": "8c3298d014cbf638487fca30f1d46475dadd6c2f440a1550134d77b9a5d36043",
+      "expected_sha256": "8c3298d014cbf638487fca30f1d46475dadd6c2f440a1550134d77b9a5d36043",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-graded-independent-audit-v2/verification.json": {
+      "sha256": "faaa14716d937535d29107f1aea7db5be576200efa4da7e0cd820171d29f94b3",
+      "expected_sha256": "faaa14716d937535d29107f1aea7db5be576200efa4da7e0cd820171d29f94b3",
+      "unchanged": true
+    }
+  },
+  "archive_matches_exact_git_commit": {
+    "scripts/mechanics_patient_mesh_diagnostic.py": {
+      "archive_sha256": "7f977dff17acbd4f4bc93e6f20b8ebc3a7f6d2b1affd64ccdacd7235986eb1de",
+      "git_sha256": "7f977dff17acbd4f4bc93e6f20b8ebc3a7f6d2b1affd64ccdacd7235986eb1de",
+      "unchanged": true
+    },
+    "manifests/experiments/resect-case4-saved-mesh-diagnostic-v1.json": {
+      "archive_sha256": "c003aac7f72f87d2293cbe15a15f6ccfd6a9d04acfba1bb7baec757f7cbc37a2",
+      "git_sha256": "c003aac7f72f87d2293cbe15a15f6ccfd6a9d04acfba1bb7baec757f7cbc37a2",
+      "unchanged": true
+    },
+    "scripts/mechanics_patient_mesh.py": {
+      "archive_sha256": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+      "git_sha256": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+      "unchanged": true
+    },
+    "scripts/mechanics_patient_mesh_candidate_run.py": {
+      "archive_sha256": "3eb34cb35cb1bfe41cf12cb55f7df35e61efe452eb747411c64b1b8ff87173bd",
+      "git_sha256": "3eb34cb35cb1bfe41cf12cb55f7df35e61efe452eb747411c64b1b8ff87173bd",
+      "unchanged": true
+    },
+    "scripts/febio_runtime.py": {
+      "archive_sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+      "git_sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+      "unchanged": true
+    },
+    "artifacts/febio-runtime-investigation-v1/prospective-runtime.json": {
+      "archive_sha256": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48",
+      "git_sha256": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48",
+      "unchanged": true
+    }
+  },
+  "archive_file_count": 6,
+  "all_10_original_graded_attempt_files_unchanged": {
+    "acceptance.json": true,
+    "candidate/diagnostic/gmsh_element_ids.npy": true,
+    "candidate/diagnostic/gmsh_node_ids.npy": true,
+    "candidate/diagnostic/manifest.json": true,
+    "candidate/diagnostic/nodes_m.npy": true,
+    "candidate/diagnostic/tet10_indices.npy": true,
+    "candidate/result.json": true,
+    "supervision/combined.log": true,
+    "supervision/supervision.json": true,
+    "worker.json": true
+  },
+  "original_source_surface_bound_and_unchanged": true,
+  "no_mesh_or_source_edits": true,
+  "actual_queries": 1152670,
+  "mesher_calls": 0,
+  "solver_calls": 0,
+  "image_or_landmark_reads": 0,
+  "no_retry": true
+}

@@ -1,0 +1,966 @@
+{
+  "status": "completed_saved_geometry_diagnostic_only",
+  "mesher_calls": 0,
+  "solver_calls": 0,
+  "image_or_landmark_reads": 0,
+  "candidate_accepted": false,
+  "seam_attribution_available": false,
+  "source_boundary": {
+    "vertices": 91951,
+    "triangles": 183902
+  },
+  "candidate_boundary": {
+    "vertices": 732,
+    "triangles": 1464
+  },
+  "saved_volume_relative_error": 0.012083768474345224,
+  "source_import_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-saved-mesh-diagnostic-v1/source/scripts/mechanics_patient_mesh.py",
+  "source_to_mesh": {
+    "sample_count": 1027230,
+    "maximum_sample_distance_m": 0.005459949977542773,
+    "full_surface_upper_bound_m": 0.006167056788211742,
+    "worst_10": [
+      {
+        "ordinal": 37286,
+        "triangle": 94491,
+        "point_m": [
+          0.045672270036302504,
+          0.021037152814504224,
+          -0.05015512484199323
+        ],
+        "distance_m": 0.005459949977542773,
+        "nearest_triangle": 1089,
+        "nearest_point_m": [
+          0.04603049793486976,
+          0.019700105749126087,
+          -0.04487355010760566
+        ],
+        "nearest_distance_m": 0.005459949977542773
+      },
+      {
+        "ordinal": 568550,
+        "triangle": 94489,
+        "point_m": [
+          0.045672270036302504,
+          0.021037152814504224,
+          -0.05015512484199323
+        ],
+        "distance_m": 0.005459949977542773,
+        "nearest_triangle": 1089,
+        "nearest_point_m": [
+          0.04603049793486976,
+          0.019700105749126087,
+          -0.04487355010760566
+        ],
+        "nearest_distance_m": 0.005459949977542773
+      },
+      {
+        "ordinal": 568556,
+        "triangle": 94490,
+        "point_m": [
+          0.045672270036302504,
+          0.021037152814504224,
+          -0.05015512484199323
+        ],
+        "distance_m": 0.005459949977542773,
+        "nearest_triangle": 1089,
+        "nearest_point_m": [
+          0.04603049793486976,
+          0.019700105749126087,
+          -0.04487355010760566
+        ],
+        "nearest_distance_m": 0.005459949977542773
+      },
+      {
+        "ordinal": 575177,
+        "triangle": 95752,
+        "point_m": [
+          0.045672270036302504,
+          0.021037152814504224,
+          -0.05015512484199323
+        ],
+        "distance_m": 0.005459949977542773,
+        "nearest_triangle": 1089,
+        "nearest_point_m": [
+          0.04603049793486976,
+          0.019700105749126087,
+          -0.04487355010760566
+        ],
+        "nearest_distance_m": 0.005459949977542773
+      },
+      {
+        "ordinal": 575184,
+        "triangle": 95754,
+        "point_m": [
+          0.045672270036302504,
+          0.021037152814504224,
+          -0.05015512484199323
+        ],
+        "distance_m": 0.005459949977542773,
+        "nearest_triangle": 1089,
+        "nearest_point_m": [
+          0.04603049793486976,
+          0.019700105749126087,
+          -0.04487355010760566
+        ],
+        "nearest_distance_m": 0.005459949977542773
+      },
+      {
+        "ordinal": 568558,
+        "triangle": 94490,
+        "point_m": [
+          0.04617036107834428,
+          0.02108065022790106,
+          -0.05015877326372035
+        ],
+        "distance_m": 0.0054414511622142255,
+        "nearest_triangle": 1089,
+        "nearest_point_m": [
+          0.04652737526767091,
+          0.019748133201598322,
+          -0.04489509299284567
+        ],
+        "nearest_distance_m": 0.0054414511622142255
+      },
+      {
+        "ordinal": 575176,
+        "triangle": 95752,
+        "point_m": [
+          0.04617036107834428,
+          0.02108065022790106,
+          -0.05015877326372035
+        ],
+        "distance_m": 0.0054414511622142255,
+        "nearest_triangle": 1089,
+        "nearest_point_m": [
+          0.04652737526767091,
+          0.019748133201598322,
+          -0.04489509299284567
+        ],
+        "nearest_distance_m": 0.0054414511622142255
+      },
+      {
+        "ordinal": 568538,
+        "triangle": 94487,
+        "point_m": [
+          0.04666845212038606,
+          0.021124147641297896,
+          -0.05016242168544747
+        ],
+        "distance_m": 0.005422952346885678,
+        "nearest_triangle": 1089,
+        "nearest_point_m": [
+          0.047024252600472057,
+          0.019796160654070562,
+          -0.044916635878085684
+        ],
+        "nearest_distance_m": 0.005422952346885678
+      },
+      {
+        "ordinal": 568544,
+        "triangle": 94488,
+        "point_m": [
+          0.04666845212038606,
+          0.021124147641297896,
+          -0.05016242168544747
+        ],
+        "distance_m": 0.005422952346885678,
+        "nearest_triangle": 1089,
+        "nearest_point_m": [
+          0.047024252600472057,
+          0.019796160654070562,
+          -0.044916635878085684
+        ],
+        "nearest_distance_m": 0.005422952346885678
+      },
+      {
+        "ordinal": 568559,
+        "triangle": 94490,
+        "point_m": [
+          0.04666845212038606,
+          0.021124147641297896,
+          -0.05016242168544747
+        ],
+        "distance_m": 0.005422952346885678,
+        "nearest_triangle": 1089,
+        "nearest_point_m": [
+          0.047024252600472057,
+          0.019796160654070562,
+          -0.044916635878085684
+        ],
+        "nearest_distance_m": 0.005422952346885678
+      }
+    ],
+    "summary": {
+      "triangles": 183902,
+      "area_m2": 0.06754710502400357,
+      "faces_with_sample_over_2mm": 7590,
+      "area_of_faces_with_sample_over_2mm_m2": 0.0027930424044692957,
+      "area_fraction_of_faces_with_sample_over_2mm": 0.041349550117310854,
+      "area_weighted_face_maximum_quantiles_m": {
+        "0.5": 0.0005912039545463902,
+        "0.9": 0.0014722759167306134,
+        "0.95": 0.0018946478677477647,
+        "0.99": 0.0028245466643835376,
+        "1.0": 0.005459949977542773
+      },
+      "connected_witness_components": 104,
+      "largest_10_components": [
+        {
+          "first_triangle": 17508,
+          "triangles": 674,
+          "area_m2": 0.00023633369072249583,
+          "maximum_sample_distance_m": 0.0033772668480472235,
+          "centroid_m": [
+            0.056129992873035134,
+            0.07500062444922187,
+            -0.022999973733211526
+          ],
+          "bounds_m": [
+            [
+              0.04173915778007358,
+              0.06480767075688346,
+              -0.02628711073303424
+            ],
+            [
+              0.06662475349195301,
+              0.08442693732579937,
+              -0.01871434350409686
+            ]
+          ]
+        },
+        {
+          "first_triangle": 88192,
+          "triangles": 537,
+          "area_m2": 0.00018768340731549452,
+          "maximum_sample_distance_m": 0.005459949977542773,
+          "centroid_m": [
+            0.048843175283408063,
+            0.0215156194284575,
+            -0.04708437415200028
+          ],
+          "bounds_m": [
+            [
+              0.039964988421648744,
+              0.015846029507170897,
+              -0.0501843122158102
+            ],
+            [
+              0.05902150985319168,
+              0.026432797001791186,
+              -0.0427465342404028
+            ]
+          ]
+        },
+        {
+          "first_triangle": 135570,
+          "triangles": 494,
+          "area_m2": 0.00018070793736090762,
+          "maximum_sample_distance_m": 0.0042871473661414096,
+          "centroid_m": [
+            0.04790578296704575,
+            -0.02392522717526939,
+            -0.04084601032910273
+          ],
+          "bounds_m": [
+            [
+              0.04193682926055044,
+              -0.03177782858791761,
+              -0.04416257763580137
+            ],
+            [
+              0.05217132873274386,
+              -0.011572300447209272,
+              -0.03465918008757746
+            ]
+          ]
+        },
+        {
+          "first_triangle": 129588,
+          "triangles": 415,
+          "area_m2": 0.00014916235849655164,
+          "maximum_sample_distance_m": 0.00471408250479809,
+          "centroid_m": [
+            0.035914891483796355,
+            -0.015856189211798655,
+            -0.04424648432320531
+          ],
+          "bounds_m": [
+            [
+              0.026538855124264956,
+              -0.02201708943961421,
+              -0.047089529345783206
+            ],
+            [
+              0.04169324392918497,
+              -0.007549470616329927,
+              -0.04149116796042249
+            ]
+          ]
+        },
+        {
+          "first_triangle": 160541,
+          "triangles": 335,
+          "area_m2": 0.00012401666644710964,
+          "maximum_sample_distance_m": 0.004497659934273803,
+          "centroid_m": [
+            -0.02995923592884981,
+            -0.048472479902650564,
+            -0.024913335841804763
+          ],
+          "bounds_m": [
+            [
+              -0.035534543108195066,
+              -0.05297569562541321,
+              -0.02758654941675215
+            ],
+            [
+              -0.02398716701939702,
+              -0.041177454695221966,
+              -0.02005391278982276
+            ]
+          ]
+        },
+        {
+          "first_triangle": 81314,
+          "triangles": 286,
+          "area_m2": 0.00010434000316171787,
+          "maximum_sample_distance_m": 0.0028245466643835376,
+          "centroid_m": [
+            0.0007652797850238559,
+            0.0172384454053825,
+            -0.03383802842433855
+          ],
+          "bounds_m": [
+            [
+              -0.0034071294665336607,
+              0.00820921225938946,
+              -0.03731615349942143
+            ],
+            [
+              0.005347502147778869,
+              0.02841400043759495,
+              -0.03184183855724386
+            ]
+          ]
+        },
+        {
+          "first_triangle": 62685,
+          "triangles": 264,
+          "area_m2": 9.26465701430178e-05,
+          "maximum_sample_distance_m": 0.0028558057658156282,
+          "centroid_m": [
+            -0.014175730552406663,
+            0.037403783352590175,
+            -0.03403837746362766
+          ],
+          "bounds_m": [
+            [
+              -0.019067645324394106,
+              0.030549770907964558,
+              -0.039199352821570256
+            ],
+            [
+              -0.008108092087320983,
+              0.04337803120980971,
+              -0.03171049829997675
+            ]
+          ]
+        },
+        {
+          "first_triangle": 68730,
+          "triangles": 234,
+          "area_m2": 8.725256512087105e-05,
+          "maximum_sample_distance_m": 0.004451753546339978,
+          "centroid_m": [
+            0.04390725376595263,
+            0.03848255190120528,
+            -0.037385865789708914
+          ],
+          "bounds_m": [
+            [
+              0.03897190696187317,
+              0.03360495849058498,
+              -0.04066632484573643
+            ],
+            [
+              0.05017064410354942,
+              0.04339633391919779,
+              -0.03514093126815186
+            ]
+          ]
+        },
+        {
+          "first_triangle": 21,
+          "triangles": 182,
+          "area_m2": 7.020203405398893e-05,
+          "maximum_sample_distance_m": 0.0029268087169254864,
+          "centroid_m": [
+            0.00036384896962970677,
+            0.09393079693603361,
+            -0.004656592829147408
+          ],
+          "bounds_m": [
+            [
+              -0.004411816647276282,
+              0.0920399523799424,
+              -0.010856998962599902
+            ],
+            [
+              0.0044705759985372425,
+              0.09522992436273489,
+              0.001624426737330907
+            ]
+          ]
+        },
+        {
+          "first_triangle": 32293,
+          "triangles": 183,
+          "area_m2": 6.79183567581718e-05,
+          "maximum_sample_distance_m": 0.004885552362521454,
+          "centroid_m": [
+            0.028782606888774955,
+            0.06561613116340902,
+            -0.02380496215830476
+          ],
+          "bounds_m": [
+            [
+              0.025905948451720177,
+              0.06217300890374463,
+              -0.026575488824333887
+            ],
+            [
+              0.03239203575067222,
+              0.07072999857313698,
+              -0.02205371818164582
+            ]
+          ]
+        }
+      ],
+      "edge_normal_change_association": {
+        "30": {
+          "all_face_area_fraction": 0.6308666583112041,
+          "witness_face_area_fraction": 0.692513267130094
+        },
+        "60": {
+          "all_face_area_fraction": 0.010705132860597325,
+          "witness_face_area_fraction": 0.02746347742974993
+        }
+      },
+      "interpretation": "Area measures entire faces with a sampled witness, not exact area of the distance excursion. Edge-normal change is a discretization proxy, not smooth curvature or a saved Gmsh seam."
+    }
+  },
+  "mesh_to_source": {
+    "sample_count": 121028,
+    "maximum_sample_distance_m": 0.0038337299930228013,
+    "full_surface_upper_bound_m": 0.004830812977588099,
+    "worst_10": [
+      {
+        "ordinal": 81685,
+        "triangle": 1089,
+        "point_m": [
+          0.04686031004907918,
+          0.020784810264779085,
+          -0.04465523659363224
+        ],
+        "distance_m": 0.0038337299930228013,
+        "nearest_triangle": 99677,
+        "nearest_point_m": [
+          0.04799456627108157,
+          0.0177266347281402,
+          -0.04666981120613855
+        ],
+        "nearest_distance_m": 0.0038337299930228013
+      },
+      {
+        "ordinal": 81697,
+        "triangle": 1089,
+        "point_m": [
+          0.045925145396467346,
+          0.02106296526668705,
+          -0.04452139234586685
+        ],
+        "distance_m": 0.003751240217750659,
+        "nearest_triangle": 90772,
+        "nearest_point_m": [
+          0.04657151666882311,
+          0.024629003422717594,
+          -0.04548957580951281
+        ],
+        "nearest_distance_m": 0.003751240217750659
+      },
+      {
+        "ordinal": 81708,
+        "triangle": 1089,
+        "point_m": [
+          0.04498998074385551,
+          0.021341120268595016,
+          -0.04438754809810145
+        ],
+        "distance_m": 0.00359774845372213,
+        "nearest_triangle": 94543,
+        "nearest_point_m": [
+          0.0426740233963887,
+          0.02113887150798722,
+          -0.04713331410047803
+        ],
+        "nearest_distance_m": 0.00359774845372213
+      },
+      {
+        "ordinal": 81696,
+        "triangle": 1089,
+        "point_m": [
+          0.04640351608138592,
+          0.020283002180351752,
+          -0.04475128837914209
+        ],
+        "distance_m": 0.0035703200269112615,
+        "nearest_triangle": 99677,
+        "nearest_point_m": [
+          0.04799456627108157,
+          0.0177266347281402,
+          -0.04666981120613855
+        ],
+        "nearest_distance_m": 0.0035703200269112615
+      },
+      {
+        "ordinal": 81709,
+        "triangle": 1089,
+        "point_m": [
+          0.04451161005893694,
+          0.022121083354930314,
+          -0.04415765206482621
+        ],
+        "distance_m": 0.003441171080971128,
+        "nearest_triangle": 90726,
+        "nearest_point_m": [
+          0.046087544773706114,
+          0.024586738958960134,
+          -0.04596835099772857
+        ],
+        "nearest_distance_m": 0.003441171080971128
+      },
+      {
+        "ordinal": 82817,
+        "triangle": 1157,
+        "point_m": [
+          0.04825226866938427,
+          0.021008463347298452,
+          -0.04469302905588779
+        ],
+        "distance_m": 0.003424221075223793,
+        "nearest_triangle": 92033,
+        "nearest_point_m": [
+          0.04846876553632319,
+          0.02379088084620889,
+          -0.046677108676359054
+        ],
+        "nearest_distance_m": 0.003424221075223793
+      },
+      {
+        "ordinal": 81659,
+        "triangle": 1089,
+        "point_m": [
+          0.04825226866938427,
+          0.021008463347298455,
+          -0.04469302905588779
+        ],
+        "distance_m": 0.00342422107522379,
+        "nearest_triangle": 92033,
+        "nearest_point_m": [
+          0.04846876553632319,
+          0.02379088084620889,
+          -0.046677108676359054
+        ],
+        "nearest_distance_m": 0.00342422107522379
+      },
+      {
+        "ordinal": 82831,
+        "triangle": 1157,
+        "point_m": [
+          0.04893277780885823,
+          0.020965165122554506,
+          -0.04472071430118227
+        ],
+        "distance_m": 0.0034128806095261414,
+        "nearest_triangle": 98357,
+        "nearest_point_m": [
+          0.05088731522775866,
+          0.01907676877614223,
+          -0.04678505360755957
+        ],
+        "nearest_distance_m": 0.0034128806095261414
+      },
+      {
+        "ordinal": 81673,
+        "triangle": 1089,
+        "point_m": [
+          0.047317104016772436,
+          0.021286618349206417,
+          -0.04455918480812239
+        ],
+        "distance_m": 0.0034121046858573982,
+        "nearest_triangle": 90772,
+        "nearest_point_m": [
+          0.04726331877854185,
+          0.024689417354783784,
+          -0.044805202008822216
+        ],
+        "nearest_distance_m": 0.0034121046858573982
+      },
+      {
+        "ordinal": 81672,
+        "triangle": 1089,
+        "point_m": [
+          0.047795474701691015,
+          0.020506655262871123,
+          -0.044789080841397634
+        ],
+        "distance_m": 0.003362203256067638,
+        "nearest_triangle": 99675,
+        "nearest_point_m": [
+          0.048024245078316576,
+          0.01772922652610174,
+          -0.04667002859773167
+        ],
+        "nearest_distance_m": 0.003362203256067638
+      }
+    ],
+    "summary": {
+      "triangles": 1464,
+      "area_m2": 0.0591553379106913,
+      "faces_with_sample_over_2mm": 101,
+      "area_of_faces_with_sample_over_2mm_m2": 0.00558565462801848,
+      "area_fraction_of_faces_with_sample_over_2mm": 0.09442350978454929,
+      "area_weighted_face_maximum_quantiles_m": {
+        "0.5": 0.0010000000386399003,
+        "0.9": 0.0019527569386818212,
+        "0.95": 0.0023632823786181385,
+        "0.99": 0.0029697026280672556,
+        "1.0": 0.0038337299930228013
+      },
+      "connected_witness_components": 30,
+      "largest_10_components": [
+        {
+          "first_triangle": 100,
+          "triangles": 12,
+          "area_m2": 0.000667436910538627,
+          "maximum_sample_distance_m": 0.0032053859164497523,
+          "centroid_m": [
+            0.05386843700289628,
+            0.06924949068705606,
+            -0.023764652779505426
+          ],
+          "bounds_m": [
+            [
+              0.03391151327917799,
+              0.04965820415313781,
+              -0.033615434765551844
+            ],
+            [
+              0.07152437478023027,
+              0.08676161366360519,
+              -0.016477163407051815
+            ]
+          ]
+        },
+        {
+          "first_triangle": 428,
+          "triangles": 10,
+          "area_m2": 0.0005903608546152159,
+          "maximum_sample_distance_m": 0.003350089720121806,
+          "centroid_m": [
+            0.04079724083680872,
+            -0.017036239872108224,
+            -0.040509097159011374
+          ],
+          "bounds_m": [
+            [
+              0.02343444494913444,
+              -0.03208356847944747,
+              -0.04566311510125508
+            ],
+            [
+              0.055218334817121295,
+              -0.0018494755047441644,
+              -0.032447779014904796
+            ]
+          ]
+        },
+        {
+          "first_triangle": 328,
+          "triangles": 8,
+          "area_m2": 0.0004778331973132433,
+          "maximum_sample_distance_m": 0.0026012674718118066,
+          "centroid_m": [
+            -0.011333166453530642,
+            0.04302984416223549,
+            -0.034507860210357594
+          ],
+          "bounds_m": [
+            [
+              -0.022731000970391733,
+              0.02629740818026885,
+              -0.04250941481186232
+            ],
+            [
+              0.006095362377062577,
+              0.06001070753886679,
+              -0.02995093716190278
+            ]
+          ]
+        },
+        {
+          "first_triangle": 84,
+          "triangles": 7,
+          "area_m2": 0.0003885905491993251,
+          "maximum_sample_distance_m": 0.002832233961966987,
+          "centroid_m": [
+            -0.020726767012949822,
+            0.06841363074841944,
+            -0.03127740661123366
+          ],
+          "bounds_m": [
+            [
+              -0.032904304377862396,
+              0.05201128989663842,
+              -0.03731293732349446
+            ],
+            [
+              -0.005214048133203625,
+              0.08008256865700325,
+              -0.02565775082892273
+            ]
+          ]
+        },
+        {
+          "first_triangle": 55,
+          "triangles": 6,
+          "area_m2": 0.0003043507122098533,
+          "maximum_sample_distance_m": 0.0026840897227873744,
+          "centroid_m": [
+            -0.004393683128994248,
+            0.09078095560957558,
+            -0.009385067534415231
+          ],
+          "bounds_m": [
+            [
+              -0.015553134657018021,
+              0.08548674525940325,
+              -0.0218058856613349
+            ],
+            [
+              0.0064667870771200646,
+              0.09540836540842232,
+              0.00525775162416059
+            ]
+          ]
+        },
+        {
+          "first_triangle": 893,
+          "triangles": 5,
+          "area_m2": 0.00028505709713103956,
+          "maximum_sample_distance_m": 0.0038337299930228013,
+          "centroid_m": [
+            0.05257905817180522,
+            0.017728663315454616,
+            -0.04310685049317578
+          ],
+          "bounds_m": [
+            [
+              0.03848698161002329,
+              0.004238634959484589,
+              -0.045842509222264
+            ],
+            [
+              0.06138530277743406,
+              0.027248168037980847,
+              -0.03970454282520427
+            ]
+          ]
+        },
+        {
+          "first_triangle": 110,
+          "triangles": 5,
+          "area_m2": 0.0002813528460669399,
+          "maximum_sample_distance_m": 0.003324228034815518,
+          "centroid_m": [
+            -0.025005202731522267,
+            -0.047788428842498704,
+            -0.024044923342091174
+          ],
+          "bounds_m": [
+            [
+              -0.036428553857818305,
+              -0.05747413785359956,
+              -0.02815685875388001
+            ],
+            [
+              -0.008509095741806513,
+              -0.03580313622617003,
+              -0.01783931726942073
+            ]
+          ]
+        },
+        {
+          "first_triangle": 704,
+          "triangles": 4,
+          "area_m2": 0.00020291367736024034,
+          "maximum_sample_distance_m": 0.0026712030845953793,
+          "centroid_m": [
+            0.001781427984149655,
+            0.016831627182392856,
+            -0.03590420123263918
+          ],
+          "bounds_m": [
+            [
+              -0.004341852515064608,
+              0.0011929778305831244,
+              -0.039487959035684944
+            ],
+            [
+              0.0066430117763242764,
+              0.03273267161056905,
+              -0.032854938629215
+            ]
+          ]
+        },
+        {
+          "first_triangle": 258,
+          "triangles": 3,
+          "area_m2": 0.00020120160854649193,
+          "maximum_sample_distance_m": 0.0022533211793715527,
+          "centroid_m": [
+            -0.03187390289043293,
+            -0.006625584324658042,
+            -0.047515318249565695
+          ],
+          "bounds_m": [
+            [
+              -0.04142878804016402,
+              -0.015099859663966857,
+              -0.04862862755541022
+            ],
+            [
+              -0.019478629704069862,
+              0.004550299936122632,
+              -0.04574341953501241
+            ]
+          ]
+        },
+        {
+          "first_triangle": 912,
+          "triangles": 3,
+          "area_m2": 0.0001926529818223285,
+          "maximum_sample_distance_m": 0.0024289324466489127,
+          "centroid_m": [
+            -0.044714488451201455,
+            0.009939242545307985,
+            -0.044435633304341894
+          ],
+          "bounds_m": [
+            [
+              -0.050017900505207595,
+              -0.0025076826761345097,
+              -0.048140777615602426
+            ],
+            [
+              -0.038269753011068317,
+              0.02219039548592533,
+              -0.03991052775718584
+            ]
+          ]
+        }
+      ],
+      "edge_normal_change_association": {
+        "30": {
+          "all_face_area_fraction": 0.17354936849106248,
+          "witness_face_area_fraction": 0.6036459172745866
+        },
+        "60": {
+          "all_face_area_fraction": 0.007567805527712076,
+          "witness_face_area_fraction": 0.03702134847865346
+        }
+      },
+      "interpretation": "Area measures entire faces with a sampled witness, not exact area of the distance excursion. Edge-normal change is a discretization proxy, not smooth curvature or a saved Gmsh seam."
+    }
+  },
+  "mesh_to_source_probe_classes": {
+    "boundary_vertices": {
+      "count": 732,
+      "maximum_m": 1.3985787785349405e-17,
+      "quantiles_m": [
+        0.0,
+        6.938893903907228e-18,
+        6.954872417915182e-18,
+        1.3877787807814457e-17,
+        1.3985787785349405e-17
+      ],
+      "over_2mm": 0
+    },
+    "boundary_midsides": {
+      "count": 2196,
+      "maximum_m": 0.0034729635449610727,
+      "quantiles_m": [
+        0.00032851852182188293,
+        0.0010362039835984222,
+        0.0013598677160952069,
+        0.0021875364590513363,
+        0.0034729635449610727
+      ],
+      "over_2mm": 32
+    },
+    "boundary_face_centroids": {
+      "count": 1464,
+      "maximum_m": 0.0034317633779275933,
+      "quantiles_m": [
+        0.00033333334807704955,
+        0.0011024832251157652,
+        0.0014733621014329835,
+        0.0021617976458926853,
+        0.0034317633779275933
+      ],
+      "over_2mm": 25
+    }
+  },
+  "query_count": 1152670,
+  "elapsed_seconds": 2.583215208025649,
+  "input_hashes": {
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-saved-mesh-diagnostic-v1/release.json": "4a9a40307b0c5ad913b8c1f3ef29c894dee9af53a6cc2cce39ad10942577734c",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-saved-mesh-diagnostic-v1/source/scripts/mechanics_patient_mesh_diagnostic.py": "7f977dff17acbd4f4bc93e6f20b8ebc3a7f6d2b1affd64ccdacd7235986eb1de",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-saved-mesh-diagnostic-v1/source/manifests/experiments/resect-case4-saved-mesh-diagnostic-v1.json": "c003aac7f72f87d2293cbe15a15f6ccfd6a9d04acfba1bb7baec757f7cbc37a2",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-saved-mesh-diagnostic-v1/source/scripts/mechanics_patient_mesh.py": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-saved-mesh-diagnostic-v1/source/scripts/mechanics_patient_mesh_candidate_run.py": "3eb34cb35cb1bfe41cf12cb55f7df35e61efe452eb747411c64b1b8ff87173bd",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-saved-mesh-diagnostic-v1/source/scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-saved-mesh-diagnostic-v1/source/artifacts/febio-runtime-investigation-v1/prospective-runtime.json": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-v1/native-surface.npz": "dca30aacd485fb6c5a23fdfa2785e6ebead42a071f77d989c684e65a0360787f",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-graded-v2/candidate/diagnostic/nodes_m.npy": "0ecb287d96219344e6063f94e760f5088b7e340d9eb43b1bbe5065323251aec3",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-graded-v2/candidate/diagnostic/tet10_indices.npy": "2b86eccf2565ab7e9819a31f905bad9d05db4b0dad2b2665f987e3c05643a2bc",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-graded-v2/candidate/diagnostic/gmsh_node_ids.npy": "45508c64dd878f5b127234db252095b595434c456191ee512678cd89ab25d1d1",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-graded-v2/candidate/diagnostic/gmsh_element_ids.npy": "a5369e41076f36f035b6991ae71d17b72ef10498c18a639daeda8e6d1ee5feaf",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-graded-v2/saved-records/candidate/diagnostic/manifest.json": "ed7eee73e0b5fad1f2d16815ac369df57c232abe1f00bb24e19c9f0cd50f98c3",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-graded-v2/saved-records/candidate/result.json": "d7d670ff3a35db3521ffa67032481bc7df313ae290ba0c09b86da3e7b242b151",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-graded-v2/raw-output-index.json": "5216805b05ee5cb505c2fac199bab0d84bd96c586d407d0279bc3d2e379e9b49",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-graded-v2/artifact-index.json": "8c3298d014cbf638487fca30f1d46475dadd6c2f440a1550134d77b9a5d36043",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-graded-independent-audit-v2/verification.json": "faaa14716d937535d29107f1aea7db5be576200efa4da7e0cd820171d29f94b3"
+  },
+  "inputs_unchanged": {
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-saved-mesh-diagnostic-v1/release.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-saved-mesh-diagnostic-v1/source/scripts/mechanics_patient_mesh_diagnostic.py": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-saved-mesh-diagnostic-v1/source/manifests/experiments/resect-case4-saved-mesh-diagnostic-v1.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-saved-mesh-diagnostic-v1/source/scripts/mechanics_patient_mesh.py": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-saved-mesh-diagnostic-v1/source/scripts/mechanics_patient_mesh_candidate_run.py": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-saved-mesh-diagnostic-v1/source/scripts/febio_runtime.py": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-saved-mesh-diagnostic-v1/source/artifacts/febio-runtime-investigation-v1/prospective-runtime.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-v1/native-surface.npz": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-graded-v2/candidate/diagnostic/nodes_m.npy": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-graded-v2/candidate/diagnostic/tet10_indices.npy": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-graded-v2/candidate/diagnostic/gmsh_node_ids.npy": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-graded-v2/candidate/diagnostic/gmsh_element_ids.npy": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-graded-v2/saved-records/candidate/diagnostic/manifest.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-graded-v2/saved-records/candidate/result.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-graded-v2/raw-output-index.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-graded-v2/artifact-index.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-graded-independent-audit-v2/verification.json": true
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "status": "completed_saved_geometry_diagnostic_only",
+  "query_count": 1152670,
+  "elapsed_seconds": 2.583215208025649,
+  "saved_volume_relative_error": 0.012083768474345224,
+  "mesh_to_source_probe_classes": {
+    "boundary_vertices": {
+      "count": 732,
+      "maximum_m": 1.3985787785349405e-17,
+      "quantiles_m": [
+        0.0,
+        6.938893903907228e-18,
+        6.954872417915182e-18,
+        1.3877787807814457e-17,
+        1.3985787785349405e-17
+      ],
+      "over_2mm": 0
+    },
+    "boundary_midsides": {
+      "count": 2196,
+      "maximum_m": 0.0034729635449610727,
+      "quantiles_m": [
+        0.00032851852182188293,
+        0.0010362039835984222,
+        0.0013598677160952069,
+        0.0021875364590513363,
+        0.0034729635449610727
+      ],
+      "over_2mm": 32
+    },
+    "boundary_face_centroids": {
+      "count": 1464,
+      "maximum_m": 0.0034317633779275933,
+      "quantiles_m": [
+        0.00033333334807704955,
+        0.0011024832251157652,
+        0.0014733621014329835,
+        0.0021617976458926853,
+        0.0034317633779275933
+      ],
+      "over_2mm": 25
+    }
+  },
+  "supervised_seconds": 2.901771374978125,
+  "sampled_peak_process_group_rss_bytes": 258113536,
+  "total_raw_output_bytes": 998481,
+  "input_hashes_unchanged": 17,
+  "source_to_mesh": {
+    "sample_count": 1027230,
+    "maximum_sample_distance_m": 0.005459949977542773,
+    "full_surface_upper_bound_m": 0.006167056788211742,
+    "faces_with_sample_over_2mm": 7590,
+    "area_fraction_of_faces_with_sample_over_2mm": 0.041349550117310854,
+    "connected_witness_components": 104,
+    "edge_normal_change_association": {
+      "30": {
+        "all_face_area_fraction": 0.6308666583112041,
+        "witness_face_area_fraction": 0.692513267130094
+      },
+      "60": {
+        "all_face_area_fraction": 0.010705132860597325,
+        "witness_face_area_fraction": 0.02746347742974993
+      }
+    }
+  },
+  "mesh_to_source": {
+    "sample_count": 121028,
+    "maximum_sample_distance_m": 0.0038337299930228013,
+    "full_surface_upper_bound_m": 0.004830812977588099,
+    "faces_with_sample_over_2mm": 101,
+    "area_fraction_of_faces_with_sample_over_2mm": 0.09442350978454929,
+    "connected_witness_components": 30,
+    "edge_normal_change_association": {
+      "30": {
+        "all_face_area_fraction": 0.17354936849106248,
+        "witness_face_area_fraction": 0.6036459172745866
+      },
+      "60": {
+        "all_face_area_fraction": 0.007567805527712076,
+        "witness_face_area_fraction": 0.03702134847865346
+      }
+    }
+  },
+  "interpretation": "Supports error from straight chords between on-source corner vertices. No patch/curve labels were saved, so seam attribution and causal significance are unavailable. Face-area fractions are not exact excursion areas. Mesh remains rejected."
+}

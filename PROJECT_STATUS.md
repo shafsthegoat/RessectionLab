@@ -25,9 +25,12 @@ solves. The fixed specimen experiment completed 18 numerical cases in 396.3 seco
 but failed mesh-convergence gates: axial probe motion differed by 22.36/23.26 µm
 against an 8 µm limit, and tension reaction differences did not decrease across
 the three meshes. Step and scale checks passed. Calibration and held-out response
-curves remain closed; the two fitted cases did not run. A reviewed saved-geometry
-diagnostic is prepared to localize the rejected patient mesh’s surface errors;
-it cannot accept that mesh or open withheld patient motions.
+curves remain closed; the two fitted cases did not run. The saved-geometry diagnostic reproduced
+its prior surface errors: all 732 corners lie on the saved anatomy surface, but
+32 straight midsides and 25 face centroids exceed 2 mm. This supports loss of
+local shape between corners; no patient mesh or withheld-motion comparison is
+accepted. The diagnostic took 2.90 seconds and left all inputs unchanged. See
+`artifacts/mechanics/resect-case4-saved-mesh-diagnostic-v1/RESULT.md`.
 
 **Latest steering (October 4): real-patient learning and probability-aware planning.**
 The user supplied `docs/CODEX_STEERING_PROMPT.md` and
