@@ -38,6 +38,17 @@ tables' patient counts and outcome counts. See `docs/rhuh-outcome-audit.md`,
 `docs/glioma-connectivity-outcome-audit.md` and
 `docs/neurological-outcome-inference-limits.md`. All source values stay unchanged.
 
+The isolated RHUH outcome adapter now passes 53 owner/independent controls.
+It preserves raw labels and unknown timing, while its permitted preoperative
+projection contains only KPS and contrast-enhancing volume and excludes the mixed
+source hash. Postoperative-field changes cannot alter that projection or its
+identity. A separately committed 40-patient leave-one-out baseline protocol fixes
+three simple comparators and bounded falsification/influence diagnostics before
+fitting. Its isolated statistics runtime passes an analytical fixture; runner
+review is still in progress. No patient outcome model or planner reward has been
+fitted. See `docs/neurological-outcome-contract.md` and
+`docs/rhuh-preoperative-baseline.md`.
+
 The task is annotation-assisted target access with at most three decisions
 (a certified native tool stroke or STOP). Initial learning used TRAIN patient
 PAT05; the same declared task has now been compared on the other five TRAIN
@@ -153,9 +164,26 @@ The saved-record diagnosis now identifies narrow lateral sampling: no target
 center exceeds the accepted axial bounds on PAT22/PAT28. PAT25's central opening
 also fails shaft clearance only 0.5 mm inside the selected access. The first-exit
 access heuristic never checked entering-shaft clearance or connection to external
-free space. This does not establish an alternative viable route; failure poses
-were not saved. A bounded six-existing-exit diagnostic is being prepared before
-any native execution. See `docs/frozen-transfer-access-diagnosis.md`.
+free space. The subsequent six-existing-exit diagnostic completed 468 initial
+previews in 106.112 seconds supervised, at 960,036,864 bytes peak RSS. Accepted
+counts in x−/x+/y−/y+/z− order were 0/78/62/58/78/72. All 78 original failures
+occurred before insertion: the backward shaft re-entered estimated tissue behind
+the locally free access. The original selected inventory reproduced exactly.
+All six outward neighbors were externally connected, so that local condition
+alone cannot establish shaft clearance. Two alternative accesses also hide every
+target cell from the current actor crop; a third omits 22 cells. Initial preview
+availability is not useful policy visibility, target removal or clinical access.
+
+Independent review reconciled all 468 trace records, six inventories and 61 source
+hashes. No cuts, policy calls, training or replacement-access selection occurred.
+The run has an explicit launch-order deviation: a saved-log whitespace check
+stopped the intended commit/archive block, but a subsequent shell line still
+started the reviewed source-hash-bound diagnostic. The source archive and commit
+were made after completion and are labeled accordingly; no retry hides this
+deviation. The evidence supports a working-tree development diagnosis, not a
+precommitted immutable-archive launch. See
+`artifacts/pat25-six-exit-access-diagnostic-v1/RESULT.md` and
+`docs/frozen-transfer-access-diagnosis.md`.
 Population training, repeated-seed advantage, protected-patient transfer and
 physical or neurological fidelity remain unproved.
 

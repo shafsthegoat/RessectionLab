@@ -1,0 +1,359 @@
+{
+  "automatic_retry": false,
+  "bound_source_count": 61,
+  "bound_source_map_canonical_json_sha256": "d0c292842e511971970bdeee7cd1f29d7c525acfbf2bfd770a23c6a21bf7d2c5",
+  "clinical_deficit_probability": null,
+  "commits": 0,
+  "diagnostic_script_sha256": "a88f8176b8c79d528b15207811d99b9d061a2fcda19029dfbf058d61acf97f6a",
+  "executed_transitions": 0,
+  "exits": [
+    {
+      "accepted": 0,
+      "all_shaft_rejections_at_entry": true,
+      "decision_model_hash": "sha256:24a8b518cbdd9c096b48fcd9aff06f9675e4d46cc1756b9377547d966c891e31",
+      "declared_slots": 78,
+      "elapsed_seconds": 2.079271834110841,
+      "emitted_previews": 78,
+      "exit_index": 0,
+      "local_outside_neighbor": {
+        "connected_to_external_free": true,
+        "in_estimated_support": false,
+        "inside_source_grid": true,
+        "outside_neighbor_voxel": [
+          91,
+          139,
+          118
+        ],
+        "scope": "one source cell immediately outward from recorded local exit; not whole-shaft or clinical clearance"
+      },
+      "nominal_target_cells": 16526,
+      "nominal_target_cells_in_actor_crop": 16526,
+      "nominal_target_mass_fraction_in_actor_crop": 1.0,
+      "original_selected": true,
+      "representative_to_exit_distance_mm": 17.5000953155969,
+      "shaft_rejected": 78,
+      "source_axis_outward_label": "x\u2212",
+      "source_hash": "sha256:1cb0e871bdbfdeac335980cbd324eba952053f67175d950141c052ab66a641d4",
+      "target_centers_outside_initial_accepted_aabb": null,
+      "working_reach_rejected": 0
+    },
+    {
+      "accepted": 78,
+      "all_shaft_rejections_at_entry": null,
+      "decision_model_hash": "sha256:eb1bc48cd809326d2858a49f46a456cdd94573761a6f354e455f8d148c481f96",
+      "declared_slots": 78,
+      "elapsed_seconds": 15.784268415998667,
+      "emitted_previews": 78,
+      "exit_index": 1,
+      "local_outside_neighbor": {
+        "connected_to_external_free": true,
+        "in_estimated_support": false,
+        "inside_source_grid": true,
+        "outside_neighbor_voxel": [
+          139,
+          139,
+          118
+        ],
+        "scope": "one source cell immediately outward from recorded local exit; not whole-shaft or clinical clearance"
+      },
+      "nominal_target_cells": 16526,
+      "nominal_target_cells_in_actor_crop": 16526,
+      "nominal_target_mass_fraction_in_actor_crop": 1.0,
+      "original_selected": false,
+      "representative_to_exit_distance_mm": 29.50016067486335,
+      "shaft_rejected": 0,
+      "source_axis_outward_label": "x+",
+      "source_hash": "sha256:1beda97178b5a6dfa2853563149596499b367472079819855f67ca250d9d2249",
+      "target_centers_outside_initial_accepted_aabb": 12479,
+      "working_reach_rejected": 0
+    },
+    {
+      "accepted": 62,
+      "all_shaft_rejections_at_entry": true,
+      "decision_model_hash": "sha256:3ed63d6649ade74390f18949ae5603fbff13dd3dc99482143e7383f5b191b270",
+      "declared_slots": 78,
+      "elapsed_seconds": 30.40634833299555,
+      "emitted_previews": 78,
+      "exit_index": 2,
+      "local_outside_neighbor": {
+        "connected_to_external_free": true,
+        "in_estimated_support": false,
+        "inside_source_grid": true,
+        "outside_neighbor_voxel": [
+          109,
+          42,
+          118
+        ],
+        "scope": "one source cell immediately outward from recorded local exit; not whole-shaft or clinical clearance"
+      },
+      "nominal_target_cells": 16526,
+      "nominal_target_cells_in_actor_crop": 0,
+      "nominal_target_mass_fraction_in_actor_crop": 0.0,
+      "original_selected": false,
+      "representative_to_exit_distance_mm": 96.49999993095156,
+      "shaft_rejected": 10,
+      "source_axis_outward_label": "y\u2212",
+      "source_hash": "sha256:aa0415455ba8f139f85f18521b38e7c8cdb47baf24338792bad9c65ec8a5955e",
+      "target_centers_outside_initial_accepted_aabb": 11683,
+      "working_reach_rejected": 6
+    },
+    {
+      "accepted": 58,
+      "all_shaft_rejections_at_entry": true,
+      "decision_model_hash": "sha256:8e331c642b98077e995a0d89d66e1f7fc0fcd1e59d3c93c52caa12b113d3fc9d",
+      "declared_slots": 78,
+      "elapsed_seconds": 11.624471666989848,
+      "emitted_previews": 78,
+      "exit_index": 3,
+      "local_outside_neighbor": {
+        "connected_to_external_free": true,
+        "in_estimated_support": false,
+        "inside_source_grid": true,
+        "outside_neighbor_voxel": [
+          109,
+          165,
+          118
+        ],
+        "scope": "one source cell immediately outward from recorded local exit; not whole-shaft or clinical clearance"
+      },
+      "nominal_target_cells": 16526,
+      "nominal_target_cells_in_actor_crop": 16504,
+      "nominal_target_mass_fraction_in_actor_crop": 0.9986687643712937,
+      "original_selected": false,
+      "representative_to_exit_distance_mm": 25.49999998175404,
+      "shaft_rejected": 18,
+      "source_axis_outward_label": "y+",
+      "source_hash": "sha256:9a62d65d90e56b5d78a44d0b5f17b9c107e419250339077e81ff4a5d40c5f83b",
+      "target_centers_outside_initial_accepted_aabb": 11575,
+      "working_reach_rejected": 2
+    },
+    {
+      "accepted": 78,
+      "all_shaft_rejections_at_entry": null,
+      "decision_model_hash": "sha256:749d5ee42e669fce0a212372cad4b1626478532f5938100628ac929555fc3852",
+      "declared_slots": 78,
+      "elapsed_seconds": 9.926411082968116,
+      "emitted_previews": 78,
+      "exit_index": 4,
+      "local_outside_neighbor": {
+        "connected_to_external_free": true,
+        "in_estimated_support": false,
+        "inside_source_grid": true,
+        "outside_neighbor_voxel": [
+          109,
+          139,
+          97
+        ],
+        "scope": "one source cell immediately outward from recorded local exit; not whole-shaft or clinical clearance"
+      },
+      "nominal_target_cells": 16526,
+      "nominal_target_cells_in_actor_crop": 16526,
+      "nominal_target_mass_fraction_in_actor_crop": 1.0,
+      "original_selected": false,
+      "representative_to_exit_distance_mm": 20.49999966866083,
+      "shaft_rejected": 0,
+      "source_axis_outward_label": "z\u2212",
+      "source_hash": "sha256:2a15b67cd83e53929cfd0b6469dca5a4084d0e3067ca93d5d60d76b718e3929d",
+      "target_centers_outside_initial_accepted_aabb": 13301,
+      "working_reach_rejected": 0
+    },
+    {
+      "accepted": 72,
+      "all_shaft_rejections_at_entry": true,
+      "decision_model_hash": "sha256:75802a66be217988264337f1bb667cf37d720ebcf197d0f2092c47dd673c3f0f",
+      "declared_slots": 78,
+      "elapsed_seconds": 34.05759279197082,
+      "emitted_previews": 78,
+      "exit_index": 5,
+      "local_outside_neighbor": {
+        "connected_to_external_free": true,
+        "in_estimated_support": false,
+        "inside_source_grid": true,
+        "outside_neighbor_voxel": [
+          109,
+          139,
+          204
+        ],
+        "scope": "one source cell immediately outward from recorded local exit; not whole-shaft or clinical clearance"
+      },
+      "nominal_target_cells": 16526,
+      "nominal_target_cells_in_actor_crop": 0,
+      "nominal_target_mass_fraction_in_actor_crop": 0.0,
+      "original_selected": false,
+      "representative_to_exit_distance_mm": 85.49999861807322,
+      "shaft_rejected": 6,
+      "source_axis_outward_label": "z+",
+      "source_hash": "sha256:c5e898bed14b52e4a9391f93668997ba28ef2d2fbfe0140648a111be3817d3c2",
+      "target_centers_outside_initial_accepted_aabb": 13362,
+      "working_reach_rejected": 0
+    }
+  ],
+  "input_sha256": {
+    "launch-deviation.json": "d6a560ea280170ab23e7a53fc915aae7417f959e4ef44103fe7b4b0f3dc0499f",
+    "post-run-source-receipt.json": "ba967d9bb17b640d53e4b9a31fb2c82195c772c62eba4a26ac73d600b525874c",
+    "run-01/declaration-input.json": "a9c7f36f7dc71a83723f169125b80e8f0be058b61f527efc08d067914359d123",
+    "run-01/receipt.json": "032c123df2e4e1060d9c8eb36d3573db809b731726a5846a808518729654e8c5",
+    "run-01/supervisor.json": "11dc609b9a922d41685220329a709261721351c4d3642a05f8f241951ec72fd9"
+  },
+  "limits": [
+    "Estimated unreviewed support and hypothetical access; no cortical or clinical permission",
+    "Preview acceptance does not establish target removal or complete resection",
+    "Local exterior-connected neighbor does not establish whole-shaft clearance",
+    "AABB exclusions are current optimistic bounding-box diagnostics, not removed fractions",
+    "Alternative accesses change actor crops; y\u2212 and z+ have zero target visible",
+    "No cuts, independent executed-trajectory replay, training or new patient-role access"
+  ],
+  "optimizer_updates": 0,
+  "original_bundle_sha256": "d635a72cc24066c2b16dc7b6d6805baae04d1750c50ca351b2410a70d913428a",
+  "original_central_opening_failure_traces": [
+    {
+      "action_id": "nominal-cavity-8766db6c53a412d98ef1a921",
+      "blocked_cell_count": 61,
+      "blocked_cell_index_bounds": [
+        [
+          21,
+          139,
+          118
+        ],
+        [
+          86,
+          139,
+          118
+        ]
+      ],
+      "blocked_cell_ras_aabb_mm": [
+        [
+          -60.45135601814157,
+          29.879881187504253,
+          -17.307326412192722
+        ],
+        [
+          5.561060687432118,
+          32.48839719108986,
+          -15.5005469587513
+        ]
+      ],
+      "completed_preview_microsteps": 0,
+      "entry_mm": [
+        10.540931855996032,
+        32.11025394208457,
+        -16.86848909321933
+      ],
+      "failure_insertion_fraction": 0.0,
+      "failure_step_index": 0,
+      "failure_tip_mm": [
+        10.540931855996032,
+        32.11025394208457,
+        -16.86848909321933
+      ],
+      "feasible": false,
+      "preview_contact_indices_hash": "sha256:f3a4a16d0b458e3f43b4ed80713bf6c0506c8d5f3f812e163f6dca9ddd93672b",
+      "preview_removed_cells": 0,
+      "preview_removed_indices_hash": "sha256:f3a4a16d0b458e3f43b4ed80713bf6c0506c8d5f3f812e163f6dca9ddd93672b",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "scope": "uncommitted preview diagnostics; no removal credited",
+      "source_state_hash": "sha256:5eacc00a3dbe4972c0f2f3c2ac44a694d0cbb4629db4f2c96511fe3267ce9f12",
+      "tip_mm": [
+        11.040748624663038,
+        32.12243966119598,
+        -16.874601624167852
+      ],
+      "tool_id": "native-fine-aspiration"
+    },
+    {
+      "action_id": "nominal-cavity-69b07b8cc82ec8e5c1f5eec1",
+      "blocked_cell_count": 567,
+      "blocked_cell_index_bounds": [
+        [
+          20,
+          138,
+          117
+        ],
+        [
+          89,
+          140,
+          119
+        ]
+      ],
+      "blocked_cell_ras_aabb_mm": [
+        [
+          -61.487584182126824,
+          28.85550883777401,
+          -18.34392687504095
+        ],
+        [
+          8.596556191158555,
+          33.56151242247719,
+          -14.488396622588567
+        ]
+      ],
+      "completed_preview_microsteps": 0,
+      "entry_mm": [
+        10.540931855996032,
+        32.11025394208457,
+        -16.86848909321933
+      ],
+      "failure_insertion_fraction": 0.0,
+      "failure_step_index": 0,
+      "failure_tip_mm": [
+        10.540931855996032,
+        32.11025394208457,
+        -16.86848909321933
+      ],
+      "feasible": false,
+      "preview_contact_indices_hash": "sha256:f3a4a16d0b458e3f43b4ed80713bf6c0506c8d5f3f812e163f6dca9ddd93672b",
+      "preview_removed_cells": 0,
+      "preview_removed_indices_hash": "sha256:f3a4a16d0b458e3f43b4ed80713bf6c0506c8d5f3f812e163f6dca9ddd93672b",
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "scope": "uncommitted preview diagnostics; no removal credited",
+      "source_state_hash": "sha256:5eacc00a3dbe4972c0f2f3c2ac44a694d0cbb4629db4f2c96511fe3267ce9f12",
+      "tip_mm": [
+        11.040748624663038,
+        32.12243966119598,
+        -16.874601624167852
+      ],
+      "tool_id": "native-wide-aspiration"
+    }
+  ],
+  "original_inventory_exactly_reproduced": true,
+  "original_preparation_sha256": "f4c6269f551f52fbe359c61d408030af81d4b233ac4ad11f98a87228f81dc70c",
+  "post_run_source_preservation": {
+    "all_bytes_match_prospective_manifest": true,
+    "archive": "artifacts/pat25-six-exit-access-diagnostic-v1/post-run-source.tar.gz",
+    "archived_before_run": false,
+    "bytes": 341076,
+    "created_at": "2026-10-05T04:41:01.608384+00:00",
+    "interpretation": "Source-hash-bound working-tree development diagnostic. Archive created after terminal completion; not a precommitted immutable archive execution.",
+    "kind": "post-run-source-preservation",
+    "launch_deviation_sha256": "d6a560ea280170ab23e7a53fc915aae7417f959e4ef44103fe7b4b0f3dc0499f",
+    "manifest_sha256": "a9c7f36f7dc71a83723f169125b80e8f0be058b61f527efc08d067914359d123",
+    "sha256": "3444b6ab5c28ec6ce2c9448bc415d6d9588df0d1fab755f15c804f910d28a34a",
+    "source_files": 61
+  },
+  "pre_run_release_file_created": false,
+  "pre_run_source_archive_created": false,
+  "pre_run_source_commit_completed": false,
+  "provenance_scope": "Prospective manifest/source-hash admission checks and saved independent review; pre-run commit/archive/release block failed, documented separately",
+  "replacement_access_selected": false,
+  "report_script_sha256": "39e68f7efa99b14526d544ddf32a159606ff57cfa20a85ed26d671d3062eb90c",
+  "resource_settings": {
+    "cooperative_seconds": 170.0,
+    "cpu_threads": 1,
+    "max_declared_slots_per_exit": 78,
+    "max_exits": 6,
+    "max_rss_bytes": 6442450944,
+    "max_total_previews": 468,
+    "max_wall_seconds": 174.0,
+    "whole_worker_envelope_seconds": 180.0
+  },
+  "role": "TRAIN",
+  "scope": "Initial uncommitted preview diagnostics; no policy comparison or replacement-access selection",
+  "subject": "sub-PAT25",
+  "supervisor_rss_samples": 507,
+  "supervisor_sampled_peak_rss_bytes": 960036864,
+  "supervisor_seconds": 106.11235099995974,
+  "total_previews": 468,
+  "version": "pat25-six-existing-exits-saved-result-v1",
+  "worker_peak_rss_bytes": 960036864,
+  "worker_seconds": 105.60045379202347
+}

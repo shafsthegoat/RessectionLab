@@ -1,0 +1,263 @@
+{
+  "checker_sha256": "54d68b74ba2be693bce8fb0e56da88b2376df0f19fd23a6cc43e7135526482e0",
+  "complete_exits_checked": 6,
+  "executed_transitions": 0,
+  "exit_summaries": [
+    {
+      "accepted_previews": 0,
+      "axis": 0,
+      "emitted_previews": 78,
+      "exit_index": 0,
+      "failure_step_counts": {
+        "0": 78
+      },
+      "original_selected": true,
+      "outward_sign": -1,
+      "reasons": {
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 78
+      },
+      "recorded_outside_neighbor": {
+        "connected_to_external_free": true,
+        "in_estimated_support": false,
+        "inside_source_grid": true,
+        "outside_neighbor_voxel": [
+          91,
+          139,
+          118
+        ],
+        "scope": "one source cell immediately outward from recorded local exit; not whole-shaft or clinical clearance"
+      },
+      "target_cells_total": 16526,
+      "target_cells_visible_to_actor": 16526
+    },
+    {
+      "accepted_previews": 78,
+      "axis": 0,
+      "emitted_previews": 78,
+      "exit_index": 1,
+      "failure_step_counts": {},
+      "original_selected": false,
+      "outward_sign": 1,
+      "reasons": {
+        "NATIVE_CONNECTED_STROKE": 78
+      },
+      "recorded_outside_neighbor": {
+        "connected_to_external_free": true,
+        "in_estimated_support": false,
+        "inside_source_grid": true,
+        "outside_neighbor_voxel": [
+          139,
+          139,
+          118
+        ],
+        "scope": "one source cell immediately outward from recorded local exit; not whole-shaft or clinical clearance"
+      },
+      "target_cells_total": 16526,
+      "target_cells_visible_to_actor": 16526
+    },
+    {
+      "accepted_previews": 62,
+      "axis": 1,
+      "emitted_previews": 78,
+      "exit_index": 2,
+      "failure_step_counts": {
+        "0": 10,
+        "None": 6
+      },
+      "original_selected": false,
+      "outward_sign": -1,
+      "reasons": {
+        "HARD_GEOMETRY:WORKING_REACH": 6,
+        "NATIVE_CONNECTED_STROKE": 62,
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 10
+      },
+      "recorded_outside_neighbor": {
+        "connected_to_external_free": true,
+        "in_estimated_support": false,
+        "inside_source_grid": true,
+        "outside_neighbor_voxel": [
+          109,
+          42,
+          118
+        ],
+        "scope": "one source cell immediately outward from recorded local exit; not whole-shaft or clinical clearance"
+      },
+      "target_cells_total": 16526,
+      "target_cells_visible_to_actor": 0
+    },
+    {
+      "accepted_previews": 58,
+      "axis": 1,
+      "emitted_previews": 78,
+      "exit_index": 3,
+      "failure_step_counts": {
+        "0": 18,
+        "None": 2
+      },
+      "original_selected": false,
+      "outward_sign": 1,
+      "reasons": {
+        "HARD_GEOMETRY:WORKING_REACH": 2,
+        "NATIVE_CONNECTED_STROKE": 58,
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 18
+      },
+      "recorded_outside_neighbor": {
+        "connected_to_external_free": true,
+        "in_estimated_support": false,
+        "inside_source_grid": true,
+        "outside_neighbor_voxel": [
+          109,
+          165,
+          118
+        ],
+        "scope": "one source cell immediately outward from recorded local exit; not whole-shaft or clinical clearance"
+      },
+      "target_cells_total": 16526,
+      "target_cells_visible_to_actor": 16504
+    },
+    {
+      "accepted_previews": 78,
+      "axis": 2,
+      "emitted_previews": 78,
+      "exit_index": 4,
+      "failure_step_counts": {},
+      "original_selected": false,
+      "outward_sign": -1,
+      "reasons": {
+        "NATIVE_CONNECTED_STROKE": 78
+      },
+      "recorded_outside_neighbor": {
+        "connected_to_external_free": true,
+        "in_estimated_support": false,
+        "inside_source_grid": true,
+        "outside_neighbor_voxel": [
+          109,
+          139,
+          97
+        ],
+        "scope": "one source cell immediately outward from recorded local exit; not whole-shaft or clinical clearance"
+      },
+      "target_cells_total": 16526,
+      "target_cells_visible_to_actor": 16526
+    },
+    {
+      "accepted_previews": 72,
+      "axis": 2,
+      "emitted_previews": 78,
+      "exit_index": 5,
+      "failure_step_counts": {
+        "0": 6
+      },
+      "original_selected": false,
+      "outward_sign": 1,
+      "reasons": {
+        "NATIVE_CONNECTED_STROKE": 72,
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 6
+      },
+      "recorded_outside_neighbor": {
+        "connected_to_external_free": true,
+        "in_estimated_support": false,
+        "inside_source_grid": true,
+        "outside_neighbor_voxel": [
+          109,
+          139,
+          204
+        ],
+        "scope": "one source cell immediately outward from recorded local exit; not whole-shaft or clinical clearance"
+      },
+      "target_cells_total": 16526,
+      "target_cells_visible_to_actor": 0
+    }
+  ],
+  "input_sha256": {
+    "artifacts/pat25-six-exit-access-diagnostic-v1/launch-deviation.json": "d6a560ea280170ab23e7a53fc915aae7417f959e4ef44103fe7b4b0f3dc0499f",
+    "artifacts/pat25-six-exit-access-diagnostic-v1/post-run-source-receipt.json": "ba967d9bb17b640d53e4b9a31fb2c82195c772c62eba4a26ac73d600b525874c",
+    "artifacts/pat25-six-exit-access-diagnostic-v1/post-run-source.tar.gz": "3444b6ab5c28ec6ce2c9448bc415d6d9588df0d1fab755f15c804f910d28a34a",
+    "artifacts/pat25-six-exit-access-diagnostic-v1/run-01/declaration-input.json": "a9c7f36f7dc71a83723f169125b80e8f0be058b61f527efc08d067914359d123",
+    "artifacts/pat25-six-exit-access-diagnostic-v1/run-01/receipt.json": "032c123df2e4e1060d9c8eb36d3573db809b731726a5846a808518729654e8c5",
+    "artifacts/pat25-six-exit-access-diagnostic-v1/run-01/supervisor.json": "11dc609b9a922d41685220329a709261721351c4d3642a05f8f241951ec72fd9",
+    "artifacts/remaining-training-frozen-spatial-float64-v1/sub-PAT25/preparation.json": "f4c6269f551f52fbe359c61d408030af81d4b233ac4ad11f98a87228f81dc70c",
+    "scripts/diagnose_pat25_access.py": "a88f8176b8c79d528b15207811d99b9d061a2fcda19029dfbf058d61acf97f6a",
+    "scripts/preflight_real_spatial_policy.py": "cfac175b072dbd8218c19f079d7ec3fa9143966b5059fe4cdfd918dff818ed3f",
+    "scripts/prepare_real_training_cases.py": "7533e829f0663fd68d982a84ad49982442e5e04345ea045f15c546d7bf247e6a",
+    "src/resectionlab/__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "src/resectionlab/anatomy.py": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37",
+    "src/resectionlab/app/__init__.py": "cad7c4e1282136061456123711d5bddb56413db3ddfb69314ee78f744d2d6d1e",
+    "src/resectionlab/app/annotation.py": "724debbe3ec4bef2a3b6eeba83b497c579f26b8a3549117edc5d72bdd993b6a5",
+    "src/resectionlab/app/desktop.py": "e9b33c7c2dce2dd6b329f9af97033fb33096dbe8b1b9e734e5ae56af489a0f96",
+    "src/resectionlab/app/refinement.py": "ce6116509a83582c904e844305deceb11c9282c2c6267d7fdaea01a734695c2c",
+    "src/resectionlab/app/reslice.py": "f397f7317da203ed88561d6638b8b41af54349bd145af5d0ccea01aa54d54796",
+    "src/resectionlab/app/scene.py": "21a2100de199360a990a12cd4e77fe627cdce5bb6ef79fb1cc2aa074d71f1b5b",
+    "src/resectionlab/app/slice_view.py": "63b279123a94e748222fc5102eeda7c1d30a3eebab2833aecc15b2335df14367",
+    "src/resectionlab/app/style.py": "aca2726fe243e19d11e85463589ef9b5db9e7806e4b36d8646ff8167c2d29468",
+    "src/resectionlab/app/training_view.py": "07fa2bfdacdb470d080cf37d6c3df52d5eee540041619cad9ae6c94132fd88d1",
+    "src/resectionlab/app/workers.py": "d3cb30b107fcfb930c50c26e9ef87cf277bcd90c4ec824909d6c375e9f4f2f8c",
+    "src/resectionlab/brain_extraction.py": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917",
+    "src/resectionlab/cohort.py": "d69538f80af8b318068af70dbc963b7a9ca6c3a4f62d6e8e542d6e43548fa874",
+    "src/resectionlab/core.py": "f1f0b8ae334cabc864c3ec85d4f6b49e4842de2b580edaadd7562276ea0c92db",
+    "src/resectionlab/desktop_bridge.py": "ef3005a35cafa9690898d9a85e123a08508ef375cf4136e3f61d936fb9370c74",
+    "src/resectionlab/diffusion.py": "e7f57bf7467fb3cb5d6b9b3f1c80e4665710713124d0720aa84d31ccc03b8e21",
+    "src/resectionlab/evaluation.py": "8fe1467d2dc53deb62f16c86c79eebc1596047bc58d52a8b7be3598f50334d18",
+    "src/resectionlab/experimental_capsule_cache.py": "7b47cf36493c4baeb305beb7f18d4f5acf5bd0fa08b0e80738e948a20bd58869",
+    "src/resectionlab/functional_events.py": "5a7ba030a4e4a0a4e35a48aa950a7bcc133b890dd02eee0b4301ed3a385f8faa",
+    "src/resectionlab/functional_evidence.py": "58ca24b6b0d63ef3860b33a247301a2f210857eec9719ad14ac5cab8517d5426",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/imaging.py": "26928ec3eb948924b961d7d70289014ee243c1cf6ea6e3f9ba60e8bf96e8d866",
+    "src/resectionlab/independent_geometry_batch.py": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3",
+    "src/resectionlab/learning.py": "23ed946d9fee0d1402b4aa89cd3c5dabcb27ab7e57cd824dc38baa98dce08e94",
+    "src/resectionlab/learning_ppo.py": "a3814bc5da4837b66ae20496c38e17edd0edf73ef7863a920924cd7ec2a42d88",
+    "src/resectionlab/mechanics_landmarks.py": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc",
+    "src/resectionlab/native_axis_accounting.py": "c75eea141a636072465d6c88fc113c4bf53d8901428f1a1511623539ee541ce8",
+    "src/resectionlab/native_axis_policy_schema.py": "672a5dfd8ba7981bf6bc7a81746b15b094001145c0db942f16599f24a72dcafe",
+    "src/resectionlab/native_axis_refinement.py": "68220ab6a5f633dda1fd65aa87a5a00f0c15fb5a63b3941a1ddae1f2243a35d7",
+    "src/resectionlab/native_axis_simulation.py": "5ca0147885e2a8c918d10246f4889e4bbfb9c06724f62d8abc9e8cc605a540bf",
+    "src/resectionlab/native_functional_evaluation.py": "2c2284e32bc0bd87b4e6dbee82e2713777bb4d509b9e22837702a9ec3ab7da13",
+    "src/resectionlab/native_proposals.py": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee",
+    "src/resectionlab/native_refinement.py": "53af6d77caeddc33072717dffba5c7ca42c776ba7ae1f25125aa1d11e669a0db",
+    "src/resectionlab/native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+    "src/resectionlab/native_routes.py": "97bb55a3bf2894f336a593bc3c3379b3c4dc291198af90b91d319bd0b9a824ea",
+    "src/resectionlab/native_simulation.py": "4790bfd16baa2cc73cb9da8b36c88a1fe945c2b29a824c232a6a941ab17a4f8f",
+    "src/resectionlab/native_spatial_evaluation.py": "a3f0ac4c73e6242804ee1de59a7ab429374ae8fc7f21bb34671062fd591dfffa",
+    "src/resectionlab/native_spatial_task.py": "61b3d8167152d06a578e1ab7c146b7af937d86ccca6ed9e20bf3081cbf2f6711",
+    "src/resectionlab/observed_search.py": "cdbacc079fa3e4f8d49a356e76dfdc77e4484ef4bb1a3383970a0e937c72febd",
+    "src/resectionlab/planning.py": "f113ce78b239f91a86c65d8add74227a9d9f3c0d718449c7968a983e76ea850d",
+    "src/resectionlab/policy_inputs.py": "1366cdabceae5eeee9ad44667be7d8c44de2c9ab8f551c4cf05b053f5b1b8b47",
+    "src/resectionlab/population_learning.py": "49899618825d08b50016f9b34f389b50ce67f6a3aa79a8f339665523e3ae8de2",
+    "src/resectionlab/preprocessing.py": "dbd2c4ba9551e2aa0d454b638e256ad8bc6cdf45dcdc8ec08e091e43c3eb14e5",
+    "src/resectionlab/prior_proposals.py": "8d0f40aa3690845465f024708d19c68b3441d0d19cd356b900566fb074730f5f",
+    "src/resectionlab/prior_registration.py": "9828e76ed3e29e232c39dd16ece7d5fefa4cd366d1cab7899121e929ef34a703",
+    "src/resectionlab/procedural_learning.py": "d4666701930d2baa1f438b2a1bed4819e895ec6161c38a78b6ef4d68331ac2d1",
+    "src/resectionlab/real_patient_learning.py": "51107e30dd26a623aaadc9bca7f5b2dda56b798ee5ef59fa4c4d6d9aa2e58512",
+    "src/resectionlab/rhuh_outcomes.py": "82981de054aca89789b9065620844cd8a8842120df71cdb89bdd147c0bc57d36",
+    "src/resectionlab/route_native_diagnostics.py": "f2cf704da9e971f321dce707dadd9f0350ec7234ecc75c0ed0fc1242fd8c82cf",
+    "src/resectionlab/selection_contract.py": "bef00b486fb6f0f0465a8526080ae5c6e08a5f1922fcf93f4624aec86ec43d72",
+    "src/resectionlab/simulation.py": "234b82653650ebd1baf6a58ef5cecf45d20047dce6299b32463bb021a987e62f",
+    "src/resectionlab/spatial_observations.py": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711",
+    "src/resectionlab/spatial_policy.py": "129d6195f76bb7a5105d6097ea41cce681c34b88b79bef287e61fd56e961073f",
+    "src/resectionlab/spatial_policy_diagnostics.py": "257d355a017023831621107800d029b813f7036e1af6a8a16fd38e5760066493",
+    "src/resectionlab/spatial_task.py": "79ae36adbc29a5eaa40c1c38c9080f6cde8c52f2c5babf6acd4664eb6842a225",
+    "src/resectionlab/structural_evidence.py": "6a1b9e7aa5b13ea971a75d9416d96ab45de2b46901a036edd73ec58194fb7a33",
+    "src/resectionlab/worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
+  },
+  "interpretation": "The original local exit has no accepted initial actions; other fixed hypothetical exits admit previews. Crop coverage differs, including two exits with zero target visibility. No cuts, complete route evaluation, policy improvement, replacement-access approval or clinical accessibility is established.",
+  "limits": [
+    "Recorded exterior-free membership and blocked-cell sets were not recomputed from images.",
+    "Start/end/current source binding and a post-run archive do not establish a precommitted immutable launch.",
+    "Supervisor sampled RSS can miss transient peaks; wall time is not an isolated-machine benchmark."
+  ],
+  "original_selected_inventory_exact": true,
+  "preview_records_checked": 468,
+  "provenance": {
+    "classification": "prospective-source-hash-bound working-tree development diagnostic",
+    "deviation_preserved": "Whitespace check rejected a preserved initial failure log. A subsequent shell command on a new line still started the reviewed diagnostic after the preceding AND-chain stopped.",
+    "launch_head": "d9f2ceb5f90ba2e2b23951eaaca9e1e484e92fb9",
+    "post_run_archive_verified": true,
+    "pre_run_archive": false,
+    "pre_run_commit": false,
+    "pre_run_release_file": false
+  },
+  "replacement_access_selected": false,
+  "scope": "Saved-record/source closure check; no patient decode or preview re-execution.",
+  "source_files_verified": 61,
+  "status": "passed"
+}
