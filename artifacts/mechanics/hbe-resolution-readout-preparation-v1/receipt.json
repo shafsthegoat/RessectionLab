@@ -1,0 +1,41 @@
+{
+  "schema": "hbe-resolution-readout-preparation-v1",
+  "status": "source_only_controls_passed_pending_independent_review",
+  "source_bindings": {
+    "scripts/mechanics_hbe_readout.py": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0",
+    "scripts/mechanics_hbe_outputs.py": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19",
+    "tests/test_mechanics_hbe_resolution_readout.py": "af750a0a75e3217445049b7ea684a4b45287f5642912cbe69c123ffd4429a58a",
+    "manifests/experiments/hbe-01-03-axial-resolution-v1.json": "23b4f5e4d8a0b5ff05fcd45fbca88463a32460793d5b0f27d1a913a5e0a2443c",
+    "docs/hbe-evaluation-interface.md": "06f26a646c30a125f25267da5809942592b7e56366be4082f64a3da1e55b8203"
+  },
+  "test_result": "38 passed in0.51s",
+  "test_files": [
+    "tests/test_mechanics_hbe_resolution_readout.py",
+    "tests/test_mechanics_hbe_outputs.py",
+    "tests/test_mechanics_hbe_readout.py",
+    "tests/test_mechanics_hbe_readout_review.py"
+  ],
+  "new_study_cases": [
+    "compression:N16:S60:reference",
+    "compression:N24:S60:reference",
+    "tension:N16:S60:reference",
+    "tension:N24:S60:reference"
+  ],
+  "case_limits": {
+    "legacy_parser_items": 20000,
+    "extension_parser_items": 25000,
+    "extension_N16_nodes_cells": [
+      7209,
+      6144
+    ],
+    "extension_N24_nodes_cells": [
+      23101,
+      20736
+    ]
+  },
+  "actual_specimen_readouts": 0,
+  "solver_calls": 0,
+  "meshing_calls": 0,
+  "experimental_response_access": false,
+  "test_scope": "Analytical small logs exercise shared numerical engine; allocation-free sentinels check25k dispatch; stubbed numerical calls isolate exact four-case/declaration forwarding. No large-mesh numerical result is asserted."
+}

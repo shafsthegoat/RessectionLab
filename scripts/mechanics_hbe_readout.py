@@ -4,12 +4,18 @@ from __future__ import annotations
 from contextlib import ExitStack
 import itertools
 import math
+from functools import partial
 
 import numpy as np
 
 from scripts.mechanics_hbe_access import local_path, verify_binding, expected_runs
-from scripts.mechanics_hbe_outputs import iter_data_records, check_solver_records
+from scripts.mechanics_hbe_outputs import iter_data_records, iter_resolution_records, check_solver_records
 from scripts.mechanics_hbe_physics import HexMesh, fixed_probes, energy_work_check, compare_refinement
+
+
+RESOLUTION_DECLARATION_SHA256 = '23b4f5e4d8a0b5ff05fcd45fbca88463a32460793d5b0f27d1a913a5e0a2443c'
+ORIGINAL_PROTOCOL_SHA256 = 'ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035'
+RESOLUTION_MESH_COUNTS = {16: (7209, 6144), 24: (23101, 20736)}
 
 
 def read_run(root, bindings, *, protocol_sha256, expected_branch, expected_mesh_N,
@@ -19,22 +25,89 @@ def read_run(root, bindings, *, protocol_sha256, expected_branch, expected_mesh_
     The caller fixes identity before a run. This function rejects mismatched
     loading/deck/source identities and exhausts both strict record generators.
     """
+    if expected_branch not in ('compression','tension','torsion_neg','torsion_pos') or expected_mesh_N not in (4,8,12) or expected_steps not in (60,120):
+        raise ValueError('Run outside frozen specimen task')
+    return _read_run(
+        root, bindings, protocol_sha256=protocol_sha256,
+        expected_branch=expected_branch, expected_mesh_N=expected_mesh_N,
+        expected_steps=expected_steps, expected_mu_Pa=expected_mu_Pa,
+        retain_scale_primitives=retain_scale_primitives,
+        record_reader=iter_data_records, maximum_items=20000,
+    )
+
+
+def read_resolution_run(root, bindings, *, declaration_binding, expected_branch, expected_mesh_N):
+    """Opt in only to the separate, fixed four-run axial resolution declaration.
+
+    This path cannot enable torsion, fitting, a changed load sequence or data
+    access. The original reader and parser retain their original case limits.
+    """
+    if not isinstance(declaration_binding, dict) or declaration_binding.get('sha256') != RESOLUTION_DECLARATION_SHA256:
+        raise ValueError('Exact separately frozen resolution declaration required')
+    declaration = verify_binding(root, declaration_binding, maximum_bytes=1024**2, read_json=True)
+    if (declaration.get('schema') != 'hbe-axial-mesh-resolution-v1'
+            or declaration.get('study_id') != 'hbe-01-03-axial-resolution-v1'
+            or declaration.get('branches') != ['compression', 'tension']
+            or declaration.get('steps') != 60 or declaration.get('mu_Pa') != 1000.
+            or declaration.get('parser_item_limit') != 25000
+            or declaration.get('calibration') is not False
+            or declaration.get('measured_data_access') is not False
+            or declaration.get('co_primary_triplets') != [[12, 16, 24], [8, 16, 24]]):
+        raise ValueError('Resolution declaration body differs from the bounded extension')
+    levels = declaration.get('mesh_levels', [])
+    expected_levels = [{'N': N, 'expected_nodes': counts[0], 'nominal_hex8_cells': counts[1]}
+                       for N, counts in RESOLUTION_MESH_COUNTS.items()]
+    if levels != expected_levels:
+        raise ValueError('Resolution mesh counts differ from the declared geometry')
+    if (expected_branch not in ('compression', 'tension')
+            or type(expected_mesh_N) is not int or expected_mesh_N not in RESOLUTION_MESH_COUNTS):
+        raise ValueError('Only declared axial N16/N24 cases belong to this extension')
+    original = declaration.get('original_protocol', {})
+    if original.get('sha256') != ORIGINAL_PROTOCOL_SHA256:
+        raise ValueError('Original scientific protocol identity changed')
+    verify_binding(root, original, maximum_bytes=1024**2)
+    receipt, cache = _read_run(
+        root, bindings, protocol_sha256=ORIGINAL_PROTOCOL_SHA256,
+        expected_branch=expected_branch, expected_mesh_N=expected_mesh_N,
+        expected_steps=60, expected_mu_Pa=1000., retain_scale_primitives=False,
+        record_reader=partial(iter_resolution_records, declaration_sha256=RESOLUTION_DECLARATION_SHA256),
+        maximum_items=25000, expected_mesh_counts=RESOLUTION_MESH_COUNTS[expected_mesh_N],
+        required_loading_fields={'resolution_declaration_sha256': RESOLUTION_DECLARATION_SHA256},
+    )
+    verify_binding(root, declaration_binding, maximum_bytes=1024**2)
+    verify_binding(root, original, maximum_bytes=1024**2)
+    receipt.update(schema='hbe-resolution-run-readout-v1',
+                   study_id=declaration['study_id'], resolution_declaration=dict(declaration_binding),
+                   resolution_declaration_sha256=RESOLUTION_DECLARATION_SHA256)
+    return receipt, cache
+
+
+def _read_run(root, bindings, *, protocol_sha256, expected_branch, expected_mesh_N,
+              expected_steps, expected_mu_Pa, retain_scale_primitives,
+              record_reader, maximum_items, expected_mesh_counts=None, required_loading_fields=None):
     if set(bindings)!={'mesh','deck','loading','nodes','elements','solver'}:
         raise ValueError('Exactly six bound run inputs required')
     for binding in bindings.values():verify_binding(root,binding)
     metadata=verify_binding(root,bindings['mesh'],maximum_bytes=16*1024**2,read_json=True)
     loading=verify_binding(root,bindings['loading'],maximum_bytes=1024**2,read_json=True)
+    for key, value in (required_loading_fields or {}).items():
+        if loading.get(key) != value:
+            raise ValueError('Loading metadata lacks the explicitly selected study binding')
     identity=(loading.get('branch'),metadata.get('mesh_N'),loading.get('steps'),loading.get('mu_Pa'))
     if identity!=(expected_branch,expected_mesh_N,expected_steps,expected_mu_Pa):
         raise ValueError('Run differs from prospectively requested identity')
-    if expected_branch not in ('compression','tension','torsion_neg','torsion_pos') or expected_mesh_N not in (4,8,12) or expected_steps not in (60,120):
-        raise ValueError('Run outside frozen specimen task')
     if not math.isfinite(expected_mu_Pa) or expected_mu_Pa<=0:
         raise ValueError('Positive finite modulus required')
     if loading.get('protocol_sha256')!=protocol_sha256 or loading.get('mesh_sha256')!=bindings['mesh']['sha256'] or loading.get('deck_sha256')!=bindings['deck']['sha256']:
         raise ValueError('Loading metadata is not bound to protocol/mesh/deck')
     if loading.get('node_fields')!='x;y;z;ux;uy;uz;Rx;Ry;Rz' or loading.get('element_fields')!='sx;sy;sz;sxy;syz;sxz;J;sed' or loading.get('raw_reaction_convention')!='body_on_constraint':
         raise ValueError('Primitive units/order/reaction convention differs')
+    if len(metadata.get('rest_nodes_m', [])) > maximum_items or len(metadata.get('elements_hex8', [])) > maximum_items:
+        raise ValueError('Mesh exceeds this explicitly selected readout limit')
+    if expected_mesh_counts is not None:
+        counts = (len(metadata.get('rest_nodes_m', [])), len(metadata.get('elements_hex8', [])))
+        if counts != expected_mesh_counts:
+            raise ValueError('Mesh node/cell counts differ from the explicit resolution declaration')
     mesh=HexMesh.from_manifest(metadata);X=mesh.rest_nodes_m
     if mesh.radius_m!=.004 or mesh.height_m!=.00489159:
         raise ValueError('Specimen geometry differs from fixed declaration')
@@ -65,8 +138,8 @@ def read_run(root, bindings, *, protocol_sha256, expected_branch, expected_mesh_
     with ExitStack() as stack:
         node_stream=stack.enter_context(local_path(root,bindings['nodes']['path']).open(encoding='utf-8',errors='strict'))
         element_stream=stack.enter_context(local_path(root,bindings['elements']['path']).open(encoding='utf-8',errors='strict'))
-        node_records=iter_data_records(node_stream,expected_times=times,item_count=len(X),field_count=9,record_name='mechanics_nodes_si')
-        element_records=iter_data_records(element_stream,expected_times=times,item_count=mesh.element_count,field_count=8,record_name='mechanics_elements_si')
+        node_records=record_reader(node_stream,expected_times=times,item_count=len(X),field_count=9,record_name='mechanics_nodes_si')
+        element_records=record_reader(element_stream,expected_times=times,item_count=mesh.element_count,field_count=8,record_name='mechanics_elements_si')
         for nodes,elements in itertools.zip_longest(node_records,element_records):
             if nodes is None or elements is None or nodes['step']!=elements['step']:
                 raise ValueError('Unsynchronized complete primitive states required')

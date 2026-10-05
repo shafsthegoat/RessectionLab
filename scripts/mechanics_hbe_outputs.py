@@ -13,6 +13,35 @@ import numpy as np
 
 def iter_data_records(lines, *, expected_times, item_count, field_count, record_name,
                       maximum_bytes=256*1024**2):
+    """Original specimen parser; the 20,000-item limit remains unchanged."""
+    return _iter_data_records(
+        lines, expected_times=expected_times, item_count=item_count,
+        field_count=field_count, record_name=record_name,
+        maximum_bytes=maximum_bytes, maximum_items=20000,
+    )
+
+
+def iter_resolution_records(lines, *, expected_times, item_count, field_count, record_name,
+                            declaration_sha256, maximum_bytes=256*1024**2):
+    """Separate declared S60 resolution study, capped at 25,000 items.
+
+    The study readout verifies the declaration file and exact case identity.
+    A hash here records that explicit selection; this parser grants no access.
+    """
+    if not isinstance(declaration_sha256, str) or re.fullmatch(r'[0-9a-f]{64}', declaration_sha256) is None:
+        raise ValueError('An explicit resolution declaration SHA256 is required')
+    times = tuple(float(t) for t in expected_times)
+    if len(times) != 61 or any(not math.isfinite(t) or abs(t-i/60) > 2e-15 for i, t in enumerate(times)):
+        raise ValueError('Resolution study requires exactly the declared S60 grid')
+    return _iter_data_records(
+        lines, expected_times=times, item_count=item_count,
+        field_count=field_count, record_name=record_name,
+        maximum_bytes=maximum_bytes, maximum_items=25000,
+    )
+
+
+def _iter_data_records(lines, *, expected_times, item_count, field_count, record_name,
+                       maximum_bytes, maximum_items):
     times=tuple(float(t) for t in expected_times)
     if len(times)<2 or times[0]!=0 or times[-1]!=1 or not all(math.isfinite(t) for t in times) or any(b<=a for a,b in zip(times,times[1:])):
         raise ValueError('Declared complete rest-to-load time grid required')
@@ -21,7 +50,7 @@ def iter_data_records(lines, *, expected_times, item_count, field_count, record_
     printed_times=tuple(float(format(t,'.9g')) for t in times)
     if len(set(printed_times))!=len(times):
         raise ValueError('Time grid aliases in primitive header precision')
-    if not isinstance(item_count,int) or not 1<=item_count<=20000 or not isinstance(field_count,int) or not 1<=field_count<=16:
+    if not isinstance(item_count,int) or not 1<=item_count<=maximum_items or not isinstance(field_count,int) or not 1<=field_count<=16:
         raise ValueError('Invalid bounded output dimensions')
     count=0; total_bytes=0; record=None
 
