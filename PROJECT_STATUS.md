@@ -45,26 +45,33 @@ check. The checksum-only helper has 37 passing offline controls; three lifecycle
 review failures were repaired and retained. After a separate source-bound release,
 one public checksum transfer succeeded in 5.324132 seconds with 61,787 bytes and
 parent acceptance. All 12 selected image paths occur in the 720-path index, but
-the file gives neither payload lengths nor a checksum algorithm label. No patient
-image was transferred; image acquisition remains disabled pending those gates.
+the file gives neither payload lengths nor a checksum algorithm label. That
+checksum-only run transferred no patient image.
 The combined observation and acquisition integration check passed all 109 focused
 tests in 4.81 seconds. See `artifacts/rhuh-checksum-transfer-v1/RESULT.md` and
 `artifacts/validation/observation-acquisition-integration-v1/verification.json`.
 An independent saved-record audit accepts the received checksum metadata. The
 documented link-listing API did not establish compressed target lengths. A
-separate prospective single-T1 acquisition experiment is therefore proposed:
-one exact preoperative image, a 64-MiB retained-file cap, measured post-transfer
-length and a fixed MD5-over-compressed-bytes compatibility test. The original
-12-file declaration remains unmet and unchanged; no image transfer or decoding
-has been released. See `artifacts/rhuh-single-image-acquisition-proposal-v2/`.
+separate prospective single-T1 acquisition experiment has now completed after
+its own reviewed preparation, source archive and committed execution release.
+The shared transfer helpers passed 86 focused controls, including all 37 original
+checksum tests. One invocation received 6,337,221 compressed bytes in 11.450222
+supervised seconds; the fixed MD5-over-compressed-bytes candidate matched the
+published token. The independent audit reconciled the original bytes, release,
+23 archived files and parent/worker receipts. Original bytes remain read-only in
+local quarantine. This establishes byte-domain compatibility for one file;
+the publisher's algorithm and prior length remain unconfirmed. Header, voxel and
+anatomical inspection have not run. The original 12-file declaration remains
+unmet and unchanged, and decoding/scientific use remain unreleased. See
+`artifacts/rhuh-single-image-acquisition-v2/RESULT.md`.
 
 The RHUH public table has 40 patients and 14 recorded postoperative deficits
 (six transient, six minor persistent, two major persistent); 26 are recorded `No`.
 Exact clinical timing, affected domain, baseline focal deficit and category
 definitions are absent. It supports a small observational baseline, not route
 risk or new surgery-caused deficit. The public processed imaging inventory has
-720 names, but image bytes, ADC units and segmentation semantics need checking;
-no patient image or injury label was accepted. BTC has five candidate TRAIN
+720 names. One T1 payload now has accepted byte/provenance checks; image geometry,
+ADC units, segmentation semantics and injury labels remain unvalidated. BTC has five candidate TRAIN
 follow-up pairs in metadata, but individual cross-release linkage remains
 unverified; no outcome rows or protected content were opened. The independent
 63-patient Figshare release has complete paired matrices and cognitive scores,

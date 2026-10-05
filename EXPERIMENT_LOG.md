@@ -1449,3 +1449,24 @@ unchanged distance/axis/sign ordering. It neither replaces the baseline nor
 certifies complete strokes. No patient arrays or learning ran in this slice.
 Exact-source negative evidence is in `artifacts/native-ingress-review-v1/` and
 the binding review is in `artifacts/training-observation-binding-review-v1/`.
+
+## October 5, 2026 — one preselected image passes compressed-byte compatibility
+
+The separate single-T1 proposal was implemented with shared transfer controls;
+86 focused tests passed, including all 37 existing checksum controls. The exact
+source archive and explicit execution release were committed before one local
+preflight and one transfer. The public RHUH-0001 visit-0 T1 source delivered
+6,337,221 compressed bytes in 11.450222 supervised seconds (11.535158 seconds at
+the outer launcher), with parent acceptance and exit 0. The fixed candidate MD5
+over original compressed bytes matched the published token. Size was measured
+after transfer under the 64-MiB retained-file cap; prior length remains unknown.
+
+An independent audit hashed the original twice, reconciled source/release and
+parent/worker records, and verified 23 archived files against Git/current bytes.
+It retained a checker correction for subsecond versus whole-second Git timestamps.
+Original image bytes remain unchanged and read-only in ignored local quarantine.
+Neither the publisher's algorithm nor anatomy is verified by this compatibility
+result. No header, voxels, surgical observations or new patient outcomes were
+inspected. The original 12-file acquisition declaration remains unmet; no decode,
+scientific use or learning was released. Evidence is retained in
+`artifacts/rhuh-single-image-acquisition-v2/`.
