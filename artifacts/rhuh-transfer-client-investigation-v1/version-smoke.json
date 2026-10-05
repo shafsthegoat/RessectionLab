@@ -1,0 +1,22 @@
+{
+  "schema": "rhuh-transfer-client-version-smoke-v1",
+  "checked_at": "2026-10-05T05:16:49.082365+00:00",
+  "preparation_commit": "556cbc9",
+  "argv": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/rhuh-transfer-client-inspection-v1/inspected/ibm-aspera-transfer-sdk-macos-arm64-1.1.9/bin/ascp",
+    "-A"
+  ],
+  "binary_sha256": "0d73689f6a4d5b6f7ddd90a86459be0aa211b53d40c9e01b80bed5f44f793c4e",
+  "signature_exit_code": 0,
+  "mode_before": "0o644",
+  "mode_after": "0o744",
+  "returncode": 0,
+  "elapsed_seconds": 0.43007087499999996,
+  "stdout": "Product version information not found.\nascp version 4.4.8.2592 6a5e6bf\nOperating System: MacOSX\nLicense max rate=(unlimited), account no.=1, license no.=56\nEnabled settings: stream and sync2\n",
+  "stderr": "",
+  "network_destination_specified": false,
+  "transfer_credentials_provided": false,
+  "patient_payload_requested": false,
+  "system_installation": false,
+  "binary_bytes_unchanged": true
+}
