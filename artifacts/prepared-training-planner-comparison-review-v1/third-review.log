@@ -1,0 +1,27 @@
+..............F                                                          [100%]
+=================================== FAILURES ===================================
+______ test_imported_resectionlab_module_outside_frozen_root_is_rejected _______
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-608/test_imported_resectionlab_mod0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x110635d30>
+
+    def test_imported_resectionlab_module_outside_frozen_root_is_rejected(tmp_path, monkeypatch):
+        from types import ModuleType
+        root = tmp_path / "archive"
+        root.mkdir()
+        external = tmp_path / "mutable_checkout" / "intruder.py"
+        external.parent.mkdir()
+        external.write_text("# outside captured source root\n")
+        module = ModuleType("resectionlab._independent_external_probe")
+        module.__file__ = str(external)
+        monkeypatch.setattr(runner, "ROOT", root)
+        # Limit inspection to this explicit test module; no real module is imported.
+        monkeypatch.setattr(runner, "sys", SimpleNamespace(modules={module.__name__: module}))
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_compare_prepared_training_planners_review.py:223: Failed
+=========================== short test summary info ============================
+FAILED tests/test_compare_prepared_training_planners_review.py::test_imported_resectionlab_module_outside_frozen_root_is_rejected
+1 failed, 14 passed in 0.88s

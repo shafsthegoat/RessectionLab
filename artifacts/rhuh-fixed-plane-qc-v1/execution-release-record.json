@@ -1,0 +1,13 @@
+{
+  "released_at_utc": "2026-10-05T07:43:27.340942+00:00",
+  "source_commit": "abd2af40d91c647e29ba21de526a4bf84e92752c",
+  "release_sha256": "ff8c8d9005e0e60055de5867fae52ee5fcd59cfad59dbb80b2ce2ced0000f942",
+  "source_archive_sha256": "74d03e76fed057e3d6f50000ba11fe1b3a7288f3ed56af0950aeca8aa62f085c",
+  "settings": {
+    "max_wall_seconds": 60.0,
+    "max_rss_bytes": 2147483648
+  },
+  "supervisor_source_sha256": "cfac175b072dbd8218c19f079d7ec3fa9143966b5059fe4cdfd918dff818ed3f",
+  "scope": "One local fixed-plane display, two decompressions of the same original snapshot, no acquisition, support derivation, case import or training",
+  "resource_scope": "Existing supervisor bounds worker wall time and sampled worker RSS; root records complete call time separately. Fixed plane view cannot validate unsampled anatomy."
+}

@@ -1,0 +1,153 @@
+.FFFFFFFF                                                                [100%]
+=================================== FAILURES ===================================
+_ test_missing_arm_or_wrong_patient_cannot_publish_complete_comparison[empty] __
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-603/test_missing_arm_or_wrong_pati0')
+change = 'empty'
+
+    @pytest.mark.parametrize("change", ["empty", "missing_stop", "wrong_subject"])
+    def test_missing_arm_or_wrong_patient_cannot_publish_complete_comparison(tmp_path, change):
+        def mutate(row):
+            if change == "empty":
+                row["arms"] = {}
+            elif change == "missing_stop":
+                del row["arms"]["STOP"]
+            else:
+                row["subject"] = "sub-PAT26"
+        write_patient(tmp_path, mutate=mutate)
+>       assert runner.summarize(tmp_path)["complete_comparisons"] == 0
+E       assert 1 == 0
+
+tests/test_compare_prepared_training_planners_review.py:69: AssertionError
+_ test_missing_arm_or_wrong_patient_cannot_publish_complete_comparison[missing_stop] _
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-603/test_missing_arm_or_wrong_pati1')
+change = 'missing_stop'
+
+    @pytest.mark.parametrize("change", ["empty", "missing_stop", "wrong_subject"])
+    def test_missing_arm_or_wrong_patient_cannot_publish_complete_comparison(tmp_path, change):
+        def mutate(row):
+            if change == "empty":
+                row["arms"] = {}
+            elif change == "missing_stop":
+                del row["arms"]["STOP"]
+            else:
+                row["subject"] = "sub-PAT26"
+        write_patient(tmp_path, mutate=mutate)
+>       assert runner.summarize(tmp_path)["complete_comparisons"] == 0
+E       assert 1 == 0
+
+tests/test_compare_prepared_training_planners_review.py:69: AssertionError
+_ test_missing_arm_or_wrong_patient_cannot_publish_complete_comparison[wrong_subject] _
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-603/test_missing_arm_or_wrong_pati2')
+change = 'wrong_subject'
+
+    @pytest.mark.parametrize("change", ["empty", "missing_stop", "wrong_subject"])
+    def test_missing_arm_or_wrong_patient_cannot_publish_complete_comparison(tmp_path, change):
+        def mutate(row):
+            if change == "empty":
+                row["arms"] = {}
+            elif change == "missing_stop":
+                del row["arms"]["STOP"]
+            else:
+                row["subject"] = "sub-PAT26"
+        write_patient(tmp_path, mutate=mutate)
+>       assert runner.summarize(tmp_path)["complete_comparisons"] == 0
+E       assert 1 == 0
+
+tests/test_compare_prepared_training_planners_review.py:69: AssertionError
+_ test_failed_parent_authority_cannot_publish_even_if_worker_payload_completed[supervisor0] _
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-603/test_failed_parent_authority_c0')
+supervisor = {'status': 'failed', 'returncode': 1, 'timed_out': False, 'termination_reason': 'worker_error'}
+
+    @pytest.mark.parametrize("supervisor", [
+        {"status": "failed", "returncode": 1, "timed_out": False, "termination_reason": "worker_error"},
+        {"status": "failed", "returncode": 0, "timed_out": True, "termination_reason": "parent_wall_budget_exceeded"},
+    ])
+    def test_failed_parent_authority_cannot_publish_even_if_worker_payload_completed(tmp_path, supervisor):
+        write_patient(tmp_path, supervisor=supervisor)
+>       assert runner.summarize(tmp_path)["complete_comparisons"] == 0
+E       assert 1 == 0
+
+tests/test_compare_prepared_training_planners_review.py:78: AssertionError
+_ test_failed_parent_authority_cannot_publish_even_if_worker_payload_completed[supervisor1] _
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-603/test_failed_parent_authority_c1')
+supervisor = {'status': 'failed', 'returncode': 0, 'timed_out': True, 'termination_reason': 'parent_wall_budget_exceeded'}
+
+    @pytest.mark.parametrize("supervisor", [
+        {"status": "failed", "returncode": 1, "timed_out": False, "termination_reason": "worker_error"},
+        {"status": "failed", "returncode": 0, "timed_out": True, "termination_reason": "parent_wall_budget_exceeded"},
+    ])
+    def test_failed_parent_authority_cannot_publish_even_if_worker_payload_completed(tmp_path, supervisor):
+        write_patient(tmp_path, supervisor=supervisor)
+>       assert runner.summarize(tmp_path)["complete_comparisons"] == 0
+E       assert 1 == 0
+
+tests/test_compare_prepared_training_planners_review.py:78: AssertionError
+_ test_completed_budget_label_cannot_override_recorded_resource_violation[failure-native_preview_entry_limit] _
+
+key = 'failure', value = 'native_preview_entry_limit'
+
+    @pytest.mark.parametrize("key,value", [
+        ("failure", "native_preview_entry_limit"),
+        ("blocked_preview_attempts", 1),
+        ("time_overshoot_seconds", .001),
+    ])
+    def test_completed_budget_label_cannot_override_recorded_resource_violation(key, value):
+        row = valid_arm()
+        row["planning_budget"][key] = value
+>       assert not runner.validate_completed_arm(row, row["initial_binding"])
+E       AssertionError: assert not True
+E        +  where True = <function validate_completed_arm at 0x107426a20>({'name': 'STOP', 'status': 'complete', 'initial_binding': {'source_hash': 'source', 'model_hash': 'model', 'initial_st...state'}, 'final_initial_binding': {'source_hash': 'source', 'model_hash': 'model', 'initial_state_hash': 'state'}, ...}, {'source_hash': 'source', 'model_hash': 'model', 'initial_state_hash': 'state'})
+E        +    where <function validate_completed_arm at 0x107426a20> = runner.validate_completed_arm
+
+tests/test_compare_prepared_training_planners_review.py:89: AssertionError
+_ test_completed_budget_label_cannot_override_recorded_resource_violation[blocked_preview_attempts-1] _
+
+key = 'blocked_preview_attempts', value = 1
+
+    @pytest.mark.parametrize("key,value", [
+        ("failure", "native_preview_entry_limit"),
+        ("blocked_preview_attempts", 1),
+        ("time_overshoot_seconds", .001),
+    ])
+    def test_completed_budget_label_cannot_override_recorded_resource_violation(key, value):
+        row = valid_arm()
+        row["planning_budget"][key] = value
+>       assert not runner.validate_completed_arm(row, row["initial_binding"])
+E       AssertionError: assert not True
+E        +  where True = <function validate_completed_arm at 0x107426a20>({'name': 'STOP', 'status': 'complete', 'initial_binding': {'source_hash': 'source', 'model_hash': 'model', 'initial_st...state'}, 'final_initial_binding': {'source_hash': 'source', 'model_hash': 'model', 'initial_state_hash': 'state'}, ...}, {'source_hash': 'source', 'model_hash': 'model', 'initial_state_hash': 'state'})
+E        +    where <function validate_completed_arm at 0x107426a20> = runner.validate_completed_arm
+
+tests/test_compare_prepared_training_planners_review.py:89: AssertionError
+_ test_completed_budget_label_cannot_override_recorded_resource_violation[time_overshoot_seconds-0.001] _
+
+key = 'time_overshoot_seconds', value = 0.001
+
+    @pytest.mark.parametrize("key,value", [
+        ("failure", "native_preview_entry_limit"),
+        ("blocked_preview_attempts", 1),
+        ("time_overshoot_seconds", .001),
+    ])
+    def test_completed_budget_label_cannot_override_recorded_resource_violation(key, value):
+        row = valid_arm()
+        row["planning_budget"][key] = value
+>       assert not runner.validate_completed_arm(row, row["initial_binding"])
+E       AssertionError: assert not True
+E        +  where True = <function validate_completed_arm at 0x107426a20>({'name': 'STOP', 'status': 'complete', 'initial_binding': {'source_hash': 'source', 'model_hash': 'model', 'initial_st...state'}, 'final_initial_binding': {'source_hash': 'source', 'model_hash': 'model', 'initial_state_hash': 'state'}, ...}, {'source_hash': 'source', 'model_hash': 'model', 'initial_state_hash': 'state'})
+E        +    where <function validate_completed_arm at 0x107426a20> = runner.validate_completed_arm
+
+tests/test_compare_prepared_training_planners_review.py:89: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_compare_prepared_training_planners_review.py::test_missing_arm_or_wrong_patient_cannot_publish_complete_comparison[empty]
+FAILED tests/test_compare_prepared_training_planners_review.py::test_missing_arm_or_wrong_patient_cannot_publish_complete_comparison[missing_stop]
+FAILED tests/test_compare_prepared_training_planners_review.py::test_missing_arm_or_wrong_patient_cannot_publish_complete_comparison[wrong_subject]
+FAILED tests/test_compare_prepared_training_planners_review.py::test_failed_parent_authority_cannot_publish_even_if_worker_payload_completed[supervisor0]
+FAILED tests/test_compare_prepared_training_planners_review.py::test_failed_parent_authority_cannot_publish_even_if_worker_payload_completed[supervisor1]
+FAILED tests/test_compare_prepared_training_planners_review.py::test_completed_budget_label_cannot_override_recorded_resource_violation[failure-native_preview_entry_limit]
+FAILED tests/test_compare_prepared_training_planners_review.py::test_completed_budget_label_cannot_override_recorded_resource_violation[blocked_preview_attempts-1]
+FAILED tests/test_compare_prepared_training_planners_review.py::test_completed_budget_label_cannot_override_recorded_resource_violation[time_overshoot_seconds-0.001]
+8 failed, 1 passed in 0.13s

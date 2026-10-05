@@ -1,0 +1,75 @@
+{
+  "actual_operations": {
+    "commits": 0,
+    "committed_transitions": 0,
+    "ingress_screens": 0,
+    "native_constructors": 0,
+    "native_previews": 0,
+    "optimizer_updates": 0,
+    "patient_arrays": 0,
+    "patient_or_checkpoint_reads": 0,
+    "policy_forwards": 0,
+    "releases": 0,
+    "saved_metadata_files": 3
+  },
+  "documentation_sha256": "f656fe635740362e8e3662c8616cf53a73f97fb3bc63bbaaadd16ce72a3afcbb",
+  "independent_tests": {
+    "all_source_and_historical_metadata_unchanged": true,
+    "first_run_passed": true,
+    "log": "initial-independent-tests.txt",
+    "log_sha256": "052e36d334c66d1f2d5fb835d0e859dae632679b544b3afd3bd87d39974570ed",
+    "passed": 70,
+    "pytest_seconds": 0.72,
+    "run_receipt_sha256": "c0ce04f4e032557da594cd69344b96dea1897d78a9b06b30e246019ffba52ff8"
+  },
+  "limitations": [
+    "Task construction, binary annotation checking, AccessWindow conversion and shared derivation were mocked with dictionary/list metadata and distinct sentinels. No patient source arrays were opened or traversed.",
+    "The real caller must still authenticate the original source bundle/support and construct the frozen initial task before actual rederivation.",
+    "This adapter supplies canonical metadata only: no ingress screening, new access selection, selected inventory, learning or clinical validation."
+  ],
+  "owner_controls": {
+    "initial_errors": "Two test-only RewardSpec import-path collection errors, corrected in owner tests; no production failure claimed.",
+    "reported_passed": 53,
+    "reported_pytest_seconds": 0.63,
+    "retained_logs": {
+      "owner-final-tests.txt": "7fd5b1af56ecef0585e0e23dcba961a913dc391306fae63f85fca12ffd290628",
+      "owner-initial-import-error.txt": "3573929a8277a3512fa4876c5ff8b5b1113a6a06fe95006bb027f8ea8964e841",
+      "owner-second-import-error.txt": "05f6ae6641bc7c4366e3b41d54388cb8dab1dfaa0c549db2017ac0df41a6de33"
+    }
+  },
+  "owner_tests_sha256": "9260ef959f882269e17c0802c2d10fff10b15f57a5e42e6d228304f1aedfb2f5",
+  "provenance": {
+    "actual_patient_boundary_rederivation_performed": false,
+    "current_shared_rule_fields": [
+      "rule",
+      "selection_uses_reward_or_native_preview"
+    ],
+    "historical_procedure_track_and_source_grid_claims": "retained separately without schema backfill",
+    "historically_missing_fields": [
+      "six_axis_exit_distances_mm[*].boundary_voxel"
+    ]
+  },
+  "schema_version": 1,
+  "scope": "offline PAT05 canonical metadata adapter review; no actual patient rederivation or execution authorization",
+  "source_and_historical_metadata_hashes": {
+    "artifacts/pat05-real-geometric-learning-v1/declaration-input.json": "d69c9b6cf1f0f329d698c3857bca13efaa4a4a9a7b424208711affd4ac8480f4",
+    "artifacts/pat05-real-geometric-learning-v1/receipt.json": "fdc575e6695a7f949f65de93e7165f7833b514fcd193094a24ac3e0f94e7ee77",
+    "artifacts/pat05-real-spatial-profile-v3/nominal64/declaration-input.json": "5a27d1815a728d05c9d6d69d3f04e7ac9b87edb61c5f7ff752ab9bcb0b00df64",
+    "scripts/diagnose_training_observation_coverage.py": "9c4432777fb1556b58693f652af94b8f292045c00cf54d04e954c239c5979daf",
+    "scripts/pat05_access_preparation.py": "cf951f2e29f912427f6d3a1a12214dc7d3ffdff46e4dbf8cb9a10f2d40a49b6d",
+    "src/resectionlab/native_access_preparation.py": "898f8ea389a251faeab9efe296f523560b7fe61fe459c07ef7b269345e4b5ecd",
+    "tests/test_pat05_access_preparation_review.py": "e1f5a1687639b638d1b05b302da7d54eeb05088287ec3ed796a4fb6ec56b585e"
+  },
+  "status": "passed",
+  "verified_contracts": [
+    "bounded loader opens exactly three pinned historical JSON metadata records; semantically unchanged resealed bytes reject before task access",
+    "20 complete runtime grid fields each reject exact-value/type changes, including one-ULP float changes; missing/extra fields and bool-number reinterpretation reject",
+    "complete-grid receipt path/hash/pointer remain pinned before derivation",
+    "all recorded centroid/representative/selected boundary/depth/cortical-access fields match the current canonical projection exactly",
+    "all six ordered axis/sign/distance triples and all selected-access fields match historical metadata exactly",
+    "expected source/model comes from executed learning metadata; objective/horizon match the learning definition rather than the earlier profile",
+    "only permitted nominal/support/original-frame sentinels are forwarded to shared derive_access; evaluator reference field is unread",
+    "noninitial tasks refuse; final grid and state changes refuse metadata",
+    "immutable output distinguishes historically verified values from current rule labels and six newly rederived boundary coordinates; original historical records stay unchanged"
+  ]
+}

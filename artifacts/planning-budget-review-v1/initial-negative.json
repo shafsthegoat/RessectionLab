@@ -1,0 +1,19 @@
+{
+  "schema": "planning-budget-independent-initial-negative-v1",
+  "source_sha256": {
+    "src/resectionlab/planning_budget.py": "b1c1ee95c0b5d83fd110d072e699659877694b6d69aa45eb7107da28c30e3eb9",
+    "tests/test_planning_budget_review.py": "80db810ae993100336d54b8193d8f646e737de9af93fd7b9fb9fbcba9db97bf1",
+    "tests/test_planning_budget.py": "e8876064742f2c29582d8126577f77177e2824da4a14ed89d2365e9937acfb2d"
+  },
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_planning_budget_review.py"
+  ],
+  "exit_code": 1,
+  "elapsed_seconds": 1.3520885419566184,
+  "log_sha256": "3a5db43440a54820cf2b98c935a97606251c37e77778eb07902fdb2057869534",
+  "scope": "one mocked inherited-method restoration control; no native/patient/learning calls"
+}

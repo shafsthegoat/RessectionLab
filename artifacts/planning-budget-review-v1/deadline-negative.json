@@ -1,0 +1,20 @@
+{
+  "schema": "planning-budget-independent-deadline-negative-v1",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_planning_budget_review.py",
+    "-k",
+    "exact_deadline"
+  ],
+  "exit_code": 1,
+  "elapsed_seconds": 1.3555115000344813,
+  "sources": {
+    "src/resectionlab/planning_budget.py": "b6cafa3b8226573da8791695b647f96f1979a73d0ffb4ea6d370ffef32046357",
+    "tests/test_planning_budget_review.py": "d2cd2c33c8d9b0f91e8c8f9edb697ed3e4cc820c4c83b53129599699006b1da5"
+  },
+  "log_sha256": "5e840707f2c6531b5838761e26a87e1a49ef0f5eb5214d0281498e7223823112",
+  "scope": "mocked exact deadline entry/request; no native scientific work"
+}

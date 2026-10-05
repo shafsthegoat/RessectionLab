@@ -1,0 +1,23 @@
+{
+  "schema": "planning-budget-independent-focused-run-v1",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_planning_budget_review.py"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 1.35626354184933,
+  "source_sha256": {
+    "src/resectionlab/planning_budget.py": "b6cafa3b8226573da8791695b647f96f1979a73d0ffb4ea6d370ffef32046357",
+    "src/resectionlab/spatial_policy_diagnostics.py": "257d355a017023831621107800d029b813f7036e1af6a8a16fd38e5760066493",
+    "src/resectionlab/native_spatial_task.py": "61b3d8167152d06a578e1ab7c146b7af937d86ccca6ed9e20bf3081cbf2f6711",
+    "tests/test_planning_budget.py": "e8876064742f2c29582d8126577f77177e2824da4a14ed89d2365e9937acfb2d",
+    "tests/test_planning_budget_review.py": "15343afe01778df529be9c9dc9d6aa17c2fa74219bff7a3f7b7a86c3b1c0ba29",
+    "docs/planning-budget.md": "487d512e0517a2ce7e75bbfc326dcbbe97bfb176bd73db796bab69a18fd8e1c6"
+  },
+  "all_bound_files_unchanged": true,
+  "log_sha256": "9310e07460e1e1037cf31bdbefd08845ca0e474185306e5096e58bfc06380097",
+  "scope": "mocked calls and clocks; no actual native geometry, patient, model, checkpoint or scientific execution"
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "resectionlab.saved-decision-diagnostic-independent-check.v1",
+  "accepted": true,
+  "checked_at": "2026-10-05T07:33:42.497058+00:00",
+  "checker": {
+    "path": "artifacts/frozen-transfer-decision-diagnostic-v1/independent-check.py",
+    "sha256": "bcd7603c5d1a04cbea45b94af659335c195dd12b419c69b54fb2efff6be7000a"
+  },
+  "analysis_source_sha256": "792b248d27df8b380f0939abe46453a66a66133afdbc63d6bb64a6d33afbf332",
+  "analysis_summary_sha256": "0096c79d7c4fd2bbdd66cc8e8320ca01d432d6ad2cbd654ec49fecb37489704b",
+  "original_archive_sha256": "ee11dc1b7ca194a43c51ea7bac0194e62c7c6d00a89329c5dbccc52bfde9bfea",
+  "read_json_members_sha256": {
+    "summary.json": "9ba600c760739851cb21a42bece5c8721f871f2400e4b8ad45eaad0a4be5a6d2",
+    "declaration-input.json": "9981dd90217e57b1fd8c6ff62580e9c1c7c9cefe991537e8b056ec68ab4756a5",
+    "sub-PAT22/frozen_policy.json": "8bd5de68e0232fab416a0df39b27b155c3f4e7a96e9128c55593525ef12c1407",
+    "sub-PAT22/greedy_search.json": "ba462cc372ec652965ec76fc68ffee881e18ce67c3616fd7ba2934c1a7d4547b",
+    "sub-PAT25/frozen_policy.json": "0a49821f44bbe61265a18cf4c6c73828a08d695a11ce34fda4a44fc009544776",
+    "sub-PAT25/greedy_search.json": "c957c1aa665ba5cd999a5c6d848e751575ded63acddf3b331dd75e45191a86fa",
+    "sub-PAT28/frozen_policy.json": "33fd109742e4773cb4f9e09eda5393b946d822713a9246b85134471537cd961a",
+    "sub-PAT28/greedy_search.json": "143f6f9454bff4a463fe4b23ae643fe5f286e66345d9cc7e2ec6842aaf056e2a"
+  },
+  "prescribed_train_cases": 5,
+  "blocked_cases": 2,
+  "complete_primary_pairs": 3,
+  "stop_only_primary_pairs": 1,
+  "patients": [
+    {
+      "subject": "sub-PAT16",
+      "status": "blocked_support_conflict",
+      "diagnostic": null
+    },
+    {
+      "subject": "sub-PAT20",
+      "status": "blocked_support_conflict",
+      "diagnostic": null
+    },
+    {
+      "subject": "sub-PAT22",
+      "status": "complete",
+      "legal_actions": 77,
+      "policy_action": "nominal-cavity-52a752d3bf00dba2333c7b71",
+      "greedy_action": "nominal-cavity-b68d498f9fe1af412016ab9f",
+      "greedy_rank_tie_interval": [
+        8,
+        8
+      ],
+      "entropy_nats": 4.33143464769707,
+      "maximum_entropy_nats": 4.343805421853684,
+      "deterministic_argmax_verified": true,
+      "episode_returns": [
+        672.29700461716,
+        789.0966581094328
+      ],
+      "first_step_greedy_minus_policy": 9.797970926611242,
+      "later_steps_arithmetic_only": 107.00168256566167,
+      "total_greedy_minus_policy": 116.7996534922728
+    },
+    {
+      "subject": "sub-PAT25",
+      "status": "complete",
+      "legal_actions": 1,
+      "policy_action": "STOP",
+      "greedy_action": "STOP",
+      "greedy_rank_tie_interval": [
+        1,
+        1
+      ],
+      "entropy_nats": 0.0,
+      "maximum_entropy_nats": 0.0,
+      "deterministic_argmax_verified": true,
+      "episode_returns": [
+        0.0,
+        0.0
+      ],
+      "first_step_greedy_minus_policy": 0.0,
+      "later_steps_arithmetic_only": 0.0,
+      "total_greedy_minus_policy": 0.0
+    },
+    {
+      "subject": "sub-PAT28",
+      "status": "complete",
+      "legal_actions": 71,
+      "policy_action": "nominal-cavity-e5bed1ae7e6f601a97e2f46d",
+      "greedy_action": "nominal-cavity-2acb00f30b55cdc9f11c9038",
+      "greedy_rank_tie_interval": [
+        4,
+        4
+      ],
+      "entropy_nats": 4.24933709774664,
+      "maximum_entropy_nats": 4.2626798770413155,
+      "deterministic_argmax_verified": true,
+      "episode_returns": [
+        493.53401291943857,
+        612.5377750441783
+      ],
+      "first_step_greedy_minus_policy": 19.99796002099049,
+      "later_steps_arithmetic_only": 99.00580210374926,
+      "total_greedy_minus_policy": 119.0037621247397
+    }
+  ],
+  "source_and_archive_unchanged": true,
+  "checker_failures": [],
+  "patient_array_files_opened": 0,
+  "checkpoint_loads": 0,
+  "model_forwards": 0,
+  "native_runs": 0,
+  "updates": 0,
+  "scope": "Hash-pinned saved TRAIN decision JSON only; no producer import or execution. No patient-array/checkpoint members were opened and no cell or voxel arrays were used for these calculations.",
+  "interpretation": [
+    "PAT16 and PAT20 remain blocked/null; PAT25 remains a legitimate STOP-only zero-return result.",
+    "PAT22 and PAT28 share the initial observation across methods, then follow different actions and different later observations.",
+    "Later-step reward subtraction is descriptive, not a causal attribution, controlled state comparison or counterfactual regret.",
+    "Near-maximum categorical entropy describes stored action probabilities; actual selections are deterministic argmax. It is neither clinical uncertainty nor evidence of random argmax behavior.",
+    "This is post-hoc arithmetic on development TRAIN cases, not held-out generalization or surgical validation."
+  ]
+}

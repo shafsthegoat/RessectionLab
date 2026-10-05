@@ -9,6 +9,7 @@ by this ledger. Updated October 5, 2026 UTC; existing patient splits remain fixe
 | Search labels teach useful choices / baseline adaptation | BC8 raises PAT05 score to139.90; later choices still remove other tissue without target | PROMOTE diagnostic, not efficacy | Match extra optimization against new state coverage |
 | Learner-visited states repair later choices / DAgger adaptation | Same starting weights/Adam;8 extra updates×6 examples each:290.51 augmented vs239.11 control; search410.31 | PROMOTE development transfer | Separate real TRAIN anatomy; no repeated PAT05-only tuning |
 | Frozen ranking helps on different anatomy / adaptation | Precision repeat: PAT22 672.30 vs greedy789.10; PAT28 493.53 vs612.54; PAT25 no legal motions; PAT16/20 support conflicts; all nine episodes audited | HOLD population training | Diagnose access/proposal coverage from saved records; preserve failures and all five patients in the denominator |
+| Weakly separated sequential rankings explain part of transfer failure / diagnostic hypothesis | Saved first-state greedy choices rank8/77 and4/71; entropy fractions0.997152/0.996870; independent arithmetic audit passes | INVESTIGATE after fixed preparation comparison | Later states diverge; large later reward remainders are descriptive, not causal. No new training or architecture conclusion |
 | Shortest local exit supplies a useful full-tool access / geometric assumption | PAT25 original78shaft failures all occur before insertion; other five fixed exits accept58–78 previews, but two hide the whole target from the actor crop | REVISE prospective access/input contract | Whole-shaft ingress plus explicit actor coverage; same allowed alternatives for every method; original STOP-only result stays unchanged |
 | Fixed initial whole-tool ingress screening restores action availability / preparation repair | PAT25 committed comparison: all6 exits/468 static checks; shortest of5 eligible exits yields78/78 native previews vs original0/78; target remains100% visible; independent saved audit passes | PROMOTE identical TRAIN preparation comparison | Apply same rule to other permitted TRAIN cases before zero-learning methods comparison; retain outside-image/exposure unknowns and decreased deepest-shaft visibility; no policy gain yet |
 | Target-centered and whole-source views repair missing context / representation hypothesis | Partial fixed TRAIN run: three completed, one failed, two blocked. Legacy/local target mass already100%; local-only shaft visibility decreases; coarse views increase centerline coverage without changing acceptance | RETAIN coarse-context candidate; no learning gain | Correct PAT05 exact-record binding separately; visibility is not full-tool clearance or an access-selection gate |
@@ -45,8 +46,9 @@ released single-image compatibility experiment succeeded. The latter received
 predeclared compressed-byte MD5 candidate; an independent byte/provenance audit
 passed. The separately released format inspection now accepts scalar 240 x 240 x
 155 float32 storage, a numeric 1-mm qform and finite values; its saved-result audit
-also passed. Source-frame interpretation and anatomical visual inspection remain
-next. This does not confirm the publisher's algorithm, supply target/injury labels
+also passed. A fixed three-plane display and saved-result audit now pass; visual
+review leaves inferior anatomical extent unresolved. Registration and full-volume
+coverage remain unaccepted. This does not confirm the publisher's algorithm, supply target/injury labels
 or satisfy the unchanged 12-file declaration. See
 [single-image format evidence](../artifacts/rhuh-single-image-inspection-v1/RESULT.md).
 Observation coverage, full-tool ingress and action coverage remain separate gaps.

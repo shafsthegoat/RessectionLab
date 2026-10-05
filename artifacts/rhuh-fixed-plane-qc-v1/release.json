@@ -1,0 +1,12 @@
+{
+  "schema": "resectionlab.rhuh-fixed-plane-release.v1",
+  "released": true,
+  "action": "fixed_three_planes_two_windows_once",
+  "source": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t1.nii.gz",
+  "renderer_sha256": "fffd3ce06b9bbf4ad7272b56f51c772cf807443c238b20395c468ce792e62926",
+  "decoder_sha256": "268d23d8560c963461f633fe2d66ef581b8bd47e74e6431b89c23d7058979a6f",
+  "inspection_sha256": "7a0bdb595034c519967c7ce044f130d2119d0a361e550d5fd424ba03fbf3c9b1",
+  "inspection_audit_sha256": "822f50da72df1377e58c43d7b3aabd75dc9393cd6fbc9769dce3d650161df07b",
+  "original_compressed_sha256": "b3b9fa69b87221062261b8b16fbddfdac2c678104b354ba371b069fd784e3625",
+  "output_directory": "outputs/rhuh-fixed-plane-qc-v1/run-first"
+}

@@ -1,0 +1,18 @@
+{
+  "renderer_sha256": "fffd3ce06b9bbf4ad7272b56f51c772cf807443c238b20395c468ce792e62926",
+  "owner_controls": {
+    "passed": 32,
+    "pytest_seconds": 1.96,
+    "evidence": "owner tool output; no separate raw log retained"
+  },
+  "independent_controls": {
+    "passed": 7,
+    "pytest_seconds": 0.42,
+    "receipt": "artifacts/rhuh-fixed-plane-review-v1/verification.json",
+    "sha256": "de8469057049f5c27467fdd897fef0aa89587c88ba37a69171b8598e88aa0f48"
+  },
+  "combined_suite_run": false,
+  "final_documentation_sha256": "a14606fa073ff2d8fd163e775c8b31bc2545f0a3608cff6a27c727a6b840af52",
+  "documentation_change_after_review": "pending-to-passed status statement only",
+  "patient_render_released": false
+}

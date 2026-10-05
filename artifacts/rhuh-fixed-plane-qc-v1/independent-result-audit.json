@@ -1,0 +1,248 @@
+{
+  "schema": "resectionlab.rhuh-fixed-plane-saved-result-audit.v1",
+  "accepted_for_saved_render_consistency": true,
+  "audited_at": "2026-10-05T07:48:11.422838+00:00",
+  "reviewer_source": {
+    "path": "artifacts/rhuh-fixed-plane-qc-v1/independent-result-audit.py",
+    "sha256": "6f3e98a2cbc420154266f3f178ac46e17dd6a51a2def9640628a1a8ba94e9a37"
+  },
+  "release_commit": "981f6c9c0d94291db5fc199b3ec145e5e9bb15d0",
+  "source_commit": "abd2af40d91c647e29ba21de526a4bf84e92752c",
+  "committed_release_preceded_execution": true,
+  "archive_current_and_git_files_verified": 13,
+  "source_archive_sha256": "74d03e76fed057e3d6f50000ba11fe1b3a7288f3ed56af0950aeca8aa62f085c",
+  "observed_receipt_bounds": {
+    "whole_call_seconds": 1.696464375127107,
+    "supervised_seconds": 1.6954410830512643,
+    "sampled_worker_rss_bytes": 302055424,
+    "rss_samples": 8,
+    "worker_returncode": 0,
+    "recorded_automatic_retry": false
+  },
+  "declared_fixed_display": {
+    "shape": [
+      240,
+      240,
+      155
+    ],
+    "indices": [
+      120,
+      120,
+      77
+    ],
+    "windows": [
+      [
+        -8.976038932800293,
+        10.492466926574707
+      ],
+      [
+        -3.0,
+        3.0
+      ]
+    ],
+    "independently_recomputed_plane_descriptors": [
+      {
+        "fixed_axis": 0,
+        "index": 120,
+        "horizontal_axis": 1,
+        "vertical_axis": 2,
+        "left": "A",
+        "right": "P",
+        "bottom": "I",
+        "top": "S",
+        "horizontal_step_mm": 1.0,
+        "vertical_step_mm": 1.0,
+        "extent": [
+          -0.5,
+          239.5,
+          -0.5,
+          154.5
+        ]
+      },
+      {
+        "fixed_axis": 1,
+        "index": 120,
+        "horizontal_axis": 0,
+        "vertical_axis": 2,
+        "left": "R",
+        "right": "L",
+        "bottom": "I",
+        "top": "S",
+        "horizontal_step_mm": 1.0,
+        "vertical_step_mm": 1.0,
+        "extent": [
+          -0.5,
+          239.5,
+          -0.5,
+          154.5
+        ]
+      },
+      {
+        "fixed_axis": 2,
+        "index": 77,
+        "horizontal_axis": 0,
+        "vertical_axis": 1,
+        "left": "R",
+        "right": "L",
+        "bottom": "A",
+        "top": "P",
+        "horizontal_step_mm": 1.0,
+        "vertical_step_mm": 1.0,
+        "extent": [
+          -0.5,
+          239.5,
+          -0.5,
+          239.5
+        ]
+      }
+    ],
+    "recorded_snapshot_decompressions": 2
+  },
+  "render_artifacts": {
+    "fixed-planes.png": {
+      "bytes": 419039,
+      "sha256": "3758bf9bce3020774943da6ec4126ea30d937056a40a0297770947974528ecee"
+    },
+    "fixed-planes.svg": {
+      "bytes": 331315,
+      "sha256": "d4290bb06e3470870c7639ae311ec2c888d6cafdfd5cd2c7dece00b5964c6d58"
+    }
+  },
+  "original_compressed_bytes": {
+    "path": "outputs/rhuh-single-image-v2/quarantine/run-kxn_jecp/RHUH-0001_0_t1.nii.gz",
+    "bytes": 6337221,
+    "sha256": "b3b9fa69b87221062261b8b16fbddfdac2c678104b354ba371b069fd784e3625",
+    "mode": "0o444",
+    "stable_during_read": true
+  },
+  "consulted_inputs": {
+    "artifacts/rhuh-fixed-plane-qc-v1/release.json": {
+      "sha256": "ff8c8d9005e0e60055de5867fae52ee5fcd59cfad59dbb80b2ce2ced0000f942",
+      "bytes": 727
+    },
+    "artifacts/rhuh-fixed-plane-qc-v1/root-terminal.json": {
+      "sha256": "f4db98a7f766f9fbc8bdc3470c9cb7c523f2befbe78ddad44132fbc3ba8ea033",
+      "bytes": 1324
+    },
+    "artifacts/rhuh-fixed-plane-qc-v1/execution-release-record.json": {
+      "sha256": "1cbf325c0f0d2a0346a6375115a8ae4f06dd4c3654a5abda74bd4a37001fd474",
+      "bytes": 829
+    },
+    "artifacts/rhuh-fixed-plane-qc-v1/source-archive.json": {
+      "sha256": "7e938454d7f835003ec440446357ea8329bea7682ab991f7ec119b02b8e3e40e",
+      "bytes": 1886
+    },
+    "artifacts/rhuh-fixed-plane-qc-v1/source.tar.gz": {
+      "sha256": "74d03e76fed057e3d6f50000ba11fe1b3a7288f3ed56af0950aeca8aa62f085c",
+      "bytes": 29094
+    },
+    "artifacts/rhuh-fixed-plane-qc-v1/metadata-preflight.json": {
+      "sha256": "918ae153a4e56379a2b97be61918ae410e7d2d26f02ac6b11bc1ffeef6043fcd",
+      "bytes": 381
+    },
+    "artifacts/rhuh-fixed-plane-qc-v1/preparation.json": {
+      "sha256": "191e285a01961662c8c673899095baf4384c24b9f8e32bbf91c724361755abe2",
+      "bytes": 712
+    },
+    "artifacts/rhuh-fixed-plane-review-v1/README.md": {
+      "sha256": "f59a29f8638794530bca32afde224625a5608199880ec443789d8ec794b2734d",
+      "bytes": 886
+    },
+    "artifacts/rhuh-fixed-plane-review-v1/independent-tests.txt": {
+      "sha256": "eae2088e1f4b9503cd3bd993ff9ac6b1418fdbc7b50e99d0cc5bc861db5934a7",
+      "bytes": 98
+    },
+    "artifacts/rhuh-fixed-plane-review-v1/test-run.json": {
+      "sha256": "b670cf102b2127406dca25cc4aa10cc733889ec5c8c90c363233dc64dd11e518",
+      "bytes": 1336
+    },
+    "artifacts/rhuh-fixed-plane-review-v1/verification.json": {
+      "sha256": "de8469057049f5c27467fdd897fef0aa89587c88ba37a69171b8598e88aa0f48",
+      "bytes": 3867
+    },
+    "docs/rhuh-fixed-plane-qc.md": {
+      "sha256": "a14606fa073ff2d8fd163e775c8b31bc2545f0a3608cff6a27c727a6b840af52",
+      "bytes": 4330
+    },
+    "pyproject.toml": {
+      "sha256": "7b2ea11f08bcba66915eac703244a2e07c4de38c2c364aadf26830f6c35bb053",
+      "bytes": 937
+    },
+    "scripts/inspect_rhuh_single_image.py": {
+      "sha256": "268d23d8560c963461f633fe2d66ef581b8bd47e74e6431b89c23d7058979a6f",
+      "bytes": 23777
+    },
+    "scripts/preflight_real_spatial_policy.py": {
+      "sha256": "cfac175b072dbd8218c19f079d7ec3fa9143966b5059fe4cdfd918dff818ed3f",
+      "bytes": 22680
+    },
+    "scripts/render_rhuh_fixed_planes.py": {
+      "sha256": "fffd3ce06b9bbf4ad7272b56f51c772cf807443c238b20395c468ce792e62926",
+      "bytes": 16196
+    },
+    "tests/test_render_rhuh_fixed_planes.py": {
+      "sha256": "cda0d331e333bf3858126343a1c7d7b050639cb16087c16a9b0f8f3bca0a94bb",
+      "bytes": 11473
+    },
+    "tests/test_render_rhuh_fixed_planes_review.py": {
+      "sha256": "7d8d9b257cdaa5a74a3db3172894857e6b31b8dfeeac91d73fd7f0b4db1aef3f",
+      "bytes": 6749
+    },
+    "outputs/rhuh-single-image-inspection-v1/run-first/stdout.json": {
+      "sha256": "7a0bdb595034c519967c7ce044f130d2119d0a361e550d5fd424ba03fbf3c9b1",
+      "bytes": 2140
+    },
+    "artifacts/rhuh-single-image-inspection-v1/independent-result-audit.json": {
+      "sha256": "822f50da72df1377e58c43d7b3aabd75dc9393cd6fbc9769dce3d650161df07b",
+      "bytes": 9360
+    },
+    "artifacts/rhuh-single-image-inspection-v1/parent-summary.json": {
+      "sha256": "a28dfcf3fd96c70cbf5c0e361dc3fda9a64b935ceba07ec22fae4a50c4c0f59e",
+      "bytes": 1127
+    },
+    "artifacts/rhuh-single-image-inspection-v1/root-terminal.json": {
+      "sha256": "8d9287aed3301dc8e93014b970b9dcfef0034fa541b0a285566fbe6316ca0040",
+      "bytes": 410
+    },
+    "outputs/rhuh-fixed-plane-qc-v1/run-first/receipt.json": {
+      "sha256": "8edbbfcf656295eab9de239d942d1fe992fe5279f7f30eea649fd1478377cf45",
+      "bytes": 2990
+    },
+    "outputs/rhuh-fixed-plane-qc-v1/supervision-first/supervisor.json": {
+      "sha256": "96262e8b8e13a48d521ecadcf356acbb986b208c536c6cba46c89c5f8f41bb5a",
+      "bytes": 572
+    },
+    "outputs/rhuh-fixed-plane-qc-v1/supervision-first/supervisor-progress.json": {
+      "sha256": "f4d3f4398621d418cda96598f717dd30ab92e8f92cd66e4d6c97cc206a38144d",
+      "bytes": 237
+    },
+    "outputs/rhuh-fixed-plane-qc-v1/supervision-first/worker.log": {
+      "sha256": "d2ea5fb5b5d898ee87c8541ecccbdb47678bf478c963dc25bfa31a84b15c4694",
+      "bytes": 2288
+    },
+    "outputs/rhuh-fixed-plane-qc-v1/run-first/fixed-planes.png": {
+      "sha256": "3758bf9bce3020774943da6ec4126ea30d937056a40a0297770947974528ecee",
+      "bytes": 419039
+    },
+    "outputs/rhuh-fixed-plane-qc-v1/run-first/fixed-planes.svg": {
+      "sha256": "d4290bb06e3470870c7639ae311ec2c888d6cafdfd5cd2c7dece00b5964c6d58",
+      "bytes": 331315
+    },
+    "artifacts/rhuh-single-image-inspection-v1/request.json": {
+      "sha256": "52c641a59a27adc90fa2782bb0d3ce83cacbd9e8eaf43bed8b3295c7b5c71ab0",
+      "bytes": 2665
+    }
+  },
+  "checker_failures": [],
+  "patient_image_decodes": 0,
+  "renderer_invocations": 0,
+  "network_requests": 0,
+  "scope": "Saved metadata/source/history audit and byte hashing only. Neither MRI gzip/header/voxels nor PNG/SVG pixels were decoded. No renderer/decoder imports or rerender occurred.",
+  "limits": [
+    "Saved PNG/SVG hashes and plane descriptors are verified; pixel fidelity and qualitative anatomy are not independently assessed here.",
+    "The fixed planes sample only three locations and cannot establish whole-volume anatomy, normalization suitability, a support mask, registration or clinical validity.",
+    "Resource measurements are recorded sampled worker RSS and recorded elapsed times, not continuous memory bounds or independently reconstructed process execution.",
+    "Two snapshot decompressions are the renderer's reported count, not new decompressions by this audit.",
+    "The original remains hash-consistent and read-only; this is not an OS immutable-file guarantee. Case import, support derivation and learning remain unreleased."
+  ]
+}

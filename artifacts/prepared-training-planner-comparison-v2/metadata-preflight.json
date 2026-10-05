@@ -1,0 +1,17 @@
+{
+  "status": "validated_not_executed",
+  "exit_code": 0,
+  "elapsed_seconds": 0.37620341700000004,
+  "stdout": "{\"status\": \"validated_not_executed\", \"declaration_sha256\": \"ddb5e69f831bb691ff76bfa667a4b43c8b17eabfee7e8f166a2115c08a01abd4\"}\n",
+  "stderr": "",
+  "declaration_sha256": "ddb5e69f831bb691ff76bfa667a4b43c8b17eabfee7e8f166a2115c08a01abd4",
+  "v1_to_v2_changed_fields": [
+    "created_at",
+    "source_sha256",
+    "version"
+  ],
+  "v1_to_v2_changed_numerical_sources": [
+    "scripts/compare_prepared_training_planners.py"
+  ],
+  "all_task_patient_checkpoint_and_budget_settings_identical": true
+}

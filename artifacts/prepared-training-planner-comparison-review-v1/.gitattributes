@@ -1,0 +1,4 @@
+# Preserve exact review logs, snapshots and machine reports.
+*.log -whitespace
+*.xml -whitespace
+*.py.txt -whitespace

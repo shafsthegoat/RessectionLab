@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="0.116" timestamp="2026-10-05T03:35:31.387806-04:00" hostname="Sayems-MacBook-Pro-6.local"><testcase classname="tests.test_compare_prepared_training_planners_review" name="test_arm_dictionary_keys_must_match_actual_method_identity" time="0.003"><failure message="assert 1 == 0">tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-611/test_arm_dictionary_keys_must_0')
+
+    def test_arm_dictionary_keys_must_match_actual_method_identity(tmp_path):
+        def mutate(row):
+            row["arms"]["greedy_search"]["name"] = "STOP"
+        write_patient(tmp_path, mutate=mutate)
+&gt;       assert runner.summarize(tmp_path)["complete_comparisons"] == 0
+E       assert 1 == 0
+
+tests/test_compare_prepared_training_planners_review.py:86: AssertionError</failure></testcase><testcase classname="tests.test_compare_prepared_training_planners_review" name="test_historical_block_cannot_be_promoted_into_an_attempted_patient" time="0.002"><failure message="assert 1 == 0">tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-611/test_historical_block_cannot_b0')
+
+    def test_historical_block_cannot_be_promoted_into_an_attempted_patient(tmp_path):
+        directory = write_patient(tmp_path)
+        row = json.loads((directory / "receipt.json").read_text())
+        row["subject"] = "sub-PAT16"
+        (directory / "receipt.json").write_text(json.dumps(row))
+        directory.rename(tmp_path / "sub-PAT16")
+&gt;       assert runner.summarize(tmp_path)["complete_comparisons"] == 0
+E       assert 1 == 0
+
+tests/test_compare_prepared_training_planners_review.py:95: AssertionError</failure></testcase></testsuite></testsuites>

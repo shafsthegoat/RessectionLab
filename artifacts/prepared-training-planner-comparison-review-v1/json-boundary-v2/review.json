@@ -1,0 +1,74 @@
+{
+  "created_at": "2026-10-05T07:58:46.211036+00:00",
+  "direct_final_validation": {
+    "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONPATH=src .venv/bin/python -m pytest -q tests/test_compare_prepared_training_planners.py tests/test_compare_prepared_training_planners_review.py",
+    "failed": 0,
+    "independent_cases": 24,
+    "junit_sha256": "1e80379b5510b25605ad78d6d4ce5a25d6ac272275e185658aa9dc0083ef00c3",
+    "log_sha256": "ad5a322007d0419327272dc4f83d3bf6800cc4c7020517898c7c3ca0e10e4276",
+    "owner_cases": 37,
+    "passed": 61,
+    "pytest_seconds": 1.55
+  },
+  "independent_tests_sha256": "7c07127714fcdc05bf6e02540f0577d66e1a03e42aa6e303c5457b0d8024c5ad",
+  "limits": [
+    "V1 remains failed; no V1 outcome is promoted or retrospectively validated",
+    "Analytical fixtures do not demonstrate patient efficacy, clinical safety or transfer",
+    "No patient replay, learned model checkpoint reading, fitting or optimization occurred",
+    "Final suite intentionally includes actual tiny analytical geometry and fixed toy policy forwards; no human data"
+  ],
+  "observed_v1": {
+    "accepted_comparisons": 0,
+    "all_attempted_arms_error": "Audit requires the durably retained complete selected-task history",
+    "attempted_arms": 12,
+    "attempted_patients": 4,
+    "patients_prescribed": 6,
+    "read_metadata_sha256": {
+      "artifacts/prepared-training-planner-comparison-v1/release.json": "8f4ec50b0db15cb36d1d8dbd4471bb46a1aec120f5552e366a34462fdae93274",
+      "artifacts/prepared-training-planner-comparison-v1/root-terminal.json": "ea7e7cbc3905b4ca0c4ac5c8d5fb31dff541bda818ae1d80bc63c9253b1dbfd9",
+      "artifacts/prepared-training-planner-comparison-v1/source-archive.json": "77b2ce2ecc6771acb914805f4dcdfb14ace6866213c329c64a9fba93d6ce7739",
+      "outputs/prepared-training-planner-comparison-v1/sub-PAT05/STOP.json": "f42f9afcc5631b688486a52711b535f8ca5ea5e0eda65caf43cefaa0dbf10321",
+      "outputs/prepared-training-planner-comparison-v1/summary.json": "37808ea94b60009a67ecd2b4b261f985b12d872b207c1c98c6ec82b36cbbd997"
+    },
+    "scope": "Saved summary and one20KBSTOPreceipt only; no arrays/checkpoints/patient decode or replay",
+    "source_commit": "981f6c9c0d94291db5fc199b3ec145e5e9bb15d0"
+  },
+  "owner_tests_sha256": "4c4ba8d341b5fd06778489a4c1fb0e896f85af9867fd106720153924fbbc4353",
+  "preserved_initial_real_regression": {
+    "directory": "artifacts/prepared-training-planner-json-boundary-v1",
+    "failure_scope": "Both STOP and non-STOP actual tiny native task pipelines fail V1 direct equality before audit; integer-tamper negative still rejected",
+    "files_sha256": {
+      "initial-regression.log": "e0d872da5598559b187122f5492e8017d39a561bc2a4c4027a5b1838254b8784",
+      "initial-regression.xml": "19bf65b914acdb33e5375f9e02c3845155474c4173d0f1f4d93ddaa45efa5532",
+      "initial-runner.py": "1caf069210347f75e42ceabe05b282118fcc6ce3fbbdc5d1e4146739f8c1966d",
+      "regression-tests.py": "4c4ba8d341b5fd06778489a4c1fb0e896f85af9867fd106720153924fbbc4353"
+    },
+    "observed_result": "2 failed, 1 passed, 34 deselected in1.57s"
+  },
+  "repair_scope": [
+    "VERSION v1 to v2",
+    "One canonical_json helper: full json.dumps sort_keys=True compact separators allow_nan=False encoded bytes",
+    "digest delegates to exactly the same prior JSON byte convention",
+    "Compare saved metrics, live metrics and recaptured actual task.metrics through canonical whole-object bytes"
+  ],
+  "runner_sha256": "ed67566f9a947b580f74f6c033ce938e5eb98b69475aa9419707be233eedcf3e",
+  "schema": "prepared-training-planner-json-boundary-independent-review-v2",
+  "semantic_controls": [
+    "tuple/list containers normalize through the actual JSON persistence format",
+    "whole records retained; no field whitelist/projection or dropped unknowns",
+    "added field and deleted nested field refuse before audit",
+    "one-ULP scalar change refuses without tolerance or rounding",
+    "integer and nested physical-coordinate changes refuse",
+    "NaN/Infinity refused; integers and floats retain distinct JSON representations",
+    "saved history corruption retains null outcomes",
+    "actual tiny STOP and legal non-STOP pipelines reach independently accepted native audits"
+  ],
+  "status": "narrow_implementation_repair_clear_no_patient_replay_release",
+  "unchanged": [
+    "all patient roles/source/geometry/action/proposal settings",
+    "policy checkpoint/tensors/architecture",
+    "reward/horizon/90second468entrybudgets",
+    "independent evaluator",
+    "source/task/supervisor/publication integrity gates"
+  ]
+}

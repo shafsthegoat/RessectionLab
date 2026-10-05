@@ -1,0 +1,421 @@
+#!/usr/bin/env python3
+"""Zero-update STOP/IL/greedy comparison after explicit TRAIN access preparation.
+
+Default invocation validates metadata only. Patient execution needs a separately
+frozen declaration and root release; the historical preparation baseline stays
+unchanged. Greedy sees full nominal fields; the CNN sees the fixed 64-cube crop.
+"""
+from __future__ import annotations
+
+import argparse
+from contextlib import ExitStack
+from dataclasses import asdict, fields
+from datetime import datetime, timezone
+import hashlib
+import json
+import math
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+import time
+import traceback
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'src')); sys.path.insert(0, str(ROOT / 'scripts'))
+import run_real_training_transfer as frozen
+import run_real_patient_learning as rollout
+from preflight_real_spatial_policy import sha256, write_json, read_declaration, supervise_worker, peak_rss_bytes
+
+VERSION = 'prepared-training-planner-comparison-v1'
+SUBJECTS = ('sub-PAT05', 'sub-PAT16', 'sub-PAT20', 'sub-PAT22', 'sub-PAT25', 'sub-PAT28')
+ATTEMPTED = ('sub-PAT05', 'sub-PAT22', 'sub-PAT25', 'sub-PAT28')
+BLOCKED = ('sub-PAT16', 'sub-PAT20')
+METHODS = ('STOP', 'frozen_il', 'greedy_search')
+SETTINGS = {'max_wall_seconds': 600., 'max_rss_bytes': 6 * 1024**3,
+            'torch_threads': 1, 'device': 'cpu', 'max_steps': 3,
+            'arm_seconds': 90., 'arm_native_preview_entries': 468, 'optimizer_updates': 0}
+SCRIPT_CLOSURE = ('compare_prepared_training_planners.py', 'pat05_access_preparation.py',
+    'diagnose_training_observation_coverage.py', 'prepare_real_training_cases.py',
+    'run_real_training_transfer.py', 'run_real_patient_learning.py',
+    'compare_real_spatial_search.py', 'preflight_real_spatial_policy.py')
+
+
+def digest(value):
+    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()).hexdigest()
+
+
+def source_inventory():
+    # Capture tracked package sources after the reviewed slice is committed;
+    # unrelated untracked future modules are not silently bound into this run.
+    tracked = subprocess.check_output(['git', 'ls-files', '--', 'src/resectionlab'], cwd=ROOT, text=True).splitlines()
+    paths = [ROOT / name for name in tracked if name.endswith('.py')]
+    paths += [ROOT / 'scripts' / name for name in SCRIPT_CLOSURE]
+    return {str(p.relative_to(ROOT)): sha256(p) for p in sorted(set(paths))}
+
+
+def original_records():
+    import diagnose_training_observation_coverage as coverage
+    return coverage.original_records()
+
+
+def input_closure():
+    import pat05_access_preparation as pat05
+    originals = original_records()
+    pat05.load_pat05_historical_records()  # Exact three small metadata byte authorities.
+    return {'original_records': {s: digest(originals[s]) for s in SUBJECTS},
+            'pat05_historical_files': dict(pat05.RECORD_SHA256)}
+
+
+def declaration():
+    return {'version': VERSION, 'subjects': list(SUBJECTS), 'attempted': list(ATTEMPTED),
+        'historical_blocks': list(BLOCKED), 'methods': list(METHODS), 'settings': dict(SETTINGS),
+        'created_at': datetime.now(timezone.utc).isoformat(), 'source_sha256': source_inventory(),
+        'input_closure': input_closure(), 'cohort_sha256': frozen.COHORT_SHA256,
+        'checkpoint': {'path': str(frozen.CHECKPOINT.relative_to(ROOT)), 'sha256': sha256(frozen.CHECKPOINT),
+            'parameter_hash': frozen.POLICY_HASH, 'architecture_hash': frozen.ARCHITECTURE_HASH},
+        'scope': 'TRAIN development preparation comparison, zero updates; fixed PAT05 imitation checkpoint',
+        'representation': 'same permitted source/task; CNN fixed64crop versus greedy full nominal fields',
+        'access_selection': 'any_admissible_static_entry_then_distance_axis_outward_sign; no reward ranking',
+        'costs': 'shared original preparation/screening/selected initial inventory and independent audit outside each arm; whole patient supervised',
+        'failure_policy': 'retain six rows; partial, unaudited, invalid or mutated histories have null outcomes; no fallback or retry'}
+
+
+def validate(record):
+    fixed = {'version': VERSION, 'subjects': list(SUBJECTS), 'attempted': list(ATTEMPTED),
+             'historical_blocks': list(BLOCKED), 'methods': list(METHODS), 'settings': SETTINGS}
+    if any(record.get(k) != v for k, v in fixed.items()):
+        raise ValueError('Only the fixed six-TRAIN zero-update comparison is supported')
+    if record.get('source_sha256') != source_inventory() or record.get('input_closure') != input_closure():
+        raise ValueError('Prepared comparison source or historical inputs changed')
+    if record.get('cohort_sha256') != frozen.COHORT_SHA256:
+        raise ValueError('Cohort binding changed')
+    cohort = frozen.read_development_cohort(ROOT / frozen.COHORT_PATH)
+    for subject in SUBJECTS:
+        frozen.require_development_role(cohort, subject, role='TRAIN')
+    expected = {'path': str(frozen.CHECKPOINT.relative_to(ROOT)), 'sha256': sha256(frozen.CHECKPOINT),
+                'parameter_hash': frozen.POLICY_HASH, 'architecture_hash': frozen.ARCHITECTURE_HASH}
+    index = json.loads((frozen.ANCHOR / 'output-sha256.json').read_text())
+    if record.get('checkpoint') != expected or index.get('augmented_latest.pt') != expected['sha256']:
+        raise ValueError('Frozen completed-imitation checkpoint binding changed')
+    if 'src/resectionlab/planning_budget.py' not in record['source_sha256']:
+        raise ValueError('Commit the reviewed planning budget before freezing execution sources')
+    return cohort
+
+
+def task_binding(task):
+    task._assert_frozen()
+    if task.terminated or task._steps or task._engine.history:
+        raise ValueError('Each arm requires the same unexecuted selected task')
+    observation = task.observation()
+    return {'source_hash': task.case.source_hash, 'model_hash': task.decision_model_hash,
+        'initial_state_hash': task._state_seal, 'engine_state_hash': task._engine.state_hash,
+        'observation_hash': observation.fingerprint, 'action_ids': list(observation.action_ids),
+        'max_steps': task.max_steps, 'reward': asdict(task.reward_spec)}
+
+
+def _source_except_access(source):
+    import numpy as np
+    from resectionlab.core import array_digest, thaw_json
+    result = {}
+    for field in fields(source):
+        if not field.init or field.name == 'access':
+            continue
+        value = getattr(source, field.name)
+        if isinstance(value, np.ndarray): value = {'array_digest': array_digest(value)}
+        elif field.name == 'tools': value = [asdict(tool) for tool in value]
+        elif field.name == 'proposal_config': value = None if value is None else asdict(value)
+        else: value = thaw_json(value)
+        result[field.name] = value
+    return digest(result)
+
+
+def prepare_selected(subject, originals, output, guard):
+    """Four authenticated original loaders, one screen, one selected inventory."""
+    if subject not in ATTEMPTED:
+        raise ValueError('Historical support blocks cannot reach a patient loader')
+    import diagnose_training_observation_coverage as coverage
+    import prepare_real_training_cases as prep
+    import pat05_access_preparation as pat05
+    from resectionlab.core import thaw_json
+    from resectionlab.native_access_preparation import prepare_native_access
+    from resectionlab.native_spatial_task import NativeSpatialTask
+    from resectionlab.native_resection import NativeResectionEngine
+    from resectionlab.spatial_policy_diagnostics import NativePreviewProfiler, spatial_coverage, runtime_proposal_coverage
+    started = time.perf_counter()
+    def cancelled():
+        guard(); return False
+    with NativePreviewProfiler(NativeResectionEngine) as profiler:
+        load_started = time.perf_counter()
+        with profiler.phase('original_preparation'):
+            if subject == 'sub-PAT05':
+                row = originals[subject]
+                loader_record = {'members': {subject: {'member': row['member'],
+                    'complete_native_grid_binding': row['complete_native_grid_binding']}},
+                    'common_task': prep.common_task_definition()}
+                original = coverage.load_initial(subject, originals, loader_record, guard)
+                metadata = thaw_json(pat05.canonical_pat05_access_metadata(original, pat05.load_pat05_historical_records()))
+            else:
+                original = prep.load_prepared_training_case(originals[subject], cancelled=cancelled)
+                binding = originals[subject]['binding']
+                metadata = {'expected_source_hash': binding['native_source_hash'],
+                    'expected_model_hash': binding['decision_model_hash'],
+                    'access_derivation': binding['member']['access_derivation']}
+        report = {'subject': subject, 'status': 'screening', 'role': 'TRAIN',
+            'original_loader_seconds': time.perf_counter()-load_started, 'upstream_metadata': metadata,
+            'original_initial_binding': task_binding(original), 'original_record_hash': digest(originals[subject])}
+        write_json(output/'preparation.json', report); guard()
+        prepared = prepare_native_access(original, subject=subject,
+            cohort_json=(ROOT/frozen.COHORT_PATH).read_bytes(), cancelled=cancelled, **{
+                key: metadata[key] for key in ('expected_source_hash', 'expected_model_hash', 'access_derivation')})
+        report['access_preparation'] = prepared.to_dict()
+        write_json(output/'preparation.json', report); guard()
+        selected = None
+        if prepared.selected_case is None:
+            report['status'] = prepared.receipt['status']
+        else:
+            if _source_except_access(original.case) != _source_except_access(prepared.selected_case):
+                raise ValueError('Access preparation changed source inputs, tools or task interpretation')
+            constructor_started = time.perf_counter()
+            with profiler.phase('selected_initial_inventory'):
+                selected = NativeSpatialTask(prepared.selected_case, max_steps=original.max_steps,
+                    reward=original.reward_spec, cancelled=cancelled)
+            report['selected_initial_inventory_seconds'] = time.perf_counter()-constructor_started
+            inventory, observation = selected.candidate_inventory(), selected.observation()
+            if (inventory['declared_slots'] != 78 or inventory['complete'] is not True
+                    or selected.max_steps != 3 or asdict(selected.reward_spec) != prep.common_task_definition()['objective']):
+                raise ValueError('Selected task changed objective/horizon or omitted declared initial slots')
+            source = selected.case
+            report.update(status='prepared', selected_initial_binding=task_binding(selected),
+                selected_inventory=inventory, actor_coverage=spatial_coverage(observation,
+                    source_shape=source.structural_intensity.shape, source_affine=source.affine_ras_mm,
+                    nominal_target=source.nominal_target, native_affine=source._native_affine_ras_mm),
+                proposal_coverage=runtime_proposal_coverage(source, inventory, observation,
+                    native_affine=source._native_affine_ras_mm), automatic_fallback=False)
+        report['shared_native_preview_profile'] = profiler.snapshot()
+    report['shared_preparation_seconds'] = time.perf_counter()-started
+    write_json(output/'preparation.json', report); guard()
+    return selected, report
+
+
+def validate_completed_arm(row, expected_binding):
+    budget = row.get('planning_budget') or {}
+    outcomes = row.get('outcomes')
+    return bool(row.get('status') == 'complete' and row.get('initial_binding') == expected_binding
+        and row.get('final_initial_binding') == expected_binding
+        and row.get('initial_parameter_hash') == row.get('final_parameter_hash') == frozen.POLICY_HASH
+        and row.get('closure_verified') is True and row.get('independent_evaluation_accepted') is True
+        and row.get('terminal_history_sha256') and row.get('episode_sha256')
+        and budget.get('status') == 'complete_history_awaiting_independent_audit'
+        and budget.get('history_complete_caller_attestation') is True
+        and budget.get('counting_reliable') is True
+        and type(budget.get('native_preview_entries')) is int
+        and 0 <= budget['native_preview_entries'] <= SETTINGS['arm_native_preview_entries']
+        and budget.get('limits') == {'native_preview_entries': 468, 'planning_execution_seconds': 90.}
+        and isinstance(budget.get('elapsed_seconds'), (int, float))
+        and math.isfinite(budget['elapsed_seconds']) and 0 <= budget['elapsed_seconds'] <= 90.
+        and isinstance(outcomes, dict) and isinstance(outcomes.get('total_reward'), (int, float))
+        and math.isfinite(outcomes['total_reward']))
+
+
+def run_arm(base, policy, name, output, *, whole_guard, auditor, closure_check,
+            budget_factory=None, episode_runner=None, policy_hasher=None, binding_reader=task_binding):
+    """One uninterrupted online guard; close it before the independent audit."""
+    if name not in METHODS:
+        raise ValueError('Only STOP, frozen IL and greedy are supported')
+    if budget_factory is None:
+        from resectionlab.planning_budget import PlanningBudget
+        from resectionlab.native_resection import NativeResectionEngine
+        budget_factory = lambda: PlanningBudget(NativeResectionEngine, max_native_previews=468, seconds=90.)
+    if policy_hasher is None:
+        from resectionlab.spatial_policy import parameter_hash
+        policy_hasher = parameter_hash
+    episode_runner = rollout.run_episode if episode_runner is None else episode_runner
+    row = {'status': 'running', 'outcomes': None, 'name': name, 'initial_binding': binding_reader(base),
+           'initial_parameter_hash': policy_hasher(policy), 'optimizer_updates': 0}
+    path = output/(name+'-arm.json'); budget = budget_factory(); started = time.perf_counter()
+    online = True
+    def save(): write_json(path, row)
+    def guard():
+        whole_guard()
+        if online: budget.check()
+    try:
+        if row['initial_parameter_hash'] != frozen.POLICY_HASH:
+            raise ValueError('Unexpected frozen policy before any planning')
+        closure_check(); whole_guard(); save()
+        with ExitStack() as stack:
+            stack.enter_context(budget)
+            sequence = ('STOP',) if name == 'STOP' else None
+            if name == 'greedy_search':
+                with budget.phase('planning'):
+                    try:
+                        sequence, row['search_accounting'] = base.observed_greedy_search(seconds=90.)
+                        row['sequence'] = list(sequence)
+                    except BaseException as error:
+                        row['partial_search_accounting'] = getattr(error, 'accounting', None)
+                        row['unreplayed_partial_sequence'] = getattr(error, 'best_sequence', None)
+                        raise
+            stack.enter_context(budget.phase('execution'))
+            def audit(task, *, metrics):
+                nonlocal online
+                # Existing rollout has already durably written its terminal history.
+                episode_path = output/(name+'.json')
+                terminal = json.loads(episode_path.read_text())
+                if (not task.terminated or metrics.get('terminated') is not True
+                        or terminal.get('status') != 'awaiting_independent_check'
+                        or terminal.get('metrics') != metrics or task.metrics() != metrics
+                        or metrics.get('decision_model_hash') != row['initial_binding']['model_hash']):
+                    raise ValueError('Audit requires the durably retained complete selected-task history')
+                terminal_path = output/(name+'-terminal.json')
+                write_json(terminal_path, terminal)
+                row['terminal_history_path'] = terminal_path.name
+                row['terminal_history_sha256'] = sha256(terminal_path)
+                row['terminal_metrics_hash'] = digest(metrics)
+                save(); budget.complete(history_complete=True); stack.close(); online = False
+                row['planning_budget'] = budget.snapshot(); save(); whole_guard()
+                audit_started = time.perf_counter()
+                result = auditor(task, metrics=metrics)
+                row['independent_audit_seconds'] = time.perf_counter()-audit_started
+                whole_guard(); return result
+            _, episode = episode_runner(base, policy, None,
+                mode='argmax' if name == 'frozen_il' else 'sequence', name=name, output=output,
+                guard=guard, audit=audit, sequence=sequence)
+        if online:
+            raise ValueError('Episode returned without the mandatory terminal audit boundary')
+        if episode.get('status') != 'complete' or episode['independent_evaluation'].get('accepted') is not True:
+            raise ValueError('Independent audit did not accept the terminal episode')
+        row.update(final_parameter_hash=policy_hasher(policy), final_initial_binding=binding_reader(base),
+            episode_sha256=sha256(output/(name+'.json')), planning_budget=budget.snapshot(),
+            actions=[x['action_id'] for x in episode['decisions']],
+            independent_evaluation_accepted=True, outcomes=episode['independent_evaluation']['outcomes'],
+            actor_decision_seconds=sum(x['decision_seconds'] for x in episode['decisions']),
+            native_transition_seconds=sum(x['transition_seconds'] for x in episode['decisions']))
+        closure_check(); whole_guard(); row.update(closure_verified=True, status='complete')
+        if not validate_completed_arm(row, row['initial_binding']):
+            raise ValueError('Completed arm failed frozen/budget/binding validation')
+        save(); closure_check(); whole_guard()  # Export failures cannot publish a comparison.
+    except BaseException as error:
+        row.update(status='failed', outcomes=None, closure_verified=False,
+            failure={'type': type(error).__name__, 'message': str(error)}, planning_budget=budget.snapshot())
+        save()
+    row['full_arm_seconds_including_audit'] = time.perf_counter()-started
+    save()
+    return row
+
+
+def blank(subject):
+    if subject not in SUBJECTS: raise ValueError('Only the six fixed TRAIN patients are permitted')
+    return {'subject': subject, 'role': 'TRAIN', 'status': 'not_executed', 'optimizer_updates': 0,
+            'arms': {name: {'status': 'not_executed', 'outcomes': None} for name in METHODS}}
+
+
+def run_patient(subject, record, output):
+    validate(record)
+    if subject not in ATTEMPTED: raise ValueError('Historical blocked subjects must not launch workers')
+    import torch
+    from resectionlab.native_spatial_evaluation import evaluate_native_spatial_episode
+    torch.set_num_threads(1); torch.set_num_interop_threads(1); torch.use_deterministic_algorithms(True)
+    started = time.perf_counter(); report = blank(subject); policy = None
+    def guard():
+        if time.perf_counter()-started > SETTINGS['max_wall_seconds'] or peak_rss_bytes() > SETTINGS['max_rss_bytes']:
+            raise TimeoutError('Whole-patient supervision envelope exhausted')
+    def cancelled(): guard(); return False
+    def closure():
+        if (source_inventory() != record['source_sha256'] or input_closure() != record['input_closure']
+                or sha256(output.parent/'frozen-checkpoint.pt') != record['checkpoint']['sha256']):
+            raise ValueError('Source, original input authority or checkpoint changed')
+    def save():
+        report.update(elapsed_seconds=time.perf_counter()-started, peak_rss_bytes=peak_rss_bytes())
+        write_json(output/'receipt.json', report)
+    try:
+        originals = original_records(); report['status'] = 'preparing'; save(); guard()
+        base, preparation = prepare_selected(subject, originals, output, guard)
+        report['preparation_sha256'] = sha256(output/'preparation.json')
+        if base is None:
+            report['status'] = 'preparation_unavailable'; save(); return report
+        report['initial_binding'] = task_binding(base)
+        load_started = time.perf_counter()
+        policy = frozen.load_frozen_policy(output.parent/'frozen-checkpoint.pt', record['checkpoint']['sha256'])
+        report['policy_load_seconds'] = time.perf_counter()-load_started
+        report['status'] = 'evaluating'; save(); guard()
+        def audit(task, *, metrics):
+            return evaluate_native_spatial_episode(task, metrics=metrics, minimum_target_cells=1,
+                cancelled=cancelled, distance_backend='batch', distance_batch_size=256)
+        for name in METHODS:
+            guard()
+            report['arms'][name] = run_arm(base, policy, name, output, whole_guard=guard,
+                auditor=audit, closure_check=closure)
+            save()
+        closure(); guard()
+        report['status'] = 'complete' if all(validate_completed_arm(row, report['initial_binding'])
+            for row in report['arms'].values()) else 'partial'
+        report['closure_verified'] = True; save()
+    except BaseException as error:
+        report.update(status='failed', closure_verified=False,
+            failure={'type': type(error).__name__, 'message': str(error)})
+        save(); raise
+    return report
+
+
+def summarize(output):
+    patients = []
+    for subject in SUBJECTS:
+        directory = output/subject; path = directory/'receipt.json'
+        row = json.loads(path.read_text()) if path.exists() else blank(subject)
+        parent = directory/'closure-check.json'
+        row['parent_closure'] = json.loads(parent.read_text()) if parent.exists() else None
+        supervisor = directory/'supervisor.json'
+        row['supervisor'] = json.loads(supervisor.read_text()) if supervisor.exists() else None
+        row['comparison_eligible'] = bool(row.get('status') == 'complete' and row.get('closure_verified') is True
+            and row['parent_closure'] == {'sources_inputs_checkpoint_unchanged': True}
+            and all(validate_completed_arm(x, row.get('initial_binding')) for x in row['arms'].values()))
+        patients.append(row)
+    return {'version': VERSION, 'patients_prescribed': 6, 'patients': patients,
+        'complete_comparisons': sum(row['comparison_eligible'] for row in patients),
+        'optimizer_updates': 0, 'adaptation': False, 'clinical_efficacy_measured': False}
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--declaration', type=Path, required=True)
+    parser.add_argument('--write-declaration', action='store_true'); parser.add_argument('--execute', action='store_true')
+    parser.add_argument('--output', type=Path); parser.add_argument('--worker', action='store_true', help=argparse.SUPPRESS)
+    parser.add_argument('--subject', choices=ATTEMPTED, help=argparse.SUPPRESS)
+    parser.add_argument('--expected-declaration-sha256', help=argparse.SUPPRESS); args = parser.parse_args()
+    if args.write_declaration:
+        if args.declaration.exists(): raise SystemExit('Preserve existing declarations')
+        write_json(args.declaration, declaration()); return
+    record, digest_, payload = read_declaration(args.declaration, args.expected_declaration_sha256); validate(record)
+    if args.worker:
+        if not args.subject or not args.expected_declaration_sha256: raise ValueError('Bound subject/declaration required')
+        run_patient(args.subject, record, args.output); return
+    if not args.execute:
+        print(json.dumps({'status': 'validated_not_executed', 'declaration_sha256': digest_})); return
+    if args.output is None or args.output.exists(): raise SystemExit('Choose a fresh output directory')
+    args.output.mkdir(parents=True); (args.output/'declaration-input.json').write_bytes(payload)
+    shutil.copy2(frozen.CHECKPOINT, args.output/'frozen-checkpoint.pt')
+    for relative in record['source_sha256']:
+        destination = args.output/'source-snapshot'/relative; destination.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(ROOT/relative, destination)
+    originals = original_records()
+    for subject in SUBJECTS:
+        directory = args.output/subject; directory.mkdir(); row = blank(subject)
+        if subject in BLOCKED:
+            row.update(status='historical_support_block', original_preparation=originals[subject],
+                original_record_hash=digest(originals[subject]), patient_arrays_opened=False)
+        write_json(directory/'receipt.json', row)
+    write_json(args.output/'summary.json', summarize(args.output))
+    for subject in ATTEMPTED:
+        validate(record); directory = args.output/subject
+        supervise_worker([sys.executable, str(Path(__file__).resolve()), '--worker', '--subject', subject,
+            '--declaration', str((args.output/'declaration-input.json').resolve()), '--expected-declaration-sha256', digest_,
+            '--output', str(directory.resolve())], directory, SETTINGS, digest_)
+        intact = (source_inventory() == record['source_sha256'] and input_closure() == record['input_closure']
+                  and sha256(args.output/'frozen-checkpoint.pt') == record['checkpoint']['sha256'])
+        write_json(directory/'closure-check.json', {'sources_inputs_checkpoint_unchanged': intact})
+        write_json(args.output/'summary.json', summarize(args.output))
+    write_json(args.output/'output-sha256.json', {str(p.relative_to(args.output)): sha256(p)
+        for p in sorted(args.output.rglob('*')) if p.is_file() and 'source-snapshot' not in p.parts and p.name != 'output-sha256.json'})
+
+
+if __name__ == '__main__': main()

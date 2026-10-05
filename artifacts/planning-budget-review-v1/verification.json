@@ -1,0 +1,85 @@
+{
+  "schema": "planning-budget-independent-review-v1",
+  "status": "passed_after_two_narrow_repairs",
+  "repository_commit_before_new_guard_commit": "4d66dc31e6af0c90c98cc961ccb0cfa97d8d6dfe",
+  "source_state": "uncommitted new guard; root owns final checkpoint",
+  "tested_sources_sha256": {
+    "src/resectionlab/planning_budget.py": "c0b00319c0240ec57d6ef9e466ac0bfc8b1a781743f2bec92a8cc8ac517d0e8c",
+    "src/resectionlab/spatial_policy_diagnostics.py": "257d355a017023831621107800d029b813f7036e1af6a8a16fd38e5760066493",
+    "src/resectionlab/native_spatial_task.py": "61b3d8167152d06a578e1ab7c146b7af937d86ccca6ed9e20bf3081cbf2f6711",
+    "tests/test_planning_budget.py": "251197d62953c4ac02049040d75a4b4a635023273df8cfe9627805d43306e7d4",
+    "tests/test_planning_budget_review.py": "d2cd2c33c8d9b0f91e8c8f9edb697ed3e4cc820c4c83b53129599699006b1da5",
+    "docs/planning-budget.md": "3ebec525c852ad1d74dd67bf21655790b75a312b666e708681fab11963b90d3f"
+  },
+  "final_controls": {
+    "passed": 53,
+    "failed": 0,
+    "independent_cases": 16,
+    "owner_cases": 37,
+    "pytest_reported_seconds": 0.95,
+    "wall_seconds": 1.3171994579024613,
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/test_planning_budget.py",
+      "tests/test_planning_budget_review.py"
+    ],
+    "all_bound_files_unchanged": true,
+    "log_sha256": "23cd1122e809e1248e1004eafd05c0c2e0c700f4d2f334a8092d78c968262f5c"
+  },
+  "preserved_negatives": [
+    {
+      "kind": "inherited_method_cleanup",
+      "initial_source_sha256": "b1c1ee95c0b5d83fd110d072e699659877694b6d69aa45eb7107da28c30e3eb9",
+      "independent_failing_controls": 1,
+      "receipt": "initial-negative.json",
+      "observed": "Deleting the installed wrapper from a subclass with an inherited method made restoration raise AttributeError and left the process-exclusive guard occupied.",
+      "repair": "Conditionally delete only an existing own method, and release active/exclusive state in an unconditional nested finally."
+    },
+    {
+      "kind": "exact_deadline_new_work",
+      "initial_source_sha256": "b6cafa3b8226573da8791695b647f96f1979a73d0ffb4ea6d370ffef32046357",
+      "independent_failing_controls": 2,
+      "receipt": "deadline-negative.json",
+      "observed": "New preview and request bodies were admitted with exactly zero remaining time.",
+      "repair": "Refuse new work at elapsed>=limit while allowing check/history completion at elapsed==limit; both fail after the limit."
+    }
+  ],
+  "owner_initial_run": {
+    "status": "owner-reported only; no durable raw log supplied",
+    "passed": 32,
+    "failed": 2,
+    "seconds": 1.16,
+    "interpretation": "Primary inherited-restoration failure and its subsequent exclusive-scope cascade; independent one-control log is the durable reproduction."
+  },
+  "intermediate_run": {
+    "path": "pre-deadline-final-independent-run.json",
+    "passed": 14,
+    "interpretation": "Passed controls before adding the exact-deadline cases; preserved without treating them as final coverage."
+  },
+  "verified": [
+    "Three mocked branches plus replay consume one shared468-entry cap; attempt469 is refused before the mock engine body and remains fatal when caught.",
+    "Explicit request starts/returns/preview admissions are separate from actual class-dispatched entries; cached-looking/empty/STOP-only zero-entry returns never manufacture cache hits.",
+    "One uninterrupted clock includes online setup, branch work, replay and history-retention time; snapshots freeze at exit so outside shared preparation/audit calls do not inflate online usage.",
+    "Incomplete/nonboolean/undeclared history has no score; completion is labeled awaiting independent audit. Work after attested completion refuses.",
+    "Caught native errors and wrapper displacement remain failed; lost counting authority reports total null while retaining the observed prefix.",
+    "Inherited method restoration and a preexisting transparent profiler restore correctly; an independent later arm can start after failure.",
+    "Exact deadline distinguishes allowed finalization from forbidden new work; the first representable overrun refuses before entry.",
+    "Returned accounting snapshots are detached from retained request/profile state."
+  ],
+  "static_integration_check": {
+    "file": "src/resectionlab/native_spatial_task.py",
+    "reviewed_sites": "The two current inventory branches dynamically dispatch self._engine.preview_stroke; no native geometry was executed by this review.",
+    "source_sha256": "61b3d8167152d06a578e1ab7c146b7af937d86ccca6ed9e20bf3081cbf2f6711"
+  },
+  "limits": [
+    "All tests use mocked preview bodies/clocks. No patient arrays, checkpoints, models, native geometry, training or scientific comparison executed.",
+    "The guard covers ordinary dynamic dispatch through the declared engine class, not pre-captured aliases, direct original-function calls, overriding subclasses or other processes. The future runner must preserve this path.",
+    "History completion is an explicit caller attestation, not proof of durable complete history. Independent replay/history validation is still required outside the guard.",
+    "Timing is cooperative: in-flight C/native work cannot be forcibly interrupted here. External supervision and durable partial receipts remain necessary.",
+    "blocked_preview_attempts counts preview-count-ceiling rejections only; deadline/health refusals are represented by separate failure reasons.",
+    "The existing whole run_episode includes audit internally. A future integration must separate that audit boundary; simply wrapping the whole function would misstate excluded costs."
+  ]
+}

@@ -1,0 +1,26 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_deleted_inherited_instrumentation_restores_exception_and_releases_scope _
+
+    def test_deleted_inherited_instrumentation_restores_exception_and_releases_scope():
+        base, _ = fake_engine()
+        class Child(base):
+            pass
+        guard = PlanningBudget(Child, _clock=Clock())
+        caught = None
+        try:
+            with guard:
+                Child().preview_stroke("first")
+                del Child.preview_stroke
+        except BaseException as error:
+            caught = error
+        try:
+>           assert module._active_guard is None, "failed cleanup leaked the process-exclusive budget"
+E           AssertionError: failed cleanup leaked the process-exclusive budget
+E           assert <resectionlab.planning_budget.PlanningBudget object at 0x10694b7d0> is None
+E            +  where <resectionlab.planning_budget.PlanningBudget object at 0x10694b7d0> = module._active_guard
+
+tests/test_planning_budget_review.py:40: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_planning_budget_review.py::test_deleted_inherited_instrumentation_restores_exception_and_releases_scope
+1 failed in 0.93s
