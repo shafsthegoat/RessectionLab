@@ -4,7 +4,9 @@ These four optional binary distributions were installed only in
 `build/rhuh-baseline-runtime-v1/site-packages`; the shared project environment
 was not modified. The existing Python 3.12.14, NumPy 2.5.3 and SciPy 1.18.1 are
 reused. `receipt.json` records every installed non-cache file and the public PyPI
-wheel URLs, sizes and verified SHA-256 values. `requirements.txt` pins the exact
+wheel URLs, sizes and verified SHA-256 values. It also binds the shared NumPy and
+SciPy package directories and their 902/1,425 non-cache files, so version strings
+alone cannot authenticate the numerical runtime. `requirements.txt` pins the exact
 macOS arm64 wheels used here; these are research runtime additions, not app dependencies.
 
 Reconstruction from the repository root, using a fresh target directory:

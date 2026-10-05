@@ -1,0 +1,56 @@
+FF...                                                                    [100%]
+=================================== FAILURES ===================================
+_________ test_convergence_warning_subclass_cannot_be_marked_converged _________
+
+    def test_convergence_warning_subclass_cannot_be_marked_converged():
+        from sklearn.exceptions import ConvergenceWarning
+        from sklearn.preprocessing import StandardScaler
+    
+        class DerivedConvergenceWarning(ConvergenceWarning):
+            pass
+    
+        class Model:
+            def fit(self, X, y):
+                self.coef_ = np.zeros((1, X.shape[1]))
+                self.intercept_ = np.zeros(1)
+                self.n_iter_ = np.ones(1, dtype=int)
+                self.classes_ = np.array([0, 1])
+                warnings.warn("constructed convergence failure", DerivedConvergenceWarning)
+    
+            def predict_proba(self, X):
+                return np.tile([.5, .5], (len(X), 1))
+    
+        rows = []
+        counts = {"attempted": 0, "completed": 0}
+>       with pytest.raises(RuntimeError, match="convergence"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE RuntimeError
+
+tests/test_rhuh_preoperative_baseline_review.py:40: Failed
+_______ test_runtime_refuses_numpy_from_outside_the_declared_interpreter _______
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-546/test_runtime_refuses_numpy_fro0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10bb42930>
+
+    def test_runtime_refuses_numpy_from_outside_the_declared_interpreter(tmp_path, monkeypatch):
+        dependency = json.loads((ROOT / "artifacts/rhuh-baseline-runtime-v1/receipt.json").read_text())
+        foreign = tmp_path / "foreign_numpy_init.py"
+        foreign.write_text("# constructed unrelated numerical source\n")
+        monkeypatch.setattr(np, "__file__", str(foreign))
+        for key in runner.THREADS:
+            monkeypatch.setenv(key, "1")
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_rhuh_preoperative_baseline_review.py:57: Failed
+=============================== warnings summary ===============================
+tests/test_rhuh_preoperative_baseline_review.py::test_runtime_refuses_numpy_from_outside_the_declared_interpreter
+  /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/__config__.py:155: UserWarning: Install `pyyaml` for better output
+    warnings.warn("Install `pyyaml` for better output", stacklevel=1)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_rhuh_preoperative_baseline_review.py::test_convergence_warning_subclass_cannot_be_marked_converged
+FAILED tests/test_rhuh_preoperative_baseline_review.py::test_runtime_refuses_numpy_from_outside_the_declared_interpreter
+2 failed, 3 passed, 1 warning in 1.46s
