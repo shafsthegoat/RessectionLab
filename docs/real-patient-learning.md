@@ -45,6 +45,21 @@ surgeon; one bounded iteration does not inherit a clinical or generalization
 guarantee. The matched control separates added state coverage from merely
 performing more optimizer updates. It remains imitation learning, not RL.
 
+The next frozen-policy comparison uses TRAIN PAT16/20/22/25/28, retaining all
+five in its denominator. It applies the PAT05 annotation-centroid/source-axis
+access rule prospectively, with the same six-millimetre aperture, tools, reward,
+64³ crop and three-decision horizon. The fixed model is the completed visited-
+state imitation checkpoint; no optimizer or patient adaptation runs. Each
+patient receives a serial CPU comparison against the same greedy baseline.
+Source identity, provisional support, roundoff-only grid reconciliation and
+actual observation/proposal coverage must be recorded before accepting results.
+Target cells outside support remain preparation failures; no label clipping or
+support expansion is allowed. Positive-target and zero-target complete outcomes
+are both retained. The five cases are development TRAIN anatomy, not a held-out
+population-generalization test. SELECT and unopened patients remain untouched.
+This is the next step toward population training, not a claim that such training
+has already occurred.
+
 These are reusable planning and bookkeeping components, not a trained model or
 an efficacy result. They open no images, run no optimizer, and do not alter
 geometry, observations, reward, or patient roles. The first population runner
