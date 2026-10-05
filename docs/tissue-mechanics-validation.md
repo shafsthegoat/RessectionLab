@@ -38,6 +38,14 @@ Preserve patient and longitudinal family splits. Overlapping landmark sets remai
 [RESECT](https://aapm.onlinelibrary.wiley.com/doi/10.1002/mp.12268) provides retrospective correspondences and repeated-picking variability. Its two ultrasound landmark sets overlap; published picking distances are not total coordinate covariance or tracking uncertainty.
 Retraction-specific validation additionally needs recorded instrument motion/contact and independent tissue measurements; a force prediction claim needs force/torque measurements. Imaging snapshots do not supply these automatically.
 
+A [bounded access check](mechanics-interaction-data-access.md) identified the
+public MULTIS cadaver-limb release as a possible separate interaction control.
+Some indentation/pinching/initial skin-cut trials combine tool motion, loads
+and independent surface displacement; its later retraction trials lack that
+independent motion acquisition. Only release metadata were inspected. This
+does not resolve brain-retraction validation or establish a simulation-ready
+paired trial, and it changes none of the current patient or specimen roles.
+
 ## Explicit mechanics and numerical verification
 
 Record constitutive law, finite- versus small-strain regime, boundary/contact assumptions, units, mesh and solver version. Freeze a small justified parameter/scenario set before V is opened.
