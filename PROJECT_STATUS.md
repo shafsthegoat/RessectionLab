@@ -51,7 +51,8 @@ ellipsoid triangulation, with node counts increasing from 269 to 2,806. It took
 2.795 seconds and used no patient inputs or physics solver. This is a framework
 capability check, not patient validation or a patient resource prediction. A new
 patient candidate using that profile passed 95 focused preparation checks,
-including independent review. Patient execution is not yet released; existing
+including independent review. Its exact archive and input hashes passed preflight;
+one mesh attempt is released to run after the specimen process finishes. Existing
 anatomy, physical-fidelity criteria and prior failed results remain fixed. See
 `artifacts/mechanics/gmsh-discrete-curvature-capability-v1/RESULT.md`.
 
