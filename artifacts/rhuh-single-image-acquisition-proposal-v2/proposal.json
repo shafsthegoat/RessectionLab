@@ -1,0 +1,92 @@
+{
+  "schema": "resectionlab.rhuh-single-image-acquisition-proposal.v2",
+  "prepared_utc": "2026-10-05T06:00:33.196949+00:00",
+  "status": "proposal_only_not_released",
+  "execution_allowed": false,
+  "original_v1_manifest_sha256": "24f7aae2763a037aec0055e946380b0053de156507273dc3697db3ea77eb422d",
+  "original_v1_preconditions_satisfied": false,
+  "prospective_change": "A separate quarantined acquisition/format-compatibility experiment permits unknown compressed length and unknown publisher digest algorithm; it does not satisfy or amend V1.",
+  "selection": {
+    "patient": "RHUH-0001",
+    "visit": 0,
+    "modality_source_label": "T1",
+    "selected_before_pixel_inspection": true,
+    "public_package_id": "684",
+    "public_source_path": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t1.nii.gz",
+    "published_checksum_token": "a5c579950d0431d04928e5b59e91ce9d",
+    "checksum_index_sha256": "7c6ba3fa767bf169679db30caa854e671796416ca365fac6e57662796177c130",
+    "source_collection": "https://www.cancerimagingarchive.net/collection/rhuh-gbm/",
+    "source_version": "RHUH-GBM-nii-v1",
+    "source_license": "CC BY 4.0",
+    "role": "acquisition_compatibility_development",
+    "no_untouched_test_claim": true
+  },
+  "prospective_transfer": {
+    "max_client_invocations": 1,
+    "max_retained_compressed_payload_bytes": 67108864,
+    "known_expected_compressed_bytes": null,
+    "known_expected_length_claim_allowed": false,
+    "whole_lifecycle_seconds": 60,
+    "hard_watchdog_seconds": 59,
+    "quarantine_parent": "outputs/rhuh-single-image-v2/quarantine",
+    "source_count": 1,
+    "requires_reviewed_new_helper": true,
+    "one_exact_public_request_then_fresh_provider_spec": true,
+    "unexpected_paths_or_multiple_sources": "reject before client starts",
+    "runtime": "previously signed/hash-verified native arm64 Aspera SDK client; credentials memory/child environment only",
+    "retention": "inert regular compressed file only; no decode or automatic promotion"
+  },
+  "cap_assessment": {
+    "native_fasp_file_or_aggregate_byte_cap_established": false,
+    "official_features_found": "rate ceiling and job-size precalculation; neither establishes a hard transfer-byte budget",
+    "proposed_enforcement": "OS RLIMIT_FSIZE=64MiB for the client, one exact regular-file destination, fresh quarantine, process-group/time supervision, final file-count/type/size checks after all writers stop",
+    "aggregate_meaning": "For accepted output there is exactly one compressed image, so its file cap is also the accepted image-payload aggregate cap. Unexpected extra files or surviving writers fail.",
+    "limits": "This is not a bound on network traffic including retransmissions, nor a proven whole-directory disk quota for all transient side files. If a strict transient aggregate-storage quota is required, a separately reviewed OS quota/container is an additional prerequisite. No claim of a native Aspera byte-limit flag.",
+    "supported_acquisition_route_assessment": "Yes: official signed FASP client against the legitimate public package is a supported transfer route, already exercised on its checksum index. This V2 is a bounded retained-payload compatibility experiment, not a passed V1 gate or verified clinical image."
+  },
+  "compatibility_test": {
+    "predeclared_candidate_algorithm": "MD5",
+    "byte_domain": "complete original compressed .nii.gz bytes only",
+    "publisher_algorithm_confirmed": false,
+    "required_comparison": "candidate MD5 must equal the exact published token with no padding or transformation",
+    "also_record": "actual measured byte length and new local SHA256",
+    "mismatch": "failed experiment; retain quarantined diagnostic receipt, no retry, no alternate digest/decoded-byte probing",
+    "match": "format/byte-domain compatibility evidence only; does not by itself verify patient identity, modality, anatomy, or dataset semantic correctness"
+  },
+  "acceptance_layers": [
+    "Authenticated transport: provider-issued token and exact reviewed public-to-server source mapping; successful client completion.",
+    "Compatible checksum: observed candidate MD5 of compressed bytes matches published token; algorithm remains an explicitly unconfirmed source claim.",
+    "Independent byte/provenance reconciliation: separate reviewer checks source/version/license/mapping/index binding, immutable original bytes, measured length, MD5 comparison and SHA256 before any header decode is authorized.",
+    "Image identity/scientific usability: deferred header/grid/modality/anatomical QC; no route, injury, training or evaluation use from acquisition or digest compatibility alone."
+  ],
+  "failure_rules": [
+    "Any cap/time/client failure, unexpected path/type/file, leftover writer, or candidate-digest mismatch is unaccepted.",
+    "No implicit retry or extra image; protocol retransmission is not claimed absent.",
+    "Incomplete bytes are never decoded, used scientifically, or called checksum-verified."
+  ],
+  "future_decode_caps_only_after_separate_reconciliation": {
+    "initial_decompressed_header_peek_bytes": 544,
+    "max_header_extensions_and_voxel_offset_bytes": 1048576,
+    "max_total_uncompressed_bytes": 268435456,
+    "max_voxel_bytes": 267386880,
+    "max_dimensions": 3,
+    "max_each_spatial_dimension": 512,
+    "max_scalar_voxels": 64000000,
+    "rules": "Validate integer dimension/product/datatype/offset bounds before allocation; bounded streaming decompression, reject truncation or excess members/output. No decoding authorized by this proposal."
+  },
+  "static_evidence": {
+    "client_binary_sha256": "0d73689f6a4d5b6f7ddd90a86459be0aa211b53d40c9e01b80bed5f44f793c4e",
+    "official_transfer_schema_url": "https://github.com/IBM/aspera-cli/blob/5676d597ec90be0b3c94efba5d12a35b77f5a900/lib/aspera/transfer/spec.schema.yaml",
+    "official_transfer_schema_sha256": "1abe938d8f3af2c3b3b4c476c0bfe6d599b799fedc985acd0569f4708dd6fe4f",
+    "prior_os_file_cap_test": "tests/test_rhuh_checksum_acquisition.py::test_os_file_limit_actually_bounds_child_write (65,536-byte control; the 64 MiB variant remains to be implemented/tested)"
+  },
+  "actions_this_slice": {
+    "new_network_requests": 0,
+    "downloads": 0,
+    "image_reads": 0,
+    "outcome_reads": 0,
+    "code_changes": 0,
+    "releases": 0,
+    "commits": 0
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "schema": "native-ingress-independent-review-v1",
+  "status": "passed_after_narrow_metadata_binding_repair",
+  "source_commit_before_ingress_commit": "4c25288e2bca6e6ccf68fdf1f1ed288d4b39ce52",
+  "source_state": "new uncommitted ingress source; root owns subsequent commit",
+  "tested_sources_sha256": {
+    "src/resectionlab/native_ingress.py": "cd27eb57062d0afd72dba3b392f9ed03973a9fe5b353bb8fd0da74e6a1c6761f",
+    "src/resectionlab/native_proposals.py": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee",
+    "src/resectionlab/native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/core.py": "f1f0b8ae334cabc864c3ec85d4f6b49e4842de2b580edaadd7562276ea0c92db",
+    "tests/test_native_ingress.py": "b361433d73e73a09c8bf90ede3d56b09d6edd56ebdef9befa78b70677914aea2",
+    "tests/test_native_ingress_review.py": "2b2cab1a81e201689a907e37dcf838e7ae7d6c745f73b04b2aae9860497b9ac2",
+    "docs/native-ingress-screening.md": "dfbb6dbd5b837f49e6e1e741c093fc455e740f670fb3519a638f14af59669a20"
+  },
+  "independent_controls": {
+    "passed": 20,
+    "failed": 0,
+    "pytest_reported_seconds": 0.88,
+    "wall_seconds": 1.0926762910094112,
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/test_native_ingress_review.py"
+    ],
+    "bound_files_unchanged": true,
+    "log": "final-independent.log",
+    "log_sha256": "5dc90a560ea250acb8f13a282c59f041cbf5dab0ca7d92c9c506178d2a2ef7ee"
+  },
+  "owner_controls": {
+    "passed": 23,
+    "pytest_reported_seconds": 0.82,
+    "evidence": "owner-reported final run; not rerun by independent reviewer",
+    "owner_tests_sha256": "b361433d73e73a09c8bf90ede3d56b09d6edd56ebdef9befa78b70677914aea2"
+  },
+  "initial_negative": {
+    "count": 2,
+    "initial_source_sha256": "47b183fef817427046254ca7f15596edb3cf241869f6005b18fca75aa2b3b8db",
+    "receipt": "initial-negative.json",
+    "log": "initial-negative.log",
+    "log_sha256": "bdc8e76abea808972025b3284d01eefab0fb86a413c912f7c6895c1f83120be4",
+    "classification": "same production defect in two analytical controls",
+    "observed": [
+      "One physical axis-0 negative access copied under six labels was accepted with selected_exit axis-2 positive.",
+      "Opposed physical accesses with swapped sign labels were accepted."
+    ],
+    "repair": "After authenticated propose(), require metadata axis/inward sign to equal the frozen source-axis descriptor. Pin provider schema and bind shared original index affine. No new geometry tolerance."
+  },
+  "verified": [
+    "Step-zero shaft occupancy agrees with an independent axial segment-to-full-voxel-box distance calculation on identity and reflected oblique anisotropic analytical grids; no shared capsule query is used by this oracle.",
+    "Any passing noncentral entry or single tool preserves an eligible shortest exit; no majority vote or later stroke outcome selects it.",
+    "Exact float64 tool/entry/raw-direction partitions determine reuse; native preview and commit are replaced by fail sentinels in the dedup/state-preservation control.",
+    "Final cancellation or changes to remaining tissue, nominal array, metadata, or provider axis prevent any selection.",
+    "Oversized ledger, candidate-cap omission, or changed tool inventory at a later exit invalidate prior eligible rows.",
+    "Original source-axis and derived roundoff-native frames remain distinct and bound; a changed original index frame or unknown provider schema rejects.",
+    "Poison evaluator/reference/reward/crop/policy attributes are not read and do not alter the complete receipt.",
+    "Outside-image unknowns remain explicit; the receipt grants neither complete-stroke certification nor removal authority."
+  ],
+  "limits": [
+    "No patient arrays, patient ingress screens, learning, search, full previews or commits were executed by this independent review.",
+    "Caller-supplied distances and the origin of the six exits are not reconstructed by this helper. Future integration must bind them to the unchanged derive_access output.",
+    "Initial pose clearance does not establish later whole-stroke feasibility, skull access, clinical safety, or completeness beyond the declared finite proposal family.",
+    "The step-zero oracle covers axis-aligned segments in orthogonal reflected/oblique grids. It is not a replacement independent audit of every arbitrary geometry primitive.",
+    "Count bounds and cooperative cancellation are tested; no patient timing or memory envelope is established.",
+    "The owner reported two earlier owner-test harness failures and corrections; these are distinct from the two reproduced independent production failures preserved here."
+  ]
+}

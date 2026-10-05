@@ -1,0 +1,18 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_training_observation_grid_binding.py",
+    "tests/test_training_observation_binding_review.py",
+    "tests/test_training_observation_coverage.py",
+    "tests/test_training_observation_coverage_review.py"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 5.250577458,
+  "stdout": "........................................................................ [ 46%]\n........................................................................ [ 92%]\n...........                                                              [100%]\n155 passed in 4.73s\n",
+  "stderr": "",
+  "runner_sha256": "9c4432777fb1556b58693f652af94b8f292045c00cf54d04e954c239c5979daf",
+  "patient_experiment_rerun": false
+}

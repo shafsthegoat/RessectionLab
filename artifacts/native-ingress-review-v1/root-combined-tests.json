@@ -1,0 +1,16 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_native_ingress.py",
+    "tests/test_native_ingress_review.py"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 1.8735511249999999,
+  "stdout": "...........................................                              [100%]\n43 passed in 1.60s\n",
+  "stderr": "",
+  "source_sha256": "cd27eb57062d0afd72dba3b392f9ed03973a9fe5b353bb8fd0da74e6a1c6761f",
+  "patient_experiment_run": false
+}

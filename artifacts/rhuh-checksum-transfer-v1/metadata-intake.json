@@ -1,0 +1,106 @@
+{
+  "schema": "rhuh-checksum-metadata-intake-v1",
+  "payload_sha256": "7c6ba3fa767bf169679db30caa854e671796416ca365fac6e57662796177c130",
+  "bytes": 61787,
+  "records": 720,
+  "distinct_paths": 720,
+  "digest_hex_width_counts": {
+    "32": 720
+  },
+  "patient_ids": 40,
+  "selected_paths": [
+    {
+      "public_package_path": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_adc.nii.gz",
+      "digest_as_published": "91e6504a5c533bf7e1fee1dc2a810777",
+      "hex_digits": 32,
+      "checksum_algorithm": null,
+      "expected_compressed_bytes": null
+    },
+    {
+      "public_package_path": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_flair.nii.gz",
+      "digest_as_published": "1c3ef3640848ef124fb82b63da1320f6",
+      "hex_digits": 32,
+      "checksum_algorithm": null,
+      "expected_compressed_bytes": null
+    },
+    {
+      "public_package_path": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t1.nii.gz",
+      "digest_as_published": "a5c579950d0431d04928e5b59e91ce9d",
+      "hex_digits": 32,
+      "checksum_algorithm": null,
+      "expected_compressed_bytes": null
+    },
+    {
+      "public_package_path": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t1ce.nii.gz",
+      "digest_as_published": "5bdeca3efc545e6ab07e18f33fc79449",
+      "hex_digits": 32,
+      "checksum_algorithm": null,
+      "expected_compressed_bytes": null
+    },
+    {
+      "public_package_path": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t2.nii.gz",
+      "digest_as_published": "e0e2e963b03f0fa819058878c849dbd6",
+      "hex_digits": 32,
+      "checksum_algorithm": null,
+      "expected_compressed_bytes": null
+    },
+    {
+      "public_package_path": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_segmentations.nii.gz",
+      "digest_as_published": "9e4011a7a01f5f9ac23c87d51873f41c",
+      "hex_digits": 32,
+      "checksum_algorithm": null,
+      "expected_compressed_bytes": null
+    },
+    {
+      "public_package_path": "/RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_adc.nii.gz",
+      "digest_as_published": "38e7431a8c8c124b55fc6102a20dc89b",
+      "hex_digits": 32,
+      "checksum_algorithm": null,
+      "expected_compressed_bytes": null
+    },
+    {
+      "public_package_path": "/RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_flair.nii.gz",
+      "digest_as_published": "f325c68dd9ab696babd2d725e8cab942",
+      "hex_digits": 32,
+      "checksum_algorithm": null,
+      "expected_compressed_bytes": null
+    },
+    {
+      "public_package_path": "/RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_t1.nii.gz",
+      "digest_as_published": "b93c74c993a9ce680ae7a163b4b0cd0c",
+      "hex_digits": 32,
+      "checksum_algorithm": null,
+      "expected_compressed_bytes": null
+    },
+    {
+      "public_package_path": "/RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_t1ce.nii.gz",
+      "digest_as_published": "3b08962226372f5d39542ddd188ab23f",
+      "hex_digits": 32,
+      "checksum_algorithm": null,
+      "expected_compressed_bytes": null
+    },
+    {
+      "public_package_path": "/RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_t2.nii.gz",
+      "digest_as_published": "0d582e80faaf1c88529d02a4dc332eae",
+      "hex_digits": 32,
+      "checksum_algorithm": null,
+      "expected_compressed_bytes": null
+    },
+    {
+      "public_package_path": "/RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_segmentations.nii.gz",
+      "digest_as_published": "75b7bb7f08e82693ddab54ad72279222",
+      "hex_digits": 32,
+      "checksum_algorithm": null,
+      "expected_compressed_bytes": null
+    }
+  ],
+  "selected_paths_complete": true,
+  "checksum_algorithm_verified": false,
+  "published_sizes_present": false,
+  "image_acquisition_released": false,
+  "limits": [
+    "The public checksum file does not state a digest algorithm or byte lengths.",
+    "All720 digests have32 lowercase hexadecimal digits; width alone does not establish the algorithm.",
+    "No patient images or clinical outcome rows were read."
+  ]
+}

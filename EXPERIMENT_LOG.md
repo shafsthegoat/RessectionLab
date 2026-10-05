@@ -1419,3 +1419,33 @@ process lifetime, enforces file size, kills descendants and reconciles final byt
 before acceptance. Fresh public metadata passed the source guards, but no checksum
 or patient-image transfer was executed. The combined six-file integration check
 passed 109 tests in 4.81 seconds. No patient experiment was rerun for integration.
+
+## October 5, 2026 — first public checksum transfer succeeds
+
+After the separate execution-release commit, one metadata transfer completed with
+parent acceptance and exit 0 in 5.324132 seconds (5.402919 seconds at the outer
+launcher). The exact 61,787 bytes have local SHA256
+`7c6ba3fa767bf169679db30caa854e671796416ca365fac6e57662796177c130`.
+The public file lists 720 unique image paths, including all 12 predeclared files
+for RHUH-0001 visits 0/1. Every token has 32 hexadecimal digits, but the file has
+no algorithm header or image lengths. These remain acquisition dependencies;
+image payloads were not requested. The original pair declaration is unchanged.
+Source, release, local preflight, parent/worker receipts and the received public
+metadata are preserved in `artifacts/rhuh-checksum-transfer-v1/`.
+
+## October 5, 2026 — exact record repair and isolated ingress controls
+
+The PAT05 V2 wrapper now authenticates the complete historical 20-field grid and
+its original eight-field projection before decoding. It keeps exact source,
+support, objective and horizon joins and saves actual/expected mismatch metadata.
+All 155 combined owner, independent and existing guard checks passed in 4.73
+seconds. The failed V1 patient outcome remains null; no patient rerun occurred.
+
+The isolated six-exit ingress helper passed 43 analytical checks in 1.60 seconds.
+Independent review exposed two real metadata-label defects; both were retained
+and repaired by joining axis/sign to the authenticated proposer descriptor.
+Selection requires a complete screen, any admissible tool-entry pose and the
+unchanged distance/axis/sign ordering. It neither replaces the baseline nor
+certifies complete strokes. No patient arrays or learning ran in this slice.
+Exact-source negative evidence is in `artifacts/native-ingress-review-v1/` and
+the binding review is in `artifacts/training-observation-binding-review-v1/`.

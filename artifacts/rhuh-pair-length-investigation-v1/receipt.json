@@ -1,0 +1,153 @@
+{
+  "schema": "resectionlab.rhuh-pair-length-investigation.v1",
+  "checked_utc": "2026-10-05T05:55:13.960148+00:00",
+  "scope": "Only fixed RHUH-0001 visits 0/1 manifest lengths and checksum-format provenance; metadata/source inspection only.",
+  "provider_metadata_requests_this_slice": 0,
+  "provider_transfers_this_slice": 0,
+  "patient_image_payloads_requested": false,
+  "outcomes_inspected": false,
+  "original_manifest_modified": false,
+  "original_manifest_sha256": "24f7aae2763a037aec0055e946380b0053de156507273dc3697db3ea77eb422d",
+  "finding": "Actual compressed target lengths remain unknown for all 12 files. No supported public link-resolution/stat parameter was found in inspected provider client/API descriptions, so no speculative metadata request was made.",
+  "api_evidence": {
+    "received_files_request": "POST /packages/{id}/files/received takes a directory path and filters; documented query parameters are offset/limit/recipient IDs.",
+    "request_body_fields": [
+      "path",
+      "case_sensitive",
+      "sort",
+      "filters"
+    ],
+    "documented_filters": [
+      "basenames",
+      "mtime_max",
+      "mtime_min",
+      "paths",
+      "size_max",
+      "size_min",
+      "types"
+    ],
+    "size_field_semantics": "Response schema describes size as file OR symbolic-link bytes; a symbolic-link size is not evidence of target compressed file length.",
+    "size_filters_limitation": "size_min/size_max automatically restrict results to type=file; they do not document following symbolic links.",
+    "pagination_limitation": "The /page variant changes pagination, not link-resolution semantics.",
+    "other_endpoint_not_attempted": "/packages/{id}/file_statuses is file-processing status and declares admin/client_only authorization; it is not a justified public target-stat path.",
+    "provider_frontend": "Uses directory path plus filters for package browsing; symbolic links receive an icon; no follow/resolve-link option found.",
+    "prior_negative": "Supplying an image filename as a directory path returned HSTS1202; this remains a directory-browse error, not proof of absent image bytes.",
+    "scope_limit": "Absence from these inspected descriptions is not proof that no provider-side mechanism exists. No node credentials, privileged API, transfer preflight, or image request was attempted."
+  },
+  "selected_files": [
+    {
+      "public_path": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_adc.nii.gz",
+      "listed_type": "symbolic_link",
+      "listed_size": "",
+      "resolved_compressed_payload_bytes": null
+    },
+    {
+      "public_path": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_flair.nii.gz",
+      "listed_type": "symbolic_link",
+      "listed_size": "",
+      "resolved_compressed_payload_bytes": null
+    },
+    {
+      "public_path": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t1.nii.gz",
+      "listed_type": "symbolic_link",
+      "listed_size": "",
+      "resolved_compressed_payload_bytes": null
+    },
+    {
+      "public_path": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t1ce.nii.gz",
+      "listed_type": "symbolic_link",
+      "listed_size": "",
+      "resolved_compressed_payload_bytes": null
+    },
+    {
+      "public_path": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t2.nii.gz",
+      "listed_type": "symbolic_link",
+      "listed_size": "",
+      "resolved_compressed_payload_bytes": null
+    },
+    {
+      "public_path": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_segmentations.nii.gz",
+      "listed_type": "symbolic_link",
+      "listed_size": "",
+      "resolved_compressed_payload_bytes": null
+    },
+    {
+      "public_path": "/RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_adc.nii.gz",
+      "listed_type": "symbolic_link",
+      "listed_size": "",
+      "resolved_compressed_payload_bytes": null
+    },
+    {
+      "public_path": "/RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_flair.nii.gz",
+      "listed_type": "symbolic_link",
+      "listed_size": "",
+      "resolved_compressed_payload_bytes": null
+    },
+    {
+      "public_path": "/RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_t1.nii.gz",
+      "listed_type": "symbolic_link",
+      "listed_size": "",
+      "resolved_compressed_payload_bytes": null
+    },
+    {
+      "public_path": "/RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_t1ce.nii.gz",
+      "listed_type": "symbolic_link",
+      "listed_size": "",
+      "resolved_compressed_payload_bytes": null
+    },
+    {
+      "public_path": "/RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_t2.nii.gz",
+      "listed_type": "symbolic_link",
+      "listed_size": "",
+      "resolved_compressed_payload_bytes": null
+    },
+    {
+      "public_path": "/RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_segmentations.nii.gz",
+      "listed_type": "symbolic_link",
+      "listed_size": "",
+      "resolved_compressed_payload_bytes": null
+    }
+  ],
+  "checksum_provenance": {
+    "file_sha256": "7c6ba3fa767bf169679db30caa854e671796416ca365fac6e57662796177c130",
+    "bytes": 61787,
+    "lines": 720,
+    "all_records_have_32_lowercase_hex_digest": true,
+    "header_declaring_algorithm": false,
+    "source_algorithm_confirmed": false,
+    "interpretation": "Format is consistent with common MD5 listings, but this is inference only. The file itself, saved collection description, author preprocessing source and inspected Faspex descriptions do not establish which algorithm or whether compressed/original bytes were hashed. No padding or format repair is warranted."
+  },
+  "sources": {
+    "official_cli_openapi_catalog": {
+      "url": "https://github.com/IBM/aspera-cli/blob/5676d597ec90be0b3c94efba5d12a35b77f5a900/docs/openapi_sources.yaml",
+      "local_ignored_copy": "build/rhuh-pair-length-investigation-v1/openapi_sources.yaml",
+      "bytes": 1876,
+      "sha256": "2e7f54a57e9f22e5d3db4b65eadddfdde0ec6b2bdc4cb4baeae02fd8010ff3f8"
+    },
+    "catalog_referenced_enhanced_faspex_schema": {
+      "url": "https://raw.githubusercontent.com/laurent-martin/aspera-api-examples/refs/heads/main/openapi/IBM%20Aspera%20Faspex%20API-5.0-enhanced.yaml",
+      "local_ignored_copy": "build/rhuh-pair-length-investigation-v1/faspex5-openapi.yaml",
+      "bytes": 2149916,
+      "sha256": "e00cb1c240fd76fc2dbbfafd9f4e59a769f6ebfe3e26bd64bdbb4a7a93500b86"
+    },
+    "saved_official_cli_faspex_client": {
+      "url": "https://github.com/IBM/aspera-cli/blob/5676d597ec90be0b3c94efba5d12a35b77f5a900/lib/aspera/cli/plugins/faspex5.rb",
+      "local_ignored_copy": "data/rhuh_source/metadata/ibm-faspex5-client.rb",
+      "bytes": 52146,
+      "sha256": "a510f9b83a25a14114178a2a6bbb8b66501ee127dd656b7b375aa153427d3578",
+      "matches_pinned_git_blob": true
+    },
+    "saved_provider_frontend": {
+      "url": null,
+      "local_ignored_copy": "data/rhuh_source/metadata/faspex-app.js",
+      "bytes": 7438100,
+      "sha256": "d925cc7632d38a86e275f084eabf9fe74569d5de7da1cfd57dd9f05fab4abd0c"
+    }
+  },
+  "documentation_fetch_note": "The referenced enhanced schema was 2,149,916 bytes. An initial 2,000,000-byte cap stopped that documentation read; a HEAD established its length and it was then retrieved with a 2,200,000-byte cap. This was public API documentation, not a TCIA metadata or image request.",
+  "remaining_dependencies": [
+    "Supported public provider mechanism or trustworthy source manifest for actual compressed lengths of the 12 selected images.",
+    "Publisher checksum algorithm/byte-domain provenance; do not silently relabel the supplied strings as verified MD5."
+  ],
+  "acquisition_release_changed": false
+}

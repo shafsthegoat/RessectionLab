@@ -1,0 +1,71 @@
+{
+  "actual_expected_mismatch_metadata_durably_retained_in_mock_worker": true,
+  "artifacts_sha256": {
+    "diagnose_training_observation_coverage.py.gz": "0e547ebd0f6b864bdec8294c09924b4fd3967cbc108fb23ba6eb90e07764918e",
+    "executed-v1-runner.py.gz": "606c6828d1e2e137862d5204ea9323ae3b72caa7e0eecdc03e4dbbad1fdd33e4",
+    "independent-tests.txt": "4950d7c811d0331be7ec79f15dd9d3c3a0f496512ddd6c66b60b267932a9c29f",
+    "initial-declaration-closure-check.json": "0949d068c8cf6dcc3840773c7eade1bbb5a46907f6506222c6ae2bc80bc8df83",
+    "precheck-sha256.json": "a0f99c63c8725d1e4a18f53c4da7fc44785fb24d9fbf0971fdfbc7a378e5e0d7",
+    "preserved-v1-negative.json": "4f55f64b5be90f13cf7ed5bbccdc2cc85c5086440b24058c7b870a97b673725d",
+    "test-run.json": "5352a87fc21292429f7c8888586e26057f0fca5d8ca5bb9503268e295edb3c18",
+    "test_training_observation_binding_review.py.gz": "35aa8566121f448905db4ffa6da3d4fbc8c80d07df76ce409186c514e6b1f820"
+  },
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_training_observation_binding_review.py"
+  ],
+  "current_patient_numeric_grid_not_revalidated": true,
+  "declaration_changes_from_v1": [
+    "/declared_at",
+    "/members/sub-PAT05/complete_native_grid_binding",
+    "/source_sha256/scripts/diagnose_training_observation_coverage.py",
+    "/source_sha256/src/resectionlab/native_ingress.py",
+    "/version"
+  ],
+  "exact_all_twenty_grid_fields_required": true,
+  "execution_or_retry_authorized": false,
+  "frozen_reviewed_sources_and_historical_inputs": {
+    "artifacts/pat05-real-geometric-learning-v1/declaration-input.json": "d69c9b6cf1f0f329d698c3857bca13efaa4a4a9a7b424208711affd4ac8480f4",
+    "artifacts/pat05-real-geometric-learning-v1/receipt.json": "fdc575e6695a7f949f65de93e7165f7833b514fcd193094a24ac3e0f94e7ee77",
+    "artifacts/training-observation-coverage-v1/pat05-wrapper-diagnosis.json": "43b5c1456660db550b3c55e344e12b454fc8476d30d278a47faeeecc62f25d76",
+    "manifests/experiments/training-observation-coverage-v1.json": "227468bc212fbd13b1d8ef63b19d63f396b0d860e74476685e4778aa45c1c7ae",
+    "scripts/diagnose_training_observation_coverage.py": "9c4432777fb1556b58693f652af94b8f292045c00cf54d04e954c239c5979daf",
+    "tests/test_training_observation_binding_review.py": "0c4285c50131ab9709dbf292e9e9a6c97175076478e74585183326b33856f55c",
+    "tests/test_training_observation_grid_binding.py": "589d29d8450ad09657a9b5dfb34549ad36e2f99065b5b8511cd8d2d10b039d8a"
+  },
+  "historical_receipt_path_sha_pointer_and_old_eight_field_projection_checked_before_decode": true,
+  "independent_tests": 75,
+  "matrix_only_affine_hash_distinguished_from_composite_structural_frame_hash": true,
+  "missing_extra_type_and_one_ulp_value_changes_rejected": true,
+  "native_tasks_or_previews_executed": false,
+  "old_v1_failed_guard_reproduced_with_mock_loader_and_mock_constructor": true,
+  "optimizer_steps": 0,
+  "original_patient_access_support_tools_objective_horizon_resource_parameters_unchanged": true,
+  "patient_arrays_decoded": false,
+  "policy_forwards": 0,
+  "prospective_v2_declaration_static_check": "metadata-only candidate compared; no manifest written or full source closure frozen",
+  "pytest_seconds": 0.6,
+  "reviewed_source_and_existing_v1_metadata_unchanged_through_review": true,
+  "schema": "pat05-complete-binding-independent-review-v1",
+  "source_freeze_coordination": {
+    "action": "Root must freeze committed archive source closure before sealing V2 declaration; no patient release issued",
+    "actual_declaration_changes": [
+      "/declared_at",
+      "/members/sub-PAT05/complete_native_grid_binding",
+      "/source_sha256/scripts/diagnose_training_observation_coverage.py",
+      "/source_sha256/src/resectionlab/native_ingress.py",
+      "/version"
+    ],
+    "initial_expected_change_set_excluded_unrelated_untracked_modules": true,
+    "metadata_only": true,
+    "observed_sha256": "cd27eb57062d0afd72dba3b392f9ed03973a9fe5b353bb8fd0da74e6a1c6761f",
+    "production_binding_defect": false,
+    "schema": "prospective-source-closure-coordination-v1",
+    "untracked_source_path": "src/resectionlab/native_ingress.py"
+  },
+  "status": "passed_code_review",
+  "v1_actual_run_remains_incomplete": true
+}

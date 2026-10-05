@@ -1,0 +1,17 @@
+{
+  "scope": "analytical metadata-to-geometry binding only; no patient arrays or full previews",
+  "sources": {
+    "src/resectionlab/native_ingress.py": "47b183fef817427046254ca7f15596edb3cf241869f6005b18fca75aa2b3b8db",
+    "tests/test_native_ingress_review.py": "1f92841b3d9ce796f4ff8882ccc8e87002407dae1ab9aaed8a6b062fb089dfe4"
+  },
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_native_ingress_review.py"
+  ],
+  "exit_code": 1,
+  "elapsed_seconds": 0.5617550830356777,
+  "log_sha256": "bdc8e76abea808972025b3284d01eefab0fb86a413c912f7c6895c1f83120be4"
+}

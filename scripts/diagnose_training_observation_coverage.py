@@ -25,12 +25,24 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import prepare_real_training_cases as prep
 from preflight_real_spatial_policy import peak_rss_bytes, read_declaration, sha256, supervise_worker, write_json
 
-VERSION = "fixed-training-observation-coverage-v1"
-RELEASE_VERSION = "fixed-training-observation-coverage-release-v1"
+VERSION = "fixed-training-observation-coverage-v2"
+RELEASE_VERSION = "fixed-training-observation-coverage-release-v2"
 SUBJECTS = ("sub-PAT05", "sub-PAT16", "sub-PAT20", "sub-PAT22", "sub-PAT25", "sub-PAT28")
 BLOCKED = frozenset({"sub-PAT16", "sub-PAT20"})
 SAVED = "artifacts/remaining-training-frozen-spatial-float64-v1"
-MANIFEST = "manifests/experiments/training-observation-coverage-v1.json"
+MANIFEST = "manifests/experiments/training-observation-coverage-v2.json"
+PAT05_GRID_RECEIPT = "artifacts/pat05-real-geometric-learning-v1/receipt.json"
+PAT05_GRID_RECEIPT_SHA256 = "fdc575e6695a7f949f65de93e7165f7833b514fcd193094a24ac3e0f94e7ee77"
+PAT05_GRID_POINTER = "/initial_task_metrics/native_grid_reconciliation"
+PAT05_GRID_SHA256 = "a9b1a2f220e2a0137e16aa31b5e59146ea0c54d8d3b5c2fd7242764d2fb4005a"
+PAT05_ORIGINAL_GRID_KEYS = frozenset({"derived_affine_ras_mm", "maximum_corner_displacement_mm",
+    "method", "native_and_actor_physical_grid", "original_affine_ras_mm",
+    "proposal_and_crop_indices_basis", "resampled", "shape"})
+PAT05_COMPLETE_GRID_KEYS = PAT05_ORIGINAL_GRID_KEYS | frozenset({"corner_domain",
+    "derived_affine_hash", "derived_spacing_mm", "handedness_preserved",
+    "maximum_allowed_corner_displacement_mm", "maximum_allowed_gram_error", "origin_preserved",
+    "original_affine_hash", "original_spacing_mm", "source_axis_gram_max_error",
+    "source_image_hash", "support_hash"})
 ANCHOR_SHA256 = {
     "sub-PAT05": "d69c9b6cf1f0f329d698c3857bca13efaa4a4a9a7b424208711affd4ac8480f4",
     "sub-PAT16": "3743dd12460cf598089664bd243fba883300c2505d477df0ec4aadd2bb596608",
@@ -47,6 +59,85 @@ SETTINGS = {"whole_worker_envelope_seconds": 180., "cooperative_seconds": 170.,
     "extent_roundtrip_atol_mm": 1e-8, "coarse_mass_rtol": 1e-6,
     "coarse_mass_small_volume_atol_mm3": 1e-6,
     "executed_transitions": 0, "policy_forwards": 0, "optimizer_updates": 0}
+
+
+def _canonical(value):
+    """Exact JSON values/types, insensitive only to mapping insertion order."""
+    return json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False).encode("utf-8")
+
+
+def pat05_complete_grid_binding(original):
+    """Authenticate saved small metadata only, before any patient decode/preview.
+
+    Keep the historical member's eight fields intact. This separate binding pins
+    all twenty executed grid fields, including image/support lineage and bounds.
+    The matrix-only affine hash is not the composite structural-frame hash.
+    """
+    with (ROOT / PAT05_GRID_RECEIPT).open("rb") as stream:
+        raw = stream.read(2 * 1024**2 + 1)
+    if len(raw) > 2 * 1024**2 or hashlib.sha256(raw).hexdigest() != PAT05_GRID_RECEIPT_SHA256:
+        raise ValueError("Original complete PAT05 grid receipt bytes changed")
+    receipt = json.loads(raw)
+    try:
+        grid = receipt
+        for key in PAT05_GRID_POINTER.split("/")[1:]:
+            grid = grid[key]
+    except (KeyError, TypeError) as error:
+        raise ValueError("Original complete PAT05 grid JSON pointer is absent") from error
+    subset = original["member"]["expected_native_grid_binding"]
+    if (not isinstance(grid, dict) or set(grid) != PAT05_COMPLETE_GRID_KEYS
+            or not isinstance(subset, dict) or set(subset) != PAT05_ORIGINAL_GRID_KEYS
+            or hashlib.sha256(_canonical(grid)).hexdigest() != PAT05_GRID_SHA256
+            or _canonical({key: grid[key] for key in subset}) != _canonical(subset)):
+        raise ValueError("Complete PAT05 grid or original eight-field projection changed")
+    acknowledgement = original["member"]["research_support_acknowledgment"]
+    if (grid["source_image_hash"] != acknowledgement["source_image_hash"]
+            or grid["support_hash"] != acknowledgement["mask_hash"]):
+        raise ValueError("Complete PAT05 grid source image or support differs from its acknowledgment")
+    return {"schema": "pat05-complete-native-grid-binding-v1",
+        "receipt": {"path": PAT05_GRID_RECEIPT, "sha256": PAT05_GRID_RECEIPT_SHA256,
+                    "json_pointer": PAT05_GRID_POINTER},
+        "grid_sha256": PAT05_GRID_SHA256, "complete_grid": grid}
+
+
+class PAT05TaskBindingMismatch(ValueError):
+    """Small expected/actual task metadata retained even when preparation fails."""
+
+    def __init__(self, details):
+        self.details = json.loads(_canonical(details))
+        super().__init__("PAT05 physical task or complete native grid differs: "
+                         + ", ".join(self.details["mismatched_fields"]))
+
+
+def verify_pat05_task_binding(task, original, binding):
+    """Full-field equality; never downgrade to a subset or numeric tolerance."""
+    from resectionlab.core import thaw_json
+    if (set(binding) != {"schema", "receipt", "grid_sha256", "complete_grid"}
+            or binding["schema"] != "pat05-complete-native-grid-binding-v1"
+            or binding["receipt"] != {"path": PAT05_GRID_RECEIPT, "sha256": PAT05_GRID_RECEIPT_SHA256,
+                                      "json_pointer": PAT05_GRID_POINTER}
+            or binding["grid_sha256"] != PAT05_GRID_SHA256
+            or set(binding["complete_grid"]) != PAT05_COMPLETE_GRID_KEYS
+            or hashlib.sha256(_canonical(binding["complete_grid"])).hexdigest() != PAT05_GRID_SHA256):
+        raise ValueError("Expected complete PAT05 grid binding is not the pinned historical contract")
+    actual_grid = thaw_json(task.case._grid_record)
+    expected_grid = binding["complete_grid"]
+    expected = {"native_grid": expected_grid, "objective": original["objective"],
+                "max_steps": original["settings"]["max_steps"]}
+    actual = {"native_grid": actual_grid, "objective": asdict(task.reward_spec),
+              "max_steps": task.max_steps}
+    missing = sorted(set(expected_grid) - set(actual_grid))
+    extra = sorted(set(actual_grid) - set(expected_grid))
+    changed = sorted(key for key in set(expected_grid) & set(actual_grid)
+                     if _canonical(actual_grid[key]) != _canonical(expected_grid[key]))
+    mismatches = ["native_grid." + key for key in sorted(set(missing + extra + changed))]
+    mismatches += [key for key in ("objective", "max_steps") if _canonical(actual[key]) != _canonical(expected[key])]
+    if mismatches:
+        raise PAT05TaskBindingMismatch({"schema": "pat05-task-binding-mismatch-v1",
+            "grid_anchor": {key: value for key, value in binding.items() if key != "complete_grid"},
+            "mismatched_fields": mismatches, "missing_grid_fields": missing,
+            "extra_grid_fields": extra, "changed_grid_fields": changed,
+            "expected": expected, "actual": actual})
 
 
 def source_inventory():
@@ -77,6 +168,9 @@ def original_records():
         if subject == "sub-PAT05":
             if row["member"]["subject"] != subject or row["member"]["role"] != "TRAIN":
                 raise ValueError("Original PAT05 TRAIN identity changed")
+            # Include this pinned dependency in the worker's existing before/
+            # after original-record closure. The source member stays unchanged.
+            row = {**row, "complete_native_grid_binding": pat05_complete_grid_binding(row)}
         elif (row.get("subject") != subject or row.get("role") != "TRAIN"
               or prep.binding_hash(row["binding"]) != row.get("binding_hash")
               or row.get("status") != ("blocked_support_conflict" if subject in BLOCKED else "prepared")):
@@ -97,6 +191,8 @@ def declaration():
         members[subject] = {"member": member, "original_record_sha256": ANCHOR_SHA256[subject],
             "historical_status": "prepared" if subject == "sub-PAT05" else row["status"],
             "new_task_permitted": subject not in BLOCKED}
+        if subject == "sub-PAT05":
+            members[subject]["complete_native_grid_binding"] = pat05_complete_grid_binding(row)
     return {"version": VERSION, "declared_at": datetime.now(timezone.utc).isoformat(),
         "subjects": list(SUBJECTS), "settings": SETTINGS, "source_sha256": source_inventory(),
         "cohort_path": prep.COHORT_PATH, "cohort_sha256": prep.COHORT_SHA256,
@@ -159,6 +255,11 @@ def load_initial(subject, originals, record, check):
     if subject != "sub-PAT05":
         return prep.load_prepared_training_case(originals[subject], cancelled=lambda: _cancelled(check))
     row, member = originals[subject], record["members"][subject]["member"]
+    if _canonical(member) != _canonical(row["member"]):
+        raise ValueError("Original PAT05 member declaration changed")
+    binding = pat05_complete_grid_binding(row)
+    if _canonical(record["members"][subject].get("complete_native_grid_binding")) != _canonical(binding):
+        raise ValueError("Declared complete PAT05 grid binding differs from the authenticated historical record")
     cohort = prep.read_development_cohort(ROOT / prep.COHORT_PATH)
     prep.require_development_role(cohort, subject, role="TRAIN")
     path = ROOT / member["case_bundle"]
@@ -175,10 +276,7 @@ def load_initial(subject, originals, record, check):
         raise ValueError("Original PAT05 source identity changed")
     check()
     task = prep._construct_task(case, member, record["common_task"], lambda: _cancelled(check))
-    from resectionlab.core import thaw_json
-    if (asdict(task.reward_spec) != row["objective"] or task.max_steps != row["settings"]["max_steps"]
-            or thaw_json(task.case._grid_record) != member["expected_native_grid_binding"]):
-        raise ValueError("PAT05 physical task or native frame changed")
+    verify_pat05_task_binding(task, row, binding)
     return task
 
 
@@ -542,6 +640,8 @@ def worker(record, output, *, manifest_sha256, release):
                 except BaseException as error:
                     row.update(status="failed", initial_previews=guard.case_calls,
                         failure={"type": type(error).__name__, "message": str(error)})
+                    if isinstance(error, PAT05TaskBindingMismatch):
+                        row["failure"]["binding_mismatch"] = error.details
                     if isinstance(error, (InitialOnlyViolation, TimeoutError, KeyboardInterrupt, SystemExit)):
                         raise
                 finally:
