@@ -1,0 +1,50 @@
+{
+  "schema": "prepared-training-planner-comparison-release-v2",
+  "released_at_utc": "2026-10-05T08:00:27.338554+00:00",
+  "released": true,
+  "source_commit": "8737b8c3780814918ff938b0489bd6a4279a57f9",
+  "declaration": {
+    "path": "manifests/experiments/prepared-training-planner-comparison-v2.json",
+    "sha256": "ddb5e69f831bb691ff76bfa667a4b43c8b17eabfee7e8f166a2115c08a01abd4"
+  },
+  "source_archive_sha256": "ae1077b4aa88b600aec9c92bddf89b80b5388d6784eec2a113a737dd586b1d5c",
+  "attempted_subjects": [
+    "sub-PAT05",
+    "sub-PAT22",
+    "sub-PAT25",
+    "sub-PAT28"
+  ],
+  "historical_blocks": [
+    "sub-PAT16",
+    "sub-PAT20"
+  ],
+  "methods": [
+    "STOP",
+    "frozen_il",
+    "greedy_search"
+  ],
+  "settings": {
+    "arm_native_preview_entries": 468,
+    "arm_seconds": 90.0,
+    "device": "cpu",
+    "max_rss_bytes": 6442450944,
+    "max_steps": 3,
+    "max_wall_seconds": 600.0,
+    "optimizer_updates": 0,
+    "torch_threads": 1
+  },
+  "output_directory": "outputs/prepared-training-planner-comparison-v2",
+  "command": [
+    ".venv/bin/python",
+    "scripts/compare_prepared_training_planners.py",
+    "--declaration",
+    "manifests/experiments/prepared-training-planner-comparison-v2.json",
+    "--execute",
+    "--output",
+    "outputs/prepared-training-planner-comparison-v2"
+  ],
+  "working_tree_has_unrelated_changes": true,
+  "execution_basis": "Committed source bytes verified against archive; worker and parent closure checks unchanged. V1 remains failed and unmodified.",
+  "resource_scope": "Per-patient600s/6GiB sampled-worker supervisor; each arm cooperative90s/468actualpreviews for planning+replay; common preparation and independent audit reported separately.",
+  "scope": "One separately released repeat after exact full-JSON comparison repair; zero optimizer updates, no automatic retry or protected patient access."
+}
