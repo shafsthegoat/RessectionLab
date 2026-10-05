@@ -12,7 +12,7 @@ packaging, broad infrastructure, further mechanics runs and model sweeps are
 deferred. Preserve all existing patient assignments and negative results.
 
 The immediate task is annotation-assisted target access with at most three
-certified native tool strokes on TRAIN patient PAT05, with STOP available.
+decisions (a certified native tool stroke or STOP) on TRAIN patient PAT05.
 Observations contain the permitted preoperative image, supplied target annotation,
 provisional tissue support, observed cavity and tool geometry. Supplied annotation
 is an input in this track; this is not scan-only inference. Success requires
@@ -57,14 +57,47 @@ fell from 4.140585 to 4.097359, while the policy still trails search by 270.4149
 The first learned action returns 147.3035, close to search's 150.7035. Its second
 and third actions each remove 18 mm³ of other tissue and no target, returning
 -3.7010 and -3.7050. Those later choices account for 98.74% of the total gap.
-This localizes the failure; it does not prove that missing training states are
-the cause. The next single diagnostic is to add greedy labels at states visited
-by this policy (one bounded imitation-data aggregation iteration), keeping the
-model, task and objective fixed. No further sweep has run. See
+This localized the failure without proving its cause. See
 `artifacts/pat05-real-geometric-imitation-v1/RESULT.md` and its comparison plot.
-The integrated five-file verification passed 81 checks in 7.51 seconds. No SELECT
-or unopened patient was accessed. Population training, transfer and physical
-fidelity remain unproved.
+
+The subsequent matched visited-state experiment completed in 160.40 seconds
+supervised (158.02 seconds worker), at 1.86 GB peak. Both branches independently
+restored exactly the BC8 weights and Adam state, then used eight additional
+updates and six examples per update (48 training forwards each). The control
+repeated the original three examples; the augmented branch added three visited
+states, with five unique observations across its six weighted examples. All
+four complete episodes and a separate saved-record calculation passed.
+
+Control return rose to 239.1058 (286.0010 mm³ target / 233.0008 mm³ other tissue).
+Augmented return reached 290.5060 (345.0012 / 271.0009 mm³), a matched difference
+of +51.4002. Both chose the same first action; augmentation improved the later
+choices and all three of its actions had positive incremental return. This is
+support for added state examples in one deterministic pair, not replicated
+causal evidence or an RL/generalization gain. Absolute other-tissue removal
+increased by 38 mm³; the result is not a clinical safety improvement. Search
+still leads at 410.3124. Obtaining the new labels cost 7.85 seconds within the
+32.29-second collection phase, additional to prior teacher-generation costs.
+See `artifacts/pat05-real-visited-imitation-v1/RESULT.md` and its comparison plot.
+Eight focused guard/isolation checks passed; the prior integrated five-file
+verification passed 81 checks. No SELECT or unopened patient was accessed.
+
+The next bounded work is to establish the same source/access/grid/action
+contracts on the remaining TRAIN cases and measure their search and frozen-policy
+outcomes. This moves toward real population training and transfer without more
+PAT05-only tuning. Existing failures and patient roles stay in the denominator.
+Population training, repeated-seed advantage, transfer and physical fidelity
+remain unproved.
+
+A metadata-only population-readiness check found existing structural-evidence
+bundles for all six TRAIN and both SELECT cases; no acquisition is needed for
+this bounded annotation-assisted track. It did not decode any additional patient
+arrays or perform a fresh whole-bundle byte audit. PAT16/PAT20 remain genuine
+factory rejections: their frozen main envelopes omit 19/125 annotated target
+cells. Keep these TRAIN failures in the denominator; do not intersect labels or
+expand support silently. PAT22/PAT25/PAT28 and SELECT PAT26/PAT27 have prior
+zero-omission receipts, but still need per-case support/access, native-grid and
+proposal-coverage bindings. Only PAT05 currently has the full executed contract.
+This is preparation readiness, not population training or transfer evidence.
 
 **Deferred mechanics preparation:** half-height source components are committed;
 34 preparation checks and 35 readout checks passed (separate focused suites,
