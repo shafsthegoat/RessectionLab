@@ -21,8 +21,13 @@ only after its physical validation. Existing patient splits remain unchanged.
 **Current mechanics checkpoint:** the repaired optional solver passed all eight
 numerical controls and independent saved-output replay. The graded real-patient
 mesh failed the unchanged 2 mm surface-fidelity gate and remains excluded from
-solves. The fixed specimen experiment is prepared for a separate bounded run;
-all measured curves and withheld patient motions remain closed at this checkpoint.
+solves. The fixed specimen experiment completed 18 numerical cases in 396.3 seconds
+but failed mesh-convergence gates: axial probe motion differed by 22.36/23.26 µm
+against an 8 µm limit, and tension reaction differences did not decrease across
+the three meshes. Step and scale checks passed. Calibration and held-out response
+curves remain closed; the two fitted cases did not run. A reviewed saved-geometry
+diagnostic is prepared to localize the rejected patient mesh’s surface errors;
+it cannot accept that mesh or open withheld patient motions.
 
 **Latest steering (October 4): real-patient learning and probability-aware planning.**
 The user supplied `docs/CODEX_STEERING_PROMPT.md` and
