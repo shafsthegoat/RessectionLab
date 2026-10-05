@@ -8,6 +8,8 @@ the frozen six-channel policy does not yet observe prior contact history.
 from __future__ import annotations
 
 import copy
+import math
+import time
 from itertools import product
 from dataclasses import asdict, dataclass, field
 from types import SimpleNamespace
@@ -610,6 +612,96 @@ class NativeSpatialTask:
         self._assert_frozen()
         return type(self)(self.case, max_steps=self.max_steps, reward=self.reward_spec,
                           cancelled=self._cancelled, _planning=self._planning)
+
+    def observed_one_step_search(self, *, seconds: float = 60.):
+        """Score every current certified nominal action, then stop after the best.
+
+        This is an exact immediate comparison, not a whole-horizon optimum.
+        Source preparation performed before this call must be charged separately.
+        No change is made to this task; the returned sequence requires replay.
+        """
+        return self._observed_greedy_search(seconds=seconds, one_step=True)
+
+    def observed_greedy_search(self, *, seconds: float = 60.):
+        """Repeat complete immediate scoring through the same remaining horizon.
+
+        Current native certificates supply hypothetical contained-cell removals;
+        only the permitted nominal target scores them. STOP wins ties at zero.
+        Negative preparatory moves are not explored, which is a stated greedy
+        limitation. No successor branch is committed merely to score its action.
+        """
+        return self._observed_greedy_search(seconds=seconds, one_step=False)
+
+    def _observed_greedy_search(self, *, seconds: float, one_step: bool):
+        from .observed_search import ObservedSearchLimit
+
+        if isinstance(seconds, bool) or not isinstance(seconds, (int, float)) or not math.isfinite(seconds) or seconds <= 0:
+            raise ValueError("Observed greedy search needs a finite positive time budget")
+        started = time.perf_counter()
+        sequence, decisions = [], []
+        evaluated = commits = 0
+        initial_steps = self._steps
+        initial_value = 0.
+        model = None
+
+        def accounting(complete=False):
+            return {"method": "observed_one_step" if one_step else "observed_greedy",
+                "objective_source": "permitted_nominal_target_and_frozen_geometric_costs",
+                "complete": complete, "planning_seconds": time.perf_counter() - started,
+                "time_budget_seconds": seconds, "evaluated_nonstop_actions": evaluated,
+                "model_transition_calls": commits, "decisions": copy.deepcopy(decisions),
+                "initial_steps": initial_steps, "max_steps": self.max_steps,
+                "estimated_incremental_return": 0. if model is None else model._total_reward - initial_value,
+                "initial_source_preparation": "outside_this_call; caller_must_report_and_charge",
+                "within_call_costs": "nominal clone, certificate checks, all candidate scoring, selected commits and needed inventories",
+                "global_optimality_proven": False, "native_replay_required": True}
+
+        def check():
+            self._check_cancelled()
+            if time.perf_counter() - started > seconds:
+                raise ObservedSearchLimit("Observed greedy search exceeded its declared time budget",
+                    accounting=accounting(), best_sequence=tuple(sequence))
+
+        check()
+        model = self.planning_clone()
+        initial_value = model._total_reward
+        while not model.terminated:
+            check()
+            inventory = model._prepare_inventory()
+            scores = [{"action_id": "STOP", "reward": 0., "target_removed_mm3": 0., "normal_removed_mm3": 0.,
+                       "insertion_distance_mm": 0., "complete_tool_path_length_mm": 0.}]
+            for identifier, preview in inventory.items():
+                check()
+                # Mirror the engine's non-mutating certificate admission checks;
+                # hypothetical scoring must not trust a forged cache entry.
+                engine = model._engine
+                if (not preview.feasible or engine._preview_records.get(id(preview)) is not preview
+                        or preview.source_state_hash != engine.state_hash
+                        or preview.decision_model_hash != engine.config.fingerprint
+                        or engine._preview_digests.get(id(preview)) != engine._result_digest(preview)):
+                    raise ValueError("Observed search encountered a stale, foreign or changed native certificate")
+                scored = model._score_record({**preview.to_history_record(), "action_id": identifier}, model._current_tool)
+                scores.append({key: scored[key] for key in scores[0]})
+                evaluated += 1
+            check()
+            selected = max(scores, key=lambda row: row["reward"])
+            decisions.append({"step": model._steps, "source_state_hash": model._engine.state_hash,
+                "legal_nonstop_actions": len(inventory), "scored_nonstop_actions": len(scores) - 1,
+                "all_current_legal_actions_scored": True, "scores": scores,
+                "selected_action_id": selected["action_id"]})
+            model.advance_planning(selected["action_id"])
+            sequence.append(selected["action_id"])
+            commits += 1
+            check()
+            if one_step and not model.terminated:
+                # STOP has no geometric effect; avoid preparing a successor
+                # inventory merely to encode its known zero-cost continuation.
+                sequence.append("STOP")
+                break
+        check()
+        self._assert_frozen()
+        model._assert_frozen()
+        return tuple(sequence), accounting(complete=True)
 
     def candidate_inventory(self):
         self._prepare_inventory()

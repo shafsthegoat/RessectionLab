@@ -1,5 +1,33 @@
 # Real-patient learning helpers
 
+The current runnable development experiment is
+`scripts/run_real_patient_learning.py`, following
+`CORE_IDEA_VALIDATION_STEERING.md`. It uses only TRAIN PAT05 and the existing
+annotation-assisted 64³ spatial actor, unchanged geometric objective and at most
+three decisions including STOP. Two REINFORCE updates use two complete episodes
+each; initial and fixed-latest policies are compared with three random episodes
+and greedy search through the same horizon. Initial/latest readouts are on the
+training anatomy, not an independent patient or checkpoint-selection set.
+
+The actor ranks certified geometric proposals. Generating those proposals
+already requires native tool previews; this is not direct path generation from
+a scan without geometric computation. Report that shared preparation and each
+successor-inventory cost as well as network latency. Greedy search scores all
+current legal certificates against the permitted annotation and frozen objective;
+it can miss a valuable route requiring a negative opening action. No method is
+claimed globally optimal. Search uses the full nominal field while the actor uses
+the fixed crop; all PAT05 target annotations fit that crop, but representation
+and computational access are not identical.
+
+The binary positive-target threshold is a reachability check. In the initial
+PAT05 inventory, 52/70 non-STOP actions remove some target and only 26/70 have
+positive geometric reward. Continuous target removal, other-tissue removal,
+contact bounds, path length and runtime therefore carry the quality comparison.
+The reward weights are research assumptions, not calibrated clinical injury
+costs. Functional evidence is unavailable in this task. Independent complete-tool
+replay and separately recomputed reward/accounting are required for every accepted
+episode; neither establishes cutting or retraction fidelity.
+
 These are reusable planning and bookkeeping components, not a trained model or
 an efficacy result. They open no images, run no optimizer, and do not alter
 geometry, observations, reward, or patient roles. The first population runner

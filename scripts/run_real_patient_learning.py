@@ -268,7 +268,13 @@ def worker(record, output):
         for index in range(SETTINGS["random_episodes"]):
             episode("random_legal_" + str(index), "random")
         search_started = time.perf_counter()
-        sequence, accounting = base.observed_greedy_search(seconds=SETTINGS["search_seconds"])
+        try:
+            sequence, accounting = base.observed_greedy_search(seconds=SETTINGS["search_seconds"])
+        except BaseException as search_error:
+            report["search"] = {"status": "failed", "planning_seconds": time.perf_counter() - search_started,
+                "partial_accounting": getattr(search_error, "accounting", None),
+                "unreplayed_partial_sequence": getattr(search_error, "best_sequence", None)}
+            raise
         report["search"] = {"sequence": list(sequence), "accounting": accounting,
                             "planning_seconds": time.perf_counter() - search_started}
         preserve()
