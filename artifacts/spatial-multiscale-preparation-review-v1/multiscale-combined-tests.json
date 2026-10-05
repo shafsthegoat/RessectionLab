@@ -1,0 +1,22 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_spatial_multiscale_views.py",
+    "tests/test_spatial_multiscale_views_review.py"
+  ],
+  "source_sha256": {
+    "src/resectionlab/spatial_multiscale_views.py": "743531e800f9f2913b6ec8101b2d5632dbb9ec2482d196fe9400d1459b29c0fe",
+    "tests/test_spatial_multiscale_views.py": "c583c961ba3927d6e97c6c4e7458b2d0aea13caa1a9439f66606c2d686a07467",
+    "tests/test_spatial_multiscale_views_review.py": "1561f503d926e74f14ba52fb538c0ffba3a5c58ad45a5183cd73d45d86659e70",
+    "docs/spatial-multiscale-views.md": "3c77d747a8724bd086dc696d329c152b70ca4af1f1bba65d52187d44f2a34291"
+  },
+  "source_unchanged": true,
+  "exit_code": 0,
+  "elapsed_seconds": 0.9862298329826444,
+  "stdout": ".......................................                                  [100%]\n39 passed in 0.79s\n",
+  "stderr": "",
+  "patient_data_read": false
+}
