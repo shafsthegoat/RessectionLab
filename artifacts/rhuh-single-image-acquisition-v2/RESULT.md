@@ -23,8 +23,14 @@ The original twelve-file V1 declaration remains unchanged and unmet.
 The source/archive and explicit release were committed before the local
 preflight and single execution. Parent/worker receipts and preservation metadata
 are retained here; no image payload, transfer token, raw client logs or private
-key is committed. Independent byte/provenance audit is pending; decoding and
-scientific use remain unreleased.
+key is committed. The independent byte/provenance audit passed: two independent
+reads matched the length and both digests, all 23 archived source/metadata files
+matched Git and current bytes, and the committed release preceded execution.
+The original file's identity and read-only permissions remained unchanged.
+The audit records a corrected Git timestamp precision assumption; it did not
+change the release or image bytes. Saved records cannot independently reconstruct
+operating-system enforcement or network traffic. See `independent-byte-audit.json`
+and its retained checker. Decoding and scientific use remain unreleased.
 
 Source: [TCIA RHUH-GBM](https://www.cancerimagingarchive.net/collection/rhuh-gbm/),
 [dataset DOI](https://doi.org/10.7937/4545-C905), CC BY 4.0 per the source declaration.
