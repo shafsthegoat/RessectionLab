@@ -1,0 +1,28 @@
+{
+  "schema": "rhuh-checksum-transfer-release-v1",
+  "released_utc": "2026-10-05T05:51:02.497469+00:00",
+  "execution_authorized": true,
+  "source_checkpoint": "1d6823b765f62d30ff516b14f9c664a505e0c00f",
+  "source_file": "scripts/acquire_rhuh_checksum.py",
+  "source_sha256": "f9ad9f4d64cab2314be865aad47e4300e23aa8b83457ee83656a6921e12edaf0",
+  "source_archive_sha256": "c800c5b7d6e93362510c0f5ea76c5b948a3f8d6656ee1b38b1464fe6d9d924b0",
+  "archived_file_count": 22,
+  "preparation_manifest_sha256": "d5cc4db024794e79d0bd7fa8ada16192dec455422b64c5ca0044528486567777",
+  "independent_review_sha256": "6866f9db73f4a904a72a1a09420982218501405e0e0a31e377851112530301e5",
+  "command": [
+    "python3",
+    "scripts/acquire_rhuh_checksum.py",
+    "--execute"
+  ],
+  "public_source": "/RHUH-GBM-nii-v1.sums",
+  "maximum_client_attempts": 1,
+  "maximum_wall_seconds": 60,
+  "outer_watchdog_seconds": 59,
+  "maximum_file_bytes": 65536,
+  "expected_payload_bytes": 61787,
+  "patient_image_requests_allowed": false,
+  "acceptance": "Parent exit0 AND accepted=true, final size/hash reconciled after descendant cleanup; worker receipt alone insufficient.",
+  "publisher_digest_for_checksum_file": null,
+  "on_failure": "Retain unverified quarantined bytes and redacted receipts; no automatic retry.",
+  "image_acquisition_released": false
+}
