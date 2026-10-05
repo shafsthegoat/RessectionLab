@@ -1520,3 +1520,24 @@ The reusable opt-in ingress preparation also passed 81 focused software checks:
 17 owner, 40 independent and 24 legacy compatibility cases. Its access derivation
 moved unchanged; existing default preparation remains the baseline. It has not
 been run on another real patient and supports no new learning claim.
+
+## October 5, 2026 — saved transfer decisions and fair-comparison preparation
+
+A post-hoc read of the completed frozen-transfer archive, followed by an
+independent saved-record calculation, found greedy's initial action at ranks8/77
+and4/71 under the frozen policy for PAT22/PAT28. Their action entropies are
+0.997152/0.996870 of the uniform maxima. The executed choices were deterministic
+argmax. Later-step arithmetic remainders are107.001683/99.005802 of the total
+116.799653/119.003762 reward gaps; later observations diverge, so this does not
+identify causal error shares or matched-state regret. Both support-blocked cases
+and PAT25's STOP-only case remain in the original denominator. No new arrays,
+checkpoints, policy calls or updates were used. Exact archive/member identities,
+analysis and independent check are in
+`artifacts/frozen-transfer-decision-diagnostic-v1/`.
+
+The PAT05 historical metadata adapter passed123 owner/independent controls without
+relaxing the complete20-field grid. Its actual patient rederivation is pending.
+The opt-in planning/replay budget passed53 controls after two retained defects:
+inherited-method cleanup could block the next arm, and new work could begin at an
+already exhausted deadline. Repairs preserve the common468-entry/90-second
+limits. These are software preparation results; the new comparison has not run.

@@ -1,0 +1,120 @@
+{
+  "analysis": "post_hoc_saved_decision_diagnostic_v1",
+  "archive_sha256": "ee11dc1b7ca194a43c51ea7bac0194e62c7c6d00a89329c5dbccc52bfde9bfea",
+  "analysis_source_sha256": "792b248d27df8b380f0939abe46453a66a66133afdbc63d6bb64a6d33afbf332",
+  "input_members_sha256": {
+    "summary.json": "9ba600c760739851cb21a42bece5c8721f871f2400e4b8ad45eaad0a4be5a6d2",
+    "sub-PAT22/frozen_policy.json": "8bd5de68e0232fab416a0df39b27b155c3f4e7a96e9128c55593525ef12c1407",
+    "sub-PAT22/greedy_search.json": "ba462cc372ec652965ec76fc68ffee881e18ce67c3616fd7ba2934c1a7d4547b",
+    "sub-PAT25/frozen_policy.json": "0a49821f44bbe61265a18cf4c6c73828a08d695a11ce34fda4a44fc009544776",
+    "sub-PAT25/greedy_search.json": "c957c1aa665ba5cd999a5c6d848e751575ded63acddf3b331dd75e45191a86fa",
+    "sub-PAT28/frozen_policy.json": "33fd109742e4773cb4f9e09eda5393b946d822713a9246b85134471537cd961a",
+    "sub-PAT28/greedy_search.json": "143f6f9454bff4a463fe4b23ae643fe5f286e66345d9cc7e2ec6842aaf056e2a"
+  },
+  "prescribed_patients": 5,
+  "patients": [
+    {
+      "subject": "sub-PAT16",
+      "status": "preparation_blocked",
+      "preparation_status": "blocked_support_conflict",
+      "diagnostic": null
+    },
+    {
+      "subject": "sub-PAT20",
+      "status": "preparation_blocked",
+      "preparation_status": "blocked_support_conflict",
+      "diagnostic": null
+    },
+    {
+      "subject": "sub-PAT22",
+      "status": "complete",
+      "preparation_status": "prepared",
+      "diagnostic": {
+        "initial_observation_hash": "sha256:7c47eade5dd659996d667ca6934b60dc91298ff81929b4e89be7e97e3ca08672",
+        "legal_actions": 77,
+        "policy_selected_probability": 0.014096961356699467,
+        "search_initial_action_probability": 0.01401478610932827,
+        "search_initial_action_rank_min": 8,
+        "policy_minus_search_action_logit": 0.0058463215827941895,
+        "entropy_nats": 4.33143464769707,
+        "entropy_fraction_of_uniform_max": 0.9971520883291924,
+        "first_step_search_minus_policy_reward": 9.797970926611242,
+        "total_search_minus_policy_reward": 116.7996534922728,
+        "later_steps_arithmetic_remainder": 107.00168256566155,
+        "later_steps_fraction_of_total_gap": 0.9161130137491422,
+        "policy_step_rewards": [
+          257.7002351920615,
+          207.09838530588493,
+          207.4983841192136
+        ],
+        "search_step_rewards": [
+          267.4982061186727,
+          261.698223325387,
+          259.9002286653731
+        ],
+        "later_states_are_matched": false
+      }
+    },
+    {
+      "subject": "sub-PAT25",
+      "status": "complete",
+      "preparation_status": "prepared",
+      "diagnostic": {
+        "initial_observation_hash": "sha256:f9ba28c325f52a51820c65e2a9834f8c152b4be2a6d29aa61a4a7cb1370e695b",
+        "legal_actions": 1,
+        "policy_selected_probability": 1.0,
+        "search_initial_action_probability": 1.0,
+        "search_initial_action_rank_min": 1,
+        "policy_minus_search_action_logit": 0.0,
+        "entropy_nats": -0.0,
+        "entropy_fraction_of_uniform_max": null,
+        "first_step_search_minus_policy_reward": 0.0,
+        "total_search_minus_policy_reward": 0.0,
+        "later_steps_arithmetic_remainder": 0.0,
+        "later_steps_fraction_of_total_gap": null,
+        "policy_step_rewards": [
+          0.0
+        ],
+        "search_step_rewards": [
+          0.0
+        ],
+        "later_states_are_matched": null
+      }
+    },
+    {
+      "subject": "sub-PAT28",
+      "status": "complete",
+      "preparation_status": "prepared",
+      "diagnostic": {
+        "initial_observation_hash": "sha256:d0d193e53aca16556e969694a6a6dc96e2bfbe1e4a3f69ba88f3c06291f46bd0",
+        "legal_actions": 71,
+        "policy_selected_probability": 0.015255728736519814,
+        "search_initial_action_probability": 0.015193062834441662,
+        "search_initial_action_rank_min": 4,
+        "policy_minus_search_action_logit": 0.004116177558898926,
+        "entropy_nats": 4.24933709774664,
+        "entropy_fraction_of_uniform_max": 0.9968698612892468,
+        "first_step_search_minus_policy_reward": 19.99796002099049,
+        "total_search_minus_policy_reward": 119.0037621247397,
+        "later_steps_arithmetic_remainder": 99.0058021037492,
+        "later_steps_fraction_of_total_gap": 0.8319552284403527,
+        "policy_step_rewards": [
+          194.91261020500994,
+          146.11070775385897,
+          152.51069496056965
+        ],
+        "search_step_rewards": [
+          214.91057022600043,
+          208.51058301928958,
+          189.1166217988883
+        ],
+        "later_states_are_matched": false
+      }
+    }
+  ],
+  "patient_arrays_opened": 0,
+  "checkpoint_loads": 0,
+  "policy_forwards": 0,
+  "updates": 0,
+  "scope": "Saved TRAIN trajectories only. Softmax probabilities are action probabilities, not clinical probabilities. Later-step differences are descriptive arithmetic on diverged states, not counterfactual regret or causal attribution."
+}

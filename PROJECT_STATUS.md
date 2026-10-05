@@ -58,6 +58,24 @@ source without constructing another full inventory or invoking a policy, and
 requires the upstream subject-specific source binding. Other TRAIN cases have
 not yet been run with it. See `docs/native-access-preparation.md`.
 
+PAT05's historical access metadata now has an explicit adapter: all saved fields
+and the executed twenty-field grid remain exact, while previously absent exit
+boundaries are labeled newly derived. Its 123 focused controls pass; actual
+patient rederivation remains pending. A separate opt-in planning budget now counts
+native preview entries across search and replay under one clock; 53 controls pass
+after inherited-method cleanup and exact-deadline admission defects were fixed.
+These components prepare the next comparison, not a completed patient run.
+
+A post-hoc saved-record diagnostic independently reproduces the frozen model's
+initial greedy-action ranks: eighth of 77 legal actions on PAT22 and fourth of 71
+on PAT28. Action-distribution entropy is 99.715% and 99.687% of the uniform maximum;
+executed choices remain deterministic argmax. Later steps account arithmetically
+for 91.61% and 83.20% of the total reward gaps, but their states diverge after the
+first action, so this is not causal attribution or matched-state regret. The
+original five-patient denominator and blocked/STOP-only outcomes remain intact.
+See `artifacts/frozen-transfer-decision-diagnostic-v1/RESULT.md`. No new training
+or patient-array processing was needed for this diagnostic.
+
 The isolated, signed native public-transfer client passes a version-only smoke
 check. The checksum-only helper has 37 passing offline controls; three lifecycle
 review failures were repaired and retained. After a separate source-bound release,
