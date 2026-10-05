@@ -1,0 +1,45 @@
+{
+  "lossless": true,
+  "archive_sha256": "729d7ceae48aff63a03c554283d9535b9bb5a1bde24d1e455e400b3f802ae710",
+  "compressed_bytes": 220390,
+  "raw_bytes": 3204034,
+  "files": {
+    "outer.json": {
+      "original_path": "outputs/pat25-ingress-access-v1.outer.json",
+      "bytes": 1876,
+      "sha256": "6899adcfea2c30104733248a42b23e6d42528f16fa99530f5320b9cf7369f3e4"
+    },
+    "outer.log": {
+      "original_path": "outputs/pat25-ingress-access-v1.outer.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "run/acceptance.json": {
+      "original_path": "outputs/pat25-ingress-access-v1/acceptance.json",
+      "bytes": 1039,
+      "sha256": "84229bc17b34925474559d81ecfe19273b7940ec7192d6a42368e8e68e3f13cc"
+    },
+    "run/execution-baseline.json": {
+      "original_path": "outputs/pat25-ingress-access-v1/execution-baseline.json",
+      "bytes": 18833,
+      "sha256": "3830de3ce1ca0d2818a1e961b524395e328631e0bb587d961b6242c844940fa9"
+    },
+    "run/receipt.json": {
+      "original_path": "outputs/pat25-ingress-access-v1/receipt.json",
+      "bytes": 3181934,
+      "sha256": "b02ac66155132a0ddc8554d69bfe3b5a8cfdbca4e80516099a21803baa41a267"
+    },
+    "run/supervisor.json": {
+      "original_path": "outputs/pat25-ingress-access-v1/supervisor.json",
+      "bytes": 352,
+      "sha256": "1b37b303c7150de5d3ca16364d0d952c93729e3b7e68312a35dc2f366293f849"
+    },
+    "run/worker.log": {
+      "original_path": "outputs/pat25-ingress-access-v1/worker.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "patient_arrays_included": false,
+  "raw_outputs_unchanged": true
+}

@@ -1,0 +1,16 @@
+{
+  "started_utc": "2026-10-05T06:45:08.343812+00:00",
+  "release_commit": "eaab1a742735bbcc9b9599592b802f1e2d7c0728",
+  "release_sha256": "1830c565c7a46d8ae129c6727ecb1d6cab6e25ea5c3e5ee7c28c85737237bcea",
+  "maximum_attempts": 1,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/scripts/diagnose_pat25_ingress_access.py",
+    "--manifest",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/pat25-ingress-access-v1/declaration.json",
+    "--release",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/pat25-ingress-access-v1/release.json",
+    "--output",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/pat25-ingress-access-v1"
+  ]
+}
