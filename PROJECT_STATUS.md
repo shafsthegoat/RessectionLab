@@ -368,6 +368,14 @@ solver admission. No new patient meshing has run; the original 2,065-node
 rejection remains terminal. A bounded source-bound caller is still required.
 See `docs/mechanics-patient-mesh-candidate.md` and its independent review.
 
+The separate mesh caller passed 33 focused checks, including independent
+resource/publication rejection tests. It binds a seven-file committed source
+archive, the exact saved native surface, private Gmsh and QC ancestry. One future
+candidate is limited to 180 s, 3 GiB sampled group memory, one numerical thread,
+2 MiB diagnostics and bounded logs/output. This is launcher preparation only;
+no new patient mesh or solver has run. See
+`docs/mechanics-patient-mesh-candidate-launcher.md`.
+
 One bounded Gmsh preparation generated the three measured-specimen meshes
 (96/768/2,592 hex elements) and 18 fixed loading decks in 3.43 s, with
 140.2 MB maximum sampled memory. Independent native-mesh and deck review

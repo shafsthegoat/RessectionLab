@@ -1,0 +1,26 @@
+{
+  "schema": "mechanics-patient-mesh-candidate-launcher-preparation-v2",
+  "created_utc": "2026-10-04T23:56:10.135979+00:00",
+  "status": "frozen_preparation_pending_independent_review",
+  "actual_execution_authorized": false,
+  "patient_array_reads": 0,
+  "native_generation_calls": 0,
+  "solver_calls": 0,
+  "files": {
+    "scripts/mechanics_patient_mesh_candidate_run.py": "3eb34cb35cb1bfe41cf12cb55f7df35e61efe452eb747411c64b1b8ff87173bd",
+    "tests/test_mechanics_patient_mesh_candidate_run.py": "cd6380ff882b07e60818e282473826d7fb042e4c6dc97705d1b36feecb4cfbc8",
+    "docs/mechanics-patient-mesh-candidate-launcher.md": "c285d052f0de53a1d3ff54993d438131bc985d669edf422407325da421676a9e",
+    "artifacts/mechanics-patient-mesh-candidate-launcher-preparation-v2/release-template.json": "efc23510b06ebd014e060136352effb64b777d4bfff3c8840f928474804416a8",
+    "artifacts/mechanics-patient-mesh-candidate-launcher-preparation-v2/atomic-publish-control-before-fixture-fix.txt": "88c7b6227e9cb687b1143e2e9b6e98cf938e248c8f1413f6ed71dff477050b2c",
+    "artifacts/mechanics-patient-mesh-candidate-launcher-preparation-v2/owner-tests.txt": "76f17ecfb4b73f6b9c5c132a48f129a5e713e11ec80816852b5eee730d268b2d"
+  },
+  "helper_v1_and_candidate_unchanged": {
+    "v1_sha256": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+    "candidate_sha256": "ff4a64f1593a3384601e10f0ea33564769e46050d88e1432ca34f5d11d0771fe",
+    "candidate_manifest_sha256": "ff27037c4141c5da99266da0c92efd5f6a673f5eb0bba6ac3032e916ba5db54e"
+  },
+  "tests_exit_code": 0,
+  "tests_scope": "Temporary text-file bindings, static checks and mocked supervisors only. No source-surface decode/native execution.",
+  "negative_controls": "Atomic-publish test initially injected FileNotFoundError without errno; fixture corrected to ordinaryENOENT and singlepublication, original failure retained.",
+  "release_template_is_not_execution_permission": true
+}

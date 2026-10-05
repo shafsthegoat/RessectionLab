@@ -1,0 +1,45 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+______ test_normal_atomic_publication_does_not_raise_false_output_failure ______
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-494/test_normal_atomic_publication0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x108a83110>
+
+    def test_normal_atomic_publication_does_not_raise_false_output_failure(tmp_path,monkeypatch):
+        temporary=tmp_path/'result.tmp';temporary.write_text('complete')
+        original=Path.stat
+        def published(path,*args,**kwargs):
+            if path==temporary and kwargs.get('follow_symlinks') is False:
+                temporary.rename(tmp_path/'result.json')
+                raise FileNotFoundError('Atomic publication between listing andstat')
+            return original(path,*args,**kwargs)
+        monkeypatch.setattr(Path,'stat',published)
+>       assert v.output_usage(tmp_path)['files']==0
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_mechanics_patient_mesh_candidate_run.py:110: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/mechanics_patient_mesh_candidate_run.py:120: in output_usage
+    if path.is_symlink(): raise ValueError('Output symlink prohibited')
+       ^^^^^^^^^^^^^^^^^
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:914: in is_symlink
+    return S_ISLNK(self.lstat().st_mode)
+                   ^^^^^^^^^^^^
+../../../../.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/pathlib.py:847: in lstat
+    return self.stat(follow_symlinks=False)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-494/test_normal_atomic_publication0/result.tmp')
+args = (), kwargs = {'follow_symlinks': False}
+
+    def published(path,*args,**kwargs):
+        if path==temporary and kwargs.get('follow_symlinks') is False:
+            temporary.rename(tmp_path/'result.json')
+>           raise FileNotFoundError('Atomic publication between listing andstat')
+E           FileNotFoundError: Atomic publication between listing andstat
+
+tests/test_mechanics_patient_mesh_candidate_run.py:107: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tests/test_mechanics_patient_mesh_candidate_run.py::test_normal_atomic_publication_does_not_raise_false_output_failure
+1 failed in 0.09s
