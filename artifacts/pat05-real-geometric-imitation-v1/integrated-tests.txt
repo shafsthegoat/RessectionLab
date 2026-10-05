@@ -1,0 +1,4 @@
+Integrated focused verification after both patient runs, source commit f2d0ef3.
+Command: .venv/bin/python -m pytest -q tests/test_native_spatial_task.py tests/test_native_spatial_evaluation.py tests/test_native_spatial_greedy.py tests/test_real_patient_learning_runner.py tests/test_real_patient_imitation.py
+Result: 81 passed in 7.51s.
+Scope: native geometric task, independent outcome accounting, greedy baseline, RL and imitation runner guards. Analytical software checks; no patient generalization or mechanics fidelity claim. Unrelated/deferred work was not included.

@@ -5,9 +5,9 @@ completed negative development result, not evidence of transfer or clinical bene
 
 The existing 30,827-parameter 3D CNN used annotation-assisted T1, nominal tissue,
 supplied target annotation, observed cavity, coverage/availability, and certified
-entry/tip/tool geometry. Motor/language/vessel risk was unavailable. Seed11,
-masked on-policy REINFORCE with a spatial value baseline, Adam0.001, gamma1,
-entropy0.01, value weight0.5 and global gradient clip5 were fixed. Each update
+entry/tip/tool geometry. Motor/language/vessel risk was unavailable. Seed 11,
+masked on-policy REINFORCE with a spatial value baseline, Adam 0.001, gamma 1,
+entropy 0.01, value weight0.5 and global gradient clip 5 were fixed. Each update
 used two complete PAT05 TRAIN episodes. PAT26/27 SELECT and unopened patients
 were not accessed. The fixed latest checkpoint was reported; there was no
 reward-based checkpoint selection.
@@ -28,29 +28,29 @@ No deformation, force, functional injury or clinical accuracy is established.
 | Greedy current-action search | 410.3124 | 493.0017 | 412.0014 | 20.09 |
 | Latest after two RL updates | 12.7030 | 17.0001 | 20.0001 | 16.37 |
 
-Search planning cost17.40s is additional to its20.09s replay/audit. Shared initial
-source/candidate preparation cost8.18s is additional to each method's table
+Search planning cost 17.40 s is additional to its20.09 s replay/audit. Shared initial
+source/candidate preparation cost 8.18 s is additional to each method's table
 cost. Every episode included initial state cloning, proposal/collision work,
 actual execution, JSON reporting and independent evaluation. Initial/latest
-actor decisions took0.894/0.613s across all three decisions; their native steps
-including successor inventory took13.209/12.900s and independent audits
-2.046/2.014s. Actor-forward timing alone is not end-to-end latency. Complete
-supervised run205.84s, measured peak RSS1,910,718,464bytes, below600s/6GiB caps.
+actor decisions took 0.894/0.613 s across all three decisions; their native steps
+including successor inventory took 13.209/12.900 s and independent audits
+2.046/2.014 s. Actor-forward timing alone is not end-to-end latency. Complete
+supervised run205.84 s, measured peak RSS1,910,718,464 bytes, below 600 s/6GiB caps.
 
-All10 completed episodes passed independent full-tool history and source-cell
-reward/volume accounting; invalid attempted actions were0. Any target-cell
+All 10 completed episodes passed independent full-tool history and source-cell
+reward/volume accounting; invalid attempted actions were 0. Any target-cell
 removal is only the reachability criterion. It is easy in this bounded catalog
 and does not demonstrate useful learning. Greedy removed4.31% of the supplied
 11,437mm³ target; the initial/latest policy removed0.149%. The catalog does not
 cover full resection.
 
-The four optimization returns were10.2130,99.0073,12.1790,−3.1250. Batch means
-were54.6102 and4.5270, with no monotonic gain. Both updates changed parameters,
+The four optimization returns were 10.2130,99.0073,12.1790,−3.1250. Batch means
+were 54.6102 and4.5270, with no monotonic gain. Both updates changed parameters,
 including nonzero encoder and actor gradients. Loss/forward/backward/Adam took
-2.783s and2.618s. Before clipping, critic/actor gradient norms were292.0/23.3
+2.783 s and2.618 s. Before clipping, critic/actor gradient norms were 292.0/23.3
 and16.4/3.62. This documents unequal gradient magnitudes, not a proven cause of
 failure. Saved first-state logits show the greedy first action improving from
-rank27 to23, with probability0.014176→0.014255; argmax stayed unchanged. A small
+rank 27 to 23, with probability 0.014176→0.014255; argmax stayed unchanged. A small
 probability shift is not demonstrated route improvement.
 
 Initial tensor hash: `sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8`.

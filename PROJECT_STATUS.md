@@ -45,11 +45,26 @@ fixed geometric objective. The network's subsecond decision time excludes the
 required candidate/tool previews and cannot establish an end-to-end speed gain.
 See `artifacts/pat05-real-geometric-learning-v1/RESULT.md` and the saved curve.
 
-The next single experiment is eight imitation-learning updates from the same
-initial weights on the independently accepted three-action search trajectory.
-This checks whether the architecture can learn a useful available ranking;
-imitation and RL gains remain separate. No SELECT or unopened patient was
-accessed. Population training, transfer and physical fidelity remain unproved.
+The separate fixed eight-update imitation experiment also completed: 63.94
+seconds supervised, 1.90 GB peak, the same original untrained weights and the
+same three-action task. The teacher was replayed exactly and independently
+checked before training. The final policy changed its actions and reached
+return 139.8975 (+127.1944 over initial), with 173.0006 mm³ target and
+164.0006 mm³ other tissue removed. Its plan independently passed; this is a
+same-patient imitation gain, not an RL or transfer gain. Teacher cross-entropy
+fell from 4.140585 to 4.097359, while the policy still trails search by 270.4149.
+
+The first learned action returns 147.3035, close to search's 150.7035. Its second
+and third actions each remove 18 mm³ of other tissue and no target, returning
+-3.7010 and -3.7050. Those later choices account for 98.74% of the total gap.
+This localizes the failure; it does not prove that missing training states are
+the cause. The next single diagnostic is to add greedy labels at states visited
+by this policy (one bounded imitation-data aggregation iteration), keeping the
+model, task and objective fixed. No further sweep has run. See
+`artifacts/pat05-real-geometric-imitation-v1/RESULT.md` and its comparison plot.
+The integrated five-file verification passed 81 checks in 7.51 seconds. No SELECT
+or unopened patient was accessed. Population training, transfer and physical
+fidelity remain unproved.
 
 **Deferred mechanics preparation:** half-height source components are committed;
 34 preparation checks and 35 readout checks passed (separate focused suites,
