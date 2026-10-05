@@ -1,0 +1,25 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_rhuh_checksum_acquisition.py",
+    "tests/test_acquire_rhuh_checksum_review.py",
+    "tests/test_rhuh_single_image_acquisition.py",
+    "tests/test_rhuh_single_image_acquisition_review.py"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 0.5079476669999999,
+  "stdout": "........................................................................ [ 83%]\n..............                                                           [100%]\n86 passed in 0.28s\n",
+  "stderr": "",
+  "review_sha256": "29d6f5d239d59b93999229f789d08c4a3f5f90c21a251bc0ae98e7bcc02699ad",
+  "source_sha256": {
+    "scripts/acquire_rhuh_single_image.py": "ffbea033b805a4e52e7705bdfaf7acab842911de2971a09515cbb9e0433b2bba",
+    "scripts/rhuh_public_transfer.py": "a4a1f775b6c0798b3ea2b721289590057ec388e479ec071961bd3616f83eea9d",
+    "scripts/acquire_rhuh_checksum.py": "1c22f81aebd654c967260d0f1c01465904508416f4fd0e4026cf8f69e8ba773b",
+    "tests/test_rhuh_single_image_acquisition.py": "005ceea8cecd725be27f75fec8af8e7f56fcf4b63596b3986c91b00e620d5f7c"
+  },
+  "image_transfers": 0,
+  "patient_decodes": 0
+}

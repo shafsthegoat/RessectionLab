@@ -1,0 +1,15 @@
+{
+  "source_and_tests": {
+    "scripts/acquire_rhuh_single_image.py": "ffbea033b805a4e52e7705bdfaf7acab842911de2971a09515cbb9e0433b2bba",
+    "scripts/rhuh_public_transfer.py": "a4a1f775b6c0798b3ea2b721289590057ec388e479ec071961bd3616f83eea9d",
+    "scripts/acquire_rhuh_checksum.py": "1c22f81aebd654c967260d0f1c01465904508416f4fd0e4026cf8f69e8ba773b",
+    "tests/test_rhuh_single_image_acquisition.py": "005ceea8cecd725be27f75fec8af8e7f56fcf4b63596b3986c91b00e620d5f7c",
+    "tests/test_rhuh_single_image_acquisition_review.py": "dc408af2c3469a3304867dfa354bcdab15b6e2be9da3154960673efd72a050cb",
+    "tests/test_rhuh_checksum_acquisition.py": "0c346b4472d1dcf9be2e4089a4405d1bb2317c47a1b7dd80c017954af890873f",
+    "tests/test_acquire_rhuh_checksum_review.py": "ae93ae0588cb0c3c1ebe24fa6e29245496759229b605dd13c0c1cca9dc9ac740"
+  },
+  "all_unchanged": true,
+  "exit_code": 0,
+  "elapsed_seconds": 0.5977962908800691,
+  "scope": "Software and inert local-file fixtures only; no network, native transfer, patient image, decode, credentials, installation or CLI --execute."
+}

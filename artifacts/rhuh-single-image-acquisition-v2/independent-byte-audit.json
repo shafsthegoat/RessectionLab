@@ -1,0 +1,233 @@
+{
+  "schema": "resectionlab.rhuh-compressed-byte-reconciliation.v1",
+  "accepted": true,
+  "source": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t1.nii.gz",
+  "proposal_sha256": "d1d8fea9771865bf33f282dfa5edfbd217021e01c7cd3212a513e5db9e8da9b2",
+  "checksum_index_sha256": "7c6ba3fa767bf169679db30caa854e671796416ca365fac6e57662796177c130",
+  "resolved_source_sha256": "d88bfbe72422b010c503aeafe777daf5d74847d46f98e6c86662ce201888686d",
+  "parent_summary": {
+    "path": "artifacts/rhuh-single-image-acquisition-v2/parent-summary.json",
+    "sha256": "5853796ca7eba872e798bba56eadf02eb38e8fa7cd19c1cf6a7cd2c284ccabac"
+  },
+  "parent_execution": {
+    "path": "artifacts/rhuh-single-image-acquisition-v2/parent-execution.json",
+    "sha256": "a59e7753a801347515a8e8e1005813a6263df133d8f753c8eb67f0d5dc329cdc"
+  },
+  "worker_receipt": {
+    "path": "artifacts/rhuh-single-image-acquisition-v2/worker-receipt.json",
+    "sha256": "d1f7375193e3d2afb9e9fc761a95bdc86fea4431c1f5f40ee09293ae73f8a426"
+  },
+  "transfer_release": {
+    "path": "artifacts/rhuh-single-image-acquisition-v2/release.json",
+    "sha256": "caf8df79f86383eaa35a7814a0620ddbfed901d45a2f353b9c9ae160839dad4a"
+  },
+  "source_archive": {
+    "path": "artifacts/rhuh-single-image-acquisition-v2/source.tar.gz",
+    "sha256": "14f52dd29b1eeaa39868c5ba383fb34f5d250ea54ca8274dd7986a043e5bef2f"
+  },
+  "reviewer_source": {
+    "path": "artifacts/rhuh-single-image-acquisition-v2/independent-byte-audit.py",
+    "sha256": "454a2a5329e1ff0c2db8829e07b149615783a368ecc213b7e338fc315690bcee"
+  },
+  "acquisition_source": {
+    "path": "scripts/acquire_rhuh_single_image.py",
+    "sha256": "ffbea033b805a4e52e7705bdfaf7acab842911de2971a09515cbb9e0433b2bba"
+  },
+  "acquisition_sources": {
+    "image_helper": {
+      "path": "scripts/acquire_rhuh_single_image.py",
+      "sha256": "ffbea033b805a4e52e7705bdfaf7acab842911de2971a09515cbb9e0433b2bba"
+    },
+    "public_transfer": {
+      "path": "scripts/rhuh_public_transfer.py",
+      "sha256": "a4a1f775b6c0798b3ea2b721289590057ec388e479ec071961bd3616f83eea9d"
+    },
+    "checksum_helper": {
+      "path": "scripts/acquire_rhuh_checksum.py",
+      "sha256": "1c22f81aebd654c967260d0f1c01465904508416f4fd0e4026cf8f69e8ba773b"
+    }
+  },
+  "payload": {
+    "path": "outputs/rhuh-single-image-v2/quarantine/run-kxn_jecp/RHUH-0001_0_t1.nii.gz",
+    "measured_compressed_bytes": 6337221,
+    "expected_compressed_bytes": null,
+    "prior_length_match_claim": false,
+    "sha256": "b3b9fa69b87221062261b8b16fbddfdac2c678104b354ba371b069fd784e3625",
+    "candidate_md5_of_original_compressed_bytes": "a5c579950d0431d04928e5b59e91ce9d",
+    "published_checksum_token": "a5c579950d0431d04928e5b59e91ce9d",
+    "candidate_matches_published_token": true,
+    "publisher_algorithm_confirmed": false,
+    "acceptance_scope": "format_byte_domain_compatibility_only",
+    "decoded": false,
+    "scientific_use_released": false
+  },
+  "immutable_original": true,
+  "original_mode": "0o444",
+  "immutable_original_meaning": "Preserved original compressed bytes, read-only permissions and identical independently recomputed hashes before/after audit; not an OS immutable-file guarantee.",
+  "publisher_algorithm_confirmed": false,
+  "prior_length_match_claim": false,
+  "decoded": false,
+  "scientific_use_released": false,
+  "independent_computation": {
+    "measured_compressed_bytes": 6337221,
+    "sha256": "b3b9fa69b87221062261b8b16fbddfdac2c678104b354ba371b069fd784e3625",
+    "candidate_md5_of_original_compressed_bytes": "a5c579950d0431d04928e5b59e91ce9d"
+  },
+  "history_checks": {
+    "release_committed_before_execution": true,
+    "source_commit": "b4c5dac78bf0a5facacf1e6659d51df388e254b5",
+    "release_commit": "2b4772e91791c43932f02e14b29f674babad1225",
+    "archived_files_matching_git_and_current_bytes": 23,
+    "code_and_test_closure_count": 7,
+    "v1_manifest_unchanged_and_unreleased": true,
+    "recorded_client_attempts": 1,
+    "worker_seconds": 11.289943,
+    "parent_seconds": 11.450222,
+    "launcher_seconds": 11.535158333
+  },
+  "consulted_inputs": {
+    "artifacts/rhuh-single-image-acquisition-v2/release.json": {
+      "bytes": 2632,
+      "sha256": "caf8df79f86383eaa35a7814a0620ddbfed901d45a2f353b9c9ae160839dad4a"
+    },
+    "artifacts/rhuh-single-image-acquisition-v2/execution-started.json": {
+      "bytes": 233,
+      "sha256": "5d9d3206eb0efdaca0d1ba276c25cf8d8b2de73888a29fb14f1715f72e53db00"
+    },
+    "artifacts/rhuh-single-image-acquisition-v2/preflight.json": {
+      "bytes": 389,
+      "sha256": "2a0b7d895766ade2ac626341474e882cd0d3f8316367e316ed38cc6231dd4497"
+    },
+    "artifacts/rhuh-single-image-acquisition-v2/parent-execution.json": {
+      "bytes": 1337,
+      "sha256": "a59e7753a801347515a8e8e1005813a6263df133d8f753c8eb67f0d5dc329cdc"
+    },
+    "artifacts/rhuh-single-image-acquisition-v2/parent-summary.json": {
+      "bytes": 842,
+      "sha256": "5853796ca7eba872e798bba56eadf02eb38e8fa7cd19c1cf6a7cd2c284ccabac"
+    },
+    "artifacts/rhuh-single-image-acquisition-v2/original-preservation.json": {
+      "bytes": 494,
+      "sha256": "b0e20e09b039593570101c7ed8cf672d891023efc82abcc497a22a44f3ffbcb1"
+    },
+    "artifacts/rhuh-single-image-acquisition-v2/source.tar.gz": {
+      "bytes": 69085,
+      "sha256": "14f52dd29b1eeaa39868c5ba383fb34f5d250ea54ca8274dd7986a043e5bef2f"
+    },
+    "artifacts/rhuh-checksum-transfer-v1/received-checksums.sums": {
+      "bytes": 61787,
+      "sha256": "7c6ba3fa767bf169679db30caa854e671796416ca365fac6e57662796177c130"
+    },
+    "artifacts/rhuh-single-image-acquisition-proposal-v2/PROPOSAL.md": {
+      "bytes": 2391,
+      "sha256": "b15d615d214c4af7a8c0225955dc5beba65f65a9f07f5ac4faf7036c1b6800b0"
+    },
+    "artifacts/rhuh-single-image-acquisition-proposal-v2/proposal.json": {
+      "bytes": 6317,
+      "sha256": "d1d8fea9771865bf33f282dfa5edfbd217021e01c7cd3212a513e5db9e8da9b2"
+    },
+    "artifacts/rhuh-single-image-preparation-v2/README.md": {
+      "bytes": 2575,
+      "sha256": "662c93c5e3100db927902d45c1e1f2408259f9d809fa8c599e1823d287e8bfbb"
+    },
+    "artifacts/rhuh-single-image-preparation-v2/metadata-spec-binding.json": {
+      "bytes": 653,
+      "sha256": "29b21bea785204eb574f1966f85625e5cc81671c33b7379e59c8b4e365f42890"
+    },
+    "artifacts/rhuh-single-image-preparation-v2/owner-validation.json": {
+      "bytes": 988,
+      "sha256": "b0edb48373049aab74d031b86228ae4c2052232d87bc04d5f53a6d1e5040e556"
+    },
+    "artifacts/rhuh-single-image-preparation-v2/preparation-manifest.json": {
+      "bytes": 5899,
+      "sha256": "95258caec50c41693567288838183133c2501e4e75f535846c5507b9af0afe2b"
+    },
+    "artifacts/rhuh-single-image-review-v2/acquire_rhuh_checksum.py.gz": {
+      "bytes": 3622,
+      "sha256": "e10f9a9b4c7a133fde5860753633977fd0ec6690afee538a7abbfb16206b7c52"
+    },
+    "artifacts/rhuh-single-image-review-v2/acquire_rhuh_single_image.py.gz": {
+      "bytes": 3853,
+      "sha256": "ed400355cd686e2e8b5f14a45633d0012bf2c572e17a51e5ccc6a86f283d7ba1"
+    },
+    "artifacts/rhuh-single-image-review-v2/focused-run.json": {
+      "bytes": 1075,
+      "sha256": "b8467c662ca5c48d3e387a22541e7c554f3405f107e48ee3bad7fa6f469d3ef5"
+    },
+    "artifacts/rhuh-single-image-review-v2/focused-tests.txt": {
+      "bytes": 179,
+      "sha256": "e08bc079cd7dec068b597b19b6b7f63f1307a84e44688eacc1454bbf6e2ea1fc"
+    },
+    "artifacts/rhuh-single-image-review-v2/rhuh_public_transfer.py.gz": {
+      "bytes": 4992,
+      "sha256": "cd09246dd198e8b8780c80d91c225b3bbf9cb724fd1524345725ad8a205bf577"
+    },
+    "artifacts/rhuh-single-image-review-v2/root-combined-tests.json": {
+      "bytes": 1165,
+      "sha256": "ffba4d98cacd5965b19796bd3c0a9eb8224c0f91b39565f6b149dcb74b678548"
+    },
+    "artifacts/rhuh-single-image-review-v2/test_rhuh_single_image_acquisition.py.gz": {
+      "bytes": 3364,
+      "sha256": "eec2bfd79c7e9bf2a80c7f2c03a89288eabc83a29fd727a4348198f7bb766de8"
+    },
+    "artifacts/rhuh-single-image-review-v2/test_rhuh_single_image_acquisition_review.py.gz": {
+      "bytes": 3603,
+      "sha256": "a7f4b3141a8268ccf3a98fff0c9b9170f07bac6c028e6a298d281260b11012a6"
+    },
+    "artifacts/rhuh-single-image-review-v2/verification.json": {
+      "bytes": 9730,
+      "sha256": "29d6f5d239d59b93999229f789d08c4a3f5f90c21a251bc0ae98e7bcc02699ad"
+    },
+    "scripts/acquire_rhuh_checksum.py": {
+      "bytes": 9889,
+      "sha256": "1c22f81aebd654c967260d0f1c01465904508416f4fd0e4026cf8f69e8ba773b"
+    },
+    "scripts/acquire_rhuh_single_image.py": {
+      "bytes": 10927,
+      "sha256": "ffbea033b805a4e52e7705bdfaf7acab842911de2971a09515cbb9e0433b2bba"
+    },
+    "scripts/rhuh_public_transfer.py": {
+      "bytes": 15037,
+      "sha256": "a4a1f775b6c0798b3ea2b721289590057ec388e479ec071961bd3616f83eea9d"
+    },
+    "tests/test_acquire_rhuh_checksum_review.py": {
+      "bytes": 12351,
+      "sha256": "ae93ae0588cb0c3c1ebe24fa6e29245496759229b605dd13c0c1cca9dc9ac740"
+    },
+    "tests/test_rhuh_checksum_acquisition.py": {
+      "bytes": 5282,
+      "sha256": "0c346b4472d1dcf9be2e4089a4405d1bb2317c47a1b7dd80c017954af890873f"
+    },
+    "tests/test_rhuh_single_image_acquisition.py": {
+      "bytes": 9752,
+      "sha256": "005ceea8cecd725be27f75fec8af8e7f56fcf4b63596b3986c91b00e620d5f7c"
+    },
+    "tests/test_rhuh_single_image_acquisition_review.py": {
+      "bytes": 11243,
+      "sha256": "dc408af2c3469a3304867dfa354bcdab15b6e2be9da3154960673efd72a050cb"
+    },
+    "artifacts/rhuh-one-pair-acquisition-preparation-v1/bounded-pair-manifest.json": {
+      "bytes": 11355,
+      "sha256": "24f7aae2763a037aec0055e946380b0053de156507273dc3697db3ea77eb422d"
+    },
+    "outputs/rhuh-one-pair/metadata/checksum-quarantine/run-1jjo0q5c/RHUH-GBM-nii-v1.sums": {
+      "bytes": 61787,
+      "sha256": "7c6ba3fa767bf169679db30caa854e671796416ca365fac6e57662796177c130"
+    },
+    "outputs/rhuh-single-image-v2/quarantine/run-kxn_jecp-receipt.json": {
+      "bytes": 1477,
+      "sha256": "d1f7375193e3d2afb9e9fc761a95bdc86fea4431c1f5f40ee09293ae73f8a426"
+    },
+    "artifacts/rhuh-single-image-acquisition-v2/worker-receipt.json": {
+      "bytes": 1477,
+      "sha256": "d1f7375193e3d2afb9e9fc761a95bdc86fea4431c1f5f40ee09293ae73f8a426"
+    }
+  },
+  "checker_development_note": "The initial metadata assertion compared a subsecond release time with a whole-second Git timestamp and stopped before image hashing. The corrected check uses Git's one-second timestamp interval, the exact committed release bytes and both recorded times preceding execution. No source records or image bytes were changed.",
+  "limits": [
+    "Only saved public metadata, source/Git records and original compressed bytes were read. No network, extra transfer, image decompression, header, voxel or clinical-outcome inspection.",
+    "The candidate MD5 matches the published token for these compressed bytes. The publisher's algorithm remains undeclared; no prior-length, cryptographic-authenticity, patient identity, modality or anatomy claim follows.",
+    "Saved receipts and frozen code support the recorded lifecycle and bounds, but cannot independently reconstruct OS enforcement, process-group state or network traffic.",
+    "The original V1 12-file prerequisites remain unmet. Any image decode or scientific use requires a separate root release."
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "schema": "resectionlab.rhuh-single-image-execution-release.v2",
+  "released_utc": "2026-10-05T06:27:09.496693+00:00",
+  "execution_authorized": true,
+  "source_commit": "b4c5dac78bf0a5facacf1e6659d51df388e254b5",
+  "source_closure_sha256": {
+    "scripts/acquire_rhuh_single_image.py": "ffbea033b805a4e52e7705bdfaf7acab842911de2971a09515cbb9e0433b2bba",
+    "scripts/rhuh_public_transfer.py": "a4a1f775b6c0798b3ea2b721289590057ec388e479ec071961bd3616f83eea9d",
+    "scripts/acquire_rhuh_checksum.py": "1c22f81aebd654c967260d0f1c01465904508416f4fd0e4026cf8f69e8ba773b",
+    "tests/test_rhuh_single_image_acquisition.py": "005ceea8cecd725be27f75fec8af8e7f56fcf4b63596b3986c91b00e620d5f7c",
+    "tests/test_rhuh_single_image_acquisition_review.py": "dc408af2c3469a3304867dfa354bcdab15b6e2be9da3154960673efd72a050cb",
+    "tests/test_rhuh_checksum_acquisition.py": "0c346b4472d1dcf9be2e4089a4405d1bb2317c47a1b7dd80c017954af890873f",
+    "tests/test_acquire_rhuh_checksum_review.py": "ae93ae0588cb0c3c1ebe24fa6e29245496759229b605dd13c0c1cca9dc9ac740"
+  },
+  "source_archive_sha256": "14f52dd29b1eeaa39868c5ba383fb34f5d250ea54ca8274dd7986a043e5bef2f",
+  "source_archive_file_count": 23,
+  "preparation_manifest_sha256": "95258caec50c41693567288838183133c2501e4e75f535846c5507b9af0afe2b",
+  "independent_review_sha256": "29d6f5d239d59b93999229f789d08c4a3f5f90c21a251bc0ae98e7bcc02699ad",
+  "proposal_sha256": "d1d8fea9771865bf33f282dfa5edfbd217021e01c7cd3212a513e5db9e8da9b2",
+  "index_sha256": "7c6ba3fa767bf169679db30caa854e671796416ca365fac6e57662796177c130",
+  "source": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t1.nii.gz",
+  "published_token": "a5c579950d0431d04928e5b59e91ce9d",
+  "candidate_checksum": "MD5 of original compressed bytes only",
+  "publisher_algorithm_confirmed": false,
+  "expected_compressed_bytes": null,
+  "max_retained_file_bytes": 67108864,
+  "max_client_invocations": 1,
+  "max_whole_lifecycle_seconds": 60,
+  "parent_watchdog_seconds": 59,
+  "command": [
+    ".venv/bin/python",
+    "scripts/acquire_rhuh_single_image.py",
+    "--execute"
+  ],
+  "scope": "One preselected acquisition-compatibility experiment, not V1 twelve-file acquisition.",
+  "success_requires": "Parent accepted true, exit0, no surviving worker group, final-byte reconciliation and exact candidate token match.",
+  "failure": "Preserve unaccepted bytes and receipts; no retry, alternate file, hash-family or decompression sweep.",
+  "image_decoding_released": false,
+  "scientific_use_released": false,
+  "role": "acquisition_compatibility_development",
+  "prior_cohort_outcomes_inspected": true,
+  "no_untouched_test_claim": true
+}

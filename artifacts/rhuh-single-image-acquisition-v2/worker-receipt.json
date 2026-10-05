@@ -1,0 +1,32 @@
+{
+  "source": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t1.nii.gz",
+  "proposal_sha256": "d1d8fea9771865bf33f282dfa5edfbd217021e01c7cd3212a513e5db9e8da9b2",
+  "checksum_index_sha256": "7c6ba3fa767bf169679db30caa854e671796416ca365fac6e57662796177c130",
+  "resolved_source_sha256": "d88bfbe72422b010c503aeafe777daf5d74847d46f98e6c86662ce201888686d",
+  "started_utc": "2026-10-05T06:27:45.626484+00:00",
+  "supervisor_acceptance_required": true,
+  "status": "compressed_digest_compatible_quarantined",
+  "transfer_started": true,
+  "max_retained_compressed_bytes": 67108864,
+  "max_client_invocations": 1,
+  "expected_compressed_bytes": null,
+  "publisher_algorithm_confirmed": false,
+  "decoded": false,
+  "scientific_use_released": false,
+  "client_exit_code": 0,
+  "payload": {
+    "path": "outputs/rhuh-single-image-v2/quarantine/run-kxn_jecp/RHUH-0001_0_t1.nii.gz",
+    "measured_compressed_bytes": 6337221,
+    "expected_compressed_bytes": null,
+    "prior_length_match_claim": false,
+    "sha256": "b3b9fa69b87221062261b8b16fbddfdac2c678104b354ba371b069fd784e3625",
+    "candidate_md5_of_original_compressed_bytes": "a5c579950d0431d04928e5b59e91ce9d",
+    "published_checksum_token": "a5c579950d0431d04928e5b59e91ce9d",
+    "candidate_matches_published_token": true,
+    "publisher_algorithm_confirmed": false,
+    "acceptance_scope": "format_byte_domain_compatibility_only",
+    "decoded": false,
+    "scientific_use_released": false
+  },
+  "elapsed_seconds": 11.289943
+}

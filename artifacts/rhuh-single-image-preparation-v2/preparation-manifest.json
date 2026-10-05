@@ -1,0 +1,113 @@
+{
+  "schema": "resectionlab.rhuh-single-image-preparation.v2",
+  "prepared_utc": "2026-10-05T06:23:21.255786+00:00",
+  "status": "prepared_and_independently_tested_not_execution_released",
+  "execution_released": false,
+  "image_payload_transfers_this_slice": 0,
+  "decoded_images": 0,
+  "selection": {
+    "patient": "RHUH-0001",
+    "visit": 0,
+    "source_modality_label": "T1",
+    "selected_before_pixels": true,
+    "public_source_path": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t1.nii.gz",
+    "public_package_id": "684",
+    "published_checksum_token": "a5c579950d0431d04928e5b59e91ce9d",
+    "source_version": "RHUH-GBM-nii-v1",
+    "source_collection": "https://www.cancerimagingarchive.net/collection/rhuh-gbm/",
+    "source_license": "CC BY 4.0",
+    "role": "acquisition_compatibility_development",
+    "prior_cohort_outcomes_inspected": true,
+    "no_untouched_test_claim": true,
+    "clinical_outcome_rows_read_this_preparation": false
+  },
+  "bindings": {
+    "accepted_prospective_proposal": {
+      "path": "artifacts/rhuh-single-image-acquisition-proposal-v2/proposal.json",
+      "sha256": "d1d8fea9771865bf33f282dfa5edfbd217021e01c7cd3212a513e5db9e8da9b2"
+    },
+    "unchanged_original_v1_manifest": {
+      "path": "artifacts/rhuh-one-pair-acquisition-preparation-v1/bounded-pair-manifest.json",
+      "sha256": "24f7aae2763a037aec0055e946380b0053de156507273dc3697db3ea77eb422d",
+      "v1_preconditions_satisfied": false
+    },
+    "checksum_index": {
+      "path": "outputs/rhuh-one-pair/metadata/checksum-quarantine/run-1jjo0q5c/RHUH-GBM-nii-v1.sums",
+      "bytes": 61787,
+      "sha256": "7c6ba3fa767bf169679db30caa854e671796416ca365fac6e57662796177c130"
+    },
+    "resolved_source_sha256": "d88bfbe72422b010c503aeafe777daf5d74847d46f98e6c86662ce201888686d",
+    "metadata_spec_binding_receipt": {
+      "path": "artifacts/rhuh-single-image-preparation-v2/metadata-spec-binding.json",
+      "sha256": "29b21bea785204eb574f1966f85625e5cc81671c33b7379e59c8b4e365f42890",
+      "image_spec_requests_this_slice": 1,
+      "full_spec_or_credentials_persisted": false
+    },
+    "source_closure_sha256": {
+      "scripts/acquire_rhuh_single_image.py": "ffbea033b805a4e52e7705bdfaf7acab842911de2971a09515cbb9e0433b2bba",
+      "scripts/rhuh_public_transfer.py": "a4a1f775b6c0798b3ea2b721289590057ec388e479ec071961bd3616f83eea9d",
+      "scripts/acquire_rhuh_checksum.py": "1c22f81aebd654c967260d0f1c01465904508416f4fd0e4026cf8f69e8ba773b",
+      "tests/test_rhuh_single_image_acquisition.py": "005ceea8cecd725be27f75fec8af8e7f56fcf4b63596b3986c91b00e620d5f7c"
+    }
+  },
+  "bounds": {
+    "max_direct_client_invocations": 1,
+    "application_retries": 0,
+    "known_expected_compressed_length": null,
+    "prior_length_match_claim": false,
+    "max_retained_compressed_file_bytes": 67108864,
+    "os_rlimit_fsize_bytes": 67108864,
+    "whole_lifecycle_seconds": 60,
+    "hard_parent_watchdog_seconds": 59,
+    "worker_budget_seconds_from_parent_entry": 57,
+    "quarantine_parent": "outputs/rhuh-single-image-v2/quarantine",
+    "fresh_directory_mode": "0700",
+    "quarantine_is_git_ignored_checked_in_preflight": true,
+    "final_allowed_regular_files": [
+      "RHUH-0001_0_t1.nii.gz"
+    ],
+    "acceptance_requires_no_surviving_worker_group_and_final_payload_rehash": true,
+    "cap_limitations": "The OS cap bounds each client-written file. Final acceptance permits exactly one file, bounding retained image payload to64MiB. It is not a network-traffic cap, a native FASP byte-budget claim or a total transient-directory disk quota. Protocol packet retransmissions are not claimed absent.",
+    "timing_limitations": "59s hard alarm terminates the supervisor and requests process-group termination; exit124/timeout is unaccepted. Normal success requires completed cleanup and final reconciliation within60s. General OS scheduling stalls are outside a Python timing guarantee."
+  },
+  "verification": {
+    "predeclared_candidate": "MD5 over original compressed bytes only",
+    "publisher_algorithm_confirmed": false,
+    "equality_claim": "format/byte-domain compatibility only",
+    "record_after_transfer": [
+      "actual compressed byte length",
+      "local SHA256",
+      "candidate MD5",
+      "exact-token comparison"
+    ],
+    "mismatch": "failed receipt with unaccepted measured bytes; no retry, alternate digest family or decompression sweep",
+    "decode_implemented": false,
+    "scientific_use_released": false,
+    "required_next_gate": "Root reviews implementation and independent tests before any image execution release. Independent byte/provenance reconciliation is required after acquisition before a separately bounded header-decode decision."
+  },
+  "refactor": {
+    "shared_module": "scripts/rhuh_public_transfer.py",
+    "checksum_behavior_intended_unchanged": true,
+    "original_checksum_controls_passed": 37,
+    "historical_executed_source_sha256": "f9ad9f4d64cab2314be865aad47e4300e23aa8b83457ee83656a6921e12edaf0",
+    "historical_execution_archive": "artifacts/rhuh-checksum-transfer-v1/source.tar.gz",
+    "historical_archive_sha256": "c800c5b7d6e93362510c0f5ea76c5b948a3f8d6656ee1b38b1464fe6d9d924b0",
+    "historical_execution_artifacts_changed": false
+  },
+  "owner_validation": {
+    "new_controls_passed": 31,
+    "original_controls_passed": 37,
+    "total_passed": 68,
+    "pytest_seconds": 0.3,
+    "test_data": "inert non-image software fixtures only; actual64MiB RLIMIT sparse-write boundary control",
+    "local_preflight": "passed_no_network_no_transfer_no_decode",
+    "independent_review": {
+      "passed": 86,
+      "independent_image_controls": 18,
+      "pytest_seconds": 0.37,
+      "source_and_test_hashes_unchanged": true,
+      "receipt_directory": "artifacts/rhuh-single-image-review-v2"
+    }
+  },
+  "proposed_later_root_command_not_executed": ".venv/bin/python scripts/acquire_rhuh_single_image.py --execute"
+}
