@@ -37,3 +37,20 @@ for axis in axes:
 fig.suptitle("PAT05 TRAIN · same initial weights and Adam state · 48 training forwards per branch", weight="bold", fontsize=12)
 fig.supxlabel("One deterministic pair; no repeatability, patient-transfer, RL-improvement or clinical-fidelity claim.", fontsize=9)
 fig.savefig(folder / "matched-comparison.png", dpi=170)
+
+fig, axes = plt.subplots(1, 2, figsize=(9, 3.7), layout="constrained", sharey=True)
+for axis, key, label, color in zip(axes, ("control", "augmented"),
+                                  ("Original examples · 3 unique states", "Added visited states · 5 unique states"),
+                                  (colors[1], colors[2])):
+    branch = result["branches"][key]
+    # Logged update losses are pre-step; append the separate post-update readout.
+    losses = [row["loss"] for row in branch["curve"]] + [branch["latest_training_loss"]["loss"]]
+    axis.plot(range(9), losses, "o-", color=color, markersize=4)
+    axis.set(xticks=[0, 2, 4, 6, 8], xlabel="Additional optimizer steps completed")
+    axis.set_title(label, loc="left", fontsize=10, weight="bold")
+    axis.spines[["top", "right"]].set_visible(False)
+    axis.grid(alpha=.15)
+axes[0].set_ylabel("Mean cross-entropy on each branch's examples")
+fig.suptitle("Matched eight-update training traces · PAT05 TRAIN", weight="bold")
+fig.supxlabel("Losses use different example sets; independent rollout outcomes determine route quality.", fontsize=8)
+fig.savefig(folder / "learning-curves.png", dpi=170)

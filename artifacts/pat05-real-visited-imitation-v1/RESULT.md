@@ -81,3 +81,5 @@ This does not justify indefinite tuning on PAT05. The next evidence should
 address the already assigned real training/selection patients under frozen
 input/support contracts, preserving existing support conflicts and unopened
 roles, rather than presenting another same-case improvement as generalization.
+
+[Matched route comparison](matched-comparison.png) · [Training curves](learning-curves.png).
