@@ -1,0 +1,30 @@
+{
+  "actual_equivalence_executed": false,
+  "analytical_controls": {
+    "command": ".venv/bin/python -m pytest -q tests/test_mechanics_hbe_halfheight_readout.py",
+    "failed": 0,
+    "passed": 18,
+    "pytest_seconds": 0.57
+  },
+  "independent_review": "pending",
+  "initial_fixture_failure": {
+    "failed": 1,
+    "passed": 13,
+    "reason": "Missing-primitive control removed solver final status too; reader correctly rejected earlier. Fixture repaired to keep solver stream complete, ensuring primitive-completeness check is exercised."
+  },
+  "measured_curves_read": false,
+  "native_solver_calls": 0,
+  "patient_inputs_read": false,
+  "saved_specimen_primitives_read": false,
+  "schema": "hbe-halfheight-readout-preparation-v1",
+  "source_bindings": {
+    "docs/hbe-halfheight-readout.md": "26d71d79b414cf636433be90b6d7db1b99247a0adce923a9a87d431d7db1e7d0",
+    "manifests/experiments/hbe-01-03-halfheight-equivalence-v1.json": "0df5587ab7a70eb1ac092919ff067b4d85ce6c7457af9726875beb58af19ad1e",
+    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "scripts/mechanics_hbe_halfheight_readout.py": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30",
+    "scripts/mechanics_hbe_outputs.py": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19",
+    "scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "scripts/mechanics_hbe_readout.py": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0",
+    "tests/test_mechanics_hbe_halfheight_readout.py": "ebe01caf5bab155a330feab592257857772281657759df6f3b428745cd5f1cf9"
+  }
+}
