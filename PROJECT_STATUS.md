@@ -31,7 +31,13 @@ whole-source views improved it without changing proposal feasibility. No learnin
 or clinical accuracy improvement was measured. PAT05's wrapper compares a full
 20-field runtime record with an eight-field declaration; its actual runtime grid
 values were not retained, so equality is unverified. Preserve the failed attempt
-and bind a complete historical record before a separately declared correction.
+unchanged. A V2 correction now authenticates the complete historical record and
+retains expected/actual mismatch details; 155 combined offline checks pass. No
+corrected patient run has been released. A separate opt-in ingress helper passes
+43 analytical checks after two metadata-label binding defects were repaired. It
+screens all six exits and selects by physical distance only after any tool-entry
+pose is admissible; full motion validation remains mandatory. The existing access
+baseline is unchanged. A bounded PAT25 preparation comparison is being prepared.
 See `artifacts/training-observation-coverage-v1/RESULT.md`.
 
 The isolated, signed native public-transfer client passes a version-only smoke
@@ -44,6 +50,13 @@ image was transferred; image acquisition remains disabled pending those gates.
 The combined observation and acquisition integration check passed all 109 focused
 tests in 4.81 seconds. See `artifacts/rhuh-checksum-transfer-v1/RESULT.md` and
 `artifacts/validation/observation-acquisition-integration-v1/verification.json`.
+An independent saved-record audit accepts the received checksum metadata. The
+documented link-listing API did not establish compressed target lengths. A
+separate prospective single-T1 acquisition experiment is therefore proposed:
+one exact preoperative image, a 64-MiB retained-file cap, measured post-transfer
+length and a fixed MD5-over-compressed-bytes compatibility test. The original
+12-file declaration remains unmet and unchanged; no image transfer or decoding
+has been released. See `artifacts/rhuh-single-image-acquisition-proposal-v2/`.
 
 The RHUH public table has 40 patients and 14 recorded postoperative deficits
 (six transient, six minor persistent, two major persistent); 26 are recorded `No`.

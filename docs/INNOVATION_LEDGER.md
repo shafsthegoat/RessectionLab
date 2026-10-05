@@ -29,10 +29,14 @@ The state-aggregation mechanism draws on
 [Ross, Gordon and Bagnell (2011)](https://proceedings.mlr.press/v15/ross11a.html);
 one bounded geometric experiment does not inherit clinical or transfer guarantees.
 
-Cheapest next discriminating work: bind the complete historical PAT05 task record
-without relaxing equality, declare whole-shaft-screened access selection before
-angular action expansion, and verify one real pre/post imaging pair's measurement
-feasibility. One checksum-only transfer succeeded; all 12 image paths are listed,
-while actual file lengths and digest semantics remain unresolved.
+Cheapest next discriminating work: compare unchanged versus screened access on
+PAT25 without learning, then apply the frozen preparation rule to the other
+permitted TRAIN cases. Exact PAT05 binding and isolated ingress helpers now pass
+155 and 43 focused checks, respectively; no new patient outcome follows yet.
+Access diagnosis precedes multiscale policy integration because the completed
+legacy crops already retained the target. One checksum transfer succeeded; the
+separate single-image acquisition proposal measures unknown length under a hard
+retained-file cap and tests one predeclared digest/byte-domain hypothesis. It does
+not satisfy the unchanged 12-file declaration or release image decoding.
 Observation coverage, full-tool ingress and action coverage remain separate gaps.
 No RL sweep, neurological reward or UI expansion is justified by current evidence.
