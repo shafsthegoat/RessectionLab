@@ -1,0 +1,85 @@
+{
+  "schema": "mechanics-accelerate-controls-final-binding-review-v1",
+  "status": "final_preparation_bindings_review_passed_execution_not_authorized",
+  "audit_source_sha256": "9a8cbb71ee09392ebb72d76d464733dbc5085ec38275df611644e0efe6952346",
+  "elapsed_seconds": 0.4959939579712227,
+  "input_bindings": {
+    "artifacts/mechanics-accelerate-controls-generation-v1/generation.json": "6c82de6c63d575074698b22d3c812e292956958f3f6018c94f0d04752bdc0806",
+    "artifacts/mechanics-accelerate-controls-v1/declaration.json": "46a538f54471b76f3b75f50c31be2de6530b94450f88d2b6f9f8698ac27a54fd",
+    "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57",
+    "artifacts/febio-accelerate-runtime-saved-review-v3/review.json": "96982e2b8b1e368e320ad63179295542c7b77ac66692b8a6f8e4f9a8878296a1",
+    "artifacts/mechanics-accelerate-controls-independent-review-v1/verification.json": "5ebfae49d6e53075da9e3698c83c974242a3c959ed2c721ea8159216b88638f1"
+  },
+  "generation_source_commit": "5ee77bc2d2d015deed9e5edb28dd7e3fb90cce09",
+  "generation_archive": "build/validation/mechanics-accelerate-controls-generation-5ee77bc2/source",
+  "archive_current_git_equal_files": 27,
+  "declared_source_files": 8,
+  "unchanged_original_checker_pins": {
+    "scripts/mechanics_febio_verification.py": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5",
+    "scripts/mechanics_patient_constraints.py": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66"
+  },
+  "runtime_identity_sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57",
+  "runtime_generation_inputs_rehashed": 31,
+  "all_read_inputs_unchanged": true,
+  "deck_checks": {
+    "zero": {
+      "original_sha256": "d202aa532e5cc2ec9f8219ba672d37c4606b74cbfeca9b6ea1ebbcd40a061f67",
+      "adapted_sha256": "a20221e487f4a192924d28791aa077fbf268756f42367e48db6b6990d8cace9d",
+      "exact_solver_only_replacement": true
+    },
+    "translation": {
+      "original_sha256": "98a34f49115f260feff3ce45a231c3dfcb3d5f7bcd15edf1777cd230566a8481",
+      "adapted_sha256": "1b5fa399cc71e2561647b3f9a6baf2f18b5428e62650898fc8e330fc146fe93d",
+      "exact_solver_only_replacement": true
+    },
+    "finite_stretch": {
+      "original_sha256": "51f7966c5054f009f7e1bf8cefa3306364196b58ede0170b39cbeab18391dee6",
+      "adapted_sha256": "0d72a0ee80fb6a8ad88f8bae84c3771321345ef43fa2311786b488ad67c58b22",
+      "exact_solver_only_replacement": true
+    },
+    "shear": {
+      "original_sha256": "509c6ea97211d44d81e00d35d004e0e503517c0d0d5d8857a4af89abbec2b5b6",
+      "adapted_sha256": "fa8c1c1f5bac69cb310c72c3fa590e83a87576ac62a99cbd0a6201f029b9c593",
+      "exact_solver_only_replacement": true
+    },
+    "shear_double_stiffness": {
+      "original_sha256": "af78dc2a965892293d20786149224ae8337392347fdca19ec7e3ced8db987ac5",
+      "adapted_sha256": "7e8e6c73909f544ef1cce49f1d83aea2a9050ae2db467c913a027c405ea56dba",
+      "exact_solver_only_replacement": true
+    },
+    "tet10_affine": {
+      "original_sha256": "8a75158a97750f3db57a5a2a48ab3f03760a4a95a8818ff3d30218ceca262f62",
+      "adapted_sha256": "dfafcfde8075aacb36e2014d6abe755470e04667bcbfd69c6857edfb63833d50",
+      "exact_solver_only_replacement": true
+    },
+    "mpc_translation": {
+      "original_sha256": "dad1653d2015d04f3499ea87f37246e5fce3c86f849ffc363e99cddd230386fa",
+      "adapted_sha256": "956b66dc6cae4904e3a124a8b5e81bec66128d015e1ce85d6b96e533f76d996b",
+      "exact_solver_only_replacement": true
+    },
+    "mpc_nonrigid": {
+      "original_sha256": "40900e8761e663ca37568f9b911a06bfb34acb3db2bd5b1fd4840c7d55fadb93",
+      "adapted_sha256": "771f3a99d7a428d84b737c21bccf5c22a60ede8542d82a31310aaa0b074e66f8",
+      "exact_solver_only_replacement": true
+    }
+  },
+  "caps": {
+    "aggregate_seconds": 60,
+    "process_group_rss_bytes": 3221225472,
+    "numerical_threads": 1,
+    "maximum_cases": 8,
+    "time_steps": 4,
+    "retries": 0
+  },
+  "prior_generic_controls_reused": {
+    "passed": 31,
+    "repeated": false
+  },
+  "solver_invocations": 0,
+  "patient_or_measured_curve_access": false,
+  "next_gate": "Commit declaration and archive exact 28-file execution closure; root supplies separate one-attempt release with this exact runtime identity.",
+  "limits": [
+    "Accepted build/static-closure evidence is preserved; numerical runtime behavior remains untested here.",
+    "No synthetic-control success, patient mechanics, calibration, clinical or surgical accuracy is claimed."
+  ]
+}
