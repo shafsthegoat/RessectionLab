@@ -1,0 +1,345 @@
+{
+  "accepted_episodes": [
+    {
+      "method": "frozen_policy",
+      "normal_mm3": 126.9996232321883,
+      "removed_cells": 825,
+      "reward": 672.29700461716,
+      "subject": "sub-PAT22",
+      "target_access_success": true,
+      "target_fraction": 0.050161696011498384,
+      "target_mm3": 697.9979292603733
+    },
+    {
+      "method": "greedy_search",
+      "normal_mm3": 152.9995460986205,
+      "removed_cells": 973,
+      "reward": 789.0966581094328,
+      "subject": "sub-PAT22",
+      "target_access_success": true,
+      "target_fraction": 0.05892921307941071,
+      "target_mm3": 819.99756732594
+    },
+    {
+      "method": "random_legal",
+      "normal_mm3": 54.99983683283743,
+      "removed_cells": 327,
+      "reward": 260.79822569871806,
+      "subject": "sub-PAT22",
+      "target_access_success": true,
+      "target_fraction": 0.019547251167804525,
+      "target_mm3": 271.99919306421424
+    },
+    {
+      "method": "frozen_policy",
+      "normal_mm3": 0.0,
+      "removed_cells": 0,
+      "reward": 0.0,
+      "subject": "sub-PAT25",
+      "target_access_success": false,
+      "target_fraction": 0.0,
+      "target_mm3": 0.0
+    },
+    {
+      "method": "greedy_search",
+      "normal_mm3": 0.0,
+      "removed_cells": 0,
+      "reward": 0.0,
+      "subject": "sub-PAT25",
+      "target_access_success": false,
+      "target_fraction": 0.0,
+      "target_mm3": 0.0
+    },
+    {
+      "method": "random_legal",
+      "normal_mm3": 0.0,
+      "removed_cells": 0,
+      "reward": 0.0,
+      "subject": "sub-PAT25",
+      "target_access_success": false,
+      "target_fraction": 0.0,
+      "target_mm3": 0.0
+    },
+    {
+      "method": "frozen_policy",
+      "normal_mm3": 185.99962819503548,
+      "removed_cells": 717,
+      "reward": 493.53401291943857,
+      "subject": "sub-PAT28",
+      "target_access_success": true,
+      "target_fraction": 0.051709027169149865,
+      "target_mm3": 530.9989385567947
+    },
+    {
+      "method": "greedy_search",
+      "normal_mm3": 155.99968816357807,
+      "removed_cells": 800,
+      "reward": 612.5377750441784,
+      "subject": "sub-PAT28",
+      "target_access_success": true,
+      "target_fraction": 0.06271301976823448,
+      "target_mm3": 643.998712675284
+    },
+    {
+      "method": "random_legal",
+      "normal_mm3": 108.99978211429493,
+      "removed_cells": 400,
+      "reward": 268.98646188342263,
+      "subject": "sub-PAT28",
+      "target_access_success": true,
+      "target_fraction": 0.02833771545427987,
+      "target_mm3": 290.9994183051361
+    }
+  ],
+  "accepted_episodes_checked": 9,
+  "added_revision_metadata_fields": [
+    "changed_numerical_sources",
+    "revision_created_at",
+    "revision_of",
+    "revision_reason"
+  ],
+  "changed_numerical_sources_only": [
+    "src/resectionlab/native_spatial_evaluation.py",
+    "src/resectionlab/native_spatial_task.py"
+  ],
+  "checker_sha256": "1dfeb94cd82cd74e6180b9432ef362dc3f6aeddf02f435e4d67a58ad0750da07",
+  "checkpoint_tensors_loaded": false,
+  "complete_primary_pairs": 3,
+  "exact_history_comparisons": [
+    {
+      "exact_native_geometry_and_cell_history_unchanged": true,
+      "method": "frozen_policy",
+      "observations_actions_and_legal_inventories_unchanged": true,
+      "original_status": "complete",
+      "repeat_status": "complete",
+      "subject": "sub-PAT22"
+    },
+    {
+      "exact_native_geometry_and_cell_history_unchanged": true,
+      "method": "greedy_search",
+      "observations_actions_and_legal_inventories_unchanged": true,
+      "original_status": "complete",
+      "repeat_status": "complete",
+      "subject": "sub-PAT22"
+    },
+    {
+      "exact_native_geometry_and_cell_history_unchanged": true,
+      "method": "random_legal",
+      "observations_actions_and_legal_inventories_unchanged": true,
+      "original_status": "failed",
+      "repeat_status": "complete",
+      "subject": "sub-PAT22"
+    },
+    {
+      "exact_native_geometry_and_cell_history_unchanged": true,
+      "method": "frozen_policy",
+      "observations_actions_and_legal_inventories_unchanged": true,
+      "original_status": "complete",
+      "repeat_status": "complete",
+      "subject": "sub-PAT25"
+    },
+    {
+      "exact_native_geometry_and_cell_history_unchanged": true,
+      "method": "greedy_search",
+      "observations_actions_and_legal_inventories_unchanged": true,
+      "original_status": "complete",
+      "repeat_status": "complete",
+      "subject": "sub-PAT25"
+    },
+    {
+      "exact_native_geometry_and_cell_history_unchanged": true,
+      "method": "random_legal",
+      "observations_actions_and_legal_inventories_unchanged": true,
+      "original_status": "complete",
+      "repeat_status": "complete",
+      "subject": "sub-PAT25"
+    },
+    {
+      "exact_native_geometry_and_cell_history_unchanged": true,
+      "method": "frozen_policy",
+      "observations_actions_and_legal_inventories_unchanged": true,
+      "original_status": "failed",
+      "repeat_status": "complete",
+      "subject": "sub-PAT28"
+    },
+    {
+      "exact_native_geometry_and_cell_history_unchanged": true,
+      "method": "greedy_search",
+      "observations_actions_and_legal_inventories_unchanged": true,
+      "original_status": "failed",
+      "repeat_status": "complete",
+      "subject": "sub-PAT28"
+    },
+    {
+      "exact_native_geometry_and_cell_history_unchanged": true,
+      "method": "random_legal",
+      "observations_actions_and_legal_inventories_unchanged": true,
+      "original_status": "complete",
+      "repeat_status": "complete",
+      "subject": "sub-PAT28"
+    }
+  ],
+  "failed_episodes_retained_unassessed": [],
+  "input_sha256": {
+    "declaration-input.json": "9981dd90217e57b1fd8c6ff62580e9c1c7c9cefe991537e8b056ec68ab4756a5",
+    "output-sha256.json": "a0718a19637c42347f2418a43c4c13c6f400096c5fe499831b41cce3711b5927",
+    "sub-PAT16/closure-check.json": "086f693e688a8ebbf1ffdd27138eacda8d4d1580c1ebc35ed9d05dba6c69e2f8",
+    "sub-PAT16/preparation.json": "3743dd12460cf598089664bd243fba883300c2505d477df0ec4aadd2bb596608",
+    "sub-PAT16/receipt.json": "5cfd6d4e3e967998bb1332dae9d1b8a8c52816a5c40e97e29f3d57e8d43a4446",
+    "sub-PAT16/supervisor.json": "30dbd058a667771a4dea177f566685fdb25c3627058588b346f4d316adcd6ceb",
+    "sub-PAT20/closure-check.json": "086f693e688a8ebbf1ffdd27138eacda8d4d1580c1ebc35ed9d05dba6c69e2f8",
+    "sub-PAT20/preparation.json": "d5b72a815e4b2b6aeeedfedbc0687e74843c21f832cab184a4e523f011037312",
+    "sub-PAT20/receipt.json": "67be70da56b127bd70ba51efa96c7de9439b40a4439f8c1ce4eb1b96bdde12ac",
+    "sub-PAT20/supervisor.json": "cdf3897abe8bb4f55c78235450821959a72f6a2aeb97341346af227dcfe78e3c",
+    "sub-PAT22/closure-check.json": "086f693e688a8ebbf1ffdd27138eacda8d4d1580c1ebc35ed9d05dba6c69e2f8",
+    "sub-PAT22/frozen_policy.json": "8bd5de68e0232fab416a0df39b27b155c3f4e7a96e9128c55593525ef12c1407",
+    "sub-PAT22/greedy_search.json": "ba462cc372ec652965ec76fc68ffee881e18ce67c3616fd7ba2934c1a7d4547b",
+    "sub-PAT22/preparation.json": "2dbf6be558d5e7b370f43751480dad7b87bf98dfaae62d0c5f2cd0a5d7e6e1b6",
+    "sub-PAT22/random_legal.json": "c47288d3568055490fc31ff44debd008def11a79c8260ee8b04e8dcc6e2325e8",
+    "sub-PAT22/receipt.json": "f3fb447a2471a83e578e1355607d7640da324106d5c5226e3621a9eee46d32dc",
+    "sub-PAT22/supervisor.json": "741553cae2b4613ef1508edaebee5ae6e997a3cd66a2fbf9eec8e57bd486fa53",
+    "sub-PAT25/closure-check.json": "086f693e688a8ebbf1ffdd27138eacda8d4d1580c1ebc35ed9d05dba6c69e2f8",
+    "sub-PAT25/frozen_policy.json": "0a49821f44bbe61265a18cf4c6c73828a08d695a11ce34fda4a44fc009544776",
+    "sub-PAT25/greedy_search.json": "c957c1aa665ba5cd999a5c6d848e751575ded63acddf3b331dd75e45191a86fa",
+    "sub-PAT25/preparation.json": "f4c6269f551f52fbe359c61d408030af81d4b233ac4ad11f98a87228f81dc70c",
+    "sub-PAT25/random_legal.json": "69e58e9fa86cdb0b45e5f33078e30b64814d53ab88212f4fa298907435b4cbc1",
+    "sub-PAT25/receipt.json": "2dad67ad59f1416fda982e2fc2fbf341349b4813a5b77921b93bbe8db304e9af",
+    "sub-PAT25/supervisor.json": "7c7d03b7a61d1930a94ba5eb98c9d2b312ce545893f89166abe0a49df9af92bf",
+    "sub-PAT28/closure-check.json": "086f693e688a8ebbf1ffdd27138eacda8d4d1580c1ebc35ed9d05dba6c69e2f8",
+    "sub-PAT28/frozen_policy.json": "33fd109742e4773cb4f9e09eda5393b946d822713a9246b85134471537cd961a",
+    "sub-PAT28/greedy_search.json": "143f6f9454bff4a463fe4b23ae643fe5f286e66345d9cc7e2ec6842aaf056e2a",
+    "sub-PAT28/preparation.json": "b4fdb77d181808c494a81cbae0004a633be12bf59f84f139e0c83095339cb081",
+    "sub-PAT28/random_legal.json": "773df3aa66c5e6f78fe5102aa7a2a436d5b20f41ffe5f5abb80883d364f4270a",
+    "sub-PAT28/receipt.json": "13568cfb6b050d85ddfa02d9349338978af72371f5fa0ac263ef0f6578bf49b8",
+    "sub-PAT28/supervisor.json": "6c642d064032456f40a3d353ee5a5ddb76c4f764dcb9e51189be364938054926",
+    "summary.json": "9ba600c760739851cb21a42bece5c8721f871f2400e4b8ad45eaad0a4be5a6d2"
+  },
+  "interpretation": "Precision-only repeat: unchanged declarations except two numerical sources; original rejections remain failed/null in original records. Exact native geometry, source cells, observations and actions are compared across attempts. STOP-only remains valid zero-target; existing TRAIN development transfer is not held-out clinical generalization.",
+  "native_geometry_rerun": false,
+  "original_failures_preserved": [
+    {
+      "method": "random_legal",
+      "original_failure": {
+        "message": "Independent episode accounting mismatch: target_removed_mm3",
+        "type": "ValueError"
+      },
+      "original_outcomes": null,
+      "original_status": "failed",
+      "subject": "sub-PAT22"
+    },
+    {
+      "method": "frozen_policy",
+      "original_failure": {
+        "message": "Independent episode accounting mismatch: normal_removed_mm3",
+        "type": "ValueError"
+      },
+      "original_outcomes": null,
+      "original_status": "failed",
+      "subject": "sub-PAT28"
+    },
+    {
+      "method": "greedy_search",
+      "original_failure": {
+        "message": "Independent episode accounting mismatch: normal_removed_mm3",
+        "type": "ValueError"
+      },
+      "original_outcomes": null,
+      "original_status": "failed",
+      "subject": "sub-PAT28"
+    }
+  ],
+  "original_run_input_sha256": {
+    "declaration-input.json": "3e46a2bba38f0b2bea127d49c831c6af597a51aad360afdcdfdadf82b27c23f3",
+    "output-sha256.json": "5373388b9f978ca431cf485bf8d3c9e7a3497ef5a86d8543236e141f51e55868",
+    "sub-PAT16/preparation.json": "190b5ebbf9e351e7dbb1ad905ea17f3581c19b40998cef9033e69e927a945154",
+    "sub-PAT16/receipt.json": "2055ab7217aca524d121dea8bb1da969f80a058893dad0817abedb60dfce31b8",
+    "sub-PAT20/preparation.json": "dd32db2c04566fd904262f3ebceac0576608a9bdfd3fbd22fff6891612dedc1a",
+    "sub-PAT20/receipt.json": "d980391afc008ae4ef4baf3aeaaca4d9b76598b8cf23b23f7b13415f44e3f1bb",
+    "sub-PAT22/frozen_policy.json": "55fad22689c830199caf640e90f71b5e095b85616224902adc7667ce2fb1e716",
+    "sub-PAT22/greedy_search.json": "1a80ce91ff8f0b782e9419c5f46c9d1147c3425a8c3f80ef175922ef10302904",
+    "sub-PAT22/preparation.json": "7db799e7a6e0b8591af6727777dfec82aeec92ba39cec19f7b86f1885f5b4b7c",
+    "sub-PAT22/random_legal.json": "9dd7eea43486b850eb4a9dddfad4f37dd794c6929febe47f4ce586d1f2058689",
+    "sub-PAT22/receipt.json": "415ded35574a1e5c2533bffb1ea09f6e90b538572cfdd26ebb02ba37fd9256a8",
+    "sub-PAT25/frozen_policy.json": "823bc0beb347b3383954c07686fa2760f7ac9447b7d0ac3ff22375054b9160f0",
+    "sub-PAT25/greedy_search.json": "52589bb6b667375b1e980dcc12656a2edc29dca696881d37380fb8e488dceef8",
+    "sub-PAT25/preparation.json": "c4bee2093993ee79baf4e807bf2fe7de824110a4e3845303e893876efa09b8af",
+    "sub-PAT25/random_legal.json": "c0dbf3d06dc49efa80784a9a36b0b9076a9d7ee0e36e66ac2dc73ff764cee515",
+    "sub-PAT25/receipt.json": "a7da138930db7a8e0636dd66813a8710110a0fa88869d66ddb5fa1d9bf0afe46",
+    "sub-PAT28/frozen_policy.json": "fe4238ad447fe000ce75d6336008d1d76e92c56e826da60e55924f43dff41755",
+    "sub-PAT28/greedy_search.json": "59fb7adcee5a4f729c5bb01c1ac22d83d5e3122b84c10a463c1116e1d6e357f7",
+    "sub-PAT28/preparation.json": "ba5f24c4a3d1b488748343f67e579011fcc5f0432fb0b9256a0b858f4160742b",
+    "sub-PAT28/random_legal.json": "fb49c00588f72e2e6ba03c89bc3e04b36d21f3acc794430c0941b2a75956a619",
+    "sub-PAT28/receipt.json": "7ac009ba3055a96da53c9f9bb081dce743f4930ef00b68d1288a4317163b9780"
+  },
+  "paired_return_difference": {
+    "sub-PAT22": -116.7996534922728,
+    "sub-PAT25": 0.0,
+    "sub-PAT28": -119.00376212473981
+  },
+  "patient_arrays_opened": false,
+  "patients": [
+    {
+      "full_target_cells": 45400,
+      "methods": {
+        "frozen_policy": "not_executed",
+        "greedy_search": "not_executed",
+        "random_legal": "not_executed"
+      },
+      "outside_support_cells": 19,
+      "preparation_status": "blocked_support_conflict",
+      "subject": "sub-PAT16"
+    },
+    {
+      "full_target_cells": 12451,
+      "methods": {
+        "frozen_policy": "not_executed",
+        "greedy_search": "not_executed",
+        "random_legal": "not_executed"
+      },
+      "outside_support_cells": 125,
+      "preparation_status": "blocked_support_conflict",
+      "subject": "sub-PAT20"
+    },
+    {
+      "accepted_initial_actions": 76,
+      "full_target_cells": 13915,
+      "methods": {
+        "frozen_policy": "complete",
+        "greedy_search": "complete",
+        "random_legal": "complete"
+      },
+      "outside_actor_crop_cells": 0,
+      "outside_support_cells": 0,
+      "preparation_status": "prepared",
+      "subject": "sub-PAT22"
+    },
+    {
+      "accepted_initial_actions": 0,
+      "full_target_cells": 16526,
+      "methods": {
+        "frozen_policy": "complete",
+        "greedy_search": "complete",
+        "random_legal": "complete"
+      },
+      "outside_actor_crop_cells": 0,
+      "outside_support_cells": 0,
+      "preparation_status": "prepared",
+      "subject": "sub-PAT25"
+    },
+    {
+      "accepted_initial_actions": 70,
+      "full_target_cells": 10269,
+      "methods": {
+        "frozen_policy": "complete",
+        "greedy_search": "complete",
+        "random_legal": "complete"
+      },
+      "outside_actor_crop_cells": 0,
+      "outside_support_cells": 0,
+      "preparation_status": "prepared",
+      "subject": "sub-PAT28"
+    }
+  ],
+  "patients_prescribed": 5,
+  "status": "passed"
+}

@@ -22,7 +22,7 @@ hypothesis decisions are tracked in `docs/MEDIVIS_RESEARCH_TARGET.md` and
 
 The task is annotation-assisted target access with at most three decisions
 (a certified native tool stroke or STOP). Initial learning used TRAIN patient
-PAT05; the same declared task is now being compared on the other five TRAIN
+PAT05; the same declared task has now been compared on the other five TRAIN
 cases with a frozen checkpoint and no adaptation.
 Observations contain the permitted preoperative image, supplied target annotation,
 provisional tissue support, observed cavity and tool geometry. Supplied annotation
@@ -112,10 +112,25 @@ out of five prescribed patients, one of them STOP-only. The original source,
 records and failure evidence are losslessly archived. See
 `artifacts/remaining-training-frozen-spatial-v1/RESULT.md`.
 
-Next: repair that arithmetic with explicit double precision and independent
-accumulation, keeping the audit tolerance, weights and geometry unchanged, then
-repeat the declared fixed-policy comparison under a new source binding. No new
-training is justified while accounting and action coverage remain unresolved.
+The narrow double-precision repair now passes 77 focused controls and eight
+independent precision controls without changing audit tolerance, weights or
+geometry. A separately declared precision-only repeat completed in 179.283 seconds,
+at 1.585 GB peak sampled worker RSS. All nine episodes across the three prepared
+patients passed independent geometry and accounting; PAT16/PAT20 remained blocked.
+PAT22 frozen/greedy returns were 672.297/789.097; PAT28 were 493.534/612.538.
+PAT25 remained STOP-only with no target access. Three primary pairs were accepted
+out of five prescribed patients, with only two exercising non-STOP choices.
+Independent saved-record comparison confirms identical actions, observations,
+policy outputs and complete geometry/cell histories in both attempts. The largest
+return arithmetic change was 0.000026317. The original three rejected outcomes
+remain rejected in their original records and lossless archive. Root verification
+checked all 105 repeat archive members against local originals and all 12 indexed
+report artifacts. See `artifacts/remaining-training-frozen-spatial-float64-v1/RESULT.md`.
+
+Next: diagnose access and proposal coverage using those saved records before
+changing the task or training further. Initial accepted proposal envelopes omit
+10,186/13,915 target centers on PAT22 and 7,509/10,269 on PAT28; the full supplied
+target is visible in the actor crop. These are action-coverage limitations.
 Population training, repeated-seed advantage, protected-patient transfer and
 physical or neurological fidelity remain unproved.
 
@@ -127,8 +142,9 @@ factory rejections: their frozen main envelopes omit 19/125 annotated target
 cells. Keep these TRAIN failures in the denominator; do not intersect labels or
 expand support silently. PAT22/PAT25/PAT28 and SELECT PAT26/PAT27 have prior
 zero-omission receipts, but still need per-case support/access, native-grid and
-proposal-coverage bindings. Only PAT05 currently has the full executed contract.
-This is preparation readiness, not population training or transfer evidence.
+proposal-coverage bindings before new comparisons. The later five-case attempt
+and precision repeat above provide explicit executed dispositions; the earlier
+metadata-only readiness check itself supplied no transfer evidence.
 
 **Deferred mechanics preparation:** half-height source components are committed;
 34 preparation checks and 35 readout checks passed (separate focused suites,
