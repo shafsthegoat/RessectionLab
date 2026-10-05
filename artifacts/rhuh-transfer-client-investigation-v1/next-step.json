@@ -1,0 +1,32 @@
+{
+  "schema": "resectionlab.rhuh-transfer-client-next-step.v1",
+  "prepared_utc": "2026-10-05T05:15:51.053796+00:00",
+  "recommended_route": "Native arm64 ascp bundled with official Transfer SDK 1.1.9, inspected under ignored build; no desktop or system installation required for proposed smoke check.",
+  "executable_absolute_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/rhuh-transfer-client-inspection-v1/inspected/ibm-aspera-transfer-sdk-macos-arm64-1.1.9/bin/ascp",
+  "expected_ascp_sha256": "0d73689f6a4d5b6f7ddd90a86459be0aa211b53d40c9e01b80bed5f44f793c4e",
+  "current_mode": "0644",
+  "proposed_after_root_review_only": [
+    {
+      "argv": [
+        "chmod",
+        "u+x",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/rhuh-transfer-client-inspection-v1/inspected/ibm-aspera-transfer-sdk-macos-arm64-1.1.9/bin/ascp"
+      ],
+      "purpose": "Enable the already inspected isolated binary only."
+    },
+    {
+      "argv": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/rhuh-transfer-client-inspection-v1/inspected/ibm-aspera-transfer-sdk-macos-arm64-1.1.9/bin/ascp",
+        "-A"
+      ],
+      "purpose": "Official upstream version-only check; no remote host, credentials, source path, or transfer."
+    }
+  ],
+  "proposed_commands_executed": false,
+  "version_flag_source": "https://github.com/IBM/aspera-cli/blob/5676d597ec90be0b3c94efba5d12a35b77f5a900/lib/aspera/ascp/installation.rb#L169",
+  "free_use_evidence": "https://www.ibm.com/products/aspera/support",
+  "free_use_interpretation": "IBM states SDKs are available to developers at no additional cost; premium developer support is optional. No account, entitlement or payment was required to retrieve this official client package.",
+  "license_limits": "Apache-2.0 applies to the IBM aspera-cli wrapper, not automatically to proprietary SDK binaries. An opaque aspera-license runtime file is included; complete SDK redistribution terms were not established, so this investigation authorizes no redistribution or application bundling.",
+  "runtime_support_limits": "Static native architecture, minimum macOS 11.0, system-library dependencies and signature verified. Execution on this macOS 26.6 host and actual TCIA transfer compatibility remain untested.",
+  "future_checksum_transfer_scope": "Separate root-reviewed step restricted to /RHUH-GBM-nii-v1.sums, expected 61787 bytes, no image acquisition. Requires fresh legitimate public transfer specification and documented token/client-key handling; no stored tokens or remote credentials in this preparation."
+}

@@ -1,0 +1,34 @@
+{
+  "checked_utc": "2026-10-05T05:15:51.070159+00:00",
+  "findings_words": 272,
+  "archive_bytes_within_150MiB": true,
+  "package_and_executable_ignored": true,
+  "inspection_binary_not_executable": true,
+  "no_rhuh_payload_transfer": true,
+  "source_files": {
+    "FINDINGS.md": {
+      "bytes": 2389,
+      "sha256": "2861d14252fc610e3125b52c087f7c874586d2dfd29a29f6f7b3d1d2de395529"
+    },
+    "next-step.json": {
+      "bytes": 2725,
+      "sha256": "db21ce37efb9a0363c2d4328d4ea39103d136ab31e31eef166f2a0e34488fa2f"
+    },
+    "package-inventory.json": {
+      "bytes": 28824,
+      "sha256": "8fdb66519eed40f6f798b99637b076d7b76dfcb349a7a4e0726d8b33f749c81d"
+    },
+    "selected-package.json": {
+      "bytes": 1278,
+      "sha256": "cc0aab09b63232f958a27d00be72a631c1aa2ad8aacc2834cff82761266fc7ad"
+    },
+    "source-receipts.json": {
+      "bytes": 4257,
+      "sha256": "d504ee9aa5bf7afe3f86e0376ebb7595703d4acfb2756b1a8c7eaad3314fa887"
+    },
+    "static-inspection.json": {
+      "bytes": 4002,
+      "sha256": "68f3829d4dcd7685d643291bd89734d0f57ebb6acabf565f932dbe940baa05c7"
+    }
+  }
+}

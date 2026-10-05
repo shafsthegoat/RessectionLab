@@ -1,0 +1,45 @@
+..F........                                                              [100%]
+=================================== FAILURES ===================================
+_________ test_final_writer_change_cannot_keep_precleanup_payload_hash _________
+
+isolated = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-563/test_final_writer_change_canno0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1070bf890>
+
+    def test_final_writer_change_cannot_keep_precleanup_payload_hash(isolated, monkeypatch):
+        """Model a writer still alive after the worker's earlier payload hash."""
+        directory = acquire.QUARANTINE_ROOT / "run-fixture"
+        directory.mkdir(parents=True)
+        payload = directory / acquire.SOURCE.lstrip("/")
+        payload.write_bytes(b"a" * acquire.EXPECTED_BYTES)
+        receipt = {"status": "received_length_checked_local_hash_recorded",
+                   "payload": acquire.verify_payload(directory),
+                   "publisher_checksum_for_checksum_file_known": False}
+        receipt_path = acquire.QUARANTINE_ROOT / "run-fixture-receipt.json"
+        receipt_path.write_text(json.dumps(receipt))
+        class ExitedWorker:
+            pid = 918275
+            returncode = 0
+            stdout = io.BytesIO()
+            def communicate(self, **kwargs):
+                return json.dumps({"status": receipt["status"],
+                    "receipt": str(receipt_path.relative_to(isolated))}).encode(), None
+            def wait(self, **kwargs):
+                return 0
+        monkeypatch.setattr(acquire.subprocess, "Popen", lambda *args, **kwargs: ExitedWorker())
+        def final_write_before_termination(*args):
+            payload.write_bytes(b"b" * acquire.EXPECTED_BYTES)
+        monkeypatch.setattr(acquire.os, "killpg", final_write_before_termination)
+>       assert acquire.supervise(acquire.time.monotonic()) != 0
+E       AssertionError: assert 0 != 0
+E        +  where 0 = <function supervise at 0x10710f380>(1046115.741415708)
+E        +    where <function supervise at 0x10710f380> = acquire.supervise
+E        +    and   1046115.741415708 = <built-in function monotonic>()
+E        +      where <built-in function monotonic> = <module 'time' (built-in)>.monotonic
+E        +        where <module 'time' (built-in)> = acquire.time
+
+tests/test_acquire_rhuh_checksum_review.py:116: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "received_length_checked_local_hash_recorded", "images_requested": false, "receipt": "quarantine/run-fixture-receipt.json", "elapsed_seconds": 0.000231}
+=========================== short test summary info ============================
+FAILED tests/test_acquire_rhuh_checksum_review.py::test_final_writer_change_cannot_keep_precleanup_payload_hash
+1 failed, 10 passed in 0.08s

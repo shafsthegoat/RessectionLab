@@ -1,0 +1,31 @@
+{
+  "scope": "Focused owner plus independent analytical/mocked coverage controls; no patient arrays/task run/model forward/learning",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_training_observation_coverage.py",
+    "tests/test_training_observation_coverage_review.py"
+  ],
+  "source_sha256": {
+    "scripts/diagnose_training_observation_coverage.py": "b85805c69821e8ca12fb28f0e6c48b500dc00329685853cef4064a5c2179c1b2",
+    "src/resectionlab/spatial_multiscale_views.py": "743531e800f9f2913b6ec8101b2d5632dbb9ec2482d196fe9400d1459b29c0fe",
+    "tests/test_training_observation_coverage.py": "65757c7e243f700f859c3f63c6698438dcac9c7819ef95c26db2f038cc964446",
+    "tests/test_training_observation_coverage_review.py": "923b3e7235aa58859554d3f76c26fd565109955764289c513b391b0f8bfaf759",
+    "tests/test_spatial_multiscale_views_review.py": "1561f503d926e74f14ba52fb538c0ffba3a5c58ad45a5183cd73d45d86659e70",
+    "docs/training-observation-coverage.md": "2a13763c5c35663764ed64d950f96b657128b2806d78d08aaa68575bef020a90",
+    "docs/spatial-multiscale-views.md": "3c77d747a8724bd086dc696d329c152b70ca4af1f1bba65d52187d44f2a34291",
+    "src/resectionlab/native_spatial_task.py": "61b3d8167152d06a578e1ab7c146b7af937d86ccca6ed9e20bf3081cbf2f6711",
+    "src/resectionlab/native_proposals.py": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee",
+    "src/resectionlab/spatial_observations.py": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711",
+    "src/resectionlab/spatial_policy.py": "129d6195f76bb7a5105d6097ea41cce681c34b88b79bef287e61fd56e961073f"
+  },
+  "source_unchanged": true,
+  "exit_code": 0,
+  "elapsed_seconds": 3.969963875017129,
+  "stdout": ".................................                                        [100%]\n33 passed in 3.58s\n",
+  "stderr": "",
+  "prior_repaired_01_fixture_failure": "Worker fixture replaced ROOT with a temporary path; the added production loaded_source_paths guard correctly refused that mismatch before reaching intended cap control. Fixed fixture keeps the real code root and uses an absolute analytical bundle path. Original1failed22passed output and tested snapshots retained.",
+  "prior_receipt_setup_failure": "Attempted to hash not-yet-created manifests/experiments/training-observation-coverage-v1.json. FileNotFoundError occurred before pytest. Source/test/doc hashes are bound here; final execution manifest remains a separate prospective step."
+}

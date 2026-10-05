@@ -1,0 +1,73 @@
+{
+  "schema": "rhuh-checksum-transfer-independent-review-v1",
+  "status": "passed_software_review_only_no_transfer_release",
+  "source_and_tests": {
+    "scripts/acquire_rhuh_checksum.py": "f9ad9f4d64cab2314be865aad47e4300e23aa8b83457ee83656a6921e12edaf0",
+    "tests/test_rhuh_checksum_acquisition.py": "0c346b4472d1dcf9be2e4089a4405d1bb2317c47a1b7dd80c017954af890873f",
+    "tests/test_acquire_rhuh_checksum_review.py": "ae93ae0588cb0c3c1ebe24fa6e29245496759229b605dd13c0c1cca9dc9ac740"
+  },
+  "checks": {
+    "combined_passed": 37,
+    "owner_passed": 23,
+    "independent_passed": 14,
+    "pytest_seconds": 0.15,
+    "process_seconds": 0.30721445905510336,
+    "all_bound_sources_unchanged": true
+  },
+  "preserved_negative_results": [
+    {
+      "source_sha256": "707e728ff8ebb10f4bb7499eb902f032e40c025406c50d92ca534211fb811c46",
+      "result": "2 failed,4 passed",
+      "findings": [
+        "Excluded local checks made the simulated complete lifecycle73 seconds despite60 second cap.",
+        "Exited client leader suppressed group cleanup."
+      ],
+      "evidence": [
+        "initial-source.py.gz",
+        "initial-tests.txt",
+        "initial-review.json"
+      ]
+    },
+    {
+      "source_sha256": "0b85352a837f87185368f80ffd085b2370cbc2791047052b6ede62726dda0e3f",
+      "result": "1 failed,10 passed",
+      "findings": [
+        "Previously hashed bytes remained accepted after a simulated surviving writer changed the exact-length payload during group cleanup."
+      ],
+      "evidence": [
+        "supervisor-repair-source.py.gz",
+        "supervisor-repair-tests.py.gz",
+        "supervisor-repair-tests.txt",
+        "supervisor-repair-review.json"
+      ]
+    }
+  ],
+  "reviewed_contract": {
+    "scope": "One public package684 checksum source /RHUH-GBM-nii-v1.sums; no patient images.",
+    "source_and_auth": "Metadata requests are fixed public collection/configuration/authorization/token/one-path transfer-spec operations. Resolved source mapping is digest-pinned; host,ports,cipher,direction and token authentication fail closed. No account credentials inspected.",
+    "local_dependencies": "Binary, bundled license and IBM-published shared bootstrap key are hash-bound; executable signature, key permissions and ignored nonsymlink quarantine path checked before authorization. This review exercises mocked local provenance refusals, not a new key or binary acquisition.",
+    "credentials": "Fresh public authorization/token/cookie remain in memory or restricted client environment; no secret argv, saved specification, raw exception/client output or inherited Aspera/SSH credentials.",
+    "byte_bound": "OS RLIMIT_FSIZE65536; only one regular61787-byte file can be accepted. Payload and receipt readback are bounded and use O_NOFOLLOW. Owner test actually verifies an inert local child cannot write65537 bytes.",
+    "time_and_cleanup": "Supervisor starts before checks, gives worker up to57 seconds, kills group unconditionally and reaps at most1 second.59-second outer watchdog includes final readback/summary and exits124 on timeout. A remaining group after worker success rejects acceptance; final payload is independently reconciled only after no group remains. Logical-clock/handler controls passed; no live transfer timing claim.",
+    "attempts": "One direct ascp invocation and no application-level retry; no ascli retry wrapper. Protocol packet retransmission and undocumented client internals are not claimed to be disabled or experimentally verified.",
+    "acceptance": "Parent accepted=true is required; worker receipt alone is provisional. Client failure, timeout, surviving writer, malformed/partial file, and stale hash remain unaccepted. Exact length plus a local SHA256 is not an independent publisher digest for the checksum file."
+  },
+  "activity_limits": {
+    "network_requests": 0,
+    "actual_transfer_client_invocations": 0,
+    "cli_execute_invocations": 0,
+    "installations": 0,
+    "patient_image_reads": 0,
+    "user_credentials_inspected": false,
+    "analytical_function_calls_with_simulated_processes": true
+  },
+  "final_evidence": {
+    "final-tests.txt": "9a340df7b528adb468182723e1619e9cabd095b22bb399376957fda62b00337f",
+    "final-run.json": "5e5510395fc62d7221282035bf4dcc32acb8eb60325c7c51a4092430cb9e8a79",
+    "final-source.py.gz": "303c3598e21adfc30f5e4a3f91c2b95c955c7e4ad57c4d265b14deac63bb01e2"
+  },
+  "limitations": [
+    "Successful provider transfer remains unexecuted and requires separate root release.",
+    "No content parsing, dataset scientific quality, image transfer or clinical validation is implied."
+  ]
+}

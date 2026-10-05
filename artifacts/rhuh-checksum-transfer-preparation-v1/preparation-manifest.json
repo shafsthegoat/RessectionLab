@@ -1,0 +1,45 @@
+{
+  "schema": "resectionlab.rhuh-checksum-transfer-preparation.v1",
+  "prepared_utc": "2026-10-05T05:37:19.094190+00:00",
+  "transfer_released": false,
+  "transfer_executed": false,
+  "public_package_id": "684",
+  "public_source_path": "/RHUH-GBM-nii-v1.sums",
+  "resolved_source_sha256": "cca6151d701646f481c1eb723623bcd5f2abd1fd55859a24f1a12dae2de5cc12",
+  "expected_bytes_from_public_listing": 61787,
+  "maximum_file_bytes": 65536,
+  "maximum_runtime_seconds": 60,
+  "maximum_transfer_attempts": 1,
+  "patient_image_requests_allowed": false,
+  "destination_parent": "outputs/rhuh-one-pair/metadata/checksum-quarantine",
+  "destination_policy": "fresh mode0700 run directory, exact checksum filename, retain failed partial bytes only as unverified quarantine",
+  "execution_command_after_root_release_only": [
+    "python3",
+    "scripts/acquire_rhuh_checksum.py",
+    "--execute"
+  ],
+  "default_command_behavior": "local hashes/signature/path checks only; no network or transfer",
+  "secrets_policy": "fresh public authorization and transfer token/cookie in memory or child environment only; no persisted specs; no raw exception/client stdout/stderr/transfer logs",
+  "byte_limit_enforcement": "OS RLIMIT_FSIZE=65536 in client; exact61787-byte regular-file check; no unexpected destination members accepted",
+  "time_limit_enforcement": "Supervisor clock starts at main entry before local checks. Worker covers checks, metadata, one client invocation, verification and receipt writes with57-second allowance; parent always terminates worker process group and reaps<=1second. An outer59-second alarm kills that group and exits124 if any phase including final bounded readback stalls. Timeout or surviving descendants never accepted.",
+  "success_semantics": "Only length checked and new localSHA256 recorded. No independent publisher digest for the checksum file itself is known. No image bytes decoded or acquired.",
+  "client_licensing": "Official free developer SDK with its bundled runtime license; no software redistribution",
+  "protocol_sources": [
+    "https://github.com/IBM/aspera-cli/blob/5676d597ec90be0b3c94efba5d12a35b77f5a900/lib/aspera/transfer/parameters.rb",
+    "https://github.com/IBM/aspera-cli/blob/5676d597ec90be0b3c94efba5d12a35b77f5a900/lib/aspera/transfer/spec.schema.yaml",
+    "https://github.com/IBM/aspera-cli/blob/5676d597ec90be0b3c94efba5d12a35b77f5a900/lib/aspera/data_repository.rb"
+  ],
+  "negative_result": "Initial public-relative versus resolved server source path comparison rejected before any transfer. Provider mapping is now pinned by SHA256 and exact checksum basename; changing mapping fails closed.",
+  "code": {
+    "scripts/acquire_rhuh_checksum.py": {
+      "bytes": 20796,
+      "sha256": "f9ad9f4d64cab2314be865aad47e4300e23aa8b83457ee83656a6921e12edaf0"
+    },
+    "tests/test_rhuh_checksum_acquisition.py": {
+      "bytes": 5282,
+      "sha256": "0c346b4472d1dcf9be2e4089a4405d1bb2317c47a1b7dd80c017954af890873f"
+    }
+  },
+  "retry_policy": "One direct ascp invocation; no application-level retry or resume (-k0). This does not claim absence of protocol packet retransmission or undocumented internal client reconnect behavior.",
+  "final_acceptance": "Worker receipts require supervisor acceptance. A surviving group after reaped-successful worker is rejected. Otherwise supervisor rereads bounded receipt and payload after cleanup, comparing exact length and SHA256. Success requires accepted=true; exit124 or accepted=false leaves all bytes unaccepted."
+}

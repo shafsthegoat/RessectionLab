@@ -1,0 +1,33 @@
+{
+  "checked_utc": "2026-10-05T05:38:14.342850+00:00",
+  "transfer_executed": false,
+  "client_key_contents_committed": false,
+  "credential_scan": "No raw JWT or key content in prepared JSON receipts",
+  "destinations_ignored": true,
+  "local_default_check": "passed; no network or transfer",
+  "owner_tests": {
+    "passed": 23,
+    "last_local_elapsed_seconds": 0.11
+  },
+  "independent_review_reported": {
+    "combined_passed": 37,
+    "independent_tests": 14,
+    "pytest_seconds": 0.15,
+    "review_artifacts": "artifacts/rhuh-checksum-transfer-review-v1",
+    "source_sha256_reviewed": "f9ad9f4d64cab2314be865aad47e4300e23aa8b83457ee83656a6921e12edaf0"
+  },
+  "source_hashes": {
+    "scripts/acquire_rhuh_checksum.py": "f9ad9f4d64cab2314be865aad47e4300e23aa8b83457ee83656a6921e12edaf0",
+    "tests/test_rhuh_checksum_acquisition.py": "0c346b4472d1dcf9be2e4089a4405d1bb2317c47a1b7dd80c017954af890873f",
+    "tests/test_acquire_rhuh_checksum_review.py": "ae93ae0588cb0c3c1ebe24fa6e29245496759229b605dd13c0c1cca9dc9ac740"
+  },
+  "prepared_artifact_hashes": {
+    "README.md": "cbbd093c1e4271942434d5c20add807014b68a07712e0675e46b558afabeb0ab",
+    "live-metadata-guard-check-after-source-mapping.json": "6afc641bf2f40c3a416e27dc9c70dcc6837c7cb5b0dff47cb30c314e07284526",
+    "live-metadata-guard-check.json": "8454e8e24bedaad82d69b8042798f09a04eb4610788af7800a4df25031e6bcd3",
+    "preparation-manifest.json": "d5cc4db024794e79d0bd7fa8ada16192dec455422b64c5ca0044528486567777",
+    "public-client-key-source.json": "b59f8d32df1835ad15e1d128b784942d3a9bbb0badf7e81198942cd33a8d2f85",
+    "resolved-source-mapping.json": "4df2efbe544984f32f4fc1b4d8e6fef779db39a1515735c160565e8f343dd115",
+    "retry-semantics.json": "2e9c4a2afad6352ca7d0969b89e5c82131758c56058d2808d81fbd57a60e8174"
+  }
+}

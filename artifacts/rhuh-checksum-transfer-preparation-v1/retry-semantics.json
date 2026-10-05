@@ -1,0 +1,8 @@
+{
+  "client_sha256": "0d73689f6a4d5b6f7ddd90a86459be0aa211b53d40c9e01b80bed5f44f793c4e",
+  "evidence_method": "Static printable help bytes read from previously verified signed binary; client not executed for this check.",
+  "retry_timeout_help_fragment": "  --retry-timeout=SECS            Advisory - caller indicates it will rerun\n                                    ascp on failure\n",
+  "interpretation": "This option advertises that a caller will rerun ascp. It is not used. Helper launches one direct client invocation and no Aspera CLI retry wrapper. -k0 disables resume, not protocol retransmission. Internal packet-level retries/reconnects were not claimed absent.",
+  "official_wrapper_reference": "https://github.com/IBM/aspera-cli/blob/5676d597ec90be0b3c94efba5d12a35b77f5a900/docs/README.md#transfer-agent-direct",
+  "wrapper_not_used": true
+}

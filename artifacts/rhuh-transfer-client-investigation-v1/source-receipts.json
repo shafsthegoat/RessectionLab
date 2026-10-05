@@ -1,0 +1,110 @@
+{
+  "checked_utc": "2026-10-05T05:11:39.572977+00:00",
+  "sources": [
+    {
+      "name": "cli-release",
+      "url": "https://api.github.com/repos/IBM/aspera-cli/releases/latest",
+      "status": 200,
+      "bytes": 15685,
+      "sha256": "91629653bdc8e4312f271af4497c71f869f37cff873563e3cc6881b4ce4333f6"
+    },
+    {
+      "name": "cli-main",
+      "url": "https://api.github.com/repos/IBM/aspera-cli/commits/main",
+      "status": 200,
+      "bytes": 15355,
+      "sha256": "a74183252e00c5d64d6fa079829e6f3ee7a9ef93ad9926ff0a5e1407cc896ca0"
+    },
+    {
+      "name": "ibm-downloads",
+      "url": "https://www.ibm.com/products/aspera/downloads",
+      "status": 200,
+      "bytes": 166374,
+      "sha256": "d367cf88421de8ec50e7adf516d4fb575a2af47d1a228571de255609948b5bba"
+    },
+    {
+      "name": "cli-tree",
+      "url": "https://api.github.com/repos/IBM/aspera-cli/git/trees/5676d597ec90be0b3c94efba5d12a35b77f5a900?recursive=1",
+      "status": 200,
+      "bytes": 94144,
+      "sha256": "93cb7ab3e70d71c4b58cd11f34a1f3d85ab362956d6cefcec530a838600bcd2b"
+    },
+    {
+      "name": "installation.rb",
+      "url": "https://raw.githubusercontent.com/IBM/aspera-cli/5676d597ec90be0b3c94efba5d12a35b77f5a900/lib/aspera/ascp/installation.rb",
+      "status": 200,
+      "bytes": 22427,
+      "sha256": "f59975fbac1b3431098018300ebf0296e2c14f8e115e9d055f1f1d0db11a2bf9"
+    },
+    {
+      "name": "README.md",
+      "url": "https://raw.githubusercontent.com/IBM/aspera-cli/5676d597ec90be0b3c94efba5d12a35b77f5a900/README.md",
+      "status": 200,
+      "bytes": 2491,
+      "sha256": "27aac84722a127c09e99c0fa399aec35d619b768c0704e59d56fe3d8e510e3bb"
+    },
+    {
+      "name": "LICENSE",
+      "url": "https://raw.githubusercontent.com/IBM/aspera-cli/5676d597ec90be0b3c94efba5d12a35b77f5a900/LICENSE",
+      "status": 200,
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "name": "docs__sdk_location.yaml",
+      "url": "https://raw.githubusercontent.com/IBM/aspera-cli/5676d597ec90be0b3c94efba5d12a35b77f5a900/docs/sdk_location.yaml",
+      "status": 200,
+      "bytes": 13911,
+      "sha256": "38bfd510b0a67749cbf218d89e9e167e55d554779ae3836f503ddc61335893e7"
+    },
+    {
+      "name": "docs__README.md",
+      "url": "https://raw.githubusercontent.com/IBM/aspera-cli/5676d597ec90be0b3c94efba5d12a35b77f5a900/docs/README.md",
+      "status": 200,
+      "bytes": 498839,
+      "sha256": "0c3ee7319c8cfaaaebf66243d29690951426d38096ec8235f28995da8975f664"
+    },
+    {
+      "name": "lib__aspera__environment.rb",
+      "url": "https://raw.githubusercontent.com/IBM/aspera-cli/5676d597ec90be0b3c94efba5d12a35b77f5a900/lib/aspera/environment.rb",
+      "status": 200,
+      "bytes": 15665,
+      "sha256": "125ff68899db83ad292bf7e9135cf73998f32b596dacd01a3d4530ebc2eb6b75"
+    },
+    {
+      "name": "lib__aspera__products__connect.rb",
+      "url": "https://raw.githubusercontent.com/IBM/aspera-cli/5676d597ec90be0b3c94efba5d12a35b77f5a900/lib/aspera/products/connect.rb",
+      "status": 200,
+      "bytes": 3618,
+      "sha256": "cb26552d52d27f6cb7e22bfffd5d4c3114435f0c8a4a2f36a1b6445095e0fc0d"
+    },
+    {
+      "name": "lib__aspera__data_repository.rb",
+      "url": "https://raw.githubusercontent.com/IBM/aspera-cli/5676d597ec90be0b3c94efba5d12a35b77f5a900/lib/aspera/data_repository.rb",
+      "status": 200,
+      "bytes": 1541,
+      "sha256": "8d38ad7a57da133aa06053dacc1a020d24527ec836307219a363861c64e29967"
+    },
+    {
+      "name": "ibm-support",
+      "url": "https://www.ibm.com/products/aspera/support",
+      "status": 200,
+      "bytes": 157775,
+      "sha256": "23a3bc78af70ba7f8ff4b5338036cc2f8a2afe2536afde387362c8698b0231d8"
+    },
+    {
+      "name": "sdk-introduction",
+      "url": "https://developer.ibm.com/apis/catalog/aspera--aspera-transfer-sdk/Introduction",
+      "status": 200,
+      "bytes": 1064,
+      "sha256": "3ee97d4cf727fd0183b64eda418a62265856b8859bc1d84c0ad395c8c8bfcc4b"
+    },
+    {
+      "name": "ibm-api-hub.js",
+      "url": "https://developer.ibm.com/apis/assets/index-BUjioLzS.js",
+      "status": 200,
+      "bytes": 3627566,
+      "sha256": "e36d1ba282da2a75fe95924710e4f6a6bb6116fa713fa798291ff00cfcc20d88"
+    }
+  ]
+}

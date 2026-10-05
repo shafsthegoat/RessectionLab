@@ -1,0 +1,55 @@
+FF....                                                                   [100%]
+=================================== FAILURES ===================================
+______________ test_whole_lifecycle_budget_includes_local_checks _______________
+
+isolated = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-561/test_whole_lifecycle_budget_in0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1073bf980>
+
+    def test_whole_lifecycle_budget_includes_local_checks(isolated, monkeypatch):
+        """Original source 707e728f spends 15 + 58 = 73 simulated seconds."""
+        clock = [0.0]
+        monkeypatch.setattr(acquire.time, "monotonic", lambda: clock[0])
+        monkeypatch.setattr(argparse.ArgumentParser, "parse_args", lambda self: argparse.Namespace(execute=True))
+        def local_checks():
+            clock[0] += 15.0
+        def exhausted_metadata(deadline):
+            clock[0] = deadline
+            raise acquire.Rejected("wall_time_limit")
+        monkeypatch.setattr(acquire, "local_checks", local_checks)
+        monkeypatch.setattr(acquire, "fresh_spec", exhausted_metadata)
+        assert acquire.main() == 1
+>       assert clock[0] <= acquire.WALL_SECONDS
+E       assert 73.0 <= 60
+E        +  where 60 = acquire.WALL_SECONDS
+
+tests/test_acquire_rhuh_checksum_review.py:48: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"status": "failed", "receipt": "quarantine/run-j8aii70i-receipt.json"}
+________________ test_exited_leader_still_cleans_process_group _________________
+
+isolated = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-561/test_exited_leader_still_clean0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1073bedb0>
+
+    def test_exited_leader_still_cleans_process_group(isolated, monkeypatch):
+        """An exited process leader does not prove all its descendants exited."""
+        killed = []
+        class ExitedLeader:
+            pid = 918273
+            def wait(self, **kwargs):
+                return 1
+            def poll(self):
+                return 1
+        monkeypatch.setattr(acquire, "fresh_spec", lambda deadline: {})
+        monkeypatch.setattr(acquire, "transfer_invocation", lambda *args: (["FAKE_CLIENT"], {}))
+        monkeypatch.setattr(acquire.subprocess, "Popen", lambda *args, **kwargs: ExitedLeader())
+        monkeypatch.setattr(acquire.os, "killpg", lambda pid, sig: killed.append((pid, sig)))
+        receipt, _ = acquire.execute()
+        assert receipt["status"] == "failed"
+>       assert (ExitedLeader.pid, signal.SIGKILL) in killed
+E       assert (918273, <Signals.SIGKILL: 9>) in []
+
+tests/test_acquire_rhuh_checksum_review.py:66: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_acquire_rhuh_checksum_review.py::test_whole_lifecycle_budget_includes_local_checks
+FAILED tests/test_acquire_rhuh_checksum_review.py::test_exited_leader_still_cleans_process_group
+2 failed, 4 passed in 0.07s

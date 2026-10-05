@@ -1,0 +1,58 @@
+{
+  "host_architecture": "arm64",
+  "host_macos": "26.6 (25G72)",
+  "package_members_executed": false,
+  "inspection_files_mode": "0644 (not executable)",
+  "ascp_sha256": "0d73689f6a4d5b6f7ddd90a86459be0aa211b53d40c9e01b80bed5f44f793c4e",
+  "runtime_license_file_present": true,
+  "runtime_license_file_sha256": "ad474b3ff9697cc675b38d49e0b3880674c214a403f1ee5572bb424eff66fa3e",
+  "runtime_license_format": "Opaque runtime license; not a readable legal agreement. Not copied into committed receipts.",
+  "commands": [
+    {
+      "command": [
+        "file",
+        "build/rhuh-transfer-client-inspection-v1/inspected/ibm-aspera-transfer-sdk-macos-arm64-1.1.9/bin/ascp"
+      ],
+      "exit_code": 0,
+      "output": "build/rhuh-transfer-client-inspection-v1/inspected/ibm-aspera-transfer-sdk-macos-arm64-1.1.9/bin/ascp: Mach-O 64-bit executable arm64\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "-dvvv",
+        "build/rhuh-transfer-client-inspection-v1/inspected/ibm-aspera-transfer-sdk-macos-arm64-1.1.9/bin/ascp"
+      ],
+      "exit_code": 0,
+      "output": "Executable=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/rhuh-transfer-client-inspection-v1/inspected/ibm-aspera-transfer-sdk-macos-arm64-1.1.9/bin/ascp\nIdentifier=ascp\nFormat=Mach-O thin (arm64)\nCodeDirectory v=20500 size=21680 flags=0x10000(runtime) hashes=672+2 location=embedded\nHash type=sha256 size=32\nCandidateCDHash sha256=35a014c5a6a5dbdec3d8725f0c68243fb711f7f5\nCandidateCDHashFull sha256=35a014c5a6a5dbdec3d8725f0c68243fb711f7f5cc2a80186941d30baa189d66\nHash choices=sha256\nCMSDigest=35a014c5a6a5dbdec3d8725f0c68243fb711f7f5cc2a80186941d30baa189d66\nCMSDigestType=2\nCDHash=35a014c5a6a5dbdec3d8725f0c68243fb711f7f5\nSignature size=8974\nAuthority=Developer ID Application: Aspera, Inc. (RJ747GSBCT)\nAuthority=Developer ID Certification Authority\nAuthority=Apple Root CA\nTimestamp=Jul 1, 2026 at 7:08:28\u202fPM\nInfo.plist=not bound\nTeamIdentifier=RJ747GSBCT\nRuntime Version=26.0.0\nSealed Resources=none\nInternal requirements count=1 size=164\n"
+    },
+    {
+      "command": [
+        "codesign",
+        "--verify",
+        "--strict",
+        "--verbose=2",
+        "build/rhuh-transfer-client-inspection-v1/inspected/ibm-aspera-transfer-sdk-macos-arm64-1.1.9/bin/ascp"
+      ],
+      "exit_code": 0,
+      "output": "build/rhuh-transfer-client-inspection-v1/inspected/ibm-aspera-transfer-sdk-macos-arm64-1.1.9/bin/ascp: valid on disk\nbuild/rhuh-transfer-client-inspection-v1/inspected/ibm-aspera-transfer-sdk-macos-arm64-1.1.9/bin/ascp: satisfies its Designated Requirement\n"
+    },
+    {
+      "command": [
+        "otool",
+        "-L",
+        "build/rhuh-transfer-client-inspection-v1/inspected/ibm-aspera-transfer-sdk-macos-arm64-1.1.9/bin/ascp"
+      ],
+      "exit_code": 0,
+      "output": "build/rhuh-transfer-client-inspection-v1/inspected/ibm-aspera-transfer-sdk-macos-arm64-1.1.9/bin/ascp:\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n\t/System/Library/Frameworks/Security.framework/Versions/A/Security (compatibility version 1.0.0, current version 61901.0.87)\n\t/System/Library/Frameworks/CoreServices.framework/Versions/A/CoreServices (compatibility version 1.0.0, current version 1226.0.0)\n\t/System/Library/Frameworks/SystemConfiguration.framework/Versions/A/SystemConfiguration (compatibility version 1.0.0, current version 1385.0.7)\n\t/usr/lib/libresolv.9.dylib (compatibility version 1.0.0, current version 1.0.0)\n\t/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation (compatibility version 150.0.0, current version 4040.1.255)\n"
+    },
+    {
+      "command": [
+        "otool",
+        "-l",
+        "build/rhuh-transfer-client-inspection-v1/inspected/ibm-aspera-transfer-sdk-macos-arm64-1.1.9/bin/ascp"
+      ],
+      "exit_code": 0,
+      "output": "      cmd LC_BUILD_VERSION\n platform 1\n    minos 11.0\n      sdk 26.0"
+    }
+  ]
+}

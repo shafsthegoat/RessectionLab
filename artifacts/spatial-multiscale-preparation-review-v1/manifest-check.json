@@ -1,0 +1,55 @@
+{
+  "historical_blocks": [
+    "sub-PAT16",
+    "sub-PAT20"
+  ],
+  "member_source_anchor_sha256": {
+    "sub-PAT05": "d69c9b6cf1f0f329d698c3857bca13efaa4a4a9a7b424208711affd4ac8480f4",
+    "sub-PAT16": "3743dd12460cf598089664bd243fba883300c2505d477df0ec4aadd2bb596608",
+    "sub-PAT20": "d5b72a815e4b2b6aeeedfedbc0687e74843c21f832cab184a4e523f011037312",
+    "sub-PAT22": "2dbf6be558d5e7b370f43751480dad7b87bf98dfaae62d0c5f2cd0a5d7e6e1b6",
+    "sub-PAT25": "f4c6269f551f52fbe359c61d408030af81d4b233ac4ad11f98a87228f81dc70c",
+    "sub-PAT28": "b4fdb77d181808c494a81cbae0004a633be12bf59f84f139e0c83095339cb081"
+  },
+  "metadata_only_validation": "passed; no patient arrays or native task constructed",
+  "path": "manifests/experiments/training-observation-coverage-v1.json",
+  "settings": {
+    "coarse_mass_rtol": 1e-06,
+    "coarse_mass_small_volume_atol_mm3": 1e-06,
+    "coarse_shape": [
+      64,
+      64,
+      64
+    ],
+    "cooperative_seconds": 170.0,
+    "cpu_threads": 1,
+    "executed_transitions": 0,
+    "extent_roundtrip_atol_mm": 1e-08,
+    "local_shape": [
+      64,
+      64,
+      64
+    ],
+    "max_initial_previews_per_case": 78,
+    "max_rss_bytes": 6442450944,
+    "max_total_previews": 312,
+    "max_wall_seconds": 174.0,
+    "newly_attempted_cases": 4,
+    "optimizer_updates": 0,
+    "policy_forwards": 0,
+    "ray_samples": 5,
+    "retained_cohort_denominator": 6,
+    "whole_worker_envelope_seconds": 180.0
+  },
+  "sha256": "227468bc212fbd13b1d8ef63b19d63f396b0d860e74476685e4778aa45c1c7ae",
+  "source_count": 62,
+  "source_map_matches_current_frozen_source": true,
+  "subjects": [
+    "sub-PAT05",
+    "sub-PAT16",
+    "sub-PAT20",
+    "sub-PAT22",
+    "sub-PAT25",
+    "sub-PAT28"
+  ]
+}

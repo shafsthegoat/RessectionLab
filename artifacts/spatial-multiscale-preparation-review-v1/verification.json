@@ -1,0 +1,114 @@
+{
+  "constraints": {
+    "execution_release_created": false,
+    "legacy_observation_and_geometry_changed": false,
+    "native_training_or_search": false,
+    "optimizer_updates": 0,
+    "patient_arrays_read": false,
+    "patient_task_runs": 0,
+    "policy_forwards": 0
+  },
+  "final_runner_checks": {
+    "independent": 14,
+    "owner": 19,
+    "passed": 33,
+    "pytest_seconds": 3.58,
+    "source_unchanged": true
+  },
+  "independent_tests_sha256": {
+    "tests/test_spatial_multiscale_views_review.py": "1561f503d926e74f14ba52fb538c0ffba3a5c58ad45a5183cd73d45d86659e70",
+    "tests/test_training_observation_coverage_review.py": "923b3e7235aa58859554d3f76c26fd565109955764289c513b391b0f8bfaf759"
+  },
+  "initial_true_failures": {
+    "count": 3,
+    "findings": [
+      "Raised profiler callback disabled monitoring; ordinary per-case recovery could continue uncounted. Fixed by fatal guard violation and active-observer check.",
+      "Cold torch helper import falsely rejected module definitions as optimizer execution. Fixed by distinguishing construction/step from import.",
+      "Archive PAX source commit was not checked against release claim. Fixed exact commit plus archived-manifest hash joins."
+    ],
+    "pytest_seconds": 1.42,
+    "source_sha256": "c926a14bc06380cf436430934f6b0c0a58c3c73d1451b86b55a1760893898635",
+    "source_unchanged": true
+  },
+  "limits": [
+    "Preparation-only analytical/mocked evidence, not patient coverage results or full runtime/memory validation.",
+    "Caller provenance cannot prove arbitrary supplied annotations are clinically truthful; explicit annotation-assisted scope remains.",
+    "Coarse cavity and coverage are fractions, separate from binary native observations; coarse cells cannot certify removal or clearance.",
+    "Shaft centerline visibility is not finite-radius whole-tool clearance.",
+    "Blocked16/20 remain historical source-bound records with null new representation, not newly measured or silently excluded.",
+    "Prospective170s cooperative/174s parent/180s envelope and6GiB caps are unchanged; actual execution requires separately frozen archive/release."
+  ],
+  "manifest": {
+    "historical_blocks": [
+      "sub-PAT16",
+      "sub-PAT20"
+    ],
+    "member_source_anchor_sha256": {
+      "sub-PAT05": "d69c9b6cf1f0f329d698c3857bca13efaa4a4a9a7b424208711affd4ac8480f4",
+      "sub-PAT16": "3743dd12460cf598089664bd243fba883300c2505d477df0ec4aadd2bb596608",
+      "sub-PAT20": "d5b72a815e4b2b6aeeedfedbc0687e74843c21f832cab184a4e523f011037312",
+      "sub-PAT22": "2dbf6be558d5e7b370f43751480dad7b87bf98dfaae62d0c5f2cd0a5d7e6e1b6",
+      "sub-PAT25": "f4c6269f551f52fbe359c61d408030af81d4b233ac4ad11f98a87228f81dc70c",
+      "sub-PAT28": "b4fdb77d181808c494a81cbae0004a633be12bf59f84f139e0c83095339cb081"
+    },
+    "metadata_only_validation": "passed; no patient arrays or native task constructed",
+    "path": "manifests/experiments/training-observation-coverage-v1.json",
+    "settings": {
+      "coarse_mass_rtol": 1e-06,
+      "coarse_mass_small_volume_atol_mm3": 1e-06,
+      "coarse_shape": [
+        64,
+        64,
+        64
+      ],
+      "cooperative_seconds": 170.0,
+      "cpu_threads": 1,
+      "executed_transitions": 0,
+      "extent_roundtrip_atol_mm": 1e-08,
+      "local_shape": [
+        64,
+        64,
+        64
+      ],
+      "max_initial_previews_per_case": 78,
+      "max_rss_bytes": 6442450944,
+      "max_total_previews": 312,
+      "max_wall_seconds": 174.0,
+      "newly_attempted_cases": 4,
+      "optimizer_updates": 0,
+      "policy_forwards": 0,
+      "ray_samples": 5,
+      "retained_cohort_denominator": 6,
+      "whole_worker_envelope_seconds": 180.0
+    },
+    "sha256": "227468bc212fbd13b1d8ef63b19d63f396b0d860e74476685e4778aa45c1c7ae",
+    "source_count": 62,
+    "source_map_matches_current_frozen_source": true,
+    "subjects": [
+      "sub-PAT05",
+      "sub-PAT16",
+      "sub-PAT20",
+      "sub-PAT22",
+      "sub-PAT25",
+      "sub-PAT28"
+    ]
+  },
+  "multiscale_independent_checks": {
+    "passed": 11,
+    "pytest_seconds": 0.35,
+    "source_unchanged": true
+  },
+  "other_preserved_setup_outcomes": [
+    "Missing not-yet-written helper documentation while building receipt hash list: pytest did not start.",
+    "One repaired-run fixture rewrote ROOT to temp and correctly failed new import-root guard;22other independent checks passed. Fixture repaired without changing production.",
+    "Missing not-yet-created execution manifest while building final receipt hash list: pytest did not start; manifest was later separately created and metadata-validated."
+  ],
+  "production_sha256": {
+    "scripts/diagnose_training_observation_coverage.py": "b85805c69821e8ca12fb28f0e6c48b500dc00329685853cef4064a5c2179c1b2",
+    "src/resectionlab/spatial_multiscale_views.py": "743531e800f9f2913b6ec8101b2d5632dbb9ec2482d196fe9400d1459b29c0fe"
+  },
+  "recorded_at_utc": "2026-10-05T05:28:53.290136+00:00",
+  "schema": "spatial-multiscale-preparation-independent-review-v1",
+  "status": "passed_preparation_only",
+  "unique_independent_controls": 25
+}

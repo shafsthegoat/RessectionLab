@@ -20,6 +20,30 @@ are complete; their limits are recorded below. No harm model or reward was added
 hypothesis decisions are tracked in `docs/MEDIVIS_RESEARCH_TARGET.md` and
 `docs/INNOVATION_LEDGER.md`. Current useful work and all patient roles remain intact.
 
+The new permitted target-local and whole-source coarse views pass 39 software
+checks, with separate fractional coverage and conserved nominal occupancy. One
+source-frozen TRAIN observation diagnostic is now archived: four cases attempted,
+three completed, PAT05 failed and PAT16/PAT20 retained historical support blocks.
+The independent audit accepted the three saved partial records; the overall run
+remains incomplete (exit 1). All three legacy crops already contained the full
+nominal target. Target-local views alone reduced shaft-centerline visibility;
+whole-source views improved it without changing proposal feasibility. No learning
+or clinical accuracy improvement was measured. PAT05's wrapper compares a full
+20-field runtime record with an eight-field declaration; its actual runtime grid
+values were not retained, so equality is unverified. Preserve the failed attempt
+and bind a complete historical record before a separately declared correction.
+See `artifacts/training-observation-coverage-v1/RESULT.md`.
+
+The isolated, signed native public-transfer client passes a version-only smoke
+check. A checksum-only acquisition helper and 37 offline controls are committed;
+three timing/cleanup/integrity review failures were repaired and retained. No
+checksum payload or patient image has been transferred by this work. The helper
+still requires a separate execution release; patient-image acquisition remains
+disabled. The combined observation and acquisition integration check passed all
+109 focused tests in 4.81 seconds. See
+`artifacts/rhuh-checksum-transfer-preparation-v1/README.md` and
+`artifacts/validation/observation-acquisition-integration-v1/verification.json`.
+
 The RHUH public table has 40 patients and 14 recorded postoperative deficits
 (six transient, six minor persistent, two major persistent); 26 are recorded `No`.
 Exact clinical timing, affected domain, baseline focal deficit and category

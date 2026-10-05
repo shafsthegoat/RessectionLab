@@ -1,0 +1,36 @@
+{
+  "count": 7,
+  "directory": "outputs/training-observation-coverage-v1/run-01",
+  "files": {
+    "declaration-input.json": {
+      "bytes": 44121,
+      "sha256": "227468bc212fbd13b1d8ef63b19d63f396b0d860e74476685e4778aa45c1c7ae"
+    },
+    "receipt.json": {
+      "bytes": 8582114,
+      "sha256": "d6e21ed006698124a2678a9dd52f0f85b7f6140dc24a259a375cec640b45efd2"
+    },
+    "release-input.json": {
+      "bytes": 1116,
+      "sha256": "2dc9081a42205d6ba0dc20af5726164bf2c0e04a38e9bcb80b51cdcf2eaf566c"
+    },
+    "supervisor-failure.json": {
+      "bytes": 572,
+      "sha256": "9cd6eb7a47912617cc75f89af06fe051528ecc50a7ad403e866e32daf404ef3b"
+    },
+    "supervisor-progress.json": {
+      "bytes": 238,
+      "sha256": "5cb670b4f02497e4d1efbddcc7c1d60f28c771a81b2d08583946a4eed4cfb037"
+    },
+    "supervisor.json": {
+      "bytes": 572,
+      "sha256": "9cd6eb7a47912617cc75f89af06fe051528ecc50a7ad403e866e32daf404ef3b"
+    },
+    "worker.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "schema": "training-observation-coverage-raw-index-v1",
+  "total_bytes": 8628733
+}

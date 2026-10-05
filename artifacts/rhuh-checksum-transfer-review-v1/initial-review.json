@@ -1,0 +1,11 @@
+{
+  "source_sha256": "707e728ff8ebb10f4bb7499eb902f032e40c025406c50d92ca534211fb811c46",
+  "tests_sha256": "b52fff0ead62c694cd5917e276a611ada7f24660d9d23b33a4c870cc2ff83026",
+  "source_unchanged": true,
+  "exit_code": 1,
+  "scope": "Analytical software controls only; no network, --execute CLI, native transfer client, installation, real credentials, or provider payload.",
+  "genuine_failures": [
+    "Whole lifecycle simulated wall time 73 seconds exceeds declared 60 because prechecks excluded.",
+    "Exited leader suppresses descendant process-group cleanup."
+  ]
+}

@@ -1390,3 +1390,32 @@ The cohort was previously inspected and has no untouched external validation.
 Both predictors are constant across a patient's alternative routes; this model
 cannot supply route rankings or a planning reward. Lossless outputs, exact source,
 all diagnostics and the report are in `artifacts/rhuh-preoperative-baseline-v1/`.
+
+## October 5, 2026 — partial observation coverage with unchanged physical tasks
+
+After separate source/archive and execution-release commits, one fixed TRAIN
+diagnostic made 312 initial previews across four attempts, with no cuts, search,
+policy forwards or updates. PAT22/PAT25/PAT28 completed; PAT05 failed a wrapper
+identity comparison, and PAT16/PAT20 retained their historical support blocks.
+Supervision took 79.756402 seconds; recorded worker peak was 1,514,209,280 bytes.
+The overall run remains incomplete with exit 1 and no retry.
+
+The independent saved-only audit verified 234 proposals and 10,530 sample points
+for the three completed records. Legacy and target-local views already retained
+100% of nominal target mass. Target-local views reduced shaft-centerline coverage;
+whole-source coarse views increased it while physical acceptance stayed 76/78,
+0/78 and 70/78. This is representation coverage, not instrument clearance or a
+learning gain. The PAT05 wrapper compared 20 runtime fields against eight declared
+fields; current-run values were not saved. The historical schema diagnosis does
+not retrospectively accept that case. Exact outputs, source, figures and partial
+audit remain in `artifacts/training-observation-coverage-v1/`.
+
+## October 5, 2026 — reviewed public checksum acquisition preparation
+
+The official signed arm64 transfer client executed only its version flag, with
+exit 0 in 0.430071 seconds. A separate checksum-only helper now passes 37 offline
+tests after three retained lifecycle failures were repaired. It bounds the full
+process lifetime, enforces file size, kills descendants and reconciles final bytes
+before acceptance. Fresh public metadata passed the source guards, but no checksum
+or patient-image transfer was executed. The combined six-file integration check
+passed 109 tests in 4.81 seconds. No patient experiment was rerun for integration.

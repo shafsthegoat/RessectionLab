@@ -1,0 +1,61 @@
+{
+  "files": {
+    "README.md": {
+      "bytes": 2375,
+      "sha256": "637fe92502fc62953d1fadb4314f85d831ca310c5d87c7e14667b40f03ca24c5"
+    },
+    "diagnose_training_observation_coverage.py.repaired-01.gz": {
+      "bytes": 10675,
+      "sha256": "606c6828d1e2e137862d5204ea9323ae3b72caa7e0eecdc03e4dbbad1fdd33e4"
+    },
+    "final-runner-tests.json": {
+      "bytes": 2481,
+      "sha256": "766c8ad9e196bf170ef7c555fc2803936832b47c69d96fd4219714c1b71e05ae"
+    },
+    "independent-repaired-01.json": {
+      "bytes": 4438,
+      "sha256": "97f7cbb688e0a15945d207b6ed3dfe0548c056f7990a045db3d92730d50db8f2"
+    },
+    "initial-runner-negatives.json": {
+      "bytes": 6356,
+      "sha256": "ba74829bf6a42d5ef9a913e395eafeca8f9b93d148b89662c377315b57541b49"
+    },
+    "initial-runner-review-tests.py.gz": {
+      "bytes": 1667,
+      "sha256": "91aebc5f09c7941a92998c325dfbaecbbcc68a72d3f5d7f2ed3e0ff183d171a9"
+    },
+    "initial-runner-source.py.gz": {
+      "bytes": 9840,
+      "sha256": "cd1177373d0508bc234b848c29cd88a34c76fcd011b2b0404c0c0064662ea1f9"
+    },
+    "manifest-check.json": {
+      "bytes": 1716,
+      "sha256": "2e6889fbaba883ee53cbc1f4db58253b9bdda359743140fcce9036a48996e0a0"
+    },
+    "multiscale-combined-tests.json": {
+      "bytes": 917,
+      "sha256": "fc4aef7b19d4729f7a1fc9b6fa7701d0db9f9df95929246bd1f6d0b5bd81c326"
+    },
+    "multiscale-independent-tests.json": {
+      "bytes": 1184,
+      "sha256": "13aa66e15025647b278085cb3d0912e4c40ace36ccec249e2e2f3a5998392a5d"
+    },
+    "spatial_multiscale_views.py.repaired-01.gz": {
+      "bytes": 7538,
+      "sha256": "0d15f6286e2281253de2b68d5dd8ce0b3b462e214ff561a8df73cccbd791abbd"
+    },
+    "test_spatial_multiscale_views_review.py.repaired-01.gz": {
+      "bytes": 2624,
+      "sha256": "6645a229ffe968d7277b83929b789522f0c47347308e81b96d4431bca8b2b21b"
+    },
+    "test_training_observation_coverage_review.py.repaired-01.gz": {
+      "bytes": 2817,
+      "sha256": "30b18a6c4deabfd64dcb97c29b63a541907d40dcb3b8fddf58f5db31c411611e"
+    },
+    "verification.json": {
+      "bytes": 5072,
+      "sha256": "40464f1a2ffdba150bc82bf49d2d1f00f7b6ca335dba1867381ebb72baec7bcd"
+    }
+  },
+  "schema": "compact-review-index-v1"
+}
