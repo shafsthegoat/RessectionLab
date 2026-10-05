@@ -1,0 +1,68 @@
+{
+  "patient_count": 40,
+  "column_count": 23,
+  "outcome_counts": {
+    "Major Persistent": 2,
+    "Minor Persistent": 6,
+    "No": 26,
+    "Transient": 6
+  },
+  "KPS_change": {
+    "definition": "Postoperative KPS minus Preoperative KPS; timing unknown; global function, not domain deficit",
+    "counts": {
+      "-30": 1,
+      "-20": 1,
+      "-10": 3,
+      "0": 22,
+      "10": 9,
+      "20": 4
+    },
+    "decreased": 5,
+    "unchanged": 22,
+    "increased": 13,
+    "min": -30,
+    "max": 20,
+    "median": 0.0,
+    "by_recorded_deficit": {
+      "Major Persistent": {
+        "decreased": 2
+      },
+      "Minor Persistent": {
+        "decreased": 2,
+        "unchanged": 2,
+        "increased": 2
+      },
+      "No": {
+        "increased": 9,
+        "unchanged": 16,
+        "decreased": 1
+      },
+      "Transient": {
+        "unchanged": 4,
+        "increased": 2
+      }
+    }
+  },
+  "EOR_definition_conflicts": [
+    {
+      "patient_id": "RHUH-0017",
+      "source_category": "NTR",
+      "source_EOR_percent": 94.6,
+      "source_pre_ce_cm3": 3.7,
+      "source_post_ce_cm3": 0.2,
+      "EOR_recomputed_from_rounded_source_volumes_percent": 94.5945945945946,
+      "interpretation": "Recorded NTR label conflicts with >95% definition and recomputed rounded volumes. No relabeling or exclusion applied."
+    },
+    {
+      "patient_id": "RHUH-0023",
+      "source_category": "NTR",
+      "source_EOR_percent": 95.0,
+      "source_pre_ce_cm3": 36.55,
+      "source_post_ce_cm3": 1.82,
+      "EOR_recomputed_from_rounded_source_volumes_percent": 95.02051983584131,
+      "interpretation": "Displayed 95.0% is not strictly >95%; rounded source volumes imply >95%, so this is a boundary-rounding ambiguity, not a confirmed eligibility violation. No relabeling or exclusion applied."
+    }
+  ],
+  "empty_cell_count": 0,
+  "explicit_missing_token_cell_count": 0
+}

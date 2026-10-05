@@ -1,0 +1,91 @@
+{
+  "timestamp_utc": "2026-10-05T04:01:20.523519+00:00",
+  "public_package_id": "684",
+  "public_authentication_status": 302,
+  "token_http_status": 201,
+  "image_downloaded": false,
+  "transfer_requested": false,
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/api/v5/packages/684",
+      "status": 200,
+      "bytes": 3513,
+      "sha256": "e307e9c3bc25bf3a9a73f1f10c604a982142052ddfc9d94335230c77537370e1",
+      "response": {
+        "id": "684",
+        "title": "RHUH-GBM-nii-v1",
+        "files_on_server": "yes",
+        "total_bytes": 43065,
+        "total_files": 720
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/v5/packages/684/files/received",
+      "status": 200,
+      "bytes": 540,
+      "sha256": "278a86063f66c518dfd5c1e9b1e60bb42443c0f2824d28e2d9098867b7464a6a",
+      "response": {
+        "self": {
+          "path": "/",
+          "basename": "/",
+          "type": "directory",
+          "size": "",
+          "mtime": null,
+          "permissions": [
+            {
+              "name": "view"
+            },
+            {
+              "name": "edit"
+            },
+            {
+              "name": "delete"
+            }
+          ]
+        },
+        "items": [
+          {
+            "path": "/RHUH-GBM_nii_v1",
+            "basename": "RHUH-GBM_nii_v1",
+            "type": "directory",
+            "size": 0,
+            "mtime": null,
+            "permissions": [
+              {
+                "name": "view"
+              },
+              {
+                "name": "edit"
+              },
+              {
+                "name": "delete"
+              }
+            ]
+          },
+          {
+            "path": "/RHUH-GBM-nii-v1.sums",
+            "basename": "RHUH-GBM-nii-v1.sums",
+            "type": "file",
+            "size": 61787,
+            "mtime": "2024-03-25T18:11:41Z",
+            "permissions": [
+              {
+                "name": "view"
+              },
+              {
+                "name": "edit"
+              },
+              {
+                "name": "delete"
+              }
+            ]
+          }
+        ],
+        "item_count": 2,
+        "total_count": 2
+      }
+    }
+  ]
+}

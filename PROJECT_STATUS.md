@@ -5,7 +5,7 @@ authoritative requirements and have been read completely. This file records
 executed work and open gates, not a replacement plan.
 
 **Current priority: credible planning comparisons and neurological-outcome evidence.**
-The latest user request is preserved verbatim in
+The rapid-validation steering is preserved verbatim in
 `docs/CORE_IDEA_VALIDATION_STEERING.md`. It supersedes the earlier requirement to
 finish tissue mechanics before beginning geometric learning experiments. UI,
 packaging, broad infrastructure, further mechanics runs and model sweeps are
@@ -16,9 +16,27 @@ research charter, not evidence that its data/model claims already hold. It exten
 the target toward neurological outcomes, robustness, changing anatomy and an
 inspectable research interface. Geometric non-target volume stays a baseline;
 it is not neurological harm. Separate RHUH, BTC and connectivity outcome audits
-are underway before any harm-model training or reward integration. Claims and
+are complete; their limits are recorded below. No harm model or reward was added. Claims and
 hypothesis decisions are tracked in `docs/MEDIVIS_RESEARCH_TARGET.md` and
 `docs/INNOVATION_LEDGER.md`. Current useful work and all patient roles remain intact.
+
+The RHUH public table has 40 patients and 14 recorded postoperative deficits
+(six transient, six minor persistent, two major persistent); 26 are recorded `No`.
+Exact clinical timing, affected domain, baseline focal deficit and category
+definitions are absent. It supports a small observational baseline, not route
+risk or new surgery-caused deficit. The public processed imaging inventory has
+720 names, but image bytes, ADC units and segmentation semantics need checking;
+no patient image or injury label was accepted. BTC has five candidate TRAIN
+follow-up pairs in metadata, but individual cross-release linkage remains
+unverified; no outcome rows or protected content were opened. The independent
+63-patient Figshare release has complete paired matrices and cognitive scores,
+but its supplied T0 impairment count is 42 versus 30 in the paper, and connectivity
+preprocessing pooled pre/post sessions. These limitations preclude a prospective
+imaging-pipeline or route-harm claim. Root independently reproduced the two public
+tables' patient counts and outcome counts. See `docs/rhuh-outcome-audit.md`,
+`docs/rhuh-postoperative-imaging-audit.md`, `docs/btc-longitudinal-outcome-audit.md`,
+`docs/glioma-connectivity-outcome-audit.md` and
+`docs/neurological-outcome-inference-limits.md`. All source values stay unchanged.
 
 The task is annotation-assisted target access with at most three decisions
 (a certified native tool stroke or STOP). Initial learning used TRAIN patient
@@ -131,6 +149,13 @@ Next: diagnose access and proposal coverage using those saved records before
 changing the task or training further. Initial accepted proposal envelopes omit
 10,186/13,915 target centers on PAT22 and 7,509/10,269 on PAT28; the full supplied
 target is visible in the actor crop. These are action-coverage limitations.
+The saved-record diagnosis now identifies narrow lateral sampling: no target
+center exceeds the accepted axial bounds on PAT22/PAT28. PAT25's central opening
+also fails shaft clearance only 0.5 mm inside the selected access. The first-exit
+access heuristic never checked entering-shaft clearance or connection to external
+free space. This does not establish an alternative viable route; failure poses
+were not saved. A bounded six-existing-exit diagnostic is being prepared before
+any native execution. See `docs/frozen-transfer-access-diagnosis.md`.
 Population training, repeated-seed advantage, protected-patient transfer and
 physical or neurological fidelity remain unproved.
 

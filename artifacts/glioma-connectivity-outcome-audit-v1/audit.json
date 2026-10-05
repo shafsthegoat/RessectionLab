@@ -1,0 +1,362 @@
+{
+  "schema_version": 1,
+  "purpose": "metadata_schema_label_consistency_audit_only",
+  "model_fits": 0,
+  "patient_roles_assigned": false,
+  "patient_id_namespace": "figshare:7578326:v1",
+  "rows": 63,
+  "columns": 31,
+  "headers": [
+    "ID",
+    "age",
+    "education",
+    "sex",
+    "left_hemi",
+    "right_hemi",
+    "loc_frontal",
+    "loc_parietal",
+    "loc_temporal",
+    "loc_occipital",
+    "loc_insular",
+    "tumor_volume",
+    "tumor_grade",
+    "radiotherapy",
+    "chemotherapy",
+    "T0_verbmem_Z",
+    "T0_vismem_Z",
+    "T0_psymotor_Z",
+    "T0_reacttime_Z",
+    "T0_complatt_Z",
+    "T0_cogflex_Z",
+    "T0_procspeed_Z",
+    "T3_verbmem_Z",
+    "T3_vismem_Z",
+    "T3_psymotor_Z",
+    "T3_reacttime_Z",
+    "T3_complatt_Z",
+    "T3_cogflex_Z",
+    "T3_procspeed_Z",
+    "T3 2 imp",
+    "T0 2 imp"
+  ],
+  "id_unique": true,
+  "missing_token_search": [
+    "",
+    "missing",
+    "n/a",
+    "na",
+    "nan",
+    "none",
+    "null"
+  ],
+  "missing_counts": {
+    "ID": 0,
+    "age": 0,
+    "education": 0,
+    "sex": 0,
+    "left_hemi": 0,
+    "right_hemi": 0,
+    "loc_frontal": 0,
+    "loc_parietal": 0,
+    "loc_temporal": 0,
+    "loc_occipital": 0,
+    "loc_insular": 0,
+    "tumor_volume": 0,
+    "tumor_grade": 0,
+    "radiotherapy": 0,
+    "chemotherapy": 0,
+    "T0_verbmem_Z": 0,
+    "T0_vismem_Z": 0,
+    "T0_psymotor_Z": 0,
+    "T0_reacttime_Z": 0,
+    "T0_complatt_Z": 0,
+    "T0_cogflex_Z": 0,
+    "T0_procspeed_Z": 0,
+    "T3_verbmem_Z": 0,
+    "T3_vismem_Z": 0,
+    "T3_psymotor_Z": 0,
+    "T3_reacttime_Z": 0,
+    "T3_complatt_Z": 0,
+    "T3_cogflex_Z": 0,
+    "T3_procspeed_Z": 0,
+    "T3 2 imp": 0,
+    "T0 2 imp": 0
+  },
+  "numeric_schema": {
+    "ID": {
+      "min": 1.0,
+      "max": 63.0,
+      "unique": 63
+    },
+    "age": {
+      "min": 19.0,
+      "max": 76.0,
+      "unique": 37
+    },
+    "education": {
+      "min": 3.0,
+      "max": 7.0,
+      "unique": 5
+    },
+    "left_hemi": {
+      "min": 0.0,
+      "max": 1.0,
+      "unique": 2
+    },
+    "right_hemi": {
+      "min": 0.0,
+      "max": 1.0,
+      "unique": 2
+    },
+    "loc_frontal": {
+      "min": 0.0,
+      "max": 1.0,
+      "unique": 2
+    },
+    "loc_parietal": {
+      "min": 0.0,
+      "max": 1.0,
+      "unique": 2
+    },
+    "loc_temporal": {
+      "min": 0.0,
+      "max": 1.0,
+      "unique": 2
+    },
+    "loc_occipital": {
+      "min": 0.0,
+      "max": 1.0,
+      "unique": 2
+    },
+    "loc_insular": {
+      "min": 0.0,
+      "max": 1.0,
+      "unique": 2
+    },
+    "tumor_volume": {
+      "min": 432.0,
+      "max": 214305.0,
+      "unique": 63
+    },
+    "tumor_grade": {
+      "min": 2.0,
+      "max": 4.0,
+      "unique": 3
+    },
+    "radiotherapy": {
+      "min": 0.0,
+      "max": 1.0,
+      "unique": 2
+    },
+    "chemotherapy": {
+      "min": 0.0,
+      "max": 1.0,
+      "unique": 2
+    },
+    "T0_verbmem_Z": {
+      "min": -3.31,
+      "max": 1.66,
+      "unique": 55
+    },
+    "T0_vismem_Z": {
+      "min": -2.81,
+      "max": 2.29,
+      "unique": 61
+    },
+    "T0_psymotor_Z": {
+      "min": -4.94,
+      "max": 1.32,
+      "unique": 61
+    },
+    "T0_reacttime_Z": {
+      "min": -6.8,
+      "max": 10.15,
+      "unique": 59
+    },
+    "T0_complatt_Z": {
+      "min": -10.59,
+      "max": 1.86,
+      "unique": 59
+    },
+    "T0_cogflex_Z": {
+      "min": -7.62,
+      "max": 1.98,
+      "unique": 58
+    },
+    "T0_procspeed_Z": {
+      "min": -2.93,
+      "max": 2.52,
+      "unique": 60
+    },
+    "T3_verbmem_Z": {
+      "min": -4.23,
+      "max": 2.06,
+      "unique": 56
+    },
+    "T3_vismem_Z": {
+      "min": -3.31,
+      "max": 2.44,
+      "unique": 59
+    },
+    "T3_psymotor_Z": {
+      "min": -2.69,
+      "max": 1.36,
+      "unique": 54
+    },
+    "T3_reacttime_Z": {
+      "min": -7.08,
+      "max": 10.15,
+      "unique": 61
+    },
+    "T3_complatt_Z": {
+      "min": -10.15,
+      "max": 2.32,
+      "unique": 59
+    },
+    "T3_cogflex_Z": {
+      "min": -6.54,
+      "max": 2.01,
+      "unique": 59
+    },
+    "T3_procspeed_Z": {
+      "min": -3.38,
+      "max": 2.18,
+      "unique": 59
+    },
+    "T3 2 imp": {
+      "min": 0.0,
+      "max": 1.0,
+      "unique": 2
+    },
+    "T0 2 imp": {
+      "min": 0.0,
+      "max": 1.0,
+      "unique": 2
+    }
+  },
+  "unrecognized_missing_sentinels": "No source data dictionary supplied; finite values are not proven valid measurements",
+  "categorical_counts": {
+    "sex": {
+      "M": 39,
+      "F": 24
+    },
+    "tumor_grade": {
+      "2": 34,
+      "4": 25,
+      "3": 4
+    },
+    "radiotherapy": {
+      "0": 26,
+      "1": 37
+    },
+    "chemotherapy": {
+      "0": 28,
+      "1": 35
+    },
+    "left_hemi": {
+      "0": 35,
+      "1": 28
+    },
+    "right_hemi": {
+      "1": 36,
+      "0": 27
+    }
+  },
+  "labels": {
+    "T0": {
+      "source_column": "T0 2 imp",
+      "supplied_positive": 42,
+      "supplied_negative": 21,
+      "available_domain_columns": [
+        "T0_verbmem_Z",
+        "T0_vismem_Z",
+        "T0_psymotor_Z",
+        "T0_reacttime_Z",
+        "T0_complatt_Z",
+        "T0_cogflex_Z",
+        "T0_procspeed_Z"
+      ],
+      "seven_domain_derived_positive": 29,
+      "seven_domain_derivation": "at least two available domain Z-scores strictly below -1.5; diagnostic only, not replacement labels",
+      "mismatch_ids": [
+        7,
+        14,
+        21,
+        22,
+        28,
+        29,
+        31,
+        43,
+        45,
+        46,
+        54,
+        56,
+        61
+      ]
+    },
+    "T3": {
+      "source_column": "T3 2 imp",
+      "supplied_positive": 34,
+      "supplied_negative": 29,
+      "available_domain_columns": [
+        "T3_verbmem_Z",
+        "T3_vismem_Z",
+        "T3_psymotor_Z",
+        "T3_reacttime_Z",
+        "T3_complatt_Z",
+        "T3_cogflex_Z",
+        "T3_procspeed_Z"
+      ],
+      "seven_domain_derived_positive": 24,
+      "seven_domain_derivation": "at least two available domain Z-scores strictly below -1.5; diagnostic only, not replacement labels",
+      "mismatch_ids": [
+        12,
+        17,
+        22,
+        28,
+        29,
+        30,
+        40,
+        46,
+        49,
+        51
+      ]
+    }
+  },
+  "supplied_binary_transition_counts": {
+    "0->0": 16,
+    "0->1": 5,
+    "1->1": 29,
+    "1->0": 13
+  },
+  "paper_T0_positive": 30,
+  "paper_T3_positive": 34,
+  "matrix_count": 126,
+  "matrix_bytes": 13346928,
+  "visit_counts": {
+    "pre": 63,
+    "post": 63
+  },
+  "matrix_shapes": {
+    "(115, 115)": 126
+  },
+  "matrix_dtypes": {
+    "float64": 126
+  },
+  "matrix_checks": {
+    "nonfinite_matrices": 0,
+    "negative_matrices": 0,
+    "asymmetric_matrices": 0,
+    "nonzero_diagonal_matrices": 0,
+    "allzero_matrices": 0
+  },
+  "matrix_value_range": [
+    0.0,
+    129.90104178351646
+  ],
+  "matrix_duplicate_file_hashes": 0,
+  "matrix_labels_unit": "115 SLANT ROIs; SIFT2 weighted connectivity, not probability or physical injury volume",
+  "source_table_sha256": "fa5d326e5a1cda10987c64bd0755ef271261da1dd221720d2670e02a8378dad2",
+  "source_matrix_manifest_sha256": "975d223610d1afa0870f2cdef340ea5a8f201ec8faed43708300bb941828bc4f",
+  "audit_source_sha256": "3ff445d6cc2a86fe545c8bfc0018549aa8a5573ff8a462d48c1a0ee7d47006f2"
+}

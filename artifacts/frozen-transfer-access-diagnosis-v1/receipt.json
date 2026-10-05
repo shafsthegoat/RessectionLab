@@ -1,0 +1,939 @@
+{
+  "aabb_caution": "Saved initial active-sweep bounding boxes are optimistic envelopes, not union coverage, removed volume, eventual reachability or clinical clearance. Target-center counts are reused from the saved diagnostic, not recomputed from patient arrays.",
+  "cases": {
+    "sub-PAT22": {
+      "accepted_count": 76,
+      "accepted_envelope": {
+        "active_sweep_aabb_ras_mm": [
+          [
+            9.691895331291107,
+            -13.106739555993073,
+            62.496354487204314
+          ],
+          [
+            21.396174315423202,
+            -2.5805662474174342,
+            105.66583123596298
+          ]
+        ],
+        "distal_active_tip_axial_upper_bound_mm": 37.74999945963779,
+        "endpoint_depth_range_mm": [
+          0.5000000346219755,
+          35.49999945963779
+        ],
+        "proposal_count": 76,
+        "target_centers_beyond_axial_bound": 0,
+        "target_centers_outside_aabb": 10186
+      },
+      "access": {
+        "center_mm": [
+          16.054344357922673,
+          -7.831972151994705,
+          100.3230730494488
+        ],
+        "normal_inward": [
+          -0.03140365756701387,
+          -0.0007659495003221986,
+          -0.9995064900303433
+        ],
+        "radius_mm": 6.0,
+        "window_id": "PAT22-main-provisional-annotation-axis-v1"
+      },
+      "access_derivation": {
+        "annotation_centroid_voxels": [
+          88.11225296442687,
+          93.28185411426519,
+          216.78296802012218
+        ],
+        "cortical_access_permitted": false,
+        "depth_to_annotation_representative_mm": 17.49999971129856,
+        "representative_voxel": [
+          88,
+          93,
+          217
+        ],
+        "rule": "annotation-centroid-nearest-cell-six-axis-shortest-exit-radius6-v1",
+        "selected_boundary_voxel": [
+          88.0,
+          93.0,
+          234.5
+        ],
+        "selection_uses_reward_or_native_preview": false,
+        "six_axis_exit_distances_mm": [
+          {
+            "axis": 0,
+            "boundary_voxel": [
+              34.5,
+              93.0,
+              217.0
+            ],
+            "distance_mm": 53.49984171551366,
+            "outward_sign": -1
+          },
+          {
+            "axis": 0,
+            "boundary_voxel": [
+              122.5,
+              93.0,
+              217.0
+            ],
+            "distance_mm": 34.499897928695724,
+            "outward_sign": 1
+          },
+          {
+            "axis": 1,
+            "boundary_voxel": [
+              88.0,
+              57.5,
+              217.0
+            ],
+            "distance_mm": 35.50000029855667,
+            "outward_sign": -1
+          },
+          {
+            "axis": 1,
+            "boundary_voxel": [
+              88.0,
+              170.5,
+              217.0
+            ],
+            "distance_mm": 77.50000065177865,
+            "outward_sign": 1
+          },
+          {
+            "axis": 2,
+            "boundary_voxel": [
+              88.0,
+              93.0,
+              91.5
+            ],
+            "distance_mm": 125.49999792959827,
+            "outward_sign": -1
+          },
+          {
+            "axis": 2,
+            "boundary_voxel": [
+              88.0,
+              93.0,
+              234.5
+            ],
+            "distance_mm": 17.49999971129856,
+            "outward_sign": 1
+          }
+        ]
+      },
+      "binding_hash": "sha256:b1ea1a2069963d940c7828fc44f8f22208956c0ae086b881ed465538f22626c8",
+      "candidate_cap": 96,
+      "central_exposed_opening": [
+        {
+          "action_id": "nominal-cavity-39368d5397dfadccad9f3c5f",
+          "entry_inside_center_bounds": true,
+          "entry_mm": [
+            16.054344233751742,
+            -7.831972173158729,
+            100.32307305336636
+          ],
+          "family": "exposed_opening",
+          "feasible": true,
+          "ray_samples": 5,
+          "ray_samples_inside": 5,
+          "reason": "NATIVE_CONNECTED_STROKE",
+          "sample_fraction_inside": 1.0,
+          "straight_segment_fraction_inside": 1.0,
+          "tip_depth_mm": 0.5000000356163665,
+          "tip_inside_center_bounds": true,
+          "tip_mm": [
+            16.03864240384975,
+            -7.83235514793617,
+            99.8233197727524
+          ],
+          "tool_id": "native-fine-aspiration"
+        },
+        {
+          "action_id": "nominal-cavity-d5eae8397f9eb5bbe4b538c1",
+          "entry_inside_center_bounds": true,
+          "entry_mm": [
+            16.054344233751742,
+            -7.831972173158729,
+            100.32307305336636
+          ],
+          "family": "exposed_opening",
+          "feasible": true,
+          "ray_samples": 5,
+          "ray_samples_inside": 5,
+          "reason": "NATIVE_CONNECTED_STROKE",
+          "sample_fraction_inside": 1.0,
+          "straight_segment_fraction_inside": 1.0,
+          "tip_depth_mm": 0.5000000356163665,
+          "tip_inside_center_bounds": true,
+          "tip_mm": [
+            16.03864240384975,
+            -7.83235514793617,
+            99.8233197727524
+          ],
+          "tool_id": "native-wide-aspiration"
+        }
+      ],
+      "declared_slots": 78,
+      "dispositions": {
+        "HARD_GEOMETRY:WORKING_REACH": 2,
+        "NATIVE_CONNECTED_STROKE": 76
+      },
+      "emitted_count": 78,
+      "emitted_envelope": {
+        "active_sweep_aabb_ras_mm": [
+          [
+            7.250740224178145,
+            -13.106739555993073,
+            -45.29328013351318
+          ],
+          [
+            21.396174315423202,
+            -2.5805662474174342,
+            105.66583123596298
+          ]
+        ],
+        "distal_active_tip_axial_upper_bound_mm": 145.74999767741795,
+        "endpoint_depth_range_mm": [
+          0.5000000346219755,
+          143.49999767741795
+        ],
+        "proposal_count": 78,
+        "target_centers_beyond_axial_bound": 0,
+        "target_centers_outside_aabb": 9474
+      },
+      "family_dispositions": {
+        "distal_nominal": {
+          "NATIVE_CONNECTED_STROKE": 26
+        },
+        "exposed_opening": {
+          "HARD_GEOMETRY:WORKING_REACH": 2,
+          "NATIVE_CONNECTED_STROKE": 24
+        },
+        "proximal_nominal": {
+          "NATIVE_CONNECTED_STROKE": 26
+        }
+      },
+      "full_target_source_cells": 13915,
+      "full_target_volume_mm3": 13914.958718707872,
+      "offsets_source_voxels": [
+        [
+          0,
+          0
+        ],
+        [
+          -2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          -2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          -2,
+          -2
+        ],
+        [
+          -2,
+          2
+        ],
+        [
+          2,
+          -2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          -3,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          -3
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "omitted_duplicate_unavailable_counts": [
+        0,
+        0,
+        0
+      ],
+      "preparation_sha256": "2dbf6be558d5e7b370f43751480dad7b87bf98dfaae62d0c5f2cd0a5d7e6e1b6",
+      "target_center_depth_range_mm": [
+        3.4999999834369295,
+        36.49999943832563
+      ],
+      "target_centers_outside_accepted_aabb_percent": 73.20158102766798,
+      "target_outside_actor_crop_source_cells": 0,
+      "target_outside_support_source_cells": 0,
+      "tool_dispositions": {
+        "native-fine-aspiration": {
+          "HARD_GEOMETRY:WORKING_REACH": 1,
+          "NATIVE_CONNECTED_STROKE": 38
+        },
+        "native-wide-aspiration": {
+          "HARD_GEOMETRY:WORKING_REACH": 1,
+          "NATIVE_CONNECTED_STROKE": 38
+        }
+      },
+      "tools": [
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 0.45,
+          "tip_length_mm": 2.0,
+          "tip_radius_mm": 1.25,
+          "tool_id": "native-fine-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.1,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 2.25,
+          "tool_id": "native-wide-aspiration",
+          "working_length_mm": 120.0
+        }
+      ]
+    },
+    "sub-PAT25": {
+      "accepted_count": 0,
+      "accepted_envelope": {
+        "active_sweep_aabb_ras_mm": null,
+        "distal_active_tip_axial_upper_bound_mm": null,
+        "endpoint_depth_range_mm": null,
+        "proposal_count": 0,
+        "target_centers_beyond_axial_bound": null,
+        "target_centers_outside_aabb": null
+      },
+      "access": {
+        "center_mm": [
+          10.540931854397058,
+          32.110253999591805,
+          -16.86848910932173
+        ],
+        "normal_inward": [
+          0.9996282252725837,
+          0.024371308712790318,
+          -0.01222499693295372
+        ],
+        "radius_mm": 6.0,
+        "window_id": "PAT25-main-provisional-annotation-axis-v1"
+      },
+      "access_derivation": {
+        "annotation_centroid_voxels": [
+          108.89410625680746,
+          138.6352414377345,
+          117.50786639235145
+        ],
+        "cortical_access_permitted": false,
+        "depth_to_annotation_representative_mm": 17.5000953155969,
+        "representative_voxel": [
+          109,
+          139,
+          118
+        ],
+        "rule": "annotation-centroid-nearest-cell-six-axis-shortest-exit-radius6-v1",
+        "selected_boundary_voxel": [
+          91.5,
+          139.0,
+          118.0
+        ],
+        "selection_uses_reward_or_native_preview": false,
+        "six_axis_exit_distances_mm": [
+          {
+            "axis": 0,
+            "boundary_voxel": [
+              91.5,
+              139.0,
+              118.0
+            ],
+            "distance_mm": 17.5000953155969,
+            "outward_sign": -1
+          },
+          {
+            "axis": 0,
+            "boundary_voxel": [
+              138.5,
+              139.0,
+              118.0
+            ],
+            "distance_mm": 29.50016067486335,
+            "outward_sign": 1
+          },
+          {
+            "axis": 1,
+            "boundary_voxel": [
+              109.0,
+              42.5,
+              118.0
+            ],
+            "distance_mm": 96.49999993095156,
+            "outward_sign": -1
+          },
+          {
+            "axis": 1,
+            "boundary_voxel": [
+              109.0,
+              164.5,
+              118.0
+            ],
+            "distance_mm": 25.49999998175404,
+            "outward_sign": 1
+          },
+          {
+            "axis": 2,
+            "boundary_voxel": [
+              109.0,
+              139.0,
+              97.5
+            ],
+            "distance_mm": 20.49999966866083,
+            "outward_sign": -1
+          },
+          {
+            "axis": 2,
+            "boundary_voxel": [
+              109.0,
+              139.0,
+              203.5
+            ],
+            "distance_mm": 85.49999861807322,
+            "outward_sign": 1
+          }
+        ]
+      },
+      "binding_hash": "sha256:083c0891d05c9ef653bda7572dc0947517ca832555fea5cea80e7030d0de67f7",
+      "candidate_cap": 96,
+      "central_exposed_opening": [
+        {
+          "action_id": "nominal-cavity-8766db6c53a412d98ef1a921",
+          "entry_inside_center_bounds": true,
+          "entry_mm": [
+            10.540931855996032,
+            32.11025394208457,
+            -16.86848909321933
+          ],
+          "family": "exposed_opening",
+          "feasible": false,
+          "ray_samples": 5,
+          "ray_samples_inside": 5,
+          "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "sample_fraction_inside": 1.0,
+          "straight_segment_fraction_inside": 1.0,
+          "tip_depth_mm": 0.5000026570185276,
+          "tip_inside_center_bounds": true,
+          "tip_mm": [
+            11.040748624663038,
+            32.12243966119598,
+            -16.874601624167852
+          ],
+          "tool_id": "native-fine-aspiration"
+        },
+        {
+          "action_id": "nominal-cavity-69b07b8cc82ec8e5c1f5eec1",
+          "entry_inside_center_bounds": true,
+          "entry_mm": [
+            10.540931855996032,
+            32.11025394208457,
+            -16.86848909321933
+          ],
+          "family": "exposed_opening",
+          "feasible": false,
+          "ray_samples": 5,
+          "ray_samples_inside": 5,
+          "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "sample_fraction_inside": 1.0,
+          "straight_segment_fraction_inside": 1.0,
+          "tip_depth_mm": 0.5000026570185276,
+          "tip_inside_center_bounds": true,
+          "tip_mm": [
+            11.040748624663038,
+            32.12243966119598,
+            -16.874601624167852
+          ],
+          "tool_id": "native-wide-aspiration"
+        }
+      ],
+      "declared_slots": 78,
+      "dispositions": {
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 78
+      },
+      "emitted_count": 78,
+      "emitted_envelope": {
+        "active_sweep_aabb_ras_mm": [
+          [
+            5.218858190383633,
+            26.788031195304224,
+            -22.49112929177025
+          ],
+          [
+            60.346720096810174,
+            38.12706311818644,
+            -11.58203832688471
+          ]
+        ],
+        "distal_active_tip_axial_upper_bound_mm": 49.750258647128895,
+        "endpoint_depth_range_mm": [
+          0.5000026570185276,
+          47.500258647128895
+        ],
+        "proposal_count": 78,
+        "target_centers_beyond_axial_bound": 0,
+        "target_centers_outside_aabb": 13376
+      },
+      "family_dispositions": {
+        "distal_nominal": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 26
+        },
+        "exposed_opening": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 26
+        },
+        "proximal_nominal": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 26
+        }
+      },
+      "full_target_source_cells": 16526,
+      "full_target_volume_mm3": 16526.089731668915,
+      "offsets_source_voxels": [
+        [
+          0,
+          0
+        ],
+        [
+          -2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          -2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          -2,
+          -2
+        ],
+        [
+          -2,
+          2
+        ],
+        [
+          2,
+          -2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          -3,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          -3
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "omitted_duplicate_unavailable_counts": [
+        0,
+        0,
+        0
+      ],
+      "preparation_sha256": "f4c6269f551f52fbe359c61d408030af81d4b233ac4ad11f98a87228f81dc70c",
+      "target_center_depth_range_mm": [
+        1.50000809471981,
+        38.50020963150577
+      ],
+      "target_centers_outside_accepted_aabb_percent": null,
+      "target_outside_actor_crop_source_cells": 0,
+      "target_outside_support_source_cells": 0,
+      "tool_dispositions": {
+        "native-fine-aspiration": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 39
+        },
+        "native-wide-aspiration": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 39
+        }
+      },
+      "tools": [
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 0.45,
+          "tip_length_mm": 2.0,
+          "tip_radius_mm": 1.25,
+          "tool_id": "native-fine-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.1,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 2.25,
+          "tool_id": "native-wide-aspiration",
+          "working_length_mm": 120.0
+        }
+      ]
+    },
+    "sub-PAT28": {
+      "accepted_count": 70,
+      "accepted_envelope": {
+        "active_sweep_aabb_ras_mm": [
+          [
+            -12.345361447374557,
+            2.921195614325362,
+            38.04904125376876
+          ],
+          [
+            -1.7434679535300988,
+            13.42226219003156,
+            75.0698495525315
+          ]
+        ],
+        "distal_active_tip_axial_upper_bound_mm": 31.74999972187756,
+        "endpoint_depth_range_mm": [
+          0.5000000029029602,
+          29.49999972187756
+        ],
+        "proposal_count": 70,
+        "target_centers_beyond_axial_bound": 0,
+        "target_centers_outside_aabb": 7509
+      },
+      "access": {
+        "center_mm": [
+          -7.003283469821326,
+          8.170754425551422,
+          69.80936404696845
+        ],
+        "normal_inward": [
+          -0.003500532625639281,
+          7.354327752512693e-05,
+          -0.9999938704125757
+        ],
+        "radius_mm": 6.0,
+        "window_id": "PAT28-main-provisional-annotation-axis-v1"
+      },
+      "access_derivation": {
+        "annotation_centroid_voxels": [
+          70.37364884604149,
+          116.49128444833967,
+          186.1124744376278
+        ],
+        "cortical_access_permitted": false,
+        "depth_to_annotation_representative_mm": 18.49999982071563,
+        "representative_voxel": [
+          70,
+          116,
+          186
+        ],
+        "rule": "annotation-centroid-nearest-cell-six-axis-shortest-exit-radius6-v1",
+        "selected_boundary_voxel": [
+          70.0,
+          116.0,
+          204.5
+        ],
+        "selection_uses_reward_or_native_preview": false,
+        "six_axis_exit_distances_mm": [
+          {
+            "axis": 0,
+            "boundary_voxel": [
+              37.5,
+              116.0,
+              186.0
+            ],
+            "distance_mm": 32.499935525045174,
+            "outward_sign": -1
+          },
+          {
+            "axis": 0,
+            "boundary_voxel": [
+              122.5,
+              116.0,
+              186.0
+            ],
+            "distance_mm": 52.4998958481499,
+            "outward_sign": 1
+          },
+          {
+            "axis": 1,
+            "boundary_voxel": [
+              70.0,
+              62.5,
+              186.0
+            ],
+            "distance_mm": 53.499999710263126,
+            "outward_sign": -1
+          },
+          {
+            "axis": 1,
+            "boundary_voxel": [
+              70.0,
+              178.5,
+              186.0
+            ],
+            "distance_mm": 62.499999661522345,
+            "outward_sign": 1
+          },
+          {
+            "axis": 2,
+            "boundary_voxel": [
+              70.0,
+              116.0,
+              82.5
+            ],
+            "distance_mm": 103.49999899697664,
+            "outward_sign": -1
+          },
+          {
+            "axis": 2,
+            "boundary_voxel": [
+              70.0,
+              116.0,
+              204.5
+            ],
+            "distance_mm": 18.49999982071563,
+            "outward_sign": 1
+          }
+        ]
+      },
+      "binding_hash": "sha256:62b5fcce4e7f2b6fa163c8d45e1bff0290ea395c921539bd3dcab93698743960",
+      "candidate_cap": 96,
+      "central_exposed_opening": [
+        {
+          "action_id": "nominal-cavity-a017817df511e5f2a2f1237f",
+          "entry_inside_center_bounds": true,
+          "entry_mm": [
+            -7.003283445694713,
+            8.170754453903696,
+            69.80936404688609
+          ],
+          "family": "exposed_opening",
+          "feasible": true,
+          "ray_samples": 5,
+          "ray_samples_inside": 5,
+          "reason": "NATIVE_CONNECTED_STROKE",
+          "sample_fraction_inside": 1.0,
+          "straight_segment_fraction_inside": 1.0,
+          "tip_depth_mm": 0.5000000029104339,
+          "tip_inside_center_bounds": true,
+          "tip_mm": [
+            -7.00503371201772,
+            8.170791225542672,
+            69.30936710876938
+          ],
+          "tool_id": "native-fine-aspiration"
+        },
+        {
+          "action_id": "nominal-cavity-f452db04ea0e0dea469be109",
+          "entry_inside_center_bounds": true,
+          "entry_mm": [
+            -7.003283445694713,
+            8.170754453903696,
+            69.80936404688609
+          ],
+          "family": "exposed_opening",
+          "feasible": true,
+          "ray_samples": 5,
+          "ray_samples_inside": 5,
+          "reason": "NATIVE_CONNECTED_STROKE",
+          "sample_fraction_inside": 1.0,
+          "straight_segment_fraction_inside": 1.0,
+          "tip_depth_mm": 0.5000000029104339,
+          "tip_inside_center_bounds": true,
+          "tip_mm": [
+            -7.00503371201772,
+            8.170791225542672,
+            69.30936710876938
+          ],
+          "tool_id": "native-wide-aspiration"
+        }
+      ],
+      "declared_slots": 78,
+      "dispositions": {
+        "HARD_GEOMETRY:WORKING_REACH": 8,
+        "NATIVE_CONNECTED_STROKE": 70
+      },
+      "emitted_count": 78,
+      "emitted_envelope": {
+        "active_sweep_aabb_ras_mm": [
+          [
+            -12.345361447374557,
+            2.921195614325362,
+            -59.9468558083461
+          ],
+          [
+            -1.7434679426194735,
+            13.42226219003156,
+            75.0698495525315
+          ]
+        ],
+        "distal_active_tip_axial_upper_bound_mm": 129.74999877191263,
+        "endpoint_depth_range_mm": [
+          0.5000000029029602,
+          127.49999877191263
+        ],
+        "proposal_count": 78,
+        "target_centers_beyond_axial_bound": 0,
+        "target_centers_outside_aabb": 7509
+      },
+      "family_dispositions": {
+        "distal_nominal": {
+          "NATIVE_CONNECTED_STROKE": 26
+        },
+        "exposed_opening": {
+          "HARD_GEOMETRY:WORKING_REACH": 8,
+          "NATIVE_CONNECTED_STROKE": 18
+        },
+        "proximal_nominal": {
+          "NATIVE_CONNECTED_STROKE": 26
+        }
+      },
+      "full_target_source_cells": 10269,
+      "full_target_volume_mm3": 10268.979472767844,
+      "offsets_source_voxels": [
+        [
+          0,
+          0
+        ],
+        [
+          -2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          -2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          -2,
+          -2
+        ],
+        [
+          -2,
+          2
+        ],
+        [
+          2,
+          -2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          -3,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          -3
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "omitted_duplicate_unavailable_counts": [
+        0,
+        0,
+        0
+      ],
+      "preparation_sha256": "b4fdb77d181808c494a81cbae0004a633be12bf59f84f139e0c83095339cb081",
+      "target_center_depth_range_mm": [
+        4.499999963926362,
+        30.49999971343076
+      ],
+      "target_centers_outside_accepted_aabb_percent": 73.1229915278995,
+      "target_outside_actor_crop_source_cells": 0,
+      "target_outside_support_source_cells": 0,
+      "tool_dispositions": {
+        "native-fine-aspiration": {
+          "HARD_GEOMETRY:WORKING_REACH": 4,
+          "NATIVE_CONNECTED_STROKE": 35
+        },
+        "native-wide-aspiration": {
+          "HARD_GEOMETRY:WORKING_REACH": 4,
+          "NATIVE_CONNECTED_STROKE": 35
+        }
+      },
+      "tools": [
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 0.45,
+          "tip_length_mm": 2.0,
+          "tip_radius_mm": 1.25,
+          "tool_id": "native-fine-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.1,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 2.25,
+          "tool_id": "native-wide-aspiration",
+          "working_length_mm": 120.0
+        }
+      ]
+    }
+  },
+  "compact_summary_sha256": "4b12409d26d5792db6f2f7c16f9f2e334632ff6ce3884ab19555e86668990dc6",
+  "pat25_all_three_methods_stop_only": true,
+  "read_source_sha256": {
+    "scripts/prepare_real_training_cases.py": "7533e829f0663fd68d982a84ad49982442e5e04345ea045f15c546d7bf247e6a",
+    "src/resectionlab/native_proposals.py": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee",
+    "src/resectionlab/native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+    "src/resectionlab/native_spatial_task.py": "61b3d8167152d06a578e1ab7c146b7af937d86ccca6ed9e20bf3081cbf2f6711",
+    "src/resectionlab/spatial_policy_diagnostics.py": "257d355a017023831621107800d029b813f7036e1af6a8a16fd38e5760066493"
+  },
+  "reproduce": "python artifacts/frozen-transfer-access-diagnosis-v1/diagnose.py",
+  "saved_run": "artifacts/remaining-training-frozen-spatial-float64-v1",
+  "scope": "Saved JSON inventories and source-code inspection only; no image decode, native preview, training or new patient-role access",
+  "script_sha256": "bae4e90c78ce030514c1abf032b2548fd417efaf43c9aa890eb0f9232bae5869"
+}

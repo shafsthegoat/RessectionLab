@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "retrieved_and_audited_utc": "2026-10-05T04:08:20.872108+00:00",
+  "scope": "public data/schema/label consistency only; no fitting, no patient roles assigned",
+  "collection_doi": "10.6084/m9.figshare.c.7578326.v1",
+  "paper_doi": "10.1093/braincomms/fcaf346",
+  "data_licenses": {
+    "matrices": "CC BY 4.0",
+    "baseline": "CC BY 4.0"
+  },
+  "data_attribution": "Lars Smolders (2024), Figshare datasets28000559v1 and28001120v1; paper Smolders, De Baene, Gehring, van der Hofstad, Florack, Rutten (2025).",
+  "data_file_count": 127,
+  "data_download_bytes": 13354772,
+  "local_files": {
+    "audit.json": {
+      "bytes": 7138,
+      "sha256": "997b0281cce88f506203c3e8b58205a14802dfa42c9a12d7daf10870b10c663d"
+    },
+    "audit.py": {
+      "bytes": 6003,
+      "sha256": "3ff445d6cc2a86fe545c8bfc0018549aa8a5573ff8a462d48c1a0ee7d47006f2"
+    },
+    "baseline-v1.json": {
+      "bytes": 2877,
+      "sha256": "452074afdbb661756d63edc3a70f7c23aff30e645ac492c6fa83202c41d67fb9",
+      "url": "https://api.figshare.com/v2/articles/28001120/versions/1"
+    },
+    "baseline_variables_cognitive_scores.csv": {
+      "bytes": 7844,
+      "sha256": "fa5d326e5a1cda10987c64bd0755ef271261da1dd221720d2670e02a8378dad2",
+      "url": "https://ndownloader.figshare.com/files/51098012"
+    },
+    "collection-v1.json": {
+      "bytes": 2268,
+      "sha256": "938e26dcc55ae61d4ad0012e479d5f8d0ce35428f7bbafd98b6e7cfd6efdca6e",
+      "url": "https://api.figshare.com/v2/collections/7578326/versions/1"
+    },
+    "matrices-v1.json": {
+      "bytes": 40982,
+      "sha256": "d5f1da9051ff38073735a876d5689522ee53e84295a6c2a420d49f4e677a7693",
+      "url": "https://api.figshare.com/v2/articles/28000559/versions/1"
+    },
+    "matrix-downloads.json": {
+      "bytes": 38706,
+      "sha256": "975d223610d1afa0870f2cdef340ea5a8f201ec8faed43708300bb941828bc4f"
+    },
+    "paper.xml": {
+      "bytes": 192418,
+      "sha256": "561a9e0eda50f910aece5eb7752b46108577ae4824d69491f188083b1910d452",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12550501/fullTextXML"
+    },
+    "supplementary.docx": {
+      "bytes": 437282,
+      "sha256": "c334e610d13c5d835bb153e9ad8983fe56d84b5c2e322956009a5f19eda3cddb"
+    },
+    "supplementary.txt": {
+      "bytes": 10665,
+      "sha256": "be2d8b634828a5aec56d5e0ececb81935e6f478199af78d25cfdcbd80ff27685"
+    },
+    "supplementary.zip": {
+      "bytes": 768044,
+      "sha256": "c1dbc963cc9cfbbeab42b8d6ac544f3516bc308d08742d7202339bbe249e80e1",
+      "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC12550501/supplementaryFiles"
+    }
+  },
+  "inspected_author_code_commit": "1712a43b3a5af68b6d125330e2be9ece6c826c20",
+  "inspected_author_code": {
+    "predict_impairment.py": {
+      "bytes": 7721,
+      "sha256": "330976d40ac18101fcd545ecb93fff03202f0a30e3f3bec964e168f5c56235ae",
+      "url": "https://raw.githubusercontent.com/larssmolders/predicting-postop-impairment/1712a43b3a5af68b6d125330e2be9ece6c826c20/predict_impairment.py",
+      "local_status": "read-only temporary inspection; not incorporated or vendored"
+    },
+    "model_testing.py": {
+      "bytes": 3208,
+      "sha256": "240f1c2fcec679ffa2b4b8341f20433a237bb1842f06de0328cc4dcc0955764c",
+      "url": "https://raw.githubusercontent.com/larssmolders/predicting-postop-impairment/1712a43b3a5af68b6d125330e2be9ece6c826c20/model_testing.py",
+      "local_status": "read-only temporary inspection; not incorporated or vendored"
+    },
+    "slant_funcs.py": {
+      "bytes": 4761,
+      "sha256": "1398c5fcf3e717b810a833438c5444afed26f357806b695c74f8228a0ab7c5f8",
+      "url": "https://raw.githubusercontent.com/larssmolders/predicting-postop-impairment/1712a43b3a5af68b6d125330e2be9ece6c826c20/slant_funcs.py",
+      "local_status": "read-only temporary inspection; not incorporated or vendored"
+    },
+    "README.md": {
+      "bytes": 533,
+      "sha256": "9409f14887558d4bd803f0b095f687822ae7acecf93bf1405c1beba0aadd1c4a",
+      "url": "https://raw.githubusercontent.com/larssmolders/predicting-postop-impairment/1712a43b3a5af68b6d125330e2be9ece6c826c20/README.md",
+      "local_status": "read-only temporary inspection; not incorporated or vendored"
+    }
+  },
+  "code_reuse_license": "No license file found in inspected repository; independent audit implementation only",
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "numpy": "2.5.3",
+  "verification": {
+    "all127_source_md5_and_size_verified": true,
+    "all126_matrices_loaded_allow_pickle_false": true,
+    "repeated_audit_bytes_identical": true,
+    "numeric_model_fits": 0,
+    "recomputed_labels_used_for_training": false
+  },
+  "document": {
+    "path": "docs/glioma-connectivity-outcome-audit.md",
+    "bytes": 11249,
+    "sha256": "55136a734e28ce2ba52c1fadec691ec814819e87871795c8efa703e55bc5e631"
+  }
+}

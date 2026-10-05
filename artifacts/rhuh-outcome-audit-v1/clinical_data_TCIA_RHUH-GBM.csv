@@ -1,0 +1,41 @@
+Patient ID,Days from earliest imaging to surgery ,Age,Sex,Preoperative KPS,"Previous treatment = (no, surgery, surgery + QT/RT)",Histopathological subtype,WHO grade,"IDH status = (mutant [mut], wild type [wt], NOS)","Operative adjuncts = (5' aminolevulinic acid [5ALA], Sodium Fluorescein - Yellow 560 [FL], Neuronavigation [NAV],  Intraoperative monitoring [IONM], Direct electrical stimulation [DES], intraoperative ultrasound [ioUS])",Preoperative  contrast enhancing tumor volume (cm3),Postoperative contrast enhancing residual tumor (cm3),Preoperative T2/FLAIR abnormality  (cm3) ,Postoperative T2/FLAIR abmnormality (cm3),Extent of resection [EOR]  %,"EOR = (Gross total resection [GTR : 100%], Near total resection [NTR : > 95%], Subtotal resection [STR : 91 - 94%], Partial resection [PR : < 90 %]","Adjuvant therapy (Radiotherapy [RT], Temozolomide [TMZ])",Radiotherapy treatment details (technique/dose/number of fractions),Postoperative Neurological Deficit,Postoperative KPS,Progression free survival [PFS] (days),Overall survival [OS] (days),Right Censored
+RHUH-0001,1,65,male,80,no,glioblastoma,4,mut,5ALA+NAV+ioUS,103.21,0,36.29,25.17,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,No,90,649,736,no
+RHUH-0002,9,65,female,90,no,glioblastoma,4,wt,5ALA+NAV+ioUS,1.6,0,27.06,6.64,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,No,90,314,506,yes
+RHUH-0003,6,75,male,80,no,glioblastoma,4,wt,5ALA+NAV+ioUS,15.26,0,26.17,1.05,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/40.5 Gy /15 fx,No,80,135,235,no
+RHUH-0004,5,64,female,90,no,glioblastoma,4,wt,5ALA+NAV+ioUS,13.15,0,105.27,45.38,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,No,90,705,947,no
+RHUH-0005,9,52,male,70,no,glioblastoma,4,wt,5ALA+NAV+ioUS,12.28,0.22,55.3,29.3,98.2,NTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,Transient,70,468,723,no
+RHUH-0006,3,72,male,70,no,glioblastoma,4,wt,5ALA+FL+NAV+ioUS,65.82,0,112.88,42.16,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/40.5 Gy /15 fx,No,70,201,260,yes
+RHUH-0007,7,51,female,70,no,glioblastoma,4,wt,5ALA+FL+NAV+ioUS,53.63,0,57.34,19.07,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,No,90,481,673,yes
+RHUH-0008,6,69,male,80,no,glioblastoma,4,wt,5ALA+NAV+ioUS,28.66,0,70.83,27.93,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,No,80,185,395,no
+RHUH-0009,2,68,male,80,no,glioblastoma,4,wt,5ALA+NAV+ioUS,38.52,0,150.38,107.69,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,No,90,288,751,yes
+RHUH-0010,1,66,male,60,no,glioblastoma,4,wt,5ALA+NAV+ioUS,14.54,0,20.94,20,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,Minor Persistent,50,361,447,no
+RHUH-0011,1,71,female,80,no,glioblastoma,4,wt,5ALA+FL+NAV+ioUS,44.31,0,123.04,22.91,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/34 Gy /10 fx,Major Persistent,60,72,149,yes
+RHUH-0012,1,64,female,80,no,glioblastoma,4,wt,5ALA+NAV+ioUS,31.18,0,142.66,61.99,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,No,90,41,236,no
+RHUH-0013,1,54,male,90,no,glioblastoma,4,wt,5ALA+NAV+ioUS,62.71,1.14,115.09,79.45,98.2,NTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,No,90,112,229,no
+RHUH-0014,2,78,male,70,no,glioblastoma,4,wt,5ALA+NAV+ioUS,54.59,1.67,93.47,74.95,96.9,NTR,RT + TMZ,VMAT-IMRT-IGRT/40.5 Gy /15 fx,No,90,151,235,no
+RHUH-0015,6,60,male,60,no,glioblastoma,4,wt,5ALA+NAV+ioUS,12.81,0,100.86,24.99,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,Transient,70,54,121,no
+RHUH-0016,6,68,female,80,surgery + QT/RT,glioblastoma,4,wt,5ALA+NAV+ioUS,52.24,0,89.79,54.58,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,Transient,80,210,675,no
+RHUH-0017,9,47,male,90,no,glioblastoma,4,wt,5ALA+FL+NAV+ioUS,3.7,0.2,16.74,2.14,94.6,NTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,Minor Persistent,90,168,352,yes
+RHUH-0018,1,57,male,60,no,glioblastoma,4,wt,5ALA+FL+NAV+ioUS,27.48,0.77,95.72,77.54,97.2,NTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,No,70,142,205,yes
+RHUH-0019,1,61,male,60,no,glioblastoma,4,wt,5ALA+NAV+ioUS,22.21,0.58,134.96,50.1,97.4,NTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,No,70,267,385,no
+RHUH-0020,4,55,male,80,no,glioblastoma,4,wt,5ALA+FL+NAV+ioUS,76.6,0,161.03,41.51,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,No,80,296,323,no
+RHUH-0021,1,56,male,80,no,glioblastoma,4,wt,5ALA+NAV+ioUS,9.56,0,62.54,32.98,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,No,80,390,777,no
+RHUH-0022,5,78,female,70,no,glioblastoma,4,wt,5ALA+NAV+ioUS,36.91,0,24.34,9.44,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/40.5 Gy /15 fx,Minor Persistent,80,149,238,no
+RHUH-0023,5,59,male,70,no,glioblastoma,4,mut,5ALA+NAV+IONM+DES+ioUS,36.55,1.82,54.45,55.06,95.0,NTR,RT + TMZ,VMAT-IMRT-IGRT/54 Gy /27 fx,Transient,80,111,176,no
+RHUH-0024,1,50,male,80,surgery + QT/RT,glioblastoma,4,wt,5ALA+NAV+DES+ioUS,6.12,0,10.02,2.89,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,Transient,80,79,247,no
+RHUH-0025,16,49,male,80,no,glioblastoma,4,wt,5ALA+NAV+IONM+ioUS,11.96,0,14.88,6.49,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,No,80,145,388,no
+RHUH-0026,15,63,female,80,no,glioblastoma,4,wt,5ALA+NAV+IONM+ioUS,9.49,0,18.28,14.56,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/50 Gy /20 fx,Major Persistent,50,718,1244,no
+RHUH-0027,8,77,female,70,no,glioblastoma,4,wt,5ALA+NAV+ioUS,47.01,0.38,68.28,29.93,99.2,NTR,RT + TMZ,VMAT-IMRT-IGRT/40.5 Gy /15 fx,No,70,476,545,no
+RHUH-0028,20,70,male,70,no,glioblastoma,4,wt,5ALA+NAV+ioUS,63.18,0.29,64.11,6.01,99.5,NTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,No,70,56,90,no
+RHUH-0029,12,75,male,70,no,glioblastoma,4,wt,5ALA+NAV+ioUS,67.33,1.38,138.23,80.9,98.0,NTR,RT + TMZ,VMAT-IMRT-IGRT/40.5 Gy /15 fx,No,70,194,287,no
+RHUH-0030,1,54,male,80,no,glioblastoma,4,wt,5ALA+NAV+ioUS,31.65,0.33,47.95,24.02,99.0,NTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,No,80,258,289,no
+RHUH-0031,8,75,female,80,no,glioblastoma,4,wt,5ALA+NAV+ioUS,17.58,0.1,24.24,9.76,99.4,NTR,RT + TMZ,VMAT-IMRT-IGRT/40.5 Gy /15 fx,No,80,106,113,no
+RHUH-0032,2,54,male,70,no,glioblastoma,4,wt,5ALA+NAV+IONM+ioUS,113.23,0.2,48.1,18.32,99.8,NTR,RT + TMZ,VMAT-IMRT-IGRT/50 Gy /20 fx,Minor Persistent,60,23,533,no
+RHUH-0033,5,74,male,80,no,glioblastoma,4,wt,5ALA+NAV+ioUS,12.74,0,42.65,14.44,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,No,90,331,568,no
+RHUH-0034,10,66,male,70,no,glioblastoma,4,wt,5ALA+NAV+ioUS,21.55,0,67.79,35.13,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,Minor Persistent,70,314,376,no
+RHUH-0035,7,55,male,70,no,glioblastoma,4,mut,5ALA+NAV+ioUS,35.48,0,52.73,20.07,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,Minor Persistent,90,665,877,no
+RHUH-0036,19,60,female,70,no,glioblastoma,4,wt,5ALA+NAV+ioUS,31.57,0,141.74,23.65,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,No,90,587,841,no
+RHUH-0037,33,45,male,90,no,glioblastoma,4,mut,5ALA+NAV+ioUS,7.85,0,59.73,10.39,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,No,80,351,656,no
+RHUH-0038,1,69,male,90,no,glioblastoma,4,wt,5ALA+NAV+ioUS,52.89,0,125.46,81.82,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,No,90,172,331,no
+RHUH-0039,1,67,female,80,no,glioblastoma,4,wt,5ALA+FL+NAV+ioUS,44.77,0,77.06,59.81,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,No,80,179,211,yes
+RHUH-0040,1,60,male,70,no,glioblastoma,4,wt,5ALA+NAV+DES+ioUS,7.72,0,47.25,49.77,100.0,GTR,RT + TMZ,VMAT-IMRT-IGRT/60 Gy /30 fx,Transient,70,25,127,yes

@@ -1,0 +1,3 @@
+# Preserve downloaded CRLF bytes, including the HTTP header terminator.
+clinical_data_TCIA_RHUH-GBM.csv -text whitespace=cr-at-eol
+clinical-download-headers.txt -text whitespace=cr-at-eol,-blank-at-eof
