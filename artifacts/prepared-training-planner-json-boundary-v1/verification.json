@@ -1,0 +1,70 @@
+{
+  "change": "Compare complete canonical JSON bytes for saved, supplied and recaptured metrics, sort_keys=True, allow_nan=False; no field dropping, rounding or numeric tolerance",
+  "diagnosis": {
+    "nonstop_extra_tuple_fields": [
+      "history[*].entry_mm",
+      "history[*].tip_mm",
+      "history[*].axis_unit",
+      "history[*].source_shape",
+      "history[*].geometry_unknowns",
+      "history[*].microsteps[*].tip_start_mm",
+      "history[*].microsteps[*].tip_end_mm",
+      "history[*].microsteps[*].active_stroke_start_mm",
+      "history[*].microsteps[*].active_stroke_end_mm"
+    ],
+    "paths": {
+      "/metrics/crop/origin_voxels": {
+        "production_type": "tuple",
+        "saved_type": "list",
+        "saved_value": [
+          3,
+          106,
+          119
+        ],
+        "type_authority": "native_spatial_task.py NativeSpatialCase initialization; NativeSpatialTask.metrics"
+      },
+      "/metrics/crop/shape": {
+        "production_type": "tuple",
+        "saved_type": "list",
+        "saved_value": [
+          64,
+          64,
+          64
+        ],
+        "type_authority": "native_spatial_task.py NativeSpatialCase initialization; NativeSpatialTask.metrics"
+      }
+    },
+    "saved_patient_receipt": "outputs/prepared-training-planner-comparison-v1/sub-PAT05/STOP.json",
+    "saved_patient_receipt_sha256": "f42f9afcc5631b688486a52711b535f8ca5ea5e0eda65caf43cefaa0dbf10321"
+  },
+  "initial_source_sha256": "1caf069210347f75e42ceabe05b282118fcc6ce3fbbdc5d1e4146739f8c1966d",
+  "initial_tests": {
+    "deselected": 34,
+    "failed": 2,
+    "junit_sha256": "19bf65b914acdb33e5375f9e02c3845155474c4173d0f1f4d93ddaa45efa5532",
+    "log_sha256": "e0d872da5598559b187122f5492e8017d39a561bc2a4c4027a5b1838254b8784",
+    "passed": 1,
+    "seconds": 1.57
+  },
+  "kind": "prepared_planner_complete_metrics_json_boundary_repair",
+  "new_patient_replays": 0,
+  "optimizer_updates": 0,
+  "original_patient_outcomes_reclassified": false,
+  "original_version": "prepared-training-planner-comparison-v1",
+  "patient_arrays_decoded_for_diagnosis": 0,
+  "repaired_source_sha256": "ed67566f9a947b580f74f6c033ce938e5eb98b69475aa9419707be233eedcf3e",
+  "repaired_tests": {
+    "failed": 0,
+    "junit_sha256": "5b393ff952c8d2c417fff1c682614dcac44cb4c624faa4683e47153e3eb59728",
+    "log_sha256": "09175346fbd07a74098e6fcbe8af8a9d6734bde98a3992c67089db7b50888ec8",
+    "passed": 54,
+    "seconds": 1.5,
+    "targets": [
+      "tests/test_compare_prepared_training_planners.py",
+      "tests/test_compare_prepared_training_planners_review.py"
+    ]
+  },
+  "repaired_version": "prepared-training-planner-comparison-v2",
+  "test_scope": "Actual tiny analytical NativeSpatialTask, real rollout writer, real PlanningBudget and independent native audit; STOP and fixed-legal nonSTOP test policy; no learning",
+  "unchanged_regression_test_sha256": "4c4ba8d341b5fd06778489a4c1fb0e896f85af9867fd106720153924fbbc4353"
+}

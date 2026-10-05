@@ -1,6 +1,11 @@
 # Prepared TRAIN planner comparison
 
-This is a prospective zero-update comparison, not an executed result. The new
+Version 2 is a prospective zero-update comparison. The first V1 execution is
+preserved separately with all 12 arms rejected at the durable-history boundary:
+live native metrics contain tuples while JSON reloads sequences as lists. The
+repair compares canonical JSON for the entire saved, supplied and recaptured
+metrics, preserving all fields and exact finite numeric values. No geometry,
+reward, patient, model, action or budget changes accompany that repair. The new
 `scripts/compare_prepared_training_planners.py` attempts TRAIN PAT05, PAT22, PAT25
 and PAT28. It retains PAT16 and PAT20 and their original support-conflict receipts
 in the six-patient denominator without decoding them. No SELECT or unopened case
@@ -60,8 +65,12 @@ captures tracked package files from the exact Git root plus explicit script
 dependencies. Runtime validation uses that frozen path set and requires every
 actually imported local source to be bound, so an isolated archive never discovers
 an enclosing checkout. The new runner, its tests and this document are the only
-files in this integration slice. Offline tests use protocol doubles, not patient
-arrays, policy forwards, checkpoint deserialization or native execution.
+files in this integration slice. Most offline controls use protocol doubles. A regression additionally uses the
+actual tiny analytical NativeSpatialTask, real episode writer and PlanningBudget,
+and independent native audit for STOP and non-STOP histories. A fixed test-only
+legal-action policy performs no learning; no public patient or stored checkpoint
+is loaded. Both positive boundary tests failed against preserved V1 bytes before
+the repair, while a deliberately changed saved scalar remained rejected.
 
 The clinical unknowns are unchanged: provisional support and hypothetical access,
 limited proposal coverage, missing functional/vascular evidence and unvalidated

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="3" time="1.566" timestamp="2026-10-05T03:54:04.621507-04:00" hostname="Sayems-MacBook-Pro-6.local"><testcase classname="tests.test_compare_prepared_training_planners" name="test_real_native_task_real_rollout_roundtrip_reaches_independent_audit[STOP]" time="1.238"><failure message="AssertionError: {'type': 'ValueError', 'message': 'Audit requires the durably retained complete selected-task history'}&#10;assert 'failed' == 'complete'&#10;  &#10;  - complete&#10;  + failed">tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-614/test_real_native_task_real_rol0')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x1093fab10&gt;
+name = 'STOP'
+
+    @pytest.mark.parametrize('name',('STOP','frozen_il'))
+    def test_real_native_task_real_rollout_roundtrip_reaches_independent_audit(tmp_path,monkeypatch,name):
+        """Actual tuple-valued native metrics must survive the durable JSON boundary."""
+        import torch
+        from resectionlab.native_spatial_task import make_native_opening_task
+        from resectionlab.native_resection import NativeResectionEngine
+        from resectionlab.native_spatial_evaluation import evaluate_native_spatial_episode
+        from resectionlab.spatial_policy import parameter_hash
+        torch.set_num_threads(1)
+        class FixedLegalPolicy(torch.nn.Module):
+            def __init__(self):
+                super().__init__();self.anchor=torch.nn.Parameter(torch.tensor(0.),requires_grad=False)
+            def forward(self,observation):
+                # Test-only frozen choice: first legal non-STOP when present, never an oracle score.
+                logits=torch.full((len(observation.action_ids),),-1.)+self.anchor
+                logits[0]=0.
+                for i,allowed in enumerate(observation.action_mask):
+                    if i and allowed:logits[i]=1.;break
+                return logits.masked_fill(~torch.tensor(observation.action_mask.copy()),-torch.inf),self.anchor
+        policy=FixedLegalPolicy();monkeypatch.setattr(runner.frozen,'POLICY_HASH',parameter_hash(policy))
+        task=make_native_opening_task(max_steps=3)
+        live=task.metrics()
+        assert isinstance(live['crop']['shape'],tuple) and isinstance(live['crop']['origin_voxels'],tuple)
+        original_preview=NativeResectionEngine.preview_stroke;checks=[]
+        def audit(actual,*,metrics):
+            assert NativeResectionEngine.preview_stroke is original_preview
+            checks.append(True)
+            return evaluate_native_spatial_episode(actual,metrics=metrics,distance_backend='batch',distance_batch_size=256)
+        row=runner.run_arm(task,policy,name,tmp_path,whole_guard=lambda:None,
+            auditor=audit,closure_check=lambda:None)
+&gt;       assert row['status']=='complete',row.get('failure')
+E       AssertionError: {'type': 'ValueError', 'message': 'Audit requires the durably retained complete selected-task history'}
+E       assert 'failed' == 'complete'
+E         
+E         - complete
+E         + failed
+
+tests/test_compare_prepared_training_planners.py:295: AssertionError</failure></testcase><testcase classname="tests.test_compare_prepared_training_planners" name="test_real_native_task_real_rollout_roundtrip_reaches_independent_audit[frozen_il]" time="0.148"><failure message="AssertionError: {'type': 'ValueError', 'message': 'Audit requires the durably retained complete selected-task history'}&#10;assert 'failed' == 'complete'&#10;  &#10;  - complete&#10;  + failed">tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-614/test_real_native_task_real_rol1')
+monkeypatch = &lt;_pytest.monkeypatch.MonkeyPatch object at 0x10fcf16d0&gt;
+name = 'frozen_il'
+
+    @pytest.mark.parametrize('name',('STOP','frozen_il'))
+    def test_real_native_task_real_rollout_roundtrip_reaches_independent_audit(tmp_path,monkeypatch,name):
+        """Actual tuple-valued native metrics must survive the durable JSON boundary."""
+        import torch
+        from resectionlab.native_spatial_task import make_native_opening_task
+        from resectionlab.native_resection import NativeResectionEngine
+        from resectionlab.native_spatial_evaluation import evaluate_native_spatial_episode
+        from resectionlab.spatial_policy import parameter_hash
+        torch.set_num_threads(1)
+        class FixedLegalPolicy(torch.nn.Module):
+            def __init__(self):
+                super().__init__();self.anchor=torch.nn.Parameter(torch.tensor(0.),requires_grad=False)
+            def forward(self,observation):
+                # Test-only frozen choice: first legal non-STOP when present, never an oracle score.
+                logits=torch.full((len(observation.action_ids),),-1.)+self.anchor
+                logits[0]=0.
+                for i,allowed in enumerate(observation.action_mask):
+                    if i and allowed:logits[i]=1.;break
+                return logits.masked_fill(~torch.tensor(observation.action_mask.copy()),-torch.inf),self.anchor
+        policy=FixedLegalPolicy();monkeypatch.setattr(runner.frozen,'POLICY_HASH',parameter_hash(policy))
+        task=make_native_opening_task(max_steps=3)
+        live=task.metrics()
+        assert isinstance(live['crop']['shape'],tuple) and isinstance(live['crop']['origin_voxels'],tuple)
+        original_preview=NativeResectionEngine.preview_stroke;checks=[]
+        def audit(actual,*,metrics):
+            assert NativeResectionEngine.preview_stroke is original_preview
+            checks.append(True)
+            return evaluate_native_spatial_episode(actual,metrics=metrics,distance_backend='batch',distance_batch_size=256)
+        row=runner.run_arm(task,policy,name,tmp_path,whole_guard=lambda:None,
+            auditor=audit,closure_check=lambda:None)
+&gt;       assert row['status']=='complete',row.get('failure')
+E       AssertionError: {'type': 'ValueError', 'message': 'Audit requires the durably retained complete selected-task history'}
+E       assert 'failed' == 'complete'
+E         
+E         - complete
+E         + failed
+
+tests/test_compare_prepared_training_planners.py:295: AssertionError</failure></testcase><testcase classname="tests.test_compare_prepared_training_planners" name="test_real_native_saved_scalar_tamper_still_refused_before_audit" time="0.042" /></testsuite></testsuites>

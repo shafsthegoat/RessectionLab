@@ -27,7 +27,7 @@ import run_real_training_transfer as frozen
 import run_real_patient_learning as rollout
 from preflight_real_spatial_policy import sha256, write_json, read_declaration, supervise_worker, peak_rss_bytes
 
-VERSION = 'prepared-training-planner-comparison-v2'
+VERSION = 'prepared-training-planner-comparison-v1'
 SUBJECTS = ('sub-PAT05', 'sub-PAT16', 'sub-PAT20', 'sub-PAT22', 'sub-PAT25', 'sub-PAT28')
 ATTEMPTED = ('sub-PAT05', 'sub-PAT22', 'sub-PAT25', 'sub-PAT28')
 BLOCKED = ('sub-PAT16', 'sub-PAT20')
@@ -41,13 +41,8 @@ SCRIPT_CLOSURE = ('compare_prepared_training_planners.py', 'pat05_access_prepara
     'compare_real_spatial_search.py', 'preflight_real_spatial_policy.py')
 
 
-def canonical_json(value):
-    """Preserve all JSON values exactly; normalize only mapping order and sequences."""
-    return json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()
-
-
 def digest(value):
-    return hashlib.sha256(canonical_json(value)).hexdigest()
+    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(',', ':'), allow_nan=False).encode()).hexdigest()
 
 
 def source_inventory(paths=None):
@@ -311,8 +306,7 @@ def run_arm(base, policy, name, output, *, whole_guard, auditor, closure_check,
                 terminal = json.loads(episode_path.read_text())
                 if (not task.terminated or metrics.get('terminated') is not True
                         or terminal.get('status') != 'awaiting_independent_check'
-                        or canonical_json(terminal.get('metrics')) != canonical_json(metrics)
-                        or canonical_json(task.metrics()) != canonical_json(metrics)
+                        or terminal.get('metrics') != metrics or task.metrics() != metrics
                         or metrics.get('decision_model_hash') != row['initial_binding']['model_hash']):
                     raise ValueError('Audit requires the durably retained complete selected-task history')
                 terminal_path = output/(name+'-terminal.json')
