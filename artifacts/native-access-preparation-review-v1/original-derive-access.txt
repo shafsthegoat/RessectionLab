@@ -1,0 +1,44 @@
+def derive_access(target, support, affine_ras_mm, subject):
+    """PAT05's exact source-index rule, without reward/feasibility selection."""
+    import numpy as np
+    from resectionlab.geometry import AccessWindow
+
+    target, support = np.asarray(target), np.asarray(support)
+    affine = np.asarray(affine_ras_mm, dtype=float)
+    if (target.dtype != bool or support.dtype != bool or target.shape != support.shape
+            or target.ndim != 3 or not target.any() or not support.any()
+            or np.any(target & ~support)):
+        raise ValueError("Access needs a nonempty target wholly inside the unchanged support")
+    if (affine.shape != (4, 4) or not np.isfinite(affine).all()
+            or not np.array_equal(affine[3], [0, 0, 0, 1])
+            or abs(np.linalg.det(affine[:3, :3])) < 1e-12):
+        raise ValueError("Access needs a finite invertible physical source affine")
+    cells = np.argwhere(target)  # Lexicographic order supplies the exact tie break.
+    centroid = cells.mean(axis=0)
+    representative = cells[np.argmin(np.square(cells - centroid).sum(axis=1))]
+    exits = []
+    for axis in range(3):
+        spacing = float(np.linalg.norm(affine[:3, axis]))
+        for sign in (-1, 1):
+            point = representative.copy()
+            while np.all(point >= 0) and np.all(point < target.shape) and support[tuple(point)]:
+                point[axis] += sign
+            boundary = point.astype(float)
+            boundary[axis] -= .5 * sign
+            distance = abs(float(boundary[axis] - representative[axis])) * spacing
+            exits.append({"axis": axis, "outward_sign": sign, "distance_mm": distance,
+                          "boundary_voxel": boundary.tolist()})
+    chosen = min(exits, key=lambda row: (row["distance_mm"], row["axis"], row["outward_sign"]))
+    axis, sign = chosen["axis"], chosen["outward_sign"]
+    normal = -sign * affine[:3, axis] / np.linalg.norm(affine[:3, axis])
+    center = affine[:3, :3] @ chosen["boundary_voxel"] + affine[:3, 3]
+    access = AccessWindow(center, normal, 6., subject.removeprefix("sub-") + "-main-provisional-annotation-axis-v1")
+    record = {"rule": ACCESS_RULE, "annotation_centroid_voxels": centroid.tolist(),
+              "representative_voxel": representative.tolist(),
+              "selected_boundary_voxel": chosen["boundary_voxel"],
+              "depth_to_annotation_representative_mm": chosen["distance_mm"],
+              "six_axis_exit_distances_mm": exits, "cortical_access_permitted": False,
+              "selection_uses_reward_or_native_preview": False}
+    geometry = {"center_mm": access.center_mm.tolist(), "normal_inward": access.normal_inward.tolist(),
+                "radius_mm": access.radius_mm, "window_id": access.window_id}
+    return geometry, record

@@ -1,0 +1,28 @@
+{
+  "committed_transitions": 0,
+  "elapsed_seconds": 1.3739118329249322,
+  "exit_code": 0,
+  "optimizer_steps": 0,
+  "patient_decodes": 0,
+  "patient_experiments": 0,
+  "policy_forwards": 0,
+  "scope": "tiny analytical sources and offline controls only; helper-time previews/constructors guarded where specified",
+  "source_hashes_after": {
+    "scripts/prepare_real_training_cases.py": "ff1055522ee06ee80df6552d782a7ae446461c37255359493d7de42f5c5bb47d",
+    "src/resectionlab/native_access_preparation.py": "898f8ea389a251faeab9efe296f523560b7fe61fe459c07ef7b269345e4b5ecd",
+    "src/resectionlab/native_ingress.py": "cd27eb57062d0afd72dba3b392f9ed03973a9fe5b353bb8fd0da74e6a1c6761f",
+    "src/resectionlab/native_proposals.py": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee",
+    "src/resectionlab/native_spatial_task.py": "61b3d8167152d06a578e1ab7c146b7af937d86ccca6ed9e20bf3081cbf2f6711",
+    "src/resectionlab/real_patient_learning.py": "51107e30dd26a623aaadc9bca7f5b2dda56b798ee5ef59fa4c4d6d9aa2e58512",
+    "tests/test_native_access_preparation_review.py": "1400db6ba912bcf08d98909505790d6fb30f5238f6bacc205f5dda108be5f90d"
+  },
+  "source_hashes_before": {
+    "scripts/prepare_real_training_cases.py": "ff1055522ee06ee80df6552d782a7ae446461c37255359493d7de42f5c5bb47d",
+    "src/resectionlab/native_access_preparation.py": "898f8ea389a251faeab9efe296f523560b7fe61fe459c07ef7b269345e4b5ecd",
+    "src/resectionlab/native_ingress.py": "cd27eb57062d0afd72dba3b392f9ed03973a9fe5b353bb8fd0da74e6a1c6761f",
+    "src/resectionlab/native_proposals.py": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee",
+    "src/resectionlab/native_spatial_task.py": "61b3d8167152d06a578e1ab7c146b7af937d86ccca6ed9e20bf3081cbf2f6711",
+    "src/resectionlab/real_patient_learning.py": "51107e30dd26a623aaadc9bca7f5b2dda56b798ee5ef59fa4c4d6d9aa2e58512",
+    "tests/test_native_access_preparation_review.py": "1400db6ba912bcf08d98909505790d6fb30f5238f6bacc205f5dda108be5f90d"
+  }
+}

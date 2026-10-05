@@ -1,0 +1,75 @@
+{
+  "actual_operations": {
+    "analytical_native_fixture_construction": true,
+    "commits": 0,
+    "committed_transitions": 0,
+    "helper_native_previews_in_guarded_controls": 0,
+    "optimizer_updates": 0,
+    "patient_decodes": 0,
+    "patient_experiments": 0,
+    "policy_forwards": 0,
+    "releases": 0
+  },
+  "documentation_sha256": "3d5ebce5a1abcb054319febf99f40b7ffd27feafb9d4a89fbf1eacd9529447e6",
+  "exact_extraction_reference": {
+    "binding_sha256": "ddf8d89aa5ca05a58f4c3df19c7b5d422ab20388e655397d91a614085877d261",
+    "function_sha256": "6e6586100d2df4825b50cf98f5db7ec6ccb8c0431fae73adedc30f49147f8ca5",
+    "legacy_alias_identity_confirmed": true
+  },
+  "independent_tests": {
+    "first_run_passed": true,
+    "log": "initial-independent-tests.txt",
+    "log_sha256": "7e309c1d4a227a972b3e6e3c790b64d3abd58f7c48dda2c0908a5214330596bd",
+    "passed": 40,
+    "pytest_seconds": 1.15,
+    "run_receipt_sha256": "e2fe1f32baf76309218c111e7856a729fdec0d7170ee7e1c6f35bf7d42d9d641",
+    "sources_unchanged_before_after": true
+  },
+  "limitations": [
+    "The helper validates the declared subject role and supplied upstream source join; NativeSpatialCase has no independent patient identity field. The caller must bind the task to a frozen subject-specific preparation record.",
+    "This helper returns a source, not a selected native task or complete-motion certificate. Later inventory construction must preserve the recorded reward/horizon and may not select a fallback.",
+    "Outside-image geometry remains unassessed; static ingress eligibility is not clinical clearance.",
+    "Prior original task construction costs remain outside the helper timer and are never waived. The final immutable receipt copy is excluded from the helper elapsed field.",
+    "Unresolved support-blocked cases cannot acquire a validated initial task through this helper. No patient data were read to reassess them."
+  ],
+  "other_reported_checks": {
+    "initial_owner_failure": "One immutable tuple-versus-list assertion mismatch, corrected in tests only; no production failure claimed.",
+    "legacy_compatibility_passed": 24,
+    "legacy_pytest_seconds": 2.18,
+    "no_repeated_combined_run": "No new source change or unresolved concern justified repeating the already passing suites.",
+    "owner_passed": 17,
+    "owner_pytest_seconds": 1.26,
+    "retained_logs": {
+      "legacy-compatibility-tests.txt": "71564ccfdf82e9cd8a40a0f0ea44501dd062ff98be0f8a4de455e31a3da36874",
+      "owner-final-tests.txt": "f620e85a6c2b4fb48caff85c07bcf06d42cb2000a83b3250ed3c83601ac9165a",
+      "owner-initial-fixture-failure.txt": "72243d6fea4cb93e711c81eb8472fe49462a8002420bf42285bae039cfd16bd3"
+    },
+    "total_test_cases_across_three_suites": 81
+  },
+  "owner_tests_sha256": "343b869a4de9a8504c258872fe72b026a12a6a11849af5148031a031496c9c42",
+  "schema_version": 1,
+  "scope": "software preparation review only; no patient experiment or execution authorization",
+  "source_hashes": {
+    "scripts/prepare_real_training_cases.py": "ff1055522ee06ee80df6552d782a7ae446461c37255359493d7de42f5c5bb47d",
+    "src/resectionlab/native_access_preparation.py": "898f8ea389a251faeab9efe296f523560b7fe61fe459c07ef7b269345e4b5ecd",
+    "src/resectionlab/native_ingress.py": "cd27eb57062d0afd72dba3b392f9ed03973a9fe5b353bb8fd0da74e6a1c6761f",
+    "src/resectionlab/native_proposals.py": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee",
+    "src/resectionlab/native_spatial_task.py": "61b3d8167152d06a578e1ab7c146b7af937d86ccca6ed9e20bf3081cbf2f6711",
+    "src/resectionlab/real_patient_learning.py": "51107e30dd26a623aaadc9bca7f5b2dda56b798ee5ef59fa4c4d6d9aa2e58512",
+    "tests/test_native_access_preparation_review.py": "1400db6ba912bcf08d98909505790d6fb30f5238f6bacc205f5dda108be5f90d"
+  },
+  "status": "passed",
+  "verified_contracts": [
+    "fixed TRAIN declared-role gate and pinned cohort bytes before task-array access",
+    "mandatory upstream source/model hashes and exact six descriptor authentication including every one-ULP distance mutation",
+    "unchanged original derive_access function text and legacy re-export identity",
+    "physical affine distances and lexicographic nominal-cell tie rule under reflection/anisotropy",
+    "original versus reconciled native frames explicitly preserved",
+    "same physical screening and selected exit under private evaluator reference replacement and actor-crop changes",
+    "unchanged original task state/support/nominal/reference/scan/frame/tools/objective/horizon",
+    "no helper-time native full-motion preview, selected task/inventory, committed cut or transition in guarded controls",
+    "noninitial, planning and missing original preparation refusal; callback horizon mutation fails closed",
+    "six complete candidate inputs, static cap, cancellation/partial failure/no eligible access without fallback",
+    "immutable receipt with prior original preparation cost explicitly unknown rather than zero"
+  ]
+}

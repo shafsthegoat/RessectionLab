@@ -36,13 +36,18 @@ repair restored initial action availability without learning; it does not replac
 the original baseline. Exact PAT05 binding and isolated ingress helpers pass
 155 and 43 focused checks; the bounded PAT25 runner passed 89 before execution.
 See [PAT25 comparison](../artifacts/pat25-ingress-access-v1/RESULT.md).
+The shared opt-in source helper now passes 81 focused checks while preserving the
+legacy default and exact derivation; it has not yet been exercised on other patients.
 Access diagnosis precedes multiscale policy integration because the completed
 legacy crops already retained the target. One checksum transfer and the separately
 released single-image compatibility experiment succeeded. The latter received
 6,337,221 compressed bytes under its 64-MiB retained-file cap and matched the
 predeclared compressed-byte MD5 candidate; an independent byte/provenance audit
-passed. Header and anatomical inspection remain a separate next step. This does
-not confirm the publisher's algorithm or satisfy the unchanged 12-file declaration.
-See [single-image evidence](../artifacts/rhuh-single-image-acquisition-v2/RESULT.md).
+passed. The separately released format inspection now accepts scalar 240 x 240 x
+155 float32 storage, a numeric 1-mm qform and finite values; its saved-result audit
+also passed. Source-frame interpretation and anatomical visual inspection remain
+next. This does not confirm the publisher's algorithm, supply target/injury labels
+or satisfy the unchanged 12-file declaration. See
+[single-image format evidence](../artifacts/rhuh-single-image-inspection-v1/RESULT.md).
 Observation coverage, full-tool ingress and action coverage remain separate gaps.
 No RL sweep, neurological reward or UI expansion is justified by current evidence.

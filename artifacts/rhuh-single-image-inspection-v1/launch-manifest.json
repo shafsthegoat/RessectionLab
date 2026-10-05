@@ -1,0 +1,26 @@
+{
+  "schema": "resectionlab.rhuh-image-inspection-launch.v1",
+  "released": true,
+  "source": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t1.nii.gz",
+  "request": {
+    "path": "artifacts/rhuh-single-image-inspection-v1/request.json",
+    "sha256": "52c641a59a27adc90fa2782bb0d3ce83cacbd9e8eaf43bed8b3295c7b5c71ab0"
+  },
+  "release": {
+    "path": "artifacts/rhuh-single-image-inspection-v1/release.json",
+    "sha256": "56ed79b17e0125800657a4eaaf4d60bd5897548bb9db466f030f1b9f975578d2"
+  },
+  "inspector": {
+    "path": "scripts/inspect_rhuh_single_image.py",
+    "sha256": "268d23d8560c963461f633fe2d66ef581b8bd47e74e6431b89c23d7058979a6f"
+  },
+  "launcher": {
+    "path": "artifacts/rhuh-single-image-inspection-v1/run_once.py",
+    "sha256": "57727639196be34e1fc5adc4b5f4d3cb943b2c25cd2b341e92e62a42bce77803"
+  },
+  "public_transfer": {
+    "path": "scripts/rhuh_public_transfer.py",
+    "sha256": "a4a1f775b6c0798b3ea2b721289590057ec388e479ec071961bd3616f83eea9d"
+  },
+  "output_directory": "outputs/rhuh-single-image-inspection-v1/run-first"
+}

@@ -1,0 +1,92 @@
+FFFF.                                                                    [100%]
+=================================== FAILURES ===================================
+____________ test_rss_requires_one_live_launcher_measurement[empty] ____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1098102c0>
+kind = 'empty'
+
+    @pytest.mark.parametrize("kind", ["empty", "unrelated_only", "child_only", "duplicate_launcher"])
+    def test_rss_requires_one_live_launcher_measurement(monkeypatch, kind):
+        """Missing RSS must remain unavailable rather than becoming zero."""
+        launcher = mod.os.getpid()
+        streams = {
+            "empty": b"",
+            "unrelated_only": b"900001 900001 33\n",
+            "child_only": b"900002 812345 17\n",
+            "duplicate_launcher": f"{launcher} 1 13\n{launcher} 1 13\n".encode(),
+        }
+        monkeypatch.setattr(mod.subprocess, "run", lambda *args, **kwargs: SimpleNamespace(stdout=streams[kind]))
+>       with pytest.raises(mod.Rejected):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE Rejected
+
+tests/test_rhuh_single_image_inspection_launch_review.py:20: Failed
+_______ test_rss_requires_one_live_launcher_measurement[unrelated_only] ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109811790>
+kind = 'unrelated_only'
+
+    @pytest.mark.parametrize("kind", ["empty", "unrelated_only", "child_only", "duplicate_launcher"])
+    def test_rss_requires_one_live_launcher_measurement(monkeypatch, kind):
+        """Missing RSS must remain unavailable rather than becoming zero."""
+        launcher = mod.os.getpid()
+        streams = {
+            "empty": b"",
+            "unrelated_only": b"900001 900001 33\n",
+            "child_only": b"900002 812345 17\n",
+            "duplicate_launcher": f"{launcher} 1 13\n{launcher} 1 13\n".encode(),
+        }
+        monkeypatch.setattr(mod.subprocess, "run", lambda *args, **kwargs: SimpleNamespace(stdout=streams[kind]))
+>       with pytest.raises(mod.Rejected):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE Rejected
+
+tests/test_rhuh_single_image_inspection_launch_review.py:20: Failed
+_________ test_rss_requires_one_live_launcher_measurement[child_only] __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109810bc0>
+kind = 'child_only'
+
+    @pytest.mark.parametrize("kind", ["empty", "unrelated_only", "child_only", "duplicate_launcher"])
+    def test_rss_requires_one_live_launcher_measurement(monkeypatch, kind):
+        """Missing RSS must remain unavailable rather than becoming zero."""
+        launcher = mod.os.getpid()
+        streams = {
+            "empty": b"",
+            "unrelated_only": b"900001 900001 33\n",
+            "child_only": b"900002 812345 17\n",
+            "duplicate_launcher": f"{launcher} 1 13\n{launcher} 1 13\n".encode(),
+        }
+        monkeypatch.setattr(mod.subprocess, "run", lambda *args, **kwargs: SimpleNamespace(stdout=streams[kind]))
+>       with pytest.raises(mod.Rejected):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE Rejected
+
+tests/test_rhuh_single_image_inspection_launch_review.py:20: Failed
+_____ test_rss_requires_one_live_launcher_measurement[duplicate_launcher] ______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x109812030>
+kind = 'duplicate_launcher'
+
+    @pytest.mark.parametrize("kind", ["empty", "unrelated_only", "child_only", "duplicate_launcher"])
+    def test_rss_requires_one_live_launcher_measurement(monkeypatch, kind):
+        """Missing RSS must remain unavailable rather than becoming zero."""
+        launcher = mod.os.getpid()
+        streams = {
+            "empty": b"",
+            "unrelated_only": b"900001 900001 33\n",
+            "child_only": b"900002 812345 17\n",
+            "duplicate_launcher": f"{launcher} 1 13\n{launcher} 1 13\n".encode(),
+        }
+        monkeypatch.setattr(mod.subprocess, "run", lambda *args, **kwargs: SimpleNamespace(stdout=streams[kind]))
+>       with pytest.raises(mod.Rejected):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE Rejected
+
+tests/test_rhuh_single_image_inspection_launch_review.py:20: Failed
+=========================== short test summary info ============================
+FAILED tests/test_rhuh_single_image_inspection_launch_review.py::test_rss_requires_one_live_launcher_measurement[empty]
+FAILED tests/test_rhuh_single_image_inspection_launch_review.py::test_rss_requires_one_live_launcher_measurement[unrelated_only]
+FAILED tests/test_rhuh_single_image_inspection_launch_review.py::test_rss_requires_one_live_launcher_measurement[child_only]
+FAILED tests/test_rhuh_single_image_inspection_launch_review.py::test_rss_requires_one_live_launcher_measurement[duplicate_launcher]
+4 failed, 1 passed in 0.06s

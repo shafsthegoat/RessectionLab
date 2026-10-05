@@ -1494,3 +1494,29 @@ arrays or repeating simulation. Raw records are retained losslessly in
 `artifacts/pat25-ingress-access-v1/completed-run.tar.gz`; the report and fixed
 comparison plot are in the same directory. This TRAIN repair was informed by
 previously inspected failures; it is not untouched validation.
+
+
+## October 5, 2026 — first real MRI format inspection passes with anatomical scope open
+
+After the decoder and supervisor passed 153 combined controls, the 23-file source
+archive and separate request/release were committed. One inspection completed in
+0.328035 seconds at the root (0.272976 seconds in the supervisor); three samples
+recorded a combined peak of 192,675,840 bytes. No retry or additional acquisition
+occurred. The single-member gzip and NIfTI-1 storage passed: 240 x 240 x 155
+little-endian float32, 8,928,000 finite values and no nonfinite values, totaling
+35,712,352 uncompressed bytes including the 352-byte header/offset region.
+
+The file declares 1-mm spacing and a finite invertible qform with L/P/S voxel
+axes; sform is absent. Code 1 does not establish scanner-native provenance in
+this processed cohort. The observed intensity range (-8.976039 to 10.492467) and
+mean (-7.312971) are descriptive and do not identify brain, background or tumor.
+No mask, anatomical alignment, clinical measurement or planning use was accepted.
+The independent saved-result audit passed on its first run, verifying 23 archived
+files, exact release/history, saved arithmetic and original compressed bytes
+without another image decode. Exact outputs and limitations are retained in
+`artifacts/rhuh-single-image-inspection-v1/`.
+
+The reusable opt-in ingress preparation also passed 81 focused software checks:
+17 owner, 40 independent and 24 legacy compatibility cases. Its access derivation
+moved unchanged; existing default preparation remains the baseline. It has not
+been run on another real patient and supports no new learning claim.

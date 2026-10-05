@@ -1,0 +1,53 @@
+..........FF                                                             [100%]
+=================================== FAILURES ===================================
+____ test_final_readback_metadata_drift_is_not_labeled_unchanged[inspector] ____
+
+fixture = (PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-595/test_final_readba...: 'format_inspected_scientific_use_unreleased', 'binary_structure_valid': True, 'scientific_use_released': False, ...})
+process_control = {'now': 10.0, 'launches': 1, 'kills': [(456789, <Signals.SIGKILL: 9>)], 'rss': 1000, ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10aca65d0>
+capsys = <_pytest.capture.CaptureFixture object at 0x10aca7f50>
+key = 'inspector'
+
+    @pytest.mark.parametrize("key", ["inspector", "request"])
+    def test_final_readback_metadata_drift_is_not_labeled_unchanged(fixture, process_control, monkeypatch, capsys, key):
+        root, plan, _, _, _ = fixture
+        original = mod.reconcile
+        def changing(*args):
+            result = original(*args)  # Hashes inert fixture bytes only.
+            (root / plan[key]["path"]).write_bytes(b"changed during final readback")
+            return result
+        monkeypatch.setattr(mod, "reconcile", changing)
+>       assert run(fixture) == 1
+E       AssertionError: assert 0 == 1
+E        +  where 0 = run((PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-595/test_final_readba...: 'format_inspected_scientific_use_unreleased', 'binary_structure_valid': True, 'scientific_use_released': False, ...}))
+
+tests/test_rhuh_single_image_inspection_launch_review.py:75: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"accepted": true, "elapsed_seconds": 0.0, "inspector_exit_code": 0, "launcher_exit_zero_required": true, "manifest": {"path": "artifacts/inert-launch.json", "sha256": "f2a9dea9d0daaa6909435f1041cf71d656f8d5ca179787c26fc08ca1386c4015"}, "original": {"compressed_bytes": 15, "original_sha256": "efb702dcc4a76cc7cbb68550ae3c5b7876ab34c742ffedd667ca16f5730c111a", "parent_decoded_image": false}, "peak_sampled_combined_rss_bytes": 1000, "release": {"path": "artifacts/inert-release.json", "sha256": "e05c384c71e822f4a3ae2c0ae1de65ebcaafdb51c4a50b9365ff2f25df20d11b"}, "request": {"path": "artifacts/inert-request.json", "sha256": "cfc9a4f44933d68b352ea123920972f402d06fe7400c529f0501e1d5b3236c07"}, "rss_samples": 1, "rss_sampling_interval_seconds": 0.1, "scientific_use_released": false, "source": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t1.nii.gz", "source_closure_unchanged": true, "status": "format_inspected_scientific_use_unreleased", "stdout_sha256": "4d7d82c9b6b7e54ede64dc7d0f64ad1e783a3e72cbb038c67defe92db3641536"}
+_____ test_final_readback_metadata_drift_is_not_labeled_unchanged[request] _____
+
+fixture = (PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-595/test_final_readba...: 'format_inspected_scientific_use_unreleased', 'binary_structure_valid': True, 'scientific_use_released': False, ...})
+process_control = {'now': 10.0, 'launches': 1, 'kills': [(456789, <Signals.SIGKILL: 9>)], 'rss': 1000, ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10acce960>
+capsys = <_pytest.capture.CaptureFixture object at 0x10accd0a0>, key = 'request'
+
+    @pytest.mark.parametrize("key", ["inspector", "request"])
+    def test_final_readback_metadata_drift_is_not_labeled_unchanged(fixture, process_control, monkeypatch, capsys, key):
+        root, plan, _, _, _ = fixture
+        original = mod.reconcile
+        def changing(*args):
+            result = original(*args)  # Hashes inert fixture bytes only.
+            (root / plan[key]["path"]).write_bytes(b"changed during final readback")
+            return result
+        monkeypatch.setattr(mod, "reconcile", changing)
+>       assert run(fixture) == 1
+E       AssertionError: assert 0 == 1
+E        +  where 0 = run((PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-595/test_final_readba...: 'format_inspected_scientific_use_unreleased', 'binary_structure_valid': True, 'scientific_use_released': False, ...}))
+
+tests/test_rhuh_single_image_inspection_launch_review.py:75: AssertionError
+----------------------------- Captured stdout call -----------------------------
+{"accepted": true, "elapsed_seconds": 0.0, "inspector_exit_code": 0, "launcher_exit_zero_required": true, "manifest": {"path": "artifacts/inert-launch.json", "sha256": "f2a9dea9d0daaa6909435f1041cf71d656f8d5ca179787c26fc08ca1386c4015"}, "original": {"compressed_bytes": 15, "original_sha256": "efb702dcc4a76cc7cbb68550ae3c5b7876ab34c742ffedd667ca16f5730c111a", "parent_decoded_image": false}, "peak_sampled_combined_rss_bytes": 1000, "release": {"path": "artifacts/inert-release.json", "sha256": "e05c384c71e822f4a3ae2c0ae1de65ebcaafdb51c4a50b9365ff2f25df20d11b"}, "request": {"path": "artifacts/inert-request.json", "sha256": "cfc9a4f44933d68b352ea123920972f402d06fe7400c529f0501e1d5b3236c07"}, "rss_samples": 1, "rss_sampling_interval_seconds": 0.1, "scientific_use_released": false, "source": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t1.nii.gz", "source_closure_unchanged": true, "status": "format_inspected_scientific_use_unreleased", "stdout_sha256": "4d7d82c9b6b7e54ede64dc7d0f64ad1e783a3e72cbb038c67defe92db3641536"}
+=========================== short test summary info ============================
+FAILED tests/test_rhuh_single_image_inspection_launch_review.py::test_final_readback_metadata_drift_is_not_labeled_unchanged[inspector]
+FAILED tests/test_rhuh_single_image_inspection_launch_review.py::test_final_readback_metadata_drift_is_not_labeled_unchanged[request]
+2 failed, 10 passed in 0.13s

@@ -51,6 +51,13 @@ preparation improvement informed by the earlier failure, not independent patient
 generalization or a learning gain. See `artifacts/pat25-ingress-access-v1/RESULT.md`
 and the unchanged `artifacts/training-observation-coverage-v1/RESULT.md`.
 
+The opt-in access preparation is now reusable without changing the default
+shortest-exit constructor. Its shared derivation was moved unchanged; 81 focused
+owner, independent and legacy compatibility checks pass. It returns a selected
+source without constructing another full inventory or invoking a policy, and
+requires the upstream subject-specific source binding. Other TRAIN cases have
+not yet been run with it. See `docs/native-access-preparation.md`.
+
 The isolated, signed native public-transfer client passes a version-only smoke
 check. The checksum-only helper has 37 passing offline controls; three lifecycle
 review failures were repaired and retained. After a separate source-bound release,
@@ -71,18 +78,26 @@ supervised seconds; the fixed MD5-over-compressed-bytes candidate matched the
 published token. The independent audit reconciled the original bytes, release,
 23 archived files and parent/worker receipts. Original bytes remain read-only in
 local quarantine. This establishes byte-domain compatibility for one file;
-the publisher's algorithm and prior length remain unconfirmed. Header, voxel and
-anatomical inspection have not run. The original 12-file declaration remains
-unmet and unchanged, and decoding/scientific use remain unreleased. See
-`artifacts/rhuh-single-image-acquisition-v2/RESULT.md`.
+the publisher's algorithm and prior length remain unconfirmed. A separate bounded
+format inspection has now completed after 153 software checks and its own committed
+release: 240 x 240 x 155 scalar float32, declared 1-mm spacing, all 8,928,000
+scaled values finite, valid single-member gzip/NIfTI-1. The finite invertible
+qform declares L/P/S voxel axes; sform is absent. This does not establish native
+scanner provenance or anatomical registration. Execution took 0.328035 seconds
+at the root, with 192,675,840 bytes sampled combined peak memory. The independent
+saved-result audit passed without re-decoding. No anatomical visual inspection,
+case import or training use has occurred. The original 12-file declaration stays
+unmet and unchanged. See `artifacts/rhuh-single-image-inspection-v1/RESULT.md` and
+the earlier `artifacts/rhuh-single-image-acquisition-v2/RESULT.md`.
 
 The RHUH public table has 40 patients and 14 recorded postoperative deficits
 (six transient, six minor persistent, two major persistent); 26 are recorded `No`.
 Exact clinical timing, affected domain, baseline focal deficit and category
 definitions are absent. It supports a small observational baseline, not route
 risk or new surgery-caused deficit. The public processed imaging inventory has
-720 names. One T1 payload now has accepted byte/provenance checks; image geometry,
-ADC units, segmentation semantics and injury labels remain unvalidated. BTC has five candidate TRAIN
+720 names. One T1 payload now has accepted byte/provenance and binary-format
+checks; anatomical alignment, ADC units, segmentation semantics and injury labels
+remain unvalidated. BTC has five candidate TRAIN
 follow-up pairs in metadata, but individual cross-release linkage remains
 unverified; no outcome rows or protected content were opened. The independent
 63-patient Figshare release has complete paired matrices and cognitive scores,
