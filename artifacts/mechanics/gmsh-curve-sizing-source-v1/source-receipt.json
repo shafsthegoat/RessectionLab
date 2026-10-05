@@ -1,0 +1,101 @@
+{
+  "status": "source_only_investigation",
+  "official_archive_url": "https://gmsh.info/src/gmsh-4.15.2-source.tgz",
+  "archive_sha256": "be3f66f225d27ba9fa014f07e83169285da8a051b0e8ab7103d88066b39bdd3e",
+  "archive_bytes": 18496049,
+  "archive_local_path": "build/validation/gmsh-discrete-curvature-capability-v1/gmsh-4.15.2-source.tgz",
+  "inspected_files": {
+    "doc/texinfo/gmsh.texi": {
+      "sha256": "434b4b4e69d920c331e65865e9248e34dd4277b927f2546648a0b5966417ae70",
+      "bytes": 297097,
+      "local_path": "build/validation/gmsh-curve-sizing-source-v1/source/doc/texinfo/gmsh.texi"
+    },
+    "src/common/Context.h": {
+      "sha256": "900677ad287a363bbd495f409763e7884c71f4df4039ecafccf25dd41d5666c5",
+      "bytes": 15915,
+      "local_path": "build/validation/gmsh-curve-sizing-source-v1/source/src/common/Context.h"
+    },
+    "src/common/DefaultOptions.h": {
+      "sha256": "96953d77e05f13e7063ed6c0c565e9bc6465a3e9dc8304b09628c0000fce2d58",
+      "bytes": 126165,
+      "local_path": "build/validation/gmsh-curve-sizing-source-v1/source/src/common/DefaultOptions.h"
+    },
+    "src/common/Options.cpp": {
+      "sha256": "893fd2910bfa03c49ef467816e435068c214d4518f32d98067098846a3d34442",
+      "bytes": 286610,
+      "local_path": "build/validation/gmsh-curve-sizing-source-v1/source/src/common/Options.cpp"
+    },
+    "src/geo/GEdge.cpp": {
+      "sha256": "fa6935859cd380cfb32716576c2484908a5354f51a895fbbdade1d2a5899427c",
+      "bytes": 28831,
+      "local_path": "build/validation/gmsh-curve-sizing-source-v1/source/src/geo/GEdge.cpp"
+    },
+    "src/geo/GEdge.h": {
+      "sha256": "06f108c2c045800ae46250dd9a311576891c334cdb47a92dede1e935cce8f826",
+      "bytes": 9266,
+      "local_path": "build/validation/gmsh-curve-sizing-source-v1/source/src/geo/GEdge.h"
+    },
+    "src/geo/GModelParametrize.cpp": {
+      "sha256": "8496e6fe1b6ae23f8f5635b57471f3249c35bd683367590a206f1d48c979f2e6",
+      "bytes": 33597,
+      "local_path": "build/validation/gmsh-discrete-curvature-capability-v1/source/src/geo/GModelParametrize.cpp"
+    },
+    "src/geo/discreteEdge.cpp": {
+      "sha256": "70a9e639551f2b1a16586a8a5b7c099525eace1b7292476d22c64fd01b0eb18d",
+      "bytes": 7567,
+      "local_path": "build/validation/gmsh-discrete-curvature-capability-v1/source/src/geo/discreteEdge.cpp"
+    },
+    "src/geo/discreteEdge.h": {
+      "sha256": "7def4ca5b996b23b776bb2a58b6d58b8013e4b88bdad8cab156ed4f0b7a7f87f",
+      "bytes": 1341,
+      "local_path": "build/validation/gmsh-curve-sizing-source-v1/source/src/geo/discreteEdge.h"
+    },
+    "src/geo/discreteFace.cpp": {
+      "sha256": "32f7669b2f9f28acfe888b86bd7ca4c81053acc2bc9db5be2fb0766d98d1e46f",
+      "bytes": 29699,
+      "local_path": "build/validation/gmsh-discrete-curvature-capability-v1/source/src/geo/discreteFace.cpp"
+    },
+    "src/geo/discreteFace.h": {
+      "sha256": "e5e4cd068234ab8c0d8f6cc18188a58e48b72dd2940510dfb5d44e029b39bf79",
+      "bytes": 2880,
+      "local_path": "build/validation/gmsh-discrete-curvature-capability-v1/source/src/geo/discreteFace.h"
+    },
+    "src/mesh/BackgroundMeshTools.cpp": {
+      "sha256": "c14ee81f8e5b763e4829066f9dafc62eaac5130a305da9cb49f3233152904bea",
+      "bytes": 13102,
+      "local_path": "build/validation/gmsh-discrete-curvature-capability-v1/source/src/mesh/BackgroundMeshTools.cpp"
+    },
+    "src/mesh/meshGEdge.cpp": {
+      "sha256": "9db5cf4dd0f39ae6bb57b633f5da75ecd8d52abe35233b6be685327fe14a5a54",
+      "bytes": 37373,
+      "local_path": "build/validation/gmsh-curve-sizing-source-v1/source/src/mesh/meshGEdge.cpp"
+    },
+    "src/mesh/meshGRegionBoundaryRecovery.cpp": {
+      "sha256": "4142b5f7b048d3cf670da4d0514bb7df6a5f3d92d88b9f373c20fc125638dc47",
+      "bytes": 47979,
+      "local_path": "build/validation/gmsh-curve-sizing-source-v1/source/src/mesh/meshGRegionBoundaryRecovery.cpp"
+    },
+    "src/mesh/tetgenBR.cxx": {
+      "sha256": "7f827e197ef23d67e142f08d29b35e9be7070047f36a2aaec195010fd33799d3",
+      "bytes": 619012,
+      "local_path": "build/validation/gmsh-curve-sizing-source-v1/source/src/mesh/tetgenBR.cxx"
+    },
+    "src/mesh/tetgenBR.h": {
+      "sha256": "6199b6a7d0b622d08319c9433145baf775ad8d6ff98b2ddc786065fd41d96b1f",
+      "bytes": 95615,
+      "local_path": "build/validation/gmsh-curve-sizing-source-v1/source/src/mesh/tetgenBR.h"
+    },
+    "src/numeric/curvature.cpp": {
+      "sha256": "80fe5c277f4b21e1c3d6cbcbd62a054f01ea5c5f504c0fb98d97c1d319807a77",
+      "bytes": 17967,
+      "local_path": "build/validation/gmsh-discrete-curvature-capability-v1/source/src/numeric/curvature.cpp"
+    }
+  },
+  "result_sha256": "5ff238ed31440f87f797cd74fc5c48f70df63875d8966e7640e9b13523611b2b",
+  "native_calls": 0,
+  "patient_array_reads": 0,
+  "runtime_rebuilds": 0,
+  "parameter_changes": 0,
+  "actual_patient_bottleneck_causality": "unmeasured",
+  "next_control": "Paired analytical metre/mm conditioning only; preparation selected by root, no execution authorization."
+}
