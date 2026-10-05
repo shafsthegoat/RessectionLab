@@ -1,0 +1,34 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_________ test_no_new_work_may_start_at_exact_deadline[native_preview] _________
+
+entry = 'native_preview'
+
+    @pytest.mark.parametrize("entry", ["native_preview", "request"])
+    def test_no_new_work_may_start_at_exact_deadline(entry):
+        engine, calls = fake_engine()
+        clock = Clock()
+        budget = PlanningBudget(engine, seconds=90., _clock=clock)
+>       with pytest.raises(PlanningBudgetViolation):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE PlanningBudgetViolation
+
+tests/test_planning_budget_review.py:245: Failed
+____________ test_no_new_work_may_start_at_exact_deadline[request] _____________
+
+entry = 'request'
+
+    @pytest.mark.parametrize("entry", ["native_preview", "request"])
+    def test_no_new_work_may_start_at_exact_deadline(entry):
+        engine, calls = fake_engine()
+        clock = Clock()
+        budget = PlanningBudget(engine, seconds=90., _clock=clock)
+>       with pytest.raises(PlanningBudgetViolation):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE PlanningBudgetViolation
+
+tests/test_planning_budget_review.py:245: Failed
+=========================== short test summary info ============================
+FAILED tests/test_planning_budget_review.py::test_no_new_work_may_start_at_exact_deadline[native_preview]
+FAILED tests/test_planning_budget_review.py::test_no_new_work_may_start_at_exact_deadline[request]
+2 failed, 14 deselected in 0.96s
