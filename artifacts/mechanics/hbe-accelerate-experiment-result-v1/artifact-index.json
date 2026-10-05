@@ -1,0 +1,41 @@
+{
+  "collection_measured_member_reads": 0,
+  "collection_solver_calls": 0,
+  "files": {
+    "RESULT.md": {
+      "bytes": 4201,
+      "sha256": "03b639230cd1511a39ee5c071a3a3b6e1183bd1d0460faec281ccabbef909cb8"
+    },
+    "access-chronology.json": {
+      "bytes": 933,
+      "sha256": "b63d7a6d05736c9b1004a56879f3e1ad96a6bc19839f45362f8bddb73fe4f661"
+    },
+    "aggregate-gates.json": {
+      "bytes": 8534,
+      "sha256": "b0bd14decf8e756aa8d8aef170380e4d0f8d9efa21d3062fc56198d927cd18ae"
+    },
+    "outcome.json": {
+      "bytes": 3919,
+      "sha256": "fc3f5211e40beee246f1ceb2d9dfb0ff08f19840d61d9d6699c3cde2e1db2b4f"
+    },
+    "preservation.json": {
+      "bytes": 87900,
+      "sha256": "86102ca7b7cf10fb559c70f0e4981e2d7a5e978940e92e293a5bebe778ff9cb7"
+    },
+    "raw-output-index.json": {
+      "bytes": 28521,
+      "sha256": "385fdbf2a52972509a18a31a693aa139553ee02e99a62decfc0391fda8fe94e9"
+    },
+    "readonly-freeze.json": {
+      "bytes": 479,
+      "sha256": "8e0882e53320561f99d1d94f230e76976cf417a3ca800e5ea9d2f9039ddd6a4c"
+    },
+    "run-outcomes.json": {
+      "bytes": 43163,
+      "sha256": "5d7bb98c96d33a448ecdbbe8d89d28181c5242ad7ec6a4abfe823799925a6198"
+    }
+  },
+  "raw_data_remain_ignored_and_read_only": true,
+  "source_or_raw_content_modified": false,
+  "status": "frozen_compact_negative_outcome"
+}

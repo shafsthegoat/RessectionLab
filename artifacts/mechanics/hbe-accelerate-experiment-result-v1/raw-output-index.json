@@ -1,0 +1,683 @@
+{
+  "bytes": 914390988,
+  "file_count": 169,
+  "files": {
+    "baseline.json": {
+      "bytes": 93638,
+      "sha256": "ff3703d68af62ba5598042e84e9d249a1a28e1f96d4ab59730e7609ec3e1003a"
+    },
+    "output-watch.json": {
+      "bytes": 195,
+      "sha256": "fc5ccf0e87da2967eb89c4af0cb7258b677f7c77cb1e2e21f9cbe73ff8ef2a2c"
+    },
+    "reference-numerical.json": {
+      "bytes": 15386249,
+      "sha256": "6f596eb45fd1e39bcf485dbbcbfbc8bfd2bd5397e9e54b67d63a77fcbfac686a"
+    },
+    "result.json": {
+      "bytes": 1738,
+      "sha256": "683a92c2a38c4364e1e18155338ee0234734d42607e2a5f967a964df223ad6ad"
+    },
+    "runs/compression-N12-S120-double_mu/console.txt": {
+      "bytes": 330780,
+      "sha256": "a60f5da17f328dfc5dfc6396b329efdbb09c8c07b65d742b3acc7aaede4bc3b8"
+    },
+    "runs/compression-N12-S120-double_mu/elements.log": {
+      "bytes": 37839981,
+      "sha256": "92da67fbb66a4819fb7734faf92c3fca7ae4b4ec46f280d94bfe1b5d080b39e9"
+    },
+    "runs/compression-N12-S120-double_mu/execution.json": {
+      "bytes": 3565,
+      "sha256": "42cc748ab38e2a264556b22c8f5f5a0df18b6b0041e90fdc78afcbc17d5d4d66"
+    },
+    "runs/compression-N12-S120-double_mu/loading.json": {
+      "bytes": 6207,
+      "sha256": "0004721130a5994eee50e1e2298a877d0bed8f7f0dc2013fa8f0ed85edb8abb9"
+    },
+    "runs/compression-N12-S120-double_mu/nodes.log": {
+      "bytes": 58679184,
+      "sha256": "33fed466401c91f473beef9e6e48d6e4b313f0fb8f5e3366c31a0b0ecfa4e36a"
+    },
+    "runs/compression-N12-S120-double_mu/readout.json": {
+      "bytes": 1090459,
+      "sha256": "d79e117fa37a195972cd94f2b693be71275613451f003ac7c5e8366daca78b80"
+    },
+    "runs/compression-N12-S120-double_mu/solver-execution.json": {
+      "bytes": 716,
+      "sha256": "a34d68143ebe42a45702e4fddf89860a6885e8d82b530b637e208d205e03df4e"
+    },
+    "runs/compression-N12-S120-double_mu/solver.log": {
+      "bytes": 734446,
+      "sha256": "8181eeb3d5b50d4003550137fbfd5de363f5482c5cb74180ddaba5618a0dad20"
+    },
+    "runs/compression-N12-S120-double_mu/specimen.feb": {
+      "bytes": 764998,
+      "sha256": "7521d5fd6a39afa2b25947a849bce5cc5c99c927df69ae6c3eac672554e01c33"
+    },
+    "runs/compression-N12-S120-reference/console.txt": {
+      "bytes": 330780,
+      "sha256": "3b3cd2c6decdf6b6d4b0d47bd9bf8f1cdb655c53c840402877c4a5f989c5df77"
+    },
+    "runs/compression-N12-S120-reference/elements.log": {
+      "bytes": 37934688,
+      "sha256": "f7cd042d57d70cf6166a2e71d79c950e818e32e76b6df648102d63747bed813f"
+    },
+    "runs/compression-N12-S120-reference/execution.json": {
+      "bytes": 3566,
+      "sha256": "d8e45f5cf5a64f051a968b8d9bd924081bdfc2a89727f9721df147f33403bbc9"
+    },
+    "runs/compression-N12-S120-reference/loading.json": {
+      "bytes": 6207,
+      "sha256": "67eefcf07fa670d80bf295f8e9c899a025715cba588d5d1070af1fa06c0c80b6"
+    },
+    "runs/compression-N12-S120-reference/nodes.log": {
+      "bytes": 58680310,
+      "sha256": "76e672a638b29c44a479fab53a264b92104bdc2164389563b3201d358ee9abb7"
+    },
+    "runs/compression-N12-S120-reference/readout.json": {
+      "bytes": 1090563,
+      "sha256": "a1e37f4c50f920b4b8183bc499e0438eaf83b9e93643a36b3dc72c60aeb9ab87"
+    },
+    "runs/compression-N12-S120-reference/solver-execution.json": {
+      "bytes": 717,
+      "sha256": "25bac9fd67925266e752ca1f40f3dc707b19d756d7ef5c293f662bf80e89199a"
+    },
+    "runs/compression-N12-S120-reference/solver.log": {
+      "bytes": 734445,
+      "sha256": "5316f9c6d05115d65010f1d49a1b22c1e04ed00bbed524b803c1e86a4b3513f9"
+    },
+    "runs/compression-N12-S120-reference/specimen.feb": {
+      "bytes": 765011,
+      "sha256": "25ccff913de0ba266824a57bbe6065d05f36bb62f8d23120761725bb449ef6f9"
+    },
+    "runs/compression-N12-S60-reference/console.txt": {
+      "bytes": 181017,
+      "sha256": "8e4458d5428f413c69d791c81fad765cd2629175e91d264b847d3e1cf086088d"
+    },
+    "runs/compression-N12-S60-reference/elements.log": {
+      "bytes": 18987060,
+      "sha256": "968e43dab11576d0a1828767da80b8b7a1e98b789d24930f2d7c3aab8f5217a1"
+    },
+    "runs/compression-N12-S60-reference/execution.json": {
+      "bytes": 3556,
+      "sha256": "458ebfdcc9c28952c70e7c720af7818d8642480c7e2369932b7c537ee24db6ff"
+    },
+    "runs/compression-N12-S60-reference/loading.json": {
+      "bytes": 3533,
+      "sha256": "48dcbd091401d151443e81bb0ec4dc101f47d1cede01d450dd08aabdb61633b0"
+    },
+    "runs/compression-N12-S60-reference/nodes.log": {
+      "bytes": 29317007,
+      "sha256": "f875239091e2c819b085d11a611edcda7290ee6b45e7c868075ed1731bc1a339"
+    },
+    "runs/compression-N12-S60-reference/readout.json": {
+      "bytes": 550687,
+      "sha256": "f000ebd0e22d64923fe88fd3d1d53e8a260f240af0cb45368cf7708425014538"
+    },
+    "runs/compression-N12-S60-reference/solver-execution.json": {
+      "bytes": 715,
+      "sha256": "bacdafdcd3907015c6e5dade2fe69443661b666b70db9a374cab648fbbd85106"
+    },
+    "runs/compression-N12-S60-reference/solver.log": {
+      "bytes": 584679,
+      "sha256": "e37c4a9b970d6af3e568dad7f53bbb14435a87e757acf9c7f95dfcea6e8912e5"
+    },
+    "runs/compression-N12-S60-reference/specimen.feb": {
+      "bytes": 759152,
+      "sha256": "6105632d45d2212d5e25f6a8cb3c011ff70a95ffdf342e0583a90e46d8f8bb57"
+    },
+    "runs/compression-N4-S60-reference/console.txt": {
+      "bytes": 159284,
+      "sha256": "b90469b54dc0456e89a52cbdd7f60a49cb34892bf731ed04e0464c3bf66115d6"
+    },
+    "runs/compression-N4-S60-reference/elements.log": {
+      "bytes": 696904,
+      "sha256": "f09421c96c1d14b4f5ed62b132556051b95aec7fec7268df6897a0d672d81d11"
+    },
+    "runs/compression-N4-S60-reference/execution.json": {
+      "bytes": 3547,
+      "sha256": "eb02fde0c0bf1be2b4edd5b8f07e1350fb617f31ee9729193ba2655d2a4d9ee4"
+    },
+    "runs/compression-N4-S60-reference/loading.json": {
+      "bytes": 3533,
+      "sha256": "0611272bea0c97372549fcea7c0cc3f284c2747706bdd326c4f9d639ce1e9f9f"
+    },
+    "runs/compression-N4-S60-reference/nodes.log": {
+      "bytes": 1296464,
+      "sha256": "af1c5aab854d446c1629726fa904742c3246c4ffb050e52e461c53a2dc6d9344"
+    },
+    "runs/compression-N4-S60-reference/readout.json": {
+      "bytes": 549126,
+      "sha256": "e790be8d6806bdb85c8fd966f0918594c89464eb899e30190e9505d68496b904"
+    },
+    "runs/compression-N4-S60-reference/solver-execution.json": {
+      "bytes": 715,
+      "sha256": "96e6b5fef68c8b565f31df9b6ed77656f177d953219d70cdaf89cd65b4e60189"
+    },
+    "runs/compression-N4-S60-reference/solver.log": {
+      "bytes": 215783,
+      "sha256": "58d4b78564ae8ab5e30579be8268979ce21d547cae210c0d96a864a864109bfc"
+    },
+    "runs/compression-N4-S60-reference/specimen.feb": {
+      "bytes": 62577,
+      "sha256": "f32f0b0678e1697a43588786bcf898976e9a6d925f45057d496d86676485f924"
+    },
+    "runs/compression-N8-S60-reference/console.txt": {
+      "bytes": 175100,
+      "sha256": "791d2bdfea35090f53e3fcb238b55aa0076b29eb13fa04e446363906a109e1e0"
+    },
+    "runs/compression-N8-S60-reference/elements.log": {
+      "bytes": 5588831,
+      "sha256": "a94c3d38029350710eede95ee6f2584b018df8f2ca1f564bc83cb194b9e58147"
+    },
+    "runs/compression-N8-S60-reference/execution.json": {
+      "bytes": 3546,
+      "sha256": "901c1c701a95730abc5d6ff25083733f66471ef67d7d6e82d050d59494c2b1b4"
+    },
+    "runs/compression-N8-S60-reference/loading.json": {
+      "bytes": 3533,
+      "sha256": "3d43d7143088803a5c732c85b22c259de6d2327b2fe7a92db3cf0e88909dd700"
+    },
+    "runs/compression-N8-S60-reference/nodes.log": {
+      "bytes": 9029128,
+      "sha256": "f661e96e0175b804b8d92191301236037d01f20a03605122a165aae5f3071d48"
+    },
+    "runs/compression-N8-S60-reference/readout.json": {
+      "bytes": 549557,
+      "sha256": "41e38786c9a07d045270f1a5a7da656bd3eddd9abed16d6fbc6fe30149a2d03d"
+    },
+    "runs/compression-N8-S60-reference/solver-execution.json": {
+      "bytes": 714,
+      "sha256": "da65a8807143498d349705700dae37d8ea2bbb87f1ce986badd3926563b9d391"
+    },
+    "runs/compression-N8-S60-reference/solver.log": {
+      "bytes": 363377,
+      "sha256": "4bc1fd13b1ad669d9b3556b3b41edfb1b916ed84ed1af5ae3d3c9e4a19b6ec8a"
+    },
+    "runs/compression-N8-S60-reference/specimen.feb": {
+      "bytes": 275433,
+      "sha256": "4145e40a52be05f1418592ef1ecf02b7ef64c9dbe03a83241cab349ef161a665"
+    },
+    "runs/tension-N12-S120-reference/console.txt": {
+      "bytes": 294298,
+      "sha256": "ac4d9cc4c86cb6a17e7d7dd5d32e0f493acd5a1f48e040ce12b102c06010d296"
+    },
+    "runs/tension-N12-S120-reference/elements.log": {
+      "bytes": 36959782,
+      "sha256": "736fe286c7330a593284f77f7004084620510677ad0f867b19d3ac9f07277897"
+    },
+    "runs/tension-N12-S120-reference/execution.json": {
+      "bytes": 3529,
+      "sha256": "9d86c8149b517d13f136e8d6f57a109e97520fd0cb82d866ccf99aa085005302"
+    },
+    "runs/tension-N12-S120-reference/loading.json": {
+      "bytes": 6082,
+      "sha256": "7b6b66b43be65b3946997bf86194cae8d99fa73700d0a8325fb7778e1b3dabd2"
+    },
+    "runs/tension-N12-S120-reference/nodes.log": {
+      "bytes": 58341477,
+      "sha256": "1ac0d36e1af6f6575298608219fcd3a9c4ec534c34ec3f8e3537286975cd035c"
+    },
+    "runs/tension-N12-S120-reference/readout.json": {
+      "bytes": 1080544,
+      "sha256": "5b64189884791f3cb39f62525037407e3dd18e582bea42768add0fab225a5768"
+    },
+    "runs/tension-N12-S120-reference/solver-execution.json": {
+      "bytes": 712,
+      "sha256": "f4609e82f9d651d3223436b283512bd0749291f03af95d0b40c6f1832a770b4b"
+    },
+    "runs/tension-N12-S120-reference/solver.log": {
+      "bytes": 697963,
+      "sha256": "f1ab50b7c0535c7e4fa6d7c5974fdae76ee7e687761fe21ff9a74d2b51d22583"
+    },
+    "runs/tension-N12-S120-reference/specimen.feb": {
+      "bytes": 764890,
+      "sha256": "536347210daf21a1ea90dbc3011bb032c02a43c5b64120da9f87eaf1049b11aa"
+    },
+    "runs/tension-N12-S60-reference/console.txt": {
+      "bytes": 170780,
+      "sha256": "e53f7e6ab7c49236423166c10cefc75d04fb6ebd2a1e5ccccf444855ddd5eea1"
+    },
+    "runs/tension-N12-S60-reference/elements.log": {
+      "bytes": 18500255,
+      "sha256": "d4d352ba0bab247541284e17c372d156f1aedf5d45b64ba91fbd9f6634962250"
+    },
+    "runs/tension-N12-S60-reference/execution.json": {
+      "bytes": 3521,
+      "sha256": "883c197bc8c347523e23de96aad830ef447a14d817058e8cb67961aceeb11168"
+    },
+    "runs/tension-N12-S60-reference/loading.json": {
+      "bytes": 3468,
+      "sha256": "637746d8302259447d43d741e85b0730f4cc614f3feab27f3b366d8b4bbbe23e"
+    },
+    "runs/tension-N12-S60-reference/nodes.log": {
+      "bytes": 29169035,
+      "sha256": "6e13550b4c3c76c09e4e8bc9eef15e07f5f91d3265b0ad10ea15f03f4d07ad23"
+    },
+    "runs/tension-N12-S60-reference/readout.json": {
+      "bytes": 545614,
+      "sha256": "7a269ca2c1f7a4a9225b84d7660455a8832e0ed593867821d5c8a25cc9401d6a"
+    },
+    "runs/tension-N12-S60-reference/solver-execution.json": {
+      "bytes": 712,
+      "sha256": "c6b1176b31581246f5eab89af0e279402e39bf8988ddd9c1eaff68b8c750e458"
+    },
+    "runs/tension-N12-S60-reference/solver.log": {
+      "bytes": 574443,
+      "sha256": "527734fefe6922468788ef894e5db3d5be6e001e306471bb2e5080c7b13e87d7"
+    },
+    "runs/tension-N12-S60-reference/specimen.feb": {
+      "bytes": 759091,
+      "sha256": "31f1ad9c050ea2c17a96c0a1441faa4b2c312f7b7a616d556497057e32220452"
+    },
+    "runs/tension-N4-S60-reference/console.txt": {
+      "bytes": 147545,
+      "sha256": "139c9c9e6c7809cc1417d16677ffd6db26332b6c972ac1bd927114767b446c69"
+    },
+    "runs/tension-N4-S60-reference/elements.log": {
+      "bytes": 675723,
+      "sha256": "6b525e36f76dd85a645aa8d816881db2c537d845f262bdce417d639d765c9f27"
+    },
+    "runs/tension-N4-S60-reference/execution.json": {
+      "bytes": 3511,
+      "sha256": "e4fc2fb4da478cc9411cd33ae7df44c73ad38226d55b07e696e792eb61c41a89"
+    },
+    "runs/tension-N4-S60-reference/loading.json": {
+      "bytes": 3468,
+      "sha256": "7f3eb850770e63f2e4ece85ac8621d8401a14188f25735888aaa68b8ad53727e"
+    },
+    "runs/tension-N4-S60-reference/nodes.log": {
+      "bytes": 1289207,
+      "sha256": "e78265e401f263b96f64d7abbdfd2835ed23a83fc7c7d3e68da6fcd7684a4e3c"
+    },
+    "runs/tension-N4-S60-reference/readout.json": {
+      "bytes": 544574,
+      "sha256": "51c7136a2456fce70b7f754e30459e8927608c5bf61b5077ddcea87e86b7f6b1"
+    },
+    "runs/tension-N4-S60-reference/solver-execution.json": {
+      "bytes": 711,
+      "sha256": "4acc083af8a6f15e61619ee8f14d556cc8022852713ceca2d5e7c4f93367e09a"
+    },
+    "runs/tension-N4-S60-reference/solver.log": {
+      "bytes": 204043,
+      "sha256": "29b3129b746dd16aa9e49039b2ba391f58678fe9834dd6ca089aa6e2045dffce"
+    },
+    "runs/tension-N4-S60-reference/specimen.feb": {
+      "bytes": 62516,
+      "sha256": "ac7fe83b6b402f058b5758a77ca513856131bf111c5b2e5e88c908b40696ef0c"
+    },
+    "runs/tension-N8-S60-reference/console.txt": {
+      "bytes": 165607,
+      "sha256": "cdefc0b5f88dbc131a03cfcec8b66c27bb50b0a682a741b42e3538b1868f068d"
+    },
+    "runs/tension-N8-S60-reference/elements.log": {
+      "bytes": 5450890,
+      "sha256": "d93b6a4a20233c2b3b2a5bbe8f201fb6fb07f8f902f0c5c6f6714cff6e924b9a"
+    },
+    "runs/tension-N8-S60-reference/execution.json": {
+      "bytes": 3510,
+      "sha256": "a72afec40b1f0c2f9a89a6eade8c8dca6301c976bc06e202fbf1f7c88efa96f8"
+    },
+    "runs/tension-N8-S60-reference/loading.json": {
+      "bytes": 3468,
+      "sha256": "3a0d486bf667346fe4c606e5881edb44d0f521db0c3639683065308f743a5f82"
+    },
+    "runs/tension-N8-S60-reference/nodes.log": {
+      "bytes": 9001775,
+      "sha256": "6ccab98630a0df79f0d9f255a1ff2779519d5ef96ff410c097874dfbc3d9a2c5"
+    },
+    "runs/tension-N8-S60-reference/readout.json": {
+      "bytes": 545016,
+      "sha256": "a9cb82b68a52d7b7f3267d83df741d6f416bb8569e3dbb2bbf7d7a94d9e50e18"
+    },
+    "runs/tension-N8-S60-reference/solver-execution.json": {
+      "bytes": 710,
+      "sha256": "e2597979a22075f9d72b5821b2a659602d46973a0e78859997d1fea56cf32051"
+    },
+    "runs/tension-N8-S60-reference/solver.log": {
+      "bytes": 353884,
+      "sha256": "e5f8008391c5635a392476b012371ae1401132440d782939c8dc089ba6487c97"
+    },
+    "runs/tension-N8-S60-reference/specimen.feb": {
+      "bytes": 275372,
+      "sha256": "f4b69389104dac4cd58ad39021b64e46ce6436cfabc64ee866b84f00350a41ea"
+    },
+    "runs/torsion_neg-N12-S120-reference/console.txt": {
+      "bytes": 328612,
+      "sha256": "c95fd91fb84ad4fbfb960ac8490ec3de9ef79e83e4638780cb6bbefd398ed7d9"
+    },
+    "runs/torsion_neg-N12-S120-reference/elements.log": {
+      "bytes": 38643876,
+      "sha256": "0f98a63f0d975b271849163f9e0aa5422677ce99d4120a6348156def1d7c20c6"
+    },
+    "runs/torsion_neg-N12-S120-reference/execution.json": {
+      "bytes": 3565,
+      "sha256": "021aa15a98ef150da032280088be52d9471a82ea33d8f7196e4f6de86360b67d"
+    },
+    "runs/torsion_neg-N12-S120-reference/loading.json": {
+      "bytes": 6020,
+      "sha256": "43dfe963dbe14dbfdaed17fbde2f72c0fd276ef1cf8a1b647b17660e52ffcf46"
+    },
+    "runs/torsion_neg-N12-S120-reference/nodes.log": {
+      "bytes": 59553734,
+      "sha256": "07624c98658433fa7172b5ea6b3f28fd1b542feadaf34d25f5b4054f091125bf"
+    },
+    "runs/torsion_neg-N12-S120-reference/readout.json": {
+      "bytes": 1087694,
+      "sha256": "5934d4699d747f0f852a9242a08ca3bdaac3cfcb583dc4ed92dd96cbaecc2569"
+    },
+    "runs/torsion_neg-N12-S120-reference/solver-execution.json": {
+      "bytes": 716,
+      "sha256": "2f03e0ccf87583afae9b88373719d708febc19c201a4c3e6be8f8a7d2a5dce57"
+    },
+    "runs/torsion_neg-N12-S120-reference/solver.log": {
+      "bytes": 914655,
+      "sha256": "e0350c42689ed21dcd47bc74988131bb6d1c8c83dd0fe27d0e8dd457f78685b5"
+    },
+    "runs/torsion_neg-N12-S120-reference/specimen.feb": {
+      "bytes": 4761992,
+      "sha256": "ccd47d61bea8ee46b835241e528e5ec054a30706fd44262b6b480dfdaabb881f"
+    },
+    "runs/torsion_neg-N12-S60-reference/console.txt": {
+      "bytes": 165607,
+      "sha256": "45b4fe8c75c1e79317bb0864dbb4c623bb94b6cd70c1fb2cd8d51b54335a4ba9"
+    },
+    "runs/torsion_neg-N12-S60-reference/elements.log": {
+      "bytes": 19333081,
+      "sha256": "48681b7389ed70b90414d6921197fc8cc7e6b60b7cb8e70fdbef3f589beb37cc"
+    },
+    "runs/torsion_neg-N12-S60-reference/execution.json": {
+      "bytes": 3557,
+      "sha256": "e03678e7ee7b72fb520875a2fdc42abeeb88f7aee2c3c0425c7e6ffd61ede1fd"
+    },
+    "runs/torsion_neg-N12-S60-reference/loading.json": {
+      "bytes": 3427,
+      "sha256": "2ad767fbf900f113e4a4ca72792e7ec26d2c37aa9d63ddc7d0453b24b3c18873"
+    },
+    "runs/torsion_neg-N12-S60-reference/nodes.log": {
+      "bytes": 29848533,
+      "sha256": "e1b3d842e0b111b689d30cd35a2e8b435d17f198239ce0ecd18e22a1829e77f6"
+    },
+    "runs/torsion_neg-N12-S60-reference/readout.json": {
+      "bytes": 549170,
+      "sha256": "ac8efacaeadd91e7d9a8c5b4e8ec1d357ffde677686350f71ebf7e42f843cb1f"
+    },
+    "runs/torsion_neg-N12-S60-reference/solver-execution.json": {
+      "bytes": 716,
+      "sha256": "eb9646451c018b054a481f7cc2e6457a509d06e727d5e3b108fe7ef7c8b1bdfd"
+    },
+    "runs/torsion_neg-N12-S60-reference/solver.log": {
+      "bytes": 751316,
+      "sha256": "550850389964405766a0e0d72add026611940624a88f4eada56e76d145abbc68"
+    },
+    "runs/torsion_neg-N12-S60-reference/specimen.feb": {
+      "bytes": 2796932,
+      "sha256": "2e62b1f7436f171103501c8c0362a146bafe36a554fa051cb44f37e26a51e7b5"
+    },
+    "runs/torsion_neg-N4-S60-reference/console.txt": {
+      "bytes": 165605,
+      "sha256": "ade29f0859ef3304f0948e7b32afc04139b630b913a15bf400ab2b046d2d7ebf"
+    },
+    "runs/torsion_neg-N4-S60-reference/elements.log": {
+      "bytes": 709229,
+      "sha256": "c66e2a6ac22ab3440995c275e02994bfb70540da0f99c5a2331d8123bf727e21"
+    },
+    "runs/torsion_neg-N4-S60-reference/execution.json": {
+      "bytes": 3547,
+      "sha256": "51b2fd6bcd9396b773341bac3d82de8e4ed0e0836b8c65b6388f79fd40e9120c"
+    },
+    "runs/torsion_neg-N4-S60-reference/loading.json": {
+      "bytes": 3426,
+      "sha256": "e785d5fbf9c2357f54d9691116805318593acbe7a1032d504fb4c50bcdc0e88a"
+    },
+    "runs/torsion_neg-N4-S60-reference/nodes.log": {
+      "bytes": 1381274,
+      "sha256": "4238e3920d93b050ac631c5a38bc1f4addd6ebb09fd443ada095ec11efd25d4d"
+    },
+    "runs/torsion_neg-N4-S60-reference/readout.json": {
+      "bytes": 524923,
+      "sha256": "33af0fc9d00b8737f1e749401d66dbaec3eeca434d6d758a8149193da82029c9"
+    },
+    "runs/torsion_neg-N4-S60-reference/solver-execution.json": {
+      "bytes": 715,
+      "sha256": "e13f21885340974b424c91100b34dedc6deffe769769c51c291278d8b523fe06"
+    },
+    "runs/torsion_neg-N4-S60-reference/solver.log": {
+      "bytes": 242016,
+      "sha256": "42af0b4abfb8d53684d2579f29fa0531d234a73e44a55e64fb09315737aa29ad"
+    },
+    "runs/torsion_neg-N4-S60-reference/specimen.feb": {
+      "bytes": 285995,
+      "sha256": "0b3abcad15d686857533c039cc60dea02f3d46c87d8303656b524aea331d17f8"
+    },
+    "runs/torsion_neg-N8-S60-reference/console.txt": {
+      "bytes": 165607,
+      "sha256": "9bf17242148bbad5cfbf80ce915e30be2e3be344c1556097bc514862848434f7"
+    },
+    "runs/torsion_neg-N8-S60-reference/elements.log": {
+      "bytes": 5696932,
+      "sha256": "9cedc03d090b16d22061c3edd1893ecb6c11018646f4392bc109b268e6e839f7"
+    },
+    "runs/torsion_neg-N8-S60-reference/execution.json": {
+      "bytes": 3546,
+      "sha256": "07a20dd4108e9d2b5f7f406d314c4035542c9c7ef0015954fd8f39c19b78296e"
+    },
+    "runs/torsion_neg-N8-S60-reference/loading.json": {
+      "bytes": 3427,
+      "sha256": "de560144ce94ba8ba943feb2e4590aef9786020dcedb8571ea8c89e72aa26743"
+    },
+    "runs/torsion_neg-N8-S60-reference/nodes.log": {
+      "bytes": 9337850,
+      "sha256": "aedeba65010fb65a68cac56670c5cf3e17f1e65a7cd7da07040edabfa6301864"
+    },
+    "runs/torsion_neg-N8-S60-reference/readout.json": {
+      "bytes": 548040,
+      "sha256": "33e59c9c904098306786d0b21151eec2471f38cff31be24b14e0c6c5e79ff10b"
+    },
+    "runs/torsion_neg-N8-S60-reference/solver-execution.json": {
+      "bytes": 714,
+      "sha256": "5b3207135617157d39de414b7151453372d825d1bcbff250dfb27399e67728ae"
+    },
+    "runs/torsion_neg-N8-S60-reference/solver.log": {
+      "bytes": 436363,
+      "sha256": "af32de9202467b8cb5c3f9a47eae7c791188b8f7669cdcec29c079d38c07ac6d"
+    },
+    "runs/torsion_neg-N8-S60-reference/specimen.feb": {
+      "bytes": 1199097,
+      "sha256": "ef594588c49f5fcd2affdb3c11579ab5297de268451c04ace1c9070569cf997a"
+    },
+    "runs/torsion_pos-N12-S120-double_mu/console.txt": {
+      "bytes": 328612,
+      "sha256": "0461223ac20e2a2beb3bb0d72fc7775d6d271ffb54aa585ffd27ec4ee282671c"
+    },
+    "runs/torsion_pos-N12-S120-double_mu/elements.log": {
+      "bytes": 38296754,
+      "sha256": "4a82db984d66ba236f90953bb90a3dff514df2e68a8965ec69864d5872ac02ea"
+    },
+    "runs/torsion_pos-N12-S120-double_mu/execution.json": {
+      "bytes": 3565,
+      "sha256": "d2ef1bbe32432239d3c9bccf455e2f2859f53fe843ad8072888c7c577ee7535d"
+    },
+    "runs/torsion_pos-N12-S120-double_mu/loading.json": {
+      "bytes": 5899,
+      "sha256": "fac2fbdaa657360bf00390f283aac96e8daeb7630a9af4fc925253e1bfe80ed0"
+    },
+    "runs/torsion_pos-N12-S120-double_mu/nodes.log": {
+      "bytes": 59553185,
+      "sha256": "9c3d6a61bc065bc0c19624910ebbbe61d8cf414cc09ab169d751b29074eb3930"
+    },
+    "runs/torsion_pos-N12-S120-double_mu/readout.json": {
+      "bytes": 1086866,
+      "sha256": "c3b9b9ec99ac931791a7eae09e47ea5b0a5a840d5c3c12234a668464f403ccf8"
+    },
+    "runs/torsion_pos-N12-S120-double_mu/solver-execution.json": {
+      "bytes": 716,
+      "sha256": "d96040e0ffa3a70a61d8dee8ace06c10cc843b34dbed010dba3dab285f64953c"
+    },
+    "runs/torsion_pos-N12-S120-double_mu/solver.log": {
+      "bytes": 914323,
+      "sha256": "f1dd9124ce02c583d98a5b73fa3ac7a83ef9bbb2ce4d1759418e2799f4b5713e"
+    },
+    "runs/torsion_pos-N12-S120-double_mu/specimen.feb": {
+      "bytes": 4754480,
+      "sha256": "7b809c877b7b719b20d1a8dc7b7b976883620ea107ffd42a08f2492e06f38a13"
+    },
+    "runs/torsion_pos-N12-S120-reference/console.txt": {
+      "bytes": 328612,
+      "sha256": "b77472ccf1b106814325e971d1c3c591d08a8b8225ae8e4eaddf144b59a78d6a"
+    },
+    "runs/torsion_pos-N12-S120-reference/elements.log": {
+      "bytes": 38641453,
+      "sha256": "08199be8b92cfd5bc8cb6b8f804e1854fdebf6336efe73e05f396afb1eb6bbd2"
+    },
+    "runs/torsion_pos-N12-S120-reference/execution.json": {
+      "bytes": 3565,
+      "sha256": "35ffcacc32f0fc48d3293c712d834c1158a345829dcaeea2c4941a906dcd6630"
+    },
+    "runs/torsion_pos-N12-S120-reference/loading.json": {
+      "bytes": 5899,
+      "sha256": "1cc031dce1b833c1776707748f724b51a43dd54d7b542e7939f6b55ee6f71de6"
+    },
+    "runs/torsion_pos-N12-S120-reference/nodes.log": {
+      "bytes": 59553142,
+      "sha256": "f35785676d86f8da7c0746b6df9f2ccf9d4cfed91792d98bb345aff5a660e761"
+    },
+    "runs/torsion_pos-N12-S120-reference/readout.json": {
+      "bytes": 1086922,
+      "sha256": "0ec663c8d3bcbc178d8712e3cb0583084086a1981f9d4f67bb52c100538c0b9f"
+    },
+    "runs/torsion_pos-N12-S120-reference/solver-execution.json": {
+      "bytes": 716,
+      "sha256": "78ee6c659ad2f2177f88101f7a8a7b2ef89e34a40b0ff04fd8f17166606598b1"
+    },
+    "runs/torsion_pos-N12-S120-reference/solver.log": {
+      "bytes": 914324,
+      "sha256": "ca587a60067b7af03121b3cce268e6d327c31a252a6767035652e0dcda2ae3cc"
+    },
+    "runs/torsion_pos-N12-S120-reference/specimen.feb": {
+      "bytes": 4754493,
+      "sha256": "9f52d78d9b65bbfe3752e3a3707ee150a2ce34f2916f96d5591026686d55bbb5"
+    },
+    "runs/torsion_pos-N12-S60-reference/console.txt": {
+      "bytes": 165607,
+      "sha256": "0f4ec68b639eb297c2446a988f2a8a233e4362a2958563a9a6b6505a7c596028"
+    },
+    "runs/torsion_pos-N12-S60-reference/elements.log": {
+      "bytes": 19332003,
+      "sha256": "37940c66c9affce53953ef653161429d11dcd09199871ab53438e31ad45f8e4d"
+    },
+    "runs/torsion_pos-N12-S60-reference/execution.json": {
+      "bytes": 3556,
+      "sha256": "dfa891d07fc9569a0079f7f57936be9e2bec114c33e62b2bf0eb290d7368e7b4"
+    },
+    "runs/torsion_pos-N12-S60-reference/loading.json": {
+      "bytes": 3366,
+      "sha256": "e9495ef71d822dd933bddf9dd75ffec9aefb88b707fc3015a61603aa7a8cbf0e"
+    },
+    "runs/torsion_pos-N12-S60-reference/nodes.log": {
+      "bytes": 29849214,
+      "sha256": "71437adbf850ff011d0cc10b96ad237d94b6e1120789bc7b383cb0f0a841d529"
+    },
+    "runs/torsion_pos-N12-S60-reference/readout.json": {
+      "bytes": 548778,
+      "sha256": "3431347f7c6d90e42a1ee7609c81f1b87c22a63778744f32997a699906c9d774"
+    },
+    "runs/torsion_pos-N12-S60-reference/solver-execution.json": {
+      "bytes": 715,
+      "sha256": "61ce31b2065361deb7d423a887a17322238c39c09e20ad745b1b6fb011c731bf"
+    },
+    "runs/torsion_pos-N12-S60-reference/solver.log": {
+      "bytes": 750982,
+      "sha256": "8fcd51a49dd930028815cb15ca7ac3c2b19bb8266a7d1dfb98c68a69bdebcc19"
+    },
+    "runs/torsion_pos-N12-S60-reference/specimen.feb": {
+      "bytes": 2793090,
+      "sha256": "4a428dab4c4a86718d3a95a08005ead95bd153d05d9eb07730c8d6a306faf208"
+    },
+    "runs/torsion_pos-N4-S60-reference/console.txt": {
+      "bytes": 165605,
+      "sha256": "9cc8fe63781aa3ccb03845926ba295f73c15a3468850efb8a326a5fc069dd8f5"
+    },
+    "runs/torsion_pos-N4-S60-reference/elements.log": {
+      "bytes": 709312,
+      "sha256": "3b7a9cab134bf63a777f9b57b124d184824f2da15402d009ea703344e189050b"
+    },
+    "runs/torsion_pos-N4-S60-reference/execution.json": {
+      "bytes": 3547,
+      "sha256": "cf6c4ed33fc645d44bff5d1928373ead2dafe4284ee9dcaaa86d8a5c030c5118"
+    },
+    "runs/torsion_pos-N4-S60-reference/loading.json": {
+      "bytes": 3365,
+      "sha256": "bfa3ba8c876b2274856b788f8497e4ec5f2730dc3a36fe74318a4ec51952ffae"
+    },
+    "runs/torsion_pos-N4-S60-reference/nodes.log": {
+      "bytes": 1380698,
+      "sha256": "6ae61f05f8f82449b160e72af342e69a5487b9dc5a62de594460dd607b397444"
+    },
+    "runs/torsion_pos-N4-S60-reference/readout.json": {
+      "bytes": 524712,
+      "sha256": "23712c8f99560743bf3c5181b33c06f5bcbc3c42ef473688dde60d72d8fc1825"
+    },
+    "runs/torsion_pos-N4-S60-reference/solver-execution.json": {
+      "bytes": 715,
+      "sha256": "22986bf8deb160c56eb93449ac9154b44f40bfc96b5818c80673ec81c48890fe"
+    },
+    "runs/torsion_pos-N4-S60-reference/solver.log": {
+      "bytes": 242019,
+      "sha256": "282a092a9f4e39773470802a0700e1f3ec5c2db9438fa6260ee8586589285ff6"
+    },
+    "runs/torsion_pos-N4-S60-reference/specimen.feb": {
+      "bytes": 285938,
+      "sha256": "41bc29d76b8ce0b8e4902e1c5c979a77ddacd5da26538bc2f2135a77eb708958"
+    },
+    "runs/torsion_pos-N8-S60-reference/console.txt": {
+      "bytes": 165607,
+      "sha256": "dcb4f36598271aacf79df6c4048c019f2d997ee5dc84738ce61c22ed9bf0f9f2"
+    },
+    "runs/torsion_pos-N8-S60-reference/elements.log": {
+      "bytes": 5696738,
+      "sha256": "7983415efe88c59a7ff4ae6f3f832fdfd2b357b857faf719a8d92447bba8ee43"
+    },
+    "runs/torsion_pos-N8-S60-reference/execution.json": {
+      "bytes": 3547,
+      "sha256": "2d92e37b8941dc2a49a2713fa5c9d71e0184ff0e749633b2b6404dd133619e42"
+    },
+    "runs/torsion_pos-N8-S60-reference/loading.json": {
+      "bytes": 3366,
+      "sha256": "58b9d10537b0d9a6676c30414f29c3d1f8263f23513b0e0879416382eba13bda"
+    },
+    "runs/torsion_pos-N8-S60-reference/nodes.log": {
+      "bytes": 9337697,
+      "sha256": "862c1ae1624867f3cb2931dc1388388e63a7ebbfa4f99a52202d65c94c82316c"
+    },
+    "runs/torsion_pos-N8-S60-reference/readout.json": {
+      "bytes": 548619,
+      "sha256": "601d70f08ba4b919440caa1cdc7a44b6b89d56e3ffcd107c88423b454d472661"
+    },
+    "runs/torsion_pos-N8-S60-reference/solver-execution.json": {
+      "bytes": 715,
+      "sha256": "c01a46e93778ded751c905b07a70e7e602798bea4ac7776bc2f6bcc6013aa2d2"
+    },
+    "runs/torsion_pos-N8-S60-reference/solver.log": {
+      "bytes": 436696,
+      "sha256": "1ebb98effed837e5b4cb68f06aa28700323e661e4006cdcca737ef3393672d85"
+    },
+    "runs/torsion_pos-N8-S60-reference/specimen.feb": {
+      "bytes": 1203020,
+      "sha256": "ef6663767570e89eec21b24d6ad82a3b7e45fc9712a8084d9736ad0f46608a97"
+    },
+    "state.json": {
+      "bytes": 84837,
+      "sha256": "d984a8213a0a6799fa1c51ae5ac6872b7ec36af6c810b9338736613d60f904f8"
+    },
+    "supervision/combined.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "supervision/supervision.json": {
+      "bytes": 1162,
+      "sha256": "2a819ab6e8320d7093508e9a958d0354330c350fd453f539d25341cd674b7c2b"
+    }
+  },
+  "root": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1"
+}

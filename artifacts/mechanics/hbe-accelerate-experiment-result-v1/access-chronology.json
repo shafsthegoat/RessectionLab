@@ -1,0 +1,28 @@
+{
+  "access_ledger_events": 0,
+  "actual_fitted_calls": 0,
+  "collector_measured_member_reads": 0,
+  "expected_absent_paths": {
+    "access.jsonl": true,
+    "calibration-metrics.json": true,
+    "fit.json": true,
+    "fitted-inputs": true,
+    "held-out-metrics.json": true,
+    "numerical.json": true,
+    "parameter-prediction-freeze.json": true,
+    "predictions.json": true
+  },
+  "original_failure_and_continuation_indexes_preserved": true,
+  "recorded_access_flags": {
+    "calibration_access_attempted": false,
+    "calibration_responses_accessed": false,
+    "held_out_access_attempted": false,
+    "held_out_responses_accessed": false
+  },
+  "state": {
+    "bytes": 84837,
+    "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/state.json",
+    "sha256": "d984a8213a0a6799fa1c51ae5ac6872b7ec36af6c810b9338736613d60f904f8"
+  },
+  "status": "aggregate_gate_stopped_before_recorded_calibration_access"
+}

@@ -4,8 +4,11 @@ Primary sources checked October 4, 2026. This is a scoped framework review,
 not an installation, completed validation or change to the geometric engine.
 Suitability judgments below are engineering recommendations; no candidate was
 installed or tested for that comparison. Subsequent local work built pinned
-FEBio 4.13 source and passed five homogeneous analytical controls; see
-[the executed evidence](../artifacts/mechanics-febio-patch-run-v1/RESULT.md).
+FEBio 4.13 source. The original runtime passed five homogeneous controls and
+three tet10/constraint controls. Its repaired optional Apple sparse backend
+passed all eight and independent replay; see [the executed evidence](../artifacts/mechanics-accelerate-controls-run-v1/RESULT.md).
+The subsequent 18-case specimen run failed cross-mesh convergence before
+measured-response access; see [the fixed-run outcome](../artifacts/mechanics/hbe-accelerate-experiment-result-v1/outcome.json).
 The table below preserves the original framework assessment. Neither those
 controls nor runtime installation establishes measured tissue fidelity.
 See the separate [measurement inventory](tissue-mechanics-measurements.md),

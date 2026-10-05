@@ -1,6 +1,6 @@
 # Tissue-mechanics validation contract
 
-Status: prospective, 2026-10-04. No mechanics gate below has been executed or passed.
+Status: updated 2026-10-04. The physical-validation gates below remain unpassed. Eight analytical solver controls and independent replay passed; the fixed 18-case specimen run then failed mesh convergence before measured-curve access. The real-patient candidate failed surface fidelity. See [specimen outcome](../artifacts/mechanics/hbe-accelerate-experiment-result-v1/outcome.json) and [patient diagnostic](../artifacts/mechanics/resect-case4-saved-mesh-diagnostic-v1/RESULT.md). These numerical tests and failures do not establish physical fidelity.
 Keep the current geometric planner and patient splits unchanged. Use an established FEM package; compare frameworks in [tissue-mechanics-frameworks.md](tissue-mechanics-frameworks.md).
 
 ## Three separate claims
