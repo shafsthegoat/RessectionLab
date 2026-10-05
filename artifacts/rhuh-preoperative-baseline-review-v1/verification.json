@@ -1,0 +1,72 @@
+{
+  "all_bound_files_unchanged_after_focused_checks": true,
+  "execution_scope": {
+    "actual_clinical_CSV_reads": 0,
+    "actual_native_or_supervised_child_process_runs": 0,
+    "installations_or_shared_venv_changes": 0,
+    "numerical_fits": "Only tiny analytical sklearn fixtures:12 initial independent constant-feature fits;24 in final combined invocation (12 independent +12 owner). Constructed fake estimators and phase mocks are not measured research fits.",
+    "patient_images": 0,
+    "protected_BTC_access": 0,
+    "real_patient_fits": 0
+  },
+  "git_head_at_review": "3d8ae73392b4ea79ed6f50329871966b7875a335",
+  "independent_controls": [
+    "Subclassed convergence failure rejects before completed-fit accounting.",
+    "Unexpected NumPy origin rejects using the actual isolated runtime metadata.",
+    "Constant-feature analytical logistic models equal fold prevalence, with zero coefficients, scale1 and unpenalized intercept.",
+    "Hand-calculated Brier, pairwise AUC, paired-difference sign and undefined-ratio behavior.",
+    "Final influence failure preserves13/14completion, nullsummary, complete earlierpermutation status, and no false overall completion.",
+    "Every excluded column rotates; IDs, target and allowed predictors stay fixed; projection/hash invariance holds.",
+    "Fitcap9092 refuses construction of an additional estimator.",
+    "Parent completion requires supervisor success and worker elapsed<180s; supervisor receives195s/1GiB and fixed thread settings.",
+    "Constructed source/archive/runtime graph accepts valid bindings, includes shared kernels in later recheck, rejects changed/extra numerical files and incomplete resealed archives."
+  ],
+  "limitations": [
+    "Constructed preflight replaces only fixture module origins/declaration digest and data binding, allowing full byte/closure validators without opening clinical CSV. It does not grant a real release.",
+    "Wall/RSS invocation and completion-authority wiring were tested with supervisor mocks; existing unchanged process-group supervisor was statically inspected, not re-executed in this slice. RSS remains sampled and may miss between-sample peaks.",
+    "Shared-runtime file hashing is implemented and exercised on constructed packages; root owns verification of the actual installed inventory and actual-source preflight.",
+    "Only source preparation is accepted. Root must separately bind final committed source/archive/release and authorize the single real-data experiment."
+  ],
+  "preserved_initial_negative": {
+    "failed": 2,
+    "findings": [
+      "Convergence-warning subclass incorrectly accepted by class-name matching.",
+      "Shared NumPy origin could differ while version matched; hash was recorded without expected origin validation."
+    ],
+    "initial_source_and_tests_preserved_compressed": true,
+    "original_runtime_receipt_preservation": "Root preserved the preceding150269d3 receipt in Git8114 and a local build copy; new receipt36880140 adds shared-package identities without installations or shared-package changes.",
+    "passed": 3,
+    "path": "initial-negatives.json",
+    "resolution": [
+      "Actual ConvergenceWarning inheritance is tested.",
+      "Declared shared NumPy/SciPy complete file inventories join checked input hashes; numerical origins and private dependencies are checked."
+    ],
+    "sha256": "cee1ec263f3c580821150edf205554c3ecd9bde40be83257ace1fe01389fa381",
+    "source_sha256": "7d17c70537ac4439b1b00d4dabbb3e3f8b92a1f83446071b588925681f7da69a"
+  },
+  "remaining_findings": [],
+  "reviewed_at_utc": "2026-10-05T04:48:27.807970+00:00",
+  "schema": "rhuh-preoperative-baseline-runner-independent-review-v1",
+  "source_sha256": {
+    "artifacts/rhuh-baseline-runtime-v1/receipt.json": "36880140d03e2edad227f568bf43f07cdbced006bc74638613a845071006d643",
+    "manifests/experiments/rhuh-preoperative-baseline-v1.json": "c73547faa86074a1293787c56f623a8d665ee61455085dd7eccb50be8857e87b",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "scripts/run_rhuh_preoperative_baseline.py": "39a48841a882056cbe33f0f248cb548c0eb6f518d3eee260199eb4eba9bf2997",
+    "src/resectionlab/__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "src/resectionlab/rhuh_outcomes.py": "82981de054aca89789b9065620844cd8a8842120df71cdb89bdd147c0bc57d36",
+    "tests/test_rhuh_preoperative_baseline.py": "bd2d1690ee11e2b4ccdbf0d66f37c1aa1197498400314dc376727fed69806d93",
+    "tests/test_rhuh_preoperative_baseline_review.py": "77661e0515e2d7100d31ce84f1230c1be488433b3b96308e64860b7318abcdda"
+  },
+  "status": "passed_source_review_not_execution_authorization",
+  "validation": {
+    "command": "PYTHONPATH=build/rhuh-baseline-runtime-v1/site-packages:src OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 NUMEXPR_NUM_THREADS=1 .venv/bin/python -m pytest -q tests/test_rhuh_preoperative_baseline_review.py tests/test_rhuh_preoperative_baseline.py",
+    "elapsed_seconds_pytest": 1.7,
+    "failed": 0,
+    "independent_cases": 13,
+    "log_sha256": "0c75b1a6bdc530cbeb9ceeb780e72595af6ee35f2f23800e4917bcdc6bbb56e3",
+    "owner_cases": 12,
+    "passed": 25,
+    "platform": "macOS-26.6-arm64-arm-64bit",
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]"
+  }
+}

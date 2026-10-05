@@ -1,0 +1,201 @@
+{
+  "timestamp_utc": "2026-10-05T04:53:58.706889+00:00",
+  "patient": "RHUH-0001",
+  "visits": [
+    0,
+    1
+  ],
+  "image_payload_requested": false,
+  "operations": [
+    {
+      "operation": "checksum_connect",
+      "method": "POST",
+      "path": "/api/v5/packages/684/transfer_spec/download?transfer_type=connect&type=received",
+      "selected_source_paths": [
+        "/RHUH-GBM-nii-v1.sums"
+      ],
+      "http_status": 201,
+      "response_bytes": 1419,
+      "response_sha256": "66204957d4739571691d35de096704d4294d253b43452073b87996083e5e8f5a",
+      "sanitized_response": {
+        "keys": [
+          "authentication",
+          "cipher",
+          "cookie",
+          "direction",
+          "fasp_port",
+          "lock_min_rate",
+          "lock_rate_policy",
+          "min_rate_cap_kbps",
+          "min_rate_kbps",
+          "multi_session",
+          "paths",
+          "rate_policy",
+          "rate_policy_allowed",
+          "remote_host",
+          "remote_user",
+          "ssh_port",
+          "tags",
+          "target_rate_cap_kbps",
+          "target_rate_kbps",
+          "token"
+        ],
+        "direction": "receive",
+        "remote_host": "144.30.235.113",
+        "fasp_port": 33001,
+        "authentication": "token",
+        "cipher": "aes-128",
+        "rate_policy": "fair",
+        "target_rate_kbps": 25000000,
+        "returned_path_count": 1,
+        "path_record_keys": [
+          [
+            "source"
+          ]
+        ]
+      }
+    },
+    {
+      "operation": "pair_connect",
+      "method": "POST",
+      "path": "/api/v5/packages/684/transfer_spec/download?transfer_type=connect&type=received",
+      "selected_source_paths": [
+        "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_adc.nii.gz",
+        "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_flair.nii.gz",
+        "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t1.nii.gz",
+        "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t1ce.nii.gz",
+        "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t2.nii.gz",
+        "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_segmentations.nii.gz",
+        "/RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_adc.nii.gz",
+        "/RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_flair.nii.gz",
+        "/RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_t1.nii.gz",
+        "/RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_t1ce.nii.gz",
+        "/RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_t2.nii.gz",
+        "/RHUH-GBM_nii_v1/RHUH-0001/1/RHUH-0001_1_segmentations.nii.gz"
+      ],
+      "http_status": 201,
+      "response_bytes": 3198,
+      "response_sha256": "b24fe7cbbd58c3672b2a7a6b272ca50bb0541d10808f318e6b680cec5d4b54a1",
+      "sanitized_response": {
+        "keys": [
+          "authentication",
+          "cipher",
+          "cookie",
+          "direction",
+          "fasp_port",
+          "lock_min_rate",
+          "lock_rate_policy",
+          "min_rate_cap_kbps",
+          "min_rate_kbps",
+          "multi_session",
+          "paths",
+          "rate_policy",
+          "rate_policy_allowed",
+          "remote_host",
+          "remote_user",
+          "ssh_port",
+          "tags",
+          "target_rate_cap_kbps",
+          "target_rate_kbps",
+          "token"
+        ],
+        "direction": "receive",
+        "remote_host": "144.30.235.113",
+        "fasp_port": 33001,
+        "authentication": "token",
+        "cipher": "aes-128",
+        "rate_policy": "fair",
+        "target_rate_kbps": 25000000,
+        "returned_path_count": 12,
+        "path_record_keys": [
+          [
+            "source"
+          ],
+          [
+            "source"
+          ],
+          [
+            "source"
+          ],
+          [
+            "source"
+          ],
+          [
+            "source"
+          ],
+          [
+            "source"
+          ],
+          [
+            "source"
+          ],
+          [
+            "source"
+          ],
+          [
+            "source"
+          ],
+          [
+            "source"
+          ],
+          [
+            "source"
+          ],
+          [
+            "source"
+          ]
+        ]
+      }
+    },
+    {
+      "operation": "checksum_http_gateway",
+      "method": "POST",
+      "path": "/api/v5/packages/684/transfer_spec/download?transfer_type=http_gateway&type=received",
+      "selected_source_paths": [
+        "/RHUH-GBM-nii-v1.sums"
+      ],
+      "http_status": 201,
+      "response_bytes": 1456,
+      "response_sha256": "340bf27a294f1492ad7fa30f3b663e2ff7737f75354d7a096e1e6b8c09879247",
+      "sanitized_response": {
+        "keys": [
+          "authentication",
+          "cipher",
+          "cookie",
+          "direction",
+          "fasp_port",
+          "lock_min_rate",
+          "lock_rate_policy",
+          "min_rate_cap_kbps",
+          "min_rate_kbps",
+          "multi_session",
+          "paths",
+          "rate_policy",
+          "rate_policy_allowed",
+          "remote_host",
+          "remote_user",
+          "source_root",
+          "ssh_port",
+          "tags",
+          "target_rate_cap_kbps",
+          "target_rate_kbps",
+          "token",
+          "zip_required"
+        ],
+        "direction": "receive",
+        "remote_host": "144.30.235.113",
+        "fasp_port": 33001,
+        "authentication": "token",
+        "cipher": "aes-128",
+        "rate_policy": "fair",
+        "target_rate_kbps": 25000000,
+        "returned_path_count": 1,
+        "path_record_keys": [
+          [
+            "source"
+          ]
+        ]
+      }
+    }
+  ]
+}

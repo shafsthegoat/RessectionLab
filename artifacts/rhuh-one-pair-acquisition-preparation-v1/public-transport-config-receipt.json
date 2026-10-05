@@ -1,0 +1,30 @@
+{
+  "timestamp_utc": "2026-10-05T04:55:22.597163+00:00",
+  "scope": "public package transport configuration and one selected symlink metadata only",
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/api/v5/configuration",
+      "http_status": 200,
+      "response_bytes": 526,
+      "response_sha256": "4e027ac3f20139c8703b89f7f47c68cacf9b967407574a6b2333ae2bf711cdd0",
+      "sanitized_response": {
+        "http_gateway_url": null,
+        "connect_install_prompt": "all_users"
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/api/v5/packages/684/files/received",
+      "http_status": 500,
+      "response_bytes": 165,
+      "response_sha256": "0418a877971cf2916d25055190af0f373de8b80b3757b6d2035974916ae10237",
+      "sanitized_response": {
+        "status": "Internal Server Error",
+        "code": "1202",
+        "message": "An error occurred in browsing directory on the HSTS node.",
+        "trace": "90287d01-0df1-4622-b50d-4e253ce2c8fc"
+      }
+    }
+  ]
+}

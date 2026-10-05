@@ -1,0 +1,74 @@
+{
+  "archive_verification": {
+    "bytes": 683,
+    "path": "artifacts/rhuh-preoperative-baseline-v1/archive-verification.json",
+    "sha256": "9468bc481ebfc52f0b7845fa72fc3e7193037f4cb841d5c563463cdde5f8f117"
+  },
+  "baseline": {
+    "bytes": 1342096,
+    "path": "outputs/rhuh-preoperative-baseline-v1/run-01/baseline.json",
+    "sha256": "971fef38308050e5769c087f8c7b2ba8e7165fa8e24c886b80a3aecb45f2b28e"
+  },
+  "baseline_input_count": 3660,
+  "baseline_inputs_rehashed_unchanged": true,
+  "compact_summary": {
+    "bytes": 10613,
+    "path": "artifacts/rhuh-preoperative-baseline-v1/compact-summary.json",
+    "sha256": "b386d8526b44556010c9badd0edb687c1c3912cf80d3047ad4fcfdd6c2ff90c3"
+  },
+  "independent_audit": {
+    "bytes": 7519,
+    "path": "artifacts/rhuh-preoperative-baseline-v1/post-run-check.json",
+    "sha256": "b16ee5384240b6d06dcf9fcaaecdad1a77b7eff41cfd86569c88cce125f140c5"
+  },
+  "input_recheck_seconds": 0.6424948750063777,
+  "new_subject_accesses": 0,
+  "operation": "saved-output summary, plot preparation and lossless content archive only",
+  "plotting": {
+    "files": [
+      {
+        "bytes": 222652,
+        "path": "artifacts/rhuh-preoperative-baseline-v1/comparison.png",
+        "sha256": "262690905a7f4d9525070cb5f2f47543258f3030a749812b19d6b38145b12b22"
+      },
+      {
+        "bytes": 33035,
+        "path": "artifacts/rhuh-preoperative-baseline-v1/comparison.pdf",
+        "sha256": "cb8ae65f6071dbd5ab3f4e9bbe66f80acacef2207a56962f785e9ab64cf9a421"
+      },
+      {
+        "bytes": 22889,
+        "path": "artifacts/rhuh-preoperative-baseline-v1/comparison.svg",
+        "sha256": "97f5044170e2011bc6cefa012d81a4f0e48943bc33ac94c8547d699c2f239e32"
+      }
+    ],
+    "formats": [
+      "png",
+      "pdf",
+      "svg"
+    ],
+    "input": "artifacts/rhuh-preoperative-baseline-v1/compact-summary.json",
+    "model_refits": 0,
+    "source": "artifacts/rhuh-preoperative-baseline-v1/plot_saved_results.py",
+    "source_binding": {
+      "bytes": 3460,
+      "path": "artifacts/rhuh-preoperative-baseline-v1/plot_saved_results.py",
+      "sha256": "79e40d77a9e73e4f0ed86ee1c5c2cc393c01148033e85e0459196d43653c59db"
+    },
+    "visual_review": "PNG reviewed; overlapping annotations repaired without changing plotted values"
+  },
+  "raw_index": {
+    "bytes": 1985,
+    "path": "artifacts/rhuh-preoperative-baseline-v1/raw-output-index.json",
+    "sha256": "f1c0de17011e3c2318e7a47accc80a15ece882999f877d89ca1cc171e6d3bf96"
+  },
+  "raw_originals_unchanged": true,
+  "refits": 0,
+  "report": {
+    "bytes": 6060,
+    "path": "artifacts/rhuh-preoperative-baseline-v1/RESULT.md",
+    "sha256": "c2f72fefa33ecd9c16a4fcc1e8439f42ef6ae1ccb5e19e1290cf28d785d4a89e"
+  },
+  "schema": "rhuh-baseline-collection-v1",
+  "source_archive_unchanged_sha256": "cbfa442eb95a1972d1d3402e2d4109058d9706b803a79a4baf9a3ba90ca2fbd3"
+}

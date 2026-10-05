@@ -1,0 +1,15 @@
+{
+  "existing_warning": "NumPy configuration suggests optional pyyaml; no dependency changed.",
+  "failed": 2,
+  "findings": [
+    "A subclass of sklearn ConvergenceWarning is ignored by category-name comparison and its constructed model is marked converged.",
+    "runtime_record accepts a numpy module claiming an unrelated file outside the declared interpreter; shared NumPy/SciPy origins/files are not compared with expected bindings."
+  ],
+  "log_sha256": "e0ca1d06001a8878f583d7e130f3f841d9d2bde757372cfc8be5fc61f8ed01c7",
+  "passed": 3,
+  "schema": "rhuh-runner-initial-negative-v1",
+  "scope": "Constructed warning/model and module-origin controls; only12 tiny constant-feature analytical sklearn fits; no actual clinical CSV or patient fits.",
+  "seconds": 1.46,
+  "source_sha256": "7d17c70537ac4439b1b00d4dabbb3e3f8b92a1f83446071b588925681f7da69a",
+  "test_sha256": "1517a25ae1b3bcc3fa50796ffbdbd847b3023af830bd0842969a24d1ad41d180"
+}

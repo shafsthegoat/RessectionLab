@@ -1,0 +1,68 @@
+{
+  "file_count": 15,
+  "files": {
+    ".gitattributes": {
+      "bytes": 105,
+      "sha256": "59cb57b54fe72523137a32f95698b6941b38c0ffef6246311d4a56a1892018a5"
+    },
+    ".gitignore": {
+      "bytes": 403,
+      "sha256": "fa38850cf43af3dcc570f16031f2141d43a1d8d974b634493b123d23027f9916"
+    },
+    "RESULT.md": {
+      "bytes": 6060,
+      "sha256": "c2f72fefa33ecd9c16a4fcc1e8439f42ef6ae1ccb5e19e1290cf28d785d4a89e"
+    },
+    "archive-verification.json": {
+      "bytes": 683,
+      "sha256": "9468bc481ebfc52f0b7845fa72fc3e7193037f4cb841d5c563463cdde5f8f117"
+    },
+    "collection-receipt.json": {
+      "bytes": 2850,
+      "sha256": "905804ec16cae2067c900408322dc02a9a2ec59ae37c3938bedec662c7f02e44"
+    },
+    "compact-summary.json": {
+      "bytes": 10613,
+      "sha256": "b386d8526b44556010c9badd0edb687c1c3912cf80d3047ad4fcfdd6c2ff90c3"
+    },
+    "comparison.pdf": {
+      "bytes": 33035,
+      "sha256": "cb8ae65f6071dbd5ab3f4e9bbe66f80acacef2207a56962f785e9ab64cf9a421"
+    },
+    "comparison.png": {
+      "bytes": 222652,
+      "sha256": "262690905a7f4d9525070cb5f2f47543258f3030a749812b19d6b38145b12b22"
+    },
+    "comparison.svg": {
+      "bytes": 22889,
+      "sha256": "97f5044170e2011bc6cefa012d81a4f0e48943bc33ac94c8547d699c2f239e32"
+    },
+    "outputs.tar.gz": {
+      "bytes": 998633,
+      "sha256": "efefe72811ce37daddf2884591da97d2b0a1d11a9d5521d3d5270f67955c5936"
+    },
+    "plot_saved_results.py": {
+      "bytes": 3460,
+      "sha256": "79e40d77a9e73e4f0ed86ee1c5c2cc393c01148033e85e0459196d43653c59db"
+    },
+    "post-run-check.json": {
+      "bytes": 7519,
+      "sha256": "b16ee5384240b6d06dcf9fcaaecdad1a77b7eff41cfd86569c88cce125f140c5"
+    },
+    "post-run-check.py": {
+      "bytes": 23385,
+      "sha256": "716265b406312a8108229292c0da8a3d7624f5f9d7dd1fb32f5a50b7583b02ab"
+    },
+    "raw-output-index.json": {
+      "bytes": 1985,
+      "sha256": "f1c0de17011e3c2318e7a47accc80a15ece882999f877d89ca1cc171e6d3bf96"
+    },
+    "source.tar.gz": {
+      "bytes": 24582,
+      "sha256": "cbfa442eb95a1972d1d3402e2d4109058d9706b803a79a4baf9a3ba90ca2fbd3"
+    }
+  },
+  "schema": "rhuh-baseline-artifact-index-v1",
+  "scope": "One completed prospective observational baseline and saved-only collection/audit; no new fitting during reporting.",
+  "total_bytes": 1358854
+}

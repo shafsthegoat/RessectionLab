@@ -1350,3 +1350,43 @@ a subsequent separate viewer repair requires a new final build. This component
 is not yet mounted in App and is not native patient-workflow validation. Host
 cancellation/source-switch handling and passive tool display are separate slices.
 See `docs/neighboring-paths-panel.md`.
+
+## October 5, 2026 — six fixed exits expose separate ingress and actor-coverage gaps
+
+One bounded PAT25 diagnostic inspected all 468 proposals across the six existing
+axis exits without cuts, policy execution or access replacement. The original
+exit reproduced 78/78 shaft failures, all before insertion; backward shafts
+re-enter estimated tissue despite a locally external neighboring cell. Other
+exits accepted 58–78 previews, but two actor crops contained no nominal target.
+Preview acceptance is neither target removal nor clinical clearance. The original
+STOP-only comparison remains unchanged, and no favorable exit was selected.
+
+The diagnostic was source-hash-bound but launched before its intended commit and
+archive because a shell continuation survived a failed whitespace check. That
+deviation was recorded while the single run was live; the matching source was
+archived after completion. There was no retry or retroactive precommit claim.
+Independent saved-output checks reconciled all inventories, geometry counts and
+source bindings. Supervision took 106.112350 seconds, sampled peak memory was
+960,036,864 bytes. All raw records, the deviation and source archive are retained
+in `artifacts/pat25-six-exit-access-diagnostic-v1/`.
+
+## October 5, 2026 — fixed real-cohort baseline preserves a negative volume increment
+
+After separate source, archive and execution-release commits, one RHUH-GBM run
+completed all 40-patient leave-one-out predictions, 99 fixed label permutations
+and 14 recorded-positive deletion analyses: 9,092/9,092 logistic fits, no retries.
+The primary Brier difference for KPS plus enhancing volume versus KPS alone was
+**+0.00120647**, so adding volume worsened the declared prediction-error measure.
+The full model detected 3/14 recorded deficits at the fixed 0.5 threshold.
+The unconditional full-model-versus-prevalence permutation p=.05 is not a test of
+volume's incremental value. Deletion differences changed sign (3 better, 11 worse);
+all remain reported. Unknown outcome timing and neurologic domains remain unknown.
+
+The independent saved-record audit reconstructed all 13,638 predictions across
+4,546 folds within the predeclared absolute 1e-12 tolerance, without refitting.
+All 3,660 bound inputs and 13 raw outputs stayed unchanged. Supervision took
+13.897940 seconds; sampled peak process-group memory was 125.890625 MiB.
+The cohort was previously inspected and has no untouched external validation.
+Both predictors are constant across a patient's alternative routes; this model
+cannot supply route rankings or a planning reward. Lossless outputs, exact source,
+all diagnostics and the report are in `artifacts/rhuh-preoperative-baseline-v1/`.

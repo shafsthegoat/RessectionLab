@@ -1,0 +1,60 @@
+{
+  "count": 13,
+  "directory": "outputs/rhuh-preoperative-baseline-v1/run-01",
+  "files": {
+    "baseline.json": {
+      "bytes": 1342096,
+      "sha256": "971fef38308050e5769c087f8c7b2ba8e7165fa8e24c886b80a3aecb45f2b28e"
+    },
+    "cohort.json": {
+      "bytes": 29086,
+      "sha256": "da7e35e3e6470f5cfbd7ef7e442a99a20f1ff9895ee97e80245bea074d37cf46"
+    },
+    "influence-folds.jsonl": {
+      "bytes": 1409430,
+      "sha256": "340d56d3b51ba5bd86f5e96792d29ff94af8a986de4d6bd82627b26ba8b16dda"
+    },
+    "influence.jsonl": {
+      "bytes": 25840,
+      "sha256": "fafee08ce6531c916b5ad696120a008178bb429210bd15f01a78eb2aa4571ee8"
+    },
+    "observed-folds.jsonl": {
+      "bytes": 103239,
+      "sha256": "368437ddec0062783f4bcc28696d1cc6d768db0eaaf72b864b27dbe433aa83da"
+    },
+    "permutation-folds.jsonl": {
+      "bytes": 8173347,
+      "sha256": "9ef8f59847b53a5a0381db033f6711ecd813fda7676640d6da6869a9087dc776"
+    },
+    "permutations.jsonl": {
+      "bytes": 174039,
+      "sha256": "01a68793176ef8ba2acce1f5137728bbf89c72047781048afbfdfb28322eef14"
+    },
+    "result.json": {
+      "bytes": 1761,
+      "sha256": "3d967c71150b105b198f5213bc5708554540f9a375aa887672ec203f9af90cf4"
+    },
+    "runtime.json": {
+      "bytes": 3576,
+      "sha256": "b3b6a297dcc2211ed36262ee81be41edaa9afe3faf3109ea9aaee75b84ce0118"
+    },
+    "state.json": {
+      "bytes": 3258,
+      "sha256": "dde6409cbfe17b15378b96b7bfe4c313df88314796410faacde6e36aae19a9d3"
+    },
+    "supervision/combined.log": {
+      "bytes": 270,
+      "sha256": "237d6b09b624ae3aff0f6221dc509590c3ff1602163c2b8fa0f8180cb3fa1950"
+    },
+    "supervision/supervision.json": {
+      "bytes": 1081,
+      "sha256": "2def8e86d476f0d7c557bf4fbf55ae37b47e9794b0623782860dc17c75f2be7b"
+    },
+    "worker-result.json": {
+      "bytes": 3306,
+      "sha256": "0e462b5dbf5b347bfb095946c411400903f98eccdd19584226cf493f44660db0"
+    }
+  },
+  "schema": "rhuh-baseline-raw-output-index-v1",
+  "total_bytes": 11270329
+}

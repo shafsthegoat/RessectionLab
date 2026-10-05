@@ -1,0 +1,30 @@
+{
+  "archive": "run-records.tar.gz",
+  "sha256": "24034aced979f79b332bd32621bcdbd0032fa0f4df419f926369b0e09c1ede2e",
+  "bytes": 187705,
+  "files": {
+    "run-01/declaration-input.json": {
+      "bytes": 13951,
+      "sha256": "a9c7f36f7dc71a83723f169125b80e8f0be058b61f527efc08d067914359d123"
+    },
+    "run-01/receipt.json": {
+      "bytes": 2106459,
+      "sha256": "032c123df2e4e1060d9c8eb36d3573db809b731726a5846a808518729654e8c5"
+    },
+    "run-01/supervisor-progress.json": {
+      "bytes": 239,
+      "sha256": "3bbf739798b58d724b57e9a52e43ed37ba44f5aaaef84a676115e43328f09d8d"
+    },
+    "run-01/supervisor.json": {
+      "bytes": 574,
+      "sha256": "11dc609b9a922d41685220329a709261721351c4d3642a05f8f241951ec72fd9"
+    },
+    "run-01/worker.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "byte_for_byte_roundtrip_verified": true,
+  "raw_originals_retained_locally": true,
+  "archive_created_after_terminal_run": true
+}
