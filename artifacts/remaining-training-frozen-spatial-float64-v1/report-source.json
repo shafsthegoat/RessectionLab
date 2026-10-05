@@ -1,0 +1,23 @@
+{
+  "attempt_comparison_sha256": "04ff00e7a6ab482ded94a0785290c9dbbb023b418fba3e5d1dab1f034e0bdfea",
+  "gradients": 0,
+  "inputs_sha256": {
+    "sub-PAT16/preparation.json": "3743dd12460cf598089664bd243fba883300c2505d477df0ec4aadd2bb596608",
+    "sub-PAT20/preparation.json": "d5b72a815e4b2b6aeeedfedbc0687e74843c21f832cab184a4e523f011037312",
+    "sub-PAT22/preparation.json": "2dbf6be558d5e7b370f43751480dad7b87bf98dfaae62d0c5f2cd0a5d7e6e1b6",
+    "sub-PAT25/preparation.json": "f4c6269f551f52fbe359c61d408030af81d4b233ac4ad11f98a87228f81dc70c",
+    "sub-PAT28/preparation.json": "b4fdb77d181808c494a81cbae0004a633be12bf59f84f139e0c83095339cb081",
+    "summary.json": "9ba600c760739851cb21a42bece5c8721f871f2400e4b8ad45eaad0a4be5a6d2"
+  },
+  "new_patient_episodes": 0,
+  "original_execution_records_modified": false,
+  "output_index_sha256": "a0718a19637c42347f2418a43c4c13c6f400096c5fe499831b41cce3711b5927",
+  "outputs_sha256": {
+    "RESULT.md": "301771c9bb6b4736ab518440d1a711ef7a061450600c34d67b0ab71ada75c900",
+    "compact-summary.json": "4b12409d26d5792db6f2f7c16f9f2e334632ff6ce3884ab19555e86668990dc6",
+    "comparison.png": "7380b218c6e55d7db360863fcf3089377b6ff50e97280b038ee8da3e550dc0a1",
+    "comparison.svg": "8e96c48629e211ac9b2d646b7c4ce7c430094cdc10374b1479d463664abb1d83"
+  },
+  "policy_forwards": 0,
+  "report_source_sha256": "d4c4382b824d836a4e91d183c3496b7049b9150efaebff20fbe155397d1dc3ac"
+}
