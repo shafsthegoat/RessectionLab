@@ -1,0 +1,171 @@
+{
+  "runs": {
+    "compression:N16:S60:reference": {
+      "criteria": {
+        "force_balance": {
+          "actual": 1.5332550322472416e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "minimum_sampled_J": {
+          "actual": 0.7169159055333503,
+          "limit": 0.0,
+          "units": "dimensionless_strictly_positive"
+        },
+        "moment_balance": {
+          "actual": 1.2883856199660838e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "prescribed_motion": {
+          "actual": 0.0001588540772186567,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "primitive_consistency": {
+          "actual": 0.0008833064461617523,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "solver_residual": {
+          "actual": 4.237478279940262e-11,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "work_energy": {
+          "actual": 0.0007534483433878014,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        }
+      },
+      "execution": {
+        "cleanup": {
+          "kill_sent": false,
+          "reaped": true
+        },
+        "command": [
+          "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+          "-noconfig",
+          "-no_title",
+          "-i",
+          "specimen.feb",
+          "-o",
+          "solver.log"
+        ],
+        "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-resolution-v1/experiment/runs/compression-N16-S60-reference",
+        "elapsed_seconds": 88.58572033396922,
+        "exit_code": 0,
+        "pid": 56891,
+        "seconds_cap": 420,
+        "started": true,
+        "status": "completed",
+        "timed_out": false
+      },
+      "execution_binding": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/experiment/runs/compression-N16-S60-reference/execution.json",
+        "sha256": "c8acadcaf0d4f37a102182996ec2a628e9194aa38e5476c3af9e83171e515f0d"
+      },
+      "frame_count": 61,
+      "individual_passed": true,
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/experiment/runs/compression-N16-S60-reference/readout.json",
+        "sha256": "dbff229c78737d8ee4532cd73f87ea0e0bad3035b8e45e1542b7d107eefc7e28"
+      },
+      "saved_solver_log_progress": {
+        "begun_step_count": 60,
+        "converged_banner_count": 60,
+        "last_begun_step": {
+          "printed_pseudotime": "1",
+          "step": 60
+        },
+        "last_log_confirmed_converged_step": {
+          "printed_pseudotime": "1",
+          "step": 60
+        },
+        "limit": "Saved banners only; later computation or primitive blocks may not yet have been flushed. A partial run has no completed readout or individual numerical pass.",
+        "normal_termination_banner": true,
+        "reported_timing": {
+          "completed_steps": 60,
+          "equilibrium_iterations": 308,
+          "linear_solver_calls": 308,
+          "linear_solver_seconds": 60.7794,
+          "right_hand_evaluations": 368,
+          "rounded_elapsed_summary": "0:01:28",
+          "rounded_linear_solver_time": "0:01:01",
+          "solve_seconds": 88.4268,
+          "stiffness_reformations": 60
+        },
+        "solver_log": {
+          "path": "outputs/mechanics/hbe-01-03-resolution-v1/experiment/runs/compression-N16-S60-reference/solver.log",
+          "sha256": "738253c38ed94ffdf6a9b61e9ac023be4622bd0a38a73e92f5a501ce0da56bdd"
+        },
+        "timing_scope": "Native saved summary counters/timing; not an independent precise profiler split."
+      },
+      "status": "passed_individual_numerical_checks"
+    },
+    "compression:N24:S60:reference": {
+      "execution": null,
+      "partial_execution": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/experiment/runs/compression-N24-S60-reference/solver-execution.json",
+        "sha256": "25252d59ac9f9e30fa38090e8a9db01390d830536fac5a73f6371d286184a036"
+      },
+      "partial_solver_execution": {
+        "cleanup": {
+          "kill_sent": true,
+          "reaped": true
+        },
+        "command": [
+          "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+          "-noconfig",
+          "-no_title",
+          "-i",
+          "specimen.feb",
+          "-o",
+          "solver.log"
+        ],
+        "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-resolution-v1/experiment/runs/compression-N24-S60-reference",
+        "elapsed_seconds": 420.039369917009,
+        "error": {
+          "message": "Command '['/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4', '-noconfig', '-no_title', '-i', 'specimen.feb', '-o', 'solver.log']' timed out after 419.9953113750089 seconds",
+          "type": "TimeoutExpired"
+        },
+        "exit_code": -9,
+        "pid": 57759,
+        "seconds_cap": 420,
+        "started": true,
+        "status": "failed",
+        "timed_out": true
+      },
+      "saved_solver_log_progress": {
+        "begun_step_count": 37,
+        "converged_banner_count": 36,
+        "last_begun_step": {
+          "printed_pseudotime": "0.616667",
+          "step": 37
+        },
+        "last_log_confirmed_converged_step": {
+          "printed_pseudotime": "0.6",
+          "step": 36
+        },
+        "limit": "Saved banners only; later computation or primitive blocks may not yet have been flushed. A partial run has no completed readout or individual numerical pass.",
+        "normal_termination_banner": false,
+        "reported_timing": {},
+        "solver_log": {
+          "path": "outputs/mechanics/hbe-01-03-resolution-v1/experiment/runs/compression-N24-S60-reference/solver.log",
+          "sha256": "ba30544d4634781d3ae4240d1d8624b78334942dea467e732457993be788c64e"
+        },
+        "timing_scope": "Native saved summary counters/timing; not an independent precise profiler split."
+      },
+      "status": "failed"
+    },
+    "tension:N16:S60:reference": {
+      "execution": null,
+      "status": "not_executed"
+    },
+    "tension:N24:S60:reference": {
+      "execution": null,
+      "status": "not_executed"
+    }
+  },
+  "solver_invocations": 2
+}

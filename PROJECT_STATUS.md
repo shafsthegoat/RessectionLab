@@ -38,11 +38,16 @@ still differ by 25–28 µm, supporting unresolved spatial discretization. The
 original failure is retained. A separate four-run N16/N24 axial resolution
 extension prepared both meshes in 5.69 seconds: 7,209 and 23,101 nodes. Independent
 reconstruction passed both geometry reports and verified the frozen solver
-decks. Exactly four new reference solves are now released, with both 12→16→24
-and 8→16→24 comparisons required to pass unchanged criteria. Results are pending;
-this release permits no measured-response access or material fitting. See
-`artifacts/mechanics/hbe-resolution-assembly-v1/solve-release.json` and
-`artifacts/mechanics/hbe-cross-mesh-diagnosis-v1/DIAGNOSIS.md`.
+decks. The separately released four-case study then stopped at its second case:
+N16 compression passed in 88.59 seconds; N24 compression timed out at the fixed
+420-second limit, with 36/60 steps confirmed. Neither tension case nor either
+required mesh comparison ran. Supervised elapsed time was 517.52 seconds and
+sampled peak RSS 1,491 MiB. All partial outputs and previous evidence are retained;
+there was no retry, measured-response access or material fitting. The completed
+case reported 60.78 seconds in its linear solver. A quarter-cylinder axial
+symmetry equivalence check is in preparation as a bounded cost optimization,
+not an accepted substitute for the full model. See
+`artifacts/mechanics/hbe-resolution-experiment-result-v1/RESULT.md`.
 
 One analytical Gmsh control confirmed that the existing discrete-surface path
 supports curvature sizing. A joint curvature-24 / minimum-3-mm profile reduced
