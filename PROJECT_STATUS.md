@@ -32,6 +32,14 @@ local shape between corners; no patient mesh or withheld-motion comparison is
 accepted. The diagnostic took 2.90 seconds and left all inputs unchanged. See
 `artifacts/mechanics/resect-case4-saved-mesh-diagnostic-v1/RESULT.md`.
 
+Independent specimen diagnosis reproduced all 75 endpoint probes within
+5.85e-14 m using a separate interpolation calculation. Shared physical nodes
+still differ by 25–28 µm, supporting unresolved spatial discretization. The
+original failure is retained. A separate four-run N16/N24 axial resolution
+extension is in preparation only; both 12→16→24 and 8→16→24 comparisons will
+have to pass unchanged criteria. No new mesh or solve is released at this
+checkpoint. See `artifacts/mechanics/hbe-cross-mesh-diagnosis-v1/DIAGNOSIS.md`.
+
 **Latest steering (October 4): real-patient learning and probability-aware planning.**
 The user supplied `docs/CODEX_STEERING_PROMPT.md` and
 `docs/DATASET_ACQUISITION_ADDENDUM.md`; both were read completely and copied
