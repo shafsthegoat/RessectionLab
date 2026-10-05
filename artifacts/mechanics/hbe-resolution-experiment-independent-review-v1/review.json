@@ -1,0 +1,177 @@
+{
+  "schema": "hbe-resolution-terminal-independent-review-v1",
+  "status": "saved_timeout_confirmed_no_retry",
+  "outcome": {
+    "path": "artifacts/mechanics/hbe-resolution-experiment-result-v1/outcome.json",
+    "sha256": "30670f554e14a55b8f88d0b269b6129c9b816ed352f6d9dfba7cc24b105950c0"
+  },
+  "result": {
+    "path": "outputs/mechanics/hbe-01-03-resolution-v1/experiment/result.json",
+    "sha256": "2eef5cd2f351931d053a7fa950d858d3d670219cf1e06de1d451b2c561ca45ae"
+  },
+  "baseline": {
+    "path": "outputs/mechanics/hbe-01-03-resolution-v1/experiment/baseline.json",
+    "sha256": "487ae12c24bd2cb4467afcef9d98a6ecd7d24ae6f376705ab146a24d33768a9a"
+  },
+  "state": {
+    "path": "outputs/mechanics/hbe-01-03-resolution-v1/experiment/state.json",
+    "sha256": "c866681c2e9ee9d05726d264de4f523c41e4d5ad1daacc42fdf9f370f0ad90e0"
+  },
+  "release": {
+    "path": "artifacts/mechanics/hbe-resolution-assembly-v1/solve-release.json",
+    "sha256": "d9fc28acaec95142711784a4ec838f9f76e05548bea97d6d1e7388e4d62d11e9"
+  },
+  "archive": {
+    "path": "outputs/validation/hbe-resolution-5b80e3f/source.tar",
+    "sha256": "29f5866817a260e49275e51510a1937f432cc1bc40762009025748092e8eefdb"
+  },
+  "source_commit": "5b80e3fee2349bc78d3f2ceb9b211efb305a1fc9",
+  "baseline_inputs_unchanged": 194,
+  "checked_files_unchanged": 363,
+  "preservation": {
+    "new_experiment": {
+      "index": {
+        "path": "artifacts/mechanics/hbe-resolution-experiment-result-v1/raw-output-index.json",
+        "sha256": "b93502f59f3d99f2a42c873578af13ffb205d0d24d118d0a5ea37d431c76863f"
+      },
+      "files": 22,
+      "bytes": 358464168,
+      "readonly_checked": true
+    },
+    "prior_mesh_preparation": {
+      "index": {
+        "path": "artifacts/mechanics/hbe-resolution-mesh-result-v1/raw-output-index.json",
+        "sha256": "96a1617c30cdd8f20c5e5014810f0ee1f715ff362a79576ed71cacedf309d382"
+      },
+      "files": 28,
+      "bytes": 39177774,
+      "readonly_checked": true
+    },
+    "prior_failed_experiment": {
+      "index": {
+        "path": "artifacts/mechanics/hbe-accelerate-experiment-result-v1/raw-output-index.json",
+        "sha256": "385fdbf2a52972509a18a31a693aa139553ee02e99a62decfc0391fda8fe94e9"
+      },
+      "files": 169,
+      "bytes": 914390988,
+      "readonly_checked": true
+    }
+  },
+  "completed_case": {
+    "id": "compression:N16:S60:reference",
+    "individual_pass": true,
+    "frames": 61,
+    "full_raw_replay_exact": true,
+    "readout": {
+      "path": "outputs/mechanics/hbe-01-03-resolution-v1/experiment/runs/compression-N16-S60-reference/readout.json",
+      "sha256": "dbff229c78737d8ee4532cd73f87ea0e0bad3035b8e45e1542b7d107eefc7e28"
+    },
+    "replay_seconds": 6.439506750088185,
+    "criteria": {
+      "force_balance": {
+        "actual": 1.5332550322472416e-08,
+        "limit": 1.0,
+        "units": "ratio_to_declared_numerical_tolerance"
+      },
+      "moment_balance": {
+        "actual": 1.2883856199660838e-08,
+        "limit": 1.0,
+        "units": "ratio_to_declared_numerical_tolerance"
+      },
+      "prescribed_motion": {
+        "actual": 0.0001588540772186567,
+        "limit": 1.0,
+        "units": "ratio_to_declared_numerical_tolerance"
+      },
+      "primitive_consistency": {
+        "actual": 0.0008833064461617523,
+        "limit": 1.0,
+        "units": "ratio_to_declared_numerical_tolerance"
+      },
+      "work_energy": {
+        "actual": 0.0007534483433878014,
+        "limit": 1.0,
+        "units": "ratio_to_declared_numerical_tolerance"
+      },
+      "solver_residual": {
+        "actual": 4.237478279940262e-11,
+        "limit": 1.0,
+        "units": "ratio_to_declared_numerical_tolerance"
+      },
+      "minimum_sampled_J": {
+        "actual": 0.7169159055333503,
+        "limit": 0.0,
+        "units": "dimensionless_strictly_positive"
+      }
+    }
+  },
+  "incomplete_case": {
+    "id": "compression:N24:S60:reference",
+    "execution": {
+      "cleanup": {
+        "kill_sent": true,
+        "reaped": true
+      },
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+        "-noconfig",
+        "-no_title",
+        "-i",
+        "specimen.feb",
+        "-o",
+        "solver.log"
+      ],
+      "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-resolution-v1/experiment/runs/compression-N24-S60-reference",
+      "elapsed_seconds": 420.039369917009,
+      "error": {
+        "message": "Command '['/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4', '-noconfig', '-no_title', '-i', 'specimen.feb', '-o', 'solver.log']' timed out after 419.9953113750089 seconds",
+        "type": "TimeoutExpired"
+      },
+      "exit_code": -9,
+      "pid": 57759,
+      "seconds_cap": 420,
+      "started": true,
+      "status": "failed",
+      "timed_out": true
+    },
+    "last_log_confirmed_converged_step": 36,
+    "last_log_confirmed_pseudotime": 0.6,
+    "last_log_begun_step": 37,
+    "last_log_begun_pseudotime": 0.616667,
+    "primitive_replay_performed": false,
+    "individual_pass": null,
+    "progress_limit": "Saved banners only; later work or primitive bytes may not have flushed."
+  },
+  "not_executed": [
+    "tension:N16:S60:reference",
+    "tension:N24:S60:reference"
+  ],
+  "aggregate_comparisons": null,
+  "physical_validation_pass": null,
+  "measured_response_access": false,
+  "resource_evidence": {
+    "parent_seconds": 517.5199365000008,
+    "worker_seconds": 516.0119246249087,
+    "completed_solver_seconds": 88.58572033396922,
+    "timed_out_solver_seconds_including_cleanup": 420.039369917009,
+    "cleanup_accounting_over_420s": 0.03936991700902581,
+    "sampled_peak_group_rss_bytes": 1563459584,
+    "output_watch": {
+      "maximum_active_bytes": 239973870,
+      "maximum_total_bytes": 397638351,
+      "sampling_interval_seconds": 0.1,
+      "sampling_limit": "Between-sample peaks may be missed.",
+      "status": "watching"
+    },
+    "scope": "Solver, worker and parent intervals are nested and must not be added. The per-case timeout stopped the case; aggregate/RSS/output caps did not trigger."
+  },
+  "audit_seconds": 8.730687625007704,
+  "limits": [
+    "One completed N16 raw replay only; no N24 primitive parsing, solver, meshing, retry, curves or new tests.",
+    "A completed individual case does not establish either co-primary mesh trend. Both comparisons remain unavailable.",
+    "The original18-run failed aggregate outcome and all prior preparation raw files remain unchanged.",
+    "Timeout is a resource termination; the saved evidence does not establish a numerical divergence diagnosis.",
+    "Sampled memory/output peaks may miss between-sample peaks."
+  ],
+  "blocking_report_mismatches": []
+}
