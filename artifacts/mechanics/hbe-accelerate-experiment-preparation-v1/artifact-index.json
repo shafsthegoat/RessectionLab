@@ -1,0 +1,54 @@
+{
+  "actual_solver_runs": 0,
+  "execution_authorized": false,
+  "external_saved_review_pending": true,
+  "files": {
+    "README.md": {
+      "bytes": 3918,
+      "sha256": "8dcd44b9a328117230ab71e5a190364de5ef8d4563b2b3c852c45eec3484af33"
+    },
+    "backend-profile.json": {
+      "bytes": 843,
+      "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+    },
+    "draft-refusal.json": {
+      "bytes": 631,
+      "sha256": "5f53b7d19d6be279d18535175df87e2cc057cb254555fb0bb2657e8eabeef7c8"
+    },
+    "original-cases.json": {
+      "bytes": 12379,
+      "sha256": "b0881954b9433f301e68af22e1a403a567df09b9fc2780df2263a78758a5ed3a"
+    },
+    "preparation-console.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "preparation-result.json": {
+      "bytes": 26572,
+      "sha256": "92ace2ac8d0ab7c2884211e7afdf015ce3b9728ea65e2b64191aa71186393800"
+    },
+    "prepare_inputs.py": {
+      "bytes": 5224,
+      "sha256": "88f9fcc4ef2841234ac45067bab073f78bd6f18ca38b70f797075e71ab2bc0ab"
+    },
+    "profile-verification.json": {
+      "bytes": 30705,
+      "sha256": "2182bf2e9ebc990e068df87c26027451f610c7742bf9891b7b3b63c1fe1fbf42"
+    },
+    "raw-input-index.json": {
+      "bytes": 6330,
+      "sha256": "afb1de5b815e9a91d80ea5b1d04de25265c870dce6a5afcf18f98d74778cce7f"
+    },
+    "release-draft.json": {
+      "bytes": 10268,
+      "sha256": "9f21f130d51911c52faf03bcaba0a8a24c058339451794809a387ea2a4191c10"
+    },
+    "source-archive.json": {
+      "bytes": 3720,
+      "sha256": "87a71756349f657a23553c6d17fa77eb9fc1aabaae7d6cb710151bae111f1568"
+    }
+  },
+  "immutable_source_commit": "6486dbcfb0395a4c5b9df3f140b08141d0d96fd7",
+  "measured_members_read": 0,
+  "status": "complete_preparation_artifacts_no_specimen_execution"
+}

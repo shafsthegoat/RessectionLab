@@ -1,0 +1,20 @@
+{
+  "hex8_controls": {
+    "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/hex8-summary.json",
+    "sha256": "4882279a8f0e89a1118265a4cd09ca2658529a15498c6ceb7da8d5b760c40d2b"
+  },
+  "patch_identity": {
+    "path": "artifacts/febio-accelerate-lifecycle-v1/patch-identity.json",
+    "sha256": "54198366eccb90a9fcdf4fcbf2a5055919a5658a1db0fdd7db8cfeede3b49eee"
+  },
+  "profile_id": "accelerate_csc_v1",
+  "runtime_identity": {
+    "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+    "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+  },
+  "schema": "hbe-solver-backend-v1",
+  "tet10_mpc_controls": {
+    "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_mpc-summary.json",
+    "sha256": "ea2c997006b1bf3eab1ed6859daa1277b14442b8564a8b18a00b088d7910c7c0"
+  }
+}

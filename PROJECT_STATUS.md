@@ -18,6 +18,12 @@ interactions stay distinct from observed surgery, with hidden simulator fields
 excluded from deployment inputs. Compare search, imitation and RL on that task
 only after its physical validation. Existing patient splits remain unchanged.
 
+**Current mechanics checkpoint:** the repaired optional solver passed all eight
+numerical controls and independent saved-output replay. The graded real-patient
+mesh failed the unchanged 2 mm surface-fidelity gate and remains excluded from
+solves. The fixed specimen experiment is prepared for a separate bounded run;
+all measured curves and withheld patient motions remain closed at this checkpoint.
+
 **Latest steering (October 4): real-patient learning and probability-aware planning.**
 The user supplied `docs/CODEX_STEERING_PROMPT.md` and
 `docs/DATASET_ACQUISITION_ADDENDUM.md`; both were read completely and copied
@@ -374,6 +380,16 @@ Jacobian was 0.9966851963; maximum multipoint constraint error was about 2e-16 m
 The 60 raw analytical files are preserved byte-for-byte. This supports the
 next fixed specimen experiment, not measured-force or patient acceptance.
 See `artifacts/mechanics-accelerate-controls-saved-review-v1/review.json`.
+
+The new specimen preparation binds the accepted runtime and numerical evidence,
+an exact fourteen-file committed source archive, and eighteen read-only copies
+whose only scientific-deck change is the linear solver. Independent saved-file
+review verified all 218 inputs unchanged. Calibration/held-out roles, one-scale
+material model, convergence gates, unverified CSV-format assumption and fixed
+20-call/90-s-per-call/900-s aggregate limits are preserved. The disabled draft
+cannot execute; a separately recorded final release is required. No specimen
+solve or measured member was accessed during preparation. See
+`artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/README.md`.
 
 A separate patient-mesh candidate helper passed 52 analytical/mocked checks.
 It preserves complete bounded coordinate/connectivity/ID diagnostics before

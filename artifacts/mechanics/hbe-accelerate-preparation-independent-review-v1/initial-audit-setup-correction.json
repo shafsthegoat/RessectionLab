@@ -1,0 +1,7 @@
+{
+  "classification": "audit_setup_path_assumption_not_preparation_failure",
+  "initial_audit_source_sha256": "abd2c5b46b1e3393819c11a0a75a4e5d5c05a7369934908709f3ed15129124b3",
+  "observed_error": "FileNotFoundError: repository/compression-N12-S120-double_mu/loading.json",
+  "cause": "Raw input index keys are relative to its declared root, not repository-relative. First archive and18 XML/loading comparisons already passed; no source/artifact changed.",
+  "correction": "Resolve raw-input index file keys under its declared root before hashing."
+}

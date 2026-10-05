@@ -1,0 +1,95 @@
+{
+  "actual_solver_runs": 0,
+  "command": [
+    "git",
+    "archive",
+    "--format=tar",
+    "--output",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/hbe-accelerate-6486dbc/source.tar",
+    "6486dbcfb0395a4c5b9df3f140b08141d0d96fd7",
+    "--",
+    "artifacts/febio-runtime-investigation-v1/prospective-runtime.json",
+    "manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+    "manifests/experiments/hbe-01-03-specimen-roles-v1.json",
+    "scripts/febio_runtime.py",
+    "scripts/mechanics_febio_verification.py",
+    "scripts/mechanics_hbe_access.py",
+    "scripts/mechanics_hbe_backend.py",
+    "scripts/mechanics_hbe_evaluation.py",
+    "scripts/mechanics_hbe_experiment.py",
+    "scripts/mechanics_hbe_mesh.py",
+    "scripts/mechanics_hbe_outputs.py",
+    "scripts/mechanics_hbe_physics.py",
+    "scripts/mechanics_hbe_readout.py",
+    "scripts/mechanics_patient_constraints.py"
+  ],
+  "file_count": 14,
+  "frozen_source_root": "outputs/validation/hbe-accelerate-6486dbc/frozen-source",
+  "measured_members_opened": 0,
+  "members": {
+    "artifacts/febio-runtime-investigation-v1/prospective-runtime.json": {
+      "bytes": 10221,
+      "sha256": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48"
+    },
+    "manifests/experiments/hbe-01-03-mechanics-poc-v1.json": {
+      "bytes": 13880,
+      "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+    },
+    "manifests/experiments/hbe-01-03-specimen-roles-v1.json": {
+      "bytes": 6123,
+      "sha256": "c135a65eb14001e31a849197cc5650a15e2484022bee9f950a5c1759a033a432"
+    },
+    "scripts/febio_runtime.py": {
+      "bytes": 24801,
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+    },
+    "scripts/mechanics_febio_verification.py": {
+      "bytes": 20494,
+      "sha256": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5"
+    },
+    "scripts/mechanics_hbe_access.py": {
+      "bytes": 37769,
+      "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+    },
+    "scripts/mechanics_hbe_backend.py": {
+      "bytes": 28370,
+      "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae"
+    },
+    "scripts/mechanics_hbe_evaluation.py": {
+      "bytes": 8744,
+      "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+    },
+    "scripts/mechanics_hbe_experiment.py": {
+      "bytes": 47907,
+      "sha256": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa"
+    },
+    "scripts/mechanics_hbe_mesh.py": {
+      "bytes": 41113,
+      "sha256": "3cb4d99f5d2d7fa2f66fb5af56ebffcf19342b9bee0b4cb2c9acfe98aabdd892"
+    },
+    "scripts/mechanics_hbe_outputs.py": {
+      "bytes": 7200,
+      "sha256": "a372cb89ea9515186d433c74ec650dc3b5cae289619e8b35d481280f6662f473"
+    },
+    "scripts/mechanics_hbe_physics.py": {
+      "bytes": 17656,
+      "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+    },
+    "scripts/mechanics_hbe_readout.py": {
+      "bytes": 14109,
+      "sha256": "21700558e5cb614a11a7cc62dbd5ec8118fabb11b4fbfc88f89cb8aa02012963"
+    },
+    "scripts/mechanics_patient_constraints.py": {
+      "bytes": 19006,
+      "sha256": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66"
+    }
+  },
+  "source_archive": {
+    "bytes": 317440,
+    "path": "outputs/validation/hbe-accelerate-6486dbc/source.tar",
+    "sha256": "fd3a72a995dd38fc1107b83ec71f1b0911ed060ecac451245637c1559e598d34"
+  },
+  "source_commit": "6486dbcfb0395a4c5b9df3f140b08141d0d96fd7",
+  "source_files_read_only": true,
+  "status": "exact_minimal_source_archive_prepared_no_execution"
+}

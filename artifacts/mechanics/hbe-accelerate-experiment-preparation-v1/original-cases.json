@@ -1,0 +1,254 @@
+{
+  "compression:N12:S120:double_mu": {
+    "deck": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/compression-120-double_mu/specimen.feb",
+      "sha256": "a4a8d683dfc4ed10746bd25867d0b59ebbbfa9d4a1698cd4c27ac0c721288995"
+    },
+    "loading": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/compression-120-double_mu/loading.json",
+      "sha256": "525c9bd86a7a4e9c27b88567b8b908a4f8bc4562d812f77b00797c746c271a27"
+    },
+    "mesh": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/mesh.json",
+      "sha256": "0ed154be0d17c8baaac6ee0288381a53ec100f93cd936a194202f69ef32ae033"
+    }
+  },
+  "compression:N12:S120:reference": {
+    "deck": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/compression-120-reference/specimen.feb",
+      "sha256": "1afc593c9e5158bf53711e394b2d8e3193a91623352e628b0281a4a940815adc"
+    },
+    "loading": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/compression-120-reference/loading.json",
+      "sha256": "d6207bd7ce17c6527b5aedc6dbd1cedf016b04d35b491084f998f871fe02129a"
+    },
+    "mesh": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/mesh.json",
+      "sha256": "0ed154be0d17c8baaac6ee0288381a53ec100f93cd936a194202f69ef32ae033"
+    }
+  },
+  "compression:N12:S60:reference": {
+    "deck": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/compression-60-reference/specimen.feb",
+      "sha256": "0860b181fc427979b463f516d83fdbd10e9357b90390138f2b2b6c2212101440"
+    },
+    "loading": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/compression-60-reference/loading.json",
+      "sha256": "e88d5d7e575be6fd178cdc6841916e262ae6898e90a4255dc3f6291727244f73"
+    },
+    "mesh": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/mesh.json",
+      "sha256": "0ed154be0d17c8baaac6ee0288381a53ec100f93cd936a194202f69ef32ae033"
+    }
+  },
+  "compression:N4:S60:reference": {
+    "deck": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/compression-60-reference/specimen.feb",
+      "sha256": "607afe0a102d44c752085745d237744d84a21886f9507c7532cc374f6fee1afd"
+    },
+    "loading": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/compression-60-reference/loading.json",
+      "sha256": "3eae99b3963006e65246e49a834603789bdd029523bf3b61ad5415b51fab7498"
+    },
+    "mesh": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/mesh.json",
+      "sha256": "4df59e253fa595823eedb7ee498b68e01e1f26d9a5427edee1be7defc257e65a"
+    }
+  },
+  "compression:N8:S60:reference": {
+    "deck": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/compression-60-reference/specimen.feb",
+      "sha256": "b0191042df6fccc4c4dc317bb9145f0a077880a7e5589cd471b9ac93452a2506"
+    },
+    "loading": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/compression-60-reference/loading.json",
+      "sha256": "a16ad897e7ffffd1b3067784d515e2ee9be71d2c335df847af4d5f2b81e41aa5"
+    },
+    "mesh": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/mesh.json",
+      "sha256": "3a6b5bb720bd3998f035abecf15d5c603d46c5ed281ce1d08c4aadec69c1dab9"
+    }
+  },
+  "tension:N12:S120:reference": {
+    "deck": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/tension-120-reference/specimen.feb",
+      "sha256": "90b9933c771d7d23655ca3aed872f0e5a5b35a2ce1126772ac482e3f2a467b2f"
+    },
+    "loading": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/tension-120-reference/loading.json",
+      "sha256": "659019189574a3d254ea6a5ad4ca85a2df7ec6940654314e9b6098416ca533ce"
+    },
+    "mesh": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/mesh.json",
+      "sha256": "0ed154be0d17c8baaac6ee0288381a53ec100f93cd936a194202f69ef32ae033"
+    }
+  },
+  "tension:N12:S60:reference": {
+    "deck": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/tension-60-reference/specimen.feb",
+      "sha256": "b3cbf26b826b700aab89273f13324852690be09947d087acff6bebd92b218294"
+    },
+    "loading": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/tension-60-reference/loading.json",
+      "sha256": "1ec671293c3ce56fef88234761896441585ad1141b239ee27bce65aaa76ebcf7"
+    },
+    "mesh": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/mesh.json",
+      "sha256": "0ed154be0d17c8baaac6ee0288381a53ec100f93cd936a194202f69ef32ae033"
+    }
+  },
+  "tension:N4:S60:reference": {
+    "deck": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/tension-60-reference/specimen.feb",
+      "sha256": "30d19a15d2690e7c0f5536506616e81d353c84fb02916ba55d7ae7bd552b61e5"
+    },
+    "loading": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/tension-60-reference/loading.json",
+      "sha256": "dee82a4402158a78aa52ece104ec7c478b8021319df0f0b4e9227369bfa39cf5"
+    },
+    "mesh": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/mesh.json",
+      "sha256": "4df59e253fa595823eedb7ee498b68e01e1f26d9a5427edee1be7defc257e65a"
+    }
+  },
+  "tension:N8:S60:reference": {
+    "deck": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/tension-60-reference/specimen.feb",
+      "sha256": "474c1f0fdfa5769ab53c0dd72933e63961a90da4db922e57e8b51695b0149a5a"
+    },
+    "loading": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/tension-60-reference/loading.json",
+      "sha256": "fa15bad17b9301b1a22e052a563e57a5273f4f081750af26d988a84d11deeb63"
+    },
+    "mesh": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/mesh.json",
+      "sha256": "3a6b5bb720bd3998f035abecf15d5c603d46c5ed281ce1d08c4aadec69c1dab9"
+    }
+  },
+  "torsion_neg:N12:S120:reference": {
+    "deck": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/torsion_neg-120-reference/specimen.feb",
+      "sha256": "2b7015ad8f8df5dd9b092143fd7e3ed1ac788e468858135fb0c2903602b0a7d8"
+    },
+    "loading": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/torsion_neg-120-reference/loading.json",
+      "sha256": "7cdde763fedd221faff7b22914bd99a371f237d12c43098da41baf20434120f5"
+    },
+    "mesh": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/mesh.json",
+      "sha256": "0ed154be0d17c8baaac6ee0288381a53ec100f93cd936a194202f69ef32ae033"
+    }
+  },
+  "torsion_neg:N12:S60:reference": {
+    "deck": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/torsion_neg-60-reference/specimen.feb",
+      "sha256": "86b1b2c8efd02f7f623ca4f7f3f2c5fe052cdf603c1196a0cfc0c9760e7f3f7b"
+    },
+    "loading": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/torsion_neg-60-reference/loading.json",
+      "sha256": "2103c24825c55d7935bf64218d3440e6759b01be7703a459d4e69c0a3a26ff11"
+    },
+    "mesh": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/mesh.json",
+      "sha256": "0ed154be0d17c8baaac6ee0288381a53ec100f93cd936a194202f69ef32ae033"
+    }
+  },
+  "torsion_neg:N4:S60:reference": {
+    "deck": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/torsion_neg-60-reference/specimen.feb",
+      "sha256": "4195443bc0d916b885fb7f52159409e09fedff63dafc426a95996995562d2d72"
+    },
+    "loading": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/torsion_neg-60-reference/loading.json",
+      "sha256": "062487b07275f2c901eec7c1f988cf23505a134b2bbf2a8c597b5f050e632795"
+    },
+    "mesh": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/mesh.json",
+      "sha256": "4df59e253fa595823eedb7ee498b68e01e1f26d9a5427edee1be7defc257e65a"
+    }
+  },
+  "torsion_neg:N8:S60:reference": {
+    "deck": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/torsion_neg-60-reference/specimen.feb",
+      "sha256": "bea2dd7ccb17ec1c0c3ec6b0c9db875bd05946f28d4f8bb9c469d0011178521b"
+    },
+    "loading": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/torsion_neg-60-reference/loading.json",
+      "sha256": "ac999d18572f0bdb801e36e83cb07658e4a4a5bd6c53c7e37825474ec4ae25f5"
+    },
+    "mesh": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/mesh.json",
+      "sha256": "3a6b5bb720bd3998f035abecf15d5c603d46c5ed281ce1d08c4aadec69c1dab9"
+    }
+  },
+  "torsion_pos:N12:S120:double_mu": {
+    "deck": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/torsion_pos-120-double_mu/specimen.feb",
+      "sha256": "17653f658b881f3aa59c03a6a012f76beb3c26e2b3d3c808a78f8975f7017656"
+    },
+    "loading": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/torsion_pos-120-double_mu/loading.json",
+      "sha256": "b2cfccec897cdcbe080b5553c194ed7f899926780c1ec6e6c288e82340b95ab8"
+    },
+    "mesh": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/mesh.json",
+      "sha256": "0ed154be0d17c8baaac6ee0288381a53ec100f93cd936a194202f69ef32ae033"
+    }
+  },
+  "torsion_pos:N12:S120:reference": {
+    "deck": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/torsion_pos-120-reference/specimen.feb",
+      "sha256": "c38385b01fa265bcf817b83fd605929d77b1b4b2074f942e54c665d7f039b86f"
+    },
+    "loading": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/torsion_pos-120-reference/loading.json",
+      "sha256": "3fa76170392cbe0b768c5921ad604c8966b911c3efcbcd7bd7c9d6849d54d808"
+    },
+    "mesh": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/mesh.json",
+      "sha256": "0ed154be0d17c8baaac6ee0288381a53ec100f93cd936a194202f69ef32ae033"
+    }
+  },
+  "torsion_pos:N12:S60:reference": {
+    "deck": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/torsion_pos-60-reference/specimen.feb",
+      "sha256": "978eac09798a579d41df0f6d245417dc4564516da92690a5c26ad5a0dc082949"
+    },
+    "loading": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/torsion_pos-60-reference/loading.json",
+      "sha256": "05fb7e7de69c55515028cd67d9a457670c99321c91615a80515d24c01a7196d3"
+    },
+    "mesh": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/mesh.json",
+      "sha256": "0ed154be0d17c8baaac6ee0288381a53ec100f93cd936a194202f69ef32ae033"
+    }
+  },
+  "torsion_pos:N4:S60:reference": {
+    "deck": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/torsion_pos-60-reference/specimen.feb",
+      "sha256": "a19e88501da3e80af743893a57984656b861ff8459a9c3f8e21416c729a991ed"
+    },
+    "loading": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/torsion_pos-60-reference/loading.json",
+      "sha256": "afa4f5b3891f114cfa0c3a47567d29f6eaf50c4eb6da1c07c65c1ad5ed980650"
+    },
+    "mesh": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/mesh.json",
+      "sha256": "4df59e253fa595823eedb7ee498b68e01e1f26d9a5427edee1be7defc257e65a"
+    }
+  },
+  "torsion_pos:N8:S60:reference": {
+    "deck": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/torsion_pos-60-reference/specimen.feb",
+      "sha256": "8977d2e717fb04b853ae835447463f5e43011064ef8ee6fea687486328a0493e"
+    },
+    "loading": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/torsion_pos-60-reference/loading.json",
+      "sha256": "a36b1caf1f774c47500586e02f366ee44972158071341d2319457fc8660678ba"
+    },
+    "mesh": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/mesh.json",
+      "sha256": "3a6b5bb720bd3998f035abecf15d5c603d46c5ed281ce1d08c4aadec69c1dab9"
+    }
+  }
+}

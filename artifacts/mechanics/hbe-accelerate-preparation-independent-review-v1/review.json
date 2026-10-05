@@ -1,0 +1,54 @@
+{
+  "status": "saved_preparation_consistency_review_passed",
+  "scope": "Read-only hashes, source archive and XML/JSON comparisons. No production code imports, solver, physics replay, CSV/ZIP/patient reads or broad tests.",
+  "source_commit": "6486dbcfb0395a4c5b9df3f140b08141d0d96fd7",
+  "source_archive": {
+    "bytes": 317440,
+    "path": "outputs/validation/hbe-accelerate-6486dbc/source.tar",
+    "sha256": "fd3a72a995dd38fc1107b83ec71f1b0911ed060ecac451245637c1559e598d34"
+  },
+  "archive_files_exact_to_commit": 14,
+  "solver_only_deck_copies_verified": 18,
+  "raw_input_files_verified": 37,
+  "raw_input_bytes": 27429035,
+  "unique_input_files_rehashed_before_and_after": 218,
+  "all_inputs_unchanged": true,
+  "runtime_identity": {
+    "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+    "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+  },
+  "profile": {
+    "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+    "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+  },
+  "backend_decks": {
+    "path": "outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/manifest.json",
+    "sha256": "0fe58b97e29bf8d712463ae0eac09b2102129a6af016216b89eb9f8bcb25217c"
+  },
+  "draft": {
+    "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/release-draft.json",
+    "sha256": "9f21f130d51911c52faf03bcaba0a8a24c058339451794809a387ea2a4191c10"
+  },
+  "control_review": {
+    "path": "artifacts/mechanics-accelerate-controls-saved-review-v1/review.json",
+    "sha256": "b410fbe9cd8cbb9be5492a77f402d44844da01042259ecfcbccc0d04fef83fba"
+  },
+  "caps_identical_to_frozen_protocol": true,
+  "original_csv_assumptions_unchanged": true,
+  "calibration_members_only": true,
+  "continuation_absent": true,
+  "draft_expected_refusal_receipt_and_source_bound": true,
+  "draft_refusal_not_reexecuted_by_this_audit": true,
+  "experiment_directory_and_marker_absent": true,
+  "new_solver_calls": 0,
+  "measured_members_read": 0,
+  "execution_authorized_by_this_review": false,
+  "limits": [
+    "Saved profile replay and eight-control interpretation are bound to the independent upstream review, not reexecuted here.",
+    "Unsupported draft refusal is an early gate, not evidence that every later supported-release preflight condition has been executed.",
+    "No specimen accuracy or constitutive-law validation is established by preparation."
+  ],
+  "audit_source_sha256": "e87fda53d2a639ce575f8b8859815154ee9e812a4a24fd6168161270a66d668c",
+  "elapsed_seconds": 1.140264790970832,
+  "verified_inputs_sha256": "38ef1c2987dd61406142737d15a95962fe93b3b87dce9418936315e6a4d6782a"
+}
