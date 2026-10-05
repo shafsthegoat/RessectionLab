@@ -1,0 +1,23 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_native_ingress_review.py"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 1.0926762910094112,
+  "sources": {
+    "src/resectionlab/native_ingress.py": "cd27eb57062d0afd72dba3b392f9ed03973a9fe5b353bb8fd0da74e6a1c6761f",
+    "src/resectionlab/native_proposals.py": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee",
+    "src/resectionlab/native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/core.py": "f1f0b8ae334cabc864c3ec85d4f6b49e4842de2b580edaadd7562276ea0c92db",
+    "tests/test_native_ingress.py": "b361433d73e73a09c8bf90ede3d56b09d6edd56ebdef9befa78b70677914aea2",
+    "tests/test_native_ingress_review.py": "2b2cab1a81e201689a907e37dcf838e7ae7d6c745f73b04b2aae9860497b9ac2",
+    "docs/native-ingress-screening.md": "dfbb6dbd5b837f49e6e1e741c093fc455e740f670fb3519a638f14af59669a20"
+  },
+  "all_bound_files_unchanged": true,
+  "log_sha256": "5dc90a560ea250acb8f13a282c59f041cbf5dab0ca7d92c9c506178d2a2ef7ee"
+}

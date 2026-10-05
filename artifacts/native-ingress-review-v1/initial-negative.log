@@ -1,0 +1,37 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_____________ test_six_labels_cannot_disguise_one_physical_access ______________
+
+    def test_six_labels_cannot_disguise_one_physical_access():
+        actual = exits()[0]
+        mislabeled = [replace(actual, axis=axis, outward_sign=sign,
+            distance_mm=1. if (axis, sign) == (2, 1) else 3.)
+            for axis, sign in product(range(3), (-1, 1))]
+        result = screen_axis_accesses(mislabeled)
+>       assert result.status == "failed", result.to_dict()
+E       AssertionError: {'version': 'six-axis-any-entry-native-ingress-v1', 'status': 'selected', 'complete': True, 'selected_exit': [2, 1], ...}
+E       assert 'selected' == 'failed'
+E         
+E         - failed
+E         + selected
+
+tests/test_native_ingress_review.py:54: AssertionError
+____________ test_opposite_metadata_sign_is_not_the_screened_access ____________
+
+    def test_opposite_metadata_sign_is_not_the_screened_access():
+        candidates = exits()
+        candidates[0], candidates[1] = (
+            replace(candidates[1], outward_sign=-1), replace(candidates[0], outward_sign=1))
+        result = screen_axis_accesses(candidates)
+>       assert result.status == "failed", result.to_dict()
+E       AssertionError: {'version': 'six-axis-any-entry-native-ingress-v1', 'status': 'selected', 'complete': True, 'selected_exit': [0, -1], ...}
+E       assert 'selected' == 'failed'
+E         
+E         - failed
+E         + selected
+
+tests/test_native_ingress_review.py:63: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_native_ingress_review.py::test_six_labels_cannot_disguise_one_physical_access
+FAILED tests/test_native_ingress_review.py::test_opposite_metadata_sign_is_not_the_screened_access
+2 failed in 0.38s
