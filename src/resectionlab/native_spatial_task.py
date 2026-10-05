@@ -508,8 +508,11 @@ class NativeSpatialTask:
             return {"action_id": "STOP", "reward": 0., "target_removed_mm3": 0., "normal_removed_mm3": 0.,
                     "insertion_distance_mm": 0., "complete_tool_path_length_mm": 0.}
         indices = np.asarray(geometry["removed_indices_native"], dtype=int)
-        target = float(self.case.reference_target[tuple(indices.T)].sum() * self._config.voxel_volume_mm3)
-        total = len(indices) * self._config.voxel_volume_mm3
+        # Float32 source memberships stay unchanged; physical accounting uses
+        # float64 before multiplication, including NumPy's scalar promotion.
+        voxel = float(self._config.voxel_volume_mm3)
+        target = float(self.case.reference_target[tuple(indices.T)].sum(dtype=np.float64)) * voxel
+        total = len(indices) * voxel
         distance = float(np.linalg.norm(np.subtract(geometry["tip_mm"], geometry["entry_mm"])))
         weights = self.reward_spec
         reward = (weights.target_per_mm3 * target - weights.normal_per_mm3 * (total - target)
@@ -746,19 +749,21 @@ class NativeSpatialTask:
 
     def metrics(self):
         self._assert_frozen()
-        voxel = self._config.voxel_volume_mm3
+        voxel = float(self._config.voxel_volume_mm3)
         removed, contact = self._engine.removed_mask, self._engine.contact_mask
+        removed_volume = int(removed.sum()) * voxel
+        target_volume = float(self.case.reference_target[removed].sum(dtype=np.float64)) * voxel
         return {"task_version": NATIVE_SPATIAL_VERSION, "source_hash": self._source_hash,
             "reference_hash": self._reference_hash, "decision_model_hash": self.decision_model_hash,
             "steps": self._steps, "terminated": self._terminated, "total_reward": self._total_reward,
-            "target_removed_mm3": float(self.case.reference_target[removed].sum() * voxel),
-            "normal_removed_mm3": float((1 - self.case.reference_target[removed]).sum() * voxel),
-            "reference_target_outside_observed_support_mm3": float(self.case.reference_target[~self.case.observed_support].sum() * voxel),
-            "simulated_removed_volume_mm3": float(removed.sum() * voxel),
-            "cumulative_contacted_tissue_upper_bound_mm3": float(contact.sum() * voxel),
-            "currently_retained_contacted_tissue_upper_bound_mm3": float((contact & ~removed).sum() * voxel),
+            "target_removed_mm3": target_volume,
+            "normal_removed_mm3": removed_volume - target_volume,
+            "reference_target_outside_observed_support_mm3": float(self.case.reference_target[~self.case.observed_support].sum(dtype=np.float64)) * voxel,
+            "simulated_removed_volume_mm3": removed_volume,
+            "cumulative_contacted_tissue_upper_bound_mm3": int(contact.sum()) * voxel,
+            "currently_retained_contacted_tissue_upper_bound_mm3": int((contact & ~removed).sum()) * voxel,
             "partial_contact_weight": 0., "functional_evidence_available": {"motor": False, "language": False},
-            "function_unassessed_removed_volume_mm3": float(removed.sum() * voxel),
+            "function_unassessed_removed_volume_mm3": removed_volume,
             "motor_surrogate": None, "language_surrogate": None, "clinical_deficit_probability": None,
             "clinical_probability_reason": "no_validated_clinical_outcome_model",
             "unknowns": ["motor_evidence_unavailable", "language_evidence_unavailable", "vascular_coverage_unassessed"],

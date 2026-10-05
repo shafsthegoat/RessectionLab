@@ -1,0 +1,46 @@
+{
+  "phase": "before_fix",
+  "command": ".venv/bin/python -m pytest -q tests/test_native_spatial_precision.py",
+  "result": {
+    "failed": 7,
+    "passed": 1,
+    "seconds": 1.23
+  },
+  "source_sha256": {
+    "src/resectionlab/native_spatial_task.py": "d5b24e392c0e5b7d129412971f8edf66924922d0ae0a07814caeff851af9b6b3",
+    "src/resectionlab/native_spatial_evaluation.py": "c1f3f2806d8b8fdfec9ad2edfeba64052a5d996845a8fc3a52cacc926a19ac1e",
+    "tests/test_native_spatial_precision.py": "c37042f3f99926e611d26ec1dd1ac40b4737c8e9c3c9a41e5b942e84958455e1"
+  },
+  "failure_scope": "Six source-cell scoring assertions plus outside-support reference sum; all analytic native strokes executed, no patient arrays or training.",
+  "examples": [
+    {
+      "kind": "binary membership times nonunit source volume",
+      "observed": 2.000006914138794,
+      "float64_expected": 2.0000069482536786
+    },
+    {
+      "kind": "near-one fractional membership",
+      "observed": 3.0000100135803223,
+      "float64_expected": 3.0000102435659626
+    },
+    {
+      "kind": "outside support fractional mass",
+      "observed": 2.299999952316284,
+      "float64_expected": 2.3000000342726707
+    }
+  ],
+  "acceptance_tolerance_unchanged": {
+    "rel_tol": 1e-07,
+    "abs_tol": 1e-07
+  },
+  "saved_run_discrepancies": {
+    "PAT22_random_target": {
+      "aggregate": 271.9991760253906,
+      "sum_actions": 271.9992035627365
+    },
+    "PAT28_policy_normal": {
+      "aggregate": 185.99961853027344,
+      "sum_actions": 185.9996501258536
+    }
+  }
+}

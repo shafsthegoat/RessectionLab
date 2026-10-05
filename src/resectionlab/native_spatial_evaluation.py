@@ -114,8 +114,9 @@ def evaluate_native_spatial_episode(task, *, minimum_target_cells=1, metrics=Non
                                       for step in record['microsteps']))
         if contact != micro_contact or any(not case.observed_support[key] for key in contact):
             raise ValueError('Macro contact accounting differs from source-tissue microsteps')
-        indices = np.asarray(sorted(cells), dtype=int)
-        target = float(case.reference_target[tuple(indices.T)].sum() * volume) if len(indices) else 0.
+        # Reconstruct mass independently from individual stored memberships;
+        # do not reuse the simulator's reduction or its reported action totals.
+        target = math.fsum(float(case.reference_target[cell]) for cell in sorted(cells)) * volume
         normal = len(cells) * volume - target
         distance = float(np.linalg.norm(np.asarray(record['tip_mm']) - np.asarray(record['entry_mm'])))
         change = int(previous_tool is not None and previous_tool != record['tool_id'])
@@ -136,7 +137,7 @@ def evaluate_native_spatial_episode(task, *, minimum_target_cells=1, metrics=Non
         previous_tool = record['tool_id']
     union = np.asarray(sorted(removed), dtype=int)
     target_cells = int(np.count_nonzero(case.reference_target[tuple(union.T)] > 0)) if len(union) else 0
-    target_total = float(case.reference_target.sum(dtype=np.float64) * volume)
+    target_total = float(case.reference_target.sum(dtype=np.float64)) * volume
     outcomes = {
         'target_removed_mm3': target_volume, 'normal_removed_mm3': normal_volume,
         'simulated_removed_volume_mm3': len(removed) * volume,
