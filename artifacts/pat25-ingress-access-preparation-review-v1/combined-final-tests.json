@@ -1,0 +1,17 @@
+{
+  "clock_scope": "Worker cooperative 170s starts at its first stdlib timestamp. Outer 174s soft stop and 180s publication envelope remain authoritative across parent imports/preflight; inner worker supervision is reduced by parent work.",
+  "independent_review_receipt_sha256": "247ed93b43e37af77d9c3e1e275315520043e129e44fe5518b04e9adb851336d",
+  "log": "combined-final-tests.txt",
+  "log_sha256": "a676f9f706ec3192e5245df292d4064a98affa4213223237839d9d7feb5deaca",
+  "passed": 89,
+  "performed_by": "geometry owner",
+  "pytest_seconds": 26.25,
+  "scope": "owner analytic controls plus independent offline/mocked controls; no patient execution",
+  "source_hashes": {
+    "docs/pat25-ingress-access-diagnostic.md": "f067033d3949fcdb5feff1562eaf71b65b852406c4f720f055058bd00eb22c3d",
+    "scripts/diagnose_pat25_ingress_access.py": "b3afc7510fcfcc3f53b0535c7128296f130b82431fb83d061058a8658cbe10e2",
+    "tests/test_pat25_ingress_access.py": "b2da9e2bc9e7ae9c1ac82bc40919184c2c6ec75c0c57f6fdc43b6a15e6a9029a",
+    "tests/test_pat25_ingress_access_review.py": "bcaa214197be83d778bf93df896f60366712ab08eec914595786c91e8bac2328"
+  },
+  "status": "passed"
+}

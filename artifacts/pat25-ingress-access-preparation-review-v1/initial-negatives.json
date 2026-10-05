@@ -1,0 +1,18 @@
+{
+  "elapsed_seconds": 0.775328209,
+  "exit_code": 1,
+  "native_constructors": 0,
+  "optimizer_steps": 0,
+  "patient_decodes": 0,
+  "policy_forwards": 0,
+  "preview_calls": 0,
+  "scope": "CPython profile observer; mocked parent time/supervisor/IO only",
+  "source_hashes_after": {
+    "scripts/diagnose_pat25_ingress_access.py": "238c44868fa0ffe7c07d53e382d81157c930006a55533c0c003e6f5d3560a8f8",
+    "tests/test_pat25_ingress_access_review.py": "777b0953511c38976e85b052e14c2b67ab000c680bd203085c08713a8c2952e2"
+  },
+  "source_hashes_before": {
+    "scripts/diagnose_pat25_ingress_access.py": "238c44868fa0ffe7c07d53e382d81157c930006a55533c0c003e6f5d3560a8f8",
+    "tests/test_pat25_ingress_access_review.py": "777b0953511c38976e85b052e14c2b67ab000c680bd203085c08713a8c2952e2"
+  }
+}
