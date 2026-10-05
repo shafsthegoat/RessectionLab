@@ -1,0 +1,43 @@
+{
+  "checks": [
+    "Strict pre-call preview admission cap",
+    "Exact returned preview semantics and unchanged initial state on analytical fixture",
+    "No retained engine, frame, traceback or array objects in compact trace output",
+    "Observer exception restores interpreter profiling and leaves committed state unchanged",
+    "Existing external profiler remains intact on refused context entry",
+    "Reflected anisotropic physical coordinates retain all six source exits and original selected identity",
+    "Owner controls cover blocked cells, empty failed-preview arrays, commit refusal, partial cancellation, incomplete catalog, internal void versus exterior free, roles and byte-before-decode"
+  ],
+  "independent_controls": 5,
+  "initial_negative": {
+    "finding": "Previews were capped after return; max1 admitted2 preview bodies. Repaired to refuse the next call before its body.",
+    "path": "initial-review.json",
+    "sha256": "ab15f5a8f0f22c6870e40779f0c3eb30edf238399d5ca2a81d263a87e4f1c17d"
+  },
+  "owner_controls": 16,
+  "process_seconds": 4.960464583011344,
+  "production_boundaries": {
+    "existing_native_resection_source_unchanged": true,
+    "existing_task_and_preparation_source_unchanged": true,
+    "no_acceptance_rule_or_support_change": true,
+    "partial_inventory_not_complete_zero": true
+  },
+  "remaining_actual_gates": [
+    "Original PAT25 selected-exit inventory/config identity must still reproduce during separately released patient diagnostic.",
+    "All six exits must remain reported, including unassessed exits if resource limits intervene.",
+    "Alternative exits are hypothetical initial catalogs; this review does not select a replacement access or establish clinical accessibility."
+  ],
+  "scope": "Source and analytical software review only; no patient decode, six-exit patient diagnostic, policy, training, search or patient-native execution.",
+  "source_sha256": {
+    "scripts/diagnose_pat25_access.py": "a88f8176b8c79d528b15207811d99b9d061a2fcda19029dfbf058d61acf97f6a",
+    "scripts/prepare_real_training_cases.py": "7533e829f0663fd68d982a84ad49982442e5e04345ea045f15c546d7bf247e6a",
+    "src/resectionlab/native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+    "src/resectionlab/native_spatial_task.py": "61b3d8167152d06a578e1ab7c146b7af937d86ccca6ed9e20bf3081cbf2f6711",
+    "tests/test_pat25_access_diagnostic.py": "b8d21870e0e167fae495eea2f8d8223785a78e21de5ab97daa9f53f9c4153ff6",
+    "tests/test_pat25_access_diagnostic_review.py": "93b43b871a756e856ab94ea39baa2182028d23ac3d6d7e135966ef4368cc3a62"
+  },
+  "status": "passed",
+  "test_exit_code": 0,
+  "test_log_sha256": "aa69fb7096748b90a05016b9a1463f044f86dfed9a9248bfc32164a61ee64ed1",
+  "test_result": ".....................                                                    [100%]\n21 passed in 4.50s"
+}

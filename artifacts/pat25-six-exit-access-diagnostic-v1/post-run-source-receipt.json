@@ -1,0 +1,13 @@
+{
+  "kind": "post-run-source-preservation",
+  "created_at": "2026-10-05T04:41:01.608384+00:00",
+  "archive": "artifacts/pat25-six-exit-access-diagnostic-v1/post-run-source.tar.gz",
+  "sha256": "3444b6ab5c28ec6ce2c9448bc415d6d9588df0d1fab755f15c804f910d28a34a",
+  "bytes": 341076,
+  "source_files": 61,
+  "all_bytes_match_prospective_manifest": true,
+  "manifest_sha256": "a9c7f36f7dc71a83723f169125b80e8f0be058b61f527efc08d067914359d123",
+  "archived_before_run": false,
+  "launch_deviation_sha256": "d6a560ea280170ab23e7a53fc915aae7417f959e4ef44103fe7b4b0f3dc0499f",
+  "interpretation": "Source-hash-bound working-tree development diagnostic. Archive created after terminal completion; not a precommitted immutable archive execution."
+}

@@ -1,0 +1,16 @@
+{
+  "kind": "pat25-diagnostic-launch-deviation-v1",
+  "recorded_at": "2026-10-05T04:38:42.490142+00:00",
+  "git_head_at_launch": "d9f2ceb5f90ba2e2b23951eaaca9e1e484e92fb9",
+  "pre_run_source_commit_completed": false,
+  "pre_run_source_archive_created": false,
+  "pre_run_release_file_created": false,
+  "cause": "Whitespace check rejected a preserved initial failure log. A subsequent shell command on a new line still started the reviewed diagnostic after the preceding AND-chain stopped.",
+  "reviewed_script_sha256": "a88f8176b8c79d528b15207811d99b9d061a2fcda19029dfbf058d61acf97f6a",
+  "manifest_sha256": "a9c7f36f7dc71a83723f169125b80e8f0be058b61f527efc08d067914359d123",
+  "current_bound_sources_match_prospective_manifest": true,
+  "bound_source_count": 61,
+  "worker_handle": "root exec session16749",
+  "action": "Preserve the one run and all its outputs. No retry or retroactive pre-run commit claim. Source archive will be explicitly post-launch. Independent saved-record review required.",
+  "user_scope": "Previously authorized bounded PAT25 development diagnostic only; no cuts, training, search or replacement access."
+}
