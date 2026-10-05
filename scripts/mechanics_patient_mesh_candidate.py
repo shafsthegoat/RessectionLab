@@ -150,7 +150,7 @@ def configure_profile(gmsh, surface_tags, profile):
     gmsh.option.setNumber('Mesh.MeshSizeMax', profile['interior_size_m'])
 
 
-def generate_one(gmsh, vertices, faces, config, charge):
+def generate_one(gmsh, vertices, faces, config, charge, *, profile_callback=None):
     """The reviewed discrete-surface workflow with one graded size-field change."""
     gmsh.clear(); gmsh.model.add(config['candidate_id'])
     for name, value in config['gmsh_options'].items():
@@ -165,7 +165,8 @@ def generate_one(gmsh, vertices, faces, config, charge):
         raise ValueError('Discrete patch cap exceeded')
     loop = gmsh.model.geo.addSurfaceLoop(tags)
     gmsh.model.geo.addVolume([loop]); gmsh.model.geo.synchronize()
-    configure_profile(gmsh, tags, config['size_profile'])
+    configure = configure_profile if profile_callback is None else profile_callback
+    configure(gmsh, tags, config['size_profile'])
     charge(); gmsh.model.mesh.generate(3)
     kinds, element_ids, connectivity = gmsh.model.mesh.getElements(3)
     if list(kinds) != [11]:
@@ -186,7 +187,7 @@ def generate_one(gmsh, vertices, faces, config, charge):
         'gmsh_to_febio_permutation': permutation.tolist(), 'discrete_patches': len(tags)}
 
 
-def assess_candidate(gmsh, vertices, faces, output, *, distance_factory, config=None):
+def assess_candidate(gmsh, vertices, faces, output, *, distance_factory, config=None, generator=None):
     """One candidate only. Caller supplies released arrays/API and supervision.
 
     This helper is deliberately not a standalone execution launcher. It neither
@@ -209,7 +210,8 @@ def assess_candidate(gmsh, vertices, faces, output, *, distance_factory, config=
         if len(faces) > config['caps']['maximum_native_triangles']:
             raise ValueError('Source face cap exceeded')
         result['source_surface'] = source; save()
-        nodes, cells, origin = generate_one(gmsh, vertices, faces, config, charge)
+        generate = generate_one if generator is None else generator
+        nodes, cells, origin = generate(gmsh, vertices, faces, config, charge)
         result.update(returned_nodes=len(nodes), returned_elements=len(cells),
                       discrete_patches=origin['discrete_patches'])
         context = {'candidate_id': config['candidate_id'],

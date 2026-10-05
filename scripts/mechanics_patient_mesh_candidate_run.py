@@ -19,6 +19,8 @@ import stat
 import subprocess
 import sys
 import time
+from functools import partial
+from typing import NamedTuple, Callable
 
 ROOT = Path(__file__).resolve().parents[1]
 VERSION = 'resect-case4-patient-mesh-graded-v2-release'
@@ -32,6 +34,28 @@ CONTEXT_ROLES = frozenset(['mask_qc', 'baseline_diagnostic', 'root_visual_decisi
 OUTPUT_BYTES = 8 * 1024**2
 FILE_BYTES = 4 * 1024**2
 OUTPUT_FILES = 32
+
+
+class ExecutionSpec(NamedTuple):
+    """Explicit caller configuration; defaults preserve the original v2 launcher."""
+    version: str
+    candidate_manifest: str
+    closure: frozenset[str]
+    context_roles: frozenset[str]
+    helper_path: str
+    entrypoint: str
+    output_bytes: int
+    file_bytes: int
+    output_files: int
+    validate_config: Callable | None = None
+
+
+def execution_spec(spec=None):
+    return spec if spec is not None else ExecutionSpec(
+        VERSION, V2, CLOSURE, CONTEXT_ROLES,
+        'scripts/mechanics_patient_mesh_candidate.py',
+        'scripts/mechanics_patient_mesh_candidate_run.py',
+        OUTPUT_BYTES, FILE_BYTES, OUTPUT_FILES)
 
 
 def sha(path):
@@ -63,9 +87,10 @@ def unchanged(bindings):
     return result
 
 
-def released(release_path, output):
+def released(release_path, output, *, spec=None):
+    selected = execution_spec(spec)
     path = Path(release_path).resolve(); release = json.loads(path.read_text())
-    if release.get('schema') != VERSION or release.get('authorized') is not True:
+    if release.get('schema') != selected.version or release.get('authorized') is not True:
         raise ValueError('Separate exact-source root release required')
     if Path(release['source_directory']).resolve() != ROOT or Path(release['attempt_directory']).resolve() != Path(output).resolve():
         raise ValueError('Released source/attempt mismatch')
@@ -77,15 +102,17 @@ def released(release_path, output):
         raise ValueError('Mesh release cannot authorize clinical claims or a solve')
     if release.get('reuse_saved_native_surface_only') is not True:
         raise ValueError('No MRI re-extraction or alternate anatomy permitted')
-    if set(release['source_sha256']) != CLOSURE:
-        raise ValueError('Exact seven-file execution closure required')
+    if set(release['source_sha256']) != selected.closure:
+        raise ValueError('Exact declared execution closure required')
     bound = {str(path): sha(path)}
     for name, expected in release['source_sha256'].items():
         raw = subprocess.run(['git', '-C', str(repository), 'show', f'{commit}:{name}'], capture_output=True, check=True, timeout=5).stdout
         if hashlib.sha256(raw).hexdigest() != expected or sha(ROOT/name) != expected:
             raise ValueError('Committed source/archive mismatch')
         bound[str(ROOT/name)] = expected
-    first = json.loads((ROOT/V1).read_text()); candidate = json.loads((ROOT/V2).read_text())
+    first = json.loads((ROOT/V1).read_text()); candidate = json.loads((ROOT/selected.candidate_manifest).read_text())
+    if selected.validate_config is not None:
+        selected.validate_config(candidate)
     if candidate['caps']['maximum_generations'] != 1 or candidate['caps']['retries'] != 0:
         raise ValueError('One fixed candidate required')
     if candidate['surface_fidelity'] != first['surface_fidelity'] or candidate['quality'] != first['quality']:
@@ -93,9 +120,11 @@ def released(release_path, output):
     expected_surface = repository/candidate['source_surface_binding']['path']
     inputs = list(first['input_bindings']) + [{'path':str(expected_surface), 'sha256':candidate['source_surface_binding']['sha256']}]
     contexts = release['context_bindings']
-    if len(contexts) != len(CONTEXT_ROLES) or {item['role'] for item in contexts} != CONTEXT_ROLES:
+    if len(contexts) != len(selected.context_roles) or {item['role'] for item in contexts} != selected.context_roles:
         raise ValueError('Fixed source/QC/review ancestry required')
-    for item in inputs + contexts:
+    evidence = [{'path':str(repository/item['path']), 'sha256':item['sha256']}
+                for item in candidate.get('evidence_bindings', [])]
+    for item in inputs + contexts + evidence:
         item_path = Path(item['path']).resolve()
         if sha(item_path) != item['sha256']:
             raise ValueError('Released input/runtime/context changed')
@@ -107,8 +136,9 @@ def released(release_path, output):
     return candidate, first, expected_surface, bound
 
 
-def output_usage(output):
+def output_usage(output, *, spec=None):
     """Bounded metadata walk; do not follow symlinks or consume artifact bodies."""
+    selected = execution_spec(spec)
     output = Path(output); files = 0; total = 0; largest = 0
     if not output.exists(): return {'files':0, 'bytes':0, 'largest_file_bytes':0}
     for directory, dirs, names in os.walk(output, followlinks=False):
@@ -128,20 +158,22 @@ def output_usage(output):
                 continue
             if not stat.S_ISREG(info.st_mode): raise ValueError('Only regular output files permitted')
             files += 1; total += info.st_size; largest = max(largest, info.st_size)
-            if files > OUTPUT_FILES or total > OUTPUT_BYTES or largest > FILE_BYTES:
+            if files > selected.output_files or total > selected.output_bytes or largest > selected.file_bytes:
                 raise ValueError('Output count/aggregate/per-file cap exceeded')
     return {'files':files, 'bytes':total, 'largest_file_bytes':largest}
 
 
-def supervised(runtime, command, output, environment, caps):
+def supervised(runtime, command, output, environment, caps, *, spec=None):
     """Reuse reviewed group supervisor, extending its numeric observer with disk checks."""
+    selected = execution_spec(spec)
+    usage = output_usage if spec is None else partial(output_usage, spec=spec)
     observer = runtime.process_group_rss
     audit = {'scope':'Sampled whole-attempt output plus hard child per-file limit',
-        'aggregate_bytes_cap':OUTPUT_BYTES, 'per_file_bytes_cap':FILE_BYTES,
-        'maximum_files':OUTPUT_FILES, 'observations':0, 'peak_sampled_bytes':0, 'error':None}
+        'aggregate_bytes_cap':selected.output_bytes, 'per_file_bytes_cap':selected.file_bytes,
+        'maximum_files':selected.output_files, 'observations':0, 'peak_sampled_bytes':0, 'error':None}
     def guarded(pgid, *, timeout_seconds):
         try:
-            use = output_usage(output)
+            use = usage(output)
             audit['observations'] += 1
             audit['peak_sampled_bytes'] = max(audit['peak_sampled_bytes'], use['bytes'])
         except BaseException as error:
@@ -154,27 +186,30 @@ def supervised(runtime, command, output, environment, caps):
             seconds=caps['aggregate_seconds'], rss_bytes=caps['process_group_rss_bytes'])
     finally:
         runtime.process_group_rss = observer
-    try: audit['final_usage'] = output_usage(output)
+    try: audit['final_usage'] = usage(output)
     except BaseException as error: audit['error'] = str(error)
     return receipt, audit
 
 
-def worker(release_path, output):
+def worker(release_path, output, *, spec=None):
+    selected = execution_spec(spec)
+    check_release = released if spec is None else partial(released, spec=spec)
+    usage = output_usage if spec is None else partial(output_usage, spec=spec)
     output = Path(output)
     if (output/'worker.json').exists(): raise FileExistsError('Existing attempt preserved')
     result = {'status':'running', 'solver_calls':0, 'native_generation_calls':0,
               'source_arrays_reused':False, 'B_or_V_access':False, 'MRI_reextracted':False}
     bound = {}; gmsh = None; start = time.monotonic()
     try:
-        config, first, surface_path, bound = released(release_path, output)
+        config, first, surface_path, bound = check_release(release_path, output)
         # RLIMIT_FSIZE is child-local; stdout shares the supervised log descriptor.
-        resource.setrlimit(resource.RLIMIT_FSIZE, (FILE_BYTES, FILE_BYTES))
-        result.update(input_sha256=bound, per_file_hard_limit_bytes=FILE_BYTES)
+        resource.setrlimit(resource.RLIMIT_FSIZE, (selected.file_bytes, selected.file_bytes))
+        result.update(input_sha256=bound, per_file_hard_limit_bytes=selected.file_bytes)
         write(output/'worker.json', result)
         for name, expected in first['package_versions'].items():
             if importlib.metadata.version(name) != expected: raise ValueError('Package version changed: '+name)
         import numpy as np
-        helper = module(ROOT/'scripts/mechanics_patient_mesh_candidate.py', 'released_graded_mesh')
+        helper = module(ROOT/selected.helper_path, 'released_graded_mesh')
         with np.load(surface_path, allow_pickle=False) as arrays:
             if set(arrays.files) != {'vertices_m', 'triangles'}: raise ValueError('Unexpected source-surface arrays')
             vertices = arrays['vertices_m']; faces = arrays['triangles']
@@ -209,7 +244,7 @@ def worker(release_path, output):
         result['inputs_after'] = unchanged(bound)
         if not bound or not all(result['inputs_after'].values()): result['status']='failed_or_incomplete'
         try:
-            result['output_usage'] = output_usage(output)
+            result['output_usage'] = usage(output)
             result['candidate_output_sha256'] = {str(p.relative_to(output)):sha(p)
                 for p in (output/'candidate').rglob('*') if p.is_file()}
         except BaseException as error:
@@ -218,20 +253,24 @@ def worker(release_path, output):
     return 0 if result['status']=='completed_geometry_only' else 1
 
 
-def launch(release_path, output):
+def launch(release_path, output, *, spec=None):
+    selected = execution_spec(spec)
+    check_release = released if spec is None else partial(released, spec=spec)
+    usage = output_usage if spec is None else partial(output_usage, spec=spec)
+    supervise = supervised if spec is None else partial(supervised, spec=spec)
     output=Path(output).resolve(); output.mkdir(parents=True,exist_ok=False)
     acceptance={'status':'failed_or_incomplete','worker_started':False,'solver_authorized':False,
                 'clinical_validation':False,'anatomical_registration_accepted':False}
     bound={}
     try:
-        config, _, _, bound=released(release_path,output)
+        config, _, _, bound=check_release(release_path,output)
         runtime=module(ROOT/'scripts/febio_runtime.py','graded_mesh_supervisor')
         env=runtime.private_environment(runtime.declaration())
         env.update(VTK_SMP_MAX_THREADS='1',VTK_SMP_IMPLEMENTATION_TYPE='Sequential')
-        command=[sys.executable,'-B',str(Path(__file__).resolve()),'worker','--release',str(Path(release_path).resolve()),'--output',str(output)]
+        command=[sys.executable,'-B',str((ROOT/selected.entrypoint).resolve()),'worker','--release',str(Path(release_path).resolve()),'--output',str(output)]
         acceptance.update(worker_started=True,command=command,thread_environment={key:env[key] for key in
             ['OMP_NUM_THREADS','OMP_DYNAMIC','VECLIB_MAXIMUM_THREADS','OPENBLAS_NUM_THREADS','MKL_NUM_THREADS','VTK_SMP_MAX_THREADS','VTK_SMP_IMPLEMENTATION_TYPE']})
-        receipt, disk=supervised(runtime,command,output,env,config['caps'])
+        receipt, disk=supervise(runtime,command,output,env,config['caps'])
         acceptance.update(supervision=receipt,output_guard=disk)
         record=json.loads((output/'worker.json').read_text()) if (output/'worker.json').is_file() else {}
         hashes=record.get('candidate_output_sha256',{})
@@ -251,22 +290,22 @@ def launch(release_path, output):
     finally:
         acceptance['inputs_after']=unchanged(bound)
         if not bound or not all(acceptance['inputs_after'].values()): acceptance['status']='failed_or_incomplete'
-        try: acceptance['final_output_usage']=output_usage(output)
+        try: acceptance['final_output_usage']=usage(output)
         except BaseException as error:
             acceptance.update(status='failed_or_incomplete',output_error=str(error)[:4096])
         write(output/'acceptance.json',acceptance)
-        try: output_usage(output)  # Include the final acceptance receipt itself.
+        try: usage(output)  # Include the final acceptance receipt itself.
         except BaseException as error:
             acceptance.update(status='failed_or_incomplete',output_error=str(error)[:4096])
             write(output/'acceptance.json',acceptance)
     return 0 if acceptance['status']=='completed_geometry_only_no_solver_authorization' else 1
 
 
-def main():
+def main(*, spec=None):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('mode',choices=['run','worker']);parser.add_argument('--release',required=True);parser.add_argument('--output',required=True)
     args=parser.parse_args()
-    return worker(args.release,args.output) if args.mode=='worker' else launch(args.release,args.output)
+    return worker(args.release,args.output,spec=spec) if args.mode=='worker' else launch(args.release,args.output,spec=spec)
 
 
 if __name__=='__main__': raise SystemExit(main())
