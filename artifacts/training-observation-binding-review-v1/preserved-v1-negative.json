@@ -1,0 +1,23 @@
+{
+  "historical_grid_sha256": "a9b1a2f220e2a0137e16aa31b5e59146ea0c54d8d3b5c2fd7242764d2fb4005a",
+  "historical_receipt_sha256": "fdc575e6695a7f949f65de93e7165f7833b514fcd193094a24ac3e0f94e7ee77",
+  "mock_boundary_counts": {
+    "mock_constructor_returns": 1,
+    "mock_decoder_returns": 1
+  },
+  "native_tasks_constructed": false,
+  "new_exact_twenty_field_gate_accepts_same_mock_record": true,
+  "new_source_sha256": "9c4432777fb1556b58693f652af94b8f292045c00cf54d04e954c239c5979daf",
+  "old_eight_field_projection_exactly_equal": true,
+  "old_expected_field_count": 8,
+  "old_function_extracted_by_ast_without_modifying_body": true,
+  "old_rejection": "PAT05 physical task or native frame changed",
+  "old_source_commit": "8fed04c",
+  "old_source_sha256": "b85805c69821e8ca12fb28f0e6c48b500dc00329685853cef4064a5c2179c1b2",
+  "optimizer_steps": 0,
+  "patient_arrays_decoded": false,
+  "policy_forwards": 0,
+  "preview_calls": 0,
+  "saved_actual_field_count": 20,
+  "schema": "pat05-binding-independent-old-negative-v1"
+}

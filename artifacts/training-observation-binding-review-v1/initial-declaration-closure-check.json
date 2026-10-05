@@ -1,0 +1,16 @@
+{
+  "action": "Root must freeze committed archive source closure before sealing V2 declaration; no patient release issued",
+  "actual_declaration_changes": [
+    "/declared_at",
+    "/members/sub-PAT05/complete_native_grid_binding",
+    "/source_sha256/scripts/diagnose_training_observation_coverage.py",
+    "/source_sha256/src/resectionlab/native_ingress.py",
+    "/version"
+  ],
+  "initial_expected_change_set_excluded_unrelated_untracked_modules": true,
+  "metadata_only": true,
+  "observed_sha256": "cd27eb57062d0afd72dba3b392f9ed03973a9fe5b353bb8fd0da74e6a1c6761f",
+  "production_binding_defect": false,
+  "schema": "prospective-source-closure-coordination-v1",
+  "untracked_source_path": "src/resectionlab/native_ingress.py"
+}
