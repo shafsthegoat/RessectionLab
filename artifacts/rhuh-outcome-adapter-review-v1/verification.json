@@ -1,0 +1,87 @@
+{
+  "bound_files_unchanged_after_checks": true,
+  "controls": [
+    "All excluded CSV fields, including target category and postoperative KPS, can change with full-source SHA while permitted projection/hash stay identical.",
+    "Changing either permitted preoperative value changes projection/hash.",
+    "Raw strings survive quoted delimiters/newlines; missing target remains null and No remains false; snapshots are immutable.",
+    "Duplicate IDs/headers, unsupported identities/categories/numbers and byte drift fail closed.",
+    "Default loader refuses constructed fixtures unless their explicit derived digest is supplied.",
+    "Imaging-to-surgery interval cannot supply assessment/availability dates or primary-planner authority."
+  ],
+  "findings": [],
+  "git_head_at_review": "8114c0e417087ab98d3d74ac8c9d4946e308df9e",
+  "limits": [
+    "Constructed CSV unit controls only; no actual clinical table was opened or fitted by this review.",
+    "No patient images, protected BTC outcomes, planner execution, solver or training calls.",
+    "Adapter permits explicitly hashed analytic subsets; actual40-record release authority depends on original default digest and downstream fixed-cohort validation.",
+    "This review does not review or release the forthcoming experiment runner, source archive, environment or execution supervision."
+  ],
+  "production_changes_requested": false,
+  "prospective_protocol_review": {
+    "canonical_content_hash": "sha256:4992bfecceb4e8d0167b815d50a2ac960049fab508627b2b5272ebcc5c6b3d9f",
+    "comparators": [
+      "training-fold prevalence",
+      "KPS",
+      "KPS plus preoperative contrast-enhancing volume"
+    ],
+    "conclusion": "No blocking statistical issue for implementation; execution remains unauthorized in declaration.",
+    "endpoint": "any recorded postoperative deficit versus No",
+    "fit_budget": {
+      "observed": 80,
+      "permutations": 7920,
+      "positive_deletion_influence": 1092,
+      "total_maximum": 9092
+    },
+    "nulls": "No pooled LOO prevalence AUC; undefined denominators, incomplete diagnostics and unvalidated calibration remain explicitly null/not established.",
+    "path": "manifests/experiments/rhuh-preoperative-baseline-v1.json",
+    "patients": 40,
+    "permutation_interpretation": "Full model minus prevalence statistic is an unconditional exchangeable-label diagnostic, not conditional significance of volume beyond KPS.",
+    "prohibited_field_shadow": "Fixed-target rotation of excluded columns, explicitly derived source digest, exact features/hash/prediction comparison, zero added fits.",
+    "resources": {
+      "cpu_threads": 1,
+      "deadline_semantics": "cooperative checks before/after each fit plus parent hard stop after grace; preserve actual elapsed/overshoot and failure; no budget enlargement during run",
+      "max_logistic_fits": 9092,
+      "network_access_during_fitting": false,
+      "paid_compute": false,
+      "resume": false,
+      "retries": 0,
+      "rss_limit_bytes": 1073741824,
+      "termination_grace_seconds": 15,
+      "worker_wall_scope": "imports, parsing, all observed/permuted/influence fits, metrics and final writes",
+      "worker_wall_seconds": 180
+    },
+    "sha256": "c73547faa86074a1293787c56f623a8d665ee61455085dd7eccb50be8857e87b",
+    "statistical_scope": "Exploratory internal association, all40 labels previously QA-inspected; not external validation, severe-risk calibration, causal route harm or reward.",
+    "validation": "Fixed patient-level leave-one-out; training-fold standardization; fixed L2/C/threshold; no tuning or final full-cohort fit."
+  },
+  "reviewed_at_utc": "2026-10-05T04:35:28.487245+00:00",
+  "schema": "rhuh-outcome-adapter-independent-review-v1",
+  "source_sha256": {
+    "docs/rhuh-preoperative-baseline.md": "8a6f29b080de9ad5a55333b47e43651027d490c56db4313e5a3dca8192ad1ccc",
+    "manifests/experiments/rhuh-preoperative-baseline-v1.json": "c73547faa86074a1293787c56f623a8d665ee61455085dd7eccb50be8857e87b",
+    "src/resectionlab/rhuh_outcomes.py": "82981de054aca89789b9065620844cd8a8842120df71cdb89bdd147c0bc57d36",
+    "tests/test_rhuh_outcomes.py": "f9439a33023a5c6ef9e119cc865d51b2662f22f5eab757a0f39a04f58e8fb7e1",
+    "tests/test_rhuh_outcomes_review.py": "ffac5932e0a39cab7495f5124d2f9d0de793541085ac75a8d40b9a7b323b1043"
+  },
+  "status": "passed_source_and_prospective_protocol_review_not_experiment_release",
+  "validation": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/test_rhuh_outcomes_review.py",
+      "tests/test_rhuh_outcomes.py"
+    ],
+    "elapsed_seconds_reported_by_pytest": 0.15,
+    "failed": 0,
+    "independent_cases": 14,
+    "independent_first_run_passed": true,
+    "log_path": "artifacts/rhuh-outcome-adapter-review-v1/focused-pytest.txt",
+    "log_sha256": "aabf5e7fcea500185733fa1e9350ddbdbbaa7313483ed99f814f7b1b424923d5",
+    "owner_cases": 39,
+    "passed": 53,
+    "platform": "macOS-26.6-arm64-arm-64bit",
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]"
+  }
+}
