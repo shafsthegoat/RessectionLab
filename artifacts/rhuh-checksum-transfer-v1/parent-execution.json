@@ -1,0 +1,21 @@
+{
+  "exit_code": 0,
+  "elapsed_seconds_observed_by_launcher": 5.402918542,
+  "stdout_bytes": 432,
+  "stderr_bytes": 0,
+  "parent_summary": {
+    "status": "received_length_checked_local_hash_recorded",
+    "images_requested": false,
+    "receipt": "outputs/rhuh-one-pair/metadata/checksum-quarantine/run-1jjo0q5c-receipt.json",
+    "final_payload": {
+      "path": "outputs/rhuh-one-pair/metadata/checksum-quarantine/run-1jjo0q5c/RHUH-GBM-nii-v1.sums",
+      "bytes": 61787,
+      "sha256": "7c6ba3fa767bf169679db30caa854e671796416ca365fac6e57662796177c130"
+    },
+    "elapsed_seconds": 5.324132,
+    "accepted": true
+  },
+  "stderr_retained": false,
+  "release_sha256": "9e09e283de8b1cc2695c22f6f01fa22e84ea4c2e7c895588473e6d529c5902c3",
+  "source_sha256_after": "f9ad9f4d64cab2314be865aad47e4300e23aa8b83457ee83656a6921e12edaf0"
+}

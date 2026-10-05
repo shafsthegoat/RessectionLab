@@ -1,0 +1,13 @@
+{
+  "command": [
+    "python3",
+    "scripts/acquire_rhuh_checksum.py"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 0.1566105,
+  "summary": {
+    "status": "local_checks_passed_no_network_or_transfer",
+    "source": "/RHUH-GBM-nii-v1.sums"
+  },
+  "release_commit": "6f546516fa59b6283306a9f576148dd8287821a5"
+}

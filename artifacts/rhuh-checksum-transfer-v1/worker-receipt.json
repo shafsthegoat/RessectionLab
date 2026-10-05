@@ -1,0 +1,22 @@
+{
+  "source": "/RHUH-GBM-nii-v1.sums",
+  "package_id": "684",
+  "images_requested": false,
+  "supervisor_acceptance_required": true,
+  "started_utc": "2026-10-05T05:51:31.451348+00:00",
+  "client_sha256": "0d73689f6a4d5b6f7ddd90a86459be0aa211b53d40c9e01b80bed5f44f793c4e",
+  "resolved_source_sha256": "cca6151d701646f481c1eb723623bcd5f2abd1fd55859a24f1a12dae2de5cc12",
+  "attempt_limit": 1,
+  "max_bytes": 65536,
+  "max_wall_seconds": 60,
+  "status": "received_length_checked_local_hash_recorded",
+  "transfer_started": true,
+  "client_exit_code": 0,
+  "payload": {
+    "path": "outputs/rhuh-one-pair/metadata/checksum-quarantine/run-1jjo0q5c/RHUH-GBM-nii-v1.sums",
+    "bytes": 61787,
+    "sha256": "7c6ba3fa767bf169679db30caa854e671796416ca365fac6e57662796177c130"
+  },
+  "publisher_checksum_for_checksum_file_known": false,
+  "elapsed_seconds": 5.176875
+}
