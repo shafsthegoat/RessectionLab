@@ -1,0 +1,40 @@
+{
+  "released_utc": "2026-10-05T07:01:22.246908+00:00",
+  "preparation_commit": "07b5212541eb8089eabece324ce91e6fb5e38d28",
+  "source_archive": {
+    "path": "artifacts/rhuh-single-image-inspection-v1/source.tar.gz",
+    "sha256": "cd5a991cb3aafdcda756eb5843c855fd9d4831c7d350b34d46f117a659cf7e3d"
+  },
+  "source_archive_record": {
+    "path": "artifacts/rhuh-single-image-inspection-v1/source-archive.json",
+    "sha256": "d2cd01e3c9b16338e255aa44ffd2b759721bf7c3889d73bb004e693d972c3ae3"
+  },
+  "independent_launch_review": {
+    "path": "artifacts/rhuh-single-image-inspection-launch-review-v1/verification.json",
+    "sha256": "a7fadf0baf5cd3625c7f73778da7e128b0cd7040777b76408cd0a57f82da1d1e"
+  },
+  "independent_inspector_review": {
+    "path": "artifacts/rhuh-single-image-inspection-review-v1/verification.json",
+    "sha256": "ef93e68a74d5277d23b5ed8bbbe8074defa53722e503d4c936cc679c92bef11d"
+  },
+  "request": {
+    "path": "artifacts/rhuh-single-image-inspection-v1/request.json",
+    "sha256": "52c641a59a27adc90fa2782bb0d3ce83cacbd9e8eaf43bed8b3295c7b5c71ab0"
+  },
+  "release": {
+    "path": "artifacts/rhuh-single-image-inspection-v1/release.json",
+    "sha256": "56ed79b17e0125800657a4eaaf4d60bd5897548bb9db466f030f1b9f975578d2"
+  },
+  "launch_manifest": {
+    "path": "artifacts/rhuh-single-image-inspection-v1/launch-manifest.json",
+    "sha256": "a8d5770eabaad9cad264df46e2e1fea82bc12617e0d17800914ed011407ec9fa"
+  },
+  "maximum_attempts": 1,
+  "role": "acquisition_compatibility_development",
+  "patient": "RHUH-0001",
+  "prior_cohort_outcomes_inspected": true,
+  "untouched_validation_claim": false,
+  "clinical_use_authorized": false,
+  "case_import_or_learning_authorized": false,
+  "scope": "One bounded header and scalar-intensity inspection of the original preselected file; preserve unresolved geometry and conservative format refusal. No acquisition, annotation inference, registration or mechanical interpretation."
+}

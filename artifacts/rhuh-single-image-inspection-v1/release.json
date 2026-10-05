@@ -1,0 +1,11 @@
+{
+  "schema": "resectionlab.rhuh-image-inspection-release.v1",
+  "released": true,
+  "action": "bounded_header_and_voxel_inspection_once",
+  "request": {
+    "path": "artifacts/rhuh-single-image-inspection-v1/request.json",
+    "sha256": "52c641a59a27adc90fa2782bb0d3ce83cacbd9e8eaf43bed8b3295c7b5c71ab0"
+  },
+  "inspector_source_sha256": "268d23d8560c963461f633fe2d66ef581b8bd47e74e6431b89c23d7058979a6f",
+  "source": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t1.nii.gz"
+}
