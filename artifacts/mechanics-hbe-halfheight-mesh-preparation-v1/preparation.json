@@ -1,0 +1,69 @@
+{
+  "api": {
+    "extract_halfheight(full_mesh, protocol)": "Returns deterministic JSON-native mesh, mapping and verification; only declared full N8/N12 are accepted. Caller independently binds source mesh and original protocol bytes.",
+    "halfheight_deck(extraction, branch, protocol)": "Returns original Skyline XML and loading metadata for compression/tension S60 mu1000; caller binds declaration and performs original backend transformation.",
+    "mapping": "One-based original node/cell identities and lower/upper reflection maps; element_half_to_full_local gives zero-based original-cell local index for each half-cell corner."
+  },
+  "bindings": [
+    {
+      "bytes": 12115,
+      "path": "scripts/mechanics_hbe_halfheight_mesh.py",
+      "sha256": "6d8aef586fd454c262cd4afd3ad4e2b43580c9e74db0c380a020838dc8379084"
+    },
+    {
+      "bytes": 8920,
+      "path": "tests/test_mechanics_hbe_halfheight_mesh.py",
+      "sha256": "faf9457099ae0e5507580cb0edb46008dfb2b3193f1a3cc0819fb72b97264a85"
+    },
+    {
+      "bytes": 48654,
+      "path": "scripts/mechanics_hbe_mesh.py",
+      "sha256": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414"
+    },
+    {
+      "bytes": 18663,
+      "path": "manifests/experiments/hbe-01-03-halfheight-equivalence-v1.json",
+      "sha256": "0df5587ab7a70eb1ac092919ff067b4d85ce6c7457af9726875beb58af19ad1e"
+    },
+    {
+      "bytes": 13880,
+      "path": "manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+      "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+    },
+    {
+      "bytes": 35916,
+      "path": "artifacts/mechanics/hbe-quarter-eligibility-diagnosis-v1/receipt.json",
+      "sha256": "41646cf5d411de0604d184e604b6d1767acdf0bbf9270ee1a2deb816708e0389"
+    },
+    {
+      "bytes": 99,
+      "path": "artifacts/mechanics-hbe-halfheight-mesh-preparation-v1/owner-tests.txt",
+      "sha256": "dcae3d6063b53bd3a62203f046d88fa3b664114fba1e9e1a995d379a72a5e40a"
+    }
+  ],
+  "checked": [
+    "unchanged source coordinates and IDs",
+    "full reflected node and cell coverage with valid local cube orientation",
+    "positive half reference Jacobians and conforming exterior tags",
+    "straddling, reflection, inversion and omitted-boundary rejection",
+    "bottom xyz unchanged; artificial cut z only with value 0.5 on original full d(t) curve",
+    "material, solver, output, mesh and loading curves unchanged by BC transformation",
+    "sorted-JSON round-trip preserves mappings and deck/loading bytes",
+    "torsion, altered coordinates and wrong full height rejected"
+  ],
+  "control_result": {
+    "elapsed_seconds": 0.36,
+    "fixtures": "Eight analytical box cells, deliberately refused by the public verified-specimen count gate.",
+    "previous_unlogged_run": "12 controls passed in 0.40s before adding JSON round-trip regression; no failing run.",
+    "tests": 13
+  },
+  "limits": [
+    "Geometry and XML controls do not establish numerical equivalence or speedup.",
+    "Only the original midheight-symmetric axial branch is represented; asymmetric instability is excluded.",
+    "Public helper accepts already loaded source objects; resource, file-hash and execution-release gates belong to the separate runner.",
+    "Original quarter failure and full N24 timeout are preserved."
+  ],
+  "schema": "hbe-halfheight-mesh-helper-preparation-v1",
+  "scope": "Pure source and analytical controls only. No actual saved specimen extraction, deck preparation, native mesher/solver or measured-curve access in this preparation.",
+  "status": "owner_controls_passed_independent_review_pending"
+}
