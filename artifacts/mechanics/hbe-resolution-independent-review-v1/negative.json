@@ -1,0 +1,19 @@
+{
+  "source_sha256": "474827dab5c36edcb1758db4c36b9acc0439f9c2c83777609997692db729a6c9",
+  "test_sha256": "c3da6b982da409ef24aa38d78a6005fe42757b5695ddaf89cb3333eb94c293dc",
+  "observed": {
+    "failed": 2,
+    "passed": 2,
+    "seconds": 0.18
+  },
+  "findings": [
+    "Changed bound level receipt accepted by solve preflight",
+    "Level receipts omitted from ongoing input hash inventory"
+  ],
+  "fixture_scope": "Only preparation output closure; historical source/runtime gates explicitly stubbed; no native mesh/solver/actual readout",
+  "earlier_fixture_errors": [
+    "initial-pytest.txt: toy XML lacked required Control/solver hierarchy (3 failures)",
+    "negative-pytest.txt: toy loading omitted required branch/steps/mu/protocol (2 failures)"
+  ],
+  "earlier_fixture_errors_are_production_findings": false
+}

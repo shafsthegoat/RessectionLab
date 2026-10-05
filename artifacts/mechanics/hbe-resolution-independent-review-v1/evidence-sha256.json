@@ -1,0 +1,66 @@
+{
+  "schema": "hbe-resolution-review-file-index-v1",
+  "files": {
+    "README.md": {
+      "sha256": "42c9af3d88db88d955766888769c8e5e2f59e157e95fbf08b59ecfdcf9688d62",
+      "bytes": 2322
+    },
+    "confirmed-negative-pytest.txt": {
+      "sha256": "ce32d2b054152b0607e28cf35d4336df43674a4252d8ca8c4c8d23e1733044c8",
+      "bytes": 1434
+    },
+    "confirmed-negative-test.py.gz": {
+      "sha256": "f615304cb5bc96bc0d20c77fc2c6108ceda69271ec51ef7c25da89c713401737",
+      "bytes": 2934
+    },
+    "final-pytest.txt": {
+      "sha256": "cc69fbd34edf34391895eeb083a27a8b5789fff2d36f8a77f6c72aa27da70ca8",
+      "bytes": 99
+    },
+    "final-source-after.json": {
+      "sha256": "27f0920ce324b7e80c8a38c20df12cc0fa2edc8346a29a9fe20ae46911b531c6",
+      "bytes": 3762
+    },
+    "final-source-before.json": {
+      "sha256": "e50c9287238752b5d17b4e8e6c466d14fe4e10e3a5092a2dbb5fe4222b55e26c",
+      "bytes": 1660
+    },
+    "initial-mechanics_hbe_resolution.py.gz": {
+      "sha256": "a77b9e238ff10cd71809e10d3d4e6d5fafe6c1f9db5c264937f8fde01587abd1",
+      "bytes": 5930
+    },
+    "initial-pytest.txt": {
+      "sha256": "f20bf4ddff43f7e528dbe8dcdbb530e0c73b23a3fb809313ba48dbb268d1f561",
+      "bytes": 2702
+    },
+    "initial-source.json": {
+      "sha256": "9791af2cd09521a396f5e64d6601150992824778900bb7e54fa27cef664a0544",
+      "bytes": 231
+    },
+    "initial-test_mechanics_hbe_resolution_review.py.gz": {
+      "sha256": "2b365c3a19ac5a93732e7045573460afdb213b2b0d163fb24a908acb3cc35e9a",
+      "bytes": 2866
+    },
+    "integration-pytest.txt": {
+      "sha256": "383947adfc23f92dc0427d0452aedef1fb19d0a9a2a7e7b04940f9b2daa3311f",
+      "bytes": 260
+    },
+    "integration-source-before.json": {
+      "sha256": "4b9da3321797b440949d2c0255b8d2a29a88010e459d7c652c8295496c0062d4",
+      "bytes": 2105
+    },
+    "negative-pytest.txt": {
+      "sha256": "c61b4362bdbc2dc1927db1675ab06a9590cb50b18d6cb944829df1c067823105",
+      "bytes": 1426
+    },
+    "negative.json": {
+      "sha256": "63e62c7d5b7606b9e6f0698936c6bc1a47db28f5a5f60d0d22db3050fcca8e9d",
+      "bytes": 818
+    },
+    "verification.json": {
+      "sha256": "800f9ea3b3c58d5cce3c29c974bbee66e6657909373cee9aacceb167547fdaba",
+      "bytes": 8079
+    }
+  },
+  "indexed_bytes": 36628
+}

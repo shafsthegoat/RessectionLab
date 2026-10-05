@@ -1,0 +1,61 @@
+{
+  "files": {
+    "manifests/experiments/hbe-01-03-axial-resolution-v1.json": {
+      "bytes": 5411,
+      "sha256": "23b4f5e4d8a0b5ff05fcd45fbca88463a32460793d5b0f27d1a913a5e0a2443c"
+    },
+    "manifests/experiments/hbe-01-03-mechanics-poc-v1.json": {
+      "bytes": 13880,
+      "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+    },
+    "scripts/febio_runtime.py": {
+      "bytes": 24801,
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+    },
+    "scripts/mechanics_hbe_access.py": {
+      "bytes": 37769,
+      "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+    },
+    "scripts/mechanics_hbe_backend.py": {
+      "bytes": 28370,
+      "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae"
+    },
+    "scripts/mechanics_hbe_evaluation.py": {
+      "bytes": 8744,
+      "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+    },
+    "scripts/mechanics_hbe_experiment.py": {
+      "bytes": 47907,
+      "sha256": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa"
+    },
+    "scripts/mechanics_hbe_mesh.py": {
+      "bytes": 48654,
+      "sha256": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414"
+    },
+    "scripts/mechanics_hbe_outputs.py": {
+      "bytes": 8702,
+      "sha256": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19"
+    },
+    "scripts/mechanics_hbe_physics.py": {
+      "bytes": 17656,
+      "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+    },
+    "scripts/mechanics_hbe_readout.py": {
+      "bytes": 18789,
+      "sha256": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0"
+    },
+    "scripts/mechanics_hbe_resolution.py": {
+      "bytes": 26614,
+      "sha256": "f6c75e1b8223355b90d06b100f538f3feb28e58f7e1be4ae2f13ed075bd8bdad"
+    }
+  },
+  "source_archive": {
+    "bytes": 307200,
+    "path": "outputs/validation/hbe-resolution-5b80e3f/source.tar",
+    "sha256": "29f5866817a260e49275e51510a1937f432cc1bc40762009025748092e8eefdb"
+  },
+  "source_commit": "5b80e3fee2349bc78d3f2ceb9b211efb305a1fc9",
+  "source_directory": "outputs/validation/hbe-resolution-5b80e3f/frozen-source",
+  "source_file_count": 12,
+  "status": "exact_committed_source_archived_no_execution"
+}
