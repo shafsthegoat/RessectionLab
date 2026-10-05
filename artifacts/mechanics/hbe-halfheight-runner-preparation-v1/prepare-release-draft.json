@@ -1,0 +1,72 @@
+{
+  "schema": "hbe-halfheight-release-draft-v1",
+  "authorized": false,
+  "phase": "prepare",
+  "study": {
+    "path": "manifests/experiments/hbe-01-03-halfheight-equivalence-v1.json",
+    "sha256": "0df5587ab7a70eb1ac092919ff067b4d85ce6c7457af9726875beb58af19ad1e"
+  },
+  "source_commit": "REQUIRED_COMMITTED_SHA",
+  "source_archive": {
+    "path": "REQUIRED_14_MEMBER_GIT_TAR",
+    "sha256": "REQUIRED_ARCHIVE_SHA"
+  },
+  "source_bindings": {
+    "runtime_driver": {
+      "path": "REQUIRED_ARCHIVE_EXTRACTED_MODULE_PATH",
+      "sha256": "REQUIRED_COMMITTED_MODULE_SHA"
+    },
+    "access": {
+      "path": "REQUIRED_ARCHIVE_EXTRACTED_MODULE_PATH",
+      "sha256": "REQUIRED_COMMITTED_MODULE_SHA"
+    },
+    "curve_evaluator": {
+      "path": "REQUIRED_ARCHIVE_EXTRACTED_MODULE_PATH",
+      "sha256": "REQUIRED_COMMITTED_MODULE_SHA"
+    },
+    "mesh_deck": {
+      "path": "REQUIRED_ARCHIVE_EXTRACTED_MODULE_PATH",
+      "sha256": "REQUIRED_COMMITTED_MODULE_SHA"
+    },
+    "primitive_parser": {
+      "path": "REQUIRED_ARCHIVE_EXTRACTED_MODULE_PATH",
+      "sha256": "REQUIRED_COMMITTED_MODULE_SHA"
+    },
+    "physics": {
+      "path": "REQUIRED_ARCHIVE_EXTRACTED_MODULE_PATH",
+      "sha256": "REQUIRED_COMMITTED_MODULE_SHA"
+    },
+    "readout": {
+      "path": "REQUIRED_ARCHIVE_EXTRACTED_MODULE_PATH",
+      "sha256": "REQUIRED_COMMITTED_MODULE_SHA"
+    },
+    "orchestrator": {
+      "path": "REQUIRED_ARCHIVE_EXTRACTED_MODULE_PATH",
+      "sha256": "REQUIRED_COMMITTED_MODULE_SHA"
+    },
+    "backend_profile": {
+      "path": "REQUIRED_ARCHIVE_EXTRACTED_MODULE_PATH",
+      "sha256": "REQUIRED_COMMITTED_MODULE_SHA"
+    },
+    "halfheight_mesh": {
+      "path": "REQUIRED_ARCHIVE_EXTRACTED_MODULE_PATH",
+      "sha256": "REQUIRED_COMMITTED_MODULE_SHA"
+    },
+    "halfheight_readout": {
+      "path": "REQUIRED_ARCHIVE_EXTRACTED_MODULE_PATH",
+      "sha256": "REQUIRED_COMMITTED_MODULE_SHA"
+    },
+    "halfheight_runner": {
+      "path": "REQUIRED_ARCHIVE_EXTRACTED_MODULE_PATH",
+      "sha256": "REQUIRED_COMMITTED_MODULE_SHA"
+    }
+  },
+  "interpreter": {
+    "path": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "sha256": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a"
+  },
+  "backend_profile": {
+    "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+    "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+  }
+}

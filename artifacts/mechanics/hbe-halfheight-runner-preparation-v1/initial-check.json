@@ -1,0 +1,10 @@
+{
+  "scope": "mocked software orchestration only; no native tools or saved actual mesh/readout execution",
+  "command": ".venv/bin/python -m pytest -q tests/test_mechanics_hbe_halfheight_experiment.py",
+  "exit_code": 1,
+  "pytest_summary": "10 failed, 4 passed in 0.59s",
+  "cause": "Toy deck returned a bare linear_solver root; production backend correctly requires the canonical Control/solver/linear_solver hierarchy. Tests failed in setup before exercising intended conditions.",
+  "source_sha256": "25d10588a36d161e31cb49d62ddd42ff458f824c1a15a07592120a473a53d809",
+  "test_sha256": "81fb82641e3e750cab181d11265969b839e0cd883c7a9d19fa55832be1ce6889",
+  "repair": "Test fixture XML hierarchy only; no production gate change."
+}

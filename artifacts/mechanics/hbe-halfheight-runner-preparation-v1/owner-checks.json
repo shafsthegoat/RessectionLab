@@ -1,0 +1,21 @@
+{
+  "status": "owner_mocked_controls_passed_pending_independent_review",
+  "source": {
+    "path": "scripts/mechanics_hbe_halfheight_experiment.py",
+    "sha256": "25d10588a36d161e31cb49d62ddd42ff458f824c1a15a07592120a473a53d809"
+  },
+  "tests": {
+    "path": "tests/test_mechanics_hbe_halfheight_experiment.py",
+    "sha256": "0ebb4956a0396d5c426822ef47f09b89d58a82376f419eea937e8aa4832eada3"
+  },
+  "result": {
+    "path": "artifacts/mechanics/hbe-halfheight-runner-preparation-v1/owner-tests.txt",
+    "sha256": "bf6453fe3563a760ccad1c2505a563ded070945dcccdaff7a6d6472aa4a721a8"
+  },
+  "pytest_summary": "14 passed in 0.41s",
+  "prior_fixture_failure": {
+    "path": "artifacts/mechanics/hbe-halfheight-runner-preparation-v1/initial-check.json",
+    "sha256": "d4356287f5e9e1c3b8655a03dc5990b929bd1ab99cd2eb60e14cc46789dd1f54"
+  },
+  "scope": "No native tool, saved actual mesh extraction, numerical output replay, or measured response access. Helper implementations remain separately owned/reviewed."
+}
