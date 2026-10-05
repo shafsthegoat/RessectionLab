@@ -1,0 +1,83 @@
+{
+  "schema": "case4-patient-mesh-result-v1",
+  "status": "failed_fixed_coarse_node_count_cap",
+  "source_commit": "a49e70ac2a4df747e75fc7bec57c3a887898a6b5",
+  "source_sha256": {
+    "scripts/mechanics_patient_mesh.py": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "manifests/experiments/resect-case4-patient-mesh-v1.json": "b6b3fd278df85fb0ea89c72dcff37cc5f229644602f5288c81e8ce6e7653173c",
+    "artifacts/febio-runtime-investigation-v1/prospective-runtime.json": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48"
+  },
+  "attempt_count": 1,
+  "native_generation_calls": 1,
+  "solver_calls": 0,
+  "B_or_V_landmark_access": false,
+  "retries": 0,
+  "levels": [
+    {
+      "level": "coarse",
+      "target_edge_m": 0.024,
+      "status": "failed_node_count_cap",
+      "returned_tet10_nodes": 2065,
+      "maximum_nodes": 2000,
+      "excess_nodes": 65,
+      "relative_count_excess": 0.0325,
+      "returned_tet10_elements": 1052,
+      "maximum_elements": 2000,
+      "quality_assessment": "not_executed",
+      "surface_fidelity_assessment": "not_executed",
+      "volume_fidelity_assessment": "not_executed",
+      "mechanics_or_operator_assessment": "not_executed"
+    },
+    {
+      "level": "medium",
+      "target_edge_m": 0.02,
+      "status": "not_executed"
+    },
+    {
+      "level": "fine",
+      "target_edge_m": 0.016,
+      "status": "not_executed"
+    }
+  ],
+  "native_extracted_surface": {
+    "vertices": 91951,
+    "triangles": 183902,
+    "components": 1,
+    "euler_characteristic": 0,
+    "genus": 1,
+    "enclosed_volume_m3": 0.0011858776244957961,
+    "area_m2": 0.06754710502400357,
+    "global_orientation_reversed": true,
+    "voxel_mask_volume_m3": 0.0011860210828391498
+  },
+  "gmsh_discrete_patches": 18,
+  "resources": {
+    "supervised_seconds": 7.789334958069958,
+    "worker_seconds": 7.390192292048596,
+    "sampled_peak_process_group_rss_bytes": 658358272,
+    "wall_cap_seconds": 180,
+    "rss_cap_bytes": 3221225472,
+    "exit_code": 1,
+    "kill_reason": null,
+    "numerical_threads": 1,
+    "timing_is_performance_benchmark": false,
+    "limitations": "RSS sampled; other tasks may run concurrently; thread limits do not establish CPU affinity."
+  },
+  "preserved_raw_volume_mesh": false,
+  "raw_surface_sha256": "dca30aacd485fb6c5a23fdfa2785e6ebead42a071f77d989c684e65a0360787f",
+  "all19_original_archive_context_inputs_unchanged": true,
+  "prior_native_cube_failure": {
+    "relative_volume_error": 0.08499022677808099,
+    "maximum_relative_volume_error": 0.03,
+    "no_retry": true
+  },
+  "clinical_validation": false,
+  "anatomical_registration_accepted": false,
+  "limitations": [
+    "No accepted patient mesh exists. Node-count failure does not show either fidelity success or fidelity failure.",
+    "The unchanged v1 worker records overcap counts/IDs but does not persist overcap volume node coordinates/connectivity. That rejected geometry cannot be retrospectively audited from this record.",
+    "Unchanged native estimated envelope has inferior/cerebellar exclusions and extracted genus1; no topology repair or anatomical interpretation is made.",
+    "The full source surface is retained, but no patient mechanics solve, displacement comparison, operator evaluation, calibration or RL update occurred."
+  ]
+}

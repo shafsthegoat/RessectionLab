@@ -1,0 +1,45 @@
+{
+  "files": [
+    {
+      "byte_roundtrip_equal": true,
+      "decompressed_sha256": "dc3da53529062d10ee0eeb199ec4216d74250ec5b9b9c093bd6803b5abeab846",
+      "gzip_bytes": 214895,
+      "gzip_path": "pilot/accounting.json.gz",
+      "gzip_sha256": "5ecc57a08a33a481deba9e5b54102134378c92685222a97490f5a7c7d3735d3f",
+      "json_roundtrip_equal": true,
+      "raw_bytes": 6088797,
+      "raw_original_retained_unchanged": true,
+      "raw_path": "pilot/accounting.json",
+      "raw_sha256": "dc3da53529062d10ee0eeb199ec4216d74250ec5b9b9c093bd6803b5abeab846"
+    },
+    {
+      "byte_roundtrip_equal": true,
+      "decompressed_sha256": "d3703cf0f1ab8580c820ecf4642a6b55d76aa91d513488c9007f5fe85cfba4c9",
+      "gzip_bytes": 505184,
+      "gzip_path": "pilot/history-freeze.json.gz",
+      "gzip_sha256": "03b87d8f631b2a583b793248353fcb10576e0270b912febffe6db31b91fafb7a",
+      "json_roundtrip_equal": true,
+      "raw_bytes": 32795940,
+      "raw_original_retained_unchanged": true,
+      "raw_path": "pilot/history-freeze.json",
+      "raw_sha256": "d3703cf0f1ab8580c820ecf4642a6b55d76aa91d513488c9007f5fe85cfba4c9"
+    },
+    {
+      "byte_roundtrip_equal": true,
+      "decompressed_sha256": "c045f1fcd4a3deaec2457cf861b78eabdd5bbec1e01072cf8d0dae5d049900f6",
+      "gzip_bytes": 528187,
+      "gzip_path": "pilot/candidate-record.json.gz",
+      "gzip_sha256": "222ba71065b2bbae39f0dff1a5809f5d23419120551561c360a92059edc2c3cb",
+      "json_roundtrip_equal": true,
+      "raw_bytes": 35921292,
+      "raw_original_retained_unchanged": true,
+      "raw_path": "pilot/candidate-record.json",
+      "raw_sha256": "c045f1fcd4a3deaec2457cf861b78eabdd5bbec1e01072cf8d0dae5d049900f6"
+    }
+  ],
+  "pack_script_sha256": "23c393f8425b9b6a6f5c305ecd9870767d9fe1e7115b10dbeef2d53da6edc63b",
+  "report_consumer": "scripts/report_native_axis_pilot.py accepts .json.gz when raw JSON is absent and refuses raw/gzip disagreement",
+  "scope": "Lossless storage copies only; no experiment receipt or runtime source changed",
+  "total_gzip_bytes": 1248266,
+  "total_raw_bytes": 74806029
+}

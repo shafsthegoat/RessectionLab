@@ -1,0 +1,173 @@
+{
+  "schema_version": 1,
+  "audit_kind": "independent_saved_artifact_engineering_qc",
+  "auditor_implementation_sha256": "26db64d473a3615d3bb07ba85c8d2a8285dac9e1ed9e9595e94e600a025d24b3",
+  "source_report_sha256": "f59f40dea25424d41407bfb018fd0ff0c7f81c9fca81acadc1bcd1ce2b64100e",
+  "source_t1_sha256": "70c5c1e4e28143318d2820788343e239efdc205344204f8f50497b81281b32c6",
+  "source_annotation_sha256": "ff989398438cf6d628471acf1c5449e132c089bba07da3f2142757c21c3e8d71",
+  "source_annotation_threshold": 0.5,
+  "variants": {
+    "main": {
+      "geometry": {
+        "shape": [
+          160,
+          256,
+          256
+        ],
+        "qform_code": 1,
+        "sform_code": 1,
+        "orientation": [
+          "R",
+          "A",
+          "S"
+        ],
+        "physical_units": "mm",
+        "maximum_native_corner_difference_mm": 0.0
+      },
+      "independent_measurements": {
+        "mask_voxels": 1529553,
+        "volume_ml": 1529.5499424978536,
+        "connected_components": 1,
+        "input_face_contact_voxels": 0,
+        "source_annotation_voxels": 10269,
+        "source_annotation_outside_voxels": 0,
+        "source_annotation_inclusion_fraction": 1.0,
+        "outside_annotation_voxel_bbox": null,
+        "outside_annotation_world_ras_mm_bbox": null,
+        "reconstructed_mask_mismatch_voxels": 0,
+        "predicted_distance_range_mm": [
+          -5.227794170379639,
+          100.0
+        ],
+        "flags": [],
+        "meaning": "engineering geometry and source-annotation inclusion; not anatomical accuracy"
+      },
+      "repeats": [
+        {
+          "run": "PAT28-mps-v1",
+          "identical_native_mask": true,
+          "maximum_predicted_distance_difference_mm": 0.0
+        },
+        {
+          "run": "PAT28-mps-v2",
+          "identical_native_mask": true,
+          "maximum_predicted_distance_difference_mm": 0.0
+        },
+        {
+          "run": "PAT28-mps-v3",
+          "identical_native_mask": true,
+          "maximum_predicted_distance_difference_mm": 0.0
+        }
+      ],
+      "output_hashes": {
+        "main_mask.nii.gz": "f0df2a6c3531ee5949dc496047a6c9f3f67542a4613ce71728f8f19597c09428",
+        "main_distance_mm.nii.gz": "bd0570faa6ce2c273ca81d101930097283ca42b7f1f1edc29092ec0324cd6019"
+      },
+      "source_model_and_runner_hashes_verified": true,
+      "review_status": "review_required",
+      "brain_reviewed": false,
+      "cortex_localized": false,
+      "cortical_access_permitted": false
+    },
+    "nocsf": {
+      "geometry": {
+        "shape": [
+          160,
+          256,
+          256
+        ],
+        "qform_code": 1,
+        "sform_code": 1,
+        "orientation": [
+          "R",
+          "A",
+          "S"
+        ],
+        "physical_units": "mm",
+        "maximum_native_corner_difference_mm": 0.0
+      },
+      "independent_measurements": {
+        "mask_voxels": 1337642,
+        "volume_ml": 1337.6393261186204,
+        "connected_components": 1,
+        "input_face_contact_voxels": 0,
+        "source_annotation_voxels": 10269,
+        "source_annotation_outside_voxels": 214,
+        "source_annotation_inclusion_fraction": 0.9791605803875743,
+        "outside_annotation_voxel_bbox": [
+          [
+            63,
+            110,
+            196
+          ],
+          [
+            72,
+            121,
+            200
+          ]
+        ],
+        "outside_annotation_world_ras_mm_bbox": [
+          [
+            -13.999932285631076,
+            2.1935590603825403,
+            61.309416230834955
+          ],
+          [
+            -4.914477311074734,
+            13.16998238634551,
+            65.32339686065617
+          ]
+        ],
+        "reconstructed_mask_mismatch_voxels": 0,
+        "predicted_distance_range_mm": [
+          -4.111861228942871,
+          100.0
+        ],
+        "flags": [
+          "SOURCE_ANNOTATION_OUTSIDE_ESTIMATED_ENVELOPE"
+        ],
+        "meaning": "engineering geometry and source-annotation inclusion; not anatomical accuracy"
+      },
+      "repeats": [
+        {
+          "run": "PAT28-mps-v1",
+          "identical_native_mask": true,
+          "maximum_predicted_distance_difference_mm": 0.0
+        },
+        {
+          "run": "PAT28-mps-v2",
+          "identical_native_mask": true,
+          "maximum_predicted_distance_difference_mm": 0.0
+        },
+        {
+          "run": "PAT28-mps-v3",
+          "identical_native_mask": true,
+          "maximum_predicted_distance_difference_mm": 0.0
+        }
+      ],
+      "output_hashes": {
+        "nocsf_mask.nii.gz": "e99c49ba6d180e03389e756f8b0a5b224e069488a5c72b97cc9f84075ac6410e",
+        "nocsf_distance_mm.nii.gz": "92a0b275c49d86d5d47db4662e10c707d196c0290a5f7486e143e80aab27326f"
+      },
+      "source_model_and_runner_hashes_verified": true,
+      "review_status": "review_required",
+      "brain_reviewed": false,
+      "cortex_localized": false,
+      "cortical_access_permitted": false
+    }
+  },
+  "visual_qc_image": "artifacts/brain-extraction/PAT28-mps-v4/extraction_qc.png",
+  "visual_qc_sha256": "64d502fb1c3e701ac8687578b4c4a336ed209a8e94a04c5dd310aa6e4f6d72b7",
+  "brain_reviewed": false,
+  "cortex_localized": false,
+  "cortical_access_permitted": false,
+  "clinical_deficit_probability": null,
+  "review_status": "review_required",
+  "limitations": [
+    "No expert anatomical review or independent brain/cortex labels.",
+    "Stored repeats are reproducibility checks, not population accuracy or latency estimates.",
+    "Predicted SDT is a model output, not an independently measured surgical clearance field.",
+    "Whole-brain envelopes include inferior structures and cannot define a cerebral access window.",
+    "Source annotation is a threshold scenario; complete inclusion is not segmentation accuracy."
+  ]
+}

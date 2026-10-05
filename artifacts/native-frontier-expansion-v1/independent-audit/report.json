@@ -1,0 +1,214 @@
+{
+  "status": "passed_with_declared_prototype_limits",
+  "training_or_geometry_reexecuted": false,
+  "proposal_model_hash": "sha256:1e0471ce1426b12a387c2f090d0321b364ced32d2729c1dff14c1aa970a50123",
+  "declaration_hash": "sha256:58e931468386550de98dd8bffe57535dcb1541a808cb0abaa99ec2dd2a351fef",
+  "source_runtime_hash": "sha256:e1186e12e79263c41e3cdad06112012702b4126a73fd912c14fa1e41d6d8843f",
+  "numerical_source_files_verified": 33,
+  "compressed_histories_byte_verified": 3,
+  "results": {
+    "expanded": {
+      "target_mm3": 1113.0,
+      "normal_mm3": 62.0,
+      "cumulative_partial_normal_mm3": 177.0,
+      "nominal_return": 1098.77,
+      "cuts": 3,
+      "termination": "action_cap",
+      "denominator": [
+        {
+          "round": 0,
+          "generated_rays": 26,
+          "checked_rays": 26,
+          "unchecked_rays": 0,
+          "preview_checks": 26,
+          "omissions": []
+        },
+        {
+          "round": 1,
+          "generated_rays": 22,
+          "checked_rays": 22,
+          "unchecked_rays": 0,
+          "preview_checks": 22,
+          "omissions": [
+            {
+              "offset": [
+                -2,
+                0
+              ],
+              "reason": "NO_REMAINING_TARGET_IN_COLUMN"
+            },
+            {
+              "offset": [
+                -3,
+                0
+              ],
+              "reason": "NO_REMAINING_TARGET_IN_COLUMN"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "generated_rays": 18,
+          "checked_rays": 18,
+          "unchecked_rays": 0,
+          "preview_checks": 18,
+          "omissions": [
+            {
+              "offset": [
+                -2,
+                0
+              ],
+              "reason": "NO_REMAINING_TARGET_IN_COLUMN"
+            },
+            {
+              "offset": [
+                0,
+                -2
+              ],
+              "reason": "NO_REMAINING_TARGET_IN_COLUMN"
+            },
+            {
+              "offset": [
+                -3,
+                0
+              ],
+              "reason": "NO_REMAINING_TARGET_IN_COLUMN"
+            },
+            {
+              "offset": [
+                0,
+                -3
+              ],
+              "reason": "NO_REMAINING_TARGET_IN_COLUMN"
+            }
+          ]
+        }
+      ]
+    },
+    "solid": {
+      "target_mm3": 378.0,
+      "normal_mm3": 150.0,
+      "cumulative_partial_normal_mm3": 212.0,
+      "nominal_return": 345.82,
+      "cuts": 3,
+      "termination": "action_cap",
+      "denominator": [
+        {
+          "round": 0,
+          "generated_rays": 26,
+          "checked_rays": 26,
+          "unchecked_rays": 0,
+          "preview_checks": 26,
+          "omissions": []
+        },
+        {
+          "round": 1,
+          "generated_rays": 22,
+          "checked_rays": 22,
+          "unchecked_rays": 0,
+          "preview_checks": 22,
+          "omissions": [
+            {
+              "offset": [
+                2,
+                0
+              ],
+              "reason": "NO_REMAINING_TARGET_IN_COLUMN"
+            },
+            {
+              "offset": [
+                3,
+                0
+              ],
+              "reason": "NO_REMAINING_TARGET_IN_COLUMN"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "generated_rays": 20,
+          "checked_rays": 20,
+          "unchecked_rays": 0,
+          "preview_checks": 20,
+          "omissions": [
+            {
+              "offset": [
+                0,
+                0
+              ],
+              "reason": "NO_REMAINING_TARGET_IN_COLUMN"
+            },
+            {
+              "offset": [
+                2,
+                0
+              ],
+              "reason": "NO_REMAINING_TARGET_IN_COLUMN"
+            },
+            {
+              "offset": [
+                3,
+                0
+              ],
+              "reason": "NO_REMAINING_TARGET_IN_COLUMN"
+            }
+          ]
+        }
+      ]
+    },
+    "barrier": {
+      "target_mm3": 36.0,
+      "normal_mm3": 60.0,
+      "cumulative_partial_normal_mm3": 105.0,
+      "nominal_return": 22.91,
+      "cuts": 2,
+      "termination": "preview_cap",
+      "denominator": [
+        {
+          "round": 0,
+          "generated_rays": 26,
+          "checked_rays": 26,
+          "unchecked_rays": 0,
+          "preview_checks": 52,
+          "omissions": []
+        },
+        {
+          "round": 1,
+          "generated_rays": 26,
+          "checked_rays": 26,
+          "unchecked_rays": 0,
+          "preview_checks": 52,
+          "omissions": []
+        },
+        {
+          "round": 2,
+          "generated_rays": 26,
+          "checked_rays": 12,
+          "unchecked_rays": 14,
+          "preview_checks": 24,
+          "omissions": []
+        }
+      ]
+    },
+    "fixed": {
+      "target_mm3": 249.0,
+      "normal_mm3": 17.0,
+      "cumulative_partial_normal_mm3": 32.0,
+      "nominal_return": 245.24,
+      "cuts": 2,
+      "termination": "no_positive_legal_proposal",
+      "denominator": []
+    }
+  },
+  "fixed_audit_binding": "exact two saved entries/targets/tools and engine hash match prior v2 SEARCH independently certified source-cell history; no fresh fixed audit claimed",
+  "causal_checker_review": "frozen evaluation.py lines959-968 tests swept shaft against remaining BEFORE microstep removal; no future-cavity borrowing",
+  "world_scope": "no optimization/selection/final/stress panel opened; factory construction can initialize a deterministic nominal world object",
+  "limits": [
+    "post hoc new action model, not learning improvement or independent patient generalization",
+    "orthogonal source grid, axis-aligned access and integer transverse origin intended; prototype np.isclose/allclose default relative tolerance accepts small deviations; actual inputs exactly aligned/integer",
+    "out-of-grid offset silently skipped in prototype; all13 offsets in bounds for these runs",
+    "barrier third round14 rays untested at128-preview cap",
+    "unchosen preview feasibility not individually re-certified; independent certificates cover committed histories",
+    "estimated source brain envelope, hypothetical access, no validated functional evidence or mechanics"
+  ]
+}

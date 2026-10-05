@@ -1,0 +1,19 @@
+{
+  "complete_history_parity_verified": true,
+  "exit_code": 0,
+  "kill_reason": null,
+  "limits": {
+    "cooperative_seconds": 140,
+    "parent_wall_seconds": 150,
+    "poll_seconds": 0.05,
+    "worker_rss_bytes": 3221225472
+  },
+  "no_retry": true,
+  "parent_seconds": 101.09954691701569,
+  "peak_sampled_worker_rss_bytes": 303218688,
+  "rss_scope": "Sampled worker RSS plus worker peak RSS; brief excursions between samples may be missed",
+  "source_error": null,
+  "source_unchanged": true,
+  "status": "completed",
+  "supervision_error": null
+}

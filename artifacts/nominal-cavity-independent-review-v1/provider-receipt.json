@@ -1,0 +1,54 @@
+{
+  "status": "provider_review_passed_diagnostics_separately_pending",
+  "base_commit": "2663c3c4918957d48419d8898a0c260bae19450e",
+  "tested_source_sha256": {
+    "src/resectionlab/native_proposals.py": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee",
+    "src/resectionlab/native_spatial_task.py": "6b3f2a7f36db4c4a5f2ea0e5461f592ab7ac510a10c7f6a3de9debaccb200214",
+    "src/resectionlab/observed_search.py": "a27c244159fd328ddaa9d16f3f90ea466bb37a564d542e42acd52a949c482be0",
+    "tests/test_nominal_cavity_proposals.py": "a32b57a3b66bba80839346b15a2a101dbbe837e6fbeeb988917d34af25274793",
+    "tests/test_nominal_cavity_proposals_review.py": "f0f088e12dc585a80b37b4c53f9e2d0d75f92776d8cfaf7a89bfb87403e03ada",
+    "docs/native-spatial-task.md": "c47808dc5ee162da2f49218be0589bb5c290ed9740c0875c836f3b441759c708"
+  },
+  "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 .venv/bin/python -m pytest -q tests/test_nominal_cavity_proposals_review.py",
+  "result": {
+    "passed": 7,
+    "failed": 0,
+    "elapsed_seconds": 1.54
+  },
+  "legacy_default": {
+    "path": "artifacts/nominal-cavity-independent-review-v1/legacy-default-equivalence.json",
+    "sha256": "d315cb4038645e0f867c8a397645283b6fe9302e1a512bb307c81f828d7a6f9f",
+    "states": 3,
+    "transitions": 2,
+    "historical_default_source_model_observation_history_and_existing_inventory_fields": "exact_equal"
+  },
+  "checks": [
+    "Hidden reference swap preserves ordered inventory, masks, all actor input fingerprints and actual bounded SEARCH result/accounting except elapsed time, before and after a native transition.",
+    "Clone/fresh/planning clone share the source-bound proposer; mutable cavities branch independently; old batch and old action refused after a committed transition.",
+    "Exactly one full native preview per emitted unique proposal in order; capped and outside-image slots retain a complete disposition ledger; STOP remains available.",
+    "Three families that select identical geometry retain three ledger slots but emit one native proposal per tool.",
+    "Maximum 96 unique proposals plus STOP below unchanged 128-certificate native capacity; generator itself never invokes previews.",
+    "Distal proposals outside a 3x3x3 actor crop retain native geometry rejection, then become legal after a paid opening; actual removal outside crop independently audited. Intermediate retained contact remains tissue with zero objective weight.",
+    "Original index affine retained, declared polar derived frame defines all emitted tips/entries."
+  ],
+  "initial_negatives": {
+    "log": "initial-pytest.log",
+    "passed": 6,
+    "failed": 4,
+    "production": 3,
+    "review_test_assumption": 1,
+    "production_details": "Same legal ID with changed tip, entry or valid tool produced a diagnostic report; owner fixing separately.",
+    "test_correction": "Retained-contact check moved to intermediate opening state. Final cut genuinely removes those cells; no production change required.",
+    "initial_source": "initial-source.json",
+    "preserved_uncommitted_bytes": [
+      "spatial_policy_diagnostics.py.initial.gz",
+      "test_nominal_cavity_proposals_review.py.initial.gz"
+    ]
+  },
+  "limitations": [
+    "Analytic unit checks only; no patient loading, policy forward, optimizer, training or public benchmark.",
+    "Declared columns/families are bounded and do not enumerate all surgical routes.",
+    "No clinical accuracy, reachability, cortical-access or anatomy acceptance claim.",
+    "Standalone provider recomputes actual frame invariants; textual summary fields in a caller-provided frame record are not independently normalized. NativeSpatialCase constructs and seals its own record."
+  ]
+}

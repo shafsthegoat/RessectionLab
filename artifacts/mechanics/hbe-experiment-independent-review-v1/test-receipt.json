@@ -1,0 +1,26 @@
+{
+  "elapsed_seconds": 0.9217745000496507,
+  "exit_code": 0,
+  "measured_responses_opened": 0,
+  "scope": "Owner tiny real process watchdog controls plus independent analytical lifecycle and mocked-clock controls; no FEBio/specimen/response access",
+  "solver_calls": 0,
+  "source_hashes_after": {
+    "scripts/mechanics_hbe_access.py": "b1e4f90b2ec84c39949ee02c1088bc0404f34904e24c2d4f328d503d96f76fe0",
+    "scripts/mechanics_hbe_experiment.py": "09c92e2d62f0996a4308b9efabb70292d169b0a23ca95796b24590f291c2a444",
+    "scripts/mechanics_hbe_mesh.py": "3cb4d99f5d2d7fa2f66fb5af56ebffcf19342b9bee0b4cb2c9acfe98aabdd892",
+    "scripts/mechanics_hbe_readout.py": "21700558e5cb614a11a7cc62dbd5ec8118fabb11b4fbfc88f89cb8aa02012963",
+    "tests/test_mechanics_hbe_experiment.py": "e1a993b37aedd397d79b9f397ebb0c1aeb9b31577f41bb462cd7d8ec55c2af6e",
+    "tests/test_mechanics_hbe_experiment_review.py": "03fe4f050adc3137ef96a4523a45d98aabdd166dc482fd2cd45413834408658c"
+  },
+  "source_hashes_before": {
+    "scripts/mechanics_hbe_access.py": "b1e4f90b2ec84c39949ee02c1088bc0404f34904e24c2d4f328d503d96f76fe0",
+    "scripts/mechanics_hbe_experiment.py": "09c92e2d62f0996a4308b9efabb70292d169b0a23ca95796b24590f291c2a444",
+    "scripts/mechanics_hbe_mesh.py": "3cb4d99f5d2d7fa2f66fb5af56ebffcf19342b9bee0b4cb2c9acfe98aabdd892",
+    "scripts/mechanics_hbe_readout.py": "21700558e5cb614a11a7cc62dbd5ec8118fabb11b4fbfc88f89cb8aa02012963",
+    "tests/test_mechanics_hbe_experiment.py": "e1a993b37aedd397d79b9f397ebb0c1aeb9b31577f41bb462cd7d8ec55c2af6e",
+    "tests/test_mechanics_hbe_experiment_review.py": "03fe4f050adc3137ef96a4523a45d98aabdd166dc482fd2cd45413834408658c"
+  },
+  "sources_unchanged": true,
+  "status": "passed",
+  "stdout_sha256": "f39f348f4dfc08bbcdd27c192835e7790e9087c24befdd2542eb0d4541fd94d7"
+}

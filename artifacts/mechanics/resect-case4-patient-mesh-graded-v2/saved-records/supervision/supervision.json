@@ -1,0 +1,25 @@
+{
+  "cleanup_error": null,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-B",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-graded-source-715f0bf/scripts/mechanics_patient_mesh_candidate_run.py",
+    "worker",
+    "--release",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-graded-v2/release.json",
+    "--output",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-graded-v2"
+  ],
+  "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-graded-source-715f0bf",
+  "elapsed_seconds": 10.47940304200165,
+  "error": null,
+  "exit_code": 1,
+  "kill_reason": null,
+  "no_retry": true,
+  "pid": 50717,
+  "rss_cap_bytes": 3221225472,
+  "sampled_peak_process_group_rss_bytes": 647561216,
+  "sampling_note": "Group RSS is sampled; brief between-sample peaks may be missed.",
+  "status": "failed_or_incomplete",
+  "wall_cap_seconds": 180
+}

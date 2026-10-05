@@ -1,0 +1,10 @@
+{
+  "created_utc": "2026-10-04T22:00:23.925839+00:00",
+  "scope": "Metadata labels and report count only; source, release, original worker/launcher receipts and raw outputs unchanged.",
+  "original_reported_count": 13,
+  "actual_count": 12,
+  "basis": "release1 + archived sources4 + prerequisite receipts2 + manifest inputs5 =12",
+  "broader_original_archive_context_count": 19,
+  "preserved_originals": "metadata-before-count-label-correction/",
+  "trigger": "Independent saved-output review"
+}

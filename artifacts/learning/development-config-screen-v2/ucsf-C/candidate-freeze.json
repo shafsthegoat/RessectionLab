@@ -1,0 +1,148 @@
+{
+  "candidate_hashes": [
+    [
+      "GREEDY",
+      "sha256:0c40dd83dd8a62d34c5924a054cecfe0d8fd835b1bd3630c3b6e0f411870f8a4"
+    ],
+    [
+      "PATIENT_SCRATCH_RL:11",
+      "sha256:09d2c18600eb4c31b3d8ab97f354b8fa7b1e6f6be42889b912cf54ac11fea1fd"
+    ],
+    [
+      "PATIENT_SCRATCH_RL:23",
+      "sha256:24939f0c738a51d0bccaf6e94f3ecf23afd49ffcb4ba008f76a4b6f6d0808193"
+    ],
+    [
+      "PATIENT_SCRATCH_RL:47",
+      "sha256:e39a867e6f7cb75d3a28647b94abfd734d5217d2239b464f30269f33d2bf9caa"
+    ],
+    [
+      "SEARCH",
+      "sha256:d138a0165042bcbb8e92ee9cd754fb0f49d40cabb18ba5cb2a787dfa9eab8b99"
+    ],
+    [
+      "STOP",
+      "sha256:7cddb09e6a70b82c6b19afac61aa13b813fbc3c75163397ac8f6604b0e344176"
+    ]
+  ],
+  "candidates": [
+    {
+      "actions": [
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "STOP",
+      "plan_id": "STOP",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "REMOVE:patient-generic-suction:30,25,17",
+        "REMOVE:patient-generic-suction:29,25,17",
+        "REMOVE:patient-generic-suction:28,25,17",
+        "REMOVE:patient-generic-suction:27,25,17",
+        "REMOVE:patient-generic-suction:26,25,17",
+        "REMOVE:patient-generic-suction:25,25,17",
+        "REMOVE:patient-generic-suction:24,25,17",
+        "REMOVE:patient-generic-suction:23,25,17",
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "GREEDY",
+      "plan_id": "GREEDY",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "REMOVE:patient-generic-suction:30,25,17",
+        "REMOVE:patient-generic-suction:29,25,17",
+        "REMOVE:patient-generic-suction:28,25,17",
+        "REMOVE:patient-generic-suction:27,25,17",
+        "REMOVE:patient-generic-suction:26,25,17",
+        "REMOVE:patient-generic-suction:25,25,17",
+        "REMOVE:patient-generic-suction:24,25,17",
+        "REMOVE:patient-generic-suction:23,25,17",
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "SEARCH",
+      "plan_id": "SEARCH",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "REMOVE:patient-generic-wide-suction:30,25,17",
+        "REMOVE:patient-generic-wide-suction:29,25,17",
+        "REMOVE:patient-generic-wide-suction:28,25,17",
+        "REMOVE:patient-generic-wide-suction:27,25,17",
+        "REMOVE:patient-generic-wide-suction:26,25,17",
+        "REMOVE:patient-generic-wide-suction:25,25,17",
+        "REMOVE:patient-generic-wide-suction:24,25,17",
+        "REMOVE:patient-generic-wide-suction:23,25,17",
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PATIENT_SCRATCH_RL",
+      "plan_id": "PATIENT_SCRATCH_RL:11",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:b5b804a5af2760bda1de15c143076457d36f1cb4b3707769321e2138dab59960"
+    },
+    {
+      "actions": [
+        "REMOVE:patient-generic-suction:30,25,17",
+        "REMOVE:patient-generic-suction:29,25,17",
+        "REMOVE:patient-generic-suction:28,25,17",
+        "REMOVE:patient-generic-suction:27,25,17",
+        "REMOVE:patient-generic-suction:26,25,17",
+        "REMOVE:patient-generic-suction:25,25,17",
+        "REMOVE:patient-generic-suction:24,25,17",
+        "REMOVE:patient-generic-wide-suction:23,25,17",
+        "REMOVE:patient-generic-suction:22,25,17",
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PATIENT_SCRATCH_RL",
+      "plan_id": "PATIENT_SCRATCH_RL:23",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:d0423c6fc6b8ee33f94a65ff898f8dcd3932a68c5bbc5148b690d0cf09d2c0f9"
+    },
+    {
+      "actions": [
+        "REMOVE:patient-generic-suction:30,25,17",
+        "REMOVE:patient-generic-suction:29,25,17",
+        "REMOVE:patient-generic-suction:28,25,17",
+        "REMOVE:patient-generic-suction:27,25,17",
+        "REMOVE:patient-generic-suction:26,25,17",
+        "REMOVE:patient-generic-suction:25,25,17",
+        "REMOVE:patient-generic-suction:24,25,17",
+        "REMOVE:patient-generic-suction:23,25,17",
+        "REMOVE:patient-generic-wide-suction:22,25,17",
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PATIENT_SCRATCH_RL",
+      "plan_id": "PATIENT_SCRATCH_RL:47",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:08447d55a075cf519aafc88709285a809fe0d30407ea0e7c7989eb20b3a2788b"
+    }
+  ],
+  "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+  "decision_model_fingerprint": "sha256:11949d7287b98703ed3cf64cf0400c46e75ef662f27384dd2342bbce1f1ce017",
+  "development_seeds": [
+    14584096233490869648,
+    10189078600246939450,
+    11339082521714785023,
+    7130800152825998054,
+    9147367766839508532
+  ],
+  "fingerprint": "sha256:1b9a57883046dd15ad7bab0b73a554ad4a103a40ddc958053a7e1a9030b58328",
+  "frozen_at": "2026-10-04T06:58:20.662574+00:00",
+  "generator_family": "rigid_gaussian",
+  "generator_fingerprint": "sha256:65178826778d6f02e623f38390d72c121c9e2cd84e5c0b69f882353a64f09a48",
+  "optimization_partition_hash": "sha256:c907294cfbbaea10bf9014755194b3b1ef696957c585d69c69e6dfef5f76de8c",
+  "selection_partition_hash": "sha256:7d9264df0fbe0cc04118c0c8551a543d65decf0ad7a2979a262a466ca27e3787",
+  "selection_rule": "all baseline sequences and one selected checkpoint per prespecified seed; max selection mean, earliest tie"
+}

@@ -1,0 +1,27 @@
+{
+  "status": "verified_focused_native_workflow",
+  "appPath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app",
+  "architecture": "arm64",
+  "signing": "local_ad_hoc",
+  "notarized": false,
+  "internalSymlinks": 41,
+  "sourceDigest": "34285015ec2cbd8304273880da352fe9c72ce6f0e412f55dbf200f336bee5cab",
+  "noticeSourceCompleteness": "incomplete",
+  "unresolvedNotices": [
+    {
+      "component": "react-remove-scroll-bar@2.3.8",
+      "reason": "Installed runtime package declares a license but contains no upstream root license/notice text. Its package.json is retained; no substitute license is invented."
+    },
+    {
+      "component": "CPython 3.12.14 static vendor libraries",
+      "reason": "No verified static-vendor notice/version manifest has been configured for this exact runtime. Its upstream build provenance must supply that closure; copying CPython LICENSE.txt alone does not resolve the gap."
+    }
+  ],
+  "noticeLocation": "Contents/Resources/ThirdPartyNotices",
+  "inputSnapshot": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/electron-notices-100865f/desktop/release/inputs-HkhJon",
+  "elapsedSeconds": 12.942,
+  "previousDirectory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/previous-1791115145884-66b0faff",
+  "publicationNote": "Exact100865f welcome correction; verified complete numerical payload and notice tree identical to bee43c9 package.",
+  "nativeReceipt": "artifacts/dependency-notices-v1/native-workflow-final.json",
+  "distributionReadiness": "not established; local ad hoc signature and two notice source-completeness gaps"
+}

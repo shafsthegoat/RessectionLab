@@ -1,0 +1,21 @@
+{
+  "matching_live_pid_pgid": [],
+  "method": "Read-only numeric ps snapshot after parent confirmed termination; no signals sent.",
+  "partial_execution": {
+    "compression:N24:S60:reference": {
+      "cleanup": {
+        "kill_sent": true,
+        "reaped": true
+      },
+      "elapsed_seconds": 420.039369917009,
+      "exit_code": -9,
+      "pid": 57759,
+      "status": "failed",
+      "timed_out": true
+    }
+  },
+  "status": "supervised_family_absent_after_terminal_receipt",
+  "supervised_process_group_id": 56876,
+  "supervision_exit_code": 1,
+  "supervision_status": "failed_or_incomplete"
+}

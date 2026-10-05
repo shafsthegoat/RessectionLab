@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-04T12:12:24.809336+00:00",
+  "auditor": "clinical_evidence sub-agent",
+  "scope": "Bounded local runtime metadata inspection only. No filesystem-wide search, network access, runtime execution, download, installation, source changes, or app changes. Only relevant metadata hashes and selected declared identities retained.",
+  "associated_engine_sha256": "85a92eff69cb1ea97afc400bc80433c53d146174dd32a9cf36061b8420f72ddd",
+  "runtime_manifest": {
+    "path": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/runtime.json",
+    "sha256": "63aa8c24422dcec49ef60a65379000f5513d155255fc632bb393d4bf22da5c43",
+    "bytes": 651,
+    "declared_identity": {
+      "bundleFormatVersion": 2,
+      "bundleVersion": "26.930.11008",
+      "pythonVersion": "3.12.14",
+      "targetArch": "arm64",
+      "targetPlatform": "darwin"
+    }
+  },
+  "venv_configuration": {
+    "path": ".venv/pyvenv.cfg",
+    "sha256": "3bae153dbc3d743f8e03962ec54da1326d938863e25fef8c44872d1cbad39ffc",
+    "bytes": 470,
+    "declared_python_version": "3.12.14",
+    "executable_points_to_manifest_runtime": true,
+    "home_points_to_manifest_runtime": true
+  },
+  "runtime_build_configuration": {
+    "path": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/_sysconfigdata__darwin_darwin.py",
+    "sha256": "8fd53ca557926873b7d519cd5cbd3d06b00c0983768901ac45f0c192d2ae05a7",
+    "matches_notice_copy": true
+  },
+  "runtime_license": {
+    "path": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/LICENSE.txt",
+    "sha256": "3b2f81fe21d181c499c59a256c8e1968455d6689d269aa85373bfb6af41da3bf",
+    "matches_notice_copy": true
+  },
+  "observations": [
+    "The local manifest identifies bundle 26.930.11008 for darwin arm64 and Python 3.12.14.",
+    "The virtual-environment configuration names that exact runtime directory.",
+    "The inspected runtime manifest contains no source archive URI/checksum, per-vendor versions, or static-vendor notice manifest.",
+    "Recorded build flags reference external/static components, but flags alone do not identify their exact upstream versions or prove applicable notice closure.",
+    "This bounded check did not locate a matching vendor closure in the inspected metadata; it does not claim no such record exists elsewhere."
+  ],
+  "vendor_provenance_status": "unresolved",
+  "unresolved_component": "CPython 3.12.14 static vendor libraries",
+  "required_evidence": "Vendor source/version and notice manifest attributable to this exact runtime bundle/build; do not substitute notices from unrelated builds.",
+  "legal_compliance_assessed": false
+}

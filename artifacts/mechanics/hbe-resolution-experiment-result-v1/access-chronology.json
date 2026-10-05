@@ -1,0 +1,12 @@
+{
+  "absent_response_fit_freeze_paths": [
+    "access.jsonl",
+    "fit.json",
+    "parameter-prediction-freeze.json",
+    "held-out-metrics.json"
+  ],
+  "calibration_in_protocol": false,
+  "measured_data_accessed": false,
+  "measured_member_reads_by_collector": 0,
+  "no_fit_or_held_out_phase_in_this_study": true
+}

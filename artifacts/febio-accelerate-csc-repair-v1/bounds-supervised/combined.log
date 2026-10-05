@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-repair-v1/bounds-regression.py", line 139, in <module>
+    {'prepare':prepare,'run-controls':run,'control-worker':run_worker}[args.stage]()
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-repair-v1/bounds-regression.py", line 112, in run_worker
+    assert result['exit_code']==0
+           ^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

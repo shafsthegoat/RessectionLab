@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "resectionlab"
+version = "0.1.0"
+description = "Local research workspace for patient-specific glioma route and resection simulation"
+requires-python = ">=3.12"
+authors = [
+  {name = "skamal23", email = "sayemkamal12@gmail.com"},
+  {name = "shafsthegoat", email = "shafrir.p@gmail.com"},
+]
+dependencies = [
+  "numpy>=2.2,<3",
+  "scipy>=1.15,<2",
+  "nibabel>=5.3,<6",
+  "scikit-image>=0.25,<1",
+  "torch>=2.6,<3",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10", "pyinstaller>=6,<7"]
+diffusion = ["dipy>=1.12,<1.13", "SimpleITK>=2.5,<3"]
+legacy-qt = ["PySide6>=6.8,<7", "vtk>=9.4,<10"]
+
+[project.scripts]
+resectionlab = "resectionlab.app:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

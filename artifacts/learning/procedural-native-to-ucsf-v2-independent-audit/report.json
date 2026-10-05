@@ -1,0 +1,275 @@
+{
+  "adapted_minus_scratch_mean": -24.603333333333353,
+  "declaration_unchanged_from_commit": "f26a72c",
+  "launch_git_revision": null,
+  "learning_rows": [
+    {
+      "actor_changed": true,
+      "algorithm_seconds": 30.11817150004208,
+      "arm": "PATIENT_SCRATCH_RL",
+      "atomic_overshoot_seconds": 0.11817150004208088,
+      "cold_setup_seconds": 2.0150345420697704,
+      "extraction_seconds": 1.0687529160641134,
+      "initial_score": 0.0,
+      "initialization_seconds": 0.038542874972335994,
+      "optimization_transitions": 68,
+      "score": 245.24,
+      "seed": 11,
+      "selected_initial": false,
+      "selection_seconds_within_algorithm": 12.96308745990973,
+      "selection_transitions": 43,
+      "trainer_call_seconds": 30.159306208021007,
+      "updates": 14
+    },
+    {
+      "actor_changed": true,
+      "algorithm_seconds": 30.050774250063114,
+      "arm": "PATIENT_SCRATCH_RL",
+      "atomic_overshoot_seconds": 0.05077425006311387,
+      "cold_setup_seconds": 1.9583466670010239,
+      "extraction_seconds": 1.9776148330420256,
+      "initial_score": 171.42,
+      "initialization_seconds": 0.040567707968875766,
+      "optimization_transitions": 66,
+      "score": 171.42,
+      "seed": 23,
+      "selected_initial": true,
+      "selection_seconds_within_algorithm": 11.838120333151892,
+      "selection_transitions": 36,
+      "trainer_call_seconds": 30.095677666948177,
+      "updates": 11
+    },
+    {
+      "actor_changed": true,
+      "algorithm_seconds": 30.008987042005174,
+      "arm": "PATIENT_SCRATCH_RL",
+      "atomic_overshoot_seconds": 0.008987042005173862,
+      "cold_setup_seconds": 1.9417186659993604,
+      "extraction_seconds": 2.022152499994263,
+      "initial_score": 139.62,
+      "initialization_seconds": 0.037765582907013595,
+      "optimization_transitions": 65,
+      "score": 245.16000000000003,
+      "seed": 47,
+      "selected_initial": false,
+      "selection_seconds_within_algorithm": 12.58408608310856,
+      "selection_transitions": 38,
+      "trainer_call_seconds": 30.051013624994084,
+      "updates": 12
+    },
+    {
+      "actor_changed": true,
+      "algorithm_seconds": 30.03423216601368,
+      "arm": "PROCEDURAL_PRETRAINED_ADAPTED",
+      "atomic_overshoot_seconds": 0.0342321660136804,
+      "cold_setup_seconds": 1.943241334054619,
+      "extraction_seconds": 1.0496363750426099,
+      "initial_score": 139.62,
+      "initialization_seconds": 0.38702475000172853,
+      "optimization_transitions": 61,
+      "score": 171.42,
+      "seed": 11,
+      "selected_initial": false,
+      "selection_seconds_within_algorithm": 14.005551332142204,
+      "selection_transitions": 42,
+      "trainer_call_seconds": 30.42331387498416,
+      "updates": 12
+    },
+    {
+      "actor_changed": true,
+      "algorithm_seconds": 30.00282412499655,
+      "arm": "PROCEDURAL_PRETRAINED_ADAPTED",
+      "atomic_overshoot_seconds": 0.002824124996550381,
+      "cold_setup_seconds": 1.9509403340052813,
+      "extraction_seconds": 0.9737934590084478,
+      "initial_score": 139.62,
+      "initialization_seconds": 0.3818457080051303,
+      "optimization_transitions": 63,
+      "score": 171.42,
+      "seed": 23,
+      "selected_initial": false,
+      "selection_seconds_within_algorithm": 11.93863666697871,
+      "selection_transitions": 36,
+      "trainer_call_seconds": 30.389155291952193,
+      "updates": 10
+    },
+    {
+      "actor_changed": true,
+      "algorithm_seconds": 30.225541207939386,
+      "arm": "PROCEDURAL_PRETRAINED_ADAPTED",
+      "atomic_overshoot_seconds": 0.22554120793938637,
+      "cold_setup_seconds": 2.020832333015278,
+      "extraction_seconds": 0.9740419170120731,
+      "initial_score": 139.62,
+      "initialization_seconds": 0.37869612500071526,
+      "optimization_transitions": 64,
+      "score": 245.17,
+      "seed": 47,
+      "selected_initial": false,
+      "selection_seconds_within_algorithm": 11.826342750922777,
+      "selection_transitions": 36,
+      "trainer_call_seconds": 30.60850216599647,
+      "updates": 10
+    }
+  ],
+  "limitations": [
+    "Artifact/source consistency audit; did not rerun the geometric collision checker or train models",
+    "One previously studied structural development case; zero human patients in pretraining",
+    "Three seeds and one offline seed do not establish a population or clinical result",
+    "Missing motor/language evidence remains null; no approved anatomical support or clinical safety inference",
+    "Sequential arm order and uncontrolled concurrent load limit runtime comparisons",
+    "Previous failed v1 remains a separate failed attempt and must not be hidden"
+  ],
+  "offline": {
+    "algorithm_seconds": 29.990159083972685,
+    "full_offline_call_seconds": 31.21762170898728,
+    "initialization_seconds": 0.8963491250760853,
+    "optimization_transitions": 169,
+    "procedural_family_gradient_episodes": {
+      "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89": 32,
+      "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c": 32
+    },
+    "selection_transitions": 188,
+    "updates": 32
+  },
+  "recomputed_from_native_source_cells": {
+    "GREEDY": {
+      "cumulative_partial_normal_contact_mm3": 32.0,
+      "nonstop_actions": 2,
+      "normal_removed_mm3": 17.0,
+      "partial_normal_later_removed_mm3": 6.0,
+      "retained_partial_normal_contact_mm3": 26.0,
+      "score": 245.24,
+      "target_removed_mm3": 249.0
+    },
+    "INITIAL:11": {
+      "cumulative_partial_normal_contact_mm3": 0.0,
+      "nonstop_actions": 0,
+      "normal_removed_mm3": 0.0,
+      "partial_normal_later_removed_mm3": 0.0,
+      "retained_partial_normal_contact_mm3": 0.0,
+      "score": 0.0,
+      "target_removed_mm3": 0.0
+    },
+    "INITIAL:23": {
+      "cumulative_partial_normal_contact_mm3": 30.0,
+      "nonstop_actions": 3,
+      "normal_removed_mm3": 11.0,
+      "partial_normal_later_removed_mm3": 10.0,
+      "retained_partial_normal_contact_mm3": 20.0,
+      "score": 171.42,
+      "target_removed_mm3": 174.0
+    },
+    "INITIAL:47": {
+      "cumulative_partial_normal_contact_mm3": 30.0,
+      "nonstop_actions": 3,
+      "normal_removed_mm3": 10.0,
+      "partial_normal_later_removed_mm3": 9.0,
+      "retained_partial_normal_contact_mm3": 21.0,
+      "score": 139.62,
+      "target_removed_mm3": 142.0
+    },
+    "PATIENT_SCRATCH_RL:11": {
+      "cumulative_partial_normal_contact_mm3": 32.0,
+      "nonstop_actions": 2,
+      "normal_removed_mm3": 17.0,
+      "partial_normal_later_removed_mm3": 6.0,
+      "retained_partial_normal_contact_mm3": 26.0,
+      "score": 245.24,
+      "target_removed_mm3": 249.0
+    },
+    "PATIENT_SCRATCH_RL:23": {
+      "cumulative_partial_normal_contact_mm3": 30.0,
+      "nonstop_actions": 3,
+      "normal_removed_mm3": 11.0,
+      "partial_normal_later_removed_mm3": 10.0,
+      "retained_partial_normal_contact_mm3": 20.0,
+      "score": 171.42,
+      "target_removed_mm3": 174.0
+    },
+    "PATIENT_SCRATCH_RL:47": {
+      "cumulative_partial_normal_contact_mm3": 36.0,
+      "nonstop_actions": 3,
+      "normal_removed_mm3": 17.0,
+      "partial_normal_later_removed_mm3": 10.0,
+      "retained_partial_normal_contact_mm3": 26.0,
+      "score": 245.16000000000003,
+      "target_removed_mm3": 249.0
+    },
+    "PROCEDURAL_PRETRAINED_ADAPTED:11": {
+      "cumulative_partial_normal_contact_mm3": 30.0,
+      "nonstop_actions": 3,
+      "normal_removed_mm3": 11.0,
+      "partial_normal_later_removed_mm3": 10.0,
+      "retained_partial_normal_contact_mm3": 20.0,
+      "score": 171.42,
+      "target_removed_mm3": 174.0
+    },
+    "PROCEDURAL_PRETRAINED_ADAPTED:23": {
+      "cumulative_partial_normal_contact_mm3": 30.0,
+      "nonstop_actions": 3,
+      "normal_removed_mm3": 11.0,
+      "partial_normal_later_removed_mm3": 10.0,
+      "retained_partial_normal_contact_mm3": 20.0,
+      "score": 171.42,
+      "target_removed_mm3": 174.0
+    },
+    "PROCEDURAL_PRETRAINED_ADAPTED:47": {
+      "cumulative_partial_normal_contact_mm3": 33.0,
+      "nonstop_actions": 3,
+      "normal_removed_mm3": 17.0,
+      "partial_normal_later_removed_mm3": 7.0,
+      "retained_partial_normal_contact_mm3": 26.0,
+      "score": 245.17,
+      "target_removed_mm3": 249.0
+    },
+    "PROCEDURAL_PRETRAINED_FROZEN": {
+      "cumulative_partial_normal_contact_mm3": 30.0,
+      "nonstop_actions": 3,
+      "normal_removed_mm3": 10.0,
+      "partial_normal_later_removed_mm3": 9.0,
+      "retained_partial_normal_contact_mm3": 21.0,
+      "score": 139.62,
+      "target_removed_mm3": 142.0
+    },
+    "SEARCH": {
+      "cumulative_partial_normal_contact_mm3": 32.0,
+      "nonstop_actions": 2,
+      "normal_removed_mm3": 17.0,
+      "partial_normal_later_removed_mm3": 6.0,
+      "retained_partial_normal_contact_mm3": 26.0,
+      "score": 245.24,
+      "target_removed_mm3": 249.0
+    },
+    "STOP": {
+      "cumulative_partial_normal_contact_mm3": 0.0,
+      "nonstop_actions": 0,
+      "normal_removed_mm3": 0.0,
+      "partial_normal_later_removed_mm3": 0.0,
+      "retained_partial_normal_contact_mm3": 0.0,
+      "score": 0.0,
+      "target_removed_mm3": 0.0
+    }
+  },
+  "selected_score_mean_by_arm": {
+    "PATIENT_SCRATCH_RL": 220.60666666666668,
+    "PROCEDURAL_PRETRAINED_ADAPTED": 196.00333333333333
+  },
+  "source_commit": "68e4fde13b1fa13411e59af663bd17ae63885947",
+  "source_hash": "sha256:e1186e12e79263c41e3cdad06112012702b4126a73fd912c14fa1e41d6d8843f",
+  "status": "passed_artifact_consistency_audit",
+  "timing": {
+    "independent_native_validation_seconds": 33.123844458023086,
+    "max_recorded_process_peak_rss_gib": 3.31719970703125,
+    "other_worker_orchestration_seconds": 1.9088055425090715,
+    "shared_validation_copy_load_seconds": 1.0029022919479758,
+    "sum_explicit_nondoublecounted_phases_seconds": 285.28067937341984,
+    "total_including_source_freeze_seconds": 288.8733472080203,
+    "total_worker_seconds": 287.1894849159289
+  },
+  "training_or_simulator_execution_performed": false,
+  "unique_independent_native_audits": 8,
+  "verified_candidate_count": 13,
+  "verified_snapshot_files": 138,
+  "world_exposure_check": "Saved contracts and replay seeds use optimization/selection only; no final/stress result or ledger, and frozen runner has no final evaluation path"
+}

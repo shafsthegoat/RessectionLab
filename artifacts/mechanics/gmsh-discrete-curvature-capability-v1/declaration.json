@@ -1,0 +1,82 @@
+{
+  "schema": "gmsh-discrete-curvature-capability-v1",
+  "authorized_one_analytical_pair": true,
+  "root_release": "Root authorized one small paired analytical mesher control, old curvature off versus documented curvature on with compatible floor. At most30s aggregate,1GiB,one thread,16MiB outputs,no retry; no patient/remesh/images/B/V/solver/training. Exact presets and caps frozen before native calls.",
+  "case_order": [
+    "curvature_off",
+    "curvature_on"
+  ],
+  "attempt_directory": "outputs/mechanics/gmsh-discrete-curvature-capability-v1",
+  "ellipsoid_axes_m": [
+    0.035,
+    0.02,
+    0.01
+  ],
+  "source_sampling": {
+    "latitude_divisions": 32,
+    "longitude_divisions": 64,
+    "nodes": 1986,
+    "triangles": 3968,
+    "exact_equation": "sum((x_i/a_i)^2)=1 at vertices; planar input facets approximate the analytic ellipsoid"
+  },
+  "presets": {
+    "curvature_off": {
+      "elements_per_2pi": 0,
+      "minimum_size_m": 0.012
+    },
+    "curvature_on": {
+      "elements_per_2pi": 24,
+      "minimum_size_m": 0.003
+    }
+  },
+  "shared_size_field": {
+    "boundary_size_m": 0.012,
+    "interior_size_m": 0.024,
+    "distance_min_m": 0.002,
+    "distance_max_m": 0.024,
+    "sampling_per_dimension": 100
+  },
+  "workflow": "Same discrete addNodes/addElements, classifySurfaces(pi,True,True,pi),createGeometry,volume,tet10 straight-reference path. Only curvature option and compatible floor differ; no physical solver.",
+  "caps": {
+    "aggregate_seconds": 30,
+    "cooperative_seconds": 27,
+    "process_group_rss_bytes": 1073741824,
+    "numerical_threads": 1,
+    "output_bytes": 16777216,
+    "maximum_generations": 2,
+    "attempts": 1,
+    "retries": 0,
+    "maximum_nodes_per_case": 20000,
+    "maximum_tets_per_case": 30000,
+    "samples_per_direction_per_case": 300000
+  },
+  "fidelity": {
+    "distance": "Existing independent nearest-triangle VTK helper",
+    "cover_radius_m": 0.0005,
+    "scope": "Two input-triangulation fidelity observations, not clinical/anatomical acceptance",
+    "paired_effect_success_not_required": true
+  },
+  "gmsh_runtime": {
+    "module_path": "data/optional-runtimes/gmsh-4.15.2/runtime/gmsh.py",
+    "library_path": "data/optional-runtimes/gmsh-4.15.2/runtime/lib/libgmsh.4.15.dylib",
+    "version": "4.15.2"
+  },
+  "inputs": {
+    "scripts/mechanics_gmsh_curvature_control.py": "7fff0fec4ae02519a41c324683f877716bd52e647bd9d9221b6f1fed036c8cd6",
+    "scripts/mechanics_patient_mesh.py": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+    "scripts/mechanics_patient_mesh_candidate_run.py": "3eb34cb35cb1bfe41cf12cb55f7df35e61efe452eb747411c64b1b8ff87173bd",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "artifacts/febio-runtime-investigation-v1/prospective-runtime.json": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48",
+    "artifacts/mechanics/gmsh-4.15.2-runtime-v1/runtime-receipt.json": "705056d13e78f98fda0ab04884c0c6e3b31ead73f88d01b6dcf3bd99d5417137",
+    "data/optional-runtimes/gmsh-4.15.2/runtime/gmsh.py": "f4b0935cebde899750293d87a643090e5ea33c9b18d249267f507db68a0e01c3",
+    "data/optional-runtimes/gmsh-4.15.2/runtime/lib/libgmsh.4.15.dylib": "def0f5c10988a986e5e879b3db9669d8fe016a81e2d994bbaf2b8497c6b8a58a",
+    "build/validation/gmsh-discrete-curvature-capability-v1/source/src/geo/GModelParametrize.cpp": "8496e6fe1b6ae23f8f5635b57471f3249c35bd683367590a206f1d48c979f2e6",
+    "build/validation/gmsh-discrete-curvature-capability-v1/source/src/geo/discreteFace.cpp": "32f7669b2f9f28acfe888b86bd7ca4c81053acc2bc9db5be2fb0766d98d1e46f",
+    "build/validation/gmsh-discrete-curvature-capability-v1/source/src/mesh/BackgroundMeshTools.cpp": "c14ee81f8e5b763e4829066f9dafc62eaac5130a305da9cb49f3233152904bea",
+    "build/validation/gmsh-discrete-curvature-capability-v1/source/CMakeLists.txt": "89f1d8bc87509cd66d508a87729084afc97171cd6d554d9725980cdf09fc15bb"
+  },
+  "original_patient_helpers_modified": false,
+  "physics_solver_calls": 0,
+  "measured_patient_or_curve_data": false,
+  "pure_fixture_controls": "4 analytical assertions passed before declaration; exact1986/3968 shapes,closed genus0,ellipsoid equation,polyhedral volume error<.5%; no native call."
+}

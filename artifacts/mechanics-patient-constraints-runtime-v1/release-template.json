@@ -1,0 +1,10 @@
+{
+  "schema": "mechanics-patient-constraints-runtime-v1-release",
+  "authorized": false,
+  "root_release": "PENDING: root must separately release exactly one attempt after the reviewed launcher and declarations are committed.",
+  "source_commit": "REPLACE_WITH_FULL_COMMITTED_40_CHARACTER_SHA",
+  "source_directory": "REPLACE_WITH_ABSOLUTE_IMMUTABLE_GIT_ARCHIVE_DIRECTORY",
+  "repository_directory": "REPLACE_WITH_ABSOLUTE_SOURCE_REPOSITORY_DIRECTORY_FOR_READ_ONLY_GIT_OBJECT_CHECKS",
+  "runtime_identity": "REPLACE_WITH_ABSOLUTE_PATH_TO_ACCEPTED_RUNTIME_IDENTITY_JSON",
+  "attempt_directory": "REPLACE_WITH_ONE_ABSOLUTE_FRESH_ATTEMPT_OUTPUT_DIRECTORY"
+}

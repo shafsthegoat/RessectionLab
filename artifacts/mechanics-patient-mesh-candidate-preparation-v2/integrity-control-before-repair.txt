@@ -1,0 +1,24 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________ test_same_size_corrupted_write_cannot_become_complete _____________
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-484/test_same_size_corrupted_write0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10a16f320>
+
+    def test_same_size_corrupted_write_cannot_become_complete(tmp_path,monkeypatch):
+        nodes,cells,origin=analytic_tet();write=v.np.lib.format.write_array
+        def corrupt(stream,array,**kwargs):
+            changed=array.copy();changed.flat[0]+=1
+            write(stream,changed,**kwargs)
+        monkeypatch.setattr(v.np.lib.format,'write_array',corrupt)
+        report=v.preserve_diagnostic(tmp_path/'diagnostic',nodes,cells,origin,{},CONFIG['diagnostic_limits'])
+>       assert report['status']=='write_failed' and not report['complete']
+E       AssertionError: assert ('complete' == 'write_failed'
+E         
+E         - write_failed
+E         + complete)
+
+tests/test_mechanics_patient_mesh_candidate.py:102: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_mechanics_patient_mesh_candidate.py::test_same_size_corrupted_write_cannot_become_complete
+1 failed in 0.36s

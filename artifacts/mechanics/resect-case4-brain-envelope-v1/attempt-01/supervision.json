@@ -1,0 +1,30 @@
+{
+  "cleanup_error": null,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-S",
+    "-B",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/resect-case4-brain-envelope-ea2c60c/source/scripts/run_resect_brain_envelope.py",
+    "--root",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "--release",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-brain-envelope-v1/root-release.json",
+    "--release-sha256",
+    "bf61fc1e2d6a2083f15e089c03ce6d91aa89e2270c0b7f4771a98f7b465651b7",
+    "--worker",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-brain-envelope-v1/attempt-01"
+  ],
+  "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/resect-case4-brain-envelope-ea2c60c/source",
+  "elapsed_seconds": 11.644444959005341,
+  "error": null,
+  "exit_code": 0,
+  "kill_reason": null,
+  "no_retry": true,
+  "pid": 35179,
+  "rss_cap_bytes": 6442450944,
+  "sampled_peak_process_group_rss_bytes": 725057536,
+  "sampling_note": "Group RSS is sampled; brief between-sample peaks may be missed.",
+  "status": "completed",
+  "wall_cap_seconds": 420
+}

@@ -1,0 +1,50 @@
+{
+  "status": "independent_review_passed_pending_root_commit_and_separate_execution_release",
+  "verification_command": ".venv/bin/python -m pytest -q tests/test_mechanics_patient_constraints_review.py tests/test_mechanics_patient_constraints_runtime.py tests/test_mechanics_patient_constraints_launcher_review.py tests/test_mechanics_patient_constraints_run.py",
+  "result": "40 passed in 1.01s;26 numerical controls plus14 mocked launcher controls",
+  "reviewed_sha256": {
+    "scripts/mechanics_patient_constraints_run.py": "8ca55cf54730c91ae47e573999041cb0c8b84fb4676842e0d1c0e7407ee8843f",
+    "scripts/mechanics_patient_constraints.py": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66",
+    "scripts/mechanics_febio_verification.py": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "tests/test_mechanics_patient_constraints_review.py": "6d3b268a4b18ab2dca3e222145a080806712b2326c38e311fd3a3eed5777ee41",
+    "tests/test_mechanics_patient_constraints_launcher_review.py": "2ab8cc422f6f3c27a26280423cbb55577c5b7525a4277deb0832389dceed2ad0",
+    "tests/test_mechanics_patient_constraints_runtime.py": "f218d3660480575fbbc3a346683545a833a8bdffca3b99b13d067d5a123a9d54",
+    "tests/test_mechanics_patient_constraints_run.py": "82b4b39fc35051d4ba7c7d54564e652a2cdd92ac9a297eeedd346640c056dafc",
+    "artifacts/mechanics-patient-constraints-runtime-v1/decks/manifest.json": "73a20d14551742159f05145bfd39444fde4d8bc81415d6139d85e8d890d0c330",
+    "artifacts/mechanics-patient-constraints-runtime-v1/release-template.json": "d951d2ac78cf408740b1118d946514cbff61256b11656b311395ad3fcd2b46de"
+  },
+  "launcher_controls": [
+    "Baseline source comparison uses the exact immutable commit and rejects a modified checker before import/execution.",
+    "Actual declared executable/library/OpenMP identity and deck/source/release hashes are bound; independent tiny fake runtime fixtures detect changed library bytes.",
+    "The parent passes exactly60s and3221225472bytes to the already reviewed process-group supervisor; numeric thread settings1 and OMP_DYNAMIC=FALSE override inherited environment, and PYTHONPATH is removed.",
+    "All three cases retain their declared order; first checker failure leaves remaining two unexecuted. Cap/observer failure cannot become success from a completed child payload.",
+    "Missing bound inputs produce a retained failure receipt.",
+    "One exact released attempt directory is enforced by parent and worker, and fresh-directory checks prevent ordinary reuse.",
+    "Direct repeated worker invocation now refuses before any write scope, preserving the original completed result byte-for-byte."
+  ],
+  "repairs": {
+    "static_one_attempt_path": "Owner bound one exact output path to each release before freeze; see launcher-pre-freeze-finding.json.",
+    "repeated_worker_receipt": "Independent regression reproduced owner-identified receipt overwrite; repaired by moving refusal before try/finally write scope. See launcher-initial-results.json and compressed initial source.",
+    "review_test_errors": "Initial mocked tests mistakenly asserted OMP_DYNAMIC=1 and omitted release_path/assumed a validation order; corrected without any production setting change.",
+    "quadrature_review_oracle": "Initial1e-14N expectation for rounded upstream quadrature was replaced by exact centroid integration for affine force plus unchanged original1e-8N numerical-rule gate."
+  },
+  "execution_limits": {
+    "cases": 3,
+    "steps_per_case": 4,
+    "aggregate_worker_wall_seconds": 60,
+    "sampled_process_group_rss_bytes": 3221225472,
+    "numerical_threads": 1,
+    "retries": 0
+  },
+  "limitations": [
+    "No actual FEBio model parsed or solved in this review; future success depends on the released experiment.",
+    "Git/source/runtime setup verification precedes supervised sequence; repeated worker validation and all solvers/checks are within60s.",
+    "Memory monitoring is sampled and may miss between-sample peaks.",
+    "No mechanics guarantee outside the three explicit analytic fixtures; nodal means are not patient volume-tent observations.",
+    "No patient data were read and no clinical calibration or risk probabilities inferred."
+  ],
+  "subprocesses_executed_by_launcher_tests": 0,
+  "solver_executed": false,
+  "patient_data_accessed": false
+}

@@ -1,0 +1,26 @@
+{
+  "schema": "hbe-backend-access-preparation-v1",
+  "status": "source_preparation_passed_pending_independent_review",
+  "source_bindings": {
+    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "tests/test_mechanics_hbe_access.py": "828c3376ca8558df262eebc5f65163abc8b1abd92a7023780f3e2886358b137d",
+    "tests/test_mechanics_hbe_backend_access.py": "3ce71fecbc4d2392996d2eeda5881bb7cc96b1505e6600949226316bd63a1b8c",
+    "docs/hbe-evaluation-interface.md": "b3eb5d80dd636275b94d26b6942857435061ac327ba13dee552c0a4a2661c0d3",
+    "scripts/mechanics_hbe_backend.py": "8b10f10aa0030e61c85dc8788499d0144e4d62c62b4fa37a9e0a4861af35846b"
+  },
+  "tests": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "tests/test_mechanics_hbe_backend_access.py",
+      "tests/test_mechanics_hbe_access.py",
+      "tests/test_mechanics_hbe_access_review.py",
+      "-q"
+    ],
+    "result": "35 passed in0.48s"
+  },
+  "real_solver_invocations": 0,
+  "observed_measurement_access": false,
+  "scope": "Explicit release profile propagation, per-run exact binding, solver-subtree-only verification, full-replay consistency and freeze dependency inventory. Constructed profile contexts isolate verification in stated tests; unmocked dummy-profile refusal is separate."
+}

@@ -1,0 +1,22 @@
+{
+  "human_patients_in_pretraining": 0,
+  "locked_final_patients": 0,
+  "patient_derived_development_cases": 1,
+  "procedural_families": [
+    "procedural:native-slab-v1",
+    "procedural:native-split_lobes-v1"
+  ],
+  "target": {
+    "aliases": [
+      "UCSF-PDGM:UCSF-PDGM-004",
+      "BraTS2021:BraTS2021_00097"
+    ],
+    "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "excluded_from_pretraining": true,
+    "group_id": "UCSF-PDGM:UCSF-PDGM-0004",
+    "outer_split": "development",
+    "planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+    "source_kind": "public_patient_structural_mirror"
+  },
+  "verified_primary_source_target_cases": 0
+}

@@ -1,0 +1,18 @@
+--- a/NumCore/AccelerateSparseSolver.cpp
++++ b/NumCore/AccelerateSparseSolver.cpp
+@@ -198,10 +198,13 @@
+     imp->m_n = imp->m_pA->Rows();
+     imp->m_nnz = imp->m_pA->NonZeroes();
+     imp->m_nrhs = 1;
+     
+-    imp->pointers.resize(imp->m_nnz);
+-    for (int i=0; i<imp->m_nnz; ++i) imp->pointers[i] = imp->m_pA->Pointers()[i];
++    if (imp->m_n == 0) return LinearSolver::PreProcess();
++
++    const int pointerCount = imp->m_pA->Columns() + 1;
++    imp->pointers.resize(pointerCount);
++    for (int i=0; i<pointerCount; ++i) imp->pointers[i] = imp->m_pA->Pointers()[i];
+     imp->colS = &imp->pointers[0];
+     
+     if (__builtin_available(macOS 10.13, *)) {
+         imp->SMS.columnCount = imp->m_pA->Columns();

@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-04T18:25:05.458852+00:00",
+  "status": "setup_failed_before_patient_array_access",
+  "errors": [
+    {
+      "phase": "release_receipt_setup",
+      "interpreter": "system python3",
+      "exception": "AttributeError: module hashlib has no attribute file_digest",
+      "effect": "Root release file was not created."
+    },
+    {
+      "phase": "integration_driver_initialization",
+      "interpreter": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+      "exception": "FileNotFoundError: root-release.json",
+      "effect": "Stopped before the case loop or source/case array reads."
+    }
+  ],
+  "initial_driver_sha256": "8618ac73623c9b100a5ea09b80e4470c471f1be169d9574c3f3ea5977352b19e",
+  "initial_log_sha256": "c57a28541123bfe56dfa64235c0999cff312b95b919490fa971a736895e7991e",
+  "source_or_inference_outputs_changed": false,
+  "new_bundle_or_QC_report_created": false,
+  "inference_retries": 0,
+  "repair_scope": "Use explicitly declared .venv Python for receipt setup and a new attempt directory. Fix a statically detected, previously unreached evidence property typo from fingerprint to evidence_hash in new driver; no production modules changed."
+}

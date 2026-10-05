@@ -1,0 +1,21 @@
+{
+  "eligible_candidate_count": 0,
+  "error": "Native anatomy differs from prior declared source model",
+  "error_type": "ValueError",
+  "resource": {
+    "budget": {
+      "hard_termination_grace_seconds": 15.0,
+      "process_peak_rss_bytes": 6442450944,
+      "worker_wall_seconds": 600.0
+    },
+    "budget_request_to_receipt_seconds": null,
+    "cancellation_callback_calls": 2,
+    "cancellation_callback_seconds": 3.02919652312994e-05,
+    "cancellation_reason": null,
+    "elapsed_seconds": 0.6003405830124393,
+    "observed_peak_rss_bytes": 354877440,
+    "scope": "worker process RSS; cooperative callback CPU cost; no OS memory reservation"
+  },
+  "stage": "case_and_native_preparation",
+  "status": "failed"
+}

@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "declared_at": "2026-10-04T08:05:59.570354+00:00",
+  "source_accession": "ds001226",
+  "release": "5.0.1",
+  "git_commit": "359d372c5e972a161966312128adb365870df949",
+  "source_metadata_sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d",
+  "selection_rule": "Sort participant_id lexicographically after retaining diagnoses containing glioma, glioblastoma, or astrocytoma (case-insensitive); exclude sub-PAT28. Select first ID before opening any of its images.",
+  "selected_subject": "sub-PAT05",
+  "eligible_metadata_candidates": [
+    "sub-PAT05",
+    "sub-PAT16",
+    "sub-PAT20",
+    "sub-PAT22",
+    "sub-PAT25",
+    "sub-PAT26",
+    "sub-PAT27",
+    "sub-PAT29",
+    "sub-PAT31"
+  ],
+  "role": "development",
+  "file_scope": [
+    "native_preoperative_T1",
+    "native_source_tumor_annotation",
+    "T1_JSON",
+    "release_metadata"
+  ],
+  "max_download_bytes": 100000000,
+  "selection_used_imaging_or_planning_results": false,
+  "pathology_use": "archival cohort inclusion only; preoperative availability unknown and optimizer input prohibited",
+  "status": "selection_locked_before_image_download"
+}

@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-10-04T12:37:10.697827+00:00",
+  "review_kind": "independent_engineering_visual_review_after_saved_array_audit",
+  "audit_report": "docs/brain-extraction-pat16-pat20-independent-qc.json",
+  "audit_report_sha256": "237e66d6a22905917b52bbe0f970ab709c6e3e1f61cc12fb06a3c3575a3281e8",
+  "source_bindings": {
+    "scripts/audit_pat16_pat20_extraction.py": "3373ac1284269790359cd4742b91c0110087cd661a56e19f0d7c8bc4ff5a678e",
+    "scripts/audit_brain_extraction.py": "927a7d4d90a5db202e5ec89a59cc3c9b2af6ef4c13a9440c10c5be461a947217",
+    "tests/test_pat16_pat20_extraction_audit.py": "a2ad99e6708e4c6e87b14a591e735b1cc8242664bc278049f39e0b127cb7b953",
+    "tests/test_brain_extraction_audit.py": "a6e68abeb082473faf6f2296b82f6eab9378abf3da1d0f673ea29831f1bf6f29",
+    "docs/brain-extraction-pat16-pat20-independent-qc.json": "237e66d6a22905917b52bbe0f970ab709c6e3e1f61cc12fb06a3c3575a3281e8",
+    "manifests/experiments/brain-extraction-pat16-pat20-repeatability-v1.json": "5be3ade2eb6b383e796cdc34def48dae66a4fb68649b282723daa83e771477db",
+    "artifacts/brain-extraction/PAT16-PAT20-repeatability-v1-batch/batch_record.json": "df8bb5bef8367e1b2d58be1a7d4ec4346481024544e52dd32dd783e7b79e9140"
+  },
+  "actual_images_opened_and_inspected": true,
+  "visual_review_completed": true,
+  "subjects": {
+    "sub-PAT16": {
+      "overlay": "outputs/brain-extraction-pat16-pat20-independent/sub-PAT16-independent-extraction.png",
+      "overlay_sha256": "e602cb7f42e1e90c1c2970533bab28213accd9cf87f28840ac18f546a576012a",
+      "native_voxel_centres": [
+        [
+          79,
+          112,
+          153
+        ],
+        [
+          108,
+          143,
+          139
+        ]
+      ],
+      "observations": [
+        "Six native oblique panels were opened and inspected: three through the main-envelope centre and three through the thresholded source-annotation centre.",
+        "The main envelope is broader than the no-CSF envelope in several displayed regions, including inferior structures. Neither outline is an accepted cortical surface.",
+        "The no-CSF contour enters the source-annotation region near parts of its inferior/anterior extent in the selected views; the array audit retains all 2,045 excluded annotation voxels. Main also excludes 19 voxels.",
+        "No gross whole-overlay translation or axis reversal is apparent in these selected native planes. Whole-volume anatomical accuracy remains unverified."
+      ],
+      "status": "engineering_inspection_completed_anatomical_review_required"
+    },
+    "sub-PAT20": {
+      "overlay": "outputs/brain-extraction-pat16-pat20-independent/sub-PAT20-independent-extraction.png",
+      "overlay_sha256": "0cf5e2f9efe1e3e30281cc81b713a0443a01f8d4527eb1b98267e1fad9586055",
+      "native_voxel_centres": [
+        [
+          80,
+          109,
+          146
+        ],
+        [
+          127,
+          79,
+          163
+        ]
+      ],
+      "observations": [
+        "Six native oblique panels were opened and inspected: three through the main-envelope centre and three through the thresholded source-annotation centre.",
+        "The source annotation approaches the outer envelope boundary in the selected views; the two estimated contours diverge locally near superficial and sulcal regions.",
+        "The array audit preserves 413 excluded annotation voxels for no-CSF and 125 for main. The displayed panels do not establish whether either envelope or the source annotation is anatomically correct.",
+        "Inferior structures remain within the estimated envelopes. Bright superficial features are visible in the MRI; this engineering inspection does not infer their cause or operative history.",
+        "No gross whole-overlay translation or axis reversal is apparent in these selected native planes. Whole-volume anatomical accuracy remains unverified."
+      ],
+      "status": "engineering_inspection_completed_anatomical_review_required"
+    }
+  },
+  "engineering_anatomical_approval": false,
+  "brain_reviewed": false,
+  "cortex_localized": false,
+  "cortical_access_permitted": false,
+  "clinical_deficit_probability": null,
+  "tests": {
+    "command": ".venv/bin/python -m pytest tests/test_pat16_pat20_extraction_audit.py tests/test_brain_extraction_audit.py -q",
+    "exit_code": 0,
+    "passed": 28,
+    "elapsed_seconds": 0.35,
+    "captured_summary": "28 passed in 0.35s"
+  },
+  "audit_execution": {
+    "command": ".venv/bin/python scripts/audit_pat16_pat20_extraction.py",
+    "exit_code": 0,
+    "elapsed_seconds": 10.350517333019525,
+    "peak_rss_bytes": 824393728,
+    "GPU_used": false,
+    "network_inference_executed": false,
+    "training_executed": false,
+    "failures": []
+  },
+  "limits": [
+    "Selected panels and engineering invariants do not establish whole-volume anatomical accuracy.",
+    "Source/model/runner hashes are pinned; historical runtime interpreter/package-binary hashes were not declared.",
+    "No source images, frozen extraction outputs, working cases, atlas registrations or cohort assignments were changed."
+  ]
+}

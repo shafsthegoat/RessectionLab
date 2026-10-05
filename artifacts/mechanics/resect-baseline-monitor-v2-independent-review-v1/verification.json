@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "status": "prepared_v2_guard_repair_independently_verified_actual_execution_unrun",
+  "created_at_utc": "2026-10-04T20:47:24.626447+00:00",
+  "git_head_at_review": "955c42a2da7db3c294cacdccb060707cae263054",
+  "command": ".venv/bin/python -m pytest -q tests/test_resect_baseline_monitor_v2_review.py artifacts/mechanics/resect-case4-baseline-alignment-v2/test_resource_monitor.py artifacts/mechanics/resect-case4-baseline-alignment-v2/test_alignment.py",
+  "result": {
+    "passed": 37,
+    "failed": 0,
+    "independent_cases": 11,
+    "owner_cases": 26,
+    "pytest_seconds": 0.49,
+    "process_seconds": 0.550290917
+  },
+  "source_sha256": {
+    "artifacts/mechanics/resect-case4-baseline-alignment-v2/align.py": "71f1a6440057960beb576180243ba3bf14855dd33a4584e1c99eb8a80e091e4c",
+    "artifacts/mechanics/resect-case4-baseline-alignment-v2/declaration.json": "9f606a76471b71b0de4598ecee0c1f9bf7f21cd410f856ec19f958ba33225593",
+    "artifacts/mechanics/resect-case4-baseline-alignment-v2/coordinate-justification.json": "f293613dd1ca5adf58bfd768c2fe2b4d50e352fe0534ee28264225739f88c2ec",
+    "artifacts/mechanics/resect-case4-baseline-alignment-v2/test_resource_monitor.py": "00fd3be8c63360f98c347c2cc8ef1edfbe4cb21eab9def924a420b45d24dc54d",
+    "artifacts/mechanics/resect-case4-baseline-alignment-v2/test_alignment.py": "0ff0c76d8227e51d59c29de05ea0ebb8dbde2039255ffe80a0f3d41cc442819f",
+    "tests/test_resect_baseline_monitor_v2_review.py": "57bf07049c0e10306e2abcc365bacaf801fed888b228db75832b391fd47adcb5"
+  },
+  "retained_initial_negative": {
+    "path": "artifacts/mechanics/resect-baseline-monitor-v2-independent-review-v1/initial-negative.json",
+    "sha256": "19c1fe2e5fbe7f0f01cb0e68ef1c74b6ecf64d71837543b205efd761a48c9cb0",
+    "passed": 10,
+    "failed": 1
+  },
+  "repaired_finding": "Decisive completed-query live observation remains exit_code_after_query:null even if error-handler poll observes later exit; exit_code_at_error preserves that separate observation. Refusal behavior unchanged.",
+  "verified_controls": [
+    "direct child exit with absent or zero RSS accepted as monitoring observation, preserving worker exit code",
+    "nonzero worker exit still fails overall run",
+    "live worker absent/zero/empty RSS fails and is killed/waited",
+    "malformed or nonzero-return ps result fails even when child exits",
+    "raw stdout/stderr/returncode/parsed PID records retained and flushed probe bytes match receipt hash",
+    "separate live-then-error-exit diagnostic observations retained",
+    "all numerical/access/render AST functions and all nonfunction AST nodes match committed V1 except main and added resource_probe",
+    "all scientific/input/fit/view/acceptance/budget declaration settings unchanged",
+    "original coordinate justification unchanged",
+    "every V1failed-freeze artifact hash unchanged"
+  ],
+  "V1_failure_cause": "Unknown; V1 lacked raw failed ps diagnostics. Mock exit scenarios establish potential paths, not actual V1 diagnosis.",
+  "original_patient_files_opened": false,
+  "patient_image_arrays_decoded": false,
+  "actual_worker_spawned": false,
+  "solver_or_registration_execution": false,
+  "V1_derived_artifacts": "Read only to compare frozen file hashes; no images reinterpreted or numerical outcomes used to choose methods.",
+  "production_edits_by_reviewer": false,
+  "remaining_blocking_findings": [],
+  "limitations": "Prepared-source mock controls only. New root commit and explicit bounded release are still required for any actual V2 baseline execution; sampled RSS is not an exact continuous peak guarantee."
+}

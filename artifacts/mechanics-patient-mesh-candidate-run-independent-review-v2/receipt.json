@@ -1,0 +1,74 @@
+{
+  "schema": "mechanics-patient-mesh-candidate-run-independent-review-v2",
+  "created_utc": "2026-10-05T00:12:30.453198+00:00",
+  "status": "passed_scoped_source_and_mocked_review_no_execution_release",
+  "scope": "Independent source/metadata review and temporary-fixture tests only; no patient/source-surface arrays, native mesher, solver, landmarks or model execution.",
+  "files": {
+    "scripts/mechanics_patient_mesh_candidate_run.py": "3eb34cb35cb1bfe41cf12cb55f7df35e61efe452eb747411c64b1b8ff87173bd",
+    "scripts/mechanics_patient_mesh_candidate.py": "ff4a64f1593a3384601e10f0ea33564769e46050d88e1432ca34f5d11d0771fe",
+    "scripts/mechanics_patient_mesh.py": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+    "manifests/experiments/resect-case4-patient-mesh-v1.json": "b6b3fd278df85fb0ea89c72dcff37cc5f229644602f5288c81e8ce6e7653173c",
+    "manifests/experiments/resect-case4-patient-mesh-graded-v2.json": "ff27037c4141c5da99266da0c92efd5f6a673f5eb0bba6ac3032e916ba5db54e",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "artifacts/febio-runtime-investigation-v1/prospective-runtime.json": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48",
+    "tests/test_mechanics_patient_mesh_candidate_run.py": "cd6380ff882b07e60818e282473826d7fb042e4c6dc97705d1b36feecb4cfbc8",
+    "tests/test_mechanics_patient_mesh_candidate_run_review.py": "5dbcd6ee6e9d65ee0a22d24945afd156f628936e6b5827d5449537b6f451ad01",
+    "docs/mechanics-patient-mesh-candidate-launcher.md": "c285d052f0de53a1d3ff54993d438131bc985d669edf422407325da421676a9e",
+    "artifacts/mechanics-patient-mesh-candidate-launcher-preparation-v2/release-template.json": "efc23510b06ebd014e060136352effb64b777d4bfff3c8840f928474804416a8",
+    "artifacts/mechanics-patient-mesh-candidate-launcher-preparation-v2/preparation.json": "d9ef5c1a0263d3ff54506d38865acc526911d01e4e8c328ea9cb009cf2ec0203"
+  },
+  "owner_preparation_hashes_match": true,
+  "exact_seven_file_closure_hashes_match": true,
+  "release_template_authorized": false,
+  "tests": {
+    "command": ".venv/bin/python -m pytest -q tests/test_mechanics_patient_mesh_candidate_run.py tests/test_mechanics_patient_mesh_candidate_run_review.py",
+    "passed": 33,
+    "owner_controls": 18,
+    "independent_controls": 15,
+    "elapsed_seconds": 0.23,
+    "exit_code": 0,
+    "log": "focused-tests.txt"
+  },
+  "reviewed_contracts": [
+    "Exact seven-file archived Git/source closure, exact output directory, and unauthorized template fail closed.",
+    "Five hash-bound context roles and prior failed-v1 worker bind the declared saved native-surface hash; no image re-extraction path.",
+    "Fixed one-candidate helper and unchanged quality/fidelity/count settings; no retries, continued levels or solver admission.",
+    "Original private Gmsh module/library bindings, package versions, one numerical thread and sequential VTK; no ambient native import in reviewed controls.",
+    "Reviewed process-group supervisor receives 180-second and 3-GiB caps; injected output-observer failure reaches its failure path and original observer is restored.",
+    "8-MiB sampled aggregate/32-file/depth-four output guard, child-local 4-MiB hard per-file limit before saved-array loading, and unchanged 2-MiB complete diagnostic packet.",
+    "Exact saved-array keys and allow_pickle=False; mocked worker rejects unexpected arrays and solver admission.",
+    "Candidate output hashes, source/input checks after execution, failure receipts and post-publication acceptance cap check."
+  ],
+  "findings": [
+    {
+      "finding": "Final acceptance publication could cross output byte/file caps after the last pre-publication check.",
+      "kind": "static finding repaired before independent reproduction",
+      "resolution": "Caller rechecks output after writing acceptance and forces failed status on an overrun.",
+      "controls": "Independent near-byte-cap and near-file-count boundary controls passed; output-closeout-controls-after-repair.txt records the first independent execution.",
+      "independent_failing_test_observed": false
+    },
+    {
+      "finding": "Owner atomic-publication fixture raised FileNotFoundError without ordinary ENOENT.",
+      "kind": "owner test setup failure, not product/native failure",
+      "resolution": "Owner corrected the fixture and retained its original log in the owner preparation directory."
+    }
+  ],
+  "limitations": [
+    "No actual candidate was generated; no new count, fidelity, quality, anatomy, solver or performance result is claimed.",
+    "Aggregate output and RSS are sampled, not atomic quotas or exact peaks; an overrun may be detected after it occurs.",
+    "Hard per-file limits apply in the child; parent failure metadata may remain after a cap failure, and an over-cap attempt cannot report success.",
+    "Selected runtime module/library hashes and package versions are checked; this is not complete dependency-binary attestation.",
+    "The retained estimated domain has known inferior/cerebellar exclusions and is not an accepted whole-brain or pial surface.",
+    "The 6000-node/6000-tet limit concerns mesh preparation only; it does not authorize or predict patient-solver memory or accuracy.",
+    "A committed source archive and a separate exact root release are required before any real attempt."
+  ],
+  "activity": {
+    "patient_array_reads": 0,
+    "native_runtime_imports": 0,
+    "native_generation_calls": 0,
+    "solver_calls": 0,
+    "inference_calls": 0,
+    "optimizer_updates": 0,
+    "commits": 0
+  }
+}

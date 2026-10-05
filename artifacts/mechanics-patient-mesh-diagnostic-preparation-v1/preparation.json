@@ -1,0 +1,55 @@
+{
+  "schema": "saved-mesh-diagnostic-preparation-v1",
+  "status": "source_frozen_analytical_controls_passed_no_execution",
+  "files": {
+    "scripts/mechanics_patient_mesh_diagnostic.py": "7f977dff17acbd4f4bc93e6f20b8ebc3a7f6d2b1affd64ccdacd7235986eb1de",
+    "tests/test_mechanics_patient_mesh_diagnostic.py": "f35702ebe1999912c46084b9bca033b79bf7c3c450fa96d75dff6491b5ab1077",
+    "tests/test_mechanics_patient_mesh_diagnostic_review.py": "46b568fbc4cccb7e2b8aa3b4eb16e059f9ff2d5f05cbbaf09bbf720f5d99fb1e",
+    "manifests/experiments/resect-case4-saved-mesh-diagnostic-v1.json": "c003aac7f72f87d2293cbe15a15f6ccfd6a9d04acfba1bb7baec757f7cbc37a2",
+    "docs/mechanics-patient-mesh-diagnostic.md": "8ee392def531b8f3804abd37858dd6c55e50f045101f36349340f74f5577f4a8",
+    "artifacts/mechanics-patient-mesh-diagnostic-preparation-v1/release-template.json": "37e7e8d87bbac2c361c5ac1eba7f3e1bdfbd54b540d54926ad9e91149b6c9e20",
+    "artifacts/mechanics-patient-mesh-diagnostic-preparation-v1/owner-controls-01.txt": "cbe1be7d5140d2f849ac6e21e13cbfe2e7948a739e2b6dbf0de700d3dd49db1c",
+    "artifacts/mechanics-patient-mesh-diagnostic-independent-review-v1/focused-tests.txt": "4ce1ebaa3c1830b0b6c1b675e76b540168e51235a7fd660bb4d04d022811631b"
+  },
+  "combined_controls": {
+    "passed": 24,
+    "elapsed_seconds": 0.42,
+    "command": ".venv/bin/python -B -m pytest -q tests/test_mechanics_patient_mesh_diagnostic.py tests/test_mechanics_patient_mesh_diagnostic_review.py",
+    "log": "artifacts/mechanics-patient-mesh-diagnostic-independent-review-v1/focused-tests.txt",
+    "scope": "Analytical/mocked controls; no raw saved arrays, VTK, Gmsh or solver."
+  },
+  "source_caps": {
+    "parent_seconds": 120,
+    "cooperative_seconds": 110,
+    "rss_bytes": 2147483648,
+    "numerical_threads": 1,
+    "maximum_distance_queries": 1200000,
+    "output_bytes": 8388608,
+    "attempts": 1,
+    "retries": 0
+  },
+  "pre_execution_repairs": [
+    {
+      "finding": "Durable acceptance could remain completed if its final publication exceeded output caps",
+      "repaired_before_independent_failure_reproduction": true
+    },
+    {
+      "finding": "Sequential VTK setting needed both return-value and backend confirmation",
+      "repaired_before_independent_failure_reproduction": true
+    }
+  ],
+  "new_data_access": {
+    "saved_geometry_arrays": false,
+    "image_or_mask": false,
+    "B_or_V": false,
+    "solver": false,
+    "mesher": false
+  },
+  "original_source_unchanged": {
+    "scripts/mechanics_patient_mesh.py": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+    "scripts/mechanics_patient_mesh_candidate.py": "ff4a64f1593a3384601e10f0ea33564769e46050d88e1432ca34f5d11d0771fe",
+    "scripts/mechanics_patient_mesh_candidate_run.py": "3eb34cb35cb1bfe41cf12cb55f7df35e61efe452eb747411c64b1b8ff87173bd"
+  },
+  "independent_receipt_expected": "artifacts/mechanics-patient-mesh-diagnostic-independent-review-v1/receipt.json",
+  "release_required": "Exact committed six-file source archive plus separate one-attempt root release. Current release-template authorized=false."
+}

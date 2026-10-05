@@ -1,0 +1,44 @@
+[
+  {
+    "actions": [
+      "REMOVE:patient-generic-suction:30,25,17",
+      "REMOVE:patient-generic-suction:29,25,17",
+      "REMOVE:patient-generic-suction:28,25,17",
+      "REMOVE:patient-generic-suction:27,25,17",
+      "REMOVE:patient-generic-suction:26,25,17",
+      "REMOVE:patient-generic-suction:25,25,17",
+      "REMOVE:patient-generic-suction:24,25,17",
+      "REMOVE:patient-generic-suction:23,25,17",
+      "STOP"
+    ],
+    "elapsed_seconds": 0.09889050002675503,
+    "environment_steps": 8,
+    "method": "GREEDY",
+    "nominal_score": 1473.0400000000004,
+    "observability": "nominal_evidence_only",
+    "optimizer_mode": "SEARCH",
+    "preparation_seconds": 0.21199637500103563,
+    "termination": "greedy_stop"
+  },
+  {
+    "actions": [
+      "REMOVE:patient-generic-suction:30,25,17",
+      "REMOVE:patient-generic-suction:29,25,17",
+      "REMOVE:patient-generic-suction:28,25,17",
+      "REMOVE:patient-generic-suction:27,25,17",
+      "REMOVE:patient-generic-suction:26,25,17",
+      "REMOVE:patient-generic-suction:25,25,17",
+      "REMOVE:patient-generic-suction:24,25,17",
+      "REMOVE:patient-generic-suction:23,25,17",
+      "STOP"
+    ],
+    "elapsed_seconds": 0.4802984580164775,
+    "environment_steps": 110,
+    "method": "SEARCH",
+    "nominal_score": 1473.0400000000004,
+    "observability": "nominal_evidence_only",
+    "optimizer_mode": "SEARCH",
+    "preparation_seconds": 0.22695645899511874,
+    "termination": "search_exhausted"
+  }
+]

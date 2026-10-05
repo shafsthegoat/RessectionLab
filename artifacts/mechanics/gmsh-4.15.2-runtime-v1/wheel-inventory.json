@@ -1,0 +1,3610 @@
+{
+  "member_count": 450,
+  "uncompressed_bytes": 97904552,
+  "duplicate_paths": false,
+  "unsafe_paths": false,
+  "symlinks": false,
+  "encrypted_members": false,
+  "members": [
+    {
+      "path": "gmsh-4.15.2.data/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000",
+      "unix_mode": "0o40755",
+      "directory": true
+    },
+    {
+      "path": "gmsh-4.15.2.dist-info/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000",
+      "unix_mode": "0o40755",
+      "directory": true
+    },
+    {
+      "path": "gmsh.py",
+      "bytes": 427222,
+      "compressed_bytes": 54911,
+      "crc32": "7e815793",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000",
+      "unix_mode": "0o40755",
+      "directory": true
+    },
+    {
+      "path": "gmsh-4.15.2.data/scripts/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000",
+      "unix_mode": "0o40755",
+      "directory": true
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/include/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000",
+      "unix_mode": "0o40755",
+      "directory": true
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/lib/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000",
+      "unix_mode": "0o40755",
+      "directory": true
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000",
+      "unix_mode": "0o40755",
+      "directory": true
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/lib/libgmsh.4.15.dylib",
+      "bytes": 82659384,
+      "compressed_bytes": 30951456,
+      "crc32": "65ca6ba0",
+      "unix_mode": "0o100755",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/lib/gmsh.jl",
+      "bytes": 362535,
+      "compressed_bytes": 52359,
+      "crc32": "ccc8443b",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000",
+      "unix_mode": "0o40755",
+      "directory": true
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/gmsh/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000",
+      "unix_mode": "0o40755",
+      "directory": true
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/man/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000",
+      "unix_mode": "0o40755",
+      "directory": true
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000",
+      "unix_mode": "0o40755",
+      "directory": true
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000",
+      "unix_mode": "0o40755",
+      "directory": true
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000",
+      "unix_mode": "0o40755",
+      "directory": true
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000",
+      "unix_mode": "0o40755",
+      "directory": true
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/CHANGELOG.txt",
+      "bytes": 64976,
+      "compressed_bytes": 21651,
+      "crc32": "1ece718a",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/CREDITS.txt",
+      "bytes": 12480,
+      "compressed_bytes": 5426,
+      "crc32": "9a0890e9",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/LICENSE.txt",
+      "bytes": 19098,
+      "compressed_bytes": 7220,
+      "crc32": "1026eb10",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/README.txt",
+      "bytes": 430,
+      "compressed_bytes": 273,
+      "crc32": "77d0b825",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000",
+      "unix_mode": "0o40755",
+      "directory": true
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000",
+      "unix_mode": "0o40755",
+      "directory": true
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/post_processing/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000",
+      "unix_mode": "0o40755",
+      "directory": true
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000",
+      "unix_mode": "0o40755",
+      "directory": true
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/struct/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000",
+      "unix_mode": "0o40755",
+      "directory": true
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/CMakeLists.txt",
+      "bytes": 3879,
+      "compressed_bytes": 1324,
+      "crc32": "7aa452ca",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/README.txt",
+      "bytes": 343,
+      "compressed_bytes": 223,
+      "crc32": "782b154e",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/adapt_mesh.cpp",
+      "bytes": 11024,
+      "compressed_bytes": 2883,
+      "crc32": "99140c52",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/adapt_mesh.py",
+      "bytes": 4906,
+      "compressed_bytes": 1619,
+      "crc32": "27611301",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/aneurysm.py",
+      "bytes": 2249,
+      "compressed_bytes": 924,
+      "crc32": "c2567075",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/aneurysm_data.stl",
+      "bytes": 5476381,
+      "compressed_bytes": 994715,
+      "crc32": "93506ec4",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/as1-tu-203.stp",
+      "bytes": 142057,
+      "compressed_bytes": 27403,
+      "crc32": "cb9136b7",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/bgmesh.pos",
+      "bytes": 161572,
+      "compressed_bytes": 38856,
+      "crc32": "50cd43a5",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/boolean.cpp",
+      "bytes": 1289,
+      "compressed_bytes": 514,
+      "crc32": "79e15228",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/boolean.py",
+      "bytes": 993,
+      "compressed_bytes": 422,
+      "crc32": "c7962db4",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/bspline_bezier_patches.py",
+      "bytes": 2321,
+      "compressed_bytes": 583,
+      "crc32": "36668d75",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/bspline_bezier_trimmed.py",
+      "bytes": 1289,
+      "compressed_bytes": 398,
+      "crc32": "d880113f",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/bspline_filling.py",
+      "bytes": 1499,
+      "compressed_bytes": 515,
+      "crc32": "0015c11a",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/circle_arc.py",
+      "bytes": 379,
+      "compressed_bytes": 194,
+      "crc32": "a145289b",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/closest_point.py",
+      "bytes": 523,
+      "compressed_bytes": 274,
+      "crc32": "4e71b83e",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/copy_mesh.py",
+      "bytes": 2075,
+      "compressed_bytes": 860,
+      "crc32": "be46d656",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/crack.py",
+      "bytes": 1339,
+      "compressed_bytes": 588,
+      "crc32": "69f2ec66",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/crack3d.py",
+      "bytes": 1352,
+      "compressed_bytes": 636,
+      "crc32": "39c92237",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/custom_gui.cpp",
+      "bytes": 4593,
+      "compressed_bytes": 1663,
+      "crc32": "b4f5d52d",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/custom_gui.py",
+      "bytes": 4378,
+      "compressed_bytes": 1553,
+      "crc32": "0a4a678a",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/cylinderFFD.py",
+      "bytes": 4472,
+      "compressed_bytes": 1490,
+      "crc32": "be0a4cc3",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/discrete.cpp",
+      "bytes": 973,
+      "compressed_bytes": 367,
+      "crc32": "ac269ef1",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/discrete.jl",
+      "bytes": 896,
+      "compressed_bytes": 341,
+      "crc32": "e6a72ea4",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/discrete.py",
+      "bytes": 851,
+      "compressed_bytes": 338,
+      "crc32": "08a212e6",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/edges.cpp",
+      "bytes": 4243,
+      "compressed_bytes": 1461,
+      "crc32": "0964df96",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/explore.cpp",
+      "bytes": 2412,
+      "compressed_bytes": 804,
+      "crc32": "a3eefc2b",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/explore.jl",
+      "bytes": 1234,
+      "compressed_bytes": 493,
+      "crc32": "a33ff1e6",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/explore.py",
+      "bytes": 1640,
+      "compressed_bytes": 593,
+      "crc32": "2b42bdd8",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/extend_field.py",
+      "bytes": 1292,
+      "compressed_bytes": 485,
+      "crc32": "83e704a2",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/faces.cpp",
+      "bytes": 4247,
+      "compressed_bytes": 1468,
+      "crc32": "54043baf",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/flatten.py",
+      "bytes": 1322,
+      "compressed_bytes": 566,
+      "crc32": "74141379",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/flatten2.py",
+      "bytes": 621,
+      "compressed_bytes": 332,
+      "crc32": "da22f5e5",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/fractures.py",
+      "bytes": 1033,
+      "compressed_bytes": 480,
+      "crc32": "a0ac0a10",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/fragment_surfaces.cpp",
+      "bytes": 576,
+      "compressed_bytes": 279,
+      "crc32": "2ba49fbe",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/get_data_perf.cpp",
+      "bytes": 1191,
+      "compressed_bytes": 514,
+      "crc32": "d5a90c6e",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/get_data_perf.py",
+      "bytes": 847,
+      "compressed_bytes": 423,
+      "crc32": "f59c4ceb",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/glue_and_remesh_stl.py",
+      "bytes": 1610,
+      "compressed_bytes": 739,
+      "crc32": "f519473b",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/gui.cpp",
+      "bytes": 1555,
+      "compressed_bytes": 661,
+      "crc32": "45b1034c",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/gui.jl",
+      "bytes": 1164,
+      "compressed_bytes": 533,
+      "crc32": "30f424f7",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/gui.py",
+      "bytes": 1310,
+      "compressed_bytes": 595,
+      "crc32": "275f0375",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/heal.py",
+      "bytes": 290,
+      "compressed_bytes": 177,
+      "crc32": "8a2565f8",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/hex.py",
+      "bytes": 553,
+      "compressed_bytes": 291,
+      "crc32": "b6bbca69",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/hybrid_order.py",
+      "bytes": 573,
+      "compressed_bytes": 294,
+      "crc32": "ec932a25",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/import_perf.c",
+      "bytes": 2678,
+      "compressed_bytes": 791,
+      "crc32": "a11e3fb7",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/import_perf.cpp",
+      "bytes": 2507,
+      "compressed_bytes": 748,
+      "crc32": "46447530",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/import_perf.jl",
+      "bytes": 2279,
+      "compressed_bytes": 663,
+      "crc32": "fbd33236",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/import_perf.py",
+      "bytes": 2861,
+      "compressed_bytes": 826,
+      "crc32": "bc70f037",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/julia_exception.jl",
+      "bytes": 449,
+      "compressed_bytes": 239,
+      "crc32": "3d4da0b3",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/mesh_from_discrete_curve.py",
+      "bytes": 882,
+      "compressed_bytes": 425,
+      "crc32": "ee5fb9b4",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/mesh_quality.py",
+      "bytes": 702,
+      "compressed_bytes": 369,
+      "crc32": "77e75c6a",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/min_edge.py",
+      "bytes": 296,
+      "compressed_bytes": 171,
+      "crc32": "35905709",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/mirror_mesh.py",
+      "bytes": 2191,
+      "compressed_bytes": 821,
+      "crc32": "be5253c7",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/msh_attributes.py",
+      "bytes": 513,
+      "compressed_bytes": 234,
+      "crc32": "0d0314e6",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/multi_process.py",
+      "bytes": 625,
+      "compressed_bytes": 358,
+      "crc32": "34cc0043",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/multi_thread.py",
+      "bytes": 511,
+      "compressed_bytes": 303,
+      "crc32": "8cfc73b4",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/naca_boundary_layer_2d.py",
+      "bytes": 5806,
+      "compressed_bytes": 2139,
+      "crc32": "c1f50b59",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/naca_boundary_layer_3d.py",
+      "bytes": 6809,
+      "compressed_bytes": 2503,
+      "crc32": "755adbd5",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/neighbors.py",
+      "bytes": 986,
+      "compressed_bytes": 463,
+      "crc32": "2b906ae2",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/normals.py",
+      "bytes": 1527,
+      "compressed_bytes": 578,
+      "crc32": "43b15726",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/object.stl",
+      "bytes": 188340,
+      "compressed_bytes": 21719,
+      "crc32": "30ca0a9b",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/ocean.py",
+      "bytes": 254108,
+      "compressed_bytes": 46756,
+      "crc32": "71c50862",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/onelab_run.py",
+      "bytes": 1161,
+      "compressed_bytes": 606,
+      "crc32": "4b30040c",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/onelab_run_auto.c",
+      "bytes": 940,
+      "compressed_bytes": 383,
+      "crc32": "b1359340",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/onelab_run_auto.cpp",
+      "bytes": 403,
+      "compressed_bytes": 226,
+      "crc32": "47a4b6c6",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/onelab_run_auto.py",
+      "bytes": 978,
+      "compressed_bytes": 508,
+      "crc32": "a90df01f",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/onelab_test.jl",
+      "bytes": 1149,
+      "compressed_bytes": 528,
+      "crc32": "895e1239",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/onelab_test.py",
+      "bytes": 1139,
+      "compressed_bytes": 505,
+      "crc32": "3256b3b4",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/open.cpp",
+      "bytes": 371,
+      "compressed_bytes": 224,
+      "crc32": "cf1375c1",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/open.py",
+      "bytes": 255,
+      "compressed_bytes": 163,
+      "crc32": "79dbaf25",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/opt.py",
+      "bytes": 348,
+      "compressed_bytes": 212,
+      "crc32": "1583804d",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/parametric_surface.py",
+      "bytes": 794,
+      "compressed_bytes": 359,
+      "crc32": "45e3b862",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/partition.cpp",
+      "bytes": 2867,
+      "compressed_bytes": 1096,
+      "crc32": "387d517d",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/partition.py",
+      "bytes": 1899,
+      "compressed_bytes": 799,
+      "crc32": "bc5df401",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/periodic.py",
+      "bytes": 683,
+      "compressed_bytes": 291,
+      "crc32": "183fd7c2",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/pipe.py",
+      "bytes": 1021,
+      "compressed_bytes": 454,
+      "crc32": "f1364573",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/plugin.cpp",
+      "bytes": 1822,
+      "compressed_bytes": 712,
+      "crc32": "1057333a",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/plugin.py",
+      "bytes": 1113,
+      "compressed_bytes": 506,
+      "crc32": "9f7dd0fc",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/poisson.py",
+      "bytes": 10625,
+      "compressed_bytes": 3204,
+      "crc32": "455fabb8",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/prepro.py",
+      "bytes": 7570,
+      "compressed_bytes": 2409,
+      "crc32": "f1c02f47",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/prim_axis.py",
+      "bytes": 924,
+      "compressed_bytes": 301,
+      "crc32": "0ba908e1",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/raw_tetrahedralization.cpp",
+      "bytes": 988,
+      "compressed_bytes": 472,
+      "crc32": "6ee25c7e",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/raw_tetrahedralization.py",
+      "bytes": 520,
+      "compressed_bytes": 307,
+      "crc32": "fec36f00",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/raw_triangulation.py",
+      "bytes": 529,
+      "compressed_bytes": 315,
+      "crc32": "2387d1d7",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/relocate_nodes.py",
+      "bytes": 1570,
+      "compressed_bytes": 589,
+      "crc32": "f4564ac2",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/remesh_cavity.py",
+      "bytes": 3052,
+      "compressed_bytes": 1124,
+      "crc32": "5e9e84d1",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/remesh_partial_move.py",
+      "bytes": 1233,
+      "compressed_bytes": 540,
+      "crc32": "7009cb74",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/remesh_stl.py",
+      "bytes": 1105,
+      "compressed_bytes": 525,
+      "crc32": "fdc3d6b7",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/remove_elements.py",
+      "bytes": 1064,
+      "compressed_bytes": 448,
+      "crc32": "b64a846c",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/renumbering.py",
+      "bytes": 788,
+      "compressed_bytes": 246,
+      "crc32": "e86c9547",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/reparamOnFace.py",
+      "bytes": 778,
+      "compressed_bytes": 411,
+      "crc32": "d5deb9b2",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/select_elements.py",
+      "bytes": 370,
+      "compressed_bytes": 229,
+      "crc32": "6e237ec9",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/simple.c",
+      "bytes": 803,
+      "compressed_bytes": 318,
+      "crc32": "088efc28",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/simple.cpp",
+      "bytes": 715,
+      "compressed_bytes": 275,
+      "crc32": "65406188",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/simple.py",
+      "bytes": 593,
+      "compressed_bytes": 241,
+      "crc32": "0b197aba",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/spherical_surf.jl",
+      "bytes": 507,
+      "compressed_bytes": 250,
+      "crc32": "80219bea",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/spherical_surf.py",
+      "bytes": 574,
+      "compressed_bytes": 269,
+      "crc32": "74e9ced0",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/spline.cpp",
+      "bytes": 1569,
+      "compressed_bytes": 557,
+      "crc32": "0ec1bb97",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/spline.py",
+      "bytes": 1546,
+      "compressed_bytes": 507,
+      "crc32": "a8cc6dee",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/split_window.py",
+      "bytes": 1545,
+      "compressed_bytes": 580,
+      "crc32": "50447643",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/square.cpp",
+      "bytes": 479,
+      "compressed_bytes": 250,
+      "crc32": "5a13e4c1",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/square.geo",
+      "bytes": 124,
+      "compressed_bytes": 100,
+      "crc32": "b1c83fed",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/step_assembly.py",
+      "bytes": 1255,
+      "compressed_bytes": 612,
+      "crc32": "26bd58bf",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/step_boundary_colors.py",
+      "bytes": 307,
+      "compressed_bytes": 194,
+      "crc32": "a882f6ad",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/step_boundary_colors.stp",
+      "bytes": 10442,
+      "compressed_bytes": 2810,
+      "crc32": "2ac41117",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/step_header_data.py",
+      "bytes": 738,
+      "compressed_bytes": 313,
+      "crc32": "f65e9d1f",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/step_header_data.stp",
+      "bytes": 4031,
+      "compressed_bytes": 1407,
+      "crc32": "5213a9ad",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/stl_to_brep.py",
+      "bytes": 1971,
+      "compressed_bytes": 829,
+      "crc32": "674f5d3d",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/stl_to_mesh.py",
+      "bytes": 919,
+      "compressed_bytes": 398,
+      "crc32": "184149ea",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/surface1.stl",
+      "bytes": 15411,
+      "compressed_bytes": 2444,
+      "crc32": "c3250a56",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/surface2.stl",
+      "bytes": 16407,
+      "compressed_bytes": 2608,
+      "crc32": "b06d64e2",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/surface_filling.py",
+      "bytes": 1162,
+      "compressed_bytes": 439,
+      "crc32": "0beb66d3",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/terrain.py",
+      "bytes": 5830,
+      "compressed_bytes": 1847,
+      "crc32": "f693b1f9",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/terrain_bspline.jl",
+      "bytes": 1981,
+      "compressed_bytes": 786,
+      "crc32": "e8f59d7f",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/terrain_bspline.py",
+      "bytes": 1953,
+      "compressed_bytes": 795,
+      "crc32": "aa4da3f7",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/terrain_stl.py",
+      "bytes": 2932,
+      "compressed_bytes": 1093,
+      "crc32": "6813b882",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/terrain_stl_data.stl",
+      "bytes": 617221,
+      "compressed_bytes": 135752,
+      "crc32": "d11775df",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/test.c",
+      "bytes": 3193,
+      "compressed_bytes": 975,
+      "crc32": "afb263e0",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/test.py",
+      "bytes": 1651,
+      "compressed_bytes": 591,
+      "crc32": "1fae626a",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/torus_bspline.py",
+      "bytes": 12722,
+      "compressed_bytes": 2999,
+      "crc32": "60a90830",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/trimmed.py",
+      "bytes": 899,
+      "compressed_bytes": 389,
+      "crc32": "8ca4eed6",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/tube_boundary_layer.py",
+      "bytes": 1738,
+      "compressed_bytes": 761,
+      "crc32": "376dedd6",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/view.cpp",
+      "bytes": 827,
+      "compressed_bytes": 396,
+      "crc32": "4059559c",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/view.py",
+      "bytes": 750,
+      "compressed_bytes": 361,
+      "crc32": "6da38192",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/view_adaptive_to_mesh.py",
+      "bytes": 3072,
+      "compressed_bytes": 948,
+      "crc32": "10c003fa",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/view_combine.py",
+      "bytes": 645,
+      "compressed_bytes": 288,
+      "crc32": "63e9f804",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/view_element_size.py",
+      "bytes": 645,
+      "compressed_bytes": 325,
+      "crc32": "89e20e60",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/view_list_isoparametric.py",
+      "bytes": 1957,
+      "compressed_bytes": 856,
+      "crc32": "1a236d46",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/view_list_subparametric.py",
+      "bytes": 2160,
+      "compressed_bytes": 922,
+      "crc32": "ae394a7e",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/view_list_superparametric.py",
+      "bytes": 2184,
+      "compressed_bytes": 933,
+      "crc32": "9478ae7f",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/view_renumbering.py",
+      "bytes": 1086,
+      "compressed_bytes": 476,
+      "crc32": "6e9c97f7",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/viewlist.cpp",
+      "bytes": 720,
+      "compressed_bytes": 297,
+      "crc32": "4d68b31f",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/viewlist.py",
+      "bytes": 442,
+      "compressed_bytes": 206,
+      "crc32": "b7894d08",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/volume.py",
+      "bytes": 499,
+      "compressed_bytes": 267,
+      "crc32": "356e77fe",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/api/x3d_export.py",
+      "bytes": 979,
+      "compressed_bytes": 442,
+      "crc32": "253ff9ea",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/as1-tu-203.stp",
+      "bytes": 142057,
+      "compressed_bytes": 27403,
+      "crc32": "cb9136b7",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/baffles.geo",
+      "bytes": 466,
+      "compressed_bytes": 219,
+      "crc32": "ed11a042",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/boolean.geo",
+      "bytes": 820,
+      "compressed_bytes": 382,
+      "crc32": "d4261046",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/chamfer.geo",
+      "bytes": 133,
+      "compressed_bytes": 102,
+      "crc32": "af703f0a",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/coherence.geo",
+      "bytes": 935,
+      "compressed_bytes": 318,
+      "crc32": "e1c1c41a",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/component8.step",
+      "bytes": 66643,
+      "compressed_bytes": 13979,
+      "crc32": "ee73f9b3",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/compsolid.geo",
+      "bytes": 1110,
+      "compressed_bytes": 407,
+      "crc32": "aba8433d",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/compsolid2.geo",
+      "bytes": 686,
+      "compressed_bytes": 384,
+      "crc32": "1e456f6b",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/cylinder_with_hole.geo",
+      "bytes": 461,
+      "compressed_bytes": 242,
+      "crc32": "de80ee40",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/extend_field.geo",
+      "bytes": 1385,
+      "compressed_bytes": 548,
+      "crc32": "0b980434",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/extrude.geo",
+      "bytes": 975,
+      "compressed_bytes": 456,
+      "crc32": "0737cc12",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/extrude2.geo",
+      "bytes": 722,
+      "compressed_bytes": 349,
+      "crc32": "a115d618",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/fillet.geo",
+      "bytes": 193,
+      "compressed_bytes": 145,
+      "crc32": "48fc73b6",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/fillet2.geo",
+      "bytes": 208,
+      "compressed_bytes": 153,
+      "crc32": "598882c3",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/fillet3.geo",
+      "bytes": 768,
+      "compressed_bytes": 347,
+      "crc32": "dacfe42e",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/fillet4.geo",
+      "bytes": 140,
+      "compressed_bytes": 104,
+      "crc32": "1c3905f5",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/fillet_chamfer.geo",
+      "bytes": 151,
+      "compressed_bytes": 113,
+      "crc32": "a6ac8241",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/fleur.geo",
+      "bytes": 559,
+      "compressed_bytes": 314,
+      "crc32": "dd9e7229",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/fragment_numbering.geo",
+      "bytes": 886,
+      "compressed_bytes": 461,
+      "crc32": "ccfedd74",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/full_quad.geo",
+      "bytes": 1334,
+      "compressed_bytes": 665,
+      "crc32": "b8df5359",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/hybrid_occ_builtin.geo",
+      "bytes": 1054,
+      "compressed_bytes": 471,
+      "crc32": "ba545e53",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/hyperboloid.geo",
+      "bytes": 1235,
+      "compressed_bytes": 567,
+      "crc32": "0f062d50",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/import.geo",
+      "bytes": 588,
+      "compressed_bytes": 370,
+      "crc32": "e071cb45",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/import2.geo",
+      "bytes": 432,
+      "compressed_bytes": 292,
+      "crc32": "534d05a5",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/intersect_line_volume.geo",
+      "bytes": 992,
+      "compressed_bytes": 460,
+      "crc32": "10c60157",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/mesh_size_per_volume.geo",
+      "bytes": 841,
+      "compressed_bytes": 446,
+      "crc32": "cd9b0f9e",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/neuron.geo",
+      "bytes": 2178,
+      "compressed_bytes": 909,
+      "crc32": "5e51255d",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/number_of_tets.geo",
+      "bytes": 383,
+      "compressed_bytes": 233,
+      "crc32": "df1ebc27",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/periodic.geo",
+      "bytes": 676,
+      "compressed_bytes": 350,
+      "crc32": "827c73aa",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/periodic_embedded.geo",
+      "bytes": 416,
+      "compressed_bytes": 195,
+      "crc32": "1515d6b7",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/pipe.geo",
+      "bytes": 607,
+      "compressed_bytes": 370,
+      "crc32": "1a1aa01e",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/primitives.geo",
+      "bytes": 2537,
+      "compressed_bytes": 557,
+      "crc32": "f765c35b",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/revolve.geo",
+      "bytes": 748,
+      "compressed_bytes": 362,
+      "crc32": "6792b43a",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/revolve2.geo",
+      "bytes": 764,
+      "compressed_bytes": 373,
+      "crc32": "e43eef4d",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/shell_sewing.geo",
+      "bytes": 370,
+      "compressed_bytes": 215,
+      "crc32": "523b7a2f",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/simple.geo",
+      "bytes": 256,
+      "compressed_bytes": 145,
+      "crc32": "625f78be",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/simple2.geo",
+      "bytes": 491,
+      "compressed_bytes": 215,
+      "crc32": "4a6060e7",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/simple3.geo",
+      "bytes": 592,
+      "compressed_bytes": 270,
+      "crc32": "f1ff1822",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/simple4.geo",
+      "bytes": 717,
+      "compressed_bytes": 294,
+      "crc32": "cc5bdd25",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/simple5.geo",
+      "bytes": 337,
+      "compressed_bytes": 224,
+      "crc32": "d81c5c9e",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/simple6.geo",
+      "bytes": 290,
+      "compressed_bytes": 161,
+      "crc32": "f80853f6",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/simple7.geo",
+      "bytes": 292,
+      "compressed_bytes": 164,
+      "crc32": "e8839a4e",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/slicer.geo",
+      "bytes": 1317,
+      "compressed_bytes": 626,
+      "crc32": "dd3250c8",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/slicer_surfaces.geo",
+      "bytes": 1338,
+      "compressed_bytes": 603,
+      "crc32": "351ad8a0",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/spherical_surf.geo",
+      "bytes": 283,
+      "compressed_bytes": 174,
+      "crc32": "583da6dd",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/spline.geo",
+      "bytes": 857,
+      "compressed_bytes": 399,
+      "crc32": "53d8f3e1",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/step_assembly.geo",
+      "bytes": 1334,
+      "compressed_bytes": 523,
+      "crc32": "93f6f1bf",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/surface_filling.geo",
+      "bytes": 799,
+      "compressed_bytes": 356,
+      "crc32": "35afc069",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/symmetry_test_occ_builtin.geo",
+      "bytes": 467,
+      "compressed_bytes": 232,
+      "crc32": "65009a7b",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/thicksolid.geo",
+      "bytes": 191,
+      "compressed_bytes": 145,
+      "crc32": "7cd54d1b",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/thrusections.geo",
+      "bytes": 1124,
+      "compressed_bytes": 349,
+      "crc32": "d248b8b3",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/transfinite.geo",
+      "bytes": 606,
+      "compressed_bytes": 329,
+      "crc32": "71cdcf0d",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/transform.geo",
+      "bytes": 1079,
+      "compressed_bytes": 359,
+      "crc32": "2ffc848a",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/boolean/twist.geo",
+      "bytes": 959,
+      "compressed_bytes": 475,
+      "crc32": "bffffc92",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/post_processing/anim.script",
+      "bytes": 2281,
+      "compressed_bytes": 761,
+      "crc32": "c3a26ef9",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/post_processing/compute_area_volume.geo",
+      "bytes": 1096,
+      "compressed_bytes": 445,
+      "crc32": "5cc63418",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/post_processing/encode.script",
+      "bytes": 2529,
+      "compressed_bytes": 822,
+      "crc32": "6bfcd2eb",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/post_processing/isosurf.script",
+      "bytes": 609,
+      "compressed_bytes": 312,
+      "crc32": "0695321f",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/post_processing/lowmem-anim.geo",
+      "bytes": 439,
+      "compressed_bytes": 287,
+      "crc32": "84e126ac",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/post_processing/multislice.script",
+      "bytes": 2525,
+      "compressed_bytes": 580,
+      "crc32": "3af567bc",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/post_processing/plot2d.geo",
+      "bytes": 217,
+      "compressed_bytes": 129,
+      "crc32": "40bf8b4f",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/post_processing/primitives.pos",
+      "bytes": 3144,
+      "compressed_bytes": 598,
+      "crc32": "c411bc84",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/post_processing/right_scale_centered.geo",
+      "bytes": 639,
+      "compressed_bytes": 287,
+      "crc32": "25f25809",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/post_processing/rotate.script",
+      "bytes": 1409,
+      "compressed_bytes": 574,
+      "crc32": "1b40b56d",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/post_processing/title.script",
+      "bytes": 1743,
+      "compressed_bytes": 668,
+      "crc32": "90d86ed9",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/post_processing/view_groups.geo",
+      "bytes": 701,
+      "compressed_bytes": 306,
+      "crc32": "56dca2d3",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/antenna.geo",
+      "bytes": 8588,
+      "compressed_bytes": 2610,
+      "crc32": "d3909836",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/antenna.i1",
+      "bytes": 2586,
+      "compressed_bytes": 595,
+      "crc32": "88d4ba34",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/cone.geo",
+      "bytes": 378,
+      "compressed_bytes": 153,
+      "crc32": "39890c58",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/cube.geo",
+      "bytes": 310,
+      "compressed_bytes": 167,
+      "crc32": "faab127e",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/filter.geo",
+      "bytes": 11767,
+      "compressed_bytes": 3310,
+      "crc32": "88997265",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/hex.geo",
+      "bytes": 2253,
+      "compressed_bytes": 814,
+      "crc32": "2d94d627",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/homology.geo",
+      "bytes": 4092,
+      "compressed_bytes": 1226,
+      "crc32": "39ae7bd3",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/indheat.geo",
+      "bytes": 4308,
+      "compressed_bytes": 1387,
+      "crc32": "18f63ef0",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/machine.geo",
+      "bytes": 5067,
+      "compressed_bytes": 1811,
+      "crc32": "42b4c9f4",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/machine.i1",
+      "bytes": 1665,
+      "compressed_bytes": 650,
+      "crc32": "b1d4accd",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/machine.i2",
+      "bytes": 1183,
+      "compressed_bytes": 471,
+      "crc32": "495e0f2e",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/piece-extr-rec.geo",
+      "bytes": 2101,
+      "compressed_bytes": 804,
+      "crc32": "d84530ea",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/piece-extr.geo",
+      "bytes": 2040,
+      "compressed_bytes": 790,
+      "crc32": "567059b3",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/piece.geo",
+      "bytes": 1827,
+      "compressed_bytes": 701,
+      "crc32": "bd962c92",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/pripyrtet.geo",
+      "bytes": 380,
+      "compressed_bytes": 222,
+      "crc32": "505c5685",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/sphere-discrete.geo",
+      "bytes": 269,
+      "compressed_bytes": 195,
+      "crc32": "4f50c9d9",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/sphere-surf.stl",
+      "bytes": 119425,
+      "compressed_bytes": 16238,
+      "crc32": "b8af5ec9",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/sphere.geo",
+      "bytes": 992,
+      "compressed_bytes": 353,
+      "crc32": "96b3eafc",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/splines.geo",
+      "bytes": 1475,
+      "compressed_bytes": 385,
+      "crc32": "b95db4b3",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/square_regular.geo",
+      "bytes": 307,
+      "compressed_bytes": 170,
+      "crc32": "5c3b0cc4",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/tower.geo",
+      "bytes": 1231,
+      "compressed_bytes": 432,
+      "crc32": "9bbb7e72",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/tower.i1",
+      "bytes": 2692,
+      "compressed_bytes": 788,
+      "crc32": "fb586b5a",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/tower.i2",
+      "bytes": 5015,
+      "compressed_bytes": 1238,
+      "crc32": "8091bc89",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/tower.i3",
+      "bytes": 1231,
+      "compressed_bytes": 280,
+      "crc32": "fa50cdfa",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/tower.i4",
+      "bytes": 181,
+      "compressed_bytes": 61,
+      "crc32": "30fa2e97",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/tower.i5",
+      "bytes": 181,
+      "compressed_bytes": 69,
+      "crc32": "990d8165",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/simple_geo/transfinite.geo",
+      "bytes": 3190,
+      "compressed_bytes": 1166,
+      "crc32": "18282a94",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/struct/Exists_GetForced.geo",
+      "bytes": 2557,
+      "compressed_bytes": 767,
+      "crc32": "4ae25b97",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/examples/struct/struct.geo",
+      "bytes": 4732,
+      "compressed_bytes": 1770,
+      "crc32": "018f5cfc",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/gui.png",
+      "bytes": 70130,
+      "compressed_bytes": 55103,
+      "crc32": "9410470a",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/gui_add_rectangle.png",
+      "bytes": 279272,
+      "compressed_bytes": 271092,
+      "crc32": "c1440485",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/gui_mesh.png",
+      "bytes": 449005,
+      "compressed_bytes": 440401,
+      "crc32": "890401d6",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/t1.png",
+      "bytes": 20769,
+      "compressed_bytes": 19187,
+      "crc32": "aeb2998d",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/t10.png",
+      "bytes": 48854,
+      "compressed_bytes": 47324,
+      "crc32": "845dae39",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/t11.png",
+      "bytes": 41434,
+      "compressed_bytes": 40431,
+      "crc32": "b622d4ed",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/t12.png",
+      "bytes": 83380,
+      "compressed_bytes": 81760,
+      "crc32": "e8776f40",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/t13.png",
+      "bytes": 169280,
+      "compressed_bytes": 167786,
+      "crc32": "f8f3bc27",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/t14.png",
+      "bytes": 222565,
+      "compressed_bytes": 220070,
+      "crc32": "ffc3f73e",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/t15.png",
+      "bytes": 18291,
+      "compressed_bytes": 16951,
+      "crc32": "2995c694",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/t16.png",
+      "bytes": 38973,
+      "compressed_bytes": 37821,
+      "crc32": "13d04123",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/t17.png",
+      "bytes": 76538,
+      "compressed_bytes": 74102,
+      "crc32": "8531ee87",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/t18.png",
+      "bytes": 48207,
+      "compressed_bytes": 47060,
+      "crc32": "233cee5c",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/t19.png",
+      "bytes": 99185,
+      "compressed_bytes": 96822,
+      "crc32": "927eadb1",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/t2.png",
+      "bytes": 34013,
+      "compressed_bytes": 32204,
+      "crc32": "946502a6",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/t20.png",
+      "bytes": 107768,
+      "compressed_bytes": 106432,
+      "crc32": "c2bf9498",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/t21.png",
+      "bytes": 49024,
+      "compressed_bytes": 47811,
+      "crc32": "6b825958",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/t3.png",
+      "bytes": 135073,
+      "compressed_bytes": 133394,
+      "crc32": "ebe316d1",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/t4.png",
+      "bytes": 36716,
+      "compressed_bytes": 35003,
+      "crc32": "5a1b99f3",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/t5.png",
+      "bytes": 39424,
+      "compressed_bytes": 38421,
+      "crc32": "8166afee",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/t6.png",
+      "bytes": 23599,
+      "compressed_bytes": 21849,
+      "crc32": "e20f0750",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/t7.png",
+      "bytes": 86470,
+      "compressed_bytes": 83664,
+      "crc32": "fd5fb0a5",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/t8.png",
+      "bytes": 78402,
+      "compressed_bytes": 73936,
+      "crc32": "3a67c4e0",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/t9.png",
+      "bytes": 106482,
+      "compressed_bytes": 104100,
+      "crc32": "c9a831fc",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/x1.png",
+      "bytes": 48872,
+      "compressed_bytes": 46396,
+      "crc32": "1dde10eb",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/x2.png",
+      "bytes": 133750,
+      "compressed_bytes": 132135,
+      "crc32": "70a067fa",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/x3.png",
+      "bytes": 62615,
+      "compressed_bytes": 58641,
+      "crc32": "941ae859",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/x4.png",
+      "bytes": 234982,
+      "compressed_bytes": 232836,
+      "crc32": "504ddea8",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/x5.png",
+      "bytes": 162114,
+      "compressed_bytes": 160478,
+      "crc32": "f3fe2d97",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/images/x7.png",
+      "bytes": 23367,
+      "compressed_bytes": 22511,
+      "crc32": "fd2a2f4a",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000",
+      "unix_mode": "0o40755",
+      "directory": true
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000",
+      "unix_mode": "0o40755",
+      "directory": true
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/fortran/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000",
+      "unix_mode": "0o40755",
+      "directory": true
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000",
+      "unix_mode": "0o40755",
+      "directory": true
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000",
+      "unix_mode": "0o40755",
+      "directory": true
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/README.txt",
+      "bytes": 3212,
+      "compressed_bytes": 1455,
+      "crc32": "f564b097",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t1.geo",
+      "bytes": 6079,
+      "compressed_bytes": 2527,
+      "crc32": "fa304519",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t10.geo",
+      "bytes": 4501,
+      "compressed_bytes": 1800,
+      "crc32": "65d6c26b",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t11.geo",
+      "bytes": 3039,
+      "compressed_bytes": 1332,
+      "crc32": "2d96d653",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t12.geo",
+      "bytes": 2717,
+      "compressed_bytes": 1066,
+      "crc32": "d61d1ec5",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t13.geo",
+      "bytes": 2727,
+      "compressed_bytes": 1255,
+      "crc32": "7a44cb4c",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t13_data.stl",
+      "bytes": 263275,
+      "compressed_bytes": 22859,
+      "crc32": "66f57a0e",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t14.geo",
+      "bytes": 2650,
+      "compressed_bytes": 973,
+      "crc32": "0deaae66",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t15.geo",
+      "bytes": 2328,
+      "compressed_bytes": 904,
+      "crc32": "856a8079",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t16.geo",
+      "bytes": 3625,
+      "compressed_bytes": 1577,
+      "crc32": "f07d9908",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t17.geo",
+      "bytes": 911,
+      "compressed_bytes": 438,
+      "crc32": "dfe20093",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t17_bgmesh.pos",
+      "bytes": 250761,
+      "compressed_bytes": 44445,
+      "crc32": "23aba6f6",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t18.geo",
+      "bytes": 3684,
+      "compressed_bytes": 1414,
+      "crc32": "bf6d6338",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t19.geo",
+      "bytes": 2281,
+      "compressed_bytes": 1037,
+      "crc32": "525f3edf",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t2.geo",
+      "bytes": 4944,
+      "compressed_bytes": 2062,
+      "crc32": "d2db8b5d",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t20.geo",
+      "bytes": 3115,
+      "compressed_bytes": 1332,
+      "crc32": "fa9d695f",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t20_data.step",
+      "bytes": 66643,
+      "compressed_bytes": 13979,
+      "crc32": "ee73f9b3",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t21.geo",
+      "bytes": 3334,
+      "compressed_bytes": 1296,
+      "crc32": "9d17d2a2",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t3.geo",
+      "bytes": 4584,
+      "compressed_bytes": 1974,
+      "crc32": "b59c13d6",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t4.geo",
+      "bytes": 5584,
+      "compressed_bytes": 2282,
+      "crc32": "d02d25b6",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t4_image.png",
+      "bytes": 78217,
+      "compressed_bytes": 72342,
+      "crc32": "6bb6ee66",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t5.geo",
+      "bytes": 7788,
+      "compressed_bytes": 3085,
+      "crc32": "bd1c29b1",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t6.geo",
+      "bytes": 2896,
+      "compressed_bytes": 1144,
+      "crc32": "727412ed",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t7.geo",
+      "bytes": 1287,
+      "compressed_bytes": 558,
+      "crc32": "fb8a2cae",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t7_bgmesh.pos",
+      "bytes": 161606,
+      "compressed_bytes": 38872,
+      "crc32": "4e4693b2",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t8.geo",
+      "bytes": 3817,
+      "compressed_bytes": 1560,
+      "crc32": "f795cb0d",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/t9.geo",
+      "bytes": 2217,
+      "compressed_bytes": 912,
+      "crc32": "4bd5bcab",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/view1.pos",
+      "bytes": 284881,
+      "compressed_bytes": 94748,
+      "crc32": "3b37774e",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/view2.pos",
+      "bytes": 34163,
+      "compressed_bytes": 10703,
+      "crc32": "cb8827db",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/view3.pos",
+      "bytes": 433536,
+      "compressed_bytes": 82415,
+      "crc32": "3b9d7b52",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/view4.pos",
+      "bytes": 7739,
+      "compressed_bytes": 3320,
+      "crc32": "b8f8c927",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/view5.msh",
+      "bytes": 659,
+      "compressed_bytes": 225,
+      "crc32": "cfe80088",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c/README.txt",
+      "bytes": 1055,
+      "compressed_bytes": 558,
+      "crc32": "4238aa5a",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c/t1.c",
+      "bytes": 8497,
+      "compressed_bytes": 3278,
+      "crc32": "164d8faf",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c/t16.c",
+      "bytes": 6205,
+      "compressed_bytes": 2327,
+      "crc32": "a08be535",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c/t2.c",
+      "bytes": 8747,
+      "compressed_bytes": 2895,
+      "crc32": "3a204e2f",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c/t6.c",
+      "bytes": 4844,
+      "compressed_bytes": 1564,
+      "crc32": "6258d367",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/README.txt",
+      "bytes": 1697,
+      "compressed_bytes": 792,
+      "crc32": "e8616299",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/t1.cpp",
+      "bytes": 8208,
+      "compressed_bytes": 3143,
+      "crc32": "c6cf73c2",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/t10.cpp",
+      "bytes": 6760,
+      "compressed_bytes": 2292,
+      "crc32": "5f110908",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/t11.cpp",
+      "bytes": 4090,
+      "compressed_bytes": 1568,
+      "crc32": "df90c5c8",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/t12.cpp",
+      "bytes": 3689,
+      "compressed_bytes": 1289,
+      "crc32": "f7b5b5c8",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/t13.cpp",
+      "bytes": 4858,
+      "compressed_bytes": 1893,
+      "crc32": "de19205e",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/t14.cpp",
+      "bytes": 5439,
+      "compressed_bytes": 1525,
+      "crc32": "dfa1e028",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/t15.cpp",
+      "bytes": 3653,
+      "compressed_bytes": 1196,
+      "crc32": "1c19f611",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/t16.cpp",
+      "bytes": 6114,
+      "compressed_bytes": 2360,
+      "crc32": "ae6db3f7",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/t17.cpp",
+      "bytes": 1702,
+      "compressed_bytes": 733,
+      "crc32": "3e91ef26",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/t18.cpp",
+      "bytes": 5896,
+      "compressed_bytes": 1915,
+      "crc32": "90e0fb1d",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/t19.cpp",
+      "bytes": 3916,
+      "compressed_bytes": 1431,
+      "crc32": "0d2659d8",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/t2.cpp",
+      "bytes": 6929,
+      "compressed_bytes": 2355,
+      "crc32": "bf463d78",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/t20.cpp",
+      "bytes": 4868,
+      "compressed_bytes": 1759,
+      "crc32": "082c18ca",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/t21.cpp",
+      "bytes": 6977,
+      "compressed_bytes": 2169,
+      "crc32": "3a626d63",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/t3.cpp",
+      "bytes": 5940,
+      "compressed_bytes": 2338,
+      "crc32": "86939520",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/t4.cpp",
+      "bytes": 7010,
+      "compressed_bytes": 2481,
+      "crc32": "31089196",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/t5.cpp",
+      "bytes": 9457,
+      "compressed_bytes": 2911,
+      "crc32": "36ec7c4b",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/t6.cpp",
+      "bytes": 4268,
+      "compressed_bytes": 1419,
+      "crc32": "637fd6d8",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/t7.cpp",
+      "bytes": 2577,
+      "compressed_bytes": 995,
+      "crc32": "5ab64c69",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/t8.cpp",
+      "bytes": 6487,
+      "compressed_bytes": 2092,
+      "crc32": "9d175d64",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/t9.cpp",
+      "bytes": 3478,
+      "compressed_bytes": 1256,
+      "crc32": "a9e07c8a",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/x1.cpp",
+      "bytes": 6612,
+      "compressed_bytes": 2239,
+      "crc32": "001eff35",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/x2.cpp",
+      "bytes": 7402,
+      "compressed_bytes": 2386,
+      "crc32": "c9a9c78a",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/x3.cpp",
+      "bytes": 7378,
+      "compressed_bytes": 2606,
+      "crc32": "0ed84846",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/x4.cpp",
+      "bytes": 4092,
+      "compressed_bytes": 1575,
+      "crc32": "1f71142e",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/x5.cpp",
+      "bytes": 4741,
+      "compressed_bytes": 1653,
+      "crc32": "fe4e2983",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/x6.cpp",
+      "bytes": 3747,
+      "compressed_bytes": 1285,
+      "crc32": "fc8668fd",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/c++/x7.cpp",
+      "bytes": 5120,
+      "compressed_bytes": 1784,
+      "crc32": "f8f9fc9c",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/fortran/README.txt",
+      "bytes": 1147,
+      "compressed_bytes": 567,
+      "crc32": "550922ff",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/fortran/t1.f90",
+      "bytes": 7795,
+      "compressed_bytes": 3129,
+      "crc32": "f7976ded",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/fortran/t10.f90",
+      "bytes": 6738,
+      "compressed_bytes": 2371,
+      "crc32": "0da27c26",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/fortran/t11.f90",
+      "bytes": 3976,
+      "compressed_bytes": 1646,
+      "crc32": "5700a109",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/fortran/t12.f90",
+      "bytes": 3785,
+      "compressed_bytes": 1337,
+      "crc32": "3ac30802",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/fortran/t13.f90",
+      "bytes": 5334,
+      "compressed_bytes": 1995,
+      "crc32": "5079874f",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/fortran/t14.f90",
+      "bytes": 6041,
+      "compressed_bytes": 1614,
+      "crc32": "f0476ac1",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/fortran/t15.f90",
+      "bytes": 3776,
+      "compressed_bytes": 1262,
+      "crc32": "927d7055",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/fortran/t16.f90",
+      "bytes": 6059,
+      "compressed_bytes": 2364,
+      "crc32": "e254256b",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/fortran/t17.f90",
+      "bytes": 1614,
+      "compressed_bytes": 720,
+      "crc32": "901543dd",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/fortran/t18.f90",
+      "bytes": 6297,
+      "compressed_bytes": 2069,
+      "crc32": "be7ba356",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/fortran/t19.f90",
+      "bytes": 3956,
+      "compressed_bytes": 1494,
+      "crc32": "94dce530",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/fortran/t2.f90",
+      "bytes": 7036,
+      "compressed_bytes": 2482,
+      "crc32": "da18172a",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/fortran/t20.f90",
+      "bytes": 4889,
+      "compressed_bytes": 1855,
+      "crc32": "609c69b2",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/fortran/t21.f90",
+      "bytes": 7224,
+      "compressed_bytes": 2237,
+      "crc32": "177702db",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/fortran/t3.f90",
+      "bytes": 7092,
+      "compressed_bytes": 2619,
+      "crc32": "9085016f",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/fortran/t4.f90",
+      "bytes": 7545,
+      "compressed_bytes": 2530,
+      "crc32": "8a69fa11",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/fortran/t5.f90",
+      "bytes": 9455,
+      "compressed_bytes": 3024,
+      "crc32": "732c936f",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/fortran/t6.f90",
+      "bytes": 4345,
+      "compressed_bytes": 1483,
+      "crc32": "6ba58e78",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/fortran/t7.f90",
+      "bytes": 2523,
+      "compressed_bytes": 1014,
+      "crc32": "f1e464c2",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/fortran/t8.f90",
+      "bytes": 6978,
+      "compressed_bytes": 2254,
+      "crc32": "a6b62787",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/fortran/t9.f90",
+      "bytes": 3326,
+      "compressed_bytes": 1218,
+      "crc32": "83fa3c1e",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/README.txt",
+      "bytes": 1083,
+      "compressed_bytes": 571,
+      "crc32": "2c4543fd",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/t1.jl",
+      "bytes": 7824,
+      "compressed_bytes": 3112,
+      "crc32": "79ecc6a5",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/t10.jl",
+      "bytes": 5940,
+      "compressed_bytes": 2133,
+      "crc32": "15a83e69",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/t11.jl",
+      "bytes": 3626,
+      "compressed_bytes": 1469,
+      "crc32": "56bc50af",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/t12.jl",
+      "bytes": 3295,
+      "compressed_bytes": 1184,
+      "crc32": "4bbfc2a4",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/t13.jl",
+      "bytes": 4301,
+      "compressed_bytes": 1697,
+      "crc32": "87e4e507",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/t14.jl",
+      "bytes": 4563,
+      "compressed_bytes": 1334,
+      "crc32": "d7d37ac6",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/t15.jl",
+      "bytes": 3130,
+      "compressed_bytes": 1064,
+      "crc32": "46e0db3c",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/t16.jl",
+      "bytes": 4695,
+      "compressed_bytes": 1995,
+      "crc32": "824a2dfe",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/t17.jl",
+      "bytes": 1361,
+      "compressed_bytes": 613,
+      "crc32": "fcbd7486",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/t18.jl",
+      "bytes": 4859,
+      "compressed_bytes": 1661,
+      "crc32": "db02c4ea",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/t19.jl",
+      "bytes": 3193,
+      "compressed_bytes": 1231,
+      "crc32": "a736ec7b",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/t2.jl",
+      "bytes": 6148,
+      "compressed_bytes": 2215,
+      "crc32": "f1b8ee8f",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/t20.jl",
+      "bytes": 3624,
+      "compressed_bytes": 1465,
+      "crc32": "1d17934a",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/t21.jl",
+      "bytes": 5957,
+      "compressed_bytes": 1845,
+      "crc32": "4c513cd1",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/t3.jl",
+      "bytes": 5394,
+      "compressed_bytes": 2182,
+      "crc32": "87684e42",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/t4.jl",
+      "bytes": 6292,
+      "compressed_bytes": 2334,
+      "crc32": "228c2e9d",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/t5.jl",
+      "bytes": 8140,
+      "compressed_bytes": 2660,
+      "crc32": "c17db23d",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/t6.jl",
+      "bytes": 3744,
+      "compressed_bytes": 1313,
+      "crc32": "f65661dd",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/t7.jl",
+      "bytes": 2166,
+      "compressed_bytes": 873,
+      "crc32": "af6dbda6",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/t8.jl",
+      "bytes": 6314,
+      "compressed_bytes": 2033,
+      "crc32": "09fa4478",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/t9.jl",
+      "bytes": 2917,
+      "compressed_bytes": 1092,
+      "crc32": "795cdcb9",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/x1.jl",
+      "bytes": 5278,
+      "compressed_bytes": 1936,
+      "crc32": "761c95ce",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/x2.jl",
+      "bytes": 6290,
+      "compressed_bytes": 2110,
+      "crc32": "94d7bd62",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/x3.jl",
+      "bytes": 6871,
+      "compressed_bytes": 2373,
+      "crc32": "d3a9b5ac",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/x4.jl",
+      "bytes": 3541,
+      "compressed_bytes": 1415,
+      "crc32": "81e1cfda",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/x5.jl",
+      "bytes": 3570,
+      "compressed_bytes": 1395,
+      "crc32": "8ee0b4fd",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/x6.jl",
+      "bytes": 3083,
+      "compressed_bytes": 1129,
+      "crc32": "d7b497dd",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/julia/x7.jl",
+      "bytes": 4568,
+      "compressed_bytes": 1662,
+      "crc32": "69beff47",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/README.txt",
+      "bytes": 1120,
+      "compressed_bytes": 579,
+      "crc32": "42c41fd7",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/t1.py",
+      "bytes": 7843,
+      "compressed_bytes": 3112,
+      "crc32": "6b2a22b2",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/t10.py",
+      "bytes": 5981,
+      "compressed_bytes": 2130,
+      "crc32": "8743ff51",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/t11.py",
+      "bytes": 3640,
+      "compressed_bytes": 1474,
+      "crc32": "f0e3e707",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/t12.py",
+      "bytes": 3308,
+      "compressed_bytes": 1186,
+      "crc32": "8dae45a7",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/t13.py",
+      "bytes": 4346,
+      "compressed_bytes": 1703,
+      "crc32": "53893c4a",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/t14.py",
+      "bytes": 4513,
+      "compressed_bytes": 1301,
+      "crc32": "178ac349",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/t15.py",
+      "bytes": 3144,
+      "compressed_bytes": 1069,
+      "crc32": "f2c1feb7",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/t16.py",
+      "bytes": 4708,
+      "compressed_bytes": 1988,
+      "crc32": "2b2042c7",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/t17.py",
+      "bytes": 1444,
+      "compressed_bytes": 644,
+      "crc32": "8e447ad6",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/t18.py",
+      "bytes": 4856,
+      "compressed_bytes": 1656,
+      "crc32": "b5b825bd",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/t19.py",
+      "bytes": 3252,
+      "compressed_bytes": 1253,
+      "crc32": "5a1f25e5",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/t2.py",
+      "bytes": 6179,
+      "compressed_bytes": 2216,
+      "crc32": "895e270f",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/t20.py",
+      "bytes": 3684,
+      "compressed_bytes": 1463,
+      "crc32": "7f43b384",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/t21.py",
+      "bytes": 5914,
+      "compressed_bytes": 1834,
+      "crc32": "d499ecb9",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/t3.py",
+      "bytes": 5406,
+      "compressed_bytes": 2174,
+      "crc32": "279879fa",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/t4.py",
+      "bytes": 6438,
+      "compressed_bytes": 2382,
+      "crc32": "22eca559",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/t5.py",
+      "bytes": 8153,
+      "compressed_bytes": 2661,
+      "crc32": "ce62abac",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/t6.py",
+      "bytes": 3775,
+      "compressed_bytes": 1322,
+      "crc32": "cba98aab",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/t7.py",
+      "bytes": 2236,
+      "compressed_bytes": 898,
+      "crc32": "0141f02f",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/t8.py",
+      "bytes": 6402,
+      "compressed_bytes": 2065,
+      "crc32": "ab4bb803",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/t9.py",
+      "bytes": 2981,
+      "compressed_bytes": 1115,
+      "crc32": "cd0e7dab",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/x1.py",
+      "bytes": 5211,
+      "compressed_bytes": 1920,
+      "crc32": "61514197",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/x2.py",
+      "bytes": 6331,
+      "compressed_bytes": 2123,
+      "crc32": "01b928c1",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/x3.py",
+      "bytes": 6897,
+      "compressed_bytes": 2371,
+      "crc32": "2b44846f",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/x4.py",
+      "bytes": 3563,
+      "compressed_bytes": 1401,
+      "crc32": "9ef6d075",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/x5.py",
+      "bytes": 3716,
+      "compressed_bytes": 1386,
+      "crc32": "0c697b9a",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/x6.py",
+      "bytes": 3035,
+      "compressed_bytes": 1116,
+      "crc32": "7ef49f48",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/doc/gmsh/tutorials/python/x7.py",
+      "bytes": 4494,
+      "compressed_bytes": 1615,
+      "crc32": "1b53ae68",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/gmsh/gmshConfig.cmake",
+      "bytes": 478,
+      "compressed_bytes": 250,
+      "crc32": "a8c72112",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/gmsh/gmshTargets-relwithdebinfo.cmake",
+      "bytes": 878,
+      "compressed_bytes": 374,
+      "crc32": "6c6001e8",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/gmsh/gmshTargets.cmake",
+      "bytes": 6051,
+      "compressed_bytes": 1847,
+      "crc32": "a0f1e064",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/man/man1/",
+      "bytes": 0,
+      "compressed_bytes": 0,
+      "crc32": "00000000",
+      "unix_mode": "0o40755",
+      "directory": true
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/share/man/man1/gmsh.1",
+      "bytes": 4455,
+      "compressed_bytes": 1698,
+      "crc32": "1194639f",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/include/gmsh.f90",
+      "bytes": 690429,
+      "compressed_bytes": 72242,
+      "crc32": "51322fc0",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/include/gmsh.h",
+      "bytes": 214610,
+      "compressed_bytes": 36553,
+      "crc32": "7125465b",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/include/gmsh.h_cwrap",
+      "bytes": 350137,
+      "compressed_bytes": 50924,
+      "crc32": "00080457",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/data/include/gmshc.h",
+      "bytes": 213555,
+      "compressed_bytes": 35077,
+      "crc32": "b53a06af",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.data/scripts/gmsh",
+      "bytes": 99,
+      "compressed_bytes": 83,
+      "crc32": "4804a870",
+      "unix_mode": "0o100777",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.dist-info/METADATA",
+      "bytes": 1693,
+      "compressed_bytes": 814,
+      "crc32": "61051dc9",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.dist-info/WHEEL",
+      "bytes": 127,
+      "compressed_bytes": 99,
+      "crc32": "616bdbeb",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.dist-info/top_level.txt",
+      "bytes": 1,
+      "compressed_bytes": 3,
+      "crc32": "32d70693",
+      "unix_mode": "0o100644",
+      "directory": false
+    },
+    {
+      "path": "gmsh-4.15.2.dist-info/RECORD",
+      "bytes": 59043,
+      "compressed_bytes": 21585,
+      "crc32": "1df2636b",
+      "unix_mode": "0o100644",
+      "directory": false
+    }
+  ]
+}

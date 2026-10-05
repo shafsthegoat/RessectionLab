@@ -1,0 +1,60 @@
+{
+  "status": "numerical_checker_and_prepared_decks_review_passed",
+  "scope": "Independent analytical software controls only; no FEBio solve/model parsing, no patient data, no runtime success claim. Separate launcher review and root release still required.",
+  "upstream_commit": "32ae206ff4881dfb54f62296cd1558e58ed9fcc6",
+  "upstream_source_hashes": {
+    "FECore/FESolidElementShape.cpp": "e99bc00dd80dc8a7bc2236b79a114d808ea64fcf611f6770ecd9b0fe1baab45d",
+    "FECore/FEElementTraits.cpp": "6d6a9fe2a52351997ece0c711bffe4900ad4d65765d9f8ad75d50227c35a9327",
+    "FEBioMech/FEOgdenMaterial.cpp": "9a4d8dd6aa45adcd8158864b8344567aa734cf912f47c9f7f7a5376c536dadc4",
+    "FEBioMech/FEUncoupledMaterial.cpp": "f07b402222bc428373a7beb0fcddd58400b110b6cda6b23df9336e959a898a41",
+    "FEBioMech/FEUncoupledMaterial.h": "236e2d27e23e78bd2cdb5c84a89c95ff383ebad421477adbcc36a935a033a234",
+    "FEBioMech/FEBioMechData.cpp": "f34f426fd662048099df46fb5c6bafd80d021f689749815d1bc812f851e74069",
+    "FEBioMech/FESolidSolver2.cpp": "0558262b37931ff591b53e9645d7c5a809e149ecd399656d59aa4bf84f245bf6",
+    "FEBioMech/FEResidualVector.cpp": "7e11906bdab31ea44e195abeb01d00eff5f137d3f3ac07f995bfc16b6165279f",
+    "FECore/FELinearConstraintManager.cpp": "d87fb27814c7bd9be0a4c01f77c7ebf40c4fc94bf579461033a17c049a1a5909",
+    "FECore/FELinearConstraint.cpp": "454ece6a242078f14b36b207aa38aeb3a5474538c371c88877ebf01bc46bf766"
+  },
+  "reviewed_files": {
+    "scripts/mechanics_patient_constraints.py": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66",
+    "scripts/mechanics_febio_verification.py": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "tests/test_mechanics_patient_constraints_runtime.py": "f218d3660480575fbbc3a346683545a833a8bdffca3b99b13d067d5a123a9d54",
+    "tests/test_mechanics_patient_constraints_review.py": "6d3b268a4b18ab2dca3e222145a080806712b2326c38e311fd3a3eed5777ee41",
+    "artifacts/mechanics-patient-constraints-runtime-v1/decks/manifest.json": "73a20d14551742159f05145bfd39444fde4d8bc81415d6139d85e8d890d0c330",
+    "docs/mechanics-patient-constraints.md": "ef3586be41366b6aa7822b86d2168e7d9130ff8250172c0747a20d9e728bd95f"
+  },
+  "verification_command": ".venv/bin/python -m pytest -q tests/test_mechanics_patient_constraints_review.py tests/test_mechanics_patient_constraints_runtime.py",
+  "verification": "26 passed in0.83s;8 independent controls and18 owner controls",
+  "initial_failure_preserved": "initial-negative-result.json and review-test-initial.py.gz",
+  "independent_checks": [
+    "Polynomial Vandermonde reconstruction checks tet10 node ordering and reference gradients without using checker shape formula.",
+    "Pinned 8-point quadrature passes reference monomial moments through total degree3 with explicit source rounding allowance. All6positive reference tetrahedra total1e-6m^3; common center node12 is truly interior and free in affine deck.",
+    "SVD principal energy and direct first-Piola derivative agree with finite-F stress/energy/J, pressure_model1, c1=2mu,m1=2,K/mu=29/3(initialnu.45). Objectivity checked at finite rotation.",
+    "Nonuniform conforming quadratic displacement field validates pointwise F and unweighted element primitive means separately from reference-volume energy integration.",
+    "All72feasible directions at all3declared finite-difference steps agree with independently assembled Piola force and reject unrelaxed but H-compatible displacement.",
+    "Affine signed surface reactions agree at every node with exact centroid-integrated linear shape gradients; rounded8-point force remains within original1e-8N tolerance.",
+    "Exported9MPC equations reconstruct original H u=d with nonzero free values at3ramp states, correct negative child coefficient and ramped offset, no parent-child overlap/extra anchors.",
+    "Prepared manifest/deck/source hashes agree; three cases/foursteps/no retries,60s/3GiB/one numerical thread remain declarations requiring separate launch supervision."
+  ],
+  "nonstationary_negative_control": {
+    "max_reduced_internal_force_N": 0.00664208219824458,
+    "max_difference_from_72direction_finite_differences_by_step_N": [
+      1.1298383322672079e-10,
+      2.8418445981864826e-11,
+      7.052219919145841e-12
+    ],
+    "passed_Hu_equals_d": true,
+    "passed_virtual_work": false
+  },
+  "limitations": [
+    "No actual solver convergence/output evidence yet.",
+    "Explicit nodal averages are not future5mm reference-volume tent operator.",
+    "Three-field mixed domain not used; no assertion for near-incompressible convergence or patient constitutive accuracy.",
+    "Jacobian witnesses are sampled; no global curved-element positivity proof.",
+    "Ordinary MPC-parent reactions remain unavailable and cannot certify force balance.",
+    "RSS sampling cannot catch all between-sample peaks."
+  ],
+  "fixture_changed": false,
+  "solver_executed": false,
+  "patient_data_accessed": false
+}

@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "source_revision": "c09ee50a72b787f76ed157a98fb966e290ba977c",
+  "renderer_source_digest": "834c7cebe711f34cd877a92b4832f9f25428bfe36e0e46f74b23699a4a9345b0",
+  "renderer_archive_sha256": "bddc52360ee25a03c20d998bac1b53e7b2ea5c7216b6652795f2d363dbf3b2d5",
+  "verified_desktop_files": 73,
+  "all_captured_desktop_source_matches_exact_git_commit": true,
+  "engine_executable_sha256": "85a92eff69cb1ea97afc400bc80433c53d146174dd32a9cf36061b8420f72ddd",
+  "engine_source_revision": "0b4e3345137316bb72d6daf9bf2a15ee6b613ed7",
+  "engine_source_digest": "afd2436576c29f8029af6f8c40b4789fa7610b38959d65b95829fff1b18bd5cd",
+  "entire_engine_payload_preserved": true,
+  "engine_payload_entries": 2809,
+  "notice_location": "Contents/Resources/ThirdPartyNotices",
+  "notice_tree_entries": 292,
+  "entire_actual_app_notice_tree_matches_capture": true,
+  "notice_source_completeness": "incomplete",
+  "unresolved_notices": [
+    {
+      "component": "react-remove-scroll-bar@2.3.8",
+      "reason": "Installed runtime package declares a license but contains no upstream root license/notice text. Its package.json is retained; no substitute license is invented."
+    },
+    {
+      "component": "CPython 3.12.14 static vendor libraries",
+      "reason": "No verified static-vendor notice/version manifest has been configured for this exact runtime. Its upstream build provenance must supply that closure; copying CPython LICENSE.txt alone does not resolve the gap."
+    }
+  ],
+  "app_build_seconds": 11.906,
+  "snapshot_tests": {
+    "main": 38,
+    "renderer": 84,
+    "viewer": 31,
+    "total": 153,
+    "passed": true
+  },
+  "production_build_passed": true,
+  "production_build_warnings": [
+    "Main JavaScript chunk exceeds500kB minified; recorded existing build warning."
+  ],
+  "bundle_architecture": "arm64",
+  "signing": "local_ad_hoc",
+  "notarized": false,
+  "entire_notice_tree_unchanged_from_bee43c9": true,
+  "entire_notice_tree_unchanged_from_fe25f2a": true,
+  "scope": "Empty route-selector presentation only; numerical engine and notice payload unchanged."
+}

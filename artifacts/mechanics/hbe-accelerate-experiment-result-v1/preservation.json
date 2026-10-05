@@ -1,0 +1,1132 @@
+{
+  "baseline": {
+    "bytes": 93638,
+    "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/baseline.json",
+    "sha256": "ff3703d68af62ba5598042e84e9d249a1a28e1f96d4ab59730e7609ec3e1003a"
+  },
+  "baseline_input_count": 215,
+  "baseline_inputs": {
+    "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12": {
+      "actual": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a",
+      "expected": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-runtime-v3/build-01/acceptance.json": {
+      "actual": "a5ca0b26e65c3240f04d635702fee15518f56634a1f6d0391db811a79ed1efa1",
+      "expected": "a5ca0b26e65c3240f04d635702fee15518f56634a1f6d0391db811a79ed1efa1",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-runtime-v3/build-01/commands.json": {
+      "actual": "570efa69ef4f0acebd89db93fdb17ccb411282a6694fc05caaa4aa4830b09554",
+      "expected": "570efa69ef4f0acebd89db93fdb17ccb411282a6694fc05caaa4aa4830b09554",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-runtime-v3/build-01/installed-inventory.json": {
+      "actual": "17d5d580f359c88dc83e743d0a128ac19ea9387ff10c09a816cb130f5cc397b6",
+      "expected": "17d5d580f359c88dc83e743d0a128ac19ea9387ff10c09a816cb130f5cc397b6",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-runtime-v3/build-01/linkage.json": {
+      "actual": "0e87aebf450f6b1d37b9fbdf22e10c26d0531230564903486b3fe3bf0057d581",
+      "expected": "0e87aebf450f6b1d37b9fbdf22e10c26d0531230564903486b3fe3bf0057d581",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-runtime-v3/build-01/result.json": {
+      "actual": "ad17d726acf792c05d33ab598d7d1bd3b96b950b273d654144b160a283f290c3",
+      "expected": "ad17d726acf792c05d33ab598d7d1bd3b96b950b273d654144b160a283f290c3",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-runtime-v3/build-01/runtime-identity-candidate.json": {
+      "actual": "1665a6640c1d92fa7ee01c3960a50c104c11aaef63b8cb6b88f294be07ea0eed",
+      "expected": "1665a6640c1d92fa7ee01c3960a50c104c11aaef63b8cb6b88f294be07ea0eed",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-runtime-v3/build-01/supervision.json": {
+      "actual": "47683a320f3c0df24533a6b98d81d8f945177be6589a4cbba7a5a812fd08ba60",
+      "expected": "47683a320f3c0df24533a6b98d81d8f945177be6589a4cbba7a5a812fd08ba60",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-runtime-v3/configure-01/source-inventory.json": {
+      "actual": "4245a2b18b0e34188aa451bea3b5f568e01ade4ac6b20fcdcbcc855813f04b20",
+      "expected": "4245a2b18b0e34188aa451bea3b5f568e01ade4ac6b20fcdcbcc855813f04b20",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json": {
+      "actual": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57",
+      "expected": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-independent-review-v1/saved-control-review.json": {
+      "actual": "a0e377ac4ea8d8fc380afb2efe1045993b4ada90cb262f61b83414be5a2e62d2",
+      "expected": "a0e377ac4ea8d8fc380afb2efe1045993b4ada90cb262f61b83414be5a2e62d2",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/accelerate-correctness.patch": {
+      "actual": "67a1858f2d55046796d7ccb46758ca06e5bfb673e75a539d158b1a17652f3340",
+      "expected": "67a1858f2d55046796d7ccb46758ca06e5bfb673e75a539d158b1a17652f3340",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/control-01/result.json": {
+      "actual": "245e48859244fa93ab51ce03db73cb78e128d9f3bdf6a187f91fa3980767b74d",
+      "expected": "245e48859244fa93ab51ce03db73cb78e128d9f3bdf6a187f91fa3980767b74d",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/control-acceptance.json": {
+      "actual": "eb2e390574896c175a1f240a6aa43e03737e2201b9c9823f243d9ef3da935757",
+      "expected": "eb2e390574896c175a1f240a6aa43e03737e2201b9c9823f243d9ef3da935757",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/control-declaration.json": {
+      "actual": "d45883853df0516efeba4e0f7d21f78b91899d47f3cd1743db58b61ec66334c9",
+      "expected": "d45883853df0516efeba4e0f7d21f78b91899d47f3cd1743db58b61ec66334c9",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/patch-identity.json": {
+      "actual": "54198366eccb90a9fcdf4fcbf2a5055919a5658a1db0fdd7db8cfeede3b49eee",
+      "expected": "54198366eccb90a9fcdf4fcbf2a5055919a5658a1db0fdd7db8cfeede3b49eee",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/patched-AccelerateSparseSolver.cpp": {
+      "actual": "476ac8471ea681a99c298352a50aba2a7a5baa71635e1678155a7f58b72ba04a",
+      "expected": "476ac8471ea681a99c298352a50aba2a7a5baa71635e1678155a7f58b72ba04a",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/supervision-01/supervision.json": {
+      "actual": "3ecf797d197caa537834f73ac4c6d46d58eb9423490c152b735e6f621b1fff54",
+      "expected": "3ecf797d197caa537834f73ac4c6d46d58eb9423490c152b735e6f621b1fff54",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics-accelerate-controls-run-v1/release.json": {
+      "actual": "949f4d808064c56b5539698933e04e59881b03a09d42340c87a87c4b10279d14",
+      "expected": "949f4d808064c56b5539698933e04e59881b03a09d42340c87a87c4b10279d14",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json": {
+      "actual": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1",
+      "expected": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/hbe-accelerate-experiment-v1/release.json": {
+      "actual": "edb91bdbaa542852ec65a87eba8e2676556d926d9c979ceea3cb8e460624ba6b",
+      "expected": "edb91bdbaa542852ec65a87eba8e2676556d926d9c979ceea3cb8e460624ba6b",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/febio-runtime-investigation-v1/prospective-runtime.json": {
+      "actual": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48",
+      "expected": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/decks/finite_stretch.feb": {
+      "actual": "0d72a0ee80fb6a8ad88f8bae84c3771321345ef43fa2311786b488ad67c58b22",
+      "expected": "0d72a0ee80fb6a8ad88f8bae84c3771321345ef43fa2311786b488ad67c58b22",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/decks/mpc_nonrigid.feb": {
+      "actual": "771f3a99d7a428d84b737c21bccf5c22a60ede8542d82a31310aaa0b074e66f8",
+      "expected": "771f3a99d7a428d84b737c21bccf5c22a60ede8542d82a31310aaa0b074e66f8",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/decks/mpc_translation.feb": {
+      "actual": "956b66dc6cae4904e3a124a8b5e81bec66128d015e1ce85d6b96e533f76d996b",
+      "expected": "956b66dc6cae4904e3a124a8b5e81bec66128d015e1ce85d6b96e533f76d996b",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/decks/shear.feb": {
+      "actual": "fa8c1c1f5bac69cb310c72c3fa590e83a87576ac62a99cbd0a6201f029b9c593",
+      "expected": "fa8c1c1f5bac69cb310c72c3fa590e83a87576ac62a99cbd0a6201f029b9c593",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/decks/shear_double_stiffness.feb": {
+      "actual": "7e8e6c73909f544ef1cce49f1d83aea2a9050ae2db467c913a027c405ea56dba",
+      "expected": "7e8e6c73909f544ef1cce49f1d83aea2a9050ae2db467c913a027c405ea56dba",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/decks/tet10_affine.feb": {
+      "actual": "dfafcfde8075aacb36e2014d6abe755470e04667bcbfd69c6857edfb63833d50",
+      "expected": "dfafcfde8075aacb36e2014d6abe755470e04667bcbfd69c6857edfb63833d50",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/decks/translation.feb": {
+      "actual": "1b5fa399cc71e2561647b3f9a6baf2f18b5428e62650898fc8e330fc146fe93d",
+      "expected": "1b5fa399cc71e2561647b3f9a6baf2f18b5428e62650898fc8e330fc146fe93d",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/decks/zero.feb": {
+      "actual": "a20221e487f4a192924d28791aa077fbf268756f42367e48db6b6990d8cace9d",
+      "expected": "a20221e487f4a192924d28791aa077fbf268756f42367e48db6b6990d8cace9d",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-accelerate-controls-v1/declaration.json": {
+      "actual": "46a538f54471b76f3b75f50c31be2de6530b94450f88d2b6f9f8698ac27a54fd",
+      "expected": "46a538f54471b76f3b75f50c31be2de6530b94450f88d2b6f9f8698ac27a54fd",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-febio-verification-v1/decks/finite_stretch.feb": {
+      "actual": "51f7966c5054f009f7e1bf8cefa3306364196b58ede0170b39cbeab18391dee6",
+      "expected": "51f7966c5054f009f7e1bf8cefa3306364196b58ede0170b39cbeab18391dee6",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-febio-verification-v1/decks/manifest.json": {
+      "actual": "2492e1d20c25a3d0adfc34faf51d88206fe43c4d6897e63db4cf7ea26c96c3d7",
+      "expected": "2492e1d20c25a3d0adfc34faf51d88206fe43c4d6897e63db4cf7ea26c96c3d7",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-febio-verification-v1/decks/shear.feb": {
+      "actual": "509c6ea97211d44d81e00d35d004e0e503517c0d0d5d8857a4af89abbec2b5b6",
+      "expected": "509c6ea97211d44d81e00d35d004e0e503517c0d0d5d8857a4af89abbec2b5b6",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-febio-verification-v1/decks/shear_double_stiffness.feb": {
+      "actual": "af78dc2a965892293d20786149224ae8337392347fdca19ec7e3ced8db987ac5",
+      "expected": "af78dc2a965892293d20786149224ae8337392347fdca19ec7e3ced8db987ac5",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-febio-verification-v1/decks/translation.feb": {
+      "actual": "98a34f49115f260feff3ce45a231c3dfcb3d5f7bcd15edf1777cd230566a8481",
+      "expected": "98a34f49115f260feff3ce45a231c3dfcb3d5f7bcd15edf1777cd230566a8481",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-febio-verification-v1/decks/zero.feb": {
+      "actual": "d202aa532e5cc2ec9f8219ba672d37c4606b74cbfeca9b6ea1ebbcd40a061f67",
+      "expected": "d202aa532e5cc2ec9f8219ba672d37c4606b74cbfeca9b6ea1ebbcd40a061f67",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-patient-constraints-runtime-v1/decks/manifest.json": {
+      "actual": "73a20d14551742159f05145bfd39444fde4d8bc81415d6139d85e8d890d0c330",
+      "expected": "73a20d14551742159f05145bfd39444fde4d8bc81415d6139d85e8d890d0c330",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-patient-constraints-runtime-v1/decks/mpc_nonrigid.feb": {
+      "actual": "40900e8761e663ca37568f9b911a06bfb34acb3db2bd5b1fd4840c7d55fadb93",
+      "expected": "40900e8761e663ca37568f9b911a06bfb34acb3db2bd5b1fd4840c7d55fadb93",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-patient-constraints-runtime-v1/decks/mpc_translation.feb": {
+      "actual": "dad1653d2015d04f3499ea87f37246e5fce3c86f849ffc363e99cddd230386fa",
+      "expected": "dad1653d2015d04f3499ea87f37246e5fce3c86f849ffc363e99cddd230386fa",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-patient-constraints-runtime-v1/decks/tet10_affine.feb": {
+      "actual": "8a75158a97750f3db57a5a2a48ab3f03760a4a95a8818ff3d30218ceca262f62",
+      "expected": "8a75158a97750f3db57a5a2a48ab3f03760a4a95a8818ff3d30218ceca262f62",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/febio_runtime.py": {
+      "actual": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+      "expected": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_accelerate_controls.py": {
+      "actual": "f2ad929648b2804fa047a0d0840a693cfd16302268c5e1b76342f85293b499ec",
+      "expected": "f2ad929648b2804fa047a0d0840a693cfd16302268c5e1b76342f85293b499ec",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_febio_verification.py": {
+      "actual": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5",
+      "expected": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_hbe_access.py": {
+      "actual": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+      "expected": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_hbe_backend.py": {
+      "actual": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+      "expected": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_hbe_evaluation.py": {
+      "actual": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+      "expected": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_patient_constraints.py": {
+      "actual": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66",
+      "expected": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_patient_constraints_run.py": {
+      "actual": "8ca55cf54730c91ae47e573999041cb0c8b84fb4676842e0d1c0e7407ee8843f",
+      "expected": "8ca55cf54730c91ae47e573999041cb0c8b84fb4676842e0d1c0e7407ee8843f",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4": {
+      "actual": "d7d4855d1d541a6407f22efd4381e23d7057cc49ec726144f06599aa5184f7b6",
+      "expected": "d7d4855d1d541a6407f22efd4381e23d7057cc49ec726144f06599aa5184f7b6",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfeamr.dylib": {
+      "actual": "7328649aa6a1e21359e9b470464306970b4bc475bab6a176ae769d0455aa1811",
+      "expected": "7328649aa6a1e21359e9b470464306970b4bc475bab6a176ae769d0455aa1811",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiofluid.dylib": {
+      "actual": "c64d397056fcf024e1d2e10ba7872e98590a440d406062d7b66a49e90b88bc7f",
+      "expected": "c64d397056fcf024e1d2e10ba7872e98590a440d406062d7b66a49e90b88bc7f",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiolib.dylib": {
+      "actual": "c44341895c567529c6917fa51ed4d0cfc6a826aebbe02ff410f4f9b89455d69d",
+      "expected": "c44341895c567529c6917fa51ed4d0cfc6a826aebbe02ff410f4f9b89455d69d",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiomech.dylib": {
+      "actual": "a035e3e975863fa8e35629d9348f885c6e38eba4aa1ef823af014e1f0af9974f",
+      "expected": "a035e3e975863fa8e35629d9348f885c6e38eba4aa1ef823af014e1f0af9974f",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiomix.dylib": {
+      "actual": "69dd24a13c299b5f8eb66a9d4e5348579815dea1b49f3a6494a647dd1df1f2e8",
+      "expected": "69dd24a13c299b5f8eb66a9d4e5348579815dea1b49f3a6494a647dd1df1f2e8",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioopt.dylib": {
+      "actual": "9261f2d2d175590bf957759d65b575bdc1fb9598bb7a29ecbf1b89e2a4268da0",
+      "expected": "9261f2d2d175590bf957759d65b575bdc1fb9598bb7a29ecbf1b89e2a4268da0",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioplot.dylib": {
+      "actual": "4689bebeefb692df58449bf17e04ad51c20c9022ba05954d3d21831499ea79d0",
+      "expected": "4689bebeefb692df58449bf17e04ad51c20c9022ba05954d3d21831499ea79d0",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebiorve.dylib": {
+      "actual": "3e6ab78be3b49d7a7e6c369662006f9eb61aad3658da4190f8ff486e38ad6711",
+      "expected": "3e6ab78be3b49d7a7e6c369662006f9eb61aad3658da4190f8ff486e38ad6711",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfebioxml.dylib": {
+      "actual": "0ae741248991be10ba53a8c914467b7caa725a90b8f5c4512aa570fb48778959",
+      "expected": "0ae741248991be10ba53a8c914467b7caa725a90b8f5c4512aa570fb48778959",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfecore.dylib": {
+      "actual": "fd5b224a47ad55f12b1e1ddd804bcb84d19f6ff63caf5b6d2b4e305337e4deca",
+      "expected": "fd5b224a47ad55f12b1e1ddd804bcb84d19f6ff63caf5b6d2b4e305337e4deca",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libfeimglib.dylib": {
+      "actual": "13a35c45ca32da28f72644d7b2b73feaf62dbe24312e91b235a1789365d7e171",
+      "expected": "13a35c45ca32da28f72644d7b2b73feaf62dbe24312e91b235a1789365d7e171",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/lib/libnumcore.dylib": {
+      "actual": "2c578d76fe57193494872e18d07469e6d542dbf1951d94b252ac04552514b4a3",
+      "expected": "2c578d76fe57193494872e18d07469e6d542dbf1951d94b252ac04552514b4a3",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/source/NumCore/AccelerateSparseSolver.cpp": {
+      "actual": "476ac8471ea681a99c298352a50aba2a7a5baa71635e1678155a7f58b72ba04a",
+      "expected": "476ac8471ea681a99c298352a50aba2a7a5baa71635e1678155a7f58b72ba04a",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib/libomp.dylib": {
+      "actual": "38f6afed27bf1d3bd52779547c7ab53aeda9c06c3473263b5cd11ed4f04b41f8",
+      "expected": "38f6afed27bf1d3bd52779547c7ab53aeda9c06c3473263b5cd11ed4f04b41f8",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/manifests/experiments/hbe-01-03-mechanics-poc-v1.json": {
+      "actual": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035",
+      "expected": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/manifests/experiments/hbe-01-03-specimen-roles-v1.json": {
+      "actual": "c135a65eb14001e31a849197cc5650a15e2484022bee9f950a5c1759a033a432",
+      "expected": "c135a65eb14001e31a849197cc5650a15e2484022bee9f950a5c1759a033a432",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/execution-baseline.json": {
+      "actual": "2a5c447b3d5bc407e71c189bce81fa374b2daeb88d9d95069e1ff6d924ae6a94",
+      "expected": "2a5c447b3d5bc407e71c189bce81fa374b2daeb88d9d95069e1ff6d924ae6a94",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/execution.json": {
+      "actual": "7b3a15d237b034ec1988c5088f09b81adb935974b50dde59d2e87b028e61c0a5",
+      "expected": "7b3a15d237b034ec1988c5088f09b81adb935974b50dde59d2e87b028e61c0a5",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/finite_stretch/checked.json": {
+      "actual": "b1c6a350dab731cd54f37ddd9ebb5c0ef62094959cd16ad3a0a118755dadee72",
+      "expected": "b1c6a350dab731cd54f37ddd9ebb5c0ef62094959cd16ad3a0a118755dadee72",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/finite_stretch/console.txt": {
+      "actual": "8accdd12df1e9e67aa8e14c6352a89d9029c98c6457705b7f97f88ad8f1357de",
+      "expected": "8accdd12df1e9e67aa8e14c6352a89d9029c98c6457705b7f97f88ad8f1357de",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/finite_stretch/finite_stretch.elements.log": {
+      "actual": "6ea157973658d3c7fe40cf01acf1dd54a84b3d995daa7d2286b659e072825aa8",
+      "expected": "6ea157973658d3c7fe40cf01acf1dd54a84b3d995daa7d2286b659e072825aa8",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/finite_stretch/finite_stretch.feb": {
+      "actual": "0d72a0ee80fb6a8ad88f8bae84c3771321345ef43fa2311786b488ad67c58b22",
+      "expected": "0d72a0ee80fb6a8ad88f8bae84c3771321345ef43fa2311786b488ad67c58b22",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/finite_stretch/finite_stretch.log": {
+      "actual": "14d683113e74ca7ce7f624392984dcdfc8548ab2f9fddb2485e85c90bee02af8",
+      "expected": "14d683113e74ca7ce7f624392984dcdfc8548ab2f9fddb2485e85c90bee02af8",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/finite_stretch/finite_stretch.nodes.log": {
+      "actual": "3b72774c5dec70762594cca01a69df7bf1be9ae6c3e05fe05e72751069689e93",
+      "expected": "3b72774c5dec70762594cca01a69df7bf1be9ae6c3e05fe05e72751069689e93",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/hex8-summary.json": {
+      "actual": "4882279a8f0e89a1118265a4cd09ca2658529a15498c6ceb7da8d5b760c40d2b",
+      "expected": "4882279a8f0e89a1118265a4cd09ca2658529a15498c6ceb7da8d5b760c40d2b",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_nonrigid/checked.json": {
+      "actual": "851bdd30410e5dc68ac0dff0fc4ce82bdc44acb47ab0dc28ee8a1fe5d86cbabb",
+      "expected": "851bdd30410e5dc68ac0dff0fc4ce82bdc44acb47ab0dc28ee8a1fe5d86cbabb",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_nonrigid/console.txt": {
+      "actual": "00fbed3ebc09cab37b7651ac2b1fc9bb928c8247e8aa180fc8ec9a67ce800629",
+      "expected": "00fbed3ebc09cab37b7651ac2b1fc9bb928c8247e8aa180fc8ec9a67ce800629",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_nonrigid/mpc_nonrigid.elements.log": {
+      "actual": "734f781f8e9dd9e7e9f3b8e289e0264d95f162831cf1bb3a4992542bbf1f2498",
+      "expected": "734f781f8e9dd9e7e9f3b8e289e0264d95f162831cf1bb3a4992542bbf1f2498",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_nonrigid/mpc_nonrigid.feb": {
+      "actual": "771f3a99d7a428d84b737c21bccf5c22a60ede8542d82a31310aaa0b074e66f8",
+      "expected": "771f3a99d7a428d84b737c21bccf5c22a60ede8542d82a31310aaa0b074e66f8",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_nonrigid/mpc_nonrigid.log": {
+      "actual": "aeb31ae7258135419f2c96b7ac561d1b53dd599ed26ff2112d0b3e511bab8b3f",
+      "expected": "aeb31ae7258135419f2c96b7ac561d1b53dd599ed26ff2112d0b3e511bab8b3f",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_nonrigid/mpc_nonrigid.nodes.log": {
+      "actual": "c3197dc5a75bcc8f5fa805e28764807557519b283381818d64b5eefe5e227273",
+      "expected": "c3197dc5a75bcc8f5fa805e28764807557519b283381818d64b5eefe5e227273",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_translation/checked.json": {
+      "actual": "3e00b7c394a52e2b3f0d0395f1f6d1c5126005ddbc71329f2183ee8b4c998347",
+      "expected": "3e00b7c394a52e2b3f0d0395f1f6d1c5126005ddbc71329f2183ee8b4c998347",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_translation/console.txt": {
+      "actual": "2cd154f5c989025c02c02b78436ccca42d01ba1e85c0e754f3a7c94e745b8b2f",
+      "expected": "2cd154f5c989025c02c02b78436ccca42d01ba1e85c0e754f3a7c94e745b8b2f",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_translation/mpc_translation.elements.log": {
+      "actual": "f6b35c01ef594ea29695d9fc36e12def945a87ad7857c1f2e98648c635213a78",
+      "expected": "f6b35c01ef594ea29695d9fc36e12def945a87ad7857c1f2e98648c635213a78",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_translation/mpc_translation.feb": {
+      "actual": "956b66dc6cae4904e3a124a8b5e81bec66128d015e1ce85d6b96e533f76d996b",
+      "expected": "956b66dc6cae4904e3a124a8b5e81bec66128d015e1ce85d6b96e533f76d996b",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_translation/mpc_translation.log": {
+      "actual": "02cfac3e0090dbd595c4e0dce4524a964fb45de396005ec2efa06f99ca383d16",
+      "expected": "02cfac3e0090dbd595c4e0dce4524a964fb45de396005ec2efa06f99ca383d16",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_translation/mpc_translation.nodes.log": {
+      "actual": "7b981afd223479f12d3deef891b6fdc494f0c2379b7ed1057b5c36ce0d1c0654",
+      "expected": "7b981afd223479f12d3deef891b6fdc494f0c2379b7ed1057b5c36ce0d1c0654",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/results.json": {
+      "actual": "765dc5ae422ac66d399b095a6f4df95e2e108e2276583441c13210d7440e24cf",
+      "expected": "765dc5ae422ac66d399b095a6f4df95e2e108e2276583441c13210d7440e24cf",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/shear/checked.json": {
+      "actual": "b01f3ac1d2a0100379d870341c8da97d02d97de7fcfa55e9f6a37f5d9aa345c9",
+      "expected": "b01f3ac1d2a0100379d870341c8da97d02d97de7fcfa55e9f6a37f5d9aa345c9",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/shear/console.txt": {
+      "actual": "24110f91138c7711b0aa1f7772213e2435919c397c0a9aea0dd33111e851e78e",
+      "expected": "24110f91138c7711b0aa1f7772213e2435919c397c0a9aea0dd33111e851e78e",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/shear/shear.elements.log": {
+      "actual": "d86f10d2e8475da91e98ef2e9f34ebfef625a9dde733dc1588b91cd004cb82cd",
+      "expected": "d86f10d2e8475da91e98ef2e9f34ebfef625a9dde733dc1588b91cd004cb82cd",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/shear/shear.feb": {
+      "actual": "fa8c1c1f5bac69cb310c72c3fa590e83a87576ac62a99cbd0a6201f029b9c593",
+      "expected": "fa8c1c1f5bac69cb310c72c3fa590e83a87576ac62a99cbd0a6201f029b9c593",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/shear/shear.log": {
+      "actual": "2145982f6336447e71aed39e0753118b4eafce7fed8853f50c0c51c003eaf6cb",
+      "expected": "2145982f6336447e71aed39e0753118b4eafce7fed8853f50c0c51c003eaf6cb",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/shear/shear.nodes.log": {
+      "actual": "49d68b3b66abec99fe7026a6a85c8336d478c88af2935c6b12901f9599fb4469",
+      "expected": "49d68b3b66abec99fe7026a6a85c8336d478c88af2935c6b12901f9599fb4469",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/shear_double_stiffness/checked.json": {
+      "actual": "d831db77aacff7a86545484fc9e2d9328693b93463e3a293e3af479d2b6293a6",
+      "expected": "d831db77aacff7a86545484fc9e2d9328693b93463e3a293e3af479d2b6293a6",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/shear_double_stiffness/console.txt": {
+      "actual": "cf23fb9697746ccfe5614ce4cbd5cd4b58a343de8dc1dfe544cc78f939490d8a",
+      "expected": "cf23fb9697746ccfe5614ce4cbd5cd4b58a343de8dc1dfe544cc78f939490d8a",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/shear_double_stiffness/shear_double_stiffness.elements.log": {
+      "actual": "d40640b320c8272696c94b29e85f412821ea97c77b0bd1a0fff2049326295bed",
+      "expected": "d40640b320c8272696c94b29e85f412821ea97c77b0bd1a0fff2049326295bed",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/shear_double_stiffness/shear_double_stiffness.feb": {
+      "actual": "7e8e6c73909f544ef1cce49f1d83aea2a9050ae2db467c913a027c405ea56dba",
+      "expected": "7e8e6c73909f544ef1cce49f1d83aea2a9050ae2db467c913a027c405ea56dba",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/shear_double_stiffness/shear_double_stiffness.log": {
+      "actual": "619084b2172ed2beb1e00e22357a993003d7d985f7d64540637e5825eded2b47",
+      "expected": "619084b2172ed2beb1e00e22357a993003d7d985f7d64540637e5825eded2b47",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/shear_double_stiffness/shear_double_stiffness.nodes.log": {
+      "actual": "6ac397c1ba84c2dc2b76994d01006475382f93ff864e52f120b5a77da3d6d2f5",
+      "expected": "6ac397c1ba84c2dc2b76994d01006475382f93ff864e52f120b5a77da3d6d2f5",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_affine/checked.json": {
+      "actual": "5aa1d6484a098af615c22a98a085930322b674100a881d32f54907de752c5fb7",
+      "expected": "5aa1d6484a098af615c22a98a085930322b674100a881d32f54907de752c5fb7",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_affine/console.txt": {
+      "actual": "83a6249de8f94d0b0b1801b4cdeb1c58b6d78ffdf328f0121d3671e510621495",
+      "expected": "83a6249de8f94d0b0b1801b4cdeb1c58b6d78ffdf328f0121d3671e510621495",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_affine/tet10_affine.elements.log": {
+      "actual": "1389f65aa1ea44eb98514e7241ecf21ba8fe641c083754553a6ef76ca51397c6",
+      "expected": "1389f65aa1ea44eb98514e7241ecf21ba8fe641c083754553a6ef76ca51397c6",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_affine/tet10_affine.feb": {
+      "actual": "dfafcfde8075aacb36e2014d6abe755470e04667bcbfd69c6857edfb63833d50",
+      "expected": "dfafcfde8075aacb36e2014d6abe755470e04667bcbfd69c6857edfb63833d50",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_affine/tet10_affine.log": {
+      "actual": "b5c8faf3f9d961ab8f6f45940c0b90eb298e59f72849fc483f2d9417e8f241fc",
+      "expected": "b5c8faf3f9d961ab8f6f45940c0b90eb298e59f72849fc483f2d9417e8f241fc",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_affine/tet10_affine.nodes.log": {
+      "actual": "7956ee9d0c797066adaa58971a333d49553e6fb737afc6770dc509e17d0ad8e2",
+      "expected": "7956ee9d0c797066adaa58971a333d49553e6fb737afc6770dc509e17d0ad8e2",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_mpc-summary.json": {
+      "actual": "ea2c997006b1bf3eab1ed6859daa1277b14442b8564a8b18a00b088d7910c7c0",
+      "expected": "ea2c997006b1bf3eab1ed6859daa1277b14442b8564a8b18a00b088d7910c7c0",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/translation/checked.json": {
+      "actual": "01bd99f36f8b52143ab13c290ee1220605c3079a46460a1db903d5e1baf86a5f",
+      "expected": "01bd99f36f8b52143ab13c290ee1220605c3079a46460a1db903d5e1baf86a5f",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/translation/console.txt": {
+      "actual": "4386db19eb7b6c1de5877560124968391e84fbc311c6f5fee3df2862d794db08",
+      "expected": "4386db19eb7b6c1de5877560124968391e84fbc311c6f5fee3df2862d794db08",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/translation/translation.elements.log": {
+      "actual": "a5ba50416863d872ccd0a9cfafa7722191cb2295bb82e7425087f3eadfc25e26",
+      "expected": "a5ba50416863d872ccd0a9cfafa7722191cb2295bb82e7425087f3eadfc25e26",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/translation/translation.feb": {
+      "actual": "1b5fa399cc71e2561647b3f9a6baf2f18b5428e62650898fc8e330fc146fe93d",
+      "expected": "1b5fa399cc71e2561647b3f9a6baf2f18b5428e62650898fc8e330fc146fe93d",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/translation/translation.log": {
+      "actual": "f4e31f67f20ea268b009af5739d48e1d1f9de36bd51ac1d07e2a1ad7d64b1d61",
+      "expected": "f4e31f67f20ea268b009af5739d48e1d1f9de36bd51ac1d07e2a1ad7d64b1d61",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/translation/translation.nodes.log": {
+      "actual": "a3e367341989c71db0f6ae3d56b99f1c9516b0f88031020a9a128bdbeff35569",
+      "expected": "a3e367341989c71db0f6ae3d56b99f1c9516b0f88031020a9a128bdbeff35569",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/zero/checked.json": {
+      "actual": "cf1fe679155ffc40803de5a143825fd91e24a79442a64d6d1463b31402a07937",
+      "expected": "cf1fe679155ffc40803de5a143825fd91e24a79442a64d6d1463b31402a07937",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/zero/console.txt": {
+      "actual": "785124fd601fcea82278f5564bb296c0e14f4373a07f8120856301b39536ece9",
+      "expected": "785124fd601fcea82278f5564bb296c0e14f4373a07f8120856301b39536ece9",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/zero/zero.elements.log": {
+      "actual": "1547e3a2e60b48cd581d14f32a7ea2b92df09e9d31e3edd2d22d2fe9942818d3",
+      "expected": "1547e3a2e60b48cd581d14f32a7ea2b92df09e9d31e3edd2d22d2fe9942818d3",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/zero/zero.feb": {
+      "actual": "a20221e487f4a192924d28791aa077fbf268756f42367e48db6b6990d8cace9d",
+      "expected": "a20221e487f4a192924d28791aa077fbf268756f42367e48db6b6990d8cace9d",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/zero/zero.log": {
+      "actual": "c7c370f91397f5f42774eb181e3a6c1cc797f04866652f4659e450a299808bbb",
+      "expected": "c7c370f91397f5f42774eb181e3a6c1cc797f04866652f4659e450a299808bbb",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/accelerate-controls-v1/attempt-01/zero/zero.nodes.log": {
+      "actual": "b28810dc7b15ddb5c0467c4e588038148074c2d3d1c11be26c2940ca8c269bd9",
+      "expected": "b28810dc7b15ddb5c0467c4e588038148074c2d3d1c11be26c2940ca8c269bd9",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/compression-N12-S120-double_mu/loading.json": {
+      "actual": "0004721130a5994eee50e1e2298a877d0bed8f7f0dc2013fa8f0ed85edb8abb9",
+      "expected": "0004721130a5994eee50e1e2298a877d0bed8f7f0dc2013fa8f0ed85edb8abb9",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/compression-N12-S120-double_mu/specimen.feb": {
+      "actual": "7521d5fd6a39afa2b25947a849bce5cc5c99c927df69ae6c3eac672554e01c33",
+      "expected": "7521d5fd6a39afa2b25947a849bce5cc5c99c927df69ae6c3eac672554e01c33",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/compression-N12-S120-reference/loading.json": {
+      "actual": "67eefcf07fa670d80bf295f8e9c899a025715cba588d5d1070af1fa06c0c80b6",
+      "expected": "67eefcf07fa670d80bf295f8e9c899a025715cba588d5d1070af1fa06c0c80b6",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/compression-N12-S120-reference/specimen.feb": {
+      "actual": "25ccff913de0ba266824a57bbe6065d05f36bb62f8d23120761725bb449ef6f9",
+      "expected": "25ccff913de0ba266824a57bbe6065d05f36bb62f8d23120761725bb449ef6f9",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/compression-N12-S60-reference/loading.json": {
+      "actual": "48dcbd091401d151443e81bb0ec4dc101f47d1cede01d450dd08aabdb61633b0",
+      "expected": "48dcbd091401d151443e81bb0ec4dc101f47d1cede01d450dd08aabdb61633b0",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/compression-N12-S60-reference/specimen.feb": {
+      "actual": "6105632d45d2212d5e25f6a8cb3c011ff70a95ffdf342e0583a90e46d8f8bb57",
+      "expected": "6105632d45d2212d5e25f6a8cb3c011ff70a95ffdf342e0583a90e46d8f8bb57",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/compression-N4-S60-reference/loading.json": {
+      "actual": "0611272bea0c97372549fcea7c0cc3f284c2747706bdd326c4f9d639ce1e9f9f",
+      "expected": "0611272bea0c97372549fcea7c0cc3f284c2747706bdd326c4f9d639ce1e9f9f",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/compression-N4-S60-reference/specimen.feb": {
+      "actual": "f32f0b0678e1697a43588786bcf898976e9a6d925f45057d496d86676485f924",
+      "expected": "f32f0b0678e1697a43588786bcf898976e9a6d925f45057d496d86676485f924",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/compression-N8-S60-reference/loading.json": {
+      "actual": "3d43d7143088803a5c732c85b22c259de6d2327b2fe7a92db3cf0e88909dd700",
+      "expected": "3d43d7143088803a5c732c85b22c259de6d2327b2fe7a92db3cf0e88909dd700",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/compression-N8-S60-reference/specimen.feb": {
+      "actual": "4145e40a52be05f1418592ef1ecf02b7ef64c9dbe03a83241cab349ef161a665",
+      "expected": "4145e40a52be05f1418592ef1ecf02b7ef64c9dbe03a83241cab349ef161a665",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/manifest.json": {
+      "actual": "0fe58b97e29bf8d712463ae0eac09b2102129a6af016216b89eb9f8bcb25217c",
+      "expected": "0fe58b97e29bf8d712463ae0eac09b2102129a6af016216b89eb9f8bcb25217c",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/tension-N12-S120-reference/loading.json": {
+      "actual": "7b6b66b43be65b3946997bf86194cae8d99fa73700d0a8325fb7778e1b3dabd2",
+      "expected": "7b6b66b43be65b3946997bf86194cae8d99fa73700d0a8325fb7778e1b3dabd2",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/tension-N12-S120-reference/specimen.feb": {
+      "actual": "536347210daf21a1ea90dbc3011bb032c02a43c5b64120da9f87eaf1049b11aa",
+      "expected": "536347210daf21a1ea90dbc3011bb032c02a43c5b64120da9f87eaf1049b11aa",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/tension-N12-S60-reference/loading.json": {
+      "actual": "637746d8302259447d43d741e85b0730f4cc614f3feab27f3b366d8b4bbbe23e",
+      "expected": "637746d8302259447d43d741e85b0730f4cc614f3feab27f3b366d8b4bbbe23e",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/tension-N12-S60-reference/specimen.feb": {
+      "actual": "31f1ad9c050ea2c17a96c0a1441faa4b2c312f7b7a616d556497057e32220452",
+      "expected": "31f1ad9c050ea2c17a96c0a1441faa4b2c312f7b7a616d556497057e32220452",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/tension-N4-S60-reference/loading.json": {
+      "actual": "7f3eb850770e63f2e4ece85ac8621d8401a14188f25735888aaa68b8ad53727e",
+      "expected": "7f3eb850770e63f2e4ece85ac8621d8401a14188f25735888aaa68b8ad53727e",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/tension-N4-S60-reference/specimen.feb": {
+      "actual": "ac7fe83b6b402f058b5758a77ca513856131bf111c5b2e5e88c908b40696ef0c",
+      "expected": "ac7fe83b6b402f058b5758a77ca513856131bf111c5b2e5e88c908b40696ef0c",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/tension-N8-S60-reference/loading.json": {
+      "actual": "3a0d486bf667346fe4c606e5881edb44d0f521db0c3639683065308f743a5f82",
+      "expected": "3a0d486bf667346fe4c606e5881edb44d0f521db0c3639683065308f743a5f82",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/tension-N8-S60-reference/specimen.feb": {
+      "actual": "f4b69389104dac4cd58ad39021b64e46ce6436cfabc64ee866b84f00350a41ea",
+      "expected": "f4b69389104dac4cd58ad39021b64e46ce6436cfabc64ee866b84f00350a41ea",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/torsion_neg-N12-S120-reference/loading.json": {
+      "actual": "43dfe963dbe14dbfdaed17fbde2f72c0fd276ef1cf8a1b647b17660e52ffcf46",
+      "expected": "43dfe963dbe14dbfdaed17fbde2f72c0fd276ef1cf8a1b647b17660e52ffcf46",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/torsion_neg-N12-S120-reference/specimen.feb": {
+      "actual": "ccd47d61bea8ee46b835241e528e5ec054a30706fd44262b6b480dfdaabb881f",
+      "expected": "ccd47d61bea8ee46b835241e528e5ec054a30706fd44262b6b480dfdaabb881f",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/torsion_neg-N12-S60-reference/loading.json": {
+      "actual": "2ad767fbf900f113e4a4ca72792e7ec26d2c37aa9d63ddc7d0453b24b3c18873",
+      "expected": "2ad767fbf900f113e4a4ca72792e7ec26d2c37aa9d63ddc7d0453b24b3c18873",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/torsion_neg-N12-S60-reference/specimen.feb": {
+      "actual": "2e62b1f7436f171103501c8c0362a146bafe36a554fa051cb44f37e26a51e7b5",
+      "expected": "2e62b1f7436f171103501c8c0362a146bafe36a554fa051cb44f37e26a51e7b5",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/torsion_neg-N4-S60-reference/loading.json": {
+      "actual": "e785d5fbf9c2357f54d9691116805318593acbe7a1032d504fb4c50bcdc0e88a",
+      "expected": "e785d5fbf9c2357f54d9691116805318593acbe7a1032d504fb4c50bcdc0e88a",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/torsion_neg-N4-S60-reference/specimen.feb": {
+      "actual": "0b3abcad15d686857533c039cc60dea02f3d46c87d8303656b524aea331d17f8",
+      "expected": "0b3abcad15d686857533c039cc60dea02f3d46c87d8303656b524aea331d17f8",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/torsion_neg-N8-S60-reference/loading.json": {
+      "actual": "de560144ce94ba8ba943feb2e4590aef9786020dcedb8571ea8c89e72aa26743",
+      "expected": "de560144ce94ba8ba943feb2e4590aef9786020dcedb8571ea8c89e72aa26743",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/torsion_neg-N8-S60-reference/specimen.feb": {
+      "actual": "ef594588c49f5fcd2affdb3c11579ab5297de268451c04ace1c9070569cf997a",
+      "expected": "ef594588c49f5fcd2affdb3c11579ab5297de268451c04ace1c9070569cf997a",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/torsion_pos-N12-S120-double_mu/loading.json": {
+      "actual": "fac2fbdaa657360bf00390f283aac96e8daeb7630a9af4fc925253e1bfe80ed0",
+      "expected": "fac2fbdaa657360bf00390f283aac96e8daeb7630a9af4fc925253e1bfe80ed0",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/torsion_pos-N12-S120-double_mu/specimen.feb": {
+      "actual": "7b809c877b7b719b20d1a8dc7b7b976883620ea107ffd42a08f2492e06f38a13",
+      "expected": "7b809c877b7b719b20d1a8dc7b7b976883620ea107ffd42a08f2492e06f38a13",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/torsion_pos-N12-S120-reference/loading.json": {
+      "actual": "1cc031dce1b833c1776707748f724b51a43dd54d7b542e7939f6b55ee6f71de6",
+      "expected": "1cc031dce1b833c1776707748f724b51a43dd54d7b542e7939f6b55ee6f71de6",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/torsion_pos-N12-S120-reference/specimen.feb": {
+      "actual": "9f52d78d9b65bbfe3752e3a3707ee150a2ce34f2916f96d5591026686d55bbb5",
+      "expected": "9f52d78d9b65bbfe3752e3a3707ee150a2ce34f2916f96d5591026686d55bbb5",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/torsion_pos-N12-S60-reference/loading.json": {
+      "actual": "e9495ef71d822dd933bddf9dd75ffec9aefb88b707fc3015a61603aa7a8cbf0e",
+      "expected": "e9495ef71d822dd933bddf9dd75ffec9aefb88b707fc3015a61603aa7a8cbf0e",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/torsion_pos-N12-S60-reference/specimen.feb": {
+      "actual": "4a428dab4c4a86718d3a95a08005ead95bd153d05d9eb07730c8d6a306faf208",
+      "expected": "4a428dab4c4a86718d3a95a08005ead95bd153d05d9eb07730c8d6a306faf208",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/torsion_pos-N4-S60-reference/loading.json": {
+      "actual": "bfa3ba8c876b2274856b788f8497e4ec5f2730dc3a36fe74318a4ec51952ffae",
+      "expected": "bfa3ba8c876b2274856b788f8497e4ec5f2730dc3a36fe74318a4ec51952ffae",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/torsion_pos-N4-S60-reference/specimen.feb": {
+      "actual": "41bc29d76b8ce0b8e4902e1c5c979a77ddacd5da26538bc2f2135a77eb708958",
+      "expected": "41bc29d76b8ce0b8e4902e1c5c979a77ddacd5da26538bc2f2135a77eb708958",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/torsion_pos-N8-S60-reference/loading.json": {
+      "actual": "58b9d10537b0d9a6676c30414f29c3d1f8263f23513b0e0879416382eba13bda",
+      "expected": "58b9d10537b0d9a6676c30414f29c3d1f8263f23513b0e0879416382eba13bda",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/torsion_pos-N8-S60-reference/specimen.feb": {
+      "actual": "ef6663767570e89eec21b24d6ad82a3b7e45fc9712a8084d9736ad0f46608a97",
+      "expected": "ef6663767570e89eec21b24d6ad82a3b7e45fc9712a8084d9736ad0f46608a97",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/compression-120-double_mu/loading.json": {
+      "actual": "525c9bd86a7a4e9c27b88567b8b908a4f8bc4562d812f77b00797c746c271a27",
+      "expected": "525c9bd86a7a4e9c27b88567b8b908a4f8bc4562d812f77b00797c746c271a27",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/compression-120-double_mu/specimen.feb": {
+      "actual": "a4a8d683dfc4ed10746bd25867d0b59ebbbfa9d4a1698cd4c27ac0c721288995",
+      "expected": "a4a8d683dfc4ed10746bd25867d0b59ebbbfa9d4a1698cd4c27ac0c721288995",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/compression-120-reference/loading.json": {
+      "actual": "d6207bd7ce17c6527b5aedc6dbd1cedf016b04d35b491084f998f871fe02129a",
+      "expected": "d6207bd7ce17c6527b5aedc6dbd1cedf016b04d35b491084f998f871fe02129a",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/compression-120-reference/specimen.feb": {
+      "actual": "1afc593c9e5158bf53711e394b2d8e3193a91623352e628b0281a4a940815adc",
+      "expected": "1afc593c9e5158bf53711e394b2d8e3193a91623352e628b0281a4a940815adc",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/compression-60-reference/loading.json": {
+      "actual": "e88d5d7e575be6fd178cdc6841916e262ae6898e90a4255dc3f6291727244f73",
+      "expected": "e88d5d7e575be6fd178cdc6841916e262ae6898e90a4255dc3f6291727244f73",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/compression-60-reference/specimen.feb": {
+      "actual": "0860b181fc427979b463f516d83fdbd10e9357b90390138f2b2b6c2212101440",
+      "expected": "0860b181fc427979b463f516d83fdbd10e9357b90390138f2b2b6c2212101440",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/mesh.json": {
+      "actual": "0ed154be0d17c8baaac6ee0288381a53ec100f93cd936a194202f69ef32ae033",
+      "expected": "0ed154be0d17c8baaac6ee0288381a53ec100f93cd936a194202f69ef32ae033",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/receipt.json": {
+      "actual": "923f0e8151c4c5c4dbedaa48e35c9463918049ebcfd7c9b1e17b7a1cf8c38199",
+      "expected": "923f0e8151c4c5c4dbedaa48e35c9463918049ebcfd7c9b1e17b7a1cf8c38199",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/specimen.msh": {
+      "actual": "9d93aa6ae2cd2597c9f45f616b56ad146f6323579adf39a83d87b27b748e8c9c",
+      "expected": "9d93aa6ae2cd2597c9f45f616b56ad146f6323579adf39a83d87b27b748e8c9c",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/tension-120-reference/loading.json": {
+      "actual": "659019189574a3d254ea6a5ad4ca85a2df7ec6940654314e9b6098416ca533ce",
+      "expected": "659019189574a3d254ea6a5ad4ca85a2df7ec6940654314e9b6098416ca533ce",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/tension-120-reference/specimen.feb": {
+      "actual": "90b9933c771d7d23655ca3aed872f0e5a5b35a2ce1126772ac482e3f2a467b2f",
+      "expected": "90b9933c771d7d23655ca3aed872f0e5a5b35a2ce1126772ac482e3f2a467b2f",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/tension-60-reference/loading.json": {
+      "actual": "1ec671293c3ce56fef88234761896441585ad1141b239ee27bce65aaa76ebcf7",
+      "expected": "1ec671293c3ce56fef88234761896441585ad1141b239ee27bce65aaa76ebcf7",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/tension-60-reference/specimen.feb": {
+      "actual": "b3cbf26b826b700aab89273f13324852690be09947d087acff6bebd92b218294",
+      "expected": "b3cbf26b826b700aab89273f13324852690be09947d087acff6bebd92b218294",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/torsion_neg-120-reference/loading.json": {
+      "actual": "7cdde763fedd221faff7b22914bd99a371f237d12c43098da41baf20434120f5",
+      "expected": "7cdde763fedd221faff7b22914bd99a371f237d12c43098da41baf20434120f5",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/torsion_neg-120-reference/specimen.feb": {
+      "actual": "2b7015ad8f8df5dd9b092143fd7e3ed1ac788e468858135fb0c2903602b0a7d8",
+      "expected": "2b7015ad8f8df5dd9b092143fd7e3ed1ac788e468858135fb0c2903602b0a7d8",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/torsion_neg-60-reference/loading.json": {
+      "actual": "2103c24825c55d7935bf64218d3440e6759b01be7703a459d4e69c0a3a26ff11",
+      "expected": "2103c24825c55d7935bf64218d3440e6759b01be7703a459d4e69c0a3a26ff11",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/torsion_neg-60-reference/specimen.feb": {
+      "actual": "86b1b2c8efd02f7f623ca4f7f3f2c5fe052cdf603c1196a0cfc0c9760e7f3f7b",
+      "expected": "86b1b2c8efd02f7f623ca4f7f3f2c5fe052cdf603c1196a0cfc0c9760e7f3f7b",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/torsion_pos-120-double_mu/loading.json": {
+      "actual": "b2cfccec897cdcbe080b5553c194ed7f899926780c1ec6e6c288e82340b95ab8",
+      "expected": "b2cfccec897cdcbe080b5553c194ed7f899926780c1ec6e6c288e82340b95ab8",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/torsion_pos-120-double_mu/specimen.feb": {
+      "actual": "17653f658b881f3aa59c03a6a012f76beb3c26e2b3d3c808a78f8975f7017656",
+      "expected": "17653f658b881f3aa59c03a6a012f76beb3c26e2b3d3c808a78f8975f7017656",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/torsion_pos-120-reference/loading.json": {
+      "actual": "3fa76170392cbe0b768c5921ad604c8966b911c3efcbcd7bd7c9d6849d54d808",
+      "expected": "3fa76170392cbe0b768c5921ad604c8966b911c3efcbcd7bd7c9d6849d54d808",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/torsion_pos-120-reference/specimen.feb": {
+      "actual": "c38385b01fa265bcf817b83fd605929d77b1b4b2074f942e54c665d7f039b86f",
+      "expected": "c38385b01fa265bcf817b83fd605929d77b1b4b2074f942e54c665d7f039b86f",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/torsion_pos-60-reference/loading.json": {
+      "actual": "05fb7e7de69c55515028cd67d9a457670c99321c91615a80515d24c01a7196d3",
+      "expected": "05fb7e7de69c55515028cd67d9a457670c99321c91615a80515d24c01a7196d3",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/torsion_pos-60-reference/specimen.feb": {
+      "actual": "978eac09798a579d41df0f6d245417dc4564516da92690a5c26ad5a0dc082949",
+      "expected": "978eac09798a579d41df0f6d245417dc4564516da92690a5c26ad5a0dc082949",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/compression-60-reference/loading.json": {
+      "actual": "3eae99b3963006e65246e49a834603789bdd029523bf3b61ad5415b51fab7498",
+      "expected": "3eae99b3963006e65246e49a834603789bdd029523bf3b61ad5415b51fab7498",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/compression-60-reference/specimen.feb": {
+      "actual": "607afe0a102d44c752085745d237744d84a21886f9507c7532cc374f6fee1afd",
+      "expected": "607afe0a102d44c752085745d237744d84a21886f9507c7532cc374f6fee1afd",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/mesh.json": {
+      "actual": "4df59e253fa595823eedb7ee498b68e01e1f26d9a5427edee1be7defc257e65a",
+      "expected": "4df59e253fa595823eedb7ee498b68e01e1f26d9a5427edee1be7defc257e65a",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/receipt.json": {
+      "actual": "2701d1a0bb0fa99102ffeb16ef8a25a4eca231e19f7e073bc50890c1e540c5e3",
+      "expected": "2701d1a0bb0fa99102ffeb16ef8a25a4eca231e19f7e073bc50890c1e540c5e3",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/specimen.msh": {
+      "actual": "07c3870cedc82a59f2c8f8df96959457eebe6af8dcf0d57d6090ad9cb951e05a",
+      "expected": "07c3870cedc82a59f2c8f8df96959457eebe6af8dcf0d57d6090ad9cb951e05a",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/tension-60-reference/loading.json": {
+      "actual": "dee82a4402158a78aa52ece104ec7c478b8021319df0f0b4e9227369bfa39cf5",
+      "expected": "dee82a4402158a78aa52ece104ec7c478b8021319df0f0b4e9227369bfa39cf5",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/tension-60-reference/specimen.feb": {
+      "actual": "30d19a15d2690e7c0f5536506616e81d353c84fb02916ba55d7ae7bd552b61e5",
+      "expected": "30d19a15d2690e7c0f5536506616e81d353c84fb02916ba55d7ae7bd552b61e5",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/torsion_neg-60-reference/loading.json": {
+      "actual": "062487b07275f2c901eec7c1f988cf23505a134b2bbf2a8c597b5f050e632795",
+      "expected": "062487b07275f2c901eec7c1f988cf23505a134b2bbf2a8c597b5f050e632795",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/torsion_neg-60-reference/specimen.feb": {
+      "actual": "4195443bc0d916b885fb7f52159409e09fedff63dafc426a95996995562d2d72",
+      "expected": "4195443bc0d916b885fb7f52159409e09fedff63dafc426a95996995562d2d72",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/torsion_pos-60-reference/loading.json": {
+      "actual": "afa4f5b3891f114cfa0c3a47567d29f6eaf50c4eb6da1c07c65c1ad5ed980650",
+      "expected": "afa4f5b3891f114cfa0c3a47567d29f6eaf50c4eb6da1c07c65c1ad5ed980650",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/torsion_pos-60-reference/specimen.feb": {
+      "actual": "a19e88501da3e80af743893a57984656b861ff8459a9c3f8e21416c729a991ed",
+      "expected": "a19e88501da3e80af743893a57984656b861ff8459a9c3f8e21416c729a991ed",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/compression-60-reference/loading.json": {
+      "actual": "a16ad897e7ffffd1b3067784d515e2ee9be71d2c335df847af4d5f2b81e41aa5",
+      "expected": "a16ad897e7ffffd1b3067784d515e2ee9be71d2c335df847af4d5f2b81e41aa5",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/compression-60-reference/specimen.feb": {
+      "actual": "b0191042df6fccc4c4dc317bb9145f0a077880a7e5589cd471b9ac93452a2506",
+      "expected": "b0191042df6fccc4c4dc317bb9145f0a077880a7e5589cd471b9ac93452a2506",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/mesh.json": {
+      "actual": "3a6b5bb720bd3998f035abecf15d5c603d46c5ed281ce1d08c4aadec69c1dab9",
+      "expected": "3a6b5bb720bd3998f035abecf15d5c603d46c5ed281ce1d08c4aadec69c1dab9",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/receipt.json": {
+      "actual": "5b3de49ff4d7c4353ef675f3caa82f45a51f54cbbef7739ff85845864561ba53",
+      "expected": "5b3de49ff4d7c4353ef675f3caa82f45a51f54cbbef7739ff85845864561ba53",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/specimen.msh": {
+      "actual": "7660737f04d93e7ca7fb1b47562ef9a23db2fee2bb2e37d80879f98edbb2b87d",
+      "expected": "7660737f04d93e7ca7fb1b47562ef9a23db2fee2bb2e37d80879f98edbb2b87d",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/tension-60-reference/loading.json": {
+      "actual": "fa15bad17b9301b1a22e052a563e57a5273f4f081750af26d988a84d11deeb63",
+      "expected": "fa15bad17b9301b1a22e052a563e57a5273f4f081750af26d988a84d11deeb63",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/tension-60-reference/specimen.feb": {
+      "actual": "474c1f0fdfa5769ab53c0dd72933e63961a90da4db922e57e8b51695b0149a5a",
+      "expected": "474c1f0fdfa5769ab53c0dd72933e63961a90da4db922e57e8b51695b0149a5a",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/torsion_neg-60-reference/loading.json": {
+      "actual": "ac999d18572f0bdb801e36e83cb07658e4a4a5bd6c53c7e37825474ec4ae25f5",
+      "expected": "ac999d18572f0bdb801e36e83cb07658e4a4a5bd6c53c7e37825474ec4ae25f5",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/torsion_neg-60-reference/specimen.feb": {
+      "actual": "bea2dd7ccb17ec1c0c3ec6b0c9db875bd05946f28d4f8bb9c469d0011178521b",
+      "expected": "bea2dd7ccb17ec1c0c3ec6b0c9db875bd05946f28d4f8bb9c469d0011178521b",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/torsion_pos-60-reference/loading.json": {
+      "actual": "a36b1caf1f774c47500586e02f366ee44972158071341d2319457fc8660678ba",
+      "expected": "a36b1caf1f774c47500586e02f366ee44972158071341d2319457fc8660678ba",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/torsion_pos-60-reference/specimen.feb": {
+      "actual": "8977d2e717fb04b853ae835447463f5e43011064ef8ee6fea687486328a0493e",
+      "expected": "8977d2e717fb04b853ae835447463f5e43011064ef8ee6fea687486328a0493e",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/receipt.json": {
+      "actual": "130f37cf55db204468bf094a1a86c769c7c29365dfa24a1deb05848669f9668a",
+      "expected": "130f37cf55db204468bf094a1a86c769c7c29365dfa24a1deb05848669f9668a",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/febio_runtime.py": {
+      "actual": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+      "expected": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_access.py": {
+      "actual": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+      "expected": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_backend.py": {
+      "actual": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+      "expected": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_evaluation.py": {
+      "actual": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+      "expected": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_experiment.py": {
+      "actual": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa",
+      "expected": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_mesh.py": {
+      "actual": "3cb4d99f5d2d7fa2f66fb5af56ebffcf19342b9bee0b4cb2c9acfe98aabdd892",
+      "expected": "3cb4d99f5d2d7fa2f66fb5af56ebffcf19342b9bee0b4cb2c9acfe98aabdd892",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_outputs.py": {
+      "actual": "a372cb89ea9515186d433c74ec650dc3b5cae289619e8b35d481280f6662f473",
+      "expected": "a372cb89ea9515186d433c74ec650dc3b5cae289619e8b35d481280f6662f473",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_physics.py": {
+      "actual": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+      "expected": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_readout.py": {
+      "actual": "21700558e5cb614a11a7cc62dbd5ec8118fabb11b4fbfc88f89cb8aa02012963",
+      "expected": "21700558e5cb614a11a7cc62dbd5ec8118fabb11b4fbfc88f89cb8aa02012963",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/hbe-accelerate-6486dbc/source.tar": {
+      "actual": "fd3a72a995dd38fc1107b83ec71f1b0911ed060ecac451245637c1559e598d34",
+      "expected": "fd3a72a995dd38fc1107b83ec71f1b0911ed060ecac451245637c1559e598d34",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/hbe-experiment-add7e8b/frozen-source/artifacts/mechanics/hbe-01-03-mesh-preparation-v1/release-and-source-binding.json": {
+      "actual": "c7a90d4e71a5c4772a33d8a50a1001e6790411c55700bf26629a1f26d1ce857b",
+      "expected": "c7a90d4e71a5c4772a33d8a50a1001e6790411c55700bf26629a1f26d1ce857b",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/hbe-mesh-preparation-cb72a84/frozen-source/scripts/mechanics_hbe_mesh.py": {
+      "actual": "5b102eb74a171d41a8815e408a6473fd65032dd9b30ff5412cf7243addc7d3e2",
+      "expected": "5b102eb74a171d41a8815e408a6473fd65032dd9b30ff5412cf7243addc7d3e2",
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/hbe-mesh-preparation-cb72a84/source.tar": {
+      "actual": "f2a2a2652361a2f0be1787808b597f734a10b122d4334e288f9165f9e5c1ae74",
+      "expected": "f2a2a2652361a2f0be1787808b597f734a10b122d4334e288f9165f9e5c1ae74",
+      "unchanged": true
+    }
+  },
+  "frozen_source_members_verified": 14,
+  "old_and_prepared_directories": {
+    "artifacts/mechanics/hbe-01-03-continuation-v1/raw-output-index.json": {
+      "all_unchanged": true,
+      "files_verified": 23,
+      "index": {
+        "bytes": 3819,
+        "path": "artifacts/mechanics/hbe-01-03-continuation-v1/raw-output-index.json",
+        "sha256": "dc1cd99215ec9115b97ec50e65f82875d12504715fed4999145d3c559f815b18"
+      }
+    },
+    "artifacts/mechanics/hbe-01-03-experiment-v1/raw-output-index.json": {
+      "all_unchanged": true,
+      "files_verified": 14,
+      "index": {
+        "bytes": 2295,
+        "path": "artifacts/mechanics/hbe-01-03-experiment-v1/raw-output-index.json",
+        "sha256": "ce6f1e0529b22bf7e2e25280d7be98600b9730f5ec323c2f74b8c7112e38ee41"
+      }
+    },
+    "artifacts/mechanics/hbe-01-03-mesh-preparation-v1/raw-output-index.json": {
+      "all_unchanged": true,
+      "files_verified": 52,
+      "index": {
+        "bytes": 8678,
+        "path": "artifacts/mechanics/hbe-01-03-mesh-preparation-v1/raw-output-index.json",
+        "sha256": "0cb55a598e3eddaf9ec486d049343c1ccfe556b64337b1cdb580ac0eb695ad83"
+      }
+    },
+    "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/raw-input-index.json": {
+      "all_unchanged": true,
+      "files_verified": 37,
+      "index": {
+        "bytes": 6330,
+        "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/raw-input-index.json",
+        "sha256": "afb1de5b815e9a91d80ea5b1d04de25265c870dce6a5afcf18f98d74778cce7f"
+      }
+    }
+  },
+  "old_skyline_installed_files_verified": 13,
+  "sealed_archive_check": "Whole-file hash only; no ZIP member opened",
+  "sealed_measurement_archive": {
+    "bytes": 12968598,
+    "path": "data/mechanics/zenodo-8095559/HBE_Data.zip",
+    "sha256": "be1459acf9cae0fdca5f2e0d462a4bc5bb43b1e5674b06346d1dcb46984e4e2c"
+  },
+  "status": "all_checked_inputs_preserved"
+}

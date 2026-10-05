@@ -1,0 +1,435 @@
+{
+  "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+  "source_module_sha256": {
+    "resectionlab/__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "resectionlab/anatomy.py": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37",
+    "resectionlab/app/__init__.py": "cad7c4e1282136061456123711d5bddb56413db3ddfb69314ee78f744d2d6d1e",
+    "resectionlab/app/annotation.py": "724debbe3ec4bef2a3b6eeba83b497c579f26b8a3549117edc5d72bdd993b6a5",
+    "resectionlab/app/desktop.py": "e9b33c7c2dce2dd6b329f9af97033fb33096dbe8b1b9e734e5ae56af489a0f96",
+    "resectionlab/app/refinement.py": "ce6116509a83582c904e844305deceb11c9282c2c6267d7fdaea01a734695c2c",
+    "resectionlab/app/reslice.py": "f397f7317da203ed88561d6638b8b41af54349bd145af5d0ccea01aa54d54796",
+    "resectionlab/app/scene.py": "21a2100de199360a990a12cd4e77fe627cdce5bb6ef79fb1cc2aa074d71f1b5b",
+    "resectionlab/app/slice_view.py": "63b279123a94e748222fc5102eeda7c1d30a3eebab2833aecc15b2335df14367",
+    "resectionlab/app/style.py": "aca2726fe243e19d11e85463589ef9b5db9e7806e4b36d8646ff8167c2d29468",
+    "resectionlab/app/training_view.py": "07fa2bfdacdb470d080cf37d6c3df52d5eee540041619cad9ae6c94132fd88d1",
+    "resectionlab/app/workers.py": "d3cb30b107fcfb930c50c26e9ef87cf277bcd90c4ec824909d6c375e9f4f2f8c",
+    "resectionlab/brain_extraction.py": "0582745cc01eabce87046d5e9c4063c72f7f95279504bc6e517b8747fb9d44fe",
+    "resectionlab/cohort.py": "d69538f80af8b318068af70dbc963b7a9ca6c3a4f62d6e8e542d6e43548fa874",
+    "resectionlab/core.py": "55ca2358e1075205558b89d0418a256f5ad72931e849c9cb9453c42b002d1fd9",
+    "resectionlab/desktop_bridge.py": "84e3821ab065ff2ee775a82b19da3d311a8ee7935d75225fa6ed873988e6f3d2",
+    "resectionlab/diffusion.py": "e7f57bf7467fb3cb5d6b9b3f1c80e4665710713124d0720aa84d31ccc03b8e21",
+    "resectionlab/evaluation.py": "baaa2f3d6b4e41c4621dc22872da9300d649bc91dfeb923e2ad35f66aadad3b7",
+    "resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "resectionlab/imaging.py": "27af71b3581df2d9e9164885b3a6dc63491a6d2214133d177d4a30d7d382ab24",
+    "resectionlab/learning.py": "cd2a05c3eb6426e95190470e1e06096399e52cbd8672c6669b5a4f1106e27b42",
+    "resectionlab/learning_ppo.py": "a3814bc5da4837b66ae20496c38e17edd0edf73ef7863a920924cd7ec2a42d88",
+    "resectionlab/native_refinement.py": "0931deba8950f2e01e8786d9a8a6fa57f1d2ffc78ab8cc58e74409b1579a630f",
+    "resectionlab/native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+    "resectionlab/native_routes.py": "2c398284050bb9042788054854af2ccd72af6ac58b128c3397f092650908f97c",
+    "resectionlab/native_simulation.py": "2461cc6c32eb25a3927bcc3a9379bb02417794c3a764c4b1e705a00bcac6493c",
+    "resectionlab/planning.py": "f113ce78b239f91a86c65d8add74227a9d9f3c0d718449c7968a983e76ea850d",
+    "resectionlab/population_learning.py": "67a78b4c84c821315bc998d3e5ce0bbe8d4172785f23118146c8ede43975601e",
+    "resectionlab/preprocessing.py": "dbd2c4ba9551e2aa0d454b638e256ad8bc6cdf45dcdc8ec08e091e43c3eb14e5",
+    "resectionlab/prior_registration.py": "9828e76ed3e29e232c39dd16ece7d5fefa4cd366d1cab7899121e929ef34a703",
+    "resectionlab/route_native_diagnostics.py": "f2cf704da9e971f321dce707dadd9f0350ec7234ecc75c0ed0fc1242fd8c82cf",
+    "resectionlab/simulation.py": "bc43c16643adf8495f969dcacacb770f5f6be7fdeff0831f2a92eb4aed52939f",
+    "resectionlab/structural_evidence.py": "6a1b9e7aa5b13ea971a75d9416d96ab45de2b46901a036edd73ec58194fb7a33",
+    "resectionlab/worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
+  },
+  "gradient_steps": 0,
+  "clinical_deficit_probability": null,
+  "search": {
+    "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "planning_model_hash": "647009ecfc8e0cff96dbc44923b93ea90ac1296ad1365c4fc5c3ac48690ef505",
+    "elapsed_seconds": 0.4979250419419259,
+    "cancelled": false,
+    "requested_candidates": 2,
+    "assumptions": [
+      "Annotation-assisted static route enumeration; no tissue removal is simulated.",
+      "Access windows are explicitly hypothetical intracranial openings; cortical surface, skull and scalp suitability are not certified.",
+      "Accessibility is conditional on establishing the straight access; brain-envelope overlap is recorded, not silently cleared.",
+      "Only supplied anatomical constraints are checked; absent functional and vascular anatomy remains unassessed.",
+      "Sampled geometric Pareto set within the declared candidate budget; no global or clinical optimum is claimed.",
+      "Separately named native-cell aspiration research profiles; original generic instrument dimensions are unchanged.",
+      "Explicit source-grid-axis hypothetical access to an annotated native target centre; this alternative is annotation-assisted and has its own frozen model.",
+      "Native access support: estimated; hole_filled_nonzero_declared_skull_stripped_MRI_union_target_v1; source sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13. The cortical surface and opening remain unverified.",
+      "Static access remains conditional; source-cell removal and prior-cavity shaft legality require a separate native simulation and independent audit.",
+      "Pareto classification applies only within this native-axis research scenario; it is not pooled with other search models."
+    ],
+    "access_support": {
+      "source": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "method": "hole_filled_nonzero_declared_skull_stripped_MRI_union_target_v1",
+      "evidence_type": "estimated",
+      "review_status": "declared_skull_strip_assumption",
+      "cortical_access_permitted": false,
+      "mask_sha256": "24d2f2f56cf8fe93a6ac47712e810cf33afbfa71baa2c37b9d18ef3c1eef8175",
+      "proposal_version": "explicit-native-source-axis-research-v1",
+      "coordinate_frame": "RAS+"
+    },
+    "optimizer_mode": "SEARCH",
+    "optimizer_version": "explicit-native-source-axis-research-v1",
+    "gradient_steps": 0,
+    "candidates": [
+      {
+        "route_id": "native-axis-a6c7baa3b880755d",
+        "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "entry_mm": [
+          -181.5,
+          85.0,
+          105.0
+        ],
+        "target_mm": [
+          -162.0,
+          85.0,
+          105.0
+        ],
+        "target_compartment": "nonenhancing_or_necrotic_core",
+        "tool_id": "native-fine-aspiration",
+        "window_id": "native_hypothetical_nearest_envelope_axis",
+        "tool": {
+          "tool_id": "native-fine-aspiration",
+          "tip_radius_mm": 1.25,
+          "shaft_radius_mm": 0.45,
+          "working_length_mm": 120.0,
+          "max_access_angle_deg": 35.0,
+          "tip_length_mm": 2.0,
+          "parameter_source": "generic research geometry; not a verified commercial device"
+        },
+        "window": {
+          "center_mm": [
+            -181.5,
+            85.0,
+            105.0
+          ],
+          "normal_inward": [
+            1.0,
+            0.0,
+            -0.0
+          ],
+          "radius_mm": 6.0,
+          "window_id": "native_hypothetical_nearest_envelope_axis"
+        },
+        "route_length_mm": 19.5,
+        "accessible_target_volume_mm3_by_compartment": {
+          "FLAIR_abnormality": 0.0,
+          "enhancing_target": 17.0,
+          "nonenhancing_or_necrotic_core": 78.0
+        },
+        "normal_tissue_exposure_mm3": null,
+        "structure_contact_volume_mm3": {
+          "language": null,
+          "motor": null,
+          "vessels": null
+        },
+        "unknowns": [
+          "brain_segmentation_unassessed",
+          "diffusion_not_audited",
+          "language_function_unassessed",
+          "motor_function_unassessed",
+          "native_frame_provenance_requires_review",
+          "skull_anatomy_unassessed",
+          "vascular_anatomy_unassessed",
+          "language_anatomy_unassessed",
+          "motor_anatomy_unassessed",
+          "vessels_anatomy_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "skull_and_scalp_unassessed",
+          "tissue_forces_unmodeled",
+          "clinical_outcomes_unavailable",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "assumptions": [
+          "Annotation-assisted static route enumeration; no tissue removal is simulated.",
+          "Access windows are explicitly hypothetical intracranial openings; cortical surface, skull and scalp suitability are not certified.",
+          "Accessibility is conditional on establishing the straight access; brain-envelope overlap is recorded, not silently cleared.",
+          "Only supplied anatomical constraints are checked; absent functional and vascular anatomy remains unassessed.",
+          "Sampled geometric Pareto set within the declared candidate budget; no global or clinical optimum is claimed.",
+          "Separately named native-cell aspiration research profiles; original generic instrument dimensions are unchanged.",
+          "Explicit source-grid-axis hypothetical access to an annotated native target centre; this alternative is annotation-assisted and has its own frozen model.",
+          "Native access support: estimated; hole_filled_nonzero_declared_skull_stripped_MRI_union_target_v1; source sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13. The cortical surface and opening remain unverified.",
+          "Static access remains conditional; source-cell removal and prior-cavity shaft legality require a separate native simulation and independent audit.",
+          "Pareto classification applies only within this native-axis research scenario; it is not pooled with other search models."
+        ],
+        "category": "dominated",
+        "dominated_by": [
+          "native-axis-e14f440173a8b13f"
+        ],
+        "assessment": "incomplete",
+        "planning_model_hash": "647009ecfc8e0cff96dbc44923b93ea90ac1296ad1365c4fc5c3ac48690ef505",
+        "accessible_union_volume_mm3": 95.0,
+        "simulated_removed_target_volume_mm3": null,
+        "clinical_deficit_probability": null,
+        "metric_definitions": {
+          "accessible_target_volume_mm3": "Target voxel centres inside the active-tip swept tube; conditional static accessibility, not removal.",
+          "normal_tissue_exposure_mm3": "Conservative unique-voxel full-tool swept-envelope overlap with the supplied non-target brain mask; not removed tissue.",
+          "structure_contact_volume_mm3": "Conservative unique-voxel full-tool swept-envelope overlap with the named supplied structure; not neurological injury.",
+          "pareto": "Sampled non-dominance on available geometric volumes and length. Unknown anatomy is excluded from numerical objectives and remains unassessed."
+        },
+        "geometry": {
+          "feasible": true,
+          "failures": [],
+          "clearance_mm": 4.75,
+          "exposure_volume_mm3": null,
+          "unknowns": [
+            "normal_tissue_exposure_unassessed",
+            "tool_geometry_outside_image_unassessed"
+          ],
+          "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+          "exposure_definition": "unique affine cells in conservative full-tool envelope; upper bound, not removal",
+          "clearance_definition": "conservative lower bound capped at 10 mm; contact is rejected"
+        },
+        "accessible_target_volume_mm3": 95.0
+      },
+      {
+        "route_id": "native-axis-e14f440173a8b13f",
+        "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "entry_mm": [
+          -181.5,
+          85.0,
+          105.0
+        ],
+        "target_mm": [
+          -162.0,
+          85.0,
+          105.0
+        ],
+        "target_compartment": "nonenhancing_or_necrotic_core",
+        "tool_id": "native-wide-aspiration",
+        "window_id": "native_hypothetical_nearest_envelope_axis",
+        "tool": {
+          "tool_id": "native-wide-aspiration",
+          "tip_radius_mm": 2.25,
+          "shaft_radius_mm": 1.1,
+          "working_length_mm": 120.0,
+          "max_access_angle_deg": 35.0,
+          "tip_length_mm": 3.0,
+          "parameter_source": "generic research geometry; not a verified commercial device"
+        },
+        "window": {
+          "center_mm": [
+            -181.5,
+            85.0,
+            105.0
+          ],
+          "normal_inward": [
+            1.0,
+            0.0,
+            -0.0
+          ],
+          "radius_mm": 6.0,
+          "window_id": "native_hypothetical_nearest_envelope_axis"
+        },
+        "route_length_mm": 19.5,
+        "accessible_target_volume_mm3_by_compartment": {
+          "FLAIR_abnormality": 0.0,
+          "enhancing_target": 84.0,
+          "nonenhancing_or_necrotic_core": 325.0
+        },
+        "normal_tissue_exposure_mm3": null,
+        "structure_contact_volume_mm3": {
+          "language": null,
+          "motor": null,
+          "vessels": null
+        },
+        "unknowns": [
+          "brain_segmentation_unassessed",
+          "diffusion_not_audited",
+          "language_function_unassessed",
+          "motor_function_unassessed",
+          "native_frame_provenance_requires_review",
+          "skull_anatomy_unassessed",
+          "vascular_anatomy_unassessed",
+          "language_anatomy_unassessed",
+          "motor_anatomy_unassessed",
+          "vessels_anatomy_unassessed",
+          "normal_tissue_exposure_unassessed",
+          "skull_and_scalp_unassessed",
+          "tissue_forces_unmodeled",
+          "clinical_outcomes_unavailable",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "assumptions": [
+          "Annotation-assisted static route enumeration; no tissue removal is simulated.",
+          "Access windows are explicitly hypothetical intracranial openings; cortical surface, skull and scalp suitability are not certified.",
+          "Accessibility is conditional on establishing the straight access; brain-envelope overlap is recorded, not silently cleared.",
+          "Only supplied anatomical constraints are checked; absent functional and vascular anatomy remains unassessed.",
+          "Sampled geometric Pareto set within the declared candidate budget; no global or clinical optimum is claimed.",
+          "Separately named native-cell aspiration research profiles; original generic instrument dimensions are unchanged.",
+          "Explicit source-grid-axis hypothetical access to an annotated native target centre; this alternative is annotation-assisted and has its own frozen model.",
+          "Native access support: estimated; hole_filled_nonzero_declared_skull_stripped_MRI_union_target_v1; source sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13. The cortical surface and opening remain unverified.",
+          "Static access remains conditional; source-cell removal and prior-cavity shaft legality require a separate native simulation and independent audit.",
+          "Pareto classification applies only within this native-axis research scenario; it is not pooled with other search models."
+        ],
+        "category": "pareto",
+        "dominated_by": [],
+        "assessment": "incomplete",
+        "planning_model_hash": "647009ecfc8e0cff96dbc44923b93ea90ac1296ad1365c4fc5c3ac48690ef505",
+        "accessible_union_volume_mm3": 409.0,
+        "simulated_removed_target_volume_mm3": null,
+        "clinical_deficit_probability": null,
+        "metric_definitions": {
+          "accessible_target_volume_mm3": "Target voxel centres inside the active-tip swept tube; conditional static accessibility, not removal.",
+          "normal_tissue_exposure_mm3": "Conservative unique-voxel full-tool swept-envelope overlap with the supplied non-target brain mask; not removed tissue.",
+          "structure_contact_volume_mm3": "Conservative unique-voxel full-tool swept-envelope overlap with the named supplied structure; not neurological injury.",
+          "pareto": "Sampled non-dominance on available geometric volumes and length. Unknown anatomy is excluded from numerical objectives and remains unassessed."
+        },
+        "geometry": {
+          "feasible": true,
+          "failures": [],
+          "clearance_mm": 3.75,
+          "exposure_volume_mm3": null,
+          "unknowns": [
+            "normal_tissue_exposure_unassessed",
+            "tool_geometry_outside_image_unassessed"
+          ],
+          "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+          "exposure_definition": "unique affine cells in conservative full-tool envelope; upper bound, not removal",
+          "clearance_definition": "conservative lower bound capped at 10 mm; contact is rejected"
+        },
+        "accessible_target_volume_mm3": 409.0
+      }
+    ]
+  },
+  "independent_results": [
+    {
+      "route_id": "native-axis-a6c7baa3b880755d",
+      "tool": {
+        "tool_id": "native-fine-aspiration",
+        "tip_radius_mm": 1.25,
+        "shaft_radius_mm": 0.45,
+        "working_length_mm": 120.0,
+        "max_access_angle_deg": 35.0,
+        "tip_length_mm": 2.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -181.5,
+        85.0,
+        105.0
+      ],
+      "target_mm": [
+        -162.0,
+        85.0,
+        105.0
+      ],
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "native_model_hash": "sha256:49b8019d989386eeadbd6343e4ac99c5bbef570a1efc084cc05dec0ec13032f9",
+      "metrics": {
+        "native_resection_version": "contained-native-cell-connected-suction-v2",
+        "decision_model_hash": "sha256:49b8019d989386eeadbd6343e4ac99c5bbef570a1efc084cc05dec0ec13032f9",
+        "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "native_grid_shape": [
+          240,
+          240,
+          155
+        ],
+        "native_voxel_volume_mm3": 1.0,
+        "simulated_removed_target_mm3": 19.0,
+        "simulated_removed_normal_mm3": 1.0,
+        "modeled_residual_target_mm3": 41900.0,
+        "contacted_tissue_upper_bound_mm3": 189.0,
+        "contacted_but_not_removed_upper_bound_mm3": 169.0,
+        "removed_by_label_mm3": {
+          "1": 0.0,
+          "2": 3.0,
+          "3": 16.0
+        },
+        "tissue_support_provenance": "hole_filled_nonzero_native_MRI_support; unreviewed skull_strip_assumption; source targets retained; source_frame=RAS+; simulation_frame=RAS+",
+        "removal_definition": "fully_contained_connected_native_cells; boundary partial volumes uncredited",
+        "completed_strokes": 1,
+        "clinical_deficit_probability": null
+      },
+      "independent_audit": {
+        "feasible": true,
+        "failures": [],
+        "first_failed_action": null,
+        "first_unsupported_source_voxel": null,
+        "first_unsupported_position_mm": null,
+        "claimed_source_tissue_volume_mm3": 20.0,
+        "contained_source_tissue_volume_mm3": 20.0,
+        "unsupported_source_tissue_volume_mm3": 0.0,
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "action_count": 1,
+        "checker_version": "independent-native-sequence-v2",
+        "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+        "complete_tool_checked": true,
+        "frontier_checked": true
+      }
+    },
+    {
+      "route_id": "native-axis-e14f440173a8b13f",
+      "tool": {
+        "tool_id": "native-wide-aspiration",
+        "tip_radius_mm": 2.25,
+        "shaft_radius_mm": 1.1,
+        "working_length_mm": 120.0,
+        "max_access_angle_deg": 35.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -181.5,
+        85.0,
+        105.0
+      ],
+      "target_mm": [
+        -162.0,
+        85.0,
+        105.0
+      ],
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "native_model_hash": "sha256:7d1fb1b8669d788c107973c5630f47fd7d063e6d12079ed5e545a5ef8dc44c0b",
+      "metrics": {
+        "native_resection_version": "contained-native-cell-connected-suction-v2",
+        "decision_model_hash": "sha256:7d1fb1b8669d788c107973c5630f47fd7d063e6d12079ed5e545a5ef8dc44c0b",
+        "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "native_grid_shape": [
+          240,
+          240,
+          155
+        ],
+        "native_voxel_volume_mm3": 1.0,
+        "simulated_removed_target_mm3": 174.0,
+        "simulated_removed_normal_mm3": 11.0,
+        "modeled_residual_target_mm3": 41745.0,
+        "contacted_tissue_upper_bound_mm3": 543.0,
+        "contacted_but_not_removed_upper_bound_mm3": 358.0,
+        "removed_by_label_mm3": {
+          "1": 0.0,
+          "2": 33.0,
+          "3": 141.0
+        },
+        "tissue_support_provenance": "hole_filled_nonzero_native_MRI_support; unreviewed skull_strip_assumption; source targets retained; source_frame=RAS+; simulation_frame=RAS+",
+        "removal_definition": "fully_contained_connected_native_cells; boundary partial volumes uncredited",
+        "completed_strokes": 1,
+        "clinical_deficit_probability": null
+      },
+      "independent_audit": {
+        "feasible": true,
+        "failures": [],
+        "first_failed_action": null,
+        "first_unsupported_source_voxel": null,
+        "first_unsupported_position_mm": null,
+        "claimed_source_tissue_volume_mm3": 185.0,
+        "contained_source_tissue_volume_mm3": 185.0,
+        "unsupported_source_tissue_volume_mm3": 0.0,
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "action_count": 1,
+        "checker_version": "independent-native-sequence-v2",
+        "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+        "complete_tool_checked": true,
+        "frontier_checked": true
+      }
+    }
+  ],
+  "original_search_regression": {
+    "before_count": 54,
+    "after_count": 54,
+    "same_ids_tools_entries_targets": false
+  },
+  "elapsed_seconds": 6.582614916958846
+}

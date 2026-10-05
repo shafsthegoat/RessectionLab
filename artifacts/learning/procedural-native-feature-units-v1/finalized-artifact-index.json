@@ -1,0 +1,417 @@
+{
+  "finalized_at_utc": "2026-10-04T11:34:20.016158+00:00",
+  "scope": "finalized registered experiment and result artifacts; frozen executable snapshots/checkpoints/raw MRI/full replay retained locally and ignored",
+  "index_excludes_itself": true,
+  "status": "completed",
+  "source_commit": "0bffeaa33dc3120183d0c6fb124aff6e2d327a63",
+  "numerical_runtime_content_hash": "sha256:850dab806bca81be6d18f25cc39643e76d7cf1621d7cbad1f96669228fed65fa",
+  "completed_offline": 2,
+  "completed_online": 12,
+  "completed_frozen": 2,
+  "planned_online": 12,
+  "failed_or_unfinished_runs": 0,
+  "candidates": 23,
+  "unique_native_audits": 9,
+  "rejected_candidates": [],
+  "launcher_seconds": 534.1834489589091,
+  "full_validation_seconds": 43.904390958021395,
+  "offline_full_call_seconds": {
+    "FEATURE_UNITS": 27.773406916996464,
+    "RAW": 30.62980220897589
+  },
+  "final_worlds_used": false,
+  "versionable_file_count": 78,
+  "versionable_total_bytes": 3447470,
+  "files": [
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/RESULT.md",
+      "bytes": 7546,
+      "sha256": "0384f549dfe1fc221086b005594dfccfba29716b7f433b329cc9ba839684b447"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/comparison.pdf",
+      "bytes": 22986,
+      "sha256": "c4a3d72b3be651d05d3aa2dc7c92bc6ab1e8e40393e76b9162806dadd7905863"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/comparison.png",
+      "bytes": 81103,
+      "sha256": "3e7449c77adfcd74e36260edc5f7c359599cc76a48f60143c92baba207e4c654"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/diagnostics-v1/DIAGNOSTIC.md",
+      "bytes": 5215,
+      "sha256": "29daee759973db7d91eb135d64e80a4f0b98dfab180c87a19601b41d3cacda19"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/diagnostics-v1/diagnostic-script.py",
+      "bytes": 22000,
+      "sha256": "afc667784afe8a21f407aec97045555f28324849e33c95d48fb46e7b6f45927c"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/diagnostics-v1/diagnostic.json",
+      "bytes": 940287,
+      "sha256": "57dc11ffa28dd2b71acf5d439f9c5298017e59698ff6e250ed3b97aec1cb903f"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/diagnostics-v1/source-receipt.json",
+      "bytes": 1493,
+      "sha256": "5d2e86c9eaa7066564ac9c198713e8109d5f53bbd9b4e6ee48b9ab0209b66ec7"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/experiment-status.json",
+      "bytes": 299,
+      "sha256": "131a5c06c87793b1ebcff9c417fe50ffce1e1329ab57955b528a1be2190e7c57"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/launch-source.json",
+      "bytes": 20169,
+      "sha256": "036ce307d1785559a340e3576df495829288cb25760838c1d7b22e8a676a81cd"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/report-reproduction-check.json",
+      "bytes": 365,
+      "sha256": "cec8f92a3779e9408918b3cb4181848d22b4b78e527d4b9027514b3785dd0cbb"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/report-source.json",
+      "bytes": 1291,
+      "sha256": "ff400f79f9cb61e113cd613bd9d481de28aa284c108953102caeb42256b3f4c3"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/report.py",
+      "bytes": 15170,
+      "sha256": "15c6b2ff7b2a05fc68f9ce3ef42c5f138143b9f8d3d2736fe11215c927946af5"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/candidate-freeze.json",
+      "bytes": 25178,
+      "sha256": "a7baf10993aab57ceaf48c5795a896d9cede77f1f5d10261cdad8b1ea41cb02c"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/development-geometry-825d1885-6d54-4d69-963c-b5c585fb6d8c/manifest.json",
+      "bytes": 225,
+      "sha256": "4e5af95f207a3b4577df62c088fa020db6a03ad3f65b06279e9e04bae72a3209"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/development-geometry-825d1885-6d54-4d69-963c-b5c585fb6d8c/native-history-audit.json",
+      "bytes": 23467,
+      "sha256": "b8f515e3da3add10ff35cb7d40a7a1af616bfc595edc0ce37b8efc245840dd2f"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/development-geometry-825d1885-6d54-4d69-963c-b5c585fb6d8c/native-history-replay.json.gz",
+      "bytes": 836680,
+      "sha256": "8cf3086439d9aebe40aba56f12eeddb3a474d7e1aa87bf147e6e2795b434073c"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/development-geometry-825d1885-6d54-4d69-963c-b5c585fb6d8c/replay-storage.json",
+      "bytes": 801,
+      "sha256": "73ca9f84da7c383eefeb39421ffe8f65cf573495821c08aba3cabb3ff5ceeca3"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/development-geometry-825d1885-6d54-4d69-963c-b5c585fb6d8c/validation-timings.json",
+      "bytes": 1504,
+      "sha256": "4efb9d2e5fe4507eb718c76f3977881dbc5266c5833b3cfe9491ff48f7a0725d"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/feature_units-adapted-11/arm-record.json",
+      "bytes": 4732,
+      "sha256": "1939d97a330af00a259e490da53a639ec71bd045865d80a51b760b17aa4e7853"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/feature_units-adapted-11/contract.json",
+      "bytes": 9868,
+      "sha256": "cfe284b2fe0ac8075e2b8c85f5740d4d95f7eeab400cde48833f1c8888705fa5"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/feature_units-adapted-11/result.json",
+      "bytes": 11250,
+      "sha256": "170fd89d119bf24c59d46712080f796e979632ebd2645ae4db961e359673fd20"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/feature_units-adapted-23/arm-record.json",
+      "bytes": 4729,
+      "sha256": "06e42a54739427abfe227a556932f67f5dc409009da2ac567901adf0c4086cc9"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/feature_units-adapted-23/contract.json",
+      "bytes": 9868,
+      "sha256": "e58745ecf573d4736c19e2541c3a51df44d420d0eefd55478a0116052445fdfd"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/feature_units-adapted-23/result.json",
+      "bytes": 11266,
+      "sha256": "85d7cb13e375cdbd66eec99722e76a4eb13e452d3190ec2efa7ba216ef975a65"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/feature_units-adapted-47/arm-record.json",
+      "bytes": 4716,
+      "sha256": "233aa1c884d2203c4d7e5214c1f424480c951f5b7c2b256986e15c2c1addc7cc"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/feature_units-adapted-47/contract.json",
+      "bytes": 9868,
+      "sha256": "e9ae4cf00e7dfb13ff6b2143934f86c73c682463e7140d8cfb87464ece0204d7"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/feature_units-adapted-47/result.json",
+      "bytes": 11528,
+      "sha256": "2c3d8b0f9310332c7c46ab9d9b94da5b7c65c5afd31c48b72b83363dcc6391b4"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/feature_units-scratch-11/arm-record.json",
+      "bytes": 4658,
+      "sha256": "90256c6ed12f438f6926292a51fe1463e6801f02f15c838b5b0d94453c231252"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/feature_units-scratch-11/contract.json",
+      "bytes": 7526,
+      "sha256": "db4cd386be9c62330e6d1dbe1e002e9304ac2d1c28c19820bf811a1b4211bcf3"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/feature_units-scratch-11/result.json",
+      "bytes": 12416,
+      "sha256": "e2b40f527840798da57fb3b06b4b46070944678f039e2b106f561f5dcdf3f06a"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/feature_units-scratch-23/arm-record.json",
+      "bytes": 4649,
+      "sha256": "d6276f2fd262a6a45ce88dadb6fc1a4c228c2f843d8b2c9e613f0f5eb24fe197"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/feature_units-scratch-23/contract.json",
+      "bytes": 7526,
+      "sha256": "4b8d919f0618c26828086d9363a945cf312b2b820064b970a8b78bc0dee7dcc7"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/feature_units-scratch-23/result.json",
+      "bytes": 12410,
+      "sha256": "90b5e15094bd38713b6e2e54d423791ad04e6a15ca9bab31e61fd140903a92d4"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/feature_units-scratch-47/arm-record.json",
+      "bytes": 4638,
+      "sha256": "c66fd684e870c51b00b0fdd420284f00382f562f643bb909cffb1db94d686f8d"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/feature_units-scratch-47/contract.json",
+      "bytes": 7526,
+      "sha256": "88ce65fe7a906e01564a30e7f4f324890ee4b16107b83cce2465545d7ac68fa0"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/feature_units-scratch-47/result.json",
+      "bytes": 13157,
+      "sha256": "cbd1cc9438699e970c8535b2f5fd35deb25675ec1fa572b6d75ec8bcf1366541"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/frozen.json",
+      "bytes": 4963,
+      "sha256": "b12eb6db2076bf2a8cfb3a84c0b80a29a4870c23746dcff29cbdc2f6d0bdb86a"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/manifest.json",
+      "bytes": 26142,
+      "sha256": "f8cf86b1276266473fd63fa353fdc5c6e777a76f2b6265c0dbb4c4d4509f04d2"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/pretraining-feature_units/declaration.json",
+      "bytes": 37098,
+      "sha256": "f80b6bf3e2f76a85ae4daad41a7429a37c595ad535609590789f56132dc303ce"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/pretraining-feature_units/input-study-declaration.json",
+      "bytes": 15469,
+      "sha256": "df60f8331cb553b016feddf8401eba9b590e70e3fb7c8fb3097d3599601d07a1"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/pretraining-feature_units/procedural-design.json",
+      "bytes": 31311,
+      "sha256": "34f22ded043880b10ce4a624280a0cd1df228e4dc158eac07033fc31073f5261"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/pretraining-feature_units/procedural-result.json",
+      "bytes": 61965,
+      "sha256": "8846e8ad6523e5885c24091e8347b8fcbd98d03c58834603e2a2c9b61455b0bc"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/pretraining-feature_units/training/contract.json",
+      "bytes": 7375,
+      "sha256": "9078f456abde786e04de64edbf5dcd8da88caefa60cc5eb2a7c348b33000315a"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/pretraining-feature_units/training/result.json",
+      "bytes": 24052,
+      "sha256": "be81d9fff8123bfaed16fb7ca757ef394c0834febe19bfac67837b60a09dd34e"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/pretraining-raw/declaration.json",
+      "bytes": 37098,
+      "sha256": "f80b6bf3e2f76a85ae4daad41a7429a37c595ad535609590789f56132dc303ce"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/pretraining-raw/input-study-declaration.json",
+      "bytes": 15469,
+      "sha256": "df60f8331cb553b016feddf8401eba9b590e70e3fb7c8fb3097d3599601d07a1"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/pretraining-raw/procedural-design.json",
+      "bytes": 31284,
+      "sha256": "dec607d7da968366df62b836903c1b85e3b08a972f15083d9cba18abe8042680"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/pretraining-raw/procedural-result.json",
+      "bytes": 61726,
+      "sha256": "34a24d4337301f61bb0bdf30991e248f8d25494edfb9c7f09c568824c06fd422"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/pretraining-raw/training/contract.json",
+      "bytes": 7348,
+      "sha256": "9f6aec60b99de9bd1d193f43d43346e01f797f436a459512324096f272a2d90e"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/pretraining-raw/training/result.json",
+      "bytes": 23855,
+      "sha256": "a675416ee6e35ada3143d753f988891223c4502b940e983c5d4e4f21ed4a397a"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/pretraining.json",
+      "bytes": 131628,
+      "sha256": "ef61a0c7dc48a0c78904e902861c2297b349b19c1b0c4ab65f353b23a1d5c801"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/procedural-preflight.json",
+      "bytes": 2406,
+      "sha256": "c7a03ebd3931bfc6b396f5f72764060396b1515468f0224bc4cfefaae6a713ba"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/public-world-preflight.json",
+      "bytes": 28674,
+      "sha256": "bd87fec8e772d20ead2ee2be7fc6aac7e324588a2b2b1fec7db963d7dbbd4ce9"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/raw-adapted-11/arm-record.json",
+      "bytes": 4632,
+      "sha256": "e6525a957345aedc2c5dfcf23191d83745e2136d2473a23b4e9c1f58a636c779"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/raw-adapted-11/contract.json",
+      "bytes": 9814,
+      "sha256": "97e345a3da5c16842daf0804d751bf24eeb2de10e29c31b6517f60214e3988a6"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/raw-adapted-11/result.json",
+      "bytes": 11479,
+      "sha256": "4fb0fce4d63cce089ecf4ff21a0430e7ee65e2d22fbfce759b3f9190cd62b14e"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/raw-adapted-23/arm-record.json",
+      "bytes": 4647,
+      "sha256": "239376104db7f6c6844246027b6766c750e42af4d25d1e1f5eae990233592361"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/raw-adapted-23/contract.json",
+      "bytes": 9814,
+      "sha256": "b26d6e9b57b4fc3757c225878968e34f12e2fa70150ba24469ac930a551f8268"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/raw-adapted-23/result.json",
+      "bytes": 10740,
+      "sha256": "2409ad2473e877152c141ed01b6dddf41eb53882267dcc9991397566801a36c9"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/raw-adapted-47/arm-record.json",
+      "bytes": 4644,
+      "sha256": "c77d1789ab47a09fd07511e8b173a9d0d87a67f411d7db148ddd3d4ea675591b"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/raw-adapted-47/contract.json",
+      "bytes": 9814,
+      "sha256": "927df93e5c099e43946fe411071780f6b21f0aa125f7e27fbe4c0309a1e00f1d"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/raw-adapted-47/result.json",
+      "bytes": 10280,
+      "sha256": "c681aa8e3568bed02e238725045b232063f13f9284aba76b8044b874d0e0da4b"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/raw-scratch-11/arm-record.json",
+      "bytes": 4578,
+      "sha256": "697f3b3d96360348ada42c754e30f56cb51ab391b9b6cf411cb6ed42fcd265dd"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/raw-scratch-11/contract.json",
+      "bytes": 7499,
+      "sha256": "40ec39b740d4e30d1cf6613e80de7ba40a46ebfa083f759301ad926bc21b7fe5"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/raw-scratch-11/result.json",
+      "bytes": 12395,
+      "sha256": "6394d99b1ef8a077d5f7ff1b6c515e203a8b2c5f9e26018470476ad5710a2b60"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/raw-scratch-23/arm-record.json",
+      "bytes": 4568,
+      "sha256": "a87bd8ea76fc988b80dd10662d55a2ca0e34bc8768ae222e5144124fb6858f45"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/raw-scratch-23/contract.json",
+      "bytes": 7499,
+      "sha256": "4832a616c8bd8565901b62f6009aa5333e7ec8b313492c6552e7c68944dfa974"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/raw-scratch-23/result.json",
+      "bytes": 11108,
+      "sha256": "0227cb6a14bb0741c0faa239c397148490753d650d12817ea4bc7ac1b1199c76"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/raw-scratch-47/arm-record.json",
+      "bytes": 4597,
+      "sha256": "841cc96b980b851266171c58c953b3ebacc7d87ddb70d6eec37b50d57bddb766"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/raw-scratch-47/contract.json",
+      "bytes": 7499,
+      "sha256": "0bc2d3be164c6e4da151e715c38d4c06a698c25dfe459c64dc2a0e5b22734a77"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/raw-scratch-47/result.json",
+      "bytes": 11142,
+      "sha256": "872c7ba91a5de770aaf088b72b52091382cd6104a86aa90ae0792c3678d0b886"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/search.json",
+      "bytes": 2288,
+      "sha256": "0c12257605426e909cc7c827356cfc8bd214aa6a8046becd5f04c5a2ffe5b4cf"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/shared-provenance.json",
+      "bytes": 135143,
+      "sha256": "d5c87ec4cd96837bf66a7f007d50e5cc142c44138fbcd00313abea8ffbe6781b"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/source.json",
+      "bytes": 20169,
+      "sha256": "036ce307d1785559a340e3576df495829288cb25760838c1d7b22e8a676a81cd"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/status.json",
+      "bytes": 4276,
+      "sha256": "1bb9a3a37be896b36f9a03ebf147eb0599cfaa5bceb36088d5344dbd956a1780"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/summary.json",
+      "bytes": 353719,
+      "sha256": "1b42e80f0a23e1ad98ee49023e0fdb6845a77f1ef030e419c32fde93ed047a6f"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/study/training.json",
+      "bytes": 58419,
+      "sha256": "140cb6f2323e41eb32334f81f9996f5454c35a7b1306ea1a7d2f1d1e68f2aaf6"
+    },
+    {
+      "path": "artifacts/learning/procedural-native-feature-units-v1/worker-preparation.json",
+      "bytes": 20734,
+      "sha256": "1f971eb380899cc954530993f93f81a270517c8f9caf561682f20ced6a3fbd49"
+    }
+  ]
+}

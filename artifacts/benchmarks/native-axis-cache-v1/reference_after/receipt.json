@@ -1,0 +1,126 @@
+{
+  "actions": [
+    "AXISv1:733fc018d7bf3838d0cdc4b8",
+    "AXISv1:655c3d5433c0c367b0806d85",
+    "AXISv1:bb274fe18711b9d4160bdc31"
+  ],
+  "cache_after": {
+    "bypasses": 0,
+    "cache_version": "experimental-exact-capsule-cover-cache-v1",
+    "calls": 44728,
+    "cavity_cached": false,
+    "compute_seconds": 23.448556383838877,
+    "entries": 5462,
+    "evictions": 39266,
+    "feasibility_cached": false,
+    "geometry_epsilon": 1e-09,
+    "geometry_source_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+    "guarded_direct_geometry_callables": [
+      "_vector",
+      "_immutable",
+      "point_segment_distances",
+      "_segment_cell_distances",
+      "world_to_voxel",
+      "voxel_to_world"
+    ],
+    "hits": 0,
+    "integrity_cached": false,
+    "max_entries": 16384,
+    "max_payload_bytes": 33554432,
+    "misses": 44728,
+    "mode": "exact_orthogonal_cells",
+    "namespace": "sha256:41eeccfc7b8f35c3eb2f1364fbb71073c034d184b73519b65f4ba917aee6f088",
+    "native_config_hash": "sha256:6d817c5c7441cc7d6c6bcaeac4542cfd3266f2474c9c1904a2d6279870b3143b",
+    "native_version": "contained-native-cell-connected-suction-v2",
+    "payload_scope": "array buffers only; keys/bookkeeping and process RSS separate",
+    "query_seconds": 25.32145559194032,
+    "retained_payload_bytes": 33553224,
+    "source_guard_sha256": "6a173851ad383c32b84121cd0d8871535fffa9174d95aa27bdb08ca4b8a7e5f9",
+    "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+  },
+  "cache_before": {
+    "bypasses": 0,
+    "cache_version": "experimental-exact-capsule-cover-cache-v1",
+    "calls": 44728,
+    "cavity_cached": false,
+    "compute_seconds": 23.448556383838877,
+    "entries": 5462,
+    "evictions": 39266,
+    "feasibility_cached": false,
+    "geometry_epsilon": 1e-09,
+    "geometry_source_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+    "guarded_direct_geometry_callables": [
+      "_vector",
+      "_immutable",
+      "point_segment_distances",
+      "_segment_cell_distances",
+      "world_to_voxel",
+      "voxel_to_world"
+    ],
+    "hits": 0,
+    "integrity_cached": false,
+    "max_entries": 16384,
+    "max_payload_bytes": 33554432,
+    "misses": 44728,
+    "mode": "exact_orthogonal_cells",
+    "namespace": "sha256:41eeccfc7b8f35c3eb2f1364fbb71073c034d184b73519b65f4ba917aee6f088",
+    "native_config_hash": "sha256:6d817c5c7441cc7d6c6bcaeac4542cfd3266f2474c9c1904a2d6279870b3143b",
+    "native_version": "contained-native-cell-connected-suction-v2",
+    "payload_scope": "array buffers only; keys/bookkeeping and process RSS separate",
+    "query_seconds": 25.32145559194032,
+    "retained_payload_bytes": 33553224,
+    "source_guard_sha256": "6a173851ad383c32b84121cd0d8871535fffa9174d95aa27bdb08ca4b8a7e5f9",
+    "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+  },
+  "exact_scientific_equality": true,
+  "history_hash": "sha256:8c6e1dd7af7ce28281f424508ee87e6fbe8983120e45f41165313093d7eacfdd",
+  "mode": "reference_after",
+  "process_cumulative_peak_rss_bytes": 2289762304,
+  "scientific_trace_export": {
+    "canonical_bytes": 23482729,
+    "canonical_sha256": "34c52fa24522d0a5cf0bd7f925639bc268435b799ac05e8acb35fe6e5f6d7430",
+    "compressed_bytes": 825670,
+    "compressed_sha256": "47dd135c0869179252042325e6b663aa3c77f7e7be81484ce71f03315a264021"
+  },
+  "scientific_trace_export_seconds": 0.26219099992886186,
+  "scientific_trace_hash": "sha256:34c52fa24522d0a5cf0bd7f925639bc268435b799ac05e8acb35fe6e5f6d7430",
+  "seconds_including_scientific_comparison_and_export": 21.669822375057265,
+  "timing": {
+    "adapter_proposal_accounting": {
+      "integrity_calls": 9,
+      "integrity_seconds": 2.7411802910501137,
+      "preview_calls": 66,
+      "preview_seconds": 15.158033630112186
+    },
+    "full_proposal_verification": {
+      "calls": 10,
+      "seconds": 3.073092208011076
+    },
+    "process_cumulative_peak_rss_bytes": 2221867008,
+    "reset_seconds": 7.167777666007169,
+    "seconds_before_export": 21.1896197500173,
+    "transitions": [
+      {
+        "action_id": "AXISv1:733fc018d7bf3838d0cdc4b8",
+        "reward": 373.24,
+        "terminated": false,
+        "transition_and_next_inventory_seconds": 6.095714792027138
+      },
+      {
+        "action_id": "AXISv1:655c3d5433c0c367b0806d85",
+        "reward": 364.03000000000003,
+        "terminated": false,
+        "transition_and_next_inventory_seconds": 5.276042250101455
+      },
+      {
+        "action_id": "AXISv1:bb274fe18711b9d4160bdc31",
+        "reward": 361.5,
+        "terminated": true,
+        "transition_and_next_inventory_seconds": 1.0172217499930412
+      }
+    ]
+  },
+  "total_reward": 1098.77
+}

@@ -1,0 +1,62 @@
+{
+  "created_at": "2026-10-04T21:18:10.139792+00:00",
+  "excluded_future_files": [
+    "root-visual-decision.json"
+  ],
+  "files": [
+    {
+      "bytes": 464618,
+      "path": "artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/Case4-fixed-native-planes.png",
+      "sha256": "70a64cb177e1151eb3716bd49fd2a4b1bfd16e419fe820df828c69bd0e949546"
+    },
+    {
+      "bytes": 2436,
+      "path": "artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/README.md",
+      "sha256": "3f38066ffffa0082e4a7ae6dad56f932f11c931f579e5550121df5e4062f20c8"
+    },
+    {
+      "bytes": 589,
+      "path": "artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/analytic-preflight.json",
+      "sha256": "6db5635bed1842fdc1bb0d847bcd31891fe7ee37af610efbe22684c1c2430246"
+    },
+    {
+      "bytes": 247,
+      "path": "artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/attempt-01/combined.log",
+      "sha256": "5ee446482d5215cb8ac8927beccdec5aaaa306400505f53a0ecda51a60d410d4"
+    },
+    {
+      "bytes": 1290,
+      "path": "artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/attempt-01/supervision.json",
+      "sha256": "bc9bf4c33c6ceda4f7c0267fe029ccd204f70213132c14223ad43c58ee5a970b"
+    },
+    {
+      "bytes": 15422,
+      "path": "artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/audit.py",
+      "sha256": "d3a30e4bea65f718da84dac76487ecc71d632a43aa099d6121d42a3fdf4351a2"
+    },
+    {
+      "bytes": 2439,
+      "path": "artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/closeout.json",
+      "sha256": "4f71588060a02900b8684157ab2a46722307879e5cfdb1ff7899bb91ed4d25a6"
+    },
+    {
+      "bytes": 815,
+      "path": "artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/execution-release.json",
+      "sha256": "ebda08f3dba34f5530ff13742bc31d3ae76b9e3cc1c4254ec52bd8eedd521a8d"
+    },
+    {
+      "bytes": 7489,
+      "path": "artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/prospective-qc.json",
+      "sha256": "0c20523874370b9738cb3ceeb9e00c271e701fcfb5dcc9ba211093b6bb83f025"
+    },
+    {
+      "bytes": 9324,
+      "path": "artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/qc-receipt.json",
+      "sha256": "f1a3ad984233fd121af37cb463e1d88ebb443f0506a0d183f0acb298116f6c23"
+    }
+  ],
+  "fixed_review_png_included": true,
+  "raw_images_tracked": false,
+  "schema_version": 1,
+  "status": "frozen_after_single_completed_QC"
+}

@@ -1,0 +1,53 @@
+{
+  "archive_file_count": 4093,
+  "archive_file_inventory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/hbe-mesh-preparation-cb72a84/archive-file-inventory.json",
+  "archive_file_inventory_sha256": "6ae562b1e923c8f080b631138bacff18ab4046604fcc329a1a67ed2dbfdc7ae8",
+  "archive_scope": "full_git_tree",
+  "frozen_source_root": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/hbe-mesh-preparation-cb72a84/frozen-source",
+  "pinned_source_and_input_sha256": {
+    "artifacts/mechanics/gmsh-4.15.2-runtime-v1/runtime-receipt.json": "705056d13e78f98fda0ab04884c0c6e3b31ead73f88d01b6dcf3bd99d5417137",
+    "manifests/experiments/hbe-01-03-mechanics-poc-v1.json": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "scripts/mechanics_hbe_mesh.py": "5b102eb74a171d41a8815e408a6473fd65032dd9b30ff5412cf7243addc7d3e2"
+  },
+  "raw_output_root": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation",
+  "recorded_at": "2026-10-04T20:26:18.032225+00:00",
+  "release": "Exactly one three-level Gmsh preparation:3calls/30s each/150s aggregate/3GiB/256MiB active/1GiB total. No curves, solver or retries.",
+  "runtime_files_before": {
+    "interpreter": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+      "resolved_path": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "sha256": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a",
+      "version": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]"
+    },
+    "library": {
+      "architecture": "arm64",
+      "bytes": 82659384,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/gmsh-4.15.2/runtime/lib/libgmsh.4.15.dylib",
+      "sha256": "def0f5c10988a986e5e879b3db9669d8fe016a81e2d994bbaf2b8497c6b8a58a"
+    },
+    "license": {
+      "copied_notice": "LICENSE-upstream.txt",
+      "identifier": "GPL-2.0-or-later_with_upstream_external_linking_exception",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/gmsh-4.15.2/runtime/share/doc/gmsh/LICENSE.txt",
+      "scope": "separate local research utility, no app bundling or distribution approval",
+      "sha256": "32085d8c954e2e22dc667c089f360049e8f1af955f946fb0a18f29d70390276a"
+    },
+    "module": {
+      "bytes": 427222,
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/gmsh-4.15.2/runtime/gmsh.py",
+      "sha256": "f4b0935cebde899750293d87a643090e5ea33c9b18d249267f507db68a0e01c3"
+    }
+  },
+  "runtime_imported_during_preparation": false,
+  "source_archive": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/hbe-mesh-preparation-cb72a84/source.tar",
+  "source_archive_sha256": "f2a2a2652361a2f0be1787808b597f734a10b122d4334e288f9165f9e5c1ae74",
+  "source_commit": "cb72a848c47c6cfb6cc35374963db63d93edbc7c",
+  "source_tree_read_only": true,
+  "states_before_execution": {
+    "12": "not_executed",
+    "4": "not_executed",
+    "8": "not_executed"
+  },
+  "status": "prepared_not_executed"
+}

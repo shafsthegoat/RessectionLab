@@ -1,0 +1,13 @@
+{
+  "schema": "mechanics-accelerate-controls-v1-release",
+  "authorized": false,
+  "root_release": "REQUIRED: separate explicit root release after accepted actual runtime and reviewed committed preparation",
+  "source_commit": "REQUIRED_EXACT_40_CHARACTER_COMMIT",
+  "source_directory": "REQUIRED_ABSOLUTE_IMMUTABLE_ARCHIVE_PATH",
+  "repository_directory": "REQUIRED_ABSOLUTE_REPOSITORY_PATH",
+  "attempt_directory": "REQUIRED_ABSOLUTE_FRESH_ATTEMPT_PATH_WITHIN_REPOSITORY",
+  "runtime_identity": {
+    "path": "REQUIRED_ACTUAL_RUNTIME_IDENTITY_RELATIVE_PATH",
+    "sha256": "REQUIRED_ACTUAL_RUNTIME_IDENTITY_SHA256"
+  }
+}

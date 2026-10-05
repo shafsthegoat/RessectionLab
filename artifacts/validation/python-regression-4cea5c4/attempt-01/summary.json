@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "git_commit": "4cea5c4371bea158b5e5fb7db9042dbb3c0eed32",
+  "execution_record_sha256": "03cde99d2134aeda8154d05dcfff7f18033d9dbb0a4e4c28f3e05f481d8baf2e",
+  "root_release_sha256": "c421face3319b214d7ab582a0aa0852eeda218a99c4a600055104e1a40d00dd4",
+  "runs": {
+    "main": {
+      "passed": 2433,
+      "skipped": {
+        "tests.test_procedural_transfer_runner::test_available_public_bundle_matches_declared_inventory_without_stepping": "Pinned public development bundle is not installed",
+        "tests.test_remind_development_acquisition::test_dicom_row_column_lps_to_ras_mapping_with_permuted_planes": "Run in the isolated IDC acquisition environment for DICOM controls",
+        "tests.test_remind_development_acquisition::test_realistic_decimal_rounding_is_fit_without_relaxing_tolerance": "Run in the isolated IDC acquisition environment for DICOM controls",
+        "tests.test_remind_development_acquisition::test_nonuniform_or_duplicate_planes_are_rejected[positions0]": "Run in the isolated IDC acquisition environment for DICOM controls",
+        "tests.test_remind_development_acquisition::test_nonuniform_or_duplicate_planes_are_rejected[positions1]": "Run in the isolated IDC acquisition environment for DICOM controls",
+        "tests.test_remind_development_acquisition::test_nonorthogonal_orientation_is_rejected": "Run in the isolated IDC acquisition environment for DICOM controls"
+      },
+      "failures": 0,
+      "wrapper_wall_seconds": 279.73392016696744,
+      "pytest_summary": "2433 passed, 6 skipped, 14 warnings in 278.04s (0:04:38)",
+      "self_peak_rss_bytes": 922599424,
+      "sampled_peak_process_family_rss_bytes": 922599424,
+      "resource_samples": 532,
+      "cap_failure": null,
+      "unexpected_project_imports": {},
+      "project_module_origin_count": 244,
+      "slowest_cases": [
+        {
+          "nodeid": "tests.test_native_feature_units_runner::test_tiny_two_profile_interleaved_study_retains_all23_candidates",
+          "junit_seconds": 25.075
+        },
+        {
+          "nodeid": "tests.test_procedural_transfer_runner::test_all_arm_orchestration_uses_explicit_nonpatient_test_scope",
+          "junit_seconds": 18.134
+        },
+        {
+          "nodeid": "tests.test_policy_inputs::test_profile_bound_pretrain_frozen_and_private_adaptation[FEATURE_UNITS]",
+          "junit_seconds": 10.968
+        },
+        {
+          "nodeid": "tests.test_native_feature_units_runner::test_failed_first_learning_arm_retains_all12_unfinished_and_raw_attempt",
+          "junit_seconds": 10.114
+        },
+        {
+          "nodeid": "tests.test_policy_inputs::test_feature_units_preserve_native_model_and_resume_actual_updates",
+          "junit_seconds": 8.579
+        }
+      ]
+    },
+    "dicom": {
+      "passed": 21,
+      "skipped": {},
+      "failures": 0,
+      "wrapper_wall_seconds": 1.5805880000116304,
+      "pytest_summary": "21 passed in 1.11s",
+      "self_peak_rss_bytes": 70713344,
+      "sampled_peak_process_family_rss_bytes": 70221824,
+      "resource_samples": 3,
+      "cap_failure": null,
+      "unexpected_project_imports": {},
+      "project_module_origin_count": 1,
+      "slowest_cases": [
+        {
+          "nodeid": "tests.test_remind_development_acquisition::test_dicom_row_column_lps_to_ras_mapping_with_permuted_planes",
+          "junit_seconds": 0.242
+        },
+        {
+          "nodeid": "tests.test_remind_development_acquisition::test_official_manifest_is_bounded_and_development_only",
+          "junit_seconds": 0.002
+        },
+        {
+          "nodeid": "tests.test_remind_development_acquisition::test_invalid_cached_bytes_are_not_accepted_or_replaced",
+          "junit_seconds": 0.002
+        },
+        {
+          "nodeid": "tests.test_remind_development_acquisition::test_realistic_decimal_rounding_is_fit_without_relaxing_tolerance",
+          "junit_seconds": 0.002
+        },
+        {
+          "nodeid": "tests.test_remind_development_acquisition::test_nonuniform_or_duplicate_planes_are_rejected[positions0]",
+          "junit_seconds": 0.002
+        }
+      ]
+    }
+  },
+  "tracked_source_files_unchanged": 3778,
+  "added_source_files": [],
+  "public_bundle_unchanged": true,
+  "no_tests_rerun_or_modified": true,
+  "workload_note": "Automated code regression includes analytic unit fixtures, not a patient training or mechanics benchmark.",
+  "deduplicated": {
+    "passed": 2438,
+    "remaining_skipped": [
+      "tests.test_procedural_transfer_runner::test_available_public_bundle_matches_declared_inventory_without_stepping"
+    ],
+    "failed": 0
+  },
+  "warnings": "Retained in main.log: 10 NumPy test-fixture shape/dtype mutation deprecations and 4 DIPY legacy descoteaux07 pending deprecations."
+}

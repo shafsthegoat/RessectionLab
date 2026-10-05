@@ -1,0 +1,22 @@
+{
+  "base_commit": "2b0779c95fe7942f2cd6372708f8958463f8a8c1",
+  "files": {
+    "artifacts/native-spatial-feature-independent-v1/conditioning-counterexample.json": "109c1b89e57a16898ea3cae3e1ed3feb6439ac23230fc99c83cf8f2e76adc5ef",
+    "artifacts/native-spatial-feature-probe-v1/probe/report.json": "f7ac523a033e7b9dbfb8119c0a78916d0ef3dc420d7156d8459f25d21bd0c79c",
+    "docs/synthetic-spatial-feature-v2.md": "295a0fc0b75454c333d744555d7b6333765244abd760cd6687c60d949008c538",
+    "pyproject.toml": "7b2ea11f08bcba66915eac703244a2e07c4de38c2c364aadf26830f6c35bb053",
+    "requirements-lock.txt": "836f3d9ada81d5a710e6690f9657ff73e5fa0f12f051d9aa4834e12332d55e5a",
+    "research/native_spatial_features.py": "b412a0f38ff4c33edae29be41ee6368430812ccd0ab6ea0a6d897db8e9434ef4",
+    "research/native_spatial_features_v2.py": "9e4eec9d69c0a426ea4689832ee1b5335e25d52f39fae75d5e81576507da83ea",
+    "scripts/probe_native_spatial_features_v2.py": "deea168082dee4048693cb6c6ded6c2d261a878d9253b7127dc2241773783e50",
+    "tests/test_native_spatial_features_v2.py": "0f6fa9293bc32b5370e1fc0382f544dd0ac98468ea82fd00c891b3e07b2bcc0f"
+  },
+  "scope": "isolated synthetic descriptor algebra; no simulator/policy/patient/gradient",
+  "thread_limits": {
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  }
+}

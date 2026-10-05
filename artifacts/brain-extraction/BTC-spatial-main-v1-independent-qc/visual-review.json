@@ -1,0 +1,242 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-04T18:31:15.746205+00:00",
+  "status": "independent_engineering_visual_review_complete",
+  "numeric_receipt_sha256": "eb8e407a33c0395ea06c0c2b2aaebebcc1e3489d343e0859777783e14f5586e8",
+  "reviewer": "imaging subagent; nonexpert engineering inspection",
+  "subjects": [
+    {
+      "subject": "sub-PAT22",
+      "development_role": "population_training",
+      "image": "artifacts/brain-extraction/BTC-spatial-main-v1-independent-qc/sub-PAT22-native-qc.png",
+      "image_sha256": "76a59ce2c076cf3ce7a68b35c0c30f097232642db616d7f0abdb2b1e82ef40bc",
+      "planes_inspected": [
+        {
+          "row": "Envelope centroid",
+          "axis": 0,
+          "index": 79,
+          "source_annotation_voxels": 379,
+          "excluded_annotation_voxels": 0
+        },
+        {
+          "row": "Envelope centroid",
+          "axis": 1,
+          "index": 101,
+          "source_annotation_voxels": 483,
+          "excluded_annotation_voxels": 0
+        },
+        {
+          "row": "Envelope centroid",
+          "axis": 2,
+          "index": 170,
+          "source_annotation_voxels": 0,
+          "excluded_annotation_voxels": 0
+        },
+        {
+          "row": "Source annotation centroid",
+          "axis": 0,
+          "index": 88,
+          "source_annotation_voxels": 774,
+          "excluded_annotation_voxels": 0
+        },
+        {
+          "row": "Source annotation centroid",
+          "axis": 1,
+          "index": 93,
+          "source_annotation_voxels": 558,
+          "excluded_annotation_voxels": 0
+        },
+        {
+          "row": "Source annotation centroid",
+          "axis": 2,
+          "index": 217,
+          "source_annotation_voxels": 526,
+          "excluded_annotation_voxels": 0
+        }
+      ],
+      "observation": "Sampled envelope follows the visible intracranial region without obvious gross displacement; source annotation lies inside the estimated envelope. Inferior structures are included; this is not a cortical surface.",
+      "gross_axis_displacement_seen_in_sampled_planes": false,
+      "anatomical_accuracy_accepted": false,
+      "review_required": true
+    },
+    {
+      "subject": "sub-PAT25",
+      "development_role": "population_training",
+      "image": "artifacts/brain-extraction/BTC-spatial-main-v1-independent-qc/sub-PAT25-native-qc.png",
+      "image_sha256": "7dabe911793190fad15306b7fee25a7af9047418dcfc7d78851d4307673b03be",
+      "planes_inspected": [
+        {
+          "row": "Envelope centroid",
+          "axis": 0,
+          "index": 80,
+          "source_annotation_voxels": 0,
+          "excluded_annotation_voxels": 0
+        },
+        {
+          "row": "Envelope centroid",
+          "axis": 1,
+          "index": 114,
+          "source_annotation_voxels": 3,
+          "excluded_annotation_voxels": 0
+        },
+        {
+          "row": "Envelope centroid",
+          "axis": 2,
+          "index": 147,
+          "source_annotation_voxels": 0,
+          "excluded_annotation_voxels": 0
+        },
+        {
+          "row": "Source annotation centroid",
+          "axis": 0,
+          "index": 109,
+          "source_annotation_voxels": 823,
+          "excluded_annotation_voxels": 0
+        },
+        {
+          "row": "Source annotation centroid",
+          "axis": 1,
+          "index": 139,
+          "source_annotation_voxels": 593,
+          "excluded_annotation_voxels": 0
+        },
+        {
+          "row": "Source annotation centroid",
+          "axis": 2,
+          "index": 118,
+          "source_annotation_voxels": 894,
+          "excluded_annotation_voxels": 0
+        }
+      ],
+      "observation": "Sampled envelope and temporal/inferior-lateral source annotation are not grossly displaced. Small anterior/inferior contour protrusions near the skull base require anatomical review; no claim about their correctness is made.",
+      "gross_axis_displacement_seen_in_sampled_planes": false,
+      "anatomical_accuracy_accepted": false,
+      "review_required": true
+    },
+    {
+      "subject": "sub-PAT26",
+      "development_role": "checkpoint_selection_development",
+      "image": "artifacts/brain-extraction/BTC-spatial-main-v1-independent-qc/sub-PAT26-native-qc.png",
+      "image_sha256": "5509a34425e2584f1a135a82abb2a1261f759a6c029b90c87be8a7ea01f72c2b",
+      "planes_inspected": [
+        {
+          "row": "Envelope centroid",
+          "axis": 0,
+          "index": 80,
+          "source_annotation_voxels": 0,
+          "excluded_annotation_voxels": 0
+        },
+        {
+          "row": "Envelope centroid",
+          "axis": 1,
+          "index": 105,
+          "source_annotation_voxels": 1428,
+          "excluded_annotation_voxels": 0
+        },
+        {
+          "row": "Envelope centroid",
+          "axis": 2,
+          "index": 127,
+          "source_annotation_voxels": 1989,
+          "excluded_annotation_voxels": 0
+        },
+        {
+          "row": "Source annotation centroid",
+          "axis": 0,
+          "index": 123,
+          "source_annotation_voxels": 1775,
+          "excluded_annotation_voxels": 0
+        },
+        {
+          "row": "Source annotation centroid",
+          "axis": 1,
+          "index": 110,
+          "source_annotation_voxels": 1446,
+          "excluded_annotation_voxels": 0
+        },
+        {
+          "row": "Source annotation centroid",
+          "axis": 2,
+          "index": 126,
+          "source_annotation_voxels": 1994,
+          "excluded_annotation_voxels": 0
+        }
+      ],
+      "observation": "Large lateral source annotation lies inside the estimate in sampled planes. The larger measured volume is descriptive; it was not used to select a different variant, threshold or access.",
+      "gross_axis_displacement_seen_in_sampled_planes": false,
+      "anatomical_accuracy_accepted": false,
+      "review_required": true
+    },
+    {
+      "subject": "sub-PAT27",
+      "development_role": "checkpoint_selection_development",
+      "image": "artifacts/brain-extraction/BTC-spatial-main-v1-independent-qc/sub-PAT27-native-qc.png",
+      "image_sha256": "a1c86e53f11348500d70826d41d5d84ec5e3106fbebb73baab719dd528fab978",
+      "planes_inspected": [
+        {
+          "row": "Envelope centroid",
+          "axis": 0,
+          "index": 80,
+          "source_annotation_voxels": 0,
+          "excluded_annotation_voxels": 0
+        },
+        {
+          "row": "Envelope centroid",
+          "axis": 1,
+          "index": 103,
+          "source_annotation_voxels": 0,
+          "excluded_annotation_voxels": 0
+        },
+        {
+          "row": "Envelope centroid",
+          "axis": 2,
+          "index": 161,
+          "source_annotation_voxels": 540,
+          "excluded_annotation_voxels": 0
+        },
+        {
+          "row": "Source annotation centroid",
+          "axis": 0,
+          "index": 45,
+          "source_annotation_voxels": 702,
+          "excluded_annotation_voxels": 0
+        },
+        {
+          "row": "Source annotation centroid",
+          "axis": 1,
+          "index": 172,
+          "source_annotation_voxels": 668,
+          "excluded_annotation_voxels": 0
+        },
+        {
+          "row": "Source annotation centroid",
+          "axis": 2,
+          "index": 163,
+          "source_annotation_voxels": 475,
+          "excluded_annotation_voxels": 0
+        }
+      ],
+      "observation": "Frontal/lateral source annotation lies inside the estimate in sampled planes, with no obvious gross displacement. Most visible neck is excluded, but exact inferior/anterior boundaries remain unreviewed.",
+      "gross_axis_displacement_seen_in_sampled_planes": false,
+      "anatomical_accuracy_accepted": false,
+      "review_required": true
+    }
+  ],
+  "total_native_planes_inspected": 24,
+  "sampling": "Three native voxel planes through estimated-envelope centroid and three through fixed-threshold source-annotation centroid for each subject; not an exhaustive whole-volume review.",
+  "display": "Green estimated envelope; orange creator annotation threshold scenario >=0.5; magenta would mark excluded annotation. Native voxel axes are labeled; no inferred anatomical orientation labels.",
+  "expert_anatomical_review": false,
+  "brain_reviewed": false,
+  "cortex_localized": false,
+  "cortical_access_permitted": false,
+  "working_brain_mask_selected": false,
+  "model_or_variant_or_access_change": false,
+  "inference_or_training_performed": false,
+  "limitations": [
+    "No visible gross error in sampled planes is not proof of anatomical accuracy.",
+    "Zero source-annotation omission does not measure whole-brain segmentation accuracy or safe surgical access.",
+    "Predicted SDT, including exterior fill at 100 mm, is not a validated surgical clearance field.",
+    "No expert landmarks or reference whole-brain annotation were available for this audit.",
+    "Roles remain TRAIN22/25 and SELECT26/27; no label-driven variant or retry selection."
+  ]
+}

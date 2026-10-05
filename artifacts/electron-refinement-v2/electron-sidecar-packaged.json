@@ -1,0 +1,22 @@
+{
+  "frozen": true,
+  "checks": {
+    "protocol": true,
+    "realMriTransfer": true,
+    "allCompartmentTransfers": true,
+    "staleCaseRejected": true,
+    "searchAndHonestOutputs": true,
+    "workspaceRoundtrip": true,
+    "previousAssetInvalidated": true,
+    "cancellationControl": true
+  },
+  "passed": true,
+  "caseId": "UCSF-PDGM-0004",
+  "shape": [
+    240,
+    240,
+    155
+  ],
+  "candidateCount": 6,
+  "elapsedSeconds": 6.719351792
+}

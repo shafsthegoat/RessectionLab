@@ -1,0 +1,169 @@
+{
+  "version": "mechanics-febio-patch-v1",
+  "status": "prepared_not_executed",
+  "febio_commit": "32ae206ff4881dfb54f62296cd1558e58ed9fcc6",
+  "units": {
+    "length": "m",
+    "force": "N",
+    "stress": "Pa",
+    "energy": "J"
+  },
+  "reference_modulus_role": "Arbitrary numerical scale, not a measured or fitted tissue property",
+  "side_m": 0.01,
+  "mu_reference_Pa": 1000.0,
+  "K_over_mu": 49.666666666666664,
+  "law": "Ogden c1=2mu,m1=2,c2..6=0; pressure_model=1; laugon=0",
+  "element": "three-field-solid hex8; 8 elements,27 nodes,center free in3 DOFs",
+  "reaction_sign": "FEBio Rx/Ry/Rz = body-on-constraint = negative required applied nodal force",
+  "time_fractions": [
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "tolerances": {
+    "position_m": 1e-10,
+    "force_N": 1e-08,
+    "moment_Nm": 1e-10,
+    "stress_Pa": 1e-05,
+    "energy_density_Pa": 1e-07,
+    "jacobian": 1e-07,
+    "relative": 2e-06,
+    "residual_print_relative": 2e-05
+  },
+  "cases": {
+    "zero": {
+      "F": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "translation_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mu_Pa": 1000.0
+    },
+    "translation": {
+      "F": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "translation_m": [
+        0.0003,
+        -0.0002,
+        0.0001
+      ],
+      "mu_Pa": 1000.0
+    },
+    "finite_stretch": {
+      "F": [
+        [
+          1.1,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.95,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "translation_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mu_Pa": 1000.0
+    },
+    "shear": {
+      "F": [
+        [
+          1.0,
+          0.1,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "translation_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mu_Pa": 1000.0
+    },
+    "shear_double_stiffness": {
+      "F": [
+        [
+          1.0,
+          0.1,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "translation_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "mu_Pa": 2000.0
+    }
+  },
+  "source_sha256": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5",
+  "decks": {
+    "zero.feb": "d202aa532e5cc2ec9f8219ba672d37c4606b74cbfeca9b6ea1ebbcd40a061f67",
+    "translation.feb": "98a34f49115f260feff3ce45a231c3dfcb3d5f7bcd15edf1777cd230566a8481",
+    "finite_stretch.feb": "51f7966c5054f009f7e1bf8cefa3306364196b58ede0170b39cbeab18391dee6",
+    "shear.feb": "509c6ea97211d44d81e00d35d004e0e503517c0d0d5d8857a4af89abbec2b5b6",
+    "shear_double_stiffness.feb": "af78dc2a965892293d20786149224ae8337392347fdca19ec7e3ced8db987ac5"
+  }
+}

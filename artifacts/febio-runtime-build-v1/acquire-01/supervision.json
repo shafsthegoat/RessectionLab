@@ -1,0 +1,23 @@
+{
+  "cleanup_error": null,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/febio_runtime.py",
+    "acquire",
+    "--worker",
+    "--output",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-runtime-build-v1/acquire-01"
+  ],
+  "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+  "elapsed_seconds": 11.842301290947944,
+  "error": null,
+  "exit_code": 0,
+  "kill_reason": null,
+  "no_retry": true,
+  "pid": 23040,
+  "rss_cap_bytes": 3221225472,
+  "sampled_peak_process_group_rss_bytes": 62832640,
+  "sampling_note": "Group RSS is sampled; brief between-sample peaks may be missed.",
+  "status": "completed",
+  "wall_cap_seconds": 300
+}

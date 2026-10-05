@@ -1,0 +1,185 @@
+"""One explicit repaired direct-solver profile; no solver or response access.
+
+Runtime/control bindings are supplied by a separate actual release. Missing
+receipts cannot be replaced with a prospective profile or a successful build.
+"""
+from __future__ import annotations
+
+import hashlib
+from pathlib import Path
+import xml.etree.ElementTree as ET
+
+PROFILE_ID = 'accelerate_csc_v1'
+PREFIX = 'data/optional-runtimes/febio-4.13-accelerate-csc-v1'
+UPSTREAM_COMMIT = '32ae206ff4881dfb54f62296cd1558e58ed9fcc6'
+PATCH_SHA = 'c3c6b068ed8e7b2480a64308099fa57d8b02fdbe04076f1497b0b2fdd3b7c3e0'
+PATCHED_SOURCE_SHA = '60e5a3f2350826af1b95376ab93c8a476f2312158763d63d82eb80ec54af79c2'
+SKYLINE_XML = '<linear_solver type="skyline" />'
+ACCELERATE_XML = ('<linear_solver type="accelerate"><iterative>0</iterative>'
+                  '<factorization>4</factorization><order_method>0</order_method>'
+                  '<print_condition_number>0</print_condition_number></linear_solver>')
+HEX_CASES = {'zero', 'translation', 'finite_stretch', 'shear', 'shear_double_stiffness'}
+TET_CASES = {'tet10_affine', 'mpc_translation', 'mpc_nonrigid'}
+
+
+def transform_deck(original):
+    """Replace only the canonical existing solver token; all other bytes stay."""
+    text = original.decode('utf-8') if isinstance(original, bytes) else original
+    tree = ET.fromstring(text)
+    solvers = tree.findall('./Control/solver/linear_solver')
+    if (len(tree.findall('.//linear_solver')) != 1 or len(solvers) != 1
+            or solvers[0].attrib != {'type': 'skyline'} or len(solvers[0])
+            or (solvers[0].text or '').strip() or text.count(SKYLINE_XML) != 1):
+        raise ValueError('Exactly one original canonical Skyline subtree required')
+    return text.replace(SKYLINE_XML, ACCELERATE_XML, 1)
+
+
+def verify_deck(original, adapted):
+    text = adapted.decode('utf-8') if isinstance(adapted, bytes) else adapted
+    if transform_deck(original) != text:
+        raise ValueError('Backend deck changed content outside the exact solver subtree')
+
+
+def verify_runtime_binding(root, binding):
+    """Check private runtime bytes only; this never establishes mechanics acceptance."""
+    # Access imports this module too; shared path/hash helpers are loaded late.
+    from scripts import mechanics_hbe_access as access
+    root = Path(root).resolve()
+    inputs = {}
+    def bound(record, *, json_value=True):
+        value = access.verify_binding(root, record, maximum_bytes=64*1024**2, read_json=json_value)
+        inputs[str(access.local_path(root, record['path']))] = record['sha256']
+        return value
+    identity = bound(binding)
+    prefix = root/PREFIX
+    executable = prefix/'install/bin/febio4'
+    if (identity.get('source_commit') != UPSTREAM_COMMIT
+            or identity.get('runtime_version') != '4.13.0' or identity.get('architecture') != 'arm64'
+            or identity.get('source_patch_sha256') != PATCH_SHA
+            or identity.get('patched_source_sha256') != PATCHED_SOURCE_SHA
+            or identity.get('executable') != str(executable)
+            or not access.HEX64.fullmatch(identity.get('executable_sha256', ''))
+            or identity.get('libraries', {}).get('install/bin/febio4') != identity.get('executable_sha256')):
+        raise ValueError('Runtime does not identify the reviewed private repaired build')
+    for name, digest in identity['libraries'].items():
+        path = (prefix/name).resolve()
+        if not path.is_relative_to(prefix.resolve()):
+            raise ValueError('Runtime library escapes repaired private prefix')
+        bound({'path': str(path.relative_to(root)), 'sha256': digest}, json_value=False)
+    omp = identity['private_openmp']
+    path = Path(omp['path']).resolve()
+    if not path.is_relative_to(prefix.resolve()):
+        raise ValueError('OpenMP escapes repaired private prefix')
+    bound({'path': str(path.relative_to(root)), 'sha256': omp['sha256']}, json_value=False)
+    bound({'path': str((prefix/'source/NumCore/AccelerateSparseSolver.cpp').relative_to(root)),
+           'sha256': PATCHED_SOURCE_SHA}, json_value=False)
+    return {'runtime_identity': binding, 'runtime': identity, 'prefix': str(prefix), 'inputs': inputs}
+
+
+def verify_profile(root, binding):
+    """Verify actual same-runtime controls, repair provenance and private bytes."""
+    from scripts import mechanics_hbe_access as access
+    root = Path(root).resolve()
+    inputs = {}
+    def bound(record):
+        value = access.verify_binding(root, record, maximum_bytes=64*1024**2, read_json=True)
+        inputs[str(access.local_path(root, record['path']))] = record['sha256']
+        return value
+    profile = bound(binding)
+    if (set(profile) != {'schema', 'profile_id', 'runtime_identity', 'hex8_controls',
+                         'tet10_mpc_controls', 'patch_identity'}
+            or profile['schema'] != 'hbe-solver-backend-v1' or profile['profile_id'] != PROFILE_ID):
+        raise ValueError('Explicit complete repaired-Accelerate profile required')
+    runtime = verify_runtime_binding(root, profile['runtime_identity'])
+    inputs.update(runtime['inputs'])
+    patch = bound(profile['patch_identity'])
+    if (patch.get('source_commit') != UPSTREAM_COMMIT or patch.get('patched_sha256') != PATCHED_SOURCE_SHA
+            or patch.get('patch_sha256') != PATCH_SHA or patch.get('changed_source_files') != 1
+            or patch.get('other_changes') is not False or patch.get('iterative_mode_allowed') is not False):
+        raise ValueError('Actual runtime repair differs from reviewed narrow source change')
+    for key, status, field, cases in (
+            ('hex8_controls', 'passed_all_five_fixed_patch_controls', 'rows', HEX_CASES),
+            ('tet10_mpc_controls', 'three_actual_fixed_software_controls_passed', 'case_rows', TET_CASES)):
+        receipt = bound(profile[key])
+        rows = receipt.get(field, [])
+        if (receipt.get('status') != status or receipt.get('solver_backend') != 'accelerate'
+                or receipt.get('runtime_identity_sha256') != profile['runtime_identity']['sha256']
+                or type(receipt.get('solver_invocations')) is not int or receipt['solver_invocations'] != len(cases)
+                or len(rows) != len(cases) or {row.get('case') for row in rows} != cases
+                or not all(row.get('passed') is True for row in rows)):
+            raise ValueError('Complete same-runtime actual analytical controls required: '+key)
+        if key == 'hex8_controls' and receipt.get('stiffness_scaling', {}).get('passed') is not True:
+            raise ValueError('Actual same-runtime stiffness scaling control required')
+    return {'profile_id': PROFILE_ID, 'binding': binding, 'runtime_identity': profile['runtime_identity'],
+            'runtime': runtime['runtime'], 'hex8_controls': profile['hex8_controls'],
+            'tet10_mpc_controls': profile['tet10_mpc_controls'], 'prefix': runtime['prefix'], 'inputs': inputs}
+
+
+def verify_prepared_decks(root, binding, original_cases):
+    """Authenticate the eighteen transformed inputs without regenerating meshes."""
+    from scripts import mechanics_hbe_access as access
+    root = Path(root).resolve()
+    manifest = access.verify_binding(root, binding, maximum_bytes=1024**2, read_json=True)
+    expected = {name for name, row in access.expected_runs().items() if row[-1] != 'fitted'}
+    if (set(original_cases) != expected or manifest.get('schema') != 'hbe-backend-decks-v1' or manifest.get('profile_id') != PROFILE_ID
+            or manifest.get('transform_source_sha256') != hashlib.sha256(Path(__file__).read_bytes()).hexdigest()
+            or set(manifest.get('cases', {})) != set(original_cases)):
+        raise ValueError('Complete source-bound backend deck inventory required')
+    cases, sources = {}, {}
+    inputs = {str(access.local_path(root, binding['path'])): binding['sha256']}
+    for run_id, original in original_cases.items():
+        row = manifest['cases'][run_id]
+        if set(row) != {'original', 'adapted'} or row['original'] != original:
+            raise ValueError('Backend preparation changed original case binding')
+        adapted = row['adapted']
+        if set(adapted) != {'mesh', 'deck', 'loading'} or adapted['mesh'] != original['mesh']:
+            raise ValueError('Backend preparation changed mesh or primitive contract')
+        for value in [*original.values(), *adapted.values()]:
+            access.verify_binding(root, value)
+            inputs[str(access.local_path(root, value['path']))] = value['sha256']
+        verify_deck(access.local_path(root, original['deck']['path']).read_bytes(),
+                    access.local_path(root, adapted['deck']['path']).read_bytes())
+        before = access.verify_binding(root, original['loading'], read_json=True)
+        after = access.verify_binding(root, adapted['loading'], read_json=True)
+        before['deck_sha256'] = adapted['deck']['sha256']
+        if before != after:
+            raise ValueError('Backend preparation changed loading metadata beyond deck hash')
+        cases[run_id], sources[run_id] = adapted, original['deck']
+    return cases, sources, inputs
+
+
+def prepare_decks(root, original_cases, directory):
+    """Write new solver-only input copies, never a release or runtime claim."""
+    from scripts import mechanics_hbe_access as access
+    root, directory = Path(root).resolve(), Path(directory).resolve()
+    expected = {name for name, row in access.expected_runs().items() if row[-1] != 'fitted'}
+    if set(original_cases) != expected or not directory.is_relative_to(root):
+        raise ValueError('Exactly the eighteen fixed reference/scaling cases required')
+    directory.mkdir(parents=True, exist_ok=False)
+    def record(path):
+        return {'path': str(path.relative_to(root)), 'sha256': hashlib.sha256(path.read_bytes()).hexdigest()}
+    manifest = {'schema': 'hbe-backend-decks-v1', 'profile_id': PROFILE_ID,
+                'transform_source_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(), 'cases': {}}
+    for run_id in access.expected_runs():
+        if run_id not in original_cases:
+            continue
+        original = original_cases[run_id]
+        if set(original) != {'mesh', 'deck', 'loading'}:
+            raise ValueError('Original prepared input set differs')
+        for value in original.values():
+            access.verify_binding(root, value)
+        target = directory/run_id.replace(':', '-')
+        target.mkdir()
+        xml = transform_deck(access.local_path(root, original['deck']['path']).read_bytes())
+        with (target/'specimen.feb').open('x', encoding='utf-8', newline='') as stream:
+            stream.write(xml)
+        adapted = {'mesh': original['mesh'], 'deck': record(target/'specimen.feb')}
+        loading = access.verify_binding(root, original['loading'], read_json=True)
+        loading['deck_sha256'] = adapted['deck']['sha256']
+        access.exclusive_json(target/'loading.json', loading)
+        adapted['loading'] = record(target/'loading.json')
+        manifest['cases'][run_id] = {'original': original, 'adapted': adapted}
+    access.exclusive_json(directory/'manifest.json', manifest)
+    binding = record(directory/'manifest.json')
+    verify_prepared_decks(root, binding, original_cases)
+    return binding

@@ -1,0 +1,619 @@
+{
+  "accepted_episodes": 6,
+  "adaptation": false,
+  "automatic_retry": false,
+  "blocked_patients": 2,
+  "checkpoint": {
+    "architecture_hash": "sha256:a3b6740ab188f01016610c566e2009c57ba422c8f9be24adca014f695ae9c917",
+    "parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+    "path": "artifacts/pat05-real-visited-imitation-v1/augmented_latest.pt",
+    "sha256": "7019ded14f17e5a9a88fde089c8e357b6edae65004f495bcfaeb34171b7101bc",
+    "training_kind": "imitation_with_one_visited_state_aggregation",
+    "training_patient": "sub-PAT05"
+  },
+  "complete_primary_pairs": 2,
+  "declaration_sha256": "3e46a2bba38f0b2bea127d49c831c6af597a51aad360afdcdfdadf82b27c23f3",
+  "execution_index_sha256": "5373388b9f978ca431cf485bf8d3c9e7a3497ef5a86d8543236e141f51e55868",
+  "failed_episodes_retained_unassessed": 3,
+  "maximum_sampled_worker_rss_bytes": 1801928704,
+  "method_order": [
+    "frozen_policy",
+    "greedy_search",
+    "random_legal"
+  ],
+  "nontrivial_complete_primary_pairs": 1,
+  "optimizer_updates": 0,
+  "paired_return_difference": {
+    "sub-PAT22": -116.79964836046781,
+    "sub-PAT25": 0.0
+  },
+  "patients": [
+    {
+      "coverage": {
+        "full_target_source_cells": 45400,
+        "full_target_volume_mm3": null,
+        "target_outside_actor_crop_source_cells": null,
+        "target_outside_support_source_cells": 19
+      },
+      "initial_accepted_action_aabb": null,
+      "initial_legal_nonstop_actions": null,
+      "initial_preview_dispositions": null,
+      "methods": {
+        "frozen_policy": {
+          "actions": null,
+          "actor_decision_seconds": null,
+          "episode_seconds": null,
+          "failure": null,
+          "final_parameter_hash": null,
+          "independent_audit_seconds": null,
+          "independent_evaluation_accepted": null,
+          "initial_parameter_hash": null,
+          "invalid_actions": null,
+          "native_steps_including_inventory_seconds": null,
+          "outcomes": null,
+          "planning_seconds": null,
+          "policy_forward_calls": null,
+          "status": "not_executed",
+          "target_access_success": null,
+          "total_method_seconds": null
+        },
+        "greedy_search": {
+          "actions": null,
+          "actor_decision_seconds": null,
+          "episode_seconds": null,
+          "failure": null,
+          "final_parameter_hash": null,
+          "independent_audit_seconds": null,
+          "independent_evaluation_accepted": null,
+          "initial_parameter_hash": null,
+          "invalid_actions": null,
+          "native_steps_including_inventory_seconds": null,
+          "outcomes": null,
+          "planning_seconds": null,
+          "policy_forward_calls": null,
+          "status": "not_executed",
+          "target_access_success": null,
+          "total_method_seconds": null
+        },
+        "random_legal": {
+          "actions": null,
+          "actor_decision_seconds": null,
+          "episode_seconds": null,
+          "failure": null,
+          "final_parameter_hash": null,
+          "independent_audit_seconds": null,
+          "independent_evaluation_accepted": null,
+          "initial_parameter_hash": null,
+          "invalid_actions": null,
+          "native_steps_including_inventory_seconds": null,
+          "outcomes": null,
+          "planning_seconds": null,
+          "policy_forward_calls": null,
+          "status": "not_executed",
+          "target_access_success": null,
+          "total_method_seconds": null
+        }
+      },
+      "nominal_target_mass_fraction_visible": null,
+      "preparation_seconds": 0.4442617919994518,
+      "sampled_peak_rss_bytes": 515751936,
+      "source_and_checkpoint_closure": {
+        "checkpoint_bytes_unchanged": true,
+        "preparation_inputs_unchanged": true,
+        "scope": "parent check after worker exit, including a timeout during optional random",
+        "sources_unchanged": true
+      },
+      "status": "preparation_blocked",
+      "subject": "sub-PAT16",
+      "supervised_seconds": 2.955834125052206
+    },
+    {
+      "coverage": {
+        "full_target_source_cells": 12451,
+        "full_target_volume_mm3": null,
+        "target_outside_actor_crop_source_cells": null,
+        "target_outside_support_source_cells": 125
+      },
+      "initial_accepted_action_aabb": null,
+      "initial_legal_nonstop_actions": null,
+      "initial_preview_dispositions": null,
+      "methods": {
+        "frozen_policy": {
+          "actions": null,
+          "actor_decision_seconds": null,
+          "episode_seconds": null,
+          "failure": null,
+          "final_parameter_hash": null,
+          "independent_audit_seconds": null,
+          "independent_evaluation_accepted": null,
+          "initial_parameter_hash": null,
+          "invalid_actions": null,
+          "native_steps_including_inventory_seconds": null,
+          "outcomes": null,
+          "planning_seconds": null,
+          "policy_forward_calls": null,
+          "status": "not_executed",
+          "target_access_success": null,
+          "total_method_seconds": null
+        },
+        "greedy_search": {
+          "actions": null,
+          "actor_decision_seconds": null,
+          "episode_seconds": null,
+          "failure": null,
+          "final_parameter_hash": null,
+          "independent_audit_seconds": null,
+          "independent_evaluation_accepted": null,
+          "initial_parameter_hash": null,
+          "invalid_actions": null,
+          "native_steps_including_inventory_seconds": null,
+          "outcomes": null,
+          "planning_seconds": null,
+          "policy_forward_calls": null,
+          "status": "not_executed",
+          "target_access_success": null,
+          "total_method_seconds": null
+        },
+        "random_legal": {
+          "actions": null,
+          "actor_decision_seconds": null,
+          "episode_seconds": null,
+          "failure": null,
+          "final_parameter_hash": null,
+          "independent_audit_seconds": null,
+          "independent_evaluation_accepted": null,
+          "initial_parameter_hash": null,
+          "invalid_actions": null,
+          "native_steps_including_inventory_seconds": null,
+          "outcomes": null,
+          "planning_seconds": null,
+          "policy_forward_calls": null,
+          "status": "not_executed",
+          "target_access_success": null,
+          "total_method_seconds": null
+        }
+      },
+      "nominal_target_mass_fraction_visible": null,
+      "preparation_seconds": 0.3941403339849785,
+      "sampled_peak_rss_bytes": 514064384,
+      "source_and_checkpoint_closure": {
+        "checkpoint_bytes_unchanged": true,
+        "preparation_inputs_unchanged": true,
+        "scope": "parent check after worker exit, including a timeout during optional random",
+        "sources_unchanged": true
+      },
+      "status": "preparation_blocked",
+      "subject": "sub-PAT20",
+      "supervised_seconds": 2.5284963329322636
+    },
+    {
+      "coverage": {
+        "full_target_source_cells": 13915,
+        "full_target_volume_mm3": 13914.958718707872,
+        "target_outside_actor_crop_source_cells": 0,
+        "target_outside_support_source_cells": 0
+      },
+      "initial_accepted_action_aabb": {
+        "active_sweep_aabb_ras_mm": [
+          [
+            9.691895331291107,
+            -13.106739555993073,
+            62.496354487204314
+          ],
+          [
+            21.396174315423202,
+            -2.5805662474174342,
+            105.66583123596298
+          ]
+        ],
+        "distal_active_tip_axial_upper_bound_mm": 37.74999945963779,
+        "endpoint_depth_range_mm": [
+          0.5000000346219755,
+          35.49999945963779
+        ],
+        "proposal_count": 76,
+        "target_centers_beyond_axial_bound": 0,
+        "target_centers_outside_aabb": 10186
+      },
+      "initial_legal_nonstop_actions": 76,
+      "initial_preview_dispositions": {
+        "HARD_GEOMETRY:WORKING_REACH": 2,
+        "NATIVE_CONNECTED_STROKE": 76
+      },
+      "methods": {
+        "frozen_policy": {
+          "actions": [
+            "nominal-cavity-52a752d3bf00dba2333c7b71",
+            "nominal-cavity-4034615eee076d69ba939e5d",
+            "nominal-cavity-8e5e81cd33cc9e77321b3370"
+          ],
+          "actor_decision_seconds": 0.9340872499160469,
+          "episode_seconds": 19.973970041959547,
+          "failure": null,
+          "final_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "independent_audit_seconds": 4.0425176250282675,
+          "independent_evaluation_accepted": true,
+          "initial_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "invalid_actions": 0,
+          "native_steps_including_inventory_seconds": 12.795366998994723,
+          "outcomes": {
+            "clinical_deficit_probability": null,
+            "complete_tool_path_length_mm": 210.9999967756287,
+            "cumulative_contacted_tissue_upper_bound_mm3": 1851.9945057166353,
+            "currently_retained_contacted_tissue_upper_bound_mm3": 1026.9969532240736,
+            "language_surrogate": null,
+            "motor_surrogate": null,
+            "nonstop_actions": 3,
+            "normal_removed_mm3": 126.99962768787412,
+            "partial_contact_reward_weight": 0.0,
+            "positive_target_source_cells_removed": 698,
+            "reference_target_fraction_removed": 0.050161695691290045,
+            "simulated_removed_volume_mm3": 824.9975524925616,
+            "target_removed_mm3": 697.9979248046875,
+            "tool_changes": 0,
+            "total_reference_target_mm3": 13914.958718707872,
+            "total_reward": 672.296999270337
+          },
+          "planning_seconds": null,
+          "policy_forward_calls": 3,
+          "status": "complete",
+          "target_access_success": true,
+          "total_method_seconds": 20.33071737503633
+        },
+        "greedy_search": {
+          "actions": [
+            "nominal-cavity-b68d498f9fe1af412016ab9f",
+            "nominal-cavity-26f54c4dc1687520e979a8d0",
+            "nominal-cavity-0c1f9f80cb58de10b5ecad46"
+          ],
+          "actor_decision_seconds": 1.4040968380868435e-05,
+          "episode_seconds": 19.45134070806671,
+          "failure": null,
+          "final_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "independent_audit_seconds": 4.2475349579472095,
+          "independent_evaluation_accepted": true,
+          "initial_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "invalid_actions": 0,
+          "native_steps_including_inventory_seconds": 13.003136001061648,
+          "outcomes": {
+            "clinical_deficit_probability": null,
+            "complete_tool_path_length_mm": 210.999996783225,
+            "cumulative_contacted_tissue_upper_bound_mm3": 2463.9926901111176,
+            "currently_retained_contacted_tissue_upper_bound_mm3": 1490.995576686557,
+            "language_surrogate": null,
+            "motor_surrogate": null,
+            "nonstop_actions": 3,
+            "normal_removed_mm3": 152.99955483081055,
+            "partial_contact_reward_weight": 0.0,
+            "positive_target_source_cells_removed": 820,
+            "reference_target_fraction_removed": 0.05892921245187094,
+            "simulated_removed_volume_mm3": 972.9971134245606,
+            "target_removed_mm3": 819.99755859375,
+            "tool_changes": 0,
+            "total_reference_target_mm3": 13914.958718707872,
+            "total_reward": 789.0966476308048
+          },
+          "planning_seconds": 15.174360167002305,
+          "policy_forward_calls": 0,
+          "status": "complete",
+          "target_access_success": true,
+          "total_method_seconds": 34.9726110000629
+        },
+        "random_legal": {
+          "actions": null,
+          "actor_decision_seconds": null,
+          "episode_seconds": null,
+          "failure": {
+            "message": "Independent episode accounting mismatch: target_removed_mm3",
+            "type": "ValueError"
+          },
+          "final_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "independent_audit_seconds": null,
+          "independent_evaluation_accepted": null,
+          "initial_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "invalid_actions": null,
+          "native_steps_including_inventory_seconds": null,
+          "outcomes": null,
+          "planning_seconds": null,
+          "policy_forward_calls": null,
+          "status": "failed",
+          "target_access_success": null,
+          "total_method_seconds": 13.974986167042516
+        }
+      },
+      "nominal_target_mass_fraction_visible": 1.0,
+      "preparation_seconds": 7.587089499924332,
+      "sampled_peak_rss_bytes": 1801928704,
+      "source_and_checkpoint_closure": {
+        "checkpoint_bytes_unchanged": true,
+        "preparation_inputs_unchanged": true,
+        "scope": "parent check after worker exit, including a timeout during optional random",
+        "sources_unchanged": true
+      },
+      "status": "partial",
+      "subject": "sub-PAT22",
+      "supervised_seconds": 79.22199599992018
+    },
+    {
+      "coverage": {
+        "full_target_source_cells": 16526,
+        "full_target_volume_mm3": 16526.089731668915,
+        "target_outside_actor_crop_source_cells": 0,
+        "target_outside_support_source_cells": 0
+      },
+      "initial_accepted_action_aabb": {
+        "active_sweep_aabb_ras_mm": null,
+        "distal_active_tip_axial_upper_bound_mm": null,
+        "endpoint_depth_range_mm": null,
+        "proposal_count": 0,
+        "target_centers_beyond_axial_bound": null,
+        "target_centers_outside_aabb": null
+      },
+      "initial_legal_nonstop_actions": 0,
+      "initial_preview_dispositions": {
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 78
+      },
+      "methods": {
+        "frozen_policy": {
+          "actions": [
+            "STOP"
+          ],
+          "actor_decision_seconds": 0.4389921249821782,
+          "episode_seconds": 1.1932704580249265,
+          "failure": null,
+          "final_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "independent_audit_seconds": 0.4524343750672415,
+          "independent_evaluation_accepted": true,
+          "initial_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "invalid_actions": 0,
+          "native_steps_including_inventory_seconds": 0.10439262504223734,
+          "outcomes": {
+            "clinical_deficit_probability": null,
+            "complete_tool_path_length_mm": 0.0,
+            "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+            "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+            "language_surrogate": null,
+            "motor_surrogate": null,
+            "nonstop_actions": 0,
+            "normal_removed_mm3": 0.0,
+            "partial_contact_reward_weight": 0.0,
+            "positive_target_source_cells_removed": 0,
+            "reference_target_fraction_removed": 0.0,
+            "simulated_removed_volume_mm3": 0.0,
+            "target_removed_mm3": 0.0,
+            "tool_changes": 0,
+            "total_reference_target_mm3": 16526.089731668915,
+            "total_reward": 0.0
+          },
+          "planning_seconds": null,
+          "policy_forward_calls": 1,
+          "status": "complete",
+          "target_access_success": false,
+          "total_method_seconds": 1.2013661250239238
+        },
+        "greedy_search": {
+          "actions": [
+            "STOP"
+          ],
+          "actor_decision_seconds": 8.666072972118855e-06,
+          "episode_seconds": 0.7040057090343907,
+          "failure": null,
+          "final_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "independent_audit_seconds": 0.4435573340160772,
+          "independent_evaluation_accepted": true,
+          "initial_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "invalid_actions": 0,
+          "native_steps_including_inventory_seconds": 0.08832945791073143,
+          "outcomes": {
+            "clinical_deficit_probability": null,
+            "complete_tool_path_length_mm": 0.0,
+            "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+            "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+            "language_surrogate": null,
+            "motor_surrogate": null,
+            "nonstop_actions": 0,
+            "normal_removed_mm3": 0.0,
+            "partial_contact_reward_weight": 0.0,
+            "positive_target_source_cells_removed": 0,
+            "reference_target_fraction_removed": 0.0,
+            "simulated_removed_volume_mm3": 0.0,
+            "target_removed_mm3": 0.0,
+            "tool_changes": 0,
+            "total_reference_target_mm3": 16526.089731668915,
+            "total_reward": 0.0
+          },
+          "planning_seconds": 0.24901062506251037,
+          "policy_forward_calls": 0,
+          "status": "complete",
+          "target_access_success": false,
+          "total_method_seconds": 0.9558064170414582
+        },
+        "random_legal": {
+          "actions": [
+            "STOP"
+          ],
+          "actor_decision_seconds": 0.00021833297796547413,
+          "episode_seconds": 0.6914587910287082,
+          "failure": null,
+          "final_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "independent_audit_seconds": 0.430553084006533,
+          "independent_evaluation_accepted": true,
+          "initial_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "invalid_actions": 0,
+          "native_steps_including_inventory_seconds": 0.08774266694672406,
+          "outcomes": {
+            "clinical_deficit_probability": null,
+            "complete_tool_path_length_mm": 0.0,
+            "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+            "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+            "language_surrogate": null,
+            "motor_surrogate": null,
+            "nonstop_actions": 0,
+            "normal_removed_mm3": 0.0,
+            "partial_contact_reward_weight": 0.0,
+            "positive_target_source_cells_removed": 0,
+            "reference_target_fraction_removed": 0.0,
+            "simulated_removed_volume_mm3": 0.0,
+            "target_removed_mm3": 0.0,
+            "tool_changes": 0,
+            "total_reference_target_mm3": 16526.089731668915,
+            "total_reward": 0.0
+          },
+          "planning_seconds": null,
+          "policy_forward_calls": 0,
+          "status": "complete",
+          "target_access_success": false,
+          "total_method_seconds": 0.6934455420123413
+        }
+      },
+      "nominal_target_mass_fraction_visible": 1.0,
+      "preparation_seconds": 2.4691035409923643,
+      "sampled_peak_rss_bytes": 1491288064,
+      "source_and_checkpoint_closure": {
+        "checkpoint_bytes_unchanged": true,
+        "preparation_inputs_unchanged": true,
+        "scope": "parent check after worker exit, including a timeout during optional random",
+        "sources_unchanged": true
+      },
+      "status": "complete",
+      "subject": "sub-PAT25",
+      "supervised_seconds": 7.79221524996683
+    },
+    {
+      "coverage": {
+        "full_target_source_cells": 10269,
+        "full_target_volume_mm3": 10268.979472767844,
+        "target_outside_actor_crop_source_cells": 0,
+        "target_outside_support_source_cells": 0
+      },
+      "initial_accepted_action_aabb": {
+        "active_sweep_aabb_ras_mm": [
+          [
+            -12.345361447374557,
+            2.921195614325362,
+            38.04904125376876
+          ],
+          [
+            -1.7434679535300988,
+            13.42226219003156,
+            75.0698495525315
+          ]
+        ],
+        "distal_active_tip_axial_upper_bound_mm": 31.74999972187756,
+        "endpoint_depth_range_mm": [
+          0.5000000029029602,
+          29.49999972187756
+        ],
+        "proposal_count": 70,
+        "target_centers_beyond_axial_bound": 0,
+        "target_centers_outside_aabb": 7509
+      },
+      "initial_legal_nonstop_actions": 70,
+      "initial_preview_dispositions": {
+        "HARD_GEOMETRY:WORKING_REACH": 8,
+        "NATIVE_CONNECTED_STROKE": 70
+      },
+      "methods": {
+        "frozen_policy": {
+          "actions": null,
+          "actor_decision_seconds": null,
+          "episode_seconds": null,
+          "failure": {
+            "message": "Independent episode accounting mismatch: normal_removed_mm3",
+            "type": "ValueError"
+          },
+          "final_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "independent_audit_seconds": null,
+          "independent_evaluation_accepted": null,
+          "initial_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "invalid_actions": null,
+          "native_steps_including_inventory_seconds": null,
+          "outcomes": null,
+          "planning_seconds": null,
+          "policy_forward_calls": null,
+          "status": "failed",
+          "target_access_success": null,
+          "total_method_seconds": 19.122770332964137
+        },
+        "greedy_search": {
+          "actions": null,
+          "actor_decision_seconds": null,
+          "episode_seconds": null,
+          "failure": {
+            "message": "Independent episode accounting mismatch: normal_removed_mm3",
+            "type": "ValueError"
+          },
+          "final_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "independent_audit_seconds": null,
+          "independent_evaluation_accepted": null,
+          "initial_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "invalid_actions": null,
+          "native_steps_including_inventory_seconds": null,
+          "outcomes": null,
+          "planning_seconds": 14.79489583405666,
+          "policy_forward_calls": null,
+          "status": "failed",
+          "target_access_success": null,
+          "total_method_seconds": 32.697133915964514
+        },
+        "random_legal": {
+          "actions": [
+            "nominal-cavity-9dc17ce59f349bd75f258c95",
+            "nominal-cavity-75907b39169b40693244b6d0",
+            "nominal-cavity-f100305513ebe47c621d82ad"
+          ],
+          "actor_decision_seconds": 0.00035066704731434584,
+          "episode_seconds": 16.678322667023167,
+          "failure": null,
+          "final_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "independent_audit_seconds": 2.5365912079578266,
+          "independent_evaluation_accepted": true,
+          "initial_parameter_hash": "sha256:74e90d9487dff6fe9db83c92e3887f15533e0499abaac386a73bbd7d4d566b4e",
+          "invalid_actions": 0,
+          "native_steps_including_inventory_seconds": 12.558119583176449,
+          "outcomes": {
+            "clinical_deficit_probability": null,
+            "complete_tool_path_length_mm": 122.99999885452706,
+            "cumulative_contacted_tissue_upper_bound_mm3": 1086.9978271398038,
+            "currently_retained_contacted_tissue_upper_bound_mm3": 686.9986267203728,
+            "language_surrogate": null,
+            "motor_surrogate": null,
+            "nonstop_actions": 3,
+            "normal_removed_mm3": 108.99978788280993,
+            "partial_contact_reward_weight": 0.0,
+            "positive_target_source_cells_removed": 291,
+            "reference_target_fraction_removed": 0.028337714892538075,
+            "simulated_removed_volume_mm3": 399.999200419431,
+            "target_removed_mm3": 290.9994125366211,
+            "tool_changes": 0,
+            "total_reference_target_mm3": 10268.979472767844,
+            "total_reward": 268.98645496120463
+          },
+          "planning_seconds": null,
+          "policy_forward_calls": 0,
+          "status": "complete",
+          "target_access_success": true,
+          "total_method_seconds": 16.878581666969694
+        }
+      },
+      "nominal_target_mass_fraction_visible": 1.0,
+      "preparation_seconds": 7.844826499931514,
+      "sampled_peak_rss_bytes": 1597358080,
+      "source_and_checkpoint_closure": {
+        "checkpoint_bytes_unchanged": true,
+        "preparation_inputs_unchanged": true,
+        "scope": "parent check after worker exit, including a timeout during optional random",
+        "sources_unchanged": true
+      },
+      "status": "partial",
+      "subject": "sub-PAT28",
+      "supervised_seconds": 78.9857342079049
+    }
+  ],
+  "patients_prescribed": 5,
+  "prepared_patients": 3,
+  "random_seed": 200011,
+  "scope": "remaining TRAIN development anatomy transfer from a single-patient trained model; not held-out generalization",
+  "source_commit": "5198947",
+  "summed_supervised_patient_seconds": 171.48427591577638
+}

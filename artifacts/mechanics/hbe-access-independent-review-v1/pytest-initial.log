@@ -1,0 +1,141 @@
+..FFFF.                                                                  [100%]
+=================================== FAILURES ===================================
+__ test_rehashing_prediction_and_freeze_does_not_make_a_new_authorized_freeze __
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-hbe-access-review-v1-initial/test_rehashing_prediction_and_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10aef6900>
+
+    def test_rehashing_prediction_and_freeze_does_not_make_a_new_authorized_freeze(tmp_path, monkeypatch):
+        study = f.study_fixture(tmp_path)
+>       freeze, _, prediction_binding, _ = f.frozen_fixture(tmp_path, study)
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_mechanics_hbe_access_review.py:48: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_mechanics_hbe_access.py:87: in frozen_fixture
+    freeze=study.freeze_predictions(fit_binding=fit_binding,prediction_binding=prediction_binding,
+scripts/mechanics_hbe_access.py:239: in freeze_predictions
+    evidence=validate_numerical_evidence(self.root,numerical_binding,protocol_sha256=self.protocol_binding['sha256'],fitted_mu_Pa=fit['mu_Pa'])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-hbe-access-review-v1-initial/test_rehashing_prediction_and_0')
+binding = {'path': 'numerical.json', 'sha256': '57b32e998080bf3fb08a0782ed9735e28f8d510eace4bd303c7b69b4f992688a'}
+protocol_sha256 = '65ea740da5694c2999cb3f6940e804ff3cc42e8c0c99c1d41582aba10d6aa19c'
+fitted_mu_Pa = 2000.0, _require_fitted = True
+
+    def validate_numerical_evidence(root,binding,*,protocol_sha256,fitted_mu_Pa,_require_fitted=True):
+        report=verify_binding(root,binding,maximum_bytes=8*1024**2,read_json=True)
+        if report.get('schema')!='hbe-numerical-evidence-v1' or report.get('protocol_sha256')!=protocol_sha256:
+            raise ValueError('Unbound numerical evidence')
+        sources=report.get('source_bindings',{})
+        if set(sources)!={'physics','primitive_parser','mesh_deck','curve_evaluator','run_readout'}:
+>           raise ValueError('Complete independent source bindings required')
+E           ValueError: Complete independent source bindings required
+
+scripts/mechanics_hbe_access.py:99: ValueError
+__ test_holdout_attempt_permanently_closes_calibration_even_for_new_instance ___
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-hbe-access-review-v1-initial/test_holdout_attempt_permanent0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10ae68f80>
+
+    def test_holdout_attempt_permanently_closes_calibration_even_for_new_instance(tmp_path, monkeypatch):
+        study = f.study_fixture(tmp_path)
+>       freeze, *_ = f.frozen_fixture(tmp_path, study)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_mechanics_hbe_access_review.py:64: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_mechanics_hbe_access.py:87: in frozen_fixture
+    freeze=study.freeze_predictions(fit_binding=fit_binding,prediction_binding=prediction_binding,
+scripts/mechanics_hbe_access.py:239: in freeze_predictions
+    evidence=validate_numerical_evidence(self.root,numerical_binding,protocol_sha256=self.protocol_binding['sha256'],fitted_mu_Pa=fit['mu_Pa'])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-hbe-access-review-v1-initial/test_holdout_attempt_permanent0')
+binding = {'path': 'numerical.json', 'sha256': '57b32e998080bf3fb08a0782ed9735e28f8d510eace4bd303c7b69b4f992688a'}
+protocol_sha256 = '65ea740da5694c2999cb3f6940e804ff3cc42e8c0c99c1d41582aba10d6aa19c'
+fitted_mu_Pa = 2000.0, _require_fitted = True
+
+    def validate_numerical_evidence(root,binding,*,protocol_sha256,fitted_mu_Pa,_require_fitted=True):
+        report=verify_binding(root,binding,maximum_bytes=8*1024**2,read_json=True)
+        if report.get('schema')!='hbe-numerical-evidence-v1' or report.get('protocol_sha256')!=protocol_sha256:
+            raise ValueError('Unbound numerical evidence')
+        sources=report.get('source_bindings',{})
+        if set(sources)!={'physics','primitive_parser','mesh_deck','curve_evaluator','run_readout'}:
+>           raise ValueError('Complete independent source bindings required')
+E           ValueError: Complete independent source bindings required
+
+scripts/mechanics_hbe_access.py:99: ValueError
+_______________ test_holdout_attempt_permanently_closes_refreeze _______________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-hbe-access-review-v1-initial/test_holdout_attempt_permanent1')
+
+    def test_holdout_attempt_permanently_closes_refreeze(tmp_path):
+        study = f.study_fixture(tmp_path)
+>       freeze, fit_binding, prediction_binding, numerical_binding = f.frozen_fixture(tmp_path, study)
+                                                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_mechanics_hbe_access_review.py:76: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_mechanics_hbe_access.py:87: in frozen_fixture
+    freeze=study.freeze_predictions(fit_binding=fit_binding,prediction_binding=prediction_binding,
+scripts/mechanics_hbe_access.py:239: in freeze_predictions
+    evidence=validate_numerical_evidence(self.root,numerical_binding,protocol_sha256=self.protocol_binding['sha256'],fitted_mu_Pa=fit['mu_Pa'])
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+root = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-hbe-access-review-v1-initial/test_holdout_attempt_permanent1')
+binding = {'path': 'numerical.json', 'sha256': '57b32e998080bf3fb08a0782ed9735e28f8d510eace4bd303c7b69b4f992688a'}
+protocol_sha256 = '65ea740da5694c2999cb3f6940e804ff3cc42e8c0c99c1d41582aba10d6aa19c'
+fitted_mu_Pa = 2000.0, _require_fitted = True
+
+    def validate_numerical_evidence(root,binding,*,protocol_sha256,fitted_mu_Pa,_require_fitted=True):
+        report=verify_binding(root,binding,maximum_bytes=8*1024**2,read_json=True)
+        if report.get('schema')!='hbe-numerical-evidence-v1' or report.get('protocol_sha256')!=protocol_sha256:
+            raise ValueError('Unbound numerical evidence')
+        sources=report.get('source_bindings',{})
+        if set(sources)!={'physics','primitive_parser','mesh_deck','curve_evaluator','run_readout'}:
+>           raise ValueError('Complete independent source bindings required')
+E           ValueError: Complete independent source bindings required
+
+scripts/mechanics_hbe_access.py:99: ValueError
+__ test_calibration_release_needs_actual_replayable_source_and_prerequisites ___
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-hbe-access-review-v1-initial/test_calibration_release_needs0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10af79940>
+
+    def test_calibration_release_needs_actual_replayable_source_and_prerequisites(tmp_path, monkeypatch):
+        study = f.study_fixture(tmp_path)
+        # The original fixture has only hash-shaped source labels and one dummy prerequisite blob.
+        release = json.loads((tmp_path / study.release_binding["path"]).read_text())
+        assert "source_archive" not in release
+        forbid_member_reads(monkeypatch)
+        with pytest.raises(ValueError):
+>           study.read_calibration(f.schemas(("compression", "tension")))
+
+tests/test_mechanics_hbe_access_review.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/mechanics_hbe_access.py:229: in read_calibration
+    self._calibration=self._read_selected(roles,roles['calibration']['members'],('compression','tension'),schemas,'calibration')
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/mechanics_hbe_access.py:221: in _read_selected
+    data=archive.read(info)
+         ^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (<zipfile.ZipFile [closed]>, <ZipInfo filename='fixture/compression.csv' filemode='?rw-------' file_size=22>)
+kwargs = {}
+
+    def fail(*args, **kwargs):
+>       raise AssertionError("Rejected evidence must not open any selected archive member")
+E       AssertionError: Rejected evidence must not open any selected archive member
+
+tests/test_mechanics_hbe_access_review.py:20: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_mechanics_hbe_access_review.py::test_rehashing_prediction_and_freeze_does_not_make_a_new_authorized_freeze
+FAILED tests/test_mechanics_hbe_access_review.py::test_holdout_attempt_permanently_closes_calibration_even_for_new_instance
+FAILED tests/test_mechanics_hbe_access_review.py::test_holdout_attempt_permanently_closes_refreeze
+FAILED tests/test_mechanics_hbe_access_review.py::test_calibration_release_needs_actual_replayable_source_and_prerequisites
+4 failed, 3 passed in 0.23s

@@ -1,0 +1,44 @@
+{
+  "status": "passed",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_axis_decision_recording.py",
+    "tests/test_learning.py",
+    "tests/test_native_axis_learning.py",
+    "tests/test_policy_inputs.py",
+    "tests/test_policy_inputs_adversarial.py",
+    "-q"
+  ],
+  "returncode": 0,
+  "wall_seconds": 38.10486004198901,
+  "source_hashes_before": {
+    "src/resectionlab/learning.py": "ea552afa8faa7a5199ac2c20cf67fc688081fe8d7e5d029131f3fd6e7c0093ec",
+    "src/resectionlab/native_axis_accounting.py": "e7593bc4c7435961b6d4bee31412ef3e2df85fd6baebee70c6849e94eaf8c259",
+    "tests/test_axis_decision_recording.py": "410587d940e0423e2823b561732db92df1e6ce7ec79b0db3d24417cd50cad7c9",
+    "tests/test_decision_observer_adversarial.py": "b63b5ee618a911766dfb72b5a7f5be4ac295907e674088fc8357d015a393b9c9",
+    "docs/learner-decision-observer.md": "1f1120f569b3f94fd5b2a6be854267bb12e338e068af25f5ca3c0a6c332e4a18",
+    "docs/native-axis-accounting.md": "f3c5fdaf702b47d3e22d9521df40bc3e89a5ee520e7f89d8d12da76d4540b951"
+  },
+  "source_hashes_after": {
+    "src/resectionlab/learning.py": "ea552afa8faa7a5199ac2c20cf67fc688081fe8d7e5d029131f3fd6e7c0093ec",
+    "src/resectionlab/native_axis_accounting.py": "e7593bc4c7435961b6d4bee31412ef3e2df85fd6baebee70c6849e94eaf8c259",
+    "tests/test_axis_decision_recording.py": "410587d940e0423e2823b561732db92df1e6ce7ec79b0db3d24417cd50cad7c9",
+    "tests/test_decision_observer_adversarial.py": "b63b5ee618a911766dfb72b5a7f5be4ac295907e674088fc8357d015a393b9c9",
+    "docs/learner-decision-observer.md": "1f1120f569b3f94fd5b2a6be854267bb12e338e068af25f5ca3c0a6c332e4a18",
+    "docs/native-axis-accounting.md": "f3c5fdaf702b47d3e22d9521df40bc3e89a5ee520e7f89d8d12da76d4540b951"
+  },
+  "scope": "Synthetic fixtures only; supported observer and unchanged numerical behavior; no patient execution",
+  "independent_review": "artifacts/validation/decision-observer-independent-v1/receipt.json",
+  "candidate_eligible": false,
+  "independent_test_count": 30,
+  "focused_test_count": 54,
+  "protected_source_hashes": {
+    "src/resectionlab/native_axis_simulation.py": "e1b8306050b53e636e1d602290720655d1f06fe72bf8309ba80afb2025122b70",
+    "src/resectionlab/native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+    "src/resectionlab/native_proposals.py": "6a173851ad383c32b84121cd0d8871535fffa9174d95aa27bdb08ca4b8a7e5f9",
+    "src/resectionlab/procedural_learning.py": "d4666701930d2baa1f438b2a1bed4819e895ec6161c38a78b6ef4d68331ac2d1"
+  },
+  "protected_sources_changed_against_head": false
+}

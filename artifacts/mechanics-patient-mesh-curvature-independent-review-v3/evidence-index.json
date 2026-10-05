@@ -1,0 +1,25 @@
+{
+  "schema": "curvature-preparation-independent-review-evidence-index-v3",
+  "files": [
+    {
+      "path": "artifacts/mechanics-patient-mesh-curvature-independent-review-v3/receipt.json",
+      "sha256": "2d23ba7c5400ebdc6ae37b10d3045f7e21af80ff38cc73a00280e0731473a142",
+      "bytes": 8950
+    },
+    {
+      "path": "artifacts/mechanics-patient-mesh-curvature-independent-review-v3/REVIEW.md",
+      "sha256": "1efb52a5333d22124e781cb7855d95c1956f7df4646e70749a53bc1b4f803d6a",
+      "bytes": 2488
+    },
+    {
+      "path": "artifacts/mechanics-patient-mesh-curvature-independent-review-v3/focused-tests.txt",
+      "sha256": "5d3cb9e42013d0a893e1652457f546e4c8a50fccb0ee1f4dc8ea7b313337f6d2",
+      "bytes": 179
+    },
+    {
+      "path": "tests/test_mechanics_patient_mesh_curvature_review.py",
+      "sha256": "8bf8dc9f5d346c313c78567bdb586c1b7ce37d43ce308c4afc9e2c642f612a99",
+      "bytes": 11824
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "caps": {
+    "aggregate_seconds": 60,
+    "attempts": 1,
+    "case_seconds": 5,
+    "compiler_seconds": 40,
+    "cpu_threads": 1,
+    "process_group_sampled_rss_bytes": 1073741824
+  },
+  "controls": [
+    "Four profiles reuse one State: symmetric and ordinary full CSC structures at dimensions2 and3.",
+    "Seed every field/attribute with a defined nondefault value; these deliberately stale values never enter Sparse API functions.",
+    "Execute exact saved initialization fragment and exact original kind assignments; verify row/column dimensions, pointers, blocksize and all5 attribute fields.",
+    "Verify reset/reuse by reseeding the same previously initialized structure before each profile; do not compare object padding."
+  ],
+  "excluded": [
+    "original faulty/uninitialized execution",
+    "factorization or solve",
+    "matrix ownership cleanup proof",
+    "numerical physics/mechanics",
+    "patient/material data",
+    "runtime build/version launch",
+    "dynamic reproduction of old defects"
+  ],
+  "pins": {
+    "combined_patch": {
+      "bytes": 869,
+      "path": "artifacts/febio-accelerate-matrix-init-v1/accelerate-csc-and-matrix-init.patch",
+      "sha256": "e5a745070635fc632d1d2dc6d4c7cdb9df738ad4e6fae110c16345f685b52358"
+    },
+    "combined_source": {
+      "bytes": 20823,
+      "path": "artifacts/febio-accelerate-matrix-init-v1/patched-AccelerateSparseSolver.cpp",
+      "sha256": "9f35180792f95e1b96b3c43a30f0ae5c3a38719b41ada5d0069a054ed40845aa"
+    },
+    "compiler": {
+      "bytes": 290664032,
+      "path": "/Library/Developer/CommandLineTools/usr/bin/clang++",
+      "sha256": "f30550eab15fdf5ab8c0dc54c52679711241e5d4b636b027e18c09fef531775d"
+    },
+    "driver": {
+      "bytes": 5944,
+      "path": "artifacts/febio-accelerate-matrix-init-v1/initialization-control.py",
+      "sha256": "39655af5282a8cff9f231a4d7bff50b46d300b184d7d7811e594b7caf4fa214d"
+    },
+    "fixture": {
+      "bytes": 3073,
+      "path": "artifacts/febio-accelerate-matrix-init-v1/matrix-initialization-control.cpp",
+      "sha256": "6b754a7b63c02949068040416111f7184e31e2ad0bad5e1f599e6c87b67a39e3"
+    },
+    "initialization_fragment": {
+      "bytes": 310,
+      "path": "artifacts/febio-accelerate-matrix-init-v1/matrix-initialization-fragment.cpp.txt",
+      "sha256": "f4f69d99bbefb3b20c4e79a35b44288384922c44a2d40ddfdb27519b55184dd3"
+    },
+    "patch_identity": {
+      "bytes": 2080,
+      "path": "artifacts/febio-accelerate-matrix-init-v1/patch-identity.json",
+      "sha256": "25db059ec84a634f77708e31dfb8a3df78944d8186293f3411c4ec0a7e885987"
+    },
+    "sdk_settings": {
+      "bytes": 7774,
+      "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/SDKSettings.json",
+      "sha256": "f8d005f09381389167f9e0aeaa169bc9e7dff162ef22ca2fd8e98df7ff1acafe"
+    },
+    "sdk_sparse_dispatch": {
+      "bytes": 23850,
+      "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers/Sparse/SolveImplementation.h",
+      "sha256": "82a509ffea2e0e27d44473337698e3ebd97b182d3069da704c20fd2995049c17"
+    },
+    "sdk_sparse_types": {
+      "bytes": 423862,
+      "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers/Sparse/Solve.h",
+      "sha256": "8d2a7b44d05f1ff67cb1688ab8bb6573b021b88c758baa37e10a8aea1c46811a"
+    },
+    "static_review": {
+      "bytes": 8528,
+      "path": "artifacts/febio-accelerate-initialization-review-v1/review.json",
+      "sha256": "d6aef94bae672fe4143518906fd9057528a82b411a233d70641d1525164316f8"
+    },
+    "supervisor": {
+      "bytes": 24801,
+      "path": "scripts/febio_runtime.py",
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+    }
+  },
+  "purpose": "Compile and run ONLY repaired source-extracted actual SDK SparseMatrixStructure initialization with defined nondefault fields before reset; no original uninitialized reads or Sparse API calls.",
+  "remaining_gate": "Independent static resource-ownership review may require another combined patch change before any runtime build; this control remains initialization-only.",
+  "schema_version": 1,
+  "sdk": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+  "source_binding_note": "Pointer conversion fragment remains byte-identical88315d2f\u2026 to saved six positive controls; those controls will not be rerun.",
+  "status": "prospective_pending_independent_review_commit_and_separate_root_execution_release",
+  "thread_environment": {
+    "MKL_NUM_THREADS": "1",
+    "OMP_DYNAMIC": "FALSE",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  }
+}

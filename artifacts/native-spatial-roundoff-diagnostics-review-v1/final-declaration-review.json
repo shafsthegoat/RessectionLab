@@ -1,0 +1,16 @@
+{
+  "schema": "roundoff-final-declaration-review-v1",
+  "status": "final_committed_source_binding_verified_root_release_required",
+  "source_commit": "89f01e4c3a1a8564d0ec00d926eb2a5e5174c332",
+  "declaration_sha256": "30213ab0174a77f5df50afc1bd93bafa0a38e442419d22d5933af9c52f25ad94",
+  "source_count": 53,
+  "checks": {
+    "declared_sha256_matches_owner": true,
+    "current_closed_inventory_matches": true,
+    "all_source_bytes_match_committed89f01e4": true,
+    "same_profile_only_train_patient": true,
+    "expected_grid_unchanged_since_draft_review": true
+  },
+  "patient_bundle_image_or_task_opened": false,
+  "source_or_manifest_modified": false
+}

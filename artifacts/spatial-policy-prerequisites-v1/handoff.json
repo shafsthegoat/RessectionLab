@@ -1,0 +1,42 @@
+{
+  "artifact_sha256": {
+    "README.md": "b8042f2cfa0a97986051eeca4fb64aad7dd00d56a4a3b2e7c98da39be9cdf46b",
+    "final-owner-receipt.json": "8c60da1dc69b926cba2bebbca3aff7b1e094e1f8ec17c79a32a14d19c0aeafcb",
+    "final-owner.log": "d7b2575e5b805acc5305b819729116ef8c8954d891ef0242a76d53ac84314d6e",
+    "final-owner.xml": "c6ab6a2455647301487906160f58bd7c79bb41c994705f0b1f26f939ae5396cc",
+    "final-source.tar.gz": "59a277009a3c9738370204477e41b7c79097cc97ceb9d00eb11c75f375fc1656",
+    "initial-analytic.log": "d7e4c6b33f0bdc9bace90072b65049051da4704156b854e1c80f8f823219f82e",
+    "initial-analytic.xml": "a96096019c258193906fe53299814f34bf6700df2cc328f2027cb30451501905",
+    "initial-policy.py.txt": "5aaabeaeabffb16c63037b3a393764b86290a7ef1c2b7a4d32c89288d05541ef",
+    "initial-tests.py.txt": "7bd99b5642f2b62d081be5e462f299380bef70f6cb2c8db830eb0d4ed64d4ecc",
+    "repaired-owner.xml": "f49f01e261b2bbcd733ecd7234b49a029f6eeee5be1158fbf2417d790d29407e",
+    "single-gradient-probe.json": "241b2f0d67d73295e8f0c6333403b1606d925533b7de9f17ab549fb55ffed5c2"
+  },
+  "created_utc": "2026-10-04T15:33:10.177002+00:00",
+  "held_out_generalization_demonstrated": false,
+  "independent_coordinate_review": {
+    "passed": 45,
+    "pytest_seconds": 1.25,
+    "receipt": "docs/rl-spatial-encoder-independent-review.json",
+    "receipt_sha256": "bf3dfd97836377bf4a2904f3e7927aa90a2ab38c4150fbf920d4704d5f6d41b2"
+  },
+  "nontrivial_training_screen_runs": 0,
+  "owned_paths": [
+    "src/resectionlab/spatial_policy.py",
+    "tests/test_spatial_policy.py",
+    "docs/spatial-policy-research.md",
+    "artifacts/spatial-policy-prerequisites-v1/"
+  ],
+  "owner_validation": {
+    "passed": 14,
+    "pytest_seconds": 2.34,
+    "receipt": "final-owner-receipt.json"
+  },
+  "post_test_change": "Documentation wording only: physical coordinates float64, normalized model inputs float32. Numerical source/tests unchanged.",
+  "public_patient_runs": 0,
+  "source_sha256": {
+    "docs/spatial-policy-research.md": "6a173d8dbd12a0d3e6b97b48659010458b3b9085e3aa5a6b3b092edafecd7e0c",
+    "src/resectionlab/spatial_policy.py": "a346b2e187d943238f2676ce2cb90ef609f4655dc7e798e21b247fae41778cb5",
+    "tests/test_spatial_policy.py": "7bd99b5642f2b62d081be5e462f299380bef70f6cb2c8db830eb0d4ed64d4ecc"
+  }
+}

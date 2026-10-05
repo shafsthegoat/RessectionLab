@@ -1,0 +1,39 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_mechanics_hbe_access_review.py",
+    "tests/test_mechanics_hbe_access.py",
+    "tests/test_mechanics_hbe_readout_review.py",
+    "tests/test_mechanics_hbe_readout.py",
+    "--basetemp=build/validation/mechanics-hbe-access-review-v1-final"
+  ],
+  "exit_code": 0,
+  "wall_seconds": 1.0464557079999999,
+  "source_before_sha256": {
+    "scripts/mechanics_hbe_access.py": "b1e4f90b2ec84c39949ee02c1088bc0404f34904e24c2d4f328d503d96f76fe0",
+    "scripts/mechanics_hbe_readout.py": "21700558e5cb614a11a7cc62dbd5ec8118fabb11b4fbfc88f89cb8aa02012963",
+    "scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "scripts/mechanics_hbe_outputs.py": "a86191769ee71e79596d9f3871da575dd7e2b2d62e1a9c919162242a335fa65d",
+    "tests/test_mechanics_hbe_access.py": "dcf68dac14a076b963bede1b06ff1964cf69f4cd4f421e3a5ad8e5f1b8c8f58e",
+    "tests/test_mechanics_hbe_access_review.py": "4d44bbd0ff801c426b9c80f588e1d89a0302ce6bf5adbc957e8e2a0e8badc4ae",
+    "tests/test_mechanics_hbe_readout.py": "b1638d2b6b1d2dca0788340603763c0dbd8b55b4f47eb8c01bf6acb3a5c57b09",
+    "tests/test_mechanics_hbe_readout_review.py": "e479ae9e25e67d69ed91220335053f7654542ae1d4a88e0a8c5cd4cf86c0e74f"
+  },
+  "source_after_sha256": {
+    "scripts/mechanics_hbe_access.py": "b1e4f90b2ec84c39949ee02c1088bc0404f34904e24c2d4f328d503d96f76fe0",
+    "scripts/mechanics_hbe_readout.py": "21700558e5cb614a11a7cc62dbd5ec8118fabb11b4fbfc88f89cb8aa02012963",
+    "scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "scripts/mechanics_hbe_outputs.py": "a86191769ee71e79596d9f3871da575dd7e2b2d62e1a9c919162242a335fa65d",
+    "tests/test_mechanics_hbe_access.py": "dcf68dac14a076b963bede1b06ff1964cf69f4cd4f421e3a5ad8e5f1b8c8f58e",
+    "tests/test_mechanics_hbe_access_review.py": "4d44bbd0ff801c426b9c80f588e1d89a0302ce6bf5adbc957e8e2a0e8badc4ae",
+    "tests/test_mechanics_hbe_readout.py": "b1638d2b6b1d2dca0788340603763c0dbd8b55b4f47eb8c01bf6acb3a5c57b09",
+    "tests/test_mechanics_hbe_readout_review.py": "e479ae9e25e67d69ed91220335053f7654542ae1d4a88e0a8c5cd4cf86c0e74f"
+  },
+  "all_tested_files_unchanged": true,
+  "scope": "Constructed ZIP/text/primitives only; lifecycle explicitly isolates real provenance/replay with named stubs, while authentic verifier rejection and source-tar corruption are separate unmocked controls. No real measurements or solver calls."
+}

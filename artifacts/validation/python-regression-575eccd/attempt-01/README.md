@@ -1,0 +1,15 @@
+# Full Python regression at 575eccd
+
+The full committed Python suite passed: **2,134 passed, 6 skipped, 14 warnings in 286.80 seconds**. The separate IDC environment then passed **all 21 transport/DICOM controls in 0.40 seconds**, covering the five DICOM checks skipped by the app environment. Across both runs, 2,139 unique checks passed and one fixture remained unavailable. No failure was suppressed, retried, xfailed, or repaired during execution.
+
+The remaining skip is the historical procedural-transfer inventory test, whose hardcoded ignored case path is absent from the archive. The newer public native-configuration checks ran against the explicitly bound, previously consulted UCSF-PDGM-0004 bundle, SHA-256 `11cca797ad0216e5c8d940e7354f2dd23fb6954dc2aed7e4b0423f6adc6cefcf`. That bundle was unchanged. This does not establish the UCSF mirror's equivalence to the official release.
+
+Both runs used the complete Git archive of `575eccd154f3d87c844951108891870cd900ae11`: 3,555 tracked files, 178,586,484 bytes, and 124 test modules. Only `tests/` was collected; historical test copies under `artifacts/`, mutable checkout files, and untracked work were excluded. Every baseline file matched its initial SHA-256 afterward, and the snapshot gained no files. The archive and extracted tree remain outside Git under `build/python-regression-575eccd/`.
+
+Python launched with `-I -S -B`, explicit frozen source paths, and explicit existing dependency directories. The main run used the app environment. The DICOM run used the existing IDC interpreter and IDC dependency directory, with app dependencies supplying pytest. No packages were installed or changed. Numerical thread settings were one, Qt was offscreen, automatic pytest plugin discovery was disabled, and Git discovery above the archive was blocked. Runtime receipts preserve import origins and dependency versions; no `resectionlab` module came from the working checkout. Subprocess tests inherited the frozen source path.
+
+Peak main-process RSS was 914,259,968 bytes; the DICOM process peaked at 70,844,416 bytes. Four warnings concern DIPY's legacy spherical-harmonic basis. Ten are NumPy 2.5 deprecations triggered deliberately by adversarial tests that alter array shape/dtype. All are retained in the log. The slowest unit check took 26.715 seconds; complete test and setup/teardown durations are retained.
+
+`root-release.json` binds the authorization, complete source inventory, archive, interpreter, and consulted bundle. `execution-record.json` records both commands, timing, exit codes, hashes, and source checks. `main.log` / `dicom.log`, their JUnit XML, progress receipts, and runtime receipts preserve all outcomes and diagnostics. `summary.json` provides deduplicated coverage, slowest checks, and file hashes.
+
+The execution receipt SHA-256 is `1997b1729f8236a1fbfe6f9ed39628d4c6ff595c162bb6fd36b6af7b1d0741c4`. These results validate this committed code snapshot. Tiny analytic/optimization fixtures are code checks, not new patient-training evidence or clinical validation. Newer code changes require their own appropriate checks.

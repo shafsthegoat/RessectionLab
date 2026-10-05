@@ -1,0 +1,1894 @@
+{
+  "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+  "native_engine_hash": "sha256:0924b7d0a4ab4310f319372fbfc6dd84919c16ffff7070030494cf8a5acc72cd",
+  "proposal_model_hash": "sha256:7916d4a61f6b96da7081561645e896789c43e95d0c2d7d838095db731c8f5f71",
+  "rule_hash": "sha256:eb59524777e0ca34a7c986a285f1f4354b749df1f1ba16f93f30a797444f7054",
+  "source_module_sha256": "6a173851ad383c32b84121cd0d8871535fffa9174d95aa27bdb08ca4b8a7e5f9",
+  "script_sha256": "0e60adca2f431e4fc6a531ff89a3e7654b1592bae0332817c688d3fac476f4a4",
+  "phases": [
+    {
+      "phase": "load_source_case",
+      "seconds": 0.17980266700033098,
+      "process_peak_rss_before_bytes": 68206592,
+      "process_peak_rss_after_bytes": 270942208
+    },
+    {
+      "phase": "native_factory_setup",
+      "seconds": 2.3235324169509113,
+      "process_peak_rss_before_bytes": 270942208,
+      "process_peak_rss_after_bytes": 1204076544
+    },
+    {
+      "phase": "provider_source_verification_and_static_preparation",
+      "seconds": 0.04397025005891919,
+      "process_peak_rss_before_bytes": 1204076544,
+      "process_peak_rss_after_bytes": 1213022208
+    },
+    {
+      "phase": "initial_history_and_whole_grid_integrity_only",
+      "seconds": 0.28773233294487,
+      "process_peak_rss_before_bytes": 1213022208,
+      "process_peak_rss_after_bytes": 1239859200
+    },
+    {
+      "phase": "initial_propose_including_integrity",
+      "seconds": 0.2866598750697449,
+      "process_peak_rss_before_bytes": 1239859200,
+      "process_peak_rss_after_bytes": 1239859200
+    },
+    {
+      "phase": "initial_validate_batch_including_integrity",
+      "seconds": 0.28465712489560246,
+      "process_peak_rss_before_bytes": 1239859200,
+      "process_peak_rss_after_bytes": 1239859200
+    },
+    {
+      "phase": "one_complete_native_preview",
+      "seconds": 0.2808352919528261,
+      "process_peak_rss_before_bytes": 1239859200,
+      "process_peak_rss_after_bytes": 1244004352
+    },
+    {
+      "phase": "one_native_certificate_commit",
+      "seconds": 0.02798341598827392,
+      "process_peak_rss_before_bytes": 1244004352,
+      "process_peak_rss_after_bytes": 1244774400
+    },
+    {
+      "phase": "updated_history_and_whole_grid_integrity_only",
+      "seconds": 0.3004977920791134,
+      "process_peak_rss_before_bytes": 1244774400,
+      "process_peak_rss_after_bytes": 1245593600
+    },
+    {
+      "phase": "updated_propose_including_integrity",
+      "seconds": 0.3022358340676874,
+      "process_peak_rss_before_bytes": 1245593600,
+      "process_peak_rss_after_bytes": 1245593600
+    },
+    {
+      "phase": "updated_validate_batch_including_integrity",
+      "seconds": 0.30207133293151855,
+      "process_peak_rss_before_bytes": 1245593600,
+      "process_peak_rss_after_bytes": 1245593600
+    }
+  ],
+  "measurement_repetitions_per_phase": 1,
+  "memory_semantics": "Cumulative process peak resident set; differences are not isolated per-phase allocation costs.",
+  "initial_batch": {
+    "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "engine_model_hash": "sha256:0924b7d0a4ab4310f319372fbfc6dd84919c16ffff7070030494cf8a5acc72cd",
+    "rule_hash": "sha256:eb59524777e0ca34a7c986a285f1f4354b749df1f1ba16f93f30a797444f7054",
+    "proposal_model_hash": "sha256:7916d4a61f6b96da7081561645e896789c43e95d0c2d7d838095db731c8f5f71",
+    "cavity_state_hash": "sha256:6f715bf853deca2023d43877d2c1ce27ead9487718bb07ea4aafb43ce26dde8b",
+    "proposals": [
+      {
+        "proposal_id": "axis-column-9aff11f927861d3a03ebc47b",
+        "column_index": 0,
+        "offset_source_voxels": [
+          0,
+          0
+        ],
+        "tool_id": "native-fine-aspiration",
+        "entry_mm": [
+          -181.5,
+          85.0,
+          105.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          85.0,
+          105.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          85.0,
+          105.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-7c81293c7ef91ae2351fd7ce",
+        "column_index": 0,
+        "offset_source_voxels": [
+          0,
+          0
+        ],
+        "tool_id": "native-wide-aspiration",
+        "entry_mm": [
+          -181.5,
+          85.0,
+          105.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          85.0,
+          105.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          85.0,
+          105.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-6ebe05cacc21fdf7b5f00671",
+        "column_index": 1,
+        "offset_source_voxels": [
+          -2,
+          0
+        ],
+        "tool_id": "native-fine-aspiration",
+        "entry_mm": [
+          -181.5,
+          87.0,
+          105.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          87.0,
+          105.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          87.0,
+          105.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-33f7a7c86564625cce6652de",
+        "column_index": 1,
+        "offset_source_voxels": [
+          -2,
+          0
+        ],
+        "tool_id": "native-wide-aspiration",
+        "entry_mm": [
+          -181.5,
+          87.0,
+          105.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          87.0,
+          105.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          87.0,
+          105.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-cb25963c849671fd0c1d0f4d",
+        "column_index": 2,
+        "offset_source_voxels": [
+          2,
+          0
+        ],
+        "tool_id": "native-fine-aspiration",
+        "entry_mm": [
+          -181.5,
+          83.0,
+          105.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          83.0,
+          105.0
+        ],
+        "fallback_target_mm": [
+          -179.0,
+          83.0,
+          105.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-7eff0ac61de45d05cb45ebec",
+        "column_index": 2,
+        "offset_source_voxels": [
+          2,
+          0
+        ],
+        "tool_id": "native-wide-aspiration",
+        "entry_mm": [
+          -181.5,
+          83.0,
+          105.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          83.0,
+          105.0
+        ],
+        "fallback_target_mm": [
+          -179.0,
+          83.0,
+          105.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-c3992a709727ced1443ff8f0",
+        "column_index": 3,
+        "offset_source_voxels": [
+          0,
+          -2
+        ],
+        "tool_id": "native-fine-aspiration",
+        "entry_mm": [
+          -181.5,
+          85.0,
+          103.0
+        ],
+        "primary_target_mm": [
+          -140.0,
+          85.0,
+          103.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          85.0,
+          103.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-0e651e6f42b63498c7f21e8c",
+        "column_index": 3,
+        "offset_source_voxels": [
+          0,
+          -2
+        ],
+        "tool_id": "native-wide-aspiration",
+        "entry_mm": [
+          -181.5,
+          85.0,
+          103.0
+        ],
+        "primary_target_mm": [
+          -140.0,
+          85.0,
+          103.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          85.0,
+          103.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-957514a8c312570dbe0af3ab",
+        "column_index": 4,
+        "offset_source_voxels": [
+          0,
+          2
+        ],
+        "tool_id": "native-fine-aspiration",
+        "entry_mm": [
+          -181.5,
+          85.0,
+          107.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          85.0,
+          107.0
+        ],
+        "fallback_target_mm": [
+          -179.0,
+          85.0,
+          107.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-6be5ae187cf1290073e2f5f5",
+        "column_index": 4,
+        "offset_source_voxels": [
+          0,
+          2
+        ],
+        "tool_id": "native-wide-aspiration",
+        "entry_mm": [
+          -181.5,
+          85.0,
+          107.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          85.0,
+          107.0
+        ],
+        "fallback_target_mm": [
+          -179.0,
+          85.0,
+          107.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-e33c662de4bedabae88a6aee",
+        "column_index": 5,
+        "offset_source_voxels": [
+          -2,
+          -2
+        ],
+        "tool_id": "native-fine-aspiration",
+        "entry_mm": [
+          -181.5,
+          87.0,
+          103.0
+        ],
+        "primary_target_mm": [
+          -140.0,
+          87.0,
+          103.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          87.0,
+          103.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-d0948587f030c7b3994a68ef",
+        "column_index": 5,
+        "offset_source_voxels": [
+          -2,
+          -2
+        ],
+        "tool_id": "native-wide-aspiration",
+        "entry_mm": [
+          -181.5,
+          87.0,
+          103.0
+        ],
+        "primary_target_mm": [
+          -140.0,
+          87.0,
+          103.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          87.0,
+          103.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-d48aae31972f216970e752fc",
+        "column_index": 6,
+        "offset_source_voxels": [
+          -2,
+          2
+        ],
+        "tool_id": "native-fine-aspiration",
+        "entry_mm": [
+          -181.5,
+          87.0,
+          107.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          87.0,
+          107.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          87.0,
+          107.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-73fbf3813cd89e5e1b8fdcba",
+        "column_index": 6,
+        "offset_source_voxels": [
+          -2,
+          2
+        ],
+        "tool_id": "native-wide-aspiration",
+        "entry_mm": [
+          -181.5,
+          87.0,
+          107.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          87.0,
+          107.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          87.0,
+          107.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-72c71a50b5e49707ce090e18",
+        "column_index": 7,
+        "offset_source_voxels": [
+          2,
+          -2
+        ],
+        "tool_id": "native-fine-aspiration",
+        "entry_mm": [
+          -181.5,
+          83.0,
+          103.0
+        ],
+        "primary_target_mm": [
+          -140.0,
+          83.0,
+          103.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          83.0,
+          103.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-145a9f74be4ddb1ab0b317bd",
+        "column_index": 7,
+        "offset_source_voxels": [
+          2,
+          -2
+        ],
+        "tool_id": "native-wide-aspiration",
+        "entry_mm": [
+          -181.5,
+          83.0,
+          103.0
+        ],
+        "primary_target_mm": [
+          -140.0,
+          83.0,
+          103.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          83.0,
+          103.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-5f36780ac9c48676ab57967f",
+        "column_index": 8,
+        "offset_source_voxels": [
+          2,
+          2
+        ],
+        "tool_id": "native-fine-aspiration",
+        "entry_mm": [
+          -181.5,
+          83.0,
+          107.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          83.0,
+          107.0
+        ],
+        "fallback_target_mm": [
+          -179.0,
+          83.0,
+          107.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-b14f9ddf5e840edc41c47173",
+        "column_index": 8,
+        "offset_source_voxels": [
+          2,
+          2
+        ],
+        "tool_id": "native-wide-aspiration",
+        "entry_mm": [
+          -181.5,
+          83.0,
+          107.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          83.0,
+          107.0
+        ],
+        "fallback_target_mm": [
+          -179.0,
+          83.0,
+          107.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-2fb9a5c34e83e24cf49105e7",
+        "column_index": 9,
+        "offset_source_voxels": [
+          -3,
+          0
+        ],
+        "tool_id": "native-fine-aspiration",
+        "entry_mm": [
+          -181.5,
+          88.0,
+          105.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          88.0,
+          105.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          88.0,
+          105.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-83aa35a29c1a68356bb44ecd",
+        "column_index": 9,
+        "offset_source_voxels": [
+          -3,
+          0
+        ],
+        "tool_id": "native-wide-aspiration",
+        "entry_mm": [
+          -181.5,
+          88.0,
+          105.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          88.0,
+          105.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          88.0,
+          105.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-8502f228ac51eee1efdbd673",
+        "column_index": 10,
+        "offset_source_voxels": [
+          3,
+          0
+        ],
+        "tool_id": "native-fine-aspiration",
+        "entry_mm": [
+          -181.5,
+          82.0,
+          105.0
+        ],
+        "primary_target_mm": [
+          -140.0,
+          82.0,
+          105.0
+        ],
+        "fallback_target_mm": [
+          -179.0,
+          82.0,
+          105.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-dda0cb672df82260364a4780",
+        "column_index": 10,
+        "offset_source_voxels": [
+          3,
+          0
+        ],
+        "tool_id": "native-wide-aspiration",
+        "entry_mm": [
+          -181.5,
+          82.0,
+          105.0
+        ],
+        "primary_target_mm": [
+          -140.0,
+          82.0,
+          105.0
+        ],
+        "fallback_target_mm": [
+          -179.0,
+          82.0,
+          105.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-fa6a92839de7e7e56834d9ea",
+        "column_index": 11,
+        "offset_source_voxels": [
+          0,
+          -3
+        ],
+        "tool_id": "native-fine-aspiration",
+        "entry_mm": [
+          -181.5,
+          85.0,
+          102.0
+        ],
+        "primary_target_mm": [
+          -140.0,
+          85.0,
+          102.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          85.0,
+          102.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-2341a837b0cf4a44eec6078b",
+        "column_index": 11,
+        "offset_source_voxels": [
+          0,
+          -3
+        ],
+        "tool_id": "native-wide-aspiration",
+        "entry_mm": [
+          -181.5,
+          85.0,
+          102.0
+        ],
+        "primary_target_mm": [
+          -140.0,
+          85.0,
+          102.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          85.0,
+          102.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-c1262f8a8a67addca613ac45",
+        "column_index": 12,
+        "offset_source_voxels": [
+          0,
+          3
+        ],
+        "tool_id": "native-fine-aspiration",
+        "entry_mm": [
+          -181.5,
+          85.0,
+          108.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          85.0,
+          108.0
+        ],
+        "fallback_target_mm": [
+          -179.0,
+          85.0,
+          108.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-2a5fdc6b9d354161a1f51632",
+        "column_index": 12,
+        "offset_source_voxels": [
+          0,
+          3
+        ],
+        "tool_id": "native-wide-aspiration",
+        "entry_mm": [
+          -181.5,
+          85.0,
+          108.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          85.0,
+          108.0
+        ],
+        "fallback_target_mm": [
+          -179.0,
+          85.0,
+          108.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      }
+    ],
+    "ledger": [
+      {
+        "column_index": 0,
+        "offset_source_voxels": [
+          0,
+          0
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-9aff11f927861d3a03ebc47b"
+      },
+      {
+        "column_index": 0,
+        "offset_source_voxels": [
+          0,
+          0
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-7c81293c7ef91ae2351fd7ce"
+      },
+      {
+        "column_index": 1,
+        "offset_source_voxels": [
+          -2,
+          0
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-6ebe05cacc21fdf7b5f00671"
+      },
+      {
+        "column_index": 1,
+        "offset_source_voxels": [
+          -2,
+          0
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-33f7a7c86564625cce6652de"
+      },
+      {
+        "column_index": 2,
+        "offset_source_voxels": [
+          2,
+          0
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-cb25963c849671fd0c1d0f4d"
+      },
+      {
+        "column_index": 2,
+        "offset_source_voxels": [
+          2,
+          0
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-7eff0ac61de45d05cb45ebec"
+      },
+      {
+        "column_index": 3,
+        "offset_source_voxels": [
+          0,
+          -2
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-c3992a709727ced1443ff8f0"
+      },
+      {
+        "column_index": 3,
+        "offset_source_voxels": [
+          0,
+          -2
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-0e651e6f42b63498c7f21e8c"
+      },
+      {
+        "column_index": 4,
+        "offset_source_voxels": [
+          0,
+          2
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-957514a8c312570dbe0af3ab"
+      },
+      {
+        "column_index": 4,
+        "offset_source_voxels": [
+          0,
+          2
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-6be5ae187cf1290073e2f5f5"
+      },
+      {
+        "column_index": 5,
+        "offset_source_voxels": [
+          -2,
+          -2
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-e33c662de4bedabae88a6aee"
+      },
+      {
+        "column_index": 5,
+        "offset_source_voxels": [
+          -2,
+          -2
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-d0948587f030c7b3994a68ef"
+      },
+      {
+        "column_index": 6,
+        "offset_source_voxels": [
+          -2,
+          2
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-d48aae31972f216970e752fc"
+      },
+      {
+        "column_index": 6,
+        "offset_source_voxels": [
+          -2,
+          2
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-73fbf3813cd89e5e1b8fdcba"
+      },
+      {
+        "column_index": 7,
+        "offset_source_voxels": [
+          2,
+          -2
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-72c71a50b5e49707ce090e18"
+      },
+      {
+        "column_index": 7,
+        "offset_source_voxels": [
+          2,
+          -2
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-145a9f74be4ddb1ab0b317bd"
+      },
+      {
+        "column_index": 8,
+        "offset_source_voxels": [
+          2,
+          2
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-5f36780ac9c48676ab57967f"
+      },
+      {
+        "column_index": 8,
+        "offset_source_voxels": [
+          2,
+          2
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-b14f9ddf5e840edc41c47173"
+      },
+      {
+        "column_index": 9,
+        "offset_source_voxels": [
+          -3,
+          0
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-2fb9a5c34e83e24cf49105e7"
+      },
+      {
+        "column_index": 9,
+        "offset_source_voxels": [
+          -3,
+          0
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-83aa35a29c1a68356bb44ecd"
+      },
+      {
+        "column_index": 10,
+        "offset_source_voxels": [
+          3,
+          0
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-8502f228ac51eee1efdbd673"
+      },
+      {
+        "column_index": 10,
+        "offset_source_voxels": [
+          3,
+          0
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-dda0cb672df82260364a4780"
+      },
+      {
+        "column_index": 11,
+        "offset_source_voxels": [
+          0,
+          -3
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-fa6a92839de7e7e56834d9ea"
+      },
+      {
+        "column_index": 11,
+        "offset_source_voxels": [
+          0,
+          -3
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-2341a837b0cf4a44eec6078b"
+      },
+      {
+        "column_index": 12,
+        "offset_source_voxels": [
+          0,
+          3
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-c1262f8a8a67addca613ac45"
+      },
+      {
+        "column_index": 12,
+        "offset_source_voxels": [
+          0,
+          3
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-2a5fdc6b9d354161a1f51632"
+      }
+    ],
+    "unsupported_reason": null,
+    "counts": {
+      "PROPOSED_UNCERTIFIED": 26
+    },
+    "slot_count": 26,
+    "geometry_certified": false,
+    "removal_authorized": false
+  },
+  "updated_batch": {
+    "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "engine_model_hash": "sha256:0924b7d0a4ab4310f319372fbfc6dd84919c16ffff7070030494cf8a5acc72cd",
+    "rule_hash": "sha256:eb59524777e0ca34a7c986a285f1f4354b749df1f1ba16f93f30a797444f7054",
+    "proposal_model_hash": "sha256:7916d4a61f6b96da7081561645e896789c43e95d0c2d7d838095db731c8f5f71",
+    "cavity_state_hash": "sha256:463ef33e5b61b2ef998c7a2eb2d41d788feb2bcf363cbd5f043f1033efc86447",
+    "proposals": [
+      {
+        "proposal_id": "axis-column-80b383160a897437fcf6962c",
+        "column_index": 1,
+        "offset_source_voxels": [
+          -2,
+          0
+        ],
+        "tool_id": "native-fine-aspiration",
+        "entry_mm": [
+          -181.5,
+          87.0,
+          105.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          87.0,
+          105.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          87.0,
+          105.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-a52b43d85986b13951372838",
+        "column_index": 1,
+        "offset_source_voxels": [
+          -2,
+          0
+        ],
+        "tool_id": "native-wide-aspiration",
+        "entry_mm": [
+          -181.5,
+          87.0,
+          105.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          87.0,
+          105.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          87.0,
+          105.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-2bf24e1b2cd05137aa2c9cfb",
+        "column_index": 2,
+        "offset_source_voxels": [
+          2,
+          0
+        ],
+        "tool_id": "native-fine-aspiration",
+        "entry_mm": [
+          -181.5,
+          83.0,
+          105.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          83.0,
+          105.0
+        ],
+        "fallback_target_mm": [
+          -179.0,
+          83.0,
+          105.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-f6367dfe9059c803e793cc4e",
+        "column_index": 2,
+        "offset_source_voxels": [
+          2,
+          0
+        ],
+        "tool_id": "native-wide-aspiration",
+        "entry_mm": [
+          -181.5,
+          83.0,
+          105.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          83.0,
+          105.0
+        ],
+        "fallback_target_mm": [
+          -179.0,
+          83.0,
+          105.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-09980f1dd7575e3c69a16348",
+        "column_index": 3,
+        "offset_source_voxels": [
+          0,
+          -2
+        ],
+        "tool_id": "native-fine-aspiration",
+        "entry_mm": [
+          -181.5,
+          85.0,
+          103.0
+        ],
+        "primary_target_mm": [
+          -140.0,
+          85.0,
+          103.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          85.0,
+          103.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-ece9089c5a95228ab0c7e46b",
+        "column_index": 3,
+        "offset_source_voxels": [
+          0,
+          -2
+        ],
+        "tool_id": "native-wide-aspiration",
+        "entry_mm": [
+          -181.5,
+          85.0,
+          103.0
+        ],
+        "primary_target_mm": [
+          -140.0,
+          85.0,
+          103.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          85.0,
+          103.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-9df0fae1d288c517dd2f06bd",
+        "column_index": 4,
+        "offset_source_voxels": [
+          0,
+          2
+        ],
+        "tool_id": "native-fine-aspiration",
+        "entry_mm": [
+          -181.5,
+          85.0,
+          107.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          85.0,
+          107.0
+        ],
+        "fallback_target_mm": [
+          -179.0,
+          85.0,
+          107.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-b0e42bf3888b832cc94e9e9e",
+        "column_index": 4,
+        "offset_source_voxels": [
+          0,
+          2
+        ],
+        "tool_id": "native-wide-aspiration",
+        "entry_mm": [
+          -181.5,
+          85.0,
+          107.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          85.0,
+          107.0
+        ],
+        "fallback_target_mm": [
+          -179.0,
+          85.0,
+          107.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-380e4f17feb565cd96a96575",
+        "column_index": 5,
+        "offset_source_voxels": [
+          -2,
+          -2
+        ],
+        "tool_id": "native-fine-aspiration",
+        "entry_mm": [
+          -181.5,
+          87.0,
+          103.0
+        ],
+        "primary_target_mm": [
+          -140.0,
+          87.0,
+          103.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          87.0,
+          103.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-04f434bc5cbbb542670b43d5",
+        "column_index": 5,
+        "offset_source_voxels": [
+          -2,
+          -2
+        ],
+        "tool_id": "native-wide-aspiration",
+        "entry_mm": [
+          -181.5,
+          87.0,
+          103.0
+        ],
+        "primary_target_mm": [
+          -140.0,
+          87.0,
+          103.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          87.0,
+          103.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-7bbf54ecff89849c49de2f71",
+        "column_index": 6,
+        "offset_source_voxels": [
+          -2,
+          2
+        ],
+        "tool_id": "native-fine-aspiration",
+        "entry_mm": [
+          -181.5,
+          87.0,
+          107.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          87.0,
+          107.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          87.0,
+          107.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-4b2be92fefb6f9b2d101517b",
+        "column_index": 6,
+        "offset_source_voxels": [
+          -2,
+          2
+        ],
+        "tool_id": "native-wide-aspiration",
+        "entry_mm": [
+          -181.5,
+          87.0,
+          107.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          87.0,
+          107.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          87.0,
+          107.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-95f606eff0b416e3d19725da",
+        "column_index": 7,
+        "offset_source_voxels": [
+          2,
+          -2
+        ],
+        "tool_id": "native-fine-aspiration",
+        "entry_mm": [
+          -181.5,
+          83.0,
+          103.0
+        ],
+        "primary_target_mm": [
+          -140.0,
+          83.0,
+          103.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          83.0,
+          103.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-c378bbf809d8c247a28ce0fe",
+        "column_index": 7,
+        "offset_source_voxels": [
+          2,
+          -2
+        ],
+        "tool_id": "native-wide-aspiration",
+        "entry_mm": [
+          -181.5,
+          83.0,
+          103.0
+        ],
+        "primary_target_mm": [
+          -140.0,
+          83.0,
+          103.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          83.0,
+          103.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-73ad9df5bbb154b99eb923a4",
+        "column_index": 8,
+        "offset_source_voxels": [
+          2,
+          2
+        ],
+        "tool_id": "native-fine-aspiration",
+        "entry_mm": [
+          -181.5,
+          83.0,
+          107.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          83.0,
+          107.0
+        ],
+        "fallback_target_mm": [
+          -179.0,
+          83.0,
+          107.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-cfe2cfc3366d02575f848658",
+        "column_index": 8,
+        "offset_source_voxels": [
+          2,
+          2
+        ],
+        "tool_id": "native-wide-aspiration",
+        "entry_mm": [
+          -181.5,
+          83.0,
+          107.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          83.0,
+          107.0
+        ],
+        "fallback_target_mm": [
+          -179.0,
+          83.0,
+          107.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-4b0c2fd589ceafe03216852b",
+        "column_index": 9,
+        "offset_source_voxels": [
+          -3,
+          0
+        ],
+        "tool_id": "native-fine-aspiration",
+        "entry_mm": [
+          -181.5,
+          88.0,
+          105.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          88.0,
+          105.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          88.0,
+          105.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-77f549f3815596455c4c4372",
+        "column_index": 9,
+        "offset_source_voxels": [
+          -3,
+          0
+        ],
+        "tool_id": "native-wide-aspiration",
+        "entry_mm": [
+          -181.5,
+          88.0,
+          105.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          88.0,
+          105.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          88.0,
+          105.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-854e419536ff6e02bf7ea690",
+        "column_index": 10,
+        "offset_source_voxels": [
+          3,
+          0
+        ],
+        "tool_id": "native-fine-aspiration",
+        "entry_mm": [
+          -181.5,
+          82.0,
+          105.0
+        ],
+        "primary_target_mm": [
+          -140.0,
+          82.0,
+          105.0
+        ],
+        "fallback_target_mm": [
+          -179.0,
+          82.0,
+          105.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-fba915d2f0c3216bb62a3731",
+        "column_index": 10,
+        "offset_source_voxels": [
+          3,
+          0
+        ],
+        "tool_id": "native-wide-aspiration",
+        "entry_mm": [
+          -181.5,
+          82.0,
+          105.0
+        ],
+        "primary_target_mm": [
+          -140.0,
+          82.0,
+          105.0
+        ],
+        "fallback_target_mm": [
+          -179.0,
+          82.0,
+          105.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-81bc0b71435e1f2fca93aa73",
+        "column_index": 11,
+        "offset_source_voxels": [
+          0,
+          -3
+        ],
+        "tool_id": "native-fine-aspiration",
+        "entry_mm": [
+          -181.5,
+          85.0,
+          102.0
+        ],
+        "primary_target_mm": [
+          -140.0,
+          85.0,
+          102.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          85.0,
+          102.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-772d1d2e95ddee9b1ffbc538",
+        "column_index": 11,
+        "offset_source_voxels": [
+          0,
+          -3
+        ],
+        "tool_id": "native-wide-aspiration",
+        "entry_mm": [
+          -181.5,
+          85.0,
+          102.0
+        ],
+        "primary_target_mm": [
+          -140.0,
+          85.0,
+          102.0
+        ],
+        "fallback_target_mm": [
+          -180.0,
+          85.0,
+          102.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-fe61f6fd6a529848cac0c715",
+        "column_index": 12,
+        "offset_source_voxels": [
+          0,
+          3
+        ],
+        "tool_id": "native-fine-aspiration",
+        "entry_mm": [
+          -181.5,
+          85.0,
+          108.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          85.0,
+          108.0
+        ],
+        "fallback_target_mm": [
+          -179.0,
+          85.0,
+          108.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      },
+      {
+        "proposal_id": "axis-column-04448b19b27057664ad524d6",
+        "column_index": 12,
+        "offset_source_voxels": [
+          0,
+          3
+        ],
+        "tool_id": "native-wide-aspiration",
+        "entry_mm": [
+          -181.5,
+          85.0,
+          108.0
+        ],
+        "primary_target_mm": [
+          -139.0,
+          85.0,
+          108.0
+        ],
+        "fallback_target_mm": [
+          -179.0,
+          85.0,
+          108.0
+        ],
+        "fallback_condition": "primary_preview_rejected"
+      }
+    ],
+    "ledger": [
+      {
+        "column_index": 0,
+        "offset_source_voxels": [
+          0,
+          0
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "NO_REMAINING_TARGET_IN_COLUMN",
+        "proposal_id": null
+      },
+      {
+        "column_index": 0,
+        "offset_source_voxels": [
+          0,
+          0
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "NO_REMAINING_TARGET_IN_COLUMN",
+        "proposal_id": null
+      },
+      {
+        "column_index": 1,
+        "offset_source_voxels": [
+          -2,
+          0
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-80b383160a897437fcf6962c"
+      },
+      {
+        "column_index": 1,
+        "offset_source_voxels": [
+          -2,
+          0
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-a52b43d85986b13951372838"
+      },
+      {
+        "column_index": 2,
+        "offset_source_voxels": [
+          2,
+          0
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-2bf24e1b2cd05137aa2c9cfb"
+      },
+      {
+        "column_index": 2,
+        "offset_source_voxels": [
+          2,
+          0
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-f6367dfe9059c803e793cc4e"
+      },
+      {
+        "column_index": 3,
+        "offset_source_voxels": [
+          0,
+          -2
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-09980f1dd7575e3c69a16348"
+      },
+      {
+        "column_index": 3,
+        "offset_source_voxels": [
+          0,
+          -2
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-ece9089c5a95228ab0c7e46b"
+      },
+      {
+        "column_index": 4,
+        "offset_source_voxels": [
+          0,
+          2
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-9df0fae1d288c517dd2f06bd"
+      },
+      {
+        "column_index": 4,
+        "offset_source_voxels": [
+          0,
+          2
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-b0e42bf3888b832cc94e9e9e"
+      },
+      {
+        "column_index": 5,
+        "offset_source_voxels": [
+          -2,
+          -2
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-380e4f17feb565cd96a96575"
+      },
+      {
+        "column_index": 5,
+        "offset_source_voxels": [
+          -2,
+          -2
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-04f434bc5cbbb542670b43d5"
+      },
+      {
+        "column_index": 6,
+        "offset_source_voxels": [
+          -2,
+          2
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-7bbf54ecff89849c49de2f71"
+      },
+      {
+        "column_index": 6,
+        "offset_source_voxels": [
+          -2,
+          2
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-4b2be92fefb6f9b2d101517b"
+      },
+      {
+        "column_index": 7,
+        "offset_source_voxels": [
+          2,
+          -2
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-95f606eff0b416e3d19725da"
+      },
+      {
+        "column_index": 7,
+        "offset_source_voxels": [
+          2,
+          -2
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-c378bbf809d8c247a28ce0fe"
+      },
+      {
+        "column_index": 8,
+        "offset_source_voxels": [
+          2,
+          2
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-73ad9df5bbb154b99eb923a4"
+      },
+      {
+        "column_index": 8,
+        "offset_source_voxels": [
+          2,
+          2
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-cfe2cfc3366d02575f848658"
+      },
+      {
+        "column_index": 9,
+        "offset_source_voxels": [
+          -3,
+          0
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-4b0c2fd589ceafe03216852b"
+      },
+      {
+        "column_index": 9,
+        "offset_source_voxels": [
+          -3,
+          0
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-77f549f3815596455c4c4372"
+      },
+      {
+        "column_index": 10,
+        "offset_source_voxels": [
+          3,
+          0
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-854e419536ff6e02bf7ea690"
+      },
+      {
+        "column_index": 10,
+        "offset_source_voxels": [
+          3,
+          0
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-fba915d2f0c3216bb62a3731"
+      },
+      {
+        "column_index": 11,
+        "offset_source_voxels": [
+          0,
+          -3
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-81bc0b71435e1f2fca93aa73"
+      },
+      {
+        "column_index": 11,
+        "offset_source_voxels": [
+          0,
+          -3
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-772d1d2e95ddee9b1ffbc538"
+      },
+      {
+        "column_index": 12,
+        "offset_source_voxels": [
+          0,
+          3
+        ],
+        "tool_id": "native-fine-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-fe61f6fd6a529848cac0c715"
+      },
+      {
+        "column_index": 12,
+        "offset_source_voxels": [
+          0,
+          3
+        ],
+        "tool_id": "native-wide-aspiration",
+        "reason": "PROPOSED_UNCERTIFIED",
+        "proposal_id": "axis-column-04448b19b27057664ad524d6"
+      }
+    ],
+    "unsupported_reason": null,
+    "counts": {
+      "NO_REMAINING_TARGET_IN_COLUMN": 2,
+      "PROPOSED_UNCERTIFIED": 24
+    },
+    "slot_count": 26,
+    "geometry_certified": false,
+    "removal_authorized": false
+  },
+  "prototype_equivalence_initial_and_updated": true,
+  "stale_batch_rejected": true,
+  "preview_feasible": true,
+  "completed_native_strokes": 1,
+  "gradient_steps": 0,
+  "final_worlds_used": false,
+  "stress_worlds_used": false,
+  "clinical_deficit_probability": null,
+  "scope": "One local performance/correctness observation. Integrity verification is not independent geometric certification or clinical validation."
+}

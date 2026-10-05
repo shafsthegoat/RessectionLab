@@ -1,0 +1,69 @@
+{
+  "accounting": {
+    "actor_forward_calls": 0,
+    "beam_pruned_prefixes": 190,
+    "beam_width": 2,
+    "call_cap_reached": false,
+    "completed_layers": 2,
+    "eager_transition_calls": 0,
+    "estimated_incremental_return": 410.312421263048,
+    "evaluated_transition_prefixes": 227,
+    "expanded_nodes": 4,
+    "final_policy_state_hash": null,
+    "guidance": "none",
+    "implicit_stop_evaluations": "all evaluated prefixes; known zero incremental reward",
+    "implicit_stop_prefix_count": 228,
+    "initial_policy_state_hash": null,
+    "layers": [
+      {
+        "completed": true,
+        "depth": 1,
+        "expanded_nodes": 1,
+        "model_transition_calls": 70,
+        "negative_prefixes_evaluated": 44,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 44,
+        "negative_prefixes_retained": 0
+      },
+      {
+        "completed": true,
+        "depth": 2,
+        "expanded_nodes": 2,
+        "model_transition_calls": 124,
+        "negative_prefixes_evaluated": 0,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 0,
+        "negative_prefixes_retained": 0
+      },
+      {
+        "completed": false,
+        "depth": 3,
+        "expanded_nodes": 1,
+        "model_transition_calls": 33,
+        "negative_prefixes_evaluated": 0,
+        "negative_prefixes_pending_at_cap": 0,
+        "negative_prefixes_pruned_by_beam": 0,
+        "negative_prefixes_retained": 0
+      }
+    ],
+    "lazy_planning_transition_calls": 227,
+    "max_calls": 512,
+    "model_transition_calls": 227,
+    "negative_prefixes_evaluated": 44,
+    "negative_prefixes_pruned_by_beam": 44,
+    "negative_prefixes_retained": 0,
+    "objective_source": "permitted_annotation_assisted_nominal_model",
+    "observation_requests": 4,
+    "peak_next_layer_states": 3,
+    "planning_seconds": 180.68571058299858,
+    "policy_state_check_seconds": 0.0,
+    "policy_state_checks": 0,
+    "root_legal_nonstop_actions": 70,
+    "stop_baseline_return": 0.0,
+    "time_cap_reached": true,
+    "transition_mode": "lazy_planning"
+  },
+  "message": "Observed search exceeded its declared episode time",
+  "traceback": "Traceback (most recent call last):\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/pat05-real-spatial-search-comparison-v1-b64d801/frozen-source/scripts/compare_real_spatial_search.py\", line 278, in main\n    worker(declaration, args.output)\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/pat05-real-spatial-search-comparison-v1-b64d801/frozen-source/scripts/compare_real_spatial_search.py\", line 237, in worker\n    row.update(replay_search(base, declaration[\"search\"], preserve=save, profiler=profiler))\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/pat05-real-spatial-search-comparison-v1-b64d801/frozen-source/scripts/compare_real_spatial_search.py\", line 148, in replay_search\n    sequence, search = observed_beam_search(base, **settings,\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/pat05-real-spatial-search-comparison-v1-b64d801/frozen-source/src/resectionlab/observed_search.py\", line 61, in observed_beam_search\n    return _observed_beam_search(task, **arguments)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/pat05-real-spatial-search-comparison-v1-b64d801/frozen-source/src/resectionlab/observed_search.py\", line 198, in _observed_beam_search\n    check_time()\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/pat05-real-spatial-search-comparison-v1-b64d801/frozen-source/src/resectionlab/observed_search.py\", line 160, in check_time\n    raise ObservedSearchLimit(\"Observed search exceeded its declared episode time\",\nresectionlab.observed_search.ObservedSearchLimit: Observed search exceeded its declared episode time\n",
+  "type": "ObservedSearchLimit"
+}

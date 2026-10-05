@@ -1,0 +1,123 @@
+{
+  "baseline_sha256": "09d683b3ef6d68d77bd762c19b5899d10333157359cb5e83f814ece3935ad863",
+  "inputs": {
+    "declaration.json": {
+      "uncompressed_bytes": 12550,
+      "uncompressed_sha256": "8e400ebc7e3a662d60cce8cd168136e44b8baf3a2355160168216f90a3b4612d"
+    },
+    "launcher-status.json": {
+      "uncompressed_bytes": 1376,
+      "uncompressed_sha256": "70dbffabb040150cf3c0fdb0579eebbb72193afc52f71729f7a2cce6f7de7b70"
+    },
+    "preparation.json": {
+      "uncompressed_bytes": 2667,
+      "uncompressed_sha256": "87b669567584161d80298a5eb45bcd1da5a35ca7e4447add06792e7664696019"
+    },
+    "profile/cancellation-probe.json": {
+      "uncompressed_bytes": 165,
+      "uncompressed_sha256": "ffb2724221701c2aa2f57c3f0752e656760dfa005f85883459a9513e3aac6c3c"
+    },
+    "profile/candidate-records.json": {
+      "uncompressed_bytes": 5335,
+      "uncompressed_sha256": "f24b59cde092ddd67f099e581b3f01cbef0caeef94681c78d07f5d30e4857e05"
+    },
+    "profile/clone-probe.json": {
+      "uncompressed_bytes": 363,
+      "uncompressed_sha256": "432e24c1ca7e0b712e805308624cc5d744fa07d7a23647466c24db73a8475fc0"
+    },
+    "profile/cold-setup.json": {
+      "uncompressed_bytes": 588,
+      "uncompressed_sha256": "af2a677057972e7485fd320e5d0fec065c9e9ba57d75166d4c0c5fa3dda18d84"
+    },
+    "profile/greedy-reset.json": {
+      "uncompressed_bytes": 175,
+      "uncompressed_sha256": "3cd085224e0a0af02c6358588e0a2a3507383eefdc9e98ef74ef15b7dcc754df"
+    },
+    "profile/greedy/episode.json": {
+      "uncompressed_bytes": 9729026,
+      "uncompressed_sha256": "a55abcf745c5c59cae3d2a3968503e4a9a9f3c5783f003f536792c8d3efc4e80"
+    },
+    "profile/greedy/timing.json": {
+      "uncompressed_bytes": 116,
+      "uncompressed_sha256": "df6fc2cf693714d7c920a05e26c671a2d5b8f4b6fc502c55ee71f0a78f90730c"
+    },
+    "profile/independent-audit.json": {
+      "uncompressed_bytes": 1162,
+      "uncompressed_sha256": "b1d8280668c41d251d5eac2aa822f024eed397df58aaac7ea70c57898c644b97"
+    },
+    "profile/initial/inventory.json": {
+      "uncompressed_bytes": 44936,
+      "uncompressed_sha256": "b5cea2d96d5e5c06ee11fd5024819a78cdbeaaca4cd994221cd6f00f324f70b6"
+    },
+    "profile/model.json": {
+      "uncompressed_bytes": 2436,
+      "uncompressed_sha256": "cbfce67b631e13a657bcf578fd793d3407a89b9e20c3e0833a9192388cc83019"
+    },
+    "profile/selection-1/episode.json": {
+      "uncompressed_bytes": 9729029,
+      "uncompressed_sha256": "12ea9651789f14b8e1a9f87cffcad6032c31e3d61569056ded26cf8d4881cb07"
+    },
+    "profile/selection-1/timing.json": {
+      "uncompressed_bytes": 116,
+      "uncompressed_sha256": "493d35aac6b271502e033fe51b0cac238e57fc670f8354d203c92740ff746bf8"
+    },
+    "profile/selection-2/episode.json": {
+      "uncompressed_bytes": 9729034,
+      "uncompressed_sha256": "c14f857c2b3f4bec58c482f3e57f8e03e4544f6f8f7d6a13a53f23144f66d1da"
+    },
+    "profile/selection-2/timing.json": {
+      "uncompressed_bytes": 116,
+      "uncompressed_sha256": "7a03520ad96cc400ebdc5c78d1affb6ad4a6678ea9aa68a6eae87cd09ef96d03"
+    },
+    "profile/selection-progress.json": {
+      "uncompressed_bytes": 1529,
+      "uncompressed_sha256": "51f5c9043df2549a7a45f4bac264be63e049a20ad1bd80ded88d012fea90d6fa"
+    },
+    "profile/sequence-freeze.json": {
+      "uncompressed_bytes": 677,
+      "uncompressed_sha256": "31ece55a360bc07daf31908400804dbe882e1da4e49ce7571f653eef5de102dc"
+    },
+    "profile/source.json": {
+      "uncompressed_bytes": 5548,
+      "uncompressed_sha256": "469e9a0c34906ec2925a7356b27eb87e0f91c995a591b650bccd0487fdb78a82"
+    },
+    "profile/status.json": {
+      "uncompressed_bytes": 1186,
+      "uncompressed_sha256": "faa4462286443ee9117b4b3fca3e38a85a3b868f03dbcbaaca4c1d5592ca325e"
+    },
+    "profile/untrained-independent-audit.json": {
+      "uncompressed_bytes": 1088,
+      "uncompressed_sha256": "6cc3b1dc1e52ab776914fbd78ec4ec7c9d2b59a75071346fcbc1fdebf1e2b938"
+    },
+    "profile/untrained-policy-freeze.json": {
+      "uncompressed_bytes": 1972,
+      "uncompressed_sha256": "03be2c438288b7dd617470327cf2d41c7cd836fbd68cb76dc3d21a2356dff736"
+    },
+    "profile/untrained-selection-1/episode.json": {
+      "uncompressed_bytes": 5049870,
+      "uncompressed_sha256": "48186342e3b401f0643b7a289e54ffcc07aed88f2c5001ba7fd39e84d10b7536"
+    },
+    "profile/untrained-selection-1/timing.json": {
+      "uncompressed_bytes": 115,
+      "uncompressed_sha256": "ee11a9241096d882c4e5fbf9a24f759ee5338e82958e8bd4cb689030b7aa8b81"
+    },
+    "profile/untrained-selection-2/episode.json": {
+      "uncompressed_bytes": 5049867,
+      "uncompressed_sha256": "79d29c11c46456d69ef394ae4410fd138ca734b7db6ec79a3be08301f6e3e2cb"
+    },
+    "profile/untrained-selection-2/timing.json": {
+      "uncompressed_bytes": 114,
+      "uncompressed_sha256": "ddb563182926512b1ec0497909ee8be57b01e1999f91c0883af2acf654af50f4"
+    },
+    "profile/untrained-selection-progress.json": {
+      "uncompressed_bytes": 1928,
+      "uncompressed_sha256": "c4d5b60971906632bdb00f8db022f21379aee881d222f8940b2cdb2764c0af64"
+    },
+    "worker-resource.json": {
+      "uncompressed_bytes": 483,
+      "uncompressed_sha256": "f0eb0689e80114932407e3b7fe0ba4415ec20b32219af76a327cc5cbc9408221"
+    }
+  },
+  "report_script_sha256": "6694764f4acb694f2372a245347c7bba61f8e05be5869cf62884b4e7881dcf0a",
+  "source_policy": "Original receipts unchanged. Hashes identify uncompressed bytes whether the consumer reads JSON or gzip."
+}

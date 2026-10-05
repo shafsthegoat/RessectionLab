@@ -1,0 +1,214 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-04T06:53:42.792444+00:00",
+  "implementation_sha256": "e7f57bf7467fb3cb5d6b9b3f1c80e4665710713124d0720aa84d31ccc03b8e21",
+  "dipy_version": "1.12.1",
+  "tensor": {
+    "model": "DIPY WLS diffusion tensor",
+    "mode": "diagnostic_only",
+    "elapsed_seconds": 2.242778791929595,
+    "selected_volume_indices": [
+      0,
+      1,
+      2,
+      4,
+      6,
+      9,
+      10,
+      13,
+      15,
+      16,
+      19,
+      21,
+      23,
+      25,
+      26,
+      28,
+      30,
+      33,
+      34,
+      36,
+      39,
+      41,
+      43,
+      45,
+      47,
+      49,
+      51,
+      52,
+      54,
+      56,
+      59,
+      60,
+      63,
+      65,
+      66,
+      69,
+      71,
+      73,
+      75,
+      76,
+      78,
+      80,
+      83,
+      84,
+      86,
+      89,
+      91,
+      93,
+      95,
+      97,
+      99,
+      101
+    ],
+    "selected_bvalues_s_per_mm2": [
+      0.0,
+      700.0,
+      1200.0
+    ],
+    "excluded_volume_count": 50,
+    "chunk_voxels": 2048,
+    "fitted_voxels": 101311,
+    "native_grid_voxels": 552960,
+    "fa_median_in_mask": 0.1938914805650711,
+    "fa_p95_in_mask": 0.6408278346061707,
+    "mean_diffusivity_median_mm2_per_s": 0.0009355877409689128,
+    "normalized_signal_rmse_median": 0.06358661502599716,
+    "normalized_signal_rmse_definition": "RMSE against measured volumes / mean b0 signal; diagnostic fit residual",
+    "planning_gate_failures": [
+      "DWI_MOTION_UNCORRECTED",
+      "DWI_DISTORTION_UNCORRECTED",
+      "GRADIENT_ROTATION_UNREVIEWED",
+      "DIFFUSION_MASK_UNREVIEWED",
+      "DIFFUSION_REGISTRATION_UNREVIEWED",
+      "PREPROCESSING_PROVENANCE_MISSING",
+      "PREPROCESSING_EVIDENCE_STALE",
+      "DIFFUSION_REGISTRATION_TRANSFORM_UNRESOLVED"
+    ],
+    "usable_for_tract_aware_planning": false,
+    "motor_coverage": "unknown",
+    "language_coverage": "unknown",
+    "clinical_deficit_probability": null,
+    "output_frame": "acquired_DWI_RAS_mm",
+    "principal_vector_components": "unit RAS, antipodally symmetric",
+    "source_affine_ras_mm": [
+      [
+        -2.499688148498535,
+        -0.03490452840924263,
+        0.018460214138031006,
+        122.3555679321289
+      ],
+      [
+        -0.037076663225889206,
+        2.4768667221069336,
+        -0.33727848529815674,
+        -99.16636657714844
+      ],
+      [
+        0.013580377213656902,
+        0.3375101685523987,
+        2.4770753383636475,
+        -78.84336853027344
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "source_hashes": {
+      "dwi": "1075093345c46c95ac0f958ce2cd630b9c5323c8d5c9f81d00713e9725c9c3bd",
+      "bvals": "a678931600142ebf20236adba60c52b41e85b9aa241b78dc69c6385c089576c2",
+      "bvecs": "7cb61a14071980a8f884173a0b05ec8e9069992a85af0689694fd9d9e5869fc9"
+    },
+    "gradient_convention": "BIDS_FSL",
+    "limitations": [
+      "single_tensor_cannot_resolve_crossing_fibers",
+      "mask_requires_review",
+      "no_functional_bundle_or_endpoint_validation",
+      "not_registered_to_structural_image"
+    ]
+  },
+  "mask": {
+    "method": "median_otsu on mean b0",
+    "median_radius": 2,
+    "passes": 2,
+    "dilate": 1,
+    "reviewed": false
+  },
+  "failed_variants": [],
+  "probabilistic_crop": {
+    "model": "DIPY CSA order 6; nonnegative ODF samples used for probabilistic tracking",
+    "spherical_harmonic_basis": "DIPY CsaOdfModel legacy descoteaux07 default; pending upstream deprecation",
+    "csa_smoothing": 0.006,
+    "mode": "diagnostic_only",
+    "elapsed_seconds": 0.17276287509594113,
+    "shell_b_s_per_mm2": 2800,
+    "weighted_direction_count": 50,
+    "crop_start_voxels": [
+      36,
+      36,
+      18
+    ],
+    "crop_shape_voxels": [
+      24,
+      24,
+      24
+    ],
+    "seed_count_per_realization": 64,
+    "realizations": [
+      {
+        "seed": 41,
+        "retained_streamlines": 57,
+        "discarded_under_5mm": 7,
+        "length_median_mm": 38.999999954217806,
+        "visited_voxels": 1066
+      },
+      {
+        "seed": 42,
+        "retained_streamlines": 59,
+        "discarded_under_5mm": 5,
+        "length_median_mm": 27.749999947345675,
+        "visited_voxels": 1010
+      },
+      {
+        "seed": 43,
+        "retained_streamlines": 60,
+        "discarded_under_5mm": 4,
+        "length_median_mm": 30.000000051219786,
+        "visited_voxels": 992
+      }
+    ],
+    "step_size_mm": 0.75,
+    "maximum_turn_degrees": 30,
+    "max_steps_per_half": 160,
+    "stopping_rule": "unreviewed low-shell FA>=0.2 fitted-mask boundary",
+    "negative_odf_fraction_before_clipping": 0.008057137713648311,
+    "streamline_count": 176,
+    "point_frame": "acquired_DWI_RAS_mm",
+    "functional_labels": [],
+    "endpoint_review": "not_performed",
+    "motor_coverage": "unknown",
+    "language_coverage": "unknown",
+    "clinical_deficit_probability": null,
+    "usable_for_tract_aware_planning": false,
+    "visitation_meaning": "fraction of fixed-ODF tracking runs visiting a crop voxel; not an anatomical or clinical probability",
+    "limitations": [
+      "raw_motion_and_distortion_uncorrected_unless_separately_documented",
+      "crop_and_FA_stopping_truncate_paths",
+      "crossing_tracts_unvalidated",
+      "single_ODF_fit_does_not_measure_reconstruction_uncertainty",
+      "unvisited_voxels_do_not_establish_absent_fibers",
+      "no_CST_or_language_bundle_identification"
+    ]
+  },
+  "artifact_hashes": {
+    "fa.nii.gz": "952d021164353e8d78e0af872e563096cc6029951adf4d448d8cae7db161a501",
+    "normalized_rmse.nii.gz": "cbfb6b5c16b10cc755a814c6996a3fe0f5314bca047fe38efdfaa50e10a32d02",
+    "fit_coverage.nii.gz": "67e575dce3cc83ce11a89178841a9894b694dcf2e3f93a7611cfc7ab3c170010",
+    "diagnostic_probabilistic_tracks.npz": "4cdfb08c46df0af8183f3a1dddef5d3c292ba000f48f09fe4f655f2a8e8ce3b1",
+    "md.nii.gz": "6b45cdfbc949175b938fe8eac520e5678a81384e00188fda462ded3f84a87ec3",
+    "principal_ras.nii.gz": "916d6029786c9e6a1b6de2b75da9b1dfe75cbef84cbb0fedc34121ca076a59ad"
+  }
+}

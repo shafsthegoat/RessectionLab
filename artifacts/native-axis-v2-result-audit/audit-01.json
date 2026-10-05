@@ -1,0 +1,577 @@
+{
+  "auditor_sha256": "af56fa3e545833c089c93f52cb143fa6d3420bb2183dc3e185ea264850b9cbb2",
+  "checkpoint_sha256": "712cda163138222be16d14de11fe43c75daf499340b50c693a80c78ac0dfb115",
+  "completed_episodes": 5,
+  "costs": {
+    "constructor_seconds": 8.046592625090852,
+    "episode_phases": {
+      "greedy": {
+        "decision_seconds": 2.187688042060472,
+        "episode_seconds_before_export": 14.748200165922754,
+        "episode_seconds_including_export": 14.946525124949403,
+        "preview_seconds": 14.881425793049857,
+        "reset_local_integrity_seconds": 3.6226965410169214,
+        "reset_seconds": 7.110680374898948,
+        "transition_seconds": 11.991530167986639
+      },
+      "selection-1": {
+        "decision_seconds": 1.312481332803145,
+        "episode_seconds_before_export": 14.017346499953419,
+        "episode_seconds_including_export": 14.220125082996674,
+        "preview_seconds": 15.021860169363208,
+        "reset_local_integrity_seconds": 3.6282047086860985,
+        "reset_seconds": 7.222221625037491,
+        "transition_seconds": 12.154147917055525
+      },
+      "selection-2": {
+        "decision_seconds": 1.2959459569538012,
+        "episode_seconds_before_export": 14.134898833930492,
+        "episode_seconds_including_export": 14.336844792007469,
+        "preview_seconds": 15.068238204810768,
+        "reset_local_integrity_seconds": 3.674753210041672,
+        "reset_seconds": 7.297867125016637,
+        "transition_seconds": 12.272694249986671
+      },
+      "untrained-selection-1": {
+        "decision_seconds": 2.703590999939479,
+        "episode_seconds_before_export": 16.63029025006108,
+        "episode_seconds_including_export": 16.736807250068523,
+        "preview_seconds": 16.51891129219439,
+        "reset_local_integrity_seconds": 4.433841209043749,
+        "reset_seconds": 7.236013457993977,
+        "transition_seconds": 13.458208873867989
+      },
+      "untrained-selection-2": {
+        "decision_seconds": 2.74973837507423,
+        "episode_seconds_before_export": 16.76324195798952,
+        "episode_seconds_including_export": 16.87084716593381,
+        "preview_seconds": 16.68956741504371,
+        "reset_local_integrity_seconds": 4.42208179528825,
+        "reset_seconds": 7.350249832961708,
+        "transition_seconds": 13.552855125977658
+      }
+    },
+    "frozen_sequence_panel_seconds": 43.07705862505827,
+    "independent_geometry_seconds": 23.854998666909523,
+    "initial_clone_seconds": 0.2930660831043497,
+    "initial_inventory_inspection_seconds": 1.403560291044414,
+    "initial_policy_setup_seconds": 0.7409825409995392,
+    "launcher_seconds": 149.37558004097082,
+    "process_peak_rss_bytes": 1411072000,
+    "profile_seconds": 148.1825368750142,
+    "profile_unattributed_overhead_seconds": 0.5151548360008746,
+    "scope": "preview/integrity subtimers overlap reset/episode intervals; do not add them to phase wall time. Reset-local integrity counters omit some pre-reset checks and are not a global count.",
+    "untrained_policy_panel_seconds": 48.19391770695802,
+    "worker_seconds": 148.8139820419019
+  },
+  "created_utc": "2026-10-04T12:43:18.232593+00:00",
+  "declaration_content_hash": "sha256:089dca680b992a5808c104a559ab562a034de9bea91de6df939da40d87650fe3",
+  "eligible_development_records": 2,
+  "final_worlds": 0,
+  "frozen_source_files_checked": 46,
+  "gradients": 0,
+  "input_sha256": {
+    "artifacts/preflight/native-axis-v2/declaration.json": "8e400ebc7e3a662d60cce8cd168136e44b8baf3a2355160168216f90a3b4612d",
+    "artifacts/preflight/native-axis-v2/launch-source.json": "8d547e897bb0927850347b1aeb7cfa77b43f8d7f6d0e6ea178e9ef5de6b7a6b7",
+    "artifacts/preflight/native-axis-v2/launcher-status.json": "70dbffabb040150cf3c0fdb0579eebbb72193afc52f71729f7a2cce6f7de7b70",
+    "artifacts/preflight/native-axis-v2/native-configuration-preflight.json": "524a2d1b47ac740733ff57d99705e6a06f56c2c4611d56b8089a81bbe3542f17",
+    "artifacts/preflight/native-axis-v2/preparation.json": "87b669567584161d80298a5eb45bcd1da5a35ca7e4447add06792e7664696019",
+    "artifacts/preflight/native-axis-v2/profile/cancellation-probe.json": "ffb2724221701c2aa2f57c3f0752e656760dfa005f85883459a9513e3aac6c3c",
+    "artifacts/preflight/native-axis-v2/profile/candidate-records.json": "f24b59cde092ddd67f099e581b3f01cbef0caeef94681c78d07f5d30e4857e05",
+    "artifacts/preflight/native-axis-v2/profile/clone-probe.json": "432e24c1ca7e0b712e805308624cc5d744fa07d7a23647466c24db73a8475fc0",
+    "artifacts/preflight/native-axis-v2/profile/cold-setup.json": "af2a677057972e7485fd320e5d0fec065c9e9ba57d75166d4c0c5fa3dda18d84",
+    "artifacts/preflight/native-axis-v2/profile/greedy-reset.json": "3cd085224e0a0af02c6358588e0a2a3507383eefdc9e98ef74ef15b7dcc754df",
+    "artifacts/preflight/native-axis-v2/profile/greedy/episode.json": "a55abcf745c5c59cae3d2a3968503e4a9a9f3c5783f003f536792c8d3efc4e80",
+    "artifacts/preflight/native-axis-v2/profile/greedy/progress.json": "24f504a5f39b78a257d148bfe6a7a55417f13180a52e9e6b8c09347f8db08342",
+    "artifacts/preflight/native-axis-v2/profile/greedy/timing.json": "df6fc2cf693714d7c920a05e26c671a2d5b8f4b6fc502c55ee71f0a78f90730c",
+    "artifacts/preflight/native-axis-v2/profile/independent-audit.json": "b1d8280668c41d251d5eac2aa822f024eed397df58aaac7ea70c57898c644b97",
+    "artifacts/preflight/native-axis-v2/profile/initial/inventory.json": "b5cea2d96d5e5c06ee11fd5024819a78cdbeaaca4cd994221cd6f00f324f70b6",
+    "artifacts/preflight/native-axis-v2/profile/model.json": "cbfce67b631e13a657bcf578fd793d3407a89b9e20c3e0833a9192388cc83019",
+    "artifacts/preflight/native-axis-v2/profile/selection-1/episode.json": "12ea9651789f14b8e1a9f87cffcad6032c31e3d61569056ded26cf8d4881cb07",
+    "artifacts/preflight/native-axis-v2/profile/selection-1/progress.json": "f8a71ab89c4bf0cebad0d01def36d7dd5a0a753fd9b3043eba69509032fd3785",
+    "artifacts/preflight/native-axis-v2/profile/selection-1/timing.json": "493d35aac6b271502e033fe51b0cac238e57fc670f8354d203c92740ff746bf8",
+    "artifacts/preflight/native-axis-v2/profile/selection-2/episode.json": "c14f857c2b3f4bec58c482f3e57f8e03e4544f6f8f7d6a13a53f23144f66d1da",
+    "artifacts/preflight/native-axis-v2/profile/selection-2/progress.json": "f355223b32d4578904c9d078faced3a58c9ba30bf0ffdb9b6bd4ca54cc247713",
+    "artifacts/preflight/native-axis-v2/profile/selection-2/timing.json": "7a03520ad96cc400ebdc5c78d1affb6ad4a6678ea9aa68a6eae87cd09ef96d03",
+    "artifacts/preflight/native-axis-v2/profile/selection-progress.json": "51f5c9043df2549a7a45f4bac264be63e049a20ad1bd80ded88d012fea90d6fa",
+    "artifacts/preflight/native-axis-v2/profile/sequence-freeze.json": "31ece55a360bc07daf31908400804dbe882e1da4e49ce7571f653eef5de102dc",
+    "artifacts/preflight/native-axis-v2/profile/source.json": "469e9a0c34906ec2925a7356b27eb87e0f91c995a591b650bccd0487fdb78a82",
+    "artifacts/preflight/native-axis-v2/profile/status.json": "faa4462286443ee9117b4b3fca3e38a85a3b868f03dbcbaaca4c1d5592ca325e",
+    "artifacts/preflight/native-axis-v2/profile/untrained-independent-audit.json": "6cc3b1dc1e52ab776914fbd78ec4ec7c9d2b59a75071346fcbc1fdebf1e2b938",
+    "artifacts/preflight/native-axis-v2/profile/untrained-policy-freeze.json": "03be2c438288b7dd617470327cf2d41c7cd836fbd68cb76dc3d21a2356dff736",
+    "artifacts/preflight/native-axis-v2/profile/untrained-selection-1/episode.json": "48186342e3b401f0643b7a289e54ffcc07aed88f2c5001ba7fd39e84d10b7536",
+    "artifacts/preflight/native-axis-v2/profile/untrained-selection-1/progress.json": "bc207c6e90ac070aeff6f5befed39d0bd86281ebca62ddf25faa47956c9ed184",
+    "artifacts/preflight/native-axis-v2/profile/untrained-selection-1/timing.json": "ee11a9241096d882c4e5fbf9a24f759ee5338e82958e8bd4cb689030b7aa8b81",
+    "artifacts/preflight/native-axis-v2/profile/untrained-selection-2/episode.json": "79d29c11c46456d69ef394ae4410fd138ca734b7db6ec79a3be08301f6e3e2cb",
+    "artifacts/preflight/native-axis-v2/profile/untrained-selection-2/progress.json": "af4db0ae7cd60ffab202957fa4308a937c65d99f4da9d11224e4cc4bbf2ae301",
+    "artifacts/preflight/native-axis-v2/profile/untrained-selection-2/timing.json": "ddb563182926512b1ec0497909ee8be57b01e1999f91c0883af2acf654af50f4",
+    "artifacts/preflight/native-axis-v2/profile/untrained-selection-progress.json": "c4d5b60971906632bdb00f8db022f21379aee881d222f8940b2cdb2764c0af64",
+    "artifacts/preflight/native-axis-v2/worker-resource.json": "f0eb0689e80114932407e3b7fe0ba4415ec20b32219af76a327cc5cbc9408221",
+    "artifacts/validation/native-axis-public-v2/execution-baseline.json": "09d683b3ef6d68d77bd762c19b5899d10333157359cb5e83f814ece3935ad863",
+    "build/validation/native-axis-v2/69304172a74c50a8b83025c863edd979ff26e4fd/source/manifests/experiments/procedural-native-to-ucsf-v1.json": "6011ec40117f49653df4ab2fb0194c1e630bd2cf09870f87332f340fe3c6fde0"
+  },
+  "inventory_scope": "constructor plus actual state inventories for five episodes; terminal provider rays remain unpreviewed at horizon",
+  "inventory_totals": {
+    "certified": 368,
+    "fallback": 0,
+    "previews": 368,
+    "primary": 368,
+    "proposals": 450,
+    "slots": 546
+  },
+  "limitations": [
+    "This auditor verified existing source-bound independent geometry certificates; it did not rerun geometry, policies or episodes.",
+    "Later decision feature matrices/logits/nominal values were not persisted. Choice semantics are supported by frozen source and unchanged checkpoint identity, not independently replayed argmax calculations.",
+    "Known fresh seed11 tensor identity was independently reconstructed in the earlier feature-unit audit; this run compares checkpoint tensor bytes to that identity without creating or running a model.",
+    "File provenance and stored flags cannot independently attest every process operation; observed seeds/episodes, source gates and saved tensors are consistent with zero gradients and closed final/stress worlds.",
+    "Deterministic replay is not Monte Carlo uncertainty or independent clinical validation; source support/access remain unreviewed and motor/language evidence absent.",
+    "Episode panels reset one simulator and exclude generic learner clone/optimizer/backpropagation costs; no training budget or throughput claim follows."
+  ],
+  "model": {
+    "access": {
+      "center_mm": [
+        -181.5,
+        85.0,
+        105.0
+      ],
+      "normal_inward": [
+        1.0,
+        0.0,
+        -0.0
+      ],
+      "radius_mm": 6.0,
+      "window_id": "native_hypothetical_nearest_envelope_axis"
+    },
+    "adapter_version": "experimental-native-axis-column-policy-v1",
+    "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "decision_model_hash": "sha256:1d06e7792ce78ecf7ef461ba5ff2b6f78e2367d3b3bc030a80d70b49e6e747f5",
+    "evidence_available": [
+      false,
+      false
+    ],
+    "input_profile": "RAW",
+    "max_actions": 27,
+    "max_steps": 3,
+    "native_config_hash": "sha256:6d817c5c7441cc7d6c6bcaeac4542cfd3266f2474c9c1904a2d6279870b3143b",
+    "partial_contact_weight": 0.05,
+    "planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+    "proposal_model_hash": "sha256:b9cc28313cba81017718bb884bd90042c0c64432bd2a2901b4f97e3485cc1135",
+    "proposal_rule": {
+      "max_primary_rays": 26,
+      "offsets_source_voxels": [
+        [
+          0,
+          0
+        ],
+        [
+          -2,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          -2
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          -2,
+          -2
+        ],
+        [
+          -2,
+          2
+        ],
+        [
+          2,
+          -2
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          -3,
+          0
+        ],
+        [
+          3,
+          0
+        ],
+        [
+          0,
+          -3
+        ],
+        [
+          0,
+          3
+        ]
+      ],
+      "version": "experimental-residual-axis-columns-v1"
+    },
+    "reward": {
+      "action_cost": 0.02,
+      "graph_edge_cost": 1.0,
+      "language_per_mm3": 2.0,
+      "motion_per_mm": 0.0,
+      "motor_per_mm3": 2.0,
+      "normal_per_mm3": 0.2,
+      "target_per_mm3": 1.0,
+      "tool_change_cost": 0.02
+    },
+    "tools": [
+      {
+        "max_access_angle_deg": 35.0,
+        "parameter_source": "generic research geometry; not a verified commercial device",
+        "shaft_radius_mm": 0.45,
+        "tip_length_mm": 2.0,
+        "tip_radius_mm": 1.25,
+        "tool_id": "native-fine-aspiration",
+        "working_length_mm": 120.0
+      },
+      {
+        "max_access_angle_deg": 35.0,
+        "parameter_source": "generic research geometry; not a verified commercial device",
+        "shaft_radius_mm": 1.1,
+        "tip_length_mm": 3.0,
+        "tip_radius_mm": 2.25,
+        "tool_id": "native-wide-aspiration",
+        "working_length_mm": 120.0
+      }
+    ]
+  },
+  "next_declared_logging_requirement": "Before a future training run, persist at every decision the ordered action IDs, mask, nominal actor observation arrays or their lossless artifact references, policy/profile/checkpoint hash, logits for policy or complete nominal values for greedy, and chosen index/ID. Record their serialization cost explicitly; keep latent world variables out of actor-observation logs.",
+  "runtime_content_hash": "sha256:ee931752f4af906c8561a8ea334bf4233fad0dd78b68fdc8f22846c17d4151f3",
+  "runtime_versions": {
+    "nibabel": "5.4.2",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "torch": "2.14.1"
+  },
+  "source_commit": "69304172a74c50a8b83025c863edd979ff26e4fd",
+  "status": "passed",
+  "stress_worlds": 0,
+  "unique_certified_histories": 2,
+  "verified_episodes": {
+    "greedy": {
+      "actions": [
+        "AXISv1:733fc018d7bf3838d0cdc4b8",
+        "AXISv1:655c3d5433c0c367b0806d85",
+        "AXISv1:bb274fe18711b9d4160bdc31"
+      ],
+      "cumulative_partial_normal_contact_mm3": 177.0,
+      "episode_world_hash": "sha256:d9c14ec8dbcac97354c1669377b54f52014f0fede21d5a11f4caee99e4f9f279",
+      "history_hash": "sha256:8c6e1dd7af7ce28281f424508ee87e6fbe8983120e45f41165313093d7eacfdd",
+      "inventory_summaries": [
+        {
+          "certified": 26,
+          "fallback": 0,
+          "preview_seconds": 5.89212833577767,
+          "previews": 26,
+          "primary": 26,
+          "proposals": 26,
+          "slots": 26,
+          "terminal": false
+        },
+        {
+          "certified": 22,
+          "fallback": 0,
+          "preview_seconds": 4.943149749422446,
+          "previews": 22,
+          "primary": 22,
+          "proposals": 22,
+          "slots": 26,
+          "terminal": false
+        },
+        {
+          "certified": 18,
+          "fallback": 0,
+          "preview_seconds": 4.046147707849741,
+          "previews": 18,
+          "primary": 18,
+          "proposals": 18,
+          "slots": 26,
+          "terminal": false
+        },
+        {
+          "certified": 0,
+          "fallback": 0,
+          "preview_seconds": 0.0,
+          "previews": 0,
+          "primary": 0,
+          "proposals": 14,
+          "slots": 26,
+          "terminal": true
+        }
+      ],
+      "native_removed_mm3": 1175.0,
+      "nonstop_actions": 3,
+      "normal_removed_mm3": 62.0,
+      "retained_contact_mm3": 1514.0,
+      "score": 1098.77,
+      "step_rewards": [
+        373.24,
+        364.03000000000003,
+        361.5
+      ],
+      "target_removed_mm3": 1113.0
+    },
+    "selection-1": {
+      "actions": [
+        "AXISv1:733fc018d7bf3838d0cdc4b8",
+        "AXISv1:655c3d5433c0c367b0806d85",
+        "AXISv1:bb274fe18711b9d4160bdc31"
+      ],
+      "cumulative_partial_normal_contact_mm3": 177.0,
+      "episode_world_hash": "sha256:92e4e0aa2e43ed4da13b22bc474efe42ff07e1f7ba90dc8a2c6fe3e04744c95a",
+      "history_hash": "sha256:8c6e1dd7af7ce28281f424508ee87e6fbe8983120e45f41165313093d7eacfdd",
+      "inventory_summaries": [
+        {
+          "certified": 26,
+          "fallback": 0,
+          "preview_seconds": 5.904976333724335,
+          "previews": 26,
+          "primary": 26,
+          "proposals": 26,
+          "slots": 26,
+          "terminal": false
+        },
+        {
+          "certified": 22,
+          "fallback": 0,
+          "preview_seconds": 5.013321002246812,
+          "previews": 22,
+          "primary": 22,
+          "proposals": 22,
+          "slots": 26,
+          "terminal": false
+        },
+        {
+          "certified": 18,
+          "fallback": 0,
+          "preview_seconds": 4.103562833392061,
+          "previews": 18,
+          "primary": 18,
+          "proposals": 18,
+          "slots": 26,
+          "terminal": false
+        },
+        {
+          "certified": 0,
+          "fallback": 0,
+          "preview_seconds": 0.0,
+          "previews": 0,
+          "primary": 0,
+          "proposals": 14,
+          "slots": 26,
+          "terminal": true
+        }
+      ],
+      "native_removed_mm3": 1175.0,
+      "nonstop_actions": 3,
+      "normal_removed_mm3": 62.0,
+      "retained_contact_mm3": 1514.0,
+      "score": 1098.77,
+      "step_rewards": [
+        373.24,
+        364.03000000000003,
+        361.5
+      ],
+      "target_removed_mm3": 1113.0
+    },
+    "selection-2": {
+      "actions": [
+        "AXISv1:733fc018d7bf3838d0cdc4b8",
+        "AXISv1:655c3d5433c0c367b0806d85",
+        "AXISv1:bb274fe18711b9d4160bdc31"
+      ],
+      "cumulative_partial_normal_contact_mm3": 177.0,
+      "episode_world_hash": "sha256:55501692a1a85f822fd2d131398414834207c56f5a797a1632fa95f94180a156",
+      "history_hash": "sha256:8c6e1dd7af7ce28281f424508ee87e6fbe8983120e45f41165313093d7eacfdd",
+      "inventory_summaries": [
+        {
+          "certified": 26,
+          "fallback": 0,
+          "preview_seconds": 5.987423958140425,
+          "previews": 26,
+          "primary": 26,
+          "proposals": 26,
+          "slots": 26,
+          "terminal": false
+        },
+        {
+          "certified": 22,
+          "fallback": 0,
+          "preview_seconds": 5.035687581053935,
+          "previews": 22,
+          "primary": 22,
+          "proposals": 22,
+          "slots": 26,
+          "terminal": false
+        },
+        {
+          "certified": 18,
+          "fallback": 0,
+          "preview_seconds": 4.045126665616408,
+          "previews": 18,
+          "primary": 18,
+          "proposals": 18,
+          "slots": 26,
+          "terminal": false
+        },
+        {
+          "certified": 0,
+          "fallback": 0,
+          "preview_seconds": 0.0,
+          "previews": 0,
+          "primary": 0,
+          "proposals": 14,
+          "slots": 26,
+          "terminal": true
+        }
+      ],
+      "native_removed_mm3": 1175.0,
+      "nonstop_actions": 3,
+      "normal_removed_mm3": 62.0,
+      "retained_contact_mm3": 1514.0,
+      "score": 1098.77,
+      "step_rewards": [
+        373.24,
+        364.03000000000003,
+        361.5
+      ],
+      "target_removed_mm3": 1113.0
+    },
+    "untrained-selection-1": {
+      "actions": [
+        "AXISv1:7d80490201dfefa87afa5c64",
+        "AXISv1:bca90d31b5ab2bcce504efeb",
+        "AXISv1:33a4dac583612edc37d059f8"
+      ],
+      "cumulative_partial_normal_contact_mm3": 72.0,
+      "episode_world_hash": "sha256:92e4e0aa2e43ed4da13b22bc474efe42ff07e1f7ba90dc8a2c6fe3e04744c95a",
+      "history_hash": "sha256:6173f430dfc684ffc006606f3a11a49fc1bebd46a665ba046a34b035d6d25aa7",
+      "inventory_summaries": [
+        {
+          "certified": 26,
+          "fallback": 0,
+          "preview_seconds": 5.957100205938332,
+          "previews": 26,
+          "primary": 26,
+          "proposals": 26,
+          "slots": 26,
+          "terminal": false
+        },
+        {
+          "certified": 24,
+          "fallback": 0,
+          "preview_seconds": 5.4958642543060705,
+          "previews": 24,
+          "primary": 24,
+          "proposals": 24,
+          "slots": 26,
+          "terminal": false
+        },
+        {
+          "certified": 22,
+          "fallback": 0,
+          "preview_seconds": 5.0659468319499865,
+          "previews": 22,
+          "primary": 22,
+          "proposals": 22,
+          "slots": 26,
+          "terminal": false
+        },
+        {
+          "certified": 0,
+          "fallback": 0,
+          "preview_seconds": 0.0,
+          "previews": 0,
+          "primary": 0,
+          "proposals": 20,
+          "slots": 26,
+          "terminal": true
+        }
+      ],
+      "native_removed_mm3": 458.0,
+      "nonstop_actions": 3,
+      "normal_removed_mm3": 13.0,
+      "retained_contact_mm3": 790.0,
+      "score": 441.6,
+      "step_rewards": [
+        359.96000000000004,
+        40.68999999999999,
+        40.949999999999996
+      ],
+      "target_removed_mm3": 445.0
+    },
+    "untrained-selection-2": {
+      "actions": [
+        "AXISv1:7d80490201dfefa87afa5c64",
+        "AXISv1:bca90d31b5ab2bcce504efeb",
+        "AXISv1:33a4dac583612edc37d059f8"
+      ],
+      "cumulative_partial_normal_contact_mm3": 72.0,
+      "episode_world_hash": "sha256:55501692a1a85f822fd2d131398414834207c56f5a797a1632fa95f94180a156",
+      "history_hash": "sha256:6173f430dfc684ffc006606f3a11a49fc1bebd46a665ba046a34b035d6d25aa7",
+      "inventory_summaries": [
+        {
+          "certified": 26,
+          "fallback": 0,
+          "preview_seconds": 6.102069000131451,
+          "previews": 26,
+          "primary": 26,
+          "proposals": 26,
+          "slots": 26,
+          "terminal": false
+        },
+        {
+          "certified": 24,
+          "fallback": 0,
+          "preview_seconds": 5.50270129321143,
+          "previews": 24,
+          "primary": 24,
+          "proposals": 24,
+          "slots": 26,
+          "terminal": false
+        },
+        {
+          "certified": 22,
+          "fallback": 0,
+          "preview_seconds": 5.084797121700831,
+          "previews": 22,
+          "primary": 22,
+          "proposals": 22,
+          "slots": 26,
+          "terminal": false
+        },
+        {
+          "certified": 0,
+          "fallback": 0,
+          "preview_seconds": 0.0,
+          "previews": 0,
+          "primary": 0,
+          "proposals": 20,
+          "slots": 26,
+          "terminal": true
+        }
+      ],
+      "native_removed_mm3": 458.0,
+      "nonstop_actions": 3,
+      "normal_removed_mm3": 13.0,
+      "retained_contact_mm3": 790.0,
+      "score": 441.6,
+      "step_rewards": [
+        359.96000000000004,
+        40.68999999999999,
+        40.949999999999996
+      ],
+      "target_removed_mm3": 445.0
+    }
+  }
+}

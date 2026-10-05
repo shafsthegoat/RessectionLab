@@ -1,0 +1,35 @@
+{
+  "status": "prepared_not_executed_independent_review_pending",
+  "native_generations": 0,
+  "patient_array_reads": 0,
+  "solver_calls": 0,
+  "retry_authorized": false,
+  "source_sha256": {
+    "scripts/mechanics_patient_mesh_candidate.py": "e1d45b6371bc64baaf6cacbc6f98926728dcf7699c0dffb00bea67df167edc4c",
+    "scripts/mechanics_patient_mesh_candidate_run.py": "cfee357faf585f78afccf812d06c00de9022494e8ed4d82ef3fa68a97eaa38cb",
+    "scripts/mechanics_patient_mesh_curvature.py": "6b5aff2ee96be527f9824109e19522aa31b004c4a5a049f077cc1179e822af79",
+    "scripts/mechanics_patient_mesh_curvature_run.py": "90399dcd4b863edd3b28d57173603befceb9f4c37c2571c30b2cd89c33138468",
+    "manifests/experiments/resect-case4-patient-mesh-curvature-v3.json": "4aa5c95f22ccfe89ab49c376a3437f8d1f7184004481f1d4d6404e978510da8d",
+    "tests/test_mechanics_patient_mesh_curvature.py": "7c1ff012bf9568d8ec2d0ad4b3de9d031f1b8e8d4467f75b0d23a5db9bcf37c3",
+    "docs/mechanics-patient-mesh-curvature.md": "9fdf78c81ab66641278a993ae56fa941918c476103e5e3b3ba144c9678cd3b81"
+  },
+  "preserved_inputs_sha256": {
+    "manifests/experiments/resect-case4-patient-mesh-v1.json": "b6b3fd278df85fb0ea89c72dcff37cc5f229644602f5288c81e8ce6e7653173c",
+    "manifests/experiments/resect-case4-patient-mesh-graded-v2.json": "ff27037c4141c5da99266da0c92efd5f6a673f5eb0bba6ac3032e916ba5db54e",
+    "scripts/mechanics_patient_mesh.py": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d"
+  },
+  "owner_test_command": ".venv/bin/python -B -m pytest -q tests/test_mechanics_patient_mesh_candidate.py tests/test_mechanics_patient_mesh_candidate_review.py tests/test_mechanics_patient_mesh_candidate_run.py tests/test_mechanics_patient_mesh_candidate_run_review.py tests/test_mechanics_patient_mesh_curvature.py",
+  "owner_tests": {
+    "passed": 82,
+    "seconds": 0.64,
+    "output": "owner-tests-02.txt",
+    "sha256": "328c4a144e056bb8f918cdc5644d5d487fcd35e504c1f0c2e2d459b3a570ddc9"
+  },
+  "initial_owner_tests": {
+    "passed": 79,
+    "seconds": 0.66,
+    "output": "owner-tests-01.txt",
+    "sha256": "963b2d5038a3d8afb8c2b83bc60f463e41e58d7f51f6b473929f1a9073d23b75"
+  },
+  "execution_requires": "Independent review, root commit and separate exact-source root release; no active release in this preparation."
+}

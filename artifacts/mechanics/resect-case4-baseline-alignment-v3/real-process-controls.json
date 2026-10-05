@@ -1,0 +1,26 @@
+{
+  "source": "Observed owner pytest tool output, retained without rerun",
+  "patient_inputs": false,
+  "real_processes": true,
+  "ps_responses": "constructed valid deficient child rows, not real OS ps samples",
+  "cases": [
+    {
+      "child_pid": 34924,
+      "child_requested_sleep_seconds": 0.02,
+      "requested_grace_seconds": 0.05,
+      "observed_grace_seconds": 0.03891495801508427,
+      "confirmed_exit_code": 0,
+      "timed_out": false
+    },
+    {
+      "child_pid": 34925,
+      "child_requested_sleep_seconds": 1.0,
+      "requested_grace_seconds": 0.05,
+      "observed_grace_seconds": 0.05282845802139491,
+      "confirmed_exit_code": null,
+      "timed_out": true,
+      "final_cleanup": "killed and reaped"
+    }
+  ],
+  "caveat": "Requested timeout <=50ms; failed wait elapsed overshot under runtime scheduling. No continuous RSS or universal termination-latency claim."
+}

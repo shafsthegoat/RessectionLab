@@ -1,0 +1,98 @@
+{
+  "schema": "resect-case4-saved-mesh-diagnostic-v1",
+  "status": "prospective_preparation_not_executed",
+  "caps": {
+    "parent_seconds": 120,
+    "cooperative_seconds": 110,
+    "rss_bytes": 2147483648,
+    "numerical_threads": 1,
+    "maximum_distance_queries": 1200000,
+    "output_bytes": 8388608,
+    "attempts": 1,
+    "retries": 0
+  },
+  "inputs": {
+    "native_surface": {
+      "path": "outputs/mechanics/resect-case4-patient-mesh-v1/native-surface.npz",
+      "sha256": "dca30aacd485fb6c5a23fdfa2785e6ebead42a071f77d989c684e65a0360787f"
+    },
+    "nodes_m": {
+      "path": "outputs/mechanics/resect-case4-patient-mesh-graded-v2/candidate/diagnostic/nodes_m.npy",
+      "sha256": "0ecb287d96219344e6063f94e760f5088b7e340d9eb43b1bbe5065323251aec3"
+    },
+    "tet10_indices": {
+      "path": "outputs/mechanics/resect-case4-patient-mesh-graded-v2/candidate/diagnostic/tet10_indices.npy",
+      "sha256": "2b86eccf2565ab7e9819a31f905bad9d05db4b0dad2b2665f987e3c05643a2bc"
+    },
+    "gmsh_node_ids": {
+      "path": "outputs/mechanics/resect-case4-patient-mesh-graded-v2/candidate/diagnostic/gmsh_node_ids.npy",
+      "sha256": "45508c64dd878f5b127234db252095b595434c456191ee512678cd89ab25d1d1"
+    },
+    "gmsh_element_ids": {
+      "path": "outputs/mechanics/resect-case4-patient-mesh-graded-v2/candidate/diagnostic/gmsh_element_ids.npy",
+      "sha256": "a5369e41076f36f035b6991ae71d17b72ef10498c18a639daeda8e6d1ee5feaf"
+    },
+    "candidate_manifest": {
+      "path": "artifacts/mechanics/resect-case4-patient-mesh-graded-v2/saved-records/candidate/diagnostic/manifest.json",
+      "sha256": "ed7eee73e0b5fad1f2d16815ac369df57c232abe1f00bb24e19c9f0cd50f98c3"
+    },
+    "candidate_result": {
+      "path": "artifacts/mechanics/resect-case4-patient-mesh-graded-v2/saved-records/candidate/result.json",
+      "sha256": "d7d670ff3a35db3521ffa67032481bc7df313ae290ba0c09b86da3e7b242b151"
+    },
+    "raw_index": {
+      "path": "artifacts/mechanics/resect-case4-patient-mesh-graded-v2/raw-output-index.json",
+      "sha256": "5216805b05ee5cb505c2fac199bab0d84bd96c586d407d0279bc3d2e379e9b49"
+    },
+    "owner_index": {
+      "path": "artifacts/mechanics/resect-case4-patient-mesh-graded-v2/artifact-index.json",
+      "sha256": "8c3298d014cbf638487fca30f1d46475dadd6c2f440a1550134d77b9a5d36043"
+    },
+    "independent_saved_review": {
+      "path": "artifacts/mechanics/resect-case4-patient-mesh-graded-independent-audit-v2/verification.json",
+      "sha256": "faaa14716d937535d29107f1aea7db5be576200efa4da7e0cd820171d29f94b3"
+    }
+  },
+  "packages": {
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "vtk": "9.7.1"
+  },
+  "sampling": {
+    "rule": "Exact original grouped barycentric lattice, chunk256, original order and cover-radius arithmetic with explicit triangle IDs",
+    "cover_m": 0.001,
+    "expected_source_to_mesh_count": 1027230,
+    "expected_mesh_to_source_count": 121028,
+    "replay_absolute_tolerance_m": 1e-12,
+    "top_witnesses_per_direction": 10,
+    "separate_locator_agreement_tolerance_m": 1e-10,
+    "additional_probes": [
+      "732 boundary vertices",
+      "2196 actual boundary midsides",
+      "1464 boundary face centroids"
+    ],
+    "all_queries_include_witness_locator": true
+  },
+  "analysis": {
+    "failure_threshold_m": 0.002,
+    "edge_normal_change_thresholds_degrees": [
+      30,
+      60
+    ],
+    "largest_components": 10,
+    "connectivity": "shared source/mesh triangle edge",
+    "area_scope": "Entire faces with a sampled excursion; not an exact excursion-area integral",
+    "curvature_scope": "Discrete adjacent triangle normal change proxy, not smooth curvature",
+    "seam_ids_retained": false,
+    "causal_claim_authorized": false
+  },
+  "prohibited": [
+    "meshing or geometry mutation",
+    "image/mask reads",
+    "B or V landmarks",
+    "solver or training",
+    "retry or parameter sweep",
+    "accepting either failed mesh"
+  ],
+  "execution_authorized": false
+}

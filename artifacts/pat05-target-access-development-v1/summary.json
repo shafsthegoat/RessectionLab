@@ -1,0 +1,138 @@
+{
+  "status": "completed_target_access_proof",
+  "patient": "sub-PAT05",
+  "role": "TRAIN",
+  "scope": "annotation-assisted single initial target-access motion then STOP",
+  "success_definition": "independently accepted committed history with positive supplied-target volume; not whole-target removal",
+  "raw_evidence": {
+    "file": "result.json",
+    "sha256": "de793c35cf682d2d8fa239b17c30bb66e449d718ee39ddcd8e56934c3562580b",
+    "bytes": 4671008
+  },
+  "compressed_evidence": {
+    "file": "result.json.gz",
+    "sha256": "b340639d422b0dfbdb7c1319c4a68c9c380304665b81350fd7375bc8244c64da",
+    "bytes": 103006,
+    "gzip_mtime": 0,
+    "gzip_filename": ""
+  },
+  "input_definition": "manifests/experiments/pat05-real-spatial-search-comparison-v1.json",
+  "input_definition_sha256": "c1203b8234554dbdff4775ee05de773ab727bb4b3ec374f456eb2ca4728f3c2d",
+  "bundle_sha256": "c1af712957dc4902343995bd828eb0c3662438f8445c5cb7401e6dd50f7a4e12",
+  "bundle_unchanged": true,
+  "source_sha256_at_execution": {
+    "src/resectionlab/native_spatial_task.py": "208a90d79818d26378b3157f94e879d7f2338aac4d59df78b337a02a2a76c024",
+    "src/resectionlab/native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+    "src/resectionlab/native_proposals.py": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee",
+    "src/resectionlab/spatial_observations.py": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711",
+    "src/resectionlab/evaluation.py": "8fe1467d2dc53deb62f16c86c79eebc1596047bc58d52a8b7be3598f50334d18"
+  },
+  "source_unchanged_during_execution": {
+    "src/resectionlab/native_spatial_task.py": true,
+    "src/resectionlab/native_resection.py": true,
+    "src/resectionlab/native_proposals.py": true,
+    "src/resectionlab/spatial_observations.py": true,
+    "src/resectionlab/evaluation.py": true
+  },
+  "initial_inventory": {
+    "declared_slots": 78,
+    "evaluated_slots": 78,
+    "emitted_count": 78,
+    "accepted_count": 70,
+    "rejected_count": 8,
+    "omitted_count": 0,
+    "complete": true,
+    "ledger_complete": true
+  },
+  "selected": {
+    "action_id": "nominal-cavity-417f590381bc98e52ed7bc77",
+    "reward": 150.70352651746774,
+    "target_removed_mm3": 175.0006103515625,
+    "normal_removed_mm3": 121.00041798998382,
+    "insertion_distance_mm": 33.50011804901173
+  },
+  "metrics": {
+    "source_hash": "sha256:27b51658c4445dc0eb12c0ecef2a2709e1b5873bb5bc8a3f9034e8195f4b9267",
+    "decision_model_hash": "sha256:015836c3dc0fa235307e55728cc0c24e0a630bd2aaf119ffd09d3a44167ea061",
+    "steps": 2,
+    "terminated": true,
+    "total_reward": 150.70352651746774,
+    "target_removed_mm3": 175.0006103515625,
+    "normal_removed_mm3": 121.00041961669922,
+    "simulated_removed_volume_mm3": 296.0010283415463,
+    "cumulative_contacted_tissue_upper_bound_mm3": 858.0029808008337,
+    "currently_retained_contacted_tissue_upper_bound_mm3": 562.0019524592873,
+    "function_unassessed_removed_volume_mm3": 296.0010283415463,
+    "clinical_deficit_probability": null
+  },
+  "full_annotation_volume_mm3": 11437.039733588736,
+  "removed_target_fraction": 0.015301215561716902,
+  "independent_audit": {
+    "feasible": true,
+    "failures": [],
+    "first_failed_action": null,
+    "first_unsupported_source_voxel": null,
+    "first_unsupported_position_mm": null,
+    "claimed_source_tissue_volume_mm3": 296.0010283415463,
+    "contained_source_tissue_volume_mm3": 296.0010283415463,
+    "unsupported_source_tissue_volume_mm3": 0.0,
+    "source_case_hash": "sha256:27b51658c4445dc0eb12c0ecef2a2709e1b5873bb5bc8a3f9034e8195f4b9267",
+    "source_voxel_volume_mm3": 1.0000034741268458,
+    "action_count": 1,
+    "checker_version": "independent-native-sequence-v2",
+    "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+    "complete_tool_checked": true,
+    "frontier_checked": true
+  },
+  "timing_seconds": {
+    "preparation_seconds": 8.914251041016541,
+    "initial_observation_inventory_scoring_seconds": 0.4589190830010921,
+    "actual_episode_seconds": 9.586251500062644,
+    "independent_audit_seconds": 6.611975874984637,
+    "wall_seconds": 26.208386749960482
+  },
+  "native_preview_profile": {
+    "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+    "phases": {
+      "source_and_initial_inventory": {
+        "started": 78,
+        "returned": 78,
+        "raised": 0,
+        "seconds": 6.905616871663369,
+        "feasible": 70,
+        "rejected": 8,
+        "returned_microsteps": 5392,
+        "rejection_reasons": {
+          "HARD_GEOMETRY:WORKING_REACH": 8
+        }
+      },
+      "actual_target_access_then_stop": {
+        "started": 70,
+        "returned": 70,
+        "raised": 0,
+        "seconds": 6.493050916935317,
+        "feasible": 62,
+        "rejected": 8,
+        "returned_microsteps": 5144,
+        "rejection_reasons": {
+          "HARD_GEOMETRY:WORKING_REACH": 8
+        }
+      }
+    },
+    "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+  },
+  "peak_rss_bytes": 1010958336,
+  "rss_enforcement": "cooperative phase-boundary peak checks",
+  "optimizer_updates": 0,
+  "other_patients_opened": 0,
+  "full_resection_claim": false,
+  "limitations": [
+    "Single TRAIN anatomy; no SELECT or unopened case touched.",
+    "One native motion followed by STOP, not a three-motion search or learned policy.",
+    "Supplied preoperative target annotation and explicitly provisional unreviewed structural envelope; not scan-only inference or reviewed clinical support.",
+    "Source-cell containment/complete-tool checks establish internal geometric acceptance only; source-grid discretization remains material.",
+    "Functional and vascular safety, surgical mechanics and clinical usefulness remain unvalidated.",
+    "Profile is instrumented and nested cumulative costs must not be summed; it does not explain all overhead of the separate failed 227-transition beam run.",
+    "Execution preceded the new public observed_greedy_search helper; recorded source hashes bind this proof to its actual code."
+  ]
+}

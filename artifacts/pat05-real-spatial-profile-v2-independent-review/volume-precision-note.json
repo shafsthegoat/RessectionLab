@@ -1,0 +1,9 @@
+{
+  "aggregate_float32_product_reproduces_raw_value": true,
+  "float32_product": 26.000089645385742,
+  "raw_aggregate": 26.000089645385742,
+  "float64_cell_count_product": 26.00009032729799,
+  "raw_difference": -6.819122475576478e-07,
+  "source_function": "NativeSpatialTask.metrics: float((1-reference_target[removed]).sum()*voxel_volume), where reference_target isfloat32",
+  "scope": "Scalar arithmetic only, no patient labels loaded"
+}

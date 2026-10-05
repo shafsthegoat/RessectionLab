@@ -1,0 +1,276 @@
+{
+  "schema_version": 1,
+  "kind": "frozen_structural_extraction_repeatability_declaration",
+  "declared_at": "2026-10-04T12:02:14.611546+00:00",
+  "execution_status_at_declaration": "not_started; awaiting root release after integrated tests and native-axis timing preflight",
+  "inference_executed_by_this_declaration": false,
+  "repo_head_observed": "100865f037b37708f4f0d0d5a48950de22ba4e5f",
+  "reference_frozen_experiment": "artifacts/brain-extraction/PAT05-frozen-experiment.json",
+  "reference_frozen_experiment_sha256": "1520350579a40c724379f0fdb11cdef42dc8dad8d8a8a40316661f4c549e4b3b",
+  "wrapper": {
+    "path": "src/resectionlab/brain_extraction.py",
+    "sha256": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917",
+    "same_bytes_as_PAT05_snapshot": true
+  },
+  "expected_executed_MPS_runner_sha256": "d39cbcba9c5303ba74eaf0bb53d9105762f8a01a7de7bae2740958242f8f6cf8",
+  "model_assets": {
+    "mri_synthstrip": {
+      "path": "data/models/synthstrip-v1/mri_synthstrip",
+      "sha256": "291c253ab2f7c0cbcb84afa769ae10909549537e727db5b92d268754b7cc7871",
+      "bytes": 12238
+    },
+    "LICENSE_FreeSurfer.txt": {
+      "path": "data/models/synthstrip-v1/LICENSE_FreeSurfer.txt",
+      "sha256": "632d404ea17b9101d9ac87cf8f09e651d18eb20d2cc0ba8dbee77e85b8516307",
+      "bytes": 10297
+    },
+    "synthstrip.nocsf.1.pt": {
+      "path": "data/models/synthstrip-v1/synthstrip.nocsf.1.pt",
+      "sha256": "62bf01137c45b5f0cc04d59dbaed5b9ac138b3f25b766c062a7c1a0d696ecb28",
+      "bytes": 30851709
+    },
+    "synthstrip.1.pt": {
+      "path": "data/models/synthstrip-v1/synthstrip.1.pt",
+      "sha256": "37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33",
+      "bytes": 30851709
+    }
+  },
+  "model_code_commit": "cf4bccf24875a47245b4df9fc9372d0f1c3d784f",
+  "weights_version": 1,
+  "inference_runtime": {
+    "interpreter": ".tools/synthstrip-runtime/bin/python",
+    "python": "3.12.14",
+    "numpy": "2.2.6",
+    "torch": "2.14.1",
+    "surfa": "0.6.3",
+    "scipy": "1.18.1",
+    "nibabel": "5.4.2",
+    "verification": "distribution metadata only; no model import or inference during declaration"
+  },
+  "frozen_configuration": {
+    "device": "mps",
+    "cpu_threads": 2,
+    "border_mm": 1,
+    "timeout_seconds": 300,
+    "maximum_rss_bytes": 6442450944,
+    "MPS_allocator_maximum_bytes": 6442450944,
+    "MPS_allocator_maximum_fraction_of_recommended": 0.7,
+    "MPS_fallback_enabled": false,
+    "annotation_threshold": 0.5,
+    "baseline": "positive-intensity Otsu;2.5mmopening;largestcomponent;holefill;1mmerosion",
+    "native_corner_displacement_tolerance_mm": 0.01
+  },
+  "execution_limits": {
+    "maximum_concurrent_inference_children": 1,
+    "planned_repetitions_per_subject": 2,
+    "planned_child_inferences": 8,
+    "child_timeout_seconds": 300,
+    "child_sampled_RSS_stop_threshold_bytes": 6442450944,
+    "MPS_allocator_cap_bytes": 6442450944,
+    "MPS_allocator_cap_fraction_of_recommended_memory": 0.7,
+    "runtime_probe_timeout_seconds": 30,
+    "maximum_sum_of_declared_child_timeout_seconds": 2400,
+    "scope": "Per inference child; parent baseline, runtime probing, artifact validation and rendering are outside the child timeout. RSS and allocator observations are sampled, not exact total-memory peaks."
+  },
+  "changes_allowed_during_batch": false,
+  "automatic_CPU_fallback": false,
+  "model_downloads_permitted": false,
+  "source_files_mutable": false,
+  "execution_preflight": [
+    "Receive root release of timing/resource hold.",
+    "Recheck wrapper, model and patient file hashes and exact inference runtime versions; stop on mismatch.",
+    "Confirm all four output directories are new; never overwrite or silently resume earlier inference.",
+    "Copy the verified wrapper to each output only after CLI completion, since CLI refuses pre-existing contents; preserve the declaration and logs separately before launch."
+  ],
+  "failure_handling": "Retain every child log, failure record and partial output. Stop on a failed CLI run; mark remaining declared work not_run_after_failure, with no silent retry, substitute model, changed threshold, or omitted failure.",
+  "subjects": [
+    {
+      "subject": "sub-PAT16",
+      "patient_group": "BTC:sub-PAT16",
+      "outer_role": "development",
+      "eligible_for_outer_final": false,
+      "source_manifest": "data/diffusion_source/ds001226-v5.0.1/btc_sub-PAT16_verified_manifest.json",
+      "source_manifest_sha256": "86f251909381a22f339b05bb01fdb0297e7929515cc5486cc53a9dce516e251f",
+      "independent_source_qc": "docs/btc-pat16-independent-qc.json",
+      "independent_source_qc_sha256": "033f4a07b39d1c886c945287059c1a7d8060d666ef94b1c2ab5c0039c5d3aebf",
+      "source_t1": "data/diffusion_source/ds001226-v5.0.1/sub-PAT16/ses-preop/anat/sub-PAT16_ses-preop_T1w.nii.gz",
+      "source_t1_sha256": "709b3ea19596ff6a0cb963ebeaeede247b0ddd6c605f12aa350df2cb04500c3e",
+      "source_annotation": "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT16/anat/sub-PAT16_space_T1_label-tumor.nii",
+      "source_annotation_sha256": "89b610ce3cfa6acf3d23e59d42e3b04a593d7360b996ced10e0aaf060428b0c8",
+      "shape": [
+        160,
+        256,
+        256
+      ],
+      "annotation_threshold": 0.5,
+      "declared_annotation_voxels": 45400,
+      "prepared_case": "outputs/cases/BTC-sub-PAT16.ressectionlab",
+      "prepared_case_semantic_hash": "sha256:a3c3dee6205ef9da9c7589ec1eaaff168a26ea9ad1b8d7960e2a40cb292ce2cf",
+      "prepared_case_planning_hash": "sha256:1a9088e0fdee2f751e67c8778eba88fa4785dd267d76396b98082fe7933ccb05",
+      "output_root": "artifacts/brain-extraction/PAT16-mps-repeatability-v1"
+    },
+    {
+      "subject": "sub-PAT20",
+      "patient_group": "BTC:sub-PAT20",
+      "outer_role": "development",
+      "eligible_for_outer_final": false,
+      "source_manifest": "data/diffusion_source/ds001226-v5.0.1/btc_sub-PAT20_verified_manifest.json",
+      "source_manifest_sha256": "d6bf19700a3e3e1108b98a5b0eb5c794d68576e2770c42d9967f450e14bb1118",
+      "independent_source_qc": "docs/btc-pat20-independent-qc.json",
+      "independent_source_qc_sha256": "e560390e47b213c83ecb697583cf8fafd760415754ba48bbbe5b3ff0dbbd5851",
+      "source_t1": "data/diffusion_source/ds001226-v5.0.1/sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.nii.gz",
+      "source_t1_sha256": "f5234d82f87369ce22d05bd27b5788dd73d4ab782c9a89731ac7f6e39568126a",
+      "source_annotation": "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT20/anat/sub-PAT20_space_T1_label-tumor.nii",
+      "source_annotation_sha256": "cabae814fc653f845c1e0fa72441a4ab6fcca63e8fbe252e73e7a976e068dd36",
+      "shape": [
+        160,
+        256,
+        256
+      ],
+      "annotation_threshold": 0.5,
+      "declared_annotation_voxels": 12451,
+      "prepared_case": "outputs/cases/BTC-sub-PAT20.ressectionlab",
+      "prepared_case_semantic_hash": "sha256:ec7536ca27ab34f9c047e71323359a6712c479448d654ad9d9e4e774d3daebe9",
+      "prepared_case_planning_hash": "sha256:c9550931a6b76b97832b4ddf2e7e8914edd50773952dff889d5a321b3b50d46c",
+      "output_root": "artifacts/brain-extraction/PAT20-mps-repeatability-v1"
+    }
+  ],
+  "runs": [
+    {
+      "run_id": "PAT16-r1",
+      "subject": "sub-PAT16",
+      "repetition": 1,
+      "output_directory": "artifacts/brain-extraction/PAT16-mps-repeatability-v1/r1",
+      "variant_order": [
+        "nocsf",
+        "main"
+      ],
+      "expected_inference_children": 2,
+      "argv": [
+        ".venv/bin/python",
+        "-m",
+        "resectionlab.brain_extraction",
+        "--t1",
+        "data/diffusion_source/ds001226-v5.0.1/sub-PAT16/ses-preop/anat/sub-PAT16_ses-preop_T1w.nii.gz",
+        "--tumor-fractional",
+        "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT16/anat/sub-PAT16_space_T1_label-tumor.nii",
+        "--cache",
+        "data/models/synthstrip-v1",
+        "--output",
+        "artifacts/brain-extraction/PAT16-mps-repeatability-v1/r1",
+        "--inference-python",
+        ".tools/synthstrip-runtime/bin/python",
+        "--compare-main-model",
+        "--device",
+        "mps"
+      ]
+    },
+    {
+      "run_id": "PAT16-r2",
+      "subject": "sub-PAT16",
+      "repetition": 2,
+      "output_directory": "artifacts/brain-extraction/PAT16-mps-repeatability-v1/r2",
+      "variant_order": [
+        "nocsf",
+        "main"
+      ],
+      "expected_inference_children": 2,
+      "argv": [
+        ".venv/bin/python",
+        "-m",
+        "resectionlab.brain_extraction",
+        "--t1",
+        "data/diffusion_source/ds001226-v5.0.1/sub-PAT16/ses-preop/anat/sub-PAT16_ses-preop_T1w.nii.gz",
+        "--tumor-fractional",
+        "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT16/anat/sub-PAT16_space_T1_label-tumor.nii",
+        "--cache",
+        "data/models/synthstrip-v1",
+        "--output",
+        "artifacts/brain-extraction/PAT16-mps-repeatability-v1/r2",
+        "--inference-python",
+        ".tools/synthstrip-runtime/bin/python",
+        "--compare-main-model",
+        "--device",
+        "mps"
+      ]
+    },
+    {
+      "run_id": "PAT20-r1",
+      "subject": "sub-PAT20",
+      "repetition": 1,
+      "output_directory": "artifacts/brain-extraction/PAT20-mps-repeatability-v1/r1",
+      "variant_order": [
+        "nocsf",
+        "main"
+      ],
+      "expected_inference_children": 2,
+      "argv": [
+        ".venv/bin/python",
+        "-m",
+        "resectionlab.brain_extraction",
+        "--t1",
+        "data/diffusion_source/ds001226-v5.0.1/sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.nii.gz",
+        "--tumor-fractional",
+        "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT20/anat/sub-PAT20_space_T1_label-tumor.nii",
+        "--cache",
+        "data/models/synthstrip-v1",
+        "--output",
+        "artifacts/brain-extraction/PAT20-mps-repeatability-v1/r1",
+        "--inference-python",
+        ".tools/synthstrip-runtime/bin/python",
+        "--compare-main-model",
+        "--device",
+        "mps"
+      ]
+    },
+    {
+      "run_id": "PAT20-r2",
+      "subject": "sub-PAT20",
+      "repetition": 2,
+      "output_directory": "artifacts/brain-extraction/PAT20-mps-repeatability-v1/r2",
+      "variant_order": [
+        "nocsf",
+        "main"
+      ],
+      "expected_inference_children": 2,
+      "argv": [
+        ".venv/bin/python",
+        "-m",
+        "resectionlab.brain_extraction",
+        "--t1",
+        "data/diffusion_source/ds001226-v5.0.1/sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.nii.gz",
+        "--tumor-fractional",
+        "data/diffusion_source/ds001226-v5.0.1/derivatives/tumor_masks/sub-PAT20/anat/sub-PAT20_space_T1_label-tumor.nii",
+        "--cache",
+        "data/models/synthstrip-v1",
+        "--output",
+        "artifacts/brain-extraction/PAT20-mps-repeatability-v1/r2",
+        "--inference-python",
+        ".tools/synthstrip-runtime/bin/python",
+        "--compare-main-model",
+        "--device",
+        "mps"
+      ]
+    }
+  ],
+  "planned_independent_QC": [
+    "Source/model/runner/output hashes and original native physical frame.",
+    "Finite SDT and binary mask; maximum eight-corner displacement <=0.01mm.",
+    "Saved mask exactly reconstructs from SDT<1mm, largest component and hole filling.",
+    "Within-subject/variant repeat mask voxel differences and maximum absolute SDT difference; report any nonzero difference.",
+    "Connected components, image-face contacts, envelope volume and every omitted source-annotation voxel.",
+    "Three native planes near brain-envelope and annotation centres, with source MRI; expert anatomy remains unreviewed."
+  ],
+  "interpretation_limits": {
+    "provenance": "estimated",
+    "review_status": "review_required",
+    "brain_reviewed": false,
+    "cortex_localized": false,
+    "cortical_access_permitted": false,
+    "working_brain_mask_attached": false,
+    "clinical_deficit_probability": null,
+    "source_annotation": "fractional source intensity threshold scenario, not calibrated probability or independent truth",
+    "repeatability": "Agreement between repeated runs is engineering repeatability, not anatomical accuracy, population generalization or clinical validation.",
+    "evaluation_role": "Two additional development patients; repeated model runs do not add independent patients."
+  }
+}

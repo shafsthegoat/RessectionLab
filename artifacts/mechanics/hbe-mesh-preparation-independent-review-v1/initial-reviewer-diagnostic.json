@@ -1,0 +1,15 @@
+{
+  "kind": "supplemental_reviewer_ideal_geometry_assumption",
+  "status": "corrected_review_method_without_changing_product_or_acceptance_limits",
+  "observed": "N4 actual sag/R differs from the perfectly uniform ideal polygon value by1.19236659e-10; reviewer rtol1e-9/atol1e-12 comparison stopped.",
+  "interpretation": "Gmsh boundary point spacing is numerically near uniform, not mathematically exact. The prospective actual-geometry quality checks pass; this supplementary expectation was stricter than and separate from declared gates.",
+  "correction": "Cross-check sag from actual adjacent ring angles and actual node radius, and retain the ideal polygon value as descriptive only. No mesh, deck, solver setting or prospective tolerance changes.",
+  "already_verified_before_stop": {
+    "archive_files": 4093,
+    "raw_output_files": 52,
+    "native_msh_conversion_levels": [
+      4
+    ]
+  },
+  "mesher_or_solver_rerun": false
+}

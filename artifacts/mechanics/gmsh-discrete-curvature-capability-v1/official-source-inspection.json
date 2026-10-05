@@ -1,0 +1,57 @@
+{
+  "url": "https://gmsh.info/src/gmsh-4.15.2-source.tgz",
+  "archive_sha256": "be3f66f225d27ba9fa014f07e83169285da8a051b0e8ab7103d88066b39bdd3e",
+  "archive_bytes": 18496049,
+  "selected_files": {
+    "CMakeLists.txt": {
+      "sha256": "89f1d8bc87509cd66d508a87729084afc97171cd6d554d9725980cdf09fc15bb",
+      "bytes": 93460
+    },
+    "src/common/gmsh.cpp": {
+      "sha256": "375f8ba655c0c2c5c7e0f52a5460e17e0bcf49a363449f2df1b287f6b38a2cb8",
+      "bytes": 297790
+    },
+    "src/fltk/classificationEditor.cpp": {
+      "sha256": "149fa71f58c6c226aa240568bcfa1fcd8bec568859d940356207100cfd58e554",
+      "bytes": 14078
+    },
+    "src/fltk/classificationEditor.h": {
+      "sha256": "7181f11be3b1e5697f0c58345386bb52fd5dc9eae99fc941484f2927eb575244",
+      "bytes": 1462
+    },
+    "src/geo/GModel.cpp": {
+      "sha256": "96df731cf16e58be3f1fbc502ecffc2037a160935c48a16a731c590d328fd691",
+      "bytes": 120632
+    },
+    "src/geo/GModelParametrize.cpp": {
+      "sha256": "8496e6fe1b6ae23f8f5635b57471f3249c35bd683367590a206f1d48c979f2e6",
+      "bytes": 33597
+    },
+    "src/geo/discreteEdge.cpp": {
+      "sha256": "70a9e639551f2b1a16586a8a5b7c099525eace1b7292476d22c64fd01b0eb18d",
+      "bytes": 7567
+    },
+    "src/geo/discreteFace.cpp": {
+      "sha256": "32f7669b2f9f28acfe888b86bd7ca4c81053acc2bc9db5be2fb0766d98d1e46f",
+      "bytes": 29699
+    },
+    "src/geo/discreteFace.h": {
+      "sha256": "e5e4cd068234ab8c0d8f6cc18188a58e48b72dd2940510dfb5d44e029b39bf79",
+      "bytes": 2880
+    },
+    "src/mesh/BackgroundMeshTools.cpp": {
+      "sha256": "c14ee81f8e5b763e4829066f9dafc62eaac5130a305da9cb49f3233152904bea",
+      "bytes": 13102
+    },
+    "src/numeric/curvature.cpp": {
+      "sha256": "80fe5c277f4b21e1c3d6cbcbd62a054f01ea5c5f504c0fb98d97c1d319807a77",
+      "bytes": 17967
+    },
+    "src/numeric/curvature.h": {
+      "sha256": "d210aaff8cdd3f549ccf93f431834e55ea8d0c7c0ebaf56c463d6b58441bb3a8",
+      "bytes": 698
+    }
+  },
+  "scope": "Official4.15.2 published source inspection only; no compile or mesher invocation",
+  "raw_gitlab_attempt": "HTTP200 bot challenge HTML; not used as source evidence"
+}

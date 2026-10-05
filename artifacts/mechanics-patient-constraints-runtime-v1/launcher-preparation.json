@@ -1,0 +1,19 @@
+{
+  "status": "prepared_not_executed",
+  "files": {
+    "scripts/mechanics_patient_constraints_run.py": "8ca55cf54730c91ae47e573999041cb0c8b84fb4676842e0d1c0e7407ee8843f",
+    "tests/test_mechanics_patient_constraints_run.py": "82b4b39fc35051d4ba7c7d54564e652a2cdd92ac9a297eeedd346640c056dafc",
+    "artifacts/mechanics-patient-constraints-runtime-v1/release-template.json": "d951d2ac78cf408740b1118d946514cbff61256b11656b311395ad3fcd2b46de",
+    "artifacts/mechanics-patient-constraints-runtime-v1/launcher-tests-01.txt": "3509d5176b59507965c15021f84249acb02f003635bc1542c898f4025b7a39bb",
+    "artifacts/mechanics-patient-constraints-runtime-v1/launcher-tests-02.txt": "e45be053ce2b0b4919c09cf65ab4c43793d6c53be59d06c06af9c1360414e1f6",
+    "artifacts/mechanics-patient-constraints-runtime-v1/LAUNCHER.md": "067be95e3cb94a25d8d8dafac0e99612dfbefd7cc07322a41086a12d9cb8fdbf",
+    "artifacts/mechanics-patient-constraints-runtime-v1/launcher-tests-03.txt": "8b8ddcd2e7b63fe945152ea4c56d7e74f75ec09c6df6f5afe0311439df55ede7"
+  },
+  "test_output": ".........                                                                [100%]\n9 passed in 0.08s\n",
+  "first_mock_run": "........                                                                 [100%]\n8 passed in 0.11s\n",
+  "change_after_first_run": "Added exact release-bound attempt directory following independent static feedback; no solver, checker or deck source changed.",
+  "runtime_invocations": 0,
+  "scope": "Thin release/source/runtime binding and existing supervisor invocation; no runtime-engine duplication.",
+  "history_note": "Original launcher-preparation-initial.json preserved; independent initial source gz and genuine repeat-receipt failure captured under artifacts/mechanics-patient-constraints-review-v1. Only repair moves repeat refusal before any result-write scope.",
+  "final_review_reported": "40 passed in1.01s:26 numerical controls+14 mocked launcher controls; separate independent final receipt being published."
+}

@@ -1,0 +1,14 @@
+...........F                                                             [100%]
+=================================== FAILURES ===================================
+_ test_primitive_stream_rejects_wrong_header_token_even_if_record_name_matches _
+
+    def test_primitive_stream_rejects_wrong_header_token_even_if_record_name_matches():
+        lines = [line.replace("*Data =", "*DataUnexpected =") for line in primitives(60)]
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_mechanics_hbe_layers_review.py:142: Failed
+=========================== short test summary info ============================
+FAILED tests/test_mechanics_hbe_layers_review.py::test_primitive_stream_rejects_wrong_header_token_even_if_record_name_matches
+1 failed, 11 passed in 0.10s

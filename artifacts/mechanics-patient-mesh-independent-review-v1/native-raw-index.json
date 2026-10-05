@@ -1,0 +1,36 @@
+{
+  "files": [
+    {
+      "path": "outputs/validation/mechanics-patient-mesh-native-cube-v1/attempt-01/combined.log",
+      "sha256": "13e655e129db095931ac43c485f9cfaed779b77b7d96da7b859887d1ca98babe",
+      "bytes": 4164
+    },
+    {
+      "path": "outputs/validation/mechanics-patient-mesh-native-cube-v1/attempt-01/supervision.json",
+      "sha256": "054374f108a4a51b6d360f6ea78c34a256d75f2f9ab483eda45c46180f59c9e2",
+      "bytes": 1136
+    },
+    {
+      "path": "outputs/validation/mechanics-patient-mesh-native-cube-v1/cube-source.npz",
+      "sha256": "6d9b48b25e90a8d315620338455c05c74a5ba7e684356dee3adc6a1cdcda8d8f",
+      "bytes": 4674
+    },
+    {
+      "path": "outputs/validation/mechanics-patient-mesh-native-cube-v1/cube-tet10.msh",
+      "sha256": "738ae0219df31073f6f5d9af5e231cc924ce402f225ecbdc38616de5645b47e3",
+      "bytes": 84770
+    },
+    {
+      "path": "outputs/validation/mechanics-patient-mesh-native-cube-v1/cube-tet10.npz",
+      "sha256": "a1fb81a72774fcc8b16b0287994fa589056c8d50ad391ad5a723991be497e701",
+      "bytes": 15229
+    },
+    {
+      "path": "outputs/validation/mechanics-patient-mesh-native-cube-v1/native-control.json",
+      "sha256": "9cf9a33446accdc7da8a15bfc22e05d0ba0ba6f3e9fc0038a04f7ab6b9521b7e",
+      "bytes": 11481
+    }
+  ],
+  "patient_data": false,
+  "retry": false
+}

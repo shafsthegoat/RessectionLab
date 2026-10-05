@@ -1,0 +1,39 @@
+{
+  "status": "passed",
+  "passed": 123,
+  "seconds": 66.07,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_procedural_learning.py",
+    "tests/test_procedural_transfer_runner.py",
+    "tests/test_procedural_native_transfer_adversarial.py",
+    "tests/test_procedural_comparison_review.py",
+    "tests/test_learning.py",
+    "tests/test_learning_ppo.py",
+    "tests/test_population_learning.py",
+    "tests/test_population_adversarial.py",
+    "tests/test_experiment_runner.py",
+    "tests/test_native_refinement.py"
+  ],
+  "working_directory": "/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/ressectionlab-procedural-validation-v2-6ulpqs56",
+  "git_archive_revision": "98c674218567b23de713a4b79373c3bab1625b6c",
+  "overlay_sha256": {
+    "src/resectionlab/learning.py": "2056cb4b9ffde0f592aaf61842c1744a6924df7ecf792240bfcc6f712eab4603",
+    "src/resectionlab/population_learning.py": "49899618825d08b50016f9b34f389b50ce67f6a3aa79a8f339665523e3ae8de2",
+    "src/resectionlab/procedural_learning.py": "ece3c5dfd2e32fd54f125dd2c8ca776e156f489fe37a90109e0740bd78f57606",
+    "scripts/run_procedural_transfer.py": "b88d8a680c8b4ffe79c4b98ed3e584367908cfcfc8bac1721787c1663dc8d1fe",
+    "tests/test_procedural_learning.py": "75a1ee5460b7d00ee1e54037d44d08209049c1634a4749c79e663e8ef0d92167",
+    "tests/test_procedural_transfer_runner.py": "a5231cb5b74a0b4ae5fa858d650bc80cedae0326b38142401a1f140ccece3ce0",
+    "tests/test_procedural_native_transfer_adversarial.py": "3b9e1cf1bc8b829c5293b0d2aab212265f5531938c374f905237086019140179",
+    "tests/test_procedural_comparison_review.py": "66c3e9c03c1fe23a7690ec6790ddb615b4b50cf579783079d662389846a05dfe",
+    "EXPERIMENT_PROTOCOL.md": "b361644ba587e77368c0aec8d9c6247e63762ca9e39e445b5dc7ff304a0172ed"
+  },
+  "registered_training_executed": false,
+  "scope": "software_regression_including_explicit_procedural_test_only_training",
+  "actual_public_target_check": "construction and inventory binding only; zero transitions and zero gradients",
+  "final_worlds_used_by_registered_study": false,
+  "unrelated_working_tree_core_prior_edits_included": false
+}

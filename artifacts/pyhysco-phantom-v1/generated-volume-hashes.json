@@ -1,0 +1,134 @@
+{
+  "evaluation-only/true-displacement-mm.nii.gz": {
+    "bytes": 1458402,
+    "sha256": "9b7b704cf337a3bbc7233196275ca441c0de23eeb31097d451622eb644971527"
+  },
+  "evaluation-only/undistorted.nii.gz": {
+    "bytes": 725671,
+    "sha256": "1c330ce0d93d56a857b2994d914506f1cce9ada545e239d7bead4c46c5ddaca5"
+  },
+  "known_distortion/adapted/corrected-1.nii.gz": {
+    "bytes": 741746,
+    "sha256": "5e47f9bd8807b44e8ddb6f9a10258a758c6eadae015a8c588fef95053a4954d8"
+  },
+  "known_distortion/adapted/corrected-2.nii.gz": {
+    "bytes": 740863,
+    "sha256": "7bc0da8965760f047b892d518064eb8e549360d0bc393795e1a3d9f0e0425617"
+  },
+  "known_distortion/adapted/displacement-centers-mm.nii.gz": {
+    "bytes": 2052438,
+    "sha256": "b0c10a00a59218a9104dd5f6e4e44e05775ab2dc73d30280a592271444781fba"
+  },
+  "known_distortion/adapted/displacement-nodes-mm.nii.gz": {
+    "bytes": 2079151,
+    "sha256": "172086a031e5f2b76875a2a32613504bc940037111efa22fae63a2dd3f491a78"
+  },
+  "known_distortion/ap.nii.gz": {
+    "bytes": 740864,
+    "sha256": "8b92011c1a0e3665c544e95a27d1f7912026c0727e8d51dfba7aa35114fa2aaf"
+  },
+  "known_distortion/pa-native.nii.gz": {
+    "bytes": 713079,
+    "sha256": "32ec0fb327651988a81be2387060bd051927e1c8fbebf774d5f885264ee527db"
+  },
+  "known_distortion/pa-on-ap-grid.nii.gz": {
+    "bytes": 713079,
+    "sha256": "32ec0fb327651988a81be2387060bd051927e1c8fbebf774d5f885264ee527db"
+  },
+  "known_distortion/raw-EstFieldMap.nii.gz": {
+    "bytes": 2079109,
+    "sha256": "089b332b8f511e9799dffa5f9dc9916d8b5fd13975946020f1fbd1d1b37d63cc"
+  },
+  "known_distortion/raw-im1Corrected.nii.gz": {
+    "bytes": 741881,
+    "sha256": "36b5b95204506bb70b2d54b0a1a098f8fc3b6df1cc25a463d236962ecb76ee66"
+  },
+  "known_distortion/raw-im2Corrected.nii.gz": {
+    "bytes": 740558,
+    "sha256": "e33981f7d69de5684254081256fb35d45357c168b537925532951d2ec4c60b49"
+  },
+  "rotated_negative_control/adapted/corrected-1.nii.gz": {
+    "bytes": 2041288,
+    "sha256": "7f79f2faede958529c9e53bd69e62620c63c0ec8b9dbee6e728d2e3258d013e1"
+  },
+  "rotated_negative_control/adapted/corrected-2.nii.gz": {
+    "bytes": 2096630,
+    "sha256": "8e8c730672d0016f0be2618906c8d7e5fa468baa0d933e1c40eabb4c71de04f7"
+  },
+  "rotated_negative_control/adapted/displacement-centers-mm.nii.gz": {
+    "bytes": 2052085,
+    "sha256": "80d3407afd7374058155ad6e57d7b26e33f7c72874703d956236bd97fdaa67a6"
+  },
+  "rotated_negative_control/adapted/displacement-nodes-mm.nii.gz": {
+    "bytes": 2079099,
+    "sha256": "19e2104a35d8e77ea018d630887fe33e7a4988ab4876ee858049eb98ad70fa23"
+  },
+  "rotated_negative_control/ap.nii.gz": {
+    "bytes": 740864,
+    "sha256": "8b92011c1a0e3665c544e95a27d1f7912026c0727e8d51dfba7aa35114fa2aaf"
+  },
+  "rotated_negative_control/pa-native.nii.gz": {
+    "bytes": 713247,
+    "sha256": "4d4dcdff1f6328e2462da94a8eed9b1ae42186703bbdf609d46db5f43e8c12dc"
+  },
+  "rotated_negative_control/pa-on-ap-grid.nii.gz": {
+    "bytes": 2077276,
+    "sha256": "5d225654bea5fbdf630c3f5fb4dac22bda21a539b798bc36cb8972540fe02d74"
+  },
+  "rotated_negative_control/pa-same-array-wrong-affine.nii.gz": {
+    "bytes": 713247,
+    "sha256": "9a23510bc1f14067436b9713fd661385d4e89d3c1e356e1cc158f0e31b469d32"
+  },
+  "rotated_negative_control/raw-EstFieldMap.nii.gz": {
+    "bytes": 2079006,
+    "sha256": "cc569e5eb64db1d56db30f9a071166c0a3f2adb5a7f00cf40cf4a2fed171386c"
+  },
+  "rotated_negative_control/raw-im1Corrected.nii.gz": {
+    "bytes": 1804670,
+    "sha256": "44095604564a7361f88f7289856eb157abdb3ed58e28c92007eff9e6696c2357"
+  },
+  "rotated_negative_control/raw-im2Corrected.nii.gz": {
+    "bytes": 1813776,
+    "sha256": "81bdac641b2899a13fcd0957eb5c53b65f34989580cd6922d47587f90fe54a08"
+  },
+  "zero/adapted/corrected-1.nii.gz": {
+    "bytes": 725654,
+    "sha256": "639d596dca336d045a249d31ff6a4ee21bcf0789a2104651e5dc1cc0bfb61b90"
+  },
+  "zero/adapted/corrected-2.nii.gz": {
+    "bytes": 725654,
+    "sha256": "639d596dca336d045a249d31ff6a4ee21bcf0789a2104651e5dc1cc0bfb61b90"
+  },
+  "zero/adapted/displacement-centers-mm.nii.gz": {
+    "bytes": 9840,
+    "sha256": "7015eedb54bae2f750e5bc3932977e159b4a3c4af943691f9f688a1ef06c63d5"
+  },
+  "zero/adapted/displacement-nodes-mm.nii.gz": {
+    "bytes": 9942,
+    "sha256": "8b202746bef71e37d5c8aaf02e022018d50e966e139825b55c97d3a467fc5775"
+  },
+  "zero/ap.nii.gz": {
+    "bytes": 725671,
+    "sha256": "1c330ce0d93d56a857b2994d914506f1cce9ada545e239d7bead4c46c5ddaca5"
+  },
+  "zero/pa-native.nii.gz": {
+    "bytes": 725671,
+    "sha256": "1c330ce0d93d56a857b2994d914506f1cce9ada545e239d7bead4c46c5ddaca5"
+  },
+  "zero/pa-on-ap-grid.nii.gz": {
+    "bytes": 725671,
+    "sha256": "1c330ce0d93d56a857b2994d914506f1cce9ada545e239d7bead4c46c5ddaca5"
+  },
+  "zero/raw-EstFieldMap.nii.gz": {
+    "bytes": 9849,
+    "sha256": "e205776d781e440ceae8d00e61051d9594f87dbae54701da1f46fd4d0024d3b4"
+  },
+  "zero/raw-im1Corrected.nii.gz": {
+    "bytes": 725629,
+    "sha256": "e6987e280117fda8e67c15a909ba549b87f8564707b4fea5fd45d606ed548f27"
+  },
+  "zero/raw-im2Corrected.nii.gz": {
+    "bytes": 725629,
+    "sha256": "e6987e280117fda8e67c15a909ba549b87f8564707b4fea5fd45d606ed548f27"
+  }
+}

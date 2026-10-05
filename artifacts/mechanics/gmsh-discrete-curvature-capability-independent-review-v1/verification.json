@@ -1,0 +1,120 @@
+{
+  "schema": "gmsh-discrete-curvature-capability-independent-review-v1",
+  "created_utc": "2026-10-05T00:56:25.598449+00:00",
+  "status": "passed_saved_source_and_analytical_array_review",
+  "owner_index_sha256": "ab6d3b396f8750eca8ea57c16eb24769ceba44b2b922d00ff778b17eae0e4fdb",
+  "script_sha256": "7fff0fec4ae02519a41c324683f877716bd52e647bd9d9221b6f1fed036c8cd6",
+  "declaration_sha256": "05c356691e809c53f846d23fee5ef78cbc99a90971087a7791117741cc9a4b8e",
+  "review_script_sha256": "c46fa1802fdbc53b9bbe4f8f691ee9a16e7a8b35d6de2cae2db2dbd345a82305",
+  "verified_owner_records": 10,
+  "verified_raw_files": 7,
+  "verified_raw_bytes": 145510,
+  "source_runtime_input_checks": {
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/gmsh-discrete-curvature-capability-v1/declaration.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/mechanics_gmsh_curvature_control.py": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/mechanics_patient_mesh.py": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/mechanics_patient_mesh_candidate_run.py": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/febio_runtime.py": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-runtime-investigation-v1/prospective-runtime.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/gmsh-4.15.2-runtime-v1/runtime-receipt.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/gmsh-4.15.2/runtime/gmsh.py": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/gmsh-4.15.2/runtime/lib/libgmsh.4.15.dylib": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/gmsh-discrete-curvature-capability-v1/source/src/geo/GModelParametrize.cpp": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/gmsh-discrete-curvature-capability-v1/source/src/geo/discreteFace.cpp": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/gmsh-discrete-curvature-capability-v1/source/src/mesh/BackgroundMeshTools.cpp": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/gmsh-discrete-curvature-capability-v1/source/CMakeLists.txt": true
+  },
+  "official_source_archive_sha256": "be3f66f225d27ba9fa014f07e83169285da8a051b0e8ab7103d88066b39bdd3e",
+  "archive_selected_file_matches": {
+    "CMakeLists.txt": "89f1d8bc87509cd66d508a87729084afc97171cd6d554d9725980cdf09fc15bb",
+    "src/common/gmsh.cpp": "375f8ba655c0c2c5c7e0f52a5460e17e0bcf49a363449f2df1b287f6b38a2cb8",
+    "src/fltk/classificationEditor.cpp": "149fa71f58c6c226aa240568bcfa1fcd8bec568859d940356207100cfd58e554",
+    "src/fltk/classificationEditor.h": "7181f11be3b1e5697f0c58345386bb52fd5dc9eae99fc941484f2927eb575244",
+    "src/geo/GModel.cpp": "96df731cf16e58be3f1fbc502ecffc2037a160935c48a16a731c590d328fd691",
+    "src/geo/GModelParametrize.cpp": "8496e6fe1b6ae23f8f5635b57471f3249c35bd683367590a206f1d48c979f2e6",
+    "src/geo/discreteEdge.cpp": "70a9e639551f2b1a16586a8a5b7c099525eace1b7292476d22c64fd01b0eb18d",
+    "src/geo/discreteFace.cpp": "32f7669b2f9f28acfe888b86bd7ca4c81053acc2bc9db5be2fb0766d98d1e46f",
+    "src/geo/discreteFace.h": "e5e4cd068234ab8c0d8f6cc18188a58e48b72dd2940510dfb5d44e029b39bf79",
+    "src/mesh/BackgroundMeshTools.cpp": "c14ee81f8e5b763e4829066f9dafc62eaac5130a305da9cb49f3233152904bea",
+    "src/numeric/curvature.cpp": "80fe5c277f4b21e1c3d6cbcbd62a054f01ea5c5f504c0fb98d97c1d319807a77",
+    "src/numeric/curvature.h": "d210aaff8cdd3f549ccf93f431834e55ea8d0c7c0ebaf56c463d6b58441bb3a8"
+  },
+  "source_checks": {
+    "vertices": 1986,
+    "triangles": 3968,
+    "maximum_ellipsoid_equation_error": 4.440892098500626e-16,
+    "polyhedral_volume_m3_recomputed": 2.9203970333085293e-05,
+    "analytic_volume_m3_recomputed": 2.9321531433504742e-05,
+    "relative_polyhedral_volume_error_recomputed": 0.004009377910088152
+  },
+  "analytical_saved_array_checks": [
+    {
+      "case": "curvature_off",
+      "nodes": 269,
+      "tet10_elements": 116,
+      "volume_m3_recomputed": 2.4417739942032515e-05,
+      "minimum_reference_determinant_m3_recomputed": 4.23290013873858e-07,
+      "maximum_midpoint_error_m_recomputed": 0.0,
+      "minimum_mean_ratio_recomputed": 0.37966059463179225,
+      "boundary_euler_recomputed": 2,
+      "boundary_edge_quantiles_m_recomputed": [
+        0.006580694163995654,
+        0.008631929699852497,
+        0.010749433989280403,
+        0.01345721802016582,
+        0.017118641763556115
+      ],
+      "source_direction_sample_count_recomputed": 120056,
+      "reverse_direction_sample_count_recomputed": 37140
+    },
+    {
+      "case": "curvature_on",
+      "nodes": 2806,
+      "tet10_elements": 1340,
+      "volume_m3_recomputed": 2.8624423199728386e-05,
+      "minimum_reference_determinant_m3_recomputed": 9.631380074784447e-09,
+      "maximum_midpoint_error_m_recomputed": 0.0,
+      "minimum_mean_ratio_recomputed": 0.2620895529857074,
+      "boundary_euler_recomputed": 2,
+      "boundary_edge_quantiles_m_recomputed": [
+        0.0019424712353430878,
+        0.0025837432186524355,
+        0.0031673009155131393,
+        0.005254901840716855,
+        0.01143917236836951
+      ],
+      "source_direction_sample_count_recomputed": 120056,
+      "reverse_direction_sample_count_recomputed": 52334
+    }
+  ],
+  "resources": {
+    "supervised_seconds": 2.79509849997703,
+    "sampled_group_peak_rss_bytes": 171065344,
+    "wall_cap_seconds": 30,
+    "rss_cap_bytes": 1073741824,
+    "sampled_output_cap_bytes": 16777216,
+    "raw_output_bytes": 145510,
+    "exact_generation_count_from_receipt_and_log": 2,
+    "numeric_threads_requested": 1,
+    "VTK_sequential_required": true,
+    "retries": 0
+  },
+  "interpretation": "Joint curvature0\u219224 and minimum-size12\u21923mm profile effect on one analytical input; no isolated causal claim, patient extrapolation or solver validation.",
+  "limitations": [
+    "Saved nearest-triangle distances were source-audited and hash-bound, not recomputed with VTK during this review.",
+    "64 curvature samples per profile demonstrate finite/nonzero availability, not full-surface coverage or curvature-estimate accuracy.",
+    "Fidelity refers to input facets, not exact smooth-ellipsoid Hausdorff distance.",
+    "Source pinning is not a reproducible-build equivalence proof.",
+    "RSS/output are sampled; timing does not predict patient or solver cost."
+  ],
+  "reviewer_control_correction": "Initial suffix-only archive locator matched nested CMakeLists files; exact archive prefix/path fixes the reviewer assertion. Initial record preserved.",
+  "review_activity": {
+    "patient_arrays_read": 0,
+    "saved_analytical_array_files_read": 3,
+    "Gmsh_or_VTK_imports": 0,
+    "mesh_generations": 0,
+    "solver_calls": 0,
+    "training_updates": 0,
+    "source_edits": 0
+  }
+}

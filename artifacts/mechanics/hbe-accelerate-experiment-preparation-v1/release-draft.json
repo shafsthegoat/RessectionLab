@@ -1,0 +1,207 @@
+{
+  "archive_sha256": "be1459acf9cae0fdca5f2e0d462a4bc5bb43b1e5674b06346d1dcb46984e4e2c",
+  "authorization": "Preparation only. Separate root execution release is required; this unsupported draft schema fails closed in the existing runner.",
+  "authorized": false,
+  "execution": {
+    "access_ledger_path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/access.jsonl",
+    "authorized_specimen_solver_calls": 20,
+    "backend_decks": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1/manifest.json",
+      "sha256": "0fe58b97e29bf8d712463ae0eac09b2102129a6af016216b89eb9f8bcb25217c"
+    },
+    "backend_profile": {
+      "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+      "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+    },
+    "canonical_deck_repair_verification": {
+      "path": "outputs/validation/hbe-experiment-add7e8b/frozen-source/artifacts/mechanics/hbe-mesh-preparation-independent-review-v1/canonical-order-repair-verification.json",
+      "sha256": "c7de815255449870e6357f55fb55f37a0e3696d303bd66fcc61b2127d8bb6511"
+    },
+    "caps": {
+      "aggregate_specimen_seconds": 900,
+      "call_allocation": {
+        "branches_x_three_meshes": 12,
+        "calibrated_axial_confirmations": 2,
+        "double_mu_controls": 2,
+        "fine_loadstep_repeats": 4
+      },
+      "each_active_run_output_bytes": 268435456,
+      "each_mesh_generation_seconds": 30,
+      "each_solver_seconds": 90,
+      "generated_output_bytes": 1073741824,
+      "gmsh_acquisition_bytes": 36427761,
+      "gmsh_acquisition_seconds": 60,
+      "gmsh_aggregate_preparation_seconds": 150,
+      "gmsh_expanded_bytes": 268435456,
+      "gmsh_generation_calls": 3,
+      "maximum_specimen_solver_calls": 20,
+      "on_failure": "kill_and_reap_process_group_preserve_partial_receipt_no_retry_or_budget_increase",
+      "output_budget_basis": "Metadata-only estimate: 3199 fine nodes,2592 cells,9 node+8 element fields,13 characters/value,60 or120 frames yields~828MB (~790MiB) before headers/IDs;1GiB total is a cap,not a measured footprint. Lossless compression after each run may reduce retained size;raw decompressed hash retained.",
+      "runtime_threads": 1,
+      "sampled_process_family_rss_bytes": 3221225472
+    },
+    "csv_schema_provenance": {
+      "assumption": "Comma delimiter, no header, columns0/1. No header or curve member inspected before release.",
+      "creator_verified_content": "Two columns in declared coordinate/response order and m/N or rad/Nm units.",
+      "failure_policy": "Any parser/schema/domain mismatch is terminal; no automatic format, column, unit, sign, fit, specimen or selection change.",
+      "format_evidence_limit": "Creator README does not establish delimiter/header; paper code is available upon request.",
+      "primary_methods": "https://link.springer.com/article/10.1007/s10237-023-01739-w",
+      "status": "prospectively_fixed_unverified_format_assumption"
+    },
+    "csv_schemas": {
+      "compression": {
+        "coordinate_column": 0,
+        "coordinate_unit": "m",
+        "delimiter": ",",
+        "header": null,
+        "response_column": 1,
+        "response_unit": "N"
+      },
+      "tension": {
+        "coordinate_column": 0,
+        "coordinate_unit": "m",
+        "delimiter": ",",
+        "header": null,
+        "response_column": 1,
+        "response_unit": "N"
+      },
+      "torsion_neg": {
+        "coordinate_column": 0,
+        "coordinate_unit": "rad",
+        "delimiter": ",",
+        "header": null,
+        "response_column": 1,
+        "response_unit": "Nm"
+      },
+      "torsion_pos": {
+        "coordinate_column": 0,
+        "coordinate_unit": "rad",
+        "delimiter": ",",
+        "header": null,
+        "response_column": 1,
+        "response_unit": "Nm"
+      }
+    },
+    "gmsh_runtime": {
+      "path": "outputs/validation/hbe-experiment-add7e8b/frozen-source/artifacts/mechanics/gmsh-4.15.2-runtime-v1/runtime-receipt.json",
+      "sha256": "705056d13e78f98fda0ab04884c0c6e3b31ead73f88d01b6dcf3bd99d5417137"
+    },
+    "independent_evidence": {
+      "actual_eight_controls_saved_review": {
+        "path": "artifacts/mechanics-accelerate-controls-saved-review-v1/review.json",
+        "sha256": "b410fbe9cd8cbb9be5492a77f402d44844da01042259ecfcbccc0d04fef83fba"
+      },
+      "actual_runtime_saved_review": {
+        "path": "artifacts/febio-accelerate-runtime-saved-review-v3/review.json",
+        "sha256": "96982e2b8b1e368e320ad63179295542c7b77ac66692b8a6f8e4f9a8878296a1"
+      },
+      "backend_integration": {
+        "path": "artifacts/mechanics/hbe-backend-independent-review-v1/verification.json",
+        "sha256": "fac9917706e12920a792ef131b63a103afa24530d9a05c773e6c148fb2cbe68c"
+      },
+      "combined_backend_repin": {
+        "path": "artifacts/mechanics/hbe-backend-combined-repin-review-v1/verification.json",
+        "sha256": "34f32924b4c276dca566f04eec0e30a02bf75a1c99729acc68a877f5bebd403f"
+      },
+      "header_parser": {
+        "path": "artifacts/mechanics/hbe-time-header-independent-review-v1/verification.json",
+        "sha256": "a76ee7941d52d16407c5e9f5d52bcecc3bf54a61f6ab9113abffbf836d1eaac2"
+      }
+    },
+    "interpreter": {
+      "path": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "sha256": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a"
+    },
+    "mesh_levels": {
+      "12": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/receipt.json",
+        "sha256": "923f0e8151c4c5c4dbedaa48e35c9463918049ebcfd7c9b1e17b7a1cf8c38199"
+      },
+      "4": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/receipt.json",
+        "sha256": "2701d1a0bb0fa99102ffeb16ef8a25a4eca231e19f7e073bc50890c1e540c5e3"
+      },
+      "8": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/receipt.json",
+        "sha256": "5b3de49ff4d7c4353ef675f3caa82f45a51f54cbbef7739ff85845864561ba53"
+      }
+    },
+    "mesh_preparation_record": {
+      "path": "outputs/validation/hbe-experiment-add7e8b/frozen-source/artifacts/mechanics/hbe-01-03-mesh-preparation-v1/release-and-source-binding.json",
+      "sha256": "c7a90d4e71a5c4772a33d8a50a1001e6790411c55700bf26629a1f26d1ce857b"
+    },
+    "mesh_preparation_source": {
+      "path": "outputs/validation/hbe-mesh-preparation-cb72a84/frozen-source/scripts/mechanics_hbe_mesh.py",
+      "sha256": "5b102eb74a171d41a8815e408a6473fd65032dd9b30ff5412cf7243addc7d3e2"
+    },
+    "original_mesh_inventory": {
+      "path": "outputs/validation/hbe-experiment-add7e8b/frozen-source/artifacts/mechanics/hbe-01-03-mesh-preparation-v1/raw-output-index.json",
+      "sha256": "0cb55a598e3eddaf9ec486d049343c1ccfe556b64337b1cdb580ac0eb695ad83"
+    },
+    "source_archive": {
+      "path": "outputs/validation/hbe-accelerate-6486dbc/source.tar",
+      "sha256": "fd3a72a995dd38fc1107b83ec71f1b0911ed060ecac451245637c1559e598d34"
+    },
+    "source_bindings": {
+      "access": {
+        "path": "outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_access.py",
+        "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+      },
+      "backend_profile": {
+        "path": "outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_backend.py",
+        "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae"
+      },
+      "curve_evaluator": {
+        "path": "outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_evaluation.py",
+        "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+      },
+      "mesh_deck": {
+        "path": "outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_mesh.py",
+        "sha256": "3cb4d99f5d2d7fa2f66fb5af56ebffcf19342b9bee0b4cb2c9acfe98aabdd892"
+      },
+      "orchestrator": {
+        "path": "outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_experiment.py",
+        "sha256": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa"
+      },
+      "physics": {
+        "path": "outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_physics.py",
+        "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+      },
+      "primitive_parser": {
+        "path": "outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_outputs.py",
+        "sha256": "a372cb89ea9515186d433c74ec650dc3b5cae289619e8b35d481280f6662f473"
+      },
+      "readout": {
+        "path": "outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_readout.py",
+        "sha256": "21700558e5cb614a11a7cc62dbd5ec8118fabb11b4fbfc88f89cb8aa02012963"
+      },
+      "runtime_driver": {
+        "path": "outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/febio_runtime.py",
+        "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+      }
+    }
+  },
+  "permitted_members": [
+    "HBE_01/HBE_01_03/compression_c3.csv",
+    "HBE_01/HBE_01_03/tension_c3.csv"
+  ],
+  "prerequisite_evidence": {
+    "analytic_verification": {
+      "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/hex8-summary.json",
+      "sha256": "4882279a8f0e89a1118265a4cd09ca2658529a15498c6ceb7da8d5b760c40d2b"
+    },
+    "mesh_validation": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/receipt.json",
+      "sha256": "130f37cf55db204468bf094a1a86c769c7c29365dfa24a1deb05848669f9668a"
+    },
+    "runtime": {
+      "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+      "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+    }
+  },
+  "protocol_sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035",
+  "roles_sha256": "c135a65eb14001e31a849197cc5650a15e2484022bee9f950a5c1759a033a432",
+  "schema": "hbe-calibration-release-draft-v1",
+  "source_archive_sha256": "fd3a72a995dd38fc1107b83ec71f1b0911ed060ecac451245637c1559e598d34",
+  "source_commit": "6486dbcfb0395a4c5b9df3f140b08141d0d96fd7"
+}

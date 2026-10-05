@@ -1,0 +1,17 @@
+{
+  "sources": {
+    "src/resectionlab/independent_geometry_batch.py": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3",
+    "src/resectionlab/evaluation.py": "8fe1467d2dc53deb62f16c86c79eebc1596047bc58d52a8b7be3598f50334d18",
+    "tests/test_independent_native_batch.py": "1066b5a3fc368ffb060134cf4dbab71982561e8f9c33706f1d7af0eb52d4fa7b",
+    "tests/test_worlds_evaluation.py": "4c5cb6a28469617d81beb61f5de728703d0f9940f1127eec5deb16ad8f1a6e47"
+  },
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_independent_native_batch.py",
+    "tests/test_worlds_evaluation.py"
+  ],
+  "scope": "Root released focused unit and complete small numerical history parity checks; no timed history or patient run"
+}

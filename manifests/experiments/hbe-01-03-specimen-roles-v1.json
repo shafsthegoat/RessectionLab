@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "declaration_id": "hbe-01-03-specimen-roles-v1",
+  "declared_on": "2026-10-04",
+  "status": "prospective_roles_only_not_an_execution_release",
+  "purpose": "bounded_within_specimen_quasi_static_cross_mode_prediction",
+  "source": {
+    "record_url": "https://zenodo.org/records/8095559",
+    "doi": "10.5281/zenodo.8095559",
+    "version": "1.0",
+    "acquisition_manifest": "manifests/hbe_8095559_acquisition.json",
+    "acquisition_manifest_sha256": "dd3ebc07046834d6ae002524bbdfa0073ab8c7fa7a1cea8239b497266078b6b4",
+    "metadata_inventory": "artifacts/mechanics/hbe-8095559-acquisition-v1/metadata-inventory.json",
+    "metadata_inventory_sha256": "cd71420f5f1da0304fec32651a98eaf44544c696e4d470c753a20fd2434241f5",
+    "metadata_integrity_receipt": "artifacts/mechanics/hbe-8095559-acquisition-v1/metadata-integrity.json",
+    "metadata_integrity_receipt_sha256": "2f050b8ce7d059b4bdd3c6c1bcfd06fc135c578f2fb206d04e903445a09c51d2",
+    "archive_path": "data/mechanics/zenodo-8095559/HBE_Data.zip",
+    "archive_sha256": "be1459acf9cae0fdca5f2e0d462a4bc5bb43b1e5674b06346d1dcb46984e4e2c",
+    "archive_bytes": 12968598,
+    "curve_binding": "exact_archive_sha256_plus_unique_member_path; byte_length_and_crc32_are_additional_checks",
+    "curve_member_sha256_status": "not_computed_before_release_to_keep_curve_members_unopened"
+  },
+  "selection": {
+    "rule": "first_metadata_eligible_by_numeric_donor_id_then_numeric_specimen_id",
+    "eligibility": "positive_complete_cylinder_geometry_and_all_declared_c3_calibration_and_l1_validation_filenames_present",
+    "outcome_values_used": false,
+    "outcome_based_replacement_allowed": false,
+    "specimen_id": "HBE_01_03",
+    "donor_id": "HBE_01",
+    "governing_region": "C",
+    "region": "MC",
+    "region_meaning": "cortex_motor_cortex",
+    "donor_role": "DEVELOPMENT",
+    "sibling_specimens_share_donor_role": true,
+    "future_final_donor_validation_eligible": false
+  },
+  "geometry": {
+    "archive_member": "HBE_01/HBE_01_03/geometry.yaml",
+    "sha256": "87938ef85a5b554b671951acad8f363b9f027a966f095d5366eec81232679641",
+    "type": "cylinder",
+    "radius_m": 0.004,
+    "height_m": 0.00489159,
+    "height_provenance": "creator_determined_from_test_data_not_independent_geometry_measurement",
+    "dimensional_measurement_uncertainty": null,
+    "unknown_uncertainty_policy": "report_as_unavailable; sensitivity_scenarios_do_not_become_measured_uncertainty"
+  },
+  "calibration": {
+    "role": "parameter_fitting_only_after_committed_bounded_experiment_release",
+    "cycle": 3,
+    "creator_declared_columns": ["displacement_m", "normal_force_N"],
+    "members": [
+      {
+        "path": "HBE_01/HBE_01_03/compression_c3.csv",
+        "bytes": 1222,
+        "crc32": "c7b7a162"
+      },
+      {
+        "path": "HBE_01/HBE_01_03/tension_c3.csv",
+        "bytes": 1170,
+        "crc32": "03927483"
+      }
+    ]
+  },
+  "held_out_validation": {
+    "role": "within_specimen_unseen_loading_mode_after_parameter_and_model_freeze",
+    "cycle": 3,
+    "loading_level": "l1",
+    "creator_declared_nominal_amount_of_shear": 0.15,
+    "creator_declared_columns": ["angular_displacement_rad", "torque_Nm"],
+    "positive_and_negative_branches_are_one_loading_mode_not_independent_specimens": true,
+    "members": [
+      {
+        "path": "HBE_01/HBE_01_03/torsion_l1_c3_neg.csv",
+        "bytes": 1224,
+        "crc32": "f5259802"
+      },
+      {
+        "path": "HBE_01/HBE_01_03/torsion_l1_c3_pos.csv",
+        "bytes": 1332,
+        "crc32": "611776b4"
+      }
+    ],
+    "may_choose_model_parameters_mesh_load_schedule_or_stopping_rule": false,
+    "read_requires_durable_calibration_and_parameter_freeze": true,
+    "post_reveal_refitting_is_same_claim_validation": false
+  },
+  "sealed_out_of_scope": {
+    "rule": "all_other_curve_members_in_the_archive",
+    "includes": [
+      "all_cycle_1_curves",
+      "all_l2_torsion_curves_including_cycle_3",
+      "all_other_specimens_in_development_donor_HBE_01",
+      "all_curves_from_donors_HBE_02_through_HBE_07",
+      "HBE_06_07_proc.csv_and_HBE_06_07_raw.csv"
+    ],
+    "may_open_plot_summarize_or_fit": false,
+    "secondary_l2_analysis_declared": false
+  },
+  "release_requirements": {
+    "root_must_commit_roles_and_bounded_model_runtime_declaration_before_any_curve_values_are_read": true,
+    "reader_must_verify_archive_hash_and_unique_member_names": true,
+    "csv_delimiter_header_row_count_status": "uninspected; schema_errors_must_be_reported_without_outcome_based_specimen_replacement",
+    "required_experiment_fields": [
+      "this_role_manifest_sha256_and_git_commit",
+      "solver_source_revision_and_verified_runtime_identity",
+      "constitutive_energy_convention_and_parameter_units",
+      "documented_bonded_plate_boundary_conditions",
+      "finite_strain_loading_protocol_and_sign_convention",
+      "calibration_algorithm_parameter_domain_and_objective",
+      "mesh_and_load_step_convergence_protocol",
+      "prospective_output_metrics_and_acceptance_tolerances",
+      "wall_memory_and_solver_call_budgets",
+      "durable_parameter_freeze_before_held_out_mode_access"
+    ],
+    "framework_under_preparation": {
+      "name": "FEBio",
+      "tag": "v4.13",
+      "annotated_tag_sha": "9184ff860ca560bec32980ee05ce04724881c64c",
+      "source_commit": "32ae206ff4881dfb54f62296cd1558e58ed9fcc6",
+      "repository": "https://github.com/febiosoftware/FEBio",
+      "runtime_status": "local_source_build_route_unverified_not_released"
+    },
+    "runtime_approved": false,
+    "curve_access_released": false
+  },
+  "claim_boundaries": {
+    "processed_data": "filtered_and_load_unload_averaged_quasi_static_hyperelastic_response",
+    "independent_donor_transfer_test": false,
+    "viscoelastic_or_hysteresis_validation": false,
+    "cutting_or_patient_retractor_force_validation": false,
+    "patient_specific_material_properties": false,
+    "real_patient_anatomy_displacement_requirement_fulfilled": false,
+    "later_patient_displacement_poc_still_required": true,
+    "validation_contract": "docs/tissue-mechanics-validation.md"
+  }
+}

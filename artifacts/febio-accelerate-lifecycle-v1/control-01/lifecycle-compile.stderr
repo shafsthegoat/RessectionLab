@@ -1,0 +1,8 @@
+In file included from /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/lifecycle-control.cpp:137:
+/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/extracted-methods.inc:51:18: warning: implicit conversion from 'double' to 'int' changes value from 0.001 to 0 [-Wliteral-conversion]
+   51 |         m_rtol = 1e-3;
+      |                ~ ^~~~
+/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/extracted-methods.inc:52:18: warning: implicit conversion from 'double' to 'int' changes value from 1.0E-12 to 0 [-Wliteral-conversion]
+   52 |         m_atol = 1e-12;
+      |                ~ ^~~~~
+2 warnings generated.

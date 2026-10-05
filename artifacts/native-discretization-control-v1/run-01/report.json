@@ -1,0 +1,2364 @@
+{
+  "version": "native-discretization-control-v1",
+  "status": "completed_numerical_rows_audits_incomplete",
+  "declaration_hash": "sha256:bfdcdfba1d94c5b3d19edc92cd9c8710a2df4db6e8e2c75f0da7a897ad61917b",
+  "source": {
+    "files": {
+      "manifests/experiments/native-discretization-control-v1.json": "e0f528064ef68f0c4c54452318e72935a1e3f7b000951bb68b07a4ea9fb053b8",
+      "scripts/probe_native_discretization.py": "6df8ade8e117667b77fef5285f99368b0d90ff8f04846caef77b213a53fa2eff",
+      "tests/test_native_discretization_control.py": "38e2cccc90146c13fa6322ecf915f8d6889e0fb2c619627c55ef5f45498f458d",
+      "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+      "src/resectionlab/native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+      "src/resectionlab/evaluation.py": "baaa2f3d6b4e41c4621dc22872da9300d649bc91dfeb923e2ad35f66aadad3b7",
+      "src/resectionlab/worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91",
+      "src/resectionlab/core.py": "f1f0b8ae334cabc864c3ec85d4f6b49e4842de2b580edaadd7562276ea0c92db"
+    },
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "platform": "macOS-26.6-arm64-arm-64bit"
+  },
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "expected_rows": 16,
+  "rows": [
+    {
+      "row_id": "aligned-1mm",
+      "spacing_mm": 1.0,
+      "grid": {
+        "name": "aligned",
+        "rotation_xyz_degrees": [
+          0,
+          0,
+          0
+        ],
+        "phase_source_voxels": [
+          0,
+          0,
+          0
+        ]
+      },
+      "shape": [
+        13,
+        13,
+        18
+      ],
+      "affine": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -6.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -6.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          -7.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_hash": "sha256:e159d01a09ed85a54583326b31fd5ad0aab20ce3cd3371293f76894d982168fa",
+      "native_config_hash": "sha256:38854c87171170ccda4935a1db8f6660d6f95902b95b077aa9afe9eac9927859",
+      "fixed_entry_mm": [
+        0.0,
+        0.0,
+        -2.0
+      ],
+      "fixed_tip_mm": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "fixed_tool": {
+        "tool_id": "native-fine-aspiration",
+        "tip_radius_mm": 1.25,
+        "shaft_radius_mm": 0.45,
+        "working_length_mm": 120.0,
+        "max_access_angle_deg": 35.0,
+        "tip_length_mm": 2.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "ideal_physical_active_sweep_mm3": 23.725569519297917,
+      "static_not_executable": {
+        "contained_cell_count": 5,
+        "contact_cell_count": 54,
+        "contained_source_cell_mm3": 5.0,
+        "contact_source_cell_upper_mm3": 54.0,
+        "contained_physical_lower_mm3": 4.5,
+        "contact_physical_upper_mm3": 49.5,
+        "physical_bracket_width_mm3": 45.0,
+        "cell_diameter_theoretical_lower_mm3": 0.0,
+        "cell_diameter_theoretical_upper_mm3": 167.28777241642652
+      },
+      "native": {
+        "feasible": true,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "failure_tip_mm": null,
+        "completed_microsteps": 97,
+        "removed_source_cell_mm3": 5.0,
+        "removed_physical_lower_mm3": 4.5,
+        "removed_outer_voxelization_excess_mm3": 0.5,
+        "contacted_physical_upper_mm3": 49.5,
+        "partial_contact_physical_upper_mm3": 45.0,
+        "ideal_sweep_tissue_not_credited_removed_mm3": 19.225569519297917,
+        "partial_cells_kept_occupied": true,
+        "rejected_transaction_unchanged": false,
+        "metrics": {
+          "native_resection_version": "contained-native-cell-connected-suction-v2",
+          "decision_model_hash": "sha256:38854c87171170ccda4935a1db8f6660d6f95902b95b077aa9afe9eac9927859",
+          "source_hash": "sha256:e159d01a09ed85a54583326b31fd5ad0aab20ce3cd3371293f76894d982168fa",
+          "native_grid_shape": [
+            13,
+            13,
+            18
+          ],
+          "native_voxel_volume_mm3": 1.0,
+          "simulated_removed_target_mm3": 5.0,
+          "simulated_removed_normal_mm3": 0.0,
+          "modeled_residual_target_mm3": 1854.0,
+          "contacted_tissue_upper_bound_mm3": 54.0,
+          "contacted_but_not_removed_upper_bound_mm3": 49.0,
+          "removed_by_label_mm3": {
+            "1": 5.0
+          },
+          "tissue_support_provenance": "analytic z>=0 half-space; conservative positive-intersection source cells",
+          "removal_definition": "fully_contained_connected_native_cells; boundary partial volumes uncredited",
+          "completed_strokes": 1,
+          "clinical_deficit_probability": null
+        },
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "committed_history_hash": "sha256:50675a692cd644640e4cb777afaafbcb6208476a0542e001b1229bf5ec6315e8"
+      },
+      "independent_audit": {
+        "status": "completed",
+        "seconds": 0.4730105419876054,
+        "certificate": {
+          "feasible": true,
+          "failures": [],
+          "first_failed_action": null,
+          "first_unsupported_source_voxel": null,
+          "first_unsupported_position_mm": null,
+          "claimed_source_tissue_volume_mm3": 5.0,
+          "contained_source_tissue_volume_mm3": 5.0,
+          "unsupported_source_tissue_volume_mm3": 0.0,
+          "source_case_hash": "sha256:e159d01a09ed85a54583326b31fd5ad0aab20ce3cd3371293f76894d982168fa",
+          "source_voxel_volume_mm3": 1.0,
+          "action_count": 1,
+          "checker_version": "independent-native-sequence-v2",
+          "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+          "complete_tool_checked": true,
+          "frontier_checked": true
+        }
+      },
+      "timing_seconds": {
+        "grid_preparation": 0.0013045419473201036,
+        "static_bounds": 0.000809708028100431,
+        "native_stroke": 0.05423820798750967,
+        "numerical_row_total": 0.05821637494955212
+      }
+    },
+    {
+      "row_id": "half_voxel_phase-1mm",
+      "spacing_mm": 1.0,
+      "grid": {
+        "name": "half_voxel_phase",
+        "rotation_xyz_degrees": [
+          0,
+          0,
+          0
+        ],
+        "phase_source_voxels": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "shape": [
+        14,
+        14,
+        19
+      ],
+      "affine": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -6.5
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          -6.5
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          -7.5
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_hash": "sha256:3efeaec6bd30c25f26092a48eef7c99b781bf8395954cc95648c687e9883ba7e",
+      "native_config_hash": "sha256:20228dede6ccc205fe9adb4860850d3fd605221ad3b076ec45a5c7cceb082e29",
+      "fixed_entry_mm": [
+        0.0,
+        0.0,
+        -2.0
+      ],
+      "fixed_tip_mm": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "fixed_tool": {
+        "tool_id": "native-fine-aspiration",
+        "tip_radius_mm": 1.25,
+        "shaft_radius_mm": 0.45,
+        "working_length_mm": 120.0,
+        "max_access_angle_deg": 35.0,
+        "tip_length_mm": 2.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "ideal_physical_active_sweep_mm3": 23.725569519297917,
+      "static_not_executable": {
+        "contained_cell_count": 0,
+        "contact_cell_count": 64,
+        "contained_source_cell_mm3": 0.0,
+        "contact_source_cell_upper_mm3": 64.0,
+        "contained_physical_lower_mm3": 0.0,
+        "contact_physical_upper_mm3": 64.0,
+        "physical_bracket_width_mm3": 64.0,
+        "cell_diameter_theoretical_lower_mm3": 0.0,
+        "cell_diameter_theoretical_upper_mm3": 167.28777241642652
+      },
+      "native": {
+        "feasible": false,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+        "failure_tip_mm": [
+          0.0,
+          0.0,
+          1.5625
+        ],
+        "completed_microsteps": 57,
+        "removed_source_cell_mm3": 0.0,
+        "removed_physical_lower_mm3": 0.0,
+        "removed_outer_voxelization_excess_mm3": 0.0,
+        "contacted_physical_upper_mm3": 0.0,
+        "partial_contact_physical_upper_mm3": 0.0,
+        "ideal_sweep_tissue_not_credited_removed_mm3": 23.725569519297917,
+        "partial_cells_kept_occupied": true,
+        "rejected_transaction_unchanged": true,
+        "metrics": {
+          "native_resection_version": "contained-native-cell-connected-suction-v2",
+          "decision_model_hash": "sha256:20228dede6ccc205fe9adb4860850d3fd605221ad3b076ec45a5c7cceb082e29",
+          "source_hash": "sha256:3efeaec6bd30c25f26092a48eef7c99b781bf8395954cc95648c687e9883ba7e",
+          "native_grid_shape": [
+            14,
+            14,
+            19
+          ],
+          "native_voxel_volume_mm3": 1.0,
+          "simulated_removed_target_mm3": 0.0,
+          "simulated_removed_normal_mm3": 0.0,
+          "modeled_residual_target_mm3": 2156.0,
+          "contacted_tissue_upper_bound_mm3": 0.0,
+          "contacted_but_not_removed_upper_bound_mm3": 0.0,
+          "removed_by_label_mm3": {
+            "1": 0.0
+          },
+          "tissue_support_provenance": "analytic z>=0 half-space; conservative positive-intersection source cells",
+          "removal_definition": "fully_contained_connected_native_cells; boundary partial volumes uncredited",
+          "completed_strokes": 0,
+          "clinical_deficit_probability": null
+        },
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "committed_history_hash": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "independent_audit": {
+        "status": "not_applicable_rejected_no_committed_history"
+      },
+      "timing_seconds": {
+        "grid_preparation": 0.0006123750936239958,
+        "static_bounds": 0.0005399170331656933,
+        "native_stroke": 0.026642041048035026,
+        "numerical_row_total": 0.028551042079925537
+      }
+    },
+    {
+      "row_id": "tilted_20_degrees-1mm",
+      "spacing_mm": 1.0,
+      "grid": {
+        "name": "tilted_20_degrees",
+        "rotation_xyz_degrees": [
+          0,
+          20,
+          0
+        ],
+        "phase_source_voxels": [
+          0,
+          0,
+          0
+        ]
+      },
+      "shape": [
+        18,
+        13,
+        21
+      ],
+      "affine": [
+        [
+          0.9396926207859083,
+          0.0,
+          0.34202014332566866,
+          -11.535414877004193
+        ],
+        [
+          0.0,
+          0.9999999999999999,
+          0.0,
+          -5.999999999999999
+        ],
+        [
+          -0.34202014332566866,
+          0.0,
+          0.9396926207859083,
+          -5.379052297142157
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_hash": "sha256:3357e1399e54efda2b2b50afbf5c0c6d945c16dae047b715a039dd2a75923abd",
+      "native_config_hash": "sha256:209d67fb760aa5cdd82f0e2fb6b0bc144404f1fc3f0713ac303f9dc49bcd8dec",
+      "fixed_entry_mm": [
+        0.0,
+        0.0,
+        -2.0
+      ],
+      "fixed_tip_mm": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "fixed_tool": {
+        "tool_id": "native-fine-aspiration",
+        "tip_radius_mm": 1.25,
+        "shaft_radius_mm": 0.45,
+        "working_length_mm": 120.0,
+        "max_access_angle_deg": 35.0,
+        "tip_length_mm": 2.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "ideal_physical_active_sweep_mm3": 23.725569519297917,
+      "static_not_executable": {
+        "contained_cell_count": 5,
+        "contact_cell_count": 68,
+        "contained_source_cell_mm3": 4.999999999999999,
+        "contact_source_cell_upper_mm3": 67.99999999999999,
+        "contained_physical_lower_mm3": 4.499999999999999,
+        "contact_physical_upper_mm3": 60.499999999999986,
+        "physical_bracket_width_mm3": 55.999999999999986,
+        "cell_diameter_theoretical_lower_mm3": 0.0,
+        "cell_diameter_theoretical_upper_mm3": 167.28777241642652
+      },
+      "native": {
+        "feasible": false,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+        "failure_tip_mm": [
+          0.0,
+          0.0,
+          1.0625
+        ],
+        "completed_microsteps": 49,
+        "removed_source_cell_mm3": 0.0,
+        "removed_physical_lower_mm3": 0.0,
+        "removed_outer_voxelization_excess_mm3": 0.0,
+        "contacted_physical_upper_mm3": 0.0,
+        "partial_contact_physical_upper_mm3": 0.0,
+        "ideal_sweep_tissue_not_credited_removed_mm3": 23.725569519297917,
+        "partial_cells_kept_occupied": true,
+        "rejected_transaction_unchanged": true,
+        "metrics": {
+          "native_resection_version": "contained-native-cell-connected-suction-v2",
+          "decision_model_hash": "sha256:209d67fb760aa5cdd82f0e2fb6b0bc144404f1fc3f0713ac303f9dc49bcd8dec",
+          "source_hash": "sha256:3357e1399e54efda2b2b50afbf5c0c6d945c16dae047b715a039dd2a75923abd",
+          "native_grid_shape": [
+            18,
+            13,
+            21
+          ],
+          "native_voxel_volume_mm3": 0.9999999999999998,
+          "simulated_removed_target_mm3": 0.0,
+          "simulated_removed_normal_mm3": 0.0,
+          "modeled_residual_target_mm3": 2885.9999999999995,
+          "contacted_tissue_upper_bound_mm3": 0.0,
+          "contacted_but_not_removed_upper_bound_mm3": 0.0,
+          "removed_by_label_mm3": {
+            "1": 0.0
+          },
+          "tissue_support_provenance": "analytic z>=0 half-space; conservative positive-intersection source cells",
+          "removal_definition": "fully_contained_connected_native_cells; boundary partial volumes uncredited",
+          "completed_strokes": 0,
+          "clinical_deficit_probability": null
+        },
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "committed_history_hash": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "independent_audit": {
+        "status": "not_applicable_rejected_no_committed_history"
+      },
+      "timing_seconds": {
+        "grid_preparation": 0.0006540410686284304,
+        "static_bounds": 0.0006515000713989139,
+        "native_stroke": 0.026463958085514605,
+        "numerical_row_total": 0.028417791007086635
+      }
+    },
+    {
+      "row_id": "oblique_fractional_phase-1mm",
+      "spacing_mm": 1.0,
+      "grid": {
+        "name": "oblique_fractional_phase",
+        "rotation_xyz_degrees": [
+          13,
+          -17,
+          23
+        ],
+        "phase_source_voxels": [
+          0.3333333333333333,
+          0.2,
+          0.14285714285714285
+        ]
+      },
+      "shape": [
+        20,
+        19,
+        22
+      ],
+      "affine": [
+        [
+          0.8802831692436254,
+          -0.44125769622828026,
+          -0.1743364203650773,
+          -2.201930492926154
+        ],
+        [
+          0.3736580364770963,
+          0.871214251804938,
+          -0.318379332287827,
+          -8.085123836516583
+        ],
+        [
+          0.2923717047227367,
+          0.2151217631279373,
+          0.9317947270221312,
+          -12.67999863389035
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_hash": "sha256:7c3b1387e42da1c59b1a13219bb59301ce8a14c9b318302e0e4ab681f8c5bef6",
+      "native_config_hash": "sha256:49e8cd5db960b520971e80a224b07bc39ce13198855d7c2b20de64c1e9cf352e",
+      "fixed_entry_mm": [
+        0.0,
+        0.0,
+        -2.0
+      ],
+      "fixed_tip_mm": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "fixed_tool": {
+        "tool_id": "native-fine-aspiration",
+        "tip_radius_mm": 1.25,
+        "shaft_radius_mm": 0.45,
+        "working_length_mm": 120.0,
+        "max_access_angle_deg": 35.0,
+        "tip_length_mm": 2.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "ideal_physical_active_sweep_mm3": 23.725569519297917,
+      "static_not_executable": {
+        "contained_cell_count": 2,
+        "contact_cell_count": 72,
+        "contained_source_cell_mm3": 1.999999999999998,
+        "contact_source_cell_upper_mm3": 71.99999999999993,
+        "contained_physical_lower_mm3": 1.7929619488708204,
+        "contact_physical_upper_mm3": 61.71975816892958,
+        "physical_bracket_width_mm3": 59.92679622005876,
+        "cell_diameter_theoretical_lower_mm3": 0.0,
+        "cell_diameter_theoretical_upper_mm3": 167.28777241642652
+      },
+      "native": {
+        "feasible": false,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+        "failure_tip_mm": [
+          0.0,
+          0.0,
+          0.25
+        ],
+        "completed_microsteps": 36,
+        "removed_source_cell_mm3": 0.0,
+        "removed_physical_lower_mm3": 0.0,
+        "removed_outer_voxelization_excess_mm3": 0.0,
+        "contacted_physical_upper_mm3": 0.0,
+        "partial_contact_physical_upper_mm3": 0.0,
+        "ideal_sweep_tissue_not_credited_removed_mm3": 23.725569519297917,
+        "partial_cells_kept_occupied": true,
+        "rejected_transaction_unchanged": true,
+        "metrics": {
+          "native_resection_version": "contained-native-cell-connected-suction-v2",
+          "decision_model_hash": "sha256:49e8cd5db960b520971e80a224b07bc39ce13198855d7c2b20de64c1e9cf352e",
+          "source_hash": "sha256:7c3b1387e42da1c59b1a13219bb59301ce8a14c9b318302e0e4ab681f8c5bef6",
+          "native_grid_shape": [
+            20,
+            19,
+            22
+          ],
+          "native_voxel_volume_mm3": 0.999999999999999,
+          "simulated_removed_target_mm3": 0.0,
+          "simulated_removed_normal_mm3": 0.0,
+          "modeled_residual_target_mm3": 5215.9999999999945,
+          "contacted_tissue_upper_bound_mm3": 0.0,
+          "contacted_but_not_removed_upper_bound_mm3": 0.0,
+          "removed_by_label_mm3": {
+            "1": 0.0
+          },
+          "tissue_support_provenance": "analytic z>=0 half-space; conservative positive-intersection source cells",
+          "removal_definition": "fully_contained_connected_native_cells; boundary partial volumes uncredited",
+          "completed_strokes": 0,
+          "clinical_deficit_probability": null
+        },
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "committed_history_hash": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "independent_audit": {
+        "status": "not_applicable_rejected_no_committed_history"
+      },
+      "timing_seconds": {
+        "grid_preparation": 0.0006030000513419509,
+        "static_bounds": 0.0005996249383315444,
+        "native_stroke": 0.02259837498422712,
+        "numerical_row_total": 0.024572000023908913
+      }
+    },
+    {
+      "row_id": "aligned-0.5mm",
+      "spacing_mm": 0.5,
+      "grid": {
+        "name": "aligned",
+        "rotation_xyz_degrees": [
+          0,
+          0,
+          0
+        ],
+        "phase_source_voxels": [
+          0,
+          0,
+          0
+        ]
+      },
+      "shape": [
+        21,
+        21,
+        31
+      ],
+      "affine": [
+        [
+          0.5,
+          0.0,
+          0.0,
+          -5.0
+        ],
+        [
+          0.0,
+          0.5,
+          0.0,
+          -5.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.5,
+          -6.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_hash": "sha256:2ba0a5e5e741f0eb8f45db8eac22969b9f2003e60e9caf2149f01bc256cc62aa",
+      "native_config_hash": "sha256:969fe0a56531c34bca4d1dfcd9bb78e5e42da04ef05feb1aff3ebb9656a78f9a",
+      "fixed_entry_mm": [
+        0.0,
+        0.0,
+        -2.0
+      ],
+      "fixed_tip_mm": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "fixed_tool": {
+        "tool_id": "native-fine-aspiration",
+        "tip_radius_mm": 1.25,
+        "shaft_radius_mm": 0.45,
+        "working_length_mm": 120.0,
+        "max_access_angle_deg": 35.0,
+        "tip_length_mm": 2.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "ideal_physical_active_sweep_mm3": 23.725569519297917,
+      "static_not_executable": {
+        "contained_cell_count": 86,
+        "contact_cell_count": 308,
+        "contained_source_cell_mm3": 10.750000000000002,
+        "contact_source_cell_upper_mm3": 38.50000000000001,
+        "contained_physical_lower_mm3": 10.187500000000002,
+        "contact_physical_upper_mm3": 36.68750000000001,
+        "physical_bracket_width_mm3": 26.500000000000007,
+        "cell_diameter_theoretical_lower_mm3": 1.971309197953662,
+        "cell_diameter_theoretical_upper_mm3": 76.11035821208496
+      },
+      "native": {
+        "feasible": true,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "failure_tip_mm": null,
+        "completed_microsteps": 97,
+        "removed_source_cell_mm3": 10.750000000000002,
+        "removed_physical_lower_mm3": 10.187500000000002,
+        "removed_outer_voxelization_excess_mm3": 0.5625,
+        "contacted_physical_upper_mm3": 36.68750000000001,
+        "partial_contact_physical_upper_mm3": 26.500000000000007,
+        "ideal_sweep_tissue_not_credited_removed_mm3": 13.538069519297915,
+        "partial_cells_kept_occupied": true,
+        "rejected_transaction_unchanged": false,
+        "metrics": {
+          "native_resection_version": "contained-native-cell-connected-suction-v2",
+          "decision_model_hash": "sha256:969fe0a56531c34bca4d1dfcd9bb78e5e42da04ef05feb1aff3ebb9656a78f9a",
+          "source_hash": "sha256:2ba0a5e5e741f0eb8f45db8eac22969b9f2003e60e9caf2149f01bc256cc62aa",
+          "native_grid_shape": [
+            21,
+            21,
+            31
+          ],
+          "native_voxel_volume_mm3": 0.12500000000000003,
+          "simulated_removed_target_mm3": 10.750000000000002,
+          "simulated_removed_normal_mm3": 0.0,
+          "modeled_residual_target_mm3": 1036.6250000000002,
+          "contacted_tissue_upper_bound_mm3": 38.50000000000001,
+          "contacted_but_not_removed_upper_bound_mm3": 27.750000000000007,
+          "removed_by_label_mm3": {
+            "1": 10.750000000000002
+          },
+          "tissue_support_provenance": "analytic z>=0 half-space; conservative positive-intersection source cells",
+          "removal_definition": "fully_contained_connected_native_cells; boundary partial volumes uncredited",
+          "completed_strokes": 1,
+          "clinical_deficit_probability": null
+        },
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "committed_history_hash": "sha256:b3b6115276bfdcd51a2795487637ea83c0692fab2f18253e404c7c12caa4cdfd"
+      },
+      "independent_audit": {
+        "status": "completed",
+        "seconds": 1.2011988749727607,
+        "certificate": {
+          "feasible": true,
+          "failures": [],
+          "first_failed_action": null,
+          "first_unsupported_source_voxel": null,
+          "first_unsupported_position_mm": null,
+          "claimed_source_tissue_volume_mm3": 10.750000000000002,
+          "contained_source_tissue_volume_mm3": 10.750000000000002,
+          "unsupported_source_tissue_volume_mm3": 0.0,
+          "source_case_hash": "sha256:2ba0a5e5e741f0eb8f45db8eac22969b9f2003e60e9caf2149f01bc256cc62aa",
+          "source_voxel_volume_mm3": 0.12500000000000003,
+          "action_count": 1,
+          "checker_version": "independent-native-sequence-v2",
+          "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+          "complete_tool_checked": true,
+          "frontier_checked": true
+        }
+      },
+      "timing_seconds": {
+        "grid_preparation": 0.0007750840159133077,
+        "static_bounds": 0.0013178749941289425,
+        "native_stroke": 0.12023116601631045,
+        "numerical_row_total": 0.12703358405269682
+      }
+    },
+    {
+      "row_id": "half_voxel_phase-0.5mm",
+      "spacing_mm": 0.5,
+      "grid": {
+        "name": "half_voxel_phase",
+        "rotation_xyz_degrees": [
+          0,
+          0,
+          0
+        ],
+        "phase_source_voxels": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "shape": [
+        22,
+        22,
+        32
+      ],
+      "affine": [
+        [
+          0.5,
+          0.0,
+          0.0,
+          -5.25
+        ],
+        [
+          0.0,
+          0.5,
+          0.0,
+          -5.25
+        ],
+        [
+          0.0,
+          0.0,
+          0.5,
+          -6.25
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_hash": "sha256:69d4c5a3243d9c483c4861b7bad12d1c4723db6d44acfe619149ed1d3c225be9",
+      "native_config_hash": "sha256:02d3d02983dcde835a91e4782b356bf0fb38ca20a890bbc4fa5a85f5cba46d2b",
+      "fixed_entry_mm": [
+        0.0,
+        0.0,
+        -2.0
+      ],
+      "fixed_tip_mm": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "fixed_tool": {
+        "tool_id": "native-fine-aspiration",
+        "tip_radius_mm": 1.25,
+        "shaft_radius_mm": 0.45,
+        "working_length_mm": 120.0,
+        "max_access_angle_deg": 35.0,
+        "tip_length_mm": 2.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "ideal_physical_active_sweep_mm3": 23.725569519297917,
+      "static_not_executable": {
+        "contained_cell_count": 112,
+        "contact_cell_count": 336,
+        "contained_source_cell_mm3": 14.000000000000004,
+        "contact_source_cell_upper_mm3": 42.00000000000001,
+        "contained_physical_lower_mm3": 14.000000000000004,
+        "contact_physical_upper_mm3": 42.00000000000001,
+        "physical_bracket_width_mm3": 28.000000000000004,
+        "cell_diameter_theoretical_lower_mm3": 1.971309197953662,
+        "cell_diameter_theoretical_upper_mm3": 76.11035821208496
+      },
+      "native": {
+        "feasible": true,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "failure_tip_mm": null,
+        "completed_microsteps": 97,
+        "removed_source_cell_mm3": 14.000000000000004,
+        "removed_physical_lower_mm3": 14.000000000000004,
+        "removed_outer_voxelization_excess_mm3": 0.0,
+        "contacted_physical_upper_mm3": 42.00000000000001,
+        "partial_contact_physical_upper_mm3": 28.000000000000004,
+        "ideal_sweep_tissue_not_credited_removed_mm3": 9.725569519297913,
+        "partial_cells_kept_occupied": true,
+        "rejected_transaction_unchanged": false,
+        "metrics": {
+          "native_resection_version": "contained-native-cell-connected-suction-v2",
+          "decision_model_hash": "sha256:02d3d02983dcde835a91e4782b356bf0fb38ca20a890bbc4fa5a85f5cba46d2b",
+          "source_hash": "sha256:69d4c5a3243d9c483c4861b7bad12d1c4723db6d44acfe619149ed1d3c225be9",
+          "native_grid_shape": [
+            22,
+            22,
+            32
+          ],
+          "native_voxel_volume_mm3": 0.12500000000000003,
+          "simulated_removed_target_mm3": 14.000000000000004,
+          "simulated_removed_normal_mm3": 0.0,
+          "modeled_residual_target_mm3": 1135.5000000000002,
+          "contacted_tissue_upper_bound_mm3": 42.00000000000001,
+          "contacted_but_not_removed_upper_bound_mm3": 28.000000000000007,
+          "removed_by_label_mm3": {
+            "1": 14.000000000000004
+          },
+          "tissue_support_provenance": "analytic z>=0 half-space; conservative positive-intersection source cells",
+          "removal_definition": "fully_contained_connected_native_cells; boundary partial volumes uncredited",
+          "completed_strokes": 1,
+          "clinical_deficit_probability": null
+        },
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "committed_history_hash": "sha256:80673c28c1167933938c1456d017659ffc8d8dd5176f55ce6a35db6119a06095"
+      },
+      "independent_audit": {
+        "status": "completed",
+        "seconds": 1.328552333987318,
+        "certificate": {
+          "feasible": true,
+          "failures": [],
+          "first_failed_action": null,
+          "first_unsupported_source_voxel": null,
+          "first_unsupported_position_mm": null,
+          "claimed_source_tissue_volume_mm3": 14.000000000000004,
+          "contained_source_tissue_volume_mm3": 14.000000000000004,
+          "unsupported_source_tissue_volume_mm3": 0.0,
+          "source_case_hash": "sha256:69d4c5a3243d9c483c4861b7bad12d1c4723db6d44acfe619149ed1d3c225be9",
+          "source_voxel_volume_mm3": 0.12500000000000003,
+          "action_count": 1,
+          "checker_version": "independent-native-sequence-v2",
+          "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+          "complete_tool_checked": true,
+          "frontier_checked": true
+        }
+      },
+      "timing_seconds": {
+        "grid_preparation": 0.0006673750467598438,
+        "static_bounds": 0.001271874993108213,
+        "native_stroke": 0.11346712510567158,
+        "numerical_row_total": 0.12018262501806021
+      }
+    },
+    {
+      "row_id": "tilted_20_degrees-0.5mm",
+      "spacing_mm": 0.5,
+      "grid": {
+        "name": "tilted_20_degrees",
+        "rotation_xyz_degrees": [
+          0,
+          20,
+          0
+        ],
+        "phase_source_voxels": [
+          0,
+          0,
+          0
+        ]
+      },
+      "shape": [
+        29,
+        21,
+        36
+      ],
+      "affine": [
+        [
+          0.46984631039295416,
+          0.0,
+          0.17101007166283433,
+          -9.612845730836828
+        ],
+        [
+          0.0,
+          0.49999999999999994,
+          0.0,
+          -4.999999999999999
+        ],
+        [
+          -0.17101007166283433,
+          0.0,
+          0.46984631039295416,
+          -4.482543580951797
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_hash": "sha256:2001d7451b3ae67c5fc76c4b86e72e275df1607f2e8e3197fdbe29ccb5c613c0",
+      "native_config_hash": "sha256:121839d3f4541875d2769475aef1638c80b7bd656c2dd2fb21bccfd722d81371",
+      "fixed_entry_mm": [
+        0.0,
+        0.0,
+        -2.0
+      ],
+      "fixed_tip_mm": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "fixed_tool": {
+        "tool_id": "native-fine-aspiration",
+        "tip_radius_mm": 1.25,
+        "shaft_radius_mm": 0.45,
+        "working_length_mm": 120.0,
+        "max_access_angle_deg": 35.0,
+        "tip_length_mm": 2.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "ideal_physical_active_sweep_mm3": 23.725569519297917,
+      "static_not_executable": {
+        "contained_cell_count": 88,
+        "contact_cell_count": 343,
+        "contained_source_cell_mm3": 10.999999999999998,
+        "contact_source_cell_upper_mm3": 42.87499999999999,
+        "contained_physical_lower_mm3": 10.062499999999998,
+        "contact_physical_upper_mm3": 40.56250000000001,
+        "physical_bracket_width_mm3": 30.500000000000007,
+        "cell_diameter_theoretical_lower_mm3": 1.971309197953662,
+        "cell_diameter_theoretical_upper_mm3": 76.11035821208496
+      },
+      "native": {
+        "feasible": false,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+        "failure_tip_mm": [
+          0.0,
+          0.0,
+          3.6875
+        ],
+        "completed_microsteps": 91,
+        "removed_source_cell_mm3": 0.0,
+        "removed_physical_lower_mm3": 0.0,
+        "removed_outer_voxelization_excess_mm3": 0.0,
+        "contacted_physical_upper_mm3": 0.0,
+        "partial_contact_physical_upper_mm3": 0.0,
+        "ideal_sweep_tissue_not_credited_removed_mm3": 23.725569519297917,
+        "partial_cells_kept_occupied": true,
+        "rejected_transaction_unchanged": true,
+        "metrics": {
+          "native_resection_version": "contained-native-cell-connected-suction-v2",
+          "decision_model_hash": "sha256:121839d3f4541875d2769475aef1638c80b7bd656c2dd2fb21bccfd722d81371",
+          "source_hash": "sha256:2001d7451b3ae67c5fc76c4b86e72e275df1607f2e8e3197fdbe29ccb5c613c0",
+          "native_grid_shape": [
+            29,
+            21,
+            36
+          ],
+          "native_voxel_volume_mm3": 0.12499999999999997,
+          "simulated_removed_target_mm3": 0.0,
+          "simulated_removed_normal_mm3": 0.0,
+          "modeled_residual_target_mm3": 1640.6249999999995,
+          "contacted_tissue_upper_bound_mm3": 0.0,
+          "contacted_but_not_removed_upper_bound_mm3": 0.0,
+          "removed_by_label_mm3": {
+            "1": 0.0
+          },
+          "tissue_support_provenance": "analytic z>=0 half-space; conservative positive-intersection source cells",
+          "removal_definition": "fully_contained_connected_native_cells; boundary partial volumes uncredited",
+          "completed_strokes": 0,
+          "clinical_deficit_probability": null
+        },
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "committed_history_hash": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "independent_audit": {
+        "status": "not_applicable_rejected_no_committed_history"
+      },
+      "timing_seconds": {
+        "grid_preparation": 0.000787292025052011,
+        "static_bounds": 0.0014128750190138817,
+        "native_stroke": 0.0961593750398606,
+        "numerical_row_total": 0.09961737506091595
+      }
+    },
+    {
+      "row_id": "oblique_fractional_phase-0.5mm",
+      "spacing_mm": 0.5,
+      "grid": {
+        "name": "oblique_fractional_phase",
+        "rotation_xyz_degrees": [
+          13,
+          -17,
+          23
+        ],
+        "phase_source_voxels": [
+          0.3333333333333333,
+          0.2,
+          0.14285714285714285
+        ]
+      },
+      "shape": [
+        34,
+        32,
+        38
+      ],
+      "affine": [
+        [
+          0.4401415846218127,
+          -0.22062884811414013,
+          -0.08716821018253865,
+          -2.248005778853155
+        ],
+        [
+          0.18682901823854814,
+          0.435607125902469,
+          -0.1591896661439135,
+          -6.849680138335548
+        ],
+        [
+          0.14618585236136836,
+          0.10756088156396865,
+          0.4658973635110656,
+          -11.269947117436024
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_hash": "sha256:605e7eaad40d8f0af30ce67428be13bd236d19a1c48441d6013d621a97226c39",
+      "native_config_hash": "sha256:a30b7c3322225d83392a4655769e66724a8ddbcd4390973c71c6ac157ce93b76",
+      "fixed_entry_mm": [
+        0.0,
+        0.0,
+        -2.0
+      ],
+      "fixed_tip_mm": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "fixed_tool": {
+        "tool_id": "native-fine-aspiration",
+        "tip_radius_mm": 1.25,
+        "shaft_radius_mm": 0.45,
+        "working_length_mm": 120.0,
+        "max_access_angle_deg": 35.0,
+        "tip_length_mm": 2.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "ideal_physical_active_sweep_mm3": 23.725569519297917,
+      "static_not_executable": {
+        "contained_cell_count": 96,
+        "contact_cell_count": 353,
+        "contained_source_cell_mm3": 11.999999999999986,
+        "contact_source_cell_upper_mm3": 44.12499999999995,
+        "contained_physical_lower_mm3": 11.121646005158583,
+        "contact_physical_upper_mm3": 41.33648739529433,
+        "physical_bracket_width_mm3": 30.214841390135746,
+        "cell_diameter_theoretical_lower_mm3": 1.971309197953662,
+        "cell_diameter_theoretical_upper_mm3": 76.11035821208496
+      },
+      "native": {
+        "feasible": false,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+        "failure_tip_mm": [
+          0.0,
+          0.0,
+          2.6875
+        ],
+        "completed_microsteps": 75,
+        "removed_source_cell_mm3": 0.0,
+        "removed_physical_lower_mm3": 0.0,
+        "removed_outer_voxelization_excess_mm3": 0.0,
+        "contacted_physical_upper_mm3": 0.0,
+        "partial_contact_physical_upper_mm3": 0.0,
+        "ideal_sweep_tissue_not_credited_removed_mm3": 23.725569519297917,
+        "partial_cells_kept_occupied": true,
+        "rejected_transaction_unchanged": true,
+        "metrics": {
+          "native_resection_version": "contained-native-cell-connected-suction-v2",
+          "decision_model_hash": "sha256:a30b7c3322225d83392a4655769e66724a8ddbcd4390973c71c6ac157ce93b76",
+          "source_hash": "sha256:605e7eaad40d8f0af30ce67428be13bd236d19a1c48441d6013d621a97226c39",
+          "native_grid_shape": [
+            34,
+            32,
+            38
+          ],
+          "native_voxel_volume_mm3": 0.12499999999999986,
+          "simulated_removed_target_mm3": 0.0,
+          "simulated_removed_normal_mm3": 0.0,
+          "modeled_residual_target_mm3": 3105.8749999999964,
+          "contacted_tissue_upper_bound_mm3": 0.0,
+          "contacted_but_not_removed_upper_bound_mm3": 0.0,
+          "removed_by_label_mm3": {
+            "1": 0.0
+          },
+          "tissue_support_provenance": "analytic z>=0 half-space; conservative positive-intersection source cells",
+          "removal_definition": "fully_contained_connected_native_cells; boundary partial volumes uncredited",
+          "completed_strokes": 0,
+          "clinical_deficit_probability": null
+        },
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "committed_history_hash": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "independent_audit": {
+        "status": "not_applicable_rejected_no_committed_history"
+      },
+      "timing_seconds": {
+        "grid_preparation": 0.0015916250413283706,
+        "static_bounds": 0.0016065000090748072,
+        "native_stroke": 0.09719683299772441,
+        "numerical_row_total": 0.1024108330020681
+      }
+    },
+    {
+      "row_id": "aligned-0.25mm",
+      "spacing_mm": 0.25,
+      "grid": {
+        "name": "aligned",
+        "rotation_xyz_degrees": [
+          0,
+          0,
+          0
+        ],
+        "phase_source_voxels": [
+          0,
+          0,
+          0
+        ]
+      },
+      "shape": [
+        37,
+        37,
+        57
+      ],
+      "affine": [
+        [
+          0.25,
+          0.0,
+          0.0,
+          -4.5
+        ],
+        [
+          0.0,
+          0.25,
+          0.0,
+          -4.5
+        ],
+        [
+          0.0,
+          0.0,
+          0.25,
+          -5.5
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_hash": "sha256:195ac8e15c7b808c63f37deacb45adb7a4f7e55ace9c56f960be309c6f13a245",
+      "native_config_hash": "sha256:dd304bf9638e69f2d9a92bdeac60eccdbe96886a1cbe6a17ecd8e7665ed71e9e",
+      "fixed_entry_mm": [
+        0.0,
+        0.0,
+        -2.0
+      ],
+      "fixed_tip_mm": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "fixed_tool": {
+        "tool_id": "native-fine-aspiration",
+        "tip_radius_mm": 1.25,
+        "shaft_radius_mm": 0.45,
+        "working_length_mm": 120.0,
+        "max_access_angle_deg": 35.0,
+        "tip_length_mm": 2.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "ideal_physical_active_sweep_mm3": 23.725569519297917,
+      "static_not_executable": {
+        "contained_cell_count": 1177,
+        "contact_cell_count": 2078,
+        "contained_source_cell_mm3": 18.390625000000007,
+        "contact_source_cell_upper_mm3": 32.468750000000014,
+        "contained_physical_lower_mm3": 17.914062500000007,
+        "contact_physical_upper_mm3": 31.679687500000014,
+        "physical_bracket_width_mm3": 13.765625000000007,
+        "cell_diameter_theoretical_lower_mm3": 9.529754381310243,
+        "cell_diameter_theoretical_upper_mm3": 45.57901674793801
+      },
+      "native": {
+        "feasible": true,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "failure_tip_mm": null,
+        "completed_microsteps": 97,
+        "removed_source_cell_mm3": 18.390625000000007,
+        "removed_physical_lower_mm3": 17.914062500000007,
+        "removed_outer_voxelization_excess_mm3": 0.4765625,
+        "contacted_physical_upper_mm3": 31.679687500000014,
+        "partial_contact_physical_upper_mm3": 13.765625000000007,
+        "ideal_sweep_tissue_not_credited_removed_mm3": 5.81150701929791,
+        "partial_cells_kept_occupied": true,
+        "rejected_transaction_unchanged": false,
+        "metrics": {
+          "native_resection_version": "contained-native-cell-connected-suction-v2",
+          "decision_model_hash": "sha256:dd304bf9638e69f2d9a92bdeac60eccdbe96886a1cbe6a17ecd8e7665ed71e9e",
+          "source_hash": "sha256:195ac8e15c7b808c63f37deacb45adb7a4f7e55ace9c56f960be309c6f13a245",
+          "native_grid_shape": [
+            37,
+            37,
+            57
+          ],
+          "native_voxel_volume_mm3": 0.015625000000000007,
+          "simulated_removed_target_mm3": 18.390625000000007,
+          "simulated_removed_normal_mm3": 0.0,
+          "modeled_residual_target_mm3": 730.2812500000003,
+          "contacted_tissue_upper_bound_mm3": 32.468750000000014,
+          "contacted_but_not_removed_upper_bound_mm3": 14.078125000000007,
+          "removed_by_label_mm3": {
+            "1": 18.390625000000007
+          },
+          "tissue_support_provenance": "analytic z>=0 half-space; conservative positive-intersection source cells",
+          "removal_definition": "fully_contained_connected_native_cells; boundary partial volumes uncredited",
+          "completed_strokes": 1,
+          "clinical_deficit_probability": null
+        },
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "committed_history_hash": "sha256:6eb2307afd590a7bdde8d1dd1f5d8989b5c73d8765d8bf3aeec4600d21851f0f"
+      },
+      "independent_audit": {
+        "status": "completed",
+        "seconds": 5.11709441698622,
+        "certificate": {
+          "feasible": true,
+          "failures": [],
+          "first_failed_action": null,
+          "first_unsupported_source_voxel": null,
+          "first_unsupported_position_mm": null,
+          "claimed_source_tissue_volume_mm3": 18.390625000000007,
+          "contained_source_tissue_volume_mm3": 18.390625000000007,
+          "unsupported_source_tissue_volume_mm3": 0.0,
+          "source_case_hash": "sha256:195ac8e15c7b808c63f37deacb45adb7a4f7e55ace9c56f960be309c6f13a245",
+          "source_voxel_volume_mm3": 0.015625000000000007,
+          "action_count": 1,
+          "checker_version": "independent-native-sequence-v2",
+          "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+          "complete_tool_checked": true,
+          "frontier_checked": true
+        }
+      },
+      "timing_seconds": {
+        "grid_preparation": 0.0013644580030813813,
+        "static_bounds": 0.0062060829950496554,
+        "native_stroke": 0.524434124934487,
+        "numerical_row_total": 0.5551706670084968
+      }
+    },
+    {
+      "row_id": "half_voxel_phase-0.25mm",
+      "spacing_mm": 0.25,
+      "grid": {
+        "name": "half_voxel_phase",
+        "rotation_xyz_degrees": [
+          0,
+          0,
+          0
+        ],
+        "phase_source_voxels": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "shape": [
+        38,
+        38,
+        58
+      ],
+      "affine": [
+        [
+          0.25,
+          0.0,
+          0.0,
+          -4.625
+        ],
+        [
+          0.0,
+          0.25,
+          0.0,
+          -4.625
+        ],
+        [
+          0.0,
+          0.0,
+          0.25,
+          -5.625
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_hash": "sha256:54e74c739a7efab8fe2e2566003e523d14e8f8cd8cb84ada60d2a099b536a69b",
+      "native_config_hash": "sha256:4e6a0c11c1af449e0b73c09621813994e31f8d6d43821821b3a26fe48941fb51",
+      "fixed_entry_mm": [
+        0.0,
+        0.0,
+        -2.0
+      ],
+      "fixed_tip_mm": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "fixed_tool": {
+        "tool_id": "native-fine-aspiration",
+        "tip_radius_mm": 1.25,
+        "shaft_radius_mm": 0.45,
+        "working_length_mm": 120.0,
+        "max_access_angle_deg": 35.0,
+        "tip_length_mm": 2.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "ideal_physical_active_sweep_mm3": 23.725569519297917,
+      "static_not_executable": {
+        "contained_cell_count": 984,
+        "contact_cell_count": 2060,
+        "contained_source_cell_mm3": 15.375000000000007,
+        "contact_source_cell_upper_mm3": 32.187500000000014,
+        "contained_physical_lower_mm3": 15.375000000000007,
+        "contact_physical_upper_mm3": 32.187500000000014,
+        "physical_bracket_width_mm3": 16.812500000000007,
+        "cell_diameter_theoretical_lower_mm3": 9.529754381310243,
+        "cell_diameter_theoretical_upper_mm3": 45.57901674793801
+      },
+      "native": {
+        "feasible": true,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "failure_tip_mm": null,
+        "completed_microsteps": 97,
+        "removed_source_cell_mm3": 15.375000000000007,
+        "removed_physical_lower_mm3": 15.375000000000007,
+        "removed_outer_voxelization_excess_mm3": 0.0,
+        "contacted_physical_upper_mm3": 32.187500000000014,
+        "partial_contact_physical_upper_mm3": 16.812500000000007,
+        "ideal_sweep_tissue_not_credited_removed_mm3": 8.35056951929791,
+        "partial_cells_kept_occupied": true,
+        "rejected_transaction_unchanged": false,
+        "metrics": {
+          "native_resection_version": "contained-native-cell-connected-suction-v2",
+          "decision_model_hash": "sha256:4e6a0c11c1af449e0b73c09621813994e31f8d6d43821821b3a26fe48941fb51",
+          "source_hash": "sha256:54e74c739a7efab8fe2e2566003e523d14e8f8cd8cb84ada60d2a099b536a69b",
+          "native_grid_shape": [
+            38,
+            38,
+            58
+          ],
+          "native_voxel_volume_mm3": 0.015625000000000007,
+          "simulated_removed_target_mm3": 15.375000000000007,
+          "simulated_removed_normal_mm3": 0.0,
+          "modeled_residual_target_mm3": 774.3125000000003,
+          "contacted_tissue_upper_bound_mm3": 32.187500000000014,
+          "contacted_but_not_removed_upper_bound_mm3": 16.812500000000007,
+          "removed_by_label_mm3": {
+            "1": 15.375000000000007
+          },
+          "tissue_support_provenance": "analytic z>=0 half-space; conservative positive-intersection source cells",
+          "removal_definition": "fully_contained_connected_native_cells; boundary partial volumes uncredited",
+          "completed_strokes": 1,
+          "clinical_deficit_probability": null
+        },
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "committed_history_hash": "sha256:91209617ee6f673e217791eaf6cfb27d54dc343aae6fa8ddba81a99b7082e737"
+      },
+      "independent_audit": {
+        "status": "completed",
+        "seconds": 4.238021875033155,
+        "certificate": {
+          "feasible": true,
+          "failures": [],
+          "first_failed_action": null,
+          "first_unsupported_source_voxel": null,
+          "first_unsupported_position_mm": null,
+          "claimed_source_tissue_volume_mm3": 15.375000000000007,
+          "contained_source_tissue_volume_mm3": 15.375000000000007,
+          "unsupported_source_tissue_volume_mm3": 0.0,
+          "source_case_hash": "sha256:54e74c739a7efab8fe2e2566003e523d14e8f8cd8cb84ada60d2a099b536a69b",
+          "source_voxel_volume_mm3": 0.015625000000000007,
+          "action_count": 1,
+          "checker_version": "independent-native-sequence-v2",
+          "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+          "complete_tool_checked": true,
+          "frontier_checked": true
+        }
+      },
+      "timing_seconds": {
+        "grid_preparation": 0.0018433750374242663,
+        "static_bounds": 0.006190541898831725,
+        "native_stroke": 0.4968494171043858,
+        "numerical_row_total": 0.5276269169989973
+      }
+    },
+    {
+      "row_id": "tilted_20_degrees-0.25mm",
+      "spacing_mm": 0.25,
+      "grid": {
+        "name": "tilted_20_degrees",
+        "rotation_xyz_degrees": [
+          0,
+          20,
+          0
+        ],
+        "phase_source_voxels": [
+          0,
+          0,
+          0
+        ]
+      },
+      "shape": [
+        53,
+        37,
+        66
+      ],
+      "affine": [
+        [
+          0.23492315519647708,
+          0.0,
+          0.08550503583141716,
+          -8.886484312949623
+        ],
+        [
+          0.0,
+          0.24999999999999997,
+          0.0,
+          -4.499999999999999
+        ],
+        [
+          -0.08550503583141716,
+          0.0,
+          0.23492315519647708,
+          -3.9487841870252005
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_hash": "sha256:60fed7d328d90b3432d893d1741e35b1feaed7ed3dd8fa14467a4eb0b6756672",
+      "native_config_hash": "sha256:4488ef81524f285db3d4be2b1d83a107aeff53832deb03490993e37013dbc382",
+      "fixed_entry_mm": [
+        0.0,
+        0.0,
+        -2.0
+      ],
+      "fixed_tip_mm": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "fixed_tool": {
+        "tool_id": "native-fine-aspiration",
+        "tip_radius_mm": 1.25,
+        "shaft_radius_mm": 0.45,
+        "working_length_mm": 120.0,
+        "max_access_angle_deg": 35.0,
+        "tip_length_mm": 2.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "ideal_physical_active_sweep_mm3": 23.725569519297917,
+      "static_not_executable": {
+        "contained_cell_count": 1129,
+        "contact_cell_count": 2125,
+        "contained_source_cell_mm3": 17.64062499999999,
+        "contact_source_cell_upper_mm3": 33.20312499999998,
+        "contained_physical_lower_mm3": 17.05468749999999,
+        "contact_physical_upper_mm3": 32.13281249999998,
+        "physical_bracket_width_mm3": 15.07812499999999,
+        "cell_diameter_theoretical_lower_mm3": 9.529754381310243,
+        "cell_diameter_theoretical_upper_mm3": 45.57901674793801
+      },
+      "native": {
+        "feasible": true,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "failure_tip_mm": null,
+        "completed_microsteps": 97,
+        "removed_source_cell_mm3": 17.64062499999999,
+        "removed_physical_lower_mm3": 17.05468749999999,
+        "removed_outer_voxelization_excess_mm3": 0.5859375,
+        "contacted_physical_upper_mm3": 32.13281249999998,
+        "partial_contact_physical_upper_mm3": 15.07812499999999,
+        "ideal_sweep_tissue_not_credited_removed_mm3": 6.6708820192979275,
+        "partial_cells_kept_occupied": true,
+        "rejected_transaction_unchanged": false,
+        "metrics": {
+          "native_resection_version": "contained-native-cell-connected-suction-v2",
+          "decision_model_hash": "sha256:4488ef81524f285db3d4be2b1d83a107aeff53832deb03490993e37013dbc382",
+          "source_hash": "sha256:60fed7d328d90b3432d893d1741e35b1feaed7ed3dd8fa14467a4eb0b6756672",
+          "native_grid_shape": [
+            53,
+            37,
+            66
+          ],
+          "native_voxel_volume_mm3": 0.015624999999999991,
+          "simulated_removed_target_mm3": 17.64062499999999,
+          "simulated_removed_normal_mm3": 0.0,
+          "modeled_residual_target_mm3": 1205.0937499999993,
+          "contacted_tissue_upper_bound_mm3": 33.20312499999998,
+          "contacted_but_not_removed_upper_bound_mm3": 15.562499999999991,
+          "removed_by_label_mm3": {
+            "1": 17.64062499999999
+          },
+          "tissue_support_provenance": "analytic z>=0 half-space; conservative positive-intersection source cells",
+          "removal_definition": "fully_contained_connected_native_cells; boundary partial volumes uncredited",
+          "completed_strokes": 1,
+          "clinical_deficit_probability": null
+        },
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "committed_history_hash": "sha256:03eb74f249d0fc34b6da629ac0f51235c5b11829617d66e9c5aa9ee64eaa78e3"
+      },
+      "independent_audit": {
+        "status": "completed",
+        "seconds": 9.045485750073567,
+        "certificate": {
+          "feasible": true,
+          "failures": [],
+          "first_failed_action": null,
+          "first_unsupported_source_voxel": null,
+          "first_unsupported_position_mm": null,
+          "claimed_source_tissue_volume_mm3": 17.64062499999999,
+          "contained_source_tissue_volume_mm3": 17.64062499999999,
+          "unsupported_source_tissue_volume_mm3": 0.0,
+          "source_case_hash": "sha256:60fed7d328d90b3432d893d1741e35b1feaed7ed3dd8fa14467a4eb0b6756672",
+          "source_voxel_volume_mm3": 0.015624999999999991,
+          "action_count": 1,
+          "checker_version": "independent-native-sequence-v2",
+          "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+          "complete_tool_checked": true,
+          "frontier_checked": true
+        }
+      },
+      "timing_seconds": {
+        "grid_preparation": 0.002094958908855915,
+        "static_bounds": 0.006286374991759658,
+        "native_stroke": 0.5573762920685112,
+        "numerical_row_total": 0.5909652089467272
+      }
+    },
+    {
+      "row_id": "oblique_fractional_phase-0.25mm",
+      "spacing_mm": 0.25,
+      "grid": {
+        "name": "oblique_fractional_phase",
+        "rotation_xyz_degrees": [
+          13,
+          -17,
+          23
+        ],
+        "phase_source_voxels": [
+          0.3333333333333333,
+          0.2,
+          0.14285714285714285
+        ]
+      },
+      "shape": [
+        62,
+        59,
+        70
+      ],
+      "affine": [
+        [
+          0.22007079231090634,
+          -0.11031442405707007,
+          -0.04358410509126932,
+          -1.9842423105399483
+        ],
+        [
+          0.09341450911927407,
+          0.2178035629512345,
+          -0.07959483307195675,
+          -6.435942176148949
+        ],
+        [
+          0.07309292618068418,
+          0.05378044078198432,
+          0.2329486817555328,
+          -10.31266019205463
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_hash": "sha256:91214c797718eef38a4827a8f03aafebcb1f98fefe1e4ff90afdc110f7a7ca9d",
+      "native_config_hash": "sha256:040d002c5302bf7117032c91ed0683f3ac23f7ef1a9332dd13bcf8f50ff52abd",
+      "fixed_entry_mm": [
+        0.0,
+        0.0,
+        -2.0
+      ],
+      "fixed_tip_mm": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "fixed_tool": {
+        "tool_id": "native-fine-aspiration",
+        "tip_radius_mm": 1.25,
+        "shaft_radius_mm": 0.45,
+        "working_length_mm": 120.0,
+        "max_access_angle_deg": 35.0,
+        "tip_length_mm": 2.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "ideal_physical_active_sweep_mm3": 23.725569519297917,
+      "static_not_executable": {
+        "contained_cell_count": 1113,
+        "contact_cell_count": 2115,
+        "contained_source_cell_mm3": 17.39062499999999,
+        "contact_source_cell_upper_mm3": 33.04687499999998,
+        "contained_physical_lower_mm3": 16.75697987032147,
+        "contact_physical_upper_mm3": 31.91501905610582,
+        "physical_bracket_width_mm3": 15.15803918578435,
+        "cell_diameter_theoretical_lower_mm3": 9.529754381310243,
+        "cell_diameter_theoretical_upper_mm3": 45.57901674793801
+      },
+      "native": {
+        "feasible": true,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "failure_tip_mm": null,
+        "completed_microsteps": 97,
+        "removed_source_cell_mm3": 17.39062499999999,
+        "removed_physical_lower_mm3": 16.75697987032147,
+        "removed_outer_voxelization_excess_mm3": 0.6336451296785199,
+        "contacted_physical_upper_mm3": 31.91501905610582,
+        "partial_contact_physical_upper_mm3": 15.15803918578435,
+        "ideal_sweep_tissue_not_credited_removed_mm3": 6.968589648976447,
+        "partial_cells_kept_occupied": true,
+        "rejected_transaction_unchanged": false,
+        "metrics": {
+          "native_resection_version": "contained-native-cell-connected-suction-v2",
+          "decision_model_hash": "sha256:040d002c5302bf7117032c91ed0683f3ac23f7ef1a9332dd13bcf8f50ff52abd",
+          "source_hash": "sha256:91214c797718eef38a4827a8f03aafebcb1f98fefe1e4ff90afdc110f7a7ca9d",
+          "native_grid_shape": [
+            62,
+            59,
+            70
+          ],
+          "native_voxel_volume_mm3": 0.015624999999999991,
+          "simulated_removed_target_mm3": 17.39062499999999,
+          "simulated_removed_normal_mm3": 0.0,
+          "modeled_residual_target_mm3": 2398.4374999999986,
+          "contacted_tissue_upper_bound_mm3": 33.04687499999998,
+          "contacted_but_not_removed_upper_bound_mm3": 15.656249999999991,
+          "removed_by_label_mm3": {
+            "1": 17.39062499999999
+          },
+          "tissue_support_provenance": "analytic z>=0 half-space; conservative positive-intersection source cells",
+          "removal_definition": "fully_contained_connected_native_cells; boundary partial volumes uncredited",
+          "completed_strokes": 1,
+          "clinical_deficit_probability": null
+        },
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "committed_history_hash": "sha256:6f2d71e9cd0f695eb04efde9234a52dfb3bba041aef8385d40a117975565a3ad"
+      },
+      "independent_audit": {
+        "status": "completed",
+        "seconds": 16.463291957974434,
+        "certificate": {
+          "feasible": true,
+          "failures": [],
+          "first_failed_action": null,
+          "first_unsupported_source_voxel": null,
+          "first_unsupported_position_mm": null,
+          "claimed_source_tissue_volume_mm3": 17.39062499999999,
+          "contained_source_tissue_volume_mm3": 17.39062499999999,
+          "unsupported_source_tissue_volume_mm3": 0.0,
+          "source_case_hash": "sha256:91214c797718eef38a4827a8f03aafebcb1f98fefe1e4ff90afdc110f7a7ca9d",
+          "source_voxel_volume_mm3": 0.015624999999999991,
+          "action_count": 1,
+          "checker_version": "independent-native-sequence-v2",
+          "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+          "complete_tool_checked": true,
+          "frontier_checked": true
+        }
+      },
+      "timing_seconds": {
+        "grid_preparation": 0.0034022920299321413,
+        "static_bounds": 0.006673417054116726,
+        "native_stroke": 0.7016255829948932,
+        "numerical_row_total": 0.7415877080056816
+      }
+    },
+    {
+      "row_id": "aligned-0.125mm",
+      "spacing_mm": 0.125,
+      "grid": {
+        "name": "aligned",
+        "rotation_xyz_degrees": [
+          0,
+          0,
+          0
+        ],
+        "phase_source_voxels": [
+          0,
+          0,
+          0
+        ]
+      },
+      "shape": [
+        69,
+        69,
+        109
+      ],
+      "affine": [
+        [
+          0.125,
+          0.0,
+          0.0,
+          -4.25
+        ],
+        [
+          0.0,
+          0.125,
+          0.0,
+          -4.25
+        ],
+        [
+          0.0,
+          0.0,
+          0.125,
+          -5.25
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_hash": "sha256:9fe2e7557ec1396f11a31b0ec93a1a3192cbb26b77fb8fb6bf15dac5b30229a8",
+      "native_config_hash": "sha256:8b1951a0c5cfefb51432dda44b4f22f1be84b29d4468b8241412cfb92bbb87a0",
+      "fixed_entry_mm": [
+        0.0,
+        0.0,
+        -2.0
+      ],
+      "fixed_tip_mm": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "fixed_tool": {
+        "tool_id": "native-fine-aspiration",
+        "tip_radius_mm": 1.25,
+        "shaft_radius_mm": 0.45,
+        "working_length_mm": 120.0,
+        "max_access_angle_deg": 35.0,
+        "tip_length_mm": 2.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "ideal_physical_active_sweep_mm3": 23.725569519297917,
+      "static_not_executable": {
+        "contained_cell_count": 10670,
+        "contact_cell_count": 14219,
+        "contained_source_cell_mm3": 20.839843750000018,
+        "contact_source_cell_upper_mm3": 27.771484375000025,
+        "contained_physical_lower_mm3": 20.569335937500018,
+        "contact_physical_upper_mm3": 27.422851562500025,
+        "physical_bracket_width_mm3": 6.853515625000007,
+        "cell_diameter_theoretical_lower_mm3": 15.734224320530082,
+        "cell_diameter_theoretical_upper_mm3": 33.63132273807846
+      },
+      "native": {
+        "feasible": true,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "failure_tip_mm": null,
+        "completed_microsteps": 97,
+        "removed_source_cell_mm3": 20.839843750000018,
+        "removed_physical_lower_mm3": 20.569335937500018,
+        "removed_outer_voxelization_excess_mm3": 0.2705078125,
+        "contacted_physical_upper_mm3": 27.422851562500025,
+        "partial_contact_physical_upper_mm3": 6.853515625000007,
+        "ideal_sweep_tissue_not_credited_removed_mm3": 3.156233581797899,
+        "partial_cells_kept_occupied": true,
+        "rejected_transaction_unchanged": false,
+        "metrics": {
+          "native_resection_version": "contained-native-cell-connected-suction-v2",
+          "decision_model_hash": "sha256:8b1951a0c5cfefb51432dda44b4f22f1be84b29d4468b8241412cfb92bbb87a0",
+          "source_hash": "sha256:9fe2e7557ec1396f11a31b0ec93a1a3192cbb26b77fb8fb6bf15dac5b30229a8",
+          "native_grid_shape": [
+            69,
+            69,
+            109
+          ],
+          "native_voxel_volume_mm3": 0.0019531250000000017,
+          "simulated_removed_target_mm3": 20.839843750000018,
+          "simulated_removed_normal_mm3": 0.0,
+          "modeled_residual_target_mm3": 602.1816406250006,
+          "contacted_tissue_upper_bound_mm3": 27.771484375000025,
+          "contacted_but_not_removed_upper_bound_mm3": 6.931640625000006,
+          "removed_by_label_mm3": {
+            "1": 20.839843750000018
+          },
+          "tissue_support_provenance": "analytic z>=0 half-space; conservative positive-intersection source cells",
+          "removal_definition": "fully_contained_connected_native_cells; boundary partial volumes uncredited",
+          "completed_strokes": 1,
+          "clinical_deficit_probability": null
+        },
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "committed_history_hash": "sha256:2287289e0002c8145fb126f3ec2d326a72daf939f54420d451b79cd4c1964bec"
+      },
+      "independent_audit": {
+        "status": "completed",
+        "seconds": 23.408963958034292,
+        "certificate": {
+          "feasible": true,
+          "failures": [],
+          "first_failed_action": null,
+          "first_unsupported_source_voxel": null,
+          "first_unsupported_position_mm": null,
+          "claimed_source_tissue_volume_mm3": 20.839843750000018,
+          "contained_source_tissue_volume_mm3": 20.839843750000018,
+          "unsupported_source_tissue_volume_mm3": 0.0,
+          "source_case_hash": "sha256:9fe2e7557ec1396f11a31b0ec93a1a3192cbb26b77fb8fb6bf15dac5b30229a8",
+          "source_voxel_volume_mm3": 0.0019531250000000017,
+          "action_count": 1,
+          "checker_version": "independent-native-sequence-v2",
+          "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+          "complete_tool_checked": true,
+          "frontier_checked": true
+        }
+      },
+      "timing_seconds": {
+        "grid_preparation": 0.007682124967686832,
+        "static_bounds": 0.04109312500804663,
+        "native_stroke": 3.2033771249698475,
+        "numerical_row_total": 3.401282624923624
+      }
+    },
+    {
+      "row_id": "half_voxel_phase-0.125mm",
+      "spacing_mm": 0.125,
+      "grid": {
+        "name": "half_voxel_phase",
+        "rotation_xyz_degrees": [
+          0,
+          0,
+          0
+        ],
+        "phase_source_voxels": [
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "shape": [
+        70,
+        70,
+        110
+      ],
+      "affine": [
+        [
+          0.125,
+          0.0,
+          0.0,
+          -4.3125
+        ],
+        [
+          0.0,
+          0.125,
+          0.0,
+          -4.3125
+        ],
+        [
+          0.0,
+          0.0,
+          0.125,
+          -5.3125
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_hash": "sha256:b9d726fc1ae9e3c0014ad507ef621ad70de4200eec7bf1192a81f184bfe84d40",
+      "native_config_hash": "sha256:d7ae3679a2d046fa7e449927da2943441b717f0f3de340512fec67260d919cd9",
+      "fixed_entry_mm": [
+        0.0,
+        0.0,
+        -2.0
+      ],
+      "fixed_tip_mm": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "fixed_tool": {
+        "tool_id": "native-fine-aspiration",
+        "tip_radius_mm": 1.25,
+        "shaft_radius_mm": 0.45,
+        "working_length_mm": 120.0,
+        "max_access_angle_deg": 35.0,
+        "tip_length_mm": 2.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "ideal_physical_active_sweep_mm3": 23.725569519297917,
+      "static_not_executable": {
+        "contained_cell_count": 10216,
+        "contact_cell_count": 14112,
+        "contained_source_cell_mm3": 19.953125000000018,
+        "contact_source_cell_upper_mm3": 27.562500000000025,
+        "contained_physical_lower_mm3": 19.953125000000018,
+        "contact_physical_upper_mm3": 27.562500000000025,
+        "physical_bracket_width_mm3": 7.609375000000007,
+        "cell_diameter_theoretical_lower_mm3": 15.734224320530082,
+        "cell_diameter_theoretical_upper_mm3": 33.63132273807846
+      },
+      "native": {
+        "feasible": true,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "failure_tip_mm": null,
+        "completed_microsteps": 97,
+        "removed_source_cell_mm3": 19.953125000000018,
+        "removed_physical_lower_mm3": 19.953125000000018,
+        "removed_outer_voxelization_excess_mm3": 0.0,
+        "contacted_physical_upper_mm3": 27.562500000000025,
+        "partial_contact_physical_upper_mm3": 7.609375000000007,
+        "ideal_sweep_tissue_not_credited_removed_mm3": 3.772444519297899,
+        "partial_cells_kept_occupied": true,
+        "rejected_transaction_unchanged": false,
+        "metrics": {
+          "native_resection_version": "contained-native-cell-connected-suction-v2",
+          "decision_model_hash": "sha256:d7ae3679a2d046fa7e449927da2943441b717f0f3de340512fec67260d919cd9",
+          "source_hash": "sha256:b9d726fc1ae9e3c0014ad507ef621ad70de4200eec7bf1192a81f184bfe84d40",
+          "native_grid_shape": [
+            70,
+            70,
+            110
+          ],
+          "native_voxel_volume_mm3": 0.0019531250000000017,
+          "simulated_removed_target_mm3": 19.953125000000018,
+          "simulated_removed_normal_mm3": 0.0,
+          "modeled_residual_target_mm3": 621.2578125000006,
+          "contacted_tissue_upper_bound_mm3": 27.562500000000025,
+          "contacted_but_not_removed_upper_bound_mm3": 7.609375000000007,
+          "removed_by_label_mm3": {
+            "1": 19.953125000000018
+          },
+          "tissue_support_provenance": "analytic z>=0 half-space; conservative positive-intersection source cells",
+          "removal_definition": "fully_contained_connected_native_cells; boundary partial volumes uncredited",
+          "completed_strokes": 1,
+          "clinical_deficit_probability": null
+        },
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "committed_history_hash": "sha256:027495ca5b61a0bb5eea3e18877db8572bf34347af4e32243004c86a46c6721a"
+      },
+      "independent_audit": {
+        "status": "completed",
+        "seconds": 20.28548479208257,
+        "certificate": {
+          "feasible": true,
+          "failures": [],
+          "first_failed_action": null,
+          "first_unsupported_source_voxel": null,
+          "first_unsupported_position_mm": null,
+          "claimed_source_tissue_volume_mm3": 19.953125000000018,
+          "contained_source_tissue_volume_mm3": 19.953125000000018,
+          "unsupported_source_tissue_volume_mm3": 0.0,
+          "source_case_hash": "sha256:b9d726fc1ae9e3c0014ad507ef621ad70de4200eec7bf1192a81f184bfe84d40",
+          "source_voxel_volume_mm3": 0.0019531250000000017,
+          "action_count": 1,
+          "checker_version": "independent-native-sequence-v2",
+          "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+          "complete_tool_checked": true,
+          "frontier_checked": true
+        }
+      },
+      "timing_seconds": {
+        "grid_preparation": 0.006765708094462752,
+        "static_bounds": 0.04240641696378589,
+        "native_stroke": 3.1892036669887602,
+        "numerical_row_total": 3.3837396670132875
+      }
+    },
+    {
+      "row_id": "tilted_20_degrees-0.125mm",
+      "spacing_mm": 0.125,
+      "grid": {
+        "name": "tilted_20_degrees",
+        "rotation_xyz_degrees": [
+          0,
+          20,
+          0
+        ],
+        "phase_source_voxels": [
+          0,
+          0,
+          0
+        ]
+      },
+      "shape": [
+        101,
+        69,
+        126
+      ],
+      "affine": [
+        [
+          0.11746157759823854,
+          0.0,
+          0.04275251791570858,
+          -8.523303604006019
+        ],
+        [
+          0.0,
+          0.12499999999999999,
+          0.0,
+          -4.249999999999999
+        ],
+        [
+          -0.04275251791570858,
+          0.0,
+          0.11746157759823854,
+          -3.6819044900619025
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_hash": "sha256:b632809a84dbaf1dec4b8e3b5c0ada712926c8dfcb79c3a31e27da33917fcb0f",
+      "native_config_hash": "sha256:5cf5a3f51eae01a5016604791cff4d89c12518339bf507624c1163daa24f4245",
+      "fixed_entry_mm": [
+        0.0,
+        0.0,
+        -2.0
+      ],
+      "fixed_tip_mm": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "fixed_tool": {
+        "tool_id": "native-fine-aspiration",
+        "tip_radius_mm": 1.25,
+        "shaft_radius_mm": 0.45,
+        "working_length_mm": 120.0,
+        "max_access_angle_deg": 35.0,
+        "tip_length_mm": 2.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "ideal_physical_active_sweep_mm3": 23.725569519297917,
+      "static_not_executable": {
+        "contained_cell_count": 10516,
+        "contact_cell_count": 14436,
+        "contained_source_cell_mm3": 20.539062499999986,
+        "contact_source_cell_upper_mm3": 28.19531249999998,
+        "contained_physical_lower_mm3": 20.198242187499986,
+        "contact_physical_upper_mm3": 27.750976562499975,
+        "physical_bracket_width_mm3": 7.552734374999989,
+        "cell_diameter_theoretical_lower_mm3": 15.734224320530082,
+        "cell_diameter_theoretical_upper_mm3": 33.63132273807846
+      },
+      "native": {
+        "feasible": true,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "failure_tip_mm": null,
+        "completed_microsteps": 97,
+        "removed_source_cell_mm3": 20.539062499999986,
+        "removed_physical_lower_mm3": 20.198242187499986,
+        "removed_outer_voxelization_excess_mm3": 0.3408203125,
+        "contacted_physical_upper_mm3": 27.750976562499975,
+        "partial_contact_physical_upper_mm3": 7.552734374999989,
+        "ideal_sweep_tissue_not_credited_removed_mm3": 3.527327331797931,
+        "partial_cells_kept_occupied": true,
+        "rejected_transaction_unchanged": false,
+        "metrics": {
+          "native_resection_version": "contained-native-cell-connected-suction-v2",
+          "decision_model_hash": "sha256:5cf5a3f51eae01a5016604791cff4d89c12518339bf507624c1163daa24f4245",
+          "source_hash": "sha256:b632809a84dbaf1dec4b8e3b5c0ada712926c8dfcb79c3a31e27da33917fcb0f",
+          "native_grid_shape": [
+            101,
+            69,
+            126
+          ],
+          "native_voxel_volume_mm3": 0.0019531249999999985,
+          "simulated_removed_target_mm3": 20.539062499999986,
+          "simulated_removed_normal_mm3": 0.0,
+          "modeled_residual_target_mm3": 1022.5468749999992,
+          "contacted_tissue_upper_bound_mm3": 28.19531249999998,
+          "contacted_but_not_removed_upper_bound_mm3": 7.656249999999994,
+          "removed_by_label_mm3": {
+            "1": 20.539062499999986
+          },
+          "tissue_support_provenance": "analytic z>=0 half-space; conservative positive-intersection source cells",
+          "removal_definition": "fully_contained_connected_native_cells; boundary partial volumes uncredited",
+          "completed_strokes": 1,
+          "clinical_deficit_probability": null
+        },
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "committed_history_hash": "sha256:e75a4f7a5d19240766fa0c19f97276a1b60f4733078aedee58e0eba90b40d8fa"
+      },
+      "independent_audit": {
+        "status": "completed",
+        "seconds": 43.43576341599692,
+        "certificate": {
+          "feasible": true,
+          "failures": [],
+          "first_failed_action": null,
+          "first_unsupported_source_voxel": null,
+          "first_unsupported_position_mm": null,
+          "claimed_source_tissue_volume_mm3": 20.539062499999986,
+          "contained_source_tissue_volume_mm3": 20.539062499999986,
+          "unsupported_source_tissue_volume_mm3": 0.0,
+          "source_case_hash": "sha256:b632809a84dbaf1dec4b8e3b5c0ada712926c8dfcb79c3a31e27da33917fcb0f",
+          "source_voxel_volume_mm3": 0.0019531249999999985,
+          "action_count": 1,
+          "checker_version": "independent-native-sequence-v2",
+          "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+          "complete_tool_checked": true,
+          "frontier_checked": true
+        }
+      },
+      "timing_seconds": {
+        "grid_preparation": 0.0117852499242872,
+        "static_bounds": 0.04112954100128263,
+        "native_stroke": 3.510507958009839,
+        "numerical_row_total": 3.728714916971512
+      }
+    },
+    {
+      "row_id": "oblique_fractional_phase-0.125mm",
+      "spacing_mm": 0.125,
+      "grid": {
+        "name": "oblique_fractional_phase",
+        "rotation_xyz_degrees": [
+          13,
+          -17,
+          23
+        ],
+        "phase_source_voxels": [
+          0.3333333333333333,
+          0.2,
+          0.14285714285714285
+        ]
+      },
+      "shape": [
+        117,
+        112,
+        135
+      ],
+      "affine": [
+        [
+          0.11003539615545317,
+          -0.05515721202853503,
+          -0.02179205254563466,
+          -1.8857257358662445
+        ],
+        [
+          0.046707254559637035,
+          0.10890178147561724,
+          -0.039797416535978375,
+          -6.080373997044051
+        ],
+        [
+          0.03654646309034209,
+          0.02689022039099216,
+          0.1164743408777664,
+          -9.923600849850704
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_hash": "sha256:66182f9701dd4a87ca8116268823dc89fb5fc91141c7ea4b5afa5cfb89e7d380",
+      "native_config_hash": "sha256:e7b7dc57e1bbb65c5dc51ddd68cae2713716eac33ad977e6abdd5831fe8d598c",
+      "fixed_entry_mm": [
+        0.0,
+        0.0,
+        -2.0
+      ],
+      "fixed_tip_mm": [
+        0.0,
+        0.0,
+        4.0
+      ],
+      "fixed_tool": {
+        "tool_id": "native-fine-aspiration",
+        "tip_radius_mm": 1.25,
+        "shaft_radius_mm": 0.45,
+        "working_length_mm": 120.0,
+        "max_access_angle_deg": 35.0,
+        "tip_length_mm": 2.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "ideal_physical_active_sweep_mm3": 23.725569519297917,
+      "static_not_executable": {
+        "contained_cell_count": 10474,
+        "contact_cell_count": 14440,
+        "contained_source_cell_mm3": 20.457031249999986,
+        "contact_source_cell_upper_mm3": 28.20312499999998,
+        "contained_physical_lower_mm3": 20.079637166368173,
+        "contact_physical_upper_mm3": 27.691710925428676,
+        "physical_bracket_width_mm3": 7.612073759060504,
+        "cell_diameter_theoretical_lower_mm3": 15.734224320530082,
+        "cell_diameter_theoretical_upper_mm3": 33.63132273807846
+      },
+      "native": {
+        "feasible": true,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "failure_tip_mm": null,
+        "completed_microsteps": 97,
+        "removed_source_cell_mm3": 20.457031249999986,
+        "removed_physical_lower_mm3": 20.079637166368173,
+        "removed_outer_voxelization_excess_mm3": 0.37739408363181326,
+        "contacted_physical_upper_mm3": 27.691710925428676,
+        "partial_contact_physical_upper_mm3": 7.612073759060504,
+        "ideal_sweep_tissue_not_credited_removed_mm3": 3.6459323529297443,
+        "partial_cells_kept_occupied": true,
+        "rejected_transaction_unchanged": false,
+        "metrics": {
+          "native_resection_version": "contained-native-cell-connected-suction-v2",
+          "decision_model_hash": "sha256:e7b7dc57e1bbb65c5dc51ddd68cae2713716eac33ad977e6abdd5831fe8d598c",
+          "source_hash": "sha256:66182f9701dd4a87ca8116268823dc89fb5fc91141c7ea4b5afa5cfb89e7d380",
+          "native_grid_shape": [
+            117,
+            112,
+            135
+          ],
+          "native_voxel_volume_mm3": 0.0019531249999999985,
+          "simulated_removed_target_mm3": 20.457031249999986,
+          "simulated_removed_normal_mm3": 0.0,
+          "modeled_residual_target_mm3": 2054.789062499998,
+          "contacted_tissue_upper_bound_mm3": 28.20312499999998,
+          "contacted_but_not_removed_upper_bound_mm3": 7.746093749999994,
+          "removed_by_label_mm3": {
+            "1": 20.457031249999986
+          },
+          "tissue_support_provenance": "analytic z>=0 half-space; conservative positive-intersection source cells",
+          "removal_definition": "fully_contained_connected_native_cells; boundary partial volumes uncredited",
+          "completed_strokes": 1,
+          "clinical_deficit_probability": null
+        },
+        "geometry_unknowns": [
+          "normal_tissue_exposure_unassessed",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "committed_history_hash": "sha256:fd186a9f91392db22da4106311d0651a77837decb7ecb326ce5a16d9e89ef732"
+      },
+      "independent_audit": {
+        "status": "cancelled_cap_reached",
+        "seconds": 26.95745645801071,
+        "certificate": {
+          "feasible": false,
+          "failures": [
+            "independent_validation_cancelled"
+          ],
+          "first_failed_action": "native-action-1",
+          "first_unsupported_source_voxel": null,
+          "first_unsupported_position_mm": null,
+          "claimed_source_tissue_volume_mm3": 13.88476562499999,
+          "contained_source_tissue_volume_mm3": 13.88476562499999,
+          "unsupported_source_tissue_volume_mm3": 0.0,
+          "source_case_hash": "sha256:66182f9701dd4a87ca8116268823dc89fb5fc91141c7ea4b5afa5cfb89e7d380",
+          "source_voxel_volume_mm3": 0.0019531249999999985,
+          "action_count": 1,
+          "checker_version": "independent-native-sequence-v2",
+          "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+          "complete_tool_checked": false,
+          "frontier_checked": false
+        }
+      },
+      "timing_seconds": {
+        "grid_preparation": 0.021747541963122785,
+        "static_bounds": 0.045165167073719203,
+        "native_stroke": 4.421749625005759,
+        "numerical_row_total": 4.68619545805268
+      }
+    }
+  ],
+  "human_patients": 0,
+  "training_updates": 0,
+  "anatomy_and_tool_fixed": true,
+  "independent_audit_scope": "Existing separate native-history checker; no certificate for rejected, cancelled or unaudited rows.",
+  "worker_seconds": 170.22876454191282,
+  "peak_worker_rss_bytes": 685096960,
+  "completed_rows": 16,
+  "source_unchanged": true
+}

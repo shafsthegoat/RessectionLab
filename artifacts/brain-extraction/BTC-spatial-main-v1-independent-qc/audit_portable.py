@@ -1,0 +1,160 @@
+"""Independently reopen four fixed main-only estimates; no model execution."""
+from datetime import datetime, timezone
+from hashlib import sha256
+from pathlib import Path
+from zipfile import ZipFile
+import gc
+import importlib
+import json
+import os
+import resource
+import sys
+import time
+
+ROOT = Path(__file__).resolve().parents[3]
+OUT = Path(__file__).resolve().parent
+FROZEN = ROOT / "build/btc-spatial-support-ea501a8/source/src"
+sys.path.insert(0, str(FROZEN))
+for variable in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS", "VECLIB_MAXIMUM_THREADS"):
+    os.environ[variable] = "1"
+import nibabel as nib
+import numpy as np
+from resectionlab.core import array_digest, thaw_json
+from resectionlab.imaging import load_case, read_case_artifacts, save_case
+from resectionlab.structural_evidence import (
+    declared_mri_support_allowed, planning_brain_support, structural_frame_hash, validate_explicit_support,
+)
+
+INTEGRATION = ROOT / "artifacts/brain-extraction/BTC-spatial-main-v1-integration/attempt-02/integration-record.json"
+INTEGRATION_SHA = "548681883bfaeceb97176a59497be9d1c975b46d634f2f37d8b2357d6c4ee68e"
+NUMERIC_SHA = "eb8e407a33c0395ea06c0c2b2aaebebcc1e3489d343e0859777783e14f5586e8"
+
+
+def digest(path):
+    with Path(path).open("rb") as handle:
+        result = sha256()
+        for block in iter(lambda: handle.read(1024 * 1024), b""):
+            result.update(block)
+    return result.hexdigest()
+
+
+def require(condition, reason):
+    if not condition:
+        raise ValueError(reason)
+
+
+def manifest(path):
+    with ZipFile(path) as archive:
+        return json.loads(archive.read("manifest.json"))
+
+
+def audit():
+    started = time.perf_counter()
+    modules = {}
+    for name in ("core", "imaging", "structural_evidence"):
+        path = Path(importlib.import_module("resectionlab." + name).__file__).resolve()
+        require(path.is_relative_to(FROZEN), "Mutable working package imported")
+        modules[name] = {"path": str(path), "sha256": digest(path)}
+    require(digest(INTEGRATION) == INTEGRATION_SHA, "Integration receipt changed")
+    require(digest(OUT / "independent-qc.json") == NUMERIC_SHA, "Independent numerical receipt changed")
+    integrated = json.loads(INTEGRATION.read_text())
+    numeric = json.loads((OUT / "independent-qc.json").read_text())
+    require([c["subject"] for c in integrated["cases"]] == ["sub-PAT22", "sub-PAT25", "sub-PAT26", "sub-PAT27"], "Wrong patient scope")
+    tracked = dict(integrated["original_source_and_inference_files_sha256"])
+    for relative, expected in tracked.items():
+        require(digest(ROOT / relative) == expected, "Changed retained input: " + relative)
+    declaration = json.loads((ROOT / "manifests/experiments/brain-extraction-btc-spatial-main-v1.json").read_text())
+    runtime = declaration["inference_runtime"]
+    require(digest(ROOT / runtime["interpreter"]) == runtime["interpreter_sha256_measured_at_declaration"], "Current inference interpreter hash differs")
+    results = []
+    for item, measured in zip(integrated["cases"], numeric["subjects"], strict=True):
+        subject = item["subject"]
+        require(subject == measured["subject"], "QC patient mismatch")
+        original_path, derived_path = ROOT / item["original_case"], ROOT / item["derived_case"]
+        require(digest(original_path) == item["original_case_sha256"], "Original case bytes changed")
+        require(digest(derived_path) == item["derived_case_sha256"], "Derived case bytes changed")
+        original, derived = load_case(original_path), load_case(derived_path)
+        before, after = manifest(original_path), manifest(derived_path)
+        changed_fields = {key for key in before.keys() | after.keys() if before.get(key) != after.get(key)}
+        require(changed_fields == {"revision", "case_semantic_hash", "array_sha256", "structural_evidence", "artifacts"}, "Unexpected manifest changes")
+        require(original.semantic_hash == item["original_semantic_hash"] and derived.semantic_hash == item["derived_semantic_hash"] != original.semantic_hash, "Case identity differs")
+        require(original.planning_hash == derived.planning_hash == item["planning_hash"], "Planning identity changed")
+        require(original.revision == 2 and derived.revision == 3, "Unexpected revision change")
+        require(original.brain_mask is derived.brain_mask is None and original.context is derived.context is None, "Working anatomy or context changed")
+        require(not original.structural_evidence and len(derived.structural_evidence) == 1, "Wrong proposal count")
+        require(thaw_json(original.metadata) == thaw_json(derived.metadata), "Source metadata changed")
+        require(derived.metadata["split"]["development_role"] == item["development_role"] == measured["development_role"], "Frozen role changed")
+        require(derived.metadata["split"]["patient_group"] == "BTC:" + subject, "Patient group changed")
+        require(derived.metadata["fractional_annotation"]["threshold"] == .5, "Reference threshold changed")
+        require(np.array_equal(original.mri, derived.mri) and np.array_equal(original.affine, derived.affine), "MRI or affine changed")
+        for key in ("compartments", "source_compartments"):
+            left, right = getattr(original, key), getattr(derived, key)
+            require(left.keys() == right.keys() and all(np.array_equal(left[k], right[k]) for k in left), "Source annotation changed")
+        require(not declared_mri_support_allowed(derived) and planning_brain_support(derived) == (None, {}), "Full-head/proposal became working support")
+        old_artifacts, artifacts = read_case_artifacts(original_path), read_case_artifacts(derived_path)
+        require({k: v for k, v in artifacts.items() if k != "structural_proposal_integration"} == old_artifacts, "Original portable artifacts changed")
+        portable = artifacts["structural_proposal_integration"]
+        report_path = ROOT / item["qc_report"]
+        report_bytes = report_path.read_bytes()
+        report = json.loads(report_bytes)
+        require(digest(report_path) == item["qc_report_sha256"] == portable["extraction_report_sha256"], "Report hash changed")
+        require(portable["extraction_report_utf8"].encode("utf-8") == report_bytes, "Embedded report bytes changed")
+        require(portable["mask_arrays_embedded"] is True and portable["predicted_distance_arrays_embedded"] is False, "Portability claim differs")
+        require(portable["selected_repetition"] == "only_declared_run" and portable["variant"] == "main", "Run selection changed")
+        require(portable["historical_PAT05_runtime_binary_equivalence_attested"] is False, "Historical binary attestation invented")
+        require(portable["brain_reviewed"] is False and portable["cortical_access_permitted"] is False and portable["clinical_deficit_probability"] is None, "Portable report promotes anatomy")
+        require(report["post_inference_QC_only"] is True and report["initial_inference_report_sha256"] == measured["original_report_sha256"], "Initial report provenance differs")
+        original_report = json.loads((ROOT / f"outputs/brain-extraction/BTC-spatial-main-v1/{subject}/brain_extraction_report.json").read_text())
+        require(report["variants"]["main"]["inference"] == original_report["variants"]["main"]["inference"], "Inference metadata altered in QC derivative")
+        external = portable["external_extraction_artifacts"]
+        require(len(external) == 2 and {e["artifact_kind"] for e in external} == {"source_mask", "predicted_signed_distance"}, "Incomplete external artifact inventory")
+        for entry in external:
+            require(digest(ROOT / entry["path"]) == entry["sha256"], "External artifact bytes changed")
+            require((ROOT / entry["path"]).stat().st_size == entry["bytes"], "External artifact size differs")
+            require(entry["variant"] == "main" and entry["embedded_as_original_file"] is False and entry["native_array_embedded_as_proposal"] is (entry["artifact_kind"] == "source_mask"), "External artifact claim differs")
+        evidence = next(iter(derived.structural_evidence.values()))
+        metadata = thaw_json(evidence.metadata)
+        mask_path = ROOT / f"outputs/brain-extraction/BTC-spatial-main-v1/{subject}/main_mask.nii.gz"
+        mask = np.asarray(nib.load(mask_path).dataobj, dtype=np.bool_)
+        require(np.array_equal(mask, evidence.mask) and not evidence.mask.flags.writeable, "Embedded estimate differs or is mutable")
+        require(evidence.provenance == "estimated" and evidence.review is None and evidence.review_status == "review_required" and not evidence.cortical_access_permitted, "Proposal review promoted")
+        require(evidence.evidence_hash == item["evidence_hash"] and evidence.source_image_hash == array_digest(original.mri) and evidence.source_frame_hash == structural_frame_hash(original), "Source frame/image binding differs")
+        require(evidence.source_file_sha256 == "sha256:" + measured["source_t1_sha256"] and evidence.model_sha256 == item["model_sha256"] and evidence.run_sha256 == "sha256:" + digest(report_path), "Model/run/source binding differs")
+        evidence.assert_matches(derived)
+        target = np.logical_or.reduce(list(derived.compartments.values()))
+        require(metadata["current_target_union_hash"] == array_digest(target), "Current target union binding differs")
+        require(metadata["current_target_voxels"] == int(target.sum()) == measured["measurements"]["source_annotation_voxels"], "Target count differs")
+        require(metadata["current_target_annotation_outside_voxels"] == int(np.count_nonzero(target & ~mask)) == 0, "Omission count differs")
+        require(metadata["source_qc"] == report["variants"]["main"]["qc"] and metadata["qc_flags"] == [], "Embedded QC differs")
+        require(metadata["mask_file_sha256"] == digest(mask_path) and metadata["report_source_uri"] == report_path.resolve().as_uri(), "Artifact URI/hash binding differs")
+        try:
+            validate_explicit_support(derived, evidence.mask, {})
+        except ValueError as exc:
+            require(str(exc).startswith("BRAIN_MASK_REVIEW_REQUIRED:"), "Unexpected support rejection")
+        else:
+            raise ValueError("Unreviewed estimate accepted as working support")
+        roundtrip = OUT / (subject + "-roundtrip.ressectionlab")
+        require(not roundtrip.exists(), "Refusing to replace previous independent roundtrip")
+        save_case(derived, roundtrip, artifacts=artifacts)
+        reopened = load_case(roundtrip)
+        require(reopened.semantic_hash == derived.semantic_hash and reopened.planning_hash == derived.planning_hash, "Reopen identity differs")
+        require(manifest(roundtrip) == after and read_case_artifacts(roundtrip) == artifacts, "Reopen manifest/artifacts differ")
+        require(reopened.brain_mask is None and np.array_equal(reopened.mri, derived.mri) and np.array_equal(reopened.affine, derived.affine), "Reopen source/working support differs")
+        reopened_evidence = next(iter(reopened.structural_evidence.values()))
+        require(reopened_evidence.to_manifest() == evidence.to_manifest() and np.array_equal(reopened_evidence.mask, evidence.mask), "Reopened evidence differs")
+        results.append({"subject": subject, "role": item["development_role"], "original_sha256": digest(original_path), "derived_sha256": digest(derived_path), "roundtrip_sha256": digest(roundtrip), "source_arrays_metadata_roles_unchanged": True, "original_revision": 2, "derived_revision": 3, "planning_hash": derived.planning_hash, "planning_hash_unchanged": True, "evidence_hash": evidence.evidence_hash, "embedded_report_sha256": digest(report_path), "native_mask_exact": True, "SDT_external_not_embedded": True, "omission_voxels": 0, "working_brain": None, "proposal_as_support_rejected": True, "review_required": True, "save_reopen_exact": True})
+        del original, derived, reopened, evidence, reopened_evidence, mask, target, left, right
+        gc.collect()
+    for relative, expected in tracked.items():
+        require(digest(ROOT / relative) == expected, "Retained input mutated during audit")
+    for info in modules.values():
+        require(digest(info["path"]) == info["sha256"], "Frozen package changed during audit")
+    return {"schema_version": 1, "status": "independent_portable_engineering_checks_passed", "completed_at": datetime.now(timezone.utc).isoformat(), "auditor_sha256": digest(__file__), "numeric_audit_sha256": NUMERIC_SHA, "integration_receipt_sha256": INTEGRATION_SHA, "project_modules": modules, "current_inference_interpreter_sha256_verified": runtime["interpreter_sha256_measured_at_declaration"], "historical_PAT05_runtime_binary_equivalence_attested": False, "cases": results, "all_retained_inputs_unchanged": True, "retained_input_count": len(tracked), "elapsed_seconds": time.perf_counter() - started, "peak_rss_bytes": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss, "inference_or_training_performed": False, "brain_reviewed": False, "cortex_localized": False, "cortical_access_permitted": False, "limitations": ["Engineering portability and overlap checks do not establish anatomical accuracy.", "Estimated masks/report text are embedded; raw fractional annotations and predicted SDTs remain external hashed artifacts.", "SELECT roles remain fixed; no variant, threshold, access or rescue selection was based on labels."]}
+
+
+if __name__ == "__main__":
+    destination = OUT / "portable-qc.json"
+    require(not destination.exists(), "Refusing to overwrite audit receipt")
+    result = audit()
+    destination.write_text(json.dumps(result, indent=2, allow_nan=False) + "\n")
+    print(json.dumps({"report": str(destination), "sha256": digest(destination), "elapsed_seconds": result["elapsed_seconds"], "peak_rss_MiB": result["peak_rss_bytes"] / 2**20}))

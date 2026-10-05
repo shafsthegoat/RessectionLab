@@ -1,0 +1,168 @@
+{
+  "augmented_minus_control_return": 51.4001706390479,
+  "augmented_unique_states": 5,
+  "checker_sha256": "9daac927c24798d7f7bd89866228544a2287f78093a202478c344e6ee96a724c",
+  "checkpoint_tensors_loaded": false,
+  "collected_behavior_history_and_observations_match_BC8": true,
+  "collection_reported_policy_and_state_hashes_unchanged": true,
+  "completed_episodes_checked": 4,
+  "control_unique_states": 3,
+  "episodes": [
+    {
+      "episode": "original_teacher",
+      "normal_mm3": 412.0014351004204,
+      "passed": true,
+      "per_action": [
+        {
+          "normal_mm3": 121.00041798998382,
+          "reward": 150.70352651746774,
+          "target_mm3": 175.0006103515625
+        },
+        {
+          "normal_mm3": 139.00048944752064,
+          "reward": 132.10545119785317,
+          "target_mm3": 160.00054931640625
+        },
+        {
+          "normal_mm3": 152.00052766291594,
+          "reward": 127.50344354772707,
+          "target_mm3": 158.00054931640625
+        }
+      ],
+      "removed_cells": 905,
+      "retained_contacted_cells": 1014,
+      "reward": 410.312421263048,
+      "target_fraction": 0.04310570921044444,
+      "target_mm3": 493.001708984375
+    },
+    {
+      "episode": "visited_collection",
+      "normal_mm3": 164.0005756879736,
+      "passed": true,
+      "per_action": [
+        {
+          "normal_mm3": 128.00045061940716,
+          "reward": 147.30350473279464,
+          "target_mm3": 173.00059509277344
+        },
+        {
+          "normal_mm3": 18.000062534283224,
+          "reward": -3.7010127570507723,
+          "target_mm3": 0.0
+        },
+        {
+          "normal_mm3": 18.000062534283224,
+          "reward": -3.705012771147555,
+          "target_mm3": 0.0
+        }
+      ],
+      "removed_cells": 337,
+      "retained_contacted_cells": 633,
+      "reward": 139.89747920459632,
+      "target_fraction": 0.015126343802470028,
+      "target_mm3": 173.00059509277344
+    },
+    {
+      "episode": "control_latest",
+      "normal_mm3": 233.00080362114934,
+      "passed": true,
+      "per_action": [
+        {
+          "normal_mm3": 129.00044367115345,
+          "reward": 144.1035061224445,
+          "target_mm3": 170.00059509277344
+        },
+        {
+          "normal_mm3": 86.00029741571268,
+          "reward": 98.70334463867027,
+          "target_mm3": 116.00040435791016
+        },
+        {
+          "normal_mm3": 18.000062534283224,
+          "reward": -3.7010127570507723,
+          "target_mm3": 0.0
+        }
+      ],
+      "removed_cells": 519,
+      "retained_contacted_cells": 747,
+      "reward": 239.105838004064,
+      "target_fraction": 0.02500655817525447,
+      "target_mm3": 286.0009994506836
+    },
+    {
+      "episode": "augmented_latest",
+      "normal_mm3": 271.00094224719555,
+      "passed": true,
+      "per_action": [
+        {
+          "normal_mm3": 129.00044367115345,
+          "reward": 144.1035061224445,
+          "target_mm3": 170.00059509277344
+        },
+        {
+          "normal_mm3": 94.00032950084042,
+          "reward": 118.10340688619483,
+          "target_mm3": 137.00047302246094
+        },
+        {
+          "normal_mm3": 48.00016907520171,
+          "reward": 28.29909563447256,
+          "target_mm3": 38.00012969970703
+        }
+      ],
+      "removed_cells": 616,
+      "retained_contacted_cells": 816,
+      "reward": 290.5060086431119,
+      "target_fraction": 0.030165253059472086,
+      "target_mm3": 345.0011978149414
+    }
+  ],
+  "examples_per_update": 6,
+  "input_sha256": {
+    "pat05-real-geometric-imitation-v1/declaration-input.json": "a9c91b5beb5c2ca0c4e08d9cfa255f5ac17bd61ee83786cd07212561c2ac9441",
+    "pat05-real-geometric-imitation-v1/latest.pt": "edaed574895e867c43084ee051e6d4323a2331114ed02ccfd91423b05633d672",
+    "pat05-real-geometric-imitation-v1/latest_policy.json": "12d19c410c12522bc08eb7fa8335eac6990a235747b84984c9787f443f7fb464",
+    "pat05-real-geometric-imitation-v1/output-sha256.json": "803388c3215c98aa03bee2d3b6847a6075c40df64fcfa7696a23699709e06d2f",
+    "pat05-real-geometric-imitation-v1/receipt.json": "31d9598d684322d55e94f0e354ba9e0f10a4595d97d1d0a12f7911cf4eaae66c",
+    "pat05-real-geometric-learning-v1/declaration-input.json": "d69c9b6cf1f0f329d698c3857bca13efaa4a4a9a7b424208711affd4ac8480f4",
+    "pat05-real-geometric-learning-v1/greedy_search.json": "303261a362fda633b9459ed11001324fa77064d4b4f4955a218c52724e02b4d5",
+    "pat05-real-visited-imitation-v1/augmented_latest.json": "7bd8d2091f25c1fe601eb847276a0c4586e2041c8a892f4a809d50403d09b206",
+    "pat05-real-visited-imitation-v1/augmented_latest.pt": "7019ded14f17e5a9a88fde089c8e357b6edae65004f495bcfaeb34171b7101bc",
+    "pat05-real-visited-imitation-v1/control_latest.json": "3f9b0c42412de6e4344387cb5bd3a19e38deb0a17d8c8397a45a22c96101f74f",
+    "pat05-real-visited-imitation-v1/control_latest.pt": "26eb18421a330c273b9cf82e932d3f0cd7f92ff5fd875e0050c407f40dbb5f20",
+    "pat05-real-visited-imitation-v1/declaration-input.json": "8f2bfdad4f383ed81a112744784b5e661408b8c768d0a95d9c10fd75da458830",
+    "pat05-real-visited-imitation-v1/original_teacher.json": "d99130ef1f5bb81880f4303b969b95caff8a7a3ebeac946114941bbda305032f",
+    "pat05-real-visited-imitation-v1/output-sha256.json": "2d94efcde415526310ed483ab0e066ff16bd979485e3442971c13a16296bd56e",
+    "pat05-real-visited-imitation-v1/receipt.json": "8eb84cafbda7521573dea17bb4b14629583184af232a325006d8bf6a0f00b338",
+    "pat05-real-visited-imitation-v1/visited_collection.json": "b894461bdb8f5a538ee10dae4de4df09cdf292dc2f42e95a965fbf6cb763cbf2"
+  },
+  "interpretation": "One matched deterministic same-patient imitation comparison favors visited-state augmentation under the frozen reward. More target and more normal tissue are removed; no reduced clinical harm, RL improvement, mechanics validity or patient generalization is established.",
+  "model_update_hash_chains_verified": true,
+  "native_geometry_rerun": false,
+  "nominal_legal_score_max_labels_verified": true,
+  "patient_arrays_opened": false,
+  "same_reported_initial_model_and_Adam_hashes": true,
+  "status": "passed",
+  "teacher_labels": [
+    {
+      "label_action_id": "nominal-cavity-417f590381bc98e52ed7bc77",
+      "legal_action_count": 71,
+      "observation_hash": "sha256:645770594d7988980781df8324fb76ed347f47ff8d7452ca7d032d31efc93f90",
+      "selected_nominal_reward": 150.70352651746774
+    },
+    {
+      "label_action_id": "nominal-cavity-3ec2ced9b5fde465f8995ee8",
+      "legal_action_count": 63,
+      "observation_hash": "sha256:31ae06d45fb639f5c083f61f72e6dfdddb5f504ea4c27b94e02345dbbdb91364",
+      "selected_nominal_reward": 132.10545119785317
+    },
+    {
+      "label_action_id": "nominal-cavity-cf32827a3dab1b2b7d73dbdb",
+      "legal_action_count": 63,
+      "observation_hash": "sha256:c7143a9483080d14a7485eacf3ba30eb1f5e37ac01248c147e7a4ce215dbdf26",
+      "selected_nominal_reward": 132.10545119785317
+    }
+  ],
+  "training_forward_calls_per_branch": 48,
+  "updates_per_branch": 8
+}

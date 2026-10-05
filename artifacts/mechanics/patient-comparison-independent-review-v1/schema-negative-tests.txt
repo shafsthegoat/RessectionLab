@@ -1,0 +1,36 @@
+..FF...........                                                          [100%]
+=================================== FAILURES ===================================
+_ test_external_field_refuses_undeclared_later_input_or_interpolation_setting[extra0] _
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-449/test_external_field_refuses_un0')
+extra = {'during_image_path': 'unopened-later-image.nii.gz'}
+
+    @pytest.mark.parametrize('extra', [
+        {'during_image_path': 'unopened-later-image.nii.gz'},
+        {'interpolation_exponent': 9},
+    ])
+    def test_external_field_refuses_undeclared_later_input_or_interpolation_setting(tmp_path, extra):
+>       with pytest.raises(ValueError, match='(?i)field|schema|key|unexpected'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_mechanics_patient_comparison_review.py:125: Failed
+_ test_external_field_refuses_undeclared_later_input_or_interpolation_setting[extra1] _
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-449/test_external_field_refuses_un1')
+extra = {'interpolation_exponent': 9}
+
+    @pytest.mark.parametrize('extra', [
+        {'during_image_path': 'unopened-later-image.nii.gz'},
+        {'interpolation_exponent': 9},
+    ])
+    def test_external_field_refuses_undeclared_later_input_or_interpolation_setting(tmp_path, extra):
+>       with pytest.raises(ValueError, match='(?i)field|schema|key|unexpected'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_mechanics_patient_comparison_review.py:125: Failed
+=========================== short test summary info ============================
+FAILED tests/test_mechanics_patient_comparison_review.py::test_external_field_refuses_undeclared_later_input_or_interpolation_setting[extra0]
+FAILED tests/test_mechanics_patient_comparison_review.py::test_external_field_refuses_undeclared_later_input_or_interpolation_setting[extra1]
+2 failed, 13 passed in 0.22s

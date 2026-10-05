@@ -1,0 +1,1533 @@
+{
+  "checkpoint_file_sha256": "08d3ca82fb0f2c39b3b55ed2809e2a9b2ba5d625d8d3afb1eddba21474a8edb1",
+  "initialization_scope": "validation_copy_and_frozen_load_once_per_comparison",
+  "initialization_seconds": 1.0029022919479758,
+  "offline_pretraining": {
+    "elapsed_seconds": 29.990159083972685,
+    "elapsed_seconds_scope": "optimization and selection including initial selection; initialization and preparation separately measured",
+    "gradient_steps": 32,
+    "initialization_seconds": 0.8963491250760853,
+    "optimization_environment_steps": 169,
+    "postprocessing_seconds_before_export": 0.0054019170347601175,
+    "preparation_seconds": 0.3132845829240978,
+    "selection_environment_steps": 188,
+    "total_offline_seconds_before_checkpoint_write": 31.20803029090166
+  },
+  "policy_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57",
+  "provenance": {
+    "actor_parameters_changed": true,
+    "checkpoint_rule": "fixed_budget_latest",
+    "clinical_population_training": false,
+    "declaration_hash": "sha256:3abf10162ed9d096a7e21ec84a87c1a88ebf12bb074345a78040dfdebb828ac9",
+    "excluded_targets": [
+      {
+        "aliases": [
+          "UCSF-PDGM:UCSF-PDGM-004",
+          "BraTS2021:BraTS2021_00097"
+        ],
+        "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "excluded_from_pretraining": true,
+        "group_id": "UCSF-PDGM:UCSF-PDGM-0004",
+        "outer_split": "development",
+        "planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+        "source_kind": "public_patient_structural_mirror"
+      }
+    ],
+    "final_worlds_used": false,
+    "gradient_episode_sources": {
+      "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89": 32,
+      "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c": 32
+    },
+    "human_patients_in_pretraining": 0,
+    "initial_policy_hash": "sha256:6acfac0b0f8565437d2d85384df3e1b2815438109b63636cf0ea2515d6c6b008",
+    "members": [
+      {
+        "aliases": [
+          "procedural_generator:native-slab-v1"
+        ],
+        "decision_model_hash": "sha256:c81e119adde1daa22f8515f16ae821ab495ab0b658df86185d65820e07b0d5d5",
+        "family_id": "procedural:native-slab-v1",
+        "generator_manifest": {
+          "aliases": [
+            "procedural_generator:native-slab-v1"
+          ],
+          "case_id": "synthetic_native_procedural_slab_v1",
+          "construction_check": {
+            "action_feature_shape": [
+              5,
+              15
+            ],
+            "gradient_steps": 0,
+            "legal_nonstop_count": 4,
+            "rejection_counts": {},
+            "source_and_model_hashes_reproduced": true,
+            "state_feature_shape": [
+              6
+            ],
+            "transitions_executed": 0
+          },
+          "construction_only": true,
+          "group_id": "procedural:native-slab-v1",
+          "initial_action_ids": [
+            "STOP",
+            "NATIVE:native-fine-aspiration:0",
+            "NATIVE:native-wide-aspiration:0",
+            "NATIVE:native-fine-aspiration:1",
+            "NATIVE:native-wide-aspiration:1"
+          ],
+          "initial_legal_nonstop": 4,
+          "initial_nonstop_action_ids": [
+            "NATIVE:native-fine-aspiration:0",
+            "NATIVE:native-wide-aspiration:0",
+            "NATIVE:native-fine-aspiration:1",
+            "NATIVE:native-wide-aspiration:1"
+          ],
+          "initial_rejection_counts": {},
+          "model_hash": "sha256:c81e119adde1daa22f8515f16ae821ab495ab0b658df86185d65820e07b0d5d5",
+          "native_config_hash": "sha256:f041c131728710b7da1505db940865608b6ca98b4ae4b654211e183b3cdc97fd",
+          "recipe": {
+            "access": {
+              "center_mm": [
+                4.0,
+                4.0,
+                -0.5
+              ],
+              "normal_inward": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "radius_mm": 4.0,
+              "window_id": "hypothetical"
+            },
+            "affine": [
+              [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "candidate_entries_mm": [
+              [
+                3.0,
+                4.0,
+                -0.5
+              ],
+              [
+                5.0,
+                4.0,
+                -0.5
+              ]
+            ],
+            "candidate_targets_mm": [
+              [
+                3.0,
+                4.0,
+                6.0
+              ],
+              [
+                5.0,
+                4.0,
+                6.0
+              ]
+            ],
+            "case_id": "synthetic_native_procedural_slab_v1",
+            "family_id": "procedural:native-slab-v1",
+            "language_evidence": null,
+            "max_actions": 7,
+            "max_steps": 3,
+            "motor_evidence": null,
+            "partial_contact_weight": 0.05,
+            "shape": [
+              9,
+              9,
+              8
+            ],
+            "source_kind": "procedural_native",
+            "target_boxes_half_open": [
+              [
+                [
+                  2,
+                  7
+                ],
+                [
+                  2,
+                  7
+                ],
+                [
+                  4,
+                  8
+                ]
+              ]
+            ],
+            "target_label": 1,
+            "tissue": "all_true",
+            "tools": [
+              {
+                "max_access_angle_deg": 35.0,
+                "parameter_source": "generic research geometry; not a verified commercial device",
+                "shaft_radius_mm": 0.45,
+                "tip_length_mm": 2.0,
+                "tip_radius_mm": 1.25,
+                "tool_id": "native-fine-aspiration",
+                "working_length_mm": 120.0
+              },
+              {
+                "max_access_angle_deg": 35.0,
+                "parameter_source": "generic research geometry; not a verified commercial device",
+                "shaft_radius_mm": 1.1,
+                "tip_length_mm": 3.0,
+                "tip_radius_mm": 2.25,
+                "tool_id": "native-wide-aspiration",
+                "working_length_mm": 120.0
+              }
+            ],
+            "version": "native-procedural-families-v1"
+          },
+          "source_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+          "target_voxels": 100,
+          "tissue_support_provenance": "procedural solid cube; exact generating mask",
+          "training_gradient_steps": 0,
+          "world_partitions": {
+            "final_evaluation": {
+              "case_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+              "generator": {
+                "family": "rigid_gaussian",
+                "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+                "rotation_center_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation_scale_deg": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "translation_scale_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "version": "rigid-registration-v1"
+              },
+              "interpretation": "deterministic_optimization",
+              "planning_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+              "role": "final_evaluation",
+              "seeds": [
+                2876800108607767037,
+                9197612259568361627,
+                9562622899901630680
+              ]
+            },
+            "optimization": {
+              "case_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+              "generator": {
+                "family": "rigid_gaussian",
+                "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+                "rotation_center_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation_scale_deg": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "translation_scale_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "version": "rigid-registration-v1"
+              },
+              "interpretation": "deterministic_optimization",
+              "planning_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+              "role": "optimization",
+              "seeds": [
+                11103855882051260355,
+                11243981505934875939,
+                6936170738492634982
+              ]
+            },
+            "selection": {
+              "case_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+              "generator": {
+                "family": "rigid_gaussian",
+                "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+                "rotation_center_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation_scale_deg": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "translation_scale_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "version": "rigid-registration-v1"
+              },
+              "interpretation": "deterministic_optimization",
+              "planning_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+              "role": "selection",
+              "seeds": [
+                1943417729305584125,
+                9073826545075957572
+              ]
+            },
+            "stress": {
+              "case_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+              "generator": {
+                "family": "rigid_uniform",
+                "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+                "rotation_center_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation_scale_deg": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "translation_scale_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "version": "rigid-registration-v1"
+              },
+              "interpretation": "deterministic_optimization",
+              "planning_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+              "role": "stress",
+              "seeds": [
+                17462187812550523012,
+                1659979217699667971
+              ]
+            }
+          }
+        },
+        "partitions": {
+          "optimization": {
+            "case_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "generator": {
+              "family": "rigid_gaussian",
+              "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+              "rotation_center_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rotation_scale_deg": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "translation_scale_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "version": "rigid-registration-v1"
+            },
+            "partition_hash": "sha256:734aa165f9934f7facdda33914b20d6c8492bed964bcf03fe3aafb2231e8fa82",
+            "planning_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "role": "optimization",
+            "seeds": [
+              11103855882051260355,
+              11243981505934875939,
+              6936170738492634982
+            ]
+          },
+          "selection": {
+            "case_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "generator": {
+              "family": "rigid_gaussian",
+              "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+              "rotation_center_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rotation_scale_deg": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "translation_scale_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "version": "rigid-registration-v1"
+            },
+            "partition_hash": "sha256:2c0578167f503390a34e2835d792b8d93e0a959060d189447fc5c0cf03787e02",
+            "planning_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "role": "selection",
+            "seeds": [
+              1943417729305584125,
+              9073826545075957572
+            ]
+          }
+        }
+      },
+      {
+        "aliases": [
+          "procedural_generator:native-split_lobes-v1"
+        ],
+        "decision_model_hash": "sha256:73cce7f2cca5f4899cb646965e8b26184db31a7d2d1783fdf6ca563aa55e7188",
+        "family_id": "procedural:native-split_lobes-v1",
+        "generator_manifest": {
+          "aliases": [
+            "procedural_generator:native-split_lobes-v1"
+          ],
+          "case_id": "synthetic_native_procedural_split_lobes_v1",
+          "construction_check": {
+            "action_feature_shape": [
+              5,
+              15
+            ],
+            "gradient_steps": 0,
+            "legal_nonstop_count": 4,
+            "rejection_counts": {},
+            "source_and_model_hashes_reproduced": true,
+            "state_feature_shape": [
+              6
+            ],
+            "transitions_executed": 0
+          },
+          "construction_only": true,
+          "group_id": "procedural:native-split_lobes-v1",
+          "initial_action_ids": [
+            "STOP",
+            "NATIVE:native-fine-aspiration:0",
+            "NATIVE:native-wide-aspiration:0",
+            "NATIVE:native-fine-aspiration:1",
+            "NATIVE:native-wide-aspiration:1"
+          ],
+          "initial_legal_nonstop": 4,
+          "initial_nonstop_action_ids": [
+            "NATIVE:native-fine-aspiration:0",
+            "NATIVE:native-wide-aspiration:0",
+            "NATIVE:native-fine-aspiration:1",
+            "NATIVE:native-wide-aspiration:1"
+          ],
+          "initial_rejection_counts": {},
+          "model_hash": "sha256:73cce7f2cca5f4899cb646965e8b26184db31a7d2d1783fdf6ca563aa55e7188",
+          "native_config_hash": "sha256:16fed4abf39d89d6d7ec8aa00906ec48f15a90e7f5dcaae2473b8d18dc8e7665",
+          "recipe": {
+            "access": {
+              "center_mm": [
+                4.0,
+                4.0,
+                -0.5
+              ],
+              "normal_inward": [
+                0.0,
+                0.0,
+                1.0
+              ],
+              "radius_mm": 4.0,
+              "window_id": "hypothetical"
+            },
+            "affine": [
+              [
+                1.0,
+                0.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                1.0,
+                0.0
+              ],
+              [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+              ]
+            ],
+            "candidate_entries_mm": [
+              [
+                3.0,
+                4.0,
+                -0.5
+              ],
+              [
+                5.0,
+                4.0,
+                -0.5
+              ]
+            ],
+            "candidate_targets_mm": [
+              [
+                3.0,
+                4.0,
+                6.0
+              ],
+              [
+                5.0,
+                4.0,
+                6.0
+              ]
+            ],
+            "case_id": "synthetic_native_procedural_split_lobes_v1",
+            "family_id": "procedural:native-split_lobes-v1",
+            "language_evidence": null,
+            "max_actions": 7,
+            "max_steps": 3,
+            "motor_evidence": null,
+            "partial_contact_weight": 0.05,
+            "shape": [
+              9,
+              9,
+              8
+            ],
+            "source_kind": "procedural_native",
+            "target_boxes_half_open": [
+              [
+                [
+                  1,
+                  4
+                ],
+                [
+                  2,
+                  7
+                ],
+                [
+                  4,
+                  7
+                ]
+              ],
+              [
+                [
+                  5,
+                  8
+                ],
+                [
+                  2,
+                  7
+                ],
+                [
+                  5,
+                  8
+                ]
+              ]
+            ],
+            "target_label": 1,
+            "tissue": "all_true",
+            "tools": [
+              {
+                "max_access_angle_deg": 35.0,
+                "parameter_source": "generic research geometry; not a verified commercial device",
+                "shaft_radius_mm": 0.45,
+                "tip_length_mm": 2.0,
+                "tip_radius_mm": 1.25,
+                "tool_id": "native-fine-aspiration",
+                "working_length_mm": 120.0
+              },
+              {
+                "max_access_angle_deg": 35.0,
+                "parameter_source": "generic research geometry; not a verified commercial device",
+                "shaft_radius_mm": 1.1,
+                "tip_length_mm": 3.0,
+                "tip_radius_mm": 2.25,
+                "tool_id": "native-wide-aspiration",
+                "working_length_mm": 120.0
+              }
+            ],
+            "version": "native-procedural-families-v1"
+          },
+          "source_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+          "target_voxels": 90,
+          "tissue_support_provenance": "procedural solid cube; exact generating mask",
+          "training_gradient_steps": 0,
+          "world_partitions": {
+            "final_evaluation": {
+              "case_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+              "generator": {
+                "family": "rigid_gaussian",
+                "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+                "rotation_center_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation_scale_deg": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "translation_scale_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "version": "rigid-registration-v1"
+              },
+              "interpretation": "deterministic_optimization",
+              "planning_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+              "role": "final_evaluation",
+              "seeds": [
+                3586485727780767959,
+                12438740218599795306,
+                1625848127013726120
+              ]
+            },
+            "optimization": {
+              "case_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+              "generator": {
+                "family": "rigid_gaussian",
+                "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+                "rotation_center_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation_scale_deg": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "translation_scale_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "version": "rigid-registration-v1"
+              },
+              "interpretation": "deterministic_optimization",
+              "planning_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+              "role": "optimization",
+              "seeds": [
+                7161218702232290418,
+                7399955035493491159,
+                17846098911440281578
+              ]
+            },
+            "selection": {
+              "case_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+              "generator": {
+                "family": "rigid_gaussian",
+                "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+                "rotation_center_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation_scale_deg": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "translation_scale_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "version": "rigid-registration-v1"
+              },
+              "interpretation": "deterministic_optimization",
+              "planning_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+              "role": "selection",
+              "seeds": [
+                14356669542590053023,
+                15498795532782231477
+              ]
+            },
+            "stress": {
+              "case_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+              "generator": {
+                "family": "rigid_uniform",
+                "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+                "rotation_center_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "rotation_scale_deg": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "translation_scale_mm": [
+                  0.0,
+                  0.0,
+                  0.0
+                ],
+                "version": "rigid-registration-v1"
+              },
+              "interpretation": "deterministic_optimization",
+              "planning_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+              "role": "stress",
+              "seeds": [
+                7524832007186600751,
+                16776302469904887833
+              ]
+            }
+          }
+        },
+        "partitions": {
+          "optimization": {
+            "case_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+            "generator": {
+              "family": "rigid_gaussian",
+              "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+              "rotation_center_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rotation_scale_deg": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "translation_scale_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "version": "rigid-registration-v1"
+            },
+            "partition_hash": "sha256:e732e5de1442054fecb7a335959415b7d458bcb378585cd30bb908373a807753",
+            "planning_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+            "role": "optimization",
+            "seeds": [
+              7161218702232290418,
+              7399955035493491159,
+              17846098911440281578
+            ]
+          },
+          "selection": {
+            "case_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+            "generator": {
+              "family": "rigid_gaussian",
+              "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+              "rotation_center_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rotation_scale_deg": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "translation_scale_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "version": "rigid-registration-v1"
+            },
+            "partition_hash": "sha256:3c2b0ff9ba07cc2ba58c56dae82201a8407beaecee845a5b4f688e0c0834509f",
+            "planning_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+            "role": "selection",
+            "seeds": [
+              14356669542590053023,
+              15498795532782231477
+            ]
+          }
+        }
+      }
+    ],
+    "observation_schema": {
+      "action_feature_names": [
+        "stop",
+        "target_benefit",
+        "normal_volume",
+        "motor_evidence",
+        "language_evidence",
+        "insertion_distance",
+        "tip_radius",
+        "shaft_radius",
+        "tool_change",
+        "depth",
+        "remaining_target_fraction",
+        "adjacent_target_fraction",
+        "partial_normal_contact_volume",
+        "partial_motor_contact_surrogate",
+        "partial_language_contact_surrogate"
+      ],
+      "action_feature_units": [
+        "binary",
+        "mm3",
+        "mm3",
+        "spatial_surrogate_mm3",
+        "spatial_surrogate_mm3",
+        "mm",
+        "mm",
+        "mm",
+        "binary",
+        "fraction_of_action_budget",
+        "fraction",
+        "fraction",
+        "mm3",
+        "spatial_surrogate_mm3",
+        "spatial_surrogate_mm3"
+      ],
+      "actor_evidence": "nominal fields and actual cavity only; hidden world excluded",
+      "adapter_version": "native-contained-brush-policy-v2",
+      "depth_semantics": "historical name; completed nonSTOP actions / max_steps; not physical depth",
+      "evidence_available": [
+        false,
+        false
+      ],
+      "max_actions": 7,
+      "max_steps": 3,
+      "partial_contact_weight": 0.05,
+      "removal_semantics": "fully contained exterior-connected native cells only; partial cells retained and costed",
+      "removal_version": "contained-native-cell-connected-suction-v2",
+      "reward": {
+        "action_cost": 0.02,
+        "graph_edge_cost": 1.0,
+        "language_per_mm3": 2.0,
+        "motion_per_mm": 0.0,
+        "motor_per_mm3": 2.0,
+        "normal_per_mm3": 0.2,
+        "target_per_mm3": 1.0,
+        "tool_change_cost": 0.02
+      },
+      "scaling": "identity; raw physical volumes/distances and existing fractions; no learned normalization",
+      "state_feature_names": [
+        "remaining_target_fraction",
+        "action_budget_fraction_used",
+        "removed_tissue_fraction",
+        "nominal_severed_edge_fraction",
+        "motor_evidence_available",
+        "language_evidence_available"
+      ],
+      "state_feature_units": [
+        "fraction",
+        "fraction",
+        "fraction",
+        "fraction",
+        "binary",
+        "binary"
+      ],
+      "tools": [
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 0.45,
+          "tip_length_mm": 2.0,
+          "tip_radius_mm": 1.25,
+          "tool_id": "native-fine-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.1,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 2.25,
+          "tool_id": "native-wide-aspiration",
+          "working_length_mm": 120.0
+        }
+      ],
+      "version": "native-15x6-actual-semantics-v1",
+      "world_generator": {
+        "family": "rigid_gaussian",
+        "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+        "rotation_center_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_scale_deg": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "translation_scale_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "version": "rigid-registration-v1"
+      }
+    },
+    "offline_pretraining": {
+      "elapsed_seconds": 29.990159083972685,
+      "elapsed_seconds_scope": "optimization and selection including initial selection; initialization and preparation separately measured",
+      "gradient_steps": 32,
+      "initialization_seconds": 0.8963491250760853,
+      "optimization_environment_steps": 169,
+      "postprocessing_seconds_before_export": 0.0054019170347601175,
+      "preparation_seconds": 0.3132845829240978,
+      "selection_environment_steps": 188,
+      "total_offline_seconds_before_checkpoint_write": 31.20803029090166
+    },
+    "policy_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57",
+    "runtime": {
+      "device": "cpu",
+      "numpy": "2.5.3",
+      "python": "3.12.14",
+      "torch": "2.14.1"
+    },
+    "scope": "procedural_native_to_patient_development",
+    "source_sha256": {
+      "__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+      "anatomy.py": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37",
+      "brain_extraction.py": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917",
+      "cohort.py": "d69538f80af8b318068af70dbc963b7a9ca6c3a4f62d6e8e542d6e43548fa874",
+      "core.py": "0600667e8e8662c78e31a86d9060d53aec5ab5a4f2b14e747afd74800f11eeec",
+      "desktop_bridge.py": "b76b76e58cb1a6476cec57fc093184ab7ea8ff598b26ed66b3438e7720fdfbe8",
+      "diffusion.py": "e7f57bf7467fb3cb5d6b9b3f1c80e4665710713124d0720aa84d31ccc03b8e21",
+      "evaluation.py": "baaa2f3d6b4e41c4621dc22872da9300d649bc91dfeb923e2ad35f66aadad3b7",
+      "geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+      "imaging.py": "ad921fb5cda6d3aed84893ad200cb846212311efa17c1996730a394e8474a95b",
+      "learning.py": "2056cb4b9ffde0f592aaf61842c1744a6924df7ecf792240bfcc6f712eab4603",
+      "learning_ppo.py": "a3814bc5da4837b66ae20496c38e17edd0edf73ef7863a920924cd7ec2a42d88",
+      "native_refinement.py": "02a1250d40d7129c77d16031e229c61c3d295139c002c9002f5a3eb78097a413",
+      "native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+      "native_routes.py": "97bb55a3bf2894f336a593bc3c3379b3c4dc291198af90b91d319bd0b9a824ea",
+      "native_simulation.py": "2461cc6c32eb25a3927bcc3a9379bb02417794c3a764c4b1e705a00bcac6493c",
+      "planning.py": "f113ce78b239f91a86c65d8add74227a9d9f3c0d718449c7968a983e76ea850d",
+      "population_learning.py": "49899618825d08b50016f9b34f389b50ce67f6a3aa79a8f339665523e3ae8de2",
+      "preprocessing.py": "dbd2c4ba9551e2aa0d454b638e256ad8bc6cdf45dcdc8ec08e091e43c3eb14e5",
+      "prior_proposals.py": "05340a6911b0330175d606f84aa81c817a330a929a336fef18078d01e3d0bd55",
+      "prior_registration.py": "9828e76ed3e29e232c39dd16ece7d5fefa4cd366d1cab7899121e929ef34a703",
+      "procedural_learning.py": "4a2c9d3692667f7361667bb412d3428563c12f10451edabb7e34dc7169481df0",
+      "route_native_diagnostics.py": "f2cf704da9e971f321dce707dadd9f0350ec7234ecc75c0ed0fc1242fd8c82cf",
+      "selection_contract.py": "bef00b486fb6f0f0465a8526080ae5c6e08a5f1922fcf93f4624aec86ec43d72",
+      "simulation.py": "bc43c16643adf8495f969dcacacb770f5f6be7fdeff0831f2a92eb4aed52939f",
+      "structural_evidence.py": "6a1b9e7aa5b13ea971a75d9416d96ab45de2b46901a036edd73ec58194fb7a33",
+      "worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
+    },
+    "training_config": {
+      "checkpoint_interval": 2,
+      "entropy_weight": 0.01,
+      "episodes_per_update": 2,
+      "gamma": 1.0,
+      "hidden_features": 16,
+      "learning_rate": 0.003,
+      "max_environment_steps": 256,
+      "max_episode_steps": 4,
+      "max_gradient_norm": 5.0,
+      "max_gradient_steps": 32,
+      "max_wall_seconds": 60.0,
+      "seed": 101,
+      "value_weight": 0.5
+    },
+    "training_gradient_steps": 32,
+    "training_record": {
+      "actor_parameters_changed": true,
+      "clinical_deficit_probability": null,
+      "completed_episodes": 64,
+      "decision_model_hash": "sha256:74f60ec85a9793ebd4d1ebb1729768e92c1d57c97d5e3aa93b584004fd2bdf76",
+      "discarded_partial_batches": 0,
+      "elapsed_seconds": 29.990159083972685,
+      "elapsed_seconds_scope": "cumulative optimization and selection, including initial selection; initialization excluded",
+      "episode_index": 64,
+      "gradient_steps": 32,
+      "initial_actor_hash": "sha256:56b097453aef571a0c34909b3771c0346a308953657bc2798a310c083f22e8f8",
+      "initial_checkpoint_hash": "sha256:6acfac0b0f8565437d2d85384df3e1b2815438109b63636cf0ea2515d6c6b008",
+      "initial_selection_return": 0.0,
+      "initialization_seconds": 0.8963491250760853,
+      "initialization_seconds_scope": "cumulative model/policy/provenance/optimizer/contract setup across invocations; excluded from learner budget",
+      "initialization_seconds_this_invocation": 0.8963491250760853,
+      "latest_actor_hash": "sha256:e672f0c229d44f86333a9f55e09c34954705b515643eeea22259f07ddba5a61c",
+      "latest_checkpoint_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57",
+      "learning_improvement_guaranteed": false,
+      "optimization_environment_steps": 169,
+      "optimization_history": [
+        {
+          "actor_gradient_norm_after_clip": 4.1596580842885045,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 134.60134887695312,
+          "gradient_steps": 1,
+          "loss": 903.6893920898438,
+          "mean_return": 20.200000000000003,
+          "optimization_environment_steps": 4
+        },
+        {
+          "actor_gradient_norm_after_clip": 4.488418564551004,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 145.32073974609375,
+          "gradient_steps": 2,
+          "loss": 425.3775634765625,
+          "mean_return": 20.04,
+          "optimization_environment_steps": 10
+        },
+        {
+          "actor_gradient_norm_after_clip": 4.619912583443472,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 85.80704498291016,
+          "gradient_steps": 3,
+          "loss": 175.94390869140625,
+          "mean_return": 8.175,
+          "optimization_environment_steps": 14
+        },
+        {
+          "actor_gradient_norm_after_clip": 4.479187412592801,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 28.994213104248047,
+          "gradient_steps": 4,
+          "loss": 32.65875244140625,
+          "mean_return": 3.13,
+          "optimization_environment_steps": 18
+        },
+        {
+          "actor_gradient_norm_after_clip": 4.765339041557247,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 64.96956634521484,
+          "gradient_steps": 5,
+          "loss": 161.79818725585938,
+          "mean_return": 11.97,
+          "optimization_environment_steps": 21
+        },
+        {
+          "actor_gradient_norm_after_clip": 4.38505182245536,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 53.217620849609375,
+          "gradient_steps": 6,
+          "loss": 119.30268859863281,
+          "mean_return": 10.275,
+          "optimization_environment_steps": 27
+        },
+        {
+          "actor_gradient_norm_after_clip": 4.029987599593979,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 62.168155670166016,
+          "gradient_steps": 7,
+          "loss": 192.1846466064453,
+          "mean_return": 9.03,
+          "optimization_environment_steps": 32
+        },
+        {
+          "actor_gradient_norm_after_clip": 4.1161860142832305,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 102.88715362548828,
+          "gradient_steps": 8,
+          "loss": 468.8231201171875,
+          "mean_return": 12.840000000000002,
+          "optimization_environment_steps": 36
+        },
+        {
+          "actor_gradient_norm_after_clip": 3.6103065060731225,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 109.74468994140625,
+          "gradient_steps": 9,
+          "loss": 664.7266845703125,
+          "mean_return": 28.58,
+          "optimization_environment_steps": 42
+        },
+        {
+          "actor_gradient_norm_after_clip": 3.11052754262138,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 43.913875579833984,
+          "gradient_steps": 10,
+          "loss": 171.027587890625,
+          "mean_return": 9.105,
+          "optimization_environment_steps": 47
+        },
+        {
+          "actor_gradient_norm_after_clip": 2.874988695179445,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 56.18949508666992,
+          "gradient_steps": 11,
+          "loss": 345.001220703125,
+          "mean_return": 15.16,
+          "optimization_environment_steps": 52
+        },
+        {
+          "actor_gradient_norm_after_clip": 2.364229287184614,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 54.67253112792969,
+          "gradient_steps": 12,
+          "loss": 358.2158203125,
+          "mean_return": 16.305,
+          "optimization_environment_steps": 58
+        },
+        {
+          "actor_gradient_norm_after_clip": 3.654149452632534,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 109.02458190917969,
+          "gradient_steps": 13,
+          "loss": 498.42333984375,
+          "mean_return": 16.57,
+          "optimization_environment_steps": 64
+        },
+        {
+          "actor_gradient_norm_after_clip": 2.7961501382299088,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 59.782676696777344,
+          "gradient_steps": 14,
+          "loss": 354.06451416015625,
+          "mean_return": 16.755,
+          "optimization_environment_steps": 70
+        },
+        {
+          "actor_gradient_norm_after_clip": 2.1093231742285057,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 79.74939727783203,
+          "gradient_steps": 15,
+          "loss": 597.5243530273438,
+          "mean_return": 23.96,
+          "optimization_environment_steps": 76
+        },
+        {
+          "actor_gradient_norm_after_clip": 3.653816725270573,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 118.16912841796875,
+          "gradient_steps": 16,
+          "loss": 889.0388793945312,
+          "mean_return": 20.98,
+          "optimization_environment_steps": 81
+        },
+        {
+          "actor_gradient_norm_after_clip": 3.1996798445036942,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 35.90541458129883,
+          "gradient_steps": 17,
+          "loss": 125.84371185302734,
+          "mean_return": 10.275,
+          "optimization_environment_steps": 87
+        },
+        {
+          "actor_gradient_norm_after_clip": 3.718565773507861,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 143.08721923828125,
+          "gradient_steps": 18,
+          "loss": 919.15185546875,
+          "mean_return": 23.87,
+          "optimization_environment_steps": 93
+        },
+        {
+          "actor_gradient_norm_after_clip": 3.0972302018765703,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 97.69495391845703,
+          "gradient_steps": 19,
+          "loss": 491.0938720703125,
+          "mean_return": 21.055,
+          "optimization_environment_steps": 99
+        },
+        {
+          "actor_gradient_norm_after_clip": 3.7277889522733263,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 18.973590850830078,
+          "gradient_steps": 20,
+          "loss": 24.37363052368164,
+          "mean_return": 4.06,
+          "optimization_environment_steps": 104
+        },
+        {
+          "actor_gradient_norm_after_clip": 4.133793092352159,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 108.57513427734375,
+          "gradient_steps": 21,
+          "loss": 554.7811889648438,
+          "mean_return": 21.435000000000002,
+          "optimization_environment_steps": 110
+        },
+        {
+          "actor_gradient_norm_after_clip": 3.97759153367538,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 38.84732437133789,
+          "gradient_steps": 22,
+          "loss": 115.81065368652344,
+          "mean_return": 8.355,
+          "optimization_environment_steps": 114
+        },
+        {
+          "actor_gradient_norm_after_clip": 2.8732132711142433,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 3.0274085998535156,
+          "gradient_steps": 23,
+          "loss": -1.3546130657196045,
+          "mean_return": 0.0,
+          "optimization_environment_steps": 116
+        },
+        {
+          "actor_gradient_norm_after_clip": 2.681661009797861,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 114.75945281982422,
+          "gradient_steps": 24,
+          "loss": 899.0298461914062,
+          "mean_return": 23.27,
+          "optimization_environment_steps": 122
+        },
+        {
+          "actor_gradient_norm_after_clip": 2.469565516387695,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 84.15782928466797,
+          "gradient_steps": 25,
+          "loss": 579.695556640625,
+          "mean_return": 24.09,
+          "optimization_environment_steps": 128
+        },
+        {
+          "actor_gradient_norm_after_clip": 3.6012071243588117,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 152.04176330566406,
+          "gradient_steps": 26,
+          "loss": 956.5079956054688,
+          "mean_return": 28.555000000000003,
+          "optimization_environment_steps": 134
+        },
+        {
+          "actor_gradient_norm_after_clip": 4.169731213501249,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 65.76893615722656,
+          "gradient_steps": 27,
+          "loss": 152.0913848876953,
+          "mean_return": 9.11,
+          "optimization_environment_steps": 139
+        },
+        {
+          "actor_gradient_norm_after_clip": 3.9906551817922886,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 94.38636779785156,
+          "gradient_steps": 28,
+          "loss": 513.02685546875,
+          "mean_return": 23.675,
+          "optimization_environment_steps": 145
+        },
+        {
+          "actor_gradient_norm_after_clip": 4.171061921002715,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 137.19699096679688,
+          "gradient_steps": 29,
+          "loss": 610.1510620117188,
+          "mean_return": 28.675,
+          "optimization_environment_steps": 151
+        },
+        {
+          "actor_gradient_norm_after_clip": 4.11488994101601,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 148.66036987304688,
+          "gradient_steps": 30,
+          "loss": 626.79248046875,
+          "mean_return": 28.58,
+          "optimization_environment_steps": 157
+        },
+        {
+          "actor_gradient_norm_after_clip": 4.039983911704936,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 98.73985290527344,
+          "gradient_steps": 31,
+          "loss": 306.80401611328125,
+          "mean_return": 21.25,
+          "optimization_environment_steps": 163
+        },
+        {
+          "actor_gradient_norm_after_clip": 2.4450743034774285,
+          "episode_source_case_hashes": [
+            "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89"
+          ],
+          "gradient_norm_before_clip": 102.63990783691406,
+          "gradient_steps": 32,
+          "loss": 535.465576171875,
+          "mean_return": 21.195,
+          "optimization_environment_steps": 169
+        }
+      ],
+      "optimizer_mode": "PATIENT_SCRATCH_RL",
+      "output_dir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-to-ucsf-v2/pretraining/training",
+      "selected_checkpoint_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57",
+      "selected_selection_return": 28.675000000000004,
+      "selection_environment_steps": 188,
+      "selection_history": [
+        {
+          "checkpoint_hash": "sha256:6acfac0b0f8565437d2d85384df3e1b2815438109b63636cf0ea2515d6c6b008",
+          "gradient_steps": 0,
+          "mean_return": 0.0,
+          "optimization_environment_steps": 0,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:bc8c877ed5ff56c415ec82b4a70b18d06c99942f7f4b173f7cdec4f909cadce0",
+          "gradient_steps": 2,
+          "mean_return": 0.0,
+          "optimization_environment_steps": 10,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:b309fb69ff2f9f8e8098c2813578b0f2773f8631db263ab6026006861aec9ad0",
+          "gradient_steps": 4,
+          "mean_return": 28.245000000000005,
+          "optimization_environment_steps": 18,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:b211037e8845917ad69cfb3f5600f9272eeefcac2b0f4998ff77ee210efa4e57",
+          "gradient_steps": 6,
+          "mean_return": 28.425000000000004,
+          "optimization_environment_steps": 27,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:2fc94798a1912ada8af5859f3de5df36136b6f4c3aa25b504c3f9a0487e02ede",
+          "gradient_steps": 8,
+          "mean_return": 28.245000000000005,
+          "optimization_environment_steps": 36,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:d61b0f1bf822ee51561b418371136f04f5ad481323cd3861869616b27990ad17",
+          "gradient_steps": 10,
+          "mean_return": 28.245000000000005,
+          "optimization_environment_steps": 47,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:02eb102677857bb097deba1570e0d5d33d60c25421fb875cf07a7d95d8d9f17c",
+          "gradient_steps": 12,
+          "mean_return": 28.245000000000005,
+          "optimization_environment_steps": 58,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:d1870f7eaca14ec63eb23f93ced6e8578404865a736832fd2dd59cba88c8ed64",
+          "gradient_steps": 14,
+          "mean_return": 23.87,
+          "optimization_environment_steps": 70,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:206c3814597dff50add0f35822a5da844b19fcd0bfd0c5385cb473ae577a0558",
+          "gradient_steps": 16,
+          "mean_return": 23.87,
+          "optimization_environment_steps": 81,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:a28d48ad850051298c485cd43241fad26f36e954f3620eb966fb833054b7838e",
+          "gradient_steps": 18,
+          "mean_return": 23.87,
+          "optimization_environment_steps": 93,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:c528867a0f02106a7909fb0bd0b77d77017308d3375398f87ec47385d256a0a2",
+          "gradient_steps": 20,
+          "mean_return": 23.87,
+          "optimization_environment_steps": 104,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:0026c2148281658f19a53ec6414e5f2fc61a1638db962b722813f29357ed4ec2",
+          "gradient_steps": 22,
+          "mean_return": 23.87,
+          "optimization_environment_steps": 114,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:e255057df39a8aa30d226b9e099694ccdf95f3c180c71b5059294b2f14014b95",
+          "gradient_steps": 24,
+          "mean_return": 23.87,
+          "optimization_environment_steps": 122,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:77fd227899215e395aa89649a0988159f415c0de360e07f22b03dc976f99d4ff",
+          "gradient_steps": 26,
+          "mean_return": 23.87,
+          "optimization_environment_steps": 134,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:445d156c8eb6aab049608ab2b906cd582ac60756ec68701310e044edaca0a073",
+          "gradient_steps": 28,
+          "mean_return": 23.930000000000003,
+          "optimization_environment_steps": 145,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:dcbec14ef099f137f7580560df1a1f414ebbc54ab69afb16bcd1664e71674e1f",
+          "gradient_steps": 30,
+          "mean_return": 28.425000000000004,
+          "optimization_environment_steps": 157,
+          "world_count": 4
+        },
+        {
+          "checkpoint_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57",
+          "gradient_steps": 32,
+          "mean_return": 28.675000000000004,
+          "optimization_environment_steps": 169,
+          "world_count": 4
+        }
+      ],
+      "selection_rule": "maximum mean deterministic selection return; earliest wins ties",
+      "selection_seconds": 16.490310623892583,
+      "shared_checkpoint_hash": null,
+      "status": "gradient_budget",
+      "wall_limit_semantics": "cooperative; a simulator/gradient call may overrun the deadline"
+    },
+    "training_run_hash": "sha256:0b698e0742220c469adb461725b3fe326dd8b3336b88d7a41206315f11877ff3",
+    "world_map": {
+      "0": [
+        0,
+        11103855882051260355
+      ],
+      "1": [
+        1,
+        7161218702232290418
+      ],
+      "1000000": [
+        0,
+        1943417729305584125
+      ],
+      "1000001": [
+        1,
+        14356669542590053023
+      ],
+      "1000002": [
+        0,
+        9073826545075957572
+      ],
+      "1000003": [
+        1,
+        15498795532782231477
+      ],
+      "2": [
+        0,
+        11243981505934875939
+      ],
+      "3": [
+        1,
+        7399955035493491159
+      ],
+      "4": [
+        0,
+        6936170738492634982
+      ],
+      "5": [
+        1,
+        17846098911440281578
+      ]
+    }
+  },
+  "provenance_hash": "sha256:13bc8610a188e08c2f04a8186cdf4348bbd3fe644847d690fa9429e831f84e4b",
+  "scope": "procedural_native_to_patient_development"
+}

@@ -1,0 +1,265 @@
+{
+  "schema_version": "1.0",
+  "verified_on": "2026-10-04",
+  "case_id": "UCSF-PDGM-0004",
+  "patient_cluster_id": "UCSF-PDGM-0004",
+  "source_metadata_id": "UCSF-PDGM-004",
+  "visit": "baseline_preoperative",
+  "selection_rule": "First lexicographically listed baseline public mirror case, chosen before planning results; no performance-based selection.",
+  "benchmark_track": "annotation_assisted_structural_mirror",
+  "source_collection": {
+    "name": "UCSF-PDGM",
+    "doi": "10.7937/tcia.bdgf-8v37",
+    "official_url": "https://www.cancerimagingarchive.net/collection/ucsf-pdgm/",
+    "spec_requested_version": 4,
+    "current_official_version": 5,
+    "current_official_version_date": "2025-05-30",
+    "version_discrepancy": "The October 4 specification cites v4 as current. TCIA v5 corrects DTI_eddy_noreg orientation/spacing and adds per-exam eddy-rotated bvecs. Original project specifications are preserved.",
+    "downloaded_imaging_version": null,
+    "downloaded_imaging_version_reason": "Third-party structural subset, pinned by mirror revision; TCIA source byte equivalence and exact original image release unverified."
+  },
+  "license": {
+    "identifier": "CC-BY-4.0",
+    "url": "https://creativecommons.org/licenses/by/4.0/",
+    "verified_at": "https://www.cancerimagingarchive.net/collection/ucsf-pdgm/",
+    "mirror_declared_license": "cc-by-4.0",
+    "data_usage_policy": "https://www.cancerimagingarchive.net/data-usage-policies-and-restrictions/",
+    "citation": "Calabrese E, Villanueva-Meyer J, Rudie J, Rauschecker A, Baid U, Bakas S, Cha S, Mongan J, Hess C. The UCSF Preoperative Diffuse Glioma MRI Dataset. Radiology: Artificial Intelligence (2022). doi:10.1148/ryai.220058. Data doi:10.7937/tcia.bdgf-8v37.",
+    "changes": "No local changes to downloaded source volumes. Any upstream mirror transformations are not independently verified."
+  },
+  "mirror": {
+    "repository": "MedOtter/UCSF-PDGM",
+    "url": "https://huggingface.co/datasets/MedOtter/UCSF-PDGM",
+    "revision": "e9372219cf1cd2fdd52260cd45f7514b4aa7638e",
+    "status": "public_structural_subset_not_official_TCIA_distribution"
+  },
+  "files": [
+    {
+      "path": "public_mirrors/MedOtter-UCSF-PDGM/e9372219cf1cd2fdd52260cd45f7514b4aa7638e/UCSF-PDGM-0004/UCSF-PDGM-0004_FLAIR.nii.gz",
+      "source_url": "https://huggingface.co/datasets/MedOtter/UCSF-PDGM/resolve/e9372219cf1cd2fdd52260cd45f7514b4aa7638e/UCSF-PDGM-0004/UCSF-PDGM-0004_FLAIR.nii.gz",
+      "source_remote_path": "UCSF-PDGM-0004/UCSF-PDGM-0004_FLAIR.nii.gz",
+      "role": "structural_mri",
+      "modality": "FLAIR",
+      "provenance": "observed_preprocessed_imaging",
+      "size_bytes": 2947932,
+      "sha256": "4f85b3a6e253a42f9c04df95f2059d256dd9ac46f68de99553915b7c82e3384b",
+      "checksum_authority": "pinned_mirror_git_lfs",
+      "primary_source_byte_match": null
+    },
+    {
+      "path": "public_mirrors/MedOtter-UCSF-PDGM/e9372219cf1cd2fdd52260cd45f7514b4aa7638e/UCSF-PDGM-0004/UCSF-PDGM-0004_T1.nii.gz",
+      "source_url": "https://huggingface.co/datasets/MedOtter/UCSF-PDGM/resolve/e9372219cf1cd2fdd52260cd45f7514b4aa7638e/UCSF-PDGM-0004/UCSF-PDGM-0004_T1.nii.gz",
+      "source_remote_path": "UCSF-PDGM-0004/UCSF-PDGM-0004_T1.nii.gz",
+      "role": "structural_mri",
+      "modality": "T1",
+      "provenance": "observed_preprocessed_imaging",
+      "size_bytes": 2811372,
+      "sha256": "519c83d1cac08d15b299707403e94e90b4a9fe6369cf77acf01b754b276147e5",
+      "checksum_authority": "pinned_mirror_git_lfs",
+      "primary_source_byte_match": null
+    },
+    {
+      "path": "public_mirrors/MedOtter-UCSF-PDGM/e9372219cf1cd2fdd52260cd45f7514b4aa7638e/UCSF-PDGM-0004/UCSF-PDGM-0004_T1c.nii.gz",
+      "source_url": "https://huggingface.co/datasets/MedOtter/UCSF-PDGM/resolve/e9372219cf1cd2fdd52260cd45f7514b4aa7638e/UCSF-PDGM-0004/UCSF-PDGM-0004_T1c.nii.gz",
+      "source_remote_path": "UCSF-PDGM-0004/UCSF-PDGM-0004_T1c.nii.gz",
+      "role": "structural_mri",
+      "modality": "T1c",
+      "provenance": "observed_preprocessed_imaging",
+      "size_bytes": 2834824,
+      "sha256": "398e7a6ec44e795aaf717fbf0fee6b3a11a671c5bc944c13a308ccaf02419176",
+      "checksum_authority": "pinned_mirror_git_lfs",
+      "primary_source_byte_match": null
+    },
+    {
+      "path": "public_mirrors/MedOtter-UCSF-PDGM/e9372219cf1cd2fdd52260cd45f7514b4aa7638e/UCSF-PDGM-0004/UCSF-PDGM-0004_T2.nii.gz",
+      "source_url": "https://huggingface.co/datasets/MedOtter/UCSF-PDGM/resolve/e9372219cf1cd2fdd52260cd45f7514b4aa7638e/UCSF-PDGM-0004/UCSF-PDGM-0004_T2.nii.gz",
+      "source_remote_path": "UCSF-PDGM-0004/UCSF-PDGM-0004_T2.nii.gz",
+      "role": "structural_mri",
+      "modality": "T2",
+      "provenance": "observed_preprocessed_imaging",
+      "size_bytes": 2912543,
+      "sha256": "6662aa3b30670944d73486ba6300b5b9d3a5916e0ba74b225816c0806c5a7824",
+      "checksum_authority": "pinned_mirror_git_lfs",
+      "primary_source_byte_match": null
+    },
+    {
+      "path": "public_mirrors/MedOtter-UCSF-PDGM/e9372219cf1cd2fdd52260cd45f7514b4aa7638e/UCSF-PDGM-0004/UCSF-PDGM-0004_tumor_segmentation.nii.gz",
+      "source_url": "https://huggingface.co/datasets/MedOtter/UCSF-PDGM/resolve/e9372219cf1cd2fdd52260cd45f7514b4aa7638e/UCSF-PDGM-0004/UCSF-PDGM-0004_tumor_segmentation.nii.gz",
+      "source_remote_path": "UCSF-PDGM-0004/UCSF-PDGM-0004_tumor_segmentation.nii.gz",
+      "role": "supplied_tumor_annotation",
+      "modality": "tumor_segmentation",
+      "provenance": "observed_source_annotation",
+      "size_bytes": 53055,
+      "sha256": "54e51eb6ae60d8985ed5379a4267438017e2682255418833fac1b704813b483e",
+      "checksum_authority": "pinned_mirror_git_lfs",
+      "primary_source_byte_match": null
+    }
+  ],
+  "storage_forecast": {
+    "source_bytes": 11559726,
+    "max_download_bytes": 20000000,
+    "working_budget_bytes": 512000000,
+    "meaning": "One compressed structural case plus temporary download and imaging working arrays; no cohort acquisition."
+  },
+  "split": {
+    "role": "development_demo",
+    "outer_test_eligible": false,
+    "reason": "Used for implementation and UI inspection; cannot be final held-out evidence.",
+    "brats2021_id": "BraTS2021_00097",
+    "brats2021_segmentation_cohort": "Training",
+    "brats2021_mgmt_cohort": "Training",
+    "pretrained_segmentation_overlap": "Known BraTS training overlap; annotation-assisted only unless checkpoint provenance independently excludes this patient.",
+    "followup_aliases": []
+  },
+  "spatial_frame": {
+    "meaning": "Downloaded preprocessed structural grid; acquired scanner-native geometry is unavailable and not claimed.",
+    "nifti_world_convention": "RAS+",
+    "array_axis_codes": [
+      "L",
+      "P",
+      "S"
+    ],
+    "physical_unit": "mm",
+    "shape": [
+      240,
+      240,
+      155
+    ],
+    "spacing_mm": [
+      1,
+      1,
+      1
+    ],
+    "voxel_to_world": [
+      [
+        -1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        -1,
+        0,
+        239
+      ],
+      [
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        1
+      ]
+    ],
+    "qform_code": 1,
+    "sform_code": 1,
+    "qform_sform_agree": true,
+    "atlas_registration": "not_performed",
+    "cross_modality_geometry_equal": true
+  },
+  "label_dictionary": {
+    "0": {
+      "name": "background",
+      "voxels": 8886081
+    },
+    "1": {
+      "name": "nonenhancing_or_necrotic_core",
+      "voxels": 7593
+    },
+    "2": {
+      "name": "FLAIR_abnormality",
+      "voxels": 18654
+    },
+    "4": {
+      "name": "enhancing_target",
+      "voxels": 15672
+    }
+  },
+  "qc": {
+    "sha256_matches_pinned_mirror": true,
+    "size_matches_pinned_mirror": true,
+    "all_arrays_finite": true,
+    "allowed_segmentation_labels": [
+      0,
+      1,
+      2,
+      4
+    ],
+    "whole_abnormality_volume_mm3": 41919,
+    "structural_viewer_eligible": true,
+    "full_patient_diffusion_mode_eligible": false,
+    "surgeon_review": "not_performed",
+    "primary_source_equivalence": "unverified",
+    "named_failures": [
+      "PRIMARY_SOURCE_DOWNLOAD_UNAVAILABLE",
+      "MISSING_DIRECTIONAL_DIFFUSION",
+      "MISSING_PATIENT_GRADIENTS",
+      "MISSING_FUNCTIONAL_EVIDENCE",
+      "NATIVE_FRAME_UNAVAILABLE",
+      "VASCULAR_ANATOMY_UNASSESSED"
+    ]
+  },
+  "clinical_context": {
+    "planning_as_of": null,
+    "planning_as_of_status": "source_acquisition_timestamp_not_released",
+    "molecular_fields_available_to_primary_planner": false,
+    "reason": "Official metadata lists molecular and postoperative fields without per-field availability times. Do not supply them as preoperative planner inputs.",
+    "clinical_deficit_probability": null,
+    "motor_localization": "unavailable",
+    "language_localization": "unavailable",
+    "vascular_anatomy": "unassessed"
+  },
+  "primary_download_attempts": [
+    {
+      "date": "2026-10-04",
+      "package_id": "1065",
+      "version": 5,
+      "authentication": "successful_public_link_OAuth",
+      "listing_http_status": 500,
+      "listing_error_code": "1202",
+      "listing_error": "An error occurred in browsing directory on the HSTS node.",
+      "download_http_status": 400,
+      "download_error_code": "1228",
+      "download_error": "Check that the files are available on the server. There was an error downloading the files on the HSTS server.",
+      "package_files_on_server": "no",
+      "http_gateway_url": null
+    }
+  ],
+  "metadata_files": [
+    {
+      "path": "provenance/ucsf-pdgm/UCSF-PDGM-metadata_glossary.csv",
+      "size_bytes": 1964,
+      "sha256": "f1404bcd730572d05bdf7ead2e62e32843944d0e27a05cd0ef2dcca8ce69378d"
+    },
+    {
+      "path": "provenance/ucsf-pdgm/UCSF-PDGM-metadata_v5.csv",
+      "size_bytes": 58149,
+      "sha256": "afc1c23a0eb0597b56e603741e72f2308b4860281187cd3808e05b7a0116fd78"
+    },
+    {
+      "path": "provenance/ucsf-pdgm/mirror_README.md",
+      "size_bytes": 6167,
+      "sha256": "a64ef118f23d42e2eff88eddf90fb6c6215195c61359edf19b97126d79795707"
+    },
+    {
+      "path": "provenance/ucsf-pdgm/mirror_case_listing.json",
+      "size_bytes": 1701,
+      "sha256": "e66deea0c0782628158693340299d121c552aade32dd925af368fd504addb780"
+    },
+    {
+      "path": "provenance/ucsf-pdgm/mirror_repository_metadata.json",
+      "size_bytes": 151195,
+      "sha256": "4991e4f7d7ca5ce880edf46a4009ee3db3f9fd11dcd7a2c5ee8da28af3de408b"
+    },
+    {
+      "path": "provenance/ucsf-pdgm/official_collection_2026-10-04.html",
+      "size_bytes": 342016,
+      "sha256": "418408a5734ad96db3df297e6dd7a4eb1c64290b65fe5344df72ac0e6bf24c99"
+    }
+  ]
+}

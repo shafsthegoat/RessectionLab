@@ -1,0 +1,58 @@
+{
+  "schema": "graded-case4-artifact-index-v2",
+  "files": {
+    "RESULT.md": {
+      "bytes": 2961,
+      "sha256": "fac5fd29f957101e4bfe6090db7c62e2fd2e10e4f45ba81714e622354ad3c33f"
+    },
+    "archive-binding.json": {
+      "bytes": 1343,
+      "sha256": "c009507201e361d7d4637304d45e6a1c8c17454c27fb310ebce27d29240ddfa3"
+    },
+    "execution-baseline.json": {
+      "bytes": 7383,
+      "sha256": "1ec8824b8caa93e55f3f784425bcf9992c7b7d99341bf581edb2e427f66ffeda"
+    },
+    "post-execution-verification.json": {
+      "bytes": 11471,
+      "sha256": "f4ab4a19636ab3c4d2dc8ccd86ef58ab5f8a6f10c575a37691d2c959df633d8a"
+    },
+    "raw-output-index.json": {
+      "bytes": 1839,
+      "sha256": "5216805b05ee5cb505c2fac199bab0d84bd96c586d407d0279bc3d2e379e9b49"
+    },
+    "release.json": {
+      "bytes": 5171,
+      "sha256": "e2d8d8d0b38f267f9b48e0a347bdeb31d5fce285cece0e288419e1c2728c22bf"
+    },
+    "saved-records/acceptance.json": {
+      "bytes": 7059,
+      "sha256": "e8c92f4efee1e6f9357a103aa469a179cd361912709bee42501167f3071eea07"
+    },
+    "saved-records/candidate/diagnostic/manifest.json": {
+      "bytes": 2674,
+      "sha256": "ed7eee73e0b5fad1f2d16815ac369df57c232abe1f00bb24e19c9f0cd50f98c3"
+    },
+    "saved-records/candidate/result.json": {
+      "bytes": 2971,
+      "sha256": "d7d670ff3a35db3521ffa67032481bc7df313ae290ba0c09b86da3e7b242b151"
+    },
+    "saved-records/supervision/combined.log": {
+      "bytes": 11883,
+      "sha256": "c88bf3fdb28cd7850da76e37babc02f88a67f1a237e900fae61abf1dc98f8565"
+    },
+    "saved-records/supervision/supervision.json": {
+      "bytes": 1301,
+      "sha256": "2fadc8a51d7d263b411c21e5d1fc8dab2295f19b975793ff5df18fc87f4b2edb"
+    },
+    "saved-records/worker.json": {
+      "bytes": 10106,
+      "sha256": "cc2450900e1d171370f370e0b7e97809643ec6e78c89d552aec6bcebc31ae8d8"
+    },
+    "summary.json": {
+      "bytes": 4163,
+      "sha256": "a4262bbd81b327c75aabd8c1a125d37f127ed6135ada4d204486ed943be92a99"
+    }
+  },
+  "total_bytes": 70325
+}

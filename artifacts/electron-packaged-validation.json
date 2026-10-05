@@ -1,0 +1,45 @@
+{
+  "tested_utc": "2026-10-04T07:49:06.594310+00:00",
+  "scope": "imaging_search_workspace_only",
+  "source_digest": "7e506dbf070f35577d620f40e9351124118e34d408b16277ac0d108a2c17e192",
+  "app_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app",
+  "architecture": "arm64",
+  "signing": "local_ad_hoc_verified_deep_strict",
+  "notarized": false,
+  "size_bytes": 388588500,
+  "bundle_internal_symlinks": 17,
+  "external_or_broken_symlinks": 0,
+  "launch_cwd": "/tmp",
+  "launch_removed_environment": [
+    "PYTHONPATH",
+    "PYTHONHOME",
+    "VIRTUAL_ENV"
+  ],
+  "native_ui_checks": {
+    "real_case": "UCSF-PDGM-0004",
+    "image_shape": [
+      240,
+      240,
+      155
+    ],
+    "source_MRI_MPR_and_3D_visible": true,
+    "reviewed_estimated_support_checkbox": true,
+    "generated_candidates": 54,
+    "retained_alternatives": 12,
+    "search_seconds_displayed": 1.16,
+    "two_distinct_routes_selected": true,
+    "accessible_is_not_removed_label": true,
+    "native_save_dialog_wrote_workspace": true,
+    "saved_case": "outputs/cases/electron-packaged-roundtrip.ressectionlab",
+    "saved_backend_routes": 54,
+    "saved_selection_and_cursor": true
+  },
+  "engine_roundtrip_report": "artifacts/electron-sidecar-packaged.json",
+  "screenshot": "artifacts/electron-packaged-routes.jpg",
+  "limitations": [
+    "No learning operations in this baseline engine",
+    "No independent clinical validation",
+    "No external Developer ID signing or notarization"
+  ],
+  "passed": true
+}

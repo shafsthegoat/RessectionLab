@@ -1,0 +1,15 @@
+{
+  "sources": {
+    "scripts/compare_independent_native_batch.py": "507595ce1968cfa736fc3734f7a581c68b7a9b8d4873cc23a4c532a1ddf3c0e6",
+    "manifests/experiments/independent-native-batch-history-v1.json": "76533ab14eaa9d922e2c148e2b40d745804a0cee85fee397d1a1c4b50c11a5d6",
+    "tests/test_independent_native_batch_comparison_review.py": "9b60e37f73085fea731e0617ed333c7fad72614f43fcce77be2a35415a1a4256"
+  },
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_independent_native_batch_comparison_review.py"
+  ],
+  "reason": "Corrected mock platform lookup so no platform subprocess uses the fake worker; runner source still unchanged."
+}

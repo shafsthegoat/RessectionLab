@@ -1,0 +1,60 @@
+{
+  "SSFO_assignment_lines_unchanged": true,
+  "algorithm": "Existing fresh SparseFactor(symbolic,matrix), ordering and all solver settings unchanged. Numeric resource release before reformation; owned handle lifetime independent of solve success.",
+  "csc_fragment_byte_identical_to_prior_sms_source": true,
+  "csc_zero_row_and_conversion_fragment_boundaries": "Narrower slice begins at zero-row guard and ends before availability block; full original positive-control slice also recorded.",
+  "csc_zero_row_and_conversion_fragment_sha256": "0dd0bbd88e903dbe3069136a118ad81089e4ff470e158456b67205cc03875dda",
+  "extraction": {
+    "bytes": 2077,
+    "path": "artifacts/febio-accelerate-lifecycle-v1/extraction.json",
+    "sha256": "198889d13d942eea439e0352da3e0bfd837e25ddbd9cf0036a14d24fa4ecd76e"
+  },
+  "historical_pointer_only_patch": {
+    "bytes": 718,
+    "path": "artifacts/febio-accelerate-csc-repair-v1/accelerate-csc-pointer-count.patch",
+    "sha256": "c3c6b068ed8e7b2480a64308099fa57d8b02fdbe04076f1497b0b2fdd3b7c3e0"
+  },
+  "initialization_fragment": {
+    "bytes": 310,
+    "path": "artifacts/febio-accelerate-matrix-init-v1/matrix-initialization-fragment.cpp.txt",
+    "sha256": "f4f69d99bbefb3b20c4e79a35b44288384922c44a2d40ddfdb27519b55184dd3"
+  },
+  "one_source_file_only": "NumCore/AccelerateSparseSolver.cpp",
+  "original_code_executed": false,
+  "original_positive_control_slice": {
+    "byte_identical_to_successful_six_control_slice": true,
+    "bytes": 379,
+    "end_exclusive": "    if (__builtin_available",
+    "sha256": "88315d2f9d1499688c66c202ad600d963f89e158c99c3ef6170dd71754fefa1b",
+    "start_inclusive": "    imp->m_n = imp->m_pA->Rows(); in PreProcess"
+  },
+  "original_source": {
+    "bytes": 20622,
+    "path": "data/optional-runtimes/febio-4.13/source/NumCore/AccelerateSparseSolver.cpp",
+    "sha256": "f5432e79ab73dd11d4a0550691480edd7fd5f00c392ae2f78eddf9c4b5da51c9"
+  },
+  "patch": {
+    "bytes": 5484,
+    "path": "artifacts/febio-accelerate-lifecycle-v1/accelerate-correctness.patch",
+    "sha256": "67a1858f2d55046796d7ccb46758ca06e5bfb673e75a539d158b1a17652f3340"
+  },
+  "patched_source": {
+    "bytes": 21906,
+    "path": "artifacts/febio-accelerate-lifecycle-v1/patched-AccelerateSparseSolver.cpp",
+    "sha256": "476ac8471ea681a99c298352a50aba2a7a5baa71635e1678155a7f58b72ba04a"
+  },
+  "runtime_or_model_executed": false,
+  "sdk_static_reviews": [
+    {
+      "bytes": 8528,
+      "path": "artifacts/febio-accelerate-initialization-review-v1/review.json",
+      "sha256": "d6aef94bae672fe4143518906fd9057528a82b411a233d70641d1525164316f8"
+    },
+    {
+      "bytes": 9900,
+      "path": "artifacts/febio-accelerate-lifecycle-review-v1/review.json",
+      "sha256": "e7681c9abc95857ece6f163ba7cd88f4e3d674a8488f6422a2d1a719c01fc629"
+    }
+  ],
+  "status": "prospective_combined_correctness_patch_unexecuted"
+}

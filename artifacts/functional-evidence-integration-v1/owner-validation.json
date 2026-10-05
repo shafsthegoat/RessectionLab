@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "scope": "functional evidence source binding, persistence, native forwarding and regressions",
+  "validation": {
+    "passed": 181,
+    "failed": 0,
+    "elapsed_seconds": 9.73,
+    "new_analytical_controls": 14,
+    "test_files": [
+      "tests/test_functional_evidence.py",
+      "tests/test_prior_proposals.py",
+      "tests/test_native_selected_route.py",
+      "tests/test_native_simulation.py",
+      "tests/test_native_refinement.py",
+      "tests/test_core.py",
+      "tests/test_imaging.py",
+      "tests/test_simulation.py",
+      "tests/test_worlds_evaluation.py"
+    ]
+  },
+  "negative_results": [
+    {
+      "attempt": "initial combined check",
+      "passed": 123,
+      "failed": 1,
+      "reason": "uncertainty tuple/list comparison rejected valid JSON roundtrip",
+      "repair": "canonical JSON manifests and persisted request records"
+    },
+    {
+      "attempt": "test invocation before final focused pass",
+      "status": "no_tests_collected",
+      "reason": "incorrect tests/test_worlds.py filename; corrected to tests/test_worlds_evaluation.py"
+    }
+  ],
+  "independent_review_fix": "fresh(world_generator=...) now rejects a generator inconsistent with the functional evidence record",
+  "patient_experiments_run": 0,
+  "source_sha256": {
+    "src/resectionlab/functional_evidence.py": "58ca24b6b0d63ef3860b33a247301a2f210857eec9719ad14ac5cab8517d5426",
+    "src/resectionlab/core.py": "f1f0b8ae334cabc864c3ec85d4f6b49e4842de2b580edaadd7562276ea0c92db",
+    "src/resectionlab/imaging.py": "26928ec3eb948924b961d7d70289014ee243c1cf6ea6e3f9ba60e8bf96e8d866",
+    "src/resectionlab/prior_proposals.py": "8d0f40aa3690845465f024708d19c68b3441d0d19cd356b900566fb074730f5f",
+    "src/resectionlab/simulation.py": "234b82653650ebd1baf6a58ef5cecf45d20047dce6299b32463bb021a987e62f",
+    "src/resectionlab/native_simulation.py": "4790bfd16baa2cc73cb9da8b36c88a1fe945c2b29a824c232a6a941ab17a4f8f",
+    "src/resectionlab/native_refinement.py": "a456b5f2bae942af8471bb290c87852e828f42a57ad4e3b9e201c57c0da85f55",
+    "tests/test_functional_evidence.py": "647491609e08b28b5704831102e72e6e9f5a6de4b253892c738f9f6b142a6233",
+    "scripts/prepare_functional_sensitivity.py": "1546da823ad7d9361d4a375aa4fdcecb592647023915c82e1273149c9c0f9ec4",
+    "docs/functional-evidence-integration.md": "41c22c84c01ab02d30b372ae02fadb89f71f7313c281f13d49c4fce89dbf0b5e"
+  },
+  "documentation_note": "Independent bridge integration paragraph added after the numerical owner pass; numerical/test files unchanged."
+}

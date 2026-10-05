@@ -1,0 +1,77 @@
+{
+  "all_pins_unchanged": true,
+  "binaries_sha256": {
+    "initialization": "4ac944ef7502c52fed410b1e75bdf7be2c10e4c81c44d92a45b95bda2eb30f85",
+    "lifecycle": "9fbf26ced54e76b63ce2644c164402fbf22c52b295c5155e3b3d507fcb72d2b0"
+  },
+  "declaration_sha256": "d45883853df0516efeba4e0f7d21f78b91899d47f3cd1743db58b61ec66334c9",
+  "factorization_or_model_executed": false,
+  "initialization_fragment_sha256": "f4f69d99bbefb3b20c4e79a35b44288384922c44a2d40ddfdb27519b55184dd3",
+  "lifecycle_api_is_mock": true,
+  "original_code_executed": false,
+  "patched_source_sha256": "476ac8471ea681a99c298352a50aba2a7a5baa71635e1678155a7f58b72ba04a",
+  "rows": [
+    {
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/clang++",
+        "-isysroot",
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        "-std=c++17",
+        "-O1",
+        "-g",
+        "-fsanitize=address,undefined",
+        "-fno-omit-frame-pointer",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-matrix-init-v1/matrix-initialization-control.cpp",
+        "-o",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/febio-accelerate-lifecycle-v1/initialization-check"
+      ],
+      "elapsed_seconds": 1.918854458956048,
+      "exit_code": 0,
+      "name": "initialization-compile",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/febio-accelerate-lifecycle-v1/initialization-check"
+      ],
+      "elapsed_seconds": 0.621503458940424,
+      "exit_code": 0,
+      "name": "initialization-cases",
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_sha256": "fa358192bc3b37397679f3d978ac2fcd86c5f208bd36857930fabf2682ebcf7a"
+    },
+    {
+      "argv": [
+        "/Library/Developer/CommandLineTools/usr/bin/clang++",
+        "-isysroot",
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        "-std=c++17",
+        "-O1",
+        "-g",
+        "-fsanitize=address,undefined",
+        "-fno-omit-frame-pointer",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/lifecycle-control.cpp",
+        "-o",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/febio-accelerate-lifecycle-v1/lifecycle-check"
+      ],
+      "elapsed_seconds": 2.0730807919753715,
+      "exit_code": 0,
+      "name": "lifecycle-compile",
+      "stderr_sha256": "b087ff3920c26d58cbf976ca3b2f9be028c994c53214ea5991ff75bca1cb905b",
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/febio-accelerate-lifecycle-v1/lifecycle-check"
+      ],
+      "elapsed_seconds": 0.34245887491852045,
+      "exit_code": 0,
+      "name": "lifecycle-cases",
+      "stderr_sha256": "a4716fe9a7380f860c22d9004a43ababc66686fcf36db655ff811848754788d9",
+      "stdout_sha256": "1e396266011042d64b07e5aa412e66b500a6b1e4a64e28c6a42fc3152bf00d02"
+    }
+  ],
+  "sdk_factorization_executed": false,
+  "status": "adapter_initialization_lifecycle_controls_passed"
+}

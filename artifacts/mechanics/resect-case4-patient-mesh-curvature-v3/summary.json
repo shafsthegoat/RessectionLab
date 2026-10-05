@@ -1,0 +1,51 @@
+{
+  "status": "failed_or_incomplete",
+  "candidate_accepted": false,
+  "source_commit": "b8de4416e777b11d31f1b75adbf164522a92eaa3",
+  "launcher_exit_code": 1,
+  "worker_exit_code": -9,
+  "kill_reason": "supervision_exception",
+  "supervision_error": {
+    "message": "Command '['/bin/ps', '-axo', 'pid=,pgid=,rss=']' timed out after 0.011743584065698087 seconds",
+    "type": "TimeoutExpired"
+  },
+  "wall_cap_seconds": 180,
+  "supervised_elapsed_seconds": 180.0281012909254,
+  "sampled_peak_process_group_rss_bytes": 590708736,
+  "native_generation_calls_charged_before_entry": 1,
+  "returned_volume_meshes": 0,
+  "returned_nodes": null,
+  "returned_tet10_elements": null,
+  "complete_diagnostic_available": false,
+  "quality_and_fidelity_status": "not_assessed_no_returned_mesh",
+  "last_recorded_native_stage": "Meshing 2D, surface 2, after completed 1D boundary curves",
+  "native_logged_stage_times": {
+    "classifying surfaces": {
+      "wall_seconds": 3.64788,
+      "cpu_seconds": 3.47466
+    },
+    "creating geometry of discrete surfaces": {
+      "wall_seconds": 1.48194,
+      "cpu_seconds": 1.3418
+    },
+    "meshing 1D": {
+      "wall_seconds": 170.079,
+      "cpu_seconds": 169.672
+    }
+  },
+  "raw_output_files": 5,
+  "raw_output_bytes": 22993,
+  "all_27_input_bindings_unchanged": true,
+  "prior_failed_attempts_match_saved_indices": true,
+  "worker_checkpoint_status": "running",
+  "candidate_checkpoint_status": "running",
+  "worker_checkpoint_generation_count": null,
+  "checkpoint_interpretation": "Running/null checkpoints were interrupted by supervised SIGKILL and are preserved verbatim; terminal authority is acceptance/supervision.",
+  "solver_calls": 0,
+  "retries": 0,
+  "MRI_reextracted": false,
+  "B_or_V_access": false,
+  "clinical_validation": false,
+  "interpretation": "Time-budget-adjacent supervision failure, not a tested geometric-fidelity rejection. The ps sample timed out with approximately 11.74 ms remaining; original kill_reason is retained. No count/fidelity success or failure can be inferred.",
+  "timing_scope": "One framework-feasibility attempt; not a formal performance comparison. Prior HBE execution had ended; result-collection I/O may remain."
+}

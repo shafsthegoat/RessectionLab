@@ -1,0 +1,18 @@
+{
+  "status": "running",
+  "candidate_id": "case4_curvature24_min3_boundary12_interior24_single",
+  "native_generation_calls": 1,
+  "solver_calls": 0,
+  "retries": 0,
+  "clinical_validation": false,
+  "solver_admitted": false,
+  "source_surface": {
+    "vertices": 91951,
+    "triangles": 183902,
+    "components": 1,
+    "euler_characteristic": 0,
+    "genus": 1,
+    "enclosed_volume_m3": 0.0011858776244957961,
+    "area_m2": 0.06754710502400357
+  }
+}

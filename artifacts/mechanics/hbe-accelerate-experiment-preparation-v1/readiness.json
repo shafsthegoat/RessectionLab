@@ -1,0 +1,40 @@
+{
+  "artifact_index": {
+    "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/artifact-index.json",
+    "sha256": "a0f23fdd755a8eb852b4e3ae374e3174f64deb7ed86809e09feb17f0b6ea6baf"
+  },
+  "draft": {
+    "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/release-draft.json",
+    "sha256": "9f21f130d51911c52faf03bcaba0a8a24c058339451794809a387ea2a4191c10"
+  },
+  "execution_authorized": false,
+  "execution_source": "outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_experiment.py",
+  "final_release_transformation": {
+    "add_execution_independent_evidence_preparation": {
+      "path": "artifacts/mechanics/hbe-accelerate-preparation-independent-review-v1/review.json",
+      "sha256": "01aca9af05ce11019e03dd72fecd96b347267133d625a66961c5b30fc5b66a5c"
+    },
+    "all_other_fields": "Unchanged from bound concrete draft",
+    "authorization": "Exact forthcoming root release text; no execution authority supplied here",
+    "created_at_utc": "Actual publication time",
+    "destination": "artifacts/mechanics/hbe-accelerate-experiment-v1/release.json",
+    "preserve_draft": true,
+    "set_authorized": true,
+    "set_schema": "hbe-calibration-release-v1"
+  },
+  "forbidden_flags": [
+    "--reuse-verified-coarse"
+  ],
+  "independent_review": {
+    "path": "artifacts/mechanics/hbe-accelerate-preparation-independent-review-v1/review.json",
+    "sha256": "01aca9af05ce11019e03dd72fecd96b347267133d625a66961c5b30fc5b66a5c"
+  },
+  "measured_member_reads": 0,
+  "metadata_preflight": "Same CLI as README with final path/hash; no execute flags",
+  "one_released_launch_flags": [
+    "--execute",
+    "--explicit-backend"
+  ],
+  "solver_invocations": 0,
+  "status": "source_bound_preparation_independently_accepted_waiting_root_execution_release"
+}

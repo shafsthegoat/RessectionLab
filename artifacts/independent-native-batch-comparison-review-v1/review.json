@@ -1,0 +1,64 @@
+{
+  "version": "independent-native-batch-comparison-review-v1",
+  "status": "prospective_orchestration_review_passed_after_repairs",
+  "scope": "Static and mocked orchestration only. No actual runtime, 0.125-mm scene, native history construction, independent history audit, patient processing, training or benchmark executed by this review.",
+  "reviewed_sources_sha256": {
+    "scripts/compare_independent_native_batch.py": "1a25bca8953467dba24228e411b6262ab627feb66661cdb5b40fd7d9b5b310e5",
+    "manifests/experiments/independent-native-batch-history-v1.json": "76533ab14eaa9d922e2c148e2b40d745804a0cee85fee397d1a1c4b50c11a5d6",
+    "tests/test_independent_native_batch_comparison_review.py": "2a454b02c8cb3b7eabbf7688264fff5e821bb2f949d2b93706b0e01af641ec4f",
+    "tests/test_independent_native_batch_comparison.py": "793cb3558193fb1893db8cfa43afb9fca529b7d5873c23927b9d838a88453be1"
+  },
+  "all_nine_pinned_input_and_numerical_file_hashes_match": {
+    "artifacts/native-discretization-control-v1/run-01/report.json": true,
+    "scripts/probe_native_discretization.py": true,
+    "manifests/experiments/native-discretization-control-v1.json": true,
+    "src/resectionlab/geometry.py": true,
+    "src/resectionlab/native_resection.py": true,
+    "src/resectionlab/evaluation.py": true,
+    "src/resectionlab/independent_geometry_batch.py": true,
+    "src/resectionlab/worlds.py": true,
+    "src/resectionlab/core.py": true
+  },
+  "negative_results": {
+    "preserved_runner": "artifacts/independent-native-batch-comparison-v1/pre-review-runner.py.txt",
+    "sha256": "507595ce1968cfa736fc3734f7a581c68b7a9b8d4873cc23a4c532a1ddf3c0e6",
+    "attempt_01": "7 failed / 2 passed. The first five failures demonstrated backend/sampler defects; two launch checks encountered an unrelated mock-platform fixture error.",
+    "attempt_02": "7 failed / 2 passed after fixing only platform mocking; old runner unchanged. All seven were genuine missing gates.",
+    "findings": [
+      "Four report tampering variants were accepted: mislabeled batch backend, missing backend, scalar phase using batch queries, batch phase reporting zero batch queries.",
+      "RSS subprocess had no timeout, allowing the watchdog to stall.",
+      "Sampler/supervisor exception bypassed worker kill/reap and failed launcher receipt.",
+      "Source inventory exception after worker exit bypassed failed launcher receipt; analogous worker-finalization path was statically identified."
+    ]
+  },
+  "final_tests": {
+    "file": "tests/test_independent_native_batch_comparison_review.py",
+    "passed": 12,
+    "pytest_seconds": 0.05,
+    "exit_code": 0,
+    "source_unchanged": true,
+    "receipt": "artifacts/independent-native-batch-comparison-review-v1/attempt-03.json"
+  },
+  "owner_tests_read_only": {
+    "passed": 21,
+    "pytest_seconds": 0.07,
+    "receipt": "artifacts/independent-native-batch-comparison-v1/owner-attempt-01/receipt.json"
+  },
+  "verified_controls": [
+    "Correctly labeled complete mock report can be accepted; changed backend evidence, noninteger query counts and unequal total queries are rejected.",
+    "RSS subprocess has a finite timeout; launcher bounds this by remaining parent budget.",
+    "Injected monitor exception kills and reaps the mocked worker and retains explicit failure receipt.",
+    "Parent final source exception produces a failed launcher receipt; worker final source exception preserves both original failure and final source error, with zero native strokes.",
+    "Conflicting tracing hook is restored to the original function and refuses acceptance.",
+    "Saved scientific payload verifier checks declared history digest, bounded gzip size, exact trace hashes, per-prefix counts and cell-query count, and equality of all phase trace payloads.",
+    "Default evaluator remains scalar; declared phases are scalar-before, explicit batch-256, scalar-after on one pinned historical analytic history."
+  ],
+  "limits": [
+    "Mocked orchestration success does not establish actual whole-history numerical parity or timing improvement.",
+    "One actual comparison still requires root commit/release and readiness checks. Preserve partial/capped results; no retry or cap expansion is authorized by this review.",
+    "Times from the future runner include identical tracing instrumentation; setup and gzip export are separate. Do not subtract capture time to manufacture an uninstrumented speedup.",
+    "Parent kill/reap and final artifact checks may add cleanup latency after the wall cap; receipt rejects completion at or beyond the declared parent limit.",
+    "Sampled worker RSS can miss brief excursions; numerical library environment controls are not a CPU-affinity guarantee.",
+    "The fixed pins and source receipt bind one analytic case/history; no patient, training, resolution-convergence or clinical claim follows."
+  ]
+}

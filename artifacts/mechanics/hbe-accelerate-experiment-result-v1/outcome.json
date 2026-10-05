@@ -1,0 +1,109 @@
+{
+  "access_chronology": {
+    "bytes": 933,
+    "path": "artifacts/mechanics/hbe-accelerate-experiment-result-v1/access-chronology.json",
+    "sha256": "b63d7a6d05736c9b1004a56879f3e1ad96a6bc19839f45362f8bddb73fe4f661"
+  },
+  "actual_solver_calls": 18,
+  "aggregate": {
+    "bytes": 15386249,
+    "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/reference-numerical.json",
+    "sha256": "6f596eb45fd1e39bcf485dbbcbfbc8bfd2bd5397e9e54b67d63a77fcbfac686a"
+  },
+  "collection_measured_member_reads": 0,
+  "collection_primitive_or_physics_replay": false,
+  "collection_solver_calls": 0,
+  "exit_code": 1,
+  "failed_aggregate_criteria": [
+    {
+      "actual": 2.2356144373333107e-05,
+      "actual_divided_by_limit": 2.7945180466666386,
+      "branch": "compression",
+      "group": "mesh",
+      "limit": 8e-06,
+      "metric": "motion",
+      "passed": false,
+      "units": "m"
+    },
+    {
+      "actual": 2.325768976023929e-05,
+      "actual_divided_by_limit": 2.9072112200299114,
+      "branch": "tension",
+      "group": "mesh",
+      "limit": 8e-06,
+      "metric": "motion",
+      "passed": false,
+      "units": "m"
+    },
+    {
+      "actual": 0.00022774250190189804,
+      "actual_divided_by_limit": 1.1416601418129249,
+      "branch": "tension",
+      "comparison": "lt",
+      "group": "mesh",
+      "limit": 0.00019948362350659735,
+      "metric": "reaction_trend",
+      "passed": false,
+      "units": "N"
+    }
+  ],
+  "fitted_calls_not_executed": 2,
+  "individual_elapsed_max_seconds": 41.28799983300269,
+  "individually_passed_calls": 18,
+  "kill_reason": null,
+  "observed_output": {
+    "maximum_active_bytes": 105300864,
+    "maximum_total_bytes": 997830113,
+    "sampling_interval_seconds": 0.1,
+    "sampling_limit": "Between-sample peaks may be missed.",
+    "status": "watching"
+  },
+  "physical_validation_pass": null,
+  "preservation": {
+    "bytes": 87900,
+    "path": "artifacts/mechanics/hbe-accelerate-experiment-result-v1/preservation.json",
+    "sha256": "86102ca7b7cf10fb559c70f0e4981e2d7a5e978940e92e293a5bebe778ff9cb7"
+  },
+  "raw_bytes": 914390988,
+  "raw_file_count": 169,
+  "raw_index": {
+    "bytes": 28521,
+    "path": "artifacts/mechanics/hbe-accelerate-experiment-result-v1/raw-output-index.json",
+    "sha256": "385fdbf2a52972509a18a31a693aa139553ee02e99a62decfc0391fda8fe94e9"
+  },
+  "readonly_freeze": {
+    "bytes": 479,
+    "path": "artifacts/mechanics/hbe-accelerate-experiment-result-v1/readonly-freeze.json",
+    "sha256": "8e0882e53320561f99d1d94f230e76976cf417a3ca800e5ea9d2f9039ddd6a4c"
+  },
+  "release": {
+    "bytes": 10798,
+    "path": "artifacts/mechanics/hbe-accelerate-experiment-v1/release.json",
+    "sha256": "edb91bdbaa542852ec65a87eba8e2676556d926d9c979ceea3cb8e460624ba6b"
+  },
+  "result": {
+    "bytes": 1738,
+    "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/result.json",
+    "sha256": "683a92c2a38c4364e1e18155338ee0234734d42607e2a5f967a964df223ad6ad"
+  },
+  "sampled_peak_group_rss_bytes": 253722624,
+  "source_archive": {
+    "path": "outputs/validation/hbe-accelerate-6486dbc/source.tar",
+    "sha256": "fd3a72a995dd38fc1107b83ec71f1b0911ed060ecac451245637c1559e598d34"
+  },
+  "source_commit": "6486dbcfb0395a4c5b9df3f140b08141d0d96fd7",
+  "state": {
+    "bytes": 84837,
+    "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/state.json",
+    "sha256": "d984a8213a0a6799fa1c51ae5ac6872b7ec36af6c810b9338736613d60f904f8"
+  },
+  "status": "failed_numerical_mesh_convergence_before_measurement_access",
+  "supervised_seconds": 396.3033522500191,
+  "supervision": {
+    "bytes": 1162,
+    "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/supervision/supervision.json",
+    "sha256": "2a819ab6e8320d7093508e9a958d0354330c350fd453f539d25341cd674b7c2b"
+  },
+  "total_recorded_solver_seconds": 338.5155295818113,
+  "worker_state_seconds": 394.0622269170126
+}

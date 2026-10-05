@@ -1,0 +1,249 @@
+{
+  "source_commit": "2cb40187be6364c71072c46d8dd02ba50ec61d44",
+  "runtime_identity_sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57",
+  "solver_backend": "accelerate",
+  "execution_accepted": true,
+  "numerical_threads": 1,
+  "evidence": {
+    "execution": {
+      "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/execution.json",
+      "sha256": "7b3a15d237b034ec1988c5088f09b81adb935974b50dde59d2e87b028e61c0a5"
+    },
+    "results": {
+      "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/results.json",
+      "sha256": "765dc5ae422ac66d399b095a6f4df95e2e108e2276583441c13210d7440e24cf"
+    },
+    "baseline": {
+      "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/execution-baseline.json",
+      "sha256": "2a5c447b3d5bc407e71c189bce81fa374b2daeb88d9d95069e1ff6d924ae6a94"
+    }
+  },
+  "status": "three_actual_fixed_software_controls_passed",
+  "case_rows": [
+    {
+      "case": "tet10_affine",
+      "status": "passed",
+      "deck_sha256": "dfafcfde8075aacb36e2014d6abe755470e04667bcbfd69c6857edfb63833d50",
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+        "-noconfig",
+        "-no_title",
+        "-i",
+        "tet10_affine.feb",
+        "-o",
+        "tet10_affine.log"
+      ],
+      "solver_seconds": 0.036926207947544754,
+      "solver_exit_code": 0,
+      "backend_evidence": {
+        "solver_backend": "accelerate",
+        "actual_selection_lines": [
+          "* Selecting linear solver accelerate                                    *"
+        ],
+        "solver_xml": "<linear_solver type=\"accelerate\"><iterative>0</iterative><factorization>4</factorization><order_method>0</order_method><print_condition_number>0</print_condition_number></linear_solver>",
+        "solver_only_change_verified": true,
+        "runtime_identity_sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57",
+        "executed_deck_sha256": "dfafcfde8075aacb36e2014d6abe755470e04667bcbfd69c6857edfb63833d50"
+      },
+      "checker_passed": true,
+      "output_hashes": {
+        "checked.json": "5aa1d6484a098af615c22a98a085930322b674100a881d32f54907de752c5fb7",
+        "console.txt": "83a6249de8f94d0b0b1801b4cdeb1c58b6d78ffdf328f0121d3671e510621495",
+        "tet10_affine.elements.log": "1389f65aa1ea44eb98514e7241ecf21ba8fe641c083754553a6ef76ca51397c6",
+        "tet10_affine.feb": "dfafcfde8075aacb36e2014d6abe755470e04667bcbfd69c6857edfb63833d50",
+        "tet10_affine.log": "b5c8faf3f9d961ab8f6f45940c0b90eb298e59f72849fc483f2d9417e8f241fc",
+        "tet10_affine.nodes.log": "7956ee9d0c797066adaa58971a333d49553e6fb737afc6770dc509e17d0ad8e2"
+      },
+      "passed": true,
+      "evidence": {
+        "original_deck": {
+          "path": "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-patient-constraints-runtime-v1/decks/tet10_affine.feb",
+          "sha256": "8a75158a97750f3db57a5a2a48ab3f03760a4a95a8818ff3d30218ceca262f62"
+        },
+        "executed_deck": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_affine/tet10_affine.feb",
+          "sha256": "dfafcfde8075aacb36e2014d6abe755470e04667bcbfd69c6857edfb63833d50"
+        },
+        "console": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_affine/console.txt",
+          "sha256": "83a6249de8f94d0b0b1801b4cdeb1c58b6d78ffdf328f0121d3671e510621495"
+        },
+        "nodes": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_affine/tet10_affine.nodes.log",
+          "sha256": "7956ee9d0c797066adaa58971a333d49553e6fb737afc6770dc509e17d0ad8e2"
+        },
+        "elements": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_affine/tet10_affine.elements.log",
+          "sha256": "1389f65aa1ea44eb98514e7241ecf21ba8fe641c083754553a6ef76ca51397c6"
+        },
+        "solver_log": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_affine/tet10_affine.log",
+          "sha256": "b5c8faf3f9d961ab8f6f45940c0b90eb298e59f72849fc483f2d9417e8f241fc"
+        },
+        "checked": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/tet10_affine/checked.json",
+          "sha256": "5aa1d6484a098af615c22a98a085930322b674100a881d32f54907de752c5fb7"
+        },
+        "checker_source": {
+          "path": "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_patient_constraints.py",
+          "sha256": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66"
+        }
+      }
+    },
+    {
+      "case": "mpc_translation",
+      "status": "passed",
+      "deck_sha256": "956b66dc6cae4904e3a124a8b5e81bec66128d015e1ce85d6b96e533f76d996b",
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+        "-noconfig",
+        "-no_title",
+        "-i",
+        "mpc_translation.feb",
+        "-o",
+        "mpc_translation.log"
+      ],
+      "solver_seconds": 0.03889662493020296,
+      "solver_exit_code": 0,
+      "backend_evidence": {
+        "solver_backend": "accelerate",
+        "actual_selection_lines": [
+          "* Selecting linear solver accelerate                                    *"
+        ],
+        "solver_xml": "<linear_solver type=\"accelerate\"><iterative>0</iterative><factorization>4</factorization><order_method>0</order_method><print_condition_number>0</print_condition_number></linear_solver>",
+        "solver_only_change_verified": true,
+        "runtime_identity_sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57",
+        "executed_deck_sha256": "956b66dc6cae4904e3a124a8b5e81bec66128d015e1ce85d6b96e533f76d996b"
+      },
+      "checker_passed": true,
+      "output_hashes": {
+        "checked.json": "3e00b7c394a52e2b3f0d0395f1f6d1c5126005ddbc71329f2183ee8b4c998347",
+        "console.txt": "2cd154f5c989025c02c02b78436ccca42d01ba1e85c0e754f3a7c94e745b8b2f",
+        "mpc_translation.elements.log": "f6b35c01ef594ea29695d9fc36e12def945a87ad7857c1f2e98648c635213a78",
+        "mpc_translation.feb": "956b66dc6cae4904e3a124a8b5e81bec66128d015e1ce85d6b96e533f76d996b",
+        "mpc_translation.log": "02cfac3e0090dbd595c4e0dce4524a964fb45de396005ec2efa06f99ca383d16",
+        "mpc_translation.nodes.log": "7b981afd223479f12d3deef891b6fdc494f0c2379b7ed1057b5c36ce0d1c0654"
+      },
+      "passed": true,
+      "evidence": {
+        "original_deck": {
+          "path": "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-patient-constraints-runtime-v1/decks/mpc_translation.feb",
+          "sha256": "dad1653d2015d04f3499ea87f37246e5fce3c86f849ffc363e99cddd230386fa"
+        },
+        "executed_deck": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_translation/mpc_translation.feb",
+          "sha256": "956b66dc6cae4904e3a124a8b5e81bec66128d015e1ce85d6b96e533f76d996b"
+        },
+        "console": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_translation/console.txt",
+          "sha256": "2cd154f5c989025c02c02b78436ccca42d01ba1e85c0e754f3a7c94e745b8b2f"
+        },
+        "nodes": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_translation/mpc_translation.nodes.log",
+          "sha256": "7b981afd223479f12d3deef891b6fdc494f0c2379b7ed1057b5c36ce0d1c0654"
+        },
+        "elements": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_translation/mpc_translation.elements.log",
+          "sha256": "f6b35c01ef594ea29695d9fc36e12def945a87ad7857c1f2e98648c635213a78"
+        },
+        "solver_log": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_translation/mpc_translation.log",
+          "sha256": "02cfac3e0090dbd595c4e0dce4524a964fb45de396005ec2efa06f99ca383d16"
+        },
+        "checked": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_translation/checked.json",
+          "sha256": "3e00b7c394a52e2b3f0d0395f1f6d1c5126005ddbc71329f2183ee8b4c998347"
+        },
+        "checker_source": {
+          "path": "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_patient_constraints.py",
+          "sha256": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66"
+        }
+      }
+    },
+    {
+      "case": "mpc_nonrigid",
+      "status": "passed",
+      "deck_sha256": "771f3a99d7a428d84b737c21bccf5c22a60ede8542d82a31310aaa0b074e66f8",
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+        "-noconfig",
+        "-no_title",
+        "-i",
+        "mpc_nonrigid.feb",
+        "-o",
+        "mpc_nonrigid.log"
+      ],
+      "solver_seconds": 0.036841124994680285,
+      "solver_exit_code": 0,
+      "backend_evidence": {
+        "solver_backend": "accelerate",
+        "actual_selection_lines": [
+          "* Selecting linear solver accelerate                                    *"
+        ],
+        "solver_xml": "<linear_solver type=\"accelerate\"><iterative>0</iterative><factorization>4</factorization><order_method>0</order_method><print_condition_number>0</print_condition_number></linear_solver>",
+        "solver_only_change_verified": true,
+        "runtime_identity_sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57",
+        "executed_deck_sha256": "771f3a99d7a428d84b737c21bccf5c22a60ede8542d82a31310aaa0b074e66f8"
+      },
+      "checker_passed": true,
+      "output_hashes": {
+        "checked.json": "851bdd30410e5dc68ac0dff0fc4ce82bdc44acb47ab0dc28ee8a1fe5d86cbabb",
+        "console.txt": "00fbed3ebc09cab37b7651ac2b1fc9bb928c8247e8aa180fc8ec9a67ce800629",
+        "mpc_nonrigid.elements.log": "734f781f8e9dd9e7e9f3b8e289e0264d95f162831cf1bb3a4992542bbf1f2498",
+        "mpc_nonrigid.feb": "771f3a99d7a428d84b737c21bccf5c22a60ede8542d82a31310aaa0b074e66f8",
+        "mpc_nonrigid.log": "aeb31ae7258135419f2c96b7ac561d1b53dd599ed26ff2112d0b3e511bab8b3f",
+        "mpc_nonrigid.nodes.log": "c3197dc5a75bcc8f5fa805e28764807557519b283381818d64b5eefe5e227273"
+      },
+      "passed": true,
+      "evidence": {
+        "original_deck": {
+          "path": "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-patient-constraints-runtime-v1/decks/mpc_nonrigid.feb",
+          "sha256": "40900e8761e663ca37568f9b911a06bfb34acb3db2bd5b1fd4840c7d55fadb93"
+        },
+        "executed_deck": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_nonrigid/mpc_nonrigid.feb",
+          "sha256": "771f3a99d7a428d84b737c21bccf5c22a60ede8542d82a31310aaa0b074e66f8"
+        },
+        "console": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_nonrigid/console.txt",
+          "sha256": "00fbed3ebc09cab37b7651ac2b1fc9bb928c8247e8aa180fc8ec9a67ce800629"
+        },
+        "nodes": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_nonrigid/mpc_nonrigid.nodes.log",
+          "sha256": "c3197dc5a75bcc8f5fa805e28764807557519b283381818d64b5eefe5e227273"
+        },
+        "elements": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_nonrigid/mpc_nonrigid.elements.log",
+          "sha256": "734f781f8e9dd9e7e9f3b8e289e0264d95f162831cf1bb3a4992542bbf1f2498"
+        },
+        "solver_log": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_nonrigid/mpc_nonrigid.log",
+          "sha256": "aeb31ae7258135419f2c96b7ac561d1b53dd599ed26ff2112d0b3e511bab8b3f"
+        },
+        "checked": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/mpc_nonrigid/checked.json",
+          "sha256": "851bdd30410e5dc68ac0dff0fc4ce82bdc44acb47ab0dc28ee8a1fe5d86cbabb"
+        },
+        "checker_source": {
+          "path": "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_patient_constraints.py",
+          "sha256": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66"
+        }
+      }
+    }
+  ],
+  "solver_invocations": 3,
+  "case_order": [
+    "tet10_affine",
+    "mpc_translation",
+    "mpc_nonrigid"
+  ],
+  "original_numerical_checker_unchanged": true,
+  "checker_inputs_after": {
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_febio_verification.py": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_patient_constraints.py": {
+      "unchanged": true
+    }
+  }
+}

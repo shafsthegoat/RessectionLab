@@ -1,0 +1,93 @@
+{
+  "behavior_changed": true,
+  "checker_sha256": "1c6399531db130c228fd6e864f145b87835019a9dc438ef1a70ac4ff5a46801b",
+  "checkpoint_tensors_loaded": false,
+  "completed_episodes_checked": 2,
+  "episodes": [
+    {
+      "episode": "teacher_replay",
+      "normal_mm3": 412.0014351004204,
+      "passed": true,
+      "per_action": [
+        {
+          "normal_mm3": 121.00041798998382,
+          "reward": 150.70352651746774,
+          "target_mm3": 175.0006103515625
+        },
+        {
+          "normal_mm3": 139.00048944752064,
+          "reward": 132.10545119785317,
+          "target_mm3": 160.00054931640625
+        },
+        {
+          "normal_mm3": 152.00052766291594,
+          "reward": 127.50344354772707,
+          "target_mm3": 158.00054931640625
+        }
+      ],
+      "recorded_independent_geometry_accepted": true,
+      "removed_cells": 905,
+      "retained_contacted_cells": 1014,
+      "reward": 410.312421263048,
+      "target_fraction": 0.04310570921044444,
+      "target_mm3": 493.001708984375
+    },
+    {
+      "episode": "latest_policy",
+      "normal_mm3": 164.0005756879736,
+      "passed": true,
+      "per_action": [
+        {
+          "normal_mm3": 128.00045061940716,
+          "reward": 147.30350473279464,
+          "target_mm3": 173.00059509277344
+        },
+        {
+          "normal_mm3": 18.000062534283224,
+          "reward": -3.7010127570507723,
+          "target_mm3": 0.0
+        },
+        {
+          "normal_mm3": 18.000062534283224,
+          "reward": -3.705012771147555,
+          "target_mm3": 0.0
+        }
+      ],
+      "recorded_independent_geometry_accepted": true,
+      "removed_cells": 337,
+      "retained_contacted_cells": 633,
+      "reward": 139.89747920459632,
+      "target_fraction": 0.015126343802470028,
+      "target_mm3": 173.00059509277344
+    }
+  ],
+  "greedy_return": 410.312421263048,
+  "imitation_return_change": 127.19443468919218,
+  "initial_return": 12.703044515404144,
+  "input_sha256": {
+    "pat05-real-geometric-imitation-v1/declaration-input.json": "a9c91b5beb5c2ca0c4e08d9cfa255f5ac17bd61ee83786cd07212561c2ac9441",
+    "pat05-real-geometric-imitation-v1/latest.pt": "edaed574895e867c43084ee051e6d4323a2331114ed02ccfd91423b05633d672",
+    "pat05-real-geometric-imitation-v1/latest_policy.json": "12d19c410c12522bc08eb7fa8335eac6990a235747b84984c9787f443f7fb464",
+    "pat05-real-geometric-imitation-v1/output-sha256.json": "803388c3215c98aa03bee2d3b6847a6075c40df64fcfa7696a23699709e06d2f",
+    "pat05-real-geometric-imitation-v1/receipt.json": "31d9598d684322d55e94f0e354ba9e0f10a4595d97d1d0a12f7911cf4eaae66c",
+    "pat05-real-geometric-imitation-v1/teacher_replay.json": "4218ea9443f1c81963dbd40c942e0db69f8703a450cbb2ab2f97984579418cae",
+    "pat05-real-geometric-learning-v1/declaration-input.json": "d69c9b6cf1f0f329d698c3857bca13efaa4a4a9a7b424208711affd4ac8480f4",
+    "pat05-real-geometric-learning-v1/greedy_search.json": "303261a362fda633b9459ed11001324fa77064d4b4f4955a218c52724e02b4d5",
+    "pat05-real-geometric-learning-v1/initial.pt": "a66dc30fc0078182500149a288710f9c80646b766768568447803a315b880b13",
+    "pat05-real-geometric-learning-v1/initial_policy.json": "9ed4ba0c05f1823efbedd1ea0f61200d8d9ca30d98d06c29acf30702668ebe19",
+    "pat05-real-geometric-learning-v1/output-sha256.json": "2df29d18c484dd5120129cc6915eb5fad5544654b9e824a801bbbc25e1025219",
+    "pat05-real-geometric-learning-v1/receipt.json": "fdc575e6695a7f949f65de93e7165f7833b514fcd193094a24ac3e0f94e7ee77"
+  },
+  "interpretation": "Stored-result integrity/accounting check. Same-patient imitation improved the fixed latest rollout, but remains inferior to greedy search. No RL improvement, physical validation, clinical accuracy or generalization established.",
+  "latest_minus_greedy_return": -270.4149420584517,
+  "latest_return": 139.89747920459632,
+  "native_geometry_rerun": false,
+  "optimizer_updates": 8,
+  "patient_arrays_opened": false,
+  "reported_parameter_hash_chain_verified": true,
+  "same_initial_checkpoint_bytes_and_reported_parameter_hash": true,
+  "status": "passed",
+  "supervised_actions_total": 24,
+  "teacher_CE_reconstructed_from_probabilities": true,
+  "teacher_history_identical_to_previously_accepted_greedy_history": true
+}

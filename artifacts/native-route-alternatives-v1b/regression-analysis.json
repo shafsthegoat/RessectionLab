@@ -1,0 +1,16 @@
+{
+  "baseline_git_head": "a89d95f13682082477f51e6b2d5a21394d0ac392",
+  "current_HEAD_and_extended_planner_default_candidates_identical": true,
+  "current_HEAD_and_extended_planner_default_model_hash_identical": true,
+  "original54_physical_rays_unchanged": true,
+  "original54_source_hash_unchanged": true,
+  "prior_snapshot_ID_change_reason": "Separate structural-evidence fix adds review_status and cortical_access_permitted to hashed access-support provenance; new receipt correctly has new IDs. Explicit-target extension adds no default-model changes.",
+  "current_support_record": {
+    "source": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "method": "finite_nonzero_structural_MRI_support_v1",
+    "evidence_type": "estimated",
+    "review_status": "declared_skull_strip_assumption",
+    "cortical_access_permitted": false,
+    "mask_sha256": "24d2f2f56cf8fe93a6ac47712e810cf33afbfa71baa2c37b9d18ef3c1eef8175"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "status": "passed",
+  "provider_source_commit": "f399cfffc2713ebfa310c4d855600e2a56b03040",
+  "production_files": {
+    "src/resectionlab/native_spatial_task.py": "6b3f2a7f36db4c4a5f2ea0e5461f592ab7ac510a10c7f6a3de9debaccb200214",
+    "src/resectionlab/native_proposals.py": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee",
+    "src/resectionlab/spatial_policy_diagnostics.py": "257d355a017023831621107800d029b813f7036e1af6a8a16fd38e5760066493",
+    "scripts/preflight_real_spatial_policy.py": "cfac175b072dbd8218c19f079d7ec3fa9143966b5059fe4cdfd918dff818ed3f"
+  },
+  "independent_test_files": {
+    "tests/test_runtime_proposal_diagnostics_review.py": "7a7c5856f24f2b2525099d28ee830c983911a1f48da61b960c302e194fbce408",
+    "tests/test_spatial_policy_diagnostics_review.py": "dc79de037d117d17090a9a6eefd79c9ff05614f1d2f8da3e605ba393b0388783",
+    "tests/test_nominal_cavity_proposals_review.py": "f0f088e12dc585a80b37b4c53f9e2d0d75f92776d8cfaf7a89bfb87403e03ada"
+  },
+  "results": {
+    "passed": 12,
+    "failed": 0,
+    "pytest_elapsed_seconds": 1.59,
+    "process_wall_seconds": 1.9411982089513913,
+    "source_files_unchanged": 59
+  },
+  "initial_failures": {
+    "path": "artifacts/nominal-cavity-independent-review-v1/initial-pytest.log",
+    "sha256": "c75727105e157e875ddbbee83315aab2bdf70594d41462f9f11395882e0f54f9",
+    "production_negatives": 3,
+    "test_only_assumption_negative": 1,
+    "production_issue": "Accepted action IDs alone did not bind entry, tip or tool to actual observed actions.",
+    "resolution": "Final helper requires exact ordered accepted IDs, source/voxel/frame/projection, tool identity and dimensions, and exact encoded observation geometry; no tolerance-based geometry matching."
+  },
+  "checks": [
+    "Changed accepted tip, entry or valid tool under the same legal ID is rejected.",
+    "Changed rejected tip, source hash, observed step count or accepted action order is rejected.",
+    "Actual emitted/rejected counts remain separate from accepted active-tip envelopes.",
+    "Early STOP reports no active proposal envelope while retaining the unused step budget explicitly.",
+    "Original source frame remains reported while the explicit reconciled native frame determines physical source-cell geometry.",
+    "Mocked profile worker still performs no optimizer, gradient, checkpoint or update and threads default/derived frame into runtime reporting; declaration mismatch refuses before diagnostics."
+  ],
+  "static_review": [
+    "Generator output receives unchanged native previews; reporting adds no geometry certification or action selection.",
+    "Runner captures initial inventory and paired observation, then before/after current-state diagnostics around each committed transition.",
+    "Nominal target statistics use only the permitted nominal field and give no reference, removal or outcome credit.",
+    "Ray fractions describe image voxel-center bounds. Axial/AABB envelopes describe current active-tip sweeps, ignore internal gaps/interactions/horizon constraints and may change with later catalogs.",
+    "Cavity and decision model hashes remain explicitly task-reported; diagnostics do not reconstruct full native history or independently certify rejected rows.",
+    "Omitted cap count describes ledger slots, not a number of unique omitted geometric routes."
+  ],
+  "scope_limits": [
+    "No patient image loaded, no patient profile, actual policy forward, optimization or training.",
+    "This review used committed f399cff native source. Optional lazy-transition follow-on belongs to its separately assigned review.",
+    "No full-suite, clean-environment or clinical validation claim.",
+    "No declaration or patient execution released by this subagent."
+  ],
+  "reproduction": {
+    "ignored_snapshot": "build/validation/runtime-proposal-diagnostics-review-v1/source",
+    "source_manifest": "tested-source-sha256.json",
+    "imports": "import-paths.txt",
+    "command_record": "test-execution.json",
+    "note": "The local ignored snapshot is retained with before/after equality. Hashes identify exact files and do not reconstruct absent bytes; a clean clone needs the recorded committed native module and final diagnostic revision matching the listed hashes."
+  }
+}

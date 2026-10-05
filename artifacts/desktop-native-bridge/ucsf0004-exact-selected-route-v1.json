@@ -1,0 +1,2140 @@
+{
+  "schema": "ressectionlab.exact-native-desktop-workflow.v1",
+  "case": {
+    "caseId": "UCSF-PDGM-0004",
+    "caseHash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "planningHash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+    "frame": "RAS+",
+    "shape": [
+      240,
+      240,
+      155
+    ],
+    "sourceRefs": [
+      {
+        "source_id": "structural",
+        "uri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/public_mirrors/MedOtter-UCSF-PDGM/e9372219cf1cd2fdd52260cd45f7514b4aa7638e/UCSF-PDGM-0004/UCSF-PDGM-0004_T1c.nii.gz",
+        "sha256": "398e7a6ec44e795aaf717fbf0fee6b3a11a671c5bc944c13a308ccaf02419176",
+        "license": "CC-BY-4.0",
+        "native_frame": "RAS+",
+        "provenance": "observed"
+      },
+      {
+        "source_id": "supplied_target_annotation",
+        "uri": "file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/public_mirrors/MedOtter-UCSF-PDGM/e9372219cf1cd2fdd52260cd45f7514b4aa7638e/UCSF-PDGM-0004/UCSF-PDGM-0004_tumor_segmentation.nii.gz",
+        "sha256": "54e51eb6ae60d8985ed5379a4267438017e2682255418833fac1b704813b483e",
+        "license": "CC-BY-4.0",
+        "native_frame": "RAS+",
+        "provenance": "observed"
+      }
+    ]
+  },
+  "source_unchanged_during_run": true,
+  "source_sha256": {
+    "simulation.py": "bc43c16643adf8495f969dcacacb770f5f6be7fdeff0831f2a92eb4aed52939f",
+    "diffusion.py": "e7f57bf7467fb3cb5d6b9b3f1c80e4665710713124d0720aa84d31ccc03b8e21",
+    "native_refinement.py": "f77d0ff3dcdf0d59ac4f149984421bc736e902f46426aec178b957ed84bbf860",
+    "prior_registration.py": "9828e76ed3e29e232c39dd16ece7d5fefa4cd366d1cab7899121e929ef34a703",
+    "native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+    "cohort.py": "d69538f80af8b318068af70dbc963b7a9ca6c3a4f62d6e8e542d6e43548fa874",
+    "population_learning.py": "67a78b4c84c821315bc998d3e5ce0bbe8d4172785f23118146c8ede43975601e",
+    "native_simulation.py": "2461cc6c32eb25a3927bcc3a9379bb02417794c3a764c4b1e705a00bcac6493c",
+    "evaluation.py": "baaa2f3d6b4e41c4621dc22872da9300d649bc91dfeb923e2ad35f66aadad3b7",
+    "anatomy.py": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37",
+    "worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91",
+    "__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "core.py": "55ca2358e1075205558b89d0418a256f5ad72931e849c9cb9453c42b002d1fd9",
+    "desktop_bridge.py": "788a07af84eb2b9f2b4fab91f3e54e051daa389bce409f44caea470c3af12be9",
+    "structural_evidence.py": "6a1b9e7aa5b13ea971a75d9416d96ab45de2b46901a036edd73ec58194fb7a33",
+    "preprocessing.py": "dbd2c4ba9551e2aa0d454b638e256ad8bc6cdf45dcdc8ec08e091e43c3eb14e5",
+    "route_native_diagnostics.py": "f2cf704da9e971f321dce707dadd9f0350ec7234ecc75c0ed0fc1242fd8c82cf",
+    "brain_extraction.py": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917",
+    "geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "learning_ppo.py": "a3814bc5da4837b66ae20496c38e17edd0edf73ef7863a920924cd7ec2a42d88",
+    "planning.py": "f113ce78b239f91a86c65d8add74227a9d9f3c0d718449c7968a983e76ea850d",
+    "learning.py": "cd2a05c3eb6426e95190470e1e06096399e52cbd8672c6669b5a4f1106e27b42",
+    "native_routes.py": "97bb55a3bf2894f336a593bc3c3379b3c4dc291198af90b91d319bd0b9a824ea",
+    "imaging.py": "27af71b3581df2d9e9164885b3a6dc63491a6d2214133d177d4a30d7d382ab24"
+  },
+  "route_counts": {
+    "original": 54,
+    "combined": 56,
+    "model_cohorts": 2
+  },
+  "original_route_preserved": {
+    "route_id": "search-7c5a737c2a8f76ed",
+    "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "entry_mm": [
+      -161.89188673393926,
+      84.87771654858179,
+      143.39832772728357
+    ],
+    "target_mm": [
+      -151.0,
+      80.0,
+      105.0
+    ],
+    "target_compartment": "FLAIR_abnormality",
+    "tool_id": "generic_aspirator",
+    "window_id": "hypothetical-envelope-1",
+    "tool": {
+      "tool_id": "generic_aspirator",
+      "tip_radius_mm": 1.7,
+      "shaft_radius_mm": 2.7,
+      "working_length_mm": 90.0,
+      "max_access_angle_deg": 45.0,
+      "tip_length_mm": 4.0,
+      "parameter_source": "generic research geometry; not a verified commercial device"
+    },
+    "window": {
+      "center_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "normal_inward": [
+        -0.0,
+        -0.0,
+        -1.0
+      ],
+      "radius_mm": 4.0,
+      "window_id": "hypothetical-envelope-1"
+    },
+    "route_length_mm": 40.21015900994605,
+    "accessible_target_volume_mm3_by_compartment": {
+      "FLAIR_abnormality": 77.0,
+      "enhancing_target": 69.0,
+      "nonenhancing_or_necrotic_core": 0.0
+    },
+    "normal_tissue_exposure_mm3": null,
+    "structure_contact_volume_mm3": {
+      "language": null,
+      "motor": null,
+      "vessels": null
+    },
+    "unknowns": [
+      "brain_segmentation_unassessed",
+      "diffusion_not_audited",
+      "language_function_unassessed",
+      "motor_function_unassessed",
+      "native_frame_provenance_requires_review",
+      "skull_anatomy_unassessed",
+      "vascular_anatomy_unassessed",
+      "language_anatomy_unassessed",
+      "motor_anatomy_unassessed",
+      "vessels_anatomy_unassessed",
+      "normal_tissue_exposure_unassessed",
+      "skull_and_scalp_unassessed",
+      "tissue_forces_unmodeled",
+      "clinical_outcomes_unavailable",
+      "tool_geometry_outside_image_unassessed"
+    ],
+    "assumptions": [
+      "Annotation-assisted static route enumeration; no tissue removal is simulated.",
+      "Access windows are explicitly hypothetical intracranial openings; cortical surface, skull and scalp suitability are not certified.",
+      "Accessibility is conditional on establishing the straight access; brain-envelope overlap is recorded, not silently cleared.",
+      "Only supplied anatomical constraints are checked; absent functional and vascular anatomy remains unassessed.",
+      "Sampled geometric Pareto set within the declared candidate budget; no global or clinical optimum is claimed.",
+      "Hypothetical window support: estimated; finite_nonzero_structural_MRI_support_v1; source sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13. This support does not label intervening tissue."
+    ],
+    "category": "pareto",
+    "dominated_by": [],
+    "assessment": "incomplete",
+    "planning_model_hash": "7af533c24de90c64578e744a97cd9cb367f42d62eb5d724936b8d59b751c6ce1",
+    "accessible_union_volume_mm3": 146.0,
+    "simulated_removed_target_volume_mm3": null,
+    "clinical_deficit_probability": null,
+    "metric_definitions": {
+      "accessible_target_volume_mm3": "Target voxel centres inside the active-tip swept tube; conditional static accessibility, not removal.",
+      "normal_tissue_exposure_mm3": "Conservative unique-voxel full-tool swept-envelope overlap with the supplied non-target brain mask; not removed tissue.",
+      "structure_contact_volume_mm3": "Conservative unique-voxel full-tool swept-envelope overlap with the named supplied structure; not neurological injury.",
+      "pareto": "Sampled non-dominance on available geometric volumes and length. Unknown anatomy is excluded from numerical objectives and remains unassessed."
+    },
+    "geometry": {
+      "feasible": true,
+      "failures": [],
+      "clearance_mm": 1.172600064827491,
+      "exposure_volume_mm3": null,
+      "unknowns": [
+        "normal_tissue_exposure_unassessed",
+        "tool_geometry_outside_image_unassessed"
+      ],
+      "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+      "exposure_definition": "unique affine cells in conservative full-tool envelope; upper bound, not removal",
+      "clearance_definition": "conservative lower bound capped at 10 mm; contact is rejected"
+    },
+    "accessible_target_volume_mm3": 146.0
+  },
+  "original_readiness": {
+    "status": "no_actionable_moves",
+    "role": "preflight",
+    "legalNonStopActions": 0,
+    "action_ids": [],
+    "reasons": [
+      "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+    ],
+    "diagnostic": {
+      "status": "no_legal_native_actions",
+      "policy_has_nontrivial_action_choice": false,
+      "non_stop_action_count": 0,
+      "non_stop_action_ids": [],
+      "rejected_proposal_count": 1,
+      "rejection_counts": {
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 1
+      },
+      "rejected_proposals": [
+        {
+          "tool_id": "generic_aspirator",
+          "tip_mm": [
+            -151.0,
+            80.0,
+            105.0
+          ],
+          "entry_mm": [
+            -161.89188673393926,
+            84.87771654858179,
+            143.39832772728357
+          ],
+          "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+        }
+      ],
+      "candidate_tips_mm": [
+        [
+          -151.0,
+          80.0,
+          105.0
+        ]
+      ],
+      "candidate_entries_mm": [
+        [
+          -161.89188673393926,
+          84.87771654858179,
+          143.39832772728357
+        ]
+      ],
+      "decision_model_hash": "sha256:479c1b052bbe80d5bdfba2fa8853ad52d036b08907c5c19f065e3b4325326932",
+      "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "tool_dimensions": [
+        {
+          "tool_id": "generic_aspirator",
+          "tip_radius_mm": 1.7,
+          "shaft_radius_mm": 2.7,
+          "tip_length_mm": 4.0,
+          "shaft_wider_than_active_tip": true
+        }
+      ],
+      "interpretation": "Initial native action availability only; no learning, removal, or clinical benefit is asserted.",
+      "clinical_deficit_probability": null
+    },
+    "decision_model_hash": "sha256:479c1b052bbe80d5bdfba2fa8853ad52d036b08907c5c19f065e3b4325326932",
+    "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "route_binding": {
+      "version": "native-route-binding-v1",
+      "geometry_frame": "RAS+",
+      "mode": "exact_selected_route",
+      "requested_geometry": {
+        "geometry_frame": "RAS+",
+        "selected_entry_mm": [
+          -161.89188673393926,
+          84.87771654858179,
+          143.39832772728357
+        ],
+        "selected_target_mm": [
+          -151.0,
+          80.0,
+          105.0
+        ],
+        "access": {
+          "center_mm": [
+            -161.89188673393926,
+            84.87771654858179,
+            143.39832772728357
+          ],
+          "normal_inward": [
+            -0.0,
+            -0.0,
+            -1.0
+          ],
+          "radius_mm": 4.0,
+          "window_id": "hypothetical-envelope-1"
+        },
+        "tools": [
+          {
+            "tool_id": "generic_aspirator",
+            "tip_radius_mm": 1.7,
+            "shaft_radius_mm": 2.7,
+            "working_length_mm": 90.0,
+            "max_access_angle_deg": 45.0,
+            "tip_length_mm": 4.0,
+            "parameter_source": "generic research geometry; not a verified commercial device"
+          }
+        ],
+        "candidate_count": 4,
+        "max_steps": 3,
+        "max_actions": 7
+      },
+      "access": {
+        "center_mm": [
+          -161.89188673393926,
+          84.87771654858179,
+          143.39832772728357
+        ],
+        "normal_inward": [
+          -0.0,
+          -0.0,
+          -1.0
+        ],
+        "radius_mm": 4.0,
+        "window_id": "hypothetical-envelope-1"
+      },
+      "tools": [
+        {
+          "tool_id": "generic_aspirator",
+          "tip_radius_mm": 1.7,
+          "shaft_radius_mm": 2.7,
+          "working_length_mm": 90.0,
+          "max_access_angle_deg": 45.0,
+          "tip_length_mm": 4.0,
+          "parameter_source": "generic research geometry; not a verified commercial device"
+        }
+      ],
+      "candidate_entries_mm": [
+        [
+          -161.89188673393926,
+          84.87771654858179,
+          143.39832772728357
+        ]
+      ],
+      "candidate_targets_mm": [
+        [
+          -151.0,
+          80.0,
+          105.0
+        ]
+      ],
+      "decision_model_hash": "sha256:479c1b052bbe80d5bdfba2fa8853ad52d036b08907c5c19f065e3b4325326932",
+      "binding_hash": "sha256:cf733aaaf0ad725e7bd403c6b2cf550b8f5ab44caf136552d92b1b40e4ac18e8"
+    },
+    "clinical_deficit_probability": null,
+    "preparation_seconds": 1.8789892080239952,
+    "caseHash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "routeId": "search-7c5a737c2a8f76ed",
+    "optimizationChoiceScope": "STOP_or_declared_native_stroke",
+    "frozenRoute": {
+      "routeId": "search-7c5a737c2a8f76ed",
+      "access": {
+        "center_mm": [
+          -161.89188673393926,
+          84.87771654858179,
+          143.39832772728357
+        ],
+        "normal_inward": [
+          -0.0,
+          -0.0,
+          -1.0
+        ],
+        "radius_mm": 4.0,
+        "window_id": "hypothetical-envelope-1"
+      },
+      "toolIds": [
+        "generic_aspirator"
+      ],
+      "selectedEntryMm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "selectedTargetMm": [
+        -151.0,
+        80.0,
+        105.0
+      ],
+      "coordinateFrame": "RAS+",
+      "scope": "exact_selected_research_route",
+      "optimizationChoiceScope": "STOP_or_declared_native_stroke",
+      "routePlanningModelHash": "7af533c24de90c64578e744a97cd9cb367f42d62eb5d724936b8d59b751c6ce1"
+    },
+    "clinicalDeficitProbability": null,
+    "clinicalRiskReason": "no_validated_clinical_outcome_model"
+  },
+  "blocked_training": {
+    "runId": "82e8a98f-b659-4356-8783-c1eaf2ce5920",
+    "caseHash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "planningHash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+    "createdAt": 1791104376.899978,
+    "status": "no_actionable_moves",
+    "config": {
+      "budgetSeconds": 5.0,
+      "seed": 11,
+      "routeId": "search-7c5a737c2a8f76ed",
+      "access": {
+        "center_mm": [
+          -161.89188673393926,
+          84.87771654858179,
+          143.39832772728357
+        ],
+        "normal_inward": [
+          -0.0,
+          -0.0,
+          -1.0
+        ],
+        "radius_mm": 4.0,
+        "window_id": "hypothetical-envelope-1"
+      },
+      "toolIds": [
+        "generic_aspirator"
+      ],
+      "selectedEntryMm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "selectedTargetMm": [
+        -151.0,
+        80.0,
+        105.0
+      ],
+      "coordinateFrame": "RAS+",
+      "scope": "exact_selected_research_route",
+      "optimizationChoiceScope": "STOP_or_declared_native_stroke",
+      "routePlanningModelHash": "7af533c24de90c64578e744a97cd9cb367f42d62eb5d724936b8d59b751c6ce1"
+    },
+    "clinicalDeficitProbability": null,
+    "clinicalRiskReason": "no_validated_clinical_outcome_model",
+    "training": {
+      "status": "no_actionable_moves",
+      "replay_status": "no_actionable_moves",
+      "optimizer_mode": null,
+      "requested_optimizer_mode": "PATIENT_SCRATCH_RL",
+      "gradient_steps": 0,
+      "optimization_environment_steps": 0,
+      "selection_environment_steps": 0,
+      "actor_parameters_changed": false,
+      "initial_selection_return": null,
+      "selected_selection_return": null,
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+      "role": "preflight",
+      "final_evaluation": false,
+      "elapsed_seconds": 0.0,
+      "preparation_seconds": 1.796699707978405,
+      "decision_model_hash": "sha256:479c1b052bbe80d5bdfba2fa8853ad52d036b08907c5c19f065e3b4325326932",
+      "readiness": {
+        "status": "no_actionable_moves",
+        "role": "preflight",
+        "legalNonStopActions": 0,
+        "action_ids": [],
+        "reasons": [
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+        ],
+        "diagnostic": {
+          "status": "no_legal_native_actions",
+          "policy_has_nontrivial_action_choice": false,
+          "non_stop_action_count": 0,
+          "non_stop_action_ids": [],
+          "rejected_proposal_count": 1,
+          "rejection_counts": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 1
+          },
+          "rejected_proposals": [
+            {
+              "tool_id": "generic_aspirator",
+              "tip_mm": [
+                -151.0,
+                80.0,
+                105.0
+              ],
+              "entry_mm": [
+                -161.89188673393926,
+                84.87771654858179,
+                143.39832772728357
+              ],
+              "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+            }
+          ],
+          "candidate_tips_mm": [
+            [
+              -151.0,
+              80.0,
+              105.0
+            ]
+          ],
+          "candidate_entries_mm": [
+            [
+              -161.89188673393926,
+              84.87771654858179,
+              143.39832772728357
+            ]
+          ],
+          "decision_model_hash": "sha256:479c1b052bbe80d5bdfba2fa8853ad52d036b08907c5c19f065e3b4325326932",
+          "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+          "tool_dimensions": [
+            {
+              "tool_id": "generic_aspirator",
+              "tip_radius_mm": 1.7,
+              "shaft_radius_mm": 2.7,
+              "tip_length_mm": 4.0,
+              "shaft_wider_than_active_tip": true
+            }
+          ],
+          "interpretation": "Initial native action availability only; no learning, removal, or clinical benefit is asserted.",
+          "clinical_deficit_probability": null
+        },
+        "decision_model_hash": "sha256:479c1b052bbe80d5bdfba2fa8853ad52d036b08907c5c19f065e3b4325326932",
+        "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "route_binding": {
+          "version": "native-route-binding-v1",
+          "geometry_frame": "RAS+",
+          "mode": "exact_selected_route",
+          "requested_geometry": {
+            "geometry_frame": "RAS+",
+            "selected_entry_mm": [
+              -161.89188673393926,
+              84.87771654858179,
+              143.39832772728357
+            ],
+            "selected_target_mm": [
+              -151.0,
+              80.0,
+              105.0
+            ],
+            "access": {
+              "center_mm": [
+                -161.89188673393926,
+                84.87771654858179,
+                143.39832772728357
+              ],
+              "normal_inward": [
+                -0.0,
+                -0.0,
+                -1.0
+              ],
+              "radius_mm": 4.0,
+              "window_id": "hypothetical-envelope-1"
+            },
+            "tools": [
+              {
+                "tool_id": "generic_aspirator",
+                "tip_radius_mm": 1.7,
+                "shaft_radius_mm": 2.7,
+                "working_length_mm": 90.0,
+                "max_access_angle_deg": 45.0,
+                "tip_length_mm": 4.0,
+                "parameter_source": "generic research geometry; not a verified commercial device"
+              }
+            ],
+            "candidate_count": 4,
+            "max_steps": 3,
+            "max_actions": 7
+          },
+          "access": {
+            "center_mm": [
+              -161.89188673393926,
+              84.87771654858179,
+              143.39832772728357
+            ],
+            "normal_inward": [
+              -0.0,
+              -0.0,
+              -1.0
+            ],
+            "radius_mm": 4.0,
+            "window_id": "hypothetical-envelope-1"
+          },
+          "tools": [
+            {
+              "tool_id": "generic_aspirator",
+              "tip_radius_mm": 1.7,
+              "shaft_radius_mm": 2.7,
+              "working_length_mm": 90.0,
+              "max_access_angle_deg": 45.0,
+              "tip_length_mm": 4.0,
+              "parameter_source": "generic research geometry; not a verified commercial device"
+            }
+          ],
+          "candidate_entries_mm": [
+            [
+              -161.89188673393926,
+              84.87771654858179,
+              143.39832772728357
+            ]
+          ],
+          "candidate_targets_mm": [
+            [
+              -151.0,
+              80.0,
+              105.0
+            ]
+          ],
+          "decision_model_hash": "sha256:479c1b052bbe80d5bdfba2fa8853ad52d036b08907c5c19f065e3b4325326932",
+          "binding_hash": "sha256:cf733aaaf0ad725e7bd403c6b2cf550b8f5ab44caf136552d92b1b40e4ac18e8"
+        },
+        "clinical_deficit_probability": null
+      },
+      "route_binding": {
+        "version": "native-route-binding-v1",
+        "geometry_frame": "RAS+",
+        "mode": "exact_selected_route",
+        "requested_geometry": {
+          "geometry_frame": "RAS+",
+          "selected_entry_mm": [
+            -161.89188673393926,
+            84.87771654858179,
+            143.39832772728357
+          ],
+          "selected_target_mm": [
+            -151.0,
+            80.0,
+            105.0
+          ],
+          "access": {
+            "center_mm": [
+              -161.89188673393926,
+              84.87771654858179,
+              143.39832772728357
+            ],
+            "normal_inward": [
+              -0.0,
+              -0.0,
+              -1.0
+            ],
+            "radius_mm": 4.0,
+            "window_id": "hypothetical-envelope-1"
+          },
+          "tools": [
+            {
+              "tool_id": "generic_aspirator",
+              "tip_radius_mm": 1.7,
+              "shaft_radius_mm": 2.7,
+              "working_length_mm": 90.0,
+              "max_access_angle_deg": 45.0,
+              "tip_length_mm": 4.0,
+              "parameter_source": "generic research geometry; not a verified commercial device"
+            }
+          ],
+          "candidate_count": 4,
+          "max_steps": 3,
+          "max_actions": 7
+        },
+        "access": {
+          "center_mm": [
+            -161.89188673393926,
+            84.87771654858179,
+            143.39832772728357
+          ],
+          "normal_inward": [
+            -0.0,
+            -0.0,
+            -1.0
+          ],
+          "radius_mm": 4.0,
+          "window_id": "hypothetical-envelope-1"
+        },
+        "tools": [
+          {
+            "tool_id": "generic_aspirator",
+            "tip_radius_mm": 1.7,
+            "shaft_radius_mm": 2.7,
+            "working_length_mm": 90.0,
+            "max_access_angle_deg": 45.0,
+            "tip_length_mm": 4.0,
+            "parameter_source": "generic research geometry; not a verified commercial device"
+          }
+        ],
+        "candidate_entries_mm": [
+          [
+            -161.89188673393926,
+            84.87771654858179,
+            143.39832772728357
+          ]
+        ],
+        "candidate_targets_mm": [
+          [
+            -151.0,
+            80.0,
+            105.0
+          ]
+        ],
+        "decision_model_hash": "sha256:479c1b052bbe80d5bdfba2fa8853ad52d036b08907c5c19f065e3b4325326932",
+        "binding_hash": "sha256:cf733aaaf0ad725e7bd403c6b2cf550b8f5ab44caf136552d92b1b40e4ac18e8"
+      },
+      "selection_history": [],
+      "optimization_history": [],
+      "clinical_deficit_probability": null,
+      "replay": null
+    }
+  },
+  "selected_route": {
+    "route_id": "native-axis-e14f440173a8b13f",
+    "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "entry_mm": [
+      -181.5,
+      85.0,
+      105.0
+    ],
+    "target_mm": [
+      -162.0,
+      85.0,
+      105.0
+    ],
+    "target_compartment": "nonenhancing_or_necrotic_core",
+    "tool_id": "native-wide-aspiration",
+    "window_id": "native_hypothetical_nearest_envelope_axis",
+    "tool": {
+      "tool_id": "native-wide-aspiration",
+      "tip_radius_mm": 2.25,
+      "shaft_radius_mm": 1.1,
+      "working_length_mm": 120.0,
+      "max_access_angle_deg": 35.0,
+      "tip_length_mm": 3.0,
+      "parameter_source": "generic research geometry; not a verified commercial device"
+    },
+    "window": {
+      "center_mm": [
+        -181.5,
+        85.0,
+        105.0
+      ],
+      "normal_inward": [
+        1.0,
+        0.0,
+        -0.0
+      ],
+      "radius_mm": 6.0,
+      "window_id": "native_hypothetical_nearest_envelope_axis"
+    },
+    "route_length_mm": 19.5,
+    "accessible_target_volume_mm3_by_compartment": {
+      "FLAIR_abnormality": 0.0,
+      "enhancing_target": 84.0,
+      "nonenhancing_or_necrotic_core": 325.0
+    },
+    "normal_tissue_exposure_mm3": null,
+    "structure_contact_volume_mm3": {
+      "language": null,
+      "motor": null,
+      "vessels": null
+    },
+    "unknowns": [
+      "brain_segmentation_unassessed",
+      "diffusion_not_audited",
+      "language_function_unassessed",
+      "motor_function_unassessed",
+      "native_frame_provenance_requires_review",
+      "skull_anatomy_unassessed",
+      "vascular_anatomy_unassessed",
+      "language_anatomy_unassessed",
+      "motor_anatomy_unassessed",
+      "vessels_anatomy_unassessed",
+      "normal_tissue_exposure_unassessed",
+      "skull_and_scalp_unassessed",
+      "tissue_forces_unmodeled",
+      "clinical_outcomes_unavailable",
+      "tool_geometry_outside_image_unassessed"
+    ],
+    "assumptions": [
+      "Annotation-assisted static route enumeration; no tissue removal is simulated.",
+      "Access windows are explicitly hypothetical intracranial openings; cortical surface, skull and scalp suitability are not certified.",
+      "Accessibility is conditional on establishing the straight access; brain-envelope overlap is recorded, not silently cleared.",
+      "Only supplied anatomical constraints are checked; absent functional and vascular anatomy remains unassessed.",
+      "Sampled geometric Pareto set within the declared candidate budget; no global or clinical optimum is claimed.",
+      "Separately named native-cell aspiration research profiles; original generic instrument dimensions are unchanged.",
+      "Explicit source-grid-axis hypothetical access to an annotated native target centre; this alternative is annotation-assisted and has its own frozen model.",
+      "Native access support: estimated; hole_filled_nonzero_declared_skull_stripped_MRI_union_target_v1; source sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13. The cortical surface and opening remain unverified.",
+      "Static access remains conditional; source-cell removal and prior-cavity shaft legality require a separate native simulation and independent audit.",
+      "Pareto classification applies only within this native-axis research scenario; it is not pooled with other search models."
+    ],
+    "category": "pareto",
+    "dominated_by": [],
+    "assessment": "incomplete",
+    "planning_model_hash": "647009ecfc8e0cff96dbc44923b93ea90ac1296ad1365c4fc5c3ac48690ef505",
+    "accessible_union_volume_mm3": 409.0,
+    "simulated_removed_target_volume_mm3": null,
+    "clinical_deficit_probability": null,
+    "metric_definitions": {
+      "accessible_target_volume_mm3": "Target voxel centres inside the active-tip swept tube; conditional static accessibility, not removal.",
+      "normal_tissue_exposure_mm3": "Conservative unique-voxel full-tool swept-envelope overlap with the supplied non-target brain mask; not removed tissue.",
+      "structure_contact_volume_mm3": "Conservative unique-voxel full-tool swept-envelope overlap with the named supplied structure; not neurological injury.",
+      "pareto": "Sampled non-dominance on available geometric volumes and length. Unknown anatomy is excluded from numerical objectives and remains unassessed."
+    },
+    "geometry": {
+      "feasible": true,
+      "failures": [],
+      "clearance_mm": 3.75,
+      "exposure_volume_mm3": null,
+      "unknowns": [
+        "normal_tissue_exposure_unassessed",
+        "tool_geometry_outside_image_unassessed"
+      ],
+      "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+      "exposure_definition": "unique affine cells in conservative full-tool envelope; upper bound, not removal",
+      "clearance_definition": "conservative lower bound capped at 10 mm; contact is rejected"
+    },
+    "accessible_target_volume_mm3": 409.0
+  },
+  "selected_readiness": {
+    "status": "ready",
+    "role": "preflight",
+    "legalNonStopActions": 1,
+    "action_ids": [
+      "NATIVE:native-wide-aspiration:0"
+    ],
+    "reasons": [],
+    "diagnostic": {
+      "status": "native_actions_available",
+      "policy_has_nontrivial_action_choice": true,
+      "non_stop_action_count": 1,
+      "non_stop_action_ids": [
+        "NATIVE:native-wide-aspiration:0"
+      ],
+      "rejected_proposal_count": 0,
+      "rejection_counts": {},
+      "rejected_proposals": [],
+      "candidate_tips_mm": [
+        [
+          -162.0,
+          85.0,
+          105.0
+        ]
+      ],
+      "candidate_entries_mm": [
+        [
+          -181.5,
+          85.0,
+          105.0
+        ]
+      ],
+      "decision_model_hash": "sha256:4d5211b0cd83c61be159c3f0c4beb0d2e31debdb03dcd1e245a74933465306a5",
+      "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "tool_dimensions": [
+        {
+          "tool_id": "native-wide-aspiration",
+          "tip_radius_mm": 2.25,
+          "shaft_radius_mm": 1.1,
+          "tip_length_mm": 3.0,
+          "shaft_wider_than_active_tip": false
+        }
+      ],
+      "interpretation": "Initial native action availability only; no learning, removal, or clinical benefit is asserted.",
+      "clinical_deficit_probability": null
+    },
+    "decision_model_hash": "sha256:4d5211b0cd83c61be159c3f0c4beb0d2e31debdb03dcd1e245a74933465306a5",
+    "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "route_binding": {
+      "version": "native-route-binding-v1",
+      "geometry_frame": "RAS+",
+      "mode": "exact_selected_route",
+      "requested_geometry": {
+        "geometry_frame": "RAS+",
+        "selected_entry_mm": [
+          -181.5,
+          85.0,
+          105.0
+        ],
+        "selected_target_mm": [
+          -162.0,
+          85.0,
+          105.0
+        ],
+        "access": {
+          "center_mm": [
+            -181.5,
+            85.0,
+            105.0
+          ],
+          "normal_inward": [
+            1.0,
+            0.0,
+            -0.0
+          ],
+          "radius_mm": 6.0,
+          "window_id": "native_hypothetical_nearest_envelope_axis"
+        },
+        "tools": [
+          {
+            "tool_id": "native-wide-aspiration",
+            "tip_radius_mm": 2.25,
+            "shaft_radius_mm": 1.1,
+            "working_length_mm": 120.0,
+            "max_access_angle_deg": 35.0,
+            "tip_length_mm": 3.0,
+            "parameter_source": "generic research geometry; not a verified commercial device"
+          }
+        ],
+        "candidate_count": 4,
+        "max_steps": 3,
+        "max_actions": 7
+      },
+      "access": {
+        "center_mm": [
+          -181.5,
+          85.0,
+          105.0
+        ],
+        "normal_inward": [
+          1.0,
+          0.0,
+          -0.0
+        ],
+        "radius_mm": 6.0,
+        "window_id": "native_hypothetical_nearest_envelope_axis"
+      },
+      "tools": [
+        {
+          "tool_id": "native-wide-aspiration",
+          "tip_radius_mm": 2.25,
+          "shaft_radius_mm": 1.1,
+          "working_length_mm": 120.0,
+          "max_access_angle_deg": 35.0,
+          "tip_length_mm": 3.0,
+          "parameter_source": "generic research geometry; not a verified commercial device"
+        }
+      ],
+      "candidate_entries_mm": [
+        [
+          -181.5,
+          85.0,
+          105.0
+        ]
+      ],
+      "candidate_targets_mm": [
+        [
+          -162.0,
+          85.0,
+          105.0
+        ]
+      ],
+      "decision_model_hash": "sha256:4d5211b0cd83c61be159c3f0c4beb0d2e31debdb03dcd1e245a74933465306a5",
+      "binding_hash": "sha256:31bd2dcd9987bc6ae9e26810cd4bec4459f4f2a3f6ad50479aee7db9f0b4cb99"
+    },
+    "clinical_deficit_probability": null,
+    "preparation_seconds": 1.9181835000636056,
+    "caseHash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "routeId": "native-axis-e14f440173a8b13f",
+    "optimizationChoiceScope": "STOP_or_declared_native_stroke",
+    "frozenRoute": {
+      "routeId": "native-axis-e14f440173a8b13f",
+      "access": {
+        "center_mm": [
+          -181.5,
+          85.0,
+          105.0
+        ],
+        "normal_inward": [
+          1.0,
+          0.0,
+          -0.0
+        ],
+        "radius_mm": 6.0,
+        "window_id": "native_hypothetical_nearest_envelope_axis"
+      },
+      "toolIds": [
+        "native-wide-aspiration"
+      ],
+      "selectedEntryMm": [
+        -181.5,
+        85.0,
+        105.0
+      ],
+      "selectedTargetMm": [
+        -162.0,
+        85.0,
+        105.0
+      ],
+      "coordinateFrame": "RAS+",
+      "scope": "exact_selected_research_route",
+      "optimizationChoiceScope": "STOP_or_declared_native_stroke",
+      "routePlanningModelHash": "647009ecfc8e0cff96dbc44923b93ea90ac1296ad1365c4fc5c3ac48690ef505"
+    },
+    "clinicalDeficitProbability": null,
+    "clinicalRiskReason": "no_validated_clinical_outcome_model"
+  },
+  "run": {
+    "runId": "216fccfa-fced-4579-bc1f-dd52c29d05cf",
+    "caseHash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "planningHash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+    "createdAt": 1791104381.1165812,
+    "status": "gradient_budget",
+    "config": {
+      "budgetSeconds": 30.0,
+      "seed": 11,
+      "routeId": "native-axis-e14f440173a8b13f",
+      "access": {
+        "center_mm": [
+          -181.5,
+          85.0,
+          105.0
+        ],
+        "normal_inward": [
+          1.0,
+          0.0,
+          -0.0
+        ],
+        "radius_mm": 6.0,
+        "window_id": "native_hypothetical_nearest_envelope_axis"
+      },
+      "toolIds": [
+        "native-wide-aspiration"
+      ],
+      "selectedEntryMm": [
+        -181.5,
+        85.0,
+        105.0
+      ],
+      "selectedTargetMm": [
+        -162.0,
+        85.0,
+        105.0
+      ],
+      "coordinateFrame": "RAS+",
+      "scope": "exact_selected_research_route",
+      "optimizationChoiceScope": "STOP_or_declared_native_stroke",
+      "routePlanningModelHash": "647009ecfc8e0cff96dbc44923b93ea90ac1296ad1365c4fc5c3ac48690ef505"
+    },
+    "clinicalDeficitProbability": null,
+    "clinicalRiskReason": "no_validated_clinical_outcome_model",
+    "training": {
+      "actor_parameters_changed": true,
+      "clinical_deficit_probability": null,
+      "completed_episodes": 64,
+      "decision_model_hash": "sha256:4d5211b0cd83c61be159c3f0c4beb0d2e31debdb03dcd1e245a74933465306a5",
+      "discarded_partial_batches": 0,
+      "elapsed_seconds": 18.11823408305645,
+      "episode_index": 64,
+      "gradient_steps": 32,
+      "initial_actor_hash": "sha256:6cc690991370666e4cb7266712aeb95804940dbea629565a1407dec1db728269",
+      "initial_checkpoint_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322",
+      "initial_selection_return": 0.0,
+      "latest_actor_hash": "sha256:b9d022a5fe9b8eca865ad5c828492ffa072c0bd320d0e7e8829c1ab2edf03ece",
+      "latest_checkpoint_hash": "sha256:0c524bb59e3791f3f662acdbef20883b7a2051f4c7ecab2f15b52ae3f87d9cc6",
+      "learning_improvement_guaranteed": false,
+      "optimization_environment_steps": 99,
+      "optimization_history": [
+        {
+          "actor_gradient_norm_after_clip": 0.4816055290599861,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 0.5199072957038879,
+          "gradient_steps": 1,
+          "loss": 0.0665692612528801,
+          "mean_return": 0.0,
+          "optimization_environment_steps": 2
+        },
+        {
+          "actor_gradient_norm_after_clip": 4.096028893012047,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 288.52490234375,
+          "gradient_steps": 2,
+          "loss": 7431.30810546875,
+          "mean_return": 85.79,
+          "optimization_environment_steps": 5
+        },
+        {
+          "actor_gradient_norm_after_clip": 0.16655512690328483,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 0.190656840801239,
+          "gradient_steps": 3,
+          "loss": 0.025915367528796196,
+          "mean_return": 0.0,
+          "optimization_environment_steps": 7
+        },
+        {
+          "actor_gradient_norm_after_clip": 4.668912070817664,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 923.1270751953125,
+          "gradient_steps": 4,
+          "loss": 14846.060546875,
+          "mean_return": 171.58,
+          "optimization_environment_steps": 11
+        },
+        {
+          "actor_gradient_norm_after_clip": 4.837962022222964,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 653.712158203125,
+          "gradient_steps": 5,
+          "loss": 7417.8154296875,
+          "mean_return": 85.79,
+          "optimization_environment_steps": 14
+        },
+        {
+          "actor_gradient_norm_after_clip": 0.1423979825640702,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 0.1458340436220169,
+          "gradient_steps": 6,
+          "loss": -0.01941695809364319,
+          "mean_return": 0.0,
+          "optimization_environment_steps": 16
+        },
+        {
+          "actor_gradient_norm_after_clip": 4.743442799352039,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 521.42236328125,
+          "gradient_steps": 7,
+          "loss": 7406.482421875,
+          "mean_return": 85.79,
+          "optimization_environment_steps": 19
+        },
+        {
+          "actor_gradient_norm_after_clip": 4.389104927879155,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 344.0721130371094,
+          "gradient_steps": 8,
+          "loss": 7401.6640625,
+          "mean_return": 85.79,
+          "optimization_environment_steps": 22
+        },
+        {
+          "actor_gradient_norm_after_clip": 3.7443630986190923,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 497.4117126464844,
+          "gradient_steps": 9,
+          "loss": 14794.521484375,
+          "mean_return": 171.58,
+          "optimization_environment_steps": 26
+        },
+        {
+          "actor_gradient_norm_after_clip": 0.2884340025278975,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 0.35700681805610657,
+          "gradient_steps": 10,
+          "loss": -0.10349887609481812,
+          "mean_return": 0.0,
+          "optimization_environment_steps": 28
+        },
+        {
+          "actor_gradient_norm_after_clip": 3.2222430478693664,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 215.3103485107422,
+          "gradient_steps": 11,
+          "loss": 7389.4091796875,
+          "mean_return": 85.79,
+          "optimization_environment_steps": 31
+        },
+        {
+          "actor_gradient_norm_after_clip": 3.1585206701980075,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 212.33555603027344,
+          "gradient_steps": 12,
+          "loss": 7385.58447265625,
+          "mean_return": 85.79,
+          "optimization_environment_steps": 34
+        },
+        {
+          "actor_gradient_norm_after_clip": 3.096416448967208,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 209.62245178222656,
+          "gradient_steps": 13,
+          "loss": 7381.55810546875,
+          "mean_return": 85.79,
+          "optimization_environment_steps": 37
+        },
+        {
+          "actor_gradient_norm_after_clip": 3.030100127515618,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 206.9176483154297,
+          "gradient_steps": 14,
+          "loss": 7377.384765625,
+          "mean_return": 85.79,
+          "optimization_environment_steps": 40
+        },
+        {
+          "actor_gradient_norm_after_clip": 2.959324703222168,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 204.23260498046875,
+          "gradient_steps": 15,
+          "loss": 7373.11328125,
+          "mean_return": 85.79,
+          "optimization_environment_steps": 43
+        },
+        {
+          "actor_gradient_norm_after_clip": 2.8844958949558253,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 201.60203552246094,
+          "gradient_steps": 16,
+          "loss": 7368.77587890625,
+          "mean_return": 85.79,
+          "optimization_environment_steps": 46
+        },
+        {
+          "actor_gradient_norm_after_clip": 2.794821771392503,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 398.0918884277344,
+          "gradient_steps": 17,
+          "loss": 14729.1240234375,
+          "mean_return": 171.58,
+          "optimization_environment_steps": 50
+        },
+        {
+          "actor_gradient_norm_after_clip": 2.724569759285993,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 196.62535095214844,
+          "gradient_steps": 18,
+          "loss": 7360.0078125,
+          "mean_return": 85.79,
+          "optimization_environment_steps": 53
+        },
+        {
+          "actor_gradient_norm_after_clip": 2.6255771876601326,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 388.6526184082031,
+          "gradient_steps": 19,
+          "loss": 14711.6376953125,
+          "mean_return": 171.58,
+          "optimization_environment_steps": 57
+        },
+        {
+          "actor_gradient_norm_after_clip": 2.554125298167128,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 192.1802215576172,
+          "gradient_steps": 20,
+          "loss": 7351.22607421875,
+          "mean_return": 85.79,
+          "optimization_environment_steps": 60
+        },
+        {
+          "actor_gradient_norm_after_clip": 2.447218820682991,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 380.43572998046875,
+          "gradient_steps": 21,
+          "loss": 14694.23046875,
+          "mean_return": 171.58,
+          "optimization_environment_steps": 64
+        },
+        {
+          "actor_gradient_norm_after_clip": 2.3558913179236147,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 376.85498046875,
+          "gradient_steps": 22,
+          "loss": 14685.5947265625,
+          "mean_return": 171.58,
+          "optimization_environment_steps": 68
+        },
+        {
+          "actor_gradient_norm_after_clip": 1.7161096178082027,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 1.9783375263214111,
+          "gradient_steps": 23,
+          "loss": -0.6321114301681519,
+          "mean_return": 0.0,
+          "optimization_environment_steps": 70
+        },
+        {
+          "actor_gradient_norm_after_clip": 2.1999704573690537,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 185.28587341308594,
+          "gradient_steps": 24,
+          "loss": 7334.31640625,
+          "mean_return": 85.79,
+          "optimization_environment_steps": 73
+        },
+        {
+          "actor_gradient_norm_after_clip": 2.1125013865658198,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 183.98704528808594,
+          "gradient_steps": 25,
+          "loss": 7330.41259765625,
+          "mean_return": 85.79,
+          "optimization_environment_steps": 76
+        },
+        {
+          "actor_gradient_norm_after_clip": 2.025514997969409,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 182.8787841796875,
+          "gradient_steps": 26,
+          "loss": 7326.48681640625,
+          "mean_return": 85.79,
+          "optimization_environment_steps": 79
+        },
+        {
+          "actor_gradient_norm_after_clip": 1.939521799859679,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 181.95668029785156,
+          "gradient_steps": 27,
+          "loss": 7322.5458984375,
+          "mean_return": 85.79,
+          "optimization_environment_steps": 82
+        },
+        {
+          "actor_gradient_norm_after_clip": 1.8549933979079067,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 181.2142333984375,
+          "gradient_steps": 28,
+          "loss": 7318.59521484375,
+          "mean_return": 85.79,
+          "optimization_environment_steps": 85
+        },
+        {
+          "actor_gradient_norm_after_clip": 2.6476433936285617,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 2.9932804107666016,
+          "gradient_steps": 29,
+          "loss": -1.033715009689331,
+          "mean_return": 0.0,
+          "optimization_environment_steps": 87
+        },
+        {
+          "actor_gradient_norm_after_clip": 1.6499475471240415,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 360.56109619140625,
+          "gradient_steps": 30,
+          "loss": 14623.2978515625,
+          "mean_return": 171.58,
+          "optimization_environment_steps": 91
+        },
+        {
+          "actor_gradient_norm_after_clip": 1.5686954670238717,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 359.8258056640625,
+          "gradient_steps": 31,
+          "loss": 14616.185546875,
+          "mean_return": 171.58,
+          "optimization_environment_steps": 95
+        },
+        {
+          "actor_gradient_norm_after_clip": 1.490413649988509,
+          "episode_source_case_hashes": [
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+          ],
+          "gradient_norm_before_clip": 359.4277648925781,
+          "gradient_steps": 32,
+          "loss": 14608.986328125,
+          "mean_return": 171.58,
+          "optimization_environment_steps": 99
+        }
+      ],
+      "optimizer_mode": "PATIENT_SCRATCH_RL",
+      "selected_checkpoint_hash": "sha256:02511592135d380f509ca31c435371a3636692ec7a38fc725145a1fd550ae7c7",
+      "selected_selection_return": 171.58,
+      "selection_environment_steps": 64,
+      "selection_history": [
+        {
+          "checkpoint_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322",
+          "gradient_steps": 0,
+          "mean_return": 0.0,
+          "optimization_environment_steps": 0,
+          "world_count": 2
+        },
+        {
+          "checkpoint_hash": "sha256:8427ff502112336b066903ed1f80ee3fa3df88a76c758e901302c0f76e419f95",
+          "gradient_steps": 2,
+          "mean_return": 0.0,
+          "optimization_environment_steps": 5,
+          "world_count": 2
+        },
+        {
+          "checkpoint_hash": "sha256:02511592135d380f509ca31c435371a3636692ec7a38fc725145a1fd550ae7c7",
+          "gradient_steps": 4,
+          "mean_return": 171.58,
+          "optimization_environment_steps": 11,
+          "world_count": 2
+        },
+        {
+          "checkpoint_hash": "sha256:bc634d08e7a80e50b84bc050da53aefc599a8ba66c65fc25f4fa44ca8681536a",
+          "gradient_steps": 6,
+          "mean_return": 171.58,
+          "optimization_environment_steps": 16,
+          "world_count": 2
+        },
+        {
+          "checkpoint_hash": "sha256:acef0c7c3af968acca001d3147c85bc7e25807cd3ab75b180010cd7ea3f80e00",
+          "gradient_steps": 8,
+          "mean_return": 171.58,
+          "optimization_environment_steps": 22,
+          "world_count": 2
+        },
+        {
+          "checkpoint_hash": "sha256:49b5140d246e93dc954fdfcd34a7e3e54e34b67812ca71867e169b5ae0dad268",
+          "gradient_steps": 10,
+          "mean_return": 171.58,
+          "optimization_environment_steps": 28,
+          "world_count": 2
+        },
+        {
+          "checkpoint_hash": "sha256:14f9f85bd9f78a74f25cd38251c611a9e7b43c8b857a815371eecf7a78056be7",
+          "gradient_steps": 12,
+          "mean_return": 171.58,
+          "optimization_environment_steps": 34,
+          "world_count": 2
+        },
+        {
+          "checkpoint_hash": "sha256:c0df1371af513a7d94cb6606f96daa34cc34a492ed46bb3ea32f73c62a58d25a",
+          "gradient_steps": 14,
+          "mean_return": 171.58,
+          "optimization_environment_steps": 40,
+          "world_count": 2
+        },
+        {
+          "checkpoint_hash": "sha256:0c18a3652477aded9fdb804de613529a1b5ebe929bc0ed0a7398d99916ffc608",
+          "gradient_steps": 16,
+          "mean_return": 171.58,
+          "optimization_environment_steps": 46,
+          "world_count": 2
+        },
+        {
+          "checkpoint_hash": "sha256:6ce320b1b00ecd42dfb734c3bee476ff876f58e0e7afb0c7040ed1dddca8ee97",
+          "gradient_steps": 18,
+          "mean_return": 171.58,
+          "optimization_environment_steps": 53,
+          "world_count": 2
+        },
+        {
+          "checkpoint_hash": "sha256:1eccebc891522f21f8b99d070239f0cdccb04e8e6c86a71b7cabdfac92f3edce",
+          "gradient_steps": 20,
+          "mean_return": 171.58,
+          "optimization_environment_steps": 60,
+          "world_count": 2
+        },
+        {
+          "checkpoint_hash": "sha256:f729304964d518a752f6031228598f19113e24658f3784229d15bf51742b9e91",
+          "gradient_steps": 22,
+          "mean_return": 171.58,
+          "optimization_environment_steps": 68,
+          "world_count": 2
+        },
+        {
+          "checkpoint_hash": "sha256:fc3842a4851c53990afbf90fb4a3029819f1a2d08dde885fbb5ae25a7d42d68a",
+          "gradient_steps": 24,
+          "mean_return": 171.58,
+          "optimization_environment_steps": 73,
+          "world_count": 2
+        },
+        {
+          "checkpoint_hash": "sha256:dcda45b219c2a617d1aabd45aa60cc885d79866f5fa1f70d1dc61838b2cce560",
+          "gradient_steps": 26,
+          "mean_return": 171.58,
+          "optimization_environment_steps": 79,
+          "world_count": 2
+        },
+        {
+          "checkpoint_hash": "sha256:fed457c480557ad1176a9158552044ed2946274a9fa7e5d7a5ad24a0067ff367",
+          "gradient_steps": 28,
+          "mean_return": 171.58,
+          "optimization_environment_steps": 85,
+          "world_count": 2
+        },
+        {
+          "checkpoint_hash": "sha256:9fb7cd329eb8afe120415e483a4bd1d5b0af150f40b78f4018405a461c3f0147",
+          "gradient_steps": 30,
+          "mean_return": 171.58,
+          "optimization_environment_steps": 91,
+          "world_count": 2
+        },
+        {
+          "checkpoint_hash": "sha256:0c524bb59e3791f3f662acdbef20883b7a2051f4c7ecab2f15b52ae3f87d9cc6",
+          "gradient_steps": 32,
+          "mean_return": 171.58,
+          "optimization_environment_steps": 99,
+          "world_count": 2
+        }
+      ],
+      "selection_rule": "maximum mean deterministic selection return; earliest wins ties",
+      "selection_seconds": 9.26611941808369,
+      "shared_checkpoint_hash": null,
+      "status": "gradient_budget",
+      "wall_limit_semantics": "cooperative; a simulator/gradient call may overrun the deadline",
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+      "role": "selection",
+      "final_evaluation": false,
+      "preparation_seconds": 1.9030732499668375,
+      "readiness": {
+        "status": "ready",
+        "role": "preflight",
+        "legalNonStopActions": 1,
+        "action_ids": [
+          "NATIVE:native-wide-aspiration:0"
+        ],
+        "reasons": [],
+        "diagnostic": {
+          "status": "native_actions_available",
+          "policy_has_nontrivial_action_choice": true,
+          "non_stop_action_count": 1,
+          "non_stop_action_ids": [
+            "NATIVE:native-wide-aspiration:0"
+          ],
+          "rejected_proposal_count": 0,
+          "rejection_counts": {},
+          "rejected_proposals": [],
+          "candidate_tips_mm": [
+            [
+              -162.0,
+              85.0,
+              105.0
+            ]
+          ],
+          "candidate_entries_mm": [
+            [
+              -181.5,
+              85.0,
+              105.0
+            ]
+          ],
+          "decision_model_hash": "sha256:4d5211b0cd83c61be159c3f0c4beb0d2e31debdb03dcd1e245a74933465306a5",
+          "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+          "tool_dimensions": [
+            {
+              "tool_id": "native-wide-aspiration",
+              "tip_radius_mm": 2.25,
+              "shaft_radius_mm": 1.1,
+              "tip_length_mm": 3.0,
+              "shaft_wider_than_active_tip": false
+            }
+          ],
+          "interpretation": "Initial native action availability only; no learning, removal, or clinical benefit is asserted.",
+          "clinical_deficit_probability": null
+        },
+        "decision_model_hash": "sha256:4d5211b0cd83c61be159c3f0c4beb0d2e31debdb03dcd1e245a74933465306a5",
+        "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "route_binding": {
+          "version": "native-route-binding-v1",
+          "geometry_frame": "RAS+",
+          "mode": "exact_selected_route",
+          "requested_geometry": {
+            "geometry_frame": "RAS+",
+            "selected_entry_mm": [
+              -181.5,
+              85.0,
+              105.0
+            ],
+            "selected_target_mm": [
+              -162.0,
+              85.0,
+              105.0
+            ],
+            "access": {
+              "center_mm": [
+                -181.5,
+                85.0,
+                105.0
+              ],
+              "normal_inward": [
+                1.0,
+                0.0,
+                -0.0
+              ],
+              "radius_mm": 6.0,
+              "window_id": "native_hypothetical_nearest_envelope_axis"
+            },
+            "tools": [
+              {
+                "tool_id": "native-wide-aspiration",
+                "tip_radius_mm": 2.25,
+                "shaft_radius_mm": 1.1,
+                "working_length_mm": 120.0,
+                "max_access_angle_deg": 35.0,
+                "tip_length_mm": 3.0,
+                "parameter_source": "generic research geometry; not a verified commercial device"
+              }
+            ],
+            "candidate_count": 4,
+            "max_steps": 3,
+            "max_actions": 7
+          },
+          "access": {
+            "center_mm": [
+              -181.5,
+              85.0,
+              105.0
+            ],
+            "normal_inward": [
+              1.0,
+              0.0,
+              -0.0
+            ],
+            "radius_mm": 6.0,
+            "window_id": "native_hypothetical_nearest_envelope_axis"
+          },
+          "tools": [
+            {
+              "tool_id": "native-wide-aspiration",
+              "tip_radius_mm": 2.25,
+              "shaft_radius_mm": 1.1,
+              "working_length_mm": 120.0,
+              "max_access_angle_deg": 35.0,
+              "tip_length_mm": 3.0,
+              "parameter_source": "generic research geometry; not a verified commercial device"
+            }
+          ],
+          "candidate_entries_mm": [
+            [
+              -181.5,
+              85.0,
+              105.0
+            ]
+          ],
+          "candidate_targets_mm": [
+            [
+              -162.0,
+              85.0,
+              105.0
+            ]
+          ],
+          "decision_model_hash": "sha256:4d5211b0cd83c61be159c3f0c4beb0d2e31debdb03dcd1e245a74933465306a5",
+          "binding_hash": "sha256:31bd2dcd9987bc6ae9e26810cd4bec4459f4f2a3f6ad50479aee7db9f0b4cb99"
+        },
+        "clinical_deficit_probability": null
+      },
+      "route_binding": {
+        "version": "native-route-binding-v1",
+        "geometry_frame": "RAS+",
+        "mode": "exact_selected_route",
+        "requested_geometry": {
+          "geometry_frame": "RAS+",
+          "selected_entry_mm": [
+            -181.5,
+            85.0,
+            105.0
+          ],
+          "selected_target_mm": [
+            -162.0,
+            85.0,
+            105.0
+          ],
+          "access": {
+            "center_mm": [
+              -181.5,
+              85.0,
+              105.0
+            ],
+            "normal_inward": [
+              1.0,
+              0.0,
+              -0.0
+            ],
+            "radius_mm": 6.0,
+            "window_id": "native_hypothetical_nearest_envelope_axis"
+          },
+          "tools": [
+            {
+              "tool_id": "native-wide-aspiration",
+              "tip_radius_mm": 2.25,
+              "shaft_radius_mm": 1.1,
+              "working_length_mm": 120.0,
+              "max_access_angle_deg": 35.0,
+              "tip_length_mm": 3.0,
+              "parameter_source": "generic research geometry; not a verified commercial device"
+            }
+          ],
+          "candidate_count": 4,
+          "max_steps": 3,
+          "max_actions": 7
+        },
+        "access": {
+          "center_mm": [
+            -181.5,
+            85.0,
+            105.0
+          ],
+          "normal_inward": [
+            1.0,
+            0.0,
+            -0.0
+          ],
+          "radius_mm": 6.0,
+          "window_id": "native_hypothetical_nearest_envelope_axis"
+        },
+        "tools": [
+          {
+            "tool_id": "native-wide-aspiration",
+            "tip_radius_mm": 2.25,
+            "shaft_radius_mm": 1.1,
+            "working_length_mm": 120.0,
+            "max_access_angle_deg": 35.0,
+            "tip_length_mm": 3.0,
+            "parameter_source": "generic research geometry; not a verified commercial device"
+          }
+        ],
+        "candidate_entries_mm": [
+          [
+            -181.5,
+            85.0,
+            105.0
+          ]
+        ],
+        "candidate_targets_mm": [
+          [
+            -162.0,
+            85.0,
+            105.0
+          ]
+        ],
+        "decision_model_hash": "sha256:4d5211b0cd83c61be159c3f0c4beb0d2e31debdb03dcd1e245a74933465306a5",
+        "binding_hash": "sha256:31bd2dcd9987bc6ae9e26810cd4bec4459f4f2a3f6ad50479aee7db9f0b4cb99"
+      },
+      "replay_status": "accepted_independent_geometry",
+      "selection_replay_and_check_seconds": 2.2948233330389485,
+      "replay": {
+        "role": "selection",
+        "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "decision_model_hash": "sha256:4d5211b0cd83c61be159c3f0c4beb0d2e31debdb03dcd1e245a74933465306a5",
+        "checkpoint_hash": "sha256:02511592135d380f509ca31c435371a3636692ec7a38fc725145a1fd550ae7c7",
+        "artifact_hash": "sha256:f9ce2d051885cbd9a6e1d67ddcecc4194b2a3bb42b5fc9df5b082aeaf1875a48",
+        "shape": [
+          240,
+          240,
+          155
+        ],
+        "affine": [
+          [
+            -1.0,
+            -0.0,
+            -0.0,
+            0.0
+          ],
+          [
+            -0.0,
+            -1.0,
+            -0.0,
+            239.0
+          ],
+          [
+            0.0,
+            0.0,
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "final_evaluation": false,
+        "scope": "native_contained_cell_structural_research",
+        "stepCount": 1,
+        "metrics": {
+          "case_id": "UCSF-PDGM-0004",
+          "decision_model_hash": "sha256:4d5211b0cd83c61be159c3f0c4beb0d2e31debdb03dcd1e245a74933465306a5",
+          "episode_world_hash": "sha256:0de029389c81de7a7390ce1511cc2a36d222d983bdefe6d253eb9ea8ee0aeab0",
+          "seed": 489568555796165988,
+          "world_generator": {
+            "family": "rigid_gaussian",
+            "translation_scale_mm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation_scale_deg": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation_center_mm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "version": "rigid-registration-v1",
+            "parameter_basis": "declared_uncalibrated_sensitivity_scenario"
+          },
+          "world_generator_fingerprint": "sha256:65178826778d6f02e623f38390d72c121c9e2cd84e5c0b69f882353a64f09a48",
+          "removed_unknown_coverage_volume_mm3": 0.0,
+          "unknown_coverage_cost_policy": "conservative_maximum_nominal_or_one_surrogate_per_mm3",
+          "optimizer_observability": "nominal_evidence_only",
+          "simulation_version": "native-contained-brush-policy-v2",
+          "total_reward": 171.58,
+          "environment_steps": 1,
+          "actions": [
+            "NATIVE:native-wide-aspiration:0",
+            "STOP"
+          ],
+          "termination_reason": "explicit_stop",
+          "simulated_removed_target_volume_mm3": 174.0,
+          "simulated_removed_normal_volume_mm3": 11.0,
+          "modeled_residual_target_volume_mm3": 41745.0,
+          "removed_by_compartment_mm3": {
+            "FLAIR_abnormality": 0.0,
+            "enhancing_target": 33.0,
+            "nonenhancing_or_necrotic_core": 141.0
+          },
+          "residual_by_compartment_mm3": {
+            "FLAIR_abnormality": 18654.0,
+            "enhancing_target": 15639.0,
+            "nonenhancing_or_necrotic_core": 7452.0
+          },
+          "motor_surrogate": null,
+          "language_surrogate": null,
+          "functional_evidence_available": {
+            "motor": false,
+            "language": false
+          },
+          "derivation": {
+            "track": "annotation_assisted_native_contained_cell_simulation",
+            "tissue_support_provenance": "estimated_hole_filled_nonzero_UCSF_or_declared_skull_stripped_MRI_support; brain_surface_unreviewed; source_frame=RAS+; simulation_frame=RAS+",
+            "removal_primitive": "full_affine_cells_contained_by_continuous_active_brush",
+            "partial_contact_policy": "retained_tissue_exposure_not_removed",
+            "partial_contact_weight": 0.05,
+            "candidate_sampling": "fixed_physical_tip_and_entry_points_shared_by_all_methods"
+          },
+          "modeled_severed_edges": [],
+          "clinical_deficit_probability": null,
+          "clinical_probability_reason": "no_validated_clinical_outcome_model",
+          "assumptions": [
+            "continuous_active_brush_contact",
+            "contained_native_cells_only_removed",
+            "partial_boundary_contact_retains_tissue",
+            "full_retraction_before_reorientation",
+            "rigid_static_geometry",
+            "hypothetical_intracranial_access"
+          ],
+          "unassessed": [
+            "vascular_anatomy",
+            "tissue_forces",
+            "postoperative_function",
+            "microscopic_infiltration"
+          ],
+          "native_engine_config_hash": "sha256:a6295c4c853acaae0805afc72357853d6dedca0d620c7b2d61ff9be7a751d31a",
+          "native_engine_metrics": {
+            "native_resection_version": "contained-native-cell-connected-suction-v2",
+            "decision_model_hash": "sha256:a6295c4c853acaae0805afc72357853d6dedca0d620c7b2d61ff9be7a751d31a",
+            "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+            "native_grid_shape": [
+              240,
+              240,
+              155
+            ],
+            "native_voxel_volume_mm3": 1.0,
+            "simulated_removed_target_mm3": 174.0,
+            "simulated_removed_normal_mm3": 11.0,
+            "modeled_residual_target_mm3": 41745.0,
+            "contacted_tissue_upper_bound_mm3": 543.0,
+            "contacted_but_not_removed_upper_bound_mm3": 358.0,
+            "removed_by_label_mm3": {
+              "1": 0.0,
+              "2": 33.0,
+              "3": 141.0
+            },
+            "tissue_support_provenance": "estimated_hole_filled_nonzero_UCSF_or_declared_skull_stripped_MRI_support; brain_surface_unreviewed; source_frame=RAS+; simulation_frame=RAS+",
+            "removal_definition": "fully_contained_connected_native_cells; boundary partial volumes uncredited",
+            "completed_strokes": 1,
+            "clinical_deficit_probability": null
+          },
+          "partial_contact_weight": 0.05,
+          "cumulative_partial_normal_contact_mm3": 20.0,
+          "proposal_failures": [],
+          "currently_retained_partial_normal_contact_mm3": 20.0,
+          "previously_partial_normal_later_removed_mm3": 0.0
+        },
+        "native_certificate": {
+          "feasible": true,
+          "failures": [],
+          "first_failed_action": null,
+          "first_unsupported_source_voxel": null,
+          "first_unsupported_position_mm": null,
+          "claimed_source_tissue_volume_mm3": 185.0,
+          "contained_source_tissue_volume_mm3": 185.0,
+          "unsupported_source_tissue_volume_mm3": 0.0,
+          "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+          "source_voxel_volume_mm3": 1.0,
+          "action_count": 1,
+          "checker_version": "independent-native-sequence-v2",
+          "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+          "complete_tool_checked": true,
+          "frontier_checked": true
+        }
+      }
+    }
+  },
+  "elapsed_seconds": 23.117688457947224,
+  "replay": {
+    "runId": "216fccfa-fced-4579-bc1f-dd52c29d05cf",
+    "caseHash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "step": 1,
+    "stepCount": 1,
+    "role": "selection",
+    "finalEvaluation": false,
+    "frame": "RAS+",
+    "affine": [
+      [
+        -1.0,
+        -0.0,
+        -0.0,
+        0.0
+      ],
+      [
+        -0.0,
+        -1.0,
+        -0.0,
+        239.0
+      ],
+      [
+        0.0,
+        0.0,
+        1.0,
+        0.0
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "simulatedRemovedTargetVolumeMm3": 174.0,
+    "simulatedRemovedNormalVolumeMm3": 11.0,
+    "modeledResidualTargetVolumeMm3": 41745.0,
+    "clinicalDeficitProbability": null,
+    "clinicalRiskReason": "no_validated_clinical_outcome_model"
+  },
+  "restart_independent_recheck_passed": true,
+  "training_contract": {
+    "algorithm": "masked_reinforce_state_value_v2",
+    "clinical_deficit_probability": null,
+    "code_sha256": "cd2a05c3eb6426e95190470e1e06096399e52cbd8672c6669b5a4f1106e27b42",
+    "config": {
+      "checkpoint_interval": 2,
+      "entropy_weight": 0.01,
+      "episodes_per_update": 2,
+      "gamma": 1.0,
+      "hidden_features": 16,
+      "learning_rate": 0.003,
+      "max_environment_steps": 256,
+      "max_episode_steps": 4,
+      "max_gradient_norm": 5.0,
+      "max_gradient_steps": 32,
+      "max_wall_seconds": 30.0,
+      "seed": 11,
+      "value_weight": 0.5
+    },
+    "contract_hash": "sha256:365baec1609d6ee19332d18fbaaccdaafad00c2c7a85d70d7aa68f9b1fa3ad39",
+    "decision_model_hash": "sha256:4d5211b0cd83c61be159c3f0c4beb0d2e31debdb03dcd1e245a74933465306a5",
+    "dimensions": [
+      15,
+      6,
+      16
+    ],
+    "final_evaluation_used_for_optimization": false,
+    "hardware": {
+      "device": "cpu",
+      "machine": "arm64",
+      "platform": "macOS-26.6-arm64-arm-64bit",
+      "processor": "arm",
+      "torch": "2.14.1",
+      "torch_threads": 4
+    },
+    "implementation_sha256": "cd2a05c3eb6426e95190470e1e06096399e52cbd8672c6669b5a4f1106e27b42",
+    "initial_checkpoint_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322",
+    "numerical_source_sha256": {
+      "__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+      "anatomy.py": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37",
+      "brain_extraction.py": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917",
+      "cohort.py": "d69538f80af8b318068af70dbc963b7a9ca6c3a4f62d6e8e542d6e43548fa874",
+      "core.py": "55ca2358e1075205558b89d0418a256f5ad72931e849c9cb9453c42b002d1fd9",
+      "desktop_bridge.py": "788a07af84eb2b9f2b4fab91f3e54e051daa389bce409f44caea470c3af12be9",
+      "diffusion.py": "e7f57bf7467fb3cb5d6b9b3f1c80e4665710713124d0720aa84d31ccc03b8e21",
+      "evaluation.py": "baaa2f3d6b4e41c4621dc22872da9300d649bc91dfeb923e2ad35f66aadad3b7",
+      "geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+      "imaging.py": "27af71b3581df2d9e9164885b3a6dc63491a6d2214133d177d4a30d7d382ab24",
+      "learning.py": "cd2a05c3eb6426e95190470e1e06096399e52cbd8672c6669b5a4f1106e27b42",
+      "learning_ppo.py": "a3814bc5da4837b66ae20496c38e17edd0edf73ef7863a920924cd7ec2a42d88",
+      "native_refinement.py": "f77d0ff3dcdf0d59ac4f149984421bc736e902f46426aec178b957ed84bbf860",
+      "native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+      "native_routes.py": "97bb55a3bf2894f336a593bc3c3379b3c4dc291198af90b91d319bd0b9a824ea",
+      "native_simulation.py": "2461cc6c32eb25a3927bcc3a9379bb02417794c3a764c4b1e705a00bcac6493c",
+      "planning.py": "f113ce78b239f91a86c65d8add74227a9d9f3c0d718449c7968a983e76ea850d",
+      "population_learning.py": "67a78b4c84c821315bc998d3e5ce0bbe8d4172785f23118146c8ede43975601e",
+      "preprocessing.py": "dbd2c4ba9551e2aa0d454b638e256ad8bc6cdf45dcdc8ec08e091e43c3eb14e5",
+      "prior_registration.py": "9828e76ed3e29e232c39dd16ece7d5fefa4cd366d1cab7899121e929ef34a703",
+      "route_native_diagnostics.py": "f2cf704da9e971f321dce707dadd9f0350ec7234ecc75c0ed0fc1242fd8c82cf",
+      "simulation.py": "bc43c16643adf8495f969dcacacb770f5f6be7fdeff0831f2a92eb4aed52939f",
+      "structural_evidence.py": "6a1b9e7aa5b13ea971a75d9416d96ab45de2b46901a036edd73ec58194fb7a33",
+      "worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
+    },
+    "partitions": {
+      "optimization": {
+        "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+          "rotation_center_mm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation_scale_deg": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "translation_scale_mm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "partition_hash": "sha256:6ec54339131277bcabbc2dbf9bc222c9da3f1dbf5a2aee5cc556cccdc6acdfa7",
+        "planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+        "role": "optimization",
+        "seeds": [
+          16265832201593650265,
+          2426642204150370815,
+          5657286968515157967
+        ]
+      },
+      "selection": {
+        "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+          "rotation_center_mm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation_scale_deg": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "translation_scale_mm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "partition_hash": "sha256:c7e5292347939ae94643c54f3b7a55517b91ebb615f9eda50ee052b96982eaef",
+        "planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+        "role": "selection",
+        "seeds": [
+          489568555796165988,
+          12710049006188768657
+        ]
+      }
+    },
+    "population_initialization": null,
+    "runtime": {
+      "device": "cpu",
+      "numpy": "2.5.3",
+      "python": "3.12.14",
+      "torch": "2.14.1"
+    },
+    "schema_version": 1,
+    "shared_checkpoint_hash": null,
+    "simulator_implementation_sha256": "2461cc6c32eb25a3927bcc3a9379bb02417794c3a764c4b1e705a00bcac6493c"
+  },
+  "report_sha256": "9f1019811d14c9330dab549eb175f0c90f865d14669f7616348b8607727e9465",
+  "export_sha256": "12eaa968d7cb2901f947bb823b98f0162a79a8d66cefde3191d099cd7cc60132",
+  "clinical_deficit_probability": null,
+  "limitations": [
+    "The new native route declares a different hypothetical 6 mm access window and named research tool; it is not a silent repair of an original route.",
+    "Policy action scope is STOP versus the declared native stroke; no free-form trajectory was learned.",
+    "This is selection-only interface validation. No final-evaluation world was used and no superiority over search is established.",
+    "Distinct optimization and selection seeds use nominal zero-shift native anatomy; this does not establish robustness to registration or anatomical uncertainty.",
+    "Accessible target estimates and simulated removed cells remain separate; contact and removal surrogates are not clinical injury probabilities.",
+    "Learner budget excludes separately measured preparation and independent certification.",
+    "Concurrent integration testing and packaging affected shared CPU load; elapsed time is descriptive workflow timing, not a comparative benchmark."
+  ],
+  "validation_conditions": {
+    "kind": "UI_protocol_workflow_smoke",
+    "concurrent_work": [
+      "Root integrated pytest suite",
+      "Full Torch sidecar packaging build"
+    ],
+    "comparative_runtime_or_learning_benchmark": false
+  },
+  "learning_observation": {
+    "gradient_steps": 32,
+    "actor_parameters_changed": true,
+    "initial_selection_return": 0.0,
+    "selected_selection_return": 171.58,
+    "selection_return_increased": true,
+    "selected_checkpoint_differs_from_initial": true,
+    "interpretation": "Policy parameters changed; compare recorded initial and selected returns separately. A productive selected stroke alone does not demonstrate policy improvement."
+  }
+}

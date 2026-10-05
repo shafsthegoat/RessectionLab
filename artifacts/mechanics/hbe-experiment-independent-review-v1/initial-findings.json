@@ -1,0 +1,21 @@
+{
+  "findings": [
+    {
+      "description": "Historical prep source5b102eb7 differs from current repaired builder3cb4d99f. Initial preflight required exact equality and would reject valid immutable preparation. Require distinct bound historical generation source, current builder, unchanged historical artifacts.",
+      "kind": "integration_gate"
+    },
+    {
+      "description": "Initial solve() emitted structured execution only on success. Timeout/nonzero left failed state/error text without actual elapsed/exit/cleanup details. Owner asked to persist partial execution for interrupted attempts.",
+      "kind": "failure_accounting"
+    }
+  ],
+  "initial_owner_source_sha256": "2f67e511dee17418293a14a081ffd14e65ca549e884cbada02e8e63970467c30",
+  "measured_responses_opened": 0,
+  "reviewer_setup_failure": {
+    "command": "pytest -q tests/test_mechanics_hbe_experiment_review.py",
+    "reason": "Run overlapped owner adding fitted-deck comparison before synthetic owner fixture had a deck binding. Held-out controls stopped at18calls with KeyError deck. No claim of a production defect from this fixture mismatch; wait for owner source and fixture freeze.",
+    "result": "1 passed, 2 failed in 0.13s"
+  },
+  "scope": "independent static orchestration review plus analytical mocked lifecycle controls; no FEBio or measured responses",
+  "solver_calls": 0
+}

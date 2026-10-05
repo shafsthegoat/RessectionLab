@@ -1,0 +1,64 @@
+{
+  "schema_version": 1,
+  "started_at": "2026-10-04T17:47:20.082423+00:00",
+  "status": "passed",
+  "git_commit": "575eccd154f3d87c844951108891870cd900ae11",
+  "root_release_sha256": "7a6366a425cbcc554732d1ce9b7800f3a5974c72da5410ffa8724c056c66c409",
+  "executor_sha256": "258e96bf73cf04157034af256658ac536eaacd707aa75c21c4d7536cd95309b9",
+  "runs": [
+    {
+      "mode": "main",
+      "argv": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+        "-I",
+        "-S",
+        "-B",
+        "-c",
+        "\nimport hashlib,importlib.metadata,json,os,pathlib,resource,sys,time\nsource=pathlib.Path(sys.argv[1]);output=pathlib.Path(sys.argv[2]);mode=sys.argv[3]\napp_dependencies=sys.argv[4];idc_dependencies=sys.argv[5]\nsys.path[:0]=[str(source/'src'),str(source)]\nsys.path.extend(([idc_dependencies] if mode=='dicom' else [])+[app_dependencies])\nimport pytest\nstarted=time.perf_counter()\nprogress={'collected':None,'finished':0,'failed':[],'skipped':[]}\ndef write(name,value):\n    path=output/(mode+'-'+name+'.json');temporary=path.with_suffix('.tmp')\n    temporary.write_text(json.dumps(value,indent=2,allow_nan=False)+'\\n');temporary.replace(path)\nclass Receipt:\n    def pytest_collection_finish(self,session):\n        progress['collected']=len(session.items);write('progress',progress)\n    def pytest_runtest_logreport(self,report):\n        if report.when=='call' or report.failed or report.skipped:\n            if report.when=='call':progress['finished']+=1\n            if report.failed:progress['failed'].append({'nodeid':report.nodeid,'when':report.when,'failure':str(report.longrepr)})\n            if report.skipped:progress['skipped'].append({'nodeid':report.nodeid,'when':report.when,'reason':str(report.longrepr)})\n            if report.failed or report.skipped or progress['finished']%20==0:write('progress',progress)\npaths=['tests'] if mode=='main' else ['tests/test_remind_development_acquisition.py']\nargs=paths+['-q','-ra','--durations=0','--durations-min=0','--junitxml='+str(output/(mode+'.xml')),'-p','no:cacheprovider']\nexit_code=pytest.main(args,plugins=[Receipt()])\nwrite('progress',progress)\norigins={name:str(pathlib.Path(module.__file__).resolve()) for name,module in sys.modules.items()\n         if getattr(module,'__file__',None) and (name.startswith('resectionlab') or pathlib.Path(module.__file__).resolve().is_relative_to(source))}\nbad={name:path for name,path in origins.items() if name.startswith('resectionlab') and not pathlib.Path(path).is_relative_to(source/'src')}\nversions={d.metadata['Name']:d.version for d in importlib.metadata.distributions(path=([idc_dependencies] if mode=='dicom' else [])+[app_dependencies])}\nwrite('runtime',{'elapsed_seconds':time.perf_counter()-started,'peak_rss_bytes_macos':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,\n    'python':sys.version,'sys_path':sys.path,'pytest_arguments':args,'package_versions':versions,\n    'project_module_origins':origins,'unexpected_resectionlab_origins':bad,'pytest_exit_code':int(exit_code)})\nif bad:raise RuntimeError('Mutable checkout imported: '+repr(bad))\nraise SystemExit(int(exit_code))\n",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/python-regression-575eccd/source",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/validation/python-regression-575eccd/attempt-01",
+        "main",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/idc-acquisition-venv/lib/python3.12/site-packages"
+      ],
+      "started_at": "2026-10-04T17:47:20.083798+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 288.3139426659327,
+      "finished_at": "2026-10-04T17:52:08.388625+00:00",
+      "log_sha256": "77aaa96b5163ba14b8eff3f14a8c0ed94e032b8ddc297f3fcf1bc7466d324a7b",
+      "main.xml_sha256": "aae8b7a582fb2eff0d8bbde667b82108f8ae6d10f4700b5b8b0346faf08835ae",
+      "main-runtime.json_sha256": "76c7a4992273c9ae3dd9ebbf78c2ad691223651a118a63be93d4fe80e3854444",
+      "main-progress.json_sha256": "d83f5f2a3f8f3c8484b597ca964ad6fd371f8c0e1821558121fbe608ccc8cece"
+    },
+    {
+      "mode": "dicom",
+      "argv": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/idc-acquisition-venv/bin/python",
+        "-I",
+        "-S",
+        "-B",
+        "-c",
+        "\nimport hashlib,importlib.metadata,json,os,pathlib,resource,sys,time\nsource=pathlib.Path(sys.argv[1]);output=pathlib.Path(sys.argv[2]);mode=sys.argv[3]\napp_dependencies=sys.argv[4];idc_dependencies=sys.argv[5]\nsys.path[:0]=[str(source/'src'),str(source)]\nsys.path.extend(([idc_dependencies] if mode=='dicom' else [])+[app_dependencies])\nimport pytest\nstarted=time.perf_counter()\nprogress={'collected':None,'finished':0,'failed':[],'skipped':[]}\ndef write(name,value):\n    path=output/(mode+'-'+name+'.json');temporary=path.with_suffix('.tmp')\n    temporary.write_text(json.dumps(value,indent=2,allow_nan=False)+'\\n');temporary.replace(path)\nclass Receipt:\n    def pytest_collection_finish(self,session):\n        progress['collected']=len(session.items);write('progress',progress)\n    def pytest_runtest_logreport(self,report):\n        if report.when=='call' or report.failed or report.skipped:\n            if report.when=='call':progress['finished']+=1\n            if report.failed:progress['failed'].append({'nodeid':report.nodeid,'when':report.when,'failure':str(report.longrepr)})\n            if report.skipped:progress['skipped'].append({'nodeid':report.nodeid,'when':report.when,'reason':str(report.longrepr)})\n            if report.failed or report.skipped or progress['finished']%20==0:write('progress',progress)\npaths=['tests'] if mode=='main' else ['tests/test_remind_development_acquisition.py']\nargs=paths+['-q','-ra','--durations=0','--durations-min=0','--junitxml='+str(output/(mode+'.xml')),'-p','no:cacheprovider']\nexit_code=pytest.main(args,plugins=[Receipt()])\nwrite('progress',progress)\norigins={name:str(pathlib.Path(module.__file__).resolve()) for name,module in sys.modules.items()\n         if getattr(module,'__file__',None) and (name.startswith('resectionlab') or pathlib.Path(module.__file__).resolve().is_relative_to(source))}\nbad={name:path for name,path in origins.items() if name.startswith('resectionlab') and not pathlib.Path(path).is_relative_to(source/'src')}\nversions={d.metadata['Name']:d.version for d in importlib.metadata.distributions(path=([idc_dependencies] if mode=='dicom' else [])+[app_dependencies])}\nwrite('runtime',{'elapsed_seconds':time.perf_counter()-started,'peak_rss_bytes_macos':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,\n    'python':sys.version,'sys_path':sys.path,'pytest_arguments':args,'package_versions':versions,\n    'project_module_origins':origins,'unexpected_resectionlab_origins':bad,'pytest_exit_code':int(exit_code)})\nif bad:raise RuntimeError('Mutable checkout imported: '+repr(bad))\nraise SystemExit(int(exit_code))\n",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/python-regression-575eccd/source",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/validation/python-regression-575eccd/attempt-01",
+        "dicom",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/idc-acquisition-venv/lib/python3.12/site-packages"
+      ],
+      "started_at": "2026-10-04T17:52:08.391202+00:00",
+      "exit_code": 0,
+      "elapsed_seconds": 0.7423152499832213,
+      "finished_at": "2026-10-04T17:52:09.133990+00:00",
+      "log_sha256": "d817df440bc240de6283d10b4e7d3f0901f6de71afa31c0c4db33ab80a20bd73",
+      "dicom.xml_sha256": "62e8981aceb009022b31ac343a3467adaed7bba4f8a437783013344797747c9f",
+      "dicom-runtime.json_sha256": "f61640f35320041eb243e16e218c0f13e6fa05d07871ca7d67b5a7f250ed5629",
+      "dicom-progress.json_sha256": "844d84bbe849f1ee099f079082abd30600799e2cafde8247e7f0b99da50f2a62"
+    }
+  ],
+  "no_installs": true,
+  "numerical_threads_requested": 1,
+  "changed_baseline_files": [],
+  "added_files": [],
+  "public_bundle_unchanged": true,
+  "finished_at": "2026-10-04T17:52:10.025774+00:00"
+}

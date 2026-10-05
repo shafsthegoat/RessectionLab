@@ -1,0 +1,88 @@
+{
+  "status": "three_actual_fixed_software_controls_passed",
+  "source_commit": "ddaa7e352282d159f454562cfa091cdad0a284d3",
+  "case_rows": [
+    {
+      "case": "tet10_affine",
+      "passed": true,
+      "states": 5,
+      "solver_seconds": 0.04069741698913276,
+      "minimum_sampled_J": 0.9999999999999989,
+      "final_reconstructed_energy_J": 5.307676290870318e-06,
+      "maximum_final_solver_residual_N2": 5.621442e-27,
+      "all_state_checks_passed": true,
+      "actual_skyline_lines": [
+        "Default linear solver: skyline",
+        "* Selecting linear solver skyline                                       *"
+      ]
+    },
+    {
+      "case": "mpc_translation",
+      "passed": true,
+      "states": 5,
+      "solver_seconds": 0.04056166601367295,
+      "minimum_sampled_J": 0.9999999999999983,
+      "final_reconstructed_energy_J": -4.425675130074515e-20,
+      "maximum_final_solver_residual_N2": 1.105826e-31,
+      "all_state_checks_passed": true,
+      "actual_skyline_lines": [
+        "Default linear solver: skyline",
+        "* Selecting linear solver skyline                                       *"
+      ],
+      "maximum_constraint_error_m": 2.710505431213761e-20,
+      "feasible_directions_per_state": 72,
+      "maximum_abs_finest_virtual_work_N": 7.074205475345855e-12,
+      "maximum_last_fd_step_change_N": 2.1107940336479585e-11,
+      "all_step_convergence_gates_passed": true,
+      "parent_reaction_scope": "retained only; eliminated DOF reactions are unavailable here and are not a force-balance gate"
+    },
+    {
+      "case": "mpc_nonrigid",
+      "passed": true,
+      "states": 5,
+      "solver_seconds": 0.0390669999178499,
+      "minimum_sampled_J": 0.9966851963045384,
+      "final_reconstructed_energy_J": 7.639209626690441e-08,
+      "maximum_final_solver_residual_N2": 2.31167e-21,
+      "all_state_checks_passed": true,
+      "actual_skyline_lines": [
+        "Default linear solver: skyline",
+        "* Selecting linear solver skyline                                       *"
+      ],
+      "maximum_constraint_error_m": 1.9999464324210736e-16,
+      "feasible_directions_per_state": 72,
+      "maximum_abs_finest_virtual_work_N": 2.4136303093684795e-11,
+      "maximum_last_fd_step_change_N": 2.113917958022141e-11,
+      "all_step_convergence_gates_passed": true,
+      "parent_reaction_scope": "retained only; eliminated DOF reactions are unavailable here and are not a force-balance gate"
+    }
+  ],
+  "bound_inputs_rehashed": 37,
+  "original_case_files_rehashed": 18,
+  "archive_files_rehashed": 9,
+  "solver_invocations": 3,
+  "supervised_seconds": 0.7812017500400543,
+  "launcher_seconds": 1.0124724589986727,
+  "worker_seconds": 0.5825628329766914,
+  "sampled_peak_process_group_rss_bytes": 40108032,
+  "caps": {
+    "aggregate_seconds": 60,
+    "process_group_rss_bytes": 3221225472,
+    "numerical_threads": 1,
+    "maximum_cases": 3,
+    "time_steps": 4,
+    "retries": 0
+  },
+  "no_retry": true,
+  "concurrent_workload": "Root disclosed concurrent HBE20-case experiment. This is a27node software fixture, not a performance benchmark. No timing generalization. Stop on observed resource pressure.",
+  "method": "Read saved measurements and rehash originals only; no solver/checker replay to generate this summary.",
+  "limits": [
+    "Fixed six-tet10, 27-node analytical software fixture only, not anatomy or synthetic patient training.",
+    "Three overlapping explicit nodal averages are not the unimplemented 5 mm volume-tent patient operator.",
+    "No patient observations or measured HBE curves loaded; no constitutive-property fit.",
+    "No mesh convergence or global finite-strain uniqueness established.",
+    "Parent Rx values are not eliminated constraint reactions; energy finite differences and actual reduced solver residual provide the recorded independent checks.",
+    "Positive J checked at declared Gauss/corner/midpoint/centroid witnesses, not everywhere in an arbitrary curved element.",
+    "One attempt with concurrent CPU work; timings do not establish performance scaling."
+  ]
+}

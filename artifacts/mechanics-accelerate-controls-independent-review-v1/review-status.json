@@ -1,0 +1,13 @@
+{
+  "schema": "mechanics-accelerate-controls-independent-review-status-v1",
+  "status": "owner_repairs_pass_11_independent_controls_final_runtime_declaration_pending",
+  "test_result": "11 passed in 0.15s",
+  "initial_negatives_sha256": "fd82304031344ad29e8676ae57a6b9d4e5e1128d9dacfda50574fec8c45b065b",
+  "sources": {
+    "scripts/mechanics_accelerate_controls.py": "f2ad929648b2804fa047a0d0840a693cfd16302268c5e1b76342f85293b499ec",
+    "tests/test_mechanics_accelerate_controls.py": "775ff809d9bd2289b19d1a70f8c460c53ed171adc8400497f877f8416b2973d2",
+    "tests/test_mechanics_accelerate_controls_review.py": "c90a017fb0c9ab6bd1304765a1034b0fec4852e2e6f21935d28705ec8ce942a6"
+  },
+  "scope": "Analytical deck metadata, mocked process/checker payloads, temporary files only. No actual solver invocation, patient images/coordinates, measured specimen curves, or installed runtime evidence was opened.",
+  "remaining": "Revised runtime/backend binding declaration freeze and one combined owner+independent control check."
+}

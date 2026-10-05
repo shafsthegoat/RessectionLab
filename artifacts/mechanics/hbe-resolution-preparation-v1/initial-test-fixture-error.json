@@ -1,0 +1,7 @@
+{
+  "status": "test_fixture_corrected_not_product_failure",
+  "test_source_sha256": "094290c10a5d2e04bab033ccf3f7dd31aca3795bd14c28ba2cea39d448a9ca35",
+  "result": "1 failed, 8 passed in 0.18s",
+  "error": "test_both_prospective_triplets_are_mandatory expected false; actual true",
+  "diagnosis": "Fixture motion differences were all below the original8um absolute floor, so existing trend exemption correctly passed. Use force trend equality above the force floor to test mandatory co-primary behavior."
+}

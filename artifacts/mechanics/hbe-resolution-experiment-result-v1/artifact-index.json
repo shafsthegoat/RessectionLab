@@ -1,0 +1,49 @@
+{
+  "aggregate_co_primary_evaluated": false,
+  "declared_case_count": 4,
+  "files": {
+    "RESULT.md": {
+      "bytes": 3750,
+      "sha256": "8bc55a5856d92fb50a7a09db926490b6098ba3cd48c5e10f5489208e0831f74a"
+    },
+    "access-chronology.json": {
+      "bytes": 316,
+      "sha256": "34c65c99108ac931202566ccd7478fd45a3a61157bb672fc6d3733fcbb69fb2c"
+    },
+    "collect.py": {
+      "bytes": 14050,
+      "sha256": "34272d5ea0e661e2d6e1180cfa2afd981e3e2348e79410d5b969e791e45820f1"
+    },
+    "outcome.json": {
+      "bytes": 5175,
+      "sha256": "30670f554e14a55b8f88d0b269b6129c9b816ed352f6d9dfba7cc24b105950c0"
+    },
+    "preservation.json": {
+      "bytes": 45488,
+      "sha256": "92aa438c4ce0b44b16912877af550a83cbffd507933badc763681622c7effeb9"
+    },
+    "process-closure.json": {
+      "bytes": 603,
+      "sha256": "30cf91b987688f55c4d33546ae82f5c6e858679a3d8c4b03532a41f9f1016ace"
+    },
+    "raw-output-index.json": {
+      "bytes": 3688,
+      "sha256": "b93502f59f3d99f2a42c873578af13ffb205d0d24d118d0a5ea37d431c76863f"
+    },
+    "readonly-freeze.json": {
+      "bytes": 562,
+      "sha256": "6e5a9587afd8538d7e56fa4a5e33c2f6fb94877c0cfb00889e8adfada4598c2d"
+    },
+    "run-outcomes.json": {
+      "bytes": 6765,
+      "sha256": "b52a8dc2820bd54dcdeb57ca4d7a34bcd1e19f5bef2af5263e3e076559f1dbef"
+    }
+  },
+  "independent_review": "separate_saved_only_review_pending_at_collection",
+  "measured_data_accessed": false,
+  "raw_bytes": 358464168,
+  "raw_file_count": 22,
+  "schema": "hbe-resolution-experiment-result-index-v1",
+  "solver_invocations": 2,
+  "status": "frozen_terminal_failure_evidence"
+}

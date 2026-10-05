@@ -1,0 +1,74 @@
+{
+  "commit": "32ae206ff4881dfb54f62296cd1558e58ed9fcc6",
+  "scope": "Selected tagged schema/output implementations only; no solver acquisition or execution",
+  "sources": [
+    {
+      "path": "FEBioMech/FESolidModule.cpp",
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FEBioMech/FESolidModule.cpp",
+      "sha256": "045b81d82a6becdf647085929d2472bf019ff7399d65aae333d7a1721aa94f6c",
+      "bytes": 3311
+    },
+    {
+      "path": "FECore/FELogNodeData.cpp",
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FECore/FELogNodeData.cpp",
+      "sha256": "61778375b70d468f7b9c7d2a47a39a42124285fbfb8fcb8ea10c1e91eb4d59e7",
+      "bytes": 1401
+    },
+    {
+      "path": "FECore/FELogElemData.cpp",
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FECore/FELogElemData.cpp",
+      "sha256": "583f441d6390a4b869d086bae1b9dba492f45841ce35a3c8f20ca5c347bb521a",
+      "bytes": 1401
+    },
+    {
+      "path": "FECore/DataRecord.cpp",
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FECore/DataRecord.cpp",
+      "sha256": "7805baf31c36d6380d675f2f20c8fcf3ff6d9382e9389aeb8dd51893ad8542e9",
+      "bytes": 6668
+    },
+    {
+      "path": "FEBioXML/FEBioOutputSection.cpp",
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FEBioXML/FEBioOutputSection.cpp",
+      "sha256": "90100d2d5ac62351d612ddab2ef463cd6aa095f50fcd10e31fc11ff368881227",
+      "bytes": 11503
+    },
+    {
+      "path": "FEBioMech/FEBioMechModule.cpp",
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FEBioMech/FEBioMechModule.cpp",
+      "sha256": "aecff27231e0e11475f732252cfcd8968944a9581f18663549abb56bf11f4645",
+      "bytes": 71188
+    },
+    {
+      "path": "FEBioMech/FEBioMechData.h",
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FEBioMech/FEBioMechData.h",
+      "sha256": "61c1ca942127cbb090080b31c5e310b8fb9a9fd39eaf9346720142f77b8dff83",
+      "bytes": 60505
+    },
+    {
+      "path": "FEBioMech/FEBioMechData.cpp",
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FEBioMech/FEBioMechData.cpp",
+      "sha256": "f34f426fd662048099df46fb5c6bafd80d021f689749815d1bc812f851e74069",
+      "bytes": 85655
+    },
+    {
+      "path": "FEBioMech/FEPrescribedDisplacement.cpp",
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FEBioMech/FEPrescribedDisplacement.cpp",
+      "sha256": "8145165e6e43945c18bbb1db873266ca517df9904019797d75fe4eb681f09231",
+      "bytes": 1931
+    },
+    {
+      "path": "FEBioXML/FEBioMeshSection4.cpp",
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FEBioXML/FEBioMeshSection4.cpp",
+      "sha256": "3ac07e443aeab60081db4bff3cb72814313798e6f4b8e80a9b3761485cb00d86",
+      "bytes": 12609
+    }
+  ],
+  "existing_tagged_source_references": {
+    "artifacts/febio-runtime-investigation-v1/model-source-FEBioMech__FEOgdenMaterial.cpp": "9a4d8dd6aa45adcd8158864b8344567aa734cf912f47c9f7f7a5376c536dadc4",
+    "artifacts/febio-runtime-investigation-v1/model-source-FEBioMech__FEUncoupledMaterial.h": "236e2d27e23e78bd2cdb5c84a89c95ff383ebad421477adbcc36a935a033a234",
+    "artifacts/febio-runtime-investigation-v1/model-source-FEBioMech__FE3FieldElasticSolidDomain.cpp": "2eabad7908288baca716695e52059fa662d52323a236d6a13bbeeb9c3c982c9f",
+    "artifacts/febio-runtime-investigation-v1/upstream-FEBioMech__FESolidSolver2.cpp": "0558262b37931ff591b53e9645d7c5a809e149ecd399656d59aa4bf84f245bf6",
+    "artifacts/febio-runtime-investigation-v1/upstream-FEBioMech__FEResidualVector.cpp": "7e11906bdab31ea44e195abeb01d00eff5f137d3f3ac07f995bfc16b6165279f",
+    "artifacts/febio-runtime-investigation-v1/upstream-FEBioMech__FEElasticSolidDomain.cpp": "14b38c357a2cd7a36c1f641b906a439279904967eb1846e6c338538b56df2134"
+  }
+}

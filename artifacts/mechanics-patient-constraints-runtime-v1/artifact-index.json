@@ -1,0 +1,62 @@
+{
+  "status": "prepared_not_executed",
+  "files": {
+    "LAUNCHER.md": {
+      "sha256": "067be95e3cb94a25d8d8dafac0e99612dfbefd7cc07322a41086a12d9cb8fdbf",
+      "bytes": 1594
+    },
+    "README.md": {
+      "sha256": "f1d99e7e22fd33c7c41189b73fb0258edbd5f93b892d750df5df87260e269c28",
+      "bytes": 4539
+    },
+    "decks/manifest.json": {
+      "sha256": "73a20d14551742159f05145bfd39444fde4d8bc81415d6139d85e8d890d0c330",
+      "bytes": 4076
+    },
+    "decks/mpc_nonrigid.feb": {
+      "sha256": "40900e8761e663ca37568f9b911a06bfb34acb3db2bd5b1fd4840c7d55fadb93",
+      "bytes": 6017
+    },
+    "decks/mpc_translation.feb": {
+      "sha256": "dad1653d2015d04f3499ea87f37246e5fce3c86f849ffc363e99cddd230386fa",
+      "bytes": 6126
+    },
+    "decks/tet10_affine.feb": {
+      "sha256": "8a75158a97750f3db57a5a2a48ab3f03760a4a95a8818ff3d30218ceca262f62",
+      "bytes": 17527
+    },
+    "launcher-preparation-initial.json": {
+      "sha256": "a8a6eb813d3afb757bfecab8ec8ed8b67be36e8044a4723c9b7c4bd016d2393b",
+      "bytes": 1429
+    },
+    "launcher-preparation.json": {
+      "sha256": "7d4df4aad3a1e90cf597fe45ab3e6811f1a55c7ecfc15cb4832461f09ad9cf98",
+      "bytes": 1998
+    },
+    "launcher-tests-01.txt": {
+      "sha256": "3509d5176b59507965c15021f84249acb02f003635bc1542c898f4025b7a39bb",
+      "bytes": 98
+    },
+    "launcher-tests-02.txt": {
+      "sha256": "e45be053ce2b0b4919c09cf65ab4c43793d6c53be59d06c06af9c1360414e1f6",
+      "bytes": 98
+    },
+    "launcher-tests-03.txt": {
+      "sha256": "8b8ddcd2e7b63fe945152ea4c56d7e74f75ec09c6df6f5afe0311439df55ede7",
+      "bytes": 98
+    },
+    "owner-tests-01.txt": {
+      "sha256": "6320bc21f6d91e1394326621455046285ed9abfe002251b7ef04464f1d80f353",
+      "bytes": 99
+    },
+    "preparation.json": {
+      "sha256": "befa1fb3099725c62827348b7d23f857ee3086706cb5a5997fdeebe59f64b0c2",
+      "bytes": 2724
+    },
+    "release-template.json": {
+      "sha256": "d951d2ac78cf408740b1118d946514cbff61256b11656b311395ad3fcd2b46de",
+      "bytes": 655
+    }
+  },
+  "count": 14
+}

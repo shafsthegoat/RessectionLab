@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "status": "initial_findings_reproduced_repairs_pending",
+  "negative_check_sha256": "95e9de512df2f5fef39b6a0a1fa079928d30a285ec868334f719d4ff17c06761",
+  "reproduced_findings": [
+    "Twenty claimed run records backed only by dummy JSON primitive/source blobs accepted.",
+    "Arbitrary metric limit1000 and wrong units accepted for claimed force_balance actual100.",
+    "Changed torsion prediction plus calibration hashes in a rehashed hand-authored freeze reached a held-out member read.",
+    "Calibration reopened after held-out disclosure, including a new study instance on the same ledger.",
+    "A new prediction freeze could be created after held-out disclosure.",
+    "Hash-shaped source labels and dummy prerequisite evidence reached calibration member read."
+  ],
+  "positive_negative_control": "Changed ZIP archive bytes rejected before any member read.",
+  "fixture_correction": "Initial stale owner fixture lacked latest run_readout source entry and fitted_confirmation group, causing three setup errors before intended lifecycle controls. Copied fixture schema updated only; all fake numerical content retained and six target failures then reproduced.",
+  "scope": "Analytical temporary ZIP archives only. No real measured values/images or FEM execution."
+}

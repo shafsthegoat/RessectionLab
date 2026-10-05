@@ -1,0 +1,55 @@
+...............................FFF........                               [100%]
+=================================== FAILURES ===================================
+____ test_contradictory_completed_launcher_is_rejected[worker_returncode-1] ____
+
+authorities = ({'source_runtime_content_hash': 'runtime', 'geometry_sha256': 'geometry', 'runtime_versions': {'numpy': 'n', 'scipy':..., 'parent_timeout_requested': False, 'hard_killed': False}, {'status': 'completed', 'runtime_content_hash': 'runtime'})
+field = 'worker_returncode', value = 1
+
+    @pytest.mark.parametrize("field,value", [("worker_returncode",1),("parent_timeout_requested",True),("hard_killed",True)])
+    def test_contradictory_completed_launcher_is_rejected(authorities,field,value):
+        authorities[3][field] = value
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_native_cache_payload_review.py:98: Failed
+_ test_contradictory_completed_launcher_is_rejected[parent_timeout_requested-True] _
+
+authorities = ({'source_runtime_content_hash': 'runtime', 'geometry_sha256': 'geometry', 'runtime_versions': {'numpy': 'n', 'scipy':...0, 'parent_timeout_requested': True, 'hard_killed': False}, {'status': 'completed', 'runtime_content_hash': 'runtime'})
+field = 'parent_timeout_requested', value = True
+
+    @pytest.mark.parametrize("field,value", [("worker_returncode",1),("parent_timeout_requested",True),("hard_killed",True)])
+    def test_contradictory_completed_launcher_is_rejected(authorities,field,value):
+        authorities[3][field] = value
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_native_cache_payload_review.py:98: Failed
+_____ test_contradictory_completed_launcher_is_rejected[hard_killed-True] ______
+
+authorities = ({'source_runtime_content_hash': 'runtime', 'geometry_sha256': 'geometry', 'runtime_versions': {'numpy': 'n', 'scipy':...0, 'parent_timeout_requested': False, 'hard_killed': True}, {'status': 'completed', 'runtime_content_hash': 'runtime'})
+field = 'hard_killed', value = True
+
+    @pytest.mark.parametrize("field,value", [("worker_returncode",1),("parent_timeout_requested",True),("hard_killed",True)])
+    def test_contradictory_completed_launcher_is_rejected(authorities,field,value):
+        authorities[3][field] = value
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_native_cache_payload_review.py:98: Failed
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/_pytest/python.py:124
+  /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/_pytest/python.py:124: PytestRemovedIn10Warning: Passing a non-Collection iterable to parametrize is deprecated.
+  Test: tests/test_native_cache_payload_review.py::test_every_baseline_counter_is_required, argvalues type: product
+  Please convert to a list or tuple.
+  See https://docs.pytest.org/en/stable/deprecations.html#parametrize-iterators
+    metafunc.parametrize(*marker.args, **marker.kwargs, _param_mark=marker)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_native_cache_payload_review.py::test_contradictory_completed_launcher_is_rejected[worker_returncode-1]
+FAILED tests/test_native_cache_payload_review.py::test_contradictory_completed_launcher_is_rejected[parent_timeout_requested-True]
+FAILED tests/test_native_cache_payload_review.py::test_contradictory_completed_launcher_is_rejected[hard_killed-True]
+3 failed, 39 passed, 1 warning in 0.38s

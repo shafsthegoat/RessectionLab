@@ -1,0 +1,111 @@
+{
+  "schema": "graded-case4-independent-saved-audit-v2",
+  "status": "passed_audit_of_rejected_candidate",
+  "owner_index_sha256": "8c3298d014cbf638487fca30f1d46475dadd6c2f440a1550134d77b9a5d36043",
+  "owner_index_files_checked": 13,
+  "raw_files_checked": 10,
+  "raw_bytes": 446610,
+  "archive_git_and_current_source_files_checked": 7,
+  "before_after_bindings_consistent": 28,
+  "current_nonimage_nonsurface_bindings_rehashed": 26,
+  "saved_worker_and_launcher_binding_count": 19,
+  "excluded_original_inputs": [
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-brain-envelope-v1/main_mask.nii.gz",
+      "basis": "Saved before/after hashes only; not reread in this audit."
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-v1/native-surface.npz",
+      "basis": "Saved before/after hashes only; not reread in this audit."
+    }
+  ],
+  "diagnostic": {
+    "status": "complete_untruncated_saved_packet",
+    "bytes": 413290,
+    "framing": {
+      "nodes_m.npy": {
+        "shape": [
+          5223,
+          3
+        ],
+        "dtype": "float64",
+        "header_bytes": 128,
+        "payload_bytes": 125352,
+        "sha256": "0ecb287d96219344e6063f94e760f5088b7e340d9eb43b1bbe5065323251aec3"
+      },
+      "tet10_indices.npy": {
+        "shape": [
+          2761,
+          10
+        ],
+        "dtype": "int64",
+        "header_bytes": 128,
+        "payload_bytes": 220880,
+        "sha256": "2b86eccf2565ab7e9819a31f905bad9d05db4b0dad2b2665f987e3c05643a2bc"
+      },
+      "gmsh_node_ids.npy": {
+        "shape": [
+          5223
+        ],
+        "dtype": "int64",
+        "header_bytes": 128,
+        "payload_bytes": 41784,
+        "sha256": "45508c64dd878f5b127234db252095b595434c456191ee512678cd89ab25d1d1"
+      },
+      "gmsh_element_ids.npy": {
+        "shape": [
+          2761
+        ],
+        "dtype": "int64",
+        "header_bytes": 128,
+        "payload_bytes": 22088,
+        "sha256": "a5369e41076f36f035b6991ae71d17b72ef10498c18a639daeda8e6d1ee5feaf"
+      }
+    },
+    "nodes": 5223,
+    "elements": 2761,
+    "indices_in_range": true,
+    "unique_positive_native_ids": true
+  },
+  "scientific_result": {
+    "status": "rejected_independent_surface_fidelity",
+    "source_to_mesh": {
+      "sample_count": 1027230,
+      "maximum_sample_distance_m": 0.005459949977542773,
+      "full_surface_upper_bound_m": 0.006167056788211742,
+      "cover_radius_cap_m": 0.001
+    },
+    "mesh_to_source": {
+      "sample_count": 121028,
+      "maximum_sample_distance_m": 0.0038337299930228013,
+      "full_surface_upper_bound_m": 0.004830812977588099,
+      "cover_radius_cap_m": 0.001
+    },
+    "relative_volume_error": 0.012083768474345224,
+    "quality_scope": "Saved quality/topology/J/non-overlap records are consistent. No independent geometry recomputation in this audit."
+  },
+  "resource_observations": {
+    "seconds": 10.47940304200165,
+    "sampled_group_peak_rss_bytes": 647561216,
+    "exit_code": 1,
+    "kill_reason": null
+  },
+  "limitations": [
+    "No accepted patient mesh or solver admission.",
+    "Sampled distances already exceed 2 mm; cover slack alone cannot explain rejection.",
+    "Distance records contain aggregate maxima, not locations or per-triangle witnesses.",
+    "Volume agreement does not establish local surface accuracy.",
+    "Native surface/mask were not reread; their preservation is supported by saved execution records.",
+    "Resource observations are sampled and not an isolated performance benchmark."
+  ],
+  "activity": {
+    "returned_mesh_arrays_loaded": 4,
+    "image_or_source_surface_arrays_loaded": 0,
+    "landmark_reads": 0,
+    "native_mesher_imports_or_calls": 0,
+    "geometry_recomputations": 0,
+    "solver_calls": 0,
+    "training_updates": 0
+  },
+  "audit_seconds": 0.20093320903833956
+}

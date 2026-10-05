@@ -1,0 +1,762 @@
+#!/usr/bin/env python3
+"""One released specimen experiment; no optimizer, retries, or automatic release.
+
+Default CLI operation checks metadata only. The explicit release binds this
+source, its helpers, the interpreter, prepared inputs, and accepted runtime.
+All solver children inherit the single supervised worker process group.
+
+The access-layer hbe-calibration-release-v1 record additionally supplies execution:
+authorized_specimen_solver_calls=20; source_bindings (seven helper module keys
+plus orchestrator below); source_archive (prefix-free Git tar binding);
+interpreter {path,sha256}; mesh_levels {"4","8","12": generated receipt binding};
+csv_schemas for four branches; access_ledger_path at the declared experiment root.
+mesh_preparation_source and mesh_preparation_record bind the historical generator
+and its original Git archive; current mesh_deck identifies the fitted-deck helper.
+prerequisite_evidence binds the accepted runtime identity, analytical summary,
+and whole mesh-preparation receipt. These are actual release inputs, not templates
+created or accepted automatically by this script.
+"""
+from __future__ import annotations
+
+import argparse
+import gzip
+import hashlib
+import json
+import math
+import os
+from pathlib import Path
+import signal
+import subprocess
+import sys
+import tarfile
+import threading
+import time
+import xml.etree.ElementTree as ET
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts import febio_runtime as runtime
+from scripts import mechanics_hbe_access as access
+from scripts import mechanics_hbe_backend as backend
+from scripts import mechanics_hbe_evaluation as evaluation
+from scripts import mechanics_hbe_mesh as meshing
+from scripts import mechanics_hbe_outputs as outputs
+from scripts import mechanics_hbe_physics as physics
+from scripts import mechanics_hbe_readout as readout
+
+SOURCE_MODULES = {'runtime_driver': runtime, 'access': access, 'curve_evaluator': evaluation,
+                  'mesh_deck': meshing, 'primitive_parser': outputs, 'physics': physics,
+                  'readout': readout}
+RUNTIME_SHA = 'f560f386726d13b399bcfb0c781a4b78104deecf41aa977e0efe205f18fabfc4'
+PREPARATION_SOURCE_SHA = '5b102eb74a171d41a8815e408a6473fd65032dd9b30ff5412cf7243addc7d3e2'
+PREPARATION_COMMIT = 'cb72a848c47c6cfb6cc35374963db63d93edbc7c'
+BRANCHES = ('compression', 'tension', 'torsion_neg', 'torsion_pos')
+CONTINUATION_SHA = '7e74bfdfd8889fd38698990c76aad0a96611fdb223ebd1d738c9d8d06b4a6c7d'
+REUSED_RUN = 'compression:N4:S60:reference'
+
+
+def binding(root, path):
+    path = Path(path).resolve()
+    return {'path': str(path.relative_to(root)), 'sha256': runtime.sha(path)}
+
+
+def saved(root, path, value):
+    access.exclusive_json(path, value)
+    return binding(root, path)
+
+
+def recheck(input_hashes):
+    for name, expected in input_hashes.items():
+        if runtime.sha(Path(name)) != expected:
+            raise ValueError('Bound input changed: ' + name)
+
+
+def continuation_inputs(root, plan, release, declaration_binding):
+    """Authenticate this one historical parser failure; not general recovery."""
+    if declaration_binding['sha256'] != CONTINUATION_SHA:
+        raise ValueError('Only the reviewed first-coarse continuation is supported')
+    declaration = access.verify_binding(root, declaration_binding, maximum_bytes=1024**2, read_json=True)
+    inputs = {str(access.local_path(root, declaration_binding['path'])): CONTINUATION_SHA}
+    def bound(record, *, json_value=True):
+        value = access.verify_binding(root, record, maximum_bytes=16*1024**2, read_json=json_value)
+        inputs[str(access.local_path(root, record['path']))] = record['sha256']
+        return value
+    old = {key: bound(record) for key, record in declaration['original'].items()}
+    prior = old['release']
+    if (prior['source_commit'] != declaration['original_source_commit']
+            or old['baseline']['release_binding'] != declaration['original']['release']
+            or old['state']['release'] != declaration['original']['release']
+            or old['attempt_marker']['release'] != declaration['original']['release']
+            or old['state'].get('solver_invocations') != 1
+            or old['state'].get('status') != 'failed_or_incomplete'
+            or old['state'].get('error') != {'type': 'ValueError', 'message': 'Unexpected physical load time'}
+            or old['result']['status'] != 'failed_or_incomplete'
+            or old['outcome']['launcher_elapsed_seconds'] != declaration['prior_parent_seconds_debit']):
+        raise ValueError('Original first-case parser failure identity differs')
+    for field in ('calibration_access_attempted', 'calibration_responses_accessed',
+                  'held_out_access_attempted', 'held_out_responses_accessed'):
+        if old['state'].get(field) is not False:
+            raise ValueError('Continuation requires no previous measurement access')
+    if (set(old['state']['runs']) != set(access.expected_runs())
+            or any(row['status'] != ('failed' if name == REUSED_RUN else 'not_executed')
+                   for name, row in old['state']['runs'].items())):
+        raise ValueError('Only the first completed solver call may be reused')
+    # The pinned inventory excludes any access ledger or later output. Bind all
+    # original bytes, not only the successful solver log selected for reuse.
+    previous = Path(plan['raw_root'])/'experiment'
+    index = old['raw_index']
+    actual_files = {str(path.relative_to(previous)) for path in previous.rglob('*') if path.is_file()}
+    if (index['root'] != str(previous.relative_to(root)) or actual_files != set(index['files'])
+            or any(path.is_symlink() for path in previous.rglob('*'))):
+        raise ValueError('Original output inventory changed or gained later access')
+    for name, record in index['files'].items():
+        path = access.local_path(root, str((previous/name).relative_to(root)))
+        if not path.is_relative_to(previous) or path.stat().st_size != record['bytes']:
+            raise ValueError('Original raw output location/size differs')
+        inputs[str(path)] = record['sha256']
+    inputs.update(old['baseline']['inputs'])
+    for field in ('protocol_sha256', 'roles_sha256', 'archive_sha256', 'permitted_members'):
+        if release[field] != prior[field]:
+            raise ValueError('Continuation changed measurement or protocol identity')
+    for field in ('csv_schemas', 'csv_schema_provenance', 'caps', 'interpreter', 'mesh_levels',
+                  'mesh_preparation_source', 'mesh_preparation_record'):
+        if release['execution'][field] != prior['execution'][field]:
+            raise ValueError('Continuation changed fixed execution assumptions: '+field)
+    if ({key: row['sha256'] for key, row in release['prerequisite_evidence'].items()}
+            != {key: row['sha256'] for key, row in prior['prerequisite_evidence'].items()}):
+        raise ValueError('Continuation changed accepted prerequisites')
+    for key, record in plan['source_bindings'].items():
+        expected = (declaration['repaired_parser_sha256'] if key == 'primitive_parser'
+                    else prior['execution']['source_bindings'][key]['sha256'])
+        if key != 'orchestrator' and record['sha256'] != expected:
+            raise ValueError('Continuation changed a scientific/runtime helper: '+key)
+    evidence = declaration['accepted_saved_readout']
+    review = bound(evidence['review'])
+    bound(evidence['gzip'], json_value=False)
+    if (review['status'] != 'pass_source_and_saved_primitive_review_only'
+            or review['saved_coarse_readout']['complete_readout_gzip_sha256'] != evidence['gzip']['sha256']
+            or review['saved_coarse_readout']['complete_readout_uncompressed_sha256'] != evidence['uncompressed_sha256']
+            or review['saved_coarse_readout']['passed_declared_single_run_checks'] is not True):
+        raise ValueError('Independent saved-coarse acceptance differs')
+    execution = old['execution']
+    access.verify_run_execution(root, REUSED_RUN,
+        {'primitive_bindings': execution['primitive_bindings'], 'execution_binding': declaration['original']['execution']},
+        plan['protocol_binding']['sha256'])
+    for key in ('mesh', 'deck', 'loading'):
+        if execution['primitive_bindings'][key]['sha256'] != plan['cases'][REUSED_RUN][key]['sha256']:
+            raise ValueError('Reused solver input differs from the unchanged prepared case')
+    recheck(inputs)
+    plan['inputs'].update(inputs)
+    return {'declaration': declaration_binding, 'execution': declaration['original']['execution'],
+            'accepted_readout': evidence, 'prior_solver_invocations': 1,
+            'prior_parent_seconds_debit': declaration['prior_parent_seconds_debit']}
+
+
+def reuse_coarse(root, plan, state):
+    """Rebuild inside the remaining worker budget, without any solver call."""
+    continuation = plan['continuation']
+    execution = access.verify_binding(root, continuation['execution'], read_json=True)
+    receipt, cache = readout.read_run(root, execution['primitive_bindings'],
+        protocol_sha256=plan['protocol_binding']['sha256'], expected_branch='compression',
+        expected_mesh_N=4, expected_steps=60, expected_mu_Pa=1000.)
+    accepted = continuation['accepted_readout']
+    access.verify_binding(root, accepted['gzip'], maximum_bytes=16*1024**2)
+    with gzip.open(access.local_path(root, accepted['gzip']['path']), 'rb') as stream:
+        data = stream.read(16*1024**2+1)
+    if (len(data) > 16*1024**2 or hashlib.sha256(data).hexdigest() != accepted['uncompressed_sha256']
+            or access.canonical_json(receipt) != access.canonical_json(json.loads(data))
+            or receipt.get('passed') is not True or cache is not None):
+        raise ValueError('Recomputed coarse output differs from independently accepted readout')
+    receipt['execution_binding'] = continuation['execution']
+    row = state['runs'][REUSED_RUN]
+    row.update(status='reused_after_header_only_repair', execution_binding=continuation['execution'],
+               readout=saved(root, Path(plan['experiment'])/'reused-coarse-readout.json', receipt))
+    runtime.write_json(Path(plan['experiment'])/'state.json', state)
+    return receipt
+
+
+def remaining_seconds(plan):
+    return (plan['protocol']['budgets']['aggregate_specimen_seconds']
+            - plan.get('continuation', {}).get('prior_parent_seconds_debit', 0.))
+
+
+def source_inventory(root, sources, archive_binding, archive_sha):
+    expected = {key: Path(module.__file__).resolve() for key, module in SOURCE_MODULES.items()}
+    expected['orchestrator'] = Path(__file__).resolve()
+    if 'backend_profile' in sources:
+        expected['backend_profile'] = Path(backend.__file__).resolve()
+    if set(sources) != set(expected):
+        raise ValueError('Exact orchestrator and helper source inventory required')
+    for key, actual in expected.items():
+        if access.local_path(root, sources[key]['path']) != actual:
+            raise ValueError('Imported source origin differs: ' + key)
+        access.verify_binding(root, sources[key], maximum_bytes=1024**2)
+    if archive_binding['sha256'] != archive_sha:
+        raise ValueError('Release/source archive hash differs')
+    access.verify_binding(root, archive_binding)
+    # Bind the canonical Git member even when the executing source is an isolated
+    # archive copy inside outputs/validation rather than the live checkout.
+    wanted = {f'scripts/{expected[key].name}': row['sha256'] for key, row in sources.items()}
+    seen = set()
+    with tarfile.open(access.local_path(root, archive_binding['path']), 'r:*') as archive:
+        for member in archive:
+            if member.name not in wanted:
+                continue
+            if member.name in seen or not member.isfile() or member.size > 1024**2:
+                raise ValueError('Ambiguous or oversized archived source')
+            stream = archive.extractfile(member)
+            if stream is None or hashlib.sha256(stream.read()).hexdigest() != wanted[member.name]:
+                raise ValueError('Loaded source differs from committed archive')
+            seen.add(member.name)
+    if seen != set(wanted):
+        raise ValueError('Source archive lacks required helper files')
+
+
+def preflight(root, protocol_binding, release_binding):
+    """No curve member access, mesh creation, or solver invocation."""
+    root = Path(root).resolve()
+    protocol = meshing.read_protocol(access.local_path(root, protocol_binding['path']))
+    if protocol_binding['sha256'] != meshing.PROTOCOL_SHA256:
+        raise ValueError('Source-bound protocol required')
+    raw_root = access.local_path(root, protocol['storage']['immutable_raw_output_root'])
+    release_metadata = access.verify_binding(root, release_binding, maximum_bytes=1024**2, read_json=True)
+    continuation = release_metadata.get('execution', {}).get('continuation')
+    backend_binding = release_metadata.get('execution', {}).get('backend_profile')
+    if continuation is not None and backend_binding is not None:
+        raise ValueError('A separately evaluated backend cannot borrow prior-runtime solves')
+    directory = raw_root/('experiment-accelerate-csc-v1' if backend_binding is not None else
+                         'continuation-header-v1' if continuation is not None else 'experiment')
+    study = access.ReleasedStudy(root, protocol_binding, release_binding,
+                                ledger_path=str((directory/'access.jsonl').relative_to(root)))
+    _, _, release = study._release()
+    execution = release.get('execution', {})
+    if execution.get('authorized_specimen_solver_calls') != 20:
+        raise ValueError('Explicit release of exactly twenty maximum specimen calls required')
+    if execution.get('access_ledger_path') != str((directory/'access.jsonl').relative_to(root)):
+        raise ValueError('Release must bind the actual experiment access ledger')
+    sources = execution['source_bindings']
+    source_inventory(root, sources, execution['source_archive'], release['source_archive_sha256'])
+    preparation_source = execution['mesh_preparation_source']
+    if preparation_source['sha256'] != PREPARATION_SOURCE_SHA:
+        raise ValueError('Original mesh-preparation source identity required')
+    access.verify_binding(root, preparation_source, maximum_bytes=1024**2)
+    generation_binding = execution['mesh_preparation_record']
+    generation = access.verify_binding(root, generation_binding, maximum_bytes=1024**2, read_json=True)
+    historical_path = Path(generation['frozen_source_root'])/'scripts/mechanics_hbe_mesh.py'
+    if (generation.get('source_commit') != PREPARATION_COMMIT
+            or generation.get('pinned_source_and_input_sha256', {}).get('scripts/mechanics_hbe_mesh.py') != PREPARATION_SOURCE_SHA
+            or historical_path != access.local_path(root, preparation_source['path'])
+            or generation.get('raw_output_root') != str(raw_root/'mesh-preparation')):
+        raise ValueError('Original preparation source/archive record differs')
+    generation_archive = {'path': str(Path(generation['source_archive']).relative_to(root)),
+                          'sha256': generation['source_archive_sha256']}
+    access.verify_binding(root, generation_archive)
+    with tarfile.open(access.local_path(root, generation_archive['path']), 'r:*') as archive:
+        members = [member for member in archive if member.name == 'scripts/mechanics_hbe_mesh.py']
+        if archive.pax_headers.get('comment') != PREPARATION_COMMIT or len(members) != 1 or not members[0].isfile() or members[0].size > 1024**2:
+            raise ValueError('Original preparation archive identity differs')
+        stream = archive.extractfile(members[0])
+        if stream is None or hashlib.sha256(stream.read()).hexdigest() != PREPARATION_SOURCE_SHA:
+            raise ValueError('Original preparation archive source bytes differ')
+    interpreter = execution['interpreter']
+    if Path(interpreter['path']).resolve() != Path(sys.executable).resolve() or runtime.sha(Path(sys.executable)) != interpreter['sha256']:
+        raise ValueError('Released interpreter differs')
+    inputs = {str(access.local_path(root, row['path'])): row['sha256'] for row in
+              [protocol_binding, release_binding, protocol['roles'], execution['source_archive'], preparation_source,
+               generation_binding, generation_archive, *sources.values(),
+               *release['prerequisite_evidence'].values()]}
+    inputs[str(Path(sys.executable).resolve())] = interpreter['sha256']
+    runtime_binding = release['prerequisite_evidence']['runtime']
+    profile = backend.verify_profile(root, backend_binding) if backend_binding is not None else None
+    expected_runtime_sha = profile['runtime_identity']['sha256'] if profile else RUNTIME_SHA
+    if runtime_binding['sha256'] != expected_runtime_sha:
+        raise ValueError('Exact verified local runtime identity required')
+    identity = access.verify_binding(root, runtime_binding, read_json=True)
+    prefix = Path(profile['prefix']) if profile else root/'data/optional-runtimes/febio-4.13'
+    if profile:
+        if runtime_binding != profile['runtime_identity'] or release['prerequisite_evidence']['analytic_verification'] != profile['hex8_controls']:
+            raise ValueError('Released prerequisites differ from verified backend profile')
+        fixed_schemas = {mode: {'delimiter': ',', 'header': None, 'coordinate_column': 0, 'response_column': 1,
+                               'coordinate_unit': 'rad' if mode.startswith('torsion') else 'm',
+                               'response_unit': 'Nm' if mode.startswith('torsion') else 'N'} for mode in BRANCHES}
+        if (execution['csv_schemas'] != fixed_schemas
+                or execution.get('csv_schema_provenance', {}).get('status') != 'prospectively_fixed_unverified_format_assumption'):
+            raise ValueError('Backend comparison must retain the original unverified CSV assumptions')
+        inputs.update(profile['inputs'])
+    executable = prefix/'install/bin/febio4'
+    if identity['executable'] != str(executable) or identity['runtime_version'] != '4.13.0' or identity['architecture'] != 'arm64':
+        raise ValueError('Runtime executable/version/architecture differs')
+    for name, sha in identity['libraries'].items():
+        path = (prefix/name).resolve()
+        if not path.is_relative_to(prefix.resolve()):
+            raise ValueError('Runtime library escaped private prefix')
+        inputs[str(path)] = sha
+    omp = identity['private_openmp']
+    if not Path(omp['path']).resolve().is_relative_to(prefix.resolve()):
+        raise ValueError('OpenMP escaped private prefix')
+    inputs[str(Path(omp['path']).resolve())] = omp['sha256']
+    patch = access.verify_binding(root, release['prerequisite_evidence']['analytic_verification'], read_json=True)
+    if (patch.get('status') != 'passed_all_five_fixed_patch_controls' or patch.get('runtime_identity_sha256') != expected_runtime_sha
+            or patch.get('solver_invocations') != 5 or len(patch.get('rows', [])) != 5
+            or not all(row.get('passed') is True for row in patch['rows'])
+            or patch.get('stiffness_scaling', {}).get('passed') is not True):
+        raise ValueError('Accepted five-case analytical and scale evidence required')
+    prep = access.verify_binding(root, release['prerequisite_evidence']['mesh_validation'], read_json=True)
+    if prep.get('status') != 'prepared_not_solved' or prep.get('source_sha256') != preparation_source['sha256'] or prep.get('protocol_sha256') != protocol_binding['sha256']:
+        raise ValueError('Accepted bound mesh preparation required')
+    levels = execution['mesh_levels']
+    if set(levels) != {'4', '8', '12'} or set(execution['csv_schemas']) != set(BRANCHES):
+        raise ValueError('Three fixed mesh levels and explicit four-branch CSV schemas required')
+    cases, meshes = {}, {}
+    for key, receipt_binding in levels.items():
+        N = int(key)
+        receipt_path = access.local_path(root, receipt_binding['path'])
+        required = raw_root/f'mesh-preparation/N{N}/generated/receipt.json'
+        if receipt_path != required:
+            raise ValueError('Prepared level path differs')
+        receipt = access.verify_binding(root, receipt_binding, read_json=True)
+        if (receipt.get('status') != 'prepared_not_solved' or receipt.get('mesh_N') != N
+                or receipt.get('source_sha256') != preparation_source['sha256']
+                or receipt.get('protocol_sha256') != protocol_binding['sha256']
+                or receipt.get('quality', {}).get('passed') is not True
+                or receipt.get('runtime_unchanged') is not True):
+            raise ValueError('Prepared mesh quality/source/runtime gate failed')
+        inputs[str(receipt_path)] = receipt_binding['sha256']
+        inputs[str(receipt_path.parent/'specimen.msh')] = receipt['native_mesh_sha256']
+        mesh_binding = {'path': str((receipt_path.parent/'mesh.json').relative_to(root)), 'sha256': receipt['mesh_sha256']}
+        meshes[key] = mesh_binding
+        inputs[str(access.local_path(root, mesh_binding['path']))] = mesh_binding['sha256']
+        names = set()
+        for run_id, (branch, n, steps, role) in access.expected_runs().items():
+            if n != N or role == 'fitted':
+                continue
+            name = f'{branch}-{steps}-{role}'
+            names.add(name)
+            hashes = receipt['decks'][name]
+            records = {'mesh': mesh_binding}
+            for field, filename, hashkey in [('deck', 'specimen.feb', 'deck_sha256'), ('loading', 'loading.json', 'loading_sha256')]:
+                path = receipt_path.parent/name/filename
+                records[field] = {'path': str(path.relative_to(root)), 'sha256': hashes[hashkey]}
+                inputs[str(path)] = hashes[hashkey]
+            cases[run_id] = records
+        if set(receipt['decks']) != names:
+            raise ValueError('Prepared deck inventory differs from fixed eighteen cases')
+    recheck(inputs)
+    plan = {'protocol': protocol, 'protocol_binding': protocol_binding, 'release_binding': release_binding,
+            'source_bindings': sources, 'inputs': inputs, 'cases': cases, 'meshes': meshes,
+            'csv_schemas': execution['csv_schemas'], 'executable': str(executable),
+            'runtime_identity': runtime_binding,
+            'raw_root': str(raw_root), 'experiment': str(directory)}
+    if continuation is not None:
+        plan['continuation'] = continuation_inputs(root, plan, release, continuation)
+    if profile:
+        if set(sources) != set(SOURCE_MODULES) | {'orchestrator', 'backend_profile'}:
+            raise ValueError('The backend helper must be included in executing sources')
+        cases, source_decks, deck_inputs = backend.verify_prepared_decks(root, execution['backend_decks'], cases)
+        plan.update(cases=cases, backend_profile=backend_binding, backend_source_decks=source_decks)
+        plan['inputs'].update(deck_inputs)
+    return plan
+
+
+class OutputWatch:
+    """Observed output caps; only the explicitly supervised worker may self-kill."""
+    def __init__(self, raw_root, receipt_path, budgets, *, kill=None):
+        self.raw_root, self.receipt_path = Path(raw_root), Path(receipt_path)
+        self.budgets = budgets
+        self.active = None
+        self.stop = threading.Event()
+        self.thread = None
+        self.kill = kill
+        self.record = {'status': 'watching', 'maximum_total_bytes': 0, 'maximum_active_bytes': 0,
+                       'sampling_interval_seconds': .1, 'sampling_limit': 'Between-sample peaks may be missed.'}
+
+    def sample(self):
+        try:
+            total = meshing.tree_bytes(self.raw_root)
+            active = meshing.tree_bytes(self.active) if self.active is not None else 0
+            self.record.update(maximum_total_bytes=max(total, self.record['maximum_total_bytes']),
+                               maximum_active_bytes=max(active, self.record['maximum_active_bytes']))
+            reason = ('total_output_cap' if total > self.budgets['generated_output_bytes'] else
+                      'active_output_cap' if active > self.budgets['each_active_run_output_bytes'] else None)
+        except BaseException as error:
+            reason = 'output_observer_failure'
+            self.record['error'] = {'type': type(error).__name__, 'message': str(error)}
+        if reason:
+            self.record.update(status='failed', reason=reason)
+        try:
+            runtime.write_json(self.receipt_path, self.record)
+        except BaseException:
+            reason = 'output_observer_receipt_failure'
+        if reason:
+            if self.kill is None:
+                if os.getpgrp() != os.getpid():
+                    raise RuntimeError('Refusing to signal an unrelated process group')
+                os.killpg(os.getpid(), signal.SIGKILL)
+            else:
+                self.kill()
+            raise RuntimeError(reason)
+
+    def __enter__(self):
+        if self.kill is None and os.getpgrp() != os.getpid():
+            raise RuntimeError('Output watcher requires the supervised session leader')
+        self.sample()
+        def watch():
+            while not self.stop.wait(.1):
+                self.sample()
+        self.thread = threading.Thread(target=watch, name='specimen-output-watch', daemon=True)
+        self.thread.start()
+        return self
+
+    def __exit__(self, *_):
+        self.stop.set()
+        self.thread.join(timeout=2)
+        if self.thread.is_alive():
+            raise RuntimeError('Output watcher did not stop')
+        self.sample()
+
+
+def solve(command, directory, seconds):
+    """Child stays in the outer worker group; timeout is terminal, never retried."""
+    process = None
+    started = time.monotonic()
+    record = {'command': command, 'cwd': str(directory), 'seconds_cap': seconds,
+              'status': 'starting', 'pid': None, 'started': False, 'exit_code': None,
+              'elapsed_seconds': 0., 'timed_out': False, 'cleanup': {'kill_sent': False, 'reaped': False}}
+    path = directory/'solver-execution.json'
+    runtime.write_json(path, record)
+    try:
+        with (directory/'console.txt').open('x') as stream:
+            process = subprocess.Popen(command, cwd=directory, stdout=stream, stderr=subprocess.STDOUT)
+            record.update(status='running', pid=process.pid, started=True)
+            runtime.write_json(path, record)
+            code = process.wait(timeout=max(0., seconds-(time.monotonic()-started)))
+            record['exit_code'] = code
+        if code != 0:
+            raise RuntimeError(f'Solver exited {code}')
+        elapsed = time.monotonic()-started
+        if elapsed >= seconds:
+            raise TimeoutError('Solver completed outside its per-case allowance')
+        record.update(status='completed', elapsed_seconds=elapsed)
+        return record
+    except BaseException as error:
+        record.update(status='failed', timed_out=isinstance(error, (subprocess.TimeoutExpired, TimeoutError)),
+                      error={'type': type(error).__name__, 'message': str(error)})
+        raise
+    finally:
+        try:
+            if process is not None:
+                if process.poll() is None:
+                    process.kill()
+                    record['cleanup']['kill_sent'] = True
+                record['exit_code'] = process.wait(timeout=2)
+                record['cleanup']['reaped'] = True
+        except BaseException as error:
+            record.update(status='failed', cleanup_error={'type': type(error).__name__, 'message': str(error)})
+            raise
+        finally:
+            record['elapsed_seconds'] = time.monotonic()-started
+            late_success = record['status'] == 'completed' and record['elapsed_seconds'] >= seconds
+            if late_success:
+                record.update(status='failed', timed_out=True,
+                              error={'type': 'TimeoutError', 'message': 'Final accounted solver interval exceeded cap'})
+            runtime.write_json(path, record)
+            if late_success:
+                raise TimeoutError(record['error']['message'])
+
+
+def run_case(root, plan, run_id, inputs, mu_Pa, state, watch, deadline, *, backend_source_deck=None):
+    branch, N, steps, role = access.expected_runs()[run_id]
+    directory = Path(plan['experiment'])/'runs'/run_id.replace(':', '-')
+    directory.mkdir(parents=True, exist_ok=False)
+    watch.active = directory
+    row = state['runs'][run_id]
+    row.update(status='preparing', directory=str(directory.relative_to(root)))
+    state_path = Path(plan['experiment'])/'state.json'
+    runtime.write_json(state_path, state)
+    try:
+        for record in inputs.values():
+            access.verify_binding(root, record)
+        for key, filename in [('deck', 'specimen.feb'), ('loading', 'loading.json')]:
+            with (directory/filename).open('xb') as target:
+                target.write(access.local_path(root, inputs[key]['path']).read_bytes())
+        primitives = dict(inputs)
+        primitives.update(deck=binding(root, directory/'specimen.feb'), loading=binding(root, directory/'loading.json'))
+        if primitives['deck']['sha256'] != inputs['deck']['sha256'] or primitives['loading']['sha256'] != inputs['loading']['sha256']:
+            raise ValueError('Copied solver input differs')
+        source_deck = None
+        if 'backend_profile' in plan:
+            source_deck = backend_source_deck or plan['backend_source_decks'][run_id]
+            access.verify_binding(root, source_deck)
+            backend.verify_deck(access.local_path(root, source_deck['path']).read_bytes(),
+                                (directory/'specimen.feb').read_bytes())
+        recheck(plan['inputs'])
+        seconds = min(plan['protocol']['budgets']['each_solver_seconds'], deadline-time.monotonic())
+        if seconds <= 0:
+            raise TimeoutError('Aggregate specimen allowance exhausted')
+        if state['solver_invocations'] >= 20:
+            raise ValueError('Declared solver allocation exhausted')
+        command = [plan['executable'], '-noconfig', '-no_title', '-i', 'specimen.feb', '-o', 'solver.log']
+        row.update(status='solver_started', command=command, seconds_cap=seconds,
+                   executable_sha256=plan['inputs'][plan['executable']], input_bindings=primitives)
+        state['solver_invocations'] += 1
+        runtime.write_json(state_path, state)
+        row['execution'] = solve(command, directory, seconds)
+        for key, filename in [('nodes', 'nodes.log'), ('elements', 'elements.log'), ('solver', 'solver.log')]:
+            primitives[key] = binding(root, directory/filename)
+        execution_record = {'schema': 'hbe-run-execution-v1', 'run_id': run_id, 'executable': binding(root, plan['executable']),
+             'runtime_identity': plan['runtime_identity'], 'protocol_sha256': plan['protocol_binding']['sha256'],
+             'primitive_bindings': primitives, 'execution': row['execution'], 'command': command,
+             'cwd': str(directory.relative_to(root))}
+        if 'backend_profile' in plan:
+            access.verify_binding(root, source_deck)
+            execution_record.update(backend_profile=plan['backend_profile'], backend_source_deck=source_deck)
+        execution_binding = saved(root, directory/'execution.json', execution_record)
+        retain = N == 12 and steps == 120 and branch in ('compression', 'tension', 'torsion_pos')
+        receipt, cache = readout.read_run(root, primitives, protocol_sha256=plan['protocol_binding']['sha256'],
+            expected_branch=branch, expected_mesh_N=N, expected_steps=steps, expected_mu_Pa=mu_Pa,
+            retain_scale_primitives=retain)
+        receipt['execution_binding'] = execution_binding
+        row['readout'] = saved(root, directory/'readout.json', receipt)
+        if receipt.get('passed') is not True:
+            raise ValueError('Actual primitive numerical checks failed')
+        row['status'] = 'passed_individual_numerical_checks'
+        return receipt, cache
+    except BaseException as error:
+        row.update(status='failed', error={'type': type(error).__name__, 'message': str(error)})
+        if (directory/'solver-execution.json').is_file():
+            row['partial_execution'] = binding(root, directory/'solver-execution.json')
+            row['execution'] = access.verify_binding(root, row['partial_execution'], maximum_bytes=1024**2, read_json=True)
+        raise
+    finally:
+        row['retained_files'] = {str(path.relative_to(directory)): {'bytes': path.stat().st_size, 'sha256': runtime.sha(path)}
+                                 for path in sorted(directory.rglob('*')) if path.is_file() and not path.is_symlink()}
+        runtime.write_json(state_path, state)
+        watch.active = None
+
+
+def curves(runs, branches, field):
+    return {mode: evaluation.curve(mode, runs[f'{mode}:N12:S120:reference']['load_coordinate'],
+                                   runs[f'{mode}:N12:S120:reference'][field]) for mode in branches}
+
+
+def check_fitted_deck(reference_xml, fitted_xml, mu_Pa):
+    """Only the three declared stiffness-related scalar texts may differ.
+
+    XML attribute order and indentation carry no meaning. All child ordering,
+    nodes, connectivity, load-curve points, boundary and solver content do.
+    The repaired helper reproduces the historical collection order exactly.
+    """
+    if not math.isfinite(mu_Pa) or mu_Pa <= 0:
+        raise ValueError('Positive finite fitted stiffness required')
+    trees = [ET.fromstring(reference_xml), ET.fromstring(fitted_xml)]
+    paths = ('Material/material/c1', 'Material/material/k', 'Control/solver/min_residual')
+    for tree, mu in zip(trees, (1000., mu_Pa)):
+        values = (2*mu, 149*mu/3, (1e-10*mu*.004**2)**2)
+        for path, expected in zip(paths, values):
+            nodes = tree.findall(path)
+            if len(nodes) != 1 or float(nodes[0].text) != expected:
+                raise ValueError('Fitted scalar differs from declared scaling: '+path)
+            nodes[0].text = '__declared_stiffness_scalar__'
+    def signature(node):
+        return (node.tag, tuple(sorted(node.attrib.items())), (node.text or '').strip(),
+                (node.tail or '').strip(), tuple(signature(child) for child in node))
+    if signature(trees[0]) != signature(trees[1]):
+        raise ValueError('Fitted deck changed a nonscalar material, fixture, load, mesh, or solver setting')
+
+
+def experiment_worker(root, plan):
+    """Sequential state machine, inside one separately supervised process group."""
+    directory = Path(plan['experiment'])
+    previous_calls = plan.get('continuation', {}).get('prior_solver_invocations', 0)
+    state = {'schema': 'hbe-experiment-state-v1', 'status': 'starting', 'solver_invocations': previous_calls,
+             'protocol': plan['protocol_binding'], 'release': plan['release_binding'], 'automatic_retry': False,
+             'runs': {key: {'status': 'not_executed'} for key in access.expected_runs()},
+             'held_out_responses_accessed': False, 'held_out_access_attempted': False,
+             'calibration_responses_accessed': False, 'calibration_access_attempted': False}
+    if 'continuation' in plan:
+        state['continuation'] = plan['continuation']
+    runtime.write_json(directory/'state.json', state)
+    started = time.monotonic()
+    deadline = started+remaining_seconds(plan)
+    runs, caches = {}, {}
+    study = access.ReleasedStudy(root, plan['protocol_binding'], plan['release_binding'],
+                                ledger_path=str((directory/'access.jsonl').relative_to(root)))
+    sources = {key: plan['source_bindings'][key] for key in ('physics', 'primitive_parser', 'mesh_deck', 'curve_evaluator')}
+    sources['run_readout'] = plan['source_bindings']['readout']
+    def aggregate(fitted_mu=None):
+        report = readout.build_numerical_evidence(runs, caches, source_bindings=sources,
+                    protocol_sha256=plan['protocol_binding']['sha256'], fitted_mu_Pa=fitted_mu)
+        name = 'reference-numerical.json' if fitted_mu is None else 'numerical.json'
+        record = saved(root, directory/name, report)
+        access.check_numeric_report(report, fitted_mu_Pa=fitted_mu)
+        return record
+    try:
+        with OutputWatch(plan['raw_root'], directory/'output-watch.json', plan['protocol']['budgets']) as watch:
+            if 'continuation' in plan:
+                runs[REUSED_RUN] = reuse_coarse(root, plan, state)
+            for run_id, (_, _, _, role) in access.expected_runs().items():
+                if role == 'fitted' or run_id in runs:
+                    continue
+                runs[run_id], cache = run_case(root, plan, run_id, plan['cases'][run_id],
+                    2000. if role == 'double_mu' else 1000., state, watch, deadline)
+                if cache is not None:
+                    caches[run_id] = cache
+            state['reference_numerical'] = aggregate()
+            recheck(plan['inputs'])
+            state.update(status='reading_released_axial_calibration', calibration_access_attempted=True,
+                         calibration_responses_accessed=None)
+            runtime.write_json(directory/'state.json', state)
+            calibration = study.read_calibration({mode: plan['csv_schemas'][mode] for mode in ('compression', 'tension')})
+            state['calibration_responses_accessed'] = True
+            references = curves(runs, ('compression', 'tension'), 'applied_force_N')
+            fit = evaluation.fit_scale(calibration, references)
+            state['fit'] = saved(root, directory/'fit.json', fit)
+            for mode in ('compression', 'tension'):
+                run_id = f'{mode}:N12:S120:fitted'
+                mesh_binding = plan['meshes']['12']
+                mesh = access.verify_binding(root, mesh_binding, maximum_bytes=16*1024**2, read_json=True)
+                xml, loading = meshing.specimen_deck(mesh, mode, 120, fit['mu_Pa'], plan['protocol'])
+                source_xml = xml
+                if 'backend_profile' in plan:
+                    xml = backend.transform_deck(xml)
+                    loading['deck_sha256'] = hashlib.sha256(xml.encode('utf-8')).hexdigest()
+                reference = plan['cases'][f'{mode}:N12:S120:reference']['deck']
+                access.verify_binding(root, reference)
+                check_fitted_deck(access.local_path(root, reference['path']).read_text(), xml, fit['mu_Pa'])
+                loading.update(role='fitted', mesh_sha256=mesh_binding['sha256'], protocol_sha256=plan['protocol_binding']['sha256'])
+                prepared = directory/'fitted-inputs'/mode
+                prepared.mkdir(parents=True, exist_ok=False)
+                with (prepared/'specimen.feb').open('x') as stream:
+                    stream.write(xml)
+                backend_source = None
+                if 'backend_profile' in plan:
+                    with (prepared/'source-skyline.feb').open('x') as stream:
+                        stream.write(source_xml)
+                    backend_source = binding(root, prepared/'source-skyline.feb')
+                records = {'mesh': mesh_binding, 'deck': binding(root, prepared/'specimen.feb'),
+                           'loading': saved(root, prepared/'loading.json', loading)}
+                if backend_source is None:
+                    runs[run_id], caches[run_id] = run_case(root, plan, run_id, records, fit['mu_Pa'], state, watch, deadline)
+                else:
+                    runs[run_id], caches[run_id] = run_case(root, plan, run_id, records, fit['mu_Pa'], state, watch, deadline,
+                                                         backend_source_deck=backend_source)
+            state['numerical'] = aggregate(fit['mu_Pa'])
+            prediction = {'schema': 'hbe-torsion-prediction-v1', 'reference': {}, 'fitted': {}}
+            for mode, reference in curves(runs, ('torsion_neg', 'torsion_pos'), 'applied_torque_Nm').items():
+                prediction['reference'][mode] = {'coordinate': list(reference.coordinate), 'response': list(reference.response)}
+                scaled = evaluation.scale_prediction(reference, fit['scale'])
+                prediction['fitted'][mode] = {'coordinate': list(scaled.coordinate), 'response': list(scaled.response), 'response_unit': 'Nm'}
+            state['predictions'] = saved(root, directory/'predictions.json', prediction)
+            recheck(plan['inputs'])
+            state['freeze'] = study.freeze_predictions(fit_binding=state['fit'], prediction_binding=state['predictions'],
+                numerical_binding=state['numerical'], output_path=str((directory/'parameter-prediction-freeze.json').relative_to(root)))
+            state['status'] = 'parameters_and_predictions_frozen_before_holdout'
+            runtime.write_json(directory/'state.json', state)
+            state.update(held_out_access_attempted=True, held_out_responses_accessed=None)
+            runtime.write_json(directory/'state.json', state)
+            heldout = study.evaluate_held_out(freeze_binding=state['freeze'],
+                schemas={mode: plan['csv_schemas'][mode] for mode in ('torsion_neg', 'torsion_pos')})
+            state['held_out_responses_accessed'] = True
+            state['held_out_metrics'] = saved(root, directory/'held-out-metrics.json', heldout)
+            fitted = {mode: evaluation.scale_prediction(reference, fit['scale']) for mode, reference in references.items()}
+            state['calibration_metrics'] = saved(root, directory/'calibration-metrics.json',
+                evaluation.paired_metrics(calibration, fitted, characteristic_response_scale=fit['mu_Pa']*.004**2))
+            state['status'] = 'completed_descriptive_one_specimen_comparison'
+    except BaseException as error:
+        state.update(status='failed_or_incomplete', error={'type': type(error).__name__, 'message': str(error)})
+    finally:
+        state['elapsed_seconds'] = time.monotonic()-started
+        state['new_solver_invocations'] = state['solver_invocations']-previous_calls
+        state['charged_prior_parent_seconds'] = plan.get('continuation', {}).get('prior_parent_seconds_debit', 0.)
+        state['charged_elapsed_seconds'] = state['elapsed_seconds']+state['charged_prior_parent_seconds']
+        try:
+            recheck(plan['inputs'])
+            state['original_inputs_unchanged'] = True
+        except BaseException as error:
+            state.update(status='failed_or_incomplete', original_inputs_unchanged=False, integrity_error=str(error))
+        if state['elapsed_seconds'] >= remaining_seconds(plan):
+            state.update(status='failed_or_incomplete', budget_error='aggregate_wall_cap')
+        runtime.write_json(directory/'state.json', state)
+    return state
+
+
+def launch(root, protocol_binding, release_binding, *, reuse_verified_coarse=False, explicit_backend=False):
+    plan = preflight(root, protocol_binding, release_binding)
+    if reuse_verified_coarse != ('continuation' in plan):
+        raise ValueError('Continuation requires its release binding and explicit reuse opt-in together')
+    if explicit_backend != ('backend_profile' in plan):
+        raise ValueError('Backend comparison requires its release profile and explicit opt-in together')
+    raw_root, directory = Path(plan['raw_root']), Path(plan['experiment'])
+    raw_root.mkdir(parents=True, exist_ok=True)
+    marker = ('.specimen-accelerate-csc-v1-started.json' if explicit_backend else
+              '.specimen-header-continuation-v1-started.json' if reuse_verified_coarse else '.specimen-experiment-started.json')
+    access.exclusive_json(raw_root/marker,
+                          {'protocol': protocol_binding, 'release': release_binding, 'no_retry': True})
+    directory.mkdir(exist_ok=False)
+    baseline = saved(root, directory/'baseline.json', plan)
+    command = [sys.executable, str(Path(__file__).resolve()), '--root', str(root),
+               '--worker-baseline', baseline['path'], '--worker-baseline-sha256', baseline['sha256']]
+    environment = runtime.private_environment(runtime.declaration())
+    for name in list(environment):
+        if name.startswith('PYTHON') or name in ('__PYVENV_LAUNCHER__', 'LD_PRELOAD', 'LD_LIBRARY_PATH'):
+            environment.pop(name)
+    environment.update(PYTHONNOUSERSITE='1', PYTHONDONTWRITEBYTECODE='1')
+    status = runtime.supervise(command, directory/'supervision', cwd=root, environment=environment,
+        seconds=remaining_seconds(plan),
+        rss_bytes=plan['protocol']['budgets']['sampled_process_family_rss_bytes'])
+    final = {'schema': 'hbe-experiment-supervised-result-v1', 'baseline': baseline, 'supervision': status,
+             'status': 'failed_or_incomplete', 'physical_validation_pass': None}
+    try:
+        recheck(plan['inputs'])
+        state_binding = binding(root, directory/'state.json')
+        state = access.verify_binding(root, state_binding, read_json=True)
+        final['state'] = state_binding
+        if status['status'] == 'completed' and state['status'] == 'completed_descriptive_one_specimen_comparison':
+            final['status'] = state['status']
+    except BaseException as error:
+        final['error'] = {'type': type(error).__name__, 'message': str(error)}
+    saved(root, directory/'result.json', final)
+    return final
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--root', type=Path, default=ROOT)
+    parser.add_argument('--protocol')
+    parser.add_argument('--protocol-sha256')
+    parser.add_argument('--release')
+    parser.add_argument('--release-sha256')
+    parser.add_argument('--execute', action='store_true')
+    parser.add_argument('--reuse-verified-coarse', action='store_true',
+                        help='Explicitly opt into the one source-bound header-repair continuation')
+    parser.add_argument('--explicit-backend', action='store_true',
+                        help='Explicitly opt into the separately bound repaired-solver comparison')
+    parser.add_argument('--worker-baseline', help=argparse.SUPPRESS)
+    parser.add_argument('--worker-baseline-sha256', help=argparse.SUPPRESS)
+    args = parser.parse_args()
+    root = args.root.resolve()
+    if args.worker_baseline:
+        if os.getpgrp() != os.getpid():
+            raise ValueError('Worker must lead its own supervised process group')
+        plan = access.verify_binding(root, {'path': args.worker_baseline, 'sha256': args.worker_baseline_sha256},
+                                     maximum_bytes=4*1024**2, read_json=True)
+        if access.canonical_json(preflight(root, plan['protocol_binding'], plan['release_binding'])) != access.canonical_json(plan):
+            raise ValueError('Worker inputs differ from frozen launch baseline')
+        state = experiment_worker(root, plan)
+        return 0 if state['status'] == 'completed_descriptive_one_specimen_comparison' else 1
+    if not all((args.protocol, args.protocol_sha256, args.release, args.release_sha256)):
+        parser.error('Explicit protocol and release paths and hashes required')
+    protocol = {'path': args.protocol, 'sha256': args.protocol_sha256}
+    release = {'path': args.release, 'sha256': args.release_sha256}
+    if args.execute:
+        return 0 if launch(root, protocol, release, reuse_verified_coarse=args.reuse_verified_coarse,
+                           explicit_backend=args.explicit_backend)['status'] == 'completed_descriptive_one_specimen_comparison' else 1
+    preflight(root, protocol, release)
+    print('Release, prepared inputs, and source identities verified; no solver or response access.')
+    return 0
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

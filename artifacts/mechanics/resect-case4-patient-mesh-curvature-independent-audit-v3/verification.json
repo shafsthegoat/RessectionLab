@@ -1,0 +1,53 @@
+{
+  "schema": "case4-curvature-saved-independent-audit-v3",
+  "status": "passed_saved_record_audit_of_failed_attempt",
+  "reviewed_commit": "b8de4416e777b11d31f1b75adbf164522a92eaa3",
+  "owner_index_sha256": "d3c8c47a3e02a3fc76c29a61043a2bc85fe606f1852b5dbc68d72fbbf5dd839a",
+  "release_sha256": "ac226fb7ff677ff9d06e204be7f565a0e9a6b30240e9506444ec2a0f1d54ffe9",
+  "verified": {
+    "compact_records": 12,
+    "raw_records_and_lossless_copies": 5,
+    "raw_bytes": 22993,
+    "exact_git_archive_files": 10,
+    "input_bindings_rehashed": 27,
+    "prior_attempt_indices_and_opaque_raw_outputs_unchanged": 2,
+    "physical_gates_unchanged": true,
+    "single_generation_charged_before_entry": true,
+    "no_volume_or_diagnostic_returned": true,
+    "no_retry_evidence": true
+  },
+  "terminal_result": {
+    "status": "failed_or_incomplete",
+    "worker_exit_code": -9,
+    "kill_reason": "supervision_exception",
+    "error_type": "TimeoutExpired",
+    "observer_timeout_seconds": 0.011743584065698087,
+    "elapsed_seconds": 180.0281012909254,
+    "elapsed_over_180s_cap_seconds": 0.02810129092540592,
+    "sampled_peak_group_rss_bytes": 590708736,
+    "last_completed_stage": "meshing 1D",
+    "stage_wall_seconds": 170.079,
+    "last_logged_stage": "2D surface2",
+    "returned_nodes": null,
+    "returned_elements": null,
+    "quality": "unassessed",
+    "fidelity": "unassessed"
+  },
+  "interpretation": "Time-budget-adjacent supervision exception; no tested geometry rejection or acceptance. Source-bound checkpoints accurately preserve interrupted running/null state.",
+  "scope": {
+    "array_decodes": 0,
+    "image_or_landmark_inspection": 0,
+    "native_calls": 0,
+    "distance_queries": 0,
+    "mesh_or_solver_replays": 0,
+    "anatomy_container_access": "Opaque SHA256 only; no arrays, images or metadata decoded.",
+    "process_cleanup": "Saved cleanup and postflight survivor receipts checked; no live process or performance experiment repeated."
+  },
+  "limitations": [
+    "RSS peaks between samples may be missed; the180s cap includes28.1ms observed supervision/cleanup overhead.",
+    "Stage timings are one attempted run, not a controlled performance comparison.",
+    "No mesh, count, quality, topology, overlap, volume or surface-fidelity result exists.",
+    "No solver admission, retry or new experiment is authorized by this audit."
+  ],
+  "remaining_reporting_blockers": []
+}

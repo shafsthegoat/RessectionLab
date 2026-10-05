@@ -1,0 +1,230 @@
+{
+  "all53_snapshot_numerical_sources_unchanged": true,
+  "attempts": 1,
+  "automatic_retry": false,
+  "candidate_preview_phases": {
+    "initial_task_preparation": {
+      "feasible": 36,
+      "raised": 0,
+      "rejected": 0,
+      "rejection_reasons": {},
+      "returned": 36,
+      "returned_microsteps": 888,
+      "seconds": 0.899766662507318,
+      "started": 36
+    },
+    "untrained_fixed_inventory_profile": {
+      "feasible": 102,
+      "raised": 0,
+      "rejected": 6,
+      "rejection_reasons": {
+        "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS": 6
+      },
+      "returned": 108,
+      "returned_microsteps": 2664,
+      "seconds": 2.793754965881817,
+      "started": 108
+    }
+  },
+  "candidate_preview_totals": {
+    "feasible": 138,
+    "raised": 0,
+    "rejected": 6,
+    "returned": 144,
+    "returned_microsteps": 3552,
+    "started": 144
+  },
+  "committed_native_transitions": 3,
+  "coverage_gap": "Crop includes24.36percent of permitted annotation; depth24/31slots clipped.10,558 of11,437target centers lie beyond all current endpoint/tool distal axial bounds, so current catalog cannot cover the full target even before lateral/shaft/horizon restrictions.",
+  "declaration_sha256": "30213ab0174a77f5df50afc1bd93bafa0a38e442419d22d5933af9c52f25ad94",
+  "executed_actions_are_policy_choices": false,
+  "execution_rule": "first_legal_inventory_row; not a search teacher",
+  "fraction_target_centers_beyond_axial_catalog_upper_bound": 0.9231441811663897,
+  "independent_geometry_audit": {
+    "action_count": 3,
+    "checker_version": "independent-native-sequence-v2",
+    "claimed_source_tissue_volume_mm3": 26.00009032729799,
+    "complete_tool_checked": true,
+    "contained_source_tissue_volume_mm3": 26.00009032729799,
+    "failures": [],
+    "feasible": true,
+    "first_failed_action": null,
+    "first_unsupported_position_mm": null,
+    "first_unsupported_source_voxel": null,
+    "frontier_checked": true,
+    "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+    "source_case_hash": "sha256:85e8937899b5a5811fc211d859cd40f92a0182e87c86736729950abe6b5e05d4",
+    "source_voxel_volume_mm3": 1.0000034741268458,
+    "unsupported_source_tissue_volume_mm3": 0.0
+  },
+  "initial_coverage": {
+    "crop_origin_source_voxels": [
+      11.0,
+      122.00000000000001,
+      134.99999999999997
+    ],
+    "crop_shape": [
+      32,
+      32,
+      32
+    ],
+    "nominal_target_mass_fraction_visible": 0.2435953484305325,
+    "nominal_target_positive_voxels_in_crop": 2786,
+    "nominal_target_positive_voxels_total": 11437,
+    "sample_coverage_counts": {
+      "full": 36,
+      "none": 0,
+      "partial": 0
+    },
+    "source_shape": [
+      160,
+      256,
+      256
+    ]
+  },
+  "initial_inventory": {
+    "accepted_count": 36,
+    "all_support_cell_tool_pairs": 2804270,
+    "basis": "fixed_access_grid_3columns_8depths_within_actor_crop",
+    "complete": true,
+    "declared_slots": 36,
+    "evaluated_slots": 36,
+    "omitted_count": 0,
+    "rejected_count": 0,
+    "scope": "complete_declared_source_normal_primitives_not_all_surgical_paths",
+    "terminated_slots": 0
+  },
+  "interpretation": "Real-source annotation-assisted engineering profile only. Fixed shallow inventory actions, not a learned policy efficacy comparison. Finite local catalog and3steps do not establish whole-target reachability, population generalization, superiority to search, calibrated clinical risk, or realistic tissue mechanics.",
+  "mode": "profile",
+  "next_step": "Before learning claims, separately declare adequate observed-context/candidate coverage and a search/reachability diagnostic. No follow-on run or optimizer update was released here.",
+  "nominal_axial_catalog_bound": {
+    "distal_tip_capsule_axial_upper_bound_mm": 18.75005813700606,
+    "endpoint_depth_range_mm": [
+      0.500001749196101,
+      16.50005813700606
+    ],
+    "frame_basis": "original source affine determines proposal indices and axis; native physical affine determines depths",
+    "interpretation": "all declared endpoints before feasibility; axial center-distance upper bound ignores lateral distance, containment, blocked shaft travel and action horizon",
+    "inward_sign": 1,
+    "native_physical_affine_ras_mm": [
+      [
+        0.9991455674090443,
+        0.03670010681805703,
+        0.019190453219683344,
+        -83.10478973388672
+      ],
+      [
+        -0.036693469029287086,
+        0.9993262887125605,
+        -0.0007048095092985703,
+        -110.23243713378906
+      ],
+      [
+        -0.019203459617015493,
+        4.299605653764695e-08,
+        0.9998155832247058,
+        -141.11172485351562
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "nominal_source_axis": 0,
+    "nominal_target_center_depth_range_mm": [
+      13.50004756170349,
+      38.50013567485909
+    ],
+    "nominal_target_centers_beyond_axial_upper_bound": 10558,
+    "nominal_target_centers_total": 11437,
+    "original_source_affine_ras_mm": [
+      [
+        0.9991455674171448,
+        0.03670010715723038,
+        0.019190452992916107,
+        -83.10478973388672
+      ],
+      [
+        -0.03669346868991852,
+        0.9993262887001038,
+        -0.0007048094994388521,
+        -110.23243713378906
+      ],
+      [
+        -0.019203459843993187,
+        4.299106848293377e-08,
+        0.9998155832290649,
+        -141.11172485351562
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "proposal_scope": "fixed_access_grid_3columns_8depths_within_actor_crop",
+    "requested_depth_offsets_voxels": [
+      0,
+      1,
+      2,
+      4,
+      8,
+      16,
+      24,
+      31
+    ],
+    "retained_depth_offsets_voxels": [
+      0,
+      1,
+      2,
+      4,
+      8,
+      16
+    ],
+    "retained_endpoint_voxels": 18
+  },
+  "optimizer_updates": 0,
+  "original_bundle_sha256_after": "c1af712957dc4902343995bd828eb0c3662438f8445c5cb7401e6dd50f7a4e12",
+  "original_bundle_unchanged": true,
+  "parent_sampled_peak_rss_bytes": 1062944768,
+  "patient": "sub-PAT05",
+  "policy_parameter_hash_unchanged": true,
+  "profile_outcomes": {
+    "currently_retained_contacted_tissue_upper_bound_mm3": 78.00027098189398,
+    "functional_evidence_available": {
+      "language": false,
+      "motor": false
+    },
+    "normal_removed_mm3": 26.000089645385742,
+    "simulated_removed_volume_mm3": 26.00009032729799,
+    "target_removed_mm3": 0.0,
+    "total_reward": -5.325018083003166
+  },
+  "recorded_at": "2026-10-04T18:20:52.726711+00:00",
+  "rollout_forward_calls": 3,
+  "source_archive_unchanged": true,
+  "source_commit": "e3b069df5fddd0cab8a20a04cffb3086f0348dce",
+  "status": "completed_engineering_profile",
+  "timing": {
+    "accounting_note": "Preview durations are nested within preparation/episode times and must not be added again; residual includes policy initialization, initial metrics/diagnostics, integrity checks and output writing, not separately profiled",
+    "all_preview_seconds_nested_in_preparation_and_episode": 3.693521628389135,
+    "episode_coverage_diagnostics_seconds": 0.12355083483271301,
+    "episode_fresh_task_seconds": 1.4587586669949815,
+    "episode_native_steps_seconds": 2.130774624994956,
+    "episode_observation_seconds": 0.09182849898934364,
+    "episode_online_seconds": 4.028667625039816,
+    "episode_policy_forward_seconds": 0.10709445888642222,
+    "independent_history_audit_seconds": 0.5362367500783876,
+    "initial_task_preparation_seconds": 1.7897859170334414,
+    "parent_import_startup_shutdown_residual_seconds": 1.5264557090122253,
+    "preview_fraction_of_worker_elapsed": 0.47449548740656283,
+    "source_loading_seconds": 0.38096949993632734,
+    "supervisor_seconds": 9.310558459023014,
+    "worker_elapsed_seconds": 7.784102750010788,
+    "worker_residual_outside_loading_preparation_episode_audit_seconds": 1.0484429579228163
+  },
+  "worker_peak_rss_bytes": 1062928384
+}

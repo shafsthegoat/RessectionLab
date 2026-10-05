@@ -1,0 +1,9 @@
+{
+  "scope": "collector path setup only",
+  "source_sha256": "d09bda3018ca258b8800f6184e139c6d7d3849a0fa4dbd9771d16b38d3b16f08",
+  "error": "Repository ancestor index4 resolved one directory above repository; FileNotFoundError before any raw read/output/freeze.",
+  "repair": "Use exact repository ancestor index3.",
+  "raw_content_changed": false,
+  "solver_calls": 0,
+  "mesher_calls": 0
+}

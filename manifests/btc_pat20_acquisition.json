@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "dataset": "BTC_preop",
+  "accession": "ds001226",
+  "release": "5.0.1",
+  "git_commit": "359d372c5e972a161966312128adb365870df949",
+  "license": "CC0",
+  "doi": "10.18112/openneuro.ds001226.v5.0.1",
+  "primary_source": "https://openneuro.org/datasets/ds001226/versions/5.0.1",
+  "subject": "sub-PAT20",
+  "role": "development",
+  "outer_role_locked": true,
+  "eligible_for_outer_final": false,
+  "acquisition_mode": "structural",
+  "selection_queue": "manifests/development_acquisition_queue.json",
+  "selection_queue_sha256": "a768aaefd78146540cf20c13193e22268344206a4a396ffb654e7d40af7b8898",
+  "files": [
+    {
+      "path": "dataset_description.json",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/dataset_description.json",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/dataset_description.json",
+      "bytes": 1209,
+      "sha256": "84185f9c387ae232ddbe87e20b329bacf82b9b5dafe9bde63b64c9bc78bed6f2"
+    },
+    {
+      "path": "participants.tsv",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/participants.tsv",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/participants.tsv",
+      "bytes": 10103,
+      "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d"
+    },
+    {
+      "path": "README",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/README",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/README",
+      "bytes": 3145,
+      "sha256": "fbb3e2e1b00d699835badc0bbda1296f9a90f2995117d93ba3123bd2f8e2d0bb"
+    },
+    {
+      "path": "CHANGES",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/CHANGES",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/CHANGES",
+      "bytes": 434,
+      "sha256": "8c766a15851db0823c661e0a3ec0ac14e2698711461a4f169cab30b3896461c9"
+    },
+    {
+      "path": "sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.nii.gz",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.nii.gz",
+      "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.nii.gz?versionId=GwT6HXksPRjidtHgRIIBZwwUCpXxJjWH",
+      "bytes": 7044313,
+      "sha256": "f5234d82f87369ce22d05bd27b5788dd73d4ab782c9a89731ac7f6e39568126a",
+      "expected_md5": "5a773054340f6f84d68e93a676c9e389",
+      "expected_bytes": 7044313
+    },
+    {
+      "path": "sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.json",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.json",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.json",
+      "bytes": 907,
+      "sha256": "42790d45fcbc3c06e447aaee965be0e1758488a86534597153cdec6eb7504ae9"
+    },
+    {
+      "path": "derivatives/tumor_masks/sub-PAT20/anat/sub-PAT20_space_T1_label-tumor.nii",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/derivatives/tumor_masks/sub-PAT20/anat/sub-PAT20_space_T1_label-tumor.nii",
+      "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/derivatives/tumor_masks/sub-PAT20/anat/sub-PAT20_space_T1_label-tumor.nii?versionId=dOJ3f23OM6ap.tRBlxmoevMp0_h.jyWL",
+      "bytes": 10486112,
+      "sha256": "cabae814fc653f845c1e0fa72441a4ab6fcca63e8fbe252e73e7a976e068dd36",
+      "expected_md5": "d126fda2aea36a594b966f2220716737",
+      "expected_bytes": 10486112
+    }
+  ],
+  "storage_forecast": {
+    "max_download_bytes": 17546223
+  },
+  "annotation_semantics": {
+    "kind": "supplied_source_annotation_pending_geometry_QC",
+    "clinical_probability": false,
+    "source_values_preserved": true
+  },
+  "clinical_context": {
+    "preoperative_availability": "unknown",
+    "eligible_as_preoperative_policy_input": false
+  },
+  "verified_at": "2026-10-04T11:37:02.582776+00:00",
+  "source_content_status": "matches_pinned_official_release_checksums",
+  "anatomical_qc_status": "not_assessed_by_download_verification"
+}

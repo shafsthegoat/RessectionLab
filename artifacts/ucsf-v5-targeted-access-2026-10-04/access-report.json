@@ -1,0 +1,106 @@
+{
+  "started_at_utc": "2026-10-04T17:08:23.629508+00:00",
+  "selected_case": "UCSF-PDGM-0004",
+  "split": "previously_consulted_development_demo",
+  "imaging_downloaded": false,
+  "public_authentication": {
+    "authorization_status": 200,
+    "token_status": 201,
+    "authorization_code_received": true
+  },
+  "probe_harness_note": "Initial wrapper incorrectly expected HTTP200 for token creation. Normal HTTP201 success was confirmed; accepted 2xx status before package queries. No provider authentication failure inferred.",
+  "operations": [
+    {
+      "operation": "package",
+      "path": "/api/v5/packages/1065",
+      "http_status": 200,
+      "response": {
+        "id": "1065",
+        "title": "UCSF-PDGM Version 5 ",
+        "files_on_server": "no",
+        "total_bytes": 885200,
+        "total_files": 12030
+      },
+      "response_bytes": 6267,
+      "response_sha256": "b23eff1628ea14c4e32311f1891e7de1d7959f5bc8b44f8f73ea4ec1c6622a47"
+    },
+    {
+      "operation": "listing",
+      "path": "/api/v5/packages/1065/files/received",
+      "http_status": 500,
+      "response": {
+        "status": "Internal Server Error",
+        "code": "1202",
+        "message": "An error occurred in browsing directory on the HSTS node.",
+        "trace": "37f91bec-ce9d-440c-a7ae-92f4afc29a79"
+      },
+      "response_bytes": 165,
+      "response_sha256": "d8b089d16132aa7e1790c9834ad8af41596db0d39b1071286f10495a23ec5297"
+    },
+    {
+      "operation": "transfer_spec",
+      "path": "/api/v5/packages/1065/transfer_spec/download?transfer_type=http_gateway&type=received",
+      "http_status": 404,
+      "response": {
+        "status": "Not Found",
+        "code": "1002",
+        "message": "Check that your API request matches the API specification. This route is not a valid endpoint.",
+        "trace": "01ee60fc-3080-4e24-aafb-b2a8b3891b7e"
+      },
+      "response_bytes": 190,
+      "response_sha256": "3652cade44d7ae7017daba3f9fec175f17c6c65d7570ffaf8c41b5480fbb6b75",
+      "interpretation": "Client method error: GET is unsupported; not evidence of source-file absence. Correct documented POST connect probe follows."
+    },
+    {
+      "operation": "connect_transfer_spec",
+      "method": "POST",
+      "path": "/api/v5/packages/1065/transfer_spec/download?transfer_type=connect&type=received",
+      "http_status": 400,
+      "response": {
+        "status": "Bad Request",
+        "code": "1228",
+        "message": "Unable to get a transfer specification. - Check that the files are available on the server. There was an error downloading the files on the HSTS server.",
+        "trace": "06929152-a4a6-40b4-af65-952d6e70031d"
+      },
+      "response_bytes": 250,
+      "response_sha256": "0f19f5f5081a5566e354460553037bde2fa5a46b0e0337277e1b504382d7fd71"
+    }
+  ],
+  "metadata_identity": {
+    "http_status": 200,
+    "bytes": 58149,
+    "sha256": "afc1c23a0eb0597b56e603741e72f2308b4860281187cd3808e05b7a0116fd78",
+    "matching_rows": 1,
+    "linkage": {
+      "ID": "UCSF-PDGM-004",
+      "BraTS21 ID": "BraTS2021_00097",
+      "BraTS21 Segmentation Cohort": "Training",
+      "BraTS21 MGMT Cohort": "Training"
+    },
+    "all_clinical_fields_excluded_from_planning": true
+  },
+  "actual_transfer_started": false,
+  "declaration_path": "manifests/data_acquisition_ucsf_v5_official_0004.json",
+  "collection_page": {
+    "url": "https://www.cancerimagingarchive.net/collection/ucsf-pdgm/",
+    "status": 200,
+    "bytes": 342016,
+    "sha256": "418408a5734ad96db3df297e6dd7a4eb1c64290b65fe5344df72ac0e6bf24c99",
+    "identical_to_previous_primary_page": true
+  },
+  "local_aspera_client_check": {
+    "path_executables": [
+      "ascp",
+      "aspera"
+    ],
+    "path_executable_found": false,
+    "standard_application_locations_found": false,
+    "user_aspera_support_directories_found": false,
+    "client_installed_for_recheck": false
+  },
+  "outcome": "official_source_files_unavailable",
+  "exact_case_file_inventory_available": false,
+  "selected_exam_gradient_pair_verified": false,
+  "existing_mirror_primary_byte_match": null,
+  "next_step": "Provider restores package1065 or supplies an official bounded UCSF-PDGM-0004 exam listing/download with its exact rotated gradients; selected IDC structural work proceeds separately."
+}

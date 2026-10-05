@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "status": "stopped_before_library_extraction_or_execution",
+  "observed_at": "2026-10-04T19:44:41.520608+00:00",
+  "driver_path": "artifacts/mechanics/gmsh-4.15.2-runtime-v1/extract-runtime.py",
+  "driver_sha256": "800cbea5f532ac57d6baf390bcd1401ea8c3952e3c8323068c2d59eb049d6a72",
+  "failure": "AssertionError at line 51: wheel RECORD SHA256 representation expected URL-safe base64, creator wheel uses literal hexadecimal.",
+  "retained_partial_files": [
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/gmsh-4.15.2/runtime/gmsh.py",
+      "bytes": 427222,
+      "sha256": "f4b0935cebde899750293d87a643090e5ea33c9b18d249267f507db68a0e01c3",
+      "creator_record": "sha256=f4b0935cebde899750293d87a643090e5ea33c9b18d249267f507db68a0e01c3",
+      "creator_hex_digest_matches": true
+    }
+  ],
+  "wheel_whole_sha256_verified": true,
+  "download_retries": 0,
+  "probe_attempts": 0,
+  "overwrites": false,
+  "next_action": "Root explicitly review bounded extraction continuation with creator hex checksums; original driver and partial file retained."
+}

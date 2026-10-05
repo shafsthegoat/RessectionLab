@@ -1,0 +1,86 @@
+{
+  "ideal_volume_mm3": 23.725569519297917,
+  "resolution_groups": [
+    {
+      "spacing_mm": 1,
+      "native_accepted": 1,
+      "independently_passed": 1,
+      "static_lower_range_mm3": [
+        0.0,
+        4.5
+      ],
+      "static_contact_upper_range_mm3": [
+        49.5,
+        64.0
+      ],
+      "bracket_width_range_mm3": [
+        45.0,
+        64.0
+      ]
+    },
+    {
+      "spacing_mm": 0.5,
+      "native_accepted": 2,
+      "independently_passed": 2,
+      "static_lower_range_mm3": [
+        10.062499999999998,
+        14.000000000000004
+      ],
+      "static_contact_upper_range_mm3": [
+        36.68750000000001,
+        42.00000000000001
+      ],
+      "bracket_width_range_mm3": [
+        26.500000000000007,
+        30.500000000000007
+      ]
+    },
+    {
+      "spacing_mm": 0.25,
+      "native_accepted": 4,
+      "independently_passed": 4,
+      "static_lower_range_mm3": [
+        15.375000000000007,
+        17.914062500000007
+      ],
+      "static_contact_upper_range_mm3": [
+        31.679687500000014,
+        32.187500000000014
+      ],
+      "bracket_width_range_mm3": [
+        13.765625000000007,
+        16.812500000000007
+      ]
+    },
+    {
+      "spacing_mm": 0.125,
+      "native_accepted": 4,
+      "independently_passed": 3,
+      "static_lower_range_mm3": [
+        19.953125000000018,
+        20.569335937500018
+      ],
+      "static_contact_upper_range_mm3": [
+        27.422851562500025,
+        27.750976562499975
+      ],
+      "bracket_width_range_mm3": [
+        6.853515625000007,
+        7.612073759060504
+      ]
+    }
+  ],
+  "timing_seconds": {
+    "grid_preparation": 0.06368104321882129,
+    "static_bounds": 0.20336054207291454,
+    "native_stroke": 17.162120873341337,
+    "numerical_row_total": 18.20428479311522,
+    "independent_audits_including_cancelled": 151.95432437513955,
+    "completed_independent_audits": 124.99686791712884
+  },
+  "finest_lower_deficit_percent_range": [
+    13.3030888014329,
+    15.900332829648054
+  ],
+  "peak_rss_gib": 0.6380462646484375
+}

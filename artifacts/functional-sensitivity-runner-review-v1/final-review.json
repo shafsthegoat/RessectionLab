@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "status": "ready_for_bounded_real_case_execution_from_committed_snapshot",
+  "scope": "independent runner review; no real-patient functional outcomes evaluated",
+  "validation": {
+    "passed": 9,
+    "failed": 0,
+    "elapsed_seconds": 2.07,
+    "independent_controls": 3,
+    "owner_controls": 6
+  },
+  "repaired_findings": [
+    "Known native execution rejections remain rejected in every main panel and receive no comparable functional-event or cost estimates.",
+    "Initial declaration bytes/hash are retained, external edits are detected, and the parent supplies an immutable declaration copy."
+  ],
+  "resource_controls": [
+    "Actual stalled child stopped by wall watchdog (owner control).",
+    "Actual 64 MiB child allocation stopped by sampled RSS watchdog (independent control).",
+    "Zero exit without a valid completion receipt is rejected (owner control)."
+  ],
+  "scientific_review": [
+    "All five declared input byte hashes independently matched.",
+    "Both fixed native records contain one stroke with route entry/target/tool identical to actual history metadata.",
+    "Two native histories, three historical rejected routes, and STOP retained; static selection uses fixed lexicographic IDs, not functional outcomes.",
+    "Eight evidence/threshold/uncertainty panels are frozen before first event evaluation.",
+    "Common random numbers are explicitly paired development sensitivity; unseen-patient validation is not claimed.",
+    "Missing components retain unknown events and cost counts; no clinical calibration is asserted.",
+    "Original-to-functional geometry uses unchanged image/target frame plus explicitly frozen tissue footprint identity."
+  ],
+  "limits": [
+    "Parent RSS sampling is periodic, not an allocation reservation.",
+    "Source/prior anatomy, vessel coverage, calibration and official mirror equivalence remain limited as declared.",
+    "This review approves the bounded engineering execution, not its yet-unmeasured outcome."
+  ],
+  "source_sha256": {
+    "scripts/evaluate_patient_functional_sensitivity.py": "eaeccac2596b28e21d4f8a4db471438015f7bd4d6c0c2e841e6b4c242e860e90",
+    "manifests/experiments/ucsf-functional-sensitivity-v1.json": "b904b340fc47e488403312da7f222568756eb39a547db5ea84d762c73d10164d",
+    "tests/test_patient_functional_sensitivity_runner.py": "12cc723932db01247861b6ddbdd383951bae3a42bcda6ebcdc74ef6049382efb",
+    "tests/test_patient_functional_sensitivity_review.py": "35a19a9609f894af99d5e28b81c2c76c258e9777c32ce210f7fbdb36753e6d8e"
+  }
+}

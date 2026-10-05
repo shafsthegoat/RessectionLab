@@ -1,0 +1,40 @@
+{
+  "gzip_only_reproduction": {
+    "exit_code": 0,
+    "outputs": {
+      "DIAGNOSTIC.md": {
+        "byte_identical": true,
+        "sha256": "2f87dff8df3ec139f4a07f7fb82af7ecfa353c4d62847ff290d3b63d499b7bed"
+      },
+      "diagnostic.json": {
+        "byte_identical": true,
+        "sha256": "e8656e692e4f21e73e1b9283a536d5e044942d25922c8dab6d956012ce01833d"
+      }
+    },
+    "paths": [
+      "pilot/accounting.json",
+      "pilot/candidate-record.json"
+    ]
+  },
+  "new_gradient_steps": 0,
+  "new_policy_forwards": 0,
+  "new_random_draws": 0,
+  "new_simulator_calls": 0,
+  "observed_test_setup_failure": {
+    "cause": "The constructed fixture reused one mutable feature-row list for two action IDs; perturbing either also changed the other, contradicting the test premise. The second row now has an independent copy. No diagnostic production defect or public-run failure is inferred.",
+    "failed": 1,
+    "passed": 10
+  },
+  "performance_claim": false,
+  "scope": "Saved-record arithmetic only; original inputs unchanged",
+  "source_sha256": {
+    "scripts/report_native_axis_decision_diagnostics.py": "5b53634f167d951f6b1cd498f2ac5b2d3a3567fe115c040804c013cb7eaf57da",
+    "tests/test_native_axis_decision_diagnostics.py": "2006c89bfd701041dc87d0e0c34dc340e8e06c728cce89425426ccf95166a7e3"
+  },
+  "status": "passed",
+  "tests": {
+    "command": ".venv/bin/python -m pytest tests/test_native_axis_decision_diagnostics.py -q",
+    "passed": 11,
+    "seconds": 0.04
+  }
+}

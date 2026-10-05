@@ -1,0 +1,22 @@
+{
+  "schema": "hbe-time-format-regression-provenance-v1",
+  "source_log": {
+    "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment/runs/compression-N4-S60-reference/nodes.log",
+    "sha256": "a6f93397138cf170bd4e0eb28f95b7306b9bbd7724013a9a92e08dc4c4c7ad82"
+  },
+  "extracted_fixture": {
+    "path": "artifacts/mechanics/hbe-primitive-time-format-v1/actual-coarse-first-node.log",
+    "sha256": "a2795e26a0a300ee9a65e75271872da08249d5f846486a3ad2cb4784eba9087e"
+  },
+  "source_format": {
+    "path": "data/optional-runtimes/febio-4.13/source/FECore/DataRecord.cpp",
+    "sha256": "7805baf31c36d6380d675f2f20c8fcf3ff6d9382e9389aeb8dd51893ad8542e9"
+  },
+  "extraction": "All original Step/Time/Data header lines and actual node ID1 row per state, in original order. Other nodes omitted solely for compact parser regression. No log values changed.",
+  "meaning": "Simulated specimen output; no observed HBE response data. This fixture checks parsing, not mechanics or physical fidelity.",
+  "expected_states": 61,
+  "item_count_in_fixture": 1,
+  "numeric_fields": 9,
+  "solver_time_format": "%.9lg",
+  "numeric_row_precision": 12
+}

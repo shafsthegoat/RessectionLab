@@ -1,0 +1,111 @@
+{
+  "adapter_controls": {
+    "acceptance": {
+      "bytes": 378,
+      "path": "artifacts/febio-accelerate-lifecycle-v1/control-acceptance.json",
+      "sha256": "eb2e390574896c175a1f240a6aa43e03737e2201b9c9823f243d9ef3da935757"
+    },
+    "declaration": {
+      "bytes": 8583,
+      "path": "artifacts/febio-accelerate-lifecycle-v1/control-declaration.json",
+      "sha256": "d45883853df0516efeba4e0f7d21f78b91899d47f3cd1743db58b61ec66334c9"
+    },
+    "independent_review": {
+      "bytes": 9481,
+      "path": "artifacts/febio-accelerate-lifecycle-independent-review-v1/saved-control-review.json",
+      "sha256": "a0e377ac4ea8d8fc380afb2efe1045993b4ada90cb262f61b83414be5a2e62d2"
+    },
+    "result": {
+      "bytes": 3602,
+      "path": "artifacts/febio-accelerate-lifecycle-v1/control-01/result.json",
+      "sha256": "245e48859244fa93ab51ce03db73cb78e128d9f3bdf6a187f91fa3980767b74d"
+    },
+    "supervision": {
+      "bytes": 933,
+      "path": "artifacts/febio-accelerate-lifecycle-v1/supervision-01/supervision.json",
+      "sha256": "3ecf797d197caa537834f73ac4c6d46d58eb9423490c152b735e6f621b1fff54"
+    }
+  },
+  "architecture": "arm64",
+  "build_acceptance": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-runtime-v3/build-01/acceptance.json",
+    "sha256": "a5ca0b26e65c3240f04d635702fee15518f56634a1f6d0391db811a79ed1efa1"
+  },
+  "build_acceptance_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-runtime-v3/build-01/acceptance.json",
+  "build_acceptance_sha256": "a5ca0b26e65c3240f04d635702fee15518f56634a1f6d0391db811a79ed1efa1",
+  "configure_acceptance_sha256": "3e80ac1e6e932bc279ab19624ef582eb29587e40e3054dbaaa051a31948ede59",
+  "controls": {
+    "bytes": 3689,
+    "path": "artifacts/febio-accelerate-csc-independent-review-v1/positive-control-review.json",
+    "sha256": "d108db018cd98cf8a10db1d0d4bd23d787e82d9d08ca075c802e84b4e1c51e4b"
+  },
+  "declaration_sha256": "273db5b32077017730bb8c2fafe9fb360d19439005ddfc977d84c45f7c379763",
+  "driver_sha256": "ba94376626a0c9a1a78b81368f60b752e2fcd320f822418934c75bfcd6d80a46",
+  "executable": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+  "executable_sha256": "d7d4855d1d541a6407f22efd4381e23d7057cc49ec726144f06599aa5184f7b6",
+  "global_environment_changed": false,
+  "installed_inventory": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-runtime-v3/build-01/installed-inventory.json",
+    "sha256": "17d5d580f359c88dc83e743d0a128ac19ea9387ff10c09a816cb130f5cc397b6"
+  },
+  "libraries": {
+    "install/bin/febio4": "d7d4855d1d541a6407f22efd4381e23d7057cc49ec726144f06599aa5184f7b6",
+    "install/lib/libfeamr.dylib": "7328649aa6a1e21359e9b470464306970b4bc475bab6a176ae769d0455aa1811",
+    "install/lib/libfebiofluid.dylib": "c64d397056fcf024e1d2e10ba7872e98590a440d406062d7b66a49e90b88bc7f",
+    "install/lib/libfebiolib.dylib": "c44341895c567529c6917fa51ed4d0cfc6a826aebbe02ff410f4f9b89455d69d",
+    "install/lib/libfebiomech.dylib": "a035e3e975863fa8e35629d9348f885c6e38eba4aa1ef823af014e1f0af9974f",
+    "install/lib/libfebiomix.dylib": "69dd24a13c299b5f8eb66a9d4e5348579815dea1b49f3a6494a647dd1df1f2e8",
+    "install/lib/libfebioopt.dylib": "9261f2d2d175590bf957759d65b575bdc1fb9598bb7a29ecbf1b89e2a4268da0",
+    "install/lib/libfebioplot.dylib": "4689bebeefb692df58449bf17e04ad51c20c9022ba05954d3d21831499ea79d0",
+    "install/lib/libfebiorve.dylib": "3e6ab78be3b49d7a7e6c369662006f9eb61aad3658da4190f8ff486e38ad6711",
+    "install/lib/libfebioxml.dylib": "0ae741248991be10ba53a8c914467b7caa725a90b8f5c4512aa570fb48778959",
+    "install/lib/libfecore.dylib": "fd5b224a47ad55f12b1e1ddd804bcb84d19f6ff63caf5b6d2b4e305337e4deca",
+    "install/lib/libfeimglib.dylib": "13a35c45ca32da28f72644d7b2b73feaf62dbe24312e91b235a1789365d7e171",
+    "install/lib/libnumcore.dylib": "2c578d76fe57193494872e18d07469e6d542dbf1951d94b252ac04552514b4a3"
+  },
+  "linkage": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-runtime-v3/build-01/linkage.json",
+    "sha256": "0e87aebf450f6b1d37b9fbdf22e10c26d0531230564903486b3fe3bf0057d581"
+  },
+  "models_executed": 0,
+  "numerically_validated": false,
+  "patch": {
+    "bytes": 5484,
+    "path": "artifacts/febio-accelerate-lifecycle-v1/accelerate-correctness.patch",
+    "sha256": "67a1858f2d55046796d7ccb46758ca06e5bfb673e75a539d158b1a17652f3340"
+  },
+  "patched_source_sha256": "476ac8471ea681a99c298352a50aba2a7a5baa71635e1678155a7f58b72ba04a",
+  "private_openmp": {
+    "bytes": 844016,
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib/libomp.dylib",
+    "sha256": "38f6afed27bf1d3bd52779547c7ab53aeda9c06c3473263b5cd11ed4f04b41f8"
+  },
+  "receipts_sha256": {
+    "build-01/commands.json": "570efa69ef4f0acebd89db93fdb17ccb411282a6694fc05caaa4aa4830b09554",
+    "build-01/installed-inventory.json": "17d5d580f359c88dc83e743d0a128ac19ea9387ff10c09a816cb130f5cc397b6",
+    "build-01/linkage.json": "0e87aebf450f6b1d37b9fbdf22e10c26d0531230564903486b3fe3bf0057d581",
+    "build-01/result.json": "ad17d726acf792c05d33ab598d7d1bd3b96b950b273d654144b160a283f290c3",
+    "build-01/runtime-identity-candidate.json": "1665a6640c1d92fa7ee01c3960a50c104c11aaef63b8cb6b88f294be07ea0eed",
+    "build-01/supervision.json": "47683a320f3c0df24533a6b98d81d8f945177be6589a4cbba7a5a812fd08ba60"
+  },
+  "runtime_version": "4.13.0",
+  "runtime_version_evidence": "pinned_source_version_only_not_executed",
+  "schema_version": 2,
+  "solver_executed": false,
+  "source_archive": {
+    "bytes": 53891813,
+    "path": "data/optional-runtimes/febio-4.13/downloads/32ae206ff4881dfb54f62296cd1558e58ed9fcc6.tar.gz",
+    "sha256": "a1c4f65597c9b3f89a02daeeee6c3ae00d9f4bf64a85824b33e817043fd1ac66"
+  },
+  "source_commit": "32ae206ff4881dfb54f62296cd1558e58ed9fcc6",
+  "source_inventory": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-runtime-v3/configure-01/source-inventory.json",
+    "sha256": "4245a2b18b0e34188aa451bea3b5f568e01ade4ac6b20fcdcbcc855813f04b20"
+  },
+  "source_inventory_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-csc-runtime-v3/configure-01/source-inventory.json",
+  "source_inventory_sha256": "4245a2b18b0e34188aa451bea3b5f568e01ade4ac6b20fcdcbcc855813f04b20",
+  "source_patch_sha256": "67a1858f2d55046796d7ccb46758ca06e5bfb673e75a539d158b1a17652f3340",
+  "source_patched": true,
+  "status": "isolated_patched_runtime_built_pending_numerical_controls",
+  "version_executable_launched": false
+}

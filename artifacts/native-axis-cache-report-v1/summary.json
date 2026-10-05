@@ -1,0 +1,671 @@
+{
+  "archived_source_verification": {
+    "added_files": [],
+    "case_bundle_sha256": "11cca797ad0216e5c8d940e7354f2dd23fb6954dc2aed7e4b0423f6adc6cefcf",
+    "source_archive_sha256": "685b33cb19a7d8004454fb80b3e102f7d5304e39908e41f850edb72c180b7ee3",
+    "source_manifest_sha256": "ca855aa790848be755b8603211b6de668f29fd0fb63e48e18ba13c6c5d57e713",
+    "status": "byte_identical",
+    "tracked_files_verified": 2930
+  },
+  "baseline": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/validation/native-axis-cache-public-v1/execution-baseline.json",
+    "sha256": "f3709aa794562fa12e482472fe3b94f26403b19ed1f639923654ab86feca01f6"
+  },
+  "cache_construction": {
+    "scope": "empty cache constructed after reference_before",
+    "seconds": 0.06904070801101625,
+    "stats": {
+      "bypasses": 0,
+      "cache_version": "experimental-exact-capsule-cover-cache-v1",
+      "calls": 0,
+      "cavity_cached": false,
+      "compute_seconds": 0.0,
+      "entries": 0,
+      "evictions": 0,
+      "feasibility_cached": false,
+      "geometry_epsilon": 1e-09,
+      "geometry_source_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+      "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+      "guarded_direct_geometry_callables": [
+        "_vector",
+        "_immutable",
+        "point_segment_distances",
+        "_segment_cell_distances",
+        "world_to_voxel",
+        "voxel_to_world"
+      ],
+      "hits": 0,
+      "integrity_cached": false,
+      "max_entries": 16384,
+      "max_payload_bytes": 33554432,
+      "misses": 0,
+      "mode": "exact_orthogonal_cells",
+      "namespace": "sha256:41eeccfc7b8f35c3eb2f1364fbb71073c034d184b73519b65f4ba917aee6f088",
+      "native_config_hash": "sha256:6d817c5c7441cc7d6c6bcaeac4542cfd3266f2474c9c1904a2d6279870b3143b",
+      "native_version": "contained-native-cell-connected-suction-v2",
+      "payload_scope": "array buffers only; keys/bookkeeping and process RSS separate",
+      "query_seconds": 0.0,
+      "retained_payload_bytes": 0,
+      "source_guard_sha256": "6a173851ad383c32b84121cd0d8871535fffa9174d95aa27bdb08ca4b8a7e5f9",
+      "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+    }
+  },
+  "clinical_deficit_probability": null,
+  "descriptive_reference_over_cached_ratios": {
+    "cached_cold": {
+      "reference_max_over_phase": 0.9464367322471361,
+      "reference_min_over_phase": 0.9251230836413085
+    },
+    "cached_warm": {
+      "reference_max_over_phase": 0.9401297822522544,
+      "reference_min_over_phase": 0.9189581654499116
+    }
+  },
+  "history_hash": "sha256:8c6e1dd7af7ce28281f424508ee87e6fbe8983120e45f41165313093d7eacfdd",
+  "independent_audits": {
+    "cached_cold": {
+      "receipt": {
+        "action_count": 3,
+        "checker_version": "independent-native-sequence-v2",
+        "claimed_source_tissue_volume_mm3": 1175.0,
+        "complete_tool_checked": true,
+        "contained_source_tissue_volume_mm3": 1175.0,
+        "failures": [],
+        "feasible": true,
+        "first_failed_action": null,
+        "first_unsupported_position_mm": null,
+        "first_unsupported_source_voxel": null,
+        "frontier_checked": true,
+        "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "unsupported_source_tissue_volume_mm3": 0.0
+      },
+      "seconds": 14.888518708059564
+    },
+    "cached_warm": {
+      "receipt": {
+        "action_count": 3,
+        "checker_version": "independent-native-sequence-v2",
+        "claimed_source_tissue_volume_mm3": 1175.0,
+        "complete_tool_checked": true,
+        "contained_source_tissue_volume_mm3": 1175.0,
+        "failures": [],
+        "feasible": true,
+        "first_failed_action": null,
+        "first_unsupported_position_mm": null,
+        "first_unsupported_source_voxel": null,
+        "frontier_checked": true,
+        "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "unsupported_source_tissue_volume_mm3": 0.0
+      },
+      "seconds": 14.920127584016882
+    },
+    "reference_after": {
+      "receipt": {
+        "action_count": 3,
+        "checker_version": "independent-native-sequence-v2",
+        "claimed_source_tissue_volume_mm3": 1175.0,
+        "complete_tool_checked": true,
+        "contained_source_tissue_volume_mm3": 1175.0,
+        "failures": [],
+        "feasible": true,
+        "first_failed_action": null,
+        "first_unsupported_position_mm": null,
+        "first_unsupported_source_voxel": null,
+        "frontier_checked": true,
+        "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "unsupported_source_tissue_volume_mm3": 0.0
+      },
+      "seconds": 14.936951708048582
+    },
+    "reference_before": {
+      "receipt": {
+        "action_count": 3,
+        "checker_version": "independent-native-sequence-v2",
+        "claimed_source_tissue_volume_mm3": 1175.0,
+        "complete_tool_checked": true,
+        "contained_source_tissue_volume_mm3": 1175.0,
+        "failures": [],
+        "feasible": true,
+        "first_failed_action": null,
+        "first_unsupported_position_mm": null,
+        "first_unsupported_source_voxel": null,
+        "frontier_checked": true,
+        "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "unsupported_source_tissue_volume_mm3": 0.0
+      },
+      "seconds": 14.81378595798742
+    }
+  },
+  "interpretation": "Descriptive paired fixed trace on one development case. Reference bracket is order/OS variation, not a confidence interval; no whole-learning throughput or clinical claim.",
+  "launcher": {
+    "authority": "Worker and result must both be completed with the launch runtime and matching result hash; launcher must also complete",
+    "full_launcher_seconds": 158.28829304198734,
+    "hard_killed": false,
+    "parent_timeout_requested": false,
+    "receipt_error": null,
+    "status": "completed",
+    "worker_returncode": 0
+  },
+  "new_audit_replays": 0,
+  "new_gradient_updates": 0,
+  "new_simulator_calls": 0,
+  "phases": [
+    {
+      "adapter_proposal_accounting": {
+        "integrity_calls": 9,
+        "integrity_seconds": 2.7796560840215534,
+        "preview_calls": 66,
+        "preview_seconds": 14.938501670025289
+      },
+      "cache_after": null,
+      "cache_before": null,
+      "cache_delta": null,
+      "capture_accounting_and_phase_overhead_seconds": 1.467235584044829,
+      "certificate_capture_seconds": null,
+      "complete_proposer_verification": {
+        "calls": 10,
+        "seconds": 3.063500499818474
+      },
+      "export_seconds": 0.2606045409338549,
+      "mode": "reference_before",
+      "phase_before_export_seconds": 20.729252958088182,
+      "phase_including_comparison_and_export_seconds": 21.181820416008122,
+      "process_cumulative_peak_rss_bytes": 1582891008,
+      "reset_seconds": 7.147247457993217,
+      "transition_seconds": [
+        5.99259866704233,
+        5.127345291082747,
+        0.9948259579250589
+      ],
+      "transition_total_seconds": 12.114769916050136
+    },
+    {
+      "adapter_proposal_accounting": {
+        "integrity_calls": 9,
+        "integrity_seconds": 2.790416459320113,
+        "preview_calls": 66,
+        "preview_seconds": 16.333981167292222
+      },
+      "cache_after": {
+        "bypasses": 0,
+        "cache_version": "experimental-exact-capsule-cover-cache-v1",
+        "calls": 22364,
+        "cavity_cached": false,
+        "compute_seconds": 11.731056619086303,
+        "entries": 5462,
+        "evictions": 16902,
+        "feasibility_cached": false,
+        "geometry_epsilon": 1e-09,
+        "geometry_source_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+        "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+        "guarded_direct_geometry_callables": [
+          "_vector",
+          "_immutable",
+          "point_segment_distances",
+          "_segment_cell_distances",
+          "world_to_voxel",
+          "voxel_to_world"
+        ],
+        "hits": 0,
+        "integrity_cached": false,
+        "max_entries": 16384,
+        "max_payload_bytes": 33554432,
+        "misses": 22364,
+        "mode": "exact_orthogonal_cells",
+        "namespace": "sha256:41eeccfc7b8f35c3eb2f1364fbb71073c034d184b73519b65f4ba917aee6f088",
+        "native_config_hash": "sha256:6d817c5c7441cc7d6c6bcaeac4542cfd3266f2474c9c1904a2d6279870b3143b",
+        "native_version": "contained-native-cell-connected-suction-v2",
+        "payload_scope": "array buffers only; keys/bookkeeping and process RSS separate",
+        "query_seconds": 12.658882041228935,
+        "retained_payload_bytes": 33553224,
+        "source_guard_sha256": "6a173851ad383c32b84121cd0d8871535fffa9174d95aa27bdb08ca4b8a7e5f9",
+        "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+      },
+      "cache_before": {
+        "bypasses": 0,
+        "cache_version": "experimental-exact-capsule-cover-cache-v1",
+        "calls": 0,
+        "cavity_cached": false,
+        "compute_seconds": 0.0,
+        "entries": 0,
+        "evictions": 0,
+        "feasibility_cached": false,
+        "geometry_epsilon": 1e-09,
+        "geometry_source_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+        "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+        "guarded_direct_geometry_callables": [
+          "_vector",
+          "_immutable",
+          "point_segment_distances",
+          "_segment_cell_distances",
+          "world_to_voxel",
+          "voxel_to_world"
+        ],
+        "hits": 0,
+        "integrity_cached": false,
+        "max_entries": 16384,
+        "max_payload_bytes": 33554432,
+        "misses": 0,
+        "mode": "exact_orthogonal_cells",
+        "namespace": "sha256:41eeccfc7b8f35c3eb2f1364fbb71073c034d184b73519b65f4ba917aee6f088",
+        "native_config_hash": "sha256:6d817c5c7441cc7d6c6bcaeac4542cfd3266f2474c9c1904a2d6279870b3143b",
+        "native_version": "contained-native-cell-connected-suction-v2",
+        "payload_scope": "array buffers only; keys/bookkeeping and process RSS separate",
+        "query_seconds": 0.0,
+        "retained_payload_bytes": 0,
+        "source_guard_sha256": "6a173851ad383c32b84121cd0d8871535fffa9174d95aa27bdb08ca4b8a7e5f9",
+        "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+      },
+      "cache_delta": {
+        "bypasses": 0,
+        "calls": 22364,
+        "compute_seconds": 11.731056619086303,
+        "evictions": 16902,
+        "hits": 0,
+        "misses": 22364,
+        "query_seconds": 12.658882041228935
+      },
+      "capture_accounting_and_phase_overhead_seconds": 1.676650457084179,
+      "certificate_capture_seconds": null,
+      "complete_proposer_verification": {
+        "calls": 10,
+        "seconds": 3.124095875886269
+      },
+      "export_seconds": 0.2612952080089599,
+      "mode": "cached_cold",
+      "phase_before_export_seconds": 22.411699415999465,
+      "phase_including_comparison_and_export_seconds": 22.89621866599191,
+      "process_cumulative_peak_rss_bytes": 1938948096,
+      "reset_seconds": 7.76651149999816,
+      "transition_seconds": [
+        6.466569083975628,
+        5.5007516669575125,
+        1.0012167079839855
+      ],
+      "transition_total_seconds": 12.968537458917126
+    },
+    {
+      "adapter_proposal_accounting": {
+        "integrity_calls": 9,
+        "integrity_seconds": 2.7663044589571655,
+        "preview_calls": 66,
+        "preview_seconds": 16.478355417842977
+      },
+      "cache_after": {
+        "bypasses": 0,
+        "cache_version": "experimental-exact-capsule-cover-cache-v1",
+        "calls": 44728,
+        "cavity_cached": false,
+        "compute_seconds": 23.448556383838877,
+        "entries": 5462,
+        "evictions": 39266,
+        "feasibility_cached": false,
+        "geometry_epsilon": 1e-09,
+        "geometry_source_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+        "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+        "guarded_direct_geometry_callables": [
+          "_vector",
+          "_immutable",
+          "point_segment_distances",
+          "_segment_cell_distances",
+          "world_to_voxel",
+          "voxel_to_world"
+        ],
+        "hits": 0,
+        "integrity_cached": false,
+        "max_entries": 16384,
+        "max_payload_bytes": 33554432,
+        "misses": 44728,
+        "mode": "exact_orthogonal_cells",
+        "namespace": "sha256:41eeccfc7b8f35c3eb2f1364fbb71073c034d184b73519b65f4ba917aee6f088",
+        "native_config_hash": "sha256:6d817c5c7441cc7d6c6bcaeac4542cfd3266f2474c9c1904a2d6279870b3143b",
+        "native_version": "contained-native-cell-connected-suction-v2",
+        "payload_scope": "array buffers only; keys/bookkeeping and process RSS separate",
+        "query_seconds": 25.32145559194032,
+        "retained_payload_bytes": 33553224,
+        "source_guard_sha256": "6a173851ad383c32b84121cd0d8871535fffa9174d95aa27bdb08ca4b8a7e5f9",
+        "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+      },
+      "cache_before": {
+        "bypasses": 0,
+        "cache_version": "experimental-exact-capsule-cover-cache-v1",
+        "calls": 22364,
+        "cavity_cached": false,
+        "compute_seconds": 11.731056619086303,
+        "entries": 5462,
+        "evictions": 16902,
+        "feasibility_cached": false,
+        "geometry_epsilon": 1e-09,
+        "geometry_source_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+        "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+        "guarded_direct_geometry_callables": [
+          "_vector",
+          "_immutable",
+          "point_segment_distances",
+          "_segment_cell_distances",
+          "world_to_voxel",
+          "voxel_to_world"
+        ],
+        "hits": 0,
+        "integrity_cached": false,
+        "max_entries": 16384,
+        "max_payload_bytes": 33554432,
+        "misses": 22364,
+        "mode": "exact_orthogonal_cells",
+        "namespace": "sha256:41eeccfc7b8f35c3eb2f1364fbb71073c034d184b73519b65f4ba917aee6f088",
+        "native_config_hash": "sha256:6d817c5c7441cc7d6c6bcaeac4542cfd3266f2474c9c1904a2d6279870b3143b",
+        "native_version": "contained-native-cell-connected-suction-v2",
+        "payload_scope": "array buffers only; keys/bookkeeping and process RSS separate",
+        "query_seconds": 12.658882041228935,
+        "retained_payload_bytes": 33553224,
+        "source_guard_sha256": "6a173851ad383c32b84121cd0d8871535fffa9174d95aa27bdb08ca4b8a7e5f9",
+        "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+      },
+      "cache_delta": {
+        "bypasses": 0,
+        "calls": 22364,
+        "compute_seconds": 11.717499764752574,
+        "evictions": 22364,
+        "hits": 0,
+        "misses": 22364,
+        "query_seconds": 12.662573550711386
+      },
+      "capture_accounting_and_phase_overhead_seconds": 1.719593626097776,
+      "certificate_capture_seconds": null,
+      "complete_proposer_verification": {
+        "calls": 10,
+        "seconds": 3.097148041939363
+      },
+      "export_seconds": 0.26079308392945677,
+      "mode": "cached_warm",
+      "phase_before_export_seconds": 22.584606832941063,
+      "phase_including_comparison_and_export_seconds": 23.04982012498658,
+      "process_cumulative_peak_rss_bytes": 2188296192,
+      "reset_seconds": 7.815383541048504,
+      "transition_seconds": [
+        6.516086165909655,
+        5.517656916985288,
+        1.0158865828998387
+      ],
+      "transition_total_seconds": 13.049629665794782
+    },
+    {
+      "adapter_proposal_accounting": {
+        "integrity_calls": 9,
+        "integrity_seconds": 2.7411802910501137,
+        "preview_calls": 66,
+        "preview_seconds": 15.158033630112186
+      },
+      "cache_after": {
+        "bypasses": 0,
+        "cache_version": "experimental-exact-capsule-cover-cache-v1",
+        "calls": 44728,
+        "cavity_cached": false,
+        "compute_seconds": 23.448556383838877,
+        "entries": 5462,
+        "evictions": 39266,
+        "feasibility_cached": false,
+        "geometry_epsilon": 1e-09,
+        "geometry_source_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+        "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+        "guarded_direct_geometry_callables": [
+          "_vector",
+          "_immutable",
+          "point_segment_distances",
+          "_segment_cell_distances",
+          "world_to_voxel",
+          "voxel_to_world"
+        ],
+        "hits": 0,
+        "integrity_cached": false,
+        "max_entries": 16384,
+        "max_payload_bytes": 33554432,
+        "misses": 44728,
+        "mode": "exact_orthogonal_cells",
+        "namespace": "sha256:41eeccfc7b8f35c3eb2f1364fbb71073c034d184b73519b65f4ba917aee6f088",
+        "native_config_hash": "sha256:6d817c5c7441cc7d6c6bcaeac4542cfd3266f2474c9c1904a2d6279870b3143b",
+        "native_version": "contained-native-cell-connected-suction-v2",
+        "payload_scope": "array buffers only; keys/bookkeeping and process RSS separate",
+        "query_seconds": 25.32145559194032,
+        "retained_payload_bytes": 33553224,
+        "source_guard_sha256": "6a173851ad383c32b84121cd0d8871535fffa9174d95aa27bdb08ca4b8a7e5f9",
+        "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+      },
+      "cache_before": {
+        "bypasses": 0,
+        "cache_version": "experimental-exact-capsule-cover-cache-v1",
+        "calls": 44728,
+        "cavity_cached": false,
+        "compute_seconds": 23.448556383838877,
+        "entries": 5462,
+        "evictions": 39266,
+        "feasibility_cached": false,
+        "geometry_epsilon": 1e-09,
+        "geometry_source_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+        "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+        "guarded_direct_geometry_callables": [
+          "_vector",
+          "_immutable",
+          "point_segment_distances",
+          "_segment_cell_distances",
+          "world_to_voxel",
+          "voxel_to_world"
+        ],
+        "hits": 0,
+        "integrity_cached": false,
+        "max_entries": 16384,
+        "max_payload_bytes": 33554432,
+        "misses": 44728,
+        "mode": "exact_orthogonal_cells",
+        "namespace": "sha256:41eeccfc7b8f35c3eb2f1364fbb71073c034d184b73519b65f4ba917aee6f088",
+        "native_config_hash": "sha256:6d817c5c7441cc7d6c6bcaeac4542cfd3266f2474c9c1904a2d6279870b3143b",
+        "native_version": "contained-native-cell-connected-suction-v2",
+        "payload_scope": "array buffers only; keys/bookkeeping and process RSS separate",
+        "query_seconds": 25.32145559194032,
+        "retained_payload_bytes": 33553224,
+        "source_guard_sha256": "6a173851ad383c32b84121cd0d8871535fffa9174d95aa27bdb08ca4b8a7e5f9",
+        "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+      },
+      "cache_delta": {
+        "bypasses": 0,
+        "calls": 0,
+        "compute_seconds": 0.0,
+        "evictions": 0,
+        "hits": 0,
+        "misses": 0,
+        "query_seconds": 0.0
+      },
+      "capture_accounting_and_phase_overhead_seconds": 1.6328632918884978,
+      "certificate_capture_seconds": null,
+      "complete_proposer_verification": {
+        "calls": 10,
+        "seconds": 3.073092208011076
+      },
+      "export_seconds": 0.26219099992886186,
+      "mode": "reference_after",
+      "phase_before_export_seconds": 21.1896197500173,
+      "phase_including_comparison_and_export_seconds": 21.669822375057265,
+      "process_cumulative_peak_rss_bytes": 2289762304,
+      "reset_seconds": 7.167777666007169,
+      "transition_seconds": [
+        6.095714792027138,
+        5.276042250101455,
+        1.0172217499930412
+      ],
+      "transition_total_seconds": 12.388978792121634
+    }
+  ],
+  "preparation": {
+    "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "native_configuration": {
+      "actual": {
+        "components": {
+          "access": {
+            "center_mm": [
+              -181.5,
+              85.0,
+              105.0
+            ],
+            "normal_inward": [
+              1.0,
+              0.0,
+              -0.0
+            ],
+            "radius_mm": 6.0,
+            "window_id": "native_hypothetical_nearest_envelope_axis"
+          },
+          "affine": {
+            "array_digest": "sha256:5a52792ccc572d29932e785f6dbe96d45b4a7ae6582374aae411115e9d7ccc0d",
+            "dtype": "float64",
+            "shape": [
+              4,
+              4
+            ]
+          },
+          "case_id": "UCSF-PDGM-0004",
+          "hard_exclusion": {
+            "array_digest": "sha256:5e2f98f6f90ab523b8812e70e784b4ec0a590ae06fdbd265e10d55a97b6c76a7",
+            "dtype": "bool",
+            "shape": [
+              240,
+              240,
+              155
+            ]
+          },
+          "max_microsteps": 4096,
+          "max_tip_step_mm": 0.25,
+          "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+          "target_labels": {
+            "array_digest": "sha256:7c84ec31360491d227e2052e19a84588208d30013f873e904972ec36b43a774c",
+            "dtype": "int16",
+            "shape": [
+              240,
+              240,
+              155
+            ]
+          },
+          "tissue_mask": {
+            "array_digest": "sha256:224e03eaca7df7b6739120a1ee129e8c841755b33769a3c895704a5cd224947f",
+            "dtype": "bool",
+            "shape": [
+              240,
+              240,
+              155
+            ]
+          },
+          "tissue_support_provenance": "hole_filled_nonzero_native_MRI_support; unreviewed skull_strip_assumption; source targets retained; source_frame=RAS+; simulation_frame=RAS+",
+          "tools": [
+            {
+              "max_access_angle_deg": 35.0,
+              "parameter_source": "generic research geometry; not a verified commercial device",
+              "shaft_radius_mm": 0.45,
+              "tip_length_mm": 2.0,
+              "tip_radius_mm": 1.25,
+              "tool_id": "native-fine-aspiration",
+              "working_length_mm": 120.0
+            },
+            {
+              "max_access_angle_deg": 35.0,
+              "parameter_source": "generic research geometry; not a verified commercial device",
+              "shaft_radius_mm": 1.1,
+              "tip_length_mm": 3.0,
+              "tip_radius_mm": 2.25,
+              "tool_id": "native-wide-aspiration",
+              "working_length_mm": 120.0
+            }
+          ]
+        },
+        "fingerprint": "sha256:6d817c5c7441cc7d6c6bcaeac4542cfd3266f2474c9c1904a2d6279870b3143b"
+      },
+      "different_components": [
+        "tissue_support_provenance"
+      ],
+      "historical_native_config_hash": "sha256:0924b7d0a4ab4310f319372fbfc6dd84919c16ffff7070030494cf8a5acc72cd",
+      "interpretation": "Distinct truthful provenance identities; no anatomy/tool/access/microstep change",
+      "physical_component_equality": true
+    },
+    "optimization": {
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "generator": {
+        "family": "rigid_gaussian",
+        "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+        "rotation_center_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_scale_deg": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "translation_scale_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "version": "rigid-registration-v1"
+      },
+      "interpretation": "deterministic_optimization",
+      "planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+      "role": "optimization",
+      "seeds": [
+        17944101631498118750,
+        16050408593453808557,
+        16285456173753334256
+      ]
+    },
+    "planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+    "seconds": 0.6406336250947788
+  },
+  "reference_bracket_seconds": [
+    21.181820416008122,
+    21.669822375057265
+  ],
+  "restoration_evidence": "Inference from completed source-bound runner checks, not a separately persisted or independently observed callable-restoration receipt.",
+  "runtime_content_hash": "sha256:55fe17e6a1e5811f606713e857ee8c3142ae44573f4c30f409aa142d3656c92e",
+  "schema_version": 1,
+  "scientific_model_hash": "sha256:1d06e7792ce78ecf7ef461ba5ff2b6f78e2367d3b3bc030a80d70b49e6e747f5",
+  "scientific_trace_hash": "sha256:34c52fa24522d0a5cf0bd7f925639bc268435b799ac05e8acb35fe6e5f6d7430",
+  "status": "completed_recorded_probe_report",
+  "template": {
+    "factory_seconds": 8.146586708026007,
+    "initialization": {
+      "native_engine_setup_seconds": 0.3382209580158815,
+      "proposer_preparation_seconds": 0.04474816599395126,
+      "scope": "includes initial complete inventory; local diagnostic only",
+      "total_seconds": 8.146512042032555
+    },
+    "proposal_accounting": {
+      "integrity_calls": 3,
+      "integrity_seconds": 0.8557882490567863,
+      "preview_calls": 26,
+      "preview_seconds": 5.866875539650209
+    },
+    "scope": "one common uncached constructor/full initial inventory; not credited as cache warmup"
+  },
+  "timing_scope": "Nested proposer, adapter preview/integrity and cache query/compute times overlap; do not sum. Certificate capture is unisolated within phase residual, alongside accounting, guards and progress writes.",
+  "total_reward": 1098.77,
+  "worker_resource": {
+    "budget": {
+      "hard_termination_grace_seconds": 10.0,
+      "process_peak_rss_bytes": 6442450944,
+      "worker_wall_seconds": 590.0
+    },
+    "budget_request_to_receipt_seconds": null,
+    "cancellation_callback_calls": 2767,
+    "cancellation_callback_seconds": 0.012308914912864566,
+    "cancellation_reason": null,
+    "elapsed_seconds": 157.79039708292112,
+    "observed_peak_rss_bytes": 2289860608,
+    "scope": "worker process RSS; cooperative callback CPU cost; no OS memory reservation"
+  }
+}

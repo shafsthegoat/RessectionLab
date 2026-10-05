@@ -1,0 +1,52 @@
+{
+  "argv": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/probe_independent_geometry_batch.py",
+    "--output",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/independent-geometry-batch-prototype-v1/run-01"
+  ],
+  "config": {
+    "absolute_distance_tolerance_mm2": 2e-14,
+    "batch_size": 256,
+    "boxes_per_workload": 1024,
+    "contact_tolerances_mm2": [
+      0.0,
+      1e-10,
+      1e-09
+    ],
+    "memory_box_counts": [
+      1024,
+      16384
+    ],
+    "patient_data_loaded": false,
+    "phase_order": [
+      "scalar_before",
+      "batch",
+      "scalar_after"
+    ],
+    "process_alarm_seconds": 45,
+    "relative_distance_tolerance": 2e-14,
+    "repetitions_per_phase": 2,
+    "seed": 604,
+    "training_or_native_history_runs": 0,
+    "version": "independent-batch-kernel-control-v1",
+    "workloads": [
+      "axial_anisotropic",
+      "oblique_local_segment",
+      "point_segment",
+      "large_translation",
+      "tangency_scalar_fallback"
+    ]
+  },
+  "created_utc": "2026-10-04T18:07:36.471314+00:00",
+  "numpy": "2.5.3",
+  "platform": "macOS-26.6-arm64-arm-64bit",
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "python_executable": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+  "scope": "Numerical unit control only; no patient or training data; production evaluator unchanged",
+  "sources": {
+    "scripts/independent_geometry_batch_prototype.py": "16de2480f97cc723fee8192e93be78a3936cc4e18b6104ddbdf3ed36da250707",
+    "scripts/probe_independent_geometry_batch.py": "6c071019c9fb3b2198859320820a98e363ee3615c892dbdf2f60a9b44533f99e",
+    "src/resectionlab/evaluation.py": "baaa2f3d6b4e41c4621dc22872da9300d649bc91dfeb923e2ad35f66aadad3b7",
+    "tests/test_independent_geometry_batch.py": "b38457162b144f0c15b3b7ec0b3fc8401b8304dd733f159f895b572528cdd32d"
+  }
+}

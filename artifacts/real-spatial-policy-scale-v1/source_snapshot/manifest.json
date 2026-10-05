@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "dataset": "BTC_preop",
+  "accession": "ds001226",
+  "release": "5.0.1",
+  "git_commit": "359d372c5e972a161966312128adb365870df949",
+  "license": "CC0",
+  "doi": "10.18112/openneuro.ds001226.v5.0.1",
+  "primary_source": "https://openneuro.org/datasets/ds001226/versions/5.0.1",
+  "subject": "sub-PAT22",
+  "role": "development",
+  "development_role": "population_training",
+  "patient_group": "BTC:sub-PAT22",
+  "outer_role_locked": true,
+  "eligible_for_outer_final": false,
+  "acquisition_mode": "structural",
+  "selection_cohort": "manifests/experiments/btc-spatial-development-cohort-v1.json",
+  "selection_cohort_sha256": "962d964e1d71427f3625cdbebc0f7e4759e5d2345d8f95cb211ed45810ed2985",
+  "files": [
+    {
+      "path": "dataset_description.json",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/dataset_description.json",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/dataset_description.json",
+      "bytes": 1209,
+      "sha256": "84185f9c387ae232ddbe87e20b329bacf82b9b5dafe9bde63b64c9bc78bed6f2"
+    },
+    {
+      "path": "participants.tsv",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/participants.tsv",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/participants.tsv",
+      "bytes": 10103,
+      "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d"
+    },
+    {
+      "path": "README",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/README",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/README",
+      "bytes": 3145,
+      "sha256": "fbb3e2e1b00d699835badc0bbda1296f9a90f2995117d93ba3123bd2f8e2d0bb"
+    },
+    {
+      "path": "CHANGES",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/CHANGES",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/CHANGES",
+      "bytes": 434,
+      "sha256": "8c766a15851db0823c661e0a3ec0ac14e2698711461a4f169cab30b3896461c9"
+    },
+    {
+      "path": "sub-PAT22/ses-preop/anat/sub-PAT22_ses-preop_T1w.nii.gz",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT22/ses-preop/anat/sub-PAT22_ses-preop_T1w.nii.gz",
+      "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT22/ses-preop/anat/sub-PAT22_ses-preop_T1w.nii.gz?versionId=ZnQfyRiqty_EoSSptUQvWyN.gMa7vKJD",
+      "bytes": 7549922,
+      "sha256": "6ac1bc950dc2b48709367550b1c740684457fce875e3e402d870d3356282334e",
+      "expected_md5": "d0b4e260d84180ed35641855d8822f37",
+      "expected_bytes": 7549922
+    },
+    {
+      "path": "sub-PAT22/ses-preop/anat/sub-PAT22_ses-preop_T1w.json",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT22/ses-preop/anat/sub-PAT22_ses-preop_T1w.json",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT22/ses-preop/anat/sub-PAT22_ses-preop_T1w.json",
+      "bytes": 929,
+      "sha256": "6af3d1cc27106772d52059ab68405d59c484daf6f8b2637a4f5efc6f15b64f3d"
+    },
+    {
+      "path": "derivatives/tumor_masks/sub-PAT22/anat/sub-PAT22_space_T1_label-tumor.nii",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/derivatives/tumor_masks/sub-PAT22/anat/sub-PAT22_space_T1_label-tumor.nii",
+      "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/derivatives/tumor_masks/sub-PAT22/anat/sub-PAT22_space_T1_label-tumor.nii?versionId=yGMmFzJZ0EgF0BC1XVzQ3NmV56sin4tA",
+      "bytes": 10486112,
+      "sha256": "b1e59048f5651e4d7e268ac14e2e3a7ea9d7e78dac5cd09f5eddc7b66a09f752",
+      "expected_md5": "a15102c95b3381219caae4d6a2c4af5b",
+      "expected_bytes": 10486112
+    }
+  ],
+  "storage_forecast": {
+    "max_download_bytes": 18051854
+  },
+  "annotation_semantics": {
+    "kind": "supplied_source_annotation_pending_geometry_QC",
+    "clinical_probability": false,
+    "source_values_preserved": true
+  },
+  "clinical_context": {
+    "preoperative_availability": "unknown",
+    "eligible_as_preoperative_policy_input": false
+  },
+  "preoperative_information_policy": {
+    "planning_as_of": null,
+    "calendar_cutoff": "source deidentified; historical availability cutoff unknown",
+    "source_preoperative_images_permitted_for_research_replay": true,
+    "source_tumor_annotation": "annotation-assisted research input; not observed resection, biological removal prescription, or clinical probability",
+    "fractional_annotation_threshold": 0.5,
+    "threshold_evidence": "unchanged declared research assumption; preserve raw source values",
+    "metadata_diagnosis_use": "archival diffuse-glioma cohort eligibility only; never actor, critic, reward, or uncertainty model",
+    "molecular_pathology_outcome_cognitive_demographic_inputs": "excluded without independently verified availability at or before a valid planning cutoff",
+    "resting_state_fMRI_not_patient_task_localization": true
+  },
+  "anatomical_gates": {
+    "structural_coverage": "full_head",
+    "working_brain_mask": null,
+    "nonzero_MRI_support_allowed": false,
+    "model_brain_envelopes": "estimated review_required view-only proposals until explicit source-bound review and working selection",
+    "cortex_localized": false,
+    "cortical_access_permitted": false,
+    "motor_language_vascular_evidence": "unassessed; do not infer from tumor label or pathology",
+    "clinical_deficit_probability": null,
+    "acquisition_equals_anatomical_acceptance": false
+  },
+  "verified_at": "2026-10-04T15:33:24.085793+00:00",
+  "source_content_status": "matches_pinned_official_release_checksums",
+  "anatomical_qc_status": "not_assessed_by_download_verification"
+}

@@ -1,0 +1,62 @@
+{
+  "schema": "hbe-resolution-mesh-preparation-v1",
+  "created_utc": "2026-10-05T00:52:18.293415+00:00",
+  "status": "source_frozen_pending_independent_review_and_separate_execution_release",
+  "files": {
+    "scripts/mechanics_hbe_mesh.py": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414",
+    "tests/test_mechanics_hbe_resolution_mesh.py": "2e0cc962d59c5237ddd8c249267b1423924032e6157b08300744857a73aa684b",
+    "manifests/experiments/hbe-01-03-axial-resolution-v1.json": "23b4f5e4d8a0b5ff05fcd45fbca88463a32460793d5b0f27d1a913a5e0a2443c"
+  },
+  "legacy_function_source": "Every prior top-level function is byte-identical to historical source SHA3cb4d99f5d2d7fa2f66fb5af56ebffcf19342b9bee0b4cb2c9acfe98aabdd892 at committed715f0bf99fdd76eb984e5522aa2c7fa538498f63; dedicated control passed.",
+  "api": {
+    "read_resolution_protocol": "(protocol_path, extension_path, extension_sha256) -> (copy with only mesher.levels adjusted, extension)",
+    "prepare_resolution_level": "(N, protocol_path, extension_path, extension_sha256, runtime_path, runtime_sha256, output) -> usual preparation receipt"
+  },
+  "scope": {
+    "levels": [
+      16,
+      24
+    ],
+    "decks_each": [
+      "compression-60-reference",
+      "tension-60-reference"
+    ],
+    "steps": 60,
+    "mu_Pa": 1000,
+    "linear_solver_in_decks": "original Skyline, later exact existing backend adaptation belongs to orchestrator",
+    "both_levels_geometry_gates": "Original finest relative volume and radial sag thresholds, positive reference J/topology and exact declared node/cell counts",
+    "parent_supervision_required": true,
+    "new_solver_or_mesher_cli": false
+  },
+  "loading_metadata": "Original protocol_sha256 retained; resolution_declaration_sha256 and mesh_sha256 bind new preparation. Original loading fields and material/BC/schedule generation are reused unchanged.",
+  "checks": {
+    "command": ".venv/bin/python -m pytest -q tests/test_mechanics_hbe_resolution_mesh.py tests/test_mechanics_hbe_mesh.py tests/test_mechanics_hbe_mesh_review.py",
+    "passed": 65,
+    "seconds": 0.51,
+    "exit_code": 0,
+    "output_evidence": "Observed tool output for the single focused invocation; no repeated run solely to capture a log.",
+    "git_diff_check": "passed"
+  },
+  "controls": [
+    "Exact legacy function-source preservation",
+    "Only returned level definitions differ; original protocol bytes unchanged",
+    "Hash/level rejection before optional-runtime import",
+    "Exactly two mocked deck outputs per level, source/loading provenance and fresh-directory refusal",
+    "N16 volume/sag/node failure preserves raw mock evidence before any deck",
+    "Partial second-deck failure preserves first deck and charges one generation",
+    "An unrelated ambient gmsh module is refused and preserved"
+  ],
+  "activity": {
+    "native_runtime_imports": 0,
+    "actual_mesh_generations": 0,
+    "actual_specimen_decks_generated": 0,
+    "solver_calls": 0,
+    "measured_curve_reads": 0,
+    "model_updates": 0
+  },
+  "limits": [
+    "Mocked/analytic controls establish preparation behavior only; actual N16/N24 mesh count, quality, time and memory remain unmeasured.",
+    "Existing N4/N12 failures and both co-primary triplets remain unchanged; numerical mesh preparation does not establish material, patient or clinical validity.",
+    "Root must commit/archive sources and separately release bounded preparation before native execution."
+  ]
+}

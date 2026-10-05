@@ -1,0 +1,123 @@
+{
+  "candidate_hashes": [
+    [
+      "GREEDY",
+      "sha256:5cc1689158851e881d15501215876a417b681ab126863c329e52c17186185cdb"
+    ],
+    [
+      "PATIENT_SCRATCH_RL:11",
+      "sha256:46783fd562e26904e7670271da1756f936965b372dbf2b8e4e366e4ec945fcd5"
+    ],
+    [
+      "PATIENT_SCRATCH_RL:23",
+      "sha256:aed6a67ca7c03c8cbabed9bcea7bf5c12a13861d1eaf2fc089e2e4ff2bafc7fe"
+    ],
+    [
+      "PATIENT_SCRATCH_RL:47",
+      "sha256:eddb774a41199224206a534aceefa5f92a4b749c38e687d3fddc65a658b19f1c"
+    ],
+    [
+      "SEARCH",
+      "sha256:729101ee2f20c3808f65ac6ebb22527166f4a7066947ce4792c57dfe54189663"
+    ],
+    [
+      "STOP",
+      "sha256:f81d6d6e31fe002727ec56649590adadbd919971f7e72f0c7068cfe8f29d5eb4"
+    ]
+  ],
+  "candidates": [
+    {
+      "actions": [
+        "STOP"
+      ],
+      "case_hash": "synthetic-branching-v1",
+      "optimizer_mode": "STOP",
+      "plan_id": "STOP",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "case_hash": "synthetic-branching-v1",
+      "optimizer_mode": "GREEDY",
+      "plan_id": "GREEDY",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "REMOVE:branch-narrow:1,1,0",
+        "REMOVE:branch-narrow:0,1,0",
+        "REMOVE:branch-narrow:0,1,1",
+        "REMOVE:branch-narrow:2,1,0",
+        "REMOVE:branch-narrow:2,1,1",
+        "STOP"
+      ],
+      "case_hash": "synthetic-branching-v1",
+      "optimizer_mode": "SEARCH",
+      "plan_id": "SEARCH",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "REMOVE:branch-wide:1,1,0",
+        "REMOVE:branch-wide:1,1,1",
+        "REMOVE:branch-wide:1,1,2",
+        "REMOVE:branch-narrow:2,1,0",
+        "REMOVE:branch-narrow:2,1,1"
+      ],
+      "case_hash": "synthetic-branching-v1",
+      "optimizer_mode": "PATIENT_SCRATCH_RL",
+      "plan_id": "PATIENT_SCRATCH_RL:11",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:722fe6e48a8fc93dabcfc1f40de4e3816513e41a4e8c570675da7275136b1b35"
+    },
+    {
+      "actions": [
+        "REMOVE:branch-wide:1,1,0",
+        "REMOVE:branch-narrow:2,1,0",
+        "REMOVE:branch-narrow:2,1,1",
+        "REMOVE:branch-wide:0,1,0",
+        "REMOVE:branch-narrow:0,1,1"
+      ],
+      "case_hash": "synthetic-branching-v1",
+      "optimizer_mode": "PATIENT_SCRATCH_RL",
+      "plan_id": "PATIENT_SCRATCH_RL:23",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:fe9dc2bba90263a1f0b0f94f7b7d39448f1b65775bee23622d22d142dc55b982"
+    },
+    {
+      "actions": [
+        "REMOVE:branch-wide:1,1,0",
+        "REMOVE:branch-wide:1,1,1",
+        "REMOVE:branch-wide:1,1,2",
+        "REMOVE:branch-narrow:0,1,0",
+        "REMOVE:branch-narrow:0,1,1"
+      ],
+      "case_hash": "synthetic-branching-v1",
+      "optimizer_mode": "PATIENT_SCRATCH_RL",
+      "plan_id": "PATIENT_SCRATCH_RL:47",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:6112dc39d194f1395e2f83159284752165c7fb1c782948e8f3dde7bd47baad5d"
+    }
+  ],
+  "case_hash": "synthetic-branching-v1",
+  "decision_model_fingerprint": "sha256:0b7f817df54bc0d4a314633456002e04fef655cb53c2df8586a983c0d47ec841",
+  "development_seeds": [
+    2715039868682679005,
+    430575957431541021,
+    6787750360569902804,
+    13570732548748017305,
+    8866893344993779307
+  ],
+  "fingerprint": "sha256:221ee22b311ffc76b5b78d4d8be17d0000fc65d60b65afc6c18f82f2d91a9ac8",
+  "frozen_at": "2026-10-04T06:57:21.856690+00:00",
+  "generator_family": "rigid_gaussian",
+  "generator_fingerprint": "sha256:65178826778d6f02e623f38390d72c121c9e2cd84e5c0b69f882353a64f09a48",
+  "optimization_partition_hash": "sha256:7ed173cff0fd219cfaf8608088e90d1f386f78815d22a0fbf2a096b3d43014be",
+  "selection_partition_hash": "sha256:7a2ef6f48a3bf7b9445c89c0a031fbc6f6bdd655485f2382225b006b7db45c7b",
+  "selection_rule": "all baseline sequences and one selected checkpoint per prespecified seed; max selection mean, earliest tie"
+}

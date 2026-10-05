@@ -1,0 +1,85 @@
+{
+  "existing_limits_remain_unchanged": true,
+  "existing_run_observed_output_watch": {
+    "maximum_active_bytes": 105300864,
+    "maximum_total_bytes": 997830113,
+    "sampling_interval_seconds": 0.1,
+    "sampling_limit": "Between-sample peaks may be missed.",
+    "status": "watching"
+  },
+  "next_study_engineering_proposal_only": {
+    "active_output_bytes": 536870912,
+    "aggregate_seconds": 1500,
+    "notes": [
+      "N24 expected23101nodes20736elements exceeds existing20000item limit; explicit reviewed new declaration needed.",
+      "N24 projected complete active run exceeds old256MiB active cap and old90second limit. No truncated output, undeclared bounds increase or automatic retry.",
+      "Old completed/failed experiment stays immutable; no outputs appended within its1GiB cap. Lossless compression would require separately tested writer/reader/hash support and is not assumed by projection."
+    ],
+    "required_reviewed_parser_item_bound": 30000,
+    "sampled_rss_bytes": 3221225472,
+    "separate_directory": true,
+    "solver_seconds_per_call": 600,
+    "threads": 1,
+    "total_output_bytes": 2147483648
+  },
+  "predicted_four_run_raw_bytes": 985846362.1768377,
+  "predicted_four_run_solver_seconds": 775.6346815858869,
+  "projections": [
+    {
+      "N": 16,
+      "axial_layers": 8,
+      "branch": "compression",
+      "elements_formula_estimate": 6144,
+      "empirical_two_point_runtime_power": 3.9046777798900942,
+      "nodes_formula_estimate": 7209,
+      "predicted_element_log_bytes": 45006364.44444445,
+      "predicted_node_log_bytes": 66066365.571428575,
+      "predicted_solver_seconds": 63.651082232009145,
+      "predicted_total_run_bytes": 116011015.05291004
+    },
+    {
+      "N": 24,
+      "axial_layers": 12,
+      "branch": "compression",
+      "elements_formula_estimate": 20736,
+      "empirical_two_point_runtime_power": 3.9046777798900942,
+      "nodes_formula_estimate": 23101,
+      "predicted_element_log_bytes": 151896480.0,
+      "predicted_node_log_bytes": 211707464.42857143,
+      "predicted_solver_seconds": 310.0169352634354,
+      "predicted_total_run_bytes": 380270656.42857146
+    },
+    {
+      "N": 16,
+      "axial_layers": 8,
+      "branch": "tension",
+      "elements_formula_estimate": 6144,
+      "empirical_two_point_runtime_power": 4.053600310881276,
+      "nodes_formula_estimate": 7209,
+      "predicted_element_log_bytes": 43852456.2962963,
+      "predicted_node_log_bytes": 65732908.19474836,
+      "predicted_solver_seconds": 65.10922930621234,
+      "predicted_total_run_bytes": 114462707.30585948
+    },
+    {
+      "N": 24,
+      "axial_layers": 12,
+      "branch": "tension",
+      "elements_formula_estimate": 20736,
+      "empirical_two_point_runtime_power": 4.053600310881276,
+      "nodes_formula_estimate": 23101,
+      "predicted_element_log_bytes": 148002040.0,
+      "predicted_node_log_bytes": 210638911.3894967,
+      "predicted_solver_seconds": 336.85743478423007,
+      "predicted_total_run_bytes": 375101983.3894967
+    }
+  ],
+  "source_bindings": {
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S60-reference/solver-execution.json": "bacdafdcd3907015c6e5dade2fe69443661b666b70db9a374cab648fbbd85106",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/solver-execution.json": "da65a8807143498d349705700dae37d8ea2bbb87f1ce986badd3926563b9d391",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S60-reference/solver-execution.json": "c6b1176b31581246f5eab89af0e279402e39bf8988ddd9c1eaff68b8c750e458",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N8-S60-reference/solver-execution.json": "e2597979a22075f9d72b5821b2a659602d46973a0e78859997d1fea56cf32051"
+  },
+  "status": "posthoc_engineering_projection_not_budget_release",
+  "uncertainty": "Only two prior mesh levels; sparse fill-in/Newton iterations and output digits may change. This is no upper bound or promised runtime; no mesh generated."
+}

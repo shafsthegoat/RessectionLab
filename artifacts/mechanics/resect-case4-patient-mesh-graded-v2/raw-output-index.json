@@ -1,0 +1,49 @@
+{
+  "schema": "graded-case4-raw-output-index-v2",
+  "raw_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-graded-v2",
+  "files": {
+    "acceptance.json": {
+      "bytes": 7059,
+      "sha256": "e8c92f4efee1e6f9357a103aa469a179cd361912709bee42501167f3071eea07"
+    },
+    "candidate/diagnostic/gmsh_element_ids.npy": {
+      "bytes": 22216,
+      "sha256": "a5369e41076f36f035b6991ae71d17b72ef10498c18a639daeda8e6d1ee5feaf"
+    },
+    "candidate/diagnostic/gmsh_node_ids.npy": {
+      "bytes": 41912,
+      "sha256": "45508c64dd878f5b127234db252095b595434c456191ee512678cd89ab25d1d1"
+    },
+    "candidate/diagnostic/manifest.json": {
+      "bytes": 2674,
+      "sha256": "ed7eee73e0b5fad1f2d16815ac369df57c232abe1f00bb24e19c9f0cd50f98c3"
+    },
+    "candidate/diagnostic/nodes_m.npy": {
+      "bytes": 125480,
+      "sha256": "0ecb287d96219344e6063f94e760f5088b7e340d9eb43b1bbe5065323251aec3"
+    },
+    "candidate/diagnostic/tet10_indices.npy": {
+      "bytes": 221008,
+      "sha256": "2b86eccf2565ab7e9819a31f905bad9d05db4b0dad2b2665f987e3c05643a2bc"
+    },
+    "candidate/result.json": {
+      "bytes": 2971,
+      "sha256": "d7d670ff3a35db3521ffa67032481bc7df313ae290ba0c09b86da3e7b242b151"
+    },
+    "supervision/combined.log": {
+      "bytes": 11883,
+      "sha256": "c88bf3fdb28cd7850da76e37babc02f88a67f1a237e900fae61abf1dc98f8565"
+    },
+    "supervision/supervision.json": {
+      "bytes": 1301,
+      "sha256": "2fadc8a51d7d263b411c21e5d1fc8dab2295f19b975793ff5df18fc87f4b2edb"
+    },
+    "worker.json": {
+      "bytes": 10106,
+      "sha256": "cc2450900e1d171370f370e0b7e97809643ec6e78c89d552aec6bcebc31ae8d8"
+    }
+  },
+  "total_bytes": 446610,
+  "complete_mesh_diagnostic_retained": true,
+  "candidate_accepted": false
+}

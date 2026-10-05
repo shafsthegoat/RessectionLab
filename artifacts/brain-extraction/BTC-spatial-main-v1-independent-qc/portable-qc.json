@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "status": "independent_portable_engineering_checks_passed",
+  "completed_at": "2026-10-04T18:32:00.798954+00:00",
+  "auditor_sha256": "eed08fd2b9d167d69e4de068383ccd9d3adecee86bf4e5ab705c88913fbae0ea",
+  "numeric_audit_sha256": "eb8e407a33c0395ea06c0c2b2aaebebcc1e3489d343e0859777783e14f5586e8",
+  "integration_receipt_sha256": "548681883bfaeceb97176a59497be9d1c975b46d634f2f37d8b2357d6c4ee68e",
+  "project_modules": {
+    "core": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/btc-spatial-support-ea501a8/source/src/resectionlab/core.py",
+      "sha256": "f1f0b8ae334cabc864c3ec85d4f6b49e4842de2b580edaadd7562276ea0c92db"
+    },
+    "imaging": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/btc-spatial-support-ea501a8/source/src/resectionlab/imaging.py",
+      "sha256": "26928ec3eb948924b961d7d70289014ee243c1cf6ea6e3f9ba60e8bf96e8d866"
+    },
+    "structural_evidence": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/btc-spatial-support-ea501a8/source/src/resectionlab/structural_evidence.py",
+      "sha256": "6a1b9e7aa5b13ea971a75d9416d96ab45de2b46901a036edd73ec58194fb7a33"
+    }
+  },
+  "current_inference_interpreter_sha256_verified": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a",
+  "historical_PAT05_runtime_binary_equivalence_attested": false,
+  "cases": [
+    {
+      "subject": "sub-PAT22",
+      "role": "population_training",
+      "original_sha256": "bbcfd3cc5ba817a15580900dcc70f50e155b9cb1a7bc04a90f048396d3a91db9",
+      "derived_sha256": "a12ac7c2325b2c87137c112fae9c4b7ebe33e40e40cdd9bcff192d891a4b562e",
+      "roundtrip_sha256": "6be215e63796ec9f4df482bca36cfae9d00e5d7a4461ca62a99c884e22278aaf",
+      "source_arrays_metadata_roles_unchanged": true,
+      "original_revision": 2,
+      "derived_revision": 3,
+      "planning_hash": "sha256:f8af18c982bc786f02086b98bbd7c54498d8af0f8ed52d20e0f89ce32047104b",
+      "planning_hash_unchanged": true,
+      "evidence_hash": "sha256:9080358b0fbadb1b0ecb50073b332a7ed41a5f998d74492609fa6e0caebeeb11",
+      "embedded_report_sha256": "1f7284c4324d835a37b6119f22c24816a219fbb27ab48076ec3248d3ae4a878f",
+      "native_mask_exact": true,
+      "SDT_external_not_embedded": true,
+      "omission_voxels": 0,
+      "working_brain": null,
+      "proposal_as_support_rejected": true,
+      "review_required": true,
+      "save_reopen_exact": true
+    },
+    {
+      "subject": "sub-PAT25",
+      "role": "population_training",
+      "original_sha256": "750087cab2fd80d6daf152147fbfadd562ff8e2c0be630265aeba1ff59250ecc",
+      "derived_sha256": "d635a72cc24066c2b16dc7b6d6805baae04d1750c50ca351b2410a70d913428a",
+      "roundtrip_sha256": "1911289142b5beb75f8d348b1c925bcaf3b912400fa69d564c62d843e1aefc39",
+      "source_arrays_metadata_roles_unchanged": true,
+      "original_revision": 2,
+      "derived_revision": 3,
+      "planning_hash": "sha256:d0f47da3323e22c1d53d1e62da753aca88bacb099fdbedb956d9653a4a84261b",
+      "planning_hash_unchanged": true,
+      "evidence_hash": "sha256:e3c7d31e80e4df68ae9ea3caf665a350b2bc9998f0434d90965aba781ab57958",
+      "embedded_report_sha256": "f78dc8260504447b64bf1d40a7258a611032cde697d0c0c329e059baa2b8c88e",
+      "native_mask_exact": true,
+      "SDT_external_not_embedded": true,
+      "omission_voxels": 0,
+      "working_brain": null,
+      "proposal_as_support_rejected": true,
+      "review_required": true,
+      "save_reopen_exact": true
+    },
+    {
+      "subject": "sub-PAT26",
+      "role": "checkpoint_selection_development",
+      "original_sha256": "e9d0d9cc393b0cc5594b394fa7e4173c5bee53141ab85c7120eb373fbd8cba7b",
+      "derived_sha256": "6d214bb12ed186f6cd54572c9e9098dc774496227267c03f3a4e7a2b919b828c",
+      "roundtrip_sha256": "12fc41508bd87728c69eec54b08baf4f595d61cc51d1c1d6ce849038d2df8b95",
+      "source_arrays_metadata_roles_unchanged": true,
+      "original_revision": 2,
+      "derived_revision": 3,
+      "planning_hash": "sha256:16535e752ae2207258b5114a8ce4c308b35530a2ea882ae495889ab5f56c9507",
+      "planning_hash_unchanged": true,
+      "evidence_hash": "sha256:203630e01251d290d7e87b555544d5a9d6d00d66494a53a3e1177e2351896862",
+      "embedded_report_sha256": "45e020a9ecba5cd285484e67a54d1e70dfdd04b578de6412ddde1297ec6a3a1e",
+      "native_mask_exact": true,
+      "SDT_external_not_embedded": true,
+      "omission_voxels": 0,
+      "working_brain": null,
+      "proposal_as_support_rejected": true,
+      "review_required": true,
+      "save_reopen_exact": true
+    },
+    {
+      "subject": "sub-PAT27",
+      "role": "checkpoint_selection_development",
+      "original_sha256": "7e4fbde8bcadb12f59dbe512e494cd0280d65981dbbaaa0a5e9995d5c095d6be",
+      "derived_sha256": "4087d68e3d8da8f613156ab407a63afcd62b3c9883f066604044bd5caa655453",
+      "roundtrip_sha256": "b3c2b8e98b0379ebb21226b07b591d5f7909e1533c2d43ddd58493f55ffada07",
+      "source_arrays_metadata_roles_unchanged": true,
+      "original_revision": 2,
+      "derived_revision": 3,
+      "planning_hash": "sha256:756a7fbb3fc79075a0e036dc5aa3e9cd6e7073f1d8bbe456068319af7dc5cad8",
+      "planning_hash_unchanged": true,
+      "evidence_hash": "sha256:1384b7323537dbc9d9313ecbba5de63f83a3a22fffcc067bf40f84443086dd63",
+      "embedded_report_sha256": "469c4cb70b9828a4d0f46ff2272a878a6ecde0777312e7084c3f3d8348d7b06e",
+      "native_mask_exact": true,
+      "SDT_external_not_embedded": true,
+      "omission_voxels": 0,
+      "working_brain": null,
+      "proposal_as_support_rejected": true,
+      "review_required": true,
+      "save_reopen_exact": true
+    }
+  ],
+  "all_retained_inputs_unchanged": true,
+  "retained_input_count": 59,
+  "elapsed_seconds": 21.239871709025465,
+  "peak_rss_bytes": 507805696,
+  "inference_or_training_performed": false,
+  "brain_reviewed": false,
+  "cortex_localized": false,
+  "cortical_access_permitted": false,
+  "limitations": [
+    "Engineering portability and overlap checks do not establish anatomical accuracy.",
+    "Estimated masks/report text are embedded; raw fractional annotations and predicted SDTs remain external hashed artifacts.",
+    "SELECT roles remain fixed; no variant, threshold, access or rescue selection was based on labels."
+  ]
+}

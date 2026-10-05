@@ -1,0 +1,192 @@
+{
+  "bindings": [
+    {
+      "path": "scripts/run_resect_brain_envelope.py",
+      "sha256": "dad389ba8bbfe3e0f25184e48a6c1cb29f040df23944f19916ff1c93b0bbb3bb"
+    },
+    {
+      "path": "manifests/experiments/resect-case4-brain-envelope-v1.json",
+      "sha256": "2a6fadfa1eed72399580b2a6eda2aa3f5d97063c973f5b531da0d3ff4472dabe"
+    },
+    {
+      "path": "src/resectionlab/brain_extraction.py",
+      "sha256": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917"
+    },
+    {
+      "path": "scripts/febio_runtime.py",
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+    },
+    {
+      "path": "data/models/synthstrip-v1/mri_synthstrip",
+      "sha256": "291c253ab2f7c0cbcb84afa769ae10909549537e727db5b92d268754b7cc7871"
+    },
+    {
+      "path": ".venv/lib/python3.12/site-packages/surfa/image/framed.py",
+      "sha256": "2034147952d04b66eac31ea6af3e31b0954ac8e54fbcd41812f4520c7ff917e3"
+    },
+    {
+      "path": ".tools/synthstrip-runtime/bin/python",
+      "sha256": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a"
+    },
+    {
+      "path": ".tools/synthstrip-runtime/lib/python3.12/site-packages/project_runtime.pth",
+      "sha256": "697493922ca241ab62fc491c135c8ae111c05c74c44edc7357df28ac507bad16"
+    },
+    {
+      "path": ".tools/synthstrip-runtime/lib/python3.12/site-packages/numpy/__init__.py",
+      "sha256": "6ae17b070c0f70a8e3cad89a510a256942e5a1f37ea5feb120cec167ed2a6236"
+    },
+    {
+      "path": ".tools/synthstrip-runtime/lib/python3.12/site-packages/numpy/_core/_multiarray_umath.cpython-312-darwin.so",
+      "sha256": "cbf15cd30e2672b47a1cfc9aa82449d4eb0597a0d853e8697953568c1dc1468b"
+    },
+    {
+      "path": ".venv/lib/python3.12/site-packages/scipy/__init__.py",
+      "sha256": "39ccae300a4739cc53719bd3b39ce3f8f66e736c6eb672006e338a4c5cc3dc76"
+    },
+    {
+      "path": ".venv/lib/python3.12/site-packages/scipy/ndimage/_measurements.py",
+      "sha256": "d4eb2602839bc629d31dfd5ba08a386388c4675909b3ae430313134e34135911"
+    },
+    {
+      "path": ".venv/lib/python3.12/site-packages/scipy/ndimage/_morphology.py",
+      "sha256": "5361c28977347a3bc4ba1240aea0b341a72a803498a5600506c9964a61eeb9ad"
+    },
+    {
+      "path": ".venv/lib/python3.12/site-packages/nibabel/__init__.py",
+      "sha256": "30f7a4b98584d3a733aef0708b19819f9342c5f3f0288ddc07680b63bca2db73"
+    },
+    {
+      "path": ".venv/lib/python3.12/site-packages/matplotlib/__init__.py",
+      "sha256": "37abb78e74e9e0085a4e306a919606ffa8ff3c263def80ae2f4d938cfa79cd32"
+    },
+    {
+      "path": "artifacts/mechanics/resect-case4-brain-envelope-v1/attempt-01/worker-record.json",
+      "sha256": "2ed93c0290a5ce30a3765f62f70822308ee1976a89b8eafe441503fd4576e004"
+    },
+    {
+      "path": "artifacts/mechanics/resect-case4-brain-envelope-v1/attempt-01/acceptance.json",
+      "sha256": "043b6c04de133110c8bcd9778af8821f99188c78b32551b0e5a8290c741ae335"
+    },
+    {
+      "path": "artifacts/mechanics/resect-case4-brain-envelope-v1/attempt-01/supervision.json",
+      "sha256": "3329c8c122085bc16cb3f527e40bd0dcb3321b19397d45e24359c6b8a6ff6c8d"
+    },
+    {
+      "path": "artifacts/mechanics/resect-case4-brain-envelope-v1/attempt-01/integrity-closeout.json",
+      "sha256": "ba2dc3bbaeca8e0df10a744b68af99b5e3c1e865e05481acf3d51f6c15296e3f"
+    }
+  ],
+  "caps": {
+    "attempts": 1,
+    "cpu_threads": 1,
+    "retries": 0,
+    "rss_bytes": 2147483648,
+    "wall_seconds": 90
+  },
+  "closed_access": [
+    "other patients",
+    "FLAIR",
+    "US including before and during",
+    "motion tags",
+    "B/V coordinates",
+    "annotations"
+  ],
+  "corner_tolerance_mm": 0.01,
+  "created_at": "2026-10-04T21:15:55.004340+00:00",
+  "display": {
+    "T1_percentiles": [
+      1,
+      99.5
+    ],
+    "anatomy_review": "pending_root_review",
+    "contour": "0.5 saved binary mask, display only",
+    "dpi": 150,
+    "image_interpolation": "nearest",
+    "layout": "three fixed native planes, T1 above same T1 with outline; native i/j/k labels; no resampling/reorientation"
+  },
+  "excluded_actions": [
+    "inference",
+    "training",
+    "mask correction",
+    "variants",
+    "smoothing",
+    "dilation",
+    "registration",
+    "transform replacement",
+    "anatomical acceptance"
+  ],
+  "images": {
+    "SDT": {
+      "path": "outputs/mechanics/resect-case4-brain-envelope-v1/main_distance_mm.nii.gz",
+      "sha256": "21545d1b70fcce791ddb9d6144c8534cd4c4d2d2616c21e99bfd969781b11195"
+    },
+    "T1": {
+      "path": "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/MRI/Case4-T1.nii.gz",
+      "sha256": "eeab888d611b7dee3627468b172ad67db39b6887e6ba38540aa39131b6cbb787"
+    },
+    "mask": {
+      "path": "outputs/mechanics/resect-case4-brain-envelope-v1/main_mask.nii.gz",
+      "sha256": "7902cfbcb5fad15144181c06883bac7f4800e842f7ff05a540f56bac4eb38759"
+    }
+  },
+  "inference_execution_commit": "ea2c60c28063ba1c389aaab8aa680f2c54c21ac6",
+  "interpretation": {
+    "SDT_is_surgical_clearance_or_calibrated_uncertainty": false,
+    "anatomical_volume_or_contact_threshold": null,
+    "brain_reviewed": false,
+    "cortical_access_permitted": false,
+    "working_brain_mask": null,
+    "world_transform_accepted": false
+  },
+  "interpreter": ".tools/synthstrip-runtime/bin/python",
+  "limitations": [
+    "Selected runtime files only, not whole binary attestation.",
+    "Group RSS is sampled.",
+    "No anatomy ground truth, landmarks, uncertainty calibration or checkpoint cohort-disjointness evidence.",
+    "Engineering pass does not approve domain, cortex, access or transform."
+  ],
+  "matplotlib_cache": "outputs/mechanics/resect-case4-brain-envelope-independent-qc-v1/matplotlib-cache",
+  "module_origins": {
+    "matplotlib": ".venv/lib/python3.12/site-packages/matplotlib/__init__.py",
+    "nibabel": ".venv/lib/python3.12/site-packages/nibabel/__init__.py",
+    "numpy": ".tools/synthstrip-runtime/lib/python3.12/site-packages/numpy/__init__.py",
+    "scipy": ".venv/lib/python3.12/site-packages/scipy/__init__.py"
+  },
+  "planes": [
+    128,
+    128,
+    96
+  ],
+  "receipt_directory": "artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1",
+  "reconstruction": {
+    "components": "scipy.ndimage.label default structure: face/6 connectivity",
+    "fill": "scipy.ndimage.binary_fill_holes default structure",
+    "selection": "(-np.bincount(labels.flat)[1:]).argsort()[:1] + 1, NumPy2.2.6",
+    "threshold": "strict SDT < 1 mm",
+    "upstream": "SynthStrip cf4bccf24875a47245b4df9fc9372d0f1c3d784f lines296-302; Surfa0.6.3 framed.py lines772-797"
+  },
+  "roundtrip": "Save/reopen each original native NIfTI uncompressed to fresh ignored directory. Require identical data dtype/values, affine, q/s transforms and units. Never overwrite source.",
+  "roundtrip_directory": "outputs/mechanics/resect-case4-brain-envelope-independent-qc-v1/native-roundtrip",
+  "schema_version": 1,
+  "script_sha256": "d3a30e4bea65f718da84dac76487ecc71d632a43aa099d6121d42a3fdf4351a2",
+  "shape": [
+    256,
+    256,
+    192
+  ],
+  "status": "prospectively_frozen_before_any_saved_array_or_header_read",
+  "supervisor": {
+    "path": "scripts/febio_runtime.py",
+    "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+  },
+  "thread_environment": {
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1",
+    "VECLIB_MAXIMUM_THREADS": "1"
+  }
+}

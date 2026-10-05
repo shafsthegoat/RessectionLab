@@ -1,0 +1,12 @@
+{
+  "scope": "Constructed records only; original actual artifact unchanged",
+  "original_script_sha256": "5b53634f167d951f6b1cd498f2ac5b2d3a3567fe115c040804c013cb7eaf57da",
+  "revised_script_sha256": "c3d3036d568383b01ffd86b6834f6ef6ba4bb8973e908259c06393ce0bf0d271",
+  "original_accepts_duplicate_decision_id": true,
+  "revised_rejection": "Selection decision IDs must be nonempty and unique",
+  "actual_v1_v2_analysis_exactly_equal": true,
+  "actual_v1_v2_changed_top_level_keys": [
+    "diagnostic_script_sha256"
+  ],
+  "independent_tests_sha256": "ef1ed20ef842e86faec083fb421f850181bf616576dc1a9196c407f194bae203"
+}

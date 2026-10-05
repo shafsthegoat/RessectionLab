@@ -1,0 +1,26 @@
+{
+  "archive_sha256": "59a277009a3c9738370204477e41b7c79097cc97ceb9d00eb11c75f375fc1656",
+  "base_revision": "5ca02451d63412d074281f8fde5407420a2f0903",
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_spatial_policy.py",
+    "--junitxml=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/spatial-policy-prerequisites-v1/final-owner.xml"
+  ],
+  "created_utc": "2026-10-04T15:31:33.767265+00:00",
+  "exit_code": 0,
+  "nontrivial_training_screen_runs": 0,
+  "numerical_threads": 1,
+  "public_patient_runs": 0,
+  "scope": "algebra/coordinate/dataflow plus one real optimizer update per unit-suite invocation; not held-out anatomy performance",
+  "seconds": 2.9354710000334308,
+  "source_changes_during_test": [],
+  "source_sha256": {
+    "docs/spatial-policy-research.md": "3f863e0822ca4627936f5edb95ca97894a4f22ba54b6149d9170b91f6952d0b5",
+    "src/resectionlab/spatial_observations.py": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711",
+    "src/resectionlab/spatial_policy.py": "a346b2e187d943238f2676ce2cb90ef609f4655dc7e798e21b247fae41778cb5",
+    "tests/test_spatial_policy.py": "7bd99b5642f2b62d081be5e462f299380bef70f6cb2c8db830eb0d4ed64d4ecc"
+  }
+}

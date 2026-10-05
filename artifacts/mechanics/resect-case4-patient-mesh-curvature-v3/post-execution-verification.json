@@ -1,0 +1,90 @@
+{
+  "status": "verified_inputs_preserved_terminal_failed_attempt",
+  "checked_at_utc": "2026-10-05T01:37:23.591080+00:00",
+  "input_checks": {
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-curvature-v3/release.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source/artifacts/febio-runtime-investigation-v1/prospective-runtime.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source/manifests/experiments/resect-case4-patient-mesh-curvature-v3.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source/manifests/experiments/resect-case4-patient-mesh-graded-v2.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source/manifests/experiments/resect-case4-patient-mesh-v1.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source/scripts/febio_runtime.py": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source/scripts/mechanics_patient_mesh.py": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source/scripts/mechanics_patient_mesh_candidate.py": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source/scripts/mechanics_patient_mesh_candidate_run.py": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source/scripts/mechanics_patient_mesh_curvature.py": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source/scripts/mechanics_patient_mesh_curvature_run.py": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-brain-envelope-v1/main_mask.nii.gz": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-baseline-header-qc-v1/header-receipt.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/gmsh-4.15.2-runtime-v1/runtime-receipt.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/gmsh-4.15.2/runtime/gmsh.py": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/gmsh-4.15.2/runtime/lib/libgmsh.4.15.dylib": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/qc-receipt.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-baseline-alignment-v3/comparison-and-outcome.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/root-visual-decision.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-v1/saved-records/worker.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics-patient-mesh-curvature-independent-review-v3/receipt.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/gmsh-discrete-curvature-capability-v1/declaration.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/gmsh-discrete-curvature-capability-v1/summary.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/gmsh-discrete-curvature-capability-independent-review-v1/verification.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-saved-mesh-diagnostic-v1/summary.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-graded-independent-audit-v2/verification.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-v1/native-surface.npz": true
+  },
+  "prior_attempts": {
+    "v1": {
+      "index_path": "artifacts/mechanics/resect-case4-patient-mesh-v1/raw-output-index.json",
+      "index_sha256": "02a054632069298592f0c8347b2b00dc5f3338f4baa0d6e7ad6c4b7930536bf4",
+      "checks": {
+        "acceptance.json": true,
+        "native-surface.npz": true,
+        "supervision/combined.log": true,
+        "supervision/supervision.json": true,
+        "worker.json": true
+      },
+      "scope": "Rehashed against the prior frozen output index; no arrays decoded."
+    },
+    "graded_v2": {
+      "index_path": "artifacts/mechanics/resect-case4-patient-mesh-graded-v2/raw-output-index.json",
+      "index_sha256": "5216805b05ee5cb505c2fac199bab0d84bd96c586d407d0279bc3d2e379e9b49",
+      "checks": {
+        "acceptance.json": true,
+        "candidate/diagnostic/gmsh_element_ids.npy": true,
+        "candidate/diagnostic/gmsh_node_ids.npy": true,
+        "candidate/diagnostic/manifest.json": true,
+        "candidate/diagnostic/nodes_m.npy": true,
+        "candidate/diagnostic/tet10_indices.npy": true,
+        "candidate/result.json": true,
+        "supervision/combined.log": true,
+        "supervision/supervision.json": true,
+        "worker.json": true
+      },
+      "scope": "Rehashed against the prior frozen output index; no arrays decoded."
+    }
+  },
+  "worker_process_group_survivors": [],
+  "raw_files": {
+    "acceptance.json": {
+      "bytes": 8525,
+      "sha256": "c71846f0a3463771605f593f4e867904d30a4f3133bc1c8472d68a7277ffb374"
+    },
+    "candidate/result.json": {
+      "bytes": 455,
+      "sha256": "fad09acf0ee25bb37d5893ee816d5d52fdf901c24ebfed69a52d721579e4f0fa"
+    },
+    "supervision/combined.log": {
+      "bytes": 4968,
+      "sha256": "d6c32951b0642036b8fbca6f21b98cd5def235823204f272521ffb88740c7898"
+    },
+    "supervision/supervision.json": {
+      "bytes": 1463,
+      "sha256": "13243ef3209b9130b24e505fd2035970a2b86c77d145f163c8ce483673b6feb9"
+    },
+    "worker.json": {
+      "bytes": 7582,
+      "sha256": "227b09ce4af3db54c3b6cc967ee874e3691d0e5971481036321f30fbe952ae55"
+    }
+  },
+  "runtime_and_archive_unchanged": true,
+  "native_calls_during_closeout": 0,
+  "array_decodes_during_closeout": 0
+}

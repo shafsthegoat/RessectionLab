@@ -1,0 +1,88 @@
+{
+  "status": "failed_or_incomplete",
+  "candidate_id": "case4_boundary12_interior24_single",
+  "native_generation_calls": 1,
+  "solver_calls": 0,
+  "retries": 0,
+  "clinical_validation": false,
+  "solver_admitted": false,
+  "source_surface": {
+    "vertices": 91951,
+    "triangles": 183902,
+    "components": 1,
+    "euler_characteristic": 0,
+    "genus": 1,
+    "enclosed_volume_m3": 0.0011858776244957961,
+    "area_m2": 0.06754710502400357
+  },
+  "returned_nodes": 5223,
+  "returned_elements": 2761,
+  "discrete_patches": 18,
+  "diagnostic": {
+    "status": "complete",
+    "complete": true,
+    "candidate_accepted": false,
+    "counts": {
+      "nodes": 5223,
+      "tet10_elements": 2761
+    },
+    "limits": {
+      "maximum_nodes": 10000,
+      "maximum_elements": 20000,
+      "maximum_total_bytes": 2097152,
+      "maximum_metadata_bytes": 8192,
+      "scope": "Returned-candidate packet only: four complete NPY arrays plus manifest; excludes previously retained native source surface, bounded result/log receipts and original v1 evidence.",
+      "no_truncation": true
+    },
+    "reserved_total_bytes": 418808,
+    "directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-graded-v2/candidate/diagnostic",
+    "total_bytes": 413290,
+    "manifest_sha256": "ed7eee73e0b5fad1f2d16815ac369df57c232abe1f00bb24e19c9f0cd50f98c3"
+  },
+  "quality": {
+    "nodes": 5223,
+    "elements": 2761,
+    "minimum_reference_determinant_m3": 5.9128729519024424e-12,
+    "minimum_actual_sampled_reference_determinant_m3": 5.912872951900573e-12,
+    "jacobian_witnesses_per_element": 19,
+    "maximum_midpoint_error_m": 0.0,
+    "minimum_mean_ratio": 0.08339217435242442,
+    "volume_m3": 0.0011715477538424824,
+    "boundary": {
+      "vertices": 732,
+      "triangles": 1464,
+      "components": 1,
+      "euler_characteristic": 0,
+      "genus": 1,
+      "enclosed_volume_m3": 0.0011715477538424824,
+      "area_m2": 0.0591553379106913
+    },
+    "overlap": {
+      "aabb_candidate_pairs_checked": 63528,
+      "contact_tolerance_m": 1e-10
+    },
+    "skyline_storage": {
+      "unreduced_displacement_dofs": 15669,
+      "worst_case_symmetric_values_bytes": 982132920,
+      "three_value_arrays_bytes": 2946398760,
+      "scope": "Conservative dense-profile values only; other allocations and runtime remain unmeasured."
+    }
+  },
+  "source_to_mesh": {
+    "sample_count": 1027230,
+    "maximum_sample_distance_m": 0.005459949977542773,
+    "full_surface_upper_bound_m": 0.006167056788211742,
+    "cover_radius_cap_m": 0.001
+  },
+  "mesh_to_source": {
+    "sample_count": 121028,
+    "maximum_sample_distance_m": 0.0038337299930228013,
+    "full_surface_upper_bound_m": 0.004830812977588099,
+    "cover_radius_cap_m": 0.001
+  },
+  "relative_volume_error": 0.012083768474345224,
+  "error": {
+    "type": "ValueError",
+    "message": "Independent surface fidelity rejected"
+  }
+}

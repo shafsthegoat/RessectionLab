@@ -1,0 +1,68 @@
+{
+  "schema": "mechanics-patient-mesh-preparation-v1",
+  "created_utc": "2026-10-04T21:35:07.847025+00:00",
+  "status": "frozen_preparation_pending_independent_review",
+  "patient_arrays_read": false,
+  "landmarks_read": false,
+  "native_surface_extractions": 0,
+  "native_meshing_calls": 0,
+  "solver_calls": 0,
+  "tests": {
+    "command": ".venv/bin/python -m pytest -q tests/test_mechanics_patient_mesh.py",
+    "exit_code": 0,
+    "output": "owner-tests-04.txt",
+    "scope": "Analytic arrays and mocked image, extraction, VTK and Gmsh calls only."
+  },
+  "fixed_targets_mm": [
+    24,
+    20,
+    16
+  ],
+  "fixed_tet10_node_caps": [
+    2000,
+    3000,
+    4500
+  ],
+  "fixed_tet10_element_caps": [
+    2000,
+    4000,
+    6000
+  ],
+  "bidirectional_surface_bound_mm": 2,
+  "full_triangle_sampling_cover_mm": 1,
+  "runtime_caps": {
+    "aggregate_seconds": 180,
+    "process_group_sampled_rss_bytes": 3221225472,
+    "numerical_threads": 1,
+    "maximum_generations": 3,
+    "retries": 0
+  },
+  "clinical_validation": false,
+  "anatomical_registration_accepted": false,
+  "actual_execution_authorized": false,
+  "files": {
+    "scripts/mechanics_patient_mesh.py": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+    "tests/test_mechanics_patient_mesh.py": "8846b274d617cb8a615e5a8a4f28196f84f00b2c948d765213cf69f46ccb1f4c",
+    "manifests/experiments/resect-case4-patient-mesh-v1.json": "b6b3fd278df85fb0ea89c72dcff37cc5f229644602f5288c81e8ce6e7653173c",
+    "docs/mechanics-patient-mesh.md": "f4e91227bbb98effa1f20f885970697c365213af5bbc1e6ec2a1827944aa53e8",
+    "artifacts/mechanics-patient-mesh-preparation-v1/release-template.json": "7b78bcda401a451ab7b5b144b282f94243df09d377fa645f08f7228441624552",
+    "artifacts/mechanics-patient-mesh-preparation-v1/owner-tests-01.txt": "932b090adbee6e7105963e8c378e1105914049d1113a963985968f7db0f2310a",
+    "artifacts/mechanics-patient-mesh-preparation-v1/owner-tests-02.txt": "47fe29fb262c1457362589626712b3cfbf80277281e13c203a1257a329f10b2c",
+    "artifacts/mechanics-patient-mesh-preparation-v1/owner-tests-03.txt": "7641f84a4687a9f959a32c8275996f681439857ac221dc016f4cc4dc6d36bd93",
+    "artifacts/mechanics-patient-mesh-preparation-v1/owner-tests-04.txt": "ddf71aba2dbba1bd72f4fdeba3082ee823be49f32ecf3ca75eabc93da603984c",
+    "artifacts/mechanics-patient-mesh-preparation-v1/owner-fidelity-diagnostics-before-fix.txt": "6cddf9ae25570027a8df099e5bad2c2a22baa71172dc6c99c161a2e3854d251b",
+    "artifacts/mechanics-patient-mesh-preparation-v1/preparation-initial.json": "7bb50d7487f397049f4555079fba520b0248829ad0560cea930f74c15a62275c"
+  },
+  "limitations": [
+    "Estimated envelope excludes inferior/cerebellar structures in reviewed fixed plane; not whole brain or pial truth.",
+    "Targets may fail fidelity, quality, size, memory, time, or downstream fixed-5mm operator accuracy.",
+    "Surface bound is a covering argument using finite-precision library point distances, not interval arithmetic.",
+    "Worst-case three Skyline symmetric value arrays exclude other allocations; no patient solve is released."
+  ],
+  "repair": {
+    "issue": "Computed quality and directional distance diagnostics were missing from failed fidelity receipts.",
+    "reproduced_by": "owner-fidelity-diagnostics-before-fix.txt",
+    "change": "Persist each completed diagnostic before its rejection gate; raw bounded output remains retained.",
+    "native_or_patient_execution": false
+  }
+}

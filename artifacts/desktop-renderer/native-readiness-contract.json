@@ -1,0 +1,584 @@
+{
+  "source": {
+    "caseHash": "sha256:77ea12986484d19cf328f8c7452c87619f2f95c5cfd0922ae51368e989099313",
+    "frame": "RAS+"
+  },
+  "checks": [
+    {
+      "route": {
+        "route_id": "search-add999a1d158fede",
+        "case_hash": "sha256:77ea12986484d19cf328f8c7452c87619f2f95c5cfd0922ae51368e989099313",
+        "entry_mm": [
+          2.905555555555555,
+          2.1833333333333336,
+          10.099999999999998
+        ],
+        "target_mm": [
+          4.5,
+          2.5,
+          6.5
+        ],
+        "target_compartment": "enhancing",
+        "tool_id": "generic_suction",
+        "window_id": "hypothetical-envelope-1",
+        "tool": {
+          "tool_id": "generic_suction",
+          "tip_radius_mm": 1.0,
+          "shaft_radius_mm": 1.4,
+          "working_length_mm": 100.0,
+          "max_access_angle_deg": 45.0,
+          "tip_length_mm": 3.0,
+          "parameter_source": "generic research geometry; not a verified commercial device"
+        },
+        "window": {
+          "center_mm": [
+            2.905555555555555,
+            2.1833333333333336,
+            10.099999999999998
+          ],
+          "normal_inward": [
+            -0.0,
+            -0.0,
+            -1.0
+          ],
+          "radius_mm": 4.0,
+          "window_id": "hypothetical-envelope-1"
+        },
+        "route_length_mm": 3.950003906858513,
+        "accessible_target_volume_mm3_by_compartment": {
+          "enhancing": 8.0,
+          "flair_abnormality": 5.0,
+          "nonenhancing_core": 2.0
+        },
+        "normal_tissue_exposure_mm3": 5.0,
+        "structure_contact_volume_mm3": {
+          "language": null,
+          "motor": null,
+          "vessels": null
+        },
+        "unknowns": [
+          "functional_anatomy_simulated_only",
+          "not_a_patient",
+          "skull_anatomy_unmodeled",
+          "uncalibrated_tissue_response",
+          "vascular_anatomy_unmodeled",
+          "language_anatomy_unassessed",
+          "motor_anatomy_unassessed",
+          "vessels_anatomy_unassessed",
+          "skull_and_scalp_unassessed",
+          "tissue_forces_unmodeled",
+          "clinical_outcomes_unavailable",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "assumptions": [
+          "Annotation-assisted static route enumeration; no tissue removal is simulated.",
+          "Access windows are explicitly hypothetical intracranial openings; cortical surface, skull and scalp suitability are not certified.",
+          "Accessibility is conditional on establishing the straight access; brain-envelope overlap is recorded, not silently cleared.",
+          "Only supplied anatomical constraints are checked; absent functional and vascular anatomy remains unassessed.",
+          "Sampled geometric Pareto set within the declared candidate budget; no global or clinical optimum is claimed."
+        ],
+        "category": "pareto",
+        "dominated_by": [],
+        "assessment": "incomplete",
+        "planning_model_hash": "41c5549d39b4612633b5b3d717b4961631e061e277e5b73ad821e3a0228b7b56",
+        "accessible_union_volume_mm3": 15.0,
+        "simulated_removed_target_volume_mm3": null,
+        "clinical_deficit_probability": null,
+        "metric_definitions": {
+          "accessible_target_volume_mm3": "Target voxel centres inside the active-tip swept tube; conditional static accessibility, not removal.",
+          "normal_tissue_exposure_mm3": "Conservative unique-voxel full-tool swept-envelope overlap with the supplied non-target brain mask; not removed tissue.",
+          "structure_contact_volume_mm3": "Conservative unique-voxel full-tool swept-envelope overlap with the named supplied structure; not neurological injury.",
+          "pareto": "Sampled non-dominance on available geometric volumes and length. Unknown anatomy is excluded from numerical objectives and remains unassessed."
+        },
+        "geometry": {
+          "feasible": true,
+          "failures": [],
+          "clearance_mm": 2.463887369555022,
+          "exposure_volume_mm3": 5.0,
+          "unknowns": [
+            "tool_geometry_outside_image_unassessed"
+          ],
+          "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+          "exposure_definition": "unique affine cells in conservative full-tool envelope; upper bound, not removal",
+          "clearance_definition": "conservative lower bound capped at 10 mm; contact is rejected"
+        },
+        "accessible_target_volume_mm3": 15.0
+      },
+      "result": {
+        "status": "no_actionable_moves",
+        "role": "preflight",
+        "legalNonStopActions": 0,
+        "action_ids": [],
+        "reasons": [
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+        ],
+        "diagnostic": {
+          "status": "no_legal_native_actions",
+          "policy_has_nontrivial_action_choice": false,
+          "non_stop_action_count": 0,
+          "non_stop_action_ids": [],
+          "rejected_proposal_count": 1,
+          "rejection_counts": {
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 1
+          },
+          "rejected_proposals": [
+            {
+              "tool_id": "generic_suction",
+              "tip_mm": [
+                4.5,
+                2.5,
+                6.5
+              ],
+              "entry_mm": [
+                2.905555555555555,
+                2.1833333333333336,
+                10.099999999999998
+              ],
+              "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+            }
+          ],
+          "candidate_tips_mm": [
+            [
+              4.5,
+              2.5,
+              6.5
+            ]
+          ],
+          "candidate_entries_mm": [
+            [
+              2.905555555555555,
+              2.1833333333333336,
+              10.099999999999998
+            ]
+          ],
+          "decision_model_hash": "sha256:7f00f9d0e175a065380fdec1106bd85972562222877a2e7df68548c1e7b99c08",
+          "source_hash": "sha256:77ea12986484d19cf328f8c7452c87619f2f95c5cfd0922ae51368e989099313",
+          "tool_dimensions": [
+            {
+              "tool_id": "generic_suction",
+              "tip_radius_mm": 1.0,
+              "shaft_radius_mm": 1.4,
+              "tip_length_mm": 3.0,
+              "shaft_wider_than_active_tip": true
+            }
+          ],
+          "interpretation": "Initial native action availability only; no learning, removal, or clinical benefit is asserted.",
+          "clinical_deficit_probability": null
+        },
+        "decision_model_hash": "sha256:7f00f9d0e175a065380fdec1106bd85972562222877a2e7df68548c1e7b99c08",
+        "case_hash": "sha256:77ea12986484d19cf328f8c7452c87619f2f95c5cfd0922ae51368e989099313",
+        "route_binding": {
+          "version": "native-route-binding-v1",
+          "geometry_frame": "RAS+",
+          "mode": "exact_selected_route",
+          "requested_geometry": {
+            "geometry_frame": "RAS+",
+            "selected_entry_mm": [
+              2.905555555555555,
+              2.1833333333333336,
+              10.099999999999998
+            ],
+            "selected_target_mm": [
+              4.5,
+              2.5,
+              6.5
+            ],
+            "access": {
+              "center_mm": [
+                2.905555555555555,
+                2.1833333333333336,
+                10.099999999999998
+              ],
+              "normal_inward": [
+                -0.0,
+                -0.0,
+                -1.0
+              ],
+              "radius_mm": 4.0,
+              "window_id": "hypothetical-envelope-1"
+            },
+            "tools": [
+              {
+                "tool_id": "generic_suction",
+                "tip_radius_mm": 1.0,
+                "shaft_radius_mm": 1.4,
+                "working_length_mm": 100.0,
+                "max_access_angle_deg": 45.0,
+                "tip_length_mm": 3.0,
+                "parameter_source": "generic research geometry; not a verified commercial device"
+              }
+            ],
+            "candidate_count": 4,
+            "max_steps": 3,
+            "max_actions": 7
+          },
+          "access": {
+            "center_mm": [
+              2.905555555555555,
+              2.1833333333333336,
+              10.099999999999998
+            ],
+            "normal_inward": [
+              -0.0,
+              -0.0,
+              -1.0
+            ],
+            "radius_mm": 4.0,
+            "window_id": "hypothetical-envelope-1"
+          },
+          "tools": [
+            {
+              "tool_id": "generic_suction",
+              "tip_radius_mm": 1.0,
+              "shaft_radius_mm": 1.4,
+              "working_length_mm": 100.0,
+              "max_access_angle_deg": 45.0,
+              "tip_length_mm": 3.0,
+              "parameter_source": "generic research geometry; not a verified commercial device"
+            }
+          ],
+          "candidate_entries_mm": [
+            [
+              2.905555555555555,
+              2.1833333333333336,
+              10.099999999999998
+            ]
+          ],
+          "candidate_targets_mm": [
+            [
+              4.5,
+              2.5,
+              6.5
+            ]
+          ],
+          "decision_model_hash": "sha256:7f00f9d0e175a065380fdec1106bd85972562222877a2e7df68548c1e7b99c08",
+          "binding_hash": "sha256:6ff07b1a6f57e2697f6f0362e4cf54cbc352329f36c87b7c1e1133ec1ad9db82"
+        },
+        "clinical_deficit_probability": null,
+        "preparation_seconds": 0.011780541972257197,
+        "caseHash": "sha256:77ea12986484d19cf328f8c7452c87619f2f95c5cfd0922ae51368e989099313",
+        "routeId": "search-add999a1d158fede",
+        "optimizationChoiceScope": "STOP_or_declared_native_stroke",
+        "frozenRoute": {
+          "routeId": "search-add999a1d158fede",
+          "access": {
+            "center_mm": [
+              2.905555555555555,
+              2.1833333333333336,
+              10.099999999999998
+            ],
+            "normal_inward": [
+              -0.0,
+              -0.0,
+              -1.0
+            ],
+            "radius_mm": 4.0,
+            "window_id": "hypothetical-envelope-1"
+          },
+          "toolIds": [
+            "generic_suction"
+          ],
+          "selectedEntryMm": [
+            2.905555555555555,
+            2.1833333333333336,
+            10.099999999999998
+          ],
+          "selectedTargetMm": [
+            4.5,
+            2.5,
+            6.5
+          ],
+          "coordinateFrame": "RAS+",
+          "scope": "exact_selected_research_route",
+          "optimizationChoiceScope": "STOP_or_declared_native_stroke",
+          "routePlanningModelHash": "41c5549d39b4612633b5b3d717b4961631e061e277e5b73ad821e3a0228b7b56"
+        },
+        "clinicalDeficitProbability": null,
+        "clinicalRiskReason": "no_validated_clinical_outcome_model"
+      }
+    },
+    {
+      "route": {
+        "route_id": "native-axis-6da080f42a999fba",
+        "case_hash": "sha256:77ea12986484d19cf328f8c7452c87619f2f95c5cfd0922ae51368e989099313",
+        "entry_mm": [
+          2.5,
+          2.5,
+          10.0
+        ],
+        "target_mm": [
+          2.5,
+          2.5,
+          6.5
+        ],
+        "target_compartment": "nonenhancing_core",
+        "tool_id": "native-fine-aspiration",
+        "window_id": "native_hypothetical_nearest_envelope_axis",
+        "tool": {
+          "tool_id": "native-fine-aspiration",
+          "tip_radius_mm": 1.25,
+          "shaft_radius_mm": 0.45,
+          "working_length_mm": 120.0,
+          "max_access_angle_deg": 35.0,
+          "tip_length_mm": 2.0,
+          "parameter_source": "generic research geometry; not a verified commercial device"
+        },
+        "window": {
+          "center_mm": [
+            2.5,
+            2.5,
+            10.0
+          ],
+          "normal_inward": [
+            -0.0,
+            -0.0,
+            -1.0
+          ],
+          "radius_mm": 6.0,
+          "window_id": "native_hypothetical_nearest_envelope_axis"
+        },
+        "route_length_mm": 3.5,
+        "accessible_target_volume_mm3_by_compartment": {
+          "enhancing": 6.0,
+          "flair_abnormality": 5.0,
+          "nonenhancing_core": 10.0
+        },
+        "normal_tissue_exposure_mm3": 2.0,
+        "structure_contact_volume_mm3": {
+          "language": null,
+          "motor": null,
+          "vessels": null
+        },
+        "unknowns": [
+          "functional_anatomy_simulated_only",
+          "not_a_patient",
+          "skull_anatomy_unmodeled",
+          "uncalibrated_tissue_response",
+          "vascular_anatomy_unmodeled",
+          "language_anatomy_unassessed",
+          "motor_anatomy_unassessed",
+          "vessels_anatomy_unassessed",
+          "skull_and_scalp_unassessed",
+          "tissue_forces_unmodeled",
+          "clinical_outcomes_unavailable",
+          "tool_geometry_outside_image_unassessed"
+        ],
+        "assumptions": [
+          "Annotation-assisted static route enumeration; no tissue removal is simulated.",
+          "Access windows are explicitly hypothetical intracranial openings; cortical surface, skull and scalp suitability are not certified.",
+          "Accessibility is conditional on establishing the straight access; brain-envelope overlap is recorded, not silently cleared.",
+          "Only supplied anatomical constraints are checked; absent functional and vascular anatomy remains unassessed.",
+          "Sampled geometric Pareto set within the declared candidate budget; no global or clinical optimum is claimed.",
+          "Separately named native-cell aspiration research profiles; original generic instrument dimensions are unchanged.",
+          "Explicit source-grid-axis hypothetical access to an annotated native target centre; this alternative is annotation-assisted and has its own frozen model.",
+          "Native access support: simulated; explicit_simulated_tissue_support; source sha256:d541cd590fb4bfc17a24e0d7507d456c2a5e823cbf53eb42a21d83445ef2fcb3. The cortical surface and opening remain unverified.",
+          "Static access remains conditional; source-cell removal and prior-cavity shaft legality require a separate native simulation and independent audit.",
+          "Pareto classification applies only within this native-axis research scenario; it is not pooled with other search models."
+        ],
+        "category": "pareto",
+        "dominated_by": [],
+        "assessment": "incomplete",
+        "planning_model_hash": "10bda75c741c7c7b4459bc8b304f4a73ba209f627351034ac43b1b3dd98e1637",
+        "accessible_union_volume_mm3": 21.0,
+        "simulated_removed_target_volume_mm3": null,
+        "clinical_deficit_probability": null,
+        "metric_definitions": {
+          "accessible_target_volume_mm3": "Target voxel centres inside the active-tip swept tube; conditional static accessibility, not removal.",
+          "normal_tissue_exposure_mm3": "Conservative unique-voxel full-tool swept-envelope overlap with the supplied non-target brain mask; not removed tissue.",
+          "structure_contact_volume_mm3": "Conservative unique-voxel full-tool swept-envelope overlap with the named supplied structure; not neurological injury.",
+          "pareto": "Sampled non-dominance on available geometric volumes and length. Unknown anatomy is excluded from numerical objectives and remains unassessed."
+        },
+        "geometry": {
+          "feasible": true,
+          "failures": [],
+          "clearance_mm": 4.75,
+          "exposure_volume_mm3": 2.0,
+          "unknowns": [
+            "tool_geometry_outside_image_unassessed"
+          ],
+          "geometry_version": "rigid-capsules-exact-orthogonal-cells-v2",
+          "exposure_definition": "unique affine cells in conservative full-tool envelope; upper bound, not removal",
+          "clearance_definition": "conservative lower bound capped at 10 mm; contact is rejected"
+        },
+        "accessible_target_volume_mm3": 21.0
+      },
+      "result": {
+        "status": "ready",
+        "role": "preflight",
+        "legalNonStopActions": 1,
+        "action_ids": [
+          "NATIVE:native-fine-aspiration:0"
+        ],
+        "reasons": [],
+        "diagnostic": {
+          "status": "native_actions_available",
+          "policy_has_nontrivial_action_choice": true,
+          "non_stop_action_count": 1,
+          "non_stop_action_ids": [
+            "NATIVE:native-fine-aspiration:0"
+          ],
+          "rejected_proposal_count": 0,
+          "rejection_counts": {},
+          "rejected_proposals": [],
+          "candidate_tips_mm": [
+            [
+              2.5,
+              2.5,
+              6.5
+            ]
+          ],
+          "candidate_entries_mm": [
+            [
+              2.5,
+              2.5,
+              10.0
+            ]
+          ],
+          "decision_model_hash": "sha256:7ec57b466367b6766f4afb75716b4c689b1b0f555e4803d1516957bc8dd52daf",
+          "source_hash": "sha256:77ea12986484d19cf328f8c7452c87619f2f95c5cfd0922ae51368e989099313",
+          "tool_dimensions": [
+            {
+              "tool_id": "native-fine-aspiration",
+              "tip_radius_mm": 1.25,
+              "shaft_radius_mm": 0.45,
+              "tip_length_mm": 2.0,
+              "shaft_wider_than_active_tip": false
+            }
+          ],
+          "interpretation": "Initial native action availability only; no learning, removal, or clinical benefit is asserted.",
+          "clinical_deficit_probability": null
+        },
+        "decision_model_hash": "sha256:7ec57b466367b6766f4afb75716b4c689b1b0f555e4803d1516957bc8dd52daf",
+        "case_hash": "sha256:77ea12986484d19cf328f8c7452c87619f2f95c5cfd0922ae51368e989099313",
+        "route_binding": {
+          "version": "native-route-binding-v1",
+          "geometry_frame": "RAS+",
+          "mode": "exact_selected_route",
+          "requested_geometry": {
+            "geometry_frame": "RAS+",
+            "selected_entry_mm": [
+              2.5,
+              2.5,
+              10.0
+            ],
+            "selected_target_mm": [
+              2.5,
+              2.5,
+              6.5
+            ],
+            "access": {
+              "center_mm": [
+                2.5,
+                2.5,
+                10.0
+              ],
+              "normal_inward": [
+                -0.0,
+                -0.0,
+                -1.0
+              ],
+              "radius_mm": 6.0,
+              "window_id": "native_hypothetical_nearest_envelope_axis"
+            },
+            "tools": [
+              {
+                "tool_id": "native-fine-aspiration",
+                "tip_radius_mm": 1.25,
+                "shaft_radius_mm": 0.45,
+                "working_length_mm": 120.0,
+                "max_access_angle_deg": 35.0,
+                "tip_length_mm": 2.0,
+                "parameter_source": "generic research geometry; not a verified commercial device"
+              }
+            ],
+            "candidate_count": 4,
+            "max_steps": 3,
+            "max_actions": 7
+          },
+          "access": {
+            "center_mm": [
+              2.5,
+              2.5,
+              10.0
+            ],
+            "normal_inward": [
+              -0.0,
+              -0.0,
+              -1.0
+            ],
+            "radius_mm": 6.0,
+            "window_id": "native_hypothetical_nearest_envelope_axis"
+          },
+          "tools": [
+            {
+              "tool_id": "native-fine-aspiration",
+              "tip_radius_mm": 1.25,
+              "shaft_radius_mm": 0.45,
+              "working_length_mm": 120.0,
+              "max_access_angle_deg": 35.0,
+              "tip_length_mm": 2.0,
+              "parameter_source": "generic research geometry; not a verified commercial device"
+            }
+          ],
+          "candidate_entries_mm": [
+            [
+              2.5,
+              2.5,
+              10.0
+            ]
+          ],
+          "candidate_targets_mm": [
+            [
+              2.5,
+              2.5,
+              6.5
+            ]
+          ],
+          "decision_model_hash": "sha256:7ec57b466367b6766f4afb75716b4c689b1b0f555e4803d1516957bc8dd52daf",
+          "binding_hash": "sha256:a4965b6d38cbab84cafa115b6b09967f7aabb2c8dbe2e89c77fbf6e20f963e28"
+        },
+        "clinical_deficit_probability": null,
+        "preparation_seconds": 0.013067833031527698,
+        "caseHash": "sha256:77ea12986484d19cf328f8c7452c87619f2f95c5cfd0922ae51368e989099313",
+        "routeId": "native-axis-6da080f42a999fba",
+        "optimizationChoiceScope": "STOP_or_declared_native_stroke",
+        "frozenRoute": {
+          "routeId": "native-axis-6da080f42a999fba",
+          "access": {
+            "center_mm": [
+              2.5,
+              2.5,
+              10.0
+            ],
+            "normal_inward": [
+              -0.0,
+              -0.0,
+              -1.0
+            ],
+            "radius_mm": 6.0,
+            "window_id": "native_hypothetical_nearest_envelope_axis"
+          },
+          "toolIds": [
+            "native-fine-aspiration"
+          ],
+          "selectedEntryMm": [
+            2.5,
+            2.5,
+            10.0
+          ],
+          "selectedTargetMm": [
+            2.5,
+            2.5,
+            6.5
+          ],
+          "coordinateFrame": "RAS+",
+          "scope": "exact_selected_research_route",
+          "optimizationChoiceScope": "STOP_or_declared_native_stroke",
+          "routePlanningModelHash": "10bda75c741c7c7b4459bc8b304f4a73ba209f627351034ac43b1b3dd98e1637"
+        },
+        "clinicalDeficitProbability": null,
+        "clinicalRiskReason": "no_validated_clinical_outcome_model"
+      }
+    }
+  ]
+}

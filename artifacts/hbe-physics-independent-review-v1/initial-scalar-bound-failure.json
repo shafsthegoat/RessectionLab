@@ -1,0 +1,19 @@
+{
+  "source_sha256": "c48d6a6e23a21d5225ea8188cf5eff13c76bd9cb53ef3735a392c2936f45b791",
+  "kind": "independent_direct_analytic_reproduction",
+  "observed": [
+    {
+      "call": "energy_work_check([0,1],[0,-100],[0,1],mu_Pa=inf,radius_m=.004,height_m=.006)",
+      "passed": true,
+      "maximum_error_J": 51.0,
+      "limit_J": "Infinity"
+    },
+    {
+      "call": "compare_refinement responses [0,100],[0,10],[0,1], zero probes, response_scale=inf,radius_m=.004",
+      "passed": true,
+      "response_change": 9.0,
+      "response_limit": "Infinity"
+    }
+  ],
+  "expected": "Reject nonfinite physical scale before constructing tolerance; opposite signed work and gross refinement errors must not pass."
+}

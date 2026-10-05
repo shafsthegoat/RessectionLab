@@ -1,0 +1,62 @@
+{
+  "files": {
+    "RESULT.md": {
+      "bytes": 2837,
+      "sha256": "6d220383a0b4a6816dbaf0d9e19c39780c6dc7370b4a4f05b635d1c85b469e43"
+    },
+    "archive-files-before.json.gz": {
+      "bytes": 136721,
+      "sha256": "2f3841495322e48b7ca6c9a7439b36e500eb26fe85da578c92312ad3d75fdb68"
+    },
+    "archive-verification.json": {
+      "bytes": 1599,
+      "sha256": "37c66bea7edf4acfcc67361c98582b6e74ea89b993f43226183f23d7ec6c608e"
+    },
+    "attempt-01/launcher.json": {
+      "bytes": 561,
+      "sha256": "125e98f729b5cf75840b20b1ace179a62535833ee5b025bb7534e1943a508791"
+    },
+    "attempt-01/native-history.json.gz": {
+      "bytes": 1407332,
+      "sha256": "f792899eddda2d794eeb0b4b7f3d5ff0610dd53495f2ce93ad0450360a65e350"
+    },
+    "attempt-01/phase-status.json": {
+      "bytes": 54,
+      "sha256": "3b395156034b44d5fc62566995ed4ee55d9981401110429a5dc3ea8b81de00bf"
+    },
+    "attempt-01/prospective.json": {
+      "bytes": 10973,
+      "sha256": "6b41df684eb39dd5f7361d8522a1aa452210c9882a09a6a3cd9a68cb402b5adf"
+    },
+    "attempt-01/report.json": {
+      "bytes": 9724,
+      "sha256": "faa6a0717eb2f47a28727c3a22fb594ccbdb18e3b0520a05778fffe5bab81c86"
+    },
+    "attempt-01/scalar_before-trace.json.gz": {
+      "bytes": 348596,
+      "sha256": "b7c99af19e1ab1ad62c85ae4c3ef1c0bb381e0890fb5f6edbe85be9e6f55970d"
+    },
+    "attempt-01/worker.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "execution-baseline.json": {
+      "bytes": 2324,
+      "sha256": "e9e40e23b9d139e3abd3e29927bb918a65b885e886883d468e5e2e1158e263dd"
+    },
+    "execution-wrapper.json": {
+      "bytes": 847,
+      "sha256": "917704cab14a7a53e2a817e4b6a5769842411c21bbe6a7ab1104f76cd89a44a1"
+    },
+    "failure-diagnostic.json": {
+      "bytes": 1256,
+      "sha256": "2e8c1386df530fb71760215420d44371dab28359fa597ef85b3f6b7dbc859843"
+    },
+    "launch-console.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "scope": "One failed V1 comparison; no batch audit executed; no retry",
+  "status": "failed_or_incomplete"
+}

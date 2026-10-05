@@ -1,0 +1,16 @@
+{
+  "coarse_sequence_seconds": {},
+  "full_validation_seconds": 19.495469707995653,
+  "native_removal_seconds": {
+    "GREEDY": 3.947144541889429,
+    "INITIAL:11": 2.729194238781929e-05,
+    "INITIAL:23": 2.3542088456451893e-05,
+    "INITIAL:47": 3.8381480000680313,
+    "PATIENT_SCRATCH_RL:11": 2.345896791666746e-05,
+    "PATIENT_SCRATCH_RL:23": 4.49101475009229,
+    "PATIENT_SCRATCH_RL:47": 5.019732709042728,
+    "SEARCH": 2.537504769861698e-05,
+    "STOP": 0.39278333401307464
+  },
+  "partition_seconds": {}
+}

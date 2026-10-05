@@ -1,0 +1,23 @@
+{
+  "frozen": true,
+  "packaged": true,
+  "checks": {
+    "actualPolicyUpdate": true,
+    "independentSelectionGeometry": true,
+    "initialReplayEmpty": true,
+    "nativeReplayMask": true,
+    "checkpointListed": true,
+    "candidateExport": true,
+    "alteredResumeContractRejected": true,
+    "restartIndependentRecheck": true,
+    "modifiedReportRejected": true
+  },
+  "passed": true,
+  "scope": "synthetic_native_selection_replay",
+  "finalEvaluation": false,
+  "gradientSteps": 8,
+  "stepCount": 1,
+  "simulatedRemovedTargetVolumeMm3": 39,
+  "simulatedRemovedNormalVolumeMm3": 2,
+  "elapsedSeconds": 12.89124825
+}

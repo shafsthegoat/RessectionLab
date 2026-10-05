@@ -1,0 +1,38 @@
+{
+  "attempts": [
+    {
+      "elapsed_seconds": 2.04,
+      "failed": 1,
+      "failure": "load_frozen_policy restricted torch.load(weights_only=True) rejected numpy._core.multiarray.scalar inside architecture metadata",
+      "order": 1,
+      "passed": 31,
+      "patient_execution_before_repair": false
+    },
+    {
+      "elapsed_seconds": 2.1,
+      "failed": 0,
+      "order": 2,
+      "passed": 32,
+      "patient_execution_before_result": false,
+      "repair": "Use weights_only=False for the exact self-produced local checkpoint only after execution-inventory and checkpoint-file SHA256 validation; no checkpoint bytes rewritten"
+    }
+  ],
+  "execution_declaration_sha256": "3e46a2bba38f0b2bea127d49c831c6af597a51aad360afdcdfdadf82b27c23f3",
+  "final_test_source_sha256": {
+    "tests/test_real_training_cases.py": "4cfbecaea2c703aa11eb29d65653b70116d5563692b47db78be9b833132a8090",
+    "tests/test_real_training_cases_review.py": "e5115ee0dd2c491e8d06f9f60fa813dc6d02b71f97bb90f486c23c6aec7b3dfc",
+    "tests/test_real_training_transfer.py": "3a8106407835a9f29ad6d6e9ff8b662f5b51a4a672e2cdfe301390ac2e816cb7"
+  },
+  "kind": "pre_execution_software_verification_receipt",
+  "new_tests_run_for_this_receipt": 0,
+  "original_execution_index_sha256": "5373388b9f978ca431cf485bf8d3c9e7a3497ef5a86d8543236e141f51e55868",
+  "result_reporting_source": "parent orchestrator reported exact integrated test outcomes before execution release; this file records those reports, not a new test execution",
+  "script_exit_code": 0,
+  "source_commit": "5198947",
+  "targets": [
+    "tests/test_real_training_cases.py",
+    "tests/test_real_training_cases_review.py",
+    "tests/test_real_training_transfer.py"
+  ],
+  "tool_session": 13645
+}

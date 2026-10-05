@@ -1,0 +1,9 @@
+{
+  "correction": "Report seven log-confirmed convergences separately from eight nonzero primitive snapshots; do not infer completion/convergence from snapshots alone.",
+  "initial_assertion": "Expected fine primitive blocks0..7 from seven logged converged states",
+  "observed": "Fine primitive files contain complete blocks0..8, despite only seven convergence messages in retained solver.log.",
+  "prior_integrity_checks_completed_before_assertion": "All21compact artifact hashes,23rawfiles,4426archivefiles,109baselineinputs,runtime,52prepfiles,14originalfiles,coarsereuse,state/calls,medium/fine execution and solver-log timing had already passed.",
+  "saved_n8_replays_added": 0,
+  "solver_calls_added": 0,
+  "status": "reviewer_assumption_corrected_without_product_change"
+}

@@ -1,0 +1,10 @@
+{
+  "source_commit": "d4b506d",
+  "source_sha256": "3dd64affe95419c532345e1ca70dfc76e7c8d91074fceebe2d0f6b61f88f5040",
+  "scope": "analytic arrays only; no real proposal accepted or patientdataopened",
+  "expected": "model-backed selected support accepted by existing factory",
+  "outcome": {
+    "type": "AttributeError",
+    "message": "'StructuralEvidence' object has no attribute 'model_hash'"
+  }
+}

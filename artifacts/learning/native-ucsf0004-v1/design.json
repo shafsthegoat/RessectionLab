@@ -1,0 +1,46 @@
+{
+  "algorithm": "masked_reinforce_state_value_v2",
+  "assumptions": [
+    "rigid_static_geometry",
+    "hypothetical_intracranial_access",
+    "contained_native_cells_only_removed",
+    "partial_contact_not_removed",
+    "functional_evidence_unavailable",
+    "tissue_mechanics_unvalidated"
+  ],
+  "case": "UCSF-PDGM-0004",
+  "clinical_deficit_probability": null,
+  "comparators": [
+    "STOP",
+    "GREEDY",
+    "SEARCH",
+    "INITIAL_POLICY"
+  ],
+  "config": {
+    "checkpoint_interval": 2,
+    "episodes_per_update": 2,
+    "hidden_features": 16,
+    "max_environment_steps": 256,
+    "max_episode_steps": 4,
+    "max_gradient_steps": 32,
+    "max_wall_seconds": 30
+  },
+  "final_and_stress_worlds_accessed": false,
+  "native_factory": {
+    "candidate_count": 4,
+    "max_actions": 7,
+    "max_steps": 3
+  },
+  "resource_note": "Fresh arm preprocessing, bounded training, selected sequence extraction and independent source geometry validation measured separately. Max wall budget is cooperative and can overshoot one transition.",
+  "seeds": [
+    11,
+    23,
+    47
+  ],
+  "selection_rule": "Maximum complete selection-panel mean; earliest tie; independent geometry after candidate freeze only",
+  "study_role": "development_only_native_patient",
+  "world_panels": {
+    "optimization": 3,
+    "selection": 2
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_mechanics_hbe_readout_review.py",
+    "tests/test_mechanics_hbe_readout.py",
+    "--basetemp=build/validation/mechanics-hbe-readout-review-v1-final"
+  ],
+  "exit_code": 0,
+  "wall_seconds": 0.499999125,
+  "source_before_sha256": {
+    "scripts/mechanics_hbe_readout.py": "75ad1bcc60de1bc470ccb45eac0837e5c0fdd5340ef70f3525d0e10b24593e3d",
+    "scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "tests/test_mechanics_hbe_readout.py": "bfe4d9dd3829aa5aedd81e1226a463888926c255944a00c3e963ffb4f9505447",
+    "tests/test_mechanics_hbe_readout_review.py": "e479ae9e25e67d69ed91220335053f7654542ae1d4a88e0a8c5cd4cf86c0e74f"
+  },
+  "source_after_sha256": {
+    "scripts/mechanics_hbe_readout.py": "75ad1bcc60de1bc470ccb45eac0837e5c0fdd5340ef70f3525d0e10b24593e3d",
+    "scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "tests/test_mechanics_hbe_readout.py": "bfe4d9dd3829aa5aedd81e1226a463888926c255944a00c3e963ffb4f9505447",
+    "tests/test_mechanics_hbe_readout_review.py": "e479ae9e25e67d69ed91220335053f7654542ae1d4a88e0a8c5cd4cf86c0e74f"
+  },
+  "all_tested_files_unchanged": true,
+  "scope": "Constructed closed-form61-frame primitives and comparison arrays only; no measured values or actual solver call."
+}

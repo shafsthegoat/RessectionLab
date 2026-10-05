@@ -1,0 +1,438 @@
+{
+  "status": "passed",
+  "audit_kind": "independent saved-source checkpoint/phase/split/source-cell-score audit",
+  "audited_at_utc": "2026-10-04T11:27:53.867986+00:00",
+  "implementation_commit": "0bffeaa33dc3120183d0c6fb124aff6e2d327a63",
+  "runtime_content_hash": "sha256:850dab806bca81be6d18f25cc39643e76d7cf1621d7cbad1f96669228fed65fa",
+  "declaration_hash": "sha256:b19aac85f9241e37b98ae53d539ad923f3258bf42a106d67e520f37abcf6a237",
+  "denominators": {
+    "offline": 2,
+    "online": 12,
+    "frozen": 2,
+    "shared_baselines": 3,
+    "candidates": 23
+  },
+  "online_timing": {
+    "scratch:RAW:11": {
+      "learner_seconds": 30.09992104198318,
+      "initialization_seconds": 0.0415669169742614,
+      "selection_seconds": 13.099746917141601,
+      "initial_selection_seconds": 0.21626829204615206,
+      "additional_selection_seconds": 12.88347862509545,
+      "cooperative_wall_overshoot_seconds": 0.09992104198317975,
+      "gradient_steps": 14,
+      "optimization_environment_steps": 68,
+      "selection_environment_steps": 43
+    },
+    "scratch:FEATURE_UNITS:11": {
+      "learner_seconds": 30.161482208990492,
+      "initialization_seconds": 0.04572404094506055,
+      "selection_seconds": 13.747611666098237,
+      "initial_selection_seconds": 1.8803875829325989,
+      "additional_selection_seconds": 11.867224083165638,
+      "cooperative_wall_overshoot_seconds": 0.16148220899049193,
+      "gradient_steps": 14,
+      "optimization_environment_steps": 67,
+      "selection_environment_steps": 44
+    },
+    "adapted:RAW:11": {
+      "learner_seconds": 30.3018419170985,
+      "initialization_seconds": 0.3806994999758899,
+      "selection_seconds": 13.588559043128043,
+      "initial_selection_seconds": 2.003935792017728,
+      "additional_selection_seconds": 11.584623251110315,
+      "cooperative_wall_overshoot_seconds": 0.30184191709849983,
+      "gradient_steps": 12,
+      "optimization_environment_steps": 63,
+      "selection_environment_steps": 42
+    },
+    "adapted:FEATURE_UNITS:11": {
+      "learner_seconds": 30.339627625071444,
+      "initialization_seconds": 0.3981543749105185,
+      "selection_seconds": 12.637828915962018,
+      "initial_selection_seconds": 1.8657646250212565,
+      "additional_selection_seconds": 10.772064290940762,
+      "cooperative_wall_overshoot_seconds": 0.3396276250714436,
+      "gradient_steps": 12,
+      "optimization_environment_steps": 66,
+      "selection_environment_steps": 41
+    },
+    "scratch:RAW:23": {
+      "learner_seconds": 30.125437750015408,
+      "initialization_seconds": 0.03916966705583036,
+      "selection_seconds": 12.219005874940194,
+      "initial_selection_seconds": 1.9977097909431905,
+      "additional_selection_seconds": 10.221296083997004,
+      "cooperative_wall_overshoot_seconds": 0.1254377500154078,
+      "gradient_steps": 12,
+      "optimization_environment_steps": 66,
+      "selection_environment_steps": 37
+    },
+    "scratch:FEATURE_UNITS:23": {
+      "learner_seconds": 30.027217541006394,
+      "initialization_seconds": 0.04517770907841623,
+      "selection_seconds": 15.401254794094712,
+      "initial_selection_seconds": 1.7847082499647513,
+      "additional_selection_seconds": 13.61654654412996,
+      "cooperative_wall_overshoot_seconds": 0.02721754100639373,
+      "gradient_steps": 14,
+      "optimization_environment_steps": 62,
+      "selection_environment_steps": 47
+    },
+    "adapted:RAW:23": {
+      "learner_seconds": 30.19902295898646,
+      "initialization_seconds": 0.43088712496683,
+      "selection_seconds": 11.915522543946281,
+      "initial_selection_seconds": 2.0149064590223134,
+      "additional_selection_seconds": 9.900616084923968,
+      "cooperative_wall_overshoot_seconds": 0.19902295898646116,
+      "gradient_steps": 11,
+      "optimization_environment_steps": 65,
+      "selection_environment_steps": 36
+    },
+    "adapted:FEATURE_UNITS:23": {
+      "learner_seconds": 30.041260999976657,
+      "initialization_seconds": 0.40900629200041294,
+      "selection_seconds": 11.805224206182174,
+      "initial_selection_seconds": 1.876669291057624,
+      "additional_selection_seconds": 9.92855491512455,
+      "cooperative_wall_overshoot_seconds": 0.04126099997665733,
+      "gradient_steps": 12,
+      "optimization_environment_steps": 67,
+      "selection_environment_steps": 38
+    },
+    "scratch:RAW:47": {
+      "learner_seconds": 30.03415025002323,
+      "initialization_seconds": 0.04195212502963841,
+      "selection_seconds": 12.574506959179416,
+      "initial_selection_seconds": 1.9292787500889972,
+      "additional_selection_seconds": 10.64522820909042,
+      "cooperative_wall_overshoot_seconds": 0.03415025002323091,
+      "gradient_steps": 12,
+      "optimization_environment_steps": 65,
+      "selection_environment_steps": 38
+    },
+    "scratch:FEATURE_UNITS:47": {
+      "learner_seconds": 30.076676166034304,
+      "initialization_seconds": 0.04674320900812745,
+      "selection_seconds": 11.588538625859655,
+      "initial_selection_seconds": 0.2241360420593992,
+      "additional_selection_seconds": 11.364402583800256,
+      "cooperative_wall_overshoot_seconds": 0.0766761660343036,
+      "gradient_steps": 15,
+      "optimization_environment_steps": 75,
+      "selection_environment_steps": 40
+    },
+    "adapted:RAW:47": {
+      "learner_seconds": 30.202303166966885,
+      "initialization_seconds": 0.37820904108230025,
+      "selection_seconds": 11.805157750844955,
+      "initial_selection_seconds": 2.0347685830201954,
+      "additional_selection_seconds": 9.77038916782476,
+      "cooperative_wall_overshoot_seconds": 0.20230316696688533,
+      "gradient_steps": 10,
+      "optimization_environment_steps": 64,
+      "selection_environment_steps": 36
+    },
+    "adapted:FEATURE_UNITS:47": {
+      "learner_seconds": 30.045983375050128,
+      "initialization_seconds": 0.39628587500192225,
+      "selection_seconds": 12.790932460222393,
+      "initial_selection_seconds": 1.793383959098719,
+      "additional_selection_seconds": 10.997548501123674,
+      "cooperative_wall_overshoot_seconds": 0.045983375050127506,
+      "gradient_steps": 12,
+      "optimization_environment_steps": 66,
+      "selection_environment_steps": 42
+    }
+  },
+  "offline_timing": {
+    "RAW": {
+      "learner_seconds": 29.40278166695498,
+      "initialization_seconds": 0.85507637495175,
+      "selection_seconds": 16.254033790319227,
+      "initial_selection_seconds": 0.3010813749860972,
+      "additional_selection_seconds": 15.95295241533313,
+      "cooperative_wall_overshoot_seconds": 0.0,
+      "gradient_steps": 32,
+      "optimization_environment_steps": 169,
+      "selection_environment_steps": 188,
+      "complete_offline_seconds": 30.628188958973624
+    },
+    "FEATURE_UNITS": {
+      "learner_seconds": 27.350969874998555,
+      "initialization_seconds": 0.08696012501604855,
+      "selection_seconds": 15.021230001933873,
+      "initial_selection_seconds": 0.3038460420211777,
+      "additional_selection_seconds": 14.717383959912695,
+      "cooperative_wall_overshoot_seconds": 0.0,
+      "gradient_steps": 32,
+      "optimization_environment_steps": 159,
+      "selection_environment_steps": 188,
+      "complete_offline_seconds": 27.771717000054196
+    }
+  },
+  "source_cell_scores": {
+    "STOP": {
+      "score": 0.0,
+      "target_removed_mm3": 0.0,
+      "normal_removed_mm3": 0.0,
+      "cumulative_partial_normal_contact_mm3": 0.0,
+      "nonstop_actions": 0
+    },
+    "GREEDY": {
+      "score": 245.24,
+      "target_removed_mm3": 249.0,
+      "normal_removed_mm3": 17.0,
+      "cumulative_partial_normal_contact_mm3": 32.0,
+      "nonstop_actions": 2
+    },
+    "SEARCH": {
+      "score": 245.24,
+      "target_removed_mm3": 249.0,
+      "normal_removed_mm3": 17.0,
+      "cumulative_partial_normal_contact_mm3": 32.0,
+      "nonstop_actions": 2
+    },
+    "RAW:PROCEDURAL_PRETRAINED_FROZEN": {
+      "score": 139.62,
+      "target_removed_mm3": 142.0,
+      "normal_removed_mm3": 10.0,
+      "cumulative_partial_normal_contact_mm3": 30.0,
+      "nonstop_actions": 3
+    },
+    "FEATURE_UNITS:PROCEDURAL_PRETRAINED_FROZEN": {
+      "score": 245.24,
+      "target_removed_mm3": 249.0,
+      "normal_removed_mm3": 17.0,
+      "cumulative_partial_normal_contact_mm3": 32.0,
+      "nonstop_actions": 2
+    },
+    "RAW:PATIENT_SCRATCH_RL:11": {
+      "score": 245.24,
+      "target_removed_mm3": 249.0,
+      "normal_removed_mm3": 17.0,
+      "cumulative_partial_normal_contact_mm3": 32.0,
+      "nonstop_actions": 2
+    },
+    "RAW:INITIAL:11": {
+      "score": 0.0,
+      "target_removed_mm3": 0.0,
+      "normal_removed_mm3": 0.0,
+      "cumulative_partial_normal_contact_mm3": 0.0,
+      "nonstop_actions": 0
+    },
+    "FEATURE_UNITS:PATIENT_SCRATCH_RL:11": {
+      "score": 245.24,
+      "target_removed_mm3": 249.0,
+      "normal_removed_mm3": 17.0,
+      "cumulative_partial_normal_contact_mm3": 32.0,
+      "nonstop_actions": 2
+    },
+    "FEATURE_UNITS:INITIAL:11": {
+      "score": 245.24,
+      "target_removed_mm3": 249.0,
+      "normal_removed_mm3": 17.0,
+      "cumulative_partial_normal_contact_mm3": 32.0,
+      "nonstop_actions": 2
+    },
+    "RAW:PROCEDURAL_PRETRAINED_ADAPTED:11": {
+      "score": 171.42,
+      "target_removed_mm3": 174.0,
+      "normal_removed_mm3": 11.0,
+      "cumulative_partial_normal_contact_mm3": 30.0,
+      "nonstop_actions": 3
+    },
+    "FEATURE_UNITS:PROCEDURAL_PRETRAINED_ADAPTED:11": {
+      "score": 245.24,
+      "target_removed_mm3": 249.0,
+      "normal_removed_mm3": 17.0,
+      "cumulative_partial_normal_contact_mm3": 32.0,
+      "nonstop_actions": 2
+    },
+    "RAW:PATIENT_SCRATCH_RL:23": {
+      "score": 171.42,
+      "target_removed_mm3": 174.0,
+      "normal_removed_mm3": 11.0,
+      "cumulative_partial_normal_contact_mm3": 30.0,
+      "nonstop_actions": 3
+    },
+    "RAW:INITIAL:23": {
+      "score": 171.42,
+      "target_removed_mm3": 174.0,
+      "normal_removed_mm3": 11.0,
+      "cumulative_partial_normal_contact_mm3": 30.0,
+      "nonstop_actions": 3
+    },
+    "FEATURE_UNITS:PATIENT_SCRATCH_RL:23": {
+      "score": 171.42,
+      "target_removed_mm3": 174.0,
+      "normal_removed_mm3": 11.0,
+      "cumulative_partial_normal_contact_mm3": 30.0,
+      "nonstop_actions": 3
+    },
+    "FEATURE_UNITS:INITIAL:23": {
+      "score": 33.4,
+      "target_removed_mm3": 34.0,
+      "normal_removed_mm3": 2.0,
+      "cumulative_partial_normal_contact_mm3": 16.0,
+      "nonstop_actions": 2
+    },
+    "RAW:PROCEDURAL_PRETRAINED_ADAPTED:23": {
+      "score": 171.42,
+      "target_removed_mm3": 174.0,
+      "normal_removed_mm3": 11.0,
+      "cumulative_partial_normal_contact_mm3": 30.0,
+      "nonstop_actions": 3
+    },
+    "FEATURE_UNITS:PROCEDURAL_PRETRAINED_ADAPTED:23": {
+      "score": 245.24,
+      "target_removed_mm3": 249.0,
+      "normal_removed_mm3": 17.0,
+      "cumulative_partial_normal_contact_mm3": 32.0,
+      "nonstop_actions": 2
+    },
+    "RAW:PATIENT_SCRATCH_RL:47": {
+      "score": 245.16000000000003,
+      "target_removed_mm3": 249.0,
+      "normal_removed_mm3": 17.0,
+      "cumulative_partial_normal_contact_mm3": 36.0,
+      "nonstop_actions": 3
+    },
+    "RAW:INITIAL:47": {
+      "score": 139.62,
+      "target_removed_mm3": 142.0,
+      "normal_removed_mm3": 10.0,
+      "cumulative_partial_normal_contact_mm3": 30.0,
+      "nonstop_actions": 3
+    },
+    "FEATURE_UNITS:PATIENT_SCRATCH_RL:47": {
+      "score": 245.24,
+      "target_removed_mm3": 249.0,
+      "normal_removed_mm3": 17.0,
+      "cumulative_partial_normal_contact_mm3": 32.0,
+      "nonstop_actions": 2
+    },
+    "FEATURE_UNITS:INITIAL:47": {
+      "score": 0.0,
+      "target_removed_mm3": 0.0,
+      "normal_removed_mm3": 0.0,
+      "cumulative_partial_normal_contact_mm3": 0.0,
+      "nonstop_actions": 0
+    },
+    "RAW:PROCEDURAL_PRETRAINED_ADAPTED:47": {
+      "score": 245.17,
+      "target_removed_mm3": 249.0,
+      "normal_removed_mm3": 17.0,
+      "cumulative_partial_normal_contact_mm3": 33.0,
+      "nonstop_actions": 3
+    },
+    "FEATURE_UNITS:PROCEDURAL_PRETRAINED_ADAPTED:47": {
+      "score": 245.24,
+      "target_removed_mm3": 249.0,
+      "normal_removed_mm3": 17.0,
+      "cumulative_partial_normal_contact_mm3": 32.0,
+      "nonstop_actions": 2
+    }
+  },
+  "recorded_geometry_rejected_candidates": [],
+  "final_worlds_used": false,
+  "clinical_deficit_probability": null,
+  "input_file_sha256": {
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/status.json": "1bb9a3a37be896b36f9a03ebf147eb0599cfaa5bceb36088d5344dbd956a1780",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/experiment-status.json": "131a5c06c87793b1ebcff9c417fe50ffce1e1329ab57955b528a1be2190e7c57",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-feature-units-v1/0bffeaa33dc3120183d0c6fb124aff6e2d327a63/source/manifests/experiments/procedural-native-feature-units-v1.json": "df60f8331cb553b016feddf8401eba9b590e70e3fb7c8fb3097d3599601d07a1",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-feature-units-v1/0bffeaa33dc3120183d0c6fb124aff6e2d327a63/source/manifests/experiments/procedural-native-to-ucsf-v1.json": "6011ec40117f49653df4ab2fb0194c1e630bd2cf09870f87332f340fe3c6fde0",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/source.json": "036ce307d1785559a340e3576df495829288cb25760838c1d7b22e8a676a81cd",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/manifest.json": "f8cf86b1276266473fd63fa353fdc5c6e777a76f2b6265c0dbb4c4d4509f04d2",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/summary.json": "1b42e80f0a23e1ad98ee49023e0fdb6845a77f1ef030e419c32fde93ed047a6f",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/public-world-preflight.json": "bd87fec8e772d20ead2ee2be7fc6aac7e324588a2b2b1fec7db963d7dbbd4ce9",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/pretraining-raw/training/result.json": "a675416ee6e35ada3143d753f988891223c4502b940e983c5d4e4f21ed4a397a",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/pretraining-raw/training/contract.json": "9f6aec60b99de9bd1d193f43d43346e01f797f436a459512324096f272a2d90e",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/pretraining-raw/training/initial.pt": "4e70ed83fcad2c3ab79f095dbce99a5314fd8db00c66f2def30b195726f095d5",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/pretraining-raw/training/checkpoint.pt": "73f17178593f6c14be92916da1b06511a8cdb024b05a1de6067fe8a7f239e727",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/pretraining-raw/procedural.pt": "3581dcd817acc40c3ef9b36c1fd8e0d412860c8637453fd99712f19a8a4efb17",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/pretraining-raw/procedural-result.json": "34a24d4337301f61bb0bdf30991e248f8d25494edfb9c7f09c568824c06fd422",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/pretraining-feature_units/training/result.json": "be81d9fff8123bfaed16fb7ca757ef394c0834febe19bfac67837b60a09dd34e",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/pretraining-feature_units/training/contract.json": "9078f456abde786e04de64edbf5dcd8da88caefa60cc5eb2a7c348b33000315a",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/pretraining-feature_units/training/initial.pt": "d53a56aabbc0ebec2574e01bbb287091f447b9f15b27902b8865e1f44268ec2e",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/pretraining-feature_units/training/checkpoint.pt": "d91ca5dc25c73b9b7c2ab1e6a7c84ab65c48c80205744b9054629f1239bed113",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/pretraining-feature_units/procedural.pt": "86156b7a7a7aff907dcba5bb6bda274247098b14773c77e4cab6d011e4267393",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/pretraining-feature_units/procedural-result.json": "8846e8ad6523e5885c24091e8347b8fcbd98d03c58834603e2a2c9b61455b0bc",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/training.json": "140cb6f2323e41eb32334f81f9996f5454c35a7b1306ea1a7d2f1d1e68f2aaf6",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-scratch-11/result.json": "6394d99b1ef8a077d5f7ff1b6c515e203a8b2c5f9e26018470476ad5710a2b60",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-scratch-11/arm-record.json": "697f3b3d96360348ada42c754e30f56cb51ab391b9b6cf411cb6ed42fcd265dd",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-scratch-11/contract.json": "40ec39b740d4e30d1cf6613e80de7ba40a46ebfa083f759301ad926bc21b7fe5",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-scratch-11/initial.pt": "8947317e9b7eb10cc21177beeb11555e12dd8b773135cafc9cc0fb04489660b2",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-scratch-11/checkpoint.pt": "7b0e2180092daaf4354d947ad8ad799f0b67e1289f6a5fb13a2187227471191e",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-scratch-11/result.json": "e2b40f527840798da57fb3b06b4b46070944678f039e2b106f561f5dcdf3f06a",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-scratch-11/arm-record.json": "90256c6ed12f438f6926292a51fe1463e6801f02f15c838b5b0d94453c231252",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-scratch-11/contract.json": "db4cd386be9c62330e6d1dbe1e002e9304ac2d1c28c19820bf811a1b4211bcf3",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-scratch-11/initial.pt": "8d38f6c7672fc9c1ecce898d60361bb70831a5bee6f025657ee2f9f0a03d518e",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-scratch-11/checkpoint.pt": "d2888ef1615f8955d192d7bbc77b4614d3f86e98aef9b3cc4674a0ac16e4be6f",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-adapted-11/result.json": "4fb0fce4d63cce089ecf4ff21a0430e7ee65e2d22fbfce759b3f9190cd62b14e",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-adapted-11/arm-record.json": "e6525a957345aedc2c5dfcf23191d83745e2136d2473a23b4e9c1f58a636c779",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-adapted-11/contract.json": "97e345a3da5c16842daf0804d751bf24eeb2de10e29c31b6517f60214e3988a6",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-adapted-11/initial.pt": "cc3fe663e403009ebce9a9aa22f37930e38f49c3d9f682989a026a52622c486e",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-adapted-11/checkpoint.pt": "e1a073d19fef1e4f4c86694b9ac5f114036a9877806abf8e27f625233f62bcbe",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-adapted-11/result.json": "170fd89d119bf24c59d46712080f796e979632ebd2645ae4db961e359673fd20",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-adapted-11/arm-record.json": "1939d97a330af00a259e490da53a639ec71bd045865d80a51b760b17aa4e7853",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-adapted-11/contract.json": "cfe284b2fe0ac8075e2b8c85f5740d4d95f7eeab400cde48833f1c8888705fa5",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-adapted-11/initial.pt": "b0885f2e31cc8742810ade3bf2c78114dfe655e18361dbbf58b9b75bfc51aa4a",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-adapted-11/checkpoint.pt": "4a48da68b3ca601a27aad44e63d4d5ce0100a6f9a64ca1d65022071cb37ee77e",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-scratch-23/result.json": "0227cb6a14bb0741c0faa239c397148490753d650d12817ea4bc7ac1b1199c76",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-scratch-23/arm-record.json": "a87bd8ea76fc988b80dd10662d55a2ca0e34bc8768ae222e5144124fb6858f45",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-scratch-23/contract.json": "4832a616c8bd8565901b62f6009aa5333e7ec8b313492c6552e7c68944dfa974",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-scratch-23/initial.pt": "580e45ab5271bf51ae8b0675b774cf37433a8054e9659591f5d5d59b75cea3cd",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-scratch-23/checkpoint.pt": "5fab5994f0f31779f3a5ac036f3598d1f36b173b4815872b4213f42248ea259a",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-scratch-23/result.json": "90b5e15094bd38713b6e2e54d423791ad04e6a15ca9bab31e61fd140903a92d4",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-scratch-23/arm-record.json": "d6276f2fd262a6a45ce88dadb6fc1a4c228c2f843d8b2c9e613f0f5eb24fe197",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-scratch-23/contract.json": "4b8d919f0618c26828086d9363a945cf312b2b820064b970a8b78bc0dee7dcc7",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-scratch-23/initial.pt": "44ab85e5e8ee220323ff94d4ac1de7672eee85aec3cdb8c8808d9881af42317c",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-scratch-23/checkpoint.pt": "85eabecc365f084c63a4ca71e40e934e075fedcbb7d58c97412c87d6072f5ad5",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-adapted-23/result.json": "2409ad2473e877152c141ed01b6dddf41eb53882267dcc9991397566801a36c9",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-adapted-23/arm-record.json": "239376104db7f6c6844246027b6766c750e42af4d25d1e1f5eae990233592361",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-adapted-23/contract.json": "b26d6e9b57b4fc3757c225878968e34f12e2fa70150ba24469ac930a551f8268",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-adapted-23/initial.pt": "cc3fe663e403009ebce9a9aa22f37930e38f49c3d9f682989a026a52622c486e",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-adapted-23/checkpoint.pt": "20c3a71f218399a9e64e517c33c0292a4344f4428cce002a8c60b5de41a2dd74",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-adapted-23/result.json": "85d7cb13e375cdbd66eec99722e76a4eb13e452d3190ec2efa7ba216ef975a65",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-adapted-23/arm-record.json": "06e42a54739427abfe227a556932f67f5dc409009da2ac567901adf0c4086cc9",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-adapted-23/contract.json": "e58745ecf573d4736c19e2541c3a51df44d420d0eefd55478a0116052445fdfd",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-adapted-23/initial.pt": "b0885f2e31cc8742810ade3bf2c78114dfe655e18361dbbf58b9b75bfc51aa4a",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-adapted-23/checkpoint.pt": "cb6c84017ef3e9ec8d3ea0bd3c4e4fd303c379b176fd119862744b215144c715",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-scratch-47/result.json": "872c7ba91a5de770aaf088b72b52091382cd6104a86aa90ae0792c3678d0b886",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-scratch-47/arm-record.json": "841cc96b980b851266171c58c953b3ebacc7d87ddb70d6eec37b50d57bddb766",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-scratch-47/contract.json": "0bc2d3be164c6e4da151e715c38d4c06a698c25dfe459c64dc2a0e5b22734a77",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-scratch-47/initial.pt": "44ace9f508911fdcb4001bd52efe9500b92070f40caf5282f59dccb444d6b4f4",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-scratch-47/checkpoint.pt": "65e571dafc9d9f8c5e538985be0978d262373b1824e826708a425d69c56566ca",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-scratch-47/result.json": "cbd1cc9438699e970c8535b2f5fd35deb25675ec1fa572b6d75ec8bcf1366541",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-scratch-47/arm-record.json": "c66fd684e870c51b00b0fdd420284f00382f562f643bb909cffb1db94d686f8d",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-scratch-47/contract.json": "88ce65fe7a906e01564a30e7f4f324890ee4b16107b83cce2465545d7ac68fa0",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-scratch-47/initial.pt": "9a2cb564f8626133e08ea8979635c27c2cbf519f93aaf3fd3d8e3fa947f77b6e",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-scratch-47/checkpoint.pt": "1d8075a5a907dc0c608a535da5d69bdc0133d828180657c9154489a6ef88b53c",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-adapted-47/result.json": "c681aa8e3568bed02e238725045b232063f13f9284aba76b8044b874d0e0da4b",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-adapted-47/arm-record.json": "c77d1789ab47a09fd07511e8b173a9d0d87a67f411d7db148ddd3d4ea675591b",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-adapted-47/contract.json": "927df93e5c099e43946fe411071780f6b21f0aa125f7e27fbe4c0309a1e00f1d",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-adapted-47/initial.pt": "cc3fe663e403009ebce9a9aa22f37930e38f49c3d9f682989a026a52622c486e",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/raw-adapted-47/checkpoint.pt": "f51d4e77e04aa7e83dd7053114bb38ea8df5a2a1f4877d997c37fcbf968763c4",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-adapted-47/result.json": "2c3d8b0f9310332c7c46ab9d9b94da5b7c65c5afd31c48b72b83363dcc6391b4",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-adapted-47/arm-record.json": "233aa1c884d2203c4d7e5214c1f424480c951f5b7c2b256986e15c2c1addc7cc",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-adapted-47/contract.json": "e9ae4cf00e7dfb13ff6b2143934f86c73c682463e7140d8cfb87464ece0204d7",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-adapted-47/initial.pt": "b0885f2e31cc8742810ade3bf2c78114dfe655e18361dbbf58b9b75bfc51aa4a",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-adapted-47/checkpoint.pt": "760ee0e4b23407ed0df936ab832bc2a2711fa2d78540d99de748151ed2399d28",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/frozen.json": "b12eb6db2076bf2a8cfb3a84c0b80a29a4870c23746dcff29cbdc2f6d0bdb86a",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/search.json": "0c12257605426e909cc7c827356cfc8bd214aa6a8046becd5f04c5a2ffe5b4cf",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/candidate-freeze.json": "a7baf10993aab57ceaf48c5795a896d9cede77f1f5d10261cdad8b1ea41cb02c",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/development-geometry-825d1885-6d54-4d69-963c-b5c585fb6d8c/native-history-audit.json": "b8f515e3da3add10ff35cb7d40a7a1af616bfc595edc0ce37b8efc245840dd2f",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/development-geometry-825d1885-6d54-4d69-963c-b5c585fb6d8c/native-history-replay.json": "50c69c8fbf10a18342524a3f8df6aa496331b0fd61edc85444b80c55be53cda9",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/development-geometry-825d1885-6d54-4d69-963c-b5c585fb6d8c/manifest.json": "4e5af95f207a3b4577df62c088fa020db6a03ad3f65b06279e9e04bae72a3209"
+  },
+  "limits": [
+    "No policy retraining, policy rollout or final/stress world execution in this audit",
+    "Geometry certificates are source-bound and cross-checked, not rerun by this receipt audit",
+    "Split closure uses saved artifacts and frozen execution paths; no per-reset execution trace was recorded",
+    "Fresh initialization and within-attempt shared copies are checked; tensor equality alone cannot prove process execution",
+    "One structural development case, absent functional evidence; no clinical or population inference"
+  ],
+  "auditor_sha256": "cc736200973f9e7770ddef7549037a113e0d35c7949262d9043f7a5f901f8ec3"
+}

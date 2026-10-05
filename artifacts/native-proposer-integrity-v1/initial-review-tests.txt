@@ -1,0 +1,168 @@
+.FFFF..FFFF.                                                             [100%]
+=================================== FAILURES ===================================
+_ test_source_content_changed_before_preparation_cannot_reuse_cached_identity[target_labels] _
+
+field = 'target_labels'
+
+    @pytest.mark.parametrize("field", ["target_labels", "tissue_mask", "hard_exclusion", "affine"])
+    def test_source_content_changed_before_preparation_cannot_reuse_cached_identity(field):
+        engine, _, _ = fixture()
+        changed = getattr(engine.config, field).copy()
+        if field == "target_labels":
+            changed[:, :, 8] = 0
+        elif field == "tissue_mask":
+            changed[0, 0, 0] = False
+        elif field == "hard_exclusion":
+            changed[0, 0, 0] = True
+        else:
+            changed[0, 3] = 1.
+        object.__setattr__(engine.config, field, _immutable(changed))
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_native_proposals_review.py:47: Failed
+_ test_source_content_changed_before_preparation_cannot_reuse_cached_identity[tissue_mask] _
+
+field = 'tissue_mask'
+
+    @pytest.mark.parametrize("field", ["target_labels", "tissue_mask", "hard_exclusion", "affine"])
+    def test_source_content_changed_before_preparation_cannot_reuse_cached_identity(field):
+        engine, _, _ = fixture()
+        changed = getattr(engine.config, field).copy()
+        if field == "target_labels":
+            changed[:, :, 8] = 0
+        elif field == "tissue_mask":
+            changed[0, 0, 0] = False
+        elif field == "hard_exclusion":
+            changed[0, 0, 0] = True
+        else:
+            changed[0, 3] = 1.
+        object.__setattr__(engine.config, field, _immutable(changed))
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_native_proposals_review.py:47: Failed
+_ test_source_content_changed_before_preparation_cannot_reuse_cached_identity[hard_exclusion] _
+
+field = 'hard_exclusion'
+
+    @pytest.mark.parametrize("field", ["target_labels", "tissue_mask", "hard_exclusion", "affine"])
+    def test_source_content_changed_before_preparation_cannot_reuse_cached_identity(field):
+        engine, _, _ = fixture()
+        changed = getattr(engine.config, field).copy()
+        if field == "target_labels":
+            changed[:, :, 8] = 0
+        elif field == "tissue_mask":
+            changed[0, 0, 0] = False
+        elif field == "hard_exclusion":
+            changed[0, 0, 0] = True
+        else:
+            changed[0, 3] = 1.
+        object.__setattr__(engine.config, field, _immutable(changed))
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_native_proposals_review.py:47: Failed
+_ test_source_content_changed_before_preparation_cannot_reuse_cached_identity[affine] _
+
+field = 'affine'
+
+    @pytest.mark.parametrize("field", ["target_labels", "tissue_mask", "hard_exclusion", "affine"])
+    def test_source_content_changed_before_preparation_cannot_reuse_cached_identity(field):
+        engine, _, _ = fixture()
+        changed = getattr(engine.config, field).copy()
+        if field == "target_labels":
+            changed[:, :, 8] = 0
+        elif field == "tissue_mask":
+            changed[0, 0, 0] = False
+        elif field == "hard_exclusion":
+            changed[0, 0, 0] = True
+        else:
+            changed[0, 3] = 1.
+        object.__setattr__(engine.config, field, _immutable(changed))
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_native_proposals_review.py:47: Failed
+_ test_external_cavity_array_mutation_rejected_under_cached_ancestry[remaining_mask] _
+
+field = 'remaining_mask'
+
+    @pytest.mark.parametrize("field", ["remaining_mask", "removed_mask", "contact_mask", "connected_free_mask"])
+    def test_external_cavity_array_mutation_rejected_under_cached_ancestry(field):
+        engine, _, _ = fixture()
+        provider = PreparedAxisColumnProposer(engine.config)
+        before = provider.propose(engine)
+        array = getattr(engine, field)
+        array[4, 4, 8] = ~array[4, 4, 8]
+        assert engine.state_hash == before.cavity_state_hash  # Cached ancestry alone cannot detect this edit.
+>       with pytest.raises(RuntimeError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE RuntimeError
+
+tests/test_native_proposals_review.py:77: Failed
+_ test_external_cavity_array_mutation_rejected_under_cached_ancestry[removed_mask] _
+
+field = 'removed_mask'
+
+    @pytest.mark.parametrize("field", ["remaining_mask", "removed_mask", "contact_mask", "connected_free_mask"])
+    def test_external_cavity_array_mutation_rejected_under_cached_ancestry(field):
+        engine, _, _ = fixture()
+        provider = PreparedAxisColumnProposer(engine.config)
+        before = provider.propose(engine)
+        array = getattr(engine, field)
+        array[4, 4, 8] = ~array[4, 4, 8]
+        assert engine.state_hash == before.cavity_state_hash  # Cached ancestry alone cannot detect this edit.
+>       with pytest.raises(RuntimeError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE RuntimeError
+
+tests/test_native_proposals_review.py:77: Failed
+_ test_external_cavity_array_mutation_rejected_under_cached_ancestry[contact_mask] _
+
+field = 'contact_mask'
+
+    @pytest.mark.parametrize("field", ["remaining_mask", "removed_mask", "contact_mask", "connected_free_mask"])
+    def test_external_cavity_array_mutation_rejected_under_cached_ancestry(field):
+        engine, _, _ = fixture()
+        provider = PreparedAxisColumnProposer(engine.config)
+        before = provider.propose(engine)
+        array = getattr(engine, field)
+        array[4, 4, 8] = ~array[4, 4, 8]
+        assert engine.state_hash == before.cavity_state_hash  # Cached ancestry alone cannot detect this edit.
+>       with pytest.raises(RuntimeError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE RuntimeError
+
+tests/test_native_proposals_review.py:77: Failed
+_ test_external_cavity_array_mutation_rejected_under_cached_ancestry[connected_free_mask] _
+
+field = 'connected_free_mask'
+
+    @pytest.mark.parametrize("field", ["remaining_mask", "removed_mask", "contact_mask", "connected_free_mask"])
+    def test_external_cavity_array_mutation_rejected_under_cached_ancestry(field):
+        engine, _, _ = fixture()
+        provider = PreparedAxisColumnProposer(engine.config)
+        before = provider.propose(engine)
+        array = getattr(engine, field)
+        array[4, 4, 8] = ~array[4, 4, 8]
+        assert engine.state_hash == before.cavity_state_hash  # Cached ancestry alone cannot detect this edit.
+>       with pytest.raises(RuntimeError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE RuntimeError
+
+tests/test_native_proposals_review.py:77: Failed
+=========================== short test summary info ============================
+FAILED tests/test_native_proposals_review.py::test_source_content_changed_before_preparation_cannot_reuse_cached_identity[target_labels]
+FAILED tests/test_native_proposals_review.py::test_source_content_changed_before_preparation_cannot_reuse_cached_identity[tissue_mask]
+FAILED tests/test_native_proposals_review.py::test_source_content_changed_before_preparation_cannot_reuse_cached_identity[hard_exclusion]
+FAILED tests/test_native_proposals_review.py::test_source_content_changed_before_preparation_cannot_reuse_cached_identity[affine]
+FAILED tests/test_native_proposals_review.py::test_external_cavity_array_mutation_rejected_under_cached_ancestry[remaining_mask]
+FAILED tests/test_native_proposals_review.py::test_external_cavity_array_mutation_rejected_under_cached_ancestry[removed_mask]
+FAILED tests/test_native_proposals_review.py::test_external_cavity_array_mutation_rejected_under_cached_ancestry[contact_mask]
+FAILED tests/test_native_proposals_review.py::test_external_cavity_array_mutation_rejected_under_cached_ancestry[connected_free_mask]
+8 failed, 4 passed in 0.31s

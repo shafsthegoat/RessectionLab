@@ -1,0 +1,364 @@
+===========================================================================
+         ________    _________   _______       __     _________            
+        |        |\ |        |\ |       \\    |  |\  /         \\          
+        |    ____|| |    ____|| |    __  ||   |__|| |    ___    ||         
+        |   |\___\| |   |\___\| |   |\_| ||    \_\| |   //  \   ||         
+        |   ||__    |   ||__    |   ||_| ||   |  |\ |  ||    |  ||         
+        |       |\  |       |\  |         \\  |  || |  ||    |  ||         
+        |    ___||  |    ___||  |    ___   || |  || |  ||    |  ||         
+        |   |\__\|  |   |\__\|  |   |\__|  || |  || |  ||    |  ||         
+        |   ||      |   ||___   |   ||__|  || |  || |   \\__/   ||         
+        |   ||      |        |\ |          || |  || |           ||         
+        |___||      |________|| |_________//  |__||  \_________//          
+                                                                           
+      F I N I T E   E L E M E N T S   F O R   B I O M E C H A N I C S      
+                                                                           
+  version 4.13.0
+  FEBio is a registered trademark.                                         
+  copyright (c) 2006-2026 - All rights reserved                            
+                                                                           
+===========================================================================
+
+Starting without configuration file
+Default linear solver: skyline
+Reading file mpc_nonrigid.feb ...SUCCESS!
+
+
+
+Data Record #1
+===========================================================================
+Step = 0
+Time = 0
+Data = mechanics_nodes_si
+File = mpc_nonrigid.nodes.log
+
+Data Record #2
+===========================================================================
+Step = 0
+Time = 0
+Data = mechanics_elements_si
+File = mpc_nonrigid.elements.log
+
+ *************************************************************************
+ * Selecting linear solver skyline                                       *
+ *************************************************************************
+
+===== beginning time step 1 : 0.25 =====
+
+
+Reforming stiffness matrix: reformation #1
+
+===== reforming stiffness matrix:
+	Nr of equations ........................... : 72
+	Nr of nonzeroes in stiffness matrix ....... : 2484
+ 1
+ Nonlinear solution status: time= 0.25
+	stiffness updates             = 0
+	right hand side evaluations   = 2
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            1.178762e-05    1.841802e-10    1.178762e-15 
+	   energy              9.733210e-08    1.297029e-11    9.733210e-18 
+	   displacement        1.452249e-08    1.452249e-08    1.452249e-28 
+ 2
+ Nonlinear solution status: time= 0.25
+	stiffness updates             = 1
+	right hand side evaluations   = 3
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            1.178762e-05    9.603260e-15    1.178762e-15 
+	   energy              9.733210e-08    6.632960e-15    9.733210e-18 
+	   displacement        1.452249e-08    7.184697e-14    1.450422e-28 
+ 3
+ Nonlinear solution status: time= 0.25
+	stiffness updates             = 2
+	right hand side evaluations   = 4
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            1.178762e-05    4.168366e-17    1.178762e-15 
+	   energy              9.733210e-08    9.832312e-18    9.733210e-18 
+	   displacement        1.452249e-08    6.556663e-15    1.452067e-28 
+ 4
+ Nonlinear solution status: time= 0.25
+	stiffness updates             = 3
+	right hand side evaluations   = 5
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            1.178762e-05    2.311670e-21    1.178762e-15 
+	   energy              9.733210e-08    6.334759e-22    9.733210e-18 
+	   displacement        1.452249e-08    2.510972e-19    1.452075e-28 
+
+ *************************************************************************
+ *                               WARNING                                 *
+ * No force acting on the system.                                        *
+ *************************************************************************
+
+convergence summary
+    number of iterations   : 4
+    number of reformations : 1
+
+------- converged at time : 0.25
+
+
+Data Record #1
+===========================================================================
+Step = 1
+Time = 0.25
+Data = mechanics_nodes_si
+File = mpc_nonrigid.nodes.log
+
+Data Record #2
+===========================================================================
+Step = 1
+Time = 0.25
+Data = mechanics_elements_si
+File = mpc_nonrigid.elements.log
+
+===== beginning time step 2 : 0.5 =====
+
+
+Reforming stiffness matrix: reformation #1
+
+ 1
+ Nonlinear solution status: time= 0.5
+	stiffness updates             = 0
+	right hand side evaluations   = 2
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            1.174376e-05    1.838222e-10    1.174376e-15 
+	   energy              9.720939e-08    1.406699e-11    9.720939e-18 
+	   displacement        1.451896e-08    1.451896e-08    1.451896e-28 
+ 2
+ Nonlinear solution status: time= 0.5
+	stiffness updates             = 1
+	right hand side evaluations   = 3
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            1.174376e-05    9.511485e-15    1.174376e-15 
+	   energy              9.720939e-08    6.590885e-15    9.720939e-18 
+	   displacement        1.451896e-08    7.105900e-14    1.450048e-28 
+ 3
+ Nonlinear solution status: time= 0.5
+	stiffness updates             = 2
+	right hand side evaluations   = 4
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            1.174376e-05    4.165630e-17    1.174376e-15 
+	   energy              9.720939e-08    9.804686e-18    9.720939e-18 
+	   displacement        1.451896e-08    6.540793e-15    1.451690e-28 
+ 4
+ Nonlinear solution status: time= 0.5
+	stiffness updates             = 3
+	right hand side evaluations   = 5
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            1.174376e-05    2.271588e-21    1.174376e-15 
+	   energy              9.720939e-08    6.447979e-22    9.720939e-18 
+	   displacement        1.451896e-08    2.496995e-19    1.451697e-28 
+
+ *************************************************************************
+ *                               WARNING                                 *
+ * No force acting on the system.                                        *
+ *************************************************************************
+
+convergence summary
+    number of iterations   : 4
+    number of reformations : 1
+
+------- converged at time : 0.5
+
+
+Data Record #1
+===========================================================================
+Step = 2
+Time = 0.5
+Data = mechanics_nodes_si
+File = mpc_nonrigid.nodes.log
+
+Data Record #2
+===========================================================================
+Step = 2
+Time = 0.5
+Data = mechanics_elements_si
+File = mpc_nonrigid.elements.log
+
+===== beginning time step 3 : 0.75 =====
+
+
+Reforming stiffness matrix: reformation #1
+
+ 1
+ Nonlinear solution status: time= 0.75
+	stiffness updates             = 0
+	right hand side evaluations   = 2
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            1.170050e-05    1.834631e-10    1.170050e-15 
+	   energy              9.708586e-08    1.514630e-11    9.708586e-18 
+	   displacement        1.451495e-08    1.451495e-08    1.451495e-28 
+ 2
+ Nonlinear solution status: time= 0.75
+	stiffness updates             = 1
+	right hand side evaluations   = 3
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            1.170050e-05    9.421584e-15    1.170050e-15 
+	   energy              9.708586e-08    6.548163e-15    9.708586e-18 
+	   displacement        1.451495e-08    7.030734e-14    1.449628e-28 
+ 3
+ Nonlinear solution status: time= 0.75
+	stiffness updates             = 2
+	right hand side evaluations   = 4
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            1.170050e-05    4.163700e-17    1.170050e-15 
+	   energy              9.708586e-08    9.777737e-18    9.708586e-18 
+	   displacement        1.451495e-08    6.525649e-15    1.451266e-28 
+ 4
+ Nonlinear solution status: time= 0.75
+	stiffness updates             = 3
+	right hand side evaluations   = 5
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            1.170050e-05    2.232547e-21    1.170050e-15 
+	   energy              9.708586e-08    6.556366e-22    9.708586e-18 
+	   displacement        1.451495e-08    2.483721e-19    1.451274e-28 
+
+ *************************************************************************
+ *                               WARNING                                 *
+ * No force acting on the system.                                        *
+ *************************************************************************
+
+convergence summary
+    number of iterations   : 4
+    number of reformations : 1
+
+------- converged at time : 0.75
+
+
+Data Record #1
+===========================================================================
+Step = 3
+Time = 0.75
+Data = mechanics_nodes_si
+File = mpc_nonrigid.nodes.log
+
+Data Record #2
+===========================================================================
+Step = 3
+Time = 0.75
+Data = mechanics_elements_si
+File = mpc_nonrigid.elements.log
+
+===== beginning time step 4 : 1 =====
+
+
+Reforming stiffness matrix: reformation #1
+
+ 1
+ Nonlinear solution status: time= 1
+	stiffness updates             = 0
+	right hand side evaluations   = 2
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            1.165782e-05    1.831032e-10    1.165782e-15 
+	   energy              9.696152e-08    1.620843e-11    9.696152e-18 
+	   displacement        1.451049e-08    1.451049e-08    1.451049e-28 
+ 2
+ Nonlinear solution status: time= 1
+	stiffness updates             = 1
+	right hand side evaluations   = 3
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            1.165782e-05    9.333486e-15    1.165782e-15 
+	   energy              9.696152e-08    6.504760e-15    9.696152e-18 
+	   displacement        1.451049e-08    6.958965e-14    1.449163e-28 
+ 3
+ Nonlinear solution status: time= 1
+	stiffness updates             = 2
+	right hand side evaluations   = 4
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            1.165782e-05    4.162582e-17    1.165782e-15 
+	   energy              9.696152e-08    9.751412e-18    9.696152e-18 
+	   displacement        1.451049e-08    6.511280e-15    1.450798e-28 
+ 4
+ Nonlinear solution status: time= 1
+	stiffness updates             = 3
+	right hand side evaluations   = 5
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            1.165782e-05    2.194596e-21    1.165782e-15 
+	   energy              9.696152e-08    6.659891e-22    9.696152e-18 
+	   displacement        1.451049e-08    2.471130e-19    1.450806e-28 
+
+ *************************************************************************
+ *                               WARNING                                 *
+ * No force acting on the system.                                        *
+ *************************************************************************
+
+convergence summary
+    number of iterations   : 4
+    number of reformations : 1
+
+------- converged at time : 1
+
+
+Data Record #1
+===========================================================================
+Step = 4
+Time = 1
+Data = mechanics_nodes_si
+File = mpc_nonrigid.nodes.log
+
+Data Record #2
+===========================================================================
+Step = 4
+Time = 1
+Data = mechanics_elements_si
+File = mpc_nonrigid.elements.log
+
+
+ N O N L I N E A R   I T E R A T I O N   I N F O R M A T I O N
+
+	Number of time steps completed .................... : 4
+
+	Total number of equilibrium iterations ............ : 16
+
+	Average number of equilibrium iterations .......... : 4
+
+	Total number of right hand evaluations ............ : 20
+
+	Total number of stiffness reformations ............ : 4
+
+
+ L I N E A R   S O L V E R   S T A T S
+
+	Total calls to linear solver ........ : 0
+
+	Avg iterations per solve ............ : 0
+
+	Time in linear solver: 0:00:00
+
+
+ Elapsed time : 0:00:00
+
+
+ N O R M A L   T E R M I N A T I O N
+

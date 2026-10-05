@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "sourceBundle": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/cases/UCSF-PDGM-0004-prior-proposals.ressectionlab",
+  "caseHash": "sha256:2dd4c1ccc72a3ee6f821cf8f23a8c32996ec74fe1d616411863d5197bf3d2547",
+  "proposalId": "motor_functional_concordance_851c3e8fac7c",
+  "mapId": "motor_functional_concordance",
+  "evidenceHash": "sha256:de1490e682050abe22d8f6ec5eed704499f6b4f6f17771ef6514f37d14f84813",
+  "motorDataHash": "sha256:7ff809ab85bceb4019a1069df2ef8173bd3eb70d8c5149352e3030824fc108f3",
+  "motorCoverageHash": "sha256:e5a02c1f4e15c9fd083eefd5538c8e9e63827623ce2d54a5059dc1ab378f6418",
+  "sourceImageHash": "sha256:88666f74a0aa1e7e83b8b555605f2c6408a7ce88b11d49c0705717838d5b5c74",
+  "scope": "deliberately_high_motor_prior_display_landmark_only",
+  "selectionRule": {
+    "eligible": "Atlas sampling coverage is true, source MRI is positive, and MRI intensity is at least the median of all positive source MRI voxels.",
+    "ranking": "Maximum motor functional-concordance value among eligible voxels.",
+    "tieBreak": "Minimum squared distance to source-grid center after dividing each axis by image shape; lexicographic voxel order breaks remaining ties.",
+    "mriPositiveMedianThreshold": 2114.397216796875,
+    "positiveMriVoxelCount": 1432027,
+    "eligibleVoxelCount": 716103,
+    "maximumValueTieCount": 1
+  },
+  "shape": [
+    240,
+    240,
+    155
+  ],
+  "affineRasMm": [
+    [
+      -1.0,
+      -0.0,
+      -0.0,
+      0.0
+    ],
+    [
+      -0.0,
+      -1.0,
+      -0.0,
+      239.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "sourceVoxel": [
+    173,
+    102,
+    112
+  ],
+  "rasMm": [
+    -173.0,
+    137.0,
+    112.0
+  ],
+  "motorPriorValue": 0.9969273805618286,
+  "sourceMriValue": 2139.291259765625,
+  "samplingCoverage": true,
+  "expectedCursorSample": {
+    "covered": true,
+    "value": 0.9969273805618286,
+    "reason": null,
+    "voxel": [
+      173,
+      102,
+      112
+    ]
+  },
+  "localMriSupport": {
+    "cubeShape": [
+      5,
+      5,
+      5
+    ],
+    "all125VoxelsPositive": true,
+    "minimumMriValue": 1431.6865234375,
+    "planes": [
+      {
+        "plane": "sagittal",
+        "localPixels": 25,
+        "positiveMriPixels": 25,
+        "minimumMriValue": 1720.0296630859375,
+        "maximumMriValue": 2342.027099609375
+      },
+      {
+        "plane": "coronal",
+        "localPixels": 25,
+        "positiveMriPixels": 25,
+        "minimumMriValue": 1859.36572265625,
+        "maximumMriValue": 2423.6943359375
+      },
+      {
+        "plane": "axial",
+        "localPixels": 25,
+        "positiveMriPixels": 25,
+        "minimumMriValue": 1785.757568359375,
+        "maximumMriValue": 2423.6943359375
+      }
+    ]
+  },
+  "interpretation": "A deliberately salient registered population-atlas display point; not patient motor localization, function validation, a clinical deficit probability, or an unbiased summary of atlas values.",
+  "patientSpecificFunction": false,
+  "planningEligible": false,
+  "clinicalDeficitProbability": null,
+  "sourceBundleSha256": "59c213b82af205516491058145ad3581a4d1832e1126fb5559118f250ea1bacc"
+}

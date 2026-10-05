@@ -1,0 +1,82 @@
+{
+  "README.md": {
+    "bytes": 2669,
+    "sha256": "943af5f6560d43827ecf25f4b44cf237b3b147a4a725d79179da815393f746b1"
+  },
+  "default-redirect-construction.json": {
+    "bytes": 653,
+    "sha256": "98c6db36c49f2e3b27ae98b46572f270aa7a69212ff4e8b016fb00c78ff695ff"
+  },
+  "final-source-after.json": {
+    "bytes": 748,
+    "sha256": "7f35fa2b23340762ddb45b3d817c10996e708969f6aef6e8511d726e9e3b494b"
+  },
+  "final-source-before.json": {
+    "bytes": 674,
+    "sha256": "ddf5446011dd8f6c2659c1d6749a0c500fd64189803230263b54c6692b6e2ab3"
+  },
+  "final-source/manifests/experiments/btc-spatial-development-cohort-v1.json": {
+    "bytes": 34626,
+    "sha256": "962d964e1d71427f3625cdbebc0f7e4759e5d2345d8f95cb211ed45810ed2985"
+  },
+  "final-source/scripts/acquire_btc_case.py": {
+    "bytes": 27807,
+    "sha256": "2978b5c7756f46aac9dc8aa9f308fdf6f84a054326a48bd704fe3addc5bca0bf"
+  },
+  "final-source/scripts/acquire_public_case.py": {
+    "bytes": 11170,
+    "sha256": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb"
+  },
+  "final-source/tests/test_btc_acquisition.py": {
+    "bytes": 15286,
+    "sha256": "f4ccbe7c621443a34e73a5d644b5cec92ec08fb0b798567dcc6d5e41d854b9af"
+  },
+  "final-source/tests/test_btc_spatial_acquisition.py": {
+    "bytes": 7488,
+    "sha256": "77d1615f67eb9678e0664b2d64a09fb0c8a4f9c2bd2288352acb36051e552b52"
+  },
+  "final-source/tests/test_btc_spatial_acquisition_review.py": {
+    "bytes": 8360,
+    "sha256": "e38c39c51e61e38f0ec9cb2dd48e827760b8c98f0bb08302982d3f5022da6dad"
+  },
+  "initial-source.json": {
+    "bytes": 460,
+    "sha256": "6b535de6363702a59d351d5805360e32b6aa2bbb8f7395c31b836641e7923477"
+  },
+  "initial-source/manifests/experiments/btc-spatial-development-cohort-v1.json": {
+    "bytes": 34626,
+    "sha256": "962d964e1d71427f3625cdbebc0f7e4759e5d2345d8f95cb211ed45810ed2985"
+  },
+  "initial-source/scripts/acquire_btc_case.py": {
+    "bytes": 27125,
+    "sha256": "587851f255d076cd7c0eed81d128120395f5d6bf53152051076a7d237ab49e1f"
+  },
+  "initial-source/scripts/acquire_public_case.py": {
+    "bytes": 11170,
+    "sha256": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb"
+  },
+  "initial-source/tests/test_btc_spatial_acquisition_review.py": {
+    "bytes": 6642,
+    "sha256": "23ec644951d8acc3f26f12146fa4ae8d4a050e361f382403a2d928fb00fd036e"
+  },
+  "receipt.json": {
+    "bytes": 3370,
+    "sha256": "064e85f5c9c8563765ae1f7b190edc463e0da5f256d155fdf339d13e01351b33"
+  },
+  "test-attempt-01.log": {
+    "bytes": 3376,
+    "sha256": "03387061ab74e9e94dc54e461263eaa726f8299fbd8ae0dd5d6ca5338067776d"
+  },
+  "test-attempt-01.xml": {
+    "bytes": 5605,
+    "sha256": "2cd561d0c7c62f49996db7672c8334a07bdd4cec860b7dbadc9e10d717e705a4"
+  },
+  "test-attempt-02.log": {
+    "bytes": 99,
+    "sha256": "c3501712bd4a41be469ad95787136227043c648a64eee2a680aa5fdbe968b761"
+  },
+  "test-attempt-02.xml": {
+    "bytes": 5135,
+    "sha256": "bb0113b983e4fe00795a9f2ed7a4a412c263978d7cd6be0ecc324a140a048189"
+  }
+}

@@ -1,0 +1,286 @@
+{
+  "clinical_use_status": "research_only",
+  "error": {
+    "message": "--install requires a documented --license-record; no license acceptance is inferred",
+    "type": "ValueError"
+  },
+  "host": {
+    "machine": "arm64",
+    "system": "Darwin"
+  },
+  "packages": {
+    "dependency_download_bytes": null,
+    "direct_package_bytes_excluding_dependencies": 1375237,
+    "installed": false,
+    "license_status": "use_scope_clarification_required",
+    "license_url": "https://fsl.fmrib.ox.ac.uk/fsl/docs/license.html",
+    "metadata_download_bytes": 368628,
+    "metadata_sha256": "2bcc74c88a4a494710558b2bf2c8bc97adf0bb90be644210deed90ef474cd431",
+    "metadata_url": "https://fsl.fmrib.ox.ac.uk/fsldownloads/fslconda/public/osx-arm64/repodata.json",
+    "note": "Null conda license metadata is not a permissive license. Full FSL terms still apply.",
+    "packages": {
+      "fsl-eddy": {
+        "build": "hed4507f_0",
+        "depends": [
+          "__osx >=11.0",
+          "fsl-base",
+          "fsl-basisfield >=2203.4,<2204.0a0",
+          "fsl-cprob >=2111.0,<2112.0a0",
+          "fsl-miscmaths >=2412.6,<2413.0a0",
+          "fsl-newimage >=2601.0,<2602.0a0",
+          "fsl-topup >=2203.5,<2204.0a0",
+          "fsl-utils >=2412.6,<2413.0a0",
+          "fsl-warpfns >=2501.0,<2502.0a0",
+          "libblas >=3.9.0,<4.0a0",
+          "libcxx >=21",
+          "liblapack >=3.9.0,<4.0a0"
+        ],
+        "effective_license_source": "https://fsl.fmrib.ox.ac.uk/fsl/docs/license.html",
+        "license": null,
+        "md5": "1831deb3589ace771aafe9b03b7c7489",
+        "sha256": "d5d2a8c4bfdd305ebbeefd78f34085d6cfb399672638b96b36749725ebda7a90",
+        "size": 1033532,
+        "url": "https://fsl.fmrib.ox.ac.uk/fsldownloads/fslconda/public/osx-arm64/fsl-eddy-2602.0-hed4507f_0.conda",
+        "version": "2602.0"
+      },
+      "fsl-topup": {
+        "build": "ha7be7b2_0",
+        "depends": [
+          "__osx >=11.0",
+          "fsl-base",
+          "fsl-basisfield >=2203.4,<2204.0a0",
+          "fsl-miscmaths >=2412.6,<2413.0a0",
+          "fsl-newimage >=2601.0,<2602.0a0",
+          "fsl-newnifti >=5.0.0,<5.1.0a0",
+          "fsl-utils >=2412.6,<2413.0a0",
+          "fsl-warpfns >=2501.1,<2502.0a0",
+          "libblas >=3.11.0,<4.0a0",
+          "libcxx >=23",
+          "liblapack >=3.11.0,<4.0a0"
+        ],
+        "effective_license_source": "https://fsl.fmrib.ox.ac.uk/fsl/docs/license.html",
+        "license": null,
+        "md5": "dca40106e4e50fce8a8ae4648532f1f4",
+        "sha256": "2120e636496a80d7629d4d576a59cf3471642d23676f360791ac9abd12d950f9",
+        "size": 341705,
+        "url": "https://fsl.fmrib.ox.ac.uk/fsldownloads/fslconda/public/osx-arm64/fsl-topup-2203.6-ha7be7b2_0.conda",
+        "version": "2203.6"
+      }
+    },
+    "target_platform": "osx-arm64"
+  },
+  "patient": {
+    "ap_pa_max_corner_distance_mm": 2.3694961431640724,
+    "case": "BTC_preop_sub-PAT28",
+    "correction_executed": false,
+    "failure_reasons": [
+      "AP_READOUT_METADATA_CONFLICT",
+      "PA_READOUT_METADATA_CONFLICT",
+      "AP_PA_GRID_RECONCILIATION_REQUIRED"
+    ],
+    "gradient_status": "source_dcm2niix_gradients_unchanged_not_motion_rotated",
+    "note": "Source readout values are retained. No header replacement, resampling, readout substitution, or phase-direction override was performed.",
+    "pa_voxel_to_ap_voxel": [
+      [
+        0.9999025160513724,
+        -0.013962179037157577,
+        3.2440001639794103e-10,
+        0.6609139881605017
+      ],
+      [
+        0.013962178200345536,
+        0.9999025605030051,
+        1.2709283625511603e-09,
+        -0.6656068950722345
+      ],
+      [
+        -7.175523452328247e-10,
+        -2.2848892777815877e-09,
+        0.9999990373247392,
+        5.166568073633471e-05
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "raw_files_modified": false,
+    "series": {
+      "AP": {
+        "affine": [
+          [
+            -2.499688148498535,
+            -0.03490452840924263,
+            0.018460214138031006,
+            122.3555679321289
+          ],
+          [
+            -0.037076663225889206,
+            2.4768667221069336,
+            -0.33727848529815674,
+            -99.16636657714844
+          ],
+          [
+            0.013580377213656902,
+            0.3375101685523987,
+            2.4770753383636475,
+            -78.84336853027344
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "b0_indices": [
+          0,
+          1,
+          26,
+          51,
+          76,
+          101
+        ],
+        "bvec_shape": [
+          3,
+          102
+        ],
+        "converter": "dcm2niix",
+        "converter_version": "v1.0.20170724 GCC4.8.5",
+        "effective_echo_spacing_seconds": 0.000380004,
+        "files": {
+          "bvals": {
+            "bytes": 476,
+            "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-AP_dwi.bval",
+            "sha256": "a678931600142ebf20236adba60c52b41e85b9aa241b78dc69c6385c089576c2"
+          },
+          "bvecs": {
+            "bytes": 2766,
+            "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-AP_dwi.bvec",
+            "sha256": "7cb61a14071980a8f884173a0b05ec8e9069992a85af0689694fd9d9e5869fc9"
+          },
+          "image": {
+            "bytes": 45750278,
+            "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-AP_dwi.nii.gz",
+            "sha256": "1075093345c46c95ac0f958ce2cd630b9c5323c8d5c9f81d00713e9725c9c3bd"
+          },
+          "metadata": {
+            "bytes": 1647,
+            "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-AP_dwi.json",
+            "sha256": "6a70c2872b854770044e7748fb19bc7247c088796eb29b952c81a855a9bff3bd"
+          }
+        },
+        "orientation": [
+          "L",
+          "A",
+          "S"
+        ],
+        "readout_from_echo_spacing_and_image_matrix_seconds": 0.036100379999999994,
+        "readout_metadata_consistent": false,
+        "shape": [
+          96,
+          96,
+          60,
+          102
+        ],
+        "source_acquisition_row": [
+          0.0,
+          -1.0,
+          0.0,
+          0.0266003
+        ]
+      },
+      "PA": {
+        "affine": [
+          [
+            -2.499931812286377,
+            -3.390533365177362e-08,
+            0.018460195511579514,
+            120.72672271728516
+          ],
+          [
+            -0.0024905940517783165,
+            2.4771430492401123,
+            -0.3372781574726105,
+            -100.83950805664062
+          ],
+          [
+            0.018291428685188293,
+            0.33728766441345215,
+            2.4770729541778564,
+            -79.05891418457031
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "b0_indices": [
+          0,
+          1
+        ],
+        "bvec_shape": [
+          3,
+          2
+        ],
+        "converter": "dcm2niix",
+        "converter_version": "v1.0.20170724 GCC4.8.5",
+        "effective_echo_spacing_seconds": 0.000380004,
+        "files": {
+          "bvals": {
+            "bytes": 4,
+            "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-PA_dwi.bval",
+            "sha256": "0ccdb5a77ba5bf7687f2565a8ed97dfb9c1af45503c496fb646312239fab5101"
+          },
+          "bvecs": {
+            "bytes": 12,
+            "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-PA_dwi.bvec",
+            "sha256": "1097c9882126db5f7d6f7a4856ec9d3db40cc1dd03515d68ac46f454a9bf1ae4"
+          },
+          "image": {
+            "bytes": 1106184,
+            "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-PA_dwi.nii.gz",
+            "sha256": "eb47b86669db4e742c1b27ace80d17b94b1f610662ccc658907579a09f73bd4f"
+          },
+          "metadata": {
+            "bytes": 1068,
+            "path": "data/diffusion_source/ds001226-v5.0.1/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-PA_dwi.json",
+            "sha256": "00aa4159cd7196363102cbca2ebf7e69a2f6e9d3f79fd8c4a1adc563777d4c7a"
+          }
+        },
+        "orientation": [
+          "L",
+          "A",
+          "S"
+        ],
+        "readout_from_echo_spacing_and_image_matrix_seconds": 0.036100379999999994,
+        "readout_metadata_consistent": false,
+        "shape": [
+          96,
+          96,
+          60,
+          2
+        ],
+        "source_acquisition_row": [
+          0.0,
+          1.0,
+          0.0,
+          0.0266003
+        ]
+      }
+    },
+    "status": "blocked"
+  },
+  "retrieved_at": "2026-10-04T07:13:01.643235+00:00",
+  "schema_version": 1,
+  "script_sha256": "72fb3561d2651e1fb0ff61b6fbb3803321abc1eff16f0847b1c77b923fe5301f",
+  "sources": {
+    "bids_metadata": "https://bids-specification.readthedocs.io/en/v1.11.0/modality-specific-files/magnetic-resonance-imaging-data.html",
+    "fsl_license": "https://fsl.fmrib.ox.ac.uk/fsl/docs/license.html"
+  },
+  "status": "failed"
+}

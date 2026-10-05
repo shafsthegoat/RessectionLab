@@ -1,0 +1,16 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+_________ test_bound_preparation_level_receipt_is_checked_before_solve _________
+tests/test_mechanics_hbe_resolution_review.py:105: in test_bound_preparation_level_receipt_is_checked_before_solve
+    with pytest.raises(ValueError, match='hash|level|receipt'):
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   Failed: DID NOT RAISE ValueError
+__________ test_valid_level_receipts_join_ongoing_input_integrity_set __________
+tests/test_mechanics_hbe_resolution_review.py:113: in test_valid_level_receipts_join_ongoing_input_integrity_set
+    assert plan['inputs'][str((tmp_path/binding['path']).resolve())] == binding['sha256']
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E   KeyError: '/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-508/test_valid_level_receipts_join0/outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/N16/generated/receipt.json'
+=========================== short test summary info ============================
+FAILED tests/test_mechanics_hbe_resolution_review.py::test_bound_preparation_level_receipt_is_checked_before_solve
+FAILED tests/test_mechanics_hbe_resolution_review.py::test_valid_level_receipts_join_ongoing_input_integrity_set
+2 failed, 2 passed in 0.18s

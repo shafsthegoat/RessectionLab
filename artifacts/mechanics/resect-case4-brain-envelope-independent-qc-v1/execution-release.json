@@ -1,0 +1,15 @@
+{
+  "status": "root_authorized_single_QC_settings_frozen_before_arrays",
+  "created_at": "2026-10-04T21:15:55.005347+00:00",
+  "script_sha256": "d3a30e4bea65f718da84dac76487ecc71d632a43aa099d6121d42a3fdf4351a2",
+  "prospective_sha256": "0c20523874370b9738cb3ceeb9e00c271e701fcfb5dcc9ba211093b6bb83f025",
+  "authorization": "Root message permits one saved-array QC after settings/source binding:90s/2GiB/oneCPU, no inference or other data; no additional permission required.",
+  "git_source_commit": "ea2c60c28063ba1c389aaab8aa680f2c54c21ac6",
+  "committed_source_files_verified": [
+    "scripts/run_resect_brain_envelope.py",
+    "manifests/experiments/resect-case4-brain-envelope-v1.json",
+    "src/resectionlab/brain_extraction.py",
+    "scripts/febio_runtime.py"
+  ],
+  "root_anatomical_review_required": true
+}

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="1.589" timestamp="2026-10-04T11:24:29.351055-04:00" hostname="Sayems-MacBook-Pro-5.local"><testcase classname="tests.test_spatial_policy" name="test_analytic_variable_length_expected_return_gradient" time="0.062"><failure message="assert -0.75 == -1.25 ± 1.2e-06&#10;  &#10;  comparison failed&#10;  Obtained: -0.75&#10;  Expected: -1.25 ± 1.2e-06">def test_analytic_variable_length_expected_return_gradient():
+        model = AnalyticPolicy()
+        obs = SimpleNamespace(action_ids=("STOP", "cut"), action_mask=(True, True))
+        episodes = [[SpatialTransition(obs, "cut", 1., True)],
+                    [SpatialTransition(obs, "cut", 0., False), SpatialTransition(obs, "cut", 2., True)]]
+        loss, _ = reinforce_loss(model, episodes, entropy_weight=0., value_weight=0.)
+        loss.backward()
+        # At theta0, dlogpi(cut)/dtheta=.5. Mean trajectory sums:
+        # -(1*.5 + (2*.5+2*.5))/2 = -1.25, not mean-per-transition -.75.
+&gt;       assert model.theta.grad.item() == pytest.approx(-1.25)
+E       assert -0.75 == -1.25 ± 1.2e-06
+E         
+E         comparison failed
+E         Obtained: -0.75
+E         Expected: -1.25 ± 1.2e-06
+
+tests/test_spatial_policy.py:162: AssertionError</failure></testcase><testcase classname="tests.test_spatial_policy" name="test_analytic_discounted_start_state_return_gradient" time="0.003"><failure message="assert -0.75 == -1.0 ± 1.0e-06&#10;  &#10;  comparison failed&#10;  Obtained: -0.75&#10;  Expected: -1.0 ± 1.0e-06">def test_analytic_discounted_start_state_return_gradient():
+        model = AnalyticPolicy()
+        obs = SimpleNamespace(action_ids=("STOP", "cut"), action_mask=(True, True))
+        episode = [SpatialTransition(obs, "cut", 0., False), SpatialTransition(obs, "cut", 2., True)]
+        loss, _ = reinforce_loss(model, [episode], gamma=.5, entropy_weight=0., value_weight=0.)
+        loss.backward()
+        # Returns[1,2] at steps[0,1]: -(.5*1 + .5*.5*2) = -1.
+&gt;       assert model.theta.grad.item() == pytest.approx(-1.)
+E       assert -0.75 == -1.0 ± 1.0e-06
+E         
+E         comparison failed
+E         Obtained: -0.75
+E         Expected: -1.0 ± 1.0e-06
+
+tests/test_spatial_policy.py:172: AssertionError</failure></testcase></testsuite></testsuites>

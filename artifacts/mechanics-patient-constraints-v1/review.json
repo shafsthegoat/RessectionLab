@@ -1,0 +1,33 @@
+{
+  "scope": "Static pinned FEBio source review plus numerical linear algebra/XML specification controls; no patient data, meshes or FEBio execution.",
+  "source_commit": "32ae206ff4881dfb54f62296cd1558e58ed9fcc6",
+  "files": {
+    "docs/mechanics-patient-constraints.md": "ef3586be41366b6aa7822b86d2168e7d9130ff8250172c0747a20d9e728bd95f",
+    "tests/test_mechanics_patient_constraints.py": "e949b15a9ff2d033af61947a21f61dac3b218ddefb33328c125418dc6425fd45",
+    "artifacts/mechanics-patient-constraints-v1/algebra-tests-02.txt": "8fbf1ad2230478d7fa8f87bfde57991b802b3e5bac9b14f4ede1ad1820e4f583",
+    "artifacts/mechanics-patient-constraints-v1/algebra-tests.txt": "8692e12a762fd8f3385f1068e1b8fdc417d5cdb2ba9ae5a148802163ef1149cf",
+    "artifacts/mechanics-patient-constraints-v1/initial-algebra-tests.py": "87789c9c1e69febd2811f8f7fd65e8945f295be9940491ae2ecc50b32f2f6cc8",
+    "artifacts/mechanics-patient-constraints-v1/linear-constraint-example.xml": "6dfa2abe8d5958db5f233769dce7bd604831f4e1d747e3bbf71aceae9db9c7a3",
+    "artifacts/mechanics-patient-constraints-v1/source-receipt.json": "230cd46475b61a15275f4282271c9a577bd357ff0769d6ad251c97173068f628"
+  },
+  "commands": [
+    {
+      "command": ".venv/bin/python -m pytest -q tests/test_mechanics_patient_constraints.py",
+      "output": "algebra-tests.txt",
+      "result": "10 passed, 1 failed: decimal virtual-work identity roundoff3.47e-18 exceeded2e-18 fixture assertion; no mechanics code or solve involved"
+    },
+    {
+      "command": ".venv/bin/python -m pytest -q tests/test_mechanics_patient_constraints.py",
+      "output": "algebra-tests-02.txt",
+      "result": "11 passed; exact dyadic virtual-work fixture; elapsed in final_test_output"
+    }
+  ],
+  "unexecuted": [
+    "tent volume integration controls",
+    "FEBio multipoint nonzero offset solver control",
+    "tet10 domain solver control",
+    "patient mechanics"
+  ],
+  "implementation_changes": "No production/compiler/mesher/solver code added. XML fragment is not a complete model.",
+  "final_test_output": "...........                                                              [100%]\n11 passed in 0.09s\n"
+}

@@ -1,0 +1,88 @@
+{
+  "schema": "case4-saved-diagnostic-independent-review-v1",
+  "status": "passed_saved_evidence_audit",
+  "owner_index_sha256": "8dce43edbadc4548153a656ba2b1967d83d23df03b18b41fec1caf44b722badf",
+  "owner_records_verified": 10,
+  "raw_files_verified": 5,
+  "raw_bytes": 998481,
+  "exact_source_files_verified": 6,
+  "current_input_hashes_verified": 17,
+  "old_graded_raw_files_unchanged": 10,
+  "distance_replay_exact": true,
+  "directional_links": {
+    "source_to_mesh": {
+      "sample_count": 1027230,
+      "maximum_m": 0.005459949977542773,
+      "selected_faces": 7590,
+      "components": 104,
+      "worst_sample_entries": 10,
+      "saved_witness_face_area_fraction": 0.041349550117310854,
+      "unique_exact_point_tuples": 3
+    },
+    "mesh_to_source": {
+      "sample_count": 121028,
+      "maximum_m": 0.0038337299930228013,
+      "selected_faces": 101,
+      "components": 30,
+      "worst_sample_entries": 10,
+      "saved_witness_face_area_fraction": 0.09442350978454929,
+      "unique_exact_point_tuples": 10
+    }
+  },
+  "probe_summary": {
+    "boundary_vertices": {
+      "count": 732,
+      "maximum_m": 1.3985787785349405e-17,
+      "quantiles_m": [
+        0.0,
+        6.938893903907228e-18,
+        6.954872417915182e-18,
+        1.3877787807814457e-17,
+        1.3985787785349405e-17
+      ],
+      "over_2mm": 0
+    },
+    "boundary_midsides": {
+      "count": 2196,
+      "maximum_m": 0.0034729635449610727,
+      "quantiles_m": [
+        0.00032851852182188293,
+        0.0010362039835984222,
+        0.0013598677160952069,
+        0.0021875364590513363,
+        0.0034729635449610727
+      ],
+      "over_2mm": 32
+    },
+    "boundary_face_centroids": {
+      "count": 1464,
+      "maximum_m": 0.0034317633779275933,
+      "quantiles_m": [
+        0.00033333334807704955,
+        0.0011024832251157652,
+        0.0014733621014329835,
+        0.0021617976458926853,
+        0.0034317633779275933
+      ],
+      "over_2mm": 25
+    }
+  },
+  "charged_queries": 1152670,
+  "audit_scope": "Loaded only six derived per-triangle fields. Checked labels, maxima, witness endpoint arithmetic and saved ratio/order consistency. No geometry construction, distance queries or area/normal/connectivity recomputation.",
+  "limits": [
+    "Whole-face witness area is not exact excursion area; triangle areas were not independently reintegrated.",
+    "Component memberships match saved labels; shared-edge connectedness was established by reviewed producer code, not recomputed here.",
+    "Top ten entries can repeat physical points; they are not ten distinct defect sites.",
+    "Normal-change associations and vertex/chord observations do not establish seam causality or anatomy.",
+    "Candidate remains rejected; no new mesh, solver admission or settings change follows."
+  ],
+  "activity": {
+    "derived_fields_loaded": 6,
+    "original_geometry_arrays_decoded": 0,
+    "distance_queries": 0,
+    "native_mesher_calls": 0,
+    "solver_calls": 0,
+    "image_or_landmark_reads": 0
+  },
+  "audit_seconds": 0.15493112499825656
+}

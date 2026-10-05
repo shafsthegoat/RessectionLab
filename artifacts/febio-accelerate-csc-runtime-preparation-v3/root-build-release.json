@@ -1,0 +1,14 @@
+{
+  "attempts_each": 1,
+  "automatic_retry": false,
+  "build_install_seconds": 900,
+  "build_requires_accepted_configure": true,
+  "configure_seconds": 120,
+  "declaration_sha256": "273db5b32077017730bb8c2fafe9fb360d19439005ddfc977d84c45f7c379763",
+  "original_runtime_preserved": true,
+  "parallel_build_jobs": 2,
+  "runtime_or_model_execution_released": false,
+  "sampled_group_rss_bytes": 3221225472,
+  "source_commit": "bdb78704c92d441c2965954571b793e7fc4f814a",
+  "status": "released_isolated_configure_then_conditional_build"
+}

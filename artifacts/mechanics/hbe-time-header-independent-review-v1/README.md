@@ -1,0 +1,13 @@
+# Independent primitive time-header review
+
+The repaired parser and saved coarse compression readout pass the bounded checks. The change decodes FEBio 4.13's pinned nine-significant-digit time header; numeric rows remain twelve digits and solver status remains six. No mechanical tolerance changed.
+
+The prior parser assumed twelve-digit headers and rejected both original saved primitive logs. Each contains 61 states, of which 40 time headers exceeded that incorrect tolerance. The exact old parser is retained as a deterministic gzip; the original source is also at commit `826bd5c3e1ab76e2c71b89687578a1af7e40d6c3`. `saved-log-initial-negative.json` preserves both reproduced failures and a reviewer-only JSON serialization mistake (NumPy integer, fixed without a production change).
+
+43 focused checks passed in 0.58 seconds, including eight new independent cases: exact 61/121-state formatting, missing/duplicate/backtracked records, duplicate time headers, a one-float-step off-grid header, and an aliased declaration rejected before reading rows. Ten bound source/test files stayed unchanged. The older independent synthetic fixture now models the actual nine-digit header and explicitly records its earlier mistaken assumption.
+
+The authorized saved-only readout consumed the original hash-bound compression/N4/60-step/1000-Pa primitives: 171 nodes, 96 elements, 61 states including rest, and 60 converged residual states. All declared single-run numerical criteria pass. `saved-coarse-readout.json.gz` contains the complete generated receipt; `saved-coarse-summary.json` records input/source hashes, criteria and measured cost. Readout took 0.174 seconds; child wall time was 0.344 seconds and process peak RSS was 38,076,416 bytes on macOS. These scopes are distinct and are not summed. All twelve bound source/input files remained unchanged.
+
+No solver or measured-curve access occurred. This coarse run does not establish refinement convergence, scaling, calibration, held-out accuracy or clinical validity. Reconstructed sampled Jacobian and logged element Jacobian are different diagnostics and remain separately reported. Later experiment continuation needs a separate release.
+
+For reproducibility, `read_saved_coarse.py` performs only saved-primitive readout and refuses a changed parser/readout source. It requires the original ignored primitive files plus all recorded dependency hashes; a clean clone alone does not contain those raw logs. Existing outputs are exclusive and must not be overwritten. Run with the thread environment recorded in `saved-coarse-process.json`; no numerical test has read a measured HBE CSV.

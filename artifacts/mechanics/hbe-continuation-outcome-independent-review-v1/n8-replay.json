@@ -1,0 +1,59 @@
+{
+  "actual_source_hashes": {
+    "scripts/mechanics_hbe_access.py": "b1e4f90b2ec84c39949ee02c1088bc0404f34904e24c2d4f328d503d96f76fe0",
+    "scripts/mechanics_hbe_outputs.py": "a372cb89ea9515186d433c74ec650dc3b5cae289619e8b35d481280f6662f473",
+    "scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "scripts/mechanics_hbe_readout.py": "21700558e5cb614a11a7cc62dbd5ec8118fabb11b4fbfc88f89cb8aa02012963"
+  },
+  "canonical_full_readout_sha256": "190ee35a378be0fd720eb6f2d03d648e8050a7bc2e1d6ddac169ab65a2b53522",
+  "criteria": {
+    "force_balance": {
+      "actual": 4.866907884774072e-08,
+      "limit": 1.0,
+      "units": "ratio_to_declared_numerical_tolerance"
+    },
+    "minimum_sampled_J": {
+      "actual": 0.7910710445791459,
+      "limit": 0.0,
+      "units": "dimensionless_strictly_positive"
+    },
+    "moment_balance": {
+      "actual": 1.907081515252156e-08,
+      "limit": 1.0,
+      "units": "ratio_to_declared_numerical_tolerance"
+    },
+    "prescribed_motion": {
+      "actual": 0.00015787415080093181,
+      "limit": 1.0,
+      "units": "ratio_to_declared_numerical_tolerance"
+    },
+    "primitive_consistency": {
+      "actual": 0.0008248315891383011,
+      "limit": 1.0,
+      "units": "ratio_to_declared_numerical_tolerance"
+    },
+    "solver_residual": {
+      "actual": 4.926826233440117e-11,
+      "limit": 1.0,
+      "units": "ratio_to_declared_numerical_tolerance"
+    },
+    "work_energy": {
+      "actual": 0.0007944097229925863,
+      "limit": 1.0,
+      "units": "ratio_to_declared_numerical_tolerance"
+    }
+  },
+  "execution_binding": {
+    "path": "outputs/mechanics/hbe-01-03-poc-v1/continuation-header-v1/runs/compression-N8-S60-reference/execution.json",
+    "sha256": "408ef9285fedf77de3e23354808504a67726566cd36dc5319a6571f2378f1f47"
+  },
+  "frame_count": 61,
+  "measured_response_archive_access": false,
+  "new_solver_calls": 0,
+  "saved_readout_binding": {
+    "path": "outputs/mechanics/hbe-01-03-poc-v1/continuation-header-v1/runs/compression-N8-S60-reference/readout.json",
+    "sha256": "190ee35a378be0fd720eb6f2d03d648e8050a7bc2e1d6ddac169ab65a2b53522"
+  },
+  "sources_and_primitive_inputs_unchanged": true,
+  "status": "passed_exact_saved_n8_readout_reproduction"
+}

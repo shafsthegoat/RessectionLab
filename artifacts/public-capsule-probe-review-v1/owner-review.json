@@ -1,0 +1,19 @@
+{
+  "status": "synthetic_owner_tests_passed_public_probe_not_executed",
+  "command": ".venv/bin/python -m pytest tests/test_public_capsule_probe.py -q",
+  "passed": 7,
+  "pytest_seconds": 1.10,
+  "public_case_loaded": false,
+  "public_benchmark_executed": false,
+  "source_file_sha256": {
+    "scripts/probe_public_native_capsule_cache.py": "5ba33718a1f58cf1f29197887753e9ad6d043d79c8d3f7ad5544d4189e6c79c1",
+    "manifests/experiments/native-axis-capsule-cache-v1.json": "28a6e9a170717a9047e481a88d9704bd18eee11ff0fe9d5acd8753a102a9a901",
+    "tests/test_public_capsule_probe.py": "567922ed74a5cfe096f8ded3b312ff219b20cc93cf33e11791e05d0088e18816",
+    "tests/test_public_capsule_probe_review.py": "6a4de1441bde14991066bf0a706d8fde1d77fbc9cc04a48968c51fd0f4feaf6d",
+    "docs/native-axis-cache-paired-probe.md": "a189b18cd695ef25ac1bb606a017abe43b6babb643a866df8dd81239406deb7c",
+    "artifacts/public-capsule-probe-review-v1/pre-review-script.py": "6c91322ff9771c641bd5cfa092de5acf52ef47d1b4c2314ab0faf61beffa17c6"
+  },
+  "production_src_diff_empty": true,
+  "independent_review": "../public-capsule-probe-independent-v1/",
+  "timing_interpretation": "Validation time only; no speedup claim."
+}

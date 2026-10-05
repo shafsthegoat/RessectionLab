@@ -1,0 +1,464 @@
+{
+  "status": "static_review_complete_pending_version_and_mechanics",
+  "source_and_tool_entries_rechecked": 6164,
+  "source_and_tool_entries_changed": [],
+  "files": [
+    {
+      "path": "install/bin/febio4",
+      "sha256": "00a3ad9ff8d28b2d2b8ba41fd63890f555ec9ff3e102c1c3eeef649cfec4fc9c",
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/file",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/bin/febio4"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/bin/febio4: Mach-O 64-bit executable arm64\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/bin/febio4"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/bin/febio4:\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n\t@rpath/libfebiolib.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/bin/febio4"
+          ],
+          "exit_code": 0,
+          "stdout": "          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 22\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\nLoad command 23\n          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "path": "install/lib/libfeamr.dylib",
+      "sha256": "6a79fb442ad680b8a5ce5f1dabae9db077eff867cd2ee96260cdd91a91ffd8a3",
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/file",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfeamr.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfeamr.dylib: Mach-O 64-bit dynamically linked shared library arm64\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfeamr.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfeamr.dylib:\n\t@rpath/libfeamr.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfeamr.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 18\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\nLoad command 19\n          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "path": "install/lib/libfebiofluid.dylib",
+      "sha256": "54586f8e60f13cb4cd30c3b4ef3ba5dd142b5c76921f817f99673dc024b72296",
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/file",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiofluid.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiofluid.dylib: Mach-O 64-bit dynamically linked shared library arm64\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiofluid.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiofluid.dylib:\n\t@rpath/libfebiofluid.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebiomix.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebiomech.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiofluid.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 20\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\nLoad command 21\n          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "path": "install/lib/libfebiolib.dylib",
+      "sha256": "28173c2c07e789ac3e36c8205c3f00dc7e608af3cfc2b976db76eb7e6f4f95fd",
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/file",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiolib.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiolib.dylib: Mach-O 64-bit dynamically linked shared library arm64\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiolib.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiolib.dylib:\n\t@rpath/libfebiolib.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libnumcore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebioopt.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebiofluid.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebiorve.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfeimglib.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebiomix.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebioplot.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebiomech.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfeamr.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebioxml.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiolib.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 28\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\nLoad command 29\n          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "path": "install/lib/libfebiomech.dylib",
+      "sha256": "119c279d82db74247da90314b036cc0849f3e278916501af5767a99294f1d5fd",
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/file",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiomech.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiomech.dylib: Mach-O 64-bit dynamically linked shared library arm64\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiomech.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiomech.dylib:\n\t@rpath/libfebiomech.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfeamr.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiomech.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 19\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\nLoad command 20\n          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "path": "install/lib/libfebiomix.dylib",
+      "sha256": "9f949867b58bc07dfb2f89dfbf525aca7f1799aae1b1f8554229a4160fc4e580",
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/file",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiomix.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiomix.dylib: Mach-O 64-bit dynamically linked shared library arm64\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiomix.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiomix.dylib:\n\t@rpath/libfebiomix.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebiomech.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiomix.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 19\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\nLoad command 20\n          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "path": "install/lib/libfebioopt.dylib",
+      "sha256": "48ea4ab25d8b2178315b590431df38479c9150956d6992b8bb330af177306c0b",
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/file",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebioopt.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebioopt.dylib: Mach-O 64-bit dynamically linked shared library arm64\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebioopt.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebioopt.dylib:\n\t@rpath/libfebioopt.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libomp.dylib (compatibility version 5.0.0, current version 5.0.0)\n\t@rpath/libfebioxml.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebioplot.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebioopt.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\nLoad command 18\n          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 22\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "path": "install/lib/libfebioplot.dylib",
+      "sha256": "40bc648820a5b29b16d5d5a9d34742870265bde62c821df1f80c965a67bcdc3d",
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/file",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebioplot.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebioplot.dylib: Mach-O 64-bit dynamically linked shared library arm64\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebioplot.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebioplot.dylib:\n\t@rpath/libfebioplot.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebioplot.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 18\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\nLoad command 19\n          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "path": "install/lib/libfebiorve.dylib",
+      "sha256": "067b97c83227fd0bd0eb35314ab3b410285c2ecbe2fc589ff6d8e8278482e13e",
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/file",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiorve.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiorve.dylib: Mach-O 64-bit dynamically linked shared library arm64\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiorve.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiorve.dylib:\n\t@rpath/libfebiorve.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebiomech.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebioxml.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfebioplot.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebiorve.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 21\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\nLoad command 22\n          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "path": "install/lib/libfebioxml.dylib",
+      "sha256": "1cf94a34e31f10d6fb93ad2a43b55af13c2eae5004d9847368c026eda2cc8051",
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/file",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebioxml.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebioxml.dylib: Mach-O 64-bit dynamically linked shared library arm64\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebioxml.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebioxml.dylib:\n\t@rpath/libfebioxml.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfebioxml.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 18\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\nLoad command 19\n          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "path": "install/lib/libfecore.dylib",
+      "sha256": "fd5b224a47ad55f12b1e1ddd804bcb84d19f6ff63caf5b6d2b4e305337e4deca",
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/file",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfecore.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfecore.dylib: Mach-O 64-bit dynamically linked shared library arm64\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfecore.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfecore.dylib:\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfecore.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 17\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\nLoad command 18\n          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "path": "install/lib/libfeimglib.dylib",
+      "sha256": "86952443cc05870a25898e2858c6409f451419d610010809e639899830cc2c40",
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/file",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfeimglib.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfeimglib.dylib: Mach-O 64-bit dynamically linked shared library arm64\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfeimglib.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfeimglib.dylib:\n\t@rpath/libfeimglib.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libfeimglib.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 18\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\nLoad command 19\n          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "path": "install/lib/libnumcore.dylib",
+      "sha256": "37138d9560210645031542ae2e406e98cdf32398d091b3d8c43e6c6631043fd9",
+      "commands": [
+        {
+          "argv": [
+            "/usr/bin/file",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libnumcore.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libnumcore.dylib: Mach-O 64-bit dynamically linked shared library arm64\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-L",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libnumcore.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libnumcore.dylib:\n\t@rpath/libnumcore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t@rpath/libomp.dylib (compatibility version 5.0.0, current version 5.0.0)\n\t/System/Library/Frameworks/Accelerate.framework/Versions/A/Accelerate (compatibility version 1.0.0, current version 4.0.0)\n\t@rpath/libfecore.dylib (compatibility version 0.0.0, current version 0.0.0)\n\t/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 2100.43.0)\n\t/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1356.0.0)\n",
+          "stderr": ""
+        },
+        {
+          "argv": [
+            "/usr/bin/otool",
+            "-l",
+            "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/lib/libnumcore.dylib"
+          ],
+          "exit_code": 0,
+          "stdout": "          cmd LC_RPATH\n      cmdsize 152\n         path /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib (offset 12)\nLoad command 17\n          cmd LC_RPATH\n      cmdsize 32\n         path @loader_path (offset 12)\nLoad command 21\n          cmd LC_RPATH\n      cmdsize 40\n         path @executable_path/../lib (offset 12)\n",
+          "stderr": ""
+        }
+      ]
+    }
+  ],
+  "no_runtime_models_executed": true,
+  "scope": "Arm64 architecture, exact hashes, Mach-O dependencies/RPATH. Runtime symbol resolution requires version/analytical execution."
+}

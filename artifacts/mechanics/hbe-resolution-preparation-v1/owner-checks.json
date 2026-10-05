@@ -1,0 +1,52 @@
+{
+  "draft": {
+    "path": "artifacts/mechanics/hbe-resolution-preparation-v1/prepare-release-draft.json",
+    "sha256": "8c56950f73a3e5906dbe921f4f8ecb7a6a691a77d418c34bd63d4dcc025dea7b"
+  },
+  "earlier_fixture_correction": {
+    "path": "artifacts/mechanics/hbe-resolution-preparation-v1/initial-test-fixture-error.json",
+    "sha256": "bd7d9696219644a1ffbcd0686bf582083fe246ccefd011fb53cad4f5f9979eff"
+  },
+  "existing_evidence_modified": false,
+  "measured_members_read": 0,
+  "new_meshes_generated": 0,
+  "new_solver_calls": 0,
+  "review_repair": "Authenticated both bound level quality receipts, actual mesh/native/original deck/loading links and bounded preparation acceptance; independent negatives preserved separately.",
+  "schema": "hbe-resolution-owner-preparation-v1",
+  "source_file_list": {
+    "path": "artifacts/mechanics/hbe-resolution-preparation-v1/source-files.txt",
+    "sha256": "e5de83aea3fd19098c8e6cbd3f0f174b116d5ee36e95c39409b3803a7d8104f5"
+  },
+  "sources": {
+    "docs/hbe-axial-resolution-extension.md": {
+      "path": "docs/hbe-axial-resolution-extension.md",
+      "sha256": "8fc2d2226c16320875149189afe30099dbf21a32f714e770693ddb5b47052c8b"
+    },
+    "manifests/experiments/hbe-01-03-axial-resolution-v1.json": {
+      "path": "manifests/experiments/hbe-01-03-axial-resolution-v1.json",
+      "sha256": "23b4f5e4d8a0b5ff05fcd45fbca88463a32460793d5b0f27d1a913a5e0a2443c"
+    },
+    "scripts/mechanics_hbe_resolution.py": {
+      "path": "scripts/mechanics_hbe_resolution.py",
+      "sha256": "f6c75e1b8223355b90d06b100f538f3feb28e58f7e1be4ae2f13ed075bd8bdad"
+    },
+    "tests/test_mechanics_hbe_resolution.py": {
+      "path": "tests/test_mechanics_hbe_resolution.py",
+      "sha256": "0899128dc1520cb60e63f5b9cc10eda53885079acc200df455f0da0b7f44b24e"
+    }
+  },
+  "status": "software_prepared_pending_independent_review_and_separate_release",
+  "test": {
+    "command": [
+      ".venv/bin/python",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/test_mechanics_hbe_resolution.py"
+    ],
+    "exit_code": 0,
+    "observed_tool_summary": "12 passed in0.20s",
+    "scope": "small analytic arrays and mocked native operations; concrete unsupported draft refusal",
+    "tool_wall_seconds": 0.216255959
+  }
+}

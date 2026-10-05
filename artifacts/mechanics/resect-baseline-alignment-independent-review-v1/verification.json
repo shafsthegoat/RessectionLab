@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "status": "independent_preparation_review_passed_actual_alignment_unrun",
+  "created_at_utc": "2026-10-04T20:33:39.174133+00:00",
+  "git_head_at_review": "e379b66876cd9cf50604cdc66502539bc51011cd",
+  "command": ".venv/bin/python -m pytest -q tests/test_resect_baseline_alignment_review.py artifacts/mechanics/resect-case4-baseline-alignment-v1/test_alignment.py",
+  "result": {
+    "passed": 18,
+    "failed": 0,
+    "independent_cases": 13,
+    "owner_cases": 5,
+    "pytest_seconds": 0.39,
+    "process_seconds": 0.409703417
+  },
+  "retained_initial_negative": {
+    "path": "artifacts/mechanics/resect-baseline-alignment-independent-review-v1/initial-negative.json",
+    "sha256": "cb5ce1e9342c4062f1a26955a59a47b9b574f44a4c96c801a39afbce8628c795",
+    "passed": 3,
+    "failed": 5
+  },
+  "source_sha256": {
+    "artifacts/mechanics/resect-case4-baseline-alignment-v1/align.py": "a213174801a27ffcdcd32c924678cd8e63d7f02b512db139df855b683516add4",
+    "artifacts/mechanics/resect-case4-baseline-alignment-v1/declaration.json": "56e30a05c7d748bab2cde6d3f5d5cbe8bafe8962ebcca2045f8a028a8ad7ca02",
+    "artifacts/mechanics/resect-case4-baseline-alignment-v1/coordinate-justification.json": "f293613dd1ca5adf58bfd768c2fe2b4d50e352fe0534ee28264225739f88c2ec",
+    "artifacts/mechanics/resect-case4-baseline-alignment-v1/test_alignment.py": "0ff0c76d8227e51d59c29de05ea0ebb8dbde2039255ffe80a0f3d41cc442819f",
+    "tests/test_resect_baseline_alignment_review.py": "049dc1c9afcebc0ed93be42048fb233fc1500cb9a971ace84732bcbaef832620"
+  },
+  "verified_controls": [
+    "proper world-coordinate rigid transform direction and rigid re-expression, unit singular values and determinant+1",
+    "every leave-one-out residual excludes its held baseline pair; no B/V outcome use",
+    "full original affine and inverse fitted physical transform for display-only sampling, no source affine mutation",
+    "released declaration authenticated before path traversal and mismatching caller dictionary refused",
+    "snapshot manifest authenticated before following contained paths",
+    "patient read allowlist excludes other data cases and symlink aliases; original writes denied",
+    "timeout, nonzero-exit, empty, malformed and incomplete RSS monitoring fail immediately, kill and wait mock worker, preserve failed receipt"
+  ],
+  "static_scope": [
+    "baseline-only four-file declaration and separate MRI-before-US role",
+    "source/header/helper hashes verified before and after real worker, pinned isolated helper import",
+    "original affines retained and only2D display samples saved",
+    "no outlier rejection, scale/reflection, alternative fit selection, anatomical acceptance or clinical threshold",
+    "supervised --execute entrypoint enforces declared wall/RSS limits; --child is an internal worker mode, not a standalone bounded execution API"
+  ],
+  "unverified": [
+    "actual released MRI-before tag parsing and coordinates",
+    "actual image arrays/visual alignment quality",
+    "actual process peak memory/wall budget",
+    "clinical registration accuracy, brain-domain or cortical validity"
+  ],
+  "patient_tag_values_read_by_review": false,
+  "patient_arrays_read_by_review": false,
+  "actual_child_process_spawned_by_review": false,
+  "fixtures": "analytic arrays, temporary constructed files, mock processes only",
+  "production_edits_by_reviewer": false,
+  "remaining_blocking_findings": []
+}

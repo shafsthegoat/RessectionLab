@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/brain-extraction/BTC-spatial-main-v1-independent-qc/audit_portable.py", line 158, in <module>
+    result = audit()
+             ^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/brain-extraction/BTC-spatial-main-v1-independent-qc/audit_portable.py", line 79, in audit
+    require(changed_fields == {"revision", "case_semantic_hash", "array_index", "array_sha256", "structural_evidence", "artifacts"}, "Unexpected manifest changes")
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/brain-extraction/BTC-spatial-main-v1-independent-qc/audit_portable.py", line 43, in require
+    raise ValueError(reason)
+ValueError: Unexpected manifest changes

@@ -1,0 +1,72 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+___ test_control_pass_labels_without_execution_and_raw_evidence_are_rejected ___
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-469/test_control_pass_labels_witho0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1098ac470>
+
+    def test_control_pass_labels_without_execution_and_raw_evidence_are_rejected(tmp_path, monkeypatch):
+        runtime_binding = {"path": "runtime.json", "sha256": "1" * 64}
+        # The runtime layer is intentionally isolated: this must fail at controls.
+        monkeypatch.setattr(backend, "verify_runtime_binding", lambda *args: {
+            "runtime": {}, "prefix": str(tmp_path / backend.PREFIX), "inputs": {},
+            "runtime_identity": runtime_binding,
+        })
+        profile = {"schema": "hbe-solver-backend-v1", "profile_id": backend.PROFILE_ID,
+                   "runtime_identity": runtime_binding}
+        profile["patch_identity"] = save(tmp_path, "patch.json", {
+            "source_commit": backend.UPSTREAM_COMMIT, "patched_sha256": backend.PATCHED_SOURCE_SHA,
+            "patch_sha256": backend.PATCH_SHA, "changed_source_files": 1,
+            "other_changes": False, "iterative_mode_allowed": False,
+        })
+        for name, status, field, cases in (
+            ("hex8_controls", "passed_all_five_fixed_patch_controls", "rows", backend.HEX_CASES),
+            ("tet10_mpc_controls", "three_actual_fixed_software_controls_passed", "case_rows", backend.TET_CASES),
+        ):
+            profile[name] = save(tmp_path, name + ".json", {
+                "status": status, "solver_backend": "accelerate",
+                "runtime_identity_sha256": runtime_binding["sha256"],
+                "solver_invocations": len(cases),
+                field: [{"case": name, "passed": True} for name in sorted(cases)],
+                "stiffness_scaling": {"passed": True},
+            })
+        binding = save(tmp_path, "profile.json", profile)
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_mechanics_hbe_backend_review.py:75: Failed
+___________ test_runtime_cannot_omit_twelve_linked_library_bindings ____________
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-469/test_runtime_cannot_omit_twelv0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1096700b0>
+
+    def test_runtime_cannot_omit_twelve_linked_library_bindings(tmp_path, monkeypatch):
+        identity, binding = runtime_fixture(tmp_path, monkeypatch,
+                                            library_names={"install/bin/febio4"})
+        identity["status"] = "isolated_patched_runtime_built_pending_numerical_controls"
+        binding = save(tmp_path, binding["path"], identity)
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_mechanics_hbe_backend_review.py:84: Failed
+_____________ test_worker_candidate_is_not_parent_accepted_runtime _____________
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-469/test_worker_candidate_is_not_p0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1098aecf0>
+
+    def test_worker_candidate_is_not_parent_accepted_runtime(tmp_path, monkeypatch):
+        identity, binding = runtime_fixture(tmp_path, monkeypatch)
+        identity["status"] = "candidate_pending_parent_build_acceptance"
+        binding = save(tmp_path, binding["path"], identity)
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_mechanics_hbe_backend_review.py:92: Failed
+=========================== short test summary info ============================
+FAILED tests/test_mechanics_hbe_backend_review.py::test_control_pass_labels_without_execution_and_raw_evidence_are_rejected
+FAILED tests/test_mechanics_hbe_backend_review.py::test_runtime_cannot_omit_twelve_linked_library_bindings
+FAILED tests/test_mechanics_hbe_backend_review.py::test_worker_candidate_is_not_parent_accepted_runtime
+3 failed in 0.18s

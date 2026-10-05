@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "exit_code": 0,
+  "failure": null,
+  "elapsed_seconds": 2.519119832897559,
+  "maximum_sampled_parent_child_RSS_bytes": 628785152,
+  "budget": {
+    "wall_seconds": 115,
+    "RSS_bytes": 2147483648,
+    "threads": 1,
+    "automatic_retries": 0,
+    "new_dependencies": false
+  },
+  "cleanup_reserve_seconds": 0.25,
+  "sampling_caveat": "RSS monitoring is sampled, not continuous",
+  "script_sha256": "a4f7761995238a05488a6cc9f1d7cfc360fc258d8c30510a40ec4e2a496c0a04",
+  "resource_probes_sha256": "b993a09806338cf07eace8b0d48f642af0a4cbea4718d48b1f3ba2c2ebe5696c",
+  "result_sha256": "d5a572a7363d3830c86c68d5de9e158afdeee0026d3d2a254d87e15071fe3adb",
+  "log_sha256": "d9cdec72718a55c4ef55e1efeddebc867fff7b758db5f9b1444835004bdac2fa"
+}

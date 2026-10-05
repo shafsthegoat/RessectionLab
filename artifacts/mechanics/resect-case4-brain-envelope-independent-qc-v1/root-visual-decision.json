@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "review_type": "root_nonexpert_visual_inspection_and_scope_decision",
+  "created_at_utc": "2026-10-04T21:18:04.598969+00:00",
+  "image": {
+    "path": "artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/Case4-fixed-native-planes.png",
+    "sha256": "70a64cb177e1151eb3716bd49fd2a4b1bfd16e419fe820df828c69bd0e949546"
+  },
+  "engineering_receipt": {
+    "path": "artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/qc-receipt.json",
+    "sha256": "f1a3ad984233fd121af37cb463e1d88ebb443f0506a0d183f0acb298116f6c23"
+  },
+  "inspected_planes": [
+    {
+      "axis": 0,
+      "index": 128
+    },
+    {
+      "axis": 1,
+      "index": 128
+    },
+    {
+      "axis": 2,
+      "index": 96
+    }
+  ],
+  "observations": [
+    "The outline broadly follows the outer cerebral region in the displayed native planes; no gross array shift is apparent in these views.",
+    "In native k=96, the inferior mask boundary passes above visible posterior-inferior brain structures; this image does not establish whole-brain coverage.",
+    "The contour is an estimated envelope, not a reviewed pial surface or tissue/cavity segmentation. Three planes cannot establish three-dimensional anatomical accuracy.",
+    "The source scan and its cropping/defacing remain unchanged; displayed native indices are not conventional reoriented clinical planes."
+  ],
+  "scope_decision": "permit preparation of a bounded mesh of the unchanged estimated domain; actual meshing remains subject to its source-bound release",
+  "mask_mutation_permitted": false,
+  "landmark_guided_domain_change_permitted": false,
+  "clinical_anatomical_acceptance": false,
+  "whole_brain_coverage_validated": false,
+  "cortical_access_permitted": false,
+  "working_brain_mask": null,
+  "B_destinations_released": false,
+  "V_sources_or_destinations_released": false,
+  "new_inference_or_solver_authorized": false,
+  "required_followup": "report boundary approximation and domain support explicitly; count unsupported observations under frozen rules without enlarging the mask"
+}

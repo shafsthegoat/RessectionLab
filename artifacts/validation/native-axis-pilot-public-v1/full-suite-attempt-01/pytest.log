@@ -1,0 +1,44 @@
+........................................................................ [  6%]
+........................................................................ [ 12%]
+........................................................................ [ 18%]
+........................................................................ [ 25%]
+........................................................................ [ 31%]
+........................................................................ [ 37%]
+........................................................................ [ 43%]
+........................................................................ [ 50%]
+........................................................................ [ 56%]
+........................................................................ [ 62%]
+........................................................................ [ 68%]
+........................................................................ [ 75%]
+........................................................................ [ 81%]
+........................................................................ [ 87%]
+........................................................................ [ 93%]
+......................................................................   [100%]
+=============================== warnings summary ===============================
+tests/test_decision_observer_adversarial.py::test_metadata_reinterpretation_is_rejected_before_journal_export[shape-source_action_features]
+tests/test_decision_observer_adversarial.py::test_metadata_reinterpretation_is_rejected_before_journal_export[shape-action_features]
+tests/test_decision_observer_adversarial.py::test_metadata_reinterpretation_is_rejected_before_journal_export[shape-actor_action_features]
+tests/test_decision_observer_adversarial.py::test_metadata_reinterpretation_is_rejected_before_journal_export[shape-action_mask]
+tests/test_decision_observer_adversarial.py::test_metadata_reinterpretation_is_rejected_before_journal_export[shape-logits]
+  /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-pilot-v1-full-01/f3a05910bc142e44c253cae7b747da3fb315d3ea/source/tests/test_decision_observer_adversarial.py:253: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
+  As an alternative, you can create a new view using np.reshape (with copy=False if needed).
+    array.shape = (array.size, 1) if array.ndim == 1 else (array.size,)
+
+tests/test_decision_observer_adversarial.py::test_metadata_reinterpretation_is_rejected_before_journal_export[dtype-source_action_features]
+tests/test_decision_observer_adversarial.py::test_metadata_reinterpretation_is_rejected_before_journal_export[dtype-action_features]
+tests/test_decision_observer_adversarial.py::test_metadata_reinterpretation_is_rejected_before_journal_export[dtype-actor_action_features]
+tests/test_decision_observer_adversarial.py::test_metadata_reinterpretation_is_rejected_before_journal_export[dtype-action_mask]
+tests/test_decision_observer_adversarial.py::test_metadata_reinterpretation_is_rejected_before_journal_export[dtype-logits]
+  /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-pilot-v1-full-01/f3a05910bc142e44c253cae7b747da3fb315d3ea/source/tests/test_decision_observer_adversarial.py:255: DeprecationWarning: Setting the dtype on a NumPy array has been deprecated in NumPy 2.5.
+  Instead of changing the dtype on an array x, create a new array with x.view(new_dtype)
+    array.dtype = np.uint8
+
+tests/test_diffusion.py::test_probabilistic_crop_uses_bounded_reproducible_native_world_geometry
+tests/test_diffusion.py::test_probabilistic_crop_uses_bounded_reproducible_native_world_geometry
+tests/test_diffusion.py::test_probabilistic_crop_uses_bounded_reproducible_native_world_geometry
+tests/test_diffusion.py::test_probabilistic_crop_uses_bounded_reproducible_native_world_geometry
+  /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/dipy/testing/decorators.py:192: PendingDeprecationWarning: The legacy descoteaux07 SH basis uses absolute values for negative harmonic phase factors. It is outdated and will be deprecated in a future DIPY release. Consider using the new descoteaux07 basis by settingthe `legacy` parameter to `False`.
+    return func(*args, **kwargs)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+1150 passed, 14 warnings in 215.95s (0:03:35)

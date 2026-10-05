@@ -1,0 +1,119 @@
+{
+  "bytes": 39177774,
+  "file_count": 28,
+  "files": {
+    "N16/generated/compression-60-reference/loading.json": {
+      "bytes": 3636,
+      "sha256": "2cebd1af34c20bdb43303d8d7f470c675cd98944125fd342c368c37370fd343e"
+    },
+    "N16/generated/compression-60-reference/specimen.feb": {
+      "bytes": 1595946,
+      "sha256": "706a323f0bc0a6b34264b34c4f137529f4583aff7375416286925c773005ef7b"
+    },
+    "N16/generated/mesh.json": {
+      "bytes": 1764236,
+      "sha256": "5fefdc7e0ba068461ea5d64074e11fe734a6460552798487fb2794ff65075f6b"
+    },
+    "N16/generated/receipt.json": {
+      "bytes": 2125,
+      "sha256": "1f8dfda34a09a92d3d58514cfcb9cb77839ae8c629eaeb449b13bb1119c970f2"
+    },
+    "N16/generated/specimen.msh": {
+      "bytes": 762606,
+      "sha256": "22bab9516195da1ffe913479fa82d99e330c3bb38dd5967eb46f247d6f115f86"
+    },
+    "N16/generated/tension-60-reference/loading.json": {
+      "bytes": 3571,
+      "sha256": "bef407c2b962dff80c1c3228da950de694ec57b4e1288ac900a937d881e0ab0e"
+    },
+    "N16/generated/tension-60-reference/specimen.feb": {
+      "bytes": 1595885,
+      "sha256": "7afae1318cd0e6be00310d34911c2ca8f90f2d13fcc934c019f51ec41c4d4c76"
+    },
+    "N24/generated/compression-60-reference/loading.json": {
+      "bytes": 3636,
+      "sha256": "bb9111cfcddff1ce2534a280b9aa79c5094ead5ec79f9c4017f392a67b4eb487"
+    },
+    "N24/generated/compression-60-reference/specimen.feb": {
+      "bytes": 4835082,
+      "sha256": "e942de70e534b926552494c0115546bd4a4dd1066f2f7d1b08e1cde7fc292efd"
+    },
+    "N24/generated/mesh.json": {
+      "bytes": 5805250,
+      "sha256": "61f27d63cdcb6328bcbe94e05ac1802a162d613cadd01610caf649a16f30643b"
+    },
+    "N24/generated/receipt.json": {
+      "bytes": 2129,
+      "sha256": "527b4b44db9567943daf4d94e9e0c366ed194281d62cf19c509e6dd475586470"
+    },
+    "N24/generated/specimen.msh": {
+      "bytes": 2424174,
+      "sha256": "6995c3fac3d36cea62f7baa6dad6636415cd56bcc05cfb9db3b8c3b62915c8a0"
+    },
+    "N24/generated/tension-60-reference/loading.json": {
+      "bytes": 3571,
+      "sha256": "1600f1171472324a7c6e926567c5e55c1bb109e751174d9600133bde3540134f"
+    },
+    "N24/generated/tension-60-reference/specimen.feb": {
+      "bytes": 4835021,
+      "sha256": "3b1657cdeff46e36681a3424eed3d1474f3fed00624cff48cc7f6fd6792dd890"
+    },
+    "baseline.json": {
+      "bytes": 2649084,
+      "sha256": "2157ab05bca33220130d30c49135028161d633875b9d0b8b92c662014258b336"
+    },
+    "cases/compression-N16-S60-reference/loading.json": {
+      "bytes": 3636,
+      "sha256": "136c9c2a072e7da817577e9b0ee372459eda24192cbe7fa4cd79c8dbad163066"
+    },
+    "cases/compression-N16-S60-reference/specimen.feb": {
+      "bytes": 1596099,
+      "sha256": "7d181c56f50c059f03a65305598141736122b221d9d278ca0845b14f56910432"
+    },
+    "cases/compression-N24-S60-reference/loading.json": {
+      "bytes": 3636,
+      "sha256": "0e90bc8c988eaa2c4167932adcb28cd7104aa7c7ee23847b8107a8404f0a17b5"
+    },
+    "cases/compression-N24-S60-reference/specimen.feb": {
+      "bytes": 4835235,
+      "sha256": "33dea7a1716bb4b920288f3a4254566fd9dd3549843f41bb6b743b2e83591bd6"
+    },
+    "cases/tension-N16-S60-reference/loading.json": {
+      "bytes": 3571,
+      "sha256": "5441f108b2df4f439450809eecec818b955324201742f9010a2923cd0bfd36a7"
+    },
+    "cases/tension-N16-S60-reference/specimen.feb": {
+      "bytes": 1596038,
+      "sha256": "68e72af8df1f2d2bcb07cdd106724e55ec69682dafae0f7615985e3dd5eede97"
+    },
+    "cases/tension-N24-S60-reference/loading.json": {
+      "bytes": 3571,
+      "sha256": "1e2740f77472e20de135b092ad7a73403c922760c379e4912aa63b01e7a72fb6"
+    },
+    "cases/tension-N24-S60-reference/specimen.feb": {
+      "bytes": 4835174,
+      "sha256": "df0a499623ac489e6428f157d2d63d0edbf8c26f8d10cc6c90c2f4ee7fa4cd73"
+    },
+    "output-watch.json": {
+      "bytes": 193,
+      "sha256": "281812dd9fa37ac20aea8a339a9ad6bebf24591fbddbae66149d5946eca44837"
+    },
+    "result.json": {
+      "bytes": 1730,
+      "sha256": "ad8e7b3a25306f5481cd77139559976f515b29366799e2feececc51e8c4b8179"
+    },
+    "state.json": {
+      "bytes": 4959,
+      "sha256": "e2880718681258924a86a7ff70113b903c84b1bf8faa0b598d93b59b29d505ca"
+    },
+    "supervision/combined.log": {
+      "bytes": 6836,
+      "sha256": "7449e00c72900be9b1d3b7ae5e20ba73dfb885da8768b43aae7c76c24cb37867"
+    },
+    "supervision/supervision.json": {
+      "bytes": 1144,
+      "sha256": "db249465c6cb1322def50d50e3de34f2fa6c57c9a8307a4e18fce7b29b326bd4"
+    }
+  },
+  "root": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation"
+}

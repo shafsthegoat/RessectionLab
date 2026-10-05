@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/pat05-real-spatial-profile-v1-8aeb3be/frozen-source/scripts/preflight_real_spatial_policy.py", line 397, in <module>
+    main()
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/pat05-real-spatial-profile-v1-8aeb3be/frozen-source/scripts/preflight_real_spatial_policy.py", line 374, in main
+    worker(declaration, args.output)
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/pat05-real-spatial-profile-v1-8aeb3be/frozen-source/scripts/preflight_real_spatial_policy.py", line 192, in worker
+    return _worker_with_profiler(declaration, output, profiler)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/pat05-real-spatial-profile-v1-8aeb3be/frozen-source/scripts/preflight_real_spatial_policy.py", line 217, in _worker_with_profiler
+    task = native_spatial_task_from_case(case, access=AccessWindow(**declaration["access"]),
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/pat05-real-spatial-profile-v1-8aeb3be/frozen-source/src/resectionlab/native_spatial_task.py", line 631, in native_spatial_task_from_case
+    source = NativeSpatialCase(case.mri, support, reference, affine, access, tuple(tools), track=track,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 18, in __init__
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/pat05-real-spatial-profile-v1-8aeb3be/frozen-source/src/resectionlab/native_spatial_task.py", line 209, in __post_init__
+    config = NativeResectionConfig(support, np.zeros(image.shape, np.int16), self.affine_ras_mm,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<string>", line 14, in __init__
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/pat05-real-spatial-profile-v1-8aeb3be/frozen-source/src/resectionlab/native_resection.py", line 99, in __post_init__
+    raise ValueError("Native cell removal currently requires an orthogonal affine, including oblique rotations")
+ValueError: Native cell removal currently requires an orthogonal affine, including oblique rotations

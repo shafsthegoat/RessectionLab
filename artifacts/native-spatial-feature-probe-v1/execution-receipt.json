@@ -1,0 +1,18 @@
+{
+  "tests": {
+    "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 NUMEXPR_NUM_THREADS=1 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python -m pytest tests/test_native_spatial_features.py -q",
+    "chunk_id": "4d9e41",
+    "wall_time_seconds": 0.060351708,
+    "exit_code": 0,
+    "original_token_count": 25,
+    "output": "........                                                                 [100%]\n8 passed in 0.06s\n"
+  },
+  "probe": {
+    "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 NUMEXPR_NUM_THREADS=1 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python scripts/probe_native_spatial_features.py --output ../probe",
+    "chunk_id": "e8cdd3",
+    "wall_time_seconds": 0.606778834,
+    "exit_code": 0,
+    "original_token_count": 38,
+    "output": "{\n  \"status\": \"completed_synthetic_descriptor_probe\",\n  \"native_transitions_executed\": 9,\n  \"gradients\": 0,\n  \"elapsed_seconds\": 0.3626359589397907\n}\n"
+  }
+}

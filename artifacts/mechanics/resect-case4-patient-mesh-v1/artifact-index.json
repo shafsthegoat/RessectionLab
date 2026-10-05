@@ -1,0 +1,66 @@
+{
+  "schema": "case4-mesh-artifact-index-v1",
+  "files": {
+    "RESULT.md": {
+      "bytes": 2712,
+      "sha256": "6f4f47d48b833c76457401869292df5bfc6027205ebaef269d11b2b6e47754a6"
+    },
+    "archive-binding.json": {
+      "bytes": 952,
+      "sha256": "060cc2e2394190d0b752b41c63aa4acf922d217d2294db7af30664cf27e9f673"
+    },
+    "execution-baseline.json": {
+      "bytes": 5575,
+      "sha256": "36e2978b6541484a3243f4c7c2c51817500cd6d9d401344465222e1b950f34dc"
+    },
+    "metadata-before-count-label-correction/RESULT.md": {
+      "bytes": 2712,
+      "sha256": "3fe973b7ff72b4852b3fa49f7b83ca440390e6f10a077539f7482af283e81d99"
+    },
+    "metadata-before-count-label-correction/artifact-index.json": {
+      "bytes": 1684,
+      "sha256": "f1d9f372272cae4050c3868b24bb93e9f389665169461b7365a3e6fe1bb284d2"
+    },
+    "metadata-before-count-label-correction/post-execution-verification.json": {
+      "bytes": 7833,
+      "sha256": "59f0c9db1b5bcb7f6103eed4fb2660ce0dc43219710a8b460217ee22237e0b30"
+    },
+    "metadata-count-correction.json": {
+      "bytes": 497,
+      "sha256": "47b68699a6f64486210e1b8adfdae5271e7ee40c78fcc055a4f5866aecaf138f"
+    },
+    "post-execution-verification.json": {
+      "bytes": 7833,
+      "sha256": "4d19af40486ecb574170be82c269eb005f583bb7de7c1b13496a01b950efa132"
+    },
+    "raw-output-index.json": {
+      "bytes": 1184,
+      "sha256": "02a054632069298592f0c8347b2b00dc5f3338f4baa0d6e7ad6c4b7930536bf4"
+    },
+    "release.json": {
+      "bytes": 3953,
+      "sha256": "b3190326e7b9c208742f5b2362e3bb41f47d3044a8d901429911c10089a0d641"
+    },
+    "saved-records/acceptance.json": {
+      "bytes": 4757,
+      "sha256": "46e6fd72fc8df87eb59bfe9247a5c8ec31207f6ee3d723835b252fb38485e5cd"
+    },
+    "saved-records/supervision/combined.log": {
+      "bytes": 12772,
+      "sha256": "0821301f4878ecdb8c6ea84bc5f224d07eec6b68143761f2871785274922a09f"
+    },
+    "saved-records/supervision/supervision.json": {
+      "bytes": 1261,
+      "sha256": "f728687e7a9952e783c1a5cabd1b2a1a530f7123aa902fb16bcc0e7a2c347e06"
+    },
+    "saved-records/worker.json": {
+      "bytes": 56022,
+      "sha256": "b3485944aa760b3d5a360660835471b06981ac59024d6f465b8285f35bda5f56"
+    },
+    "summary.json": {
+      "bytes": 3411,
+      "sha256": "95ec3020db75a7a11c94cd8d997c1b89da3dfb1c4ef475f281d06cd61304a52a"
+    }
+  },
+  "total_bytes": 113158
+}

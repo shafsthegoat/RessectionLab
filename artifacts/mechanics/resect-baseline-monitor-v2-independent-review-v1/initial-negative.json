@@ -1,0 +1,20 @@
+{
+  "status": "initial_diagnostic_race_negative",
+  "created_at_utc": "2026-10-04T20:45:07.078247+00:00",
+  "command": ".venv/bin/python -m pytest -q tests/test_resect_baseline_monitor_v2_review.py",
+  "result": {
+    "passed": 10,
+    "failed": 1,
+    "pytest_seconds": 0.12,
+    "process_seconds": 0.1307865
+  },
+  "finding": "Missing child RSS while first direct poll reports alive is correctly refused, but error handling overwrites that decisive live observation with a later exit. Preserve both temporal observations; do not change refusal behavior.",
+  "source_sha256": {
+    "artifacts/mechanics/resect-case4-baseline-alignment-v2/align.py": "4ca345d9dc919ee2364a86418751b74963e30695dc7c89d97aeae83f49576b03",
+    "artifacts/mechanics/resect-case4-baseline-alignment-v2/declaration.json": "9f606a76471b71b0de4598ecee0c1f9bf7f21cd410f856ec19f958ba33225593",
+    "tests/test_resect_baseline_monitor_v2_review.py": "57bf07049c0e10306e2abcc365bacaf801fed888b228db75832b391fd47adcb5"
+  },
+  "patient_access": false,
+  "real_worker_spawned": false,
+  "production_edits_by_reviewer": false
+}

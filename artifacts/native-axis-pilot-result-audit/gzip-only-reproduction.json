@@ -1,0 +1,16 @@
+{
+  "all_scientific_report_fields_identical": true,
+  "audit_status": "passed",
+  "gzip_only_inputs": [
+    "artifacts/learning/native-axis-raw-update-pilot-v1/pilot/accounting.json",
+    "artifacts/learning/native-axis-raw-update-pilot-v1/pilot/candidate-record.json",
+    "artifacts/learning/native-axis-raw-update-pilot-v1/pilot/history-freeze.json"
+  ],
+  "new_gradients": 0,
+  "public_simulator_episodes_rerun": 0,
+  "raw_files_retained": true,
+  "reference_audit_sha256": "37b9bec653545486446cd78f845615867654838938a7f9a69ba07c0451d0eb21",
+  "source_sha256": "11d274eb50087624b157e95e533a5387f36d44f7087b6589017a52e39affa856",
+  "status": "passed",
+  "uncompressed_input_hashes_identical": true
+}

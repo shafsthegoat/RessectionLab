@@ -1,0 +1,22 @@
+{
+  "phase": "after_fix",
+  "command": ".venv/bin/python -m pytest -q tests/test_native_spatial_precision.py tests/test_native_spatial_evaluation.py tests/test_native_spatial_greedy.py tests/test_native_spatial_task.py",
+  "result": {
+    "passed": 77,
+    "seconds": 8.0
+  },
+  "source_sha256": {
+    "src/resectionlab/native_spatial_task.py": "61b3d8167152d06a578e1ab7c146b7af937d86ccca6ed9e20bf3081cbf2f6711",
+    "src/resectionlab/native_spatial_evaluation.py": "a3f0ac4c73e6242804ee1de59a7ab429374ae8fc7f21bb34671062fd591dfffa",
+    "tests/test_native_spatial_precision.py": "c37042f3f99926e611d26ec1dd1ac40b4737c8e9c3c9a41e5b942e84958455e1"
+  },
+  "change": "Float64 accumulation before physical volume product; normal volume complements the same full removal volume. Independent evaluator uses math.fsum over stored memberships.",
+  "unchanged": [
+    "source arrays",
+    "native geometry and removal rules",
+    "reward weights",
+    "relative and absolute accounting tolerance1e-7"
+  ],
+  "patient_execution": false,
+  "optimizer_updates": 0
+}

@@ -1,0 +1,2698 @@
+[
+  {
+    "candidate_freeze": {
+      "candidate_hashes": [
+        [
+          "STOP",
+          "sha256:2207e5af567835dc902ffd2c62199ae4c12c063e7acf91084256cdc0cf0e7d29"
+        ],
+        [
+          "native_native-fine-aspiration",
+          "sha256:695f96e110492ee520fadcb3f3e0f461a35993a2601b306cc53462b3fcd7d7e2"
+        ],
+        [
+          "native_native-wide-aspiration",
+          "sha256:bd86392dcbdb0d5c8194a1b4203af62ec62d7482bad308a5ea658c78f6a08271"
+        ],
+        [
+          "static_search-046893487762fe04",
+          "sha256:ba240ce1bb2998f4a154ba07b373418c29132db27d7fc5d28dba573ff83d32ef"
+        ],
+        [
+          "static_search-110df6a56e19bfbc",
+          "sha256:7b3add606862514ea29c6c7b4450f2a0e8d2b3636a0120bc66dee5eaba8703ac"
+        ],
+        [
+          "static_search-35049655244ec7bf",
+          "sha256:d6ec1c4ccf50e0297d4997609b905ea241a9330f29e183b425e66903b43fc1fe"
+        ]
+      ],
+      "case_hash": "sha256:0f9ea30ab997d7d2d6e2b6029a5304b5f272df05243cbb80137216bd0e3a1600",
+      "decision_model_fingerprint": "sha256:fef20585043faf8b65369a3e36ca7b6be5fde0107e675a400e20107d70766bf4",
+      "development_seeds": [
+        6559090289141741178,
+        10288562917747277039,
+        14994860691902963090,
+        461796896752173374
+      ],
+      "fingerprint": "sha256:178d2865fb9fec860ca53849ca04634cffffce3460e024d19c976edbaafa2609",
+      "frozen_at": "2026-10-04T17:41:09.127054+00:00",
+      "generator_family": "rigid_gaussian",
+      "generator_fingerprint": "sha256:980872c0559be403faf8353ecbc03489368b67c98d8581f7dd848c1c58da2e88",
+      "optimization_partition_hash": "sha256:5b69e62d6bc1acb896f40de5f0b53564cc3311e0c944b7e5f70f2a6ce2b5d9b0",
+      "selection_partition_hash": "sha256:3868a76bd667101cc4bad9eb2243654931ade755a8bd3706f49851e6707f98c6",
+      "selection_rule": "Retain the two previously validated native-axis histories; select lexicographically first original route ID per original window without looking at functional values; retain STOP"
+    },
+    "case_hash": "sha256:0f9ea30ab997d7d2d6e2b6029a5304b5f272df05243cbb80137216bd0e3a1600",
+    "decision_model": {
+      "action_primitives": "fixed_historical_routes_and_native_histories",
+      "case_hash": "sha256:0f9ea30ab997d7d2d6e2b6029a5304b5f272df05243cbb80137216bd0e3a1600",
+      "fingerprint": "sha256:fef20585043faf8b65369a3e36ca7b6be5fde0107e675a400e20107d70766bf4",
+      "geometry": {
+        "functional_event_config": {
+          "cvar_alpha": 0.95,
+          "language_threshold": 0.5,
+          "motor_threshold": 0.5,
+          "version": "thresholded-supplied-map-contact-v1"
+        },
+        "functional_evidence_hash": "sha256:6f6b2ab64228ff44c5407f8939c18aee1fa5dc0ccaff63b0fc7329e63dfa2e03",
+        "functional_footprint_hashes": {
+          "STOP": "sha256:5110fc3ebbb1ea63c42a46ccc9af61c390a03df8a041ed111b227c413a1b7184",
+          "native_native-fine-aspiration": "sha256:078fb52dcd3192febb976b1d338446733e0907cf50464add9f12b36c0d8be677",
+          "native_native-wide-aspiration": "sha256:60128f94ba31ad27fd72759a1febd6e9ed0d57ecb0ea31c0c630f0dcd3fcd84c",
+          "static_search-046893487762fe04": "sha256:122dbb169a04ff6781e25e2c6a6afd688cc260b0751afd8b28531bae831b6bdf",
+          "static_search-110df6a56e19bfbc": "sha256:503381b79481ae9fb0444c7b04e1ee8b05585993447e9550eb4eeb3b4292a665",
+          "static_search-35049655244ec7bf": "sha256:9eda13ba6de4a6fc197e6306ae63b193409229bfbd1d35b6aa117d6c77c6f1ae"
+        },
+        "original_anatomy_hash": "sha256:c38a0f7aaced9f79a59a77d785d6b4e804ef2e8b81b60240fe1fda9307de29ac",
+        "tissue_support_hash": "sha256:24d2f2f56cf8fe93a6ac47712e810cf33afbfa71baa2c37b9d18ef3c1eef8175"
+      },
+      "objectives": {
+        "mode": "fixed_plan_sensitivity_no_optimization"
+      },
+      "planning_as_of": null,
+      "tools": [
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 0.45,
+          "tip_length_mm": 2.0,
+          "tip_radius_mm": 1.25,
+          "tool_id": "native-fine-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.1,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 2.25,
+          "tool_id": "native-wide-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 45.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 2.7,
+          "tip_length_mm": 4.0,
+          "tip_radius_mm": 1.7,
+          "tool_id": "generic_aspirator",
+          "working_length_mm": 90.0
+        },
+        {
+          "max_access_angle_deg": 45.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.4,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 1.0,
+          "tool_id": "generic_suction",
+          "working_length_mm": 100.0
+        },
+        {
+          "max_access_angle_deg": 45.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.4,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 1.0,
+          "tool_id": "generic_suction",
+          "working_length_mm": 100.0
+        }
+      ],
+      "world_generator": {
+        "family": "rigid_gaussian",
+        "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+        "rotation_center_mm": [
+          -119.5,
+          119.5,
+          77.0
+        ],
+        "rotation_scale_deg": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "translation_scale_mm": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "version": "rigid-registration-v1"
+      }
+    },
+    "panel": {
+      "components": "motor_and_language",
+      "name": "gaussian_1mm_1deg_support_0.5",
+      "threshold": 0.5,
+      "uncertainty": {
+        "family": "rigid_gaussian",
+        "name": "gaussian_1mm_1deg",
+        "rotation_scale_deg": [
+          1,
+          1,
+          1
+        ],
+        "translation_scale_mm": [
+          1,
+          1,
+          1
+        ],
+        "worlds": 64
+      }
+    },
+    "partitions": {
+      "final_evaluation": {
+        "case_hash": "sha256:0f9ea30ab997d7d2d6e2b6029a5304b5f272df05243cbb80137216bd0e3a1600",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "translation_scale_mm": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "model_conditioned_registration_sensitivity",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "final_evaluation",
+        "seeds": [
+          1529104678594480277,
+          6418447880485267965,
+          1857108746152219565,
+          10574678595861379623,
+          5799084095705787991,
+          31452775612415305,
+          7358151955602154437,
+          4966039446242244793,
+          7577864996885476907,
+          17514867677110453140,
+          12390226149352340049,
+          5028095460308559101,
+          17952109984398741739,
+          17758876404911039689,
+          4923068012857034716,
+          16251269378407696652,
+          1173791800285137527,
+          2401319012343297036,
+          12192521536978362213,
+          8009120961057141994,
+          17726709311493437357,
+          9147421065865586326,
+          14274850890507104346,
+          13440445323536405208,
+          6697223596687778854,
+          5198373523614498423,
+          16832977903083604320,
+          10705945640228410824,
+          6695808908568947296,
+          15940999035738911038,
+          7860809268582868720,
+          10406118165687609976,
+          13907907425291025175,
+          16098986146326065553,
+          14665533917695896715,
+          10698886731088144987,
+          14210864166610525363,
+          1496088039945441488,
+          10021759592387834359,
+          10006198639456560059,
+          12084793923340721730,
+          15978411972554244358,
+          13815906699426395512,
+          14778591410666933409,
+          7371780179628086580,
+          16398917700670728996,
+          699583571808892505,
+          13043751709906473674,
+          12285714323958259015,
+          18159778149023487334,
+          11700630262131173794,
+          10492856648327831255,
+          13669815992638081270,
+          3963229307734240558,
+          6796409360127326394,
+          9468096094573476328,
+          8734727055628846504,
+          15228308076994956198,
+          13695738567647307701,
+          10041062176334326825,
+          18435169312945515091,
+          9177749463278321533,
+          13527678881625249227,
+          11698409449641935496
+        ]
+      },
+      "optimization": {
+        "case_hash": "sha256:0f9ea30ab997d7d2d6e2b6029a5304b5f272df05243cbb80137216bd0e3a1600",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "translation_scale_mm": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "model_conditioned_registration_sensitivity",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "optimization",
+        "seeds": [
+          6559090289141741178,
+          10288562917747277039
+        ]
+      },
+      "selection": {
+        "case_hash": "sha256:0f9ea30ab997d7d2d6e2b6029a5304b5f272df05243cbb80137216bd0e3a1600",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "translation_scale_mm": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "model_conditioned_registration_sensitivity",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "selection",
+        "seeds": [
+          14994860691902963090,
+          461796896752173374
+        ]
+      },
+      "stress": {
+        "case_hash": "sha256:0f9ea30ab997d7d2d6e2b6029a5304b5f272df05243cbb80137216bd0e3a1600",
+        "generator": {
+          "family": "rigid_uniform",
+          "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "translation_scale_mm": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "model_conditioned_registration_sensitivity",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "stress",
+        "seeds": [
+          14302496771823229960,
+          18263318370709886001
+        ]
+      }
+    }
+  },
+  {
+    "candidate_freeze": {
+      "candidate_hashes": [
+        [
+          "STOP",
+          "sha256:2207e5af567835dc902ffd2c62199ae4c12c063e7acf91084256cdc0cf0e7d29"
+        ],
+        [
+          "native_native-fine-aspiration",
+          "sha256:695f96e110492ee520fadcb3f3e0f461a35993a2601b306cc53462b3fcd7d7e2"
+        ],
+        [
+          "native_native-wide-aspiration",
+          "sha256:bd86392dcbdb0d5c8194a1b4203af62ec62d7482bad308a5ea658c78f6a08271"
+        ],
+        [
+          "static_search-046893487762fe04",
+          "sha256:ba240ce1bb2998f4a154ba07b373418c29132db27d7fc5d28dba573ff83d32ef"
+        ],
+        [
+          "static_search-110df6a56e19bfbc",
+          "sha256:7b3add606862514ea29c6c7b4450f2a0e8d2b3636a0120bc66dee5eaba8703ac"
+        ],
+        [
+          "static_search-35049655244ec7bf",
+          "sha256:d6ec1c4ccf50e0297d4997609b905ea241a9330f29e183b425e66903b43fc1fe"
+        ]
+      ],
+      "case_hash": "sha256:0f9ea30ab997d7d2d6e2b6029a5304b5f272df05243cbb80137216bd0e3a1600",
+      "decision_model_fingerprint": "sha256:d0a3e81d5ab4902e77378b0a7b5c19d88c88ae43e7811186a5ad3f4f2a8710ac",
+      "development_seeds": [
+        6559090289141741178,
+        10288562917747277039,
+        14994860691902963090,
+        461796896752173374
+      ],
+      "fingerprint": "sha256:ebb46825f5f8037e31374a4184aee3e93e6780892addbdd4f18bf473147949f3",
+      "frozen_at": "2026-10-04T17:41:09.200356+00:00",
+      "generator_family": "rigid_gaussian",
+      "generator_fingerprint": "sha256:980872c0559be403faf8353ecbc03489368b67c98d8581f7dd848c1c58da2e88",
+      "optimization_partition_hash": "sha256:5b69e62d6bc1acb896f40de5f0b53564cc3311e0c944b7e5f70f2a6ce2b5d9b0",
+      "selection_partition_hash": "sha256:3868a76bd667101cc4bad9eb2243654931ade755a8bd3706f49851e6707f98c6",
+      "selection_rule": "Retain the two previously validated native-axis histories; select lexicographically first original route ID per original window without looking at functional values; retain STOP"
+    },
+    "case_hash": "sha256:0f9ea30ab997d7d2d6e2b6029a5304b5f272df05243cbb80137216bd0e3a1600",
+    "decision_model": {
+      "action_primitives": "fixed_historical_routes_and_native_histories",
+      "case_hash": "sha256:0f9ea30ab997d7d2d6e2b6029a5304b5f272df05243cbb80137216bd0e3a1600",
+      "fingerprint": "sha256:d0a3e81d5ab4902e77378b0a7b5c19d88c88ae43e7811186a5ad3f4f2a8710ac",
+      "geometry": {
+        "functional_event_config": {
+          "cvar_alpha": 0.95,
+          "language_threshold": 0.1,
+          "motor_threshold": 0.1,
+          "version": "thresholded-supplied-map-contact-v1"
+        },
+        "functional_evidence_hash": "sha256:6f6b2ab64228ff44c5407f8939c18aee1fa5dc0ccaff63b0fc7329e63dfa2e03",
+        "functional_footprint_hashes": {
+          "STOP": "sha256:5110fc3ebbb1ea63c42a46ccc9af61c390a03df8a041ed111b227c413a1b7184",
+          "native_native-fine-aspiration": "sha256:078fb52dcd3192febb976b1d338446733e0907cf50464add9f12b36c0d8be677",
+          "native_native-wide-aspiration": "sha256:60128f94ba31ad27fd72759a1febd6e9ed0d57ecb0ea31c0c630f0dcd3fcd84c",
+          "static_search-046893487762fe04": "sha256:122dbb169a04ff6781e25e2c6a6afd688cc260b0751afd8b28531bae831b6bdf",
+          "static_search-110df6a56e19bfbc": "sha256:503381b79481ae9fb0444c7b04e1ee8b05585993447e9550eb4eeb3b4292a665",
+          "static_search-35049655244ec7bf": "sha256:9eda13ba6de4a6fc197e6306ae63b193409229bfbd1d35b6aa117d6c77c6f1ae"
+        },
+        "original_anatomy_hash": "sha256:c38a0f7aaced9f79a59a77d785d6b4e804ef2e8b81b60240fe1fda9307de29ac",
+        "tissue_support_hash": "sha256:24d2f2f56cf8fe93a6ac47712e810cf33afbfa71baa2c37b9d18ef3c1eef8175"
+      },
+      "objectives": {
+        "mode": "fixed_plan_sensitivity_no_optimization"
+      },
+      "planning_as_of": null,
+      "tools": [
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 0.45,
+          "tip_length_mm": 2.0,
+          "tip_radius_mm": 1.25,
+          "tool_id": "native-fine-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.1,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 2.25,
+          "tool_id": "native-wide-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 45.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 2.7,
+          "tip_length_mm": 4.0,
+          "tip_radius_mm": 1.7,
+          "tool_id": "generic_aspirator",
+          "working_length_mm": 90.0
+        },
+        {
+          "max_access_angle_deg": 45.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.4,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 1.0,
+          "tool_id": "generic_suction",
+          "working_length_mm": 100.0
+        },
+        {
+          "max_access_angle_deg": 45.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.4,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 1.0,
+          "tool_id": "generic_suction",
+          "working_length_mm": 100.0
+        }
+      ],
+      "world_generator": {
+        "family": "rigid_gaussian",
+        "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+        "rotation_center_mm": [
+          -119.5,
+          119.5,
+          77.0
+        ],
+        "rotation_scale_deg": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "translation_scale_mm": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "version": "rigid-registration-v1"
+      }
+    },
+    "panel": {
+      "components": "motor_and_language",
+      "name": "gaussian_1mm_1deg_support_0.1",
+      "threshold": 0.1,
+      "uncertainty": {
+        "family": "rigid_gaussian",
+        "name": "gaussian_1mm_1deg",
+        "rotation_scale_deg": [
+          1,
+          1,
+          1
+        ],
+        "translation_scale_mm": [
+          1,
+          1,
+          1
+        ],
+        "worlds": 64
+      }
+    },
+    "partitions": {
+      "final_evaluation": {
+        "case_hash": "sha256:0f9ea30ab997d7d2d6e2b6029a5304b5f272df05243cbb80137216bd0e3a1600",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "translation_scale_mm": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "model_conditioned_registration_sensitivity",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "final_evaluation",
+        "seeds": [
+          1529104678594480277,
+          6418447880485267965,
+          1857108746152219565,
+          10574678595861379623,
+          5799084095705787991,
+          31452775612415305,
+          7358151955602154437,
+          4966039446242244793,
+          7577864996885476907,
+          17514867677110453140,
+          12390226149352340049,
+          5028095460308559101,
+          17952109984398741739,
+          17758876404911039689,
+          4923068012857034716,
+          16251269378407696652,
+          1173791800285137527,
+          2401319012343297036,
+          12192521536978362213,
+          8009120961057141994,
+          17726709311493437357,
+          9147421065865586326,
+          14274850890507104346,
+          13440445323536405208,
+          6697223596687778854,
+          5198373523614498423,
+          16832977903083604320,
+          10705945640228410824,
+          6695808908568947296,
+          15940999035738911038,
+          7860809268582868720,
+          10406118165687609976,
+          13907907425291025175,
+          16098986146326065553,
+          14665533917695896715,
+          10698886731088144987,
+          14210864166610525363,
+          1496088039945441488,
+          10021759592387834359,
+          10006198639456560059,
+          12084793923340721730,
+          15978411972554244358,
+          13815906699426395512,
+          14778591410666933409,
+          7371780179628086580,
+          16398917700670728996,
+          699583571808892505,
+          13043751709906473674,
+          12285714323958259015,
+          18159778149023487334,
+          11700630262131173794,
+          10492856648327831255,
+          13669815992638081270,
+          3963229307734240558,
+          6796409360127326394,
+          9468096094573476328,
+          8734727055628846504,
+          15228308076994956198,
+          13695738567647307701,
+          10041062176334326825,
+          18435169312945515091,
+          9177749463278321533,
+          13527678881625249227,
+          11698409449641935496
+        ]
+      },
+      "optimization": {
+        "case_hash": "sha256:0f9ea30ab997d7d2d6e2b6029a5304b5f272df05243cbb80137216bd0e3a1600",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "translation_scale_mm": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "model_conditioned_registration_sensitivity",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "optimization",
+        "seeds": [
+          6559090289141741178,
+          10288562917747277039
+        ]
+      },
+      "selection": {
+        "case_hash": "sha256:0f9ea30ab997d7d2d6e2b6029a5304b5f272df05243cbb80137216bd0e3a1600",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "translation_scale_mm": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "model_conditioned_registration_sensitivity",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "selection",
+        "seeds": [
+          14994860691902963090,
+          461796896752173374
+        ]
+      },
+      "stress": {
+        "case_hash": "sha256:0f9ea30ab997d7d2d6e2b6029a5304b5f272df05243cbb80137216bd0e3a1600",
+        "generator": {
+          "family": "rigid_uniform",
+          "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "translation_scale_mm": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "model_conditioned_registration_sensitivity",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "stress",
+        "seeds": [
+          14302496771823229960,
+          18263318370709886001
+        ]
+      }
+    }
+  },
+  {
+    "candidate_freeze": {
+      "candidate_hashes": [
+        [
+          "STOP",
+          "sha256:31a52859d221b4256d7a3530e1310d07e42032bbb22a35ff407a9e3341698098"
+        ],
+        [
+          "native_native-fine-aspiration",
+          "sha256:feb5cec3dd9d295827fb51fd9af4dd2cf3df51ad95345295de04ee9f473e4ce5"
+        ],
+        [
+          "native_native-wide-aspiration",
+          "sha256:02bf47db53612b2c2a022f0607a17ae261cd156e42609a50629e83290fbc27c3"
+        ],
+        [
+          "static_search-046893487762fe04",
+          "sha256:b89b5c7252a30ca3bb5d13fbe983859d3e3ad6933161309a97449b3abd1eb677"
+        ],
+        [
+          "static_search-110df6a56e19bfbc",
+          "sha256:b56aaf6d2587b8d651e1110c79cc596c0626fdd7069e7a3a383ec34a8084ec18"
+        ],
+        [
+          "static_search-35049655244ec7bf",
+          "sha256:5e6504eb5b6e30a33ddeaced45f15597ba714bf9569fdb16a593c89cedc48fe5"
+        ]
+      ],
+      "case_hash": "sha256:8669fb83314c40d7c39e09ed63c9448ab505ce886346817a2f35a232d0078550",
+      "decision_model_fingerprint": "sha256:1c9e345551020652018b770cba82ba3ebac050af9fd967f3c7007a050d5ad65e",
+      "development_seeds": [
+        6559090289141741178,
+        10288562917747277039,
+        14994860691902963090,
+        461796896752173374
+      ],
+      "fingerprint": "sha256:3f6ceeffae3b63199f1f0739c276af36fd0eef0994a83b7239884369f1cdea12",
+      "frozen_at": "2026-10-04T17:41:10.567090+00:00",
+      "generator_family": "rigid_gaussian",
+      "generator_fingerprint": "sha256:764edde013107f29c6f0f3b80038dfc39dddd604e8b86a045610af1463cc2c6c",
+      "optimization_partition_hash": "sha256:d4fd493c9aa624cf886a4a791d5970f262992abda0277689f3c8f0624e9bc551",
+      "selection_partition_hash": "sha256:b5406bf7f647f76e086de230530b157e5a777e51e582d26c721e190a12a0e626",
+      "selection_rule": "Retain the two previously validated native-axis histories; select lexicographically first original route ID per original window without looking at functional values; retain STOP"
+    },
+    "case_hash": "sha256:8669fb83314c40d7c39e09ed63c9448ab505ce886346817a2f35a232d0078550",
+    "decision_model": {
+      "action_primitives": "fixed_historical_routes_and_native_histories",
+      "case_hash": "sha256:8669fb83314c40d7c39e09ed63c9448ab505ce886346817a2f35a232d0078550",
+      "fingerprint": "sha256:1c9e345551020652018b770cba82ba3ebac050af9fd967f3c7007a050d5ad65e",
+      "geometry": {
+        "functional_event_config": {
+          "cvar_alpha": 0.95,
+          "language_threshold": 0.5,
+          "motor_threshold": 0.5,
+          "version": "thresholded-supplied-map-contact-v1"
+        },
+        "functional_evidence_hash": "sha256:659f3453d0c759cd3f513cc2715a80047f01c87e1ddda5137ec5b85a2965c847",
+        "functional_footprint_hashes": {
+          "STOP": "sha256:88412ec72334f9e192b1763299f156ecba47d95707d8028754f892d42fc032b4",
+          "native_native-fine-aspiration": "sha256:360da8997a5eb9d1941a6af9231ce1002582e97c7e1cb663e2221e2b64178076",
+          "native_native-wide-aspiration": "sha256:89d9dd7402ed7e0fc88a52ddb673f6021a0018c84fe9e8b9548b7a1b0d514800",
+          "static_search-046893487762fe04": "sha256:9e8f67244ad1171150c8b211be0bf1542cbe0f892bc4581168a38a8509f29848",
+          "static_search-110df6a56e19bfbc": "sha256:49afdfb4386a67df10cdd964dd3ccd46fa55d0612266da25a7a71b215beb760c",
+          "static_search-35049655244ec7bf": "sha256:2adfa5faa375b477f79927e12ccb9ed13e95e9d3dd2f4aba0df947bd8d68b71c"
+        },
+        "original_anatomy_hash": "sha256:c38a0f7aaced9f79a59a77d785d6b4e804ef2e8b81b60240fe1fda9307de29ac",
+        "tissue_support_hash": "sha256:24d2f2f56cf8fe93a6ac47712e810cf33afbfa71baa2c37b9d18ef3c1eef8175"
+      },
+      "objectives": {
+        "mode": "fixed_plan_sensitivity_no_optimization"
+      },
+      "planning_as_of": null,
+      "tools": [
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 0.45,
+          "tip_length_mm": 2.0,
+          "tip_radius_mm": 1.25,
+          "tool_id": "native-fine-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.1,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 2.25,
+          "tool_id": "native-wide-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 45.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 2.7,
+          "tip_length_mm": 4.0,
+          "tip_radius_mm": 1.7,
+          "tool_id": "generic_aspirator",
+          "working_length_mm": 90.0
+        },
+        {
+          "max_access_angle_deg": 45.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.4,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 1.0,
+          "tool_id": "generic_suction",
+          "working_length_mm": 100.0
+        },
+        {
+          "max_access_angle_deg": 45.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.4,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 1.0,
+          "tool_id": "generic_suction",
+          "working_length_mm": 100.0
+        }
+      ],
+      "world_generator": {
+        "family": "rigid_gaussian",
+        "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+        "rotation_center_mm": [
+          -119.5,
+          119.5,
+          77.0
+        ],
+        "rotation_scale_deg": [
+          2.0,
+          2.0,
+          2.0
+        ],
+        "translation_scale_mm": [
+          2.0,
+          2.0,
+          2.0
+        ],
+        "version": "rigid-registration-v1"
+      }
+    },
+    "panel": {
+      "components": "motor_and_language",
+      "name": "gaussian_2mm_2deg_support_0.5",
+      "threshold": 0.5,
+      "uncertainty": {
+        "family": "rigid_gaussian",
+        "name": "gaussian_2mm_2deg",
+        "rotation_scale_deg": [
+          2,
+          2,
+          2
+        ],
+        "translation_scale_mm": [
+          2,
+          2,
+          2
+        ],
+        "worlds": 64
+      }
+    },
+    "partitions": {
+      "final_evaluation": {
+        "case_hash": "sha256:8669fb83314c40d7c39e09ed63c9448ab505ce886346817a2f35a232d0078550",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            2.0,
+            2.0,
+            2.0
+          ],
+          "translation_scale_mm": [
+            2.0,
+            2.0,
+            2.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "model_conditioned_registration_sensitivity",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "final_evaluation",
+        "seeds": [
+          1529104678594480277,
+          6418447880485267965,
+          1857108746152219565,
+          10574678595861379623,
+          5799084095705787991,
+          31452775612415305,
+          7358151955602154437,
+          4966039446242244793,
+          7577864996885476907,
+          17514867677110453140,
+          12390226149352340049,
+          5028095460308559101,
+          17952109984398741739,
+          17758876404911039689,
+          4923068012857034716,
+          16251269378407696652,
+          1173791800285137527,
+          2401319012343297036,
+          12192521536978362213,
+          8009120961057141994,
+          17726709311493437357,
+          9147421065865586326,
+          14274850890507104346,
+          13440445323536405208,
+          6697223596687778854,
+          5198373523614498423,
+          16832977903083604320,
+          10705945640228410824,
+          6695808908568947296,
+          15940999035738911038,
+          7860809268582868720,
+          10406118165687609976,
+          13907907425291025175,
+          16098986146326065553,
+          14665533917695896715,
+          10698886731088144987,
+          14210864166610525363,
+          1496088039945441488,
+          10021759592387834359,
+          10006198639456560059,
+          12084793923340721730,
+          15978411972554244358,
+          13815906699426395512,
+          14778591410666933409,
+          7371780179628086580,
+          16398917700670728996,
+          699583571808892505,
+          13043751709906473674,
+          12285714323958259015,
+          18159778149023487334,
+          11700630262131173794,
+          10492856648327831255,
+          13669815992638081270,
+          3963229307734240558,
+          6796409360127326394,
+          9468096094573476328,
+          8734727055628846504,
+          15228308076994956198,
+          13695738567647307701,
+          10041062176334326825,
+          18435169312945515091,
+          9177749463278321533,
+          13527678881625249227,
+          11698409449641935496
+        ]
+      },
+      "optimization": {
+        "case_hash": "sha256:8669fb83314c40d7c39e09ed63c9448ab505ce886346817a2f35a232d0078550",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            2.0,
+            2.0,
+            2.0
+          ],
+          "translation_scale_mm": [
+            2.0,
+            2.0,
+            2.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "model_conditioned_registration_sensitivity",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "optimization",
+        "seeds": [
+          6559090289141741178,
+          10288562917747277039
+        ]
+      },
+      "selection": {
+        "case_hash": "sha256:8669fb83314c40d7c39e09ed63c9448ab505ce886346817a2f35a232d0078550",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            2.0,
+            2.0,
+            2.0
+          ],
+          "translation_scale_mm": [
+            2.0,
+            2.0,
+            2.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "model_conditioned_registration_sensitivity",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "selection",
+        "seeds": [
+          14994860691902963090,
+          461796896752173374
+        ]
+      },
+      "stress": {
+        "case_hash": "sha256:8669fb83314c40d7c39e09ed63c9448ab505ce886346817a2f35a232d0078550",
+        "generator": {
+          "family": "rigid_uniform",
+          "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            2.0,
+            2.0,
+            2.0
+          ],
+          "translation_scale_mm": [
+            2.0,
+            2.0,
+            2.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "model_conditioned_registration_sensitivity",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "stress",
+        "seeds": [
+          14302496771823229960,
+          18263318370709886001
+        ]
+      }
+    }
+  },
+  {
+    "candidate_freeze": {
+      "candidate_hashes": [
+        [
+          "STOP",
+          "sha256:31a52859d221b4256d7a3530e1310d07e42032bbb22a35ff407a9e3341698098"
+        ],
+        [
+          "native_native-fine-aspiration",
+          "sha256:feb5cec3dd9d295827fb51fd9af4dd2cf3df51ad95345295de04ee9f473e4ce5"
+        ],
+        [
+          "native_native-wide-aspiration",
+          "sha256:02bf47db53612b2c2a022f0607a17ae261cd156e42609a50629e83290fbc27c3"
+        ],
+        [
+          "static_search-046893487762fe04",
+          "sha256:b89b5c7252a30ca3bb5d13fbe983859d3e3ad6933161309a97449b3abd1eb677"
+        ],
+        [
+          "static_search-110df6a56e19bfbc",
+          "sha256:b56aaf6d2587b8d651e1110c79cc596c0626fdd7069e7a3a383ec34a8084ec18"
+        ],
+        [
+          "static_search-35049655244ec7bf",
+          "sha256:5e6504eb5b6e30a33ddeaced45f15597ba714bf9569fdb16a593c89cedc48fe5"
+        ]
+      ],
+      "case_hash": "sha256:8669fb83314c40d7c39e09ed63c9448ab505ce886346817a2f35a232d0078550",
+      "decision_model_fingerprint": "sha256:90fa03308cc865bd03077493cae812b612f18dd3a9fb45f9c5edce7555be6688",
+      "development_seeds": [
+        6559090289141741178,
+        10288562917747277039,
+        14994860691902963090,
+        461796896752173374
+      ],
+      "fingerprint": "sha256:5bc5e7ac2e6a00c1d0d4647ba2fe915bd3c5504d110a1f968f355a9687baf230",
+      "frozen_at": "2026-10-04T17:41:10.641452+00:00",
+      "generator_family": "rigid_gaussian",
+      "generator_fingerprint": "sha256:764edde013107f29c6f0f3b80038dfc39dddd604e8b86a045610af1463cc2c6c",
+      "optimization_partition_hash": "sha256:d4fd493c9aa624cf886a4a791d5970f262992abda0277689f3c8f0624e9bc551",
+      "selection_partition_hash": "sha256:b5406bf7f647f76e086de230530b157e5a777e51e582d26c721e190a12a0e626",
+      "selection_rule": "Retain the two previously validated native-axis histories; select lexicographically first original route ID per original window without looking at functional values; retain STOP"
+    },
+    "case_hash": "sha256:8669fb83314c40d7c39e09ed63c9448ab505ce886346817a2f35a232d0078550",
+    "decision_model": {
+      "action_primitives": "fixed_historical_routes_and_native_histories",
+      "case_hash": "sha256:8669fb83314c40d7c39e09ed63c9448ab505ce886346817a2f35a232d0078550",
+      "fingerprint": "sha256:90fa03308cc865bd03077493cae812b612f18dd3a9fb45f9c5edce7555be6688",
+      "geometry": {
+        "functional_event_config": {
+          "cvar_alpha": 0.95,
+          "language_threshold": 0.1,
+          "motor_threshold": 0.1,
+          "version": "thresholded-supplied-map-contact-v1"
+        },
+        "functional_evidence_hash": "sha256:659f3453d0c759cd3f513cc2715a80047f01c87e1ddda5137ec5b85a2965c847",
+        "functional_footprint_hashes": {
+          "STOP": "sha256:88412ec72334f9e192b1763299f156ecba47d95707d8028754f892d42fc032b4",
+          "native_native-fine-aspiration": "sha256:360da8997a5eb9d1941a6af9231ce1002582e97c7e1cb663e2221e2b64178076",
+          "native_native-wide-aspiration": "sha256:89d9dd7402ed7e0fc88a52ddb673f6021a0018c84fe9e8b9548b7a1b0d514800",
+          "static_search-046893487762fe04": "sha256:9e8f67244ad1171150c8b211be0bf1542cbe0f892bc4581168a38a8509f29848",
+          "static_search-110df6a56e19bfbc": "sha256:49afdfb4386a67df10cdd964dd3ccd46fa55d0612266da25a7a71b215beb760c",
+          "static_search-35049655244ec7bf": "sha256:2adfa5faa375b477f79927e12ccb9ed13e95e9d3dd2f4aba0df947bd8d68b71c"
+        },
+        "original_anatomy_hash": "sha256:c38a0f7aaced9f79a59a77d785d6b4e804ef2e8b81b60240fe1fda9307de29ac",
+        "tissue_support_hash": "sha256:24d2f2f56cf8fe93a6ac47712e810cf33afbfa71baa2c37b9d18ef3c1eef8175"
+      },
+      "objectives": {
+        "mode": "fixed_plan_sensitivity_no_optimization"
+      },
+      "planning_as_of": null,
+      "tools": [
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 0.45,
+          "tip_length_mm": 2.0,
+          "tip_radius_mm": 1.25,
+          "tool_id": "native-fine-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.1,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 2.25,
+          "tool_id": "native-wide-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 45.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 2.7,
+          "tip_length_mm": 4.0,
+          "tip_radius_mm": 1.7,
+          "tool_id": "generic_aspirator",
+          "working_length_mm": 90.0
+        },
+        {
+          "max_access_angle_deg": 45.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.4,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 1.0,
+          "tool_id": "generic_suction",
+          "working_length_mm": 100.0
+        },
+        {
+          "max_access_angle_deg": 45.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.4,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 1.0,
+          "tool_id": "generic_suction",
+          "working_length_mm": 100.0
+        }
+      ],
+      "world_generator": {
+        "family": "rigid_gaussian",
+        "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+        "rotation_center_mm": [
+          -119.5,
+          119.5,
+          77.0
+        ],
+        "rotation_scale_deg": [
+          2.0,
+          2.0,
+          2.0
+        ],
+        "translation_scale_mm": [
+          2.0,
+          2.0,
+          2.0
+        ],
+        "version": "rigid-registration-v1"
+      }
+    },
+    "panel": {
+      "components": "motor_and_language",
+      "name": "gaussian_2mm_2deg_support_0.1",
+      "threshold": 0.1,
+      "uncertainty": {
+        "family": "rigid_gaussian",
+        "name": "gaussian_2mm_2deg",
+        "rotation_scale_deg": [
+          2,
+          2,
+          2
+        ],
+        "translation_scale_mm": [
+          2,
+          2,
+          2
+        ],
+        "worlds": 64
+      }
+    },
+    "partitions": {
+      "final_evaluation": {
+        "case_hash": "sha256:8669fb83314c40d7c39e09ed63c9448ab505ce886346817a2f35a232d0078550",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            2.0,
+            2.0,
+            2.0
+          ],
+          "translation_scale_mm": [
+            2.0,
+            2.0,
+            2.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "model_conditioned_registration_sensitivity",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "final_evaluation",
+        "seeds": [
+          1529104678594480277,
+          6418447880485267965,
+          1857108746152219565,
+          10574678595861379623,
+          5799084095705787991,
+          31452775612415305,
+          7358151955602154437,
+          4966039446242244793,
+          7577864996885476907,
+          17514867677110453140,
+          12390226149352340049,
+          5028095460308559101,
+          17952109984398741739,
+          17758876404911039689,
+          4923068012857034716,
+          16251269378407696652,
+          1173791800285137527,
+          2401319012343297036,
+          12192521536978362213,
+          8009120961057141994,
+          17726709311493437357,
+          9147421065865586326,
+          14274850890507104346,
+          13440445323536405208,
+          6697223596687778854,
+          5198373523614498423,
+          16832977903083604320,
+          10705945640228410824,
+          6695808908568947296,
+          15940999035738911038,
+          7860809268582868720,
+          10406118165687609976,
+          13907907425291025175,
+          16098986146326065553,
+          14665533917695896715,
+          10698886731088144987,
+          14210864166610525363,
+          1496088039945441488,
+          10021759592387834359,
+          10006198639456560059,
+          12084793923340721730,
+          15978411972554244358,
+          13815906699426395512,
+          14778591410666933409,
+          7371780179628086580,
+          16398917700670728996,
+          699583571808892505,
+          13043751709906473674,
+          12285714323958259015,
+          18159778149023487334,
+          11700630262131173794,
+          10492856648327831255,
+          13669815992638081270,
+          3963229307734240558,
+          6796409360127326394,
+          9468096094573476328,
+          8734727055628846504,
+          15228308076994956198,
+          13695738567647307701,
+          10041062176334326825,
+          18435169312945515091,
+          9177749463278321533,
+          13527678881625249227,
+          11698409449641935496
+        ]
+      },
+      "optimization": {
+        "case_hash": "sha256:8669fb83314c40d7c39e09ed63c9448ab505ce886346817a2f35a232d0078550",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            2.0,
+            2.0,
+            2.0
+          ],
+          "translation_scale_mm": [
+            2.0,
+            2.0,
+            2.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "model_conditioned_registration_sensitivity",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "optimization",
+        "seeds": [
+          6559090289141741178,
+          10288562917747277039
+        ]
+      },
+      "selection": {
+        "case_hash": "sha256:8669fb83314c40d7c39e09ed63c9448ab505ce886346817a2f35a232d0078550",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            2.0,
+            2.0,
+            2.0
+          ],
+          "translation_scale_mm": [
+            2.0,
+            2.0,
+            2.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "model_conditioned_registration_sensitivity",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "selection",
+        "seeds": [
+          14994860691902963090,
+          461796896752173374
+        ]
+      },
+      "stress": {
+        "case_hash": "sha256:8669fb83314c40d7c39e09ed63c9448ab505ce886346817a2f35a232d0078550",
+        "generator": {
+          "family": "rigid_uniform",
+          "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            2.0,
+            2.0,
+            2.0
+          ],
+          "translation_scale_mm": [
+            2.0,
+            2.0,
+            2.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "model_conditioned_registration_sensitivity",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "stress",
+        "seeds": [
+          14302496771823229960,
+          18263318370709886001
+        ]
+      }
+    }
+  },
+  {
+    "candidate_freeze": {
+      "candidate_hashes": [
+        [
+          "STOP",
+          "sha256:b762b8ccfaf230e6933447c1a6909efc29891d3e7ce406f55b8214f35f1547fe"
+        ],
+        [
+          "native_native-fine-aspiration",
+          "sha256:b2b21a7751e35fe22b2863e5564025dff900ab6c303e4db2e4c2ae8abe42bad1"
+        ],
+        [
+          "native_native-wide-aspiration",
+          "sha256:3112f689c5aff323526213de5fd7e753c20ea8d04e3b59cb8dceca7eb77281fe"
+        ],
+        [
+          "static_search-046893487762fe04",
+          "sha256:6ef89f458c20cfd0e1b8887dd98a2cd9e96db8f40e4c6da4d260c841c0c36d26"
+        ],
+        [
+          "static_search-110df6a56e19bfbc",
+          "sha256:c16944216ef60602188e6389fb1edd34f930c78e34e895b349f53c1e72c4cc28"
+        ],
+        [
+          "static_search-35049655244ec7bf",
+          "sha256:7a41b645b18116c4519f6038ce3391660640f0f06a55321cdfe32e035288832f"
+        ]
+      ],
+      "case_hash": "sha256:63611caf1ff8857edfbe2d2dd41cec6fc7395d2071b70a254aa886f0647cfca2",
+      "decision_model_fingerprint": "sha256:01fa3fac4a3d97c9527b4ff092fd873d508f3a8863dd57f6ba880b3ee61ef632",
+      "development_seeds": [
+        6559090289141741178,
+        10288562917747277039,
+        14994860691902963090,
+        461796896752173374
+      ],
+      "fingerprint": "sha256:e9e5e1b7fe85c44da29df76b1f028909c35289635c5e9d0d204d0223d4a3557b",
+      "frozen_at": "2026-10-04T17:41:12.013924+00:00",
+      "generator_family": "rigid_gaussian",
+      "generator_fingerprint": "sha256:a54a948adbbf018027d26728442943ce5e6c2313d7907fc2478e2363b6ba40c0",
+      "optimization_partition_hash": "sha256:86034a3ede7b6da7c4949538f73f10f0f97e56c93d3afc5f00fc17fc52014dae",
+      "selection_partition_hash": "sha256:e45ebbc7e8d7e93c8146212ecf6b31c2bf5728832cb0f010a7efb244c25ddc94",
+      "selection_rule": "Retain the two previously validated native-axis histories; select lexicographically first original route ID per original window without looking at functional values; retain STOP"
+    },
+    "case_hash": "sha256:63611caf1ff8857edfbe2d2dd41cec6fc7395d2071b70a254aa886f0647cfca2",
+    "decision_model": {
+      "action_primitives": "fixed_historical_routes_and_native_histories",
+      "case_hash": "sha256:63611caf1ff8857edfbe2d2dd41cec6fc7395d2071b70a254aa886f0647cfca2",
+      "fingerprint": "sha256:01fa3fac4a3d97c9527b4ff092fd873d508f3a8863dd57f6ba880b3ee61ef632",
+      "geometry": {
+        "functional_event_config": {
+          "cvar_alpha": 0.95,
+          "language_threshold": 0.5,
+          "motor_threshold": 0.5,
+          "version": "thresholded-supplied-map-contact-v1"
+        },
+        "functional_evidence_hash": "sha256:5b2ba8db37aa52ea47d5be61226d0b084cd77f02efc864a9758b22fdb483fea9",
+        "functional_footprint_hashes": {
+          "STOP": "sha256:46ff216fd153b4beb646739df5be0f2e62f0eada6210e306d1540b622ead9525",
+          "native_native-fine-aspiration": "sha256:3b9436ed5c490a6fd3237249c228062e209a8f77cb00488aef424b2ced382fe1",
+          "native_native-wide-aspiration": "sha256:54796b9d93e067f7b3804939e1e67170e413fd47f0616c88c1447f8a834ea257",
+          "static_search-046893487762fe04": "sha256:a9e49620eccd88b453490d486683a1202b15388e8b4aaec7621b55392c72fdc7",
+          "static_search-110df6a56e19bfbc": "sha256:180f0e38638c9a0e0667882f545542bc2f408a6ca6099784d6103c43af310db3",
+          "static_search-35049655244ec7bf": "sha256:663e42b98c94c61a9534be69936a4d3df67dc7259ebe1c44a8b562678bc83d9e"
+        },
+        "original_anatomy_hash": "sha256:c38a0f7aaced9f79a59a77d785d6b4e804ef2e8b81b60240fe1fda9307de29ac",
+        "tissue_support_hash": "sha256:24d2f2f56cf8fe93a6ac47712e810cf33afbfa71baa2c37b9d18ef3c1eef8175"
+      },
+      "objectives": {
+        "mode": "fixed_plan_sensitivity_no_optimization"
+      },
+      "planning_as_of": null,
+      "tools": [
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 0.45,
+          "tip_length_mm": 2.0,
+          "tip_radius_mm": 1.25,
+          "tool_id": "native-fine-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.1,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 2.25,
+          "tool_id": "native-wide-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 45.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 2.7,
+          "tip_length_mm": 4.0,
+          "tip_radius_mm": 1.7,
+          "tool_id": "generic_aspirator",
+          "working_length_mm": 90.0
+        },
+        {
+          "max_access_angle_deg": 45.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.4,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 1.0,
+          "tool_id": "generic_suction",
+          "working_length_mm": 100.0
+        },
+        {
+          "max_access_angle_deg": 45.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.4,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 1.0,
+          "tool_id": "generic_suction",
+          "working_length_mm": 100.0
+        }
+      ],
+      "world_generator": {
+        "family": "rigid_gaussian",
+        "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+        "rotation_center_mm": [
+          -119.5,
+          119.5,
+          77.0
+        ],
+        "rotation_scale_deg": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "translation_scale_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "version": "rigid-registration-v1"
+      }
+    },
+    "panel": {
+      "components": "motor_and_language",
+      "name": "deterministic_control_support_0.5",
+      "threshold": 0.5,
+      "uncertainty": {
+        "family": "rigid_gaussian",
+        "name": "deterministic_control",
+        "rotation_scale_deg": [
+          0,
+          0,
+          0
+        ],
+        "translation_scale_mm": [
+          0,
+          0,
+          0
+        ],
+        "worlds": 32
+      }
+    },
+    "partitions": {
+      "final_evaluation": {
+        "case_hash": "sha256:63611caf1ff8857edfbe2d2dd41cec6fc7395d2071b70a254aa886f0647cfca2",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "translation_scale_mm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "deterministic_optimization",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "final_evaluation",
+        "seeds": [
+          1529104678594480277,
+          6418447880485267965,
+          1857108746152219565,
+          10574678595861379623,
+          5799084095705787991,
+          31452775612415305,
+          7358151955602154437,
+          4966039446242244793,
+          7577864996885476907,
+          17514867677110453140,
+          12390226149352340049,
+          5028095460308559101,
+          17952109984398741739,
+          17758876404911039689,
+          4923068012857034716,
+          16251269378407696652,
+          1173791800285137527,
+          2401319012343297036,
+          12192521536978362213,
+          8009120961057141994,
+          17726709311493437357,
+          9147421065865586326,
+          14274850890507104346,
+          13440445323536405208,
+          6697223596687778854,
+          5198373523614498423,
+          16832977903083604320,
+          10705945640228410824,
+          6695808908568947296,
+          15940999035738911038,
+          7860809268582868720,
+          10406118165687609976
+        ]
+      },
+      "optimization": {
+        "case_hash": "sha256:63611caf1ff8857edfbe2d2dd41cec6fc7395d2071b70a254aa886f0647cfca2",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "translation_scale_mm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "deterministic_optimization",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "optimization",
+        "seeds": [
+          6559090289141741178,
+          10288562917747277039
+        ]
+      },
+      "selection": {
+        "case_hash": "sha256:63611caf1ff8857edfbe2d2dd41cec6fc7395d2071b70a254aa886f0647cfca2",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "translation_scale_mm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "deterministic_optimization",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "selection",
+        "seeds": [
+          14994860691902963090,
+          461796896752173374
+        ]
+      },
+      "stress": {
+        "case_hash": "sha256:63611caf1ff8857edfbe2d2dd41cec6fc7395d2071b70a254aa886f0647cfca2",
+        "generator": {
+          "family": "rigid_uniform",
+          "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "translation_scale_mm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "deterministic_optimization",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "stress",
+        "seeds": [
+          14302496771823229960,
+          18263318370709886001
+        ]
+      }
+    }
+  },
+  {
+    "candidate_freeze": {
+      "candidate_hashes": [
+        [
+          "STOP",
+          "sha256:b762b8ccfaf230e6933447c1a6909efc29891d3e7ce406f55b8214f35f1547fe"
+        ],
+        [
+          "native_native-fine-aspiration",
+          "sha256:b2b21a7751e35fe22b2863e5564025dff900ab6c303e4db2e4c2ae8abe42bad1"
+        ],
+        [
+          "native_native-wide-aspiration",
+          "sha256:3112f689c5aff323526213de5fd7e753c20ea8d04e3b59cb8dceca7eb77281fe"
+        ],
+        [
+          "static_search-046893487762fe04",
+          "sha256:6ef89f458c20cfd0e1b8887dd98a2cd9e96db8f40e4c6da4d260c841c0c36d26"
+        ],
+        [
+          "static_search-110df6a56e19bfbc",
+          "sha256:c16944216ef60602188e6389fb1edd34f930c78e34e895b349f53c1e72c4cc28"
+        ],
+        [
+          "static_search-35049655244ec7bf",
+          "sha256:7a41b645b18116c4519f6038ce3391660640f0f06a55321cdfe32e035288832f"
+        ]
+      ],
+      "case_hash": "sha256:63611caf1ff8857edfbe2d2dd41cec6fc7395d2071b70a254aa886f0647cfca2",
+      "decision_model_fingerprint": "sha256:a9bfa7911a231a4229a8548be46edd2c6e41a920923808a458319d56d18f5f01",
+      "development_seeds": [
+        6559090289141741178,
+        10288562917747277039,
+        14994860691902963090,
+        461796896752173374
+      ],
+      "fingerprint": "sha256:f1686227f19870ec9993e9f50d312b34f6772623af649bc5751bc6a54229cac4",
+      "frozen_at": "2026-10-04T17:41:12.087638+00:00",
+      "generator_family": "rigid_gaussian",
+      "generator_fingerprint": "sha256:a54a948adbbf018027d26728442943ce5e6c2313d7907fc2478e2363b6ba40c0",
+      "optimization_partition_hash": "sha256:86034a3ede7b6da7c4949538f73f10f0f97e56c93d3afc5f00fc17fc52014dae",
+      "selection_partition_hash": "sha256:e45ebbc7e8d7e93c8146212ecf6b31c2bf5728832cb0f010a7efb244c25ddc94",
+      "selection_rule": "Retain the two previously validated native-axis histories; select lexicographically first original route ID per original window without looking at functional values; retain STOP"
+    },
+    "case_hash": "sha256:63611caf1ff8857edfbe2d2dd41cec6fc7395d2071b70a254aa886f0647cfca2",
+    "decision_model": {
+      "action_primitives": "fixed_historical_routes_and_native_histories",
+      "case_hash": "sha256:63611caf1ff8857edfbe2d2dd41cec6fc7395d2071b70a254aa886f0647cfca2",
+      "fingerprint": "sha256:a9bfa7911a231a4229a8548be46edd2c6e41a920923808a458319d56d18f5f01",
+      "geometry": {
+        "functional_event_config": {
+          "cvar_alpha": 0.95,
+          "language_threshold": 0.1,
+          "motor_threshold": 0.1,
+          "version": "thresholded-supplied-map-contact-v1"
+        },
+        "functional_evidence_hash": "sha256:5b2ba8db37aa52ea47d5be61226d0b084cd77f02efc864a9758b22fdb483fea9",
+        "functional_footprint_hashes": {
+          "STOP": "sha256:46ff216fd153b4beb646739df5be0f2e62f0eada6210e306d1540b622ead9525",
+          "native_native-fine-aspiration": "sha256:3b9436ed5c490a6fd3237249c228062e209a8f77cb00488aef424b2ced382fe1",
+          "native_native-wide-aspiration": "sha256:54796b9d93e067f7b3804939e1e67170e413fd47f0616c88c1447f8a834ea257",
+          "static_search-046893487762fe04": "sha256:a9e49620eccd88b453490d486683a1202b15388e8b4aaec7621b55392c72fdc7",
+          "static_search-110df6a56e19bfbc": "sha256:180f0e38638c9a0e0667882f545542bc2f408a6ca6099784d6103c43af310db3",
+          "static_search-35049655244ec7bf": "sha256:663e42b98c94c61a9534be69936a4d3df67dc7259ebe1c44a8b562678bc83d9e"
+        },
+        "original_anatomy_hash": "sha256:c38a0f7aaced9f79a59a77d785d6b4e804ef2e8b81b60240fe1fda9307de29ac",
+        "tissue_support_hash": "sha256:24d2f2f56cf8fe93a6ac47712e810cf33afbfa71baa2c37b9d18ef3c1eef8175"
+      },
+      "objectives": {
+        "mode": "fixed_plan_sensitivity_no_optimization"
+      },
+      "planning_as_of": null,
+      "tools": [
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 0.45,
+          "tip_length_mm": 2.0,
+          "tip_radius_mm": 1.25,
+          "tool_id": "native-fine-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.1,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 2.25,
+          "tool_id": "native-wide-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 45.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 2.7,
+          "tip_length_mm": 4.0,
+          "tip_radius_mm": 1.7,
+          "tool_id": "generic_aspirator",
+          "working_length_mm": 90.0
+        },
+        {
+          "max_access_angle_deg": 45.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.4,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 1.0,
+          "tool_id": "generic_suction",
+          "working_length_mm": 100.0
+        },
+        {
+          "max_access_angle_deg": 45.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.4,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 1.0,
+          "tool_id": "generic_suction",
+          "working_length_mm": 100.0
+        }
+      ],
+      "world_generator": {
+        "family": "rigid_gaussian",
+        "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+        "rotation_center_mm": [
+          -119.5,
+          119.5,
+          77.0
+        ],
+        "rotation_scale_deg": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "translation_scale_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "version": "rigid-registration-v1"
+      }
+    },
+    "panel": {
+      "components": "motor_and_language",
+      "name": "deterministic_control_support_0.1",
+      "threshold": 0.1,
+      "uncertainty": {
+        "family": "rigid_gaussian",
+        "name": "deterministic_control",
+        "rotation_scale_deg": [
+          0,
+          0,
+          0
+        ],
+        "translation_scale_mm": [
+          0,
+          0,
+          0
+        ],
+        "worlds": 32
+      }
+    },
+    "partitions": {
+      "final_evaluation": {
+        "case_hash": "sha256:63611caf1ff8857edfbe2d2dd41cec6fc7395d2071b70a254aa886f0647cfca2",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "translation_scale_mm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "deterministic_optimization",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "final_evaluation",
+        "seeds": [
+          1529104678594480277,
+          6418447880485267965,
+          1857108746152219565,
+          10574678595861379623,
+          5799084095705787991,
+          31452775612415305,
+          7358151955602154437,
+          4966039446242244793,
+          7577864996885476907,
+          17514867677110453140,
+          12390226149352340049,
+          5028095460308559101,
+          17952109984398741739,
+          17758876404911039689,
+          4923068012857034716,
+          16251269378407696652,
+          1173791800285137527,
+          2401319012343297036,
+          12192521536978362213,
+          8009120961057141994,
+          17726709311493437357,
+          9147421065865586326,
+          14274850890507104346,
+          13440445323536405208,
+          6697223596687778854,
+          5198373523614498423,
+          16832977903083604320,
+          10705945640228410824,
+          6695808908568947296,
+          15940999035738911038,
+          7860809268582868720,
+          10406118165687609976
+        ]
+      },
+      "optimization": {
+        "case_hash": "sha256:63611caf1ff8857edfbe2d2dd41cec6fc7395d2071b70a254aa886f0647cfca2",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "translation_scale_mm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "deterministic_optimization",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "optimization",
+        "seeds": [
+          6559090289141741178,
+          10288562917747277039
+        ]
+      },
+      "selection": {
+        "case_hash": "sha256:63611caf1ff8857edfbe2d2dd41cec6fc7395d2071b70a254aa886f0647cfca2",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "translation_scale_mm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "deterministic_optimization",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "selection",
+        "seeds": [
+          14994860691902963090,
+          461796896752173374
+        ]
+      },
+      "stress": {
+        "case_hash": "sha256:63611caf1ff8857edfbe2d2dd41cec6fc7395d2071b70a254aa886f0647cfca2",
+        "generator": {
+          "family": "rigid_uniform",
+          "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "translation_scale_mm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "deterministic_optimization",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "stress",
+        "seeds": [
+          14302496771823229960,
+          18263318370709886001
+        ]
+      }
+    }
+  },
+  {
+    "candidate_freeze": {
+      "candidate_hashes": [
+        [
+          "STOP",
+          "sha256:536b95a84e452265eed77f98d37be6df6bf7c4c7b653c01f665ec1ddffbb608f"
+        ],
+        [
+          "native_native-fine-aspiration",
+          "sha256:396b3750d8eb8548d63dc4d49b6b20b82e40bb315563f60527a37b1e5b5baa99"
+        ],
+        [
+          "native_native-wide-aspiration",
+          "sha256:1cfc4b6908ce32ee0e6b01daa6ad2e36fc91eeb5978ca41617447d084fea902f"
+        ],
+        [
+          "static_search-046893487762fe04",
+          "sha256:a93c6ddb0cdc608db0dcd892998a136a51269334bd68643d7b02f32eb69044f7"
+        ],
+        [
+          "static_search-110df6a56e19bfbc",
+          "sha256:6f86e5c448a91e883403b31a84e814e444dfb54583edbab4dec0e8e56502e436"
+        ],
+        [
+          "static_search-35049655244ec7bf",
+          "sha256:726371a0a7a4b0635759d26623808ffa0f39370254653af1ef2a9e526c8307a0"
+        ]
+      ],
+      "case_hash": "sha256:9ad170de14ed3ab7fb1d6ee6cc066b5a2c0b6a2bc1cebd04f70d558d7addd7fc",
+      "decision_model_fingerprint": "sha256:96c28147f7730b55b482dfed6bb866b556f510f0b95e699db8670263fe57c434",
+      "development_seeds": [
+        6559090289141741178,
+        10288562917747277039,
+        14994860691902963090,
+        461796896752173374
+      ],
+      "fingerprint": "sha256:8e03eeec0824b94a33602ecbca6fbdd6bd638c1ee033f0bab4adae526b3dc4b7",
+      "frozen_at": "2026-10-04T17:41:13.448878+00:00",
+      "generator_family": "rigid_gaussian",
+      "generator_fingerprint": "sha256:980872c0559be403faf8353ecbc03489368b67c98d8581f7dd848c1c58da2e88",
+      "optimization_partition_hash": "sha256:35fc06446cb892805db2f472875212041c8f480ea8418b133e349baaea95567a",
+      "selection_partition_hash": "sha256:890973db62ea5d680a3436c6ad456f5a5fdb1c7954abcd2e7a70601bc10b7020",
+      "selection_rule": "Retain the two previously validated native-axis histories; select lexicographically first original route ID per original window without looking at functional values; retain STOP"
+    },
+    "case_hash": "sha256:9ad170de14ed3ab7fb1d6ee6cc066b5a2c0b6a2bc1cebd04f70d558d7addd7fc",
+    "decision_model": {
+      "action_primitives": "fixed_historical_routes_and_native_histories",
+      "case_hash": "sha256:9ad170de14ed3ab7fb1d6ee6cc066b5a2c0b6a2bc1cebd04f70d558d7addd7fc",
+      "fingerprint": "sha256:96c28147f7730b55b482dfed6bb866b556f510f0b95e699db8670263fe57c434",
+      "geometry": {
+        "functional_event_config": {
+          "cvar_alpha": 0.95,
+          "language_threshold": 0.5,
+          "motor_threshold": 0.5,
+          "version": "thresholded-supplied-map-contact-v1"
+        },
+        "functional_evidence_hash": "sha256:83a8e3252cac21fc2c98df11d59927dc9dfc76fca93c86553b6d15dc9423e0e2",
+        "functional_footprint_hashes": {
+          "STOP": "sha256:20c423a43f8fefac9e1d7265e847d7679f544d78912ae10408b87d1d3795faa2",
+          "native_native-fine-aspiration": "sha256:90d043054a32152f4204d80fc90c374e97d9e7bf00e189e89a4cd95f51554dff",
+          "native_native-wide-aspiration": "sha256:770d4f989db5bca68dbbff3c09fb6103f10d44d2356e4408599200fcf85f7984",
+          "static_search-046893487762fe04": "sha256:ebcd848dcedd28fe12113b9bfa752c41e65def00ed9907885ef514f02bbf83d6",
+          "static_search-110df6a56e19bfbc": "sha256:df1be4459671af1487f253beb652e9f6850a88a56ad441b4bab2f1fa0abedfab",
+          "static_search-35049655244ec7bf": "sha256:1dfd5ce65efb316e4229a217ff3810d8484e4b0b84cf681bd45eb756b237c759"
+        },
+        "original_anatomy_hash": "sha256:c38a0f7aaced9f79a59a77d785d6b4e804ef2e8b81b60240fe1fda9307de29ac",
+        "tissue_support_hash": "sha256:24d2f2f56cf8fe93a6ac47712e810cf33afbfa71baa2c37b9d18ef3c1eef8175"
+      },
+      "objectives": {
+        "mode": "fixed_plan_sensitivity_no_optimization"
+      },
+      "planning_as_of": null,
+      "tools": [
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 0.45,
+          "tip_length_mm": 2.0,
+          "tip_radius_mm": 1.25,
+          "tool_id": "native-fine-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.1,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 2.25,
+          "tool_id": "native-wide-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 45.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 2.7,
+          "tip_length_mm": 4.0,
+          "tip_radius_mm": 1.7,
+          "tool_id": "generic_aspirator",
+          "working_length_mm": 90.0
+        },
+        {
+          "max_access_angle_deg": 45.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.4,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 1.0,
+          "tool_id": "generic_suction",
+          "working_length_mm": 100.0
+        },
+        {
+          "max_access_angle_deg": 45.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.4,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 1.0,
+          "tool_id": "generic_suction",
+          "working_length_mm": 100.0
+        }
+      ],
+      "world_generator": {
+        "family": "rigid_gaussian",
+        "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+        "rotation_center_mm": [
+          -119.5,
+          119.5,
+          77.0
+        ],
+        "rotation_scale_deg": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "translation_scale_mm": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "version": "rigid-registration-v1"
+      }
+    },
+    "panel": {
+      "components": "motor_only",
+      "name": "gaussian_1mm_1deg_motor_only",
+      "threshold": 0.5,
+      "uncertainty": {
+        "family": "rigid_gaussian",
+        "name": "gaussian_1mm_1deg",
+        "rotation_scale_deg": [
+          1,
+          1,
+          1
+        ],
+        "translation_scale_mm": [
+          1,
+          1,
+          1
+        ],
+        "worlds": 64
+      }
+    },
+    "partitions": {
+      "final_evaluation": {
+        "case_hash": "sha256:9ad170de14ed3ab7fb1d6ee6cc066b5a2c0b6a2bc1cebd04f70d558d7addd7fc",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "translation_scale_mm": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "model_conditioned_registration_sensitivity",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "final_evaluation",
+        "seeds": [
+          1529104678594480277,
+          6418447880485267965,
+          1857108746152219565,
+          10574678595861379623,
+          5799084095705787991,
+          31452775612415305,
+          7358151955602154437,
+          4966039446242244793,
+          7577864996885476907,
+          17514867677110453140,
+          12390226149352340049,
+          5028095460308559101,
+          17952109984398741739,
+          17758876404911039689,
+          4923068012857034716,
+          16251269378407696652,
+          1173791800285137527,
+          2401319012343297036,
+          12192521536978362213,
+          8009120961057141994,
+          17726709311493437357,
+          9147421065865586326,
+          14274850890507104346,
+          13440445323536405208,
+          6697223596687778854,
+          5198373523614498423,
+          16832977903083604320,
+          10705945640228410824,
+          6695808908568947296,
+          15940999035738911038,
+          7860809268582868720,
+          10406118165687609976,
+          13907907425291025175,
+          16098986146326065553,
+          14665533917695896715,
+          10698886731088144987,
+          14210864166610525363,
+          1496088039945441488,
+          10021759592387834359,
+          10006198639456560059,
+          12084793923340721730,
+          15978411972554244358,
+          13815906699426395512,
+          14778591410666933409,
+          7371780179628086580,
+          16398917700670728996,
+          699583571808892505,
+          13043751709906473674,
+          12285714323958259015,
+          18159778149023487334,
+          11700630262131173794,
+          10492856648327831255,
+          13669815992638081270,
+          3963229307734240558,
+          6796409360127326394,
+          9468096094573476328,
+          8734727055628846504,
+          15228308076994956198,
+          13695738567647307701,
+          10041062176334326825,
+          18435169312945515091,
+          9177749463278321533,
+          13527678881625249227,
+          11698409449641935496
+        ]
+      },
+      "optimization": {
+        "case_hash": "sha256:9ad170de14ed3ab7fb1d6ee6cc066b5a2c0b6a2bc1cebd04f70d558d7addd7fc",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "translation_scale_mm": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "model_conditioned_registration_sensitivity",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "optimization",
+        "seeds": [
+          6559090289141741178,
+          10288562917747277039
+        ]
+      },
+      "selection": {
+        "case_hash": "sha256:9ad170de14ed3ab7fb1d6ee6cc066b5a2c0b6a2bc1cebd04f70d558d7addd7fc",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "translation_scale_mm": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "model_conditioned_registration_sensitivity",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "selection",
+        "seeds": [
+          14994860691902963090,
+          461796896752173374
+        ]
+      },
+      "stress": {
+        "case_hash": "sha256:9ad170de14ed3ab7fb1d6ee6cc066b5a2c0b6a2bc1cebd04f70d558d7addd7fc",
+        "generator": {
+          "family": "rigid_uniform",
+          "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "translation_scale_mm": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "model_conditioned_registration_sensitivity",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "stress",
+        "seeds": [
+          14302496771823229960,
+          18263318370709886001
+        ]
+      }
+    }
+  },
+  {
+    "candidate_freeze": {
+      "candidate_hashes": [
+        [
+          "STOP",
+          "sha256:afc00023e3bbdde8e0871495dbd115a4a5fa80fb954eab866307de0277cbc726"
+        ],
+        [
+          "native_native-fine-aspiration",
+          "sha256:698b52f150f4700f2317fb4cb15f883d1567b3ab78859b5cc337afa0c03f965c"
+        ],
+        [
+          "native_native-wide-aspiration",
+          "sha256:f44f1e31e29a93fe739be5307395478b5cc7aa40293662a8b6201354af328ac0"
+        ],
+        [
+          "static_search-046893487762fe04",
+          "sha256:0139b80e2f3d5092a78eb6be4f0822c8950ab0308ccc71462b98b5532377e37f"
+        ],
+        [
+          "static_search-110df6a56e19bfbc",
+          "sha256:97b7cdb18408d0b53488e30224198fc16b06e24a538c0199c2c5fe72eb1706ba"
+        ],
+        [
+          "static_search-35049655244ec7bf",
+          "sha256:729460bc8f2af41aa5476e2a5036d31f0b84978e992b41461951e8f0b2ad052b"
+        ]
+      ],
+      "case_hash": "sha256:3b103ffe1439ea621c609a6e0e6b1a26bd0034fab51966558ee5c03b5de88e4f",
+      "decision_model_fingerprint": "sha256:032cd5813e0a453d16adb87ec2fec4a8964b481f9b26803132cc79a62448d873",
+      "development_seeds": [
+        6559090289141741178,
+        10288562917747277039,
+        14994860691902963090,
+        461796896752173374
+      ],
+      "fingerprint": "sha256:e2906409a4ba65eb326f9084e2c143c91ed57b6ed040ecd0f70563cbc2a26534",
+      "frozen_at": "2026-10-04T17:41:14.818125+00:00",
+      "generator_family": "rigid_gaussian",
+      "generator_fingerprint": "sha256:980872c0559be403faf8353ecbc03489368b67c98d8581f7dd848c1c58da2e88",
+      "optimization_partition_hash": "sha256:655382732be7894f6bcc478fc57367cab5e26f51262b755e444d7a5189bd58e5",
+      "selection_partition_hash": "sha256:22497f9a0c646a18bbf0fc8408b4ae98a2527f49cf459598cffbe9051e5b8396",
+      "selection_rule": "Retain the two previously validated native-axis histories; select lexicographically first original route ID per original window without looking at functional values; retain STOP"
+    },
+    "case_hash": "sha256:3b103ffe1439ea621c609a6e0e6b1a26bd0034fab51966558ee5c03b5de88e4f",
+    "decision_model": {
+      "action_primitives": "fixed_historical_routes_and_native_histories",
+      "case_hash": "sha256:3b103ffe1439ea621c609a6e0e6b1a26bd0034fab51966558ee5c03b5de88e4f",
+      "fingerprint": "sha256:032cd5813e0a453d16adb87ec2fec4a8964b481f9b26803132cc79a62448d873",
+      "geometry": {
+        "functional_event_config": {
+          "cvar_alpha": 0.95,
+          "language_threshold": 0.5,
+          "motor_threshold": 0.5,
+          "version": "thresholded-supplied-map-contact-v1"
+        },
+        "functional_evidence_hash": "sha256:e6e311bf1e178ea132ed8f5a309ace3b49274b8b1993370e61687a7468965a65",
+        "functional_footprint_hashes": {
+          "STOP": "sha256:2920db6f803aadd539e91019822d2b6ca76b82a8c26dd73f90a0a4083f9b6ac3",
+          "native_native-fine-aspiration": "sha256:8b560c0a2ee9c07879abd2877bfa42cbd53b1d57a35240f709d9978e8c0c7c4f",
+          "native_native-wide-aspiration": "sha256:64f1e92dfabb29ab4267a35bf7e6082a38574408e8e89cb43714d8575e4e744f",
+          "static_search-046893487762fe04": "sha256:604c4c2e5f602721ae5c53c998194444790643c9d3af0c6579f9b5461ab97260",
+          "static_search-110df6a56e19bfbc": "sha256:559c08ea4525b2b8992de1525acdeba8a8423765377d814553c15c904c0c8e18",
+          "static_search-35049655244ec7bf": "sha256:764dd3941b58830330f2784a17d4325ee45bd139924b0458f8dee3111e01964e"
+        },
+        "original_anatomy_hash": "sha256:c38a0f7aaced9f79a59a77d785d6b4e804ef2e8b81b60240fe1fda9307de29ac",
+        "tissue_support_hash": "sha256:24d2f2f56cf8fe93a6ac47712e810cf33afbfa71baa2c37b9d18ef3c1eef8175"
+      },
+      "objectives": {
+        "mode": "fixed_plan_sensitivity_no_optimization"
+      },
+      "planning_as_of": null,
+      "tools": [
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 0.45,
+          "tip_length_mm": 2.0,
+          "tip_radius_mm": 1.25,
+          "tool_id": "native-fine-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 35.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.1,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 2.25,
+          "tool_id": "native-wide-aspiration",
+          "working_length_mm": 120.0
+        },
+        {
+          "max_access_angle_deg": 45.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 2.7,
+          "tip_length_mm": 4.0,
+          "tip_radius_mm": 1.7,
+          "tool_id": "generic_aspirator",
+          "working_length_mm": 90.0
+        },
+        {
+          "max_access_angle_deg": 45.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.4,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 1.0,
+          "tool_id": "generic_suction",
+          "working_length_mm": 100.0
+        },
+        {
+          "max_access_angle_deg": 45.0,
+          "parameter_source": "generic research geometry; not a verified commercial device",
+          "shaft_radius_mm": 1.4,
+          "tip_length_mm": 3.0,
+          "tip_radius_mm": 1.0,
+          "tool_id": "generic_suction",
+          "working_length_mm": 100.0
+        }
+      ],
+      "world_generator": {
+        "family": "rigid_gaussian",
+        "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+        "rotation_center_mm": [
+          -119.5,
+          119.5,
+          77.0
+        ],
+        "rotation_scale_deg": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "translation_scale_mm": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "version": "rigid-registration-v1"
+      }
+    },
+    "panel": {
+      "components": "language_only",
+      "name": "gaussian_1mm_1deg_language_only",
+      "threshold": 0.5,
+      "uncertainty": {
+        "family": "rigid_gaussian",
+        "name": "gaussian_1mm_1deg",
+        "rotation_scale_deg": [
+          1,
+          1,
+          1
+        ],
+        "translation_scale_mm": [
+          1,
+          1,
+          1
+        ],
+        "worlds": 64
+      }
+    },
+    "partitions": {
+      "final_evaluation": {
+        "case_hash": "sha256:3b103ffe1439ea621c609a6e0e6b1a26bd0034fab51966558ee5c03b5de88e4f",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "translation_scale_mm": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "model_conditioned_registration_sensitivity",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "final_evaluation",
+        "seeds": [
+          1529104678594480277,
+          6418447880485267965,
+          1857108746152219565,
+          10574678595861379623,
+          5799084095705787991,
+          31452775612415305,
+          7358151955602154437,
+          4966039446242244793,
+          7577864996885476907,
+          17514867677110453140,
+          12390226149352340049,
+          5028095460308559101,
+          17952109984398741739,
+          17758876404911039689,
+          4923068012857034716,
+          16251269378407696652,
+          1173791800285137527,
+          2401319012343297036,
+          12192521536978362213,
+          8009120961057141994,
+          17726709311493437357,
+          9147421065865586326,
+          14274850890507104346,
+          13440445323536405208,
+          6697223596687778854,
+          5198373523614498423,
+          16832977903083604320,
+          10705945640228410824,
+          6695808908568947296,
+          15940999035738911038,
+          7860809268582868720,
+          10406118165687609976,
+          13907907425291025175,
+          16098986146326065553,
+          14665533917695896715,
+          10698886731088144987,
+          14210864166610525363,
+          1496088039945441488,
+          10021759592387834359,
+          10006198639456560059,
+          12084793923340721730,
+          15978411972554244358,
+          13815906699426395512,
+          14778591410666933409,
+          7371780179628086580,
+          16398917700670728996,
+          699583571808892505,
+          13043751709906473674,
+          12285714323958259015,
+          18159778149023487334,
+          11700630262131173794,
+          10492856648327831255,
+          13669815992638081270,
+          3963229307734240558,
+          6796409360127326394,
+          9468096094573476328,
+          8734727055628846504,
+          15228308076994956198,
+          13695738567647307701,
+          10041062176334326825,
+          18435169312945515091,
+          9177749463278321533,
+          13527678881625249227,
+          11698409449641935496
+        ]
+      },
+      "optimization": {
+        "case_hash": "sha256:3b103ffe1439ea621c609a6e0e6b1a26bd0034fab51966558ee5c03b5de88e4f",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "translation_scale_mm": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "model_conditioned_registration_sensitivity",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "optimization",
+        "seeds": [
+          6559090289141741178,
+          10288562917747277039
+        ]
+      },
+      "selection": {
+        "case_hash": "sha256:3b103ffe1439ea621c609a6e0e6b1a26bd0034fab51966558ee5c03b5de88e4f",
+        "generator": {
+          "family": "rigid_gaussian",
+          "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "translation_scale_mm": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "model_conditioned_registration_sensitivity",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "selection",
+        "seeds": [
+          14994860691902963090,
+          461796896752173374
+        ]
+      },
+      "stress": {
+        "case_hash": "sha256:3b103ffe1439ea621c609a6e0e6b1a26bd0034fab51966558ee5c03b5de88e4f",
+        "generator": {
+          "family": "rigid_uniform",
+          "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+          "rotation_center_mm": [
+            -119.5,
+            119.5,
+            77.0
+          ],
+          "rotation_scale_deg": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "translation_scale_mm": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "version": "rigid-registration-v1"
+        },
+        "interpretation": "model_conditioned_registration_sensitivity",
+        "planning_hash": "prospectively_paired_UCSF0004_prior_sensitivity_v1",
+        "role": "stress",
+        "seeds": [
+          14302496771823229960,
+          18263318370709886001
+        ]
+      }
+    }
+  }
+]

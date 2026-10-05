@@ -1,0 +1,95 @@
+{
+  "status": "narrow_combined_repin_review_passed",
+  "scope": "Static committed repair bytes and constructed backend receipt controls only. No solver, runtime load, compiler, patient or measured curve access. Prior127-check generic integration receipt preserved unchanged.",
+  "source_commit_before_update": "67a3e126360588b43b488f44540f91bce39f9bc4",
+  "combined_repair_commit": "0eeda40b29a501b9b270299eac7600c492c2c6e4",
+  "committed_repair_bytes": {
+    "artifacts/febio-accelerate-lifecycle-v1/patch-identity.json": {
+      "sha256": "54198366eccb90a9fcdf4fcbf2a5055919a5658a1db0fdd7db8cfeede3b49eee",
+      "exact_workspace_match": true
+    },
+    "artifacts/febio-accelerate-lifecycle-v1/accelerate-correctness.patch": {
+      "sha256": "67a1858f2d55046796d7ccb46758ca06e5bfb673e75a539d158b1a17652f3340",
+      "exact_workspace_match": true
+    },
+    "artifacts/febio-accelerate-lifecycle-v1/patched-AccelerateSparseSolver.cpp": {
+      "sha256": "476ac8471ea681a99c298352a50aba2a7a5baa71635e1678155a7f58b72ba04a",
+      "exact_workspace_match": true
+    }
+  },
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_mechanics_hbe_backend.py",
+    "tests/test_mechanics_hbe_backend_review.py",
+    "-p",
+    "no:cacheprovider"
+  ],
+  "exit_code": 0,
+  "process_elapsed_seconds": 1.349305749987252,
+  "source_sha256": {
+    "scripts/mechanics_hbe_backend.py": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+    "scripts/mechanics_hbe_experiment.py": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa",
+    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "tests/test_mechanics_hbe_backend.py": "0bf731adb184c8d305ca8f82af0086497d6983122bbaeded2bad5bb6a4b0ea9e",
+    "tests/test_mechanics_hbe_backend_review.py": "5adb943cac4330f7c755b08d0d22db91e5688f3ededeecdccaf1b043e0239215",
+    "docs/hbe-backend-comparison.md": "e17ac70bcea7494301eea8556640dfa5032e1f1aaf07195280b5624ef4d59c61",
+    "artifacts/febio-accelerate-lifecycle-v1/patch-identity.json": "54198366eccb90a9fcdf4fcbf2a5055919a5658a1db0fdd7db8cfeede3b49eee",
+    "artifacts/febio-accelerate-lifecycle-v1/accelerate-correctness.patch": "67a1858f2d55046796d7ccb46758ca06e5bfb673e75a539d158b1a17652f3340",
+    "artifacts/febio-accelerate-lifecycle-v1/patched-AccelerateSparseSolver.cpp": "476ac8471ea681a99c298352a50aba2a7a5baa71635e1678155a7f58b72ba04a"
+  },
+  "source_after_sha256": {
+    "scripts/mechanics_hbe_backend.py": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+    "scripts/mechanics_hbe_experiment.py": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa",
+    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "tests/test_mechanics_hbe_backend.py": "0bf731adb184c8d305ca8f82af0086497d6983122bbaeded2bad5bb6a4b0ea9e",
+    "tests/test_mechanics_hbe_backend_review.py": "5adb943cac4330f7c755b08d0d22db91e5688f3ededeecdccaf1b043e0239215",
+    "docs/hbe-backend-comparison.md": "e17ac70bcea7494301eea8556640dfa5032e1f1aaf07195280b5624ef4d59c61",
+    "artifacts/febio-accelerate-lifecycle-v1/patch-identity.json": "54198366eccb90a9fcdf4fcbf2a5055919a5658a1db0fdd7db8cfeede3b49eee",
+    "artifacts/febio-accelerate-lifecycle-v1/accelerate-correctness.patch": "67a1858f2d55046796d7ccb46758ca06e5bfb673e75a539d158b1a17652f3340",
+    "artifacts/febio-accelerate-lifecycle-v1/patched-AccelerateSparseSolver.cpp": "476ac8471ea681a99c298352a50aba2a7a5baa71635e1678155a7f58b72ba04a"
+  },
+  "all_sources_unchanged": true,
+  "ast_review": {
+    "changed_functions": [
+      "_accepted_build",
+      "verify_profile"
+    ],
+    "new_functions": [
+      "_verify_patch_identity"
+    ],
+    "unchanged_functions": [
+      "transform_deck",
+      "verify_deck",
+      "verify_runtime_binding",
+      "_verify_controls",
+      "verify_prepared_decks",
+      "prepare_decks"
+    ],
+    "frozen_constants_unchanged": {
+      "PROFILE_ID": true,
+      "PREFIX": true,
+      "UPSTREAM_COMMIT": true,
+      "SKYLINE_XML": true,
+      "ACCELERATE_XML": true,
+      "REUSED_OPENMP": true,
+      "REUSED_OPENMP_SHA": true,
+      "CASE_ORDER": true,
+      "INSTALLED_FILES": true,
+      "BUILD_FILES": true,
+      "CHECKER_PINS": true,
+      "CHECKER_FILES": true
+    }
+  },
+  "actual_runtime_identity_present": false,
+  "actual_sparse_executable_present": false,
+  "actual_control_profile_or_execution_authorized": false,
+  "fixture_change": "Placeholder-summary negative now passes authentic committed nested patch identity/files and asserts control-layer error, avoiding a false pass from obsolete flat fixture.",
+  "pytest_summary": "54 passed in 1.15s",
+  "runtime_identity_paths_present": {
+    "artifacts/febio-accelerate-csc-runtime-v2/runtime-identity.json": false,
+    "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json": false
+  }
+}

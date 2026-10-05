@@ -1,0 +1,288 @@
+{
+  "criterion_count": 30,
+  "failed_criteria": [
+    {
+      "actual": 2.2356144373333107e-05,
+      "actual_divided_by_limit": 2.7945180466666386,
+      "branch": "compression",
+      "group": "mesh",
+      "limit": 8e-06,
+      "metric": "motion",
+      "passed": false,
+      "units": "m"
+    },
+    {
+      "actual": 2.325768976023929e-05,
+      "actual_divided_by_limit": 2.9072112200299114,
+      "branch": "tension",
+      "group": "mesh",
+      "limit": 8e-06,
+      "metric": "motion",
+      "passed": false,
+      "units": "m"
+    },
+    {
+      "actual": 0.00022774250190189804,
+      "actual_divided_by_limit": 1.1416601418129249,
+      "branch": "tension",
+      "comparison": "lt",
+      "group": "mesh",
+      "limit": 0.00019948362350659735,
+      "metric": "reaction_trend",
+      "passed": false,
+      "units": "N"
+    }
+  ],
+  "groups": {
+    "mesh": {
+      "compression": {
+        "motion": {
+          "actual": 2.2356144373333107e-05,
+          "actual_divided_by_limit": 2.7945180466666386,
+          "limit": 8e-06,
+          "passed": false,
+          "units": "m"
+        },
+        "motion_trend": {
+          "actual": 2.2356144373333107e-05,
+          "actual_divided_by_limit": 0.272379057461625,
+          "comparison": "lt",
+          "limit": 8.207732481959567e-05,
+          "passed": true,
+          "units": "m"
+        },
+        "reaction": {
+          "actual": 0.0003216196557785031,
+          "actual_divided_by_limit": 0.4370687308172415,
+          "limit": 0.0007358560178330099,
+          "passed": true,
+          "units": "N"
+        },
+        "reaction_trend": {
+          "actual": 0.0003216196557785031,
+          "actual_divided_by_limit": 0.21593860129689857,
+          "comparison": "lt",
+          "limit": 0.0014894032555869963,
+          "passed": true,
+          "units": "N"
+        }
+      },
+      "tension": {
+        "motion": {
+          "actual": 2.325768976023929e-05,
+          "actual_divided_by_limit": 2.9072112200299114,
+          "limit": 8e-06,
+          "passed": false,
+          "units": "m"
+        },
+        "motion_trend": {
+          "actual": 2.325768976023929e-05,
+          "actual_divided_by_limit": 0.2708418786526345,
+          "comparison": "lt",
+          "limit": 8.587183738327338e-05,
+          "passed": true,
+          "units": "m"
+        },
+        "reaction": {
+          "actual": 0.00022774250190189804,
+          "actual_divided_by_limit": 0.42448873806018284,
+          "limit": 0.0005365101155395301,
+          "passed": true,
+          "units": "N"
+        },
+        "reaction_trend": {
+          "actual": 0.00022774250190189804,
+          "actual_divided_by_limit": 1.1416601418129249,
+          "comparison": "lt",
+          "limit": 0.00019948362350659735,
+          "passed": false,
+          "units": "N"
+        }
+      },
+      "torsion_neg": {
+        "motion": {
+          "actual": 6.980995863297348e-07,
+          "actual_divided_by_limit": 0.08726244829121685,
+          "limit": 8e-06,
+          "passed": true,
+          "units": "m"
+        },
+        "motion_trend": {
+          "actual": 3.190212130047307e-06,
+          "actual_divided_by_limit": 0.39877651625591337,
+          "limit": 8e-06,
+          "passed": true,
+          "units": "m"
+        },
+        "reaction": {
+          "actual": 1.036266581717538e-07,
+          "actual_divided_by_limit": 0.34481529215088425,
+          "limit": 3.005280233523079e-07,
+          "passed": true,
+          "units": "Nm"
+        },
+        "reaction_trend": {
+          "actual": 1.036266581717538e-07,
+          "actual_divided_by_limit": 0.1905256040820345,
+          "comparison": "lt",
+          "limit": 5.438988563822389e-07,
+          "passed": true,
+          "units": "Nm"
+        }
+      },
+      "torsion_pos": {
+        "motion": {
+          "actual": 6.980995847519999e-07,
+          "actual_divided_by_limit": 0.087262448094,
+          "limit": 8e-06,
+          "passed": true,
+          "units": "m"
+        },
+        "motion_trend": {
+          "actual": 3.190212132598668e-06,
+          "actual_divided_by_limit": 0.39877651657483354,
+          "limit": 8e-06,
+          "passed": true,
+          "units": "m"
+        },
+        "reaction": {
+          "actual": 1.0362665817544687e-07,
+          "actual_divided_by_limit": 0.3448152921630504,
+          "limit": 3.005280233524146e-07,
+          "passed": true,
+          "units": "Nm"
+        },
+        "reaction_trend": {
+          "actual": 1.0362665817544687e-07,
+          "actual_divided_by_limit": 0.19052560408524852,
+          "comparison": "lt",
+          "limit": 5.438988563924474e-07,
+          "passed": true,
+          "units": "Nm"
+        }
+      }
+    },
+    "scale": {
+      "compression": {
+        "motion": {
+          "actual": 1.0000247158137299e-14,
+          "actual_divided_by_limit": 8.820594130072585e-07,
+          "limit": 1.1337385000000001e-08,
+          "passed": true,
+          "units": "m"
+        },
+        "reaction": {
+          "actual": 6.008428202018302e-08,
+          "actual_divided_by_limit": 6.008428202018302e-08,
+          "limit": 1.0,
+          "passed": true,
+          "units": "ratio_to_declared_scale_tolerance"
+        },
+        "torque": {
+          "actual": 1.2450867335190997e-06,
+          "actual_divided_by_limit": 1.2450867335190997e-06,
+          "limit": 1.0,
+          "passed": true,
+          "units": "ratio_to_declared_scale_tolerance"
+        }
+      },
+      "torsion_pos": {
+        "motion": {
+          "actual": 1.0000030317702802e-14,
+          "actual_divided_by_limit": 8.832795433688553e-07,
+          "limit": 1.1321478452407467e-08,
+          "passed": true,
+          "units": "m"
+        },
+        "reaction": {
+          "actual": 4.634474596385667e-08,
+          "actual_divided_by_limit": 4.634474596385667e-08,
+          "limit": 1.0,
+          "passed": true,
+          "units": "ratio_to_declared_scale_tolerance"
+        },
+        "torque": {
+          "actual": 4.2322088227355e-09,
+          "actual_divided_by_limit": 4.2322088227355e-09,
+          "limit": 1.0,
+          "passed": true,
+          "units": "ratio_to_declared_scale_tolerance"
+        }
+      }
+    },
+    "step": {
+      "compression": {
+        "motion": {
+          "actual": 1.3311742641026243e-14,
+          "actual_divided_by_limit": 1.6639678301282802e-08,
+          "limit": 8.000000000000001e-07,
+          "passed": true,
+          "units": "m"
+        },
+        "reaction": {
+          "actual": 7.549932901085299e-13,
+          "actual_divided_by_limit": 1.0260068163162803e-08,
+          "limit": 7.3585601781791e-05,
+          "passed": true,
+          "units": "N"
+        }
+      },
+      "tension": {
+        "motion": {
+          "actual": 1.3312267997479185e-14,
+          "actual_divided_by_limit": 1.664033499684898e-08,
+          "limit": 8.000000000000001e-07,
+          "passed": true,
+          "units": "m"
+        },
+        "reaction": {
+          "actual": 2.8699993770420207e-12,
+          "actual_divided_by_limit": 5.3493853961067966e-08,
+          "limit": 5.3651011556033405e-05,
+          "passed": true,
+          "units": "N"
+        }
+      },
+      "torsion_neg": {
+        "motion": {
+          "actual": 3.5397044430680967e-14,
+          "actual_divided_by_limit": 4.4246305538351204e-08,
+          "limit": 8.000000000000001e-07,
+          "passed": true,
+          "units": "m"
+        },
+        "reaction": {
+          "actual": 1.5893844806892307e-15,
+          "actual_divided_by_limit": 5.288639850599028e-08,
+          "limit": 3.005280233837829e-08,
+          "passed": true,
+          "units": "Nm"
+        }
+      },
+      "torsion_pos": {
+        "motion": {
+          "actual": 3.5397044430680967e-14,
+          "actual_divided_by_limit": 4.4246305538351204e-08,
+          "limit": 8.000000000000001e-07,
+          "passed": true,
+          "units": "m"
+        },
+        "reaction": {
+          "actual": 1.587173724696897e-15,
+          "actual_divided_by_limit": 5.281283611508429e-08,
+          "limit": 3.0052802338399166e-08,
+          "passed": true,
+          "units": "Nm"
+        }
+      }
+    }
+  },
+  "no_criteria_changed": true,
+  "saved_values_only_no_physics_recomputation": true,
+  "source": {
+    "bytes": 15386249,
+    "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/reference-numerical.json",
+    "sha256": "6f596eb45fd1e39bcf485dbbcbfbc8bfd2bd5397e9e54b67d63a77fcbfac686a"
+  },
+  "status": "failed_fixed_mesh_convergence"
+}

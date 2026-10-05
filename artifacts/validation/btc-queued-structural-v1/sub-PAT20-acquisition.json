@@ -1,0 +1,55 @@
+{
+  "accession": "ds001226",
+  "release": "5.0.1",
+  "subject": "sub-PAT20",
+  "source_manifest_sha256": "d6bf19700a3e3e1108b98a5b0eb5c794d68576e2770c42d9967f450e14bb1118",
+  "checked_at": "2026-10-04T11:37:02.583596+00:00",
+  "files": [
+    {
+      "path": "dataset_description.json",
+      "status": "already_verified",
+      "sha256": "84185f9c387ae232ddbe87e20b329bacf82b9b5dafe9bde63b64c9bc78bed6f2",
+      "source_annex_md5": null
+    },
+    {
+      "path": "participants.tsv",
+      "status": "already_verified",
+      "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d",
+      "source_annex_md5": null
+    },
+    {
+      "path": "README",
+      "status": "already_verified",
+      "sha256": "fbb3e2e1b00d699835badc0bbda1296f9a90f2995117d93ba3123bd2f8e2d0bb",
+      "source_annex_md5": null
+    },
+    {
+      "path": "CHANGES",
+      "status": "already_verified",
+      "sha256": "8c766a15851db0823c661e0a3ec0ac14e2698711461a4f169cab30b3896461c9",
+      "source_annex_md5": null
+    },
+    {
+      "path": "sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.nii.gz",
+      "status": "downloaded_and_verified",
+      "sha256": "f5234d82f87369ce22d05bd27b5788dd73d4ab782c9a89731ac7f6e39568126a",
+      "source_annex_md5": "5a773054340f6f84d68e93a676c9e389"
+    },
+    {
+      "path": "sub-PAT20/ses-preop/anat/sub-PAT20_ses-preop_T1w.json",
+      "status": "downloaded_and_verified",
+      "sha256": "42790d45fcbc3c06e447aaee965be0e1758488a86534597153cdec6eb7504ae9",
+      "source_annex_md5": null
+    },
+    {
+      "path": "derivatives/tumor_masks/sub-PAT20/anat/sub-PAT20_space_T1_label-tumor.nii",
+      "status": "downloaded_and_verified",
+      "sha256": "cabae814fc653f845c1e0fa72441a4ab6fcca63e8fbe252e73e7a976e068dd36",
+      "source_annex_md5": "d126fda2aea36a594b966f2220716737"
+    }
+  ],
+  "source_content_status": "matches_pinned_official_release_checksums",
+  "anatomical_qc_status": "not_assessed_by_download_verification",
+  "selection_queue_sha256": "a768aaefd78146540cf20c13193e22268344206a4a396ffb654e7d40af7b8898",
+  "verified_manifest": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/diffusion_source/ds001226-v5.0.1/btc_sub-PAT20_verified_manifest.json"
+}

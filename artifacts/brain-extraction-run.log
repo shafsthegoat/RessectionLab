@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/brain_extraction.py", line 283, in <module>
+    main()
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/brain_extraction.py", line 269, in main
+    record = run_synthstrip(args.t1, args.cache, args.output, model=variant,
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/brain_extraction.py", line 160, in run_synthstrip
+    raise BrainExtractionError(record["failure"], f"Inference stopped; inspect {model}_inference_record.json and log.")
+BrainExtractionError: EXTRACTION_PROCESS_FAILED: Inference stopped; inspect nocsf_inference_record.json and log.

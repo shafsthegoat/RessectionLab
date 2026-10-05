@@ -1,0 +1,36 @@
+{
+  "status": "passed",
+  "baseline_commit": "3d9278de4735640150e4d9b83ae0ec1d88c3d407",
+  "baseline_module_sha256": "137d89a8ec6c1d538c3ebf69aed87be9eefa4d3fddc1f6631ed887ba3e650475",
+  "current_module_sha256": "6b3f2a7f36db4c4a5f2ea0e5461f592ab7ac510a10c7f6a3de9debaccb200214",
+  "checks": [
+    {
+      "stage": 0,
+      "source_hash": "sha256:9b39c31e1e012b0822d538451a0452fa9c564acc863d22dabb311ec4cf8c5d4e",
+      "decision_model_hash": "sha256:f607b51b66d00164c33ff9c8fa7725b0e6e15bab1b566d161efbe3fb4f4e730b",
+      "observation_fingerprint": "sha256:c9458a99068bfaae90ba69062073a674c55ee31ad66d11a5c86461ef2c834eba",
+      "legal_actions": 5,
+      "history_length": 0,
+      "all_historical_inventory_fields_equal": true
+    },
+    {
+      "stage": 1,
+      "source_hash": "sha256:9b39c31e1e012b0822d538451a0452fa9c564acc863d22dabb311ec4cf8c5d4e",
+      "decision_model_hash": "sha256:f607b51b66d00164c33ff9c8fa7725b0e6e15bab1b566d161efbe3fb4f4e730b",
+      "observation_fingerprint": "sha256:ccca16824aab833104e49e21de526444c7bc8bc1bcb52ee5a4e370c9a564124d",
+      "legal_actions": 5,
+      "history_length": 1,
+      "all_historical_inventory_fields_equal": true
+    },
+    {
+      "stage": 2,
+      "source_hash": "sha256:9b39c31e1e012b0822d538451a0452fa9c564acc863d22dabb311ec4cf8c5d4e",
+      "decision_model_hash": "sha256:f607b51b66d00164c33ff9c8fa7725b0e6e15bab1b566d161efbe3fb4f4e730b",
+      "observation_fingerprint": "sha256:3edfa3b551d717964f6fc84e136926037a80eebea5888701905553342267a192",
+      "legal_actions": 1,
+      "history_length": 2,
+      "all_historical_inventory_fields_equal": true
+    }
+  ],
+  "scope": "Two analytic transitions, exact historical default contract; no patient or model execution."
+}

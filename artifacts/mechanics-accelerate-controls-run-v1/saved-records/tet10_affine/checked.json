@@ -1,0 +1,114 @@
+{
+  "case": "tet10_affine",
+  "passed": true,
+  "solver": {
+    "passed": true,
+    "last_squared_force_residual_norms_N2": {
+      "0.25": [
+        7.344889e-05,
+        5.621442e-27,
+        7.344889e-15
+      ],
+      "0.5": [
+        7.253139e-05,
+        5.519571e-27,
+        7.253139e-15
+      ],
+      "0.75": [
+        7.165078e-05,
+        5.400407e-27,
+        7.165078e-15
+      ],
+      "1.0": [
+        7.080574e-05,
+        5.278502e-27,
+        7.080574e-15
+      ]
+    },
+    "criterion": "current <= max(FEBio required relative norm, declared absolute floor), allowing only log-print rounding"
+  },
+  "reported_required_matches_fixed_rtol": true,
+  "states": [
+    {
+      "time": 0.0,
+      "checks": {
+        "displacement_position_consistency": true,
+        "actual_jacobians": true,
+        "stress_from_actual_deformation": true,
+        "energy_from_actual_deformation": true,
+        "J_from_actual_deformation": true,
+        "affine_all_nodes_including_free_center": true,
+        "signed_reactions": true,
+        "homogeneous_energy": true
+      },
+      "minimum_actual_sampled_J": 0.9999999999999989,
+      "reconstructed_energy_J": -4.325548060476053e-20,
+      "expected_energy_J": 0.0
+    },
+    {
+      "time": 0.25,
+      "checks": {
+        "displacement_position_consistency": true,
+        "actual_jacobians": true,
+        "stress_from_actual_deformation": true,
+        "energy_from_actual_deformation": true,
+        "J_from_actual_deformation": true,
+        "affine_all_nodes_including_free_center": true,
+        "signed_reactions": true,
+        "homogeneous_energy": true
+      },
+      "minimum_actual_sampled_J": 1.0074937031008215,
+      "reconstructed_energy_J": 3.3604376636747364e-07,
+      "expected_energy_J": 3.3604376636794146e-07
+    },
+    {
+      "time": 0.5,
+      "checks": {
+        "displacement_position_consistency": true,
+        "actual_jacobians": true,
+        "stress_from_actual_deformation": true,
+        "energy_from_actual_deformation": true,
+        "J_from_actual_deformation": true,
+        "affine_all_nodes_including_free_center": true,
+        "signed_reactions": true,
+        "homogeneous_energy": true
+      },
+      "minimum_actual_sampled_J": 1.01497462494844,
+      "reconstructed_energy_J": 1.3383871726207983e-06,
+      "expected_energy_J": 1.3383871726211517e-06
+    },
+    {
+      "time": 0.75,
+      "checks": {
+        "displacement_position_consistency": true,
+        "actual_jacobians": true,
+        "stress_from_actual_deformation": true,
+        "energy_from_actual_deformation": true,
+        "J_from_actual_deformation": true,
+        "affine_all_nodes_including_free_center": true,
+        "signed_reactions": true,
+        "homogeneous_energy": true
+      },
+      "minimum_actual_sampled_J": 1.0224424842960218,
+      "reconstructed_energy_J": 2.9984297754083076e-06,
+      "expected_energy_J": 2.9984297754083652e-06
+    },
+    {
+      "time": 1.0,
+      "checks": {
+        "displacement_position_consistency": true,
+        "actual_jacobians": true,
+        "stress_from_actual_deformation": true,
+        "energy_from_actual_deformation": true,
+        "J_from_actual_deformation": true,
+        "affine_all_nodes_including_free_center": true,
+        "signed_reactions": true,
+        "homogeneous_energy": true
+      },
+      "minimum_actual_sampled_J": 1.0298969998978509,
+      "reconstructed_energy_J": 5.307676290870318e-06,
+      "expected_energy_J": 5.307676290870663e-06
+    }
+  ],
+  "scope": "Analytical software fixture only; no patient tent operator, mesh convergence, tissue fit or clinical validation"
+}

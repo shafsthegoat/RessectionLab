@@ -1,0 +1,82 @@
+{
+  "files": [
+    {
+      "byte_roundtrip": true,
+      "gzip_bytes": 163735,
+      "gzip_path": "profile/greedy/episode.json.gz",
+      "gzip_sha256": "6d52eab008e31f320ab2e58651514fbe5a5066013eaf0280dce9df8ea257c77d",
+      "json_semantic_roundtrip": true,
+      "raw_bytes": 9729026,
+      "raw_file_retained_unchanged": true,
+      "raw_path": "profile/greedy/episode.json",
+      "uncompressed_sha256": "a55abcf745c5c59cae3d2a3968503e4a9a9f3c5783f003f536792c8d3efc4e80"
+    },
+    {
+      "byte_roundtrip": true,
+      "gzip_bytes": 163753,
+      "gzip_path": "profile/selection-1/episode.json.gz",
+      "gzip_sha256": "60c6979fc4c33bcde954deb27aba0c0b0fcd20764cbd27d27653e18208f2cd01",
+      "json_semantic_roundtrip": true,
+      "raw_bytes": 9729029,
+      "raw_file_retained_unchanged": true,
+      "raw_path": "profile/selection-1/episode.json",
+      "uncompressed_sha256": "12ea9651789f14b8e1a9f87cffcad6032c31e3d61569056ded26cf8d4881cb07"
+    },
+    {
+      "byte_roundtrip": true,
+      "gzip_bytes": 163755,
+      "gzip_path": "profile/selection-2/episode.json.gz",
+      "gzip_sha256": "2b055efa8040a6729b8a54e110fddf24e8964190af0b221bf02fbb167854e9b5",
+      "json_semantic_roundtrip": true,
+      "raw_bytes": 9729034,
+      "raw_file_retained_unchanged": true,
+      "raw_path": "profile/selection-2/episode.json",
+      "uncompressed_sha256": "c14f857c2b3f4bec58c482f3e57f8e03e4544f6f8f7d6a13a53f23144f66d1da"
+    },
+    {
+      "byte_roundtrip": true,
+      "gzip_bytes": 87232,
+      "gzip_path": "profile/untrained-selection-1/episode.json.gz",
+      "gzip_sha256": "5b322d69654a2ffe1d715ec654caa5d2bf9f85e3abfb5b23abfd4b9dfbb385d1",
+      "json_semantic_roundtrip": true,
+      "raw_bytes": 5049870,
+      "raw_file_retained_unchanged": true,
+      "raw_path": "profile/untrained-selection-1/episode.json",
+      "uncompressed_sha256": "48186342e3b401f0643b7a289e54ffcc07aed88f2c5001ba7fd39e84d10b7536"
+    },
+    {
+      "byte_roundtrip": true,
+      "gzip_bytes": 87224,
+      "gzip_path": "profile/untrained-selection-2/episode.json.gz",
+      "gzip_sha256": "50c10276650cabe44b698d62683bbb659b8a43b10099d627cafa10eb3fd8fedc",
+      "json_semantic_roundtrip": true,
+      "raw_bytes": 5049867,
+      "raw_file_retained_unchanged": true,
+      "raw_path": "profile/untrained-selection-2/episode.json",
+      "uncompressed_sha256": "79d29c11c46456d69ef394ae4410fd138ca734b7db6ec79a3be08301f6e3e2cb"
+    }
+  ],
+  "gradient_steps": 0,
+  "gzip_bytes_total": 665699,
+  "gzip_only_report_reproduction": {
+    "RESULT.md": {
+      "byte_identical": true,
+      "sha256": "52b4f9d02e6e324bc2c618e836a27a1c21193498b49a36f66bfe7bd1873bda56"
+    },
+    "cost-summary.json": {
+      "byte_identical": true,
+      "sha256": "4d3a8925c07e98ba8579ccb81ac49bc94878f9ee10df5b47625123d4d8917885"
+    },
+    "report-source.json": {
+      "byte_identical": true,
+      "sha256": "88fd233796c13e6de6d2531fdc1d5580117fa8b6c63ae5d267a9b9354492d507"
+    }
+  },
+  "method": "gzip level9 mtime0; original raw files retained; byte and JSON roundtrip; report rerun with only compressed episode files",
+  "new_episodes": 0,
+  "original_receipts_changed": false,
+  "packer_script_sha256": "8a9c77cec660e22dfb104a6f8d1229dba96f1602fea87858cf8a1b053af5d748",
+  "raw_bytes_total": 39286826,
+  "report_script_sha256": "6694764f4acb694f2372a245347c7bba61f8e05be5869cf62884b4e7881dcf0a",
+  "status": "passed"
+}

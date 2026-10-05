@@ -1,0 +1,34 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_mechanics_hbe_layers_review.py",
+    "tests/test_mechanics_hbe_evaluation.py",
+    "tests/test_mechanics_hbe_outputs.py",
+    "--basetemp=build/validation/mechanics-hbe-review-v1-final"
+  ],
+  "exit_code": 0,
+  "wall_seconds": 0.359928584,
+  "source_before_sha256": {
+    "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "scripts/mechanics_hbe_outputs.py": "a86191769ee71e79596d9f3871da575dd7e2b2d62e1a9c919162242a335fa65d",
+    "tests/test_mechanics_hbe_layers_review.py": "ffe9604d2fb182af35a5c6183c6b63a0781ac820ca2bf44dd8e7c0529753d820",
+    "tests/test_mechanics_hbe_evaluation.py": "f2e512c621e2cafec042b1789c2465688fdc3f73c4d74e649c88d8a001416f2a",
+    "tests/test_mechanics_hbe_outputs.py": "006538a2e86005697cb9fd3f9f8b1000e9da6b93b8b9f84aa8431c7b8a86c83b",
+    "docs/hbe-specimen-mechanics-poc.md": "e58e484310ebdd91e1366b2855bd8ae64b3b33e466d9842fb16c778a5110bccb",
+    "manifests/experiments/hbe-01-03-mechanics-poc-v1.json": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+  },
+  "source_after_sha256": {
+    "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "scripts/mechanics_hbe_outputs.py": "a86191769ee71e79596d9f3871da575dd7e2b2d62e1a9c919162242a335fa65d",
+    "tests/test_mechanics_hbe_layers_review.py": "ffe9604d2fb182af35a5c6183c6b63a0781ac820ca2bf44dd8e7c0529753d820",
+    "tests/test_mechanics_hbe_evaluation.py": "f2e512c621e2cafec042b1789c2465688fdc3f73c4d74e649c88d8a001416f2a",
+    "tests/test_mechanics_hbe_outputs.py": "006538a2e86005697cb9fd3f9f8b1000e9da6b93b8b9f84aa8431c7b8a86c83b",
+    "docs/hbe-specimen-mechanics-poc.md": "e58e484310ebdd91e1366b2855bd8ae64b3b33e466d9842fb16c778a5110bccb",
+    "manifests/experiments/hbe-01-03-mechanics-poc-v1.json": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+  },
+  "all_tested_files_unchanged": true,
+  "scope": "Only constructed closed-form curves and primitive/residual text; no measured curves, patient data or solver calls. Single-thread environment."
+}

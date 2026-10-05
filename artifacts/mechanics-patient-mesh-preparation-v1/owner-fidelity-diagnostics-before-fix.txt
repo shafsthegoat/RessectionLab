@@ -1,0 +1,21 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+____________ test_fidelity_failure_preserves_completed_diagnostics _____________
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-453/test_fidelity_failure_preserve0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10ac0af30>
+
+    def test_fidelity_failure_preserves_completed_diagnostics(tmp_path, monkeypatch):
+        output, calls = mocked_worker(tmp_path, monkeypatch)
+        monkeypatch.setattr(v, 'vtk_distance_function', lambda *_: (lambda q: np.full(len(q), .003)))
+        assert v.worker('mock-release', output) == 1 and calls == ['coarse']
+        result = json.loads((output / 'worker.json').read_text())
+        first = result['levels'][0]
+>       assert first['status'] == 'failed' and first['quality']['elements'] == 1
+                                               ^^^^^^^^^^^^^^^^
+E       KeyError: 'quality'
+
+tests/test_mechanics_patient_mesh.py:227: KeyError
+=========================== short test summary info ============================
+FAILED tests/test_mechanics_patient_mesh.py::test_fidelity_failure_preserves_completed_diagnostics
+1 failed in 0.42s

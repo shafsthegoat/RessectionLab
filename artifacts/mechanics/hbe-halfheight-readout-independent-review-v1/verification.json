@@ -1,0 +1,67 @@
+{
+  "schema": "hbe-halfheight-readout-independent-review-v1",
+  "status": "frozen_readout_implementation_analytical_controls_passed_actual_equivalence_not_executed",
+  "source_commit_observed": "4936d1b4ec373c342dce33dc558472115de6b832",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_mechanics_hbe_halfheight_readout.py",
+    "tests/test_mechanics_hbe_halfheight_readout_review.py"
+  ],
+  "result": "35 passed in 1.35s",
+  "exit_code": 0,
+  "process_elapsed_seconds": 1.5380175421014428,
+  "owner_controls": 18,
+  "independent_controls": 17,
+  "sources_before": {
+    "scripts/mechanics_hbe_halfheight_readout.py": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30",
+    "tests/test_mechanics_hbe_halfheight_readout.py": "ebe01caf5bab155a330feab592257857772281657759df6f3b428745cd5f1cf9",
+    "tests/test_mechanics_hbe_halfheight_readout_review.py": "5deef26fdf0e0cd532f16b33d25029f6f5fe06291686d44d33d3b343a620fc68",
+    "docs/hbe-halfheight-readout.md": "26d71d79b414cf636433be90b6d7db1b99247a0adce923a9a87d431d7db1e7d0",
+    "scripts/mechanics_hbe_readout.py": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0",
+    "scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "scripts/mechanics_hbe_outputs.py": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19",
+    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "scripts/mechanics_hbe_backend.py": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+    "manifests/experiments/hbe-01-03-halfheight-equivalence-v1.json": "0df5587ab7a70eb1ac092919ff067b4d85ce6c7457af9726875beb58af19ad1e",
+    "artifacts/mechanics/hbe-halfheight-contract-independent-review-v1/review.json": "a42f55b47d5fd56d050ca9f4bc944ab45b3ba5744e75d97308c0a41822bcce7a"
+  },
+  "sources_after": {
+    "scripts/mechanics_hbe_halfheight_readout.py": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30",
+    "tests/test_mechanics_hbe_halfheight_readout.py": "ebe01caf5bab155a330feab592257857772281657759df6f3b428745cd5f1cf9",
+    "tests/test_mechanics_hbe_halfheight_readout_review.py": "5deef26fdf0e0cd532f16b33d25029f6f5fe06291686d44d33d3b343a620fc68",
+    "docs/hbe-halfheight-readout.md": "26d71d79b414cf636433be90b6d7db1b99247a0adce923a9a87d431d7db1e7d0",
+    "scripts/mechanics_hbe_readout.py": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0",
+    "scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "scripts/mechanics_hbe_outputs.py": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19",
+    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "scripts/mechanics_hbe_backend.py": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+    "manifests/experiments/hbe-01-03-halfheight-equivalence-v1.json": "0df5587ab7a70eb1ac092919ff067b4d85ce6c7457af9726875beb58af19ad1e",
+    "artifacts/mechanics/hbe-halfheight-contract-independent-review-v1/review.json": "a42f55b47d5fd56d050ca9f4bc944ab45b3ba5744e75d97308c0a41822bcce7a"
+  },
+  "sources_unchanged": true,
+  "log_sha256": "6a046d55284e400ded066fd9bcf64805f242e46fb285a5782351fe2537b2c302",
+  "new_production_defects_found": [],
+  "independent_coverage": [
+    "Compression and tension retain signed full d, signed canonical force scale1, half work at d/2 and full/twice-half work identity.",
+    "Current-frame moment includes reflected-position translation, not polar-vector torque reflection.",
+    "Shared midplane tangential reaction contributions add and fail free-DOF/full-free-node gates; normal contributions cancel by signed assembly.",
+    "Float/Boolean node IDs, noncube permutations and stale complete-mesh fingerprints rejected.",
+    "Caller edits to original geometry/mapping do not mutate constructed reconstruction snapshots.",
+    "Rehashed wrapper cannot switch declaration or original full mesh; rehashed loading cannot halve original full d.",
+    "Missing middle/duplicate final primitive frames and nonpositive logged J rejected.",
+    "Logged sed corruption remains diagnostic and does not replace reconstructed three-field energy.",
+    "Numerically unchanged but byte-modified input after initial verification cannot return passed receipt."
+  ],
+  "scope": "Only tiny constructed two-cell analytical meshes/logs. End-to-end log generation reuses the explicitly labelled owner fixture while production parsing, geometry, physics and comparison remain unmocked; independent adversaries and expected identities are new. No native solver, saved specimen primitives, measured curves or patient arrays opened.",
+  "limits": [
+    "Actual four-case N8/N12 half-height equivalence remains unexecuted and requires separate source freeze/release.",
+    "Readout verifies deck-byte bindings and declared loading metadata, not deck XML semantics; separately reviewed mesh/deck generator and runner must enforce actual cut-z-only boundary and immutable preparation.",
+    "This review does not accept the mesh extraction or bounded runner, which have separate independent owners.",
+    "No branch stability, mesh convergence, material fidelity or clinical validity claim."
+  ]
+}

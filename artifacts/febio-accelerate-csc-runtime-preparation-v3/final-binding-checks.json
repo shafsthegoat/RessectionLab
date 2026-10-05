@@ -1,0 +1,21 @@
+{
+  "claims": "Nine loading/join tests only, including six resealed graphs with failed acceptance, wrong source, SDK-execution claim, nonzero exit, changed cap or preparation-only review. No repetition of prior23 tests or C++ controls.",
+  "command": ".venv/bin/python -m pytest -q tests/test_febio_accelerate_runtime_binding.py tests/test_febio_accelerate_runtime.py::test_declaration_loads_saved_positive_only_evidence_without_execution tests/test_febio_accelerate_lifecycle_preparation.py::test_prospective_controls_pin_all_files_but_cannot_build",
+  "configure_build_or_solver_executed": false,
+  "control_driver_sha256_unchanged": "af24ed8a31eb787d968c6d08b24ea373615dd9c0802673946469416e49dd2778",
+  "files": {
+    "artifacts/febio-accelerate-csc-runtime-preparation-v3/prospective-runtime-declaration.json": "4f24c624808a7077e2a02a6350e85efd2b86d407180c1a5599e4e456d94dcedd",
+    "manifests/experiments/febio-accelerate-csc-runtime-v3.json": "273db5b32077017730bb8c2fafe9fb360d19439005ddfc977d84c45f7c379763",
+    "tests/test_febio_accelerate_lifecycle_preparation.py": "e0cf6c68a6774c71f1b2bc708846bd1151a7eb2b4ffc67b8ecf2c5ff4e211f15",
+    "tests/test_febio_accelerate_runtime.py": "e334299ced1df537b28354d1c92eb39c323de69e46df79f5c4d362a9a03be7c5",
+    "tests/test_febio_accelerate_runtime_binding.py": "4f4afa10d4fa3e66398b846ce9a2b04b7cc430e70524b6dbcac8621d34c2e916"
+  },
+  "final_declaration_sha256": "273db5b32077017730bb8c2fafe9fb360d19439005ddfc977d84c45f7c379763",
+  "new_runtime_prefix_exists": false,
+  "passed": 9,
+  "prospective_declaration_sha256_preserved": "4f24c624808a7077e2a02a6350e85efd2b86d407180c1a5599e4e456d94dcedd",
+  "pytest_seconds": 1.92,
+  "runtime_driver_sha256_unchanged": "ba94376626a0c9a1a78b81368f60b752e2fcd320f822418934c75bfcd6d80a46",
+  "saved_independent_review_sha256": "a0e377ac4ea8d8fc380afb2efe1045993b4ada90cb262f61b83414be5a2e62d2",
+  "status": "final_runtime_v3_saved_control_bindings_verified_no_stage_executed"
+}

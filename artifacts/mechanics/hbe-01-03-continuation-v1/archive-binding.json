@@ -1,0 +1,21 @@
+{
+  "archive": {
+    "bytes": 210667520,
+    "path": "outputs/validation/hbe-continuation-a9f2783/source.tar",
+    "sha256": "ecf834b983f6cb71eba33141f24f9e0a5623619ef5c59da4e90bf96d83ddb501"
+  },
+  "created_at_utc": "2026-10-04T21:23:36.953006+00:00",
+  "file_count": 4426,
+  "frozen_source_root": "outputs/validation/hbe-continuation-a9f2783/frozen-source",
+  "inventory": {
+    "path": "outputs/validation/hbe-continuation-a9f2783/archive-file-inventory.json",
+    "sha256": "fb8e8ae562f376a22f0bf706f268937dceb48259ebc2024532bb31b63e255cb7"
+  },
+  "pinned_sources": {
+    "manifests/experiments/hbe-01-03-header-continuation-v1.json": "7e74bfdfd8889fd38698990c76aad0a96611fdb223ebd1d738c9d8d06b4a6c7d",
+    "scripts/mechanics_hbe_experiment.py": "ce921239857d45ac4c5d70052c515c3a7804e32e8101f14315953c8b0aa53daa",
+    "scripts/mechanics_hbe_outputs.py": "a372cb89ea9515186d433c74ec650dc3b5cae289619e8b35d481280f6662f473"
+  },
+  "source_commit": "a9f2783adb9ad4dbc41d9eafc29e4c11f0313388",
+  "tests": "Existing independently reviewed43checks apply to unchanged source; no test rerun."
+}

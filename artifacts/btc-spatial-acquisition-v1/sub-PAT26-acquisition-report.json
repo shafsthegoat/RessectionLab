@@ -1,0 +1,56 @@
+{
+  "accession": "ds001226",
+  "release": "5.0.1",
+  "subject": "sub-PAT26",
+  "source_manifest_sha256": "e33f8c6fc60997b93afd2920f4590c316a3bb2a5499d5529dd4eaede7102fc01",
+  "checked_at": "2026-10-04T15:33:29.596956+00:00",
+  "files": [
+    {
+      "path": "dataset_description.json",
+      "status": "already_verified",
+      "sha256": "84185f9c387ae232ddbe87e20b329bacf82b9b5dafe9bde63b64c9bc78bed6f2",
+      "source_annex_md5": null
+    },
+    {
+      "path": "participants.tsv",
+      "status": "already_verified",
+      "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d",
+      "source_annex_md5": null
+    },
+    {
+      "path": "README",
+      "status": "already_verified",
+      "sha256": "fbb3e2e1b00d699835badc0bbda1296f9a90f2995117d93ba3123bd2f8e2d0bb",
+      "source_annex_md5": null
+    },
+    {
+      "path": "CHANGES",
+      "status": "already_verified",
+      "sha256": "8c766a15851db0823c661e0a3ec0ac14e2698711461a4f169cab30b3896461c9",
+      "source_annex_md5": null
+    },
+    {
+      "path": "sub-PAT26/ses-preop/anat/sub-PAT26_ses-preop_T1w.nii.gz",
+      "status": "downloaded_and_verified",
+      "sha256": "a27b46c82c4df0b4ebae97b5bea22bb4299abc5086577416c498edfa63879595",
+      "source_annex_md5": "4096e06bea2c2eb8797e8830ea0fd7db"
+    },
+    {
+      "path": "sub-PAT26/ses-preop/anat/sub-PAT26_ses-preop_T1w.json",
+      "status": "downloaded_and_verified",
+      "sha256": "566b553a3c55cd7c59ed22f5e9646a70e7267dcaa990c202f2d4ffd26a98bef3",
+      "source_annex_md5": null
+    },
+    {
+      "path": "derivatives/tumor_masks/sub-PAT26/anat/sub-PAT26_space_T1_label-tumor.nii",
+      "status": "downloaded_and_verified",
+      "sha256": "1e79c102fe85092fa6d8b9100c2fb2ad334cf8adf1c7d3bdcbda635d91884294",
+      "source_annex_md5": "0cc343b576553a0fd95fa92743c4ed29"
+    }
+  ],
+  "source_content_status": "matches_pinned_official_release_checksums",
+  "anatomical_qc_status": "not_assessed_by_download_verification",
+  "selection_cohort_sha256": "962d964e1d71427f3625cdbebc0f7e4759e5d2345d8f95cb211ed45810ed2985",
+  "development_role": "checkpoint_selection_development",
+  "verified_manifest": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/diffusion_source/ds001226-v5.0.1/btc_sub-PAT26_verified_manifest.json"
+}

@@ -1,0 +1,371 @@
+#!/usr/bin/env python3
+"""Prospective frozen pure-cover sizing; never constructs a patient simulator.
+
+Default invocation writes a declaration only. Explicit execution needs a
+separate release. Geometry imports occur only after source/runtime checks.
+"""
+from __future__ import annotations
+
+from collections import OrderedDict
+import argparse
+import gzip
+import hashlib
+import importlib.metadata
+import importlib.util
+import json
+import math
+from pathlib import Path
+import resource
+import struct
+import sys
+import time
+
+ROOT = Path(__file__).resolve().parents[1]
+DECLARATION = Path("manifests/experiments/native-cache-payload-v1.json")
+COUNTERS = ("calls", "hits", "misses", "evictions", "bypasses", "entries", "retained_payload_bytes")
+
+
+def canonical(value):
+    return json.dumps(value, sort_keys=True, separators=(",", ":"), allow_nan=False)
+
+
+def content_hash(value):
+    return "sha256:" + hashlib.sha256(canonical(value).encode()).hexdigest()
+
+
+def file_hash(path):
+    value = hashlib.sha256()
+    with Path(path).open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            value.update(block)
+    return value.hexdigest()
+
+
+def write_json(path, value):
+    with Path(path).open("x") as stream:
+        stream.write(json.dumps(value, sort_keys=True, indent=2, allow_nan=False) + "\n")
+
+
+def peak_rss_bytes():
+    return int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss) * (1 if sys.platform == "darwin" else 1024)
+
+
+def load_verified_geometry(path, expected_sha256, runtime_versions):
+    """Load one file whose only external numerical dependencies are NumPy/SciPy."""
+    if file_hash(path) != expected_sha256:
+        raise ValueError("Frozen geometry source changed before import")
+    for name in ("numpy", "scipy"):
+        if importlib.metadata.version(name) != runtime_versions[name]:
+            raise ValueError("Frozen geometry dependency version changed: " + name)
+    name = "_payload_frozen_geometry_" + expected_sha256[:16]
+    if name in sys.modules:
+        raise RuntimeError("This isolated process already loaded payload geometry")
+    spec = importlib.util.spec_from_file_location(name, path)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[name] = module
+    try:
+        spec.loader.exec_module(module)
+    except BaseException:
+        sys.modules.pop(name, None)
+        raise
+    if file_hash(path) != expected_sha256:
+        raise ValueError("Frozen geometry source changed during import")
+    return module
+
+
+def validate_arguments(reconstruction, maximum_queries, maximum_unique_queries):
+    binding = reconstruction["binding"]
+    if content_hash(binding) != reconstruction["binding_hash"]:
+        raise ValueError("Query frame binding changed")
+    rows = reconstruction["queries"]
+    if not rows or len(rows) > maximum_queries:
+        raise ValueError("Declared ordered-query cap exceeded")
+    unique = OrderedDict()
+    sequence = []
+    for index, row in enumerate(rows):
+        key = row["argument_float64_le_hex"]
+        if row["index"] != index or len(key) != 112:
+            raise ValueError("Query order or float64 argument layout changed")
+        try:
+            values = struct.unpack("<7d", bytes.fromhex(key))
+        except (ValueError, struct.error) as error:
+            raise ValueError("Malformed float64 query arguments") from error
+        if not all(math.isfinite(value) for value in values) or values[-1] < 0:
+            raise ValueError("Query arguments must be finite with nonnegative radius")
+        expected = content_hash({"binding": reconstruction["binding_hash"], "arguments": key})
+        if row["key_projection_hash"] != expected:
+            raise ValueError("Query projection hash changed")
+        sequence.append(key)
+        unique.setdefault(key, row)
+    if len(unique) > maximum_unique_queries:
+        raise ValueError("Declared unique-query cap exceeded")
+    return sequence, unique
+
+
+def collect_cover_sizes(reconstruction, geometry_module, *, maximum_queries=22364,
+                        maximum_unique_queries=8812, maximum_grid_voxels=8928000,
+                        check_budget=None, on_query_started=None, on_cover=None):
+    """Call frozen coverage once per distinct argument tuple; retain sizes only."""
+    sequence, unique = validate_arguments(reconstruction, maximum_queries, maximum_unique_queries)
+    binding = reconstruction["binding"]
+    if (binding["float64_byte_order"] != "little" or sys.byteorder != "little"
+            or geometry_module.GEOMETRY_VERSION != binding["geometry_version"]
+            or geometry_module._EPS != binding["geometry_epsilon"]
+            or file_hash(geometry_module.__file__) != binding["geometry_source_sha256"]):
+        raise ValueError("Frozen geometry mode/source/precision changed")
+    np = geometry_module.np
+    shape = tuple(binding["source_shape"])
+    if (len(shape) != 3 or any(type(value) is not int or value <= 0 for value in shape)
+            or math.prod(shape) > maximum_grid_voxels):
+        raise ValueError("Source grid exceeds its declared bound")
+    affine_bytes = bytes.fromhex(binding["native_affine_float64_le_hex"])
+    if len(affine_bytes) != 16 * 8:
+        raise ValueError("Malformed source affine")
+    affine = np.frombuffer(affine_bytes, dtype="<f8").reshape(4, 4)
+    if check_budget:
+        check_budget()
+    # Pure coverage uses shape/frame, never occupancy. No patient tissue array
+    # is loaded, constructed from imaging, or inferred by this diagnostic.
+    scene = geometry_module.GeometryScene(np.zeros(shape, dtype=bool), affine)
+    if scene._orthogonal_spacing is None or binding["mode"] != "exact_orthogonal_cells":
+        raise ValueError("Frozen cache requires an orthogonal source frame")
+    frame = {"source_shape": list(scene.shape), "affine_float64_le_hex": scene.affine.tobytes().hex(),
+        "inverse_float64_le_hex": scene._inverse.tobytes().hex(),
+        "cell_radius_float64_le_hex": np.asarray(scene._cell_radius_mm, dtype=np.float64).tobytes().hex(),
+        "orthogonal_spacing_float64_le_hex": scene._orthogonal_spacing.tobytes().hex(),
+        "derivation": "Newly computed by the exact frozen GeometryScene constructor and bound NumPy/SciPy versions; original inverse/derived-frame bytes were not saved and are not claimed to have been read back."}
+    if frame["affine_float64_le_hex"] != binding["native_affine_float64_le_hex"]:
+        raise ValueError("Source affine bytes changed during frame construction")
+    covers = []
+    compute_seconds = 0.
+    for index, (key, row) in enumerate(unique.items()):
+        if check_budget:
+            check_budget()
+        values = np.frombuffer(bytes.fromhex(key), dtype="<f8")
+        if on_query_started:
+            on_query_started(index, key)
+        started = time.perf_counter()
+        cells = geometry_module.capsule_voxel_indices(scene, values[:3], values[3:6], float(values[6]))
+        compute_seconds += time.perf_counter() - started
+        if (not isinstance(cells, np.ndarray) or cells.ndim != 2 or cells.shape[1] != 3
+                or cells.dtype != np.dtype(np.int64) or cells.itemsize != 8
+                or not cells.flags.c_contiguous or cells.flags.writeable
+                or cells.nbytes != len(cells) * 3 * 8):
+            raise ValueError("Pure cover did not return an immutable contiguous N-by-3 int64 ndarray")
+        record = {"unique_index": index, "first_query_index": row["index"],
+            "argument_float64_le_hex": key, "key_projection_hash": row["key_projection_hash"],
+            "array_shape": list(cells.shape), "array_dtype": cells.dtype.str,
+            "array_itemsize_bytes": int(cells.itemsize), "array_elements": int(cells.size),
+            "cell_count": int(len(cells)), "array_nbytes": int(cells.nbytes),
+            "cover_array_sha256": hashlib.sha256(cells.tobytes()).hexdigest()}
+        covers.append(record)
+        if on_cover:
+            on_cover(record)
+        del cells
+        if check_budget:
+            check_budget()
+    return {"frame": frame, "covers": covers, "ordered_query_count": len(sequence),
+        "unique_query_count": len(unique), "pure_cover_calls": len(covers),
+        "exact_unique_payload_bytes": sum(row["array_nbytes"] for row in covers),
+        "pure_cover_compute_seconds": compute_seconds}
+
+
+def paired_lru(sequence, sizes, max_payload_bytes, max_entries):
+    """Exact metadata-only replay of the frozen cache's admission/eviction order."""
+    if any(type(value) is not int or value < 0 for value in (max_payload_bytes, max_entries)):
+        raise ValueError("Cache limits must be nonnegative integers")
+    if any(type(value) is not int or value < 0 for value in sizes.values()):
+        raise ValueError("Payload sizes must be nonnegative integers")
+    cache = OrderedDict()
+    counters = {name: 0 for name in COUNTERS}
+    phases = {}
+    for phase in ("cold", "warm"):
+        before = dict(counters)
+        for key in sequence:
+            size = sizes[key]
+            counters["calls"] += 1
+            if key in cache:
+                counters["hits"] += 1
+                cache.move_to_end(key)
+                continue
+            counters["misses"] += 1
+            if max_entries == 0 or max_payload_bytes == 0 or size > max_payload_bytes:
+                counters["bypasses"] += 1
+                continue
+            while cache and (counters["retained_payload_bytes"] + size > max_payload_bytes
+                             or len(cache) >= max_entries):
+                counters["retained_payload_bytes"] -= cache.popitem(last=False)[1]
+                counters["evictions"] += 1
+            cache[key] = size
+            counters["retained_payload_bytes"] += size
+            counters["entries"] = len(cache)
+        phases[phase] = {"before": before, "after": dict(counters),
+            "increment": {name: counters[name] - before[name] for name in ("calls", "hits", "misses", "evictions", "bypasses")}}
+    return phases
+
+
+def compare_baseline(actual, cold_receipt, warm_receipt):
+    differences = []
+    for phase, receipt in (("cold", cold_receipt), ("warm", warm_receipt)):
+        for point in ("before", "after"):
+            expected = receipt["cache_" + point]
+            for field in COUNTERS:
+                if actual[phase][point][field] != expected[field]:
+                    differences.append({"phase": phase, "point": point, "field": field,
+                        "expected": expected[field], "actual": actual[phase][point][field]})
+        for field in actual[phase]["increment"]:
+            expected = receipt["cache_after"][field] - receipt["cache_before"][field]
+            if actual[phase]["increment"][field] != expected:
+                differences.append({"phase": phase, "point": "increment", "field": field,
+                    "expected": expected, "actual": actual[phase]["increment"][field]})
+    return {"status": "passed" if not differences else "failed", "differences": differences,
+            "actual": actual, "scope": "All original cold/warm cumulative counters, increments, retained entries and raw array bytes; timing is intentionally excluded."}
+
+
+def validate_source_authorities(declaration, source, worker, launcher, result):
+    """Cross-check the original completed run, not just individually hashed files."""
+    expected = declaration["source_runtime_content_hash"]
+    if (any(value["status"] != "completed" for value in (worker, launcher, result))
+            or any(value["runtime_content_hash"] != expected for value in (source, worker, result))
+            or worker["result_hash"] != content_hash(result)
+            or source["file_sha256"]["src/resectionlab/geometry.py"] != declaration["geometry_sha256"]
+            or source["runtime_versions"] != declaration["runtime_versions"]
+            or sys.version != source["python"]):
+        raise ValueError("Original completed source/runtime authorities disagree")
+    for path, expected_sha256 in declaration["frozen_source_sha256"].items():
+        if source["file_sha256"][path] != expected_sha256:
+            raise ValueError("Original frozen callsite source changed: " + path)
+
+
+def validate_baseline_binding(binding, limits, cold, warm):
+    """Keep the query frame and exact cache admission policy bound together."""
+    fields = ("namespace", "cache_version", "native_config_hash", "source_hash", "geometry_source_sha256",
+              "source_guard_sha256", "geometry_version", "native_version", "mode", "geometry_epsilon")
+    for receipt in (cold, warm):
+        for point in ("cache_before", "cache_after"):
+            metadata = receipt[point]
+            if any(metadata[field] != binding[field] for field in fields):
+                raise ValueError("Original cache frame binding changed")
+            if any(metadata[field] != limits[field] for field in ("max_payload_bytes", "max_entries")):
+                raise ValueError("Original cache admission limits changed")
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--execute", action="store_true")
+    args = parser.parse_args()
+    declaration = json.loads((ROOT / DECLARATION).read_text())
+    body = dict(declaration)
+    supplied = body.pop("declaration_content_hash")
+    if content_hash(body) != supplied:
+        raise ValueError("Prospective declaration changed")
+    output = args.output.resolve()
+    output.mkdir(parents=True, exist_ok=False)
+    write_json(output / "declaration.json", declaration)
+    if not args.execute:
+        write_json(output / "status.json", {"status": "declared_not_executed"})
+        return
+    started = time.perf_counter()
+    script_hash = file_hash(Path(__file__))
+    progress = {"attempted_unique_queries": 0, "completed_unique_queries": 0}
+    def check_budget():
+        if time.perf_counter() - started > declaration["maximum_wall_seconds"]:
+            raise InterruptedError("Pure-cover diagnostic wall budget exceeded")
+        if peak_rss_bytes() > declaration["maximum_process_peak_rss_bytes"]:
+            raise InterruptedError("Pure-cover diagnostic process RSS budget exceeded")
+    try:
+        check_budget()
+        for name, expected in declaration["input_sha256"].items():
+            if file_hash(ROOT / name) != expected:
+                raise ValueError("Bound input changed: " + name)
+        query_run = ROOT / declaration["query_run"]
+        query_status = json.loads((query_run / "status.json").read_text())
+        if (query_status["status"] != "completed"
+                or query_status["summary_sha256"] != file_hash(query_run / "summary.json")):
+            raise ValueError("Saved query diagnostic authority is incomplete")
+        summary = json.loads((query_run / "summary.json").read_text())
+        arguments = query_run / "ordered-query-arguments.json.gz"
+        if summary["query_artifact_sha256"] != file_hash(arguments):
+            raise ValueError("Saved ordered query bytes changed")
+        with gzip.open(arguments, "rb") as stream:
+            encoded = stream.read(declaration["maximum_uncompressed_query_bytes"] + 1)
+        if len(encoded) > declaration["maximum_uncompressed_query_bytes"]:
+            raise ValueError("Query artifact decompression cap exceeded")
+        reconstruction = json.loads(encoded)
+        del encoded
+        sequence, unique = validate_arguments(reconstruction, declaration["expected_ordered_queries"], declaration["expected_unique_queries"])
+        if (len(sequence) != declaration["expected_ordered_queries"]
+                or len(unique) != declaration["expected_unique_queries"]
+                or reconstruction["binding_hash"] != summary["binding_hash"]):
+            raise ValueError("Saved exact query denominator or binding changed")
+        source_run = ROOT / declaration["source_cache_run"]
+        source = json.loads((source_run / "launch-source.json").read_text())
+        validate_source_authorities(declaration, source,
+            json.loads((source_run / "worker-status.json").read_text()),
+            json.loads((source_run / "launcher-status.json").read_text()),
+            json.loads((source_run / "result.json").read_text()))
+        baseline_limits = declaration["baseline_cache"]
+        cold = json.loads((source_run / "cached_cold/receipt.json").read_text())
+        warm = json.loads((source_run / "cached_warm/receipt.json").read_text())
+        validate_baseline_binding(reconstruction["binding"], baseline_limits, cold, warm)
+        geometry_path = ROOT / declaration["geometry_path"]
+        geometry = load_verified_geometry(geometry_path, declaration["geometry_sha256"], declaration["runtime_versions"])
+        check_budget()
+        def on_start(index, key):
+            progress["attempted_unique_queries"] += 1
+        with (output / "cover-sizes.jsonl.gz").open("xb") as raw:
+            with gzip.GzipFile(filename="", mode="wb", fileobj=raw, mtime=0) as stream:
+                def on_cover(record):
+                    stream.write((canonical(record) + "\n").encode())
+                    progress["completed_unique_queries"] += 1
+                measured = collect_cover_sizes(reconstruction, geometry,
+                    maximum_queries=declaration["expected_ordered_queries"],
+                    maximum_unique_queries=declaration["expected_unique_queries"],
+                    maximum_grid_voxels=declaration["maximum_grid_voxels"],
+                    check_budget=check_budget, on_query_started=on_start, on_cover=on_cover)
+        write_json(output / "measured-frame.json", measured["frame"])
+        sizes = {row["argument_float64_le_hex"]: row["array_nbytes"] for row in measured["covers"]}
+        actual = paired_lru(sequence, sizes, baseline_limits["max_payload_bytes"], baseline_limits["max_entries"])
+        gate = compare_baseline(actual, cold, warm)
+        write_json(output / "baseline-reproduction.json", gate)
+        if gate["status"] != "passed":
+            raise ValueError("Original byte-LRU reproduction failed; no capacity interpretation is eligible")
+        capacities = {}
+        for capacity in declaration["candidate_payload_bytes"]:
+            check_budget()
+            capacities[str(capacity)] = paired_lru(sequence, sizes, capacity, baseline_limits["max_entries"])
+        for name, expected in declaration["input_sha256"].items():
+            if file_hash(ROOT / name) != expected:
+                raise ValueError("Bound input changed during payload sizing: " + name)
+        if file_hash(Path(__file__)) != script_hash or file_hash(geometry_path) != declaration["geometry_sha256"]:
+            raise ValueError("Diagnostic or frozen geometry source changed")
+        check_budget()
+        result = {"status": "completed", "baseline_reproduction": "passed",
+            "binding_hash": reconstruction["binding_hash"], "source_runtime_content_hash": source["runtime_content_hash"],
+            "declaration_content_hash": declaration["declaration_content_hash"], "script_sha256": script_hash,
+            "ordered_queries": len(sequence), "unique_queries": len(unique), **progress,
+            "exact_unique_array_payload_bytes": measured["exact_unique_payload_bytes"],
+            "minimum_payload_bytes_for_zero_warm_misses_when_all_entries_fit": (measured["exact_unique_payload_bytes"]
+                if baseline_limits["max_entries"] >= len(unique) else None),
+            "maximum_single_cover_bytes": max(sizes.values()), "candidate_capacity_replays": capacities,
+            "cover_sizes_sha256": file_hash(output / "cover-sizes.jsonl.gz"),
+            "measured_frame_sha256": file_hash(output / "measured-frame.json"),
+            "baseline_reproduction_sha256": file_hash(output / "baseline-reproduction.json"),
+            "pure_cover_compute_seconds": measured["pure_cover_compute_seconds"],
+            "elapsed_before_summary_seconds": time.perf_counter() - started,
+            "actual_process_cumulative_peak_rss_bytes": peak_rss_bytes(),
+            "patient_loads": 0, "patient_tissue_arrays_loaded": 0, "simulator_steps": 0,
+            "policy_or_gradient_updates": 0, "final_worlds_used": False, "stress_worlds_used": False,
+            "scope": "Frozen pure geometry on an empty source-shaped frame; raw int64 array payload only. Hypothetical exact LRU counts are not measured cache timing, Python memory or a default-capacity promotion."}
+        write_json(output / "summary.json", result)
+        write_json(output / "status.json", {"status": "completed", "summary_sha256": file_hash(output / "summary.json")})
+    except (Exception, KeyboardInterrupt) as error:
+        write_json(output / "status.json", {"status": "failed", "error_type": type(error).__name__,
+            "error": str(error), **progress, "actual_process_cumulative_peak_rss_bytes": peak_rss_bytes(),
+            "elapsed_seconds": time.perf_counter() - started, "eligible_capacity_interpretations": 0})
+        raise
+
+
+if __name__ == "__main__":
+    main()

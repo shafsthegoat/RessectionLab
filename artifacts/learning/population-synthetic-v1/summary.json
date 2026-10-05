@@ -1,0 +1,197 @@
+{
+  "clinical_deficit_probability": null,
+  "final_worlds_used": false,
+  "frozen": {
+    "elapsed_seconds": 0.002340500010177493,
+    "gradient_steps": 0,
+    "optimization_environment_steps": 0,
+    "optimizer_mode": "POPULATION_FROZEN",
+    "preparation_seconds": 0.016023167059756815,
+    "pretraining_cost_accounted_separately": true,
+    "selected_checkpoint_hash": "sha256:ea902c2e725a7909756bf126092c14e1deed85246ce1db87cc7842fa97f1fa92",
+    "selection_environment_steps": 2,
+    "selection_panel_complete": true,
+    "selection_partition_hash": "sha256:7a2ef6f48a3bf7b9445c89c0a031fbc6f6bdd655485f2382225b006b7db45c7b",
+    "selection_return": 0.0,
+    "selection_returns": [
+      0.0,
+      0.0
+    ],
+    "shared_checkpoint_hash": "sha256:ea902c2e725a7909756bf126092c14e1deed85246ce1db87cc7842fa97f1fa92",
+    "status": "completed"
+  },
+  "full_validation_seconds": 0.13407137501053512,
+  "independent_geometry": {
+    "GREEDY": true,
+    "PATIENT_SCRATCH_RL:11": true,
+    "PATIENT_SCRATCH_RL:23": true,
+    "PATIENT_SCRATCH_RL:47": true,
+    "POPULATION_ADAPTED:11": true,
+    "POPULATION_ADAPTED:23": true,
+    "POPULATION_ADAPTED:47": true,
+    "POPULATION_FROZEN": true,
+    "SEARCH": true,
+    "STOP": true
+  },
+  "independent_patient_count": 0,
+  "learning": [
+    {
+      "candidate_extraction_seconds": 0.0010700830025598407,
+      "elapsed_seconds": 0.08292812504805624,
+      "gradient_steps": 8,
+      "initial_checkpoint_hash": "sha256:3ffe11ea901cac5d4d0b27c17c6a9de587fbe995087c52f3917acd195958d202",
+      "initial_selection_return": 0.0,
+      "optimization_environment_steps": 57,
+      "optimizer_mode": "PATIENT_SCRATCH_RL",
+      "preparation_seconds": 0.01549541694112122,
+      "seed": 11,
+      "selected_checkpoint_hash": "sha256:3ffe11ea901cac5d4d0b27c17c6a9de587fbe995087c52f3917acd195958d202",
+      "selected_selection_return": 0.0,
+      "selection_environment_steps": 10,
+      "shared_checkpoint_hash": null
+    },
+    {
+      "candidate_extraction_seconds": 0.0009431249927729368,
+      "elapsed_seconds": 0.06993804103694856,
+      "gradient_steps": 8,
+      "initial_checkpoint_hash": "sha256:38b91ec6302c4a795ec519341cd3f0e523376c331b36cfd5dadb6e1450c466fe",
+      "initial_selection_return": 0.0,
+      "optimization_environment_steps": 45,
+      "optimizer_mode": "PATIENT_SCRATCH_RL",
+      "preparation_seconds": 0.015850124997086823,
+      "seed": 23,
+      "selected_checkpoint_hash": "sha256:38b91ec6302c4a795ec519341cd3f0e523376c331b36cfd5dadb6e1450c466fe",
+      "selected_selection_return": 0.0,
+      "selection_environment_steps": 10,
+      "shared_checkpoint_hash": null
+    },
+    {
+      "candidate_extraction_seconds": 0.0061699580401182175,
+      "elapsed_seconds": 0.09876245900522918,
+      "gradient_steps": 8,
+      "initial_checkpoint_hash": "sha256:1b950505190cfef3b8181127d7f85fd9f0a6691e3184b4a1c422189cbadf4d34",
+      "initial_selection_return": 0.020000000000000018,
+      "optimization_environment_steps": 46,
+      "optimizer_mode": "PATIENT_SCRATCH_RL",
+      "preparation_seconds": 0.015955209033563733,
+      "seed": 47,
+      "selected_checkpoint_hash": "sha256:5c18a98e947e628c40e549df92474e7377fefe1cc2ea07f68a82e30b7e801878",
+      "selected_selection_return": 1.24,
+      "selection_environment_steps": 50,
+      "shared_checkpoint_hash": null
+    },
+    {
+      "candidate_extraction_seconds": 0.0010063749505206943,
+      "elapsed_seconds": 0.08503295807167888,
+      "gradient_steps": 8,
+      "initial_checkpoint_hash": "sha256:ea902c2e725a7909756bf126092c14e1deed85246ce1db87cc7842fa97f1fa92",
+      "initial_selection_return": 0.0,
+      "optimization_environment_steps": 49,
+      "optimizer_mode": "POPULATION_ADAPTED",
+      "preparation_seconds": 0.016243624966591597,
+      "seed": 11,
+      "selected_checkpoint_hash": "sha256:ea902c2e725a7909756bf126092c14e1deed85246ce1db87cc7842fa97f1fa92",
+      "selected_selection_return": 0.0,
+      "selection_environment_steps": 10,
+      "shared_checkpoint_hash": "sha256:ea902c2e725a7909756bf126092c14e1deed85246ce1db87cc7842fa97f1fa92"
+    },
+    {
+      "candidate_extraction_seconds": 0.0009476249106228352,
+      "elapsed_seconds": 0.0921249589882791,
+      "gradient_steps": 8,
+      "initial_checkpoint_hash": "sha256:ea902c2e725a7909756bf126092c14e1deed85246ce1db87cc7842fa97f1fa92",
+      "initial_selection_return": 0.0,
+      "optimization_environment_steps": 60,
+      "optimizer_mode": "POPULATION_ADAPTED",
+      "preparation_seconds": 0.01585887500550598,
+      "seed": 23,
+      "selected_checkpoint_hash": "sha256:ea902c2e725a7909756bf126092c14e1deed85246ce1db87cc7842fa97f1fa92",
+      "selected_selection_return": 0.0,
+      "selection_environment_steps": 10,
+      "shared_checkpoint_hash": "sha256:ea902c2e725a7909756bf126092c14e1deed85246ce1db87cc7842fa97f1fa92"
+    },
+    {
+      "candidate_extraction_seconds": 0.0009974590502679348,
+      "elapsed_seconds": 0.07761354208923876,
+      "gradient_steps": 8,
+      "initial_checkpoint_hash": "sha256:ea902c2e725a7909756bf126092c14e1deed85246ce1db87cc7842fa97f1fa92",
+      "initial_selection_return": 0.0,
+      "optimization_environment_steps": 45,
+      "optimizer_mode": "POPULATION_ADAPTED",
+      "preparation_seconds": 0.016230624984018505,
+      "seed": 47,
+      "selected_checkpoint_hash": "sha256:ea902c2e725a7909756bf126092c14e1deed85246ce1db87cc7842fa97f1fa92",
+      "selected_selection_return": 0.0,
+      "selection_environment_steps": 10,
+      "shared_checkpoint_hash": "sha256:ea902c2e725a7909756bf126092c14e1deed85246ce1db87cc7842fa97f1fa92"
+    }
+  ],
+  "limitations": [
+    "Two or more procedural development groups are not human patients",
+    "One shared initialization does not estimate population-training-seed variation",
+    "Only the supplied action/reward/world assumptions were tested",
+    "Source snapshot and explicit exclusions support reproducibility, not clinical generalization",
+    "Offline pretraining and online inference/adaptation costs are separate"
+  ],
+  "offline_pretraining": {
+    "elapsed_seconds": 1.3294570409925655,
+    "elapsed_seconds_scope": "Learner initialization, optimization and selection; preparation and export costs reported separately",
+    "gradient_steps": 8,
+    "optimization_environment_steps": 42,
+    "postprocessing_seconds_before_export": 0.004911458934657276,
+    "preparation_seconds": 0.03636208304669708,
+    "selection_environment_steps": 20,
+    "total_offline_seconds_before_checkpoint_write": 1.3725557500729337
+  },
+  "population_checkpoint_hash": "sha256:ea902c2e725a7909756bf126092c14e1deed85246ce1db87cc7842fa97f1fa92",
+  "search": [
+    {
+      "actions": [
+        "STOP"
+      ],
+      "elapsed_seconds": 8.716701995581388e-05,
+      "environment_steps": 0,
+      "method": "GREEDY",
+      "nominal_score": 0.0,
+      "observability": "nominal_evidence_only",
+      "optimizer_mode": "SEARCH",
+      "preparation_seconds": 0.016868832986801863,
+      "termination": "greedy_stop"
+    },
+    {
+      "actions": [
+        "REMOVE:branch-narrow:1,1,0",
+        "REMOVE:branch-narrow:0,1,0",
+        "REMOVE:branch-narrow:0,1,1",
+        "REMOVE:branch-narrow:2,1,0",
+        "REMOVE:branch-narrow:2,1,1",
+        "STOP"
+      ],
+      "elapsed_seconds": 0.048267042031511664,
+      "environment_steps": 110,
+      "method": "SEARCH",
+      "nominal_score": 1.3,
+      "observability": "nominal_evidence_only",
+      "optimizer_mode": "SEARCH",
+      "preparation_seconds": 0.015527999959886074,
+      "termination": "search_exhausted"
+    }
+  ],
+  "seed_order": [
+    11,
+    23,
+    47
+  ],
+  "status": "completed",
+  "study_role": "analytic_synthetic_development_four_arm_comparison",
+  "target": {
+    "aliases": [
+      "analytic:branching-v1"
+    ],
+    "case_hash": "synthetic-branching-v1",
+    "group_id": "synthetic:branching-family",
+    "outer_split": "excluded",
+    "source_kind": "analytic_synthetic"
+  },
+  "total_experiment_seconds": 2.4978442499414086
+}

@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-04T19:42:04.118630+00:00",
+  "git_commit": "5554d38a8f9ede8f660467f8a6162121b0c46678",
+  "manifest_path": "manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+  "manifest_sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035",
+  "authority": "Root explicit release to acquire exact Gmsh 4.15.2 arm64 wheel, verify and privately extract, then one supervised non-GUI import/version probe only.",
+  "scope": {
+    "payload_downloads": 1,
+    "download_wall_seconds": 60,
+    "retries": 0,
+    "overwrites": false,
+    "safe_extraction_uncompressed_cap_bytes": 268435456,
+    "probe_count": 1,
+    "probe_wall_seconds": 15,
+    "threads": 1,
+    "mesh_generation": false,
+    "patient_or_curve_access": false,
+    "global_or_app_environment_changes": false,
+    "read_user_config": false
+  },
+  "mesher": {
+    "name": "Gmsh",
+    "version": "4.15.2",
+    "documentation": "https://gmsh.info/doc/texinfo/gmsh.html",
+    "metadata_url": "https://pypi.org/pypi/gmsh/4.15.2/json",
+    "filename": "gmsh-4.15.2-py2.py3-none-macosx_12_0_arm64.whl",
+    "url": "https://files.pythonhosted.org/packages/3d/b4/0d25938ad62ea4db6bcbdecbc77c72d05d8a6a679abe4addcd86167ffd77/gmsh-4.15.2-py2.py3-none-macosx_12_0_arm64.whl",
+    "bytes": 36427761,
+    "sha256": "f6649b3e59f49272e7ee8ab282ecb4d1a6e0d627e86cf3e3b1a83fd07417e4f8",
+    "license": "GPL-2.0-or-later_with_upstream_external_linking_exception",
+    "scope": "separate_local_research_utility_no_app_bundling",
+    "private_prefix": "data/optional-runtimes/gmsh-4.15.2",
+    "global_or_app_environment_changes": false,
+    "method": "built_in_CAD_five_block_transfinite_quad_disk_recombined_axial_extrusion",
+    "central_square_xy": "(+/-R/2,+/-R/2)",
+    "outer_arc_corners_degrees": [
+      45,
+      135,
+      225,
+      315
+    ],
+    "edge_and_quarter_arc_cells": "N",
+    "radial_connector_cells": "N/2",
+    "axial_layers": "N/2",
+    "levels": [
+      {
+        "N": 4,
+        "nominal_hex8_cells": 96
+      },
+      {
+        "N": 8,
+        "nominal_hex8_cells": 768
+      },
+      {
+        "N": 12,
+        "nominal_hex8_cells": 2592
+      }
+    ],
+    "mesh_quality": {
+      "jacobian_sites": [
+        "8_gauss",
+        "8_corners",
+        "center"
+      ],
+      "rest_jacobian_positive": true,
+      "minimum_rest_scaled_jacobian_exclusive": 0.1,
+      "finest_relative_volume_error_max": 0.005,
+      "finest_max_radial_sag_over_R": 0.005,
+      "conforming_interfaces_and_boundary_tags_required": true,
+      "mixed_or_non_hex8_cells_allowed": false
+    },
+    "release_requirements": [
+      "root separately releases hash-pinned wheel acquisition/private extraction",
+      "verify wheel hash and safe bounded members before extraction;retain license notices",
+      "verify arm64 dylib and private prefix import version before mesh generation",
+      "record interpreter identity and private prefix runtime hashes;no ambient gmsh import"
+    ]
+  },
+  "interpreter": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+  "interpreter_resolved": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+  "interpreter_sha256": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a",
+  "interpreter_version": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "runtime_receipt_contract": "runtime-receipt.json contains exact module/library/interpreter paths and hashes; meshing needs separate root release."
+}

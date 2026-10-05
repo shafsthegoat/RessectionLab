@@ -1,0 +1,24 @@
+{
+  "candidate_record_sha256": "c045f1fcd4a3deaec2457cf861b78eabdd5bbec1e01072cf8d0dae5d049900f6",
+  "eligible_candidate_count": 1,
+  "final_worlds_used": false,
+  "full_worker_seconds": 220.33499779098202,
+  "pilot_status_sha256": "aa038d39f9a1aea3808e7cf049853c7c8fbd9f857a10afa09ffcef3888e927af",
+  "resource": {
+    "budget": {
+      "hard_termination_grace_seconds": 15.0,
+      "process_peak_rss_bytes": 6442450944,
+      "worker_wall_seconds": 600.0
+    },
+    "budget_request_to_receipt_seconds": null,
+    "cancellation_callback_calls": 2708,
+    "cancellation_callback_seconds": 0.012744573061354458,
+    "cancellation_reason": null,
+    "elapsed_seconds": 220.335014124983,
+    "observed_peak_rss_bytes": 2382168064,
+    "scope": "worker process RSS; cooperative callback CPU cost; no OS memory reservation"
+  },
+  "stage": "complete",
+  "status": "completed",
+  "stress_worlds_used": false
+}

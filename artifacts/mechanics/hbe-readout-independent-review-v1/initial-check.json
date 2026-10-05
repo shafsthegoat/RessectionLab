@@ -1,0 +1,26 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_mechanics_hbe_readout_review.py",
+    "--basetemp=build/validation/mechanics-hbe-readout-review-v1-initial"
+  ],
+  "exit_code": 1,
+  "wall_seconds": 0.400398209,
+  "source_before_sha256": {
+    "scripts/mechanics_hbe_readout.py": "3a48858d3e89a38dab5c1ea6694159be253435f77609efe4009355849bcb93bc",
+    "scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "tests/test_mechanics_hbe_readout.py": "bfe4d9dd3829aa5aedd81e1226a463888926c255944a00c3e963ffb4f9505447",
+    "tests/test_mechanics_hbe_readout_review.py": "e479ae9e25e67d69ed91220335053f7654542ae1d4a88e0a8c5cd4cf86c0e74f"
+  },
+  "source_after_sha256": {
+    "scripts/mechanics_hbe_readout.py": "3a48858d3e89a38dab5c1ea6694159be253435f77609efe4009355849bcb93bc",
+    "scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "tests/test_mechanics_hbe_readout.py": "bfe4d9dd3829aa5aedd81e1226a463888926c255944a00c3e963ffb4f9505447",
+    "tests/test_mechanics_hbe_readout_review.py": "e479ae9e25e67d69ed91220335053f7654542ae1d4a88e0a8c5cd4cf86c0e74f"
+  },
+  "all_tested_files_unchanged": true,
+  "scope": "Constructed closed-form61-frame primitives and tiny comparison arrays; no measured curves or actual FEM calls."
+}

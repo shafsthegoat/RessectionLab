@@ -1,0 +1,43 @@
+         4166 function calls (3699 primitive calls) in 0.026 seconds
+
+   Ordered by: cumulative time
+   List reduced from 130 to 35 due to restriction <35>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.026    0.026 profile_native.py:50(<lambda>)
+        1    0.000    0.000    0.026    0.026 native_simulation.py:154(reset)
+        2    0.000    0.000    0.022    0.011 native_simulation.py:260(observation)
+        2    0.008    0.004    0.019    0.010 simulation.py:378(observation)
+        1    0.000    0.000    0.012    0.012 simulation.py:224(reset)
+       62    0.000    0.000    0.011    0.000 {method 'sum' of 'numpy.ndarray' objects}
+       62    0.000    0.000    0.011    0.000 _methods.py:47(_sum)
+       70    0.011    0.000    0.011    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+        8    0.002    0.000    0.002    0.000 native_simulation.py:252(_new_partial_indices)
+        5    0.002    0.000    0.002    0.000 {method 'copy' of 'numpy.ndarray' objects}
+        1    0.000    0.000    0.001    0.001 native_resection.py:309(clone)
+        2    0.000    0.000    0.001    0.000 native_simulation.py:137(assert_model_frozen)
+    228/2    0.000    0.000    0.001    0.000 native_simulation.py:34(_immutable_model_descriptor)
+     48/6    0.000    0.000    0.001    0.000 native_simulation.py:56(<genexpr>)
+   188/72    0.000    0.000    0.001    0.000 native_simulation.py:52(<genexpr>)
+        8    0.000    0.000    0.000    0.000 {built-in method numpy.zeros}
+        3    0.000    0.000    0.000    0.000 numeric.py:170(ones)
+       13    0.000    0.000    0.000    0.000 {built-in method numpy.asarray}
+     1238    0.000    0.000    0.000    0.000 {built-in method builtins.isinstance}
+        1    0.000    0.000    0.000    0.000 worlds.py:281(sample_seed)
+        1    0.000    0.000    0.000    0.000 numeric.py:97(zeros_like)
+     62/2    0.000    0.000    0.000    0.000 copy.py:118(deepcopy)
+        6    0.000    0.000    0.000    0.000 native_simulation.py:211(proposed_actions)
+     10/2    0.000    0.000    0.000    0.000 copy.py:191(_deepcopy_list)
+        4    0.000    0.000    0.000    0.000 copy.py:217(_deepcopy_dict)
+      192    0.000    0.000    0.000    0.000 dataclasses.py:1301(is_dataclass)
+       32    0.000    0.000    0.000    0.000 native_simulation.py:54(<genexpr>)
+        8    0.000    0.000    0.000    0.000 fromnumeric.py:3737(mean)
+      173    0.000    0.000    0.000    0.000 <frozen abc>:117(__instancecheck__)
+       21    0.000    0.000    0.000    0.000 dataclasses.py:1278(fields)
+        8    0.000    0.000    0.000    0.000 _methods.py:115(_mean)
+        1    0.000    0.000    0.000    0.000 _rotation.py:658(from_rotvec)
+        1    0.000    0.000    0.000    0.000 worlds.py:127(fingerprint)
+      173    0.000    0.000    0.000    0.000 {built-in method _abc._abc_instancecheck}
+      198    0.000    0.000    0.000    0.000 {built-in method builtins.getattr}
+
+

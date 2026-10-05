@@ -1,0 +1,132 @@
+{
+  "all_tiny_update_numerical_source_hashes_match_final_source": true,
+  "attempts": [
+    {
+      "attempt": 1,
+      "errors": 5,
+      "failures": 0,
+      "log_sha256": "a7bd824f517a806e69cb1b02b024a04ea2e876f804f3b42ada553018755857a5",
+      "seconds": 3.824,
+      "source_test_snapshot": "source/tests/test_native_axis_input_profiles_review.py",
+      "tests": 15
+    },
+    {
+      "attempt": 2,
+      "errors": 0,
+      "failures": 0,
+      "log_sha256": "00ef0e01eb3c30458801818b137d0865321b8ef909942d4584332a2b1ad807f9",
+      "seconds": 9.401,
+      "source_test_snapshot": "source/tests/test_native_axis_input_profiles_review.py",
+      "tests": 15
+    },
+    {
+      "attempt": 3,
+      "errors": 0,
+      "failures": 0,
+      "log_sha256": "c2d935132a9598cba0bb1f5fdb151ca445149343b8eb0173c15e1502bb5c480c",
+      "seconds": 14.222,
+      "source_test_snapshot": "source/test_native_axis_input_profiles_review.final.py.txt",
+      "tests": 25
+    }
+  ],
+  "base_head": "b0f5635e8f77a7d223b25fecb3c47435f372d3fa",
+  "documentation_frozen_after_tests_sha256": {
+    "docs/native-axis-accounting.md": "15d5a97304b5c47bd31c48331bb5fadf9737670de7b87be71289610f56e8d295",
+    "docs/native-axis-input-profiles.md": "89d554db109288b6a69e298f257ab93ed520bd47e9668baed03e881781d31d8d"
+  },
+  "findings": {
+    "registry_resealed_divisors": "Owner added immutable registry equality before frozen tests; regression passes.",
+    "remaining_blocking_findings": []
+  },
+  "initial_negative": "Attempt01 pytest --basetemp parent missing:10 passed/5 setup errors; source unchanged for attempt02. Parent created; no production or fixture repair required. Attempt03 adds receipt-forgery/transfer/pool boundary checks.",
+  "limits": [
+    "Tiny constructed anatomy validates callable integration and bindings only; no accuracy or clinical claim.",
+    "Latest selection return ties initialization; earliest initial checkpoint remains selected.",
+    "No full suite was run by this independent agent.",
+    "Checkpoint bytes are retained only in ignored build temporary storage; hashes cannot recover them.",
+    "Exact timing is environmental; no real-time claim."
+  ],
+  "production_source_unchanged_across_all_attempts": true,
+  "schema": "independent-native-axis-input-profile-review-v1",
+  "scope": "single-thread synthetic only; no public cases or population training",
+  "tested_source_sha256": {
+    "src/resectionlab/learning.py": "23ed946d9fee0d1402b4aa89cd3c5dabcb27ab7e57cd824dc38baa98dce08e94",
+    "src/resectionlab/learning_ppo.py": "a3814bc5da4837b66ae20496c38e17edd0edf73ef7863a920924cd7ec2a42d88",
+    "src/resectionlab/native_axis_accounting.py": "c75eea141a636072465d6c88fc113c4bf53d8901428f1a1511623539ee541ce8",
+    "src/resectionlab/native_axis_policy_schema.py": "672a5dfd8ba7981bf6bc7a81746b15b094001145c0db942f16599f24a72dcafe",
+    "src/resectionlab/native_axis_simulation.py": "e1b8306050b53e636e1d602290720655d1f06fe72bf8309ba80afb2025122b70",
+    "src/resectionlab/policy_inputs.py": "1366cdabceae5eeee9ad44667be7d8c44de2c9ab8f551c4cf05b053f5b1b8b47",
+    "src/resectionlab/procedural_learning.py": "d4666701930d2baa1f438b2a1bed4819e895ec6161c38a78b6ef4d68331ac2d1",
+    "tests/test_native_axis_input_profiles_review.py": "a994028c74e93a194ac33e10f56dd293a287082cd4824565c64403213d9c1124"
+  },
+  "thread_environment": {
+    "MKL_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "torch_num_threads": 1
+  },
+  "tiny_update": {
+    "actor_parameters_changed": true,
+    "decision_model_hash": "sha256:aeb6b8925a5b0b1c68ec7e6102fc70758196cea94d358b94ec7274088775a61c",
+    "evidence": {
+      "accounting.json": {
+        "gzip_sha256": "657fc5eadc6d2c4dc210e5202137f370aaecf5500867f7c62a356991fede56e6",
+        "raw_bytes": 404472,
+        "raw_sha256": "a6a3bdaaee65016f92ad25d3619981e3839224742c8193819ee5351ac183e6aa",
+        "tracked_compressed_path": "artifacts/native-axis-input-profile-review-v1/tiny-update/accounting.json.gz"
+      },
+      "learner/contract.json": {
+        "gzip_sha256": "27ebbcd4af9a81138a745be2f5b3b250816735490dc3299d4d786627e8be9c5c",
+        "raw_bytes": 10560,
+        "raw_sha256": "7dda731db0ef4b7d88274250f41ab4c457d514e5e8fac6b17a22c7174c3dc990",
+        "tracked_compressed_path": "artifacts/native-axis-input-profile-review-v1/tiny-update/learner/contract.json.gz"
+      },
+      "learner/result.json": {
+        "gzip_sha256": "9316bf9e483dbaa8399b798e9b8051c3a4bbc820b89dcc9752bfc481b101de08",
+        "raw_bytes": 4777,
+        "raw_sha256": "afcf67635f0ff8d4cd6f226684d70f81cb9974ccc0cdfbd00b6cbe548e9a5c41",
+        "tracked_compressed_path": "artifacts/native-axis-input-profile-review-v1/tiny-update/learner/result.json.gz"
+      }
+    },
+    "gradient_steps": 1,
+    "initial_selection_return": -152.98000000000002,
+    "initial_trainable_parameter_hash": "sha256:7e7b0db1cc5857360eaeac2eff27368bfba2e1d4cf45d14eb65e8876d6d81de5",
+    "input_profile_hash": "sha256:ae7e392794857e72d3cbd06dd7106dd30bcf557e8a91fe9261bf14d6481cc74b",
+    "latest_selection_return": -152.98000000000002,
+    "latest_trainable_parameter_hash": "sha256:000b6d54b1b6124c4306ca658c01f35cb7e9c3ec1c9b82210dac79447f8e9e0e",
+    "local_checkpoint_byte_hashes": {
+      "checkpoint.pt": {
+        "bytes": 25416,
+        "sha256": "5df812a4098face85885f91f0bce93ed3cd1bde456257f62100f4f90fde6b4a8",
+        "tracked": false
+      },
+      "initial.pt": {
+        "bytes": 6198,
+        "sha256": "30ae50643bfe74d95ec1b6cfa2c8104525b1d33d2bb3b2a26ad9abea21577b51",
+        "tracked": false
+      }
+    },
+    "optimization_environment_steps": 3,
+    "receipt_status": "learner_returned",
+    "receipt_totals": {
+      "optimization": {
+        "committed_but_unreturned": 0,
+        "counts_complete": true,
+        "executed_reward": -98.72,
+        "executed_transitions": 3,
+        "native_commits": 3,
+        "returned_transitions": 3
+      },
+      "selection": {
+        "committed_but_unreturned": 0,
+        "counts_complete": true,
+        "executed_reward": -305.96000000000004,
+        "executed_transitions": 6,
+        "native_commits": 4,
+        "returned_transitions": 6
+      }
+    },
+    "selected_selection_return": -152.98000000000002,
+    "selection_environment_steps": 6
+  }
+}

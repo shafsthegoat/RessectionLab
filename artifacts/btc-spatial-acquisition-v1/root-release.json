@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-04T15:31:59.864481+00:00",
+  "authorization": "Root explicitly released this exact committed downloader for four local public structural acquisitions after commit/push59972d6 and independent review; no paid services.",
+  "git_commit": "59972d6520e8e95f858d9dd97c4fa621dab559ba",
+  "declared_cohort_commit": "9881c17",
+  "source_snapshot": "build/btc-spatial-acquisition-59972d6",
+  "source_archive_sha256": "49a4a8d2601f7451bd37b61cd292cb8735567f0179c8562d6903b2467f37445e",
+  "frozen_source_files": {
+    "scripts/acquire_btc_case.py": "2978b5c7756f46aac9dc8aa9f308fdf6f84a054326a48bd704fe3addc5bca0bf",
+    "scripts/acquire_public_case.py": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb",
+    "manifests/experiments/btc-spatial-development-cohort-v1.json": "962d964e1d71427f3625cdbebc0f7e4759e5d2345d8f95cb211ed45810ed2985"
+  },
+  "allowed_subjects": [
+    "sub-PAT22",
+    "sub-PAT25",
+    "sub-PAT26",
+    "sub-PAT27"
+  ],
+  "forbidden_subjects": [
+    "sub-PAT29",
+    "sub-PAT31"
+  ],
+  "new_subject_bytes_maximum": 72375710,
+  "network_bytes_maximum_including_shared_metadata_once": 72390601,
+  "diffusion_or_functional_downloads_permitted": false,
+  "preparation_or_training_permitted": false,
+  "anatomical_acceptance_permitted": false,
+  "output_root": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/diffusion_source/ds001226-v5.0.1",
+  "interpreter": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+  "interpreter_binary_sha256_measured_now": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a",
+  "python_version": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "runtime_isolation": "-I -S; explicitly add frozen snapshot scripts to sys.path; no live repository modules imported",
+  "existing_shared_metadata": [
+    {
+      "path": "dataset_description.json",
+      "bytes": 1209,
+      "sha256": "84185f9c387ae232ddbe87e20b329bacf82b9b5dafe9bde63b64c9bc78bed6f2",
+      "mtime_ns": 1791095940756980407
+    },
+    {
+      "path": "participants.tsv",
+      "bytes": 10103,
+      "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d",
+      "mtime_ns": 1791095940757086822
+    },
+    {
+      "path": "README",
+      "bytes": 3145,
+      "sha256": "fbb3e2e1b00d699835badc0bbda1296f9a90f2995117d93ba3123bd2f8e2d0bb",
+      "mtime_ns": 1791095940828265388
+    },
+    {
+      "path": "CHANGES",
+      "bytes": 434,
+      "sha256": "8c766a15851db0823c661e0a3ec0ac14e2698711461a4f169cab30b3896461c9",
+      "mtime_ns": 1791095940870062585
+    }
+  ],
+  "all_six_new_candidate_files_absent_before_image_GET": true,
+  "failure_policy": "One attempt per allowed subject, sequentially. Stop at first failure; preserve logs/partials. No implicit retry, substitution or role change.",
+  "new_imaging_expected_files": 8,
+  "per_request_timeout_seconds": 45,
+  "previous_read_only_source_requests": "Pinned Git text and S3 HEAD only; no image GET before this release."
+}

@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "integration_kind": "portable_unreviewed_structural_proposals",
+  "recorded_at": "2026-10-04T12:52:52.562901+00:00",
+  "inference_executed": false,
+  "downloads_performed": false,
+  "selected_repetition": "r1, first declared repetition consistently for both patients; no score or overlap selection",
+  "historical_binary_attestation": {
+    "historical_interpreter_binary_hash_predeclared": false,
+    "historical_installed_package_binary_hashes_predeclared": false,
+    "verified_scope": "Recorded runtime version strings and retained source/model/output hashes agree; no historical runtime binary identity is attested.",
+    "unrecorded_runs_excluded_by_attestation": false
+  },
+  "integration_source_sha256": "ad921fb5cda6d3aed84893ad200cb846212311efa17c1996730a394e8474a95b",
+  "independent_audit_pending": true,
+  "cases": [
+    {
+      "subject": "sub-PAT16",
+      "original_case": "outputs/cases/BTC-sub-PAT16.ressectionlab",
+      "original_case_sha256": "1d003645c374df4cf0c1f5b5014ee535434bb72615c9a8bcfb6bbcac9ed19ddf",
+      "original_semantic_hash": "sha256:a3c3dee6205ef9da9c7589ec1eaaff168a26ea9ad1b8d7960e2a40cb292ce2cf",
+      "original_revision": 2,
+      "derived_case": "outputs/cases/BTC-sub-PAT16-structural-evidence.ressectionlab",
+      "derived_case_sha256": "b906e1c061450526e4ed4737f17f880f1ab7fdf35d667d1d6f8d7eb55b3c416b",
+      "derived_case_bytes": 9738528,
+      "derived_semantic_hash": "sha256:a7104aa095f7c20c1b7fe732dbf540ded495e85854adc10b594e5039dde3c094",
+      "derived_revision": 4,
+      "planning_hash": "sha256:1a9088e0fdee2f751e67c8778eba88fa4785dd267d76396b98082fe7933ccb05",
+      "planning_hash_unchanged": true,
+      "source_case_bytes_unchanged": true,
+      "mri_affine_annotations_source_refs_metadata_unchanged": true,
+      "reopened_identical": true,
+      "working_brain_mask": null,
+      "brain_reviewed": false,
+      "cortical_access_permitted": false,
+      "evidence": [
+        {
+          "evidence_id": "synthstrip_main_a3b03fb5ecfc",
+          "variant": "main",
+          "evidence_hash": "sha256:77b5da8ddc19a6f15c98c376f6ae530e691c876a642fed62a47cf4b7a6ceee06",
+          "mask_hash": "sha256:9b9cf932b42acf555dfa7ea5c686861351dd745109843bc5c8d0e431f6fb2b3a",
+          "source_image_hash": "sha256:f54e4a15e69e797aed65a0315d87abfd712acabb5b385c0df5954947ebe175d0",
+          "source_frame_hash": "sha256:30129c664eccf050cf7dcc8088a4ac5c673b5d48cec83ff68f3955f4f5b2fb2f",
+          "source_file_sha256": "sha256:709b3ea19596ff6a0cb963ebeaeede247b0ddd6c605f12aa350df2cb04500c3e",
+          "model_sha256": "sha256:37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33",
+          "run_sha256": "sha256:a3b03fb5ecfca30fe9f2893501ede5d86c442a30f8a04c1ddde393ba316ba5ff",
+          "current_target_annotation_outside_voxels": 19,
+          "qc_flags": [
+            "CURRENT_TARGET_ANNOTATION_OUTSIDE_ESTIMATED_ENVELOPE",
+            "SOURCE_ANNOTATION_EXTENDS_OUTSIDE_EXTRACTION"
+          ],
+          "provenance": "estimated",
+          "review_status": "review_required",
+          "cortical_access_permitted": false
+        },
+        {
+          "evidence_id": "synthstrip_nocsf_a3b03fb5ecfc",
+          "variant": "nocsf",
+          "evidence_hash": "sha256:5579aa8c650ba17ed97ea4cb1ba0f78137dc26cb42338a9f833d3e624c085890",
+          "mask_hash": "sha256:2aecd38c3a68b2e173e22e56e6cf2ebc6ab25610cc4b154bbcc78d7395d339f0",
+          "source_image_hash": "sha256:f54e4a15e69e797aed65a0315d87abfd712acabb5b385c0df5954947ebe175d0",
+          "source_frame_hash": "sha256:30129c664eccf050cf7dcc8088a4ac5c673b5d48cec83ff68f3955f4f5b2fb2f",
+          "source_file_sha256": "sha256:709b3ea19596ff6a0cb963ebeaeede247b0ddd6c605f12aa350df2cb04500c3e",
+          "model_sha256": "sha256:62bf01137c45b5f0cc04d59dbaed5b9ac138b3f25b766c062a7c1a0d696ecb28",
+          "run_sha256": "sha256:a3b03fb5ecfca30fe9f2893501ede5d86c442a30f8a04c1ddde393ba316ba5ff",
+          "current_target_annotation_outside_voxels": 2045,
+          "qc_flags": [
+            "CURRENT_TARGET_ANNOTATION_OUTSIDE_ESTIMATED_ENVELOPE",
+            "SOURCE_ANNOTATION_EXTENDS_OUTSIDE_EXTRACTION"
+          ],
+          "provenance": "estimated",
+          "review_status": "review_required",
+          "cortical_access_permitted": false
+        }
+      ],
+      "portable_report_sha256": "a3b03fb5ecfca30fe9f2893501ede5d86c442a30f8a04c1ddde393ba316ba5ff",
+      "mask_arrays_embedded": true,
+      "predicted_distance_arrays_embedded": false
+    },
+    {
+      "subject": "sub-PAT20",
+      "original_case": "outputs/cases/BTC-sub-PAT20.ressectionlab",
+      "original_case_sha256": "42339757157a01ca1b57daa8ab81c5f9aae21807b41305454d27e49eb414da6a",
+      "original_semantic_hash": "sha256:ec7536ca27ab34f9c047e71323359a6712c479448d654ad9d9e4e774d3daebe9",
+      "original_revision": 2,
+      "derived_case": "outputs/cases/BTC-sub-PAT20-structural-evidence.ressectionlab",
+      "derived_case_sha256": "edd4d0d149cf27e81dbc67c2742fd14dff5bfa6fa1c63ad111fecb4b48eca66b",
+      "derived_case_bytes": 9006489,
+      "derived_semantic_hash": "sha256:578c1cfb984015b848ac3f044e1bd9e189d7a2688d360841384bdea1ad4e49a1",
+      "derived_revision": 4,
+      "planning_hash": "sha256:c9550931a6b76b97832b4ddf2e7e8914edd50773952dff889d5a321b3b50d46c",
+      "planning_hash_unchanged": true,
+      "source_case_bytes_unchanged": true,
+      "mri_affine_annotations_source_refs_metadata_unchanged": true,
+      "reopened_identical": true,
+      "working_brain_mask": null,
+      "brain_reviewed": false,
+      "cortical_access_permitted": false,
+      "evidence": [
+        {
+          "evidence_id": "synthstrip_main_192161c23a1d",
+          "variant": "main",
+          "evidence_hash": "sha256:c3f886fc7b6cd3312e8ca2c38fa5abec3769f5d55ae577ab4dcb471157c746ab",
+          "mask_hash": "sha256:aa8079a5c9c9bad78dd4ea09f8c3b79d5a0ffcc28de71b8709725dfe0ea9abb9",
+          "source_image_hash": "sha256:8401698f6c3379f009c9e9a63f70a68fbfe2f5cd3f0c7049a8d5685d9619e587",
+          "source_frame_hash": "sha256:806326446d7300f891a28d78b31d05a5699aeb55cd0849b8f2f3454e77176540",
+          "source_file_sha256": "sha256:f5234d82f87369ce22d05bd27b5788dd73d4ab782c9a89731ac7f6e39568126a",
+          "model_sha256": "sha256:37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33",
+          "run_sha256": "sha256:192161c23a1dedca372050d66f6272f4c4e7d2532e83e6c3a3c0e07c3efefd2b",
+          "current_target_annotation_outside_voxels": 125,
+          "qc_flags": [
+            "CURRENT_TARGET_ANNOTATION_OUTSIDE_ESTIMATED_ENVELOPE",
+            "SOURCE_ANNOTATION_EXTENDS_OUTSIDE_EXTRACTION"
+          ],
+          "provenance": "estimated",
+          "review_status": "review_required",
+          "cortical_access_permitted": false
+        },
+        {
+          "evidence_id": "synthstrip_nocsf_192161c23a1d",
+          "variant": "nocsf",
+          "evidence_hash": "sha256:a38b1802542b9f0ef997629147be8b08a16291fa4f02481a665bcd16e2a3ad8a",
+          "mask_hash": "sha256:c741f90335e39c61bd6054dee0556b71db3745daff0ff20c3fe0c849dad5f1d4",
+          "source_image_hash": "sha256:8401698f6c3379f009c9e9a63f70a68fbfe2f5cd3f0c7049a8d5685d9619e587",
+          "source_frame_hash": "sha256:806326446d7300f891a28d78b31d05a5699aeb55cd0849b8f2f3454e77176540",
+          "source_file_sha256": "sha256:f5234d82f87369ce22d05bd27b5788dd73d4ab782c9a89731ac7f6e39568126a",
+          "model_sha256": "sha256:62bf01137c45b5f0cc04d59dbaed5b9ac138b3f25b766c062a7c1a0d696ecb28",
+          "run_sha256": "sha256:192161c23a1dedca372050d66f6272f4c4e7d2532e83e6c3a3c0e07c3efefd2b",
+          "current_target_annotation_outside_voxels": 413,
+          "qc_flags": [
+            "CURRENT_TARGET_ANNOTATION_OUTSIDE_ESTIMATED_ENVELOPE",
+            "SOURCE_ANNOTATION_EXTENDS_OUTSIDE_EXTRACTION"
+          ],
+          "provenance": "estimated",
+          "review_status": "review_required",
+          "cortical_access_permitted": false
+        }
+      ],
+      "portable_report_sha256": "192161c23a1dedca372050d66f6272f4c4e7d2532e83e6c3a3c0e07c3efefd2b",
+      "mask_arrays_embedded": true,
+      "predicted_distance_arrays_embedded": false
+    }
+  ]
+}

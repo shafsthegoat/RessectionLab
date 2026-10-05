@@ -1,0 +1,14 @@
+{
+  "exit_code": 0,
+  "wrapper_seconds": 101.14700466697104,
+  "started_utc": "2026-10-04T19:11:19.829823+00:00",
+  "ended_utc": "2026-10-04T19:13:00.976545+00:00",
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/independent-native-batch-history-v2/ba437632417b2df7a42481f6fc4314c03fbd0d6b/scripts/compare_independent_native_batch.py",
+    "--output",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/independent-native-batch-history-v2/attempt-01"
+  ],
+  "working_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/independent-native-batch-history-v2/ba437632417b2df7a42481f6fc4314c03fbd0d6b",
+  "one_attempt": true
+}

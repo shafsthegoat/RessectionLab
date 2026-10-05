@@ -1,0 +1,81 @@
+{
+  "case_id": "BTC-ds001226-sub-PAT05-preop",
+  "audit_kind": "independent_stored_source_and_structural_alignment_check",
+  "source_files_verified": 7,
+  "source_image_and_mask_affines": [
+    [
+      [
+        0.9991455674171448,
+        0.03670010715723038,
+        0.019190452992916107,
+        -83.10478973388672
+      ],
+      [
+        -0.03669346868991852,
+        0.9993262887001038,
+        -0.0007048094994388521,
+        -110.23243713378906
+      ],
+      [
+        -0.019203459843993187,
+        4.299106848293377e-08,
+        0.9998155832290649,
+        -141.11172485351562
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    [
+      [
+        -0.999142050743103,
+        0.03670012950897217,
+        0.019190430641174316,
+        75.75935363769531
+      ],
+      [
+        0.03669333457946777,
+        0.9993263483047485,
+        -0.0007047653198242188,
+        -116.06671142578125
+      ],
+      [
+        0.019203364849090576,
+        5.960464477539063e-08,
+        0.9998155832290649,
+        -144.1650848388672
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ]
+  ],
+  "threshold": 0.5,
+  "independent_annotation_voxel_count": 11437,
+  "independent_vs_case_mask_difference_voxels": 0,
+  "maximum_reindexed_corner_difference_mm": 0.0005637016806572913,
+  "source_annotation_centroid_voxel": [
+    46.010754568505725,
+    137.85992830287663,
+    150.8153361895602
+  ],
+  "source_annotation_centroid_ras_mm": [
+    -29.17965949208582,
+    25.74002311382057,
+    8.792238707734526
+  ],
+  "full_head_nonzero_support_rejected": "FULL_HEAD_SUPPORT_NOT_CORTEX: nonzero whole-head MRI cannot define an intracranial access window; use a reviewed brain mask or explicit hypothetical window",
+  "brain_mask": null,
+  "review_status": "review_required",
+  "cortical_access_permitted": false,
+  "diffusion_acquired": false,
+  "clinical_deficit_probability": null,
+  "visual_qc_image": "artifacts/btc-independent/PAT05-independent-overlay.png",
+  "interpretation": "Header/source/derived-target agreement and gate checks only; not reference segmentation accuracy or clinical validation."
+}

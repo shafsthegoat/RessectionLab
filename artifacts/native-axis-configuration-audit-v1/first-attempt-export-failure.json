@@ -1,0 +1,7 @@
+{
+  "status": "diagnostic_export_failed",
+  "error_type": "TypeError",
+  "error": "Object of type _ImmutableArray is not JSON serializable",
+  "scope": "All configuration comparison assertions passed; JSON export failed before a report was written. No engine, axis, transitions or gradients.",
+  "source_sha256": "f2d4a2f51ae460680db3cb3d448e7023e7077e185d09d58c2a69b167ebed3d78"
+}

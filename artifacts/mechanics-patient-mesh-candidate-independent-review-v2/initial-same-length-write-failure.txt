@@ -1,0 +1,38 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_failed_packet_never_has_a_complete_marker_and_keeps_partial_evidence[same_length_corrupt_write] _
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-485/test_failed_packet_never_has_a0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10aabbfe0>
+failure = 'same_length_corrupt_write'
+
+    @pytest.mark.parametrize('failure',['array_short_write','same_length_corrupt_write','marker_rename'])
+    def test_failed_packet_never_has_a_complete_marker_and_keeps_partial_evidence(tmp_path,monkeypatch,failure):
+        X,E,origin=arrays()
+        if failure in ('array_short_write','same_length_corrupt_write'):
+            real=np.lib.format.write_array;calls=[]
+            def short(stream,*args,**kwargs):
+                calls.append(1)
+                if failure=='array_short_write' and len(calls)==2:stream.write(b'partial')
+                else:
+                    real(stream,*args,**kwargs)
+                    if failure=='same_length_corrupt_write' and len(calls)==1:
+                        end=stream.tell();stream.seek(end-8);stream.write(b'\x00'*8)
+            monkeypatch.setattr(np.lib.format,'write_array',short)
+        else:
+            real=Path.rename
+            def reject_marker(path,destination):
+                if path.name=='manifest.pending':raise OSError('injected marker commit failure')
+                return real(path,destination)
+            monkeypatch.setattr(Path,'rename',reject_marker)
+        result=v.preserve_diagnostic(tmp_path/'packet',X,E,origin,{},CONFIG['diagnostic_limits'])
+>       assert result['status']=='write_failed' and result['complete'] is False
+E       AssertionError: assert ('complete' == 'write_failed'
+E         
+E         - write_failed
+E         + complete)
+
+tests/test_mechanics_patient_mesh_candidate_review.py:74: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_mechanics_patient_mesh_candidate_review.py::test_failed_packet_never_has_a_complete_marker_and_keeps_partial_evidence[same_length_corrupt_write]
+1 failed, 9 deselected in 0.33s

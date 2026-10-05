@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "auditor": "clinical_evidence sub-agent; independent standard-library filesystem and Git inspection",
+  "created_utc": "2026-10-04T12:10:27.931639+00:00",
+  "scope": "Actual final app notice files, embedded source manifest, exact Git source inputs, nested notice inventories, and engine executable identity. No app execution, numerical processing, network use, rebuild, test suite, or signature revalidation. Full engine payload was not rehashed in this audit to avoid timing-run interference.",
+  "app_path": "desktop/release/RessectionLab-darwin-arm64/RessectionLab.app",
+  "source_capture": "build/electron-notices-100865f/desktop/release/inputs-HkhJon",
+  "source_revision": "100865f037b37708f4f0d0d5a48950de22ba4e5f",
+  "renderer_source_digest": "34285015ec2cbd8304273880da352fe9c72ce6f0e412f55dbf200f336bee5cab",
+  "renderer_archive_sha256": "b99ba3daab4f3a370e0de423cd208058cde3b292ebfb6cd176c83aa3f11d5f6f",
+  "embedded_manifest_sha256": "9427c7f0526c40f29e011ff18d3674b65b98559571346695d1a659c61fc6c140",
+  "engine_executable_sha256": "85a92eff69cb1ea97afc400bc80433c53d146174dd32a9cf36061b8420f72ddd",
+  "packaging_receipt_sha256": "b128d05344dbe5a0db29e91cc1492abd4c81a4444aefec06cdd6941f090e3c3b",
+  "source_files_verified": 71,
+  "actual_notice_files_verified": 292,
+  "python_notice_metadata_files_verified": 217,
+  "python_distribution_owners": 28,
+  "renderer_notice_metadata_files_verified": 69,
+  "renderer_package_closure": 35,
+  "electron_notice_files_verified": 2,
+  "notice_tree_sha256": "060ecd7a96f0f81abf38d2dadd53a1204cf79a7a6d02086bb35b51b8fb2433f9",
+  "unresolved": [
+    {
+      "component": "react-remove-scroll-bar@2.3.8",
+      "reason": "Installed runtime package declares a license but contains no upstream root license/notice text. Its package.json is retained; no substitute license is invented."
+    },
+    {
+      "component": "CPython 3.12.14 static vendor libraries",
+      "reason": "No verified static-vendor notice/version manifest has been configured for this exact runtime. Its upstream build provenance must supply that closure; copying CPython LICENSE.txt alone does not resolve the gap."
+    }
+  ],
+  "checks": {
+    "asar_hash_matches_packaging_receipt": true,
+    "source_revision_matches_receipt": true,
+    "source_digest_matches_receipt": true,
+    "embedded_manifest_matches_capture": true,
+    "actual_notice_tree_matches_embedded_manifest": true,
+    "notice_tree_has_no_symlinks": true,
+    "actual_notice_tree_matches_immutable_capture": true,
+    "all_captured_desktop_files_match_exact_git_commit": true,
+    "all_nested_notice_inventory_hashes_match_actual_files": true,
+    "engine_executable_matches_all_receipts": true,
+    "source_completeness_remains_incomplete": true,
+    "two_named_unresolved_items_preserved": true,
+    "incidental_license_package_code_absent": true
+  },
+  "passed": true,
+  "source_mismatches": [],
+  "notice_mismatches": [],
+  "notice_symlinks": [],
+  "legal_compliance_assessed": false
+}

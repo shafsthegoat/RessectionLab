@@ -1,0 +1,130 @@
+{
+  "algorithm": "masked_reinforce_state_value_v2",
+  "clinical_deficit_probability": null,
+  "code_sha256": "474cf054effc1d5bbfba7d2071fcf460bd2edc1144b419ec7345a4296b403086",
+  "config": {
+    "checkpoint_interval": 2,
+    "entropy_weight": 0.01,
+    "episodes_per_update": 2,
+    "gamma": 1.0,
+    "hidden_features": 16,
+    "learning_rate": 0.003,
+    "max_environment_steps": 256,
+    "max_episode_steps": 4,
+    "max_gradient_norm": 5.0,
+    "max_gradient_steps": 32,
+    "max_wall_seconds": 30.0,
+    "seed": 11,
+    "value_weight": 0.5
+  },
+  "contract_hash": "sha256:d5e399ec78fe9c20f42218719d0068d15338db0c99fe35ef41b7e7e7f2fa0bb4",
+  "decision_model_hash": "sha256:dd81bd59566ead4e42916c8ede3d48d5615837e523d23d359b268d9a90f63f0b",
+  "dimensions": [
+    15,
+    6,
+    16
+  ],
+  "final_evaluation_used_for_optimization": false,
+  "hardware": {
+    "device": "cpu",
+    "machine": "arm64",
+    "platform": "macOS-26.6-arm64-arm-64bit",
+    "processor": "arm",
+    "torch": "2.14.1",
+    "torch_threads": 4
+  },
+  "implementation_sha256": "474cf054effc1d5bbfba7d2071fcf460bd2edc1144b419ec7345a4296b403086",
+  "initial_checkpoint_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322",
+  "numerical_source_sha256": {
+    "__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "anatomy.py": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37",
+    "brain_extraction.py": "bc8eba3f28f63c1c65d36cf2cc446a6629dc7e431ab9826588f113b51be5a608",
+    "cohort.py": "d69538f80af8b318068af70dbc963b7a9ca6c3a4f62d6e8e542d6e43548fa874",
+    "core.py": "ca8760f1f5b4ac7dcf765ec51e47e858758b33940643dfa0c12e40b1fdc6d4fd",
+    "desktop_bridge.py": "a1ab5754d025edc786d55cc8dd7c78d186cea2c4940fe430dc7135c02847d1b5",
+    "diffusion.py": "e7f57bf7467fb3cb5d6b9b3f1c80e4665710713124d0720aa84d31ccc03b8e21",
+    "evaluation.py": "baaa2f3d6b4e41c4621dc22872da9300d649bc91dfeb923e2ad35f66aadad3b7",
+    "geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "imaging.py": "c28b2be5f4acf5cd2023c889c3d02fb30a6902298b46602844c5317e41e2da17",
+    "learning.py": "474cf054effc1d5bbfba7d2071fcf460bd2edc1144b419ec7345a4296b403086",
+    "learning_ppo.py": "a3814bc5da4837b66ae20496c38e17edd0edf73ef7863a920924cd7ec2a42d88",
+    "native_refinement.py": "3b23985f96ced842a24733b2e2952c17e1cc7388d21985ae023dc89b142cfdb4",
+    "native_resection.py": "e40b0855526e1e7cff6575f54273e899480fed0b6c117c18b049ef2ff0d8696a",
+    "native_simulation.py": "e442f200a2e84f36c8550cc9a86dea9c23acf7114a685366f9894204e6a47e2d",
+    "planning.py": "aa989269868a3a8655f93c9cc0a68e73f383ecf9b282ddedb071c6f2b3b68bff",
+    "preprocessing.py": "dbd2c4ba9551e2aa0d454b638e256ad8bc6cdf45dcdc8ec08e091e43c3eb14e5",
+    "prior_registration.py": "9828e76ed3e29e232c39dd16ece7d5fefa4cd366d1cab7899121e929ef34a703",
+    "simulation.py": "727a63a47b9b65b881920aa0409b85708b4aa540114c7cb67a01996c91d3ef3c",
+    "worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
+  },
+  "partitions": {
+    "optimization": {
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "generator": {
+        "family": "rigid_gaussian",
+        "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+        "rotation_center_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_scale_deg": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "translation_scale_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "version": "rigid-registration-v1"
+      },
+      "partition_hash": "sha256:aa8de3098a046f59a463eca08667916b6e4619417da135a473405457b94b0a1c",
+      "role": "optimization",
+      "seeds": [
+        17944101631498118750,
+        16050408593453808557,
+        16285456173753334256
+      ]
+    },
+    "selection": {
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "generator": {
+        "family": "rigid_gaussian",
+        "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+        "rotation_center_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_scale_deg": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "translation_scale_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "version": "rigid-registration-v1"
+      },
+      "partition_hash": "sha256:62f80e45baec7c506272e1b04037c8551267969fdbd2fdb650a61bb720df8dc2",
+      "role": "selection",
+      "seeds": [
+        8109736527858856845,
+        8342823306791655420
+      ]
+    }
+  },
+  "runtime": {
+    "device": "cpu",
+    "numpy": "2.5.3",
+    "python": "3.12.14",
+    "torch": "2.14.1"
+  },
+  "schema_version": 1,
+  "shared_checkpoint_hash": null,
+  "simulator_implementation_sha256": "e442f200a2e84f36c8550cc9a86dea9c23acf7114a685366f9894204e6a47e2d"
+}

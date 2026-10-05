@@ -1,0 +1,226 @@
+{
+  "schema_version": 1,
+  "audit_kind": "independent_saved_artifact_engineering_qc",
+  "subject": "sub-PAT05",
+  "source_geometry": {
+    "shape": [
+      160,
+      256,
+      256
+    ],
+    "qform_code": 1,
+    "sform_code": 1,
+    "orientation": [
+      "R",
+      "A",
+      "S"
+    ],
+    "physical_units": "mm",
+    "maximum_native_corner_difference_mm": 0.0
+  },
+  "frozen_declaration_check": {
+    "declared_subject": "sub-PAT05",
+    "cohort_role": "predeclared development; not final evaluation",
+    "recorded_declaration_precedes_recorded_completion": true,
+    "models_and_implementation_match": true,
+    "annotation_threshold_matches": true,
+    "reported_configuration_fields_matched": [
+      "device",
+      "cpu_threads",
+      "border_mm",
+      "timeout_seconds",
+      "maximum_rss_bytes"
+    ],
+    "recorded_variant_order": [
+      "nocsf",
+      "main"
+    ],
+    "limitations": "Saved declarations checked; external timestamp attestation and absence of other runs are not established.",
+    "manifest_sha256": "1520350579a40c724379f0fdb11cdef42dc8dad8d8a8a40316661f4c549e4b3b",
+    "predeclared_source_snapshot_sha256": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917",
+    "selection_manifest_sha256": "edd2d5ace4db04615ac948f339beb058eb5f637a7a588325fb714e360fd887f3"
+  },
+  "source_manifest_sha256": "09df59d9ac8b1c8d8d555f0e165148c79c0a2d1a404180451d0b9e90b814badf",
+  "frozen_implementation_sha256": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917",
+  "auditor_implementation_sha256": "927a7d4d90a5db202e5ec89a59cc3c9b2af6ef4c13a9440c10c5be461a947217",
+  "source_report_sha256": "7be541d3d8f3c2784006aae75cf8e3d420bff37790554eac9eb6990b84abd428",
+  "source_t1_sha256": "016779173394c3a3e07fc53f927d37c3c1cb5df04bcbdc398fcfbdc23b40085e",
+  "source_annotation_sha256": "497505a1354f075955290f4395217112715ab73242fa10fd2a0f519ca51b8bdc",
+  "source_annotation_threshold": 0.5,
+  "variants": {
+    "main": {
+      "geometry": {
+        "shape": [
+          160,
+          256,
+          256
+        ],
+        "qform_code": 1,
+        "sform_code": 1,
+        "orientation": [
+          "R",
+          "A",
+          "S"
+        ],
+        "physical_units": "mm",
+        "maximum_native_corner_difference_mm": 0.0
+      },
+      "distance_geometry": {
+        "shape": [
+          160,
+          256,
+          256
+        ],
+        "qform_code": 1,
+        "sform_code": 1,
+        "orientation": [
+          "R",
+          "A",
+          "S"
+        ],
+        "physical_units": "mm",
+        "maximum_native_corner_difference_mm": 0.0
+      },
+      "independent_measurements": {
+        "mask_voxels": 1402135,
+        "volume_ml": 1402.1398711948427,
+        "connected_components": 1,
+        "input_face_contact_voxels": 0,
+        "source_annotation_voxels": 11437,
+        "source_annotation_outside_voxels": 0,
+        "source_annotation_inclusion_fraction": 1.0,
+        "outside_annotation_voxel_bbox": null,
+        "outside_annotation_world_ras_mm_bbox": null,
+        "reconstructed_mask_mismatch_voxels": 0,
+        "predicted_distance_range_mm": [
+          -5.17395544052124,
+          100.0
+        ],
+        "flags": [],
+        "meaning": "engineering geometry and source-annotation inclusion; not anatomical accuracy"
+      },
+      "repeats": [],
+      "model_hashes": {
+        "mri_synthstrip": "291c253ab2f7c0cbcb84afa769ae10909549537e727db5b92d268754b7cc7871",
+        "LICENSE_FreeSurfer.txt": "632d404ea17b9101d9ac87cf8f09e651d18eb20d2cc0ba8dbee77e85b8516307",
+        "synthstrip.1.pt": "37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33"
+      },
+      "executed_runner_sha256": "d39cbcba9c5303ba74eaf0bb53d9105762f8a01a7de7bae2740958242f8f6cf8",
+      "output_hashes": {
+        "main_mask.nii.gz": "a8a950310f039aa2f7db7e233e123a2fa35340f9944d8596c0ca846a9d9b1836",
+        "main_distance_mm.nii.gz": "11ac6e7d50c8938dc0112d28d95756530ed24571b9927bd508ceaffe29da14ee"
+      },
+      "source_model_and_runner_hashes_verified": true,
+      "review_status": "review_required",
+      "brain_reviewed": false,
+      "cortex_localized": false,
+      "cortical_access_permitted": false
+    },
+    "nocsf": {
+      "geometry": {
+        "shape": [
+          160,
+          256,
+          256
+        ],
+        "qform_code": 1,
+        "sform_code": 1,
+        "orientation": [
+          "R",
+          "A",
+          "S"
+        ],
+        "physical_units": "mm",
+        "maximum_native_corner_difference_mm": 0.0
+      },
+      "distance_geometry": {
+        "shape": [
+          160,
+          256,
+          256
+        ],
+        "qform_code": 1,
+        "sform_code": 1,
+        "orientation": [
+          "R",
+          "A",
+          "S"
+        ],
+        "physical_units": "mm",
+        "maximum_native_corner_difference_mm": 0.0
+      },
+      "independent_measurements": {
+        "mask_voxels": 1240894,
+        "volume_ml": 1240.898311023156,
+        "connected_components": 1,
+        "input_face_contact_voxels": 0,
+        "source_annotation_voxels": 11437,
+        "source_annotation_outside_voxels": 538,
+        "source_annotation_inclusion_fraction": 0.9529596922269826,
+        "outside_annotation_voxel_bbox": [
+          [
+            34,
+            133,
+            136
+          ],
+          [
+            45,
+            149,
+            150
+          ]
+        ],
+        "outside_annotation_world_ras_mm_bbox": [
+          [
+            -41.24990986287594,
+            21.218808353878558,
+            -6.000955122610776
+          ],
+          [
+            -30.3219223767519,
+            37.1332324167015,
+            8.188497727018216
+          ]
+        ],
+        "reconstructed_mask_mismatch_voxels": 0,
+        "predicted_distance_range_mm": [
+          -4.115878105163574,
+          100.0
+        ],
+        "flags": [
+          "SOURCE_ANNOTATION_OUTSIDE_ESTIMATED_ENVELOPE"
+        ],
+        "meaning": "engineering geometry and source-annotation inclusion; not anatomical accuracy"
+      },
+      "repeats": [],
+      "model_hashes": {
+        "mri_synthstrip": "291c253ab2f7c0cbcb84afa769ae10909549537e727db5b92d268754b7cc7871",
+        "LICENSE_FreeSurfer.txt": "632d404ea17b9101d9ac87cf8f09e651d18eb20d2cc0ba8dbee77e85b8516307",
+        "synthstrip.nocsf.1.pt": "62bf01137c45b5f0cc04d59dbaed5b9ac138b3f25b766c062a7c1a0d696ecb28"
+      },
+      "executed_runner_sha256": "d39cbcba9c5303ba74eaf0bb53d9105762f8a01a7de7bae2740958242f8f6cf8",
+      "output_hashes": {
+        "nocsf_mask.nii.gz": "cae2a9f0a12936eff5fb476fb8eb7e12b90caf42ce2093df1b15be4c0328a7d5",
+        "nocsf_distance_mm.nii.gz": "4985be975881a037fd2a049edfaab9983ca1a9598177eba998fc4dca61e62077"
+      },
+      "source_model_and_runner_hashes_verified": true,
+      "review_status": "review_required",
+      "brain_reviewed": false,
+      "cortex_localized": false,
+      "cortical_access_permitted": false
+    }
+  },
+  "visual_qc_image": "artifacts/brain-extraction/PAT05-mps-v1/extraction_qc.png",
+  "visual_qc_sha256": "3eda847913c76c2c06c9edbcd210c2d79598d49170f2ad0cc9b7f4804065dc02",
+  "brain_reviewed": false,
+  "cortex_localized": false,
+  "cortical_access_permitted": false,
+  "clinical_deficit_probability": null,
+  "review_status": "review_required",
+  "limitations": [
+    "No expert anatomical review or independent brain/cortex labels.",
+    "Stored repeats are reproducibility checks, not population accuracy or latency estimates.",
+    "Predicted SDT is a model output, not an independently measured surgical clearance field.",
+    "Whole-brain envelopes include inferior structures and cannot define a cerebral access window.",
+    "Source annotation is a threshold scenario; complete inclusion is not segmentation accuracy."
+  ]
+}

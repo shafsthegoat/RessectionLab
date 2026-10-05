@@ -1,0 +1,75 @@
+{
+  "scope": "Saved-log stage diagnosis only; no native calls, geometry recomputation or candidate proposal.",
+  "log_bindings": {
+    "patient_curvature_v3": {
+      "path": "outputs/mechanics/resect-case4-patient-mesh-curvature-v3/supervision/combined.log",
+      "sha256": "d6c32951b0642036b8fbca6f21b98cd5def235823204f272521ffb88740c7898"
+    },
+    "patient_graded_v2": {
+      "path": "outputs/mechanics/resect-case4-patient-mesh-graded-v2/supervision/combined.log",
+      "sha256": "c88bf3fdb28cd7850da76e37babc02f88a67f1a237e900fae61abf1dc98f8565"
+    },
+    "analytical_pair": {
+      "path": "outputs/mechanics/gmsh-discrete-curvature-capability-v1/supervision/combined.log",
+      "sha256": "2a0febed284b8af5e8899df89e6f5f0caa01c4ddda51effcb588b6fc3e1f25b2"
+    }
+  },
+  "recorded_stage_times_seconds": {
+    "patient_graded_v2": {
+      "classification_wall": 3.94836,
+      "parametrization_wall": 1.51165,
+      "one_dimensional_wall": 0.0165353,
+      "one_dimensional_cpu": 0.016239,
+      "two_dimensional_wall": 0.551975,
+      "three_dimensional_wall": 0.0346655
+    },
+    "patient_curvature_v3": {
+      "classification_wall": 3.64788,
+      "parametrization_wall": 1.48194,
+      "one_dimensional_wall": 170.079,
+      "one_dimensional_cpu": 169.672,
+      "two_dimensional_wall": null,
+      "three_dimensional_wall": null
+    },
+    "analytical_curvature_off": {
+      "one_dimensional_wall": 0.00116013,
+      "one_dimensional_cpu": 0.001037,
+      "two_dimensional_wall": 0.00441046,
+      "three_dimensional_wall": 0.00174921
+    },
+    "analytical_curvature_on": {
+      "one_dimensional_wall": 0.732809,
+      "one_dimensional_cpu": 0.726464,
+      "two_dimensional_wall": 0.0433269,
+      "three_dimensional_wall": 0.0178603
+    }
+  },
+  "exact_bottleneck_stage": "Gmsh initial 1D meshing of discrete model curves; not second-order elevation, volume generation, independent quality or fidelity checking.",
+  "shared_patient_parametrization_messages": [
+    "Level 13 partition with 23 triangles split in 2 parts because boundary not manifold",
+    "Level 13 partition with 17 triangles split in 2 parts because parametrized triangles are too small (9.75782e-19)"
+  ],
+  "message_interpretation": "Both patient logs contain identical informational partition messages and finish classification/parametrization. They do not identify a new error or establish the cause of the slower 1D stage.",
+  "patient_geometry_log_counts": {
+    "classified_surfaces": 18,
+    "classified_curves": 46,
+    "initial_1D_curve_progress_entries": 48,
+    "initial_1D_curve_tags": [
+      48,
+      95
+    ]
+  },
+  "analytical_geometry_log_counts": {
+    "classified_surfaces_per_case": 2,
+    "classified_curves_per_case": 1,
+    "initial_1D_curve_progress_entries_per_case": 1
+  },
+  "per_curve_elapsed_times_recorded": false,
+  "location_limit": "Curve tags/progress percentages have no individual timestamps or durations. No slowest-curve, seam or anatomical-location claim is supported.",
+  "evidence": "The analytical joint-profile pair also increases logged 1D-stage time; the actual patient failure localizes the dominant recorded cost to that same stage. Nearly equal wall/CPU time identifies recorded computation, not a measured I/O stall.",
+  "inference_limit": "The joint curvature24/min3mm change is associated with additional 1D work. Saved logs cannot separate curvature evaluation, spatial lookup, adaptive sizing/integration or a larger 1D mesh; no individual mechanism or isolated-factor causal effect is established.",
+  "comparability_limit": "Absolute stage values are descriptive across separate runs and geometries, not a controlled patient speed ratio or scale law.",
+  "new_candidate_proposed": false,
+  "native_calls": 0,
+  "image_or_B_V_access": false
+}

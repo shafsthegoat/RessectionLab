@@ -1,0 +1,25 @@
+.....F.....                                                              [100%]
+=================================== FAILURES ===================================
+________ test_feasible_directions_leave_original_constraints_unchanged _________
+
+    def test_feasible_directions_leave_original_constraints_unchanged():
+        H = np.array([[.5, .5, 0, 0], [0, .25, .25, .5]])
+        pivots, free = [0, 3], [1, 2]
+        T = np.zeros((4, 2))
+        T[free] = np.eye(2)
+        T[pivots] = -np.linalg.solve(H[:, pivots], H[:, free])
+        np.testing.assert_array_equal(H @ T, np.zeros((2, 2)))
+        # Pure virtual-work coordinate identity; no constitutive/force engine.
+        force = np.array([.01, -.02, .03, -.04])
+        direction = np.array([.2, -.3])
+>       assert force @ (T @ direction) == pytest.approx((T.T @ force) @ direction, abs=2e-18)
+E       assert np.float64(-0.017) == -0.0169999999...9998 ± 2.0e-18
+E         
+E         comparison failed
+E         Obtained: -0.017
+E         Expected: -0.016999999999999998 ± 2.0e-18
+
+tests/test_mechanics_patient_constraints.py:61: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_mechanics_patient_constraints.py::test_feasible_directions_leave_original_constraints_unchanged
+1 failed, 10 passed in 0.11s

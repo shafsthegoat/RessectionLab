@@ -1,0 +1,158 @@
+--- a/NumCore/AccelerateSparseSolver.cpp
++++ b/NumCore/AccelerateSparseSolver.cpp
+@@ -46,9 +46,11 @@
+ #ifdef __APPLE__
+     SparseMatrixStructure SMS;
+     SparseMatrix_Double A;
+-    SparseOpaqueSymbolicFactorization ASS;
++    SparseOpaqueSymbolicFactorization ASS{};
++    bool m_ownsSymbolic = false;
+     SparseSymbolicFactorOptions SSFO;
+-    SparseOpaqueFactorization_Double ASF;
++    SparseOpaqueFactorization_Double ASF{};
++    bool m_ownsNumeric = false;
+     long* colS;
+     std::vector<long> pointers;
+     SparseIterativeStatus_t SStatus;
+@@ -87,6 +89,15 @@
+         m_atol = 1e-12;
+         m_print_level = 0;
+     }
++
++    void ClearNumericFactor()
++    {
++        // A failed SDK result may still own numeric storage or a symbolic reference.
++        if (m_ownsNumeric) SparseCleanup(ASF);
++        ASF = {};
++        m_ownsNumeric = false;
++        m_isFactored = false;
++    }
+ };
+ 
+ //////////////////////////////////////////////////////////////
+@@ -115,6 +126,8 @@
+ AccelerateSparseSolver::~AccelerateSparseSolver()
+ {
+     Destroy();
++    delete imp;
++    imp = nullptr;
+ }
+ 
+ //-----------------------------------------------------------------------------
+@@ -166,6 +179,7 @@
+ //-----------------------------------------------------------------------------
+ SparseMatrix* AccelerateSparseSolver::CreateSparseMatrix(Matrix_Type ntype)
+ {
++    Destroy();
+     // allocate the correct matrix format depending on matrix symmetry type
+     switch (ntype)
+     {
+@@ -183,7 +197,7 @@
+ //-----------------------------------------------------------------------------
+ bool AccelerateSparseSolver::SetSparseMatrix(SparseMatrix* pA)
+ {
+-    if (imp->m_pA && imp->m_isFactored) Destroy();
++    Destroy();
+     imp->m_pA = dynamic_cast<CompactMatrix*>(pA);
+     imp->m_mtype = -2;
+     if (dynamic_cast<CCSSparseMatrix*>(pA)) imp->m_mtype = 11;
+@@ -193,17 +207,22 @@
+ //-----------------------------------------------------------------------------
+ bool AccelerateSparseSolver::PreProcess()
+ {
+-    assert(imp->m_isFactored == false);
++    Destroy();
+     
+     imp->m_n = imp->m_pA->Rows();
+     imp->m_nnz = imp->m_pA->NonZeroes();
+     imp->m_nrhs = 1;
+     
+-    imp->pointers.resize(imp->m_nnz);
+-    for (int i=0; i<imp->m_nnz; ++i) imp->pointers[i] = imp->m_pA->Pointers()[i];
++    if (imp->m_n == 0) return LinearSolver::PreProcess();
++
++    const int pointerCount = imp->m_pA->Columns() + 1;
++    imp->pointers.resize(pointerCount);
++    for (int i=0; i<pointerCount; ++i) imp->pointers[i] = imp->m_pA->Pointers()[i];
+     imp->colS = &imp->pointers[0];
+     
+     if (__builtin_available(macOS 10.13, *)) {
++        imp->SMS = {};
++        imp->SMS.attributes.triangle = SparseUpperTriangle;
+         imp->SMS.columnCount = imp->m_pA->Columns();
+         imp->SMS.rowCount = imp->m_pA->Rows();
+         imp->SMS.rowIndices = imp->m_pA->Indices();
+@@ -287,6 +306,11 @@
+                         break;
+                 }
+             }
++            imp->m_ownsSymbolic = (imp->ASS.factorization != nullptr);
++            if (imp->ASS.status != SparseStatusOK || !imp->m_ownsSymbolic) {
++                Destroy();
++                return false;
++            }
+         }
+         else {
+             // for iterative solving we don't need to factorize
+@@ -306,8 +330,11 @@
+ //-----------------------------------------------------------------------------
+ bool AccelerateSparseSolver::Factor()
+ {
++    // Discard the previous numeric factor before allocating a fresh one.
++    imp->ClearNumericFactor();
+     // make sure we have work to do
+-    if (imp->m_pA->Rows() == 0) return true;
++    if (imp->m_pA->Rows() == 0) { Destroy(); return true; }
++    if (!imp->m_iparm3 && !imp->m_ownsSymbolic) return false;
+     
+     // ------------------------------------------------------------------------------
+     // This step does the factorization
+@@ -325,6 +352,9 @@
+         }
+         else {
+             imp->ASF = SparseFactor(imp->ASS,imp->A);
++            imp->m_ownsNumeric = (imp->ASF.symbolicFactorization.status >= 0 &&
++                (imp->ASF.numericFactorization != nullptr ||
++                 imp->ASF.symbolicFactorization.factorization != nullptr));
+             if (imp->ASF.status != SparseStatusOK) {
+                 fprintf(stderr, "\n\tERROR during factorization:");
+                 switch (imp->ASF.status) {
+@@ -343,6 +373,7 @@
+                     default:
+                         fprintf(stderr, "\n\tUnknown error!");
+                 }
++                imp->ClearNumericFactor();
+                 return false;
+             }
+         }
+@@ -371,7 +402,7 @@
+ {
+     // make sure we have work to do
+     if (imp->m_pA->Rows() == 0) return true;
+-    if ((!imp->m_iparm3) && (imp->m_isFactored == false)) return true;
++    if ((!imp->m_iparm3) && (imp->m_isFactored == false)) return false;
+     
+     DenseVector_Double X, B;
+     X.count = B.count = imp->m_n;
+@@ -507,12 +538,15 @@
+ //-----------------------------------------------------------------------------
+ void AccelerateSparseSolver::Destroy()
+ {
+-    if (imp->m_pA && imp->m_isFactored)
+-    {
+-        SparseCleanup(imp->ASS);
+-        SparseCleanup(imp->ASF);
+-    }
+-    imp->m_isFactored = false;
++    if (imp == nullptr) return;
++    imp->ClearNumericFactor();
++    if (imp->m_ownsSymbolic) SparseCleanup(imp->ASS);
++    imp->ASS = {};
++    imp->m_ownsSymbolic = false;
++    imp->A = {};
++    imp->SMS = {};
++    imp->colS = nullptr;
++    imp->pointers.clear();
+ }
+ 
+ #else

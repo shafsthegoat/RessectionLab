@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-04T17:54:01.699384+00:00",
+  "git_commit": "575eccd154f3d87c844951108891870cd900ae11",
+  "status": "passed_with_declared_unavailable_fixture",
+  "runs": {
+    "main": {
+      "tests": 2140,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 6,
+      "passed": 2134,
+      "junit_seconds": 286.684,
+      "pytest_summary": "2134 passed, 6 skipped, 14 warnings in 286.80s (0:04:46)",
+      "peak_rss_bytes_macos": 914259968,
+      "project_import_origins_recorded": 223,
+      "slowest_tests": [
+        {
+          "identity": "tests.test_native_feature_units_runner::test_tiny_two_profile_interleaved_study_retains_all23_candidates",
+          "seconds": 26.715,
+          "status": "passed"
+        },
+        {
+          "identity": "tests.test_procedural_transfer_runner::test_all_arm_orchestration_uses_explicit_nonpatient_test_scope",
+          "seconds": 19.456,
+          "status": "passed"
+        },
+        {
+          "identity": "tests.test_policy_inputs::test_profile_bound_pretrain_frozen_and_private_adaptation[FEATURE_UNITS]",
+          "seconds": 11.671,
+          "status": "passed"
+        },
+        {
+          "identity": "tests.test_native_feature_units_runner::test_failed_first_learning_arm_retains_all12_unfinished_and_raw_attempt",
+          "seconds": 10.778,
+          "status": "passed"
+        },
+        {
+          "identity": "tests.test_policy_inputs::test_feature_units_preserve_native_model_and_resume_actual_updates",
+          "seconds": 9.286,
+          "status": "passed"
+        },
+        {
+          "identity": "tests.test_policy_inputs::test_profile_bound_pretrain_frozen_and_private_adaptation[RAW]",
+          "seconds": 6.014,
+          "status": "passed"
+        },
+        {
+          "identity": "tests.test_desktop_bridge::test_actual_native_training_replay_export_and_restart_recheck",
+          "seconds": 5.759,
+          "status": "passed"
+        },
+        {
+          "identity": "tests.test_desktop_bridge::test_training_cancellation_keeps_checkpoint_and_original_resume_budget",
+          "seconds": 5.518,
+          "status": "passed"
+        },
+        {
+          "identity": "tests.test_native_axis_input_profiles_review::test_one_tiny_update_records_actual_transform_and_unchanged_raw_model",
+          "seconds": 4.77,
+          "status": "passed"
+        },
+        {
+          "identity": "tests.test_native_axis_feature_units_review::test_initial_contract_rejects_stale_or_coherently_resealed_semantics[stale_algorithm_hash]",
+          "seconds": 4.68,
+          "status": "passed"
+        }
+      ],
+      "warnings": 14
+    },
+    "dicom": {
+      "tests": 21,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 21,
+      "junit_seconds": 0.395,
+      "pytest_summary": "21 passed in 0.40s",
+      "peak_rss_bytes_macos": 70844416,
+      "project_import_origins_recorded": 1,
+      "slowest_tests": [
+        {
+          "identity": "tests.test_remind_development_acquisition::test_dicom_row_column_lps_to_ras_mapping_with_permuted_planes",
+          "seconds": 0.261,
+          "status": "passed"
+        },
+        {
+          "identity": "tests.test_remind_development_acquisition::test_invalid_cached_bytes_are_not_accepted_or_replaced",
+          "seconds": 0.003,
+          "status": "passed"
+        },
+        {
+          "identity": "tests.test_remind_development_acquisition::test_realistic_decimal_rounding_is_fit_without_relaxing_tolerance",
+          "seconds": 0.003,
+          "status": "passed"
+        },
+        {
+          "identity": "tests.test_remind_development_acquisition::test_nonuniform_or_duplicate_planes_are_rejected[positions0]",
+          "seconds": 0.003,
+          "status": "passed"
+        },
+        {
+          "identity": "tests.test_remind_development_acquisition::test_official_manifest_is_bounded_and_development_only",
+          "seconds": 0.002,
+          "status": "passed"
+        },
+        {
+          "identity": "tests.test_remind_development_acquisition::test_modified_identity_is_rejected[duplicate_object]",
+          "seconds": 0.002,
+          "status": "passed"
+        },
+        {
+          "identity": "tests.test_remind_development_acquisition::test_nonuniform_or_duplicate_planes_are_rejected[positions1]",
+          "seconds": 0.002,
+          "status": "passed"
+        },
+        {
+          "identity": "tests.test_remind_development_acquisition::test_nonorthogonal_orientation_is_rejected",
+          "seconds": 0.002,
+          "status": "passed"
+        },
+        {
+          "identity": "tests.test_remind_development_acquisition::test_modified_identity_is_rejected[other_patient]",
+          "seconds": 0.001,
+          "status": "passed"
+        },
+        {
+          "identity": "tests.test_remind_development_acquisition::test_modified_identity_is_rejected[intraoperative]",
+          "seconds": 0.001,
+          "status": "passed"
+        }
+      ],
+      "warnings": 0
+    }
+  },
+  "unique_cases": {
+    "passed": 2139,
+    "failed": 0,
+    "skipped": 1
+  },
+  "tracked_source_files_unchanged": 3555,
+  "added_snapshot_files": 0,
+  "working_checkout_imported": false,
+  "installed_packages_changed": false,
+  "interpretation": "Code regression, including tiny analytic fixtures; not new model training evidence, clinical validation, or a changed benchmark result.",
+  "remaining_skip": [
+    "tests.test_procedural_transfer_runner::test_available_public_bundle_matches_declared_inventory_without_stepping"
+  ],
+  "warning_groups": {
+    "NumPy2.5_test_only_deliberate_shape_or_dtype_tampering_deprecations": 10,
+    "DIPY_legacy_descoteaux07_pending_deprecation": 4
+  },
+  "file_sha256": {
+    "dicom-progress.json": "844d84bbe849f1ee099f079082abd30600799e2cafde8247e7f0b99da50f2a62",
+    "dicom-runtime.json": "f61640f35320041eb243e16e218c0f13e6fa05d07871ca7d67b5a7f250ed5629",
+    "dicom.log": "d817df440bc240de6283d10b4e7d3f0901f6de71afa31c0c4db33ab80a20bd73",
+    "dicom.xml": "62e8981aceb009022b31ac343a3467adaed7bba4f8a437783013344797747c9f",
+    "execute_regression.py": "258e96bf73cf04157034af256658ac536eaacd707aa75c21c4d7536cd95309b9",
+    "execution-record.json": "1997b1729f8236a1fbfe6f9ed39628d4c6ff595c162bb6fd36b6af7b1d0741c4",
+    "main-progress.json": "d83f5f2a3f8f3c8484b597ca964ad6fd371f8c0e1821558121fbe608ccc8cece",
+    "main-runtime.json": "76c7a4992273c9ae3dd9ebbf78c2ad691223651a118a63be93d4fe80e3854444",
+    "main.log": "77aaa96b5163ba14b8eff3f14a8c0ed94e032b8ddc297f3fcf1bc7466d324a7b",
+    "main.xml": "aae8b7a582fb2eff0d8bbde667b82108f8ae6d10f4700b5b8b0346faf08835ae",
+    "root-release.json": "7a6366a425cbcc554732d1ce9b7800f3a5974c72da5410ffa8724c056c66c409"
+  }
+}

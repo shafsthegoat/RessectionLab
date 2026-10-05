@@ -1,0 +1,19 @@
+{
+  "declaration": "manifests/experiments/procedural-native-feature-units-v1.json",
+  "declaration_content_hash": "sha256:b19aac85f9241e37b98ae53d539ad923f3258bf42a106d67e520f37abcf6a237",
+  "checks": [
+    "canonical declaration and profile hashes",
+    "reference design hash",
+    "actual native feature names/order",
+    "exact positive unit divisors and state/return identity",
+    "procedural source recipe support648mm3",
+    "unchanged budgets",
+    "declared12-arm interleaved order",
+    "nine protected geometry/world/provenance source hashes unchanged",
+    "23candidate identities",
+    "six explicit unchanged state feature names"
+  ],
+  "validation_kind": "static declaration consistency; no simulator rollout or policy optimization",
+  "training_gradient_steps": 0,
+  "final_worlds_used": false
+}

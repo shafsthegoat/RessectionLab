@@ -1,0 +1,15 @@
+# Independent axis-adapter review
+
+The separate experimental adapter passes **19 independent tests in 3.00 seconds** on small analytic grids. This review performed no patient training, patient simulation or performance benchmark. The adapter remains outside the desktop, selected-route refinement, existing procedural checkpoints and `FEATURE_UNITS` profiles.
+
+The tests cover identical nominal actor observations and action IDs across distinct hidden worlds before and after the same physical cut; primary/fallback ordering; negative-valued feasible primaries; stale action rejection; reset/fresh/clone identity and missing-evidence preservation; edited cavity, partial-contact, derived reward and cached action data; cancelled preparation and retry; cancellation immediately before and after commit; and independent source-cell replay certification.
+
+Final review exposed three additional defects after the first thirteen cases passed:
+
+- Cancellation during reset left episode and hidden-world integrity checks uninitialized. A caller could clear cancellation, edit partial-contact accounting, total reward or the hidden field, and receive a valid observation. The repaired adapter marks reset incomplete and refuses rollout exports until explicit reset succeeds. A committed transition interrupted while preparing its next observation remains separately identified and inspectable.
+- A native preview that raised an exception increased the check counter without adding an attempted-preview record. The repaired log creates the attempt before calling geometry, retains its exception and elapsed time, and never reports it as a successful or rejected geometric certificate.
+- The adapter owner identified a transient observation-cache bypass, independently reproduced here. An externally assigned copied action could retain a genuine ID while changing its reward-bearing removal cells. The repaired adapter rejects transient inventory outside an active internal observation read, protecting the link between an action and its registered native preview.
+
+`initial-native_axis_simulation.py` and `initial-failures.json` preserve the first failing source and four targeted failures. The intermediate eighteen-test pass remains recorded separately. `pre-transient-guard-native_axis_simulation.py` and `transient-cache-failure.json` preserve the fifth failure. `review.json` records the final tested source and test-file hashes; source bytes were unchanged throughout the final run. Production changes were made by the adapter owner; this reviewer owns only the separate adversarial tests and this receipt.
+
+Constructor preparation and preview/integrity costs are now separately reported, but this review makes no throughput claim. Current cancellation remains cooperative at individual integrity scans and native previews. Generic learners currently treat an interrupted committed transition as a failed run; resumable handling requires a separately reviewed runner. The new action model needs a new declared benchmark before any patient improvement claim.

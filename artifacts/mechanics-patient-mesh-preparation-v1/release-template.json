@@ -1,0 +1,30 @@
+{
+  "schema": "resect-case4-patient-mesh-v1-release",
+  "authorized": false,
+  "source_commit": "PENDING_FULL_40_CHARACTER_COMMIT",
+  "source_directory": "PENDING_ABSOLUTE_IMMUTABLE_SOURCE_ARCHIVE",
+  "repository_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+  "attempt_directory": "PENDING_ONE_FRESH_ABSOLUTE_ATTEMPT_DIRECTORY",
+  "mask_qc_accepted_for_estimated_domain": false,
+  "baseline_diagnostic_accepted_for_provisional_research_frame": false,
+  "clinical_validation": false,
+  "anatomical_registration_accepted": false,
+  "source_sha256": {
+    "scripts/mechanics_patient_mesh.py": "PENDING_COMMITTED_HASH",
+    "scripts/febio_runtime.py": "PENDING_COMMITTED_HASH",
+    "manifests/experiments/resect-case4-patient-mesh-v1.json": "PENDING_COMMITTED_HASH",
+    "artifacts/febio-runtime-investigation-v1/prospective-runtime.json": "PENDING_COMMITTED_HASH"
+  },
+  "prerequisite_receipts": [
+    {
+      "role": "mask_qc",
+      "path": "PENDING_EXACT_RECEIPT_PATH",
+      "sha256": "PENDING_FIXED_RECEIPT_SHA256"
+    },
+    {
+      "role": "baseline_diagnostic",
+      "path": "PENDING_EXACT_RECEIPT_PATH",
+      "sha256": "PENDING_FIXED_RECEIPT_SHA256"
+    }
+  ]
+}

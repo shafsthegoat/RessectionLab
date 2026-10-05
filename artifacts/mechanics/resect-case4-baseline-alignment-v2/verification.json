@@ -1,0 +1,22 @@
+{
+  "status": "prepared_unrun_independent_final_controls_pending",
+  "tests": "26 passed in0.36s",
+  "test_command": ".venv/bin/python -m pytest -q artifacts/mechanics/resect-case4-baseline-alignment-v2/test_alignment.py artifacts/mechanics/resect-case4-baseline-alignment-v2/test_resource_monitor.py",
+  "patient_arrays_or_coordinates_opened": false,
+  "actual_worker_run": false,
+  "files": {
+    "align.py": "71f1a6440057960beb576180243ba3bf14855dd33a4584e1c99eb8a80e091e4c",
+    "test_alignment.py": "0ff0c76d8227e51d59c29de05ea0ebb8dbde2039255ffe80a0f3d41cc442819f",
+    "test_resource_monitor.py": "00fd3be8c63360f98c347c2cc8ef1edfbe4cb21eab9def924a420b45d24dc54d",
+    "declaration.json": "9f606a76471b71b0de4598ecee0c1f9bf7f21cd410f856ec19f958ba33225593",
+    "coordinate-justification.json": "f293613dd1ca5adf58bfd768c2fe2b4d50e352fe0534ee28264225739f88c2ec",
+    "README.md": "1402a15d4b3f71cffd39f6543a160e07516b0a528d7aae2c68786a4b81a99216"
+  },
+  "prior_test_scope": "Original26 owner checks before diagnostic-only repair; rerun pending.",
+  "diagnostic_repair": {
+    "time_utc": "2026-10-04T20:46:33.388486+00:00",
+    "change": "Preserve decisive exit_code_after_query, record later exit_code_at_error separately; timeout retains compatible fallback observation. Refusal behavior unchanged.",
+    "initial_negative_receipt": "artifacts/mechanics/resect-baseline-monitor-v2-independent-review-v1/initial-negative.json",
+    "prior_verification_sha256": "06f9853000cba8a71b0227616c545ee8d6bd11659ae545b7d3a00ea2016585bc"
+  }
+}

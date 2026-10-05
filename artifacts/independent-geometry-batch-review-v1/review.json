@@ -1,0 +1,132 @@
+{
+  "artifact_sha256": {
+    "artifacts/independent-geometry-batch-prototype-v1/combined-tests.txt": "914de358e218d35cc60f1a061e0dacae27d4080d362ddab50acbf91509c68c5a",
+    "artifacts/independent-geometry-batch-prototype-v1/probe-launch.json": "16f8b8cf33c86c355337096d09209ebba1112989a3593d4376326dba65bf5abf",
+    "artifacts/independent-geometry-batch-prototype-v1/probe-launcher.json": "0f12482c3efffe1fb96cd50de72e265af0442b2112017cf415948d782a27b92a",
+    "artifacts/independent-geometry-batch-prototype-v1/run-01/01-axial_anisotropic.json": "537a5432569f0592e98a4060ba705432a66080ac3ec0ddd8bf70d63a9aa12b9d",
+    "artifacts/independent-geometry-batch-prototype-v1/run-01/02-oblique_local_segment.json": "265b09d80a8164b2c7c76175a85ddda3a45ac62f1e89a8e678224e377c138af7",
+    "artifacts/independent-geometry-batch-prototype-v1/run-01/03-point_segment.json": "3fd0b40bb6f89eb4651156c88cf08b5ce28cb2cfa5d2ac9142d7aa21deefb19a",
+    "artifacts/independent-geometry-batch-prototype-v1/run-01/04-large_translation.json": "4aa4b85093f05979a8fe46baba488f803e6b0ddb16c5734a444c3274d2584a20",
+    "artifacts/independent-geometry-batch-prototype-v1/run-01/05-tangency_scalar_fallback.json": "3e8031be96b3587458af94cdee112a6129ab55d8c70db29ff8c7a8c4ee21cae5",
+    "artifacts/independent-geometry-batch-prototype-v1/run-01/prospective.json": "fbbe50c236b749cf18e17694969fac9d12fd0bce2190bb5335e780ced4296e0a",
+    "artifacts/independent-geometry-batch-prototype-v1/run-01/report.json": "373486b7e75b5bdc5166962dda1b6bf03962be65d373e2ac9444711a9b993ecb",
+    "artifacts/independent-geometry-batch-prototype-v1/test-baseline.json": "46104fd5d6d77febc23455b5bc2c398343b416924fb550d7121a9976fd69d3fb",
+    "artifacts/independent-geometry-batch-prototype-v1/test-receipt.json": "9d79dc758e66bb16a0c93cf848926ca610c4ae167f9f352f58004a84060fbd56"
+  },
+  "audit_completed_utc": "2026-10-04T18:09:57.637700+00:00",
+  "authorized_run": {
+    "boxes_per_workload": 1024,
+    "peak_process_rss_bytes": 65110016,
+    "probe_body_seconds": 1.6172189159551635,
+    "probe_parent_seconds": 1.9695266659837216,
+    "pytest_seconds": 1.09,
+    "recorded_bitwise_distance_matches": 4927,
+    "recorded_different_distances": 193,
+    "recorded_matching_contact_sets_and_first_witnesses": 15,
+    "test_count": 76,
+    "test_parent_seconds": 1.299596874974668,
+    "traced_peak_minus_output_bytes": 89147,
+    "workloads": 5
+  },
+  "blocking_static_defects_remaining": [],
+  "negative_and_limited_results": [
+    "The oblique workload had 193/1024 non-bitwise-identical raw distances, with recorded maximum difference 4.440892098500626e-15 mm2. Other four workloads were bitwise identical. The preserved scalar controls and all 15 contact-set/first-witness checks passed on this runtime.",
+    "Large-coordinate contact calls took about 60.1-60.8 ms versus a 55.46 ms pooled scalar-distance median; zero-tolerance tangency contact took 51.60 ms versus a 49.54 ms scalar-distance median. These single contact-call observations include fallback and index work and are not paired same-API performance estimates. They show that the raw-distance improvement does not guarantee faster contact decisions.",
+    "The includes_near_threshold_scalar_fallback field denotes the enabled code path, not a measured fallback count. Actual fallback counts were not recorded.",
+    "Raw distance and contact-index arrays were not retained, only hashes, match counts and maximum differences. This audit verifies receipt/source bindings, saved per-workload consistency, timing arithmetic and the reviewed comparison logic; it does not independently recompute geometry outputs.",
+    "The 89,147-byte traced-work excess is identical for 1,024 and 16,384 boxes at batch size 256. This observation excludes pre-existing inputs and does not establish a complete process-memory bound.",
+    "No full native-history audit, production integration, patient performance or clinical validity is established."
+  ],
+  "new_review_controls": "tests/test_independent_geometry_batch_review.py",
+  "planned_controls": [
+    "Closed-form distances to point boxes for arbitrary segment direction, axis permutation and segment reversal.",
+    "Collapsed plane and line boxes with internal stationary minima.",
+    "Read-only negative-stride inputs, duplicated contacts and deterministic first input witness.",
+    "Arbitrary-direction tangency at neighboring representable radii with observed scalar fallback.",
+    "Cancellation during input validation before any kernel execution.",
+    "Reject probe source receipts when loaded scalar or prototype comes from another path."
+  ],
+  "probe_sha256": "6c071019c9fb3b2198859320820a98e363ee3615c892dbdf2f60a9b44533f99e",
+  "prototype_sha256": "16de2480f97cc723fee8192e93be78a3936cc4e18b6104ddbdf3ed36da250707",
+  "remaining_gate": "Separate root authorization and full-history equivalence checks remain required before any production evaluator wiring. No further test or probe run is authorized by this review.",
+  "review_test_sha256": "1fa32e1b26d2eec5bb987861591fd7e8ab180192eccae4c38bae54a6839bebe1",
+  "schema": "independent-unwired-geometry-batch-review-v1",
+  "scope": "Static prototype/reference review plus read-only audit of the owner-executed 76 controls and one root-authorized kernel probe. This reviewer did not execute or repeat tests, kernels, timing probes, patient data or native histories.",
+  "source_files_rehashed": 5,
+  "static_findings": [
+    "Face crossings, nonempty intervals, active-coordinate stationary minima and the 1e-15 direction cutoff match the preserved scalar algorithm.",
+    "Working arrays are chunk-bounded; full distance output is O(N), contact fragments are retained only when nonempty, and earliest contact follows input row order.",
+    "Input validation scans bounded chunks before computation; cancellation raises without returning a partial result, including around final and early-return chunks.",
+    "Scalar fallback protects near-threshold decisions, but its proximity guard is explicitly not a formal floating-point error bound.",
+    "Probe initially imported an ambient scalar module while hashing the checkout path. Owner repaired this before execution by pinning ROOT/src and checking loaded scalar/prototype source paths against receipted files.",
+    "Probe receipts and documentation restrict any future timings to the numerical kernel; no full native-audit or patient speedup is asserted."
+  ],
+  "status": "static_review_and_saved_authorized_run_audit_complete",
+  "workloads": [
+    {
+      "batch_distance_median_seconds": 0.0022814584663137794,
+      "bitwise_distance_matches": 1024,
+      "max_absolute_distance_difference_mm2": 0.0,
+      "observed_distance_only_ratio": 21.53725554569776,
+      "pooled_scalar_distance_median_seconds": 0.049136354005895555,
+      "single_contact_call_seconds": [
+        0.0023514999775215983,
+        0.002205875003710389,
+        0.0021297080675140023
+      ],
+      "workload": "axial_anisotropic"
+    },
+    {
+      "batch_distance_median_seconds": 0.004174125497229397,
+      "bitwise_distance_matches": 831,
+      "max_absolute_distance_difference_mm2": 4.440892098500626e-15,
+      "observed_distance_only_ratio": 25.139891589747894,
+      "pooled_scalar_distance_median_seconds": 0.10493706248234957,
+      "single_contact_call_seconds": [
+        0.004184749908745289,
+        0.004098917008377612,
+        0.0041890410939231515
+      ],
+      "workload": "oblique_local_segment"
+    },
+    {
+      "batch_distance_median_seconds": 0.0015745419659651816,
+      "bitwise_distance_matches": 1024,
+      "max_absolute_distance_difference_mm2": 0.0,
+      "observed_distance_only_ratio": 11.344767485168902,
+      "pooled_scalar_distance_median_seconds": 0.017862812499515712,
+      "single_contact_call_seconds": [
+        0.0016792500391602516,
+        0.00162191700655967,
+        0.0015916249249130487
+      ],
+      "workload": "point_segment"
+    },
+    {
+      "batch_distance_median_seconds": 0.003992166952230036,
+      "bitwise_distance_matches": 1024,
+      "max_absolute_distance_difference_mm2": 0.0,
+      "observed_distance_only_ratio": 13.891244437952572,
+      "pooled_scalar_distance_median_seconds": 0.05545616697054356,
+      "single_contact_call_seconds": [
+        0.060141957947053015,
+        0.06069704191759229,
+        0.06077175005339086
+      ],
+      "workload": "large_translation"
+    },
+    {
+      "batch_distance_median_seconds": 0.0016897710156627,
+      "bitwise_distance_matches": 1024,
+      "max_absolute_distance_difference_mm2": 0.0,
+      "observed_distance_only_ratio": 29.31825972023123,
+      "pooled_scalar_distance_median_seconds": 0.04954114550491795,
+      "single_contact_call_seconds": [
+        0.05159795796498656,
+        0.0017852919409051538,
+        0.001750833005644381
+      ],
+      "workload": "tangency_scalar_fallback"
+    }
+  ]
+}

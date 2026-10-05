@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/pat05-real-spatial-search-comparison-v1-b64d801/frozen-source/scripts/compare_real_spatial_search.py", line 299, in <module>
+    main()
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/pat05-real-spatial-search-comparison-v1-b64d801/frozen-source/scripts/compare_real_spatial_search.py", line 278, in main
+    worker(declaration, args.output)
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/pat05-real-spatial-search-comparison-v1-b64d801/frozen-source/scripts/compare_real_spatial_search.py", line 237, in worker
+    row.update(replay_search(base, declaration["search"], preserve=save, profiler=profiler))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/pat05-real-spatial-search-comparison-v1-b64d801/frozen-source/scripts/compare_real_spatial_search.py", line 148, in replay_search
+    sequence, search = observed_beam_search(base, **settings,
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/pat05-real-spatial-search-comparison-v1-b64d801/frozen-source/src/resectionlab/observed_search.py", line 61, in observed_beam_search
+    return _observed_beam_search(task, **arguments)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/pat05-real-spatial-search-comparison-v1-b64d801/frozen-source/src/resectionlab/observed_search.py", line 198, in _observed_beam_search
+    check_time()
+  File "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/pat05-real-spatial-search-comparison-v1-b64d801/frozen-source/src/resectionlab/observed_search.py", line 160, in check_time
+    raise ObservedSearchLimit("Observed search exceeded its declared episode time",
+resectionlab.observed_search.ObservedSearchLimit: Observed search exceeded its declared episode time

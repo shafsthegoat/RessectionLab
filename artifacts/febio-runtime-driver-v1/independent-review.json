@@ -1,0 +1,29 @@
+{
+  "status": "passed_runtime_driver_software_review",
+  "driver_path": "scripts/febio_runtime.py",
+  "driver_sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+  "test_path": "tests/test_febio_runtime.py",
+  "test_sha256": "106f6fb743f9cc2abe580dd8fe3a0f4cd23ea03c3ef4ba50861a4a4f9029b773",
+  "command": ".venv/bin/python -m pytest -q tests/test_febio_runtime.py",
+  "observed_result": "19 passed in 0.85s",
+  "test_execution_note": "Prior completed independent run; this receipt persistence did not rerun tests.",
+  "initial_static_findings_repaired": [
+    "A parent-rejected acquisition could be reused because only worker and supervisor completion were checked. Acquisition now requires accepted parent receipts and exact artifact/source/declaration binding.",
+    "Build could start from a matching cache left by a failed configure. Build now requires the accepted configuration and exact cache/acquisition-inventory binding.",
+    "Child isolation retained DYLD_INSERT_LIBRARIES and other DYLD_* loader overrides. All DYLD_* variables are now removed in the child environment only."
+  ],
+  "additional_reviewed_guards": [
+    "Required stage artifact inventory is exact and each artifact is hash checked.",
+    "Configure and build attempt markers prevent automatic retries with another receipt directory.",
+    "Real tiny-process controls cover clean exit, wall and sampled memory caps, observer failure, orphaned inherited descendants, group cleanup and leader reaping.",
+    "Archive traversal, escaping link chains, expansion limits, exact source root and payload hash mismatch reject."
+  ],
+  "limitations": [
+    "RSS is sampled and applies to the inherited process group; brief peaks and arbitrary descendants escaping that group are not guaranteed contained.",
+    "Payload notice/architecture review and final built-runtime linkage inspection remain separate gates.",
+    "Driver correctness and a successful build do not establish mechanics or clinical validity."
+  ],
+  "review_executed_network_acquisition": false,
+  "review_executed_febio": false,
+  "review_loaded_patient_or_measurement_data": false
+}

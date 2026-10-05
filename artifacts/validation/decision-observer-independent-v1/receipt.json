@@ -1,0 +1,53 @@
+{
+  "base_commit": "2225b3e76b37ccaa34aaa4b53d6849a450597a76",
+  "command": "PYTHONPATH=src .venv/bin/pytest -q tests/test_decision_observer_adversarial.py",
+  "limits": [
+    "No public patient episodes or gradients executed by this audit; maximum two updates per synthetic training call.",
+    "Optional record payload does not itself include policy hash, profile hash, or sampled probabilities; any runner enrichment needs explicit provenance and cannot substitute selected weights for latest executed weights.",
+    "No claim of clinical validity, performance improvement, independent final-world evaluation, or candidate eligibility.",
+    "This receipt summarizes an observed local test invocation; it is not a cryptographic proof of test execution."
+  ],
+  "observed_result": {
+    "failed": 0,
+    "passed": 30,
+    "seconds": 3.34,
+    "warning_scope": "Intentional NumPy shape/dtype reassignment adversaries trigger deprecation warnings",
+    "warnings": 10
+  },
+  "recorded_at": "2026-10-04T13:03:20.508533+00:00",
+  "resolved_findings": [
+    {
+      "finding": "Read-only ndarray bytes still permitted shape/dtype metadata reinterpretation",
+      "regression": "test_metadata_reinterpretation_is_rejected_before_journal_export",
+      "resolution": "Owner added captured layout/content identity checks before export"
+    },
+    {
+      "finding": "Axis consumer initially bound IDs but trusted supplied source features/mask",
+      "regression": "test_axis_consumer_binds_inputs_to_the_served_observation_not_just_action_ids",
+      "resolution": "Owner caches descriptors from observations actually returned by reset/step and validates record source and RAW conversion without another simulator call"
+    }
+  ],
+  "runtime": {
+    "device": "cpu",
+    "numpy": "2.5.3",
+    "python": "3.12.14",
+    "torch": "2.14.1"
+  },
+  "schema_version": 1,
+  "scope": "Independent decision observer and axis accounting review; tiny synthetic fixtures only",
+  "tested_source_sha256": {
+    "src/resectionlab/learning.py": "ea552afa8faa7a5199ac2c20cf67fc688081fe8d7e5d029131f3fd6e7c0093ec",
+    "src/resectionlab/native_axis_accounting.py": "e7593bc4c7435961b6d4bee31412ef3e2df85fd6baebee70c6849e94eaf8c259",
+    "tests/test_decision_observer_adversarial.py": "b63b5ee618a911766dfb72b5a7f5be4ac295907e674088fc8357d015a393b9c9"
+  },
+  "verified": [
+    "Paired two-update default versus observed training has identical actual reset/step trace, observation getter and simulator method counts, forward count and outputs, selected/latest weights, Adam state, and private RNG; global Torch RNG remains unchanged.",
+    "RAW and FEATURE_UNITS records match actor and value tensors captured from the same actual forward, including original source dtype, float32 model inputs, transformed action features, mask, action IDs, masked logits, and value.",
+    "Forced rollout STOP does not add a forward or invent logits/value; optimization forced STOP retains its already-computed forward and labels budget overrides.",
+    "Metadata reinterpretation and direct writeability escalation cannot silently alter exported evidence; JSON serialization preserves masked negative infinity explicitly.",
+    "Observer failure precedes execution; incomplete selection remains score-null with no completed selection history.",
+    "Axis decisions bind served source arrays and RAW conversions, seed/role/step/action inventory; forged input or final-evaluation role rejects before execution.",
+    "Decision events are not counted as transitions; native commit and STOP are distinct; commit interruption and export failure preserve executed-versus-returned status and previous durable receipt.",
+    "Accounting alone remains candidate-ineligible and does not claim independent geometry evaluation."
+  ]
+}

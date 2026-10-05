@@ -1,0 +1,53 @@
+[
+  {
+    "decision_model_hash": "sha256:d1ab7b03040e5cfb2cff4c48ef1d8d1f0b796620f621c0d9d2596b6b393c112c",
+    "elapsed_seconds": 1.0931833749637008,
+    "gradient_steps": 32,
+    "initial_checkpoint_hash": "sha256:3ffe11ea901cac5d4d0b27c17c6a9de587fbe995087c52f3917acd195958d202",
+    "initial_selection_return": 0.0,
+    "latest_checkpoint_hash": "sha256:029a6590a0e45beef2eb056da0250aac1d822905be2445e6dcdfc9ebef389d54",
+    "optimization_environment_steps": 86,
+    "optimizer_mode": "PATIENT_SCRATCH_RL",
+    "output_dir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/ppo-branching-v1/comparison/scratch-11",
+    "preparation_seconds": 0.01778875000309199,
+    "selected_checkpoint_hash": "sha256:3ffe11ea901cac5d4d0b27c17c6a9de587fbe995087c52f3917acd195958d202",
+    "selected_selection_return": 0.0,
+    "selection_environment_steps": 10,
+    "shared_checkpoint_hash": null,
+    "status": "gradient_budget"
+  },
+  {
+    "decision_model_hash": "sha256:d1ab7b03040e5cfb2cff4c48ef1d8d1f0b796620f621c0d9d2596b6b393c112c",
+    "elapsed_seconds": 0.17896287492476404,
+    "gradient_steps": 32,
+    "initial_checkpoint_hash": "sha256:38b91ec6302c4a795ec519341cd3f0e523376c331b36cfd5dadb6e1450c466fe",
+    "initial_selection_return": 0.0,
+    "latest_checkpoint_hash": "sha256:05dc11202d48666c8312e95ffe76c4b29c614aa726a03b2a9c66a3edd3832291",
+    "optimization_environment_steps": 66,
+    "optimizer_mode": "PATIENT_SCRATCH_RL",
+    "output_dir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/ppo-branching-v1/comparison/scratch-23",
+    "preparation_seconds": 0.01782954204827547,
+    "selected_checkpoint_hash": "sha256:38b91ec6302c4a795ec519341cd3f0e523376c331b36cfd5dadb6e1450c466fe",
+    "selected_selection_return": 0.0,
+    "selection_environment_steps": 10,
+    "shared_checkpoint_hash": null,
+    "status": "gradient_budget"
+  },
+  {
+    "decision_model_hash": "sha256:d1ab7b03040e5cfb2cff4c48ef1d8d1f0b796620f621c0d9d2596b6b393c112c",
+    "elapsed_seconds": 0.27452937501948327,
+    "gradient_steps": 32,
+    "initial_checkpoint_hash": "sha256:1b950505190cfef3b8181127d7f85fd9f0a6691e3184b4a1c422189cbadf4d34",
+    "initial_selection_return": 0.020000000000000018,
+    "latest_checkpoint_hash": "sha256:c3f1afe5a3b6e8c4cb8656d8e4c188bdda2b803dca27d168b09755e0f7a6cf27",
+    "optimization_environment_steps": 118,
+    "optimizer_mode": "PATIENT_SCRATCH_RL",
+    "output_dir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/ppo-branching-v1/comparison/scratch-47",
+    "preparation_seconds": 0.018293375032953918,
+    "selected_checkpoint_hash": "sha256:5d98bfb7c25bb959611e708c73457af35d97eaf55198720ef3cea26175d92ec4",
+    "selected_selection_return": 0.040000000000000036,
+    "selection_environment_steps": 42,
+    "shared_checkpoint_hash": null,
+    "status": "gradient_budget"
+  }
+]

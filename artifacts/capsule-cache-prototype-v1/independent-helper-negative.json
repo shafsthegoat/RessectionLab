@@ -1,0 +1,7 @@
+{
+  "source_sha256": "425ee17f846960c7cbd206c8f043fac22d4e1789c9fcd13f82b2ba1d53737cb7",
+  "command": ".venv/bin/python -m pytest -q tests/test_capsule_cache_review.py -k direct_geometry_helper_replacement",
+  "exit_code": 1,
+  "result": "2 failed, 24 deselected in 0.31s",
+  "finding": "warm hits silently reused former covers after direct geometry helper replacement"
+}

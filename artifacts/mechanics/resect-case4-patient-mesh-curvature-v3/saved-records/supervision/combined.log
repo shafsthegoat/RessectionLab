@@ -1,0 +1,79 @@
+Info    : Clearing all models and views...
+Info    : Done clearing all models and views
+Info    : Classifying surfaces (angle: 180)...
+Info    : Splitting triangulations to make them parametrizable:
+Info    :  - Level 0 partition with 183902 triangles split in 2 parts because poincare characteristic 2 is not 0
+Info    :  - Level 1 partition with 91940 triangles split in 2 parts because poincare characteristic 4 is not 0
+Info    :  - Level 2 partition with 45996 triangles split in 2 parts because poincare characteristic 4 is not 0
+Info    :  - Level 3 partition with 22996 triangles split in 2 parts because poincare characteristic 4 is not 0
+Info    :  - Level 4 partition with 11508 triangles split in 2 parts because poincare characteristic 4 is not 0
+Info    :  - Level 5 partition with 5830 triangles split in 2 parts because poincare characteristic 4 is not 0
+Info    :  - Level 6 partition with 2920 triangles split in 2 parts because poincare characteristic 4 is not 0
+Info    :  - Level 7 partition with 1465 triangles split in 2 parts because poincare characteristic 4 is not 0
+Info    :  - Level 8 partition with 725 triangles split in 2 parts because poincare characteristic 4 is not 0
+Info    :  - Level 9 partition with 369 triangles split in 2 parts because poincare characteristic 4 is not 0
+Info    :  - Level 10 partition with 184 triangles split in 2 parts because poincare characteristic 4 is not 0
+Info    :  - Level 11 partition with 91 triangles split in 2 parts because poincare characteristic 4 is not 0
+Info    :  - Level 12 partition with 45 triangles split in 2 parts because poincare characteristic 4 is not 0
+Info    :  - Level 13 partition with 23 triangles split in 2 parts because boundary not manifold
+Info    :  - Level 13 partition with 17 triangles split in 2 parts because parametrized triangles are too small (9.75782e-19)
+Info    : Found 18 model surfaces
+Info    : Found 46 model curves
+Info    : Done classifying surfaces (Wall 3.64788s, CPU 3.47466s)
+Info    : Creating geometry of discrete curves...
+Info    : Done creating geometry of discrete curves (Wall 7.38339e-05s, CPU 7e-05s)
+Info    : Creating geometry of discrete surfaces...
+Info    : [ 70%] Discrete surface 14 is planar, simplifying parametrization
+Info    : Done creating geometry of discrete surfaces (Wall 1.48194s, CPU 1.3418s)
+Info    : Meshing 1D...
+Info    : [  0%] Meshing curve 48 (Discrete curve)
+Info    : [ 10%] Meshing curve 49 (Discrete curve)
+Info    : [ 10%] Meshing curve 50 (Discrete curve)
+Info    : [ 10%] Meshing curve 51 (Discrete curve)
+Info    : [ 10%] Meshing curve 52 (Discrete curve)
+Info    : [ 20%] Meshing curve 53 (Discrete curve)
+Info    : [ 20%] Meshing curve 54 (Discrete curve)
+Info    : [ 20%] Meshing curve 55 (Discrete curve)
+Info    : [ 20%] Meshing curve 56 (Discrete curve)
+Info    : [ 20%] Meshing curve 57 (Discrete curve)
+Info    : [ 30%] Meshing curve 58 (Discrete curve)
+Info    : [ 30%] Meshing curve 59 (Discrete curve)
+Info    : [ 30%] Meshing curve 60 (Discrete curve)
+Info    : [ 30%] Meshing curve 61 (Discrete curve)
+Info    : [ 30%] Meshing curve 62 (Discrete curve)
+Info    : [ 40%] Meshing curve 63 (Discrete curve)
+Info    : [ 40%] Meshing curve 64 (Discrete curve)
+Info    : [ 40%] Meshing curve 65 (Discrete curve)
+Info    : [ 40%] Meshing curve 66 (Discrete curve)
+Info    : [ 40%] Meshing curve 67 (Discrete curve)
+Info    : [ 50%] Meshing curve 68 (Discrete curve)
+Info    : [ 50%] Meshing curve 69 (Discrete curve)
+Info    : [ 50%] Meshing curve 70 (Discrete curve)
+Info    : [ 50%] Meshing curve 71 (Discrete curve)
+Info    : [ 60%] Meshing curve 72 (Discrete curve)
+Info    : [ 60%] Meshing curve 73 (Discrete curve)
+Info    : [ 60%] Meshing curve 74 (Discrete curve)
+Info    : [ 60%] Meshing curve 75 (Discrete curve)
+Info    : [ 60%] Meshing curve 76 (Discrete curve)
+Info    : [ 70%] Meshing curve 77 (Discrete curve)
+Info    : [ 70%] Meshing curve 78 (Discrete curve)
+Info    : [ 70%] Meshing curve 79 (Discrete curve)
+Info    : [ 70%] Meshing curve 80 (Discrete curve)
+Info    : [ 70%] Meshing curve 81 (Discrete curve)
+Info    : [ 80%] Meshing curve 82 (Discrete curve)
+Info    : [ 80%] Meshing curve 83 (Discrete curve)
+Info    : [ 80%] Meshing curve 84 (Discrete curve)
+Info    : [ 80%] Meshing curve 85 (Discrete curve)
+Info    : [ 80%] Meshing curve 86 (Discrete curve)
+Info    : [ 90%] Meshing curve 87 (Discrete curve)
+Info    : [ 90%] Meshing curve 88 (Discrete curve)
+Info    : [ 90%] Meshing curve 89 (Discrete curve)
+Info    : [ 90%] Meshing curve 90 (Discrete curve)
+Info    : [ 90%] Meshing curve 91 (Discrete curve)
+Info    : [100%] Meshing curve 92 (Discrete curve)
+Info    : [100%] Meshing curve 93 (Discrete curve)
+Info    : [100%] Meshing curve 94 (Discrete curve)
+Info    : [100%] Meshing curve 95 (Discrete curve)
+Info    : Done meshing 1D (Wall 170.079s, CPU 169.672s)
+Info    : Meshing 2D...
+Info    : [  0%] Meshing surface 2 (Discrete surface, Frontal-Delaunay)

@@ -1,0 +1,25 @@
+{
+  "version": "native-discretization-control-v1",
+  "role": "analytic_numerical_unit_control_not_training_data",
+  "physical_frame": "RAS+_mm",
+  "anatomy": {"definition": "infinite_half_space_z_greater_than_or_equal_to_zero", "sampled_field_contains_box_mm": [[-4, -4, -5], [4, 4, 8]], "voxelization": "occupied_if_cell_has_positive_volume_in_half_space"},
+  "tool": {"tool_id": "native-fine-aspiration", "tip_radius_mm": 1.25, "shaft_radius_mm": 0.45, "tip_length_mm": 2.0, "working_length_mm": 120.0, "max_access_angle_deg": 35.0},
+  "entry_mm": [0.0, 0.0, -2.0],
+  "tip_mm": [0.0, 0.0, 4.0],
+  "access_radius_mm": 4.0,
+  "max_tip_step_mm": 0.0625,
+  "spacings_mm": [1.0, 0.5, 0.25, 0.125],
+  "grids": [
+    {"name": "aligned", "rotation_xyz_degrees": [0, 0, 0], "phase_source_voxels": [0, 0, 0]},
+    {"name": "half_voxel_phase", "rotation_xyz_degrees": [0, 0, 0], "phase_source_voxels": [0.5, 0.5, 0.5]},
+    {"name": "tilted_20_degrees", "rotation_xyz_degrees": [0, 20, 0], "phase_source_voxels": [0, 0, 0]},
+    {"name": "oblique_fractional_phase", "rotation_xyz_degrees": [13, -17, 23], "phase_source_voxels": [0.3333333333333333, 0.2, 0.14285714285714285]}
+  ],
+  "expected_rows": 16,
+  "analytic_reference": "pi*r^2*4 + (2/3)*pi*r^3; ideal active-sweep/half-space intersection, not a clinical removal prediction",
+  "boundary_accounting": "Report native full-cell volume and independently clipped half-space physical volume separately; partially contacted cells remain occupied.",
+  "ordering": "spacing_coarse_to_fine_then_declared_grid_order; all16numericalrows_before_same_order_independent_audits",
+  "caps": {"cooperative_worker_seconds": 170, "parent_wall_seconds": 180, "worker_peak_rss_bytes": 2147483648, "max_grid_cells": 2000000, "max_native_strokes": 16, "max_independent_audits": 16},
+  "failure_policy": "Keep every completed and rejected row. Preserve partial reports on timeout, memory cap, cancellation or error. Unaudited rows never receive an independent certificate. Do not increase caps after outcomes.",
+  "claims_excluded": ["synthetic_or_human_training", "patient_generalization", "clinical_safety", "guaranteed_monotone_convergence", "population_probability_calibration", "source_grid_co_transform_as_revoxelization"]
+}

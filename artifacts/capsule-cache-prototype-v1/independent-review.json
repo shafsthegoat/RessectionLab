@@ -1,0 +1,48 @@
+{
+  "status": "passed",
+  "command": ".venv/bin/python -m pytest -q tests/test_capsule_cache_review.py",
+  "result": "26 passed in 0.75s",
+  "independent_test_count": 26,
+  "source_unchanged_during_test_run": true,
+  "file_sha256": {
+    "src/resectionlab/experimental_capsule_cache.py": "7b47cf36493c4baeb305beb7f18d4f5acf5bd0fa08b0e80738e948a20bd58869",
+    "src/resectionlab/native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+    "src/resectionlab/native_simulation.py": "2461cc6c32eb25a3927bcc3a9379bb02417794c3a764c4b1e705a00bcac6493c",
+    "src/resectionlab/native_axis_simulation.py": "e1b8306050b53e636e1d602290720655d1f06fe72bf8309ba80afb2025122b70",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/native_proposals.py": "6a173851ad383c32b84121cd0d8871535fffa9174d95aa27bdb08ca4b8a7e5f9",
+    "tests/test_capsule_cache_review.py": "9cfaa044e90bf79cf1db4694f5c228019f580dbf0b3ece45b7829c5bc0637150",
+    "scripts/probe_native_capsule_cache.py": "70c3bc2600a769fe152ca65074011931754911ba7166b5c15a83568bb2bd202e"
+  },
+  "scope": {
+    "tiny_synthetic_only": true,
+    "public_patient_execution": false,
+    "training": false,
+    "performance_benchmark": false
+  },
+  "verified": [
+    "exact float64 keys retain ULP and endpoint-order distinctions",
+    "bound source and canonical affine/inverse/radius/mode validate on hits",
+    "direct geometry helper replacement invalidates warm hits",
+    "input-conversion source/mode edits reject before lookup",
+    "immutable cached outputs include descriptor verification",
+    "payload/entry bounds, empty entries, zero capacity, oversized bypass and LRU eviction",
+    "query reentrancy/thread crossing and nested/conflicting injection reject",
+    "body exceptions restore original native query symbol",
+    "cached/uncached accepted and rejected diagnostics plus committed histories match exactly",
+    "independent native checker accepts both reference and cached committed histories",
+    "short-tip shaft cannot borrow future cuts at .5/.25/.1mm steps"
+  ],
+  "retained_actual_failures": [
+    "owner input-conversion guard-order failure",
+    "independent direct helper replacement failures (2)"
+  ],
+  "review_harness_corrections": [
+    "Rejected previews cannot be exported as executed histories; compare their separate candidate diagnostics.",
+    "A hard full-tool rejection happens before any cover calls; zero cache calls is the correct expectation."
+  ],
+  "threat_boundary": "one explicitly isolated creating worker, intended immutable native configuration, canonical orthogonal GeometryScene and guarded direct numeric geometry callables; no arbitrary hostile mutation of every Python global or function internals",
+  "source_scene_limit": "a GeometryScene does not identify another engine label map on the same frame; pure coverage is label-independent, and scoped injection must run only the intended native workload",
+  "memory_scope": "32MiB default cap is retained array payload, with independent entry cap; Python keys/bookkeeping and process peak RSS are separate",
+  "integration": "production engine and adapters do not import the helper; explicit scoped injection only"
+}

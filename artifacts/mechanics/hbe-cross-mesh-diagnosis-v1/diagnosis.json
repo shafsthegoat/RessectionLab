@@ -1,0 +1,4991 @@
+{
+  "branches": {
+    "compression": {
+      "diagnostic_only_endpoint_force_times_exact_over_polygon_area_N": {
+        "12": -0.03689006087572168,
+        "4": -0.03960595960786309,
+        "8": -0.03734592552699098
+      },
+      "endpoint_forces_N": {
+        "12": -0.036784800891650496,
+        "4": -0.038595823803015995,
+        "8": -0.037106420547429
+      },
+      "endpoint_interpolation_checks": {
+        "12": {
+          "all_host_tie_spread_max_m": 6.250981161795249e-17,
+          "independent_endpoint_interpolation_max_error_m": 4.1709254089393435e-15,
+          "probes_with_multiple_valid_hosts": 51,
+          "raw_displacement_vs_current_rest_max_error_m": 8.12987341402633e-15
+        },
+        "4": {
+          "all_host_tie_spread_max_m": 1.5067462089676246e-16,
+          "independent_endpoint_interpolation_max_error_m": 1.4957111159349189e-15,
+          "probes_with_multiple_valid_hosts": 51,
+          "raw_displacement_vs_current_rest_max_error_m": 6.820620674372387e-15
+        },
+        "8": {
+          "all_host_tie_spread_max_m": 3.190018066377915e-17,
+          "independent_endpoint_interpolation_max_error_m": 5.52007377430501e-14,
+          "probes_with_multiple_valid_hosts": 75,
+          "raw_displacement_vs_current_rest_max_error_m": 7.44630048831789e-15
+        }
+      },
+      "pairs": [
+        {
+          "coarse_N": 4,
+          "endpoint_center_plane_max_probe_change_m": 7.588277580639942e-05,
+          "endpoint_probe_median_change_m": 7.216536220925288e-05,
+          "endpoint_probe_rms_change_m": 6.66156157963095e-05,
+          "endpoint_probes_exceeding_original_8um_limit": 74,
+          "fine_N": 8,
+          "force_endpoint_delta_N": 0.0014894032555869963,
+          "force_max_difference_N": 0.0014894032555869963,
+          "force_max_step": 60,
+          "load_fraction": 1.0,
+          "load_step": 60,
+          "max_delta_vector_m": [
+            -1.3317804709778083e-14,
+            5.349391066286299e-05,
+            -6.225021101598813e-05
+          ],
+          "max_probe_change_m": 8.207732481959567e-05,
+          "point_m": [
+            1.8369701987210298e-19,
+            0.003,
+            0.0036686925
+          ],
+          "point_radius_over_R": 0.75,
+          "point_z_over_H": 0.75,
+          "shared_node_max_point_m": [
+            0.00282842712474619,
+            0.00282842712474619,
+            0.002445795
+          ],
+          "shared_non_end_plane_node_count": 57,
+          "shared_non_end_plane_node_max_displacement_change_m": 0.00022000425268013237,
+          "zero_based_probe_index": 69
+        },
+        {
+          "coarse_N": 8,
+          "endpoint_center_plane_max_probe_change_m": 1.8877615745831265e-05,
+          "endpoint_probe_median_change_m": 1.4242525811913995e-05,
+          "endpoint_probe_rms_change_m": 1.436123204720414e-05,
+          "endpoint_probes_exceeding_original_8um_limit": 56,
+          "fine_N": 12,
+          "force_endpoint_delta_N": 0.0003216196557785031,
+          "force_max_difference_N": 0.0003216196557785031,
+          "force_max_step": 60,
+          "load_fraction": 1.0,
+          "load_step": 60,
+          "max_delta_vector_m": [
+            -2.723919806271548e-15,
+            -1.7260225020186248e-05,
+            -1.4208512360337029e-05
+          ],
+          "max_probe_change_m": 2.2356144373333107e-05,
+          "point_m": [
+            1.8369701987210298e-19,
+            0.003,
+            0.0012228975
+          ],
+          "point_radius_over_R": 0.75,
+          "point_z_over_H": 0.25,
+          "shared_node_max_point_m": [
+            0.002414213562372163,
+            0.002414213562372163,
+            0.002445795
+          ],
+          "shared_non_end_plane_node_count": 57,
+          "shared_non_end_plane_node_max_displacement_change_m": 2.824302551799624e-05,
+          "zero_based_probe_index": 19
+        }
+      ]
+    },
+    "tension": {
+      "diagnostic_only_endpoint_force_times_exact_over_polygon_area_N": {
+        "12": 0.026894244271204806,
+        "4": 0.027957785193552433,
+        "8": 0.02721981299141924
+      },
+      "endpoint_forces_N": {
+        "12": 0.026817505776976502,
+        "4": 0.027244731902384998,
+        "8": 0.0270452482788784
+      },
+      "endpoint_interpolation_checks": {
+        "12": {
+          "all_host_tie_spread_max_m": 4.734032839054605e-17,
+          "independent_endpoint_interpolation_max_error_m": 2.3522423105030658e-15,
+          "probes_with_multiple_valid_hosts": 51,
+          "raw_displacement_vs_current_rest_max_error_m": 8.329594222665067e-15
+        },
+        "4": {
+          "all_host_tie_spread_max_m": 1.2393031242559734e-16,
+          "independent_endpoint_interpolation_max_error_m": 7.105319124081275e-16,
+          "probes_with_multiple_valid_hosts": 51,
+          "raw_displacement_vs_current_rest_max_error_m": 6.315328239664121e-15
+        },
+        "8": {
+          "all_host_tie_spread_max_m": 2.477592696903945e-17,
+          "independent_endpoint_interpolation_max_error_m": 4.1111497956396316e-14,
+          "probes_with_multiple_valid_hosts": 75,
+          "raw_displacement_vs_current_rest_max_error_m": 7.66779030561038e-15
+        }
+      },
+      "pairs": [
+        {
+          "coarse_N": 4,
+          "endpoint_center_plane_max_probe_change_m": 8.587183738327338e-05,
+          "endpoint_probe_median_change_m": 7.819196348801008e-05,
+          "endpoint_probe_rms_change_m": 7.180494427482509e-05,
+          "endpoint_probes_exceeding_original_8um_limit": 74,
+          "fine_N": 8,
+          "force_endpoint_delta_N": -0.00019948362350659735,
+          "force_max_difference_N": 0.00019948362350659735,
+          "force_max_step": 60,
+          "load_fraction": 1.0,
+          "load_step": 60,
+          "max_delta_vector_m": [
+            -6.072055856788544e-05,
+            6.072055848543672e-05,
+            -5.421010862427522e-20
+          ],
+          "max_probe_change_m": 8.587183738327338e-05,
+          "point_m": [
+            -0.0021213203435596424,
+            0.002121320343559643,
+            0.002445795
+          ],
+          "point_radius_over_R": 0.75,
+          "point_z_over_H": 0.5,
+          "shared_node_max_point_m": [
+            0.00282842712474619,
+            0.00282842712474619,
+            0.002445795
+          ],
+          "shared_non_end_plane_node_count": 57,
+          "shared_non_end_plane_node_max_displacement_change_m": 0.00018920036500782067,
+          "zero_based_probe_index": 45
+        },
+        {
+          "coarse_N": 8,
+          "endpoint_center_plane_max_probe_change_m": 1.8083400630326937e-05,
+          "endpoint_probe_median_change_m": 1.646506464630107e-05,
+          "endpoint_probe_rms_change_m": 1.580913344139754e-05,
+          "endpoint_probes_exceeding_original_8um_limit": 66,
+          "fine_N": 12,
+          "force_endpoint_delta_N": -0.00022774250190189804,
+          "force_max_difference_N": 0.00022774250190189804,
+          "force_max_step": 60,
+          "load_fraction": 1.0,
+          "load_step": 60,
+          "max_delta_vector_m": [
+            2.8611805338947207e-15,
+            1.4894002241695758e-05,
+            -1.7863057694804136e-05
+          ],
+          "max_probe_change_m": 2.325768976023929e-05,
+          "point_m": [
+            1.8369701987210298e-19,
+            0.003,
+            0.0036686925
+          ],
+          "point_radius_over_R": 0.75,
+          "point_z_over_H": 0.75,
+          "shared_node_max_point_m": [
+            0.00282842712474619,
+            0.00282842712474619,
+            0.002445795
+          ],
+          "shared_non_end_plane_node_count": 57,
+          "shared_non_end_plane_node_max_displacement_change_m": 2.5123874049389313e-05,
+          "zero_based_probe_index": 69
+        }
+      ]
+    },
+    "torsion_neg": {
+      "diagnostic_only_endpoint_force_times_exact_over_polygon_area_N": {
+        "12": -0.00028445749495557344,
+        "4": -0.0003621650239234889,
+        "8": -0.0002958240744317958
+      },
+      "endpoint_forces_N": {
+        "12": -0.0002836458402530013,
+        "4": -0.00035292813478987,
+        "8": -0.0002939269106073372
+      },
+      "endpoint_interpolation_checks": {
+        "12": {
+          "all_host_tie_spread_max_m": 6.737241921004408e-17,
+          "independent_endpoint_interpolation_max_error_m": 6.734847104030706e-17,
+          "probes_with_multiple_valid_hosts": 51,
+          "raw_displacement_vs_current_rest_max_error_m": 8.011504578569159e-15
+        },
+        "4": {
+          "all_host_tie_spread_max_m": 1.3379956009170274e-16,
+          "independent_endpoint_interpolation_max_error_m": 1.3377799169677854e-16,
+          "probes_with_multiple_valid_hosts": 51,
+          "raw_displacement_vs_current_rest_max_error_m": 7.301442513942812e-15
+        },
+        "8": {
+          "all_host_tie_spread_max_m": 3.3972957394033964e-17,
+          "independent_endpoint_interpolation_max_error_m": 5.846650741897038e-14,
+          "probes_with_multiple_valid_hosts": 75,
+          "raw_displacement_vs_current_rest_max_error_m": 7.647336147597408e-15
+        }
+      },
+      "pairs": [
+        {
+          "coarse_N": 4,
+          "endpoint_center_plane_max_probe_change_m": 3.190212130047307e-06,
+          "endpoint_probe_median_change_m": 1.1300801379921513e-06,
+          "endpoint_probe_rms_change_m": 1.6035378167956027e-06,
+          "endpoint_probes_exceeding_original_8um_limit": 0,
+          "fine_N": 8,
+          "force_endpoint_delta_N": 5.900122418253277e-05,
+          "force_max_difference_N": 5.900122418253277e-05,
+          "force_max_step": 60,
+          "load_fraction": 1.0,
+          "load_step": 60,
+          "max_delta_vector_m": [
+            2.921876175876882e-07,
+            3.1768033982022567e-06,
+            -1.0051193270781417e-14
+          ],
+          "max_probe_change_m": 3.190212130047307e-06,
+          "point_m": [
+            -5.510910596163089e-19,
+            -0.003,
+            0.002445795
+          ],
+          "point_radius_over_R": 0.75,
+          "point_z_over_H": 0.5,
+          "shared_node_max_point_m": [
+            0.00282842712474619,
+            0.00282842712474619,
+            0.002445795
+          ],
+          "shared_non_end_plane_node_count": 57,
+          "shared_non_end_plane_node_max_displacement_change_m": 4.740128495751365e-06,
+          "zero_based_probe_index": 48
+        },
+        {
+          "coarse_N": 8,
+          "endpoint_center_plane_max_probe_change_m": 4.7523861850399586e-07,
+          "endpoint_probe_median_change_m": 4.586584329900746e-07,
+          "endpoint_probe_rms_change_m": 4.4149398356205164e-07,
+          "endpoint_probes_exceeding_original_8um_limit": 0,
+          "fine_N": 12,
+          "force_endpoint_delta_N": 1.0281070354335915e-05,
+          "force_max_difference_N": 1.0281070354335915e-05,
+          "force_max_step": 60,
+          "load_fraction": 1.0,
+          "load_step": 60,
+          "max_delta_vector_m": [
+            -8.546786165592162e-08,
+            -6.844041016055668e-07,
+            1.0783924500472067e-07
+          ],
+          "max_probe_change_m": 6.980995863297348e-07,
+          "point_m": [
+            1.8369701987210298e-19,
+            0.003,
+            0.0036686925
+          ],
+          "point_radius_over_R": 0.75,
+          "point_z_over_H": 0.75,
+          "shared_node_max_point_m": [
+            0.002414213562372163,
+            0.002414213562372163,
+            0.002445795
+          ],
+          "shared_non_end_plane_node_count": 57,
+          "shared_non_end_plane_node_max_displacement_change_m": 5.20297313197874e-07,
+          "zero_based_probe_index": 69
+        }
+      ]
+    },
+    "torsion_pos": {
+      "diagnostic_only_endpoint_force_times_exact_over_polygon_area_N": {
+        "12": -0.0002844574949557228,
+        "4": -0.0003621650239241046,
+        "8": -0.0002958240744318346
+      },
+      "endpoint_forces_N": {
+        "12": -0.0002836458402531502,
+        "4": -0.00035292813479047,
+        "8": -0.0002939269106073758
+      },
+      "endpoint_interpolation_checks": {
+        "12": {
+          "all_host_tie_spread_max_m": 6.734728197376548e-17,
+          "independent_endpoint_interpolation_max_error_m": 6.733051812489195e-17,
+          "probes_with_multiple_valid_hosts": 51,
+          "raw_displacement_vs_current_rest_max_error_m": 8.216492852778964e-15
+        },
+        "4": {
+          "all_host_tie_spread_max_m": 1.3379956009127185e-16,
+          "independent_endpoint_interpolation_max_error_m": 1.3377799169634775e-16,
+          "probes_with_multiple_valid_hosts": 51,
+          "raw_displacement_vs_current_rest_max_error_m": 6.592641301364654e-15
+        },
+        "8": {
+          "all_host_tie_spread_max_m": 3.3972957393982645e-17,
+          "independent_endpoint_interpolation_max_error_m": 5.846651513842448e-14,
+          "probes_with_multiple_valid_hosts": 75,
+          "raw_displacement_vs_current_rest_max_error_m": 8.296629308311779e-15
+        }
+      },
+      "pairs": [
+        {
+          "coarse_N": 4,
+          "endpoint_center_plane_max_probe_change_m": 3.190212132598668e-06,
+          "endpoint_probe_median_change_m": 1.1300801331127626e-06,
+          "endpoint_probe_rms_change_m": 1.6035378175178152e-06,
+          "endpoint_probes_exceeding_original_8um_limit": 0,
+          "fine_N": 8,
+          "force_endpoint_delta_N": 5.900122418309417e-05,
+          "force_max_difference_N": 5.900122418309417e-05,
+          "force_max_step": 60,
+          "load_fraction": 1.0,
+          "load_step": 60,
+          "max_delta_vector_m": [
+            3.176803401486927e-06,
+            2.921876097318845e-07,
+            1.0051627041245776e-14
+          ],
+          "max_probe_change_m": 3.190212132598668e-06,
+          "point_m": [
+            -0.003,
+            3.6739403974420597e-19,
+            0.002445795
+          ],
+          "point_radius_over_R": 0.75,
+          "point_z_over_H": 0.5,
+          "shared_node_max_point_m": [
+            0.00282842712474619,
+            0.00282842712474619,
+            0.002445795
+          ],
+          "shared_non_end_plane_node_count": 57,
+          "shared_non_end_plane_node_max_displacement_change_m": 4.740128494456072e-06,
+          "zero_based_probe_index": 46
+        },
+        {
+          "coarse_N": 8,
+          "endpoint_center_plane_max_probe_change_m": 4.752386163443159e-07,
+          "endpoint_probe_median_change_m": 4.586584288564895e-07,
+          "endpoint_probe_rms_change_m": 4.4149399002288173e-07,
+          "endpoint_probes_exceeding_original_8um_limit": 0,
+          "fine_N": 12,
+          "force_endpoint_delta_N": 1.0281070354225597e-05,
+          "force_max_difference_N": 1.0281070354225597e-05,
+          "force_max_step": 60,
+          "load_fraction": 1.0,
+          "load_step": 60,
+          "max_delta_vector_m": [
+            4.0806543941883074e-08,
+            -6.885118394883616e-07,
+            -1.078392465050939e-07
+          ],
+          "max_probe_change_m": 6.980995847519999e-07,
+          "point_m": [
+            1.8369701987210298e-19,
+            0.003,
+            0.0012228975
+          ],
+          "point_radius_over_R": 0.75,
+          "point_z_over_H": 0.25,
+          "shared_node_max_point_m": [
+            0.002414213562372163,
+            0.002414213562372163,
+            0.002445795
+          ],
+          "shared_non_end_plane_node_count": 57,
+          "shared_non_end_plane_node_max_displacement_change_m": 5.20297313197874e-07,
+          "zero_based_probe_index": 19
+        }
+      ]
+    }
+  },
+  "classification": "post_hoc_diagnostic_not_acceptance_or_new_experiment",
+  "inputs": {
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/reference-numerical.json": "6f596eb45fd1e39bcf485dbbcbfbc8bfd2bd5397e9e54b67d63a77fcbfac686a",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S60-reference/nodes.log": "f875239091e2c819b085d11a611edcda7290ee6b45e7c868075ed1731bc1a339",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S60-reference/readout.json": "f000ebd0e22d64923fe88fd3d1d53e8a260f240af0cb45368cf7708425014538",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N4-S60-reference/nodes.log": "af1c5aab854d446c1629726fa904742c3246c4ffb050e52e461c53a2dc6d9344",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N4-S60-reference/readout.json": "e790be8d6806bdb85c8fd966f0918594c89464eb899e30190e9505d68496b904",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/nodes.log": "f661e96e0175b804b8d92191301236037d01f20a03605122a165aae5f3071d48",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/readout.json": "41e38786c9a07d045270f1a5a7da656bd3eddd9abed16d6fbc6fe30149a2d03d",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S60-reference/nodes.log": "6e13550b4c3c76c09e4e8bc9eef15e07f5f91d3265b0ad10ea15f03f4d07ad23",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S60-reference/readout.json": "7a269ca2c1f7a4a9225b84d7660455a8832e0ed593867821d5c8a25cc9401d6a",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N4-S60-reference/nodes.log": "e78265e401f263b96f64d7abbdfd2835ed23a83fc7c7d3e68da6fcd7684a4e3c",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N4-S60-reference/readout.json": "51c7136a2456fce70b7f754e30459e8927608c5bf61b5077ddcea87e86b7f6b1",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N8-S60-reference/nodes.log": "6ccab98630a0df79f0d9f255a1ff2779519d5ef96ff410c097874dfbc3d9a2c5",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N8-S60-reference/readout.json": "a9cb82b68a52d7b7f3267d83df741d6f416bb8569e3dbb2bbf7d7a94d9e50e18",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N12-S60-reference/nodes.log": "e1b3d842e0b111b689d30cd35a2e8b435d17f198239ce0ecd18e22a1829e77f6",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N12-S60-reference/readout.json": "ac8efacaeadd91e7d9a8c5b4e8ec1d357ffde677686350f71ebf7e42f843cb1f",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N4-S60-reference/nodes.log": "4238e3920d93b050ac631c5a38bc1f4addd6ebb09fd443ada095ec11efd25d4d",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N4-S60-reference/readout.json": "33af0fc9d00b8737f1e749401d66dbaec3eeca434d6d758a8149193da82029c9",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N8-S60-reference/nodes.log": "aedeba65010fb65a68cac56670c5cf3e17f1e65a7cd7da07040edabfa6301864",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N8-S60-reference/readout.json": "33e59c9c904098306786d0b21151eec2471f38cff31be24b14e0c6c5e79ff10b",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N12-S60-reference/nodes.log": "71437adbf850ff011d0cc10b96ad237d94b6e1120789bc7b383cb0f0a841d529",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N12-S60-reference/readout.json": "3431347f7c6d90e42a1ee7609c81f1b87c22a63778744f32997a699906c9d774",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N4-S60-reference/nodes.log": "6ae61f05f8f82449b160e72af342e69a5487b9dc5a62de594460dd607b397444",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N4-S60-reference/readout.json": "23712c8f99560743bf3c5181b33c06f5bcbc3c42ef473688dde60d72d8fc1825",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N8-S60-reference/nodes.log": "862c1ae1624867f3cb2931dc1388388e63a7ebbfa4f99a52202d65c94c82316c",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N8-S60-reference/readout.json": "601d70f08ba4b919440caa1cdc7a44b6b89d56e3ffcd107c88423b454d472661",
+    "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/mesh.json": "0ed154be0d17c8baaac6ee0288381a53ec100f93cd936a194202f69ef32ae033",
+    "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N4/generated/mesh.json": "4df59e253fa595823eedb7ee498b68e01e1f26d9a5427edee1be7defc257e65a",
+    "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/mesh.json": "3a6b5bb720bd3998f035abecf15d5c603d46c5ed281ce1d08c4aadec69c1dab9",
+    "outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+  },
+  "meshes": {
+    "12": {
+      "area_m2": 5.0122057812499815e-05,
+      "area_over_exact_circle": 0.9971466573496371,
+      "axial_layers": 6,
+      "elements": 2592,
+      "height_m": 0.00489159,
+      "hosts": [
+        {
+          "cell_id": 392,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            0.0,
+            0.0,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.7063566917793017e-17,
+          "weights": [
+            -4.9836842355161404e-27,
+            4.998779168375266e-14,
+            0.4999999999999999,
+            -4.984901380566455e-14,
+            -4.9836842355161404e-27,
+            4.998779168375266e-14,
+            0.4999999999999999,
+            -4.984901380566455e-14
+          ]
+        },
+        {
+          "cell_id": 176,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            0.001,
+            0.0,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.3146726315974225e-17,
+          "weights": [
+            2.4003994847700212e-24,
+            3.896355460495202e-12,
+            0.49999999999579564,
+            3.080313781798493e-13,
+            2.4003994847700212e-24,
+            3.896355460495202e-12,
+            0.49999999999579564,
+            3.080313781798493e-13
+          ]
+        },
+        {
+          "cell_id": 236,
+          "nearest_node_distance_m": 0.00041162490301368664,
+          "point_m": [
+            0.0007071067811865476,
+            0.0007071067811865475,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 2.5529450499637028e-17,
+          "weights": [
+            0.007359312880754417,
+            0.05330085890086814,
+            0.38603896932078574,
+            0.05330085889759171,
+            0.007359312880754417,
+            0.05330085890086814,
+            0.38603896932078574,
+            0.05330085889759171
+          ]
+        },
+        {
+          "cell_id": 374,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            6.123233995736766e-20,
+            0.001,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.329038171019829e-17,
+          "weights": [
+            -3.0494241387554124e-24,
+            3.913258606078014e-13,
+            0.5000000000035049,
+            -3.896272193767706e-12,
+            -3.0494241387554124e-24,
+            3.913258606078014e-13,
+            0.5000000000035049,
+            -3.896272193767706e-12
+          ]
+        },
+        {
+          "cell_id": 596,
+          "nearest_node_distance_m": 0.00041162490301368664,
+          "point_m": [
+            -0.0007071067811865475,
+            0.0007071067811865476,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 2.5529450499637028e-17,
+          "weights": [
+            0.053300858897591785,
+            0.007359312880754478,
+            0.05330085890086844,
+            0.3860389693207853,
+            0.053300858897591785,
+            0.007359312880754478,
+            0.05330085890086844,
+            0.3860389693207853
+          ]
+        },
+        {
+          "cell_id": 608,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            -0.001,
+            1.2246467991473531e-19,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.575456796343304e-17,
+          "weights": [
+            2.297098244757455e-24,
+            -3.79640763270802e-12,
+            0.5000000000040989,
+            -3.0253577421265227e-13,
+            2.297098244757455e-24,
+            -3.79640763270802e-12,
+            0.5000000000040989,
+            -3.0253577421265227e-13
+          ]
+        },
+        {
+          "cell_id": 626,
+          "nearest_node_distance_m": 0.00041162490301368664,
+          "point_m": [
+            -0.0007071067811865477,
+            -0.0007071067811865475,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 2.5607377231233674e-17,
+          "weights": [
+            0.3860389693207855,
+            0.05330085889759182,
+            0.0073593128807544405,
+            0.05330085890086817,
+            0.3860389693207855,
+            0.05330085889759182,
+            0.0073593128807544405,
+            0.05330085890086817
+          ]
+        },
+        {
+          "cell_id": 410,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            -1.8369701987210298e-19,
+            -0.001,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.572310538145924e-17,
+          "weights": [
+            -3.0119823997145405e-24,
+            -3.9668268669555647e-13,
+            0.4999999999966002,
+            3.796463143859966e-12,
+            -3.0119823997145405e-24,
+            -3.9668268669555647e-13,
+            0.4999999999966002,
+            3.796463143859966e-12
+          ]
+        },
+        {
+          "cell_id": 266,
+          "nearest_node_distance_m": 0.00041162490301368664,
+          "point_m": [
+            0.0007071067811865474,
+            -0.0007071067811865477,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 2.5454056185335737e-17,
+          "weights": [
+            0.05330085890086793,
+            0.38603896932078585,
+            0.05330085889759188,
+            0.00735931288075441,
+            0.05330085890086793,
+            0.38603896932078585,
+            0.05330085889759188,
+            0.00735931288075441
+          ]
+        },
+        {
+          "cell_id": 32,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            0.002,
+            0.0,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.1174059511315036e-17,
+          "weights": [
+            7.64319163515437e-12,
+            -5.566584651740426e-25,
+            -3.6415315207148476e-14,
+            0.4999999999923932,
+            7.64319163515437e-12,
+            -5.566584651740426e-25,
+            -3.6415315207148476e-14,
+            0.4999999999923932
+          ]
+        },
+        {
+          "cell_id": 80,
+          "nearest_node_distance_m": 0.00042337628412015464,
+          "point_m": [
+            0.0014142135623730952,
+            0.001414213562373095,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.7634874126387873e-17,
+          "weights": [
+            0.029437251523021363,
+            0.09188309203849628,
+            0.2867965644030687,
+            0.09188309203541359,
+            0.029437251523021363,
+            0.09188309203849628,
+            0.2867965644030687,
+            0.09188309203541359
+          ]
+        },
+        {
+          "cell_id": 362,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            1.2246467991473531e-19,
+            0.002,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.115045257819844e-17,
+          "weights": [
+            -7.64305285727518e-12,
+            0.5000000000076067,
+            3.633204848141362e-14,
+            -5.553755339046082e-25,
+            -7.64305285727518e-12,
+            0.5000000000076067,
+            3.633204848141362e-14,
+            -5.553755339046082e-25
+          ]
+        },
+        {
+          "cell_id": 728,
+          "nearest_node_distance_m": 0.0004233762841201548,
+          "point_m": [
+            -0.001414213562373095,
+            0.0014142135623730952,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.7788847046432204e-17,
+          "weights": [
+            0.09188309203541387,
+            0.02943725152302146,
+            0.09188309203849619,
+            0.28679656440306844,
+            0.09188309203541387,
+            0.02943725152302146,
+            0.09188309203849619,
+            0.28679656440306844
+          ]
+        },
+        {
+          "cell_id": 824,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            -0.002,
+            2.4492935982947063e-19,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.0856656914388106e-17,
+          "weights": [
+            -5.46882096568199e-25,
+            -7.642941834972725e-12,
+            0.5000000000076072,
+            3.577693696909256e-14,
+            -5.46882096568199e-25,
+            -7.642941834972725e-12,
+            0.5000000000076072,
+            3.577693696909256e-14
+          ]
+        },
+        {
+          "cell_id": 782,
+          "nearest_node_distance_m": 0.00042337628412015475,
+          "point_m": [
+            -0.0014142135623730955,
+            -0.001414213562373095,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.7633540928568812e-17,
+          "weights": [
+            0.2867965644030681,
+            0.09188309203541431,
+            0.029437251523021575,
+            0.091883092038496,
+            0.2867965644030681,
+            0.09188309203541431,
+            0.029437251523021575,
+            0.091883092038496
+          ]
+        },
+        {
+          "cell_id": 428,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            -3.6739403974420597e-19,
+            -0.002,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.120668533150526e-17,
+          "weights": [
+            -5.523715084366959e-25,
+            -3.613775945099648e-14,
+            0.49999999999239364,
+            7.64258101249082e-12,
+            -5.523715084366959e-25,
+            -3.613775945099648e-14,
+            0.49999999999239364,
+            7.64258101249082e-12
+          ]
+        },
+        {
+          "cell_id": 134,
+          "nearest_node_distance_m": 0.00042337628412015475,
+          "point_m": [
+            0.0014142135623730948,
+            -0.0014142135623730955,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.7479544950190464e-17,
+          "weights": [
+            0.09188309203849591,
+            0.2867965644030683,
+            0.09188309203541427,
+            0.02943725152302152,
+            0.09188309203849591,
+            0.2867965644030683,
+            0.09188309203541427,
+            0.02943725152302152
+          ]
+        },
+        {
+          "cell_id": 2336,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            0.003,
+            0.0,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.4079916526813939e-16,
+          "weights": [
+            -2.9894904432188045e-18,
+            5.363120617266283e-09,
+            0.4999999949155873,
+            -2.787081091552082e-10,
+            -2.989490443218807e-18,
+            5.363120617266289e-09,
+            0.4999999949155878,
+            -2.7870810915520847e-10
+          ]
+        },
+        {
+          "cell_id": 866,
+          "nearest_node_distance_m": 0.00040832026229277224,
+          "point_m": [
+            0.002121320343559643,
+            0.0021213203435596424,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 2.168404344971009e-19,
+          "weights": [
+            0.06066017177955115,
+            0.43933982822044904,
+            -3.9021215434016256e-16,
+            -5.3877055509899826e-17,
+            0.060660171779551214,
+            0.4393398282204495,
+            -3.9021215434016296e-16,
+            -5.387705550989988e-17
+          ]
+        },
+        {
+          "cell_id": 1040,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            1.8369701987210298e-19,
+            0.003,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.4073669900992883e-16,
+          "weights": [
+            -2.9894905515186616e-18,
+            5.363120811555312e-09,
+            0.49999999491558705,
+            -2.787081091552081e-10,
+            -2.9894905515186643e-18,
+            5.363120811555318e-09,
+            0.49999999491558755,
+            -2.7870810915520837e-10
+          ]
+        },
+        {
+          "cell_id": 932,
+          "nearest_node_distance_m": 0.00040832026229277224,
+          "point_m": [
+            -0.0021213203435596424,
+            0.002121320343559643,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 0.0,
+          "weights": [
+            4.3775107601792774e-17,
+            3.170473754013831e-16,
+            0.43933982822044976,
+            0.060660171779549896,
+            4.3775107601792774e-17,
+            3.170473754013831e-16,
+            0.43933982822044976,
+            0.060660171779549896
+          ]
+        },
+        {
+          "cell_id": 1472,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            -0.003,
+            3.6739403974420597e-19,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.4073055475516838e-16,
+          "weights": [
+            -2.989490675289927e-18,
+            5.363121033599917e-09,
+            0.49999999491558683,
+            -2.7870810915520796e-10,
+            -2.9894906752899296e-18,
+            5.363121033599923e-09,
+            0.49999999491558733,
+            -2.787081091552082e-10
+          ]
+        },
+        {
+          "cell_id": 1364,
+          "nearest_node_distance_m": 0.0004083202622927722,
+          "point_m": [
+            -0.0021213203435596433,
+            -0.0021213203435596424,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 6.133173666733497e-19,
+          "weights": [
+            1.7173311443779484e-16,
+            1.2438012419592788e-15,
+            0.4393398282204512,
+            0.06066017177954709,
+            1.7173311443779502e-16,
+            1.2438012419592802e-15,
+            0.43933982822045164,
+            0.060660171779547155
+          ]
+        },
+        {
+          "cell_id": 1904,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            -5.510910596163089e-19,
+            -0.003,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.4072441050957887e-16,
+          "weights": [
+            -2.9894907990611922e-18,
+            5.363121255644522e-09,
+            0.4999999949155866,
+            -2.7870810915520785e-10,
+            -2.989490799061195e-18,
+            5.363121255644528e-09,
+            0.4999999949155871,
+            -2.787081091552081e-10
+          ]
+        },
+        {
+          "cell_id": 1796,
+          "nearest_node_distance_m": 0.00040832026229277224,
+          "point_m": [
+            0.002121320343559642,
+            -0.0021213203435596433,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 6.505213034913027e-19,
+          "weights": [
+            2.4918138173327797e-16,
+            1.8047312138232615e-15,
+            0.4393398282204492,
+            0.060660171779548716,
+            2.4918138173327797e-16,
+            1.8047312138232615e-15,
+            0.4393398282204492,
+            0.060660171779548716
+          ]
+        },
+        {
+          "cell_id": 393,
+          "nearest_node_distance_m": 0.0,
+          "point_m": [
+            0.0,
+            0.0,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.7065565014368125e-17,
+          "weights": [
+            -5.5330009857314404e-43,
+            5.549759727746812e-30,
+            5.5511151231257815e-17,
+            -5.534352288190608e-30,
+            -9.967368471032281e-27,
+            9.997558336750532e-14,
+            0.9999999999999998,
+            -9.96980276113291e-14
+          ]
+        },
+        {
+          "cell_id": 177,
+          "nearest_node_distance_m": 2.5749082771869766e-15,
+          "point_m": [
+            0.001,
+            0.0,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.3146726315974256e-17,
+          "weights": [
+            2.6649787762900403e-40,
+            4.3258235443657275e-28,
+            5.551115123079105e-17,
+            3.4198352836228776e-29,
+            4.8007989695400424e-24,
+            7.792710920990403e-12,
+            0.9999999999915913,
+            6.160627563596986e-13
+          ]
+        },
+        {
+          "cell_id": 237,
+          "nearest_node_distance_m": 5.719095841806598e-05,
+          "point_m": [
+            0.0007071067811865476,
+            0.0007071067811865475,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 2.5529450499637028e-17,
+          "weights": [
+            8.170478605634028e-19,
+            5.917584078404048e-18,
+            4.285893521425009e-17,
+            5.91758407804029e-18,
+            0.014718625761508806,
+            0.1066017178017362,
+            0.7720779386415717,
+            0.10660171779518332
+          ]
+        },
+        {
+          "cell_id": 375,
+          "nearest_node_distance_m": 2.574847295814012e-15,
+          "point_m": [
+            6.123233995736766e-20,
+            0.001,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.329201090197564e-17,
+          "weights": [
+            -3.385300764380734e-40,
+            4.344281656989253e-29,
+            5.551115123164694e-17,
+            -4.325731099727677e-28,
+            -6.098415704400852e-24,
+            7.825962100643712e-13,
+            1.0000000000070097,
+            -7.792544387535412e-12
+          ]
+        },
+        {
+          "cell_id": 597,
+          "nearest_node_distance_m": 5.7190958418066135e-05,
+          "point_m": [
+            -0.0007071067811865475,
+            0.0007071067811865476,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 2.5530371375823154e-17,
+          "weights": [
+            5.917584078040309e-18,
+            8.170478605634117e-19,
+            5.917584078404085e-18,
+            4.285893521425002e-17,
+            0.10660171779518367,
+            0.014718625761508968,
+            0.10660171780173687,
+            0.7720779386415705
+          ]
+        },
+        {
+          "cell_id": 609,
+          "nearest_node_distance_m": 2.5747519490015537e-15,
+          "point_m": [
+            -0.001,
+            1.2246467991473531e-19,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.5607892452085976e-17,
+          "weights": [
+            2.5502913611557598e-40,
+            -4.2148591646951285e-28,
+            5.55111512317129e-17,
+            -3.3588218230368424e-29,
+            4.59419648951491e-24,
+            -7.59281526541604e-12,
+            1.0000000000081979,
+            -6.050715484253045e-13
+          ]
+        },
+        {
+          "cell_id": 627,
+          "nearest_node_distance_m": 5.719095841806621e-05,
+          "point_m": [
+            -0.0007071067811865477,
+            -0.0007071067811865475,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 2.5456826895910006e-17,
+          "weights": [
+            4.285893521425005e-17,
+            5.917584078040313e-18,
+            8.170478605634077e-19,
+            5.917584078404055e-18,
+            0.772077938641571,
+            0.10660171779518374,
+            0.014718625761508895,
+            0.10660171780173633
+          ]
+        },
+        {
+          "cell_id": 411,
+          "nearest_node_distance_m": 2.5747253331050098e-15,
+          "point_m": [
+            -1.8369701987210298e-19,
+            -0.001,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.5871975106741967e-17,
+          "weights": [
+            -3.3439722099288144e-40,
+            -4.4040625223957405e-29,
+            5.5511151230880376e-17,
+            4.214920794454143e-28,
+            -6.023964799429081e-24,
+            -7.933653733911129e-13,
+            0.9999999999932004,
+            7.592926287719933e-12
+          ]
+        },
+        {
+          "cell_id": 267,
+          "nearest_node_distance_m": 5.7190958418066135e-05,
+          "point_m": [
+            0.0007071067811865474,
+            -0.0007071067811865477,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 2.5456826895910006e-17,
+          "weights": [
+            5.917584078404022e-18,
+            4.2858935214250076e-17,
+            5.91758407804032e-18,
+            8.170478605634035e-19,
+            0.10660171780173573,
+            0.7720779386415715,
+            0.10660171779518386,
+            0.01471862576150882
+          ]
+        },
+        {
+          "cell_id": 33,
+          "nearest_node_distance_m": 5.12870995672543e-15,
+          "point_m": [
+            0.002,
+            0.0,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.117405951131534e-17,
+          "weights": [
+            8.485647334970782e-28,
+            -6.198992370987495e-41,
+            -4.055238090839774e-30,
+            5.5511151230413314e-17,
+            1.5286383270308742e-11,
+            -1.1167111892820732e-24,
+            -7.305267501921859e-14,
+            0.9999999999847866
+          ]
+        },
+        {
+          "cell_id": 81,
+          "nearest_node_distance_m": 0.00011438191683627242,
+          "point_m": [
+            0.0014142135623730952,
+            0.001414213562373095,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.7633540928568812e-17,
+          "weights": [
+            3.2681914422540328e-18,
+            1.0201072435489097e-17,
+            3.1840814918367834e-17,
+            1.0201072435146863e-17,
+            0.058874503046042824,
+            0.18376618407699255,
+            0.5735931288061372,
+            0.1837661840708274
+          ]
+        },
+        {
+          "cell_id": 363,
+          "nearest_node_distance_m": 5.128587492045515e-15,
+          "point_m": [
+            1.2246467991473531e-19,
+            0.002,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.137990357765794e-17,
+          "weights": [
+            -8.485554890332214e-28,
+            5.551115123210234e-17,
+            4.036749163497353e-30,
+            -6.170662262459108e-41,
+            -1.528621673685282e-11,
+            1.0000000000152134,
+            7.271960811405937e-14,
+            -1.1116076906336008e-24
+          ]
+        },
+        {
+          "cell_id": 729,
+          "nearest_node_distance_m": 0.00011438191683627303,
+          "point_m": [
+            -0.001414213562373095,
+            0.0014142135623730952,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.7479544950190464e-17,
+          "weights": [
+            1.0201072435146886e-17,
+            3.268191442254035e-18,
+            1.0201072435489077e-17,
+            3.184081491836783e-17,
+            0.18376618407082781,
+            0.058874503046042866,
+            0.1837661840769922,
+            0.5735931288061371
+          ]
+        },
+        {
+          "cell_id": 825,
+          "nearest_node_distance_m": 5.128465027365601e-15,
+          "point_m": [
+            -0.002,
+            2.4492935982947063e-19,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.061368106133917e-17,
+          "weights": [
+            -6.071610953652929e-41,
+            -8.485370001057563e-28,
+            5.55111512321024e-17,
+            3.972037917364952e-30,
+            -1.093764193136398e-24,
+            -1.528588366994545e-11,
+            1.0000000000152145,
+            7.155387393818512e-14
+          ]
+        },
+        {
+          "cell_id": 783,
+          "nearest_node_distance_m": 0.00011438191683627288,
+          "point_m": [
+            -0.0014142135623730955,
+            -0.001414213562373095,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.7633540928568812e-17,
+          "weights": [
+            3.184081491836779e-17,
+            1.0201072435146924e-17,
+            3.2681914422540463e-18,
+            1.0201072435489062e-17,
+            0.5735931288061364,
+            0.1837661840708285,
+            0.05887450304604307,
+            0.1837661840769919
+          ]
+        },
+        {
+          "cell_id": 429,
+          "nearest_node_distance_m": 5.128342562685686e-15,
+          "point_m": [
+            -3.6739403974420597e-19,
+            -0.002,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.0954306191915604e-17,
+          "weights": [
+            -6.151396084932668e-41,
+            -4.0244232117300545e-30,
+            5.551115123041335e-17,
+            8.48496940763035e-28,
+            -1.1081370046364436e-24,
+            -7.249756350691459e-14,
+            0.9999999999847873,
+            1.528516202498164e-11
+          ]
+        },
+        {
+          "cell_id": 135,
+          "nearest_node_distance_m": 0.00011438191683627288,
+          "point_m": [
+            0.0014142135623730948,
+            -0.0014142135623730955,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.7644203690497756e-17,
+          "weights": [
+            1.0201072435489054e-17,
+            3.1840814918367815e-17,
+            1.0201072435146923e-17,
+            3.26819144225404e-18,
+            0.18376618407699177,
+            0.5735931288061369,
+            0.18376618407082848,
+            0.058874503046042956
+          ]
+        },
+        {
+          "cell_id": 2337,
+          "nearest_node_distance_m": 4.587956652212661e-12,
+          "point_m": [
+            0.003,
+            0.0,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.4056437015380528e-16,
+          "weights": [
+            -3.318983934511391e-34,
+            5.954259993130894e-25,
+            5.551115066677448e-17,
+            -3.0942655756015715e-26,
+            -5.978949924285665e-18,
+            1.072624123453254e-08,
+            0.999999989831172,
+            -5.574133317305836e-10
+          ]
+        },
+        {
+          "cell_id": 867,
+          "nearest_node_distance_m": 2.3689270621704702e-05,
+          "point_m": [
+            0.002121320343559643,
+            0.0021213203435596424,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.2266347333466993e-18,
+          "weights": [
+            6.734631938737334e-18,
+            4.877651929252054e-17,
+            -4.3322251823703527e-32,
+            -5.9815547526097106e-33,
+            0.1213203435590996,
+            0.8786796564409013,
+            -7.80424308680328e-16,
+            -1.0775411101979725e-16
+          ]
+        },
+        {
+          "cell_id": 1041,
+          "nearest_node_distance_m": 4.587956835909659e-12,
+          "point_m": [
+            1.8369701987210298e-19,
+            0.003,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.405066519355255e-16,
+          "weights": [
+            -3.318984054747763e-34,
+            5.954260208835048e-25,
+            5.5511150666774453e-17,
+            -3.0942655756015704e-26,
+            -5.978950140884258e-18,
+            1.0726241623110598e-08,
+            0.9999999898311716,
+            -5.574133317305834e-10
+          ]
+        },
+        {
+          "cell_id": 933,
+          "nearest_node_distance_m": 2.3689270621704702e-05,
+          "point_m": [
+            -0.0021213203435596424,
+            0.002121320343559643,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.336808689942018e-19,
+          "weights": [
+            -5.682477014979226e-32,
+            -4.115613923251835e-31,
+            -3.9021215434016355e-16,
+            -5.387705550989856e-17,
+            1.279580068360093e-16,
+            9.267538665578899e-16,
+            0.8786796564409,
+            0.1213203435590994
+          ]
+        },
+        {
+          "cell_id": 1473,
+          "nearest_node_distance_m": 4.587957019606656e-12,
+          "point_m": [
+            -0.003,
+            3.6739403974420597e-19,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.4050049762032414e-16,
+          "weights": [
+            -3.31898419216076e-34,
+            5.954260455354081e-25,
+            5.551115066677443e-17,
+            -3.094265575601569e-26,
+            -5.978950388425506e-18,
+            1.0726242067199808e-08,
+            0.9999999898311711,
+            -5.574133317305832e-10
+          ]
+        },
+        {
+          "cell_id": 1365,
+          "nearest_node_distance_m": 2.3689270621704394e-05,
+          "point_m": [
+            -0.0021213203435596433,
+            -0.0021213203435596424,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 7.511572993685796e-19,
+          "weights": [
+            1.521557990195105e-31,
+            1.1020097807654574e-30,
+            5.365417122177239e-16,
+            7.408095132611094e-17,
+            2.491813817332826e-16,
+            1.8047312138232556e-15,
+            0.8786796564408974,
+            0.12132034355909994
+          ]
+        },
+        {
+          "cell_id": 1905,
+          "nearest_node_distance_m": 4.587957203303654e-12,
+          "point_m": [
+            -5.510910596163089e-19,
+            -0.003,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.4049434331422377e-16,
+          "weights": [
+            -3.318984329573757e-34,
+            5.954260701873114e-25,
+            5.5511150666774404e-17,
+            -3.0942655756015675e-26,
+            -5.978950635966755e-18,
+            1.0726242511289018e-08,
+            0.9999999898311707,
+            -5.574133317305829e-10
+          ]
+        },
+        {
+          "cell_id": 1797,
+          "nearest_node_distance_m": 2.3689270621704702e-05,
+          "point_m": [
+            0.002121320343559642,
+            -0.0021213203435596433,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.336808689942018e-19,
+          "weights": [
+            2.3440217686788877e-31,
+            1.6976907433413863e-30,
+            5.365417122177252e-16,
+            7.408095132610902e-17,
+            3.8387402050802044e-16,
+            2.7802615996736735e-15,
+            0.8786796564408994,
+            0.12132034355909681
+          ]
+        },
+        {
+          "cell_id": 395,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            0.0,
+            0.0,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.7063566917793017e-17,
+          "weights": [
+            -4.9836842355161404e-27,
+            4.998779168375266e-14,
+            0.4999999999999999,
+            -4.984901380566455e-14,
+            -4.9836842355161404e-27,
+            4.998779168375266e-14,
+            0.4999999999999999,
+            -4.984901380566455e-14
+          ]
+        },
+        {
+          "cell_id": 179,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            0.001,
+            0.0,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.314890579008597e-17,
+          "weights": [
+            2.4003994847700212e-24,
+            3.896355460495202e-12,
+            0.49999999999579564,
+            3.080313781798493e-13,
+            2.4003994847700212e-24,
+            3.896355460495202e-12,
+            0.49999999999579564,
+            3.080313781798493e-13
+          ]
+        },
+        {
+          "cell_id": 239,
+          "nearest_node_distance_m": 0.00041162490301368664,
+          "point_m": [
+            0.0007071067811865476,
+            0.0007071067811865475,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 2.5533133805108e-17,
+          "weights": [
+            0.007359312880754417,
+            0.05330085890086814,
+            0.38603896932078574,
+            0.05330085889759171,
+            0.007359312880754417,
+            0.05330085890086814,
+            0.38603896932078574,
+            0.05330085889759171
+          ]
+        },
+        {
+          "cell_id": 377,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            6.123233995736766e-20,
+            0.001,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.329201090197554e-17,
+          "weights": [
+            -3.0494241387554124e-24,
+            3.913258606078014e-13,
+            0.5000000000035049,
+            -3.896272193767706e-12,
+            -3.0494241387554124e-24,
+            3.913258606078014e-13,
+            0.5000000000035049,
+            -3.896272193767706e-12
+          ]
+        },
+        {
+          "cell_id": 599,
+          "nearest_node_distance_m": 0.00041162490301368664,
+          "point_m": [
+            -0.0007071067811865475,
+            0.0007071067811865476,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 2.5529450499637028e-17,
+          "weights": [
+            0.053300858897591785,
+            0.007359312880754478,
+            0.05330085890086844,
+            0.3860389693207853,
+            0.053300858897591785,
+            0.007359312880754478,
+            0.05330085890086844,
+            0.3860389693207853
+          ]
+        },
+        {
+          "cell_id": 611,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            -0.001,
+            1.2246467991473531e-19,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.575456796343304e-17,
+          "weights": [
+            2.297098244757455e-24,
+            -3.79640763270802e-12,
+            0.5000000000040989,
+            -3.0253577421265227e-13,
+            2.297098244757455e-24,
+            -3.79640763270802e-12,
+            0.5000000000040989,
+            -3.0253577421265227e-13
+          ]
+        },
+        {
+          "cell_id": 629,
+          "nearest_node_distance_m": 0.00041162490301368664,
+          "point_m": [
+            -0.0007071067811865477,
+            -0.0007071067811865475,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 2.5610131354305928e-17,
+          "weights": [
+            0.3860389693207855,
+            0.05330085889759182,
+            0.0073593128807544405,
+            0.05330085890086817,
+            0.3860389693207855,
+            0.05330085889759182,
+            0.0073593128807544405,
+            0.05330085890086817
+          ]
+        },
+        {
+          "cell_id": 413,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            -1.8369701987210298e-19,
+            -0.001,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.5722591198990395e-17,
+          "weights": [
+            -3.0119823997145405e-24,
+            -3.9668268669555647e-13,
+            0.4999999999966002,
+            3.796463143859966e-12,
+            -3.0119823997145405e-24,
+            -3.9668268669555647e-13,
+            0.4999999999966002,
+            3.796463143859966e-12
+          ]
+        },
+        {
+          "cell_id": 269,
+          "nearest_node_distance_m": 0.00041162490301368664,
+          "point_m": [
+            0.0007071067811865474,
+            -0.0007071067811865477,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 2.546790672388922e-17,
+          "weights": [
+            0.05330085890086793,
+            0.38603896932078585,
+            0.05330085889759188,
+            0.00735931288075441,
+            0.05330085890086793,
+            0.38603896932078585,
+            0.05330085889759188,
+            0.00735931288075441
+          ]
+        },
+        {
+          "cell_id": 35,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            0.002,
+            0.0,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.1174059511315036e-17,
+          "weights": [
+            7.64319163515437e-12,
+            -5.566584651740426e-25,
+            -3.6415315207148476e-14,
+            0.4999999999923932,
+            7.64319163515437e-12,
+            -5.566584651740426e-25,
+            -3.6415315207148476e-14,
+            0.4999999999923932
+          ]
+        },
+        {
+          "cell_id": 83,
+          "nearest_node_distance_m": 0.00042337628412015464,
+          "point_m": [
+            0.0014142135623730952,
+            0.001414213562373095,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.763887311524302e-17,
+          "weights": [
+            0.029437251523021363,
+            0.09188309203849628,
+            0.2867965644030687,
+            0.09188309203541359,
+            0.029437251523021363,
+            0.09188309203849628,
+            0.2867965644030687,
+            0.09188309203541359
+          ]
+        },
+        {
+          "cell_id": 365,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            1.2246467991473531e-19,
+            0.002,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.115216648868753e-17,
+          "weights": [
+            -7.64305285727518e-12,
+            0.5000000000076067,
+            3.633204848141362e-14,
+            -5.553755339046082e-25,
+            -7.64305285727518e-12,
+            0.5000000000076067,
+            3.633204848141362e-14,
+            -5.553755339046082e-25
+          ]
+        },
+        {
+          "cell_id": 731,
+          "nearest_node_distance_m": 0.0004233762841201548,
+          "point_m": [
+            -0.001414213562373095,
+            0.0014142135623730952,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.7788847046432204e-17,
+          "weights": [
+            0.09188309203541387,
+            0.02943725152302146,
+            0.09188309203849619,
+            0.28679656440306844,
+            0.09188309203541387,
+            0.02943725152302146,
+            0.09188309203849619,
+            0.28679656440306844
+          ]
+        },
+        {
+          "cell_id": 827,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            -0.002,
+            2.4492935982947063e-19,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.085838314889756e-17,
+          "weights": [
+            -5.46882096568199e-25,
+            -7.642941834972725e-12,
+            0.5000000000076072,
+            3.577693696909256e-14,
+            -5.46882096568199e-25,
+            -7.642941834972725e-12,
+            0.5000000000076072,
+            3.577693696909256e-14
+          ]
+        },
+        {
+          "cell_id": 785,
+          "nearest_node_distance_m": 0.00042337628412015475,
+          "point_m": [
+            -0.0014142135623730955,
+            -0.001414213562373095,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.7633540928568812e-17,
+          "weights": [
+            0.2867965644030681,
+            0.09188309203541431,
+            0.029437251523021575,
+            0.091883092038496,
+            0.2867965644030681,
+            0.09188309203541431,
+            0.029437251523021575,
+            0.091883092038496
+          ]
+        },
+        {
+          "cell_id": 431,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            -3.6739403974420597e-19,
+            -0.002,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.121524247921131e-17,
+          "weights": [
+            -5.523715084366959e-25,
+            -3.613775945099648e-14,
+            0.49999999999239364,
+            7.64258101249082e-12,
+            -5.523715084366959e-25,
+            -3.613775945099648e-14,
+            0.49999999999239364,
+            7.64258101249082e-12
+          ]
+        },
+        {
+          "cell_id": 137,
+          "nearest_node_distance_m": 0.00042337628412015475,
+          "point_m": [
+            0.0014142135623730948,
+            -0.0014142135623730955,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.7479544950190464e-17,
+          "weights": [
+            0.09188309203849591,
+            0.2867965644030683,
+            0.09188309203541427,
+            0.02943725152302152,
+            0.09188309203849591,
+            0.2867965644030683,
+            0.09188309203541427,
+            0.02943725152302152
+          ]
+        },
+        {
+          "cell_id": 2339,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            0.003,
+            0.0,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.408050092584485e-16,
+          "weights": [
+            -2.9894904432188026e-18,
+            5.3631206172662804e-09,
+            0.499999994915587,
+            -2.7870810915520806e-10,
+            -2.9894904432188095e-18,
+            5.363120617266292e-09,
+            0.4999999949155881,
+            -2.787081091552087e-10
+          ]
+        },
+        {
+          "cell_id": 869,
+          "nearest_node_distance_m": 0.00040832026229277224,
+          "point_m": [
+            0.002121320343559643,
+            0.0021213203435596424,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 8.673617379884035e-19,
+          "weights": [
+            0.06066017177955132,
+            0.43933982822045026,
+            -3.9021215434016365e-16,
+            -5.3877055509899974e-17,
+            0.06066017177955106,
+            0.4393398282204483,
+            -3.902121543401619e-16,
+            -5.3877055509899746e-17
+          ]
+        },
+        {
+          "cell_id": 1043,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            1.8369701987210298e-19,
+            0.003,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.40822201987087e-16,
+          "weights": [
+            -2.9894905515186597e-18,
+            5.36312081155531e-09,
+            0.4999999949155868,
+            -2.7870810915520796e-10,
+            -2.9894905515186666e-18,
+            5.363120811555321e-09,
+            0.4999999949155879,
+            -2.787081091552086e-10
+          ]
+        },
+        {
+          "cell_id": 935,
+          "nearest_node_distance_m": 0.00040832026229277224,
+          "point_m": [
+            -0.0021213203435596424,
+            0.002121320343559643,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 6.133173666733497e-19,
+          "weights": [
+            1.111214269891639e-16,
+            8.048125683265912e-16,
+            0.43933982822045115,
+            0.060660171779548536,
+            1.1112142698916366e-16,
+            8.048125683265894e-16,
+            0.43933982822045015,
+            0.0606601717795484
+          ]
+        },
+        {
+          "cell_id": 1475,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            -0.003,
+            3.6739403974420597e-19,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.4081071881492136e-16,
+          "weights": [
+            -2.9894906752899285e-18,
+            5.3631210335999204e-09,
+            0.4999999949155871,
+            -2.787081091552081e-10,
+            -2.9894906752899285e-18,
+            5.3631210335999204e-09,
+            0.4999999949155871,
+            -2.787081091552081e-10
+          ]
+        },
+        {
+          "cell_id": 1367,
+          "nearest_node_distance_m": 0.0004083202622927722,
+          "point_m": [
+            -0.0021213203435596433,
+            -0.0021213203435596424,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 6.133173666733497e-19,
+          "weights": [
+            1.7173311443779494e-16,
+            1.2438012419592796e-15,
+            0.4393398282204514,
+            0.06066017177954713,
+            1.7173311443779494e-16,
+            1.2438012419592796e-15,
+            0.4393398282204514,
+            0.06066017177954713
+          ]
+        },
+        {
+          "cell_id": 1907,
+          "nearest_node_distance_m": 0.00040763249999999996,
+          "point_m": [
+            -5.510910596163089e-19,
+            -0.003,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.4080658167169757e-16,
+          "weights": [
+            -2.9894907990611903e-18,
+            5.3631212556445196e-09,
+            0.49999999491558633,
+            -2.787081091552077e-10,
+            -2.9894907990611972e-18,
+            5.363121255644531e-09,
+            0.49999999491558744,
+            -2.787081091552083e-10
+          ]
+        },
+        {
+          "cell_id": 1799,
+          "nearest_node_distance_m": 0.00040832026229277224,
+          "point_m": [
+            0.002121320343559642,
+            -0.0021213203435596433,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 0.0,
+          "weights": [
+            2.4918138173327807e-16,
+            1.8047312138232615e-15,
+            0.4393398282204492,
+            0.060660171779548744,
+            2.4918138173327807e-16,
+            1.8047312138232615e-15,
+            0.4393398282204492,
+            0.060660171779548744
+          ]
+        }
+      ],
+      "max_rest_map_error_m": 1.40822201987087e-16,
+      "mesh_sha256": "0ed154be0d17c8baaac6ee0288381a53ec100f93cd936a194202f69ef32ae033",
+      "nodes": 3199,
+      "radius_m": 0.004,
+      "rest_volume_m3": 2.45176556775046e-07
+    },
+    "4": {
+      "area_m2": 4.898347934273145e-05,
+      "area_over_exact_circle": 0.9744953584044319,
+      "axial_layers": 2,
+      "elements": 96,
+      "height_m": 0.00489159,
+      "hosts": [
+        {
+          "cell_id": 11,
+          "nearest_node_distance_m": 0.0012228975,
+          "point_m": [
+            0.0,
+            0.0,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.86728763488134e-16,
+          "weights": [
+            -5.922617299789299e-26,
+            1.7197354651449597e-13,
+            0.5000000000000002,
+            -1.7219559111930256e-13,
+            -5.922617299789299e-26,
+            1.7197354651449597e-13,
+            0.5000000000000002,
+            -1.7219559111930256e-13
+          ]
+        },
+        {
+          "cell_id": 3,
+          "nearest_node_distance_m": 0.0012228975,
+          "point_m": [
+            0.001,
+            0.0,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.548439165006326e-16,
+          "weights": [
+            -9.316817069209472e-26,
+            1.4543921622590482e-12,
+            0.4999999999985776,
+            -3.20299342603426e-14,
+            -9.316817069209472e-26,
+            1.4543921622590482e-12,
+            0.4999999999985776,
+            -3.20299342603426e-14
+          ]
+        },
+        {
+          "cell_id": 11,
+          "nearest_node_distance_m": 0.0012911433579427913,
+          "point_m": [
+            0.0007071067811865476,
+            0.0007071067811865475,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 8.333453246107193e-17,
+          "weights": [
+            0.2500000000001165,
+            0.10355339059383148,
+            0.042893218813404216,
+            0.10355339059264779,
+            0.2500000000001165,
+            0.10355339059383148,
+            0.042893218813404216,
+            0.10355339059264779
+          ]
+        },
+        {
+          "cell_id": 9,
+          "nearest_node_distance_m": 0.0012228975,
+          "point_m": [
+            6.123233995736766e-20,
+            0.001,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.548638461189628e-16,
+          "weights": [
+            -7.708795049768151e-25,
+            2.650379915544114e-13,
+            0.5000000000011893,
+            -1.4542811399557217e-12,
+            -7.708795049768151e-25,
+            2.650379915544114e-13,
+            0.5000000000011893,
+            -1.4542811399557217e-12
+          ]
+        },
+        {
+          "cell_id": 19,
+          "nearest_node_distance_m": 0.0012911433579427915,
+          "point_m": [
+            -0.0007071067811865475,
+            0.0007071067811865476,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 8.364119101511688e-17,
+          "weights": [
+            0.10355339059264777,
+            0.25000000000011646,
+            0.1035533905938315,
+            0.04289321881340423,
+            0.10355339059264777,
+            0.25000000000011646,
+            0.1035533905938315,
+            0.04289321881340423
+          ]
+        },
+        {
+          "cell_id": 19,
+          "nearest_node_distance_m": 0.0012228975,
+          "point_m": [
+            -0.001,
+            1.2246467991473531e-19,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.870134318512756e-16,
+          "weights": [
+            -1.2346898366302256e-25,
+            -1.1098899577176456e-12,
+            0.5000000000010543,
+            5.562217353384381e-14,
+            -1.2346898366302256e-25,
+            -1.1098899577176456e-12,
+            0.5000000000010543,
+            5.562217353384381e-14
+          ]
+        },
+        {
+          "cell_id": 21,
+          "nearest_node_distance_m": 0.0012911433579427915,
+          "point_m": [
+            -0.0007071067811865477,
+            -0.0007071067811865475,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 8.348786173797568e-17,
+          "weights": [
+            0.042893218813404195,
+            0.10355339059264786,
+            0.2500000000001166,
+            0.1035533905938314,
+            0.042893218813404195,
+            0.10355339059264786,
+            0.2500000000001166,
+            0.1035533905938314
+          ]
+        },
+        {
+          "cell_id": 13,
+          "nearest_node_distance_m": 0.0012228975,
+          "point_m": [
+            -1.8369701987210298e-19,
+            -0.001,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.869299621509524e-16,
+          "weights": [
+            -6.406660194191374e-25,
+            -2.8860247525066876e-13,
+            0.4999999999991787,
+            1.109945468869641e-12,
+            -6.406660194191374e-25,
+            -2.8860247525066876e-13,
+            0.4999999999991787,
+            1.109945468869641e-12
+          ]
+        },
+        {
+          "cell_id": 13,
+          "nearest_node_distance_m": 0.0012911433579427913,
+          "point_m": [
+            0.0007071067811865474,
+            -0.0007071067811865477,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 8.348786173797568e-17,
+          "weights": [
+            0.1035533905938314,
+            0.04289321881340423,
+            0.10355339059264788,
+            0.25000000000011646,
+            0.1035533905938314,
+            0.04289321881340423,
+            0.10355339059264788,
+            0.25000000000011646
+          ]
+        },
+        {
+          "cell_id": 3,
+          "nearest_node_distance_m": 0.0012228975,
+          "point_m": [
+            0.002,
+            0.0,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.545582087675444e-16,
+          "weights": [
+            2.392142040009303e-12,
+            -7.098983260059833e-25,
+            -1.4838130724044227e-13,
+            0.4999999999977562,
+            2.392142040009303e-12,
+            -7.098983260059833e-25,
+            -1.4838130724044227e-13,
+            0.4999999999977562
+          ]
+        },
+        {
+          "cell_id": 1,
+          "nearest_node_distance_m": 0.001355958718403424,
+          "point_m": [
+            0.0014142135623730952,
+            0.001414213562373095,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.2270179968253057e-17,
+          "weights": [
+            0.0857864376269615,
+            0.12132034356015034,
+            0.1715728752537299,
+            0.12132034355915824,
+            0.0857864376269615,
+            0.12132034356015034,
+            0.1715728752537299,
+            0.12132034355915824
+          ]
+        },
+        {
+          "cell_id": 9,
+          "nearest_node_distance_m": 0.0012228975,
+          "point_m": [
+            1.2246467991473531e-19,
+            0.002,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.550320394066452e-16,
+          "weights": [
+            -2.3921420400078835e-12,
+            0.5000000000022436,
+            1.4838130724186205e-13,
+            -7.098983260059833e-25,
+            -2.3921420400078835e-12,
+            0.5000000000022436,
+            1.4838130724186205e-13,
+            -7.098983260059833e-25
+          ]
+        },
+        {
+          "cell_id": 25,
+          "nearest_node_distance_m": 0.001355958718403424,
+          "point_m": [
+            -0.001414213562373095,
+            0.0014142135623730952,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.2420623116491257e-17,
+          "weights": [
+            0.12132034355915829,
+            0.08578643762696143,
+            0.12132034356015026,
+            0.17157287525373002,
+            0.12132034355915829,
+            0.08578643762696143,
+            0.12132034356015026,
+            0.17157287525373002
+          ]
+        },
+        {
+          "cell_id": 27,
+          "nearest_node_distance_m": 0.0012228975,
+          "point_m": [
+            -0.002,
+            2.4492935982947063e-19,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.548239601846696e-16,
+          "weights": [
+            -7.098653787372387e-25,
+            -2.392031017705421e-12,
+            0.5000000000022436,
+            1.4838130724186205e-13,
+            -7.098653787372387e-25,
+            -2.392031017705421e-12,
+            0.5000000000022436,
+            1.4838130724186205e-13
+          ]
+        },
+        {
+          "cell_id": 31,
+          "nearest_node_distance_m": 0.001355958718403424,
+          "point_m": [
+            -0.0014142135623730955,
+            -0.001414213562373095,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.24225157828819e-17,
+          "weights": [
+            0.1715728752537299,
+            0.12132034355915831,
+            0.08578643762696153,
+            0.1213203435601503,
+            0.1715728752537299,
+            0.12132034355915831,
+            0.08578643762696153,
+            0.1213203435601503
+          ]
+        },
+        {
+          "cell_id": 15,
+          "nearest_node_distance_m": 0.0012228975,
+          "point_m": [
+            -3.6739403974420597e-19,
+            -0.002,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.544480333895317e-16,
+          "weights": [
+            -7.095998099460912e-25,
+            -1.4832579608921132e-13,
+            0.4999999999977563,
+            2.3920310177068407e-12,
+            -7.095998099460912e-25,
+            -1.4832579608921132e-13,
+            0.4999999999977563,
+            2.3920310177068407e-12
+          ]
+        },
+        {
+          "cell_id": 7,
+          "nearest_node_distance_m": 0.001355958718403424,
+          "point_m": [
+            0.0014142135623730948,
+            -0.0014142135623730955,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.2270179968253057e-17,
+          "weights": [
+            0.12132034356015015,
+            0.17157287525373002,
+            0.1213203435591584,
+            0.08578643762696143,
+            0.12132034356015015,
+            0.17157287525373002,
+            0.1213203435591584,
+            0.08578643762696143
+          ]
+        },
+        {
+          "cell_id": 83,
+          "nearest_node_distance_m": 0.0012228975,
+          "point_m": [
+            0.003,
+            0.0,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 2.440396376934032e-19,
+          "weights": [
+            -1.0047883605855489e-18,
+            1.812895362612902e-09,
+            0.49999999846422727,
+            -2.7712254612729206e-10,
+            -1.0047883605855485e-18,
+            1.8128953626129012e-09,
+            0.49999999846422705,
+            -2.7712254612729196e-10
+          ]
+        },
+        {
+          "cell_id": 33,
+          "nearest_node_distance_m": 0.0012348747090410062,
+          "point_m": [
+            0.002121320343559643,
+            0.0021213203435596424,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.956503722638003e-16,
+          "weights": [
+            0.35355339059227053,
+            0.14644660940746052,
+            7.877407865780926e-14,
+            1.901774490576349e-13,
+            0.35355339059227053,
+            0.14644660940746052,
+            7.877407865780926e-14,
+            1.901774490576349e-13
+          ]
+        },
+        {
+          "cell_id": 35,
+          "nearest_node_distance_m": 0.0012228975,
+          "point_m": [
+            1.8369701987210298e-19,
+            0.003,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 6.191703206472077e-19,
+          "weights": [
+            -1.0047876016484183e-18,
+            1.8128954458796287e-09,
+            0.4999999984642271,
+            -2.7712232408268797e-10,
+            -1.0047876016484175e-18,
+            1.8128954458796273e-09,
+            0.4999999984642267,
+            -2.7712232408268776e-10
+          ]
+        },
+        {
+          "cell_id": 39,
+          "nearest_node_distance_m": 0.0012348747090410062,
+          "point_m": [
+            -0.0021213203435596424,
+            0.002121320343559643,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.959201417765938e-16,
+          "weights": [
+            1.9039333677070308e-13,
+            7.886350227651302e-14,
+            0.1464466094074611,
+            0.3535533905922697,
+            1.9039333677070308e-13,
+            7.886350227651302e-14,
+            0.1464466094074611,
+            0.3535533905922697
+          ]
+        },
+        {
+          "cell_id": 51,
+          "nearest_node_distance_m": 0.0012228975,
+          "point_m": [
+            -0.003,
+            3.6739403974420597e-19,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.2814654692157e-19,
+          "weights": [
+            -1.0047894438616697e-18,
+            1.8128955013907808e-09,
+            0.49999999846422727,
+            -2.7712282368304713e-10,
+            -1.0047894438616697e-18,
+            1.8128955013907808e-09,
+            0.49999999846422727,
+            -2.7712282368304713e-10
+          ]
+        },
+        {
+          "cell_id": 55,
+          "nearest_node_distance_m": 0.0012348747090410062,
+          "point_m": [
+            -0.0021213203435596433,
+            -0.0021213203435596424,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.957913213174163e-16,
+          "weights": [
+            1.9060922448377148e-13,
+            7.895292589521654e-14,
+            0.14644660940746124,
+            0.3535533905922692,
+            1.9060922448377148e-13,
+            7.895292589521654e-14,
+            0.14644660940746124,
+            0.3535533905922692
+          ]
+        },
+        {
+          "cell_id": 67,
+          "nearest_node_distance_m": 0.0012228975,
+          "point_m": [
+            -5.510910596163089e-19,
+            -0.003,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.953015741529645e-19,
+          "weights": [
+            -1.0047886849245235e-18,
+            1.8128955846575068e-09,
+            0.49999999846422694,
+            -2.7712260163844293e-10,
+            -1.0047886849245235e-18,
+            1.8128955846575068e-09,
+            0.49999999846422694,
+            -2.7712260163844293e-10
+          ]
+        },
+        {
+          "cell_id": 71,
+          "nearest_node_distance_m": 0.0012348747090410062,
+          "point_m": [
+            0.002121320343559642,
+            -0.0021213203435596433,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.964708429034893e-16,
+          "weights": [
+            1.9076623372963926e-13,
+            7.90179612542738e-14,
+            0.14644660940746163,
+            0.3535533905922686,
+            1.9076623372963926e-13,
+            7.90179612542738e-14,
+            0.14644660940746163,
+            0.3535533905922686
+          ]
+        },
+        {
+          "cell_id": 11,
+          "nearest_node_distance_m": 0.0,
+          "point_m": [
+            0.0,
+            0.0,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.86728763488134e-16,
+          "weights": [
+            -0.0,
+            0.0,
+            0.0,
+            -0.0,
+            -1.1845234599578598e-25,
+            3.4394709302899194e-13,
+            1.0000000000000004,
+            -3.443911822386051e-13
+          ]
+        },
+        {
+          "cell_id": 3,
+          "nearest_node_distance_m": 2.5749082771869766e-15,
+          "point_m": [
+            0.001,
+            0.0,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.547023215429609e-16,
+          "weights": [
+            -0.0,
+            0.0,
+            0.0,
+            -0.0,
+            -1.8601340145111458e-25,
+            2.9087843245180963e-12,
+            0.9999999999971552,
+            -6.3948846218223e-14
+          ]
+        },
+        {
+          "cell_id": 11,
+          "nearest_node_distance_m": 0.00041421356237276535,
+          "point_m": [
+            0.0007071067811865476,
+            0.0007071067811865475,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 8.348898811625085e-17,
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.500000000000233,
+            0.207106781187663,
+            0.08578643762680843,
+            0.20710678118529552
+          ]
+        },
+        {
+          "cell_id": 9,
+          "nearest_node_distance_m": 2.574847295814012e-15,
+          "point_m": [
+            6.123233995736766e-20,
+            0.001,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.547221539638369e-16,
+          "weights": [
+            -0.0,
+            0.0,
+            0.0,
+            -0.0,
+            -1.5414360946724586e-24,
+            5.299649608063599e-13,
+            1.0000000000023785,
+            -2.9085622799114434e-12
+          ]
+        },
+        {
+          "cell_id": 19,
+          "nearest_node_distance_m": 0.0004142135623727656,
+          "point_m": [
+            -0.0007071067811865475,
+            0.0007071067811865476,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 8.356463187824629e-17,
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.20710678118529555,
+            0.5000000000002329,
+            0.20710678118766299,
+            0.08578643762680845
+          ]
+        },
+        {
+          "cell_id": 19,
+          "nearest_node_distance_m": 2.5747519490015537e-15,
+          "point_m": [
+            -0.001,
+            1.2246467991473531e-19,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.870134318512756e-16,
+          "weights": [
+            -0.0,
+            -0.0,
+            0.0,
+            0.0,
+            -2.469379673260451e-25,
+            -2.2197799154352912e-12,
+            1.0000000000021085,
+            1.1124434706768762e-13
+          ]
+        },
+        {
+          "cell_id": 21,
+          "nearest_node_distance_m": 0.00041421356237276557,
+          "point_m": [
+            -0.0007071067811865477,
+            -0.0007071067811865475,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 8.348786173797568e-17,
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.08578643762680838,
+            0.20710678118529569,
+            0.5000000000002331,
+            0.2071067811876628
+          ]
+        },
+        {
+          "cell_id": 13,
+          "nearest_node_distance_m": 2.5747253331050098e-15,
+          "point_m": [
+            -1.8369701987210298e-19,
+            -0.001,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.869299621509524e-16,
+          "weights": [
+            -0.0,
+            -0.0,
+            0.0,
+            0.0,
+            -1.2813320388382748e-24,
+            -5.772049505013375e-13,
+            0.9999999999983574,
+            2.219890937739282e-12
+          ]
+        },
+        {
+          "cell_id": 13,
+          "nearest_node_distance_m": 0.0004142135623727655,
+          "point_m": [
+            0.0007071067811865474,
+            -0.0007071067811865477,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 8.348786173797568e-17,
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.20710678118766285,
+            0.08578643762680845,
+            0.20710678118529574,
+            0.500000000000233
+          ]
+        },
+        {
+          "cell_id": 3,
+          "nearest_node_distance_m": 5.12870995672543e-15,
+          "point_m": [
+            0.002,
+            0.0,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.548412892655952e-16,
+          "weights": [
+            0.0,
+            -0.0,
+            -0.0,
+            0.0,
+            4.784284080018607e-12,
+            -1.4203278142461649e-24,
+            -2.9687363678334656e-13,
+            0.9999999999955126
+          ]
+        },
+        {
+          "cell_id": 1,
+          "nearest_node_distance_m": 0.0005857864376272347,
+          "point_m": [
+            0.0014142135623730952,
+            0.001414213562373095,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.2420623116491257e-17,
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.17157287525392298,
+            0.2426406871203006,
+            0.3431457505074599,
+            0.24264068711831652
+          ]
+        },
+        {
+          "cell_id": 9,
+          "nearest_node_distance_m": 5.128587492045515e-15,
+          "point_m": [
+            1.2246467991473531e-19,
+            0.002,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.547487674585784e-16,
+          "weights": [
+            -0.0,
+            0.0,
+            0.0,
+            -0.0,
+            -4.784284080015767e-12,
+            1.0000000000044873,
+            2.9687363678618716e-13,
+            -1.4203278142461649e-24
+          ]
+        },
+        {
+          "cell_id": 25,
+          "nearest_node_distance_m": 0.0005857864376272344,
+          "point_m": [
+            -0.001414213562373095,
+            0.0014142135623730952,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.2420623116491257e-17,
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.24264068711831654,
+            0.1715728752539229,
+            0.24264068712030054,
+            0.34314575050746
+          ]
+        },
+        {
+          "cell_id": 27,
+          "nearest_node_distance_m": 5.128465027365601e-15,
+          "point_m": [
+            -0.002,
+            2.4492935982947063e-19,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.548239601846698e-16,
+          "weights": [
+            -0.0,
+            -0.0,
+            0.0,
+            0.0,
+            -1.4197307574744774e-24,
+            -4.784062035410842e-12,
+            1.0000000000044873,
+            2.967626144837241e-13
+          ]
+        },
+        {
+          "cell_id": 31,
+          "nearest_node_distance_m": 0.0005857864376272345,
+          "point_m": [
+            -0.0014142135623730955,
+            -0.001414213562373095,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.2420623116491257e-17,
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.34314575050745977,
+            0.24264068711831666,
+            0.1715728752539231,
+            0.24264068712030054
+          ]
+        },
+        {
+          "cell_id": 15,
+          "nearest_node_distance_m": 5.128342562685686e-15,
+          "point_m": [
+            -3.6739403974420597e-19,
+            -0.002,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.544480333895318e-16,
+          "weights": [
+            -0.0,
+            -0.0,
+            0.0,
+            0.0,
+            -1.4191996198921824e-24,
+            -2.9665159217842264e-13,
+            0.9999999999955126,
+            4.784062035413681e-12
+          ]
+        },
+        {
+          "cell_id": 7,
+          "nearest_node_distance_m": 0.0005857864376272346,
+          "point_m": [
+            0.0014142135623730948,
+            -0.0014142135623730955,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.2270179968253057e-17,
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.24264068712030032,
+            0.34314575050746,
+            0.24264068711831677,
+            0.1715728752539229
+          ]
+        },
+        {
+          "cell_id": 83,
+          "nearest_node_distance_m": 4.5879561105372405e-12,
+          "point_m": [
+            0.003,
+            0.0,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.479002871927952e-19,
+          "weights": [
+            -2.2310801332477256e-34,
+            4.025436345618033e-25,
+            1.1102230212150563e-16,
+            -6.153361557445972e-26,
+            -2.0095783313456343e-18,
+            3.6257907252258046e-09,
+            0.9999999969284546,
+            -5.542455363437922e-10
+          ]
+        },
+        {
+          "cell_id": 33,
+          "nearest_node_distance_m": 0.00017157287525380996,
+          "point_m": [
+            0.002121320343559643,
+            0.0021213203435596424,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.960605876404377e-16,
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.707106781184541,
+            0.29289321881492114,
+            1.5754815731561857e-13,
+            3.8035489811526977e-13
+          ]
+        },
+        {
+          "cell_id": 35,
+          "nearest_node_distance_m": 4.5879562942342386e-12,
+          "point_m": [
+            1.8369701987210298e-19,
+            0.003,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.2295716582831197e-18,
+          "weights": [
+            -6.693229981247781e-34,
+            1.2076309591521913e-24,
+            3.3306690636451654e-16,
+            -1.8460055090054076e-25,
+            -2.009575203296835e-18,
+            3.6257908917592545e-09,
+            0.9999999969284534,
+            -5.542446481653755e-10
+          ]
+        },
+        {
+          "cell_id": 39,
+          "nearest_node_distance_m": 0.00017157287525380996,
+          "point_m": [
+            -0.0021213203435596424,
+            0.002121320343559643,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.960605876404377e-16,
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            3.810221874102082e-13,
+            1.5782455759161148e-13,
+            0.292893218814922,
+            0.7071067811845392
+          ]
+        },
+        {
+          "cell_id": 51,
+          "nearest_node_distance_m": 4.587956477931236e-12,
+          "point_m": [
+            -0.003,
+            3.6739403974420597e-19,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 6.265618322958789e-19,
+          "weights": [
+            -2.231080304037818e-34,
+            4.0254366537668246e-25,
+            1.110223021215056e-16,
+            -6.15336155744597e-26,
+            -2.009578485179674e-18,
+            3.625791002781561e-09,
+            0.9999999969284544,
+            -5.54245536343792e-10
+          ]
+        },
+        {
+          "cell_id": 55,
+          "nearest_node_distance_m": 0.00017157287525381025,
+          "point_m": [
+            -0.0021213203435596433,
+            -0.0021213203435596424,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.957913213174163e-16,
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            3.8121844896754297e-13,
+            1.5790585179043308e-13,
+            0.2928932188149225,
+            0.7071067811845384
+          ]
+        },
+        {
+          "cell_id": 67,
+          "nearest_node_distance_m": 4.587956661628234e-12,
+          "point_m": [
+            -5.510910596163089e-19,
+            -0.003,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.2307954941247908e-18,
+          "weights": [
+            -3.3466185986581137e-34,
+            6.038155257984146e-25,
+            1.665334531822583e-16,
+            -9.230036789490734e-26,
+            -2.0095773698490466e-18,
+            3.6257911693150128e-09,
+            0.9999999969284536,
+            -5.542452032768858e-10
+          ]
+        },
+        {
+          "cell_id": 71,
+          "nearest_node_distance_m": 0.00017157287525380993,
+          "point_m": [
+            0.002121320343559642,
+            -0.0021213203435596433,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.956503722638003e-16,
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            3.8125770127900997e-13,
+            1.579221106301973e-13,
+            0.2928932188149224,
+            0.7071067811845384
+          ]
+        },
+        {
+          "cell_id": 12,
+          "nearest_node_distance_m": 0.0012228974999999999,
+          "point_m": [
+            0.0,
+            0.0,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.867287634881341e-16,
+          "weights": [
+            -5.922617299789301e-26,
+            1.7197354651449605e-13,
+            0.5000000000000004,
+            -1.7219559111930263e-13,
+            -5.922617299789297e-26,
+            1.7197354651449592e-13,
+            0.5,
+            -1.721955911193025e-13
+          ]
+        },
+        {
+          "cell_id": 4,
+          "nearest_node_distance_m": 0.0012228974999999999,
+          "point_m": [
+            0.001,
+            0.0,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.548441232518352e-16,
+          "weights": [
+            -9.316817069209476e-26,
+            1.4543921622590488e-12,
+            0.4999999999985778,
+            -3.202993426034261e-14,
+            -9.316817069209468e-26,
+            1.4543921622590478e-12,
+            0.4999999999985774,
+            -3.2029934260342586e-14
+          ]
+        },
+        {
+          "cell_id": 12,
+          "nearest_node_distance_m": 0.001291143357942791,
+          "point_m": [
+            0.0007071067811865476,
+            0.0007071067811865475,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 8.348898811625085e-17,
+          "weights": [
+            0.25000000000011663,
+            0.10355339059383152,
+            0.04289321881340424,
+            0.10355339059264783,
+            0.2500000000001164,
+            0.10355339059383145,
+            0.0428932188134042,
+            0.10355339059264776
+          ]
+        },
+        {
+          "cell_id": 10,
+          "nearest_node_distance_m": 0.0012228974999999999,
+          "point_m": [
+            6.123233995736766e-20,
+            0.001,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.54863846118963e-16,
+          "weights": [
+            -7.708795049768155e-25,
+            2.650379915544115e-13,
+            0.5000000000011895,
+            -1.4542811399557223e-12,
+            -7.708795049768148e-25,
+            2.650379915544113e-13,
+            0.500000000001189,
+            -1.4542811399557213e-12
+          ]
+        },
+        {
+          "cell_id": 20,
+          "nearest_node_distance_m": 0.001291143357942791,
+          "point_m": [
+            -0.0007071067811865475,
+            0.0007071067811865476,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 8.364231532856681e-17,
+          "weights": [
+            0.10355339059264781,
+            0.2500000000001166,
+            0.10355339059383155,
+            0.04289321881340425,
+            0.10355339059264775,
+            0.25000000000011635,
+            0.10355339059383148,
+            0.042893218813404216
+          ]
+        },
+        {
+          "cell_id": 20,
+          "nearest_node_distance_m": 0.0012228974999999999,
+          "point_m": [
+            -0.001,
+            1.2246467991473531e-19,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.870136249455996e-16,
+          "weights": [
+            -1.234689836630226e-25,
+            -1.109889957717646e-12,
+            0.5000000000010545,
+            5.5622173533843834e-14,
+            -1.2346898366302252e-25,
+            -1.1098899577176452e-12,
+            0.500000000001054,
+            5.562217353384379e-14
+          ]
+        },
+        {
+          "cell_id": 22,
+          "nearest_node_distance_m": 0.001291143357942791,
+          "point_m": [
+            -0.0007071067811865477,
+            -0.0007071067811865475,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 8.341243020726609e-17,
+          "weights": [
+            0.042893218813404216,
+            0.1035533905926479,
+            0.2500000000001167,
+            0.10355339059383144,
+            0.04289321881340418,
+            0.10355339059264783,
+            0.25000000000011646,
+            0.10355339059383137
+          ]
+        },
+        {
+          "cell_id": 14,
+          "nearest_node_distance_m": 0.0012228974999999999,
+          "point_m": [
+            -1.8369701987210298e-19,
+            -0.001,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.870835225518582e-16,
+          "weights": [
+            -6.406660194191377e-25,
+            -2.886024752506689e-13,
+            0.49999999999917893,
+            1.1099454688696414e-12,
+            -6.406660194191372e-25,
+            -2.8860247525066866e-13,
+            0.49999999999917855,
+            1.1099454688696406e-12
+          ]
+        },
+        {
+          "cell_id": 14,
+          "nearest_node_distance_m": 0.001291143357942791,
+          "point_m": [
+            0.0007071067811865474,
+            -0.0007071067811865477,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 8.348898811625085e-17,
+          "weights": [
+            0.10355339059383144,
+            0.04289321881340425,
+            0.10355339059264793,
+            0.2500000000001166,
+            0.10355339059383137,
+            0.042893218813404216,
+            0.10355339059264786,
+            0.25000000000011635
+          ]
+        },
+        {
+          "cell_id": 4,
+          "nearest_node_distance_m": 0.0012228974999999999,
+          "point_m": [
+            0.002,
+            0.0,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.545583639284186e-16,
+          "weights": [
+            2.3921420400093044e-12,
+            -7.098983260059836e-25,
+            -1.4838130724044235e-13,
+            0.4999999999977564,
+            2.3921420400093024e-12,
+            -7.09898326005983e-25,
+            -1.4838130724044222e-13,
+            0.499999999997756
+          ]
+        },
+        {
+          "cell_id": 2,
+          "nearest_node_distance_m": 0.001355958718403424,
+          "point_m": [
+            0.0014142135623730952,
+            0.001414213562373095,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.2420623116491257e-17,
+          "weights": [
+            0.08578643762696155,
+            0.1213203435601504,
+            0.17157287525373,
+            0.1213203435591583,
+            0.08578643762696148,
+            0.1213203435601503,
+            0.17157287525372986,
+            0.1213203435591582
+          ]
+        },
+        {
+          "cell_id": 10,
+          "nearest_node_distance_m": 0.0012228974999999999,
+          "point_m": [
+            1.2246467991473531e-19,
+            0.002,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.550328144026329e-16,
+          "weights": [
+            -2.3921420400078847e-12,
+            0.5000000000022439,
+            1.4838130724186212e-13,
+            -7.098983260059836e-25,
+            -2.3921420400078827e-12,
+            0.5000000000022434,
+            1.48381307241862e-13,
+            -7.09898326005983e-25
+          ]
+        },
+        {
+          "cell_id": 26,
+          "nearest_node_distance_m": 0.0013559587184034238,
+          "point_m": [
+            -0.001414213562373095,
+            0.0014142135623730952,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.2274011406275634e-17,
+          "weights": [
+            0.12132034355915834,
+            0.08578643762696148,
+            0.12132034356015031,
+            0.1715728752537301,
+            0.12132034355915824,
+            0.0857864376269614,
+            0.12132034356015022,
+            0.17157287525372997
+          ]
+        },
+        {
+          "cell_id": 28,
+          "nearest_node_distance_m": 0.0012228974999999999,
+          "point_m": [
+            -0.002,
+            2.4492935982947063e-19,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.548239601846691e-16,
+          "weights": [
+            -7.0986537873723895e-25,
+            -2.392031017705422e-12,
+            0.5000000000022439,
+            1.4838130724186212e-13,
+            -7.098653787372384e-25,
+            -2.39203101770542e-12,
+            0.5000000000022434,
+            1.48381307241862e-13
+          ]
+        },
+        {
+          "cell_id": 32,
+          "nearest_node_distance_m": 0.0013559587184034238,
+          "point_m": [
+            -0.0014142135623730955,
+            -0.001414213562373095,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.2428192052669952e-17,
+          "weights": [
+            0.17157287525373,
+            0.12132034355915837,
+            0.08578643762696157,
+            0.12132034356015035,
+            0.17157287525372986,
+            0.12132034355915827,
+            0.0857864376269615,
+            0.12132034356015026
+          ]
+        },
+        {
+          "cell_id": 16,
+          "nearest_node_distance_m": 0.0012228974999999999,
+          "point_m": [
+            -3.6739403974420597e-19,
+            -0.002,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.544482403208413e-16,
+          "weights": [
+            -7.095998099460915e-25,
+            -1.483257960892114e-13,
+            0.4999999999977565,
+            2.392031017706842e-12,
+            -7.095998099460909e-25,
+            -1.4832579608921127e-13,
+            0.49999999999775613,
+            2.39203101770684e-12
+          ]
+        },
+        {
+          "cell_id": 8,
+          "nearest_node_distance_m": 0.0013559587184034238,
+          "point_m": [
+            0.0014142135623730948,
+            -0.0014142135623730955,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.2266347333466993e-17,
+          "weights": [
+            0.1213203435601502,
+            0.1715728752537301,
+            0.12132034355915845,
+            0.08578643762696148,
+            0.1213203435601501,
+            0.17157287525372997,
+            0.12132034355915836,
+            0.0857864376269614
+          ]
+        },
+        {
+          "cell_id": 84,
+          "nearest_node_distance_m": 0.0012228974999999999,
+          "point_m": [
+            0.003,
+            0.0,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 6.23453096101845e-19,
+          "weights": [
+            -1.0047883605855493e-18,
+            1.812895362612903e-09,
+            0.4999999984642275,
+            -2.771225461272922e-10,
+            -1.0047883605855481e-18,
+            1.8128953626129004e-09,
+            0.4999999984642268,
+            -2.771225461272918e-10
+          ]
+        },
+        {
+          "cell_id": 34,
+          "nearest_node_distance_m": 0.001234874709041006,
+          "point_m": [
+            0.002121320343559643,
+            0.0021213203435596424,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.953812626320552e-16,
+          "weights": [
+            0.3535533905922713,
+            0.14644660940746013,
+            7.871717271863414e-14,
+            1.9004006596750074e-13,
+            0.35355339059227103,
+            0.14644660940746002,
+            7.871717271863408e-14,
+            1.900400659675006e-13
+          ]
+        },
+        {
+          "cell_id": 36,
+          "nearest_node_distance_m": 0.0012228974999999999,
+          "point_m": [
+            1.8369701987210298e-19,
+            0.003,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.374046816910946e-18,
+          "weights": [
+            -1.004787601648419e-18,
+            1.81289544587963e-09,
+            0.49999999846422744,
+            -2.7712232408268817e-10,
+            -1.0047876016484167e-18,
+            1.8128954458796258e-09,
+            0.4999999984642263,
+            -2.7712232408268755e-10
+          ]
+        },
+        {
+          "cell_id": 40,
+          "nearest_node_distance_m": 0.001234874709041006,
+          "point_m": [
+            -0.0021213203435596424,
+            0.002121320343559643,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.960605876404377e-16,
+          "weights": [
+            1.905110937051041e-13,
+            7.891227879580574e-14,
+            0.146446609407461,
+            0.3535533905922696,
+            1.905110937051041e-13,
+            7.891227879580574e-14,
+            0.146446609407461,
+            0.3535533905922696
+          ]
+        },
+        {
+          "cell_id": 52,
+          "nearest_node_distance_m": 0.0012228974999999999,
+          "point_m": [
+            -0.003,
+            3.6739403974420597e-19,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.2814654692157e-19,
+          "weights": [
+            -1.0047894438616697e-18,
+            1.8128955013907808e-09,
+            0.49999999846422727,
+            -2.7712282368304713e-10,
+            -1.0047894438616697e-18,
+            1.8128955013907808e-09,
+            0.49999999846422727,
+            -2.7712282368304713e-10
+          ]
+        },
+        {
+          "cell_id": 56,
+          "nearest_node_distance_m": 0.001234874709041006,
+          "point_m": [
+            -0.0021213203435596433,
+            -0.0021213203435596424,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.962014201698763e-16,
+          "weights": [
+            1.9062885063950503e-13,
+            7.896105531509872e-14,
+            0.14644660940746132,
+            0.3535533905922693,
+            1.9062885063950488e-13,
+            7.896105531509865e-14,
+            0.1464466094074612,
+            0.35355339059226903
+          ]
+        },
+        {
+          "cell_id": 68,
+          "nearest_node_distance_m": 0.0012228974999999999,
+          "point_m": [
+            -5.510910596163089e-19,
+            -0.003,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 6.21597113529019e-19,
+          "weights": [
+            -1.0047886849245239e-18,
+            1.8128955846575076e-09,
+            0.49999999846422716,
+            -2.7712260163844304e-10,
+            -1.0047886849245231e-18,
+            1.8128955846575062e-09,
+            0.49999999846422677,
+            -2.7712260163844283e-10
+          ]
+        },
+        {
+          "cell_id": 72,
+          "nearest_node_distance_m": 0.001234874709041006,
+          "point_m": [
+            0.002121320343559642,
+            -0.0021213203435596433,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.95791510993044e-16,
+          "weights": [
+            1.9064847679523886e-13,
+            7.896918473498058e-14,
+            0.14644660940746085,
+            0.35355339059226987,
+            1.906484767952386e-13,
+            7.896918473498048e-14,
+            0.14644660940746063,
+            0.3535533905922694
+          ]
+        }
+      ],
+      "max_rest_map_error_m": 4.964708429034893e-16,
+      "mesh_sha256": "4df59e253fa595823eedb7ee498b68e01e1f26d9a5427edee1be7defc257e65a",
+      "nodes": 171,
+      "radius_m": 0.004,
+      "rest_volume_m3": 2.3960709771811174e-07
+    },
+    "8": {
+      "area_m2": 4.994312243612885e-05,
+      "area_over_exact_circle": 0.9935868511442062,
+      "axial_layers": 4,
+      "elements": 768,
+      "height_m": 0.00489159,
+      "hosts": [
+        {
+          "cell_id": 109,
+          "nearest_node_distance_m": 0.0,
+          "point_m": [
+            0.0,
+            0.0,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.236055350423398e-16,
+          "weights": [
+            -0.0,
+            0.0,
+            0.0,
+            -0.0,
+            -3.0556650423252333e-26,
+            1.748601263784927e-13,
+            0.9999999999999999,
+            -1.747491040759691e-13
+          ]
+        },
+        {
+          "cell_id": 45,
+          "nearest_node_distance_m": 2.5749082771869766e-15,
+          "point_m": [
+            0.001,
+            0.0,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.191528772081452e-16,
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            1.6122143467664081e-24,
+            5.303701922086454e-12,
+            0.9999999999943923,
+            3.039790641407556e-13
+          ]
+        },
+        {
+          "cell_id": 73,
+          "nearest_node_distance_m": 0.0002928932188137068,
+          "point_m": [
+            0.0007071067811865476,
+            0.0007071067811865475,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 3.604055018529306e-18,
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.1715728752541443,
+            0.24264068712160008,
+            0.3431457505071469,
+            0.24264068711710873
+          ]
+        },
+        {
+          "cell_id": 101,
+          "nearest_node_distance_m": 2.574847295814012e-15,
+          "point_m": [
+            6.123233995736766e-20,
+            0.001,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.18948592095391e-16,
+          "weights": [
+            -0.0,
+            0.0,
+            0.0,
+            -0.0,
+            -3.327005269277812e-24,
+            6.273315200677716e-13,
+            1.000000000004676,
+            -5.303424366328584e-12
+          ]
+        },
+        {
+          "cell_id": 169,
+          "nearest_node_distance_m": 0.0002928932188137069,
+          "point_m": [
+            -0.0007071067811865475,
+            0.0007071067811865476,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 3.3767284763475117e-18,
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.24264068711710926,
+            0.1715728752541444,
+            0.24264068712159964,
+            0.34314575050714674
+          ]
+        },
+        {
+          "cell_id": 173,
+          "nearest_node_distance_m": 2.5747519490015537e-15,
+          "point_m": [
+            -0.001,
+            1.2246467991473531e-19,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.2182539906016849e-16,
+          "weights": [
+            0.0,
+            -0.0,
+            0.0,
+            -0.0,
+            1.468457179497927e-24,
+            -4.953815135878917e-12,
+            1.0000000000052502,
+            -2.9642954757638526e-13
+          ]
+        },
+        {
+          "cell_id": 181,
+          "nearest_node_distance_m": 0.0002928932188137068,
+          "point_m": [
+            -0.0007071067811865477,
+            -0.0007071067811865475,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 3.52657485837176e-18,
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.3431457505071469,
+            0.2426406871171091,
+            0.1715728752541443,
+            0.24264068712159972
+          ]
+        },
+        {
+          "cell_id": 117,
+          "nearest_node_distance_m": 2.5747253331050098e-15,
+          "point_m": [
+            -1.8369701987210298e-19,
+            -0.001,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.2172889965620523e-16,
+          "weights": [
+            -0.0,
+            -0.0,
+            0.0,
+            0.0,
+            -3.1463524735005134e-24,
+            -6.351585923849057e-13,
+            0.9999999999956815,
+            4.9536486024269e-12
+          ]
+        },
+        {
+          "cell_id": 85,
+          "nearest_node_distance_m": 0.00029289321881370664,
+          "point_m": [
+            0.0007071067811865474,
+            -0.0007071067811865477,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 3.52657485837176e-18,
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.24264068712159945,
+            0.34314575050714713,
+            0.24264068711710926,
+            0.17157287525414414
+          ]
+        },
+        {
+          "cell_id": 13,
+          "nearest_node_distance_m": 5.12870995672543e-15,
+          "point_m": [
+            0.002,
+            0.0,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.1055461191024806e-16,
+          "weights": [
+            0.0,
+            -0.0,
+            -0.0,
+            0.0,
+            1.0082545909285954e-11,
+            -1.3634139281469427e-24,
+            -1.3522516439798064e-13,
+            0.9999999999900526
+          ]
+        },
+        {
+          "cell_id": 37,
+          "nearest_node_distance_m": 0.00012132034355932817,
+          "point_m": [
+            0.0014142135623730952,
+            0.001414213562373095,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.9066826775390145e-17,
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.6862915010159826,
+            0.1421356237325677,
+            0.02943725152270557,
+            0.1421356237287443
+          ]
+        },
+        {
+          "cell_id": 97,
+          "nearest_node_distance_m": 5.128587492045515e-15,
+          "point_m": [
+            1.2246467991473531e-19,
+            0.002,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.1047972225258269e-16,
+          "weights": [
+            -0.0,
+            0.0,
+            0.0,
+            -0.0,
+            -1.0082490398131997e-11,
+            1.0000000000099474,
+            1.3511414209824384e-13,
+            -1.3622870403438345e-24
+          ]
+        },
+        {
+          "cell_id": 197,
+          "nearest_node_distance_m": 0.00012132034355932786,
+          "point_m": [
+            -0.001414213562373095,
+            0.0014142135623730952,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.9373000364179077e-17,
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.14213562372874433,
+            0.686291501015982,
+            0.14213562373256794,
+            0.029437251522705647
+          ]
+        },
+        {
+          "cell_id": 237,
+          "nearest_node_distance_m": 5.128465027365601e-15,
+          "point_m": [
+            -0.002,
+            2.4492935982947063e-19,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.1047088925477915e-16,
+          "weights": [
+            -0.0,
+            -0.0,
+            0.0,
+            0.0,
+            -1.3600183256842255e-24,
+            -1.0082268353527074e-11,
+            1.0000000000099472,
+            1.3489209749331652e-13
+          ]
+        },
+        {
+          "cell_id": 217,
+          "nearest_node_distance_m": 0.00012132034355932801,
+          "point_m": [
+            -0.0014142135623730955,
+            -0.001414213562373095,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.921895750570712e-17,
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.029437251522705446,
+            0.14213562372874416,
+            0.6862915010159831,
+            0.14213562373256736
+          ]
+        },
+        {
+          "cell_id": 125,
+          "nearest_node_distance_m": 5.128342562685686e-15,
+          "point_m": [
+            -3.6739403974420597e-19,
+            -0.002,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.1052746477637062e-16,
+          "weights": [
+            -0.0,
+            -0.0,
+            0.0,
+            0.0,
+            -1.3644431635981507e-24,
+            -1.3533618670044214e-13,
+            0.9999999999900535,
+            1.008187977547118e-11
+          ]
+        },
+        {
+          "cell_id": 57,
+          "nearest_node_distance_m": 0.00012132034355932817,
+          "point_m": [
+            0.0014142135623730948,
+            -0.0014142135623730955,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.921895750570712e-17,
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.1421356237325674,
+            0.029437251522705626,
+            0.1421356237287448,
+            0.6862915010159821
+          ]
+        },
+        {
+          "cell_id": 685,
+          "nearest_node_distance_m": 4.587956218531844e-12,
+          "point_m": [
+            0.003,
+            0.0,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.3405305656769006e-14,
+          "weights": [
+            -6.674912390784583e-34,
+            1.190125143424398e-24,
+            1.6653345259704997e-16,
+            -9.340162354874233e-26,
+            -4.00815106078242e-18,
+            7.146462869933834e-09,
+            0.9999999934143949,
+            -5.60858022679887e-10
+          ]
+        },
+        {
+          "cell_id": 257,
+          "nearest_node_distance_m": 0.00012132034355928264,
+          "point_m": [
+            0.002121320343559643,
+            0.0021213203435596424,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.248627587334452e-13,
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.4142135603126017,
+            0.5857864388305425,
+            5.019345130993651e-10,
+            3.5492129542931313e-10
+          ]
+        },
+        {
+          "cell_id": 301,
+          "nearest_node_distance_m": 4.5879564022288415e-12,
+          "point_m": [
+            1.8369701987210298e-19,
+            0.003,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.3405540766903242e-14,
+          "weights": [
+            8.899909959455963e-34,
+            -1.586833586195625e-24,
+            -2.220446034627336e-16,
+            1.245358678435364e-25,
+            -4.008163117703685e-18,
+            7.1464631474896064e-09,
+            0.9999999934143968,
+            -5.60859688014412e-10
+          ]
+        },
+        {
+          "cell_id": 285,
+          "nearest_node_distance_m": 0.00012132034355928264,
+          "point_m": [
+            -0.0021213203435596424,
+            0.002121320343559643,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.2486233460071515e-13,
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            3.5492147937708603e-10,
+            5.01934773240802e-10,
+            0.5857864388305422,
+            0.4142135603126016
+          ]
+        },
+        {
+          "cell_id": 429,
+          "nearest_node_distance_m": 4.5879565859258396e-12,
+          "point_m": [
+            -0.003,
+            3.6739403974420597e-19,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.340520261738351e-14,
+          "weights": [
+            -6.67491423057219e-34,
+            1.1901252358690353e-24,
+            1.6653345259704987e-16,
+            -9.34016420376696e-26,
+            -4.008152165537991e-18,
+            7.146463425045347e-09,
+            0.9999999934143944,
+            -5.608581337021883e-10
+          ]
+        },
+        {
+          "cell_id": 413,
+          "nearest_node_distance_m": 0.00012132034355928233,
+          "point_m": [
+            -0.0021213203435596433,
+            -0.0021213203435596424,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.248623346007705e-13,
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            3.5492205421387345e-10,
+            5.019355861827954e-10,
+            0.5857864388305446,
+            0.4142135603125977
+          ]
+        },
+        {
+          "cell_id": 557,
+          "nearest_node_distance_m": 4.587956769622838e-12,
+          "point_m": [
+            -5.510910596163089e-19,
+            -0.003,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 1.3405059520133557e-14,
+          "weights": [
+            -6.674905292530654e-34,
+            1.190125291335817e-24,
+            1.665334525970497e-16,
+            -9.340151261517823e-26,
+            -4.008146798423253e-18,
+            7.146463758112249e-09,
+            0.9999999934143934,
+            -5.608573565460764e-10
+          ]
+        },
+        {
+          "cell_id": 541,
+          "nearest_node_distance_m": 0.00012132034355928264,
+          "point_m": [
+            0.002121320343559642,
+            -0.0021213203435596433,
+            0.0012228975
+          ],
+          "rest_reconstruction_error_m": 4.248623346007705e-13,
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            3.5492235312900446e-10,
+            5.019360089126303e-10,
+            0.5857864388305439,
+            0.4142135603125976
+          ]
+        },
+        {
+          "cell_id": 110,
+          "nearest_node_distance_m": 0.0,
+          "point_m": [
+            0.0,
+            0.0,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.236062958436957e-16,
+          "weights": [
+            -3.3924696855316775e-42,
+            1.9413373839426729e-29,
+            1.1102230246251564e-16,
+            -1.9401047887775868e-29,
+            -3.055665042325233e-26,
+            1.7486012637849267e-13,
+            0.9999999999999998,
+            -1.7474910407596907e-13
+          ]
+        },
+        {
+          "cell_id": 46,
+          "nearest_node_distance_m": 2.5749082771869766e-15,
+          "point_m": [
+            0.001,
+            0.0,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.191534691324655e-16,
+          "weights": [
+            1.7899174884110726e-40,
+            5.8882919896490795e-28,
+            1.1102230246189307e-16,
+            3.3748455601307415e-29,
+            1.612214346766408e-24,
+            5.303701922086453e-12,
+            0.9999999999943922,
+            3.0397906414075556e-13
+          ]
+        },
+        {
+          "cell_id": 74,
+          "nearest_node_distance_m": 0.0002928932188137068,
+          "point_m": [
+            0.0007071067811865476,
+            0.0007071067811865475,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 3.52657485837176e-18,
+          "weights": [
+            1.9048415650829076e-17,
+            2.693852775532691e-17,
+            3.80968313015314e-17,
+            2.693852775482827e-17,
+            0.17157287525414427,
+            0.24264068712160006,
+            0.34314575050714685,
+            0.2426406871171087
+          ]
+        },
+        {
+          "cell_id": 102,
+          "nearest_node_distance_m": 2.574847295814012e-15,
+          "point_m": [
+            6.123233995736766e-20,
+            0.001,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.1880244083547022e-16,
+          "weights": [
+            -3.6937178530014455e-40,
+            6.964778976523385e-29,
+            1.110223024630348e-16,
+            -5.8879838408560745e-28,
+            -3.327005269277811e-24,
+            6.273315200677715e-13,
+            1.0000000000046758,
+            -5.303424366328583e-12
+          ]
+        },
+        {
+          "cell_id": 170,
+          "nearest_node_distance_m": 0.0002928932188137069,
+          "point_m": [
+            -0.0007071067811865475,
+            0.0007071067811865476,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 3.373245516703423e-18,
+          "weights": [
+            2.693852775482833e-17,
+            1.9048415650829088e-17,
+            2.6938527755326862e-17,
+            3.809683130153138e-17,
+            0.24264068711710923,
+            0.17157287525414439,
+            0.2426406871215996,
+            0.3431457505071467
+          ]
+        },
+        {
+          "cell_id": 174,
+          "nearest_node_distance_m": 2.5747519490015537e-15,
+          "point_m": [
+            -0.001,
+            1.2246467991473531e-19,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.218261709784292e-16,
+          "weights": [
+            1.630314971354715e-40,
+            -5.499839623589372e-28,
+            1.1102230246309855e-16,
+            -3.291029088985212e-29,
+            1.4684571794979268e-24,
+            -4.953815135878916e-12,
+            1.00000000000525,
+            -2.964295475763852e-13
+          ]
+        },
+        {
+          "cell_id": 182,
+          "nearest_node_distance_m": 0.0002928932188137068,
+          "point_m": [
+            -0.0007071067811865477,
+            -0.0007071067811865475,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 3.477906966835275e-18,
+          "weights": [
+            3.80968313015314e-17,
+            2.693852775482831e-17,
+            1.9048415650829076e-17,
+            2.693852775532687e-17,
+            0.34314575050714685,
+            0.24264068711710907,
+            0.17157287525414427,
+            0.2426406871215997
+          ]
+        },
+        {
+          "cell_id": 118,
+          "nearest_node_distance_m": 2.5747253331050098e-15,
+          "point_m": [
+            -1.8369701987210298e-19,
+            -0.001,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.2172889965620526e-16,
+          "weights": [
+            -3.4931529596665826e-40,
+            -7.051676935542269e-29,
+            1.110223024620362e-16,
+            5.499654734316573e-28,
+            -3.146352473500513e-24,
+            -6.351585923849056e-13,
+            0.9999999999956813,
+            4.9536486024268995e-12
+          ]
+        },
+        {
+          "cell_id": 86,
+          "nearest_node_distance_m": 0.00029289321881370664,
+          "point_m": [
+            0.0007071067811865474,
+            -0.0007071067811865477,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 3.529906531158615e-18,
+          "weights": [
+            2.693852775532684e-17,
+            3.809683130153142e-17,
+            2.693852775482833e-17,
+            1.9048415650829058e-17,
+            0.24264068712159942,
+            0.3431457505071471,
+            0.24264068711710923,
+            0.1715728752541441
+          ]
+        },
+        {
+          "cell_id": 14,
+          "nearest_node_distance_m": 5.12870995672543e-15,
+          "point_m": [
+            0.002,
+            0.0,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.105554625232138e-16,
+          "weights": [
+            1.1193874615329451e-27,
+            -1.5136935351233646e-40,
+            -1.501300910233601e-29,
+            1.1102230246141127e-16,
+            1.0082545909285952e-11,
+            -1.3634139281469426e-24,
+            -1.352251643979806e-13,
+            0.9999999999900525
+          ]
+        },
+        {
+          "cell_id": 38,
+          "nearest_node_distance_m": 0.00012132034355932817,
+          "point_m": [
+            0.0014142135623730952,
+            0.001414213562373095,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.906538933386797e-17,
+          "weights": [
+            7.619366260325029e-17,
+            1.5780224208735448e-17,
+            3.2681914422189674e-18,
+            1.5780224208310967e-17,
+            0.6862915010159825,
+            0.14213562373256766,
+            0.029437251522705567,
+            0.14213562372874428
+          ]
+        },
+        {
+          "cell_id": 98,
+          "nearest_node_distance_m": 5.128587492045515e-15,
+          "point_m": [
+            1.2246467991473531e-19,
+            0.002,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.107466742850234e-16,
+          "weights": [
+            -1.1193812985568205e-27,
+            1.1102230246362003e-16,
+            1.5000683150994548e-29,
+            -1.5124424383381846e-40,
+            -1.0082490398131996e-11,
+            1.0000000000099472,
+            1.3511414209824382e-13,
+            -1.3622870403438343e-24
+          ]
+        },
+        {
+          "cell_id": 198,
+          "nearest_node_distance_m": 0.00012132034355932786,
+          "point_m": [
+            -0.001414213562373095,
+            0.0014142135623730952,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.92227786308419e-17,
+          "weights": [
+            1.578022420831097e-17,
+            7.619366260325023e-17,
+            1.5780224208735476e-17,
+            3.268191442218976e-18,
+            0.1421356237287443,
+            0.6862915010159819,
+            0.1421356237325679,
+            0.029437251522705644
+          ]
+        },
+        {
+          "cell_id": 238,
+          "nearest_node_distance_m": 5.128465027365601e-15,
+          "point_m": [
+            -0.002,
+            2.4492935982947063e-19,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.1074019787972791e-16,
+          "weights": [
+            -1.509923659086782e-40,
+            -1.1193566466535325e-27,
+            1.1102230246362e-16,
+            1.4976031247706136e-29,
+            -1.3600183256842253e-24,
+            -1.0082268353527072e-11,
+            1.000000000009947,
+            1.348920974933165e-13
+          ]
+        },
+        {
+          "cell_id": 218,
+          "nearest_node_distance_m": 0.00012132034355932801,
+          "point_m": [
+            -0.0014142135623730955,
+            -0.001414213562373095,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.921895750570712e-17,
+          "weights": [
+            3.2681914422189535e-18,
+            1.5780224208310952e-17,
+            7.619366260325035e-17,
+            1.578022420873541e-17,
+            0.029437251522705443,
+            0.14213562372874414,
+            0.686291501015983,
+            0.14213562373256733
+          ]
+        },
+        {
+          "cell_id": 126,
+          "nearest_node_distance_m": 5.128342562685686e-15,
+          "point_m": [
+            -3.6739403974420597e-19,
+            -0.002,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.1052746477637065e-16,
+          "weights": [
+            -1.5148362160190562e-40,
+            -1.5025335053979976e-29,
+            1.1102230246141137e-16,
+            1.1193135058230808e-27,
+            -1.3644431635981506e-24,
+            -1.3533618670044212e-13,
+            0.9999999999900534,
+            1.0081879775471179e-11
+          ]
+        },
+        {
+          "cell_id": 58,
+          "nearest_node_distance_m": 0.00012132034355932817,
+          "point_m": [
+            0.0014142135623730948,
+            -0.0014142135623730955,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.906826417480286e-17,
+          "weights": [
+            1.5780224208735417e-17,
+            3.2681914422189736e-18,
+            1.5780224208311023e-17,
+            7.619366260325024e-17,
+            0.14213562373256738,
+            0.029437251522705623,
+            0.14213562372874478,
+            0.686291501015982
+          ]
+        },
+        {
+          "cell_id": 686,
+          "nearest_node_distance_m": 4.587956218531844e-12,
+          "point_m": [
+            0.003,
+            0.0,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.3405649643005833e-14,
+          "weights": [
+            8.899909613799491e-34,
+            -1.5868335245658668e-24,
+            -2.2204460346273368e-16,
+            1.2453586784353643e-25,
+            -4.008162962033849e-18,
+            7.14646286993385e-09,
+            0.9999999934143972,
+            -5.608596880144121e-10
+          ]
+        },
+        {
+          "cell_id": 258,
+          "nearest_node_distance_m": 0.00012132034355928264,
+          "point_m": [
+            0.002121320343559643,
+            0.0021213203435596424,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.2486275873366653e-13,
+          "weights": [
+            -9.197388635420227e-17,
+            -1.3007071838056883e-16,
+            -1.1145185065938647e-25,
+            -7.880835882308215e-26,
+            0.4142135603126018,
+            0.5857864388305426,
+            5.019345130993652e-10,
+            3.5492129542931323e-10
+          ]
+        },
+        {
+          "cell_id": 302,
+          "nearest_node_distance_m": 4.5879564022288415e-12,
+          "point_m": [
+            1.8369701987210298e-19,
+            0.003,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.3405540766903242e-14,
+          "weights": [
+            8.899909959455963e-34,
+            -1.586833586195625e-24,
+            -2.220446034627336e-16,
+            1.245358678435364e-25,
+            -4.008163117703685e-18,
+            7.1464631474896064e-09,
+            0.9999999934143968,
+            -5.60859688014412e-10
+          ]
+        },
+        {
+          "cell_id": 286,
+          "nearest_node_distance_m": 0.00012132034355928264,
+          "point_m": [
+            -0.0021213203435596424,
+            0.002121320343559643,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.2486233460071515e-13,
+          "weights": [
+            3.940419983384636e-26,
+            5.572595421119453e-26,
+            6.503535919028438e-17,
+            4.5986943177101124e-17,
+            3.54921479377086e-10,
+            5.019347732408019e-10,
+            0.585786438830542,
+            0.41421356031260154
+          ]
+        },
+        {
+          "cell_id": 430,
+          "nearest_node_distance_m": 4.5879565859258396e-12,
+          "point_m": [
+            -0.003,
+            3.6739403974420597e-19,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.3405202622645365e-14,
+          "weights": [
+            -4.44994282038146e-34,
+            7.9341682391269025e-25,
+            1.1102230173136658e-16,
+            -6.22677613584464e-26,
+            -4.008152165537991e-18,
+            7.146463425045348e-09,
+            0.9999999934143945,
+            -5.608581337021883e-10
+          ]
+        },
+        {
+          "cell_id": 414,
+          "nearest_node_distance_m": 0.00012132034355928233,
+          "point_m": [
+            -0.0021213203435596433,
+            -0.0021213203435596424,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.2486224409937097e-13,
+          "weights": [
+            -7.880846093460787e-26,
+            -1.1145199506689363e-25,
+            -1.3007071838056944e-16,
+            -9.19738863542014e-17,
+            3.549217552987424e-10,
+            5.019351634529606e-10,
+            0.5857864388305454,
+            0.4142135603125979
+          ]
+        },
+        {
+          "cell_id": 558,
+          "nearest_node_distance_m": 4.587956769622838e-12,
+          "point_m": [
+            -5.510910596163089e-19,
+            -0.003,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 1.3405288781084566e-14,
+          "weights": [
+            -2.002474362498646e-33,
+            3.570375874007453e-24,
+            4.996003577911494e-16,
+            -2.802049261130087e-25,
+            -4.0081523523412754e-18,
+            7.146463758112253e-09,
+            0.9999999934143938,
+            -5.60858133702188e-10
+          ]
+        },
+        {
+          "cell_id": 542,
+          "nearest_node_distance_m": 0.00012132034355928264,
+          "point_m": [
+            0.002121320343559642,
+            -0.0021213203435596433,
+            0.002445795
+          ],
+          "rest_reconstruction_error_m": 4.2486191046822577e-13,
+          "weights": [
+            -7.880852730710046e-26,
+            -1.1145208893177241e-25,
+            -1.3007071838056885e-16,
+            -9.197388635420184e-17,
+            3.549220542138753e-10,
+            5.019355861827937e-10,
+            0.5857864388305427,
+            0.41421356031259987
+          ]
+        },
+        {
+          "cell_id": 111,
+          "nearest_node_distance_m": 0.0,
+          "point_m": [
+            0.0,
+            0.0,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.236055350423398e-16,
+          "weights": [
+            -6.784939371063355e-42,
+            3.8826747678853457e-29,
+            2.2204460492503128e-16,
+            -3.8802095775551736e-29,
+            -3.055665042325233e-26,
+            1.7486012637849265e-13,
+            0.9999999999999997,
+            -1.7474910407596904e-13
+          ]
+        },
+        {
+          "cell_id": 47,
+          "nearest_node_distance_m": 2.5749082771869766e-15,
+          "point_m": [
+            0.001,
+            0.0,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.191558368003425e-16,
+          "weights": [
+            3.579834976822145e-40,
+            1.1776583979298159e-27,
+            2.2204460492378614e-16,
+            6.749691120261483e-29,
+            1.6122143467664077e-24,
+            5.303701922086453e-12,
+            0.999999999994392,
+            3.0397906414075556e-13
+          ]
+        },
+        {
+          "cell_id": 75,
+          "nearest_node_distance_m": 0.0002928932188137068,
+          "point_m": [
+            0.0007071067811865476,
+            0.0007071067811865475,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 3.52657485837176e-18,
+          "weights": [
+            3.809683130165815e-17,
+            5.387705551065382e-17,
+            7.61936626030628e-17,
+            5.387705550965654e-17,
+            0.17157287525414427,
+            0.24264068712160003,
+            0.34314575050714685,
+            0.24264068711710868
+          ]
+        },
+        {
+          "cell_id": 103,
+          "nearest_node_distance_m": 2.574847295814012e-15,
+          "point_m": [
+            6.123233995736766e-20,
+            0.001,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.1894938268260092e-16,
+          "weights": [
+            -7.387435706002891e-40,
+            1.392955795304677e-28,
+            2.220446049260696e-16,
+            -1.1775967681712149e-27,
+            -3.327005269277811e-24,
+            6.273315200677715e-13,
+            1.0000000000046758,
+            -5.303424366328583e-12
+          ]
+        },
+        {
+          "cell_id": 171,
+          "nearest_node_distance_m": 0.0002928932188137069,
+          "point_m": [
+            -0.0007071067811865475,
+            0.0007071067811865476,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 3.450761912075328e-18,
+          "weights": [
+            5.387705550965666e-17,
+            3.8096831301658177e-17,
+            5.3877055510653724e-17,
+            7.619366260306276e-17,
+            0.2426406871171092,
+            0.17157287525414439,
+            0.24264068712159959,
+            0.3431457505071467
+          ]
+        },
+        {
+          "cell_id": 175,
+          "nearest_node_distance_m": 2.5747519490015537e-15,
+          "point_m": [
+            -0.001,
+            1.2246467991473531e-19,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.218261709784292e-16,
+          "weights": [
+            3.26062994270943e-40,
+            -1.0999679247178744e-27,
+            2.220446049261971e-16,
+            -6.582058177970424e-29,
+            1.4684571794979267e-24,
+            -4.953815135878916e-12,
+            1.00000000000525,
+            -2.964295475763852e-13
+          ]
+        },
+        {
+          "cell_id": 183,
+          "nearest_node_distance_m": 0.0002928932188137068,
+          "point_m": [
+            -0.0007071067811865477,
+            -0.0007071067811865475,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 3.6300539490092766e-18,
+          "weights": [
+            7.61936626030628e-17,
+            5.387705550965662e-17,
+            3.809683130165815e-17,
+            5.387705551065374e-17,
+            0.34314575050714685,
+            0.24264068711710904,
+            0.17157287525414427,
+            0.24264068712159967
+          ]
+        },
+        {
+          "cell_id": 119,
+          "nearest_node_distance_m": 2.5747253331050098e-15,
+          "point_m": [
+            -1.8369701987210298e-19,
+            -0.001,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.2172967218639265e-16,
+          "weights": [
+            -6.986305919333165e-40,
+            -1.4103353871084539e-28,
+            2.220446049240724e-16,
+            1.0999309468633146e-27,
+            -3.1463524735005126e-24,
+            -6.351585923849056e-13,
+            0.9999999999956812,
+            4.9536486024268995e-12
+          ]
+        },
+        {
+          "cell_id": 87,
+          "nearest_node_distance_m": 0.00029289321881370664,
+          "point_m": [
+            0.0007071067811865474,
+            -0.0007071067811865477,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 3.556447555475522e-18,
+          "weights": [
+            5.387705551065368e-17,
+            7.619366260306285e-17,
+            5.387705550965666e-17,
+            3.8096831301658115e-17,
+            0.2426406871215994,
+            0.3431457505071471,
+            0.2426406871171092,
+            0.1715728752541441
+          ]
+        },
+        {
+          "cell_id": 15,
+          "nearest_node_distance_m": 5.12870995672543e-15,
+          "point_m": [
+            0.002,
+            0.0,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.1055546252321335e-16,
+          "weights": [
+            2.2387749230658902e-27,
+            -3.0273870702467292e-40,
+            -3.002601820467202e-29,
+            2.2204460492282255e-16,
+            1.0082545909285952e-11,
+            -1.3634139281469424e-24,
+            -1.352251643979806e-13,
+            0.9999999999900524
+          ]
+        },
+        {
+          "cell_id": 39,
+          "nearest_node_distance_m": 0.00012132034355932817,
+          "point_m": [
+            0.0014142135623730952,
+            0.001414213562373095,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.90663476328951e-17,
+          "weights": [
+            1.5238732520650057e-16,
+            3.1560448417470897e-17,
+            6.536382884437935e-18,
+            3.1560448416621934e-17,
+            0.6862915010159825,
+            0.14213562373256766,
+            0.029437251522705564,
+            0.14213562372874428
+          ]
+        },
+        {
+          "cell_id": 99,
+          "nearest_node_distance_m": 5.128587492045515e-15,
+          "point_m": [
+            1.2246467991473531e-19,
+            0.002,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.1048057344213906e-16,
+          "weights": [
+            -2.238762597113641e-27,
+            2.2204460492724007e-16,
+            3.0001366301989095e-29,
+            -3.0248848766763692e-40,
+            -1.0082490398131996e-11,
+            1.0000000000099472,
+            1.3511414209824382e-13,
+            -1.3622870403438342e-24
+          ]
+        },
+        {
+          "cell_id": 199,
+          "nearest_node_distance_m": 0.00012132034355932786,
+          "point_m": [
+            -0.001414213562373095,
+            0.0014142135623730952,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.937776182353303e-17,
+          "weights": [
+            3.156044841662194e-17,
+            1.5238732520650045e-16,
+            3.156044841747095e-17,
+            6.536382884437952e-18,
+            0.1421356237287443,
+            0.6862915010159819,
+            0.1421356237325679,
+            0.02943725152270564
+          ]
+        },
+        {
+          "cell_id": 239,
+          "nearest_node_distance_m": 5.128465027365601e-15,
+          "point_m": [
+            -0.002,
+            2.4492935982947063e-19,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.1047833753651786e-16,
+          "weights": [
+            -3.019847318173564e-40,
+            -2.238713293307065e-27,
+            2.2204460492724e-16,
+            2.995206249541227e-29,
+            -1.3600183256842251e-24,
+            -1.0082268353527072e-11,
+            1.000000000009947,
+            1.348920974933165e-13
+          ]
+        },
+        {
+          "cell_id": 219,
+          "nearest_node_distance_m": 0.00012132034355932801,
+          "point_m": [
+            -0.0014142135623730955,
+            -0.001414213562373095,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.90663476328951e-17,
+          "weights": [
+            6.536382884437907e-18,
+            3.1560448416621903e-17,
+            1.523873252065007e-16,
+            3.156044841747082e-17,
+            0.02943725152270544,
+            0.14213562372874414,
+            0.686291501015983,
+            0.14213562373256733
+          ]
+        },
+        {
+          "cell_id": 127,
+          "nearest_node_distance_m": 5.128342562685686e-15,
+          "point_m": [
+            -3.6739403974420597e-19,
+            -0.002,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.1052746477637003e-16,
+          "weights": [
+            -3.0296724320381124e-40,
+            -3.005067010795995e-29,
+            2.2204460492282274e-16,
+            2.2386270116461616e-27,
+            -1.3644431635981504e-24,
+            -1.3533618670044212e-13,
+            0.9999999999900533,
+            1.0081879775471179e-11
+          ]
+        },
+        {
+          "cell_id": 59,
+          "nearest_node_distance_m": 0.00012132034355932817,
+          "point_m": [
+            0.0014142135623730948,
+            -0.0014142135623730955,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.906538933386797e-17,
+          "weights": [
+            3.1560448417470835e-17,
+            6.536382884437947e-18,
+            3.1560448416622045e-17,
+            1.5238732520650047e-16,
+            0.14213562373256738,
+            0.02943725152270562,
+            0.14213562372874478,
+            0.686291501015982
+          ]
+        },
+        {
+          "cell_id": 687,
+          "nearest_node_distance_m": 4.587956218531844e-12,
+          "point_m": [
+            0.003,
+            0.0,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.340553496261639e-14,
+          "weights": [
+            -8.899897281625691e-34,
+            1.5868335245658654e-24,
+            2.2204460346273348e-16,
+            -1.2453569528021465e-25,
+            -4.008157408116515e-18,
+            7.14646286993384e-09,
+            0.9999999934143958,
+            -5.608589108583003e-10
+          ]
+        },
+        {
+          "cell_id": 259,
+          "nearest_node_distance_m": 0.00012132034355928264,
+          "point_m": [
+            0.002121320343559643,
+            0.0021213203435596424,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.248627587334452e-13,
+          "weights": [
+            -1.839477727084036e-16,
+            -2.601414367611386e-16,
+            -2.229037013187737e-25,
+            -1.576167176461635e-25,
+            0.41421356031259976,
+            0.5857864388305448,
+            5.01934513099367e-10,
+            3.5492129542931147e-10
+          ]
+        },
+        {
+          "cell_id": 303,
+          "nearest_node_distance_m": 4.5879564022288415e-12,
+          "point_m": [
+            1.8369701987210298e-19,
+            0.003,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.3405540759888063e-14,
+          "weights": [
+            4.449954979727982e-34,
+            -7.934167930978125e-25,
+            -1.110223017313668e-16,
+            6.22679339217682e-26,
+            -4.008163117703684e-18,
+            7.146463147489605e-09,
+            0.9999999934143966,
+            -5.608596880144119e-10
+          ]
+        },
+        {
+          "cell_id": 287,
+          "nearest_node_distance_m": 0.00012132034355928264,
+          "point_m": [
+            -0.0021213203435596424,
+            0.002121320343559643,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.2486224409937097e-13,
+          "weights": [
+            -1.5761679933538465e-25,
+            -2.229038168447789e-25,
+            -2.601414367611384e-16,
+            -1.8394777270840358e-16,
+            3.5492147937708443e-10,
+            5.01934773240804e-10,
+            0.5857864388305444,
+            0.4142135603125997
+          ]
+        },
+        {
+          "cell_id": 431,
+          "nearest_node_distance_m": 4.5879565859258396e-12,
+          "point_m": [
+            -0.003,
+            3.6739403974420597e-19,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.3405202678766183e-14,
+          "weights": [
+            -2.22497141019073e-33,
+            3.9670841195634514e-24,
+            5.5511150865683295e-16,
+            -3.1133880679223203e-25,
+            -4.008152165537989e-18,
+            7.146463425045344e-09,
+            0.999999993414394,
+            -5.608581337021881e-10
+          ]
+        },
+        {
+          "cell_id": 415,
+          "nearest_node_distance_m": 0.00012132034355928233,
+          "point_m": [
+            -0.0021213203435596433,
+            -0.0021213203435596424,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.2486224409937097e-13,
+          "weights": [
+            -1.5761692186921574e-25,
+            -2.2290399013378725e-25,
+            -2.601414367611389e-16,
+            -1.839477727084028e-16,
+            3.5492175529874244e-10,
+            5.019351634529607e-10,
+            0.5857864388305455,
+            0.41421356031259793
+          ]
+        },
+        {
+          "cell_id": 559,
+          "nearest_node_distance_m": 4.587956769622838e-12,
+          "point_m": [
+            -5.510910596163089e-19,
+            -0.003,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 1.3405174167759855e-14,
+          "weights": [
+            -3.782446332434037e-33,
+            6.74404331756963e-24,
+            9.43689564716615e-16,
+            -5.292752381526767e-25,
+            -4.00814679842325e-18,
+            7.146463758112244e-09,
+            0.9999999934143927,
+            -5.60857356546076e-10
+          ]
+        },
+        {
+          "cell_id": 543,
+          "nearest_node_distance_m": 0.00012132034355928264,
+          "point_m": [
+            0.002121320343559642,
+            -0.0021213203435596433,
+            0.0036686925
+          ],
+          "rest_reconstruction_error_m": 4.2486191046822577e-13,
+          "weights": [
+            -3.9404263653550226e-26,
+            -5.572604446588621e-26,
+            -6.503535919028443e-17,
+            -4.5986943177100915e-17,
+            3.5492205421387516e-10,
+            5.019355861827936e-10,
+            0.5857864388305426,
+            0.4142135603125997
+          ]
+        }
+      ],
+      "max_rest_map_error_m": 4.2486275873366653e-13,
+      "mesh_sha256": "3a6b5bb720bd3998f035abecf15d5c603d46c5ed281ce1d08c4aadec69c1dab9",
+      "nodes": 1045,
+      "radius_m": 0.004,
+      "rest_volume_m3": 2.4430127827734354e-07
+    }
+  },
+  "original_failed_numerical_gate_preserved": true,
+  "schema": "saved-hbe-cross-mesh-diagnosis-v1",
+  "solver_or_mesher_or_curve_access": false
+}

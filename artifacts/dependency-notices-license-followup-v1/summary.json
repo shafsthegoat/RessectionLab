@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "observed_utc": "2026-10-04T13:52:36.268678+00:00",
+  "package": "react-remove-scroll-bar",
+  "version": "2.3.8",
+  "scope": "Read-only official npm registry and upstream GitHub JSON/text lookups. No tarball/archive download, clone, package installation, build, test, runtime execution, app mutation, or license substitution.",
+  "prior_receipt": {
+    "path": "artifacts/dependency-notices-v1/npm-missing-notice-source-check.json",
+    "sha256": "a1c0b7dacf47ff7255122c8decc7f2006dd94f6944d9fd65efc8b6d777971bc1",
+    "preserved": true
+  },
+  "published_registry_record": {
+    "url": "https://registry.npmjs.org/react-remove-scroll-bar/2.3.8",
+    "sha256": "826c618ece09367334160c1ab3a272fd54f8f12e3b0a45f75b0f2660d285855a",
+    "matches_prior_response_hash": true,
+    "declared_license": "MIT",
+    "git_head": "b3b1287aad81def2e2ae707274b74531b61ddbaf",
+    "published_at": "2024-12-15T02:08:28.658Z",
+    "tarball_integrity": "sha512-9r+yi9+mgU33AKcj6IbT9oRCO78WriSj6t/cF8DWBZJ9aOGPOTEDvdUDz1FwKim7QXWwmHqtdHnRJfhAxEG46Q==",
+    "tarball_fetched": false
+  },
+  "exact_published_commit_lookup": {
+    "http_status": 422,
+    "message": "No commit found for SHA: b3b1287aad81def2e2ae707274b74531b61ddbaf"
+  },
+  "upstream_repository_license": {
+    "full_text_found": true,
+    "license_text_sha256": "a79aae0c0f21990d9d963bb3c5a79cdcea9a46f8523ba55c58d7fe776b6ebc84",
+    "immutable_url": "https://raw.githubusercontent.com/theKashey/react-remove-scroll-bar/7301c160fda44cb8cf2b9fdfde61efad35736196/LICENSE",
+    "first_license_file_commit": "7301c160fda44cb8cf2b9fdfde61efad35736196",
+    "first_license_file_commit_date": "2025-05-21T17:01:24Z",
+    "package_version_at_license_commit": "2.3.7",
+    "metadata_differences_from_installed_target": [
+      "version2.3.7 versus2.3.8",
+      "react-style-singleton dependency^2.2.1 versus^2.2.2"
+    ],
+    "exact_target_version_binding_verified": false,
+    "used_as_app_notice": false
+  },
+  "tag_lookup": {
+    "tag_count": 19,
+    "target_v2_3_8_present": false,
+    "latest_returned_tag": "v2.3.7"
+  },
+  "result": "unresolved_exact_version_license_text_binding",
+  "exact_version_license_text_verified": false,
+  "legal_permission_assessment": "not performed",
+  "next_evidence_needed": "An authoritative upstream notice explicitly covering published2.3.8, or accessible exact source for publishedgitHead b3b1287aad81def2e2ae707274b74531b61ddbaf together with its applicable complete notice. Do not substitute the2.3.7 source LICENSE.",
+  "response_files": {
+    "github-branches.json": {
+      "bytes": 1417,
+      "sha256": "c763899b00f08a2a9ac35885abeac7b3fa65d6710ef864b2be470c076a02c3a6"
+    },
+    "github-license-addition-commit.json": {
+      "bytes": 5746,
+      "sha256": "9b394151d0b7a57096e72b0ec4c9872ae8b1b7e8f1ce66f38add07593d68a7f2"
+    },
+    "github-license-addition-license.txt": {
+      "bytes": 1093,
+      "sha256": "a79aae0c0f21990d9d963bb3c5a79cdcea9a46f8523ba55c58d7fe776b6ebc84"
+    },
+    "github-license-addition-package.json": {
+      "bytes": 2221,
+      "sha256": "484ad46c8cc261e168d7e2602bbb70b80f8d10307b7de91d99485da28c350a03"
+    },
+    "github-license-history.json": {
+      "bytes": 4011,
+      "sha256": "9875fa0feeff0e4c1132e49dc97fd882729e17da901176c332dc83787dd6e99f"
+    },
+    "github-master-license.txt": {
+      "bytes": 1093,
+      "sha256": "a79aae0c0f21990d9d963bb3c5a79cdcea9a46f8523ba55c58d7fe776b6ebc84"
+    },
+    "github-master-package.json": {
+      "bytes": 2221,
+      "sha256": "484ad46c8cc261e168d7e2602bbb70b80f8d10307b7de91d99485da28c350a03"
+    },
+    "github-package-history.json": {
+      "bytes": 117195,
+      "sha256": "72efe7fbaf4088bea6256659762c428079fdf24e730f5f1e1c9a5fb8654faf6a"
+    },
+    "github-published-commit.json": {
+      "bytes": 174,
+      "sha256": "7639972c070d72ee85aa77fe9fd505b2a3915ed1184afbb9233a75d877e2de4f"
+    },
+    "github-tags.json": {
+      "bytes": 8798,
+      "sha256": "43e5fbc546532f261a7186f69fc114091e753307ca0c0acf4647fdd2c6c1a05a"
+    },
+    "lookups-v1.json": {
+      "bytes": 3426,
+      "sha256": "51bdf02b081a236f6a77e072530c6766e06dbd679adf3834a71e9ad2a34bebb8"
+    },
+    "lookups-v2.json": {
+      "bytes": 2621,
+      "sha256": "125e52285249924b6e7164e22202db76589759adfc6709dbf5eeadd69f8347fb"
+    },
+    "npm-package-metadata.json": {
+      "bytes": 66434,
+      "sha256": "7682738ac0d8ee945ef9463e263549c9bc60049c650790a0a2fd8500e4f080ba"
+    },
+    "npm-version.json": {
+      "bytes": 2908,
+      "sha256": "826c618ece09367334160c1ab3a272fd54f8f12e3b0a45f75b0f2660d285855a"
+    }
+  }
+}

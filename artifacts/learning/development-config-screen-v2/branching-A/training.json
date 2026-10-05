@@ -1,0 +1,53 @@
+[
+  {
+    "decision_model_hash": "sha256:c1f8ca6a37e2190a210002302f8a0aa53d883ede01d2388e80800740a89acae8",
+    "elapsed_seconds": 1.7166098339948803,
+    "gradient_steps": 32,
+    "initial_checkpoint_hash": "sha256:3ffe11ea901cac5d4d0b27c17c6a9de587fbe995087c52f3917acd195958d202",
+    "initial_selection_return": 0.0,
+    "latest_checkpoint_hash": "sha256:25c7efe0ad51b1f70295b061a7c54b0da911c49254d9c5cd18a2068e457db01e",
+    "optimization_environment_steps": 355,
+    "optimizer_mode": "PATIENT_SCRATCH_RL",
+    "output_dir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/development-config-screen-v2/branching-A/scratch-11",
+    "preparation_seconds": 0.017430666950531304,
+    "selected_checkpoint_hash": "sha256:3ffe11ea901cac5d4d0b27c17c6a9de587fbe995087c52f3917acd195958d202",
+    "selected_selection_return": 0.0,
+    "selection_environment_steps": 10,
+    "shared_checkpoint_hash": null,
+    "status": "gradient_budget"
+  },
+  {
+    "decision_model_hash": "sha256:c1f8ca6a37e2190a210002302f8a0aa53d883ede01d2388e80800740a89acae8",
+    "elapsed_seconds": 0.6117934579961002,
+    "gradient_steps": 32,
+    "initial_checkpoint_hash": "sha256:38b91ec6302c4a795ec519341cd3f0e523376c331b36cfd5dadb6e1450c466fe",
+    "initial_selection_return": 0.0,
+    "latest_checkpoint_hash": "sha256:126126ff35e124fe85590640d60c845e7577a668553d66cd55ef496df81e7837",
+    "optimization_environment_steps": 301,
+    "optimizer_mode": "PATIENT_SCRATCH_RL",
+    "output_dir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/development-config-screen-v2/branching-A/scratch-23",
+    "preparation_seconds": 0.0197530830046162,
+    "selected_checkpoint_hash": "sha256:38b91ec6302c4a795ec519341cd3f0e523376c331b36cfd5dadb6e1450c466fe",
+    "selected_selection_return": 0.0,
+    "selection_environment_steps": 10,
+    "shared_checkpoint_hash": null,
+    "status": "gradient_budget"
+  },
+  {
+    "decision_model_hash": "sha256:c1f8ca6a37e2190a210002302f8a0aa53d883ede01d2388e80800740a89acae8",
+    "elapsed_seconds": 0.5697394999442622,
+    "gradient_steps": 32,
+    "initial_checkpoint_hash": "sha256:1b950505190cfef3b8181127d7f85fd9f0a6691e3184b4a1c422189cbadf4d34",
+    "initial_selection_return": 0.020000000000000018,
+    "latest_checkpoint_hash": "sha256:b2e0f2e225ea9628130689fe5af51cc07343ec39aed8202ba90e6edfc3b11b40",
+    "optimization_environment_steps": 357,
+    "optimizer_mode": "PATIENT_SCRATCH_RL",
+    "output_dir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/development-config-screen-v2/branching-A/scratch-47",
+    "preparation_seconds": 0.019229582976549864,
+    "selected_checkpoint_hash": "sha256:5473dfff39be8778f777ae28bb3660657b7ef8502aa2170ca4a241219adb622c",
+    "selected_selection_return": 1.26,
+    "selection_environment_steps": 26,
+    "shared_checkpoint_hash": null,
+    "status": "gradient_budget"
+  }
+]

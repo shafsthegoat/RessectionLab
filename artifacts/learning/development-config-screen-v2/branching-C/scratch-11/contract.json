@@ -1,0 +1,102 @@
+{
+  "algorithm": "masked_reinforce_state_value_v2",
+  "clinical_deficit_probability": null,
+  "code_sha256": "36a7f489fa49c87e683370aafcfe18fa398c51bf441516a341df3dab55e0b5b3",
+  "config": {
+    "checkpoint_interval": 8,
+    "entropy_weight": 0.03,
+    "episodes_per_update": 4,
+    "gamma": 1.0,
+    "hidden_features": 64,
+    "learning_rate": 0.003,
+    "max_environment_steps": 2048,
+    "max_episode_steps": 24,
+    "max_gradient_norm": 5.0,
+    "max_gradient_steps": 32,
+    "max_wall_seconds": 60,
+    "seed": 11,
+    "value_weight": 0.5
+  },
+  "contract_hash": "sha256:3ec014fead156faaaa14bec09c5a0068d2df903f9708c1b6f12c29d397b39dcf",
+  "decision_model_hash": "sha256:c1f8ca6a37e2190a210002302f8a0aa53d883ede01d2388e80800740a89acae8",
+  "dimensions": [
+    12,
+    6,
+    64
+  ],
+  "final_evaluation_used_for_optimization": false,
+  "hardware": {
+    "device": "cpu",
+    "machine": "arm64",
+    "platform": "macOS-26.6-arm64-arm-64bit",
+    "processor": "arm",
+    "torch": "2.14.1",
+    "torch_threads": 4
+  },
+  "implementation_sha256": "36a7f489fa49c87e683370aafcfe18fa398c51bf441516a341df3dab55e0b5b3",
+  "initial_checkpoint_hash": "sha256:46ac4ada573e43f3111ef0e168a5b40e81a8bbc77a16c3e92f107a47a76a3cb2",
+  "partitions": {
+    "optimization": {
+      "case_hash": "synthetic-branching-v1",
+      "generator": {
+        "family": "rigid_gaussian",
+        "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+        "rotation_center_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_scale_deg": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "translation_scale_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "version": "rigid-registration-v1"
+      },
+      "partition_hash": "sha256:7ed173cff0fd219cfaf8608088e90d1f386f78815d22a0fbf2a096b3d43014be",
+      "role": "optimization",
+      "seeds": [
+        2715039868682679005,
+        430575957431541021,
+        6787750360569902804
+      ]
+    },
+    "selection": {
+      "case_hash": "synthetic-branching-v1",
+      "generator": {
+        "family": "rigid_gaussian",
+        "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+        "rotation_center_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_scale_deg": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "translation_scale_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "version": "rigid-registration-v1"
+      },
+      "partition_hash": "sha256:7a2ef6f48a3bf7b9445c89c0a031fbc6f6bdd655485f2382225b006b7db45c7b",
+      "role": "selection",
+      "seeds": [
+        13570732548748017305,
+        8866893344993779307
+      ]
+    }
+  },
+  "schema_version": 1,
+  "shared_checkpoint_hash": null,
+  "simulator_implementation_sha256": "0ca58ca9340581304a73bfae2b8335c4b15819ac8936a459ea385908800836b0"
+}

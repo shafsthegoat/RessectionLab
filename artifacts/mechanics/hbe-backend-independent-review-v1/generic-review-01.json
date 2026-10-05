@@ -1,0 +1,31 @@
+{
+  "scope": "Constructed receipt and checker doubles only; no solver/physics/patient/measurement validity claim. Runtime pins provisional pending combined CSC/matrix-attribute/ownership repair.",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_mechanics_hbe_backend_review.py",
+    "-p",
+    "no:cacheprovider"
+  ],
+  "exit_code": 0,
+  "process_elapsed_seconds": 0.5261129579739645,
+  "source_sha256": {
+    "scripts/mechanics_hbe_backend.py": "1a5f559aba920f1a23af1e6fca962865f23a88c036a6f3f3c36790ae9ecd2af0",
+    "scripts/mechanics_hbe_experiment.py": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa",
+    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "tests/test_mechanics_hbe_backend_review.py": "3e3d897a1eff89583a8c08802b12db895d79d911a9da6666652ed56ee972003d",
+    "tests/test_mechanics_hbe_backend.py": "410a975d7f3cc3130ab31c7e62065baefa557625b3a8f9769b9f8a556ce76e4a",
+    "tests/test_mechanics_hbe_backend_access.py": "3ce71fecbc4d2392996d2eeda5881bb7cc96b1505e6600949226316bd63a1b8c"
+  },
+  "source_after_sha256": {
+    "scripts/mechanics_hbe_backend.py": "1a5f559aba920f1a23af1e6fca962865f23a88c036a6f3f3c36790ae9ecd2af0",
+    "scripts/mechanics_hbe_experiment.py": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa",
+    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "tests/test_mechanics_hbe_backend_review.py": "3e3d897a1eff89583a8c08802b12db895d79d911a9da6666652ed56ee972003d",
+    "tests/test_mechanics_hbe_backend.py": "410a975d7f3cc3130ab31c7e62065baefa557625b3a8f9769b9f8a556ce76e4a",
+    "tests/test_mechanics_hbe_backend_access.py": "3ce71fecbc4d2392996d2eeda5881bb7cc96b1505e6600949226316bd63a1b8c"
+  },
+  "all_sources_unchanged": true
+}

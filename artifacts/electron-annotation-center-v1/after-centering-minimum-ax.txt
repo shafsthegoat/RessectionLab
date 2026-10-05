@@ -1,0 +1,208 @@
+Window: "RessectionLab", App: RessectionLab.
+0 standard window RessectionLab, Secondary Actions: Raise
+	1 container RessectionLab
+		2 container
+			3 HTML content RessectionLab, URL: file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/dist/index.html
+				4 container
+					5 text Ressection Lab Research workspace
+					6 button Open case ⌘O
+						7 text Open case
+						8 text ⌘O
+					9 button Import MRI
+					10 button Save
+					11 container Workspace navigation
+						12 button Toggle case and evidence panel
+						13 button Focus route comparison
+					14 text CASE & EVIDENCE
+					15 button Collapse case panel
+					16 heading UCSF-PDGM-0004, Value: 1
+						17 text UCSF-PDGM-0004
+					18 text Annotation-assisted structural workspace
+					19 text Public mirror · source match unverified
+					20 container
+						21 heading Source imaging 01, Value: 2
+							22 text Source imaging 01
+						23 text T1c 240 × 240 × 155 voxels 1.0 × 1.0 × 1.0 mm ·  RAS+
+					24 container
+						25 heading Target annotations 03, Value: 2
+							26 text Target annotations 03
+						27 button Center on annotations, Help: Move the linked MRI slices to the source annotation center.
+						28 checkbox FLAIR Abnormality 18.65 mL · supplied annotation, Value: 1
+						29 text FLAIR Abnormality
+						30 text 18.65  mL · supplied annotation
+						31 checkbox Enhancing Target 15.67 mL · supplied annotation, Value: 1
+						32 text Enhancing Target
+						33 text 15.67  mL · supplied annotation
+						34 checkbox Nonenhancing Or Necrotic Core 7.59 mL · supplied annotation, Value: 1
+						35 text Nonenhancing Or Necrotic Core
+						36 text 7.59  mL · supplied annotation Overlay opacity 75 %
+						37 slider Overlay opacity 75%, Value: 0.75, Secondary Actions: Increment, Decrement
+					38 container
+						39 heading Population priors 07, Value: 2
+							40 text Population priors 07
+						41 text Population prior Alignment review required · inspection only Inspect one released map
+						42 pop up button Inspect one released map, Value: Motor · functional network
+							43 (selected) Motor · functional network
+						44 text Atlas concordance (unitless, 0–1) 0 1 Normative connectivity-map concordance. This is not an injury probability or patient connectivity. AT LINKED CURSOR · INTERPOLATED ATLAS SAMPLE Within atlas field of view Atlas concordance 0.0000 No signal in this released map; patient function unknown.
+						45 button Return to source view
+						46 text Not used in route scoring Patient language dominance: unknown Patient-specific function: unknown
+					47 pop up button Inspect evidence
+					48 text Local processing · source preserved Workspace Route comparison
+					49 heading Anatomy, in context, Value: 2
+						50 text Anatomy, in context
+					51 container Camera framing
+						52 toggle button Focus anatomy, Value: 1
+						53 toggle button Fit instruments, Value: 0
+					54 text Population prior
+					55 text Motor · functional network
+					56 text Alignment review required · inspection only · not used in route scoring
+					57 button Source view
+					58 container Linked patient imaging workspace
+						59 toolbar Imaging layout and 3D controls
+							60 container View layout
+								61 toggle button 3D focus, Value: 0
+								62 toggle button MRI review, Value: 1
+							63 toggle button MRI plane off, Help: Show or hide the source MRI plane in 3D; linked MRI views remain visible, Value: 0
+							64 pop up button Description: MRI plane shown in 3D, Value: Axial
+								65 (selected) Axial
+							66 button Description: Fit 3D view, Help: Fit anatomy and the selected 3D camera preset
+							67 container
+								68 text Population prior  · alignment review required Interpolated atlas sample: covered zero · 0.0000 · unitless Patient function unknown · hatching marks unavailable atlas support
+						69 container
+							70 text 3D Spatial workspace
+							71 container 3-D source anatomy. Drag to rotate, scroll to zoom, double-click to set linked cursor.
+								72 container
+									73 text Source annotation surfaces ● Route  A ● Route  B
+								74 container 3-D patient coordinates: R is right, A anterior, S superior
+									75 text R A S
+									76 text Patient axes
+								77 container
+									78 text Drag to rotate  ·  Scroll to zoom
+						79 container
+							80 text Axial 104.6 mm
+							81 toggle button Description: Expand Axial MRI, Value: 0
+							82 container Axial source MRI, neurological convention, slice position 104.6 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice.
+								83 text L
+								84 text R
+								85 text A
+								86 text P
+								87 text 20
+								88 text  mm
+								89 text SOURCE MRI
+								90 text  · PRIOR
+						91 container
+							92 text Coronal 84.9 mm
+							93 toggle button Description: Expand Coronal MRI, Value: 0
+							94 container Coronal source MRI, neurological convention, slice position 84.9 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice.
+								95 text L
+								96 text R
+								97 text S
+								98 text I
+								99 text 20
+								100 text  mm
+								101 text SOURCE MRI
+								102 text  · PRIOR
+						103 container
+							104 text Sagittal -161.9 mm
+							105 toggle button Description: Expand Sagittal MRI, Value: 0
+							106 container Sagittal source MRI, neurological convention, slice position -161.9 millimeters. Population prior, alignment review required. Patient function unknown. Hatching marks unavailable atlas support. Click to set cursor; scroll or arrow keys change slice.
+								107 text P
+								108 text A
+								109 text S
+								110 text I
+								111 text 20
+								112 text  mm
+								113 text SOURCE MRI
+								114 text  · PRIOR
+						115 text Linked views
+						116 text RAS
+						117 text -161.9 / 84.9 / 104.6  mm
+						118 container
+							119 text Contrast
+							120 slider Description: Source MRI window width, Value: 1, Secondary Actions: Increment, Decrement
+					121 text Linked physical coordinates · RAS+ mm Anatomy focus may crop instruments
+					122 tab group Planning workflows
+						123 tab (selected) Routes, Value: 1
+						124 tab (settable, integer) Refine, Value: 0
+					125 container Routes
+						126 text INSTRUMENT-AWARE SEARCH
+						127 heading Compare the alternatives, Value: 2
+							128 text Compare the alternatives
+						129 disclosure triangle Search settings
+							130 text Search settings
+						131 pop up button Description: Candidate category, Value: Retained alternatives
+							132 (selected) Retained alternatives
+						133 text 12
+						134 container
+							135 text A
+							136 pop up button Description: Primary route A, Value: Route 02 · Aspirator
+						137 container
+							138 text B
+							139 pop up button Description: Comparison route B, Value: Route 04 · Aspirator
+						140 table
+							141 row
+								142 column header
+									143 text Modeled metric
+								144 column header
+									145 text A
+									146 text Route 02
+								147 column header
+									148 text B
+									149 text Route 04
+							150 row
+								151 row header
+									152 text Accessible target
+								153 cell
+									154 text 0.146 mL
+								155 cell
+									156 text 0.332 mL
+							157 row
+								158 row header
+									159 text Route length
+								160 cell
+									161 text 40.2 mm
+								162 cell
+									163 text 57.0 mm
+							164 row
+								165 row header
+									166 text Clearance¹
+								167 cell
+									168 text 1.2 mm
+								169 cell
+									170 text 0.9 mm
+							171 row
+								172 row header
+									173 text Normal exposure²
+								174 cell
+									175 text Unassessed
+								176 cell
+									177 text Unassessed
+							178 row
+								179 row header
+									180 text Assessment
+								181 cell
+									182 text Incomplete
+								183 cell
+									184 text Incomplete
+						185 text ¹ Conservative lower bound
+						186 text ² Geometric exposure, not tissue removal
+						187 text Removed target volume
+						188 text Not simulated
+						189 disclosure triangle Target compartments
+							190 text Target compartments
+						191 text 54 evaluations · 1.11 s · Search
+					192 text Research use only
+					193 text Clinical outcomes are not predicted. Functional and vascular anatomy remain unassessed.
+					194 text Population prior shown · alignment review required · not used in route scoring
+					195 text RAS -161.9 / 84.9 / 104.6 mm
+	196 close button
+	197 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	198 minimize button
+199 menu bar
+	200 RessectionLab
+	201 File
+	202 Edit
+	203 View
+	204 Window
+
+The focused UI element is 27 button Center on annotations, Help: Move the linked MRI slices to the source annotation center.

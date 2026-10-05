@@ -1,0 +1,15 @@
+{
+  "draft": {
+    "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/release-draft.json",
+    "sha256": "9f21f130d51911c52faf03bcaba0a8a24c058339451794809a387ea2a4191c10"
+  },
+  "exception": "Explicit committed calibration release required",
+  "executing_orchestrator": {
+    "path": "outputs/validation/hbe-accelerate-6486dbc/frozen-source/scripts/mechanics_hbe_experiment.py",
+    "sha256": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa"
+  },
+  "experiment_directory_created": false,
+  "measured_member_reads": 0,
+  "solver_invocations": 0,
+  "status": "draft_rejected_before_execution"
+}

@@ -1,0 +1,28 @@
+{
+  "scope": "Saved-data and source-derived representation diagnostic only; no scene reconstruction, geometry audit, benchmark retry or runner mutation",
+  "frozen_runner_sha256": "1a25bca8953467dba24228e411b6262ab627feb66661cdb5b40fd7d9b5b310e5",
+  "saved_json_certificate_equals_historical": true,
+  "json_decoded_phase_passes_frozen_gate": true,
+  "native_to_dict_shape_python_comparison_matches": false,
+  "exact_canonical_json_matches": true,
+  "representation_difference": {
+    "field": "certificate.failures",
+    "native_asdict_type": "tuple",
+    "historical_json_type": "list",
+    "values": "both empty"
+  },
+  "source_basis": "Archived NativeRemovalAudit.failures is tuple[str,...]; to_dict uses dataclasses.asdict; the report constructor supplies (). This diagnostic restores that source-defined representation rather than capturing original process memory.",
+  "native_shape_reproduced_rejection": "Phase is incomplete, rejected, unrestored, or differs from the historical certificate",
+  "scientific_replays": 0,
+  "trace_digest_matches": true,
+  "history_digest_matches": true,
+  "observed_trace_counts": {
+    "contacts": 97,
+    "cell_queries": 679,
+    "prefixes": 97
+  },
+  "unexecuted_phases": [
+    "batch",
+    "scalar_after"
+  ]
+}

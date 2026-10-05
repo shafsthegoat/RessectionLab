@@ -1,0 +1,84 @@
+{
+  "actual_tiny_training_scope": {
+    "geometry_audit_receipts_total": 12,
+    "optimization_episodes_per_profile": 2,
+    "optimizer_updates_per_profile": 1,
+    "profiles": [
+      "RAW",
+      "FEATURE_UNITS"
+    ],
+    "selection_episodes_per_profile": 4
+  },
+  "archive_member_count": 63,
+  "archive_member_hash_mismatches": [],
+  "concurrent_check_note": "Owner independently ran the same45-test combination; timings are test durations, not benchmarks.",
+  "created_utc": "2026-10-04T15:00:02.841090+00:00",
+  "exclusive_machine_claim": false,
+  "execution_receipt": "final-combined-execution.json",
+  "file_sha256": {
+    "README.md": "3fe218f030805b028059526d82ed8565e07f7446c4da8f55264fef6e3f7f9ac0",
+    "contract-repaired-runner.py.txt": "edbf7472e51ef0612b8a76ffde8b9637622823c02ab9500047cf2d9e477badca",
+    "expanded-review-tests.py.txt": "7e631d806268b9ddbeff33f9f35ed46f8daa75a3599090eb5111c6ce830d71ff",
+    "final-combined-execution.json": "55e9224485fef17aa690412ec15e8d3089c7d99e3ef5500fb4114457b02e5004",
+    "final-combined.log": "aeb3e25a0661e683420aa653ee5d42a06fb66afdbb86bd44b8b70051b273b257",
+    "final-combined.xml": "0df5af9a7fa7f83523373d2e2abe5eda313c7b1bee767b7f1f1fdbcbdb54e22e",
+    "final-tested-inputs.tar.gz": "7fab4d221dcc9700905dc6a2595f9059dcdb1a7ea6f24e71be9006ddc4983e3d",
+    "initial-negatives.log": "c48ed532e101be90be12da6336d3381e8f5ec9bad66eb2bbac6516257f492506",
+    "initial-negatives.xml": "f34a4ae7623a65f8dd0e83ed7f4fd00b3417a026f81e87aca8b777aee3a7908e",
+    "initial-review-tests.py.txt": "e261e212607a171d51a59c7016a42c98f659cf59263117219702e7ddf3eb03b1",
+    "initial-runner.py.txt": "38b89d05a6755f13b0f8d31189172e54d5b3a0ddc926406a9b9ddb42ead4e56c",
+    "second-review.log": "a9eb8084f1014b952c3b438ef00aff49a8a38f1459501602ee2cf9985afba766",
+    "second-review.xml": "78c8cbf22b1056ebe01ccfc0ca0f13d2ed5f6ecb6a59983d26fda8f44ed4f5f4"
+  },
+  "final_or_stress_worlds_used": false,
+  "final_source_sha256": {
+    "docs/native-axis-scratch-feature-units.md": "6c9925f7e3a37ce2fc3f9266b6256e6baef292c67598f50d3562d4f72021828b",
+    "manifests/experiments/native-axis-scratch-feature-units-v1.json": "a0b6ee8849b36b2cea921cf02c6a4beaa890385ead741b5c46bbce71ba9154b4",
+    "scripts/run_native_axis_feature_units.py": "dd41c946b9aa3fb4f1cf54daba7e7899f0f9716959e59ddf6ee84caa31a161db",
+    "tests/test_native_axis_feature_units.py": "abe74b133b46aec0ddad2b8bcbdd180ce42c2b7be74a248b03fca5598299ce33",
+    "tests/test_native_axis_feature_units_review.py": "5e6b42aee6ec62f50ec9cdf5c211d8fa0065ad8a40ec31d2ada20bf0a012b488"
+  },
+  "independent_tests": 27,
+  "limits": [
+    "No public patient execution or new efficacy result.",
+    "One seed and tiny geometry only.",
+    "Copied-record resource adversaries; not actual RSS exhaustion.",
+    "Hash consistency is not a signature/authenticity guarantee.",
+    "Full integrated regression and release remain parent-owned."
+  ],
+  "negative_stages": [
+    {
+      "failed_production_regressions": 4,
+      "passed": 0,
+      "pytest_seconds": 5.8,
+      "source": "initial-runner.py.txt",
+      "stage": "initial",
+      "tests": "initial-review-tests.py.txt"
+    },
+    {
+      "failed_production_regressions": 4,
+      "failed_review_harness_setup": 1,
+      "harness_resolution": "Replace whole translation_scale_mm vector instead of mutating tuple.",
+      "passed": 18,
+      "pytest_seconds": 7.49,
+      "source": "contract-repaired-runner.py.txt",
+      "stage": "expanded",
+      "tests": "expanded-review-tests.py.txt"
+    }
+  ],
+  "owned_paths": [
+    "tests/test_native_axis_feature_units_review.py",
+    "artifacts/native-axis-feature-units-runner-review-v1/"
+  ],
+  "owner_tests": 18,
+  "passed": 45,
+  "process_seconds": 13.0044410409173,
+  "production_edits_by_reviewer": false,
+  "public_patient_episodes": 0,
+  "pytest_seconds": 12.38,
+  "review_status": "bounded_synthetic_checks_passed_public_execution_not_released",
+  "schema_version": 1,
+  "single_numerical_thread": true,
+  "source_archive_sha256": "7fab4d221dcc9700905dc6a2595f9059dcdb1a7ea6f24e71be9006ddc4983e3d",
+  "source_changed_during_run": []
+}

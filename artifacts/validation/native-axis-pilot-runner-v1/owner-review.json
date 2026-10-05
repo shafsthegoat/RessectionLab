@@ -1,0 +1,43 @@
+{
+  "command": ".venv/bin/python -m pytest tests/test_native_axis_pilot.py tests/test_native_axis_pilot_independent.py -q --disable-warnings",
+  "early_findings": [
+    {
+      "description": "Tuple/list representation of in-memory worlds versus serialized accounting differed; compare complete canonical dictionaries without dropping fields.",
+      "kind": "owner_observed_fixture_setup_failure"
+    },
+    {
+      "description": "An added guard initially expected float64 source observations. Actual adapter captures are float32; owner one setup error and independent seven setup errors occurred before mutation attacks. Guard fixed to actual dtype; final suite covers source/logit metadata attacks.",
+      "kind": "actual_observed_metadata_gate_regression"
+    },
+    {
+      "description": "Strengthened independent certificate source/count/volume/flags; recheck all frozen inputs after candidate export before final authority. No earlier failing public execution asserted.",
+      "kind": "static_review_findings_fixed_before_execution"
+    },
+    {
+      "description": "The initial launcher-timeout test replaced subprocess.Popen broadly and intercepted platform uname. The mock was restricted to the worker command; this was a test-only setup defect, not a production timeout failure.",
+      "kind": "independently_reported_test_harness_failure"
+    }
+  ],
+  "exit_code": 0,
+  "independent_tests": 38,
+  "next_gate": "Root commits source, runs immutable integrated suite, then explicitly releases any prospective public pilot.",
+  "owner_tests": 15,
+  "passed": 53,
+  "public_execution_authorized_by_this_receipt": false,
+  "runtime": {
+    "platform": "macOS-26.6-arm64-arm-64bit",
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]"
+  },
+  "scope": "Constructed synthetic native anatomy only, with actual one-update/six-episode learner and independent geometry; further orchestration attacks reuse its saved evidence. No public-patient episode, gradient, final or stress world was executed.",
+  "seconds_reported_by_pytest": 8.25,
+  "source_sha256": {
+    "manifests/experiments/native-axis-raw-update-pilot-v1.json": "057fe7cf5d2e770c34314ed081db129452f451067891a37bc3e6e9b5f6e9bc61",
+    "scripts/preflight_native_axis.py": "420eac522225fc5dcc08d2e1680d333043669df9e7bd35808746cf0a0b3266e2",
+    "scripts/run_native_axis_pilot.py": "e10dd2aa01a0ccf148f877b0e37b2bd0e7453048e68e507a0656847264f6da86",
+    "src/resectionlab/learning.py": "ea552afa8faa7a5199ac2c20cf67fc688081fe8d7e5d029131f3fd6e7c0093ec",
+    "src/resectionlab/native_axis_accounting.py": "e7593bc4c7435961b6d4bee31412ef3e2df85fd6baebee70c6849e94eaf8c259",
+    "tests/test_native_axis_pilot.py": "c1127832d548a891bad0d77ac08684e884e33a6b5ea16415eed56abecbc026af",
+    "tests/test_native_axis_pilot_independent.py": "81384c005bd5853cc8f963720773463c4c01ce4812dd481084dfbba073e97424"
+  },
+  "status": "focused_validation_passed_no_public_execution"
+}

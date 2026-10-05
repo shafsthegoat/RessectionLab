@@ -1,0 +1,8 @@
+{
+  "command": ".venv/bin/python -m pytest -q tests/test_native_axis_independent.py -k external_transient_cache",
+  "observed_result": "1 failed, 18 deselected in 1.41s",
+  "source_snapshot": "pre-transient-guard-native_axis_simulation.py",
+  "source_sha256": "b9425c602a33978f0b23d5a56c67ac20854dea38c508db02c6f7e196883ffd99",
+  "finding": "external transient cache accepted copied action with genuine ID and forged removal coordinates while committing the original native certificate",
+  "reported_by": "adapter owner; independently reproduced"
+}

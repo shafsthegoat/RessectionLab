@@ -1,0 +1,197 @@
+{
+  "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+  "gradient_steps": 0,
+  "environment_steps": 0,
+  "elapsed_seconds": 6.573955582920462,
+  "results": [
+    {
+      "route_id": "search-e8eea12fa7ae6b0f",
+      "tool_id": "generic_aspirator",
+      "exact_coverage": {
+        "route_id": "search-e8eea12fa7ae6b0f",
+        "selected_route_target_proposed": true,
+        "selected_route_exact_ray_proposed": true,
+        "matching_indices": [
+          0
+        ],
+        "proposal_problems": [],
+        "projected_entry_offsets_mm": [
+          0.0
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "preflight": {
+        "status": "no_legal_native_actions",
+        "policy_has_nontrivial_action_choice": false,
+        "non_stop_action_count": 0,
+        "non_stop_action_ids": [],
+        "rejected_proposal_count": 1,
+        "rejection_counts": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 1
+        },
+        "rejected_proposals": [
+          {
+            "tool_id": "generic_aspirator",
+            "tip_mm": [
+              -151.0,
+              80.0,
+              105.0
+            ],
+            "entry_mm": [
+              -161.89188673393926,
+              84.87771654858179,
+              143.39832772728357
+            ],
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+          }
+        ],
+        "candidate_tips_mm": [
+          [
+            -151.0,
+            80.0,
+            105.0
+          ]
+        ],
+        "candidate_entries_mm": [
+          [
+            -161.89188673393926,
+            84.87771654858179,
+            143.39832772728357
+          ]
+        ],
+        "decision_model_hash": "sha256:c30961fb2574d66b4a45b6e1f5c91e41dc3da8f61ee6b6ee67abb10793cf78f4",
+        "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "tool_dimensions": [
+          {
+            "tool_id": "generic_aspirator",
+            "tip_radius_mm": 1.7,
+            "shaft_radius_mm": 2.7,
+            "tip_length_mm": 4.0,
+            "shaft_wider_than_active_tip": true
+          }
+        ],
+        "interpretation": "Initial native action availability only; no learning, removal, or clinical benefit is asserted.",
+        "clinical_deficit_probability": null
+      },
+      "expected_non_stop_available": false
+    },
+    {
+      "route_id": "native-axis-a6c7baa3b880755d",
+      "tool_id": "native-fine-aspiration",
+      "exact_coverage": {
+        "route_id": "native-axis-a6c7baa3b880755d",
+        "selected_route_target_proposed": true,
+        "selected_route_exact_ray_proposed": true,
+        "matching_indices": [
+          0
+        ],
+        "proposal_problems": [],
+        "projected_entry_offsets_mm": [
+          0.0
+        ],
+        "access_radius_mm": 6.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "preflight": {
+        "status": "native_actions_available",
+        "policy_has_nontrivial_action_choice": true,
+        "non_stop_action_count": 1,
+        "non_stop_action_ids": [
+          "NATIVE:native-fine-aspiration:0"
+        ],
+        "rejected_proposal_count": 0,
+        "rejection_counts": {},
+        "rejected_proposals": [],
+        "candidate_tips_mm": [
+          [
+            -162.0,
+            85.0,
+            105.0
+          ]
+        ],
+        "candidate_entries_mm": [
+          [
+            -181.5,
+            85.0,
+            105.0
+          ]
+        ],
+        "decision_model_hash": "sha256:12337253c02f6a463504389160fc30952851d9427d058005e1368b0c84817090",
+        "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "tool_dimensions": [
+          {
+            "tool_id": "native-fine-aspiration",
+            "tip_radius_mm": 1.25,
+            "shaft_radius_mm": 0.45,
+            "tip_length_mm": 2.0,
+            "shaft_wider_than_active_tip": false
+          }
+        ],
+        "interpretation": "Initial native action availability only; no learning, removal, or clinical benefit is asserted.",
+        "clinical_deficit_probability": null
+      },
+      "expected_non_stop_available": true
+    },
+    {
+      "route_id": "native-axis-e14f440173a8b13f",
+      "tool_id": "native-wide-aspiration",
+      "exact_coverage": {
+        "route_id": "native-axis-e14f440173a8b13f",
+        "selected_route_target_proposed": true,
+        "selected_route_exact_ray_proposed": true,
+        "matching_indices": [
+          0
+        ],
+        "proposal_problems": [],
+        "projected_entry_offsets_mm": [
+          0.0
+        ],
+        "access_radius_mm": 6.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "preflight": {
+        "status": "native_actions_available",
+        "policy_has_nontrivial_action_choice": true,
+        "non_stop_action_count": 1,
+        "non_stop_action_ids": [
+          "NATIVE:native-wide-aspiration:0"
+        ],
+        "rejected_proposal_count": 0,
+        "rejection_counts": {},
+        "rejected_proposals": [],
+        "candidate_tips_mm": [
+          [
+            -162.0,
+            85.0,
+            105.0
+          ]
+        ],
+        "candidate_entries_mm": [
+          [
+            -181.5,
+            85.0,
+            105.0
+          ]
+        ],
+        "decision_model_hash": "sha256:5d42abd6e8dfaf93986090e966bd592c0a464ae7a9b8c0b27a7e7c2856bef199",
+        "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "tool_dimensions": [
+          {
+            "tool_id": "native-wide-aspiration",
+            "tip_radius_mm": 2.25,
+            "shaft_radius_mm": 1.1,
+            "tip_length_mm": 3.0,
+            "shaft_wider_than_active_tip": false
+          }
+        ],
+        "interpretation": "Initial native action availability only; no learning, removal, or clinical benefit is asserted.",
+        "clinical_deficit_probability": null
+      },
+      "expected_non_stop_available": true
+    }
+  ],
+  "selected_factory_source_sha256": "2461cc6c32eb25a3927bcc3a9379bb02417794c3a764c4b1e705a00bcac6493c",
+  "selected_factory_source_file": "artifacts/native-route-alternatives-v1b/native_simulation-selected-ray.py",
+  "source_snapshot_note": "Native route independent audits use source-snapshot; this later exact-factory preflight uses the separately retained selected-ray factory source."
+}

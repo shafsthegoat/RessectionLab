@@ -1,0 +1,27 @@
+{
+  "all_cases_passed": true,
+  "elapsed_seconds": 0.5259119169786572,
+  "no_retry": true,
+  "result_status": "completed",
+  "solver_invocations": 5,
+  "status": "completed",
+  "supervision": {
+    "cleanup_error": null,
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics-febio-patch-run-v1/run_once.py"
+    ],
+    "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "elapsed_seconds": 0.5246963331010193,
+    "error": null,
+    "exit_code": 0,
+    "kill_reason": null,
+    "no_retry": true,
+    "pid": 30648,
+    "rss_cap_bytes": 3221225472,
+    "sampled_peak_process_group_rss_bytes": 48775168,
+    "sampling_note": "Group RSS is sampled; brief between-sample peaks may be missed.",
+    "status": "completed",
+    "wall_cap_seconds": 56.49
+  }
+}

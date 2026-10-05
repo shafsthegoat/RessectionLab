@@ -1,0 +1,39 @@
+{
+  "format": "gzip",
+  "compresslevel": 9,
+  "mtime": 0,
+  "header_filename": "",
+  "candidate_declarations_and_script_unchanged": true,
+  "files": [
+    {
+      "raw_file": "frontier-solid-candidate.json",
+      "raw_bytes": 3354050,
+      "raw_sha256": "3aac5f304f37128f8345146082f2de2fd9997fae825d7df6d4bcffb8406ce97f",
+      "gzip_file": "frontier-solid-candidate.json.gz",
+      "gzip_bytes": 52271,
+      "gzip_sha256": "cbfd531c70e6ae52d2c8ee413e64946fce11ceabb2cb25b747665bc692063983",
+      "roundtrip_byte_identical": true,
+      "raw_source_unchanged": true
+    },
+    {
+      "raw_file": "frontier-barrier-candidate.json",
+      "raw_bytes": 647898,
+      "raw_sha256": "6aadaf89bd767fa94e7dfc4b1dd8c7bcb150fcd69841a043369f4c182f57a4a3",
+      "gzip_file": "frontier-barrier-candidate.json.gz",
+      "gzip_bytes": 12541,
+      "gzip_sha256": "c1382b25331d5b6bb7501802dab6da2ac4b6f5dc392a687275001c38d8c78372",
+      "roundtrip_byte_identical": true,
+      "raw_source_unchanged": true
+    },
+    {
+      "raw_file": "patient-expanded-candidate.json",
+      "raw_bytes": 8574646,
+      "raw_sha256": "63305474782ffc9f0a20e29aedd14de41c780f78f59e9d229f4d58dbf701a37e",
+      "gzip_file": "patient-expanded-candidate.json.gz",
+      "gzip_bytes": 140464,
+      "gzip_sha256": "c0fb9376f5637ac5f4ffb5a711cd62a26b110ada8558b4805ce9425d82b58997",
+      "roundtrip_byte_identical": true,
+      "raw_source_unchanged": true
+    }
+  ]
+}

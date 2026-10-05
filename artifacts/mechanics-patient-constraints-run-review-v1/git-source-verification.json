@@ -1,0 +1,16 @@
+{
+  "source_commit": "ddaa7e352282d159f454562cfa091cdad0a284d3",
+  "exact_git_object_checks": {
+    "scripts/mechanics_patient_constraints_run.py": "8ca55cf54730c91ae47e573999041cb0c8b84fb4676842e0d1c0e7407ee8843f",
+    "scripts/mechanics_patient_constraints.py": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66",
+    "scripts/mechanics_febio_verification.py": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "artifacts/febio-runtime-investigation-v1/prospective-runtime.json": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48",
+    "artifacts/mechanics-patient-constraints-runtime-v1/decks/manifest.json": "73a20d14551742159f05145bfd39444fde4d8bc81415d6139d85e8d890d0c330",
+    "artifacts/mechanics-patient-constraints-runtime-v1/decks/tet10_affine.feb": "8a75158a97750f3db57a5a2a48ab3f03760a4a95a8818ff3d30218ceca262f62",
+    "artifacts/mechanics-patient-constraints-runtime-v1/decks/mpc_translation.feb": "dad1653d2015d04f3499ea87f37246e5fce3c86f849ffc363e99cddd230386fa",
+    "artifacts/mechanics-patient-constraints-runtime-v1/decks/mpc_nonrigid.feb": "40900e8761e663ca37568f9b911a06bfb34acb3db2bd5b1fd4840c7d55fadb93"
+  },
+  "read_only_git_calls": 9,
+  "solver_invocations": 0
+}

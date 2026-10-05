@@ -1,0 +1,53 @@
+{
+  "aggregate_download_bytes": 102042925,
+  "declaration_sha256": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48",
+  "downloads": {
+    "FEBio source": {
+      "bytes": 53891813,
+      "final_url": "https://codeload.github.com/febiosoftware/FEBio/tar.gz/32ae206ff4881dfb54f62296cd1558e58ed9fcc6",
+      "sha256": "a1c4f65597c9b3f89a02daeeee6c3ae00d9f4bf64a85824b33e817043fd1ac66",
+      "url": "https://codeload.github.com/febiosoftware/FEBio/tar.gz/32ae206ff4881dfb54f62296cd1558e58ed9fcc6"
+    },
+    "cmake": {
+      "bytes": 47224338,
+      "final_url": "https://files.pythonhosted.org/packages/7f/09/516b0d709672bc430eb13278f0316acd34869269447744f5d136daeef689/cmake-3.31.6-py3-none-macosx_10_10_universal2.whl",
+      "sha256": "da9d4fd9abd571fd016ddb27da0428b10277010b23bb21e3678f8b9e96e1686e",
+      "url": "https://files.pythonhosted.org/packages/7f/09/516b0d709672bc430eb13278f0316acd34869269447744f5d136daeef689/cmake-3.31.6-py3-none-macosx_10_10_universal2.whl"
+    },
+    "llvm-openmp": {
+      "bytes": 286338,
+      "final_url": "https://binstar-cio-packages-prod.s3.amazonaws.com/5f18a12783b6630a0ed9f52b/6a8e996fa6f9b8468d097c58",
+      "sha256": "74093c0f1169da8d16f1cf722062f388ad9bc9a5b0c3f43cdaf54763a2fa6a70",
+      "url": "https://api.anaconda.org/download/conda-forge/llvm-openmp/21.1.8/osx-arm64/llvm-openmp-21.1.8-hc225544_2.conda",
+      "final_url_query_sha256": "14f6a3eb9b6727749004c3771410638d418c8c492a8a6b75447f857faded7687"
+    },
+    "zstandard": {
+      "bytes": 640436,
+      "final_url": "https://files.pythonhosted.org/packages/aa/1c/d920d64b22f8dd028a8b90e2d756e431a5d86194caa78e3819c7bf53b4b3/zstandard-0.25.0-cp312-cp312-macosx_11_0_arm64.whl",
+      "sha256": "913cbd31a400febff93b564a23e17c3ed2d56c064006f54efec210d586171c00",
+      "url": "https://files.pythonhosted.org/packages/aa/1c/d920d64b22f8dd028a8b90e2d756e431a5d86194caa78e3819c7bf53b4b3/zstandard-0.25.0-cp312-cp312-macosx_11_0_arm64.whl"
+    }
+  },
+  "notice_paths": [
+    "openmp/info/licenses/openmp/LICENSE.TXT",
+    "openmp/info/recipe/parent/LICENSE",
+    "openmp/info/recipe/parent/recipe-scripts-license.txt",
+    "source/LICENSE",
+    "tools/cmake-3.31.6.dist-info/licenses/LICENSE_Apache_20",
+    "tools/cmake-3.31.6.dist-info/licenses/LICENSE_BSD_3",
+    "tools/cmake/data/doc/cmake/Copyright.txt",
+    "tools/cmake/data/doc/cmake/cmcppdap/NOTICE",
+    "tools/cmake/data/doc/cmake/cmlibuv/LICENSE",
+    "tools/cmake/data/doc/cmake/cmsys/Copyright.txt",
+    "tools/cmake/data/doc/cmake/cmzstd/LICENSE",
+    "tools/cmake/data/share/cmake-3.31/Templates/CPack.GenericLicense.txt",
+    "zstandard-helper/zstandard-0.25.0.dist-info/licenses/LICENSE"
+  ],
+  "source_expansion": {
+    "entries": 2410,
+    "expanded_bytes": 74394570
+  },
+  "status": "acquired_pending_payload_review",
+  "publication_note": "Derived copy omits transient public CDN signed-query parameters; exact original receipt remains local and its SHA256 is retained. Payload byte hashes are unchanged.",
+  "original_receipt_sha256": "41ff86aa04c685256640643febbcb12b88b2932dba77e32bef2f730e0758978e"
+}

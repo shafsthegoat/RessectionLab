@@ -1,0 +1,40 @@
+{
+  "final_diff_check": "passed",
+  "focused_attempts": [
+    {
+      "attempt": 1,
+      "errors": 0,
+      "failures": 0,
+      "log_sha256": "2af9ae331ecfa2bac04fb5d8a5d8ff04486bcacb1f238b27afd5b97d3314ef6a",
+      "seconds": 5.411,
+      "tests": 66
+    },
+    {
+      "attempt": 2,
+      "errors": 0,
+      "failures": 0,
+      "log_sha256": "75509d66db21a220493d963879ccebf7b6ca033e71a279cf75ae98b07f0d97bf",
+      "seconds": 5.544,
+      "tests": 68
+    }
+  ],
+  "historical_actual_file_count": 31,
+  "historical_actual_files_unchanged_vs_git": true,
+  "legacy_actual_contract_sha256": "1a547a9b4036fe2fcfc3fa2cfb4972de4f7cbd89744668499daf66bbc839bed7",
+  "original_failure": "Two assigned audit tests failed because the hardcoded legacy body omitted the newly hashed axis_observation_contract; full root run1470passed12failed. Remaining10failures assigned elsewhere.",
+  "original_full_log_sha256": "a6eae570a35904cc8fe20c1bcf10984f4322aadad5e90cf7a69ef81ea8987d8d",
+  "paths_sha256": {
+    "scripts/audit_native_axis_pilot.py": "30b67a89a76de39b2079f4247614f7d8f28fb73a641988ae3e8eb26c5d4c9335",
+    "tests/test_native_axis_pilot.py": "bc008eeadda5341b50e7188fde938130775ce83127c273e378899012c4fc52b8",
+    "tests/test_native_axis_pilot_artifact_audit.py": "9359b4d3d202e141bf6c28d47523a1d3d2e0a215f0e42c0d06c5b9d22d80904e"
+  },
+  "repair": "Explicit legacy and RAW-axis-v1 contract forms, closed key inventory, nested semantic/source/model/proposal/reward/budget and nested hash checks, full outer checksum, schema/source-generation presence guard. Private synthetic declaration now names actual proposal model/rule/inventory.",
+  "root_failure_commit": "523a72bf3c12a9575184024c13ed31525c33645a",
+  "validation_scope": [
+    "Existing constructed tiny fixture only; two focused modules.",
+    "No public rollout, public policy evaluation, geometry rerun on patient, or model training beyond the existing tiny fixture.",
+    "Auditor remains NumPy/tensor-only and does not import resectionlab or instantiate policy; existing no-policy-forward/no-RNG test passes.",
+    "Full integrated suite is root-owned and has not been rerun by this agent."
+  ],
+  "version": "native-axis-pilot-contract-repair-v1"
+}

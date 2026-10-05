@@ -1,0 +1,128 @@
+{
+  "status": "declarations_reviewed_ready_for_root_release_not_executed",
+  "production_source_commit": "8ebc303617761502621d2476f09ffc26b78e6bd4",
+  "declarations": {
+    "fixed64": {
+      "path": "manifests/experiments/pat05-real-spatial-profile-v3-fixed64.json",
+      "sha256": "92e4ababa7ad3a4c4b05ade06cabe6134c34e7155964457728d45e7435a43aea"
+    },
+    "nominal64": {
+      "path": "manifests/experiments/pat05-real-spatial-profile-v3-nominal64.json",
+      "sha256": "5a27d1815a728d05c9d6d69d3f04e7ac9b87edb61c5f7ff752ab9bcb0b00df64"
+    }
+  },
+  "historical_v2": {
+    "path": "manifests/experiments/pat05-real-spatial-profile-v2.json",
+    "sha256": "30213ab0174a77f5df50afc1bd93bafa0a38e442419d22d5933af9c52f25ad94",
+    "unchanged_fields": [
+      "access",
+      "access_derivation",
+      "case_bundle",
+      "case_bundle_sha256",
+      "case_semantic_hash",
+      "cohort_path",
+      "cohort_sha256",
+      "execution_rule",
+      "expected_policy_architecture_hash",
+      "expected_native_grid_binding",
+      "grid_header_diagnosis",
+      "input_binding",
+      "mode",
+      "objective",
+      "policy_config",
+      "profiling",
+      "settings",
+      "subject",
+      "supervision",
+      "tools",
+      "tools_source",
+      "track",
+      "version"
+    ]
+  },
+  "source_audit": {
+    "exact_git_tree_file_count": 56,
+    "exact_closed_inventory_matches_each_declaration": true,
+    "all56_hashes_recomputed_from_git_objects": true,
+    "existing_archive_sha256": "58c6913130a854cfc3b34fab811120b039bd8bb654502712c6e4a0c3d8d22d51",
+    "existing_archive_all56_entries_match_git_and_declarations": true,
+    "untracked_files_in_declared_source": false,
+    "new_source_snapshot_created": false
+  },
+  "pair_difference_paths": [
+    "/adapter_options/proposal_config",
+    "/adapter_options/proposal_mode",
+    "/coverage/candidate_basis",
+    "/coverage/declared_slot_upper_count",
+    "/output_path",
+    "/paired_comparison/member",
+    "/study_id"
+  ],
+  "common_delta_from_v2": {
+    "actor_crop_shape": [
+      64,
+      64,
+      64
+    ],
+    "previous_actor_crop_shape": [
+      32,
+      32,
+      32
+    ],
+    "source_resampling": false,
+    "native_grid_binding": "exactly identical eight-field original/derived source-grid binding"
+  },
+  "unchanged_adapter_assumptions": [
+    "intensity_normalization",
+    "native_grid_reconciliation",
+    "research_support_acknowledgment"
+  ],
+  "bounded_execution": {
+    "mode": "profile",
+    "order": [
+      "fixed64",
+      "nominal64"
+    ],
+    "replicates_per_member": 1,
+    "optimizer_updates": 0,
+    "search_calls": 0,
+    "seed": 11,
+    "max_steps": 3,
+    "max_wall_seconds_per_member": 600,
+    "max_rss_bytes_per_member": 6442450944,
+    "cpu_threads": 1,
+    "automatic_retry": false,
+    "automatic_followon_training": false
+  },
+  "provider_configuration": {
+    "fixed64": "fixed_lattice; at most48 declared slots before runtime eligibility",
+    "nominal64": "nominal_cavity_v1; exact declared13 offsets, max96 unique candidates, membership threshold0;78 family/tool/column slots"
+  },
+  "authority": {
+    "subject": "sub-PAT05",
+    "role": "previously_consulted_training_and_method_development; development only",
+    "external_final_eligible": false,
+    "track": "annotation_assisted",
+    "support_review_accepted": false,
+    "cortical_access_permitted": false,
+    "clinical_use_permitted": false
+  },
+  "bound_metadata_references_verified": [
+    "input_binding",
+    "grid_header_diagnosis",
+    "cohort_manifest",
+    "prior_v2_outcome"
+  ],
+  "owner_receipt": {
+    "path": "artifacts/pat05-real-spatial-profile-v3-declaration/source-bound-check.json",
+    "sha256": "e5d43155c0782cab6ff1c9c702c7abde3fe98fe0f64bd9934803747c3d2c81ae"
+  },
+  "limits": [
+    "Static JSON/Git/source-archive review only; no source imports, tests, image loading, previews or patient execution.",
+    "Case bundle path and stored hash match V2; the large bundle bytes were not reread. Worker must verify the actual bundle before loading.",
+    "Pair uses the same64cube context. Historical V2 used32cube and is not a matched provider-only comparator.",
+    "First-legal actions can differ with provider ordering. This is a coverage/engineering-cost profile, not a learned-policy efficacy comparison.",
+    "Source commit includes separately reviewed lazy-transition and independent-checker changes; this declaration review does not repeat their numerical validation.",
+    "Root must commit declarations and explicitly release the sequential executions after its resource quiet-slot check."
+  ]
+}

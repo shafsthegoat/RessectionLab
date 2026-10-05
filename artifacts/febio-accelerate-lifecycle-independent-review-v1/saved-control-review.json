@@ -1,0 +1,182 @@
+{
+  "acceptance_sha256": "eb2e390574896c175a1f240a6aa43e03737e2201b9c9823f243d9ef3da935757",
+  "actual_saved_results": {
+    "all_logged_outputs_and_binaries_match_hashes": true,
+    "attempts": 1,
+    "binary_static_inspection": "Both binaries arm64, linked ASan runtime and imported ASan/UBSan handlers; no linked Accelerate framework or unresolved Sparse API imports.",
+    "elapsed_seconds": 5.459139916929416,
+    "initialization_profiles_passed": 4,
+    "lifecycle_scenarios_passed": 14,
+    "phase_exit_codes": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "phase_seconds": {
+      "initialization-cases": 0.621503458940424,
+      "initialization-compile": 1.918854458956048,
+      "lifecycle-cases": 0.34245887491852045,
+      "lifecycle-compile": 2.0730807919753715
+    },
+    "rss_cap_bytes": 1073741824,
+    "sampled_group_peak_rss_bytes": 312262656,
+    "sanitizer_diagnostic_detected": false,
+    "stderr_classification": {
+      "initialization_compile_and_run": "empty",
+      "lifecycle_cases": "Exactly4 deliberate mock numeric-factor failure messages, matching scenarios3,4,5,6. No other diagnostics.",
+      "lifecycle_compile": "Exactly2 known double-to-int tolerance conversion warnings in unchanged constructor assignments; these fields are used by excluded iterative modes."
+    },
+    "stdout_exactly_matches_declared_profiles": true,
+    "wall_cap_seconds": 100
+  },
+  "all_control_pins_verified_unchanged": true,
+  "attempt_sha256": "4d1cd81790b3d442a168b27a86ddd64ba7d87c3021e0e3a459bff6e68dec71f8",
+  "binary_metadata_sha256": "a52f7ae02d6bbd4430c718724469a88dbef9fcd006e733e26315709c1dcb2943",
+  "blocking_findings": [],
+  "committed_source_file_count": 13,
+  "committed_source_files": [
+    "artifacts/febio-accelerate-lifecycle-v1/README.md",
+    "artifacts/febio-accelerate-lifecycle-v1/accelerate-correctness.patch",
+    "artifacts/febio-accelerate-lifecycle-v1/adapter-control.py",
+    "artifacts/febio-accelerate-lifecycle-v1/control-declaration.json",
+    "artifacts/febio-accelerate-lifecycle-v1/extracted-methods.inc",
+    "artifacts/febio-accelerate-lifecycle-v1/extraction.json",
+    "artifacts/febio-accelerate-lifecycle-v1/lifecycle-control.cpp",
+    "artifacts/febio-accelerate-lifecycle-v1/patch-identity.json",
+    "artifacts/febio-accelerate-lifecycle-v1/patched-AccelerateSparseSolver.cpp",
+    "manifests/experiments/febio-accelerate-csc-runtime-v3.json",
+    "scripts/febio_accelerate_runtime.py",
+    "tests/test_febio_accelerate_lifecycle_preparation.py",
+    "tests/test_febio_accelerate_runtime.py"
+  ],
+  "control_declaration_sha256": "d45883853df0516efeba4e0f7d21f78b91899d47f3cd1743db58b61ec66334c9",
+  "control_pin_count": 18,
+  "limitations": [
+    "No repeated control execution or dynamic reproduction of original defects.",
+    "Mock reference counts and destruction watches validate adapter transitions under defined returns, not private SDK allocator implementations.",
+    "LeakSanitizer disabled in declared child environment; explicit mock allocation/refcount checks supplement ASan/UBSan.",
+    "RSS is sampled and may miss brief peaks.",
+    "Runtime build remains unexecuted; later same-runtime numerical controls remain required."
+  ],
+  "patched_source_sha256": "476ac8471ea681a99c298352a50aba2a7a5baa71635e1678155a7f58b72ba04a",
+  "pins": {
+    "combined_patch": {
+      "bytes": 5484,
+      "path": "artifacts/febio-accelerate-lifecycle-v1/accelerate-correctness.patch",
+      "sha256": "67a1858f2d55046796d7ccb46758ca06e5bfb673e75a539d158b1a17652f3340"
+    },
+    "combined_source": {
+      "bytes": 21906,
+      "path": "artifacts/febio-accelerate-lifecycle-v1/patched-AccelerateSparseSolver.cpp",
+      "sha256": "476ac8471ea681a99c298352a50aba2a7a5baa71635e1678155a7f58b72ba04a"
+    },
+    "compiler": {
+      "bytes": 290664032,
+      "path": "/Library/Developer/CommandLineTools/usr/bin/clang++",
+      "sha256": "f30550eab15fdf5ab8c0dc54c52679711241e5d4b636b027e18c09fef531775d"
+    },
+    "driver": {
+      "bytes": 6611,
+      "path": "artifacts/febio-accelerate-lifecycle-v1/adapter-control.py",
+      "sha256": "af24ed8a31eb787d968c6d08b24ea373615dd9c0802673946469416e49dd2778"
+    },
+    "extracted_methods": {
+      "bytes": 15225,
+      "path": "artifacts/febio-accelerate-lifecycle-v1/extracted-methods.inc",
+      "sha256": "ebdd5b0619fba88411cdb15d8f6d23ea5ee7e0c295bafa7e28fa5e7a28cd95e4"
+    },
+    "extraction": {
+      "bytes": 2077,
+      "path": "artifacts/febio-accelerate-lifecycle-v1/extraction.json",
+      "sha256": "198889d13d942eea439e0352da3e0bfd837e25ddbd9cf0036a14d24fa4ecd76e"
+    },
+    "historical_sms_only_patch": {
+      "bytes": 869,
+      "path": "artifacts/febio-accelerate-matrix-init-v1/accelerate-csc-and-matrix-init.patch",
+      "sha256": "e5a745070635fc632d1d2dc6d4c7cdb9df738ad4e6fae110c16345f685b52358"
+    },
+    "initialization_fixture": {
+      "bytes": 3073,
+      "path": "artifacts/febio-accelerate-matrix-init-v1/matrix-initialization-control.cpp",
+      "sha256": "6b754a7b63c02949068040416111f7184e31e2ad0bad5e1f599e6c87b67a39e3"
+    },
+    "initialization_fragment": {
+      "bytes": 310,
+      "path": "artifacts/febio-accelerate-matrix-init-v1/matrix-initialization-fragment.cpp.txt",
+      "sha256": "f4f69d99bbefb3b20c4e79a35b44288384922c44a2d40ddfdb27519b55184dd3"
+    },
+    "lifecycle_fixture": {
+      "bytes": 11063,
+      "path": "artifacts/febio-accelerate-lifecycle-v1/lifecycle-control.cpp",
+      "sha256": "3e7abc5e14d5d8caf7ace33618662191b0ab171f05b94a79957825479dad1678"
+    },
+    "lifecycle_review": {
+      "bytes": 9900,
+      "path": "artifacts/febio-accelerate-lifecycle-review-v1/review.json",
+      "sha256": "e7681c9abc95857ece6f163ba7cd88f4e3d674a8488f6422a2d1a719c01fc629"
+    },
+    "patch_identity": {
+      "bytes": 2860,
+      "path": "artifacts/febio-accelerate-lifecycle-v1/patch-identity.json",
+      "sha256": "54198366eccb90a9fcdf4fcbf2a5055919a5658a1db0fdd7db8cfeede3b49eee"
+    },
+    "sdk_settings": {
+      "bytes": 7774,
+      "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/SDKSettings.json",
+      "sha256": "f8d005f09381389167f9e0aeaa169bc9e7dff162ef22ca2fd8e98df7ff1acafe"
+    },
+    "sdk_sparse_dispatch": {
+      "bytes": 23850,
+      "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers/Sparse/SolveImplementation.h",
+      "sha256": "82a509ffea2e0e27d44473337698e3ebd97b182d3069da704c20fd2995049c17"
+    },
+    "sdk_sparse_types": {
+      "bytes": 423862,
+      "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers/Sparse/Solve.h",
+      "sha256": "8d2a7b44d05f1ff67cb1688ab8bb6573b021b88c758baa37e10a8aea1c46811a"
+    },
+    "sdk_typed": {
+      "bytes": 104361,
+      "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers/Sparse/SolveImplementationTyped.h",
+      "sha256": "201d2246ac80ecae14375abf8703d556e1adbd8d63cf2460e6db49ea31511bae"
+    },
+    "static_review": {
+      "bytes": 8528,
+      "path": "artifacts/febio-accelerate-initialization-review-v1/review.json",
+      "sha256": "d6aef94bae672fe4143518906fd9057528a82b411a233d70641d1525164316f8"
+    },
+    "supervisor": {
+      "bytes": 24801,
+      "path": "scripts/febio_runtime.py",
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+    }
+  },
+  "preparation_review_sha256": "8f5d269e91d0cc437824945ded45b57991a6062a5fe906b8fb6428cf78447476",
+  "result_sha256": "245e48859244fa93ab51ce03db73cb78e128d9f3bdf6a187f91fa3980767b74d",
+  "reviewer_executions": {
+    "binary_metadata_tools_only": true,
+    "compiler": 0,
+    "control_reruns": 0,
+    "original_faulty_paths": 0,
+    "runtime_build": 0,
+    "solver": 0
+  },
+  "reviewer_setup_correction": "Initial audit over-broadly required current Python preparation tests to remain unchanged; owner is preparing subsequent binding tests. Both committed test snapshots match original preparation and neither file is a control-run input. Actual control pins remained unchanged. Corrected audit uses committed preparation bytes and current exact control pins.",
+  "root_release_sha256": "f6163d77d49a5c6471753cfc7e496a1128a18a688fd1dd60ecc58937f94b9ef0",
+  "schema_version": 1,
+  "scope": "Independent saved-input/output/source/binary-metadata audit only. Actual accepted run executes corrected SDK-type initialization and mocked ownership bookkeeping. No real factorization, solve, mechanics or patient model is validated.",
+  "source_commit": "0eeda40b29a501b9b270299eac7600c492c2c6e4",
+  "status": "adapter_initialization_lifecycle_controls_independently_verified",
+  "subsequent_binding_test_wip": {
+    "tests/test_febio_accelerate_lifecycle_preparation.py": {
+      "committed_control_preparation_sha256": "3d8566f65ea6e231f440e4c648781ad0d202ca0193b46bc189ba31388813bcbf",
+      "current_binding_test_wip_sha256": "e0cf6c68a6774c71f1b2bc708846bd1151a7eb2b4ffc67b8ecf2c5ff4e211f15"
+    },
+    "tests/test_febio_accelerate_runtime.py": {
+      "committed_control_preparation_sha256": "092540ff123fefcd5d28401d86df0ad5a0bc572032dde822526cad545034d23f",
+      "current_binding_test_wip_sha256": "e334299ced1df537b28354d1c92eb39c323de69e46df79f5c4d362a9a03be7c5"
+    }
+  },
+  "supervision_sha256": "3ecf797d197caa537834f73ac4c6d46d58eb9423490c152b735e6f621b1fff54"
+}

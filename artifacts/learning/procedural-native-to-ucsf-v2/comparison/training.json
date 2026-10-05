@@ -1,0 +1,290 @@
+[
+  {
+    "actor_parameters_changed": true,
+    "algorithm": "masked_reinforce_state_value_v2",
+    "candidate_extraction_seconds": 1.0687529160641134,
+    "decision_model_hash": "sha256:dd81bd59566ead4e42916c8ede3d48d5615837e523d23d359b268d9a90f63f0b",
+    "elapsed_seconds": 30.11817150004208,
+    "execution_context_after": {
+      "cpu_count": 10,
+      "load_average_1_5_15_minutes": [
+        2.345703125,
+        2.4365234375,
+        2.41015625
+      ],
+      "process_peak_rss_bytes": 3561816064,
+      "recorded_at": "2026-10-04T10:24:08.927413+00:00"
+    },
+    "execution_context_before": {
+      "cpu_count": 10,
+      "load_average_1_5_15_minutes": [
+        2.27734375,
+        2.4326171875,
+        2.408203125
+      ],
+      "process_peak_rss_bytes": 3561816064,
+      "recorded_at": "2026-10-04T10:23:38.766492+00:00"
+    },
+    "gradient_steps": 14,
+    "initial_actor_hash": "sha256:6cc690991370666e4cb7266712aeb95804940dbea629565a1407dec1db728269",
+    "initial_checkpoint_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322",
+    "initial_selection_return": 0.0,
+    "initialization_seconds": 0.038542874972335994,
+    "latest_actor_hash": "sha256:32fc16196d661dd3dd7dd049b958ea0aca06556fdc93fb49c085cc283cbcec2d",
+    "latest_checkpoint_hash": "sha256:0575e685fa0f1df72514111a903aaf9c6ab7bb606d86fc84b4105cf6a60e6211",
+    "learner_wall_budget_overshoot_seconds": 0.11817150004208088,
+    "optimization_environment_steps": 68,
+    "optimizer_mode": "PATIENT_SCRATCH_RL",
+    "output_dir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-to-ucsf-v2/comparison/scratch-11",
+    "preparation_seconds": 2.0150345420697704,
+    "seed": 11,
+    "selected_checkpoint_hash": "sha256:9356db7deb702a192ceba1b538385c6dd635844afd05b90ebaa7ae001010cb8d",
+    "selected_is_initial": false,
+    "selected_selection_return": 245.24,
+    "selection_environment_steps": 43,
+    "shared_checkpoint_hash": null,
+    "status": "wall_time_budget",
+    "trainer_call_scope": "full wrapper, initialization, learner and export; elapsed_seconds is the learner's optimization-plus-selection timer",
+    "trainer_call_seconds": 30.159306208021007
+  },
+  {
+    "actor_parameters_changed": true,
+    "algorithm": "masked_reinforce_state_value_v2",
+    "candidate_extraction_seconds": 1.9776148330420256,
+    "decision_model_hash": "sha256:dd81bd59566ead4e42916c8ede3d48d5615837e523d23d359b268d9a90f63f0b",
+    "elapsed_seconds": 30.050774250063114,
+    "execution_context_after": {
+      "cpu_count": 10,
+      "load_average_1_5_15_minutes": [
+        2.310546875,
+        2.41064453125,
+        2.4013671875
+      ],
+      "process_peak_rss_bytes": 3561816064,
+      "recorded_at": "2026-10-04T10:24:42.238515+00:00"
+    },
+    "execution_context_before": {
+      "cpu_count": 10,
+      "load_average_1_5_15_minutes": [
+        2.345703125,
+        2.4365234375,
+        2.41015625
+      ],
+      "process_peak_rss_bytes": 3561816064,
+      "recorded_at": "2026-10-04T10:24:12.142610+00:00"
+    },
+    "gradient_steps": 11,
+    "initial_actor_hash": "sha256:c4e3149dd154753c3f9ed47fc704f77e20c8e7c6ddea31c10aaf7f80bb57c7ba",
+    "initial_checkpoint_hash": "sha256:435e605ae7df4d64e5929702a690098954baf7a962fdf4218133dab6494fd326",
+    "initial_selection_return": 171.42,
+    "initialization_seconds": 0.040567707968875766,
+    "latest_actor_hash": "sha256:5bded14004dc5a4d7872f11d45041458389006858934917207411669400a5e35",
+    "latest_checkpoint_hash": "sha256:1b55707b9607a82f06baea0b338bf08e8c73959adf18965615445f68e5798408",
+    "learner_wall_budget_overshoot_seconds": 0.05077425006311387,
+    "optimization_environment_steps": 66,
+    "optimizer_mode": "PATIENT_SCRATCH_RL",
+    "output_dir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-to-ucsf-v2/comparison/scratch-23",
+    "preparation_seconds": 1.9583466670010239,
+    "seed": 23,
+    "selected_checkpoint_hash": "sha256:435e605ae7df4d64e5929702a690098954baf7a962fdf4218133dab6494fd326",
+    "selected_is_initial": true,
+    "selected_selection_return": 171.42,
+    "selection_environment_steps": 36,
+    "shared_checkpoint_hash": null,
+    "status": "wall_time_budget",
+    "trainer_call_scope": "full wrapper, initialization, learner and export; elapsed_seconds is the learner's optimization-plus-selection timer",
+    "trainer_call_seconds": 30.095677666948177
+  },
+  {
+    "actor_parameters_changed": true,
+    "algorithm": "masked_reinforce_state_value_v2",
+    "candidate_extraction_seconds": 2.022152499994263,
+    "decision_model_hash": "sha256:dd81bd59566ead4e42916c8ede3d48d5615837e523d23d359b268d9a90f63f0b",
+    "elapsed_seconds": 30.008987042005174,
+    "execution_context_after": {
+      "cpu_count": 10,
+      "load_average_1_5_15_minutes": [
+        2.4150390625,
+        2.43896484375,
+        2.41162109375
+      ],
+      "process_peak_rss_bytes": 3561816064,
+      "recorded_at": "2026-10-04T10:25:16.395810+00:00"
+    },
+    "execution_context_before": {
+      "cpu_count": 10,
+      "load_average_1_5_15_minutes": [
+        2.52587890625,
+        2.45361328125,
+        2.41650390625
+      ],
+      "process_peak_rss_bytes": 3561816064,
+      "recorded_at": "2026-10-04T10:24:46.344533+00:00"
+    },
+    "gradient_steps": 12,
+    "initial_actor_hash": "sha256:4c16df6644e124b34c9a4d6e2f507b22de0ae4d83f1eec8de07ddd96ce0cedcc",
+    "initial_checkpoint_hash": "sha256:df38b5264d3ee1df4f133ea9e01d5d44e6d4fe896106e3696950fb9e4c19e215",
+    "initial_selection_return": 139.62,
+    "initialization_seconds": 0.037765582907013595,
+    "latest_actor_hash": "sha256:615addef83b05b3fcd49055babf80ebcb83d98611db1e79eda55c715ef952ee3",
+    "latest_checkpoint_hash": "sha256:2c98e552e22e513edf95407e716e890ca1e98709526eafa594106fbd079a61b4",
+    "learner_wall_budget_overshoot_seconds": 0.008987042005173862,
+    "optimization_environment_steps": 65,
+    "optimizer_mode": "PATIENT_SCRATCH_RL",
+    "output_dir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-to-ucsf-v2/comparison/scratch-47",
+    "preparation_seconds": 1.9417186659993604,
+    "seed": 47,
+    "selected_checkpoint_hash": "sha256:7b77aef4802730f8e1a52b0952c6992ef16edf181f9b025bf0f4a54a95f9fd97",
+    "selected_is_initial": false,
+    "selected_selection_return": 245.16000000000003,
+    "selection_environment_steps": 38,
+    "shared_checkpoint_hash": null,
+    "status": "wall_time_budget",
+    "trainer_call_scope": "full wrapper, initialization, learner and export; elapsed_seconds is the learner's optimization-plus-selection timer",
+    "trainer_call_seconds": 30.051013624994084
+  },
+  {
+    "actor_parameters_changed": true,
+    "algorithm": "masked_reinforce_state_value_v2",
+    "candidate_extraction_seconds": 1.0496363750426099,
+    "decision_model_hash": "sha256:dd81bd59566ead4e42916c8ede3d48d5615837e523d23d359b268d9a90f63f0b",
+    "elapsed_seconds": 30.03423216601368,
+    "execution_context_after": {
+      "cpu_count": 10,
+      "load_average_1_5_15_minutes": [
+        2.12744140625,
+        2.37109375,
+        2.388671875
+      ],
+      "process_peak_rss_bytes": 3561816064,
+      "recorded_at": "2026-10-04T10:25:50.961180+00:00"
+    },
+    "execution_context_before": {
+      "cpu_count": 10,
+      "load_average_1_5_15_minutes": [
+        2.38134765625,
+        2.431640625,
+        2.4091796875
+      ],
+      "process_peak_rss_bytes": 3561816064,
+      "recorded_at": "2026-10-04T10:25:20.537605+00:00"
+    },
+    "gradient_steps": 12,
+    "initial_actor_hash": "sha256:e672f0c229d44f86333a9f55e09c34954705b515643eeea22259f07ddba5a61c",
+    "initial_checkpoint_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57",
+    "initial_selection_return": 139.62,
+    "initialization_seconds": 0.38702475000172853,
+    "latest_actor_hash": "sha256:c2e68417476c85cbee0744f541816d010f7eeee627b5a74db68557a59aae5761",
+    "latest_checkpoint_hash": "sha256:3ca1f7d23de440257bf1819f2d36ef1beb348ba6452b0b234b740e41d06de566",
+    "learner_wall_budget_overshoot_seconds": 0.0342321660136804,
+    "optimization_environment_steps": 61,
+    "optimizer_mode": "PROCEDURAL_PRETRAINED_ADAPTED",
+    "output_dir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-to-ucsf-v2/comparison/adapted-11",
+    "preparation_seconds": 1.943241334054619,
+    "seed": 11,
+    "selected_checkpoint_hash": "sha256:3ca1f7d23de440257bf1819f2d36ef1beb348ba6452b0b234b740e41d06de566",
+    "selected_is_initial": false,
+    "selected_selection_return": 171.42,
+    "selection_environment_steps": 42,
+    "shared_checkpoint_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57",
+    "status": "wall_time_budget",
+    "trainer_call_scope": "full wrapper, initialization, learner and export; elapsed_seconds is the learner's optimization-plus-selection timer",
+    "trainer_call_seconds": 30.42331387498416
+  },
+  {
+    "actor_parameters_changed": true,
+    "algorithm": "masked_reinforce_state_value_v2",
+    "candidate_extraction_seconds": 0.9737934590084478,
+    "decision_model_hash": "sha256:dd81bd59566ead4e42916c8ede3d48d5615837e523d23d359b268d9a90f63f0b",
+    "elapsed_seconds": 30.00282412499655,
+    "execution_context_after": {
+      "cpu_count": 10,
+      "load_average_1_5_15_minutes": [
+        1.91259765625,
+        2.28271484375,
+        2.35400390625
+      ],
+      "process_peak_rss_bytes": 3561816064,
+      "recorded_at": "2026-10-04T10:26:24.544288+00:00"
+    },
+    "execution_context_before": {
+      "cpu_count": 10,
+      "load_average_1_5_15_minutes": [
+        2.037109375,
+        2.34814453125,
+        2.38037109375
+      ],
+      "process_peak_rss_bytes": 3561816064,
+      "recorded_at": "2026-10-04T10:25:54.155117+00:00"
+    },
+    "gradient_steps": 10,
+    "initial_actor_hash": "sha256:e672f0c229d44f86333a9f55e09c34954705b515643eeea22259f07ddba5a61c",
+    "initial_checkpoint_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57",
+    "initial_selection_return": 139.62,
+    "initialization_seconds": 0.3818457080051303,
+    "latest_actor_hash": "sha256:5cfa719271b603273f5b10c74fc7bb09f60d6ce40cb1211e152abba96002f11a",
+    "latest_checkpoint_hash": "sha256:819492358f90a33212305bfe17d56e2f7542d3619fff22c0b83b8f2e5f748d1b",
+    "learner_wall_budget_overshoot_seconds": 0.002824124996550381,
+    "optimization_environment_steps": 63,
+    "optimizer_mode": "PROCEDURAL_PRETRAINED_ADAPTED",
+    "output_dir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-to-ucsf-v2/comparison/adapted-23",
+    "preparation_seconds": 1.9509403340052813,
+    "seed": 23,
+    "selected_checkpoint_hash": "sha256:9591d9e40207b4a150a685f753680fca29f3b4f1b4f113d4a167980a8738847a",
+    "selected_is_initial": false,
+    "selected_selection_return": 171.42,
+    "selection_environment_steps": 36,
+    "shared_checkpoint_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57",
+    "status": "wall_time_budget",
+    "trainer_call_scope": "full wrapper, initialization, learner and export; elapsed_seconds is the learner's optimization-plus-selection timer",
+    "trainer_call_seconds": 30.389155291952193
+  },
+  {
+    "actor_parameters_changed": true,
+    "algorithm": "masked_reinforce_state_value_v2",
+    "candidate_extraction_seconds": 0.9740419170120731,
+    "decision_model_hash": "sha256:dd81bd59566ead4e42916c8ede3d48d5615837e523d23d359b268d9a90f63f0b",
+    "elapsed_seconds": 30.225541207939386,
+    "execution_context_after": {
+      "cpu_count": 10,
+      "load_average_1_5_15_minutes": [
+        2.08935546875,
+        2.28662109375,
+        2.35107421875
+      ],
+      "process_peak_rss_bytes": 3561816064,
+      "recorded_at": "2026-10-04T10:26:58.313552+00:00"
+    },
+    "execution_context_before": {
+      "cpu_count": 10,
+      "load_average_1_5_15_minutes": [
+        1.91259765625,
+        2.28271484375,
+        2.35400390625
+      ],
+      "process_peak_rss_bytes": 3561816064,
+      "recorded_at": "2026-10-04T10:26:27.704975+00:00"
+    },
+    "gradient_steps": 10,
+    "initial_actor_hash": "sha256:e672f0c229d44f86333a9f55e09c34954705b515643eeea22259f07ddba5a61c",
+    "initial_checkpoint_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57",
+    "initial_selection_return": 139.62,
+    "initialization_seconds": 0.37869612500071526,
+    "latest_actor_hash": "sha256:a33f2e3e9d3ff09a113e19a1bc40f17dbba0dd0d687b7db1d7533b46faf0cc5a",
+    "latest_checkpoint_hash": "sha256:4ce051cdf9bd0d5e03b67b70f38c4b949dadf791bb348641adf5875891e0430e",
+    "learner_wall_budget_overshoot_seconds": 0.22554120793938637,
+    "optimization_environment_steps": 64,
+    "optimizer_mode": "PROCEDURAL_PRETRAINED_ADAPTED",
+    "output_dir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-to-ucsf-v2/comparison/adapted-47",
+    "preparation_seconds": 2.020832333015278,
+    "seed": 47,
+    "selected_checkpoint_hash": "sha256:cc4c86f79827b0500e2628da6e7546c53819b720f12203dc1bb73571c2ed61ce",
+    "selected_is_initial": false,
+    "selected_selection_return": 245.17,
+    "selection_environment_steps": 36,
+    "shared_checkpoint_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57",
+    "status": "wall_time_budget",
+    "trainer_call_scope": "full wrapper, initialization, learner and export; elapsed_seconds is the learner's optimization-plus-selection timer",
+    "trainer_call_seconds": 30.60850216599647
+  }
+]

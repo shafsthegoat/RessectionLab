@@ -1,0 +1,30 @@
+{
+  "schema": "case4-mesh-raw-output-index-v1",
+  "raw_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-v1",
+  "files": {
+    "acceptance.json": {
+      "bytes": 4757,
+      "sha256": "46e6fd72fc8df87eb59bfe9247a5c8ec31207f6ee3d723835b252fb38485e5cd"
+    },
+    "native-surface.npz": {
+      "bytes": 2621465,
+      "sha256": "dca30aacd485fb6c5a23fdfa2785e6ebead42a071f77d989c684e65a0360787f"
+    },
+    "supervision/combined.log": {
+      "bytes": 12772,
+      "sha256": "0821301f4878ecdb8c6ea84bc5f224d07eec6b68143761f2871785274922a09f"
+    },
+    "supervision/supervision.json": {
+      "bytes": 1261,
+      "sha256": "f728687e7a9952e783c1a5cabd1b2a1a530f7123aa902fb16bcc0e7a2c347e06"
+    },
+    "worker.json": {
+      "bytes": 56022,
+      "sha256": "b3485944aa760b3d5a360660835471b06981ac59024d6f465b8285f35bda5f56"
+    }
+  },
+  "total_bytes": 2696277,
+  "native_surface_retained": true,
+  "returned_overcap_volume_mesh_persisted": false,
+  "reason": "Unchanged reviewed worker rejects returned count excess before raw volume-mesh persistence or any quality/fidelity check."
+}

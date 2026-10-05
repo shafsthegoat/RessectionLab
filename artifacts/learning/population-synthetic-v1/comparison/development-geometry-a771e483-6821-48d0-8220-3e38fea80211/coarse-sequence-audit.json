@@ -1,0 +1,136 @@
+{
+  "GREEDY": {
+    "checker_version": "independent-sequence-cell-capsule-v1",
+    "collision_position_mm": null,
+    "conservative": true,
+    "failures": [],
+    "feasible": true,
+    "unknowns": [
+      "discrete_suction_footprint_is_model_assumption",
+      "geometry_checked_on_declared_simulation_grid",
+      "native_resolution_removal_not_independently_verified",
+      "vascular_anatomy_and_tissue_mechanics_unassessed"
+    ]
+  },
+  "PATIENT_SCRATCH_RL:11": {
+    "checker_version": "independent-sequence-cell-capsule-v1",
+    "collision_position_mm": null,
+    "conservative": true,
+    "failures": [],
+    "feasible": true,
+    "unknowns": [
+      "discrete_suction_footprint_is_model_assumption",
+      "geometry_checked_on_declared_simulation_grid",
+      "native_resolution_removal_not_independently_verified",
+      "vascular_anatomy_and_tissue_mechanics_unassessed"
+    ]
+  },
+  "PATIENT_SCRATCH_RL:23": {
+    "checker_version": "independent-sequence-cell-capsule-v1",
+    "collision_position_mm": null,
+    "conservative": true,
+    "failures": [],
+    "feasible": true,
+    "unknowns": [
+      "discrete_suction_footprint_is_model_assumption",
+      "geometry_checked_on_declared_simulation_grid",
+      "native_resolution_removal_not_independently_verified",
+      "vascular_anatomy_and_tissue_mechanics_unassessed"
+    ]
+  },
+  "PATIENT_SCRATCH_RL:47": {
+    "checker_version": "independent-sequence-cell-capsule-v1",
+    "collision_position_mm": null,
+    "conservative": true,
+    "failures": [],
+    "feasible": true,
+    "unknowns": [
+      "discrete_suction_footprint_is_model_assumption",
+      "geometry_checked_on_declared_simulation_grid",
+      "geometry_checks_only_supplied_anatomical_obstacles",
+      "native_resolution_removal_not_independently_verified",
+      "proximal_tool_outside_image_coverage_unassessed",
+      "vascular_anatomy_and_tissue_mechanics_unassessed"
+    ]
+  },
+  "POPULATION_ADAPTED:11": {
+    "checker_version": "independent-sequence-cell-capsule-v1",
+    "collision_position_mm": null,
+    "conservative": true,
+    "failures": [],
+    "feasible": true,
+    "unknowns": [
+      "discrete_suction_footprint_is_model_assumption",
+      "geometry_checked_on_declared_simulation_grid",
+      "native_resolution_removal_not_independently_verified",
+      "vascular_anatomy_and_tissue_mechanics_unassessed"
+    ]
+  },
+  "POPULATION_ADAPTED:23": {
+    "checker_version": "independent-sequence-cell-capsule-v1",
+    "collision_position_mm": null,
+    "conservative": true,
+    "failures": [],
+    "feasible": true,
+    "unknowns": [
+      "discrete_suction_footprint_is_model_assumption",
+      "geometry_checked_on_declared_simulation_grid",
+      "native_resolution_removal_not_independently_verified",
+      "vascular_anatomy_and_tissue_mechanics_unassessed"
+    ]
+  },
+  "POPULATION_ADAPTED:47": {
+    "checker_version": "independent-sequence-cell-capsule-v1",
+    "collision_position_mm": null,
+    "conservative": true,
+    "failures": [],
+    "feasible": true,
+    "unknowns": [
+      "discrete_suction_footprint_is_model_assumption",
+      "geometry_checked_on_declared_simulation_grid",
+      "native_resolution_removal_not_independently_verified",
+      "vascular_anatomy_and_tissue_mechanics_unassessed"
+    ]
+  },
+  "POPULATION_FROZEN": {
+    "checker_version": "independent-sequence-cell-capsule-v1",
+    "collision_position_mm": null,
+    "conservative": true,
+    "failures": [],
+    "feasible": true,
+    "unknowns": [
+      "discrete_suction_footprint_is_model_assumption",
+      "geometry_checked_on_declared_simulation_grid",
+      "native_resolution_removal_not_independently_verified",
+      "vascular_anatomy_and_tissue_mechanics_unassessed"
+    ]
+  },
+  "SEARCH": {
+    "checker_version": "independent-sequence-cell-capsule-v1",
+    "collision_position_mm": null,
+    "conservative": true,
+    "failures": [],
+    "feasible": true,
+    "unknowns": [
+      "discrete_suction_footprint_is_model_assumption",
+      "geometry_checked_on_declared_simulation_grid",
+      "geometry_checks_only_supplied_anatomical_obstacles",
+      "native_resolution_removal_not_independently_verified",
+      "proximal_tool_outside_image_coverage_unassessed",
+      "vascular_anatomy_and_tissue_mechanics_unassessed"
+    ]
+  },
+  "STOP": {
+    "checker_version": "independent-sequence-cell-capsule-v1",
+    "collision_position_mm": null,
+    "conservative": true,
+    "failures": [],
+    "feasible": true,
+    "unknowns": [
+      "discrete_suction_footprint_is_model_assumption",
+      "geometry_checked_on_declared_simulation_grid",
+      "native_resolution_removal_not_independently_verified",
+      "vascular_anatomy_and_tissue_mechanics_unassessed"
+    ]
+  }
+}

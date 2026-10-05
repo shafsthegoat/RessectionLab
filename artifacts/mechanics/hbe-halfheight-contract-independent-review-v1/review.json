@@ -1,0 +1,41 @@
+{
+  "schema": "hbe-halfheight-mechanical-contract-independent-review-v1",
+  "status": "mechanical_contract_consistent_preexecution_implementation_and_actual_equivalence_pending",
+  "source_commit_observed": "12874e0e90b833d569765109167e36371f64f7ff",
+  "reviewed_bindings": {
+    "manifests/experiments/hbe-01-03-halfheight-equivalence-v1.json": "0df5587ab7a70eb1ac092919ff067b4d85ce6c7457af9726875beb58af19ad1e",
+    "docs/hbe-halfheight-equivalence.md": "8013998991afc89c01603124a10865810e15996da3b3090f5cf789acd662df62",
+    "docs/hbe-specimen-mechanics-poc.md": "e58e484310ebdd91e1366b2855bd8ae64b3b33e466d9842fb16c778a5110bccb",
+    "docs/hbe-evaluation-interface.md": "06f26a646c30a125f25267da5809942592b7e56366be4082f64a3da1e55b8203",
+    "scripts/mechanics_hbe_readout.py": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0",
+    "scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "artifacts/mechanics/hbe-halfheight-contract-independent-review-v1/REVIEW.md": "7d6795e8503eabe224a468e1a0422a8607435b56cc13c70b6dea0393aa6ab76f"
+  },
+  "source_only": true,
+  "new_solver_invocations": 0,
+  "measured_response_or_solver_field_or_patient_array_access": false,
+  "mechanical_findings": {
+    "finite_strain_displacement_reflection": "X_prime=S X+H ez; x_prime=S x+(H+d)ez; u_prime=(ux,uy,d-uz); F_prime=S F S",
+    "cut_constraint": "uz=d/2 with ux,uy free",
+    "raw_reaction_assembly": "polar-vector reflection S and complete signed sum at shared midplane nodes",
+    "canonical_full_top_force": "-sum(full top Rz)=+sum(half physical bottom Rz)=-sum(half cut Rz); equality uses equilibrium",
+    "full_force_scale": 1,
+    "full_energy_scale": 2,
+    "full_work_scale": 2,
+    "half_work_coordinate": "q=d/2",
+    "stress_transform": "S sigma S",
+    "three_field_energy": "reference-volume cell-average J preserved; logged sed not energy authority"
+  },
+  "implementation_pitfalls": [
+    "Existing full-domain read_frame/read_run assumes xyz-prescribed physical top; needs explicit half cut-z-only handling before full lifted readout.",
+    "Keep full H and original probes/scales separate from modeled H/2.",
+    "Moment uses current lever arms and is axial under reflection; never apply polar force reflection directly.",
+    "Do not force plate-force equality by substitution or erase/dismiss shared-plane residuals."
+  ],
+  "scope_limits": [
+    "Symmetric equilibrium branch only; no uniqueness/stability/asymmetric-mode guarantee.",
+    "No mesh-convergence, material fidelity, patient or clinical claim.",
+    "No implementation approval or execution release conferred."
+  ],
+  "blocking_contract_findings": []
+}

@@ -1,0 +1,27 @@
+{
+  "command_exit_code": 0,
+  "gzip_only_paths": [
+    "pilot/accounting.json",
+    "pilot/candidate-record.json",
+    "pilot/history-freeze.json"
+  ],
+  "new_gradient_steps": 0,
+  "new_policy_forwards": 0,
+  "new_simulator_calls": 0,
+  "report_files": {
+    "RESULT.md": {
+      "byte_identical": true,
+      "sha256": "3dac7df311466d4a5b9bbe85ccb954b447b0f9ca70e3e2a43d6e04bce2d8bfd5"
+    },
+    "cost-summary.json": {
+      "byte_identical": true,
+      "sha256": "47ac0277620f98dc1e737fbd14ddf57de75e0463e44367547bf7afedeba97261"
+    },
+    "report-source.json": {
+      "byte_identical": true,
+      "sha256": "d2fb38139898d842961220d19aec7f481a9a8567bdb288737ffc627cd2450ea0"
+    }
+  },
+  "report_script_sha256": "c53868349eba10870a15727bb61a2604ebed9047823c5e495b3d67925c37df8d",
+  "scope": "Final report regeneration with three raw payloads absent from a private copy; original execution files remain unchanged"
+}

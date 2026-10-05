@@ -1,0 +1,26 @@
+{
+  "inspection_at": "2026-10-04T08:47:16.388032+00:00",
+  "image_sha256": "3eda847913c76c2c06c9edbcd210c2d79598d49170f2ad0cc9b7f4804065dc02",
+  "scope": "engineering visual check of six native voxel planes; not expert clinical review",
+  "native_planes": {
+    "brain_envelope_centre": [
+      78,
+      110,
+      148
+    ],
+    "source_annotation_centre": [
+      46,
+      137,
+      150
+    ]
+  },
+  "observations": [
+    "Main and no-CSF contours differ near CSF boundaries.",
+    "No-CSF misses 538 source annotation voxels; no patch or tuning applied.",
+    "The intensity baseline undercovers brain regions and extends inferiorly beyond model envelopes."
+  ],
+  "brain_reviewed": false,
+  "cortex_localized": false,
+  "cortical_access_permitted": false,
+  "whole_volume_anatomical_correctness": "unverified"
+}

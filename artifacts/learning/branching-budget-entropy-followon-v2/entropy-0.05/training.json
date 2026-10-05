@@ -1,0 +1,53 @@
+[
+  {
+    "decision_model_hash": "sha256:c1f8ca6a37e2190a210002302f8a0aa53d883ede01d2388e80800740a89acae8",
+    "elapsed_seconds": 1.1060021250741556,
+    "gradient_steps": 128,
+    "initial_checkpoint_hash": "sha256:3ffe11ea901cac5d4d0b27c17c6a9de587fbe995087c52f3917acd195958d202",
+    "initial_selection_return": 0.0,
+    "latest_checkpoint_hash": "sha256:27466076a9595dbe89b1927190e5af2b1b224211b1e9aff49fd6e088cfdfdf77",
+    "optimization_environment_steps": 943,
+    "optimizer_mode": "PATIENT_SCRATCH_RL",
+    "output_dir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/branching-budget-entropy-followon-v2/entropy-0.05/scratch-11",
+    "preparation_seconds": 0.014102582936175168,
+    "selected_checkpoint_hash": "sha256:3ffe11ea901cac5d4d0b27c17c6a9de587fbe995087c52f3917acd195958d202",
+    "selected_selection_return": 0.0,
+    "selection_environment_steps": 34,
+    "shared_checkpoint_hash": null,
+    "status": "gradient_budget"
+  },
+  {
+    "decision_model_hash": "sha256:c1f8ca6a37e2190a210002302f8a0aa53d883ede01d2388e80800740a89acae8",
+    "elapsed_seconds": 0.9945413749665022,
+    "gradient_steps": 128,
+    "initial_checkpoint_hash": "sha256:38b91ec6302c4a795ec519341cd3f0e523376c331b36cfd5dadb6e1450c466fe",
+    "initial_selection_return": 0.0,
+    "latest_checkpoint_hash": "sha256:ff68b3ef22208f4b69473fcbf5bdbd3cac5d7ffe38925660858d0c337dd5c466",
+    "optimization_environment_steps": 835,
+    "optimizer_mode": "PATIENT_SCRATCH_RL",
+    "output_dir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/branching-budget-entropy-followon-v2/entropy-0.05/scratch-23",
+    "preparation_seconds": 0.014211916946806014,
+    "selected_checkpoint_hash": "sha256:38b91ec6302c4a795ec519341cd3f0e523376c331b36cfd5dadb6e1450c466fe",
+    "selected_selection_return": 0.0,
+    "selection_environment_steps": 34,
+    "shared_checkpoint_hash": null,
+    "status": "gradient_budget"
+  },
+  {
+    "decision_model_hash": "sha256:c1f8ca6a37e2190a210002302f8a0aa53d883ede01d2388e80800740a89acae8",
+    "elapsed_seconds": 1.4976281659910455,
+    "gradient_steps": 128,
+    "initial_checkpoint_hash": "sha256:1b950505190cfef3b8181127d7f85fd9f0a6691e3184b4a1c422189cbadf4d34",
+    "initial_selection_return": 0.020000000000000018,
+    "latest_checkpoint_hash": "sha256:62290698dea1005e660fb375ac1f7f90148127d177ca0b14afa58a02fb0b6125",
+    "optimization_environment_steps": 1342,
+    "optimizer_mode": "PATIENT_SCRATCH_RL",
+    "output_dir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/branching-budget-entropy-followon-v2/entropy-0.05/scratch-47",
+    "preparation_seconds": 0.014621458947658539,
+    "selected_checkpoint_hash": "sha256:4f2379a51f2d38f8b9c6a3d32ddf7c9425a8c172c7b47e8fcac99119781de2d4",
+    "selected_selection_return": 1.26,
+    "selection_environment_steps": 50,
+    "shared_checkpoint_hash": null,
+    "status": "gradient_budget"
+  }
+]

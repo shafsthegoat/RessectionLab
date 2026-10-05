@@ -1,0 +1,11 @@
+# Independent resolution preparation review
+
+The repaired source passes **258 distinct focused checks**: 56 new extension checks (including 11 independent controls) in 0.56 seconds, followed by 202 existing HBE integration checks in 2.79 seconds. All 33 bound source, test, declaration and preparation files stayed unchanged. See `verification.json` for exact identities and limits.
+
+The independent review found one preparation-output integrity gap in runner `474827da…`: solve preflight ignored the saved level receipts, so a changed receipt was accepted and neither receipt entered subsequent input rechecks. Two tests exposed those two consequences. The original source and reproducing test are retained as compact gzip snapshots. The repaired runner `f6c75e1b…` authenticates both level receipts, their quality values and source/runtime/study identities, their original and adapted output graph, and the separately supervised preparation phase. Five coherently rehashed corruption controls also reject.
+
+The earlier `initial-pytest.txt` and `negative-pytest.txt` failures were fixture setup mistakes: the toy XML initially lacked the required solver hierarchy, then its loading metadata lacked required identity fields. They are not scientific or production findings. `confirmed-negative-pytest.txt` contains the actual reproduced defect; `negative.json` records the distinction.
+
+Both N12→N16→N24 and N8→N16→N24 comparisons remain mandatory with unchanged numerical rules. The new readout explicitly selects the frozen axial study and its 25,000-item bound; the original reader retains 20,000 items and the original mesh levels. Existing mesh functions are unchanged. The draft remains unsupported and unauthorized, with the exact prospective twelve-file archive list.
+
+This review performed no native meshing, FEBio solve, measured-response access or actual primitive replay. Tests use analytical data and mocks; existing watchdog tests use tiny Python child processes. The independent prepared-output fixture deliberately isolates the new linkage checks by stubbing historical source/runtime authentication. No N16/N24 quality, convergence or resource outcome is asserted. Real preparation and solution require separate source-bound releases; the original failed experiment and archives remain intact.

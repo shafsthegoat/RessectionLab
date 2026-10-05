@@ -1,0 +1,45 @@
+{
+  "accepted_case_comparison": "accepted-case-comparison.json",
+  "fixes": [
+    "validate and canonicalize immutable frame against declared normal/reference/sine",
+    "reject complex physical input rather than discard imaginary components",
+    "reject nonfinite coordinate projections and individual or aggregate volumes"
+  ],
+  "gradients": 0,
+  "initial_independent_outcome": {
+    "failed": 14,
+    "passed": 16,
+    "receipt": "../../native-spatial-feature-v2-independent/initial-negative-tests.json"
+  },
+  "new_native_transitions": 0,
+  "new_simulators": 0,
+  "original_v2_evidence_preserved": true,
+  "patient_loads": 0,
+  "policies_evaluated": 0,
+  "production_files_changed": false,
+  "remaining_limits": [
+    "engineering conditioning margin, not a global numerical guarantee",
+    "no global cross-patient tangent convention or external provenance authentication",
+    "partial-contact history/tool/budget/geometry/topology/interaction summaries remain incomplete"
+  ],
+  "repaired_outcome": {
+    "independent_passed": 30,
+    "independent_receipt": "../../native-spatial-feature-v2-independent/repaired-review.json",
+    "independent_seconds": 0.08,
+    "owner_passed": 11,
+    "owner_seconds": 0.06
+  },
+  "saved_accepted_numeric_comparisons_equal": 14,
+  "separate_verified_source_archives": [
+    "../source.tar.gz",
+    "source.tar.gz"
+  ],
+  "source_sha256": "1bd454e0a6f15d0b664545bed4c7a8bbf9ed265d7f5e6c015b0ef502b4f3ff79",
+  "status": "validated_research_only_repair",
+  "unchanged_v1_source_and_inputs": {
+    "artifacts/native-spatial-feature-independent-v1/conditioning-counterexample.json": "109c1b89e57a16898ea3cae3e1ed3feb6439ac23230fc99c83cf8f2e76adc5ef",
+    "artifacts/native-spatial-feature-probe-v1/probe/report.json": "f7ac523a033e7b9dbfb8119c0a78916d0ef3dc420d7156d8459f25d21bd0c79c",
+    "research/native_spatial_features.py": "b412a0f38ff4c33edae29be41ee6368430812ccd0ab6ea0a6d897db8e9434ef4"
+  },
+  "version": "synthetic-declared-tangent-frame-v2.1"
+}

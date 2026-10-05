@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "error": null,
+  "checks": {
+    "two_accessible_route_selectors": true,
+    "case_routes_view_roundtrip": true,
+    "cancellation_preserves_case": true,
+    "real_vtk_framebuffer": true
+  },
+  "elapsed_seconds": 3.4322672920534387,
+  "heartbeat_p95_ms": 30.46050004195422,
+  "heartbeat_max_ms": 418.3070419821888,
+  "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13"
+}

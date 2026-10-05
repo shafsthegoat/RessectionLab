@@ -1,0 +1,726 @@
+{
+  "renderer": "WebKit WebGL",
+  "scope": "actual WebGL2 production priorAt function in1pixel float framebuffer; no application screenshot",
+  "results": [
+    {
+      "name": "functional_center",
+      "expectedCovered": true,
+      "expectedValue": 0.5,
+      "actualCovered": true,
+      "actualValue": 0.5,
+      "glError": 0
+    },
+    {
+      "name": "covered_zero",
+      "expectedCovered": true,
+      "expectedValue": 0,
+      "actualCovered": true,
+      "actualValue": 0,
+      "glError": 0
+    },
+    {
+      "name": "incomplete_support",
+      "expectedCovered": false,
+      "expectedValue": null,
+      "actualCovered": false,
+      "actualValue": 0,
+      "glError": 0
+    },
+    {
+      "name": "binary_low",
+      "expectedCovered": true,
+      "expectedValue": 0,
+      "actualCovered": true,
+      "actualValue": 0,
+      "glError": 0
+    },
+    {
+      "name": "binary_high",
+      "expectedCovered": true,
+      "expectedValue": 1,
+      "actualCovered": true,
+      "actualValue": 1,
+      "glError": 0
+    },
+    {
+      "name": "oblique_covered_boundary",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.4000000059604645,
+      "glError": 0
+    },
+    {
+      "name": "tiny_positive",
+      "expectedCovered": true,
+      "expectedValue": 0.00001,
+      "actualCovered": true,
+      "actualValue": 0.00000999999883788405,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_0_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0.39999985694885254,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_0_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.4000000059604645,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_1_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0.3999999165534973,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_1_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.4000000059604645,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_2_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.3999999761581421,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_2_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_3_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.4000000059604645,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_3_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.3999999761581421,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_4_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.4000000059604645,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_4_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_5_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.3999999761581421,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_5_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.3999999463558197,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_6_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.3999999463558197,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_6_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.40000003576278687,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_7_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.4000000059604645,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_7_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.3999999463558197,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_8_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.4000000059604645,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_8_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_9_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0.3999999165534973,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_9_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.4000000059604645,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_10_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.4000000059604645,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_10_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.3999999761581421,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_11_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.3999999761581421,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_11_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_12_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0.399999737739563,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_12_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.40000003576278687,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_13_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.40000003576278687,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_13_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.4000000059604645,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_14_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.40000003576278687,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_14_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_15_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0.3999999165534973,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_15_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.3999999761581421,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_16_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.3999999761581421,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_16_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_17_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.4000000059604645,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_17_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.3999999761581421,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_18_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.4000000059604645,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_18_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.3999999761581421,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_19_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0.39999985694885254,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_19_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_20_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.3999999761581421,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_20_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.4000000059604645,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_21_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.4000000059604645,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_21_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_22_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.3999999761581421,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_22_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.4000000059604645,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_23_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.4000000059604645,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_23_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_24_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.4000000059604645,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_24_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.4000000059604645,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_25_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.40000003576278687,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_25_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.3999999165534973,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_26_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0.3999996483325958,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_26_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.40000003576278687,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_27_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.40000003576278687,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_27_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.4000000059604645,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_28_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.40000003576278687,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_28_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.3999999165534973,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_29_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0.3999996781349182,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_29_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.40000003576278687,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_30_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.40000003576278687,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_30_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_31_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.40000003576278687,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_31_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": true,
+      "actualValue": 0.3999999761581421,
+      "glError": 0
+    }
+  ],
+  "caseCount": 71,
+  "failedCoverage": [
+    {
+      "name": "coverage_boundary_0_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0.39999985694885254,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_1_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0.3999999165534973,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_2_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_4_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_8_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_9_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0.3999999165534973,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_11_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_12_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0.399999737739563,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_14_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_15_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0.3999999165534973,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_16_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_19_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0.39999985694885254,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_19_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_21_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_23_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_26_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0.3999996483325958,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_29_0",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0.3999996781349182,
+      "glError": 0
+    },
+    {
+      "name": "coverage_boundary_30_1",
+      "expectedCovered": true,
+      "expectedValue": 0.4,
+      "actualCovered": false,
+      "actualValue": 0,
+      "glError": 0
+    }
+  ],
+  "maxCoveredAbsoluteError": 8.344650270775134e-8,
+  "sourceFileSha256": "30cd8c6bb3e09bc6642d5600ef7ebdcc609aa6582e4196b63efadf6bdbc1b626",
+  "shaderFunctionSha256": "7d273a38449a55586f373a122b5fbff2fb1ffd664565d5c96e55ecdecc66474b",
+  "probeSourceSha256": "6e2d8774b74a083e966756f47d2847f7ae93990cd991ab5601514de1004263dd",
+  "recordedAt": "2026-10-04T10:45:51.346Z"
+}

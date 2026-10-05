@@ -1,0 +1,109 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+______________ test_external_archive_refused_before_runtime_work _______________
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-472/test_external_archive_refused_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1070911c0>
+
+    def test_external_archive_refused_before_runtime_work(tmp_path, monkeypatch):
+        repository = tmp_path / "repository"
+        repository.mkdir()
+        archive = tmp_path / "outside-archive"
+        archive.mkdir()
+        release = tmp_path / "release.json"
+        release.write_text(json.dumps({
+            "schema": v.VERSION + "-release", "authorized": True,
+            "root_release": "Constructed review fixture; no execution authorization",
+            "attempt_directory": str(repository / "new-attempt"),
+            "source_commit": "a" * 40, "source_directory": str(archive),
+            "repository_directory": str(repository),
+            "runtime_identity": {"path": "identity.json", "sha256": "b" * 64},
+        }))
+        calls = []
+        monkeypatch.setattr(v, "ROOT", archive)
+        monkeypatch.setattr(v, "CLOSURE", ())
+        monkeypatch.setattr(v, "declaration", lambda: {})
+        def runtime(*args):
+            calls.append(args)
+            return {"inputs": {}, "runtime": {"executable": "never-executed"}}
+        monkeypatch.setattr(v, "runtime_binding", runtime)
+>       with pytest.raises(ValueError, match="[Aa]rchive|[Ss]ource|repository"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_mechanics_accelerate_controls_review.py:42: Failed
+_________ test_failed_summary_reports_changed_checker_truthfully[hex8] _________
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-472/test_failed_summary_reports_ch0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107093500>
+changed_group = 'hex8'
+
+    @pytest.mark.parametrize("changed_group", ["hex8", "tet10_mpc"])
+    def test_failed_summary_reports_changed_checker_truthfully(tmp_path, monkeypatch, changed_group):
+        archive = tmp_path / "archive"
+        checks = {}
+        for relative in v.CHECKER_PINS:
+            path = archive / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes((ROOT / relative).read_bytes())
+            checks[str(path)] = v.sha(path)
+        changed = "mechanics_febio_verification.py" if changed_group == "hex8" else "mechanics_patient_constraints.py"
+        with (archive / "scripts" / changed).open("ab") as stream:
+            stream.write(b"\n# deliberately changed temporary checker\n")
+        output = tmp_path / "attempt"
+        output.mkdir()
+        base = {"source_commit": "a" * 40, "runtime_identity_sha256": "b" * 64,
+                "release": {"repository_directory": str(tmp_path)}, "input_hashes": checks}
+        result = v.initial_result()
+        result.update(status="failed_or_incomplete", inputs_after=v.unchanged(checks))
+        for name, value in (("execution.json", {"status": "failed_or_incomplete"}),
+                            ("results.json", result), ("execution-baseline.json", base)):
+            (output / name).write_text(json.dumps(value))
+        monkeypatch.setattr(v, "ROOT", archive)
+        v.summaries(output, base, result, False)
+        summary = json.loads((output / (changed_group + "-summary.json")).read_text())
+        assert summary["status"] == "failed_or_incomplete"
+>       assert summary["original_numerical_checker_unchanged"] is False
+E       assert True is False
+
+tests/test_mechanics_accelerate_controls_review.py:72: AssertionError
+______ test_failed_summary_reports_changed_checker_truthfully[tet10_mpc] _______
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-472/test_failed_summary_reports_ch1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x107093d70>
+changed_group = 'tet10_mpc'
+
+    @pytest.mark.parametrize("changed_group", ["hex8", "tet10_mpc"])
+    def test_failed_summary_reports_changed_checker_truthfully(tmp_path, monkeypatch, changed_group):
+        archive = tmp_path / "archive"
+        checks = {}
+        for relative in v.CHECKER_PINS:
+            path = archive / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes((ROOT / relative).read_bytes())
+            checks[str(path)] = v.sha(path)
+        changed = "mechanics_febio_verification.py" if changed_group == "hex8" else "mechanics_patient_constraints.py"
+        with (archive / "scripts" / changed).open("ab") as stream:
+            stream.write(b"\n# deliberately changed temporary checker\n")
+        output = tmp_path / "attempt"
+        output.mkdir()
+        base = {"source_commit": "a" * 40, "runtime_identity_sha256": "b" * 64,
+                "release": {"repository_directory": str(tmp_path)}, "input_hashes": checks}
+        result = v.initial_result()
+        result.update(status="failed_or_incomplete", inputs_after=v.unchanged(checks))
+        for name, value in (("execution.json", {"status": "failed_or_incomplete"}),
+                            ("results.json", result), ("execution-baseline.json", base)):
+            (output / name).write_text(json.dumps(value))
+        monkeypatch.setattr(v, "ROOT", archive)
+        v.summaries(output, base, result, False)
+        summary = json.loads((output / (changed_group + "-summary.json")).read_text())
+        assert summary["status"] == "failed_or_incomplete"
+>       assert summary["original_numerical_checker_unchanged"] is False
+E       assert True is False
+
+tests/test_mechanics_accelerate_controls_review.py:72: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_mechanics_accelerate_controls_review.py::test_external_archive_refused_before_runtime_work
+FAILED tests/test_mechanics_accelerate_controls_review.py::test_failed_summary_reports_changed_checker_truthfully[hex8]
+FAILED tests/test_mechanics_accelerate_controls_review.py::test_failed_summary_reports_changed_checker_truthfully[tet10_mpc]
+3 failed in 0.06s

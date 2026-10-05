@@ -1,0 +1,72 @@
+{
+  "bitwise_distance_matches": 1024,
+  "boxes": 1024,
+  "contact_checks": [
+    {
+      "contacts": 96,
+      "first_witness": 336,
+      "includes_near_threshold_scalar_fallback": true,
+      "indices_sha256": "f5b9f0579020124fcaebcfd83f1ba412b608ae7133a6f929251e77a58a2d2e08",
+      "one_contact_call_seconds": 0.0023514999775215983,
+      "ordered_indices_match": true,
+      "tolerance_mm2": 0.0
+    },
+    {
+      "contacts": 96,
+      "first_witness": 336,
+      "includes_near_threshold_scalar_fallback": true,
+      "indices_sha256": "f5b9f0579020124fcaebcfd83f1ba412b608ae7133a6f929251e77a58a2d2e08",
+      "one_contact_call_seconds": 0.002205875003710389,
+      "ordered_indices_match": true,
+      "tolerance_mm2": 1e-10
+    },
+    {
+      "contacts": 96,
+      "first_witness": 336,
+      "includes_near_threshold_scalar_fallback": true,
+      "indices_sha256": "f5b9f0579020124fcaebcfd83f1ba412b608ae7133a6f929251e77a58a2d2e08",
+      "one_contact_call_seconds": 0.0021297080675140023,
+      "ordered_indices_match": true,
+      "tolerance_mm2": 1e-09
+    }
+  ],
+  "distance_sha256": {
+    "batch": "483bc4e32405693352baa16c657d31df6d6ea73be6472347ad1240c8873d9fc2",
+    "scalar_after": "483bc4e32405693352baa16c657d31df6d6ea73be6472347ad1240c8873d9fc2",
+    "scalar_before": "483bc4e32405693352baa16c657d31df6d6ea73be6472347ad1240c8873d9fc2"
+  },
+  "distance_tolerance_passed": true,
+  "input_sha256": {
+    "end": "a9755e43ce0f937dd584cad3304c4c1f052489cfb9c6d988dc03c48edf805b7e",
+    "lower": "fd71b9b47d99444b049d6888e9387b685871b966a9c332a406a405778a742c44",
+    "start": "90b18fc0a29e806acbd7059cdfb9e67d164e97257926a0de42facb867585dbd0",
+    "upper": "2184878990e26dc8b02c87fa41547d392db653a55ac8d72bfd4d79856e84a4a5"
+  },
+  "interpretation": "Distance-kernel timings only; source transforms, occupancy, native history, and independent full-tool audit are excluded",
+  "max_absolute_distance_difference_mm2": 0.0,
+  "phases": {
+    "batch": {
+      "median_seconds": 0.0022814584663137794,
+      "seconds": [
+        0.0025122499791905284,
+        0.0020506669534370303
+      ]
+    },
+    "scalar_after": {
+      "median_seconds": 0.04939668747829273,
+      "seconds": [
+        0.04993687488604337,
+        0.0488565000705421
+      ]
+    },
+    "scalar_before": {
+      "median_seconds": 0.04908095794962719,
+      "seconds": [
+        0.04874570795800537,
+        0.04941620794124901
+      ]
+    }
+  },
+  "scalar_reversal_identical": true,
+  "workload": "axial_anisotropic"
+}

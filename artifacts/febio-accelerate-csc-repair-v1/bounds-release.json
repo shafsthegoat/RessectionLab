@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "authorized_at": "2026-10-04T21:36:41.524515+00:00",
+  "authority": "Root explicitly released one frozen source-extracted ASan/UBSan bounds diagnostic under60s/1GiB/oneCPU; full isolated FEBio build remains unreleased.",
+  "driver_sha256": "2dce058c3cc5db3edebc941300cd97c85413beefc30d34ccf631f1eeb85f61e5",
+  "fixture_preparation_sha256": "8cc65fed0e93746c7cd17c5209eb1cce6fbe7d8e74577c44311fb04bea2cacef",
+  "manifest_sha256": "7517aa3bd9a40cce9ce2864e5118c52185448a1a3eb1bab24b42ae9e9e4026b2",
+  "caps": {
+    "aggregate_seconds": 60,
+    "process_group_rss_bytes": 1073741824,
+    "cpu_threads": 1
+  },
+  "runtime_build": false,
+  "patient_or_curve_access": false,
+  "retries": 0
+}

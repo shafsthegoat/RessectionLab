@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "created_utc": "2026-10-04T13:37:15.841735+00:00",
+  "source_revision": "fe25f2ad23035e9f2f5fc73f5c1a002ef20377e0",
+  "renderer_source_digest": "bc63bc2e29b123b5ba25263824e3e3a65f2b3cc693025d5dc8ebef8b14d55064",
+  "renderer_archive_sha256": "542a036acb63bdaa70ec45bf440ccf10d1283d264e28d1756178c0e5519e4a1c",
+  "engine_executable_sha256": "85a92eff69cb1ea97afc400bc80433c53d146174dd32a9cf36061b8420f72ddd",
+  "engine_source_revision": "0b4e3345137316bb72d6daf9bf2a15ee6b613ed7",
+  "capture_receipt": "capture-verification.json",
+  "scope": "Narrow native persistent-case-identity and existing centering regression; no new model work.",
+  "checks": {
+    "unloaded_uses_generic_route_comparison_without_case_identity": true,
+    "actual_case_switch_order": [
+      "UCSF-PDGM-0004",
+      "BTC-ds001226-sub-PAT16-preop",
+      "BTC-ds001226-sub-PAT20-preop"
+    ],
+    "exact_current_case_accessible_labels": {
+      "ucsf-scrolled-wide": "UCSF-PDGM-0004",
+      "ucsf-scrolled-minimum": "UCSF-PDGM-0004",
+      "pat16-scrolled-wide": "BTC-ds001226-sub-PAT16-preop",
+      "pat16-scrolled-minimum": "BTC-ds001226-sub-PAT16-preop",
+      "pat20-scrolled-wide": "BTC-ds001226-sub-PAT20-preop",
+      "pat20-scrolled-minimum": "BTC-ds001226-sub-PAT20-preop"
+    },
+    "fixed_central_header_visible_after_left_panel_scroll": true,
+    "window_widths_points": [
+      1460,
+      1050
+    ],
+    "actual_btc_ids_fit_without_wrapping_or_obscuring_controls": true,
+    "centering_quick_check_before_ras_mm_display": [
+      -173,
+      137,
+      112
+    ],
+    "centering_quick_check_after_ras_mm_display": [
+      -161.9,
+      84.9,
+      104.6
+    ],
+    "no_renderer_warning_or_shader_error_observed": true,
+    "numerical_and_notice_payloads_unchanged": true,
+    "deep_strict_local_ad_hoc_signature_passed": true
+  },
+  "scope_limits": [
+    "No synthetic very-long case-ID fixture was loaded. Actual full BTC IDs fit at minimum width; arbitrary-long accessible label/ellipsis behavior is covered by source tests and CSS, not a native extreme-length claim.",
+    "No new training, final evaluation, full prior-map or full proposal regression repeated.",
+    "No clinical identity/imaging correspondence claim beyond the loaded research bundle identifier.",
+    "Two notice-source gaps and notarization remain unresolved."
+  ],
+  "screenshots": {
+    "pat16-scrolled-minimum.jpg": "e13eb00a6c5531d2f450914b9f21d935550a955b73f1f0cc779bfd62ffc8b069",
+    "pat16-scrolled-wide.jpg": "04a8ea54f0501c6b61fbd4182f9840a0e83a518ebc011e645062a3380f1fdb96",
+    "pat20-final-mri-review-wide.jpg": "2fecfcecd3d8afe56895d8cf8e9000826a393bc0cc56a10849e9e40571154882",
+    "pat20-scrolled-minimum.jpg": "5b5bef85ca1b6ec1df08fdf005ab98dace267fcd4cf747010616db58ae73e8fc",
+    "pat20-scrolled-wide.jpg": "9372c1094916d758c11b6c13ca23cd2b8892e69c10b270707a1169cf24144bad",
+    "ucsf-centered-minimum.jpg": "4e255926e6fa65fc5647da9d3bf29f5b4ec6e960d8a118dffaa33f4611217a47",
+    "ucsf-scrolled-minimum.jpg": "e531141f12aeb9d9ab85a923787f62f62d5e347643c8ffeb0f101ab6e73be5c3",
+    "ucsf-scrolled-wide.jpg": "34ac52c9f6de85486b4ae4c94c7dfcefb6ba872a3347dc0ef87d74fa9446a12c",
+    "unloaded.jpg": "a78755e5490c3b9c9539e54680bf2801eb420323d8140b113df69a195ce0030c"
+  },
+  "mac_focus_released": true
+}

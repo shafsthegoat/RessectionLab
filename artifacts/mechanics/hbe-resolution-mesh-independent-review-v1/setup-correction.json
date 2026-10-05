@@ -1,0 +1,5 @@
+{
+  "source_sha256": "d92507f4bd87bc594875c780854049f5d743fc801101da7ebacafd5b8e44e6c4",
+  "error": "Compared entire Boundary XML across resolutions although top-node prescriptions scale with mesh nodes. Actual deck regeneration was already byte-exact. Fix checks identical prescription semantics for each new top node instead.",
+  "production_finding": false
+}

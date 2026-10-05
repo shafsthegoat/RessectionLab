@@ -1,0 +1,114 @@
+{
+  "schema": "graded-case4-result-v2",
+  "status": "rejected_independent_surface_fidelity",
+  "source_commit": "715f0bf99fdd76eb984e5522aa2c7fa538498f63",
+  "candidate_id": "case4_boundary12_interior24_single",
+  "attempts": 1,
+  "native_generation_calls": 1,
+  "retries": 0,
+  "nodes": 5223,
+  "tet10_elements": 2761,
+  "mesh_count_caps": {
+    "nodes": 6000,
+    "tet10_elements": 6000
+  },
+  "count_gate_passed": true,
+  "quality_and_topology_checks_passed": true,
+  "quality": {
+    "nodes": 5223,
+    "elements": 2761,
+    "minimum_reference_determinant_m3": 5.9128729519024424e-12,
+    "minimum_actual_sampled_reference_determinant_m3": 5.912872951900573e-12,
+    "jacobian_witnesses_per_element": 19,
+    "maximum_midpoint_error_m": 0.0,
+    "minimum_mean_ratio": 0.08339217435242442,
+    "volume_m3": 0.0011715477538424824,
+    "boundary": {
+      "vertices": 732,
+      "triangles": 1464,
+      "components": 1,
+      "euler_characteristic": 0,
+      "genus": 1,
+      "enclosed_volume_m3": 0.0011715477538424824,
+      "area_m2": 0.0591553379106913
+    },
+    "overlap": {
+      "aabb_candidate_pairs_checked": 63528,
+      "contact_tolerance_m": 1e-10
+    },
+    "skyline_storage": {
+      "unreduced_displacement_dofs": 15669,
+      "worst_case_symmetric_values_bytes": 982132920,
+      "three_value_arrays_bytes": 2946398760,
+      "scope": "Conservative dense-profile values only; other allocations and runtime remain unmeasured."
+    }
+  },
+  "source_to_mesh": {
+    "sample_count": 1027230,
+    "maximum_sample_distance_m": 0.005459949977542773,
+    "full_surface_upper_bound_m": 0.006167056788211742,
+    "cover_radius_cap_m": 0.001
+  },
+  "mesh_to_source": {
+    "sample_count": 121028,
+    "maximum_sample_distance_m": 0.0038337299930228013,
+    "full_surface_upper_bound_m": 0.004830812977588099,
+    "cover_radius_cap_m": 0.001
+  },
+  "relative_volume_error_computed": 0.012083768474345224,
+  "relative_volume_limit": 0.03,
+  "volume_note": "Computed error is below 3%, but no candidate acceptance follows; the earlier surface gate rejected it.",
+  "surface_distance_limit_m": 0.002,
+  "complete_diagnostic_packet_bytes": 413290,
+  "diagnostic_manifest_sha256": "ed7eee73e0b5fad1f2d16815ac369df57c232abe1f00bb24e19c9f0cd50f98c3",
+  "solver_admitted": false,
+  "resources": {
+    "supervised_seconds": 10.47940304200165,
+    "worker_seconds": 10.210598042001948,
+    "sampled_group_peak_rss_bytes": 647561216,
+    "exit_code": 1,
+    "kill_reason": null,
+    "output_guard": {
+      "scope": "Sampled whole-attempt output plus hard child per-file limit",
+      "aggregate_bytes_cap": 8388608,
+      "per_file_bytes_cap": 4194304,
+      "maximum_files": 32,
+      "observations": 83,
+      "peak_sampled_bytes": 439542,
+      "error": null,
+      "final_usage": {
+        "files": 9,
+        "bytes": 439551,
+        "largest_file_bytes": 221008
+      }
+    },
+    "final_raw_output_files": 10,
+    "final_raw_output_bytes": 446610,
+    "caps": {
+      "seconds": 180,
+      "rss_bytes": 3221225472,
+      "numeric_threads": 1,
+      "sampled_aggregate_output_bytes": 8388608,
+      "hard_child_file_bytes": 4194304,
+      "diagnostic_bytes": 2097152,
+      "files": 32
+    }
+  },
+  "all_input_bindings_unchanged": 28,
+  "source_arrays_reused": true,
+  "MRI_reextracted": false,
+  "B_or_V_access": false,
+  "solver_calls": 0,
+  "training_updates": 0,
+  "clinical_validation": false,
+  "anatomical_registration_accepted": false,
+  "limitations": [
+    "No accepted patient mesh or mechanics solve exists.",
+    "The measured sampled gaps themselves exceed 2 mm; this is not only looseness of the added covering radius.",
+    "Near-unity volume agreement does not establish local shape agreement.",
+    "Source remains an estimated native envelope with known inferior/cerebellar exclusions, not whole-brain or pial truth.",
+    "Geometry checks use finite-precision library arithmetic; physical tissue and planning validity are not established.",
+    "Resources are sampled observations with possible concurrent work, not performance benchmarks.",
+    "No field, cap, domain or algorithm changes or additional mesh generations were made."
+  ]
+}

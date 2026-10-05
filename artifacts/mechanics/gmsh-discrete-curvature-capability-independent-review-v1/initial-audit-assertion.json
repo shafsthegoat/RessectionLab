@@ -1,0 +1,8 @@
+{
+  "status": "reviewer_assertion_failed_before_numeric_checks",
+  "exception": "AssertionError at archive selected-file uniqueness assertion (line22).",
+  "cause": "Suffix-only match for CMakeLists.txt matched nested CMakeLists files; review locator must use exact archive prefix/path.",
+  "product_failure": false,
+  "native_calls": 0,
+  "patient_reads": 0
+}

@@ -1,0 +1,25 @@
+{
+  "error_type": null,
+  "external_timeout": false,
+  "external_wall_seconds": 1.108213417,
+  "finished_utc": "2026-10-04T14:30:20.624173+00:00",
+  "output_file_sha256": {
+    "declaration.json": "28096bde87eca2cac3c2b66590c81905d8729cb7e135ebd0c39563bd4ef18a78",
+    "ordered-query-arguments.json.gz": "534759de882aa54cde6170a689f35d18f61a15e3ce96b690cc9fe56f10517cb5",
+    "status.json": "fc406ddc2ad5d81d51bf6a6dcbe2ede69e2a3189943eacc026e6edb2f707738d",
+    "summary.json": "8e532681554ffe15b7e6712b0958ce1fe9d1f560a33181c7527114245ee56174"
+  },
+  "returncode": 0,
+  "root_release_sha256": "b728f1e42008944ce30c241890b4a9a732cb2112521419ed07c10b94bec93bd1",
+  "rss_limit_scope": "512MiB cooperative peak RSS check; no OS memory reservation.",
+  "schema_version": 1,
+  "scope": "Released saved-artifact reconstruction only; isolated interpreter with site disabled. No cover geometry, patient data loading, simulator stepping or policy work. No retries.",
+  "source_added": [],
+  "source_archive_sha256": "ed3d7e4e5a9208827cc008d17f7110d7a8be6b3bb886642e9d5811d3b73c66be",
+  "source_changed": [],
+  "source_commit": "b0f5635e8f77a7d223b25fecb3c47435f372d3fa",
+  "source_manifest_sha256": "8cd3f3eefb2851f05cd749e908f4afeae6b716445bd36e12f636337c00d2df9e",
+  "started_utc": "2026-10-04T14:30:19.511699+00:00",
+  "status": "completed",
+  "verified_source_file_count": 16
+}

@@ -1,0 +1,27 @@
+{
+  "automatic_retry": false,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/functional-sensitivity-f3582cc/scripts/evaluate_patient_functional_sensitivity.py",
+    "--worker",
+    "--data-root",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "--output",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/functional-sensitivity-realcase-v1/analysis",
+    "--bundle-output",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/cases/UCSF-PDGM-0004-functional-gaussian-primary-v1.ressectionlab",
+    "--declaration",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/functional-sensitivity-realcase-v1/frozen-declaration.json"
+  ],
+  "declaration_sha256": "b904b340fc47e488403312da7f222568756eb39a547db5ea84d762c73d10164d",
+  "parent_sampled_peak_rss_gib": 2.1079559326171875,
+  "parent_wall_seconds": 28.98429091705475,
+  "rss_sampling_interval_seconds": 0.2,
+  "status": "completed",
+  "termination_grace_seconds": 2,
+  "termination_reason": null,
+  "worker_exit_code": 0,
+  "worker_log": "artifacts/functional-sensitivity-realcase-v1/worker.log",
+  "worker_output": "artifacts/functional-sensitivity-realcase-v1/analysis"
+}

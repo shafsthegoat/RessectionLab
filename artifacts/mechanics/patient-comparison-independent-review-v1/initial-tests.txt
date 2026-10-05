@@ -1,0 +1,54 @@
+FF.........                                                              [100%]
+=================================== FAILURES ===================================
+__ test_same_source_file_alternative_entrypoint_is_rejected_before_validation __
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-445/test_same_source_file_alternat0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x106a4c800>
+
+    def test_same_source_file_alternative_entrypoint_is_rejected_before_validation(tmp_path, monkeypatch):
+        prepared = freeze(tmp_path, external=True)
+        forbid_reveal(monkeypatch)
+        with pytest.raises(ValueError, match='(?i)entrypoint|interpolator|sampler'):
+>           evaluate(tmp_path, prepared, sampler=prepared[-1].alternate)
+
+tests/test_mechanics_patient_comparison_review.py:100: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_mechanics_patient_comparison_review.py:85: in evaluate
+    return c.evaluate_frozen_comparison(root, freeze_binding=frozen,
+scripts/mechanics_patient_comparison.py:440: in evaluate_frozen_comparison
+    validation = lm.reveal_validation_landmarks(payload, source_binding, partition, frozen)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (b'MNI Tag Point File\nVolumes = 2;\nPoints =\n-3.0 -2.0 -1.0 -2.5 -3.0 1.0\n4.0 -2.0 -1.0 4.5 -3.0 1.0\n-3.0 5.0 -1.0...865134aad4886300030892b', source_audit_hash='sha256:00a72b667597df67cf9f25928211874324c5489325d0294b64aac77a0bb538ac'))
+kwargs = {}
+
+    def forbidden(*args, **kwargs):
+>       raise AssertionError('Invalid frozen identity reached validation reveal')
+E       AssertionError: Invalid frozen identity reached validation reveal
+
+tests/test_mechanics_patient_comparison_review.py:92: AssertionError
+____________ test_actual_read_length_is_bounded_when_stat_is_stale _____________
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-445/test_actual_read_length_is_bou0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x106f1de20>
+
+    def test_actual_read_length_is_bounded_when_stat_is_stale(tmp_path, monkeypatch):
+        data = b'x'*128
+        path = tmp_path/'growing-artifact.bin'
+        path.write_bytes(data)
+        original_stat = Path.stat
+        def stale_stat(self, *args, **kwargs):
+            if self == path:
+                return SimpleNamespace(st_size=1)
+            return original_stat(self, *args, **kwargs)
+        monkeypatch.setattr(Path, 'stat', stale_stat)
+>       with pytest.raises(ValueError, match='(?i)bound|size|length'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests/test_mechanics_patient_comparison_review.py:114: Failed
+=========================== short test summary info ============================
+FAILED tests/test_mechanics_patient_comparison_review.py::test_same_source_file_alternative_entrypoint_is_rejected_before_validation
+FAILED tests/test_mechanics_patient_comparison_review.py::test_actual_read_length_is_bounded_when_stat_is_stale
+2 failed, 9 passed in 0.23s

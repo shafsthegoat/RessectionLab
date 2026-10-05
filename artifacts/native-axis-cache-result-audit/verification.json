@@ -1,0 +1,123 @@
+{
+  "actual_audit": {
+    "first_attempt": true,
+    "path": "artifacts/native-axis-cache-result-audit/audit-01.json",
+    "sha256": "757da633f4a1e6edf5939b8f2d1b591249cb33f181306456e79d5e0bee5b6475",
+    "status": "passed"
+  },
+  "file_sha256": {
+    "artifacts/native-axis-v2-result-audit/audit.py": "8390d427f70635549554c3935fb4b77a3027baa39994cb41af2dd443c303b346",
+    "scripts/audit_public_native_capsule_cache.py": "53e763d4ea082b478764bcd9a488e188cf68d9443380fd47778c04949abb4eb8",
+    "tests/test_public_native_cache_artifact_audit.py": "f0d4afed30ecc93ce0531ca6a4eb6a7cc519c1b06be31e157bc5bb9f6e60f0ec"
+  },
+  "limits": [
+    "Fixed trace on one previously studied development case; no whole-learning throughput or general patient-performance inference.",
+    "Process cumulative peak RSS is not isolated cache allocation.",
+    "Nested timers are not additive.",
+    "Raw live masks and function-pointer restoration observations were not persisted; persisted digest reconstructions and source-bound completion inference are clearly distinguished."
+  ],
+  "mask_evidence": "Saved digests were compared with independent source-cell set reconstruction and full exterior flood. Raw engine masks were not persisted; their direct byte equality is a separate frozen-runner observation.",
+  "negative_preview_evidence": "No rejected previews or fallback attempts occurred in this public fixed trace. This result does not add public hard-barrier rejection evidence; separate synthetic cache tests remain separately scoped.",
+  "performance": {
+    "cached_phase_deltas": {
+      "cached_cold": {
+        "bypasses": 0,
+        "calls": 22364,
+        "compute_seconds": 11.731056619086303,
+        "evictions": 16902,
+        "hits": 0,
+        "misses": 22364,
+        "query_seconds": 12.658882041228935
+      },
+      "cached_warm": {
+        "bypasses": 0,
+        "calls": 22364,
+        "compute_seconds": 11.717499764752574,
+        "evictions": 22364,
+        "hits": 0,
+        "misses": 22364,
+        "query_seconds": 12.662573550711386
+      }
+    },
+    "entry_limit": 16384,
+    "inclusive_time_ratios": {
+      "cached_cold": {
+        "reference_after": 0.9464367322471361,
+        "reference_before": 0.9251230836413085
+      },
+      "cached_warm": {
+        "reference_after": 0.9401297822522544,
+        "reference_before": 0.9189581654499116
+      }
+    },
+    "interpretation": "Both cold and warm phases had zero cache hits and were slower than both uncached references. Counters are consistent with eviction churn; no cache-key trace or follow-up capacity experiment was performed.",
+    "payload_limit_bytes": 33554432,
+    "result": "negative",
+    "warm_final_entries": 5462,
+    "warm_final_retained_payload_bytes": 33553224
+  },
+  "restoration_evidence": {
+    "basis": "Frozen runner checks native callable/proposer restoration after each phase and checks unchanged cache calls around four audits before completing. Reference-after saved cache counters are unchanged. No pointer observation or before/after-audit counter values were persisted.",
+    "explicit_runtime_restoration_receipt": false,
+    "source_bound_completion_inference": true
+  },
+  "scientific_checks": {
+    "accepted_preview_records_checked": 66,
+    "cavity_ancestry_recomputed": true,
+    "clinical_deficit_probability": null,
+    "full_canonical_traces_byte_equal": 4,
+    "independent_native_audit_receipts_checked": 4,
+    "masks_per_state": 5,
+    "ordered_inventory_attempt_counts": [
+      26,
+      22,
+      18,
+      0
+    ],
+    "preview_record_scope": "Provenance/current-state/source-cell/microstep-union/accounting and exact four-phase equality. No additional geometric clearance computation for selected or unselected previews. Four saved independent native certificates cover the executed histories.",
+    "source_cell_score": {
+      "cumulative_partial_normal_contact_mm3": 177.0,
+      "nonstop_actions": 3,
+      "normal_removed_mm3": 62.0,
+      "score": 1098.77,
+      "step_rewards": [
+        373.24,
+        364.03000000000003,
+        361.5
+      ],
+      "target_removed_mm3": 1113.0
+    },
+    "source_mask_states_reconstructed": 4,
+    "unique_saved_native_histories": 1
+  },
+  "scope": {
+    "cache_queries_by_auditor": 0,
+    "clinical_use_validated": false,
+    "native_geometry_checks_rerun": 0,
+    "new_gradients": 0,
+    "original_receipts_modified": false,
+    "policy_forwards_by_auditor": 0,
+    "public_episodes_rerun": 0,
+    "source_or_model_changes": false,
+    "timings_here_are_not_a_benchmark": true
+  },
+  "source_scope": {
+    "executed_file_closure_count": 54,
+    "new_runtime_distinct_from_scientific_model_identity": true,
+    "original_v2_inputs_bound": true,
+    "runtime_hash": "sha256:55fe17e6a1e5811f606713e857ee8c3142ae44573f4c30f409aa142d3656c92e",
+    "source_commit": "43857b5a4931a9b4c3909f9c2914833e795b685b"
+  },
+  "status": "passed_artifact_equivalence_audit_negative_performance_result",
+  "test_command": ".venv/bin/python -m pytest -q tests/test_public_native_cache_artifact_audit.py",
+  "test_runs": [
+    {
+      "passed": 32,
+      "seconds": 0.37
+    },
+    {
+      "passed": 34,
+      "seconds": 0.28
+    }
+  ]
+}

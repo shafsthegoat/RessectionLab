@@ -1,0 +1,7 @@
+        imp->SMS = {};
+        imp->SMS.attributes.triangle = SparseUpperTriangle;
+        imp->SMS.columnCount = imp->m_pA->Columns();
+        imp->SMS.rowCount = imp->m_pA->Rows();
+        imp->SMS.rowIndices = imp->m_pA->Indices();
+        imp->SMS.columnStarts = imp->colS;
+        imp->SMS.blockSize = 1;

@@ -1,0 +1,169 @@
+{
+  "version": "resect-case4-patient-mesh-v1",
+  "status": "prepared_not_executed",
+  "scope": "One native Case4 estimated-envelope meshing attempt; no landmarks, material fitting or equilibrium solve. Mask QC and root estimated-domain decision required before execution.",
+  "coordinate_frame": "native Case4 T1 NIfTI RAS, converted mm\u2192m exactly once; no US transform applied",
+  "mask": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-brain-envelope-v1/main_mask.nii.gz",
+    "shape": [
+      256,
+      256,
+      192
+    ],
+    "affine_ras_mm": [
+      [
+        0.0869971364736557,
+        0.007269168272614479,
+        -0.9961820840835571,
+        91.50908660888672
+      ],
+      [
+        -0.9962085485458374,
+        0.0006349085597321391,
+        -0.08699482679367065,
+        142.4852752685547
+      ],
+      [
+        1.0446104425909652e-07,
+        0.9999734163284302,
+        0.007296843454241753,
+        -156.06825256347656
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "source_status": "unmodified SynthStrip main-v1 estimated envelope; inferior/cerebellar coverage limited in reviewed fixed slice; not whole brain or pial truth"
+  },
+  "input_bindings": [
+    {
+      "role": "mask",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-brain-envelope-v1/main_mask.nii.gz",
+      "sha256": "7902cfbcb5fad15144181c06883bac7f4800e842f7ff05a540f56bac4eb38759"
+    },
+    {
+      "role": "metadata",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-baseline-header-qc-v1/header-receipt.json",
+      "sha256": "18d6e6306e38f409a314ba180d7d0a21e9a7ee02677f34a1d1fd28ea1294d692"
+    },
+    {
+      "role": "metadata",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/gmsh-4.15.2-runtime-v1/runtime-receipt.json",
+      "sha256": "705056d13e78f98fda0ab04884c0c6e3b31ead73f88d01b6dcf3bd99d5417137"
+    },
+    {
+      "role": "gmsh_module",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/gmsh-4.15.2/runtime/gmsh.py",
+      "sha256": "f4b0935cebde899750293d87a643090e5ea33c9b18d249267f507db68a0e01c3"
+    },
+    {
+      "role": "gmsh_library",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/gmsh-4.15.2/runtime/lib/libgmsh.4.15.dylib",
+      "sha256": "def0f5c10988a986e5e879b3db9669d8fe016a81e2d994bbaf2b8497c6b8a58a"
+    }
+  ],
+  "package_versions": {
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "scikit-image": "0.26.0",
+    "vtk": "9.7.1",
+    "nibabel": "5.4.2"
+  },
+  "gmsh_runtime": {
+    "version": "4.15.2",
+    "module_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/gmsh-4.15.2/runtime/gmsh.py",
+    "library_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/gmsh-4.15.2/runtime/lib/libgmsh.4.15.dylib",
+    "license_scope": "existing private GPL research utility, no desktop bundling"
+  },
+  "levels": [
+    {
+      "id": "coarse",
+      "target_edge_m": 0.024,
+      "maximum_nodes": 2000,
+      "maximum_elements": 2000
+    },
+    {
+      "id": "medium",
+      "target_edge_m": 0.02,
+      "maximum_nodes": 3000,
+      "maximum_elements": 4000
+    },
+    {
+      "id": "fine",
+      "target_edge_m": 0.016,
+      "maximum_nodes": 4500,
+      "maximum_elements": 6000
+    }
+  ],
+  "caps": {
+    "aggregate_seconds": 180,
+    "process_group_rss_bytes": 3221225472,
+    "numerical_threads": 1,
+    "maximum_generations": 3,
+    "retries": 0,
+    "maximum_native_triangles": 500000,
+    "maximum_discrete_patches": 256
+  },
+  "surface_fidelity": {
+    "maximum_distance_m": 0.002,
+    "cover_radius_m": 0.001,
+    "maximum_samples_per_direction": 4000000,
+    "maximum_relative_volume_error": 0.03,
+    "meaning": "Engineering approximation against the estimated mask isosurface, not anatomical error. Bidirectional nearest-triangle samples plus full triangle-interior covering radius."
+  },
+  "quality": {
+    "midpoint_tolerance_m": 1e-12,
+    "minimum_mean_ratio": 0.05,
+    "maximum_overlap_candidate_pairs": 2000000
+  },
+  "gmsh_options": {
+    "General.NumThreads": 1,
+    "Mesh.MaxNumThreads1D": 1,
+    "Mesh.MaxNumThreads2D": 1,
+    "Mesh.MaxNumThreads3D": 1,
+    "Mesh.Algorithm": 6,
+    "Mesh.Algorithm3D": 1,
+    "Mesh.ElementOrder": 2,
+    "Mesh.SecondOrderLinear": 1,
+    "Mesh.HighOrderOptimize": 0,
+    "Mesh.MeshSizeFromPoints": 0,
+    "Mesh.MeshSizeFromCurvature": 0,
+    "Mesh.MeshSizeExtendFromBoundary": 0,
+    "Mesh.Optimize": 1,
+    "Mesh.OptimizeNetgen": 0,
+    "Mesh.RandomSeed": 1,
+    "Mesh.Binary": 1
+  },
+  "prohibited_operations": [
+    "smoothing",
+    "dilation",
+    "hole filling",
+    "component replacement",
+    "landmark-based refinement or domain adjustment",
+    "baseline-affine substitution",
+    "new solver/backend",
+    "equilibrium solve"
+  ],
+  "skyline_limit": {
+    "fine_unreduced_dofs": 13500,
+    "one_dense_symmetric_value_array_bytes": 729054000,
+    "three_value_arrays_bytes": 2187162000,
+    "remaining_under_3GiB_bytes": 1034063472,
+    "limitation": "Other allocations, profile changes from MPCs and factorization time are unmeasured; this headroom is not a solver success guarantee."
+  },
+  "operator_contract": {
+    "nodes": "float64[N,3],nativeT1RASmeters",
+    "tet10_indices": "int64[E,10],zero-based,FEBio corner+edge12,23,31,14,24,34 order",
+    "geometry": "straight-sided; all true Gmsh midsides retained and checked; no silent tet4 masquerading",
+    "radius_m": 0.005,
+    "limitation": "Coarse geometry may not resolve the fixed5mm operator; independent bounded integration/accuracy checks can reject any level."
+  },
+  "references": [
+    "https://gmsh.info/doc/texinfo/gmsh.html#t13",
+    "https://scikit-image.org/docs/stable/api/skimage.measure.html#skimage.measure.marching_cubes",
+    "https://vtk.org/doc/nightly/html/classvtkImplicitPolyDataDistance.html"
+  ]
+}

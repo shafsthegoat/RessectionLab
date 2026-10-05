@@ -1,0 +1,194 @@
+{
+  "argument_verification": {
+    "accepted_attempts_by_inventory": [
+      26,
+      22,
+      18,
+      0
+    ],
+    "binding_hash": "sha256:60067f4640ce5772357e3bfe24736b43fd88cec2c5afc6e42ec73374cbe109e7",
+    "exact_argument_byte_mismatches": 0,
+    "microsteps_by_inventory": [
+      4406,
+      3722,
+      3054,
+      0
+    ],
+    "ordering_mismatches": 0,
+    "queries": 22364,
+    "queries_by_inventory": [
+      8812,
+      7444,
+      6108,
+      0
+    ]
+  },
+  "audit_seconds_not_a_performance_benchmark": 0.8016490000300109,
+  "auditor_sha256": "25864ebbb03493ea06920a14f16f162c350ef37f7bd8c8a3f4b982a70812ebde",
+  "declaration_content_hash": "sha256:ff027ab3c2cea8b791841c89945a0839817144b80b0b5f8aaf9e6807e4f83af8",
+  "execution_verification": {
+    "execution_sha256": "0bca062cac3e3838e48832cbcb867bdcc48f63f9ad2aa5b435fd3426fb777918",
+    "external_wall_seconds": 1.108213417,
+    "process_peak_rss_bytes": null,
+    "release_sha256": "b728f1e42008944ce30c241890b4a9a732cb2112521419ed07c10b94bec93bd1",
+    "rss_scope": "Cooperative limit checked by completed producer; no numerical peak-RSS measurement was persisted.",
+    "source_archive_sha256": "ed3d7e4e5a9208827cc008d17f7110d7a8be6b3bb886642e9d5811d3b73c66be",
+    "source_commit": "b0f5635e8f77a7d223b25fecb3c47435f372d3fa",
+    "verified_source_file_count": 16
+  },
+  "final_worlds_used": false,
+  "independently_recomputed_statistics": {
+    "distinct_argument_keys": 8812,
+    "entry_capacity_for_all_repeat_accesses_to_hit_without_payload_limit": 8812,
+    "entry_only_lru_unlimited_payload": {
+      "0": {
+        "first": {
+          "entries": 0,
+          "evictions": 0,
+          "hits": 0,
+          "misses": 22364
+        },
+        "repeated_increment": {
+          "evictions": 0,
+          "hits": 0,
+          "misses": 22364
+        }
+      },
+      "1024": {
+        "first": {
+          "entries": 1024,
+          "evictions": 21340,
+          "hits": 0,
+          "misses": 22364
+        },
+        "repeated_increment": {
+          "evictions": 22364,
+          "hits": 0,
+          "misses": 22364
+        }
+      },
+      "16384": {
+        "first": {
+          "entries": 8812,
+          "evictions": 0,
+          "hits": 13552,
+          "misses": 8812
+        },
+        "repeated_increment": {
+          "evictions": 0,
+          "hits": 22364,
+          "misses": 0
+        }
+      },
+      "32768": {
+        "first": {
+          "entries": 8812,
+          "evictions": 0,
+          "hits": 13552,
+          "misses": 8812
+        },
+        "repeated_increment": {
+          "evictions": 0,
+          "hits": 22364,
+          "misses": 0
+        }
+      },
+      "4096": {
+        "first": {
+          "entries": 4096,
+          "evictions": 18268,
+          "hits": 0,
+          "misses": 22364
+        },
+        "repeated_increment": {
+          "evictions": 22364,
+          "hits": 0,
+          "misses": 22364
+        }
+      },
+      "8192": {
+        "first": {
+          "entries": 8192,
+          "evictions": 1304,
+          "hits": 12868,
+          "misses": 9496
+        },
+        "repeated_increment": {
+          "evictions": 3404,
+          "hits": 18960,
+          "misses": 3404
+        }
+      }
+    },
+    "occurrence_frequency_histogram": {
+      "1": 1368,
+      "2": 1336,
+      "3": 6108
+    },
+    "phases": [
+      {
+        "calls": 22364,
+        "compulsory_misses": 8812,
+        "distinct_key_reuse_distance_histogram": {
+          "6107": 684,
+          "6775": 4056,
+          "7443": 3388,
+          "8127": 4740,
+          "8811": 684
+        },
+        "maximum_distinct_key_reuse_distance": 8811,
+        "phase": "first"
+      },
+      {
+        "calls": 22364,
+        "compulsory_misses": 0,
+        "distinct_key_reuse_distance_histogram": {
+          "6107": 1368,
+          "6775": 4056,
+          "6791": 684,
+          "7443": 3388,
+          "7459": 3388,
+          "8127": 5408,
+          "8143": 668,
+          "8811": 3404
+        },
+        "maximum_distinct_key_reuse_distance": 8811,
+        "phase": "repeated"
+      }
+    ],
+    "queries_per_phase": 22364,
+    "within_first_phase_repeat_count": 13552
+  },
+  "limits": [
+    "Full inverse/derived frame bytes were not saved; exact equality concerns variable arguments inside one source-bound invariant frame.",
+    "Full cover payload bytes and byte-weighted reuse remain unknown. Entry-only counts assume unchanged no-bypass admission and are not speed measurements or a capacity recommendation.",
+    "The producer checked wall/RSS cooperatively. Its summary records elapsed analysis time, not an independently measured peak-RSS field; external execution receipts must establish any peak memory claim.",
+    "Original native callable restoration and frame-guard execution are source-bound completed-run observations, not rerun here."
+  ],
+  "no_bypass_condition_verified": true,
+  "output_sha256": {
+    "declaration.json": "28096bde87eca2cac3c2b66590c81905d8729cb7e135ebd0c39563bd4ef18a78",
+    "ordered-query-arguments.json.gz": "534759de882aa54cde6170a689f35d18f61a15e3ce96b690cc9fe56f10517cb5",
+    "status.json": "fc406ddc2ad5d81d51bf6a6dcbe2ede69e2a3189943eacc026e6edb2f707738d",
+    "summary.json": "8e532681554ffe15b7e6712b0958ce1fe9d1f560a33181c7527114245ee56174"
+  },
+  "producer_sha256": "3d4659cadeb33027b2d889bef068591aaa6b10491037e0795224e8d352e4c2ff",
+  "reported_diagnostic_elapsed_seconds": 1.0225189169868827,
+  "scope": "Saved JSON/byte verification and arithmetic only; no producer invocation, native geometry, patient loading, simulator, policy, gradient or RNG draws.",
+  "source_input_sha256": {
+    "artifacts/benchmarks/native-axis-cache-v1/cached_cold/receipt.json": "c4e9614544506ce34e2c6f2f7b3f65198a500f3a51e30974d79710f09696b93a",
+    "artifacts/benchmarks/native-axis-cache-v1/cached_cold/scientific-trace.json.gz": "47dd135c0869179252042325e6b663aa3c77f7e7be81484ce71f03315a264021",
+    "artifacts/benchmarks/native-axis-cache-v1/cached_warm/receipt.json": "53d23e8b7557cbd384bbd9a77ff18abbfd313d706acac82a4bac45e759b12e99",
+    "artifacts/benchmarks/native-axis-cache-v1/cached_warm/scientific-trace.json.gz": "47dd135c0869179252042325e6b663aa3c77f7e7be81484ce71f03315a264021",
+    "artifacts/benchmarks/native-axis-cache-v1/launch-source.json": "c067100c907adba159a66af4ac0dc3816555a0ee4f641447bb4c56d28cbfb60e",
+    "artifacts/benchmarks/native-axis-cache-v1/launcher-status.json": "0f9476caad4825590c5edbf4c4eb55870c2a594b08830d658a3bb5ce13aaa0d6",
+    "artifacts/benchmarks/native-axis-cache-v1/preparation.json": "621b5f0b49fb7dc87e7d8e41312af6f48c0b86176c80e1ce4c20bc24c831a62c",
+    "artifacts/benchmarks/native-axis-cache-v1/reference_after/scientific-trace.json.gz": "47dd135c0869179252042325e6b663aa3c77f7e7be81484ce71f03315a264021",
+    "artifacts/benchmarks/native-axis-cache-v1/reference_before/scientific-trace.json.gz": "47dd135c0869179252042325e6b663aa3c77f7e7be81484ce71f03315a264021",
+    "artifacts/benchmarks/native-axis-cache-v1/result.json": "0e42d6bc19dd1d4d20ee66873fafe3b779cef43294d43120eb7a4d1938f3e3e7",
+    "artifacts/benchmarks/native-axis-cache-v1/worker-status.json": "dfcfcc86a122ac30e4a199acabdd39d45101fb898e0ef91bdc721c294623e3b9"
+  },
+  "source_runtime_content_hash": "sha256:55fe17e6a1e5811f606713e857ee8c3142ae44573f4c30f409aa142d3656c92e",
+  "status": "independent_saved_result_audit_passed",
+  "stress_worlds_used": false
+}

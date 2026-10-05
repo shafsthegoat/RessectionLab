@@ -1,0 +1,24 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_mechanics_hbe_layers_review.py",
+    "--basetemp=build/validation/mechanics-hbe-review-v1-partial"
+  ],
+  "exit_code": 1,
+  "wall_seconds": 0.25048187499999996,
+  "source_before_sha256": {
+    "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "scripts/mechanics_hbe_outputs.py": "cff33021b7215cb26d6d6bb384be3270dc2edeb1ae5eb8af6b269530b860395b",
+    "tests/test_mechanics_hbe_layers_review.py": "6af6adfc6d64651109e9d053cdcda9a4494a59518c6d2276abf8cccbfcb7054d"
+  },
+  "source_after_sha256": {
+    "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "scripts/mechanics_hbe_outputs.py": "cff33021b7215cb26d6d6bb384be3270dc2edeb1ae5eb8af6b269530b860395b",
+    "tests/test_mechanics_hbe_layers_review.py": "6af6adfc6d64651109e9d053cdcda9a4494a59518c6d2276abf8cccbfcb7054d"
+  },
+  "all_tested_files_unchanged": true,
+  "scope": "Constructed curves/text only; no measured data or solver runs."
+}

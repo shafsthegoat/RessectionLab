@@ -1,0 +1,43 @@
+         225419 function calls (225212 primitive calls) in 0.460 seconds
+
+   Ordered by: cumulative time
+   List reduced from 265 to 35 due to restriction <35>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.460    0.460 profile_native.py:50(<lambda>)
+        1    0.000    0.000    0.460    0.460 native_simulation.py:149(reset)
+        2    0.000    0.000    0.456    0.228 native_simulation.py:235(observation)
+        2    0.008    0.004    0.454    0.227 simulation.py:378(observation)
+        1    0.001    0.001    0.448    0.448 simulation.py:224(reset)
+        6    0.000    0.000    0.435    0.072 native_simulation.py:194(proposed_actions)
+        8    0.011    0.001    0.434    0.054 native_resection.py:320(preview_stroke)
+      586    0.024    0.000    0.329    0.001 geometry.py:357(capsule_voxel_indices)
+      586    0.151    0.000    0.223    0.000 geometry.py:319(_segment_cell_distances)
+    10575    0.064    0.000    0.064    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+     2360    0.002    0.000    0.045    0.000 fromnumeric.py:66(_wrapreduction)
+      871    0.023    0.000    0.043    0.000 geometry.py:285(point_segment_distances)
+     1758    0.001    0.000    0.042    0.000 fromnumeric.py:2342(sum)
+        8    0.001    0.000    0.030    0.004 native_resection.py:345(finish)
+      648    0.000    0.000    0.024    0.000 {method 'sum' of 'numpy.ndarray' objects}
+      285    0.005    0.000    0.024    0.000 native_resection.py:210(contained_capsule_cells)
+      648    0.000    0.000    0.024    0.000 _methods.py:47(_sum)
+      602    0.022    0.000    0.022    0.000 {method 'sort' of 'numpy.ndarray' objects}
+        8    0.000    0.000    0.019    0.002 geometry.py:511(check_motion)
+       16    0.000    0.000    0.018    0.001 _arraysetops_impl.py:145(unique)
+      586    0.003    0.000    0.018    0.000 _function_base_impl.py:5062(meshgrid)
+       16    0.000    0.000    0.017    0.001 _arraysetops_impl.py:350(_unique1d)
+        8    0.000    0.000    0.015    0.002 native_resection.py:59(_unique)
+       16    0.001    0.000    0.015    0.001 geometry.py:411(_check_envelope)
+        4    0.001    0.000    0.014    0.004 native_resection.py:431(_result_digest)
+      108    0.007    0.000    0.013    0.000 native_resection.py:253(_extend_connected_free)
+     2067    0.002    0.000    0.013    0.000 fromnumeric.py:2245(clip)
+      284    0.007    0.000    0.013    0.000 native_resection.py:228(_connected_surface_cells)
+     1557    0.005    0.000    0.013    0.000 _linalg.py:2598(norm)
+      586    0.002    0.000    0.012    0.000 _stride_tricks_impl.py:588(broadcast_arrays)
+     2099    0.001    0.000    0.011    0.000 fromnumeric.py:48(_wrapfunc)
+     2943    0.010    0.000    0.010    0.000 {method 'copy' of 'numpy.ndarray' objects}
+     2067    0.001    0.000    0.010    0.000 {method 'clip' of 'numpy.ndarray' objects}
+     1758    0.006    0.000    0.009    0.000 _stride_tricks_impl.py:447(_broadcast_to)
+     2067    0.009    0.000    0.009    0.000 _methods.py:96(_clip)
+
+

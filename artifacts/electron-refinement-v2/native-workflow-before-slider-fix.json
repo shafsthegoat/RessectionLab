@@ -1,0 +1,91 @@
+{
+  "tested_utc": "2026-10-04T09:16:40.179138+00:00",
+  "status": "scientific_native_workflow_passed_replay_accessibility_fix_pending",
+  "scope": "research_selection_only",
+  "python_source_digest": "377284f6d80164a86ca69d6b8f9f606e4015266b8c5285070d12d1d147b2ef62",
+  "renderer_source_digest": "d23af1adaddde49c1d2708d1ead9c6a92e8b2fce503aaed6b9d36a3f54147bc6",
+  "bundle_id": "org.ressectionlab.electron",
+  "checks": {
+    "original_search_count": 54,
+    "original_route_no_legal_actions_training_disabled": true,
+    "explicit_new_native_alternatives": 2,
+    "new_native_wide_ready_actions": 1,
+    "policy_gradient_updates": 32,
+    "actor_parameters_changed": true,
+    "source_view_restored": true,
+    "native_export_dialog": true,
+    "native_cancel_after_observed_updates": 4,
+    "cancelled_checkpoint_in_history": true
+  },
+  "completed_run_id": "e72e0a73-d190-438c-8701-a93e39312283",
+  "completed_config": {
+    "access": {
+      "center_mm": [
+        -181.5,
+        85.0,
+        105.0
+      ],
+      "normal_inward": [
+        1.0,
+        0.0,
+        -0.0
+      ],
+      "radius_mm": 6.0,
+      "window_id": "native_hypothetical_nearest_envelope_axis"
+    },
+    "budgetSeconds": 30.0,
+    "coordinateFrame": "RAS+",
+    "optimizationChoiceScope": "STOP_or_declared_native_stroke",
+    "routeId": "native-axis-e14f440173a8b13f",
+    "routePlanningModelHash": "647009ecfc8e0cff96dbc44923b93ea90ac1296ad1365c4fc5c3ac48690ef505",
+    "scope": "exact_selected_research_route",
+    "seed": 11,
+    "selectedEntryMm": [
+      -181.5,
+      85.0,
+      105.0
+    ],
+    "selectedTargetMm": [
+      -162.0,
+      85.0,
+      105.0
+    ],
+    "toolIds": [
+      "native-wide-aspiration"
+    ]
+  },
+  "selected_return_initial": 0.0,
+  "selected_return_final": 171.58,
+  "modeled_volumes_mm3": {
+    "target": 174,
+    "normal": 11,
+    "residual_target": 41745
+  },
+  "cancelled_run_id": "38e17ad4-0d07-4973-8642-8669fab84cf6",
+  "cancelled_status": "cancelled",
+  "cancelled_run_path": "/Users/sayemkamal/Library/Application Support/ressectionlab-desktop/research-runs/38e17ad4-0d07-4973-8642-8669fab84cf6",
+  "native_export": "outputs/cases/electron-native-wide-candidate.json",
+  "native_export_sha256": "22c00c64f877d3407399ea8e9dbfc765e39388fef6a074edfd5de1ef6511fea0",
+  "known_ui_issue": "AX slider decrease updates requested step label before certified replay; source fix pending",
+  "clinical_deficit_probability": null,
+  "final_evaluation": false,
+  "saved_workspace": {
+    "path": "outputs/cases/electron-native-v2-workspace.ressectionlab",
+    "candidate_count": 56,
+    "selected_route_ids": [
+      "native-axis-e14f440173a8b13f",
+      "search-7c5a737c2a8f76ed"
+    ],
+    "case_semantic_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "sha256": "2bce0048a3b1e2a6eeb7014c2583d37ff12a7a183b161080586dca2de4ea21ad"
+  },
+  "cancelled_checkpoint": {
+    "checkpointSha256": "3eb65dfadcc36b9461d0a1bde39c7c0437b421c000165935e94f1617acec7fb3",
+    "contractSha256": "90c57fc6ef846c56c72dec5b9505fa399d1abad9048c7e76481803077cbadea6",
+    "nativeRequestSha256": "6a770edea3d1db0933ace826e6cde78fd3faa496154f90dfc152136518cc04dc",
+    "integrity": "acea864a34bff98cf05bc129dd04f6dcf57b85cbaa388572bfab373e5a83350e",
+    "status": "cancelled",
+    "gradient_steps": 6,
+    "actor_parameters_changed": true
+  }
+}

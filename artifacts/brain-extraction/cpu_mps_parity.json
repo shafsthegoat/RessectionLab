@@ -1,0 +1,20 @@
+{
+  "cpu_seconds": 1.435614874935709,
+  "mps_seconds": 1.046940291998908,
+  "shape": [
+    1,
+    1,
+    64,
+    64,
+    64
+  ],
+  "finite": true,
+  "maximum_absolute_sdt_difference_mm": 6.4373016357421875e-06,
+  "median_absolute_sdt_difference_mm": 9.5367431640625e-07,
+  "rms_sdt_difference_mm": 1.3495385928763426e-06,
+  "mask_agreement_at_1mm": 1.0,
+  "input": "seed2026 uniform random64cubed; numerical parity only, not anatomy validation",
+  "torch_version": "2.14.1",
+  "numpy_version": "2.2.6",
+  "cpu_threads": 2
+}

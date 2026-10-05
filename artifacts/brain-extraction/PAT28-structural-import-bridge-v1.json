@@ -1,0 +1,28 @@
+{
+  "case_hash": "sha256:69e57559a86b00a55c3b8b5e2b5e8cc7312d0170af6ba4496a951b76e7213228",
+  "planning_hash": "sha256:8a2421f977f0639ee7560df445d2b81fdade3cc5b7bcdd747327b9eeef66dc70",
+  "original_planning_hash": "sha256:8a2421f977f0639ee7560df445d2b81fdade3cc5b7bcdd747327b9eeef66dc70",
+  "unreviewed_proposals": 2,
+  "brain_mask": null,
+  "cortical_access_permitted": false,
+  "source_and_model_hashes": [
+    {
+      "source": "sha256:70c5c1e4e28143318d2820788343e239efdc205344204f8f50497b81281b32c6",
+      "model": "sha256:62bf01137c45b5f0cc04d59dbaed5b9ac138b3f25b766c062a7c1a0d696ecb28",
+      "run": "sha256:f59f40dea25424d41407bfb018fd0ff0c7f81c9fca81acadc1bcd1ce2b64100e"
+    },
+    {
+      "source": "sha256:70c5c1e4e28143318d2820788343e239efdc205344204f8f50497b81281b32c6",
+      "model": "sha256:37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33",
+      "run": "sha256:f59f40dea25424d41407bfb018fd0ff0c7f81c9fca81acadc1bcd1ce2b64100e"
+    }
+  ],
+  "duration_seconds": {
+    "load": 0.28029983292799443,
+    "nocsf": 0.5102892499417067,
+    "main": 0.5821293749613687,
+    "save": 4.213516084011644,
+    "reopen": 0.33121208392549306
+  },
+  "saved_reopened_case_hash_unchanged": true
+}

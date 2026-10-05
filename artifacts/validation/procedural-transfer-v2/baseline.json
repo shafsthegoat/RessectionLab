@@ -1,0 +1,29 @@
+{
+  "git_archive_revision": "98c674218567b23de713a4b79373c3bab1625b6c",
+  "isolated_directory": "/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/ressectionlab-procedural-validation-v2-6ulpqs56",
+  "overlay_sha256": {
+    "src/resectionlab/learning.py": "2056cb4b9ffde0f592aaf61842c1744a6924df7ecf792240bfcc6f712eab4603",
+    "src/resectionlab/population_learning.py": "49899618825d08b50016f9b34f389b50ce67f6a3aa79a8f339665523e3ae8de2",
+    "src/resectionlab/procedural_learning.py": "ece3c5dfd2e32fd54f125dd2c8ca776e156f489fe37a90109e0740bd78f57606",
+    "scripts/run_procedural_transfer.py": "b88d8a680c8b4ffe79c4b98ed3e584367908cfcfc8bac1721787c1663dc8d1fe",
+    "tests/test_procedural_learning.py": "75a1ee5460b7d00ee1e54037d44d08209049c1634a4749c79e663e8ef0d92167",
+    "tests/test_procedural_transfer_runner.py": "a5231cb5b74a0b4ae5fa858d650bc80cedae0326b38142401a1f140ccece3ce0",
+    "tests/test_procedural_native_transfer_adversarial.py": "3b9e1cf1bc8b829c5293b0d2aab212265f5531938c374f905237086019140179",
+    "tests/test_procedural_comparison_review.py": "66c3e9c03c1fe23a7690ec6790ddb615b4b50cf579783079d662389846a05dfe",
+    "EXPERIMENT_PROTOCOL.md": "b361644ba587e77368c0aec8d9c6247e63762ca9e39e445b5dc7ff304a0172ed"
+  },
+  "bundle_sha256": "11cca797ad0216e5c8d940e7354f2dd23fb6954dc2aed7e4b0423f6adc6cefcf",
+  "registered_training_executed": false,
+  "pretest_revisions": [
+    {
+      "path": "scripts/run_procedural_transfer.py",
+      "previous_sha256": "0b4b9cb2cfb6d3417cb7a039ce7d066ce282b82092cdf17f33c198534a78cdc2",
+      "sha256": "b88d8a680c8b4ffe79c4b98ed3e584367908cfcfc8bac1721787c1663dc8d1fe"
+    },
+    {
+      "path": "tests/test_procedural_transfer_runner.py",
+      "previous_sha256": "b5f9be2d5691e26586cba053c5c3739f3f3ca1c2a3caecf0c1b62d06c6c2bb90",
+      "sha256": "a5231cb5b74a0b4ae5fa858d650bc80cedae0326b38142401a1f140ccece3ce0"
+    }
+  ]
+}

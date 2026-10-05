@@ -1,0 +1,109 @@
+{
+  "actor_parameters_changed": true,
+  "algorithm": "masked_reinforce_state_value_v2",
+  "candidate_extraction_seconds": 1.0434695000294596,
+  "complete_arm_seconds_before_independent_audit": 33.111208457965404,
+  "decision_model_hash": "sha256:dd81bd59566ead4e42916c8ede3d48d5615837e523d23d359b268d9a90f63f0b",
+  "elapsed_seconds": 30.076676166034304,
+  "execution_context_after": {
+    "cpu_count": 10,
+    "load_average_1_5_15_minutes": [
+      1.6953125,
+      1.7177734375,
+      1.87744140625
+    ],
+    "process_peak_rss_bytes": 2762424320,
+    "recorded_at": "2026-10-04T11:24:04.685538+00:00"
+  },
+  "execution_context_before": {
+    "cpu_count": 10,
+    "load_average_1_5_15_minutes": [
+      1.8232421875,
+      1.7421875,
+      1.89208984375
+    ],
+    "process_peak_rss_bytes": 2762424320,
+    "recorded_at": "2026-10-04T11:23:34.558126+00:00"
+  },
+  "final_checkpoint_export_seconds": 0.0019055409356951714,
+  "gradient_steps": 15,
+  "incomplete_selection_seconds": 0.0,
+  "initial_actor_hash": "sha256:4c16df6644e124b34c9a4d6e2f507b22de0ae4d83f1eec8de07ddd96ce0cedcc",
+  "initial_checkpoint_hash": "sha256:110823e726e31fabdc4168f019dc4bf581ae4de8c1298e33ef9e48ea812f7bf1",
+  "initial_policy_diagnostics": {
+    "action_ids": [
+      "STOP",
+      "NATIVE:native-fine-aspiration:0",
+      "NATIVE:native-wide-aspiration:0",
+      "NATIVE:native-fine-aspiration:3",
+      "NATIVE:native-wide-aspiration:3"
+    ],
+    "action_probabilities": [
+      0.21898029744625092,
+      0.18998153507709503,
+      0.20057933032512665,
+      0.1900276243686676,
+      0.20043125748634338
+    ],
+    "actor_preactivation_max": 0.5937198400497437,
+    "actor_preactivation_min": -0.38502436876296997,
+    "actor_tanh_fraction_abs_above_0_95": 0.0,
+    "actor_tanh_max": 0.5325656533241272,
+    "actor_tanh_min": -0.36706286668777466,
+    "critic_physical_value": 0.20000417530536652,
+    "diagnostic_scope": "initial permitted optimization state; no transitions or gradients",
+    "entropy_nats": 1.6080551147460938
+  },
+  "initial_selection_return": 0.0,
+  "initial_selection_seconds": 0.2241360420593992,
+  "initial_trainable_parameter_hash": "sha256:df38b5264d3ee1df4f133ea9e01d5d44e6d4fe896106e3696950fb9e4c19e215",
+  "initialization_seconds": 0.04674320900812745,
+  "input_profile": "FEATURE_UNITS",
+  "input_profile_hash": "sha256:ae7e392794857e72d3cbd06dd7106dd30bcf557e8a91fe9261bf14d6481cc74b",
+  "later_and_partial_selection_seconds": 11.364402583800256,
+  "latest_actor_hash": "sha256:becbe833f8e81550fbd8eb386ab1dfdf9e8e2feac89a9ac52d6aa096a0c6a4f3",
+  "latest_checkpoint_hash": "sha256:a6333918b3b14de4b789ce7d2935e143a1c6d98aeae942f6f719a452f511620d",
+  "learner_wall_budget_overshoot_seconds": 0.0766761660343036,
+  "operation_id": "scratch:FEATURE_UNITS:47",
+  "optimization_and_bookkeeping_seconds": 18.488137540174648,
+  "optimization_environment_steps": 75,
+  "optimizer_mode": "PATIENT_SCRATCH_RL",
+  "output_dir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/procedural-native-feature-units-v1/study/feature_units-scratch-47",
+  "phase": "scratch",
+  "post_budget_checkpoint_and_reporting_residual_seconds": 0.0035047080600634217,
+  "post_budget_residual_scope": "full trainer call minus its learner and initialization clocks; reporting/checkpoint overhead, not isolated export latency",
+  "preparation_seconds": 1.9400468750391155,
+  "seed": 47,
+  "selected_checkpoint_hash": "sha256:cc383b516f1f03c1d81715091dd665343ad8d8681f32cc6b7a3aace1264c0c2b",
+  "selected_is_initial": false,
+  "selected_policy_diagnostics": {
+    "action_ids": [
+      "STOP",
+      "NATIVE:native-fine-aspiration:0",
+      "NATIVE:native-wide-aspiration:0",
+      "NATIVE:native-fine-aspiration:3",
+      "NATIVE:native-wide-aspiration:3"
+    ],
+    "action_probabilities": [
+      0.19767236709594727,
+      0.19235321879386902,
+      0.20910952985286713,
+      0.19225867092609406,
+      0.20860616862773895
+    ],
+    "actor_preactivation_max": 0.6221046447753906,
+    "actor_preactivation_min": -0.4143926203250885,
+    "actor_tanh_fraction_abs_above_0_95": 0.0,
+    "actor_tanh_max": 0.5525916814804077,
+    "actor_tanh_min": -0.39219602942466736,
+    "critic_physical_value": 0.2981012165546417,
+    "diagnostic_scope": "initial permitted optimization state; no transitions or gradients",
+    "entropy_nats": 1.6087374687194824
+  },
+  "selected_selection_return": 245.24,
+  "selection_environment_steps": 40,
+  "selection_seconds": 11.588538625859655,
+  "shared_checkpoint_hash": null,
+  "status": "wall_time_budget",
+  "trainer_call_seconds": 30.126924083102494
+}

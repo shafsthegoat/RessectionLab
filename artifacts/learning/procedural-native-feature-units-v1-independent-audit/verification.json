@@ -1,0 +1,11 @@
+{
+  "recorded_at_utc": "2026-10-04T11:30:15.637777+00:00",
+  "command": ".venv/bin/python -m pytest -q tests/test_feature_units_receipt_audit.py",
+  "passed": 17,
+  "elapsed_seconds": 0.14,
+  "auditor_sha256": "cc736200973f9e7770ddef7549037a113e0d35c7949262d9043f7a5f901f8ec3",
+  "test_sha256": "488da73d8ff18944508c6b53e650b0b2d66686625c03014b0f8a184d11d61a76",
+  "scope": "fabricated receipts and three-cell source accounting; no registered training or final/stress worlds",
+  "actual_audit_receipt": "audit-01.json",
+  "actual_audit_sha256": "0150f6de4ba36648dd9c9e93dc31e8c2f76d95ebd8ce5a1b2ab965b8a8ddf461"
+}

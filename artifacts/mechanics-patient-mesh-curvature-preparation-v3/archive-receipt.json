@@ -1,0 +1,82 @@
+{
+  "status": "verified_readonly_archive_no_execution",
+  "source_commit": "b8de4416e777b11d31f1b75adbf164522a92eaa3",
+  "git_archive_commit_id": "b8de4416e777b11d31f1b75adbf164522a92eaa3",
+  "source_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source",
+  "archive": {
+    "path": "build/validation/resect-case4-patient-mesh-curvature-v3/source-b8de441.tar",
+    "sha256": "209e3fe645557656bb5364f90b68c45befa42e55c8b27a9ac3e509d4ddab73c6",
+    "bytes": 133120,
+    "mode": "0444"
+  },
+  "member_count": 10,
+  "members": {
+    "artifacts/febio-runtime-investigation-v1/prospective-runtime.json": {
+      "sha256": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48",
+      "bytes": 10221,
+      "git_object_equal": true,
+      "mode": "0444"
+    },
+    "manifests/experiments/resect-case4-patient-mesh-curvature-v3.json": {
+      "sha256": "4aa5c95f22ccfe89ab49c376a3437f8d1f7184004481f1d4d6404e978510da8d",
+      "bytes": 5362,
+      "git_object_equal": true,
+      "mode": "0444"
+    },
+    "manifests/experiments/resect-case4-patient-mesh-graded-v2.json": {
+      "sha256": "ff27037c4141c5da99266da0c92efd5f6a673f5eb0bba6ac3032e916ba5db54e",
+      "bytes": 4044,
+      "git_object_equal": true,
+      "mode": "0444"
+    },
+    "manifests/experiments/resect-case4-patient-mesh-v1.json": {
+      "sha256": "b6b3fd278df85fb0ea89c72dcff37cc5f229644602f5288c81e8ce6e7653173c",
+      "bytes": 6384,
+      "git_object_equal": true,
+      "mode": "0444"
+    },
+    "scripts/febio_runtime.py": {
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+      "bytes": 24801,
+      "git_object_equal": true,
+      "mode": "0444"
+    },
+    "scripts/mechanics_patient_mesh.py": {
+      "sha256": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+      "bytes": 31603,
+      "git_object_equal": true,
+      "mode": "0444"
+    },
+    "scripts/mechanics_patient_mesh_candidate.py": {
+      "sha256": "e1d45b6371bc64baaf6cacbc6f98926728dcf7699c0dffb00bea67df167edc4c",
+      "bytes": 14207,
+      "git_object_equal": true,
+      "mode": "0444"
+    },
+    "scripts/mechanics_patient_mesh_candidate_run.py": {
+      "sha256": "cfee357faf585f78afccf812d06c00de9022494e8ed4d82ef3fa68a97eaa38cb",
+      "bytes": 17418,
+      "git_object_equal": true,
+      "mode": "0444"
+    },
+    "scripts/mechanics_patient_mesh_curvature.py": {
+      "sha256": "6b5aff2ee96be527f9824109e19522aa31b004c4a5a049f077cc1179e822af79",
+      "bytes": 5046,
+      "git_object_equal": true,
+      "mode": "0444"
+    },
+    "scripts/mechanics_patient_mesh_curvature_run.py": {
+      "sha256": "90399dcd4b863edd3b28d57173603befceb9f4c37c2571c30b2cd89c33138468",
+      "bytes": 1623,
+      "git_object_equal": true,
+      "mode": "0444"
+    }
+  },
+  "root_directory_mode": "0555",
+  "release_draft_sha256": "f3df76a8f5fab8b8ab153300ff99255d32e590206f2b1b9b8bb43172d973c985",
+  "authorized": false,
+  "patient_array_reads": 0,
+  "native_calls": 0,
+  "solver_calls": 0,
+  "write_protection_scope": "Filesystem write bits removed; this is a local readonly snapshot, not an immutable-security boundary against its owner."
+}

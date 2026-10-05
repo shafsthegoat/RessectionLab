@@ -1,0 +1,93 @@
+........................................................................ [  7%]
+........................................................................ [ 15%]
+........................................................................ [ 23%]
+........................................................................ [ 31%]
+........................................................................ [ 39%]
+........................................................................ [ 47%]
+........................................................................ [ 55%]
+........................................................................ [ 62%]
+........................................................................ [ 70%]
+........................................................................ [ 78%]
+.......................................F................................ [ 86%]
+........................................................................ [ 94%]
+...................................................                      [100%]
+=================================== FAILURES ===================================
+________ test_all_arm_orchestration_uses_explicit_nonpatient_test_scope ________
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-236/test_all_arm_orchestration_use0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x120bd9730>
+
+    def test_all_arm_orchestration_uses_explicit_nonpatient_test_scope(tmp_path, monkeypatch):
+        """Exercise real trainers/audits on tiny geometry, never the registered case.
+    
+        Pytest-only validators substitute this fixture for the fixed study. No
+        production flag or checkpoint accepts these substitutions on a patient.
+        """
+        from dataclasses import asdict
+        from resectionlab.learning import TrainingConfig
+        from resectionlab.procedural_learning import (TEST_SCOPE, make_procedural_test_target,
+            make_native_procedural_fixture, train_procedural_native_policy)
+        target, factory = make_procedural_test_target()
+        members = make_native_procedural_fixture(target)
+        config = TrainingConfig(hidden_features=16, max_gradient_steps=4, max_environment_steps=64,
+            max_wall_seconds=15, max_episode_steps=4, episodes_per_update=2, checkpoint_interval=2)
+        shared = train_procedural_native_policy(members, excluded_targets=(target,), config=config,
+                                                output_dir=tmp_path / "pretraining")
+        assert shared["scope"] == TEST_SCOPE
+        base = factory()
+        case = SimpleNamespace(mri=base.native_config.tissue_mask, affine=base.native_config.affine,
+                              frame="RAS+", semantic_hash=base.case_hash)
+        panels = generate_partitions(base.case_hash, base.config.world_generator, 20261004,
+            optimization=3, selection=2, final_evaluation=3, stress=2, planning_hash=target.planning_hash)
+        declaration = runner.load_declaration(ROOT / runner.DECLARATION_PATH)
+        settings = asdict(config)
+        settings.pop("seed")
+        settings.update(max_gradient_steps=1, max_environment_steps=16, checkpoint_interval=1)
+        declaration["budgets"]["online_scratch_and_adapted_each_seed"] = settings
+        declaration["budgets"]["search"] = {"beam_width": 2, "max_expansions": 16, "max_wall_seconds": 15}
+        monkeypatch.setattr(runner, "SCOPE", TEST_SCOPE)
+        monkeypatch.setattr(runner, "assert_declaration", lambda value: None)
+        monkeypatch.setattr(runner, "assert_declared_sources", lambda value: None)
+        monkeypatch.setattr(runner, "assert_declared_target", lambda *args: panels)
+        output = tmp_path / "comparison"
+>       result = runner.run_target_comparison(base, case, target, Path(shared["checkpoint_path"]), output, declaration)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_procedural_transfer_runner.py:220: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/run_procedural_transfer.py:225: in run_target_comparison
+    preserve_declaration_inputs(declaration, output / "source-snapshot")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+declaration = {'schema_version': 1, 'study_id': 'procedural-native-to-ucsf-v1', 'declared_at_utc': '2026-10-04T09:19:25.953902+00:00', 'status': 'declared_not_executed', ...}
+directory = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-236/test_all_arm_orchestration_use0/comparison/source-snapshot')
+root = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/integrated-axis-v1/100865f037b37708f4f0d0d5a48950de22ba4e5f/source')
+
+    def preserve_declaration_inputs(declaration: dict[str, Any], directory: Path,
+                                     root: Path = ROOT) -> None:
+        """Keep non-code provenance needed by the narrow checkpoint validator."""
+        names = (str(DECLARATION_PATH), *(name for name in declaration["source_hashes_at_declaration"]
+                                        if not name.startswith("src/")))
+        for name in names:
+            destination = directory / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            destination.write_bytes((root / name).read_bytes())
+        load_declaration(directory / DECLARATION_PATH)
+        for name in names[1:]:
+            if hashlib.sha256((directory / name).read_bytes()).hexdigest() != declaration["source_hashes_at_declaration"][name]:
+>               raise ValueError(f"Declared input changed while preserving it: {name}")
+E               ValueError: Declared input changed while preserving it: manifests/cohort_registry.json
+
+scripts/run_procedural_transfer.py:161: ValueError
+=============================== warnings summary ===============================
+tests/test_diffusion.py::test_probabilistic_crop_uses_bounded_reproducible_native_world_geometry
+tests/test_diffusion.py::test_probabilistic_crop_uses_bounded_reproducible_native_world_geometry
+tests/test_diffusion.py::test_probabilistic_crop_uses_bounded_reproducible_native_world_geometry
+tests/test_diffusion.py::test_probabilistic_crop_uses_bounded_reproducible_native_world_geometry
+  /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/dipy/testing/decorators.py:192: PendingDeprecationWarning: The legacy descoteaux07 SH basis uses absolute values for negative harmonic phase factors. It is outdated and will be deprecated in a future DIPY release. Consider using the new descoteaux07 basis by settingthe `legacy` parameter to `False`.
+    return func(*args, **kwargs)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_procedural_transfer_runner.py::test_all_arm_orchestration_uses_explicit_nonpatient_test_scope
+1 failed, 914 passed, 4 warnings in 171.74s (0:02:51)

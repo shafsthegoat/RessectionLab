@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "status": "running",
+  "probe_number": 1,
+  "argv": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-S",
+    "-B",
+    "-c",
+    "\nimport hashlib,importlib.util,json,pathlib,resource,sys,time\nstarted=time.monotonic();resource.setrlimit(resource.RLIMIT_CPU,(12,12))\ninfo=json.loads(pathlib.Path(sys.argv[1]).read_text());release=json.loads(pathlib.Path(sys.argv[2]).read_text())\nmodule_path=pathlib.Path(info['module']['path']);library_path=pathlib.Path(info['library']['path'])\nfor key in ('module','library'):\n    with pathlib.Path(info[key]['path']).open('rb') as handle:assert hashlib.file_digest(handle,'sha256').hexdigest()==info[key]['sha256']\nassert not (module_path.parent/library_path.name).exists()\nassert library_path==module_path.parent/'lib'/library_path.name\ninterpreter=pathlib.Path(sys.executable).resolve()\nwith interpreter.open('rb') as handle:assert hashlib.file_digest(handle,'sha256').hexdigest()==release['interpreter_sha256']\nassert 'gmsh' not in sys.modules\nspec=importlib.util.spec_from_file_location('ressectionlab_private_gmsh_4_15_2',module_path)\ngmsh=importlib.util.module_from_spec(spec);spec.loader.exec_module(gmsh)\nassert pathlib.Path(gmsh.__file__).resolve()==module_path.resolve()\nassert pathlib.Path(gmsh.lib._name).resolve()==library_path.resolve()\nassert not gmsh.use_numpy\nassert gmsh.__version__=='4.15.2'\nassert gmsh.isInitialized()==0\ngmsh.initialize(['gmsh-private-version-probe','-nt','1'],readConfigFiles=False,run=False,interruptible=False)\ntry:\n    gmsh.option.setNumber('General.NumThreads',1)\n    actual_version=gmsh.option.getString('General.Version')\n    actual_threads=gmsh.option.getNumber('General.NumThreads')\n    assert actual_version=='4.15.2' and actual_threads==1\nfinally:gmsh.finalize()\nassert gmsh.isInitialized()==0\nprint(json.dumps({'status':'passed','api_version':gmsh.__version__,'runtime_version':actual_version,'module_path':gmsh.__file__,'library_path':gmsh.lib._name,'numpy_used':gmsh.use_numpy,'threads_option':actual_threads,'read_config_files_argument':False,'run_argument':False,'mesh_generation':False,'geometry_input':False,'patient_or_curve_input':False,'interpreter':str(interpreter),'interpreter_version':sys.version,'sys_path':sys.path,'elapsed_seconds':time.monotonic()-started,'self_peak_rss_bytes_macos':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,'finalized':True}))\n",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/gmsh-4.15.2-runtime-v1/extraction-receipt.json",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/gmsh-4.15.2-runtime-v1/root-release.json"
+  ],
+  "wall_seconds": 15,
+  "rss_cap_bytes": 1073741824,
+  "numerical_threads": 1,
+  "source_supervision_sha256": "271667258961d604c7523986fc14fe4f51b09417ea78e0c3adcd9bd04648bd15",
+  "probe_driver_sha256": "f58c1cb305cece881a6910227b9afc01808d3b8efa43afbbd69b6c553d34ba57",
+  "created_at": "2026-10-04T19:46:54.671816+00:00",
+  "extraction_receipt_sha256": "9eead2310cbda5d8dc1c7add487e5677cabe32000f00863a265cb638e6778201"
+}

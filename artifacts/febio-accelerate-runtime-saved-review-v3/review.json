@@ -1,0 +1,116 @@
+{
+  "audit_source_sha256": "4422cc59dafa197448d2e979222a2a34734785d63c065043ccc97ac117d81f50",
+  "complete_identity_equals_accepted_candidate_publication": true,
+  "elapsed_seconds": 2.390418416936882,
+  "executable_or_solver_or_model_launched": false,
+  "initial_review_assertion_correction": "First audit incorrectly required one shared RPATH order. Actual per-file order matches saved commands; allowed-set contract plus actual ordered resolution is checked. Initial script/failure retained.",
+  "installed_macho": [
+    {
+      "architecture": "arm64",
+      "path": "install/bin/febio4",
+      "sha256": "d7d4855d1d541a6407f22efd4381e23d7057cc49ec726144f06599aa5184f7b6",
+      "static_load_commands_match_saved": true
+    },
+    {
+      "architecture": "arm64",
+      "path": "install/lib/libfeamr.dylib",
+      "sha256": "7328649aa6a1e21359e9b470464306970b4bc475bab6a176ae769d0455aa1811",
+      "static_load_commands_match_saved": true
+    },
+    {
+      "architecture": "arm64",
+      "path": "install/lib/libfebiofluid.dylib",
+      "sha256": "c64d397056fcf024e1d2e10ba7872e98590a440d406062d7b66a49e90b88bc7f",
+      "static_load_commands_match_saved": true
+    },
+    {
+      "architecture": "arm64",
+      "path": "install/lib/libfebiolib.dylib",
+      "sha256": "c44341895c567529c6917fa51ed4d0cfc6a826aebbe02ff410f4f9b89455d69d",
+      "static_load_commands_match_saved": true
+    },
+    {
+      "architecture": "arm64",
+      "path": "install/lib/libfebiomech.dylib",
+      "sha256": "a035e3e975863fa8e35629d9348f885c6e38eba4aa1ef823af014e1f0af9974f",
+      "static_load_commands_match_saved": true
+    },
+    {
+      "architecture": "arm64",
+      "path": "install/lib/libfebiomix.dylib",
+      "sha256": "69dd24a13c299b5f8eb66a9d4e5348579815dea1b49f3a6494a647dd1df1f2e8",
+      "static_load_commands_match_saved": true
+    },
+    {
+      "architecture": "arm64",
+      "path": "install/lib/libfebioopt.dylib",
+      "sha256": "9261f2d2d175590bf957759d65b575bdc1fb9598bb7a29ecbf1b89e2a4268da0",
+      "static_load_commands_match_saved": true
+    },
+    {
+      "architecture": "arm64",
+      "path": "install/lib/libfebioplot.dylib",
+      "sha256": "4689bebeefb692df58449bf17e04ad51c20c9022ba05954d3d21831499ea79d0",
+      "static_load_commands_match_saved": true
+    },
+    {
+      "architecture": "arm64",
+      "path": "install/lib/libfebiorve.dylib",
+      "sha256": "3e6ab78be3b49d7a7e6c369662006f9eb61aad3658da4190f8ff486e38ad6711",
+      "static_load_commands_match_saved": true
+    },
+    {
+      "architecture": "arm64",
+      "path": "install/lib/libfebioxml.dylib",
+      "sha256": "0ae741248991be10ba53a8c914467b7caa725a90b8f5c4512aa570fb48778959",
+      "static_load_commands_match_saved": true
+    },
+    {
+      "architecture": "arm64",
+      "path": "install/lib/libfecore.dylib",
+      "sha256": "fd5b224a47ad55f12b1e1ddd804bcb84d19f6ff63caf5b6d2b4e305337e4deca",
+      "static_load_commands_match_saved": true
+    },
+    {
+      "architecture": "arm64",
+      "path": "install/lib/libfeimglib.dylib",
+      "sha256": "13a35c45ca32da28f72644d7b2b73feaf62dbe24312e91b235a1789365d7e171",
+      "static_load_commands_match_saved": true
+    },
+    {
+      "architecture": "arm64",
+      "path": "install/lib/libnumcore.dylib",
+      "sha256": "2c578d76fe57193494872e18d07469e6d542dbf1951d94b252ac04552514b4a3",
+      "static_load_commands_match_saved": true
+    }
+  ],
+  "limits": [
+    "System install names and static path closure checked; dynamic symbol resolution and executable startup not tested.",
+    "Runtime version4.13.0 is source-declared only; real solver/physics controls remain pending.",
+    "Resource peaks are sampled process-group RSS, not a guarantee about between-sample peaks."
+  ],
+  "new_install_entries_rehashed": 1037,
+  "new_source_entries_rehashed": 2322,
+  "original_acquisition_entries_rehashed": 6164,
+  "original_install_entries_rehashed": 1037,
+  "private_openmp": {
+    "bytes": 844016,
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib/libomp.dylib",
+    "sha256": "38f6afed27bf1d3bd52779547c7ab53aeda9c06c3473263b5cd11ed4f04b41f8"
+  },
+  "runtime_identity_sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57",
+  "stages": {
+    "build": {
+      "acceptance_sha256": "a5ca0b26e65c3240f04d635702fee15518f56634a1f6d0391db811a79ed1efa1",
+      "sampled_rss_bytes": 585285632,
+      "seconds": 436.3417682918953
+    },
+    "configure": {
+      "acceptance_sha256": "3e80ac1e6e932bc279ab19624ef582eb29587e40e3054dbaaa051a31948ede59",
+      "sampled_rss_bytes": 134529024,
+      "seconds": 8.050194415962324
+    }
+  },
+  "static_load_command_parsing": "Independent direct thin64 Mach-O header/load-command byte parsing; no lipo/otool/runtime invoked during audit. Includes LC_ID_DYLIB to match otool-L saved convention.",
+  "status": "saved_build_and_static_runtime_closure_review_passed"
+}

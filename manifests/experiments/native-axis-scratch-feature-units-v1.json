@@ -1,0 +1,334 @@
+{
+  "schema_version": 1,
+  "study_id": "native-axis-scratch-feature-units-v1",
+  "status": "declared_not_executed",
+  "execution_authorized": false,
+  "purpose": "Paired fresh scratch, one-update development contrast of existing RAW versus fixed FEATURE_UNITS actor inputs on the same expanded native axis model; no efficacy or timing-generalization claim.",
+  "references": {
+    "baseline_protocol": {
+      "path": "manifests/experiments/native-axis-raw-update-pilot-v1.json",
+      "file_sha256": "057fe7cf5d2e770c34314ed081db129452f451067891a37bc3e6e9b5f6e9bc61",
+      "content_hash": "sha256:7783126ab41fab01be6b148131c23fdd305c1e3276d27edb2971a734b644e385"
+    },
+    "completed_raw_costs": {
+      "path": "artifacts/learning/native-axis-raw-update-pilot-v1/report-v1/cost-summary.json",
+      "file_sha256": "47ac0277620f98dc1e737fbd14ddf57de75e0463e44367547bf7afedeba97261"
+    },
+    "completed_raw_audit": {
+      "path": "artifacts/native-axis-pilot-result-audit/audit-02.json",
+      "file_sha256": "37b9bec653545486446cd78f845615867654838938a7f9a69ba07c0451d0eb21"
+    }
+  },
+  "fixed_protocol": {
+    "training_config": {
+      "seed": 11,
+      "max_environment_steps": 8,
+      "max_gradient_steps": 1,
+      "max_wall_seconds": 300.0,
+      "max_episode_steps": 4,
+      "episodes_per_update": 2,
+      "checkpoint_interval": 1,
+      "hidden_features": 16,
+      "learning_rate": 0.003,
+      "gamma": 1.0,
+      "entropy_weight": 0.01,
+      "value_weight": 0.5,
+      "max_gradient_norm": 5.0
+    },
+    "resource_budget_per_arm": {
+      "worker_wall_seconds": 600.0,
+      "process_peak_rss_bytes": 6442450944,
+      "hard_termination_grace_seconds": 15.0
+    },
+    "world_partitions": {
+      "optimization": {
+        "role": "optimization",
+        "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+        "generator": {
+          "family": "rigid_gaussian",
+          "translation_scale_mm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation_scale_deg": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation_center_mm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": "rigid-registration-v1",
+          "parameter_basis": "declared_uncalibrated_sensitivity_scenario"
+        },
+        "seeds": [
+          17944101631498118750,
+          16050408593453808557,
+          16285456173753334256
+        ],
+        "interpretation": "deterministic_optimization"
+      },
+      "selection": {
+        "role": "selection",
+        "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+        "generator": {
+          "family": "rigid_gaussian",
+          "translation_scale_mm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation_scale_deg": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "rotation_center_mm": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "version": "rigid-registration-v1",
+          "parameter_basis": "declared_uncalibrated_sensitivity_scenario"
+        },
+        "seeds": [
+          8109736527858856845,
+          8342823306791655420
+        ],
+        "interpretation": "deterministic_optimization"
+      }
+    },
+    "optimization_episode_seeds": [
+      17944101631498118750,
+      16050408593453808557
+    ],
+    "physical_frozen_model_hash": "sha256:edd10cb66c331e8c69aaa633f2b2417d804e8ee756f413d5250a4456e163e0ec",
+    "observation_encoding": "RAW",
+    "cache_enabled": false,
+    "physical_backend": "exact AxisColumnNativeSimulator; no cached subclass or wrapper other than authenticated AxisTrainingAccounting",
+    "no_final_or_stress_worlds": true
+  },
+  "profiles": {
+    "RAW": {
+      "input_profile_manifest": {
+        "profile_id": "RAW",
+        "version": "native-fixed-action-units-v1",
+        "action_feature_names": [
+          "stop",
+          "target_benefit",
+          "normal_volume",
+          "motor_evidence",
+          "language_evidence",
+          "insertion_distance",
+          "tip_radius",
+          "shaft_radius",
+          "tool_change",
+          "depth",
+          "remaining_target_fraction",
+          "adjacent_target_fraction",
+          "partial_normal_contact_volume",
+          "partial_motor_contact_surrogate",
+          "partial_language_contact_surrogate"
+        ],
+        "action_divisors": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "state_feature_names": [
+          "remaining_target_fraction",
+          "action_budget_fraction_used",
+          "removed_tissue_fraction",
+          "nominal_severed_edge_fraction",
+          "motor_evidence_available",
+          "language_evidence_available"
+        ],
+        "state_divisors": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "centering": false,
+        "clipping": false,
+        "running_statistics": false,
+        "return_divisor": 1.0,
+        "critic_output_divisor": 1.0
+      },
+      "input_profile_hash": "sha256:b0ae5e34b7fbd206ca7e690fc29c5283ab4be69af25ba45b67f4f5d858b27e12",
+      "initial_policy_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322"
+    },
+    "FEATURE_UNITS": {
+      "input_profile_manifest": {
+        "profile_id": "FEATURE_UNITS",
+        "version": "native-fixed-action-units-v1",
+        "action_feature_names": [
+          "stop",
+          "target_benefit",
+          "normal_volume",
+          "motor_evidence",
+          "language_evidence",
+          "insertion_distance",
+          "tip_radius",
+          "shaft_radius",
+          "tool_change",
+          "depth",
+          "remaining_target_fraction",
+          "adjacent_target_fraction",
+          "partial_normal_contact_volume",
+          "partial_motor_contact_surrogate",
+          "partial_language_contact_surrogate"
+        ],
+        "action_divisors": [
+          1.0,
+          648.0,
+          648.0,
+          648.0,
+          648.0,
+          120.0,
+          2.25,
+          1.1,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          648.0,
+          648.0,
+          648.0
+        ],
+        "state_feature_names": [
+          "remaining_target_fraction",
+          "action_budget_fraction_used",
+          "removed_tissue_fraction",
+          "nominal_severed_edge_fraction",
+          "motor_evidence_available",
+          "language_evidence_available"
+        ],
+        "state_divisors": [
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "centering": false,
+        "clipping": false,
+        "running_statistics": false,
+        "return_divisor": 1.0,
+        "critic_output_divisor": 1.0
+      },
+      "input_profile_hash": "sha256:ae7e392794857e72d3cbd06dd7106dd30bcf557e8a91fe9261bf14d6481cc74b",
+      "initial_policy_hash": "sha256:748abc9f7d23465682bd6766dfd9ac09ac52652c890a31aadb2847b6bc0402fe"
+    }
+  },
+  "paired_initialization": {
+    "seed": 11,
+    "dimensions": [
+      15,
+      6,
+      16
+    ],
+    "expected_trainable_parameter_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322",
+    "fresh_adam_per_arm": true,
+    "resume": false,
+    "population_or_procedural_initialization": false,
+    "derivation": "RAW digest is the prior recorded seeded trainable state. FEATURE_UNITS behavioral digest adds only the immutable registered nontrainable float32 divisor buffer to those bytes. No old weights are loaded for training. Actual fresh learner initial files are checked before its first scored factory call and before any gradient; profile-independent trainable hash must equal the same pinned digest.",
+    "extra_policy_forwards_or_random_draws_for_validation": 0
+  },
+  "execution_order": [
+    "RAW",
+    "FEATURE_UNITS"
+  ],
+  "execution_order_rationale": "Fixed prospectively. Separate cold processes share the exact frozen executable bytes. Order, OS file cache and background load remain uncontrolled timing limitations; no timing superiority claim.",
+  "costs": {
+    "per_arm_online_seconds": 300.0,
+    "per_arm_worker_seconds": 600.0,
+    "per_arm_rss_bytes": 6442450944,
+    "per_arm_termination_grace_seconds": 15.0,
+    "prior_observed_RAW_online_seconds": 169.59038816695102,
+    "prior_observed_RAW_launcher_seconds": 221.1391212909948,
+    "prior_observed_RAW_peak_rss_bytes": 2382168064,
+    "interpretation": "Prior RAW costs support feasibility only for that observed path/source. FEATURE_UNITS routes and new schema/accounting overhead remain unmeasured. The fixed caps may fail; no extension or retry. Separate cold preparation, seven factory clones, learner setup, full trainer call, initial/latest selection, online, final checkpoint export, independent audit, worker and launcher costs. Nested timings are not additive.",
+    "cross_arm_geometry_certificate_reuse": false,
+    "all_audits_inside_each_600s_worker": true
+  },
+  "expected_denominators": {
+    "arms": 2,
+    "fresh_initial_policies": 2,
+    "fresh_adam_optimizers": 2,
+    "gradient_steps": 2,
+    "shape_probe_resets": 2,
+    "shape_probe_transitions": 0,
+    "initial_selection_episodes": 4,
+    "optimization_episodes": 4,
+    "latest_selection_episodes": 4,
+    "completed_episode_audit_receipts": 12,
+    "maximum_unique_native_audits": 12,
+    "maximum_returned_transitions": 36,
+    "final_worlds": 0,
+    "stress_worlds": 0
+  },
+  "outcomes": {
+    "per_arm": [
+      "initial full-panel mean return",
+      "latest full-panel mean return",
+      "selected full-panel mean return",
+      "latest minus initial return",
+      "selected minus initial return",
+      "selected checkpoint phase",
+      "actual optimizer steps, actor change and gradient norms",
+      "target, normal and retained partial-contact source-cell quantities",
+      "all completion/failure and cost denominators"
+    ],
+    "paired": [
+      "FEATURE_UNITS minus RAW initial returns",
+      "FEATURE_UNITS minus RAW latest returns",
+      "FEATURE_UNITS minus RAW selected returns",
+      "difference between latest-minus-initial changes"
+    ],
+    "selection": "Both complete panels required; maximum mean return and earliest checkpoint on ties. Updated trace binds latest tensors even if initial is selected.",
+    "negative_results": "Retain unchanged/worse latest outcomes; selected score alone must never conceal a worse update. No settings chosen from these results."
+  },
+  "eligibility": {
+    "per_arm": "All existing pilot source/model/world/complete-panel/actual-actor-update/accounting/trace/independent-native checks, plus exact registry/schema/profile/initializer gates. Audit every completed episode after freezing.",
+    "paired": "Both separate worker+arm launcher authorities and final pair authority must complete and hash-bind their evidence. Any failed/incomplete arm prevents paired interpretation while preserving the other arm diagnostic and full denominator.",
+    "incomplete_or_zero_actor_update": "ineligible; retain failure including valid earlier initial panel",
+    "automatic_retry": false,
+    "automatic_budget_extension": false,
+    "fresh_output_required": true
+  },
+  "interpretation": {
+    "independent_human_patients": 1,
+    "previously_studied_development_case": true,
+    "human_pretraining_patients": 0,
+    "brain_support_reviewed": false,
+    "cortical_access_approved": false,
+    "motor_language_assessed": false,
+    "clinical_deficit_probability": null,
+    "deterministic_worlds_are_uncertainty_samples": false,
+    "replicated_efficacy_claim": false,
+    "clinical_use_validated": false
+  },
+  "source_binding": "Exact common tested commit/runtime/source snapshot set at execution freeze; includes new runner/declaration, baseline helpers and profile/accounting/schema/learner bytes. No mutable result directory in numerical source. Only source-receipted immutable reference files are copied separately. Public execution awaits source commit, reviews, immutable regression and explicit root release.",
+  "declaration_content_hash": "sha256:9c0f5f51574ac1347749ff87a377367785e6df8bde01b654bde6616afe35695e"
+}

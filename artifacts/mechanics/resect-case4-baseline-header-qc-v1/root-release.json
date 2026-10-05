@@ -1,0 +1,24 @@
+{
+  "recorded_at_utc": "2026-10-04T19:43:58.534915+00:00",
+  "authorizer": "/root",
+  "access_contract_commit": "cb9f71b",
+  "acquisition_commit": "65bf883",
+  "allowed_originals": [
+    "RESECT/NIFTI/Case4/MRI/Case4-T1.nii.gz",
+    "RESECT/NIFTI/Case4/MRI/Case4-FLAIR.nii.gz",
+    "RESECT/NIFTI/Case4/US/Case4-US-before.nii.gz"
+  ],
+  "allowed": "verify compressed hashes then native NIfTI headers only",
+  "closed": [
+    "all image arrays",
+    "during-US file",
+    "all landmark files",
+    "inference",
+    "registration",
+    "model solve"
+  ],
+  "wall_limit_seconds": 55.0,
+  "combined_sampled_rss_limit_bytes": 1073741824,
+  "dependency_probe": "psutil absent; no installation. Existing Python/nibabel/numpy only; system ps monitors RSS.",
+  "probe_sha256": "4097493f70166b073f20c923c0b035e05210ad71c875e333c4cb43396a35ba30"
+}

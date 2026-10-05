@@ -1,0 +1,30 @@
+{
+  "scope": "Independent static viewer review; no patient or engine execution",
+  "findings": [
+    {
+      "finding": "Missing planning identity accepted",
+      "source": "desktop/src/viewer/inspectionTool.ts",
+      "expression": "(!volume.planningHash || input.planningHash === volume.planningHash)",
+      "status": "static; targeted runtime check follows",
+      "runtime_probe": {
+        "hasVolumePlanningHash": false,
+        "accepted": true,
+        "scope": "synthetic pure validator; no engine"
+      }
+    },
+    {
+      "finding": "Suppressed inspection can return through equivalent cloned wrapper",
+      "source": "desktop/src/viewer/ViewerWorkspace.tsx",
+      "trace": [
+        "Store inspection object A in suppressedInspection during replay or Clear tool",
+        "Receive new object B=structuredClone(A) with identical source/binding/inspection/action identities after replay is absent",
+        "B !== suppressedInspection.current, so setInspectionTool(B) is invoked"
+      ],
+      "status": "static control-flow counterexample; not a browser or hook execution"
+    }
+  ],
+  "source_sha256": {
+    "desktop/src/viewer/inspectionTool.ts": "900dcf35db056ed1bda3fcf86a89da6a26cc7073ba4d411a46df75216f26445c",
+    "desktop/src/viewer/ViewerWorkspace.tsx": "4ff74719d38f07fcb5019092334b776ed3975c3c84c2dfbadbea002299ac95e2"
+  }
+}

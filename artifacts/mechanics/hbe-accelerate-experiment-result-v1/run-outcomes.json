@@ -1,0 +1,1129 @@
+{
+  "actual_solver_invocations": 18,
+  "aggregate_readouts_exactly_match_individual": true,
+  "runs": {
+    "compression:N12:S120:double_mu": {
+      "backend_profile": {
+        "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+        "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+      },
+      "execution": {
+        "bytes": 3565,
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S120-double_mu/execution.json",
+        "sha256": "42cc748ab38e2a264556b22c8f5f5a0df18b6b0041e90fdc78afcbc17d5d4d66"
+      },
+      "frame_count": 121,
+      "individual_criteria": {
+        "force_balance": {
+          "actual": 2.7771862148065586e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "minimum_sampled_J": {
+          "actual": 0.7530810623532112,
+          "limit": 0.0,
+          "units": "dimensionless_strictly_positive"
+        },
+        "moment_balance": {
+          "actual": 1.6394109944599403e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "prescribed_motion": {
+          "actual": 0.0001758227574282181,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "primitive_consistency": {
+          "actual": 0.0007467739002780543,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "solver_residual": {
+          "actual": 1.61388930236071e-10,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "work_energy": {
+          "actual": 0.0001915163778788294,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S120-double_mu/readout.json",
+        "sha256": "d79e117fa37a195972cd94f2b693be71275613451f003ac7c5e8366daca78b80"
+      },
+      "reaped": true,
+      "runtime_identity": {
+        "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+        "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+      },
+      "solver_exit_code": 0,
+      "solver_seconds": 39.47212145803496,
+      "status": "passed_individual_numerical_checks",
+      "timed_out": false
+    },
+    "compression:N12:S120:fitted": {
+      "status": "not_executed"
+    },
+    "compression:N12:S120:reference": {
+      "backend_profile": {
+        "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+        "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+      },
+      "execution": {
+        "bytes": 3566,
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S120-reference/execution.json",
+        "sha256": "d8e45f5cf5a64f051a968b8d9bd924081bdfc2a89727f9721df147f33403bbc9"
+      },
+      "frame_count": 121,
+      "individual_criteria": {
+        "force_balance": {
+          "actual": 2.7422892254709973e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "minimum_sampled_J": {
+          "actual": 0.7530810623532112,
+          "limit": 0.0,
+          "units": "dimensionless_strictly_positive"
+        },
+        "moment_balance": {
+          "actual": 1.709372916073877e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "prescribed_motion": {
+          "actual": 0.0001758227574282181,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "primitive_consistency": {
+          "actual": 0.0007467268873896933,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "solver_residual": {
+          "actual": 1.613813356236763e-10,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "work_energy": {
+          "actual": 0.0001915163775609463,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S120-reference/readout.json",
+        "sha256": "a1e37f4c50f920b4b8183bc499e0438eaf83b9e93643a36b3dc72c60aeb9ab87"
+      },
+      "reaped": true,
+      "runtime_identity": {
+        "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+        "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+      },
+      "solver_exit_code": 0,
+      "solver_seconds": 38.690875415923074,
+      "status": "passed_individual_numerical_checks",
+      "timed_out": false
+    },
+    "compression:N12:S60:reference": {
+      "backend_profile": {
+        "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+        "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+      },
+      "execution": {
+        "bytes": 3556,
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S60-reference/execution.json",
+        "sha256": "458ebfdcc9c28952c70e7c720af7818d8642480c7e2369932b7c537ee24db6ff"
+      },
+      "frame_count": 61,
+      "individual_criteria": {
+        "force_balance": {
+          "actual": 2.539064642844824e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "minimum_sampled_J": {
+          "actual": 0.7530810623617966,
+          "limit": 0.0,
+          "units": "dimensionless_strictly_positive"
+        },
+        "moment_balance": {
+          "actual": 1.0273228119637568e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "prescribed_motion": {
+          "actual": 0.0001758227574282181,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "primitive_consistency": {
+          "actual": 0.0008678104278786736,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "solver_residual": {
+          "actual": 2.8582455125443712e-11,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "work_energy": {
+          "actual": 0.000766054977321149,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S60-reference/readout.json",
+        "sha256": "f000ebd0e22d64923fe88fd3d1d53e8a260f240af0cb45368cf7708425014538"
+      },
+      "reaped": true,
+      "runtime_identity": {
+        "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+        "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+      },
+      "solver_exit_code": 0,
+      "solver_seconds": 20.69952041702345,
+      "status": "passed_individual_numerical_checks",
+      "timed_out": false
+    },
+    "compression:N4:S60:reference": {
+      "backend_profile": {
+        "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+        "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+      },
+      "execution": {
+        "bytes": 3547,
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N4-S60-reference/execution.json",
+        "sha256": "eb02fde0c0bf1be2b4edd5b8f07e1350fb617f31ee9729193ba2655d2a4d9ee4"
+      },
+      "frame_count": 61,
+      "individual_criteria": {
+        "force_balance": {
+          "actual": 8.37182619688062e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "minimum_sampled_J": {
+          "actual": 0.8499999999908006,
+          "limit": 0.0,
+          "units": "dimensionless_strictly_positive"
+        },
+        "moment_balance": {
+          "actual": 5.17311680093631e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "prescribed_motion": {
+          "actual": 0.00015788320748067125,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "primitive_consistency": {
+          "actual": 0.0009410377866251235,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "solver_residual": {
+          "actual": 4.017088926045783e-12,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "work_energy": {
+          "actual": 0.0010421914474346458,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N4-S60-reference/readout.json",
+        "sha256": "e790be8d6806bdb85c8fd966f0918594c89464eb899e30190e9505d68496b904"
+      },
+      "reaped": true,
+      "runtime_identity": {
+        "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+        "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+      },
+      "solver_exit_code": 0,
+      "solver_seconds": 0.4644269999116659,
+      "status": "passed_individual_numerical_checks",
+      "timed_out": false
+    },
+    "compression:N8:S60:reference": {
+      "backend_profile": {
+        "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+        "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+      },
+      "execution": {
+        "bytes": 3546,
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/execution.json",
+        "sha256": "901c1c701a95730abc5d6ff25083733f66471ef67d7d6e82d050d59494c2b1b4"
+      },
+      "frame_count": 61,
+      "individual_criteria": {
+        "force_balance": {
+          "actual": 4.9012243828857e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "minimum_sampled_J": {
+          "actual": 0.7910710445791459,
+          "limit": 0.0,
+          "units": "dimensionless_strictly_positive"
+        },
+        "moment_balance": {
+          "actual": 2.0586232430385412e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "prescribed_motion": {
+          "actual": 0.00015787415080093181,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "primitive_consistency": {
+          "actual": 0.0008247936647766021,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "solver_residual": {
+          "actual": 4.9268735648423097e-11,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "work_energy": {
+          "actual": 0.0007944097233543286,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/readout.json",
+        "sha256": "41e38786c9a07d045270f1a5a7da656bd3eddd9abed16d6fbc6fe30149a2d03d"
+      },
+      "reaped": true,
+      "runtime_identity": {
+        "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+        "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+      },
+      "solver_exit_code": 0,
+      "solver_seconds": 4.249919041059911,
+      "status": "passed_individual_numerical_checks",
+      "timed_out": false
+    },
+    "tension:N12:S120:fitted": {
+      "status": "not_executed"
+    },
+    "tension:N12:S120:reference": {
+      "backend_profile": {
+        "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+        "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+      },
+      "execution": {
+        "bytes": 3529,
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S120-reference/execution.json",
+        "sha256": "9d86c8149b517d13f136e8d6f57a109e97520fd0cb82d866ccf99aa085005302"
+      },
+      "frame_count": 121,
+      "individual_criteria": {
+        "force_balance": {
+          "actual": 2.724097529865049e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "minimum_sampled_J": {
+          "actual": 0.8871318021515809,
+          "limit": 0.0,
+          "units": "dimensionless_strictly_positive"
+        },
+        "moment_balance": {
+          "actual": 2.5545019876943058e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "prescribed_motion": {
+          "actual": 0.0001758227574282181,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "primitive_consistency": {
+          "actual": 0.00021990947332691711,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "solver_residual": {
+          "actual": 5.996050359630342e-13,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "work_energy": {
+          "actual": 0.00016779512275121405,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S120-reference/readout.json",
+        "sha256": "5b64189884791f3cb39f62525037407e3dd18e582bea42768add0fab225a5768"
+      },
+      "reaped": true,
+      "runtime_identity": {
+        "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+        "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+      },
+      "solver_exit_code": 0,
+      "solver_seconds": 39.67242008296307,
+      "status": "passed_individual_numerical_checks",
+      "timed_out": false
+    },
+    "tension:N12:S60:reference": {
+      "backend_profile": {
+        "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+        "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+      },
+      "execution": {
+        "bytes": 3521,
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S60-reference/execution.json",
+        "sha256": "883c197bc8c347523e23de96aad830ef447a14d817058e8cb67961aceeb11168"
+      },
+      "frame_count": 61,
+      "individual_criteria": {
+        "force_balance": {
+          "actual": 1.616723404096847e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "minimum_sampled_J": {
+          "actual": 0.8871318021493118,
+          "limit": 0.0,
+          "units": "dimensionless_strictly_positive"
+        },
+        "moment_balance": {
+          "actual": 1.3425919048629193e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "prescribed_motion": {
+          "actual": 0.0001758227574282181,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "primitive_consistency": {
+          "actual": 0.0009006855666803488,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "solver_residual": {
+          "actual": 6.432598918467328e-11,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "work_energy": {
+          "actual": 0.0006711821811207981,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S60-reference/readout.json",
+        "sha256": "7a269ca2c1f7a4a9225b84d7660455a8832e0ed593867821d5c8a25cc9401d6a"
+      },
+      "reaped": true,
+      "runtime_identity": {
+        "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+        "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+      },
+      "solver_exit_code": 0,
+      "solver_seconds": 20.285739916958846,
+      "status": "passed_individual_numerical_checks",
+      "timed_out": false
+    },
+    "tension:N4:S60:reference": {
+      "backend_profile": {
+        "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+        "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+      },
+      "execution": {
+        "bytes": 3511,
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N4-S60-reference/execution.json",
+        "sha256": "e4fc2fb4da478cc9411cd33ae7df44c73ad38226d55b07e696e792eb61c41a89"
+      },
+      "frame_count": 61,
+      "individual_criteria": {
+        "force_balance": {
+          "actual": 7.104573729318902e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "minimum_sampled_J": {
+          "actual": 0.8635831014752134,
+          "limit": 0.0,
+          "units": "dimensionless_strictly_positive"
+        },
+        "moment_balance": {
+          "actual": 6.884846214998429e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "prescribed_motion": {
+          "actual": 0.00015788320748067125,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "primitive_consistency": {
+          "actual": 0.00017687244913572388,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "solver_residual": {
+          "actual": 1.1780392309939622e-13,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "work_energy": {
+          "actual": 0.0006203603314113382,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N4-S60-reference/readout.json",
+        "sha256": "51c7136a2456fce70b7f754e30459e8927608c5bf61b5077ddcea87e86b7f6b1"
+      },
+      "reaped": true,
+      "runtime_identity": {
+        "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+        "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+      },
+      "solver_exit_code": 0,
+      "solver_seconds": 0.5088555420516059,
+      "status": "passed_individual_numerical_checks",
+      "timed_out": false
+    },
+    "tension:N8:S60:reference": {
+      "backend_profile": {
+        "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+        "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+      },
+      "execution": {
+        "bytes": 3510,
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N8-S60-reference/execution.json",
+        "sha256": "a72afec40b1f0c2f9a89a6eade8c8dca6301c976bc06e202fbf1f7c88efa96f8"
+      },
+      "frame_count": 61,
+      "individual_criteria": {
+        "force_balance": {
+          "actual": 4.9658733796992556e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "minimum_sampled_J": {
+          "actual": 0.8824822830130267,
+          "limit": 0.0,
+          "units": "dimensionless_strictly_positive"
+        },
+        "moment_balance": {
+          "actual": 2.9783759758843427e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "prescribed_motion": {
+          "actual": 0.00015787415080093181,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "primitive_consistency": {
+          "actual": 0.0008479836389338081,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "solver_residual": {
+          "actual": 3.9351728825307095e-11,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "work_energy": {
+          "actual": 0.0006538539879126291,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N8-S60-reference/readout.json",
+        "sha256": "a9cb82b68a52d7b7f3267d83df741d6f416bb8569e3dbb2bbf7d7a94d9e50e18"
+      },
+      "reaped": true,
+      "runtime_identity": {
+        "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+        "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+      },
+      "solver_exit_code": 0,
+      "solver_seconds": 3.920913583948277,
+      "status": "passed_individual_numerical_checks",
+      "timed_out": false
+    },
+    "torsion_neg:N12:S120:reference": {
+      "backend_profile": {
+        "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+        "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+      },
+      "execution": {
+        "bytes": 3565,
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N12-S120-reference/execution.json",
+        "sha256": "021aa15a98ef150da032280088be52d9471a82ea33d8f7196e4f6de86360b67d"
+      },
+      "frame_count": 121,
+      "individual_criteria": {
+        "force_balance": {
+          "actual": 8.473813958816203e-09,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "minimum_sampled_J": {
+          "actual": 0.9997015686310063,
+          "limit": 0.0,
+          "units": "dimensionless_strictly_positive"
+        },
+        "moment_balance": {
+          "actual": 2.977884281183671e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "prescribed_motion": {
+          "actual": 0.0001758227560910825,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "primitive_consistency": {
+          "actual": 0.0002168000788716131,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "solver_residual": {
+          "actual": 4.9768298498377805e-11,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "work_energy": {
+          "actual": 7.621074093643374e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N12-S120-reference/readout.json",
+        "sha256": "5934d4699d747f0f852a9242a08ca3bdaac3cfcb583dc4ed92dd96cbaecc2569"
+      },
+      "reaped": true,
+      "runtime_identity": {
+        "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+        "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+      },
+      "solver_exit_code": 0,
+      "solver_seconds": 39.87973683408927,
+      "status": "passed_individual_numerical_checks",
+      "timed_out": false
+    },
+    "torsion_neg:N12:S60:reference": {
+      "backend_profile": {
+        "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+        "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+      },
+      "execution": {
+        "bytes": 3557,
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N12-S60-reference/execution.json",
+        "sha256": "e03678e7ee7b72fb520875a2fdc42abeeb88f7aee2c3c0425c7e6ffd61ede1fd"
+      },
+      "frame_count": 61,
+      "individual_criteria": {
+        "force_balance": {
+          "actual": 6.277333655594311e-09,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "minimum_sampled_J": {
+          "actual": 0.9997015686311028,
+          "limit": 0.0,
+          "units": "dimensionless_strictly_positive"
+        },
+        "moment_balance": {
+          "actual": 1.9275928958318485e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "prescribed_motion": {
+          "actual": 0.0001758227560910825,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "primitive_consistency": {
+          "actual": 0.00021495901508001677,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "solver_residual": {
+          "actual": 1.420022856582716e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "work_energy": {
+          "actual": 2.9575667378000855e-07,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N12-S60-reference/readout.json",
+        "sha256": "ac8efacaeadd91e7d9a8c5b4e8ec1d357ffde677686350f71ebf7e42f843cb1f"
+      },
+      "reaped": true,
+      "runtime_identity": {
+        "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+        "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+      },
+      "solver_exit_code": 0,
+      "solver_seconds": 19.940188625012524,
+      "status": "passed_individual_numerical_checks",
+      "timed_out": false
+    },
+    "torsion_neg:N4:S60:reference": {
+      "backend_profile": {
+        "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+        "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+      },
+      "execution": {
+        "bytes": 3547,
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N4-S60-reference/execution.json",
+        "sha256": "51b2fd6bcd9396b773341bac3d82de8e4ed0e0836b8c65b6388f79fd40e9120c"
+      },
+      "frame_count": 61,
+      "individual_criteria": {
+        "force_balance": {
+          "actual": 2.130212934596753e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "minimum_sampled_J": {
+          "actual": 0.999031811303682,
+          "limit": 0.0,
+          "units": "dimensionless_strictly_positive"
+        },
+        "moment_balance": {
+          "actual": 3.4866724326225834e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "prescribed_motion": {
+          "actual": 0.00017261297621751448,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "primitive_consistency": {
+          "actual": 0.0004891907389328147,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "solver_residual": {
+          "actual": 1.058454202715283e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "work_energy": {
+          "actual": 1.1932511218662444e-05,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N4-S60-reference/readout.json",
+        "sha256": "33af0fc9d00b8737f1e749401d66dbaec3eeca434d6d758a8149193da82029c9"
+      },
+      "reaped": true,
+      "runtime_identity": {
+        "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+        "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+      },
+      "solver_exit_code": 0,
+      "solver_seconds": 0.5194890829734504,
+      "status": "passed_individual_numerical_checks",
+      "timed_out": false
+    },
+    "torsion_neg:N8:S60:reference": {
+      "backend_profile": {
+        "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+        "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+      },
+      "execution": {
+        "bytes": 3546,
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N8-S60-reference/execution.json",
+        "sha256": "07a20dd4108e9d2b5f7f406d314c4035542c9c7ef0015954fd8f39c19b78296e"
+      },
+      "frame_count": 61,
+      "individual_criteria": {
+        "force_balance": {
+          "actual": 1.2107092133826395e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "minimum_sampled_J": {
+          "actual": 0.9995980934956507,
+          "limit": 0.0,
+          "units": "dimensionless_strictly_positive"
+        },
+        "moment_balance": {
+          "actual": 2.5998067398347347e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "prescribed_motion": {
+          "actual": 0.00017398459450763376,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "primitive_consistency": {
+          "actual": 0.00021044309059824504,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "solver_residual": {
+          "actual": 1.1392335743192721e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "work_energy": {
+          "actual": 1.7687719583402623e-06,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_neg-N8-S60-reference/readout.json",
+        "sha256": "33e59c9c904098306786d0b21151eec2471f38cff31be24b14e0c6c5e79ff10b"
+      },
+      "reaped": true,
+      "runtime_identity": {
+        "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+        "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+      },
+      "solver_exit_code": 0,
+      "solver_seconds": 4.063534332904965,
+      "status": "passed_individual_numerical_checks",
+      "timed_out": false
+    },
+    "torsion_pos:N12:S120:double_mu": {
+      "backend_profile": {
+        "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+        "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+      },
+      "execution": {
+        "bytes": 3565,
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N12-S120-double_mu/execution.json",
+        "sha256": "d2ef1bbe32432239d3c9bccf455e2f2859f53fe843ad8072888c7c577ee7535d"
+      },
+      "frame_count": 121,
+      "individual_criteria": {
+        "force_balance": {
+          "actual": 7.776382222963793e-09,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "minimum_sampled_J": {
+          "actual": 0.9997015686301253,
+          "limit": 0.0,
+          "units": "dimensionless_strictly_positive"
+        },
+        "moment_balance": {
+          "actual": 2.0285430597929445e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "prescribed_motion": {
+          "actual": 0.0001758227560910825,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "primitive_consistency": {
+          "actual": 0.00021340540356798505,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "solver_residual": {
+          "actual": 4.975526446791992e-11,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "work_energy": {
+          "actual": 7.639232314528474e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N12-S120-double_mu/readout.json",
+        "sha256": "c3b9b9ec99ac931791a7eae09e47ea5b0a5a840d5c3c12234a668464f403ccf8"
+      },
+      "reaped": true,
+      "runtime_identity": {
+        "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+        "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+      },
+      "solver_exit_code": 0,
+      "solver_seconds": 40.00306337501388,
+      "status": "passed_individual_numerical_checks",
+      "timed_out": false
+    },
+    "torsion_pos:N12:S120:reference": {
+      "backend_profile": {
+        "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+        "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+      },
+      "execution": {
+        "bytes": 3565,
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N12-S120-reference/execution.json",
+        "sha256": "35ffcacc32f0fc48d3293c712d834c1158a345829dcaeea2c4941a906dcd6630"
+      },
+      "frame_count": 121,
+      "individual_criteria": {
+        "force_balance": {
+          "actual": 9.816317556230941e-09,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "minimum_sampled_J": {
+          "actual": 0.9997015686301252,
+          "limit": 0.0,
+          "units": "dimensionless_strictly_positive"
+        },
+        "moment_balance": {
+          "actual": 2.964759424452265e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "prescribed_motion": {
+          "actual": 0.0001758227560910825,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "primitive_consistency": {
+          "actual": 0.00021340540356798505,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "solver_residual": {
+          "actual": 4.967969872749171e-11,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "work_energy": {
+          "actual": 7.639181644708729e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N12-S120-reference/readout.json",
+        "sha256": "0ec663c8d3bcbc178d8712e3cb0583084086a1981f9d4f67bb52c100538c0b9f"
+      },
+      "reaped": true,
+      "runtime_identity": {
+        "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+        "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+      },
+      "solver_exit_code": 0,
+      "solver_seconds": 41.28799983300269,
+      "status": "passed_individual_numerical_checks",
+      "timed_out": false
+    },
+    "torsion_pos:N12:S60:reference": {
+      "backend_profile": {
+        "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+        "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+      },
+      "execution": {
+        "bytes": 3556,
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N12-S60-reference/execution.json",
+        "sha256": "dfa891d07fc9569a0079f7f57936be9e2bec114c33e62b2bf0eb290d7368e7b4"
+      },
+      "frame_count": 61,
+      "individual_criteria": {
+        "force_balance": {
+          "actual": 9.58148270938189e-09,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "minimum_sampled_J": {
+          "actual": 0.9997015686311752,
+          "limit": 0.0,
+          "units": "dimensionless_strictly_positive"
+        },
+        "moment_balance": {
+          "actual": 2.27827294954904e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "prescribed_motion": {
+          "actual": 0.0001758227560910825,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "primitive_consistency": {
+          "actual": 0.00021168647858590248,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "solver_residual": {
+          "actual": 1.4201898353203983e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "work_energy": {
+          "actual": 2.9593456323304604e-07,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N12-S60-reference/readout.json",
+        "sha256": "3431347f7c6d90e42a1ee7609c81f1b87c22a63778744f32997a699906c9d774"
+      },
+      "reaped": true,
+      "runtime_identity": {
+        "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+        "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+      },
+      "solver_exit_code": 0,
+      "solver_seconds": 20.09381474996917,
+      "status": "passed_individual_numerical_checks",
+      "timed_out": false
+    },
+    "torsion_pos:N4:S60:reference": {
+      "backend_profile": {
+        "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+        "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+      },
+      "execution": {
+        "bytes": 3547,
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N4-S60-reference/execution.json",
+        "sha256": "cf6c4ed33fc645d44bff5d1928373ead2dafe4284ee9dcaaa86d8a5c030c5118"
+      },
+      "frame_count": 61,
+      "individual_criteria": {
+        "force_balance": {
+          "actual": 3.1801273425196146e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "minimum_sampled_J": {
+          "actual": 0.9990318113048557,
+          "limit": 0.0,
+          "units": "dimensionless_strictly_positive"
+        },
+        "moment_balance": {
+          "actual": 4.668458757076366e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "prescribed_motion": {
+          "actual": 0.00017076762998702568,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "primitive_consistency": {
+          "actual": 0.000489308345726673,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "solver_residual": {
+          "actual": 1.058348586822786e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "work_energy": {
+          "actual": 1.1932860868263643e-05,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N4-S60-reference/readout.json",
+        "sha256": "23712c8f99560743bf3c5181b33c06f5bcbc3c42ef473688dde60d72d8fc1825"
+      },
+      "reaped": true,
+      "runtime_identity": {
+        "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+        "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+      },
+      "solver_exit_code": 0,
+      "solver_seconds": 0.5140552499797195,
+      "status": "passed_individual_numerical_checks",
+      "timed_out": false
+    },
+    "torsion_pos:N8:S60:reference": {
+      "backend_profile": {
+        "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+        "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+      },
+      "execution": {
+        "bytes": 3547,
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N8-S60-reference/execution.json",
+        "sha256": "2d92e37b8941dc2a49a2713fa5c9d71e0184ff0e749633b2b6404dd133619e42"
+      },
+      "frame_count": 61,
+      "individual_criteria": {
+        "force_balance": {
+          "actual": 1.1227182980483455e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "minimum_sampled_J": {
+          "actual": 0.9995980934960933,
+          "limit": 0.0,
+          "units": "dimensionless_strictly_positive"
+        },
+        "moment_balance": {
+          "actual": 2.5860167689323385e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "prescribed_motion": {
+          "actual": 0.0001725062994214608,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "primitive_consistency": {
+          "actual": 0.0002115804999701949,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "solver_residual": {
+          "actual": 1.1392534211532374e-08,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        },
+        "work_energy": {
+          "actual": 1.7689377722375484e-06,
+          "limit": 1.0,
+          "units": "ratio_to_declared_numerical_tolerance"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/torsion_pos-N8-S60-reference/readout.json",
+        "sha256": "601d70f08ba4b919440caa1cdc7a44b6b89d56e3ffcd107c88423b454d472661"
+      },
+      "reaped": true,
+      "runtime_identity": {
+        "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+        "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+      },
+      "solver_exit_code": 0,
+      "solver_seconds": 4.2488550409907475,
+      "status": "passed_individual_numerical_checks",
+      "timed_out": false
+    }
+  },
+  "total_recorded_solver_seconds": 338.5155295818113
+}

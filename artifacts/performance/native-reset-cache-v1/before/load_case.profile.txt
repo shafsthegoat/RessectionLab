@@ -1,0 +1,43 @@
+         22504 function calls (19799 primitive calls) in 0.185 seconds
+
+   Ordered by: cumulative time
+   List reduced from 313 to 35 due to restriction <35>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    0.185    0.185 profile_native.py:43(<lambda>)
+        1    0.000    0.000    0.185    0.185 imaging.py:433(load_case)
+        1    0.000    0.000    0.108    0.108 <string>:2(__init__)
+        1    0.004    0.004    0.108    0.108 core.py:296(__post_init__)
+        8    0.000    0.000    0.063    0.008 _npyio_impl.py:239(__getitem__)
+        8    0.011    0.001    0.063    0.008 _format_impl.py:780(read_array)
+      382    0.000    0.000    0.061    0.000 __init__.py:983(read)
+      357    0.001    0.000    0.060    0.000 __init__.py:1065(_read1)
+        1    0.000    0.000    0.054    0.054 core.py:403(to_manifest)
+        7    0.000    0.000    0.053    0.008 core.py:99(array_digest)
+       14    0.053    0.004    0.053    0.004 {method 'update' of '_hashlib.HASH' objects}
+      357    0.053    0.000    0.053    0.000 {method 'decompress' of 'zlib.Decompress' objects}
+      372    0.000    0.000    0.052    0.000 _format_impl.py:1000(_read_bytes)
+        2    0.000    0.000    0.043    0.022 core.py:116(_compartments)
+        6    0.040    0.007    0.043    0.007 core.py:107(_mask)
+        1    0.000    0.000    0.013    0.013 imaging.py:411(_read_bundle)
+        2    0.000    0.000    0.009    0.005 __init__.py:1582(read)
+        8    0.000    0.000    0.007    0.001 core.py:87(immutable_array)
+        8    0.007    0.001    0.007    0.001 {method 'tobytes' of 'numpy.ndarray' objects}
+      357    0.000    0.000    0.004    0.000 __init__.py:1018(_update_crc)
+      385    0.004    0.000    0.004    0.000 {built-in method zlib.crc32}
+       10    0.003    0.000    0.003    0.000 {built-in method _hashlib.openssl_sha256}
+        2    0.000    0.000    0.002    0.001 core.py:81(semantic_digest)
+      107    0.000    0.000    0.002    0.000 __init__.py:820(read)
+      329    0.000    0.000    0.002    0.000 __init__.py:1101(_read2)
+       11    0.000    0.000    0.002    0.000 fromnumeric.py:2586(all)
+       10    0.002    0.000    0.002    0.000 {method 'read' of '_io.BufferedReader' objects}
+       11    0.000    0.000    0.002    0.000 fromnumeric.py:86(_wrapreduction_any_all)
+       19    0.002    0.000    0.002    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+    993/3    0.001    0.000    0.001    0.000 core.py:49(freeze_json)
+        3    0.000    0.000    0.001    0.000 __init__.py:1314(__init__)
+     5537    0.001    0.000    0.001    0.000 {built-in method builtins.isinstance}
+        3    0.000    0.000    0.001    0.000 __init__.py:1430(_RealGetContents)
+    993/3    0.000    0.000    0.001    0.000 core.py:72(thaw_json)
+  647/247    0.000    0.000    0.001    0.000 core.py:68(<genexpr>)
+
+

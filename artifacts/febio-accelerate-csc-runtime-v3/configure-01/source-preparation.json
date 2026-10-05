@@ -1,0 +1,22 @@
+{
+  "changed_files": [
+    "NumCore/AccelerateSparseSolver.cpp"
+  ],
+  "expansion": {
+    "entries": 2410,
+    "expanded_bytes": 74394570
+  },
+  "original_sha256": "f5432e79ab73dd11d4a0550691480edd7fd5f00c392ae2f78eddf9c4b5da51c9",
+  "patch": {
+    "bytes": 5484,
+    "path": "artifacts/febio-accelerate-lifecycle-v1/accelerate-correctness.patch",
+    "sha256": "67a1858f2d55046796d7ccb46758ca06e5bfb673e75a539d158b1a17652f3340"
+  },
+  "patch_log_sha256": "60349273da3027ebfa38962fe11ab659d664ce09a81a8a4d82e4a8c215dd84dd",
+  "patch_tool": {
+    "bytes": 220000,
+    "path": "/usr/bin/patch",
+    "sha256": "aa9edec10aa9a2dfe79929c21ead8ce3a3554b496cc00c36dd20dcdcab34b1b3"
+  },
+  "patched_sha256": "476ac8471ea681a99c298352a50aba2a7a5baa71635e1678155a7f58b72ba04a"
+}

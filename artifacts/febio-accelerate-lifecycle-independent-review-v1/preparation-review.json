@@ -1,0 +1,86 @@
+{
+  "blocking_findings": [],
+  "checks": {
+    "all_final_owner_and_declaration_hashes_match": true,
+    "all_verified_files_unchanged_after_review": true,
+    "control_attempt_not_started": true,
+    "csc_slice_bytes": 379,
+    "csc_slice_sha256": "88315d2f9d1499688c66c202ad600d963f89e158c99c3ef6170dd71754fefa1b",
+    "extracted_include_exact_concatenation": true,
+    "initialization_fragment_literal_in_source_and_fixture": true,
+    "nine_extracted_methods_exact_source_bytes": true,
+    "patch_exactly_equals_original_to_candidate_unified_diff": true,
+    "prior_six_control_csc_slice_identical": true,
+    "runtime_gate_null_and_new_prefix_absent": true
+  },
+  "control_declaration_sha256": "d45883853df0516efeba4e0f7d21f78b91899d47f3cd1743db58b61ec66334c9",
+  "executed_by_reviewer": {
+    "build": 0,
+    "cxx_compiler": 0,
+    "fixture": 0,
+    "patch_utility": 0,
+    "python_test_repeats": 0,
+    "solver": 0
+  },
+  "limitations": [
+    "Preparation review is not successful execution of the two new C++ controls. Root must separately release them.",
+    "Mocks test adapter state bookkeeping under defined SDK return states, not private SDK constructors, actual factorization/solve accuracy, mechanics or leak rate.",
+    "Failed-owned-symbolic return is explicitly a defined mock edge, not evidence every SDK failure allocates.",
+    "Excluded iterative and condition-number paths remain aborting mock stubs; no claim about them.",
+    "Any future accepted runtime build still needs separately released eight numerical cases."
+  ],
+  "owner_preparation_sha256": "2832aca8317a697f3352eee7343fc90ae1f661265a2855353693e212d8dfde07",
+  "patch_sha256": "67a1858f2d55046796d7ccb46758ca06e5bfb673e75a539d158b1a17652f3340",
+  "patched_source_sha256": "476ac8471ea681a99c298352a50aba2a7a5baa71635e1678155a7f58b72ba04a",
+  "regression_evidence": {
+    "metadata_after_owner_tests": "Owner records documentation/slice-boundary clarifications and dependent declaration hashes updated after checks; this independent final binding/static review verifies final files.",
+    "passed": 23,
+    "pytest_seconds": 1.3,
+    "scope": "Python source-text and mocked orchestration only; includes prior18 build-driver controls plus5 incremental extraction/control/patch checks.",
+    "source": "Owner preparation record, read and hash-verified; no repeated suite requested by root."
+  },
+  "review_findings_resolved": [
+    "Added SDK status-first numeric ownership guard before final extraction.",
+    "Stale initialization-only declaration labels and historical-patch naming corrected; old and current CSC slice boundaries made explicit."
+  ],
+  "reviewer_setup_correction": "First extraction check assumed an extra newline between fragments although recorded method spans already include trailing newline. All9 individual spans matched; corrected concatenation assertion passed without product edits.",
+  "runtime_driver_sha256": "ba94376626a0c9a1a78b81368f60b752e2fcd320f822418934c75bfcd6d80a46",
+  "runtime_v3_declaration_sha256": "4f24c624808a7077e2a02a6350e85efd2b86d407180c1a5599e4e456d94dcedd",
+  "schema_version": 1,
+  "static_review": [
+    "Defined SMS fields with explicit upper triangle; original fresh SparseFactor algorithm and SSFO assignments retained.",
+    "Owned numerical object released before replacement, ownership independent of success, partial numeric symbolic references handled once, symbolic retained independently, handles reset after by-value cleanup, repeated Destroy idempotent, Implementation deleted; borrowed matrix not deleted.",
+    "Numeric pointer inspection now short-circuits unless embedded symbolic status is nonnegative. Canonical no-resource wrapper errors skip cleanup; defined valid-symbolic partial errors retain cleanup.",
+    "Literal corrected methods use actual SDK types, with mocked factor/cleanup/solve APIs.14 scenarios cover requested ownership/error/reset/zero-row/destructor transitions. Four initialization profiles seed defined fields then reset; no stale values enter a Sparse API.",
+    "Control driver has one exclusive attempt; reviewed group supervisor100s/1GiB, two40s compile/two5s run limits, fixed source/tool/SDK pins, isolated child interpreter, exact expected outputs and accepted receipt binding. No original diagnostic or real Sparse factorization path.",
+    "V3 incremental driver changes bind the combined patch, pinned system patch tool, exact prospective control declaration, required accepted/independent result chain and pending numerical-validation identity. Existing caps/source preservation/installed linkage design retained."
+  ],
+  "status": "independent_combined_source_and_control_preparation_review_passed_pending_root_release",
+  "verified_files": {
+    "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/SDKSettings.json": "f8d005f09381389167f9e0aeaa169bc9e7dff162ef22ca2fd8e98df7ff1acafe",
+    "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers/Sparse/Solve.h": "8d2a7b44d05f1ff67cb1688ab8bb6573b021b88c758baa37e10a8aea1c46811a",
+    "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers/Sparse/SolveImplementation.h": "82a509ffea2e0e27d44473337698e3ebd97b182d3069da704c20fd2995049c17",
+    "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers/Sparse/SolveImplementationTyped.h": "201d2246ac80ecae14375abf8703d556e1adbd8d63cf2460e6db49ea31511bae",
+    "/Library/Developer/CommandLineTools/usr/bin/clang++": "f30550eab15fdf5ab8c0dc54c52679711241e5d4b636b027e18c09fef531775d",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-initialization-review-v1/review.json": "d6aef94bae672fe4143518906fd9057528a82b411a233d70641d1525164316f8",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-review-v1/review.json": "e7681c9abc95857ece6f163ba7cd88f4e3d674a8488f6422a2d1a719c01fc629",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/README.md": "cdd6c5a5f7903acb1630a83b8d14bf81b725d6f1e22324b54f4018fb5d19a084",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/accelerate-correctness.patch": "67a1858f2d55046796d7ccb46758ca06e5bfb673e75a539d158b1a17652f3340",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/adapter-control.py": "af24ed8a31eb787d968c6d08b24ea373615dd9c0802673946469416e49dd2778",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/control-declaration.json": "d45883853df0516efeba4e0f7d21f78b91899d47f3cd1743db58b61ec66334c9",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/extracted-methods.inc": "ebdd5b0619fba88411cdb15d8f6d23ea5ee7e0c295bafa7e28fa5e7a28cd95e4",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/extraction.json": "198889d13d942eea439e0352da3e0bfd837e25ddbd9cf0036a14d24fa4ecd76e",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/lifecycle-control.cpp": "3e7abc5e14d5d8caf7ace33618662191b0ab171f05b94a79957825479dad1678",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/patch-identity.json": "54198366eccb90a9fcdf4fcbf2a5055919a5658a1db0fdd7db8cfeede3b49eee",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-lifecycle-v1/patched-AccelerateSparseSolver.cpp": "476ac8471ea681a99c298352a50aba2a7a5baa71635e1678155a7f58b72ba04a",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-matrix-init-v1/accelerate-csc-and-matrix-init.patch": "e5a745070635fc632d1d2dc6d4c7cdb9df738ad4e6fae110c16345f685b52358",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-matrix-init-v1/matrix-initialization-control.cpp": "6b754a7b63c02949068040416111f7184e31e2ad0bad5e1f599e6c87b67a39e3",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/febio-accelerate-matrix-init-v1/matrix-initialization-fragment.cpp.txt": "f4f69d99bbefb3b20c4e79a35b44288384922c44a2d40ddfdb27519b55184dd3",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/manifests/experiments/febio-accelerate-csc-runtime-v3.json": "4f24c624808a7077e2a02a6350e85efd2b86d407180c1a5599e4e456d94dcedd",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/febio_accelerate_runtime.py": "ba94376626a0c9a1a78b81368f60b752e2fcd320f822418934c75bfcd6d80a46",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/tests/test_febio_accelerate_lifecycle_preparation.py": "3d8566f65ea6e231f440e4c648781ad0d202ca0193b46bc189ba31388813bcbf",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/tests/test_febio_accelerate_runtime.py": "092540ff123fefcd5d28401d86df0ad5a0bc572032dde822526cad545034d23f"
+  },
+  "verified_unique_file_count": 24
+}

@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "experiment_id": "native-axis-capsule-cache-fixed-trace-v1",
+  "status": "declared_not_executed",
+  "question": "Does exact capsule-cell coverage memoization reduce repeated fixed-trace native simulation cost while every scientific output stays unchanged?",
+  "scope": "one previously used structural development patient; four fixed-trace replays; no policy training or model-score selection",
+  "bound_input_file_sha256": {
+    "manifests/experiments/procedural-native-to-ucsf-v1.json": "6011ec40117f49653df4ab2fb0194c1e630bd2cf09870f87332f340fe3c6fde0",
+    "manifests/experiments/native-axis-preflight-v2.json": "35402cd0634e1db0798189e41a1dbbd4c880988b3e107ce38338eb8c966fb955",
+    "artifacts/preflight/native-axis-v2/profile/sequence-freeze.json": "31ece55a360bc07daf31908400804dbe882e1da4e49ce7571f653eef5de102dc",
+    "artifacts/preflight/native-axis-v2/profile/model.json": "cbfce67b631e13a657bcf578fd793d3407a89b9e20c3e0833a9192388cc83019",
+    "artifacts/preflight/native-axis-v2/profile/initial/inventory.json": "b5cea2d96d5e5c06ee11fd5024819a78cdbeaaca4cd994221cd6f00f324f70b6",
+    "artifacts/preflight/native-axis-v2/profile/greedy/episode.json.gz": "6d52eab008e31f320ab2e58651514fbe5a5066013eaf0280dce9df8ea257c77d"
+  },
+  "source_case": {
+    "case_id": "UCSF-PDGM-0004",
+    "bundle_sha256": "11cca797ad0216e5c8d940e7354f2dd23fb6954dc2aed7e4b0423f6adc6cefcf",
+    "semantic_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e"
+  },
+  "v2_model": {
+    "decision_model_hash": "sha256:1d06e7792ce78ecf7ef461ba5ff2b6f78e2367d3b3bc030a80d70b49e6e747f5",
+    "native_config_hash": "sha256:6d817c5c7441cc7d6c6bcaeac4542cfd3266f2474c9c1904a2d6279870b3143b",
+    "proposal_model_hash": "sha256:b9cc28313cba81017718bb884bd90042c0c64432bd2a2901b4f97e3485cc1135",
+    "greedy_history_hash": "sha256:8c6e1dd7af7ce28281f424508ee87e6fbe8983120e45f41165313093d7eacfdd",
+    "fixed_actions": [
+      "AXISv1:733fc018d7bf3838d0cdc4b8",
+      "AXISv1:655c3d5433c0c367b0806d85",
+      "AXISv1:bb274fe18711b9d4160bdc31"
+    ],
+    "optimization_seed": 17944101631498118750
+  },
+  "cache": {
+    "version": "experimental-exact-capsule-cover-cache-v1",
+    "tested_helper_sha256": "7b47cf36493c4baeb305beb7f18d4f5acf5bd0fa08b0e80738e948a20bd58869",
+    "max_payload_bytes": 33554432,
+    "max_entries": 16384,
+    "cached_values": "immutable pure active/shaft capsule-cell coverage only; no feasibility/cavity/integrity/audit cache"
+  },
+  "resource_budget": {
+    "worker_wall_seconds": 590.0,
+    "process_peak_rss_bytes": 6442450944,
+    "hard_termination_grace_seconds": 10.0
+  },
+  "maximum_worker_and_grace_seconds": 600.0,
+  "phase_order": [
+    "uncached_template_construction",
+    "reference_before",
+    "cached_cold",
+    "cached_warm",
+    "reference_after",
+    "four_independent_native_audits"
+  ],
+  "template_scope": "one uncached native configuration and complete axis adapter initial inventory, recorded separately; all four scored traces reset this same simulator to the pinned optimization seed",
+  "cold_cache_scope": "construct empty cache after reference_before; cached_cold includes an empty-cache reset/initial inventory and all postcut inventories; cache remains populated only for cached_warm; injection restored before reference_after",
+  "fixed_work": {
+    "episodes": 4,
+    "cuts_per_episode": 3,
+    "inventory_count_per_episode": 4,
+    "preview_attempts_per_inventory": [
+      26,
+      22,
+      18,
+      0
+    ],
+    "preview_attempts_per_episode": 66,
+    "common_template_preview_attempts": 26,
+    "independent_history_audits": 4,
+    "gradient_updates": 0,
+    "final_worlds": 0,
+    "stress_worlds": 0
+  },
+  "scientific_equality": "exact canonical equality across four phases for ordered full inventory ledgers, proposal/action IDs, all accepted native certificates, action/state observations, committed histories/source cells, rewards, five tissue/accounting masks and cavity ancestry; original V2 action/model/history/reward/ordered-ledger identity also required",
+  "excluded_timing_fields": [
+    "inventory.attempts[].elapsed_seconds",
+    "metrics.inventory_receipts[].attempts[].elapsed_seconds",
+    "metrics.proposal_failures[].elapsed_seconds",
+    "metrics.proposal_accounting.integrity_seconds",
+    "metrics.proposal_accounting.preview_seconds",
+    "metrics.initialization_timing"
+  ],
+  "runtime_identity": "full src/resectionlab Python closure, both launcher/helper scripts, requirements/runtime versions and all bound inputs frozen before child launch; new runtime hash kept separate from unchanged scientific model identity",
+  "measurement": "record preparation/template/cache-construction/reset/transition/export/audit/total wall, complete proposal verification call count/time including pre-reset calls, adapter preview count/time, cache counters/payload/entries and process cumulative peak RSS; same explicit per-instance proposer timing wrapper in all four phases, restored in finally",
+  "memory_scope": "6GiB cooperative process peak RSS limit, not an OS memory reservation; parent enforces590s plus at most10s termination grace",
+  "execution": "explicit --execute only after root release; one isolated subprocess/worker; no other native workload in its process; preserve failures and committed transitions; no automatic retry or parameter change",
+  "interpretation": "paired fixed trace on one development case only; not whole-learning throughput, clinical safety, calibrated probability or general patient performance",
+  "declaration_content_hash": "sha256:90b245b72f84acac1cbe32cb338d64e47222fd75b2f20673439dbb34e6e4f9d6"
+}

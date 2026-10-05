@@ -1,0 +1,131 @@
+{
+  "status": "failed_supervised_attempt_saved_diagnostics_identical_to_v1",
+  "created_at_utc": "2026-10-04T20:49:40.882470+00:00",
+  "v1_frozen_unchanged": true,
+  "all_deterministic_fields_identical": true,
+  "deterministic_field_comparisons": {
+    "status": true,
+    "N": true,
+    "coordinate_justification_sha256": true,
+    "source_world_to_RAS": true,
+    "destination_world_to_RAS": true,
+    "pair_role": true,
+    "pair_binding_hash": true,
+    "row_ids": true,
+    "FLAIR_reference_RAS_mm": true,
+    "beforeUS_reference_RAS_mm": true,
+    "FLAIR_RAS_to_beforeUS_RAS_mm": true,
+    "bounds": true,
+    "raw_distances_mm": true,
+    "fit_residuals_mm": true,
+    "leave_one_out_residuals_mm": true,
+    "summaries": true,
+    "LOO_RMS_worse_than_raw": true,
+    "outliers_removed": true,
+    "alternative_fits_selected": true,
+    "clinical_accuracy_validated": true,
+    "brain_domain_available": true,
+    "anatomical_alignment_accepted": true,
+    "duringUS_or_before_during_tag_opened": true,
+    "B_or_V_motion_accessed": true,
+    "native_affines_preserved": true,
+    "resampled_volumes_saved": true,
+    "plots": true,
+    "runtime": true
+  },
+  "all_six_images_byte_identical": true,
+  "images": [
+    {
+      "path": "MRI-native-axis0.png",
+      "v1_sha256": "92f5863c837c8e6390ce7684c544f9750bd85c500e7d020b19659672d985a997",
+      "v2_sha256": "92f5863c837c8e6390ce7684c544f9750bd85c500e7d020b19659672d985a997",
+      "byte_identical": true
+    },
+    {
+      "path": "MRI-native-axis1.png",
+      "v1_sha256": "ad44a9d1ef3adb72960b20c34b2d53dc6bb875cddaabd637c0055d3ce7c15bb4",
+      "v2_sha256": "ad44a9d1ef3adb72960b20c34b2d53dc6bb875cddaabd637c0055d3ce7c15bb4",
+      "byte_identical": true
+    },
+    {
+      "path": "MRI-native-axis2.png",
+      "v1_sha256": "f1febbbd647fe2a1505bc31a0f07337688e94e3230fb6242a7c1233154e48bc1",
+      "v2_sha256": "f1febbbd647fe2a1505bc31a0f07337688e94e3230fb6242a7c1233154e48bc1",
+      "byte_identical": true
+    },
+    {
+      "path": "US-native-axis0.png",
+      "v1_sha256": "bf32d28ac60bb8254095a6358cb98a6a29913292cf74971890da87c628028441",
+      "v2_sha256": "bf32d28ac60bb8254095a6358cb98a6a29913292cf74971890da87c628028441",
+      "byte_identical": true
+    },
+    {
+      "path": "US-native-axis1.png",
+      "v1_sha256": "b930c8971887bdc4a11879a2f02d5fd7a0628775da3e79efeb8c7ca53e7de7dd",
+      "v2_sha256": "b930c8971887bdc4a11879a2f02d5fd7a0628775da3e79efeb8c7ca53e7de7dd",
+      "byte_identical": true
+    },
+    {
+      "path": "US-native-axis2.png",
+      "v1_sha256": "75b9973c67232cde0e6e962227943eecff451793839dee31779e32f959c3ac1f",
+      "v2_sha256": "75b9973c67232cde0e6e962227943eecff451793839dee31779e32f959c3ac1f",
+      "byte_identical": true
+    }
+  ],
+  "shared_source_identities_identical": {
+    "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/MRI/Case4-T1.nii.gz": true,
+    "artifacts/mechanics/resect-case4-baseline-header-qc-v1/header-receipt.json": true,
+    "build/resect-source-partition-6766a2a/src/resectionlab/mechanics_landmarks.py": true,
+    "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/US/Case4-US-before.nii.gz": true,
+    "build/resect-source-partition-6766a2a/src/resectionlab/core.py": true,
+    "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/Landmarks/Case4-MRI-beforeUS.tag": true,
+    "artifacts/mechanics/resect-case4-source-partition-v1/source-snapshot.json": true,
+    "build/resect-source-partition-6766a2a/src/resectionlab/__init__.py": true,
+    "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/MRI/Case4-FLAIR.nii.gz": true
+  },
+  "v2_source_hashes_before_equal_after": true,
+  "runtime_fields_separate": {
+    "elapsed_seconds": {
+      "v1": 2.4063256670488045,
+      "v2": 2.430624832981266
+    },
+    "child_peak_RSS_bytes": {
+      "v1": 601866240,
+      "v2": 601915392
+    }
+  },
+  "distinct_control_bindings": "V2 source/declaration/release and paths differ as explicitly authorized; patient/source-helper/header identities remain unchanged.",
+  "monitor_samples": 69,
+  "final_probe": {
+    "parent_pid": 34317,
+    "child_pid": 34324,
+    "returncode": 0,
+    "stdout": "34317  25408 Ss  \n34324      0 ?E  \n",
+    "stderr": "",
+    "parsed_rows": [
+      {
+        "pid": 34317,
+        "rss_KiB": 25408,
+        "state": "Ss"
+      },
+      {
+        "pid": 34324,
+        "rss_KiB": 0,
+        "state": "?E"
+      }
+    ],
+    "failure": "RuntimeError: LIVE_CHILD_RSS_MISSING_OR_ZERO",
+    "exit_code_after_query": null,
+    "exit_code_at_error": null,
+    "elapsed_seconds": 2.5356384579790756
+  },
+  "monitor_interpretation": "Query succeeded with child RSS0 and state ?E while both directpoll observations were None. Conservative missing-live-RSS failure occurred; worker exit0 was recorded after. No assumption that ps state alone proves successful exit. V1 exact failed query remains unknown.",
+  "root_visual_inspection_bound": {
+    "source": "artifacts/mechanics/resect-case4-baseline-alignment-v1/root-visual-qc.json",
+    "sha256": "7703f86e7e91fdd3f5d523f1116a6a0895ff7a8bf5c7633fad80444170f5f2f0",
+    "reuse_reason": "All six image byte hashes are identical; no new visual evidence or expert approval."
+  },
+  "anatomical_alignment_accepted": false,
+  "B_or_V_motion_accessed": false,
+  "automatic_retries": 0
+}

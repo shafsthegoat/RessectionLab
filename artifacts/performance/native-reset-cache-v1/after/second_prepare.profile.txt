@@ -1,0 +1,43 @@
+         229234 function calls (228794 primitive calls) in 2.381 seconds
+
+   Ordered by: cumulative time
+   List reduced from 363 to 35 due to restriction <35>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.000    0.000    2.382    2.382 profile_native.py:65(<lambda>)
+        1    0.018    0.018    2.382    2.382 native_simulation.py:400(make_native_patient_simulator)
+        1    0.000    0.000    1.910    1.910 native_simulation.py:66(__init__)
+        1    0.012    0.012    1.123    1.123 simulation.py:197(__init__)
+        3    0.000    0.000    0.926    0.309 simulation.py:136(decision_model_hash)
+       30    0.050    0.002    0.925    0.031 simulation.py:38(_array_hash)
+       51    0.840    0.016    0.840    0.016 {built-in method _hashlib.openssl_sha256}
+        1    0.000    0.000    0.790    0.790 native_simulation.py:154(reset)
+        1    0.000    0.000    0.777    0.777 simulation.py:224(reset)
+        2    0.002    0.001    0.560    0.280 _morphology.py:1083(binary_fill_holes)
+        2    0.000    0.000    0.557    0.278 _morphology.py:407(binary_dilation)
+        2    0.000    0.000    0.557    0.278 _morphology.py:216(_binary_erosion)
+        2    0.000    0.000    0.472    0.236 native_simulation.py:260(observation)
+        2    0.007    0.004    0.469    0.234 simulation.py:378(observation)
+        6    0.000    0.000    0.451    0.075 native_simulation.py:211(proposed_actions)
+        8    0.011    0.001    0.450    0.056 native_resection.py:320(preview_stroke)
+        2    0.389    0.194    0.389    0.194 {built-in method scipy.ndimage._nd_image.binary_erosion2}
+        1    0.000    0.000    0.343    0.343 native_resection.py:280(__init__)
+      586    0.025    0.000    0.343    0.001 geometry.py:357(capsule_voxel_indices)
+        1    0.000    0.000    0.315    0.315 native_simulation.py:137(assert_model_frozen)
+        1    0.000    0.000    0.315    0.315 simulation.py:220(assert_model_frozen)
+      586    0.155    0.000    0.230    0.000 geometry.py:319(_segment_cell_distances)
+     2125    0.001    0.000    0.194    0.000 fromnumeric.py:48(_wrapfunc)
+        7    0.000    0.000    0.182    0.026 numeric.py:620(argwhere)
+       10    0.000    0.000    0.182    0.018 fromnumeric.py:2031(nonzero)
+       10    0.182    0.018    0.182    0.018 {method 'nonzero' of 'numpy.ndarray' objects}
+        2    0.166    0.083    0.166    0.083 {built-in method scipy.ndimage._nd_image.binary_erosion}
+        1    0.042    0.042    0.137    0.137 simulation.py:84(__post_init__)
+     2861    0.081    0.000    0.081    0.000 {method 'tobytes' of 'numpy.ndarray' objects}
+    10674    0.076    0.000    0.076    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+        3    0.000    0.000    0.063    0.021 geometry.py:225(__post_init__)
+        1    0.005    0.005    0.049    0.049 native_resection.py:79(__post_init__)
+     2363    0.003    0.000    0.047    0.000 fromnumeric.py:66(_wrapreduction)
+       17    0.000    0.000    0.046    0.003 _arraysetops_impl.py:145(unique)
+       17    0.000    0.000    0.045    0.003 _arraysetops_impl.py:350(_unique1d)
+
+

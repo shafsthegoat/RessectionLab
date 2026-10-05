@@ -1,0 +1,32 @@
+{
+  "scope": "Independent synthetic viewer-only review. No public patient, native simulation, numerical policy, browser, or GPU execution. Actual VolumeRenderer methods exercised through prototype fixtures with CPU THREE objects and MRI/source-plane uniform records; WebGL constructor not invoked.",
+  "tests": {
+    "file": "desktop/src/viewer/inspectionTool-independent.test.mjs",
+    "passed": 7,
+    "failed": 0
+  },
+  "coverage": [
+    "Missing planning identity refuses inspection",
+    "Stable semantic selection suppression survives equivalent wrapper recreation; explicit deselection permits later reselection",
+    "Actual MRI/source-plane uniform slots and mesh visibility are exclusive to selected inspection; latest A/B state restores after invalid replacement",
+    "Actual accepted replay clears inspection and clearing replay does not resurrect it",
+    "Rejected replay also clears prior inspection",
+    "Selected geometry unknowns do not inherit warnings belonging only to other accepted previews",
+    "Oblique LPS source fixture uses already-RAS endpoints once; full shaft/tip capsule endcaps match independent physical algebra"
+  ],
+  "remaining_limits": [
+    "Host must authenticate full response and selected request geometry before constructing viewer props",
+    "Component-to-App request cancellation, source-switch integration, and actual GPU appearance remain unverified in this receipt",
+    "No independent geometry or clinical authority is conferred",
+    "Camera and cursor intentionally stay unchanged; user-operated fit control fits the displayed tool"
+  ],
+  "source_sha256": {
+    "desktop/src/viewer/inspectionTool.ts": "5656bcd6e7f27fc726d984bdbd2ecb0540c3aac92b26e6ccff624367b348e372",
+    "desktop/src/viewer/inspectionToolGeometry.ts": "9ac792a3a8b247242a99f837106d0c24b41a61c2f04d2c8fd24e3a76675dcd58",
+    "desktop/src/viewer/VolumeRenderer.ts": "2aa65200e4ced8f7eb754a7e960f6ef9cd60a42388b8b08be6dfa94ad2d6c3cf",
+    "desktop/src/viewer/ViewerWorkspace.tsx": "c81633b46951606a9c6008adf068b786bd262bab13f11ee98ecf2bdc399c0d22",
+    "desktop/src/viewer/contracts.ts": "ce8ea24977b17f36c384ec8ffcd6bf873824545b910e6d5ae7bd8cf4e8573078",
+    "desktop/src/viewer/shaders.ts": "7501b3a47996b825e13b98f0b5ce2a33e481b150fecdec6fa3b7b8e3dc00b0fe",
+    "desktop/src/viewer/inspectionTool-independent.test.mjs": "2e5ce333c3bd850aa170f1b01f3b5a63d2d865b86d35068b2919bdd9a63182c6"
+  }
+}

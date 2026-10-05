@@ -1,0 +1,10 @@
+{
+  "command": ".venv/bin/python -m pytest tests/test_capsule_cache.py tests/test_capsule_cache_review.py tests/test_native_resection.py tests/test_native_adversarial.py -q",
+  "exit_code": 0,
+  "summary": "78 passed in 1.93s",
+  "source_sha256": "7b47cf36493c4baeb305beb7f18d4f5acf5bd0fa08b0e80738e948a20bd58869",
+  "source_file": "src/resectionlab/experimental_capsule_cache.py",
+  "own_tests_sha256": "111ffc9e134f88d586ce42d94d67d873381ab75f35e02dd5bb07581a76fda6c2",
+  "review_tests_sha256": "9cfaa044e90bf79cf1db4694f5c228019f580dbf0b3ece45b7829c5bc0637150",
+  "scope": "Synthetic cache and existing native engine/adversarial regressions; no public workload, gradients or production integration."
+}

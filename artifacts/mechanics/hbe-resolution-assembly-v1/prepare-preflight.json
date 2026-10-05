@@ -1,0 +1,20 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "outputs/validation/hbe-resolution-5b80e3f/frozen-source/scripts/mechanics_hbe_resolution.py",
+    "--root",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "--phase",
+    "prepare",
+    "--release",
+    "artifacts/mechanics/hbe-resolution-assembly-v1/prepare-release.json",
+    "--release-sha256",
+    "43d21dc6c23fb9bc1e3aa319810262a9edbee99e6d437b5910250397e6820bbd"
+  ],
+  "exit_code": 0,
+  "stdout": "Metadata verified; neither phase has executed.\n",
+  "stderr": "",
+  "elapsed_seconds": 0.934850083081983,
+  "mode": "metadata_only_no_meshing_or_solver",
+  "release_sha256": "43d21dc6c23fb9bc1e3aa319810262a9edbee99e6d437b5910250397e6820bbd"
+}

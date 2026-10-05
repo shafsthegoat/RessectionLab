@@ -1,0 +1,23 @@
+{
+  "study_role": "development_followon_from_selection_only_screen",
+  "declared_at": "2026-10-04T07:00:29.127284+00:00",
+  "hypothesis": "More exploration and updates may reduce collapse to immediate STOP.",
+  "width": 16,
+  "learning_rate": 0.003,
+  "entropies": [
+    0.01,
+    0.05
+  ],
+  "seeds": [
+    11,
+    23,
+    47
+  ],
+  "budget": {
+    "max_gradient_steps": 128,
+    "max_environment_steps": 4096,
+    "max_wall_seconds": 60
+  },
+  "final_evaluation_access": "none",
+  "rewards_world_tools": "unchanged branching-v1 decision model"
+}

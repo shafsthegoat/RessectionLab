@@ -1,0 +1,530 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-10-04T07:14:57.441804+00:00",
+  "implementation_sha256": "dbd2c4ba9551e2aa0d454b638e256ad8bc6cdf45dcdc8ec08e091e43c3eb14e5",
+  "source_state": "raw_uncorrected",
+  "source_hashes": {
+    "mean_b0": "e5963131a8fb62993294e27a18edf2633ec6ccd9c964439cde4c1164cf7afb87",
+    "T1": "70c5c1e4e28143318d2820788343e239efdc205344204f8f50497b81281b32c6",
+    "b0_mask": "67e575dce3cc83ce11a89178841a9894b694dcf2e3f93a7611cfc7ab3c170010"
+  },
+  "header_qc": {
+    "mean_b0": {
+      "file": "mean_b0.nii.gz",
+      "shape": [
+        96,
+        96,
+        60
+      ],
+      "affine_ras_mm": [
+        [
+          -2.499688148498535,
+          -0.03490452840924263,
+          0.018460214138031006,
+          122.3555679321289
+        ],
+        [
+          -0.037076663225889206,
+          2.4768667221069336,
+          -0.33727848529815674,
+          -99.16636657714844
+        ],
+        [
+          0.013580377213656902,
+          0.3375101685523987,
+          2.4770753383636475,
+          -78.84336853027344
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_units": "mm",
+      "physical_units": "mm",
+      "unit_scale_to_mm": 1.0,
+      "qform_code": 1,
+      "sform_code": 1,
+      "qform_native": [
+        [
+          -2.4996881531617854,
+          -0.034904461855672544,
+          0.018461188617961408,
+          122.3555679321289
+        ],
+        [
+          -0.03707672897864982,
+          2.4768666780266138,
+          -0.3372784835260785,
+          -99.16636657714844
+        ],
+        [
+          0.013581351584647086,
+          0.3375102040294091,
+          2.477075374118672,
+          -78.84336853027344
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "sform_native": [
+        [
+          -2.499688148498535,
+          -0.03490452840924263,
+          0.018460214138031006,
+          122.3555679321289
+        ],
+        [
+          -0.037076663225889206,
+          2.4768667221069336,
+          -0.33727848529815674,
+          -99.16636657714844
+        ],
+        [
+          0.013580377213656902,
+          0.3375101685523987,
+          2.4770753383636475,
+          -78.84336853027344
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "orientation": [
+        "L",
+        "A",
+        "S"
+      ],
+      "spacing_mm": [
+        2.499999989069053,
+        2.5000000398120967,
+        2.4999999576160836
+      ],
+      "voxel_volume_mm3": 15.624999915607704,
+      "handedness": "left",
+      "anisotropic": false,
+      "obliquity_degrees": [
+        0.9049788915131939,
+        7.800492834715033,
+        7.765172761249733
+      ],
+      "status": "passed_header_checks",
+      "visual_alignment_review": "pending",
+      "frame": "RAS+",
+      "simulation_frame": "source_coded_frame_native_status_requires_source_provenance"
+    },
+    "T1": {
+      "file": "sub-PAT28_ses-preop_T1w.nii.gz",
+      "shape": [
+        160,
+        256,
+        256
+      ],
+      "affine_ras_mm": [
+        [
+          0.9997712969779968,
+          0.02100319229066372,
+          0.003500532591715455,
+          -80.1395034790039
+        ],
+        [
+          -0.02100302278995514,
+          0.9997794032096863,
+          -7.354327681241557e-05,
+          -106.31840515136719
+        ],
+        [
+          -0.0035012979060411453,
+          4.689304944349715e-09,
+          0.9999938607215881,
+          -134.4442901611328
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_units": "mm",
+      "physical_units": "mm",
+      "unit_scale_to_mm": 1.0,
+      "qform_code": 1,
+      "sform_code": 1,
+      "qform_native": [
+        [
+          0.9997713138694039,
+          0.02100319300951191,
+          0.003500532552138133,
+          -80.1395034790039
+        ],
+        [
+          -0.021003022940148143,
+          0.9997794086114222,
+          -7.35432732034985e-05,
+          -106.31840515136719
+        ],
+        [
+          -0.003501298121459978,
+          4.68939084951643e-09,
+          0.9999938704128333,
+          -134.4442901611328
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "sform_native": [
+        [
+          0.9997712969779968,
+          0.02100319229066372,
+          0.003500532591715455,
+          -80.1395034790039
+        ],
+        [
+          -0.02100302278995514,
+          0.9997794032096863,
+          -7.354327681241557e-05,
+          -106.31840515136719
+        ],
+        [
+          -0.0035012979060411453,
+          4.689304944349715e-09,
+          0.9999938607215881,
+          -134.4442901611328
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "orientation": [
+        "R",
+        "A",
+        "S"
+      ],
+      "spacing_mm": [
+        0.9999980161552362,
+        0.9999999945843575,
+        0.999999990308953
+      ],
+      "voxel_volume_mm3": 0.9999980010485767,
+      "handedness": "right",
+      "anisotropic": false,
+      "obliquity_degrees": [
+        1.220085863066466,
+        1.2034827750156092,
+        0.20061041386885015
+      ],
+      "status": "passed_header_checks",
+      "visual_alignment_review": "pending",
+      "frame": "RAS+",
+      "simulation_frame": "source_coded_frame_native_status_requires_source_provenance"
+    },
+    "b0_mask": {
+      "file": "fit_coverage.nii.gz",
+      "shape": [
+        96,
+        96,
+        60
+      ],
+      "affine_ras_mm": [
+        [
+          -2.499688148498535,
+          -0.03490452840924263,
+          0.018460214138031006,
+          122.3555679321289
+        ],
+        [
+          -0.037076663225889206,
+          2.4768667221069336,
+          -0.33727848529815674,
+          -99.16636657714844
+        ],
+        [
+          0.013580377213656902,
+          0.3375101685523987,
+          2.4770753383636475,
+          -78.84336853027344
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "source_units": "mm",
+      "physical_units": "mm",
+      "unit_scale_to_mm": 1.0,
+      "qform_code": 1,
+      "sform_code": 1,
+      "qform_native": [
+        [
+          -2.4996881531617854,
+          -0.034904461855672544,
+          0.018461188617961408,
+          122.3555679321289
+        ],
+        [
+          -0.03707672897864982,
+          2.4768666780266138,
+          -0.3372784835260785,
+          -99.16636657714844
+        ],
+        [
+          0.013581351584647086,
+          0.3375102040294091,
+          2.477075374118672,
+          -78.84336853027344
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "sform_native": [
+        [
+          -2.499688148498535,
+          -0.03490452840924263,
+          0.018460214138031006,
+          122.3555679321289
+        ],
+        [
+          -0.037076663225889206,
+          2.4768667221069336,
+          -0.33727848529815674,
+          -99.16636657714844
+        ],
+        [
+          0.013580377213656902,
+          0.3375101685523987,
+          2.4770753383636475,
+          -78.84336853027344
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "orientation": [
+        "L",
+        "A",
+        "S"
+      ],
+      "spacing_mm": [
+        2.499999989069053,
+        2.5000000398120967,
+        2.4999999576160836
+      ],
+      "voxel_volume_mm3": 15.624999915607704,
+      "handedness": "left",
+      "anisotropic": false,
+      "obliquity_degrees": [
+        0.9049788915131939,
+        7.800492834715033,
+        7.765172761249733
+      ],
+      "status": "passed_header_checks",
+      "visual_alignment_review": "pending",
+      "frame": "RAS+",
+      "simulation_frame": "source_coded_frame_native_status_requires_source_provenance"
+    }
+  },
+  "local_tools": {
+    "executables_on_path": {
+      "topup": null,
+      "eddy": null,
+      "eddy_cpu": null,
+      "bet": null,
+      "flirt": null,
+      "epi_reg": null,
+      "antsRegistration": null,
+      "mrconvert": null
+    },
+    "python_packages": {
+      "SimpleITK": "2.5.6",
+      "dipy": "1.12.1"
+    }
+  },
+  "method": "SimpleITK Euler3D rigid; Mattes mutual information; physical identity initialization",
+  "simpleitk_version": "2.5.6",
+  "configuration": {
+    "iterations_per_level": 120,
+    "sampling_fraction": 0.25,
+    "random_seed": 41,
+    "threads": 2,
+    "maximum_center_displacement_mm": 40,
+    "maximum_rotation_degrees": 25
+  },
+  "fixed_image": "mean_b0",
+  "moving_image": "T1",
+  "transform_direction": "DWI_RAS_mm_to_T1_RAS_mm",
+  "DWI_RAS_mm_to_T1_RAS_mm": [
+    [
+      0.9998973360797598,
+      0.006246512760291895,
+      -0.012895672876410386,
+      0.22566156168908946
+    ],
+    [
+      -0.005996180795672532,
+      0.9997945906504067,
+      0.019360328562589554,
+      -0.0978452484730064
+    ],
+    [
+      0.013013958524041858,
+      -0.019281016169313325,
+      0.999729403038149,
+      2.4555369662604596
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "T1_RAS_mm_to_DWI_RAS_mm": [
+    [
+      0.99989733607976,
+      -0.005996180795672551,
+      0.013013958524041932,
+      -0.25818134842152596
+    ],
+    [
+      0.0062465127602918755,
+      0.9997945906504067,
+      -0.019281016169313367,
+      0.14376080027037308
+    ],
+    [
+      -0.01289567287641031,
+      0.019360328562589502,
+      0.9997294030381485,
+      -2.4500681315786275
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "fixed_affine_ras_mm": [
+    [
+      -2.499688148498535,
+      -0.03490452840924263,
+      0.018460214138031006,
+      122.3555679321289
+    ],
+    [
+      -0.037076663225889206,
+      2.4768667221069336,
+      -0.33727848529815674,
+      -99.16636657714844
+    ],
+    [
+      0.013580377213656902,
+      0.3375101685523987,
+      2.4770753383636475,
+      -78.84336853027344
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "moving_affine_ras_mm": [
+    [
+      0.9997712969779968,
+      0.02100319229066372,
+      0.003500532591715455,
+      -80.1395034790039
+    ],
+    [
+      -0.02100302278995514,
+      0.9997794032096863,
+      -7.354327681241557e-05,
+      -106.31840515136719
+    ],
+    [
+      -0.0035012979060411453,
+      4.689304944349715e-09,
+      0.9999938607215881,
+      -134.4442901611328
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "elapsed_registration_seconds": 3.3303704579593614,
+  "optimization_iterations": 64,
+  "optimizer_stop_reason": "RegularStepGradientDescentOptimizerv4: Step too small after 18 iterations. Current step (0.000976562) is less than minimum step (0.001).",
+  "independent_qc": {
+    "implementation": "NumPy joint histogram; fixed 32 bins over normalized [0,1]",
+    "metric": "(H(fixed)+H(moving))/H(joint)",
+    "same_paired_voxels_before_and_after": true,
+    "paired_voxels": 99922,
+    "mask_common_support_fraction": 0.9862897414890782,
+    "nmi_before": 1.0402376064910845,
+    "nmi_after": 1.0662700805969374,
+    "center_displacement_mm": 2.409025176705257,
+    "rotation_degrees": 1.3783156114284025,
+    "flags": []
+  },
+  "normalization_windows": {
+    "fixed_mean_b0": [
+      3.3333332538604736,
+      641.6666870117188
+    ],
+    "moving_T1": [
+      1.0,
+      352.0
+    ]
+  },
+  "registration_reviewed": false,
+  "mask_reviewed": false,
+  "preprocessing_ready": false,
+  "clinical_deficit_probability": null,
+  "functional_coverage": {
+    "motor": "unknown",
+    "language": "unknown"
+  },
+  "unresolved": [
+    "susceptibility_correction_not_established",
+    "volume_motion_and_eddy_correction_not_established",
+    "rotated_gradient_provenance_not_established",
+    "independent_anatomical_landmark_review_pending",
+    "mask_and_lesion_region_review_pending"
+  ],
+  "artifact_hashes": {
+    "T1_on_b0.nii.gz": "2e047b9ba5fdbf2d04e538aac7669ee0694652f49c9437f7d48edf14bd2116fc",
+    "DWI_LPS_to_T1_LPS.tfm": "22d3cf935b5f5de309fa2eca72f0621deacf744cbf997f5cdd80e05c6a6c1579",
+    "registration_qc.png": "43c7b7c74554dfeb1101991b43a882e5b58e7598c4066039191f396ae53c0db7"
+  }
+}

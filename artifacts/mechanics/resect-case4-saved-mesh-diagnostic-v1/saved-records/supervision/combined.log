@@ -1,0 +1,2 @@
+/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-saved-mesh-diagnostic-v1/source/scripts/mechanics_patient_mesh_diagnostic.py:165: DeprecationWarning: Call to deprecated method SetCells. (Use ImportLegacyFormat or SetData instead.) -- Deprecated since version 9.6.0.
+  cells=vtkCellArray();cells.SetCells(len(faces),numpy_to_vtkIdTypeArray(np.c_[np.full(len(faces),3),faces].astype(np.int64).ravel(),deep=True))

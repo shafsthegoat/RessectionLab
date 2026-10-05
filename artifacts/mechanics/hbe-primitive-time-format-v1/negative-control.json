@@ -1,0 +1,15 @@
+{
+  "schema": "hbe-time-format-negative-control-v1",
+  "parser_sha256": "a86191769ee71e79596d9f3871da575dd7e2b2d62e1a9c919162242a335fa65d",
+  "test": "test_actual_saved_coarse_headers_use_nine_significant_digits",
+  "result": "1 failed in 0.08s",
+  "exception": "ValueError: Unexpected physical load time",
+  "failing_step": 1,
+  "observed_time": 0.0166666667,
+  "declared_time": 0.016666666666666666,
+  "difference": 3.333333262189875e-11,
+  "prior_absolute_header_allowance": 5e-12,
+  "cause": "The earlier 12-significant-digit assumption described numeric rows but not the %.9lg time header.",
+  "no_solver_rerun": true,
+  "no_observed_HBE_response_access": true
+}

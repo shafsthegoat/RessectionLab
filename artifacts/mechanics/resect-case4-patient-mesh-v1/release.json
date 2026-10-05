@@ -1,0 +1,65 @@
+{
+  "schema": "resect-case4-patient-mesh-v1-release",
+  "authorized": true,
+  "authorized_at_utc": "2026-10-04T21:53:24.965889+00:00",
+  "authorization_authority": "Root coordinator explicit instruction in current task",
+  "authorization_text": "Authorize ONE bounded real Case4 meshing attempt under the unchanged v1 declaration: 24/20/16 mm, stop first failure, 180s/3GiB/one numerical thread, no retry or mask alteration, no solver or B/V access.",
+  "source_commit": "a49e70ac2a4df747e75fc7bec57c3a887898a6b5",
+  "source_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-source-a49e70ac",
+  "repository_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+  "attempt_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-v1",
+  "mask_qc_accepted_for_estimated_domain": true,
+  "baseline_diagnostic_accepted_for_provisional_research_frame": true,
+  "clinical_validation": false,
+  "anatomical_registration_accepted": false,
+  "source_sha256": {
+    "scripts/mechanics_patient_mesh.py": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "manifests/experiments/resect-case4-patient-mesh-v1.json": "b6b3fd278df85fb0ea89c72dcff37cc5f229644602f5288c81e8ce6e7653173c",
+    "artifacts/febio-runtime-investigation-v1/prospective-runtime.json": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48"
+  },
+  "prerequisite_receipts": [
+    {
+      "role": "mask_qc",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/qc-receipt.json",
+      "sha256": "f1a3ad984233fd121af37cb463e1d88ebb443f0506a0d183f0acb298116f6c23"
+    },
+    {
+      "role": "baseline_diagnostic",
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-baseline-alignment-v3/comparison-and-outcome.json",
+      "sha256": "605f3cdc54c6163b449d638da6ba4e9c10823727a102f333f92d1b213c05f7e1"
+    }
+  ],
+  "release_context": {
+    "evidence": [
+      {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/root-visual-decision.json",
+        "sha256": "5ed4158a8247eb731175b70d8194ac290731455cc6ce34ed08056dc3f715a2c2"
+      },
+      {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics-patient-mesh-independent-review-v1/receipt.json",
+        "sha256": "e043316fbc5d3c1fc9342f8a3b0aa45cc0ca6f231cdd7e356e254af40a01461c"
+      },
+      {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics-patient-mesh-independent-review-v1/native-raw-index.json",
+        "sha256": "2341ce38b2a549ebcd562c0ab1b86ea340c481993ae646f08ed5f4a2866e932e"
+      }
+    ],
+    "estimated_domain": "Unchanged SynthStrip envelope with inferior/cerebellar exclusions observed on fixed planes; not whole brain or pial truth.",
+    "prior_native_cube_control": {
+      "status": "failed_fixed_volume_fidelity_gate",
+      "relative_volume_error": 0.08499022677808099,
+      "maximum_relative_volume_error": 0.03,
+      "attempts": 1,
+      "retries": 0
+    },
+    "meaning": "New real-domain feasibility experiment; native API operation does not establish prevalidated geometry fidelity.",
+    "forbidden": [
+      "solver calls",
+      "B/V landmark access",
+      "domain alteration",
+      "parameter rescue",
+      "retries"
+    ]
+  }
+}

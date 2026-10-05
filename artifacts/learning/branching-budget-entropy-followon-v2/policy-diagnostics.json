@@ -1,0 +1,1326 @@
+{
+  "analysis_role": "development_policy_diagnostics_no_final_worlds",
+  "exact_reference_return": 1.3,
+  "rows": [
+    {
+      "entropy": 0.01,
+      "seed": 11,
+      "selected_return": 0.0,
+      "gradient_steps": 128,
+      "actor_gradient_norm_min_median_max": [
+        0.0043027824202808845,
+        0.19684809334749326,
+        1.8591570633802998
+      ],
+      "fraction_updates_gradient_clipped": 0.0,
+      "mean_optimization_return_first8": -0.2925,
+      "mean_optimization_return_last8": -0.055,
+      "reference_path_states": [
+        {
+          "reference_action": "REMOVE:branch-narrow:1,1,0",
+          "reference_reward": -0.22,
+          "states": {
+            "initial": {
+              "value": 0.21834588050842285,
+              "probabilities": {
+                "STOP": 0.35080471634864807,
+                "REMOVE:branch-narrow:1,1,0": 0.32117176055908203,
+                "REMOVE:branch-wide:1,1,0": 0.3280235826969147
+              },
+              "entropy": 1.0978951454162598,
+              "greedy": "STOP"
+            },
+            "selected": {
+              "value": 0.21834588050842285,
+              "probabilities": {
+                "STOP": 0.35080471634864807,
+                "REMOVE:branch-narrow:1,1,0": 0.32117176055908203,
+                "REMOVE:branch-wide:1,1,0": 0.3280235826969147
+              },
+              "entropy": 1.0978951454162598,
+              "greedy": "STOP"
+            },
+            "latest": {
+              "value": -0.05892515927553177,
+              "probabilities": {
+                "STOP": 0.899693489074707,
+                "REMOVE:branch-narrow:1,1,0": 0.05492308363318443,
+                "REMOVE:branch-wide:1,1,0": 0.04538341239094734
+              },
+              "entropy": 0.3948287069797516,
+              "greedy": "STOP"
+            }
+          }
+        },
+        {
+          "reference_action": "REMOVE:branch-narrow:0,1,0",
+          "reference_reward": -0.22,
+          "states": {
+            "initial": {
+              "value": 0.24663573503494263,
+              "probabilities": {
+                "STOP": 0.22837300598621368,
+                "REMOVE:branch-narrow:1,1,1": 0.19336098432540894,
+                "REMOVE:branch-wide:1,1,1": 0.18020403385162354,
+                "REMOVE:branch-narrow:0,1,0": 0.1990310251712799,
+                "REMOVE:branch-narrow:2,1,0": 0.1990310251712799
+              },
+              "entropy": 1.6063843965530396,
+              "greedy": "STOP"
+            },
+            "selected": {
+              "value": 0.24663573503494263,
+              "probabilities": {
+                "STOP": 0.22837300598621368,
+                "REMOVE:branch-narrow:1,1,1": 0.19336098432540894,
+                "REMOVE:branch-wide:1,1,1": 0.18020403385162354,
+                "REMOVE:branch-narrow:0,1,0": 0.1990310251712799,
+                "REMOVE:branch-narrow:2,1,0": 0.1990310251712799
+              },
+              "entropy": 1.6063843965530396,
+              "greedy": "STOP"
+            },
+            "latest": {
+              "value": -0.021024830639362335,
+              "probabilities": {
+                "STOP": 0.862328827381134,
+                "REMOVE:branch-narrow:1,1,1": 0.034351564943790436,
+                "REMOVE:branch-wide:1,1,1": 0.020659074187278748,
+                "REMOVE:branch-narrow:0,1,0": 0.04133033752441406,
+                "REMOVE:branch-narrow:2,1,0": 0.04133033752441406
+              },
+              "entropy": 0.5870487689971924,
+              "greedy": "STOP"
+            }
+          }
+        },
+        {
+          "reference_action": "REMOVE:branch-narrow:0,1,1",
+          "reference_reward": 0.98,
+          "states": {
+            "initial": {
+              "value": 0.2758551239967346,
+              "probabilities": {
+                "STOP": 0.1974368840456009,
+                "REMOVE:branch-narrow:1,1,1": 0.16571423411369324,
+                "REMOVE:branch-wide:1,1,1": 0.15443408489227295,
+                "REMOVE:branch-narrow:0,1,1": 0.15328650176525116,
+                "REMOVE:branch-narrow:2,1,0": 0.1705417037010193,
+                "REMOVE:branch-wide:2,1,0": 0.15858663618564606
+              },
+              "entropy": 1.78782057762146,
+              "greedy": "STOP"
+            },
+            "selected": {
+              "value": 0.2758551239967346,
+              "probabilities": {
+                "STOP": 0.1974368840456009,
+                "REMOVE:branch-narrow:1,1,1": 0.16571423411369324,
+                "REMOVE:branch-wide:1,1,1": 0.15443408489227295,
+                "REMOVE:branch-narrow:0,1,1": 0.15328650176525116,
+                "REMOVE:branch-narrow:2,1,0": 0.1705417037010193,
+                "REMOVE:branch-wide:2,1,0": 0.15858663618564606
+              },
+              "entropy": 1.78782057762146,
+              "greedy": "STOP"
+            },
+            "latest": {
+              "value": 0.018532954156398773,
+              "probabilities": {
+                "STOP": 0.7819421291351318,
+                "REMOVE:branch-narrow:1,1,1": 0.03072163462638855,
+                "REMOVE:branch-wide:1,1,1": 0.018276449292898178,
+                "REMOVE:branch-narrow:0,1,1": 0.11067475378513336,
+                "REMOVE:branch-narrow:2,1,0": 0.037102315574884415,
+                "REMOVE:branch-wide:2,1,0": 0.021282803267240524
+              },
+              "entropy": 0.820246160030365,
+              "greedy": "STOP"
+            }
+          }
+        },
+        {
+          "reference_action": "REMOVE:branch-narrow:2,1,0",
+          "reference_reward": -0.22,
+          "states": {
+            "initial": {
+              "value": 0.2772149443626404,
+              "probabilities": {
+                "STOP": 0.22987137734889984,
+                "REMOVE:branch-narrow:1,1,1": 0.19654923677444458,
+                "REMOVE:branch-wide:1,1,1": 0.1831430196762085,
+                "REMOVE:branch-narrow:2,1,0": 0.20231038331985474,
+                "REMOVE:branch-wide:2,1,0": 0.18812601268291473
+              },
+              "entropy": 1.606176495552063,
+              "greedy": "STOP"
+            },
+            "selected": {
+              "value": 0.2772149443626404,
+              "probabilities": {
+                "STOP": 0.22987137734889984,
+                "REMOVE:branch-narrow:1,1,1": 0.19654923677444458,
+                "REMOVE:branch-wide:1,1,1": 0.1831430196762085,
+                "REMOVE:branch-narrow:2,1,0": 0.20231038331985474,
+                "REMOVE:branch-wide:2,1,0": 0.18812601268291473
+              },
+              "entropy": 1.606176495552063,
+              "greedy": "STOP"
+            },
+            "latest": {
+              "value": 0.04348360747098923,
+              "probabilities": {
+                "STOP": 0.8602800369262695,
+                "REMOVE:branch-narrow:1,1,1": 0.040166087448596954,
+                "REMOVE:branch-wide:1,1,1": 0.023301415145397186,
+                "REMOVE:branch-narrow:2,1,0": 0.0488809198141098,
+                "REMOVE:branch-wide:2,1,0": 0.027371449396014214
+              },
+              "entropy": 0.5922187566757202,
+              "greedy": "STOP"
+            }
+          }
+        },
+        {
+          "reference_action": "REMOVE:branch-narrow:2,1,1",
+          "reference_reward": 0.98,
+          "states": {
+            "initial": {
+              "value": 0.3079710602760315,
+              "probabilities": {
+                "STOP": 0.2921520173549652,
+                "REMOVE:branch-narrow:1,1,1": 0.2476956844329834,
+                "REMOVE:branch-wide:1,1,1": 0.23085302114486694,
+                "REMOVE:branch-narrow:2,1,1": 0.22929932177066803
+              },
+              "entropy": 1.3812801837921143,
+              "greedy": "STOP"
+            },
+            "selected": {
+              "value": 0.3079710602760315,
+              "probabilities": {
+                "STOP": 0.2921520173549652,
+                "REMOVE:branch-narrow:1,1,1": 0.2476956844329834,
+                "REMOVE:branch-wide:1,1,1": 0.23085302114486694,
+                "REMOVE:branch-narrow:2,1,1": 0.22929932177066803
+              },
+              "entropy": 1.3812801837921143,
+              "greedy": "STOP"
+            },
+            "latest": {
+              "value": 0.08592637628316879,
+              "probabilities": {
+                "STOP": 0.802433431148529,
+                "REMOVE:branch-narrow:1,1,1": 0.03738241642713547,
+                "REMOVE:branch-wide:1,1,1": 0.021468548104166985,
+                "REMOVE:branch-narrow:2,1,1": 0.13871562480926514
+              },
+              "entropy": 0.6559534072875977,
+              "greedy": "STOP"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "entropy": 0.01,
+      "seed": 23,
+      "selected_return": 0.0,
+      "gradient_steps": 128,
+      "actor_gradient_norm_min_median_max": [
+        8.18743391881138e-05,
+        0.1789418655949382,
+        1.357110915312163
+      ],
+      "fraction_updates_gradient_clipped": 0.0,
+      "mean_optimization_return_first8": -0.2875,
+      "mean_optimization_return_last8": -0.01375,
+      "reference_path_states": [
+        {
+          "reference_action": "REMOVE:branch-narrow:1,1,0",
+          "reference_reward": -0.22,
+          "states": {
+            "initial": {
+              "value": -0.022199973464012146,
+              "probabilities": {
+                "STOP": 0.3940345346927643,
+                "REMOVE:branch-narrow:1,1,0": 0.3058032989501953,
+                "REMOVE:branch-wide:1,1,0": 0.3001621961593628
+              },
+              "entropy": 1.0905156135559082,
+              "greedy": "STOP"
+            },
+            "selected": {
+              "value": -0.022199973464012146,
+              "probabilities": {
+                "STOP": 0.3940345346927643,
+                "REMOVE:branch-narrow:1,1,0": 0.3058032989501953,
+                "REMOVE:branch-wide:1,1,0": 0.3001621961593628
+              },
+              "entropy": 1.0905156135559082,
+              "greedy": "STOP"
+            },
+            "latest": {
+              "value": 0.018083378672599792,
+              "probabilities": {
+                "STOP": 0.8877936005592346,
+                "REMOVE:branch-narrow:1,1,0": 0.062221091240644455,
+                "REMOVE:branch-wide:1,1,0": 0.049985371530056
+              },
+              "entropy": 0.42821091413497925,
+              "greedy": "STOP"
+            }
+          }
+        },
+        {
+          "reference_action": "REMOVE:branch-narrow:0,1,0",
+          "reference_reward": -0.22,
+          "states": {
+            "initial": {
+              "value": 0.011944971978664398,
+              "probabilities": {
+                "STOP": 0.2569462060928345,
+                "REMOVE:branch-narrow:1,1,1": 0.1784052848815918,
+                "REMOVE:branch-wide:1,1,1": 0.19357775151729584,
+                "REMOVE:branch-narrow:0,1,0": 0.18553540110588074,
+                "REMOVE:branch-narrow:2,1,0": 0.18553540110588074
+              },
+              "entropy": 1.5996195077896118,
+              "greedy": "STOP"
+            },
+            "selected": {
+              "value": 0.011944971978664398,
+              "probabilities": {
+                "STOP": 0.2569462060928345,
+                "REMOVE:branch-narrow:1,1,1": 0.1784052848815918,
+                "REMOVE:branch-wide:1,1,1": 0.19357775151729584,
+                "REMOVE:branch-narrow:0,1,0": 0.18553540110588074,
+                "REMOVE:branch-narrow:2,1,0": 0.18553540110588074
+              },
+              "entropy": 1.5996195077896118,
+              "greedy": "STOP"
+            },
+            "latest": {
+              "value": 0.06899020820856094,
+              "probabilities": {
+                "STOP": 0.8166975975036621,
+                "REMOVE:branch-narrow:1,1,1": 0.04427526891231537,
+                "REMOVE:branch-wide:1,1,1": 0.0382990688085556,
+                "REMOVE:branch-narrow:0,1,0": 0.050364065915346146,
+                "REMOVE:branch-narrow:2,1,0": 0.050364065915346146
+              },
+              "entropy": 0.7293586730957031,
+              "greedy": "STOP"
+            }
+          }
+        },
+        {
+          "reference_action": "REMOVE:branch-narrow:0,1,1",
+          "reference_reward": 0.98,
+          "states": {
+            "initial": {
+              "value": 0.04688610881567001,
+              "probabilities": {
+                "STOP": 0.21612535417079926,
+                "REMOVE:branch-narrow:1,1,1": 0.1484808325767517,
+                "REMOVE:branch-wide:1,1,1": 0.1607551872730255,
+                "REMOVE:branch-narrow:0,1,1": 0.1531336009502411,
+                "REMOVE:branch-narrow:2,1,0": 0.15441639721393585,
+                "REMOVE:branch-wide:2,1,0": 0.1670885980129242
+              },
+              "entropy": 1.7828916311264038,
+              "greedy": "STOP"
+            },
+            "selected": {
+              "value": 0.04688610881567001,
+              "probabilities": {
+                "STOP": 0.21612535417079926,
+                "REMOVE:branch-narrow:1,1,1": 0.1484808325767517,
+                "REMOVE:branch-wide:1,1,1": 0.1607551872730255,
+                "REMOVE:branch-narrow:0,1,1": 0.1531336009502411,
+                "REMOVE:branch-narrow:2,1,0": 0.15441639721393585,
+                "REMOVE:branch-wide:2,1,0": 0.1670885980129242
+              },
+              "entropy": 1.7828916311264038,
+              "greedy": "STOP"
+            },
+            "latest": {
+              "value": 0.120429128408432,
+              "probabilities": {
+                "STOP": 0.7043394446372986,
+                "REMOVE:branch-narrow:1,1,1": 0.03968289494514465,
+                "REMOVE:branch-wide:1,1,1": 0.03412389010190964,
+                "REMOVE:branch-narrow:0,1,1": 0.1377568542957306,
+                "REMOVE:branch-narrow:2,1,0": 0.045198097825050354,
+                "REMOVE:branch-wide:2,1,0": 0.03889881819486618
+              },
+              "entropy": 1.029511570930481,
+              "greedy": "STOP"
+            }
+          }
+        },
+        {
+          "reference_action": "REMOVE:branch-narrow:2,1,0",
+          "reference_reward": -0.22,
+          "states": {
+            "initial": {
+              "value": 0.07573395222425461,
+              "probabilities": {
+                "STOP": 0.255513459444046,
+                "REMOVE:branch-narrow:1,1,1": 0.17538319528102875,
+                "REMOVE:branch-wide:1,1,1": 0.18951952457427979,
+                "REMOVE:branch-narrow:2,1,0": 0.18248020112514496,
+                "REMOVE:branch-wide:2,1,0": 0.1971036195755005
+              },
+              "entropy": 1.5996886491775513,
+              "greedy": "STOP"
+            },
+            "selected": {
+              "value": 0.07573395222425461,
+              "probabilities": {
+                "STOP": 0.255513459444046,
+                "REMOVE:branch-narrow:1,1,1": 0.17538319528102875,
+                "REMOVE:branch-wide:1,1,1": 0.18951952457427979,
+                "REMOVE:branch-narrow:2,1,0": 0.18248020112514496,
+                "REMOVE:branch-wide:2,1,0": 0.1971036195755005
+              },
+              "entropy": 1.5996886491775513,
+              "greedy": "STOP"
+            },
+            "latest": {
+              "value": 0.1569111943244934,
+              "probabilities": {
+                "STOP": 0.7864766716957092,
+                "REMOVE:branch-narrow:1,1,1": 0.05370548367500305,
+                "REMOVE:branch-wide:1,1,1": 0.04584570229053497,
+                "REMOVE:branch-narrow:2,1,0": 0.06147141754627228,
+                "REMOVE:branch-wide:2,1,0": 0.05250069871544838
+              },
+              "entropy": 0.8134423494338989,
+              "greedy": "STOP"
+            }
+          }
+        },
+        {
+          "reference_action": "REMOVE:branch-narrow:2,1,1",
+          "reference_reward": 0.98,
+          "states": {
+            "initial": {
+              "value": 0.11044289916753769,
+              "probabilities": {
+                "STOP": 0.32135772705078125,
+                "REMOVE:branch-narrow:1,1,1": 0.21832196414470673,
+                "REMOVE:branch-wide:1,1,1": 0.2352323830127716,
+                "REMOVE:branch-narrow:2,1,1": 0.22508788108825684
+              },
+              "entropy": 1.373133897781372,
+              "greedy": "STOP"
+            },
+            "selected": {
+              "value": 0.11044289916753769,
+              "probabilities": {
+                "STOP": 0.32135772705078125,
+                "REMOVE:branch-narrow:1,1,1": 0.21832196414470673,
+                "REMOVE:branch-wide:1,1,1": 0.2352323830127716,
+                "REMOVE:branch-narrow:2,1,1": 0.22508788108825684
+              },
+              "entropy": 1.373133897781372,
+              "greedy": "STOP"
+            },
+            "latest": {
+              "value": 0.2077455222606659,
+              "probabilities": {
+                "STOP": 0.7246474623680115,
+                "REMOVE:branch-narrow:1,1,1": 0.05201354995369911,
+                "REMOVE:branch-wide:1,1,1": 0.04417765140533447,
+                "REMOVE:branch-narrow:2,1,1": 0.17916136980056763
+              },
+              "entropy": 0.8330284357070923,
+              "greedy": "STOP"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "entropy": 0.01,
+      "seed": 47,
+      "selected_return": 1.26,
+      "gradient_steps": 128,
+      "actor_gradient_norm_min_median_max": [
+        0.013222030362416707,
+        0.36988729878010773,
+        1.516705798882804
+      ],
+      "fraction_updates_gradient_clipped": 0.0234375,
+      "mean_optimization_return_first8": -0.2075,
+      "mean_optimization_return_last8": -0.053125000000000006,
+      "reference_path_states": [
+        {
+          "reference_action": "REMOVE:branch-narrow:1,1,0",
+          "reference_reward": -0.22,
+          "states": {
+            "initial": {
+              "value": 0.2390011101961136,
+              "probabilities": {
+                "STOP": 0.29896247386932373,
+                "REMOVE:branch-narrow:1,1,0": 0.3491654098033905,
+                "REMOVE:branch-wide:1,1,0": 0.35187214612960815
+              },
+              "entropy": 1.0958995819091797,
+              "greedy": "REMOVE:branch-wide:1,1,0"
+            },
+            "selected": {
+              "value": -0.004665674641728401,
+              "probabilities": {
+                "STOP": 0.31084856390953064,
+                "REMOVE:branch-narrow:1,1,0": 0.3458358347415924,
+                "REMOVE:branch-wide:1,1,0": 0.3433155417442322
+              },
+              "entropy": 1.097456693649292,
+              "greedy": "REMOVE:branch-narrow:1,1,0"
+            },
+            "latest": {
+              "value": 0.11518785357475281,
+              "probabilities": {
+                "STOP": 0.34983229637145996,
+                "REMOVE:branch-narrow:1,1,0": 0.35466572642326355,
+                "REMOVE:branch-wide:1,1,0": 0.2955019474029541
+              },
+              "entropy": 1.0953090190887451,
+              "greedy": "REMOVE:branch-narrow:1,1,0"
+            }
+          }
+        },
+        {
+          "reference_action": "REMOVE:branch-narrow:0,1,0",
+          "reference_reward": -0.22,
+          "states": {
+            "initial": {
+              "value": 0.26702991127967834,
+              "probabilities": {
+                "STOP": 0.18850140273571014,
+                "REMOVE:branch-narrow:1,1,1": 0.1953534334897995,
+                "REMOVE:branch-wide:1,1,1": 0.20790286362171173,
+                "REMOVE:branch-narrow:0,1,0": 0.20412109792232513,
+                "REMOVE:branch-narrow:2,1,0": 0.20412109792232513
+              },
+              "entropy": 1.6088080406188965,
+              "greedy": "REMOVE:branch-wide:1,1,1"
+            },
+            "selected": {
+              "value": 0.024247093126177788,
+              "probabilities": {
+                "STOP": 0.19386811554431915,
+                "REMOVE:branch-narrow:1,1,1": 0.19655150175094604,
+                "REMOVE:branch-wide:1,1,1": 0.20100077986717224,
+                "REMOVE:branch-narrow:0,1,0": 0.20428983867168427,
+                "REMOVE:branch-narrow:2,1,0": 0.20428983867168427
+              },
+              "entropy": 1.6092190742492676,
+              "greedy": "REMOVE:branch-narrow:0,1,0"
+            },
+            "latest": {
+              "value": 0.19704625010490417,
+              "probabilities": {
+                "STOP": 0.16101646423339844,
+                "REMOVE:branch-narrow:1,1,1": 0.19590874016284943,
+                "REMOVE:branch-wide:1,1,1": 0.2411322146654129,
+                "REMOVE:branch-narrow:0,1,0": 0.20097123086452484,
+                "REMOVE:branch-narrow:2,1,0": 0.20097126066684723
+              },
+              "entropy": 1.601351261138916,
+              "greedy": "REMOVE:branch-wide:1,1,1"
+            }
+          }
+        },
+        {
+          "reference_action": "REMOVE:branch-narrow:0,1,1",
+          "reference_reward": 0.98,
+          "states": {
+            "initial": {
+              "value": 0.293885201215744,
+              "probabilities": {
+                "STOP": 0.15608112514019012,
+                "REMOVE:branch-narrow:1,1,1": 0.16031241416931152,
+                "REMOVE:branch-wide:1,1,1": 0.17025992274284363,
+                "REMOVE:branch-narrow:0,1,1": 0.16841274499893188,
+                "REMOVE:branch-narrow:2,1,0": 0.16746005415916443,
+                "REMOVE:branch-wide:2,1,0": 0.177473783493042
+              },
+              "entropy": 1.790900707244873,
+              "greedy": "REMOVE:branch-wide:2,1,0"
+            },
+            "selected": {
+              "value": 0.052495405077934265,
+              "probabilities": {
+                "STOP": 0.1570131480693817,
+                "REMOVE:branch-narrow:1,1,1": 0.15924867987632751,
+                "REMOVE:branch-wide:1,1,1": 0.16246114671230316,
+                "REMOVE:branch-narrow:0,1,1": 0.18723955750465393,
+                "REMOVE:branch-narrow:2,1,0": 0.16549339890480042,
+                "REMOVE:branch-wide:2,1,0": 0.1685439944267273
+              },
+              "entropy": 1.790018081665039,
+              "greedy": "REMOVE:branch-narrow:0,1,1"
+            },
+            "latest": {
+              "value": 0.27744871377944946,
+              "probabilities": {
+                "STOP": 0.04722956568002701,
+                "REMOVE:branch-narrow:1,1,1": 0.06839285790920258,
+                "REMOVE:branch-wide:1,1,1": 0.08352875709533691,
+                "REMOVE:branch-narrow:0,1,1": 0.6448053121566772,
+                "REMOVE:branch-narrow:2,1,0": 0.07011400908231735,
+                "REMOVE:branch-wide:2,1,0": 0.0859295129776001
+              },
+              "entropy": 1.2151806354522705,
+              "greedy": "REMOVE:branch-narrow:0,1,1"
+            }
+          }
+        },
+        {
+          "reference_action": "REMOVE:branch-narrow:2,1,0",
+          "reference_reward": -0.22,
+          "states": {
+            "initial": {
+              "value": 0.3337479531764984,
+              "probabilities": {
+                "STOP": 0.19054771959781647,
+                "REMOVE:branch-narrow:1,1,1": 0.19254253804683685,
+                "REMOVE:branch-wide:1,1,1": 0.20378275215625763,
+                "REMOVE:branch-narrow:2,1,0": 0.20087368786334991,
+                "REMOVE:branch-wide:2,1,0": 0.21225333213806152
+              },
+              "entropy": 1.6086647510528564,
+              "greedy": "REMOVE:branch-wide:2,1,0"
+            },
+            "selected": {
+              "value": 0.10451699793338776,
+              "probabilities": {
+                "STOP": 0.19481463730335236,
+                "REMOVE:branch-narrow:1,1,1": 0.195995032787323,
+                "REMOVE:branch-wide:1,1,1": 0.19921429455280304,
+                "REMOVE:branch-narrow:2,1,0": 0.20344384014606476,
+                "REMOVE:branch-wide:2,1,0": 0.20653219521045685
+              },
+              "entropy": 1.6091933250427246,
+              "greedy": "REMOVE:branch-wide:2,1,0"
+            },
+            "latest": {
+              "value": 0.36999696493148804,
+              "probabilities": {
+                "STOP": 0.12528692185878754,
+                "REMOVE:branch-narrow:1,1,1": 0.19535061717033386,
+                "REMOVE:branch-wide:1,1,1": 0.23650608956813812,
+                "REMOVE:branch-narrow:2,1,0": 0.19986702501773834,
+                "REMOVE:branch-wide:2,1,0": 0.2429894506931305
+              },
+              "entropy": 1.5858018398284912,
+              "greedy": "REMOVE:branch-wide:2,1,0"
+            }
+          }
+        },
+        {
+          "reference_action": "REMOVE:branch-narrow:2,1,1",
+          "reference_reward": 0.98,
+          "states": {
+            "initial": {
+              "value": 0.3574155867099762,
+              "probabilities": {
+                "STOP": 0.243449404835701,
+                "REMOVE:branch-narrow:1,1,1": 0.24369506537914276,
+                "REMOVE:branch-wide:1,1,1": 0.25719526410102844,
+                "REMOVE:branch-narrow:2,1,1": 0.2556602656841278
+              },
+              "entropy": 1.3859615325927734,
+              "greedy": "REMOVE:branch-wide:1,1,1"
+            },
+            "selected": {
+              "value": 0.13058945536613464,
+              "probabilities": {
+                "STOP": 0.23780758678913116,
+                "REMOVE:branch-narrow:1,1,1": 0.23916499316692352,
+                "REMOVE:branch-wide:1,1,1": 0.24233688414096832,
+                "REMOVE:branch-narrow:2,1,1": 0.28069061040878296
+              },
+              "entropy": 1.3838239908218384,
+              "greedy": "REMOVE:branch-narrow:2,1,1"
+            },
+            "latest": {
+              "value": 0.44485291838645935,
+              "probabilities": {
+                "STOP": 0.04564980790019035,
+                "REMOVE:branch-narrow:1,1,1": 0.08395595848560333,
+                "REMOVE:branch-wide:1,1,1": 0.10065694898366928,
+                "REMOVE:branch-narrow:2,1,1": 0.7697373032569885
+              },
+              "entropy": 0.7814645767211914,
+              "greedy": "REMOVE:branch-narrow:2,1,1"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "entropy": 0.05,
+      "seed": 11,
+      "selected_return": 0.0,
+      "gradient_steps": 128,
+      "actor_gradient_norm_min_median_max": [
+        0.012183322279541558,
+        0.15219488590150554,
+        1.2812468081491246
+      ],
+      "fraction_updates_gradient_clipped": 0.0,
+      "mean_optimization_return_first8": -0.2925,
+      "mean_optimization_return_last8": -0.04125,
+      "reference_path_states": [
+        {
+          "reference_action": "REMOVE:branch-narrow:1,1,0",
+          "reference_reward": -0.22,
+          "states": {
+            "initial": {
+              "value": 0.21834588050842285,
+              "probabilities": {
+                "STOP": 0.35080471634864807,
+                "REMOVE:branch-narrow:1,1,0": 0.32117176055908203,
+                "REMOVE:branch-wide:1,1,0": 0.3280235826969147
+              },
+              "entropy": 1.0978951454162598,
+              "greedy": "STOP"
+            },
+            "selected": {
+              "value": 0.21834588050842285,
+              "probabilities": {
+                "STOP": 0.35080471634864807,
+                "REMOVE:branch-narrow:1,1,0": 0.32117176055908203,
+                "REMOVE:branch-wide:1,1,0": 0.3280235826969147
+              },
+              "entropy": 1.0978951454162598,
+              "greedy": "STOP"
+            },
+            "latest": {
+              "value": -0.06734377890825272,
+              "probabilities": {
+                "STOP": 0.8773736357688904,
+                "REMOVE:branch-narrow:1,1,0": 0.06646735221147537,
+                "REMOVE:branch-wide:1,1,0": 0.056159086525440216
+              },
+              "entropy": 0.4566899538040161,
+              "greedy": "STOP"
+            }
+          }
+        },
+        {
+          "reference_action": "REMOVE:branch-narrow:0,1,0",
+          "reference_reward": -0.22,
+          "states": {
+            "initial": {
+              "value": 0.24663573503494263,
+              "probabilities": {
+                "STOP": 0.22837300598621368,
+                "REMOVE:branch-narrow:1,1,1": 0.19336098432540894,
+                "REMOVE:branch-wide:1,1,1": 0.18020403385162354,
+                "REMOVE:branch-narrow:0,1,0": 0.1990310251712799,
+                "REMOVE:branch-narrow:2,1,0": 0.1990310251712799
+              },
+              "entropy": 1.6063843965530396,
+              "greedy": "STOP"
+            },
+            "selected": {
+              "value": 0.24663573503494263,
+              "probabilities": {
+                "STOP": 0.22837300598621368,
+                "REMOVE:branch-narrow:1,1,1": 0.19336098432540894,
+                "REMOVE:branch-wide:1,1,1": 0.18020403385162354,
+                "REMOVE:branch-narrow:0,1,0": 0.1990310251712799,
+                "REMOVE:branch-narrow:2,1,0": 0.1990310251712799
+              },
+              "entropy": 1.6063843965530396,
+              "greedy": "STOP"
+            },
+            "latest": {
+              "value": -0.03132077306509018,
+              "probabilities": {
+                "STOP": 0.8305845856666565,
+                "REMOVE:branch-narrow:1,1,1": 0.042395174503326416,
+                "REMOVE:branch-wide:1,1,1": 0.02627212181687355,
+                "REMOVE:branch-narrow:0,1,0": 0.05037404224276543,
+                "REMOVE:branch-narrow:2,1,0": 0.05037404224276543
+              },
+              "entropy": 0.6848511099815369,
+              "greedy": "STOP"
+            }
+          }
+        },
+        {
+          "reference_action": "REMOVE:branch-narrow:0,1,1",
+          "reference_reward": 0.98,
+          "states": {
+            "initial": {
+              "value": 0.2758551239967346,
+              "probabilities": {
+                "STOP": 0.1974368840456009,
+                "REMOVE:branch-narrow:1,1,1": 0.16571423411369324,
+                "REMOVE:branch-wide:1,1,1": 0.15443408489227295,
+                "REMOVE:branch-narrow:0,1,1": 0.15328650176525116,
+                "REMOVE:branch-narrow:2,1,0": 0.1705417037010193,
+                "REMOVE:branch-wide:2,1,0": 0.15858663618564606
+              },
+              "entropy": 1.78782057762146,
+              "greedy": "STOP"
+            },
+            "selected": {
+              "value": 0.2758551239967346,
+              "probabilities": {
+                "STOP": 0.1974368840456009,
+                "REMOVE:branch-narrow:1,1,1": 0.16571423411369324,
+                "REMOVE:branch-wide:1,1,1": 0.15443408489227295,
+                "REMOVE:branch-narrow:0,1,1": 0.15328650176525116,
+                "REMOVE:branch-narrow:2,1,0": 0.1705417037010193,
+                "REMOVE:branch-wide:2,1,0": 0.15858663618564606
+              },
+              "entropy": 1.78782057762146,
+              "greedy": "STOP"
+            },
+            "latest": {
+              "value": 0.0063841864466667175,
+              "probabilities": {
+                "STOP": 0.7430981397628784,
+                "REMOVE:branch-narrow:1,1,1": 0.03748282790184021,
+                "REMOVE:branch-wide:1,1,1": 0.023034589365124702,
+                "REMOVE:branch-narrow:0,1,1": 0.12511494755744934,
+                "REMOVE:branch-narrow:2,1,0": 0.04466284066438675,
+                "REMOVE:branch-wide:2,1,0": 0.026606734842061996
+              },
+              "entropy": 0.9259781837463379,
+              "greedy": "STOP"
+            }
+          }
+        },
+        {
+          "reference_action": "REMOVE:branch-narrow:2,1,0",
+          "reference_reward": -0.22,
+          "states": {
+            "initial": {
+              "value": 0.2772149443626404,
+              "probabilities": {
+                "STOP": 0.22987137734889984,
+                "REMOVE:branch-narrow:1,1,1": 0.19654923677444458,
+                "REMOVE:branch-wide:1,1,1": 0.1831430196762085,
+                "REMOVE:branch-narrow:2,1,0": 0.20231038331985474,
+                "REMOVE:branch-wide:2,1,0": 0.18812601268291473
+              },
+              "entropy": 1.606176495552063,
+              "greedy": "STOP"
+            },
+            "selected": {
+              "value": 0.2772149443626404,
+              "probabilities": {
+                "STOP": 0.22987137734889984,
+                "REMOVE:branch-narrow:1,1,1": 0.19654923677444458,
+                "REMOVE:branch-wide:1,1,1": 0.1831430196762085,
+                "REMOVE:branch-narrow:2,1,0": 0.20231038331985474,
+                "REMOVE:branch-wide:2,1,0": 0.18812601268291473
+              },
+              "entropy": 1.606176495552063,
+              "greedy": "STOP"
+            },
+            "latest": {
+              "value": 0.030939914286136627,
+              "probabilities": {
+                "STOP": 0.8277190327644348,
+                "REMOVE:branch-narrow:1,1,1": 0.0491909459233284,
+                "REMOVE:branch-wide:1,1,1": 0.029644718393683434,
+                "REMOVE:branch-narrow:2,1,0": 0.0589636005461216,
+                "REMOVE:branch-wide:2,1,0": 0.03448169678449631
+              },
+              "entropy": 0.6920032501220703,
+              "greedy": "STOP"
+            }
+          }
+        },
+        {
+          "reference_action": "REMOVE:branch-narrow:2,1,1",
+          "reference_reward": 0.98,
+          "states": {
+            "initial": {
+              "value": 0.3079710602760315,
+              "probabilities": {
+                "STOP": 0.2921520173549652,
+                "REMOVE:branch-narrow:1,1,1": 0.2476956844329834,
+                "REMOVE:branch-wide:1,1,1": 0.23085302114486694,
+                "REMOVE:branch-narrow:2,1,1": 0.22929932177066803
+              },
+              "entropy": 1.3812801837921143,
+              "greedy": "STOP"
+            },
+            "selected": {
+              "value": 0.3079710602760315,
+              "probabilities": {
+                "STOP": 0.2921520173549652,
+                "REMOVE:branch-narrow:1,1,1": 0.2476956844329834,
+                "REMOVE:branch-wide:1,1,1": 0.23085302114486694,
+                "REMOVE:branch-narrow:2,1,1": 0.22929932177066803
+              },
+              "entropy": 1.3812801837921143,
+              "greedy": "STOP"
+            },
+            "latest": {
+              "value": 0.07164432853460312,
+              "probabilities": {
+                "STOP": 0.7711957693099976,
+                "REMOVE:branch-narrow:1,1,1": 0.04574143886566162,
+                "REMOVE:branch-wide:1,1,1": 0.027361687272787094,
+                "REMOVE:branch-narrow:2,1,1": 0.1557011604309082
+              },
+              "entropy": 0.729507327079773,
+              "greedy": "STOP"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "entropy": 0.05,
+      "seed": 23,
+      "selected_return": 0.0,
+      "gradient_steps": 128,
+      "actor_gradient_norm_min_median_max": [
+        0.0011729883205394444,
+        0.13949273842627855,
+        1.6775845131400264
+      ],
+      "fraction_updates_gradient_clipped": 0.0,
+      "mean_optimization_return_first8": -0.2875,
+      "mean_optimization_return_last8": -0.0275,
+      "reference_path_states": [
+        {
+          "reference_action": "REMOVE:branch-narrow:1,1,0",
+          "reference_reward": -0.22,
+          "states": {
+            "initial": {
+              "value": -0.022199973464012146,
+              "probabilities": {
+                "STOP": 0.3940345346927643,
+                "REMOVE:branch-narrow:1,1,0": 0.3058032989501953,
+                "REMOVE:branch-wide:1,1,0": 0.3001621961593628
+              },
+              "entropy": 1.0905156135559082,
+              "greedy": "STOP"
+            },
+            "selected": {
+              "value": -0.022199973464012146,
+              "probabilities": {
+                "STOP": 0.3940345346927643,
+                "REMOVE:branch-narrow:1,1,0": 0.3058032989501953,
+                "REMOVE:branch-wide:1,1,0": 0.3001621961593628
+              },
+              "entropy": 1.0905156135559082,
+              "greedy": "STOP"
+            },
+            "latest": {
+              "value": -0.008669616654515266,
+              "probabilities": {
+                "STOP": 0.8779608607292175,
+                "REMOVE:branch-narrow:1,1,0": 0.0673607662320137,
+                "REMOVE:branch-wide:1,1,0": 0.05467843636870384
+              },
+              "entropy": 0.45489928126335144,
+              "greedy": "STOP"
+            }
+          }
+        },
+        {
+          "reference_action": "REMOVE:branch-narrow:0,1,0",
+          "reference_reward": -0.22,
+          "states": {
+            "initial": {
+              "value": 0.011944971978664398,
+              "probabilities": {
+                "STOP": 0.2569462060928345,
+                "REMOVE:branch-narrow:1,1,1": 0.1784052848815918,
+                "REMOVE:branch-wide:1,1,1": 0.19357775151729584,
+                "REMOVE:branch-narrow:0,1,0": 0.18553540110588074,
+                "REMOVE:branch-narrow:2,1,0": 0.18553540110588074
+              },
+              "entropy": 1.5996195077896118,
+              "greedy": "STOP"
+            },
+            "selected": {
+              "value": 0.011944971978664398,
+              "probabilities": {
+                "STOP": 0.2569462060928345,
+                "REMOVE:branch-narrow:1,1,1": 0.1784052848815918,
+                "REMOVE:branch-wide:1,1,1": 0.19357775151729584,
+                "REMOVE:branch-narrow:0,1,0": 0.18553540110588074,
+                "REMOVE:branch-narrow:2,1,0": 0.18553540110588074
+              },
+              "entropy": 1.5996195077896118,
+              "greedy": "STOP"
+            },
+            "latest": {
+              "value": 0.03614959120750427,
+              "probabilities": {
+                "STOP": 0.808686375617981,
+                "REMOVE:branch-narrow:1,1,1": 0.04588305205106735,
+                "REMOVE:branch-wide:1,1,1": 0.03963761404156685,
+                "REMOVE:branch-narrow:0,1,0": 0.052896492183208466,
+                "REMOVE:branch-narrow:2,1,0": 0.052896492183208466
+              },
+              "entropy": 0.7520348429679871,
+              "greedy": "STOP"
+            }
+          }
+        },
+        {
+          "reference_action": "REMOVE:branch-narrow:0,1,1",
+          "reference_reward": 0.98,
+          "states": {
+            "initial": {
+              "value": 0.04688610881567001,
+              "probabilities": {
+                "STOP": 0.21612535417079926,
+                "REMOVE:branch-narrow:1,1,1": 0.1484808325767517,
+                "REMOVE:branch-wide:1,1,1": 0.1607551872730255,
+                "REMOVE:branch-narrow:0,1,1": 0.1531336009502411,
+                "REMOVE:branch-narrow:2,1,0": 0.15441639721393585,
+                "REMOVE:branch-wide:2,1,0": 0.1670885980129242
+              },
+              "entropy": 1.7828916311264038,
+              "greedy": "STOP"
+            },
+            "selected": {
+              "value": 0.04688610881567001,
+              "probabilities": {
+                "STOP": 0.21612535417079926,
+                "REMOVE:branch-narrow:1,1,1": 0.1484808325767517,
+                "REMOVE:branch-wide:1,1,1": 0.1607551872730255,
+                "REMOVE:branch-narrow:0,1,1": 0.1531336009502411,
+                "REMOVE:branch-narrow:2,1,0": 0.15441639721393585,
+                "REMOVE:branch-wide:2,1,0": 0.1670885980129242
+              },
+              "entropy": 1.7828916311264038,
+              "greedy": "STOP"
+            },
+            "latest": {
+              "value": 0.0816573053598404,
+              "probabilities": {
+                "STOP": 0.7041417956352234,
+                "REMOVE:branch-narrow:1,1,1": 0.041069190949201584,
+                "REMOVE:branch-wide:1,1,1": 0.035279251635074615,
+                "REMOVE:branch-narrow:0,1,1": 0.1313573569059372,
+                "REMOVE:branch-narrow:2,1,0": 0.047406282275915146,
+                "REMOVE:branch-wide:2,1,0": 0.04074616730213165
+              },
+              "entropy": 1.0376780033111572,
+              "greedy": "STOP"
+            }
+          }
+        },
+        {
+          "reference_action": "REMOVE:branch-narrow:2,1,0",
+          "reference_reward": -0.22,
+          "states": {
+            "initial": {
+              "value": 0.07573395222425461,
+              "probabilities": {
+                "STOP": 0.255513459444046,
+                "REMOVE:branch-narrow:1,1,1": 0.17538319528102875,
+                "REMOVE:branch-wide:1,1,1": 0.18951952457427979,
+                "REMOVE:branch-narrow:2,1,0": 0.18248020112514496,
+                "REMOVE:branch-wide:2,1,0": 0.1971036195755005
+              },
+              "entropy": 1.5996886491775513,
+              "greedy": "STOP"
+            },
+            "selected": {
+              "value": 0.07573395222425461,
+              "probabilities": {
+                "STOP": 0.255513459444046,
+                "REMOVE:branch-narrow:1,1,1": 0.17538319528102875,
+                "REMOVE:branch-wide:1,1,1": 0.18951952457427979,
+                "REMOVE:branch-narrow:2,1,0": 0.18248020112514496,
+                "REMOVE:branch-wide:2,1,0": 0.1971036195755005
+              },
+              "entropy": 1.5996886491775513,
+              "greedy": "STOP"
+            },
+            "latest": {
+              "value": 0.11540167033672333,
+              "probabilities": {
+                "STOP": 0.781827449798584,
+                "REMOVE:branch-narrow:1,1,1": 0.054518818855285645,
+                "REMOVE:branch-wide:1,1,1": 0.04650579020380974,
+                "REMOVE:branch-narrow:2,1,0": 0.06321059912443161,
+                "REMOVE:branch-wide:2,1,0": 0.05393745005130768
+              },
+              "entropy": 0.8257550597190857,
+              "greedy": "STOP"
+            }
+          }
+        },
+        {
+          "reference_action": "REMOVE:branch-narrow:2,1,1",
+          "reference_reward": 0.98,
+          "states": {
+            "initial": {
+              "value": 0.11044289916753769,
+              "probabilities": {
+                "STOP": 0.32135772705078125,
+                "REMOVE:branch-narrow:1,1,1": 0.21832196414470673,
+                "REMOVE:branch-wide:1,1,1": 0.2352323830127716,
+                "REMOVE:branch-narrow:2,1,1": 0.22508788108825684
+              },
+              "entropy": 1.373133897781372,
+              "greedy": "STOP"
+            },
+            "selected": {
+              "value": 0.11044289916753769,
+              "probabilities": {
+                "STOP": 0.32135772705078125,
+                "REMOVE:branch-narrow:1,1,1": 0.21832196414470673,
+                "REMOVE:branch-wide:1,1,1": 0.2352323830127716,
+                "REMOVE:branch-narrow:2,1,1": 0.22508788108825684
+              },
+              "entropy": 1.373133897781372,
+              "greedy": "STOP"
+            },
+            "latest": {
+              "value": 0.1605236530303955,
+              "probabilities": {
+                "STOP": 0.7325568199157715,
+                "REMOVE:branch-narrow:1,1,1": 0.05311323329806328,
+                "REMOVE:branch-wide:1,1,1": 0.045093782246112823,
+                "REMOVE:branch-narrow:2,1,1": 0.16923610866069794
+              },
+              "entropy": 0.8242744207382202,
+              "greedy": "STOP"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "entropy": 0.05,
+      "seed": 47,
+      "selected_return": 1.26,
+      "gradient_steps": 128,
+      "actor_gradient_norm_min_median_max": [
+        0.014948591066350695,
+        0.34658600604721046,
+        1.2220282459279685
+      ],
+      "fraction_updates_gradient_clipped": 0.015625,
+      "mean_optimization_return_first8": -0.2075,
+      "mean_optimization_return_last8": -0.07999999999999999,
+      "reference_path_states": [
+        {
+          "reference_action": "REMOVE:branch-narrow:1,1,0",
+          "reference_reward": -0.22,
+          "states": {
+            "initial": {
+              "value": 0.2390011101961136,
+              "probabilities": {
+                "STOP": 0.29896247386932373,
+                "REMOVE:branch-narrow:1,1,0": 0.3491654098033905,
+                "REMOVE:branch-wide:1,1,0": 0.35187214612960815
+              },
+              "entropy": 1.0958995819091797,
+              "greedy": "REMOVE:branch-wide:1,1,0"
+            },
+            "selected": {
+              "value": -0.004665674641728401,
+              "probabilities": {
+                "STOP": 0.3116122782230377,
+                "REMOVE:branch-narrow:1,1,0": 0.34546592831611633,
+                "REMOVE:branch-wide:1,1,0": 0.3429217040538788
+              },
+              "entropy": 1.097533941268921,
+              "greedy": "REMOVE:branch-narrow:1,1,0"
+            },
+            "latest": {
+              "value": 0.14589209854602814,
+              "probabilities": {
+                "STOP": 0.3740861713886261,
+                "REMOVE:branch-narrow:1,1,0": 0.33059245347976685,
+                "REMOVE:branch-wide:1,1,0": 0.29532134532928467
+              },
+              "entropy": 1.0939507484436035,
+              "greedy": "STOP"
+            }
+          }
+        },
+        {
+          "reference_action": "REMOVE:branch-narrow:0,1,0",
+          "reference_reward": -0.22,
+          "states": {
+            "initial": {
+              "value": 0.26702991127967834,
+              "probabilities": {
+                "STOP": 0.18850140273571014,
+                "REMOVE:branch-narrow:1,1,1": 0.1953534334897995,
+                "REMOVE:branch-wide:1,1,1": 0.20790286362171173,
+                "REMOVE:branch-narrow:0,1,0": 0.20412109792232513,
+                "REMOVE:branch-narrow:2,1,0": 0.20412109792232513
+              },
+              "entropy": 1.6088080406188965,
+              "greedy": "REMOVE:branch-wide:1,1,1"
+            },
+            "selected": {
+              "value": 0.024247093126177788,
+              "probabilities": {
+                "STOP": 0.19447217881679535,
+                "REMOVE:branch-narrow:1,1,1": 0.19639961421489716,
+                "REMOVE:branch-wide:1,1,1": 0.20080925524234772,
+                "REMOVE:branch-narrow:0,1,0": 0.2041594535112381,
+                "REMOVE:branch-narrow:2,1,0": 0.2041594535112381
+              },
+              "entropy": 1.6092406511306763,
+              "greedy": "REMOVE:branch-narrow:0,1,0"
+            },
+            "latest": {
+              "value": 0.22797319293022156,
+              "probabilities": {
+                "STOP": 0.18083995580673218,
+                "REMOVE:branch-narrow:1,1,1": 0.18283280730247498,
+                "REMOVE:branch-wide:1,1,1": 0.25853243470191956,
+                "REMOVE:branch-narrow:0,1,0": 0.18889735639095306,
+                "REMOVE:branch-narrow:2,1,0": 0.18889734148979187
+              },
+              "entropy": 1.5992685556411743,
+              "greedy": "REMOVE:branch-wide:1,1,1"
+            }
+          }
+        },
+        {
+          "reference_action": "REMOVE:branch-narrow:0,1,1",
+          "reference_reward": 0.98,
+          "states": {
+            "initial": {
+              "value": 0.293885201215744,
+              "probabilities": {
+                "STOP": 0.15608112514019012,
+                "REMOVE:branch-narrow:1,1,1": 0.16031241416931152,
+                "REMOVE:branch-wide:1,1,1": 0.17025992274284363,
+                "REMOVE:branch-narrow:0,1,1": 0.16841274499893188,
+                "REMOVE:branch-narrow:2,1,0": 0.16746005415916443,
+                "REMOVE:branch-wide:2,1,0": 0.177473783493042
+              },
+              "entropy": 1.790900707244873,
+              "greedy": "REMOVE:branch-wide:2,1,0"
+            },
+            "selected": {
+              "value": 0.052495405077934265,
+              "probabilities": {
+                "STOP": 0.15751110017299652,
+                "REMOVE:branch-narrow:1,1,1": 0.15914703905582428,
+                "REMOVE:branch-wide:1,1,1": 0.1623413860797882,
+                "REMOVE:branch-narrow:0,1,1": 0.18715998530387878,
+                "REMOVE:branch-narrow:2,1,0": 0.16540765762329102,
+                "REMOVE:branch-wide:2,1,0": 0.1684328019618988
+              },
+              "entropy": 1.7900489568710327,
+              "greedy": "REMOVE:branch-narrow:0,1,1"
+            },
+            "latest": {
+              "value": 0.30847176909446716,
+              "probabilities": {
+                "STOP": 0.06291694939136505,
+                "REMOVE:branch-narrow:1,1,1": 0.07406345754861832,
+                "REMOVE:branch-wide:1,1,1": 0.10435467213392258,
+                "REMOVE:branch-narrow:0,1,1": 0.5742195248603821,
+                "REMOVE:branch-narrow:2,1,0": 0.07645756751298904,
+                "REMOVE:branch-wide:2,1,0": 0.10798778384923935
+              },
+              "entropy": 1.358107566833496,
+              "greedy": "REMOVE:branch-narrow:0,1,1"
+            }
+          }
+        },
+        {
+          "reference_action": "REMOVE:branch-narrow:2,1,0",
+          "reference_reward": -0.22,
+          "states": {
+            "initial": {
+              "value": 0.3337479531764984,
+              "probabilities": {
+                "STOP": 0.19054771959781647,
+                "REMOVE:branch-narrow:1,1,1": 0.19254253804683685,
+                "REMOVE:branch-wide:1,1,1": 0.20378275215625763,
+                "REMOVE:branch-narrow:2,1,0": 0.20087368786334991,
+                "REMOVE:branch-wide:2,1,0": 0.21225333213806152
+              },
+              "entropy": 1.6086647510528564,
+              "greedy": "REMOVE:branch-wide:2,1,0"
+            },
+            "selected": {
+              "value": 0.10451699793338776,
+              "probabilities": {
+                "STOP": 0.1953381448984146,
+                "REMOVE:branch-narrow:1,1,1": 0.19586604833602905,
+                "REMOVE:branch-wide:1,1,1": 0.19906774163246155,
+                "REMOVE:branch-narrow:2,1,0": 0.20333267748355865,
+                "REMOVE:branch-wide:2,1,0": 0.20639532804489136
+              },
+              "entropy": 1.6092092990875244,
+              "greedy": "REMOVE:branch-wide:2,1,0"
+            },
+            "latest": {
+              "value": 0.40004006028175354,
+              "probabilities": {
+                "STOP": 0.13874132931232452,
+                "REMOVE:branch-narrow:1,1,1": 0.1765596568584442,
+                "REMOVE:branch-wide:1,1,1": 0.24723123013973236,
+                "REMOVE:branch-narrow:2,1,0": 0.18190571665763855,
+                "REMOVE:branch-wide:2,1,0": 0.25556206703186035
+              },
+              "entropy": 1.5843708515167236,
+              "greedy": "REMOVE:branch-wide:2,1,0"
+            }
+          }
+        },
+        {
+          "reference_action": "REMOVE:branch-narrow:2,1,1",
+          "reference_reward": 0.98,
+          "states": {
+            "initial": {
+              "value": 0.3574155867099762,
+              "probabilities": {
+                "STOP": 0.243449404835701,
+                "REMOVE:branch-narrow:1,1,1": 0.24369506537914276,
+                "REMOVE:branch-wide:1,1,1": 0.25719526410102844,
+                "REMOVE:branch-narrow:2,1,1": 0.2556602656841278
+              },
+              "entropy": 1.3859615325927734,
+              "greedy": "REMOVE:branch-wide:1,1,1"
+            },
+            "selected": {
+              "value": 0.13058945536613464,
+              "probabilities": {
+                "STOP": 0.23838423192501068,
+                "REMOVE:branch-narrow:1,1,1": 0.23897504806518555,
+                "REMOVE:branch-wide:1,1,1": 0.24213837087154388,
+                "REMOVE:branch-narrow:2,1,1": 0.2805023491382599
+              },
+              "entropy": 1.3838590383529663,
+              "greedy": "REMOVE:branch-narrow:2,1,1"
+            },
+            "latest": {
+              "value": 0.4747824966907501,
+              "probabilities": {
+                "STOP": 0.06362852454185486,
+                "REMOVE:branch-narrow:1,1,1": 0.0937502384185791,
+                "REMOVE:branch-wide:1,1,1": 0.13033871352672577,
+                "REMOVE:branch-narrow:2,1,1": 0.7122824788093567
+              },
+              "entropy": 0.9044395685195923,
+              "greedy": "REMOVE:branch-narrow:2,1,1"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

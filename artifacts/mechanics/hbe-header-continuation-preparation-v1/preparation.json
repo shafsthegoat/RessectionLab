@@ -1,0 +1,24 @@
+{
+  "controls": {
+    "command": ".venv/bin/python -m pytest -q tests/test_mechanics_hbe_experiment.py tests/test_mechanics_hbe_experiment_review.py",
+    "log_sha256": "dd92b8a046b7e14ff80aa3ce9ee59a0e5c0f2146c0cb5b022616b20e4d695b61",
+    "passed": 41,
+    "pytest_seconds": 0.77
+  },
+  "saved_metadata_check_sha256": "73d3a2e75a4af65c25538d0588addfcee4ffeb0d7b2edc2b0ec053e464ed559c",
+  "scope": "No solver, primitive replay, measurement, cohort mask, or patient access. Explicit new root release and archived-source binding still required.",
+  "source_and_test_sha256": {
+    "manifests/experiments/hbe-01-03-header-continuation-v1.json": "7e74bfdfd8889fd38698990c76aad0a96611fdb223ebd1d738c9d8d06b4a6c7d",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "scripts/mechanics_hbe_access.py": "b1e4f90b2ec84c39949ee02c1088bc0404f34904e24c2d4f328d503d96f76fe0",
+    "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "scripts/mechanics_hbe_experiment.py": "ce921239857d45ac4c5d70052c515c3a7804e32e8101f14315953c8b0aa53daa",
+    "scripts/mechanics_hbe_mesh.py": "3cb4d99f5d2d7fa2f66fb5af56ebffcf19342b9bee0b4cb2c9acfe98aabdd892",
+    "scripts/mechanics_hbe_outputs.py": "a372cb89ea9515186d433c74ec650dc3b5cae289619e8b35d481280f6662f473",
+    "scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "scripts/mechanics_hbe_readout.py": "21700558e5cb614a11a7cc62dbd5ec8118fabb11b4fbfc88f89cb8aa02012963",
+    "tests/test_mechanics_hbe_experiment.py": "3e4aacabdbf5d713a131704f1ceae089d49fdef095cd58ff5db0929a23c8ec67",
+    "tests/test_mechanics_hbe_experiment_review.py": "03fe4f050adc3137ef96a4523a45d98aabdd166dc482fd2cd45413834408658c"
+  },
+  "status": "prepared_not_released_or_executed"
+}

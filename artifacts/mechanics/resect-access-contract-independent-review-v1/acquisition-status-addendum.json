@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "kind": "factual_status_addendum_preserving_prospective_record",
+  "supersedes_current_status_language_only_in": "verification.json remaining_gates: Acquisition and measurement access remain unreleased",
+  "original_review_sha256": "ff12dbc0f52203c4483c83013341f504eb983ab87542edab0f03abea9915ee46",
+  "acquisition_evidence_commit": "65bf883423a39091d5b560b226fba11eba8e4449",
+  "root_release": {
+    "path": "artifacts/mechanics/resect-case4-acquisition-v1/root-release.json",
+    "sha256": "ffa5fe23292f94068f20136d5923160054e49fd89129323212cd8bf6077538ed"
+  },
+  "acquisition_receipt": {
+    "path": "artifacts/mechanics/resect-case4-acquisition-v1/acquisition-receipt.json",
+    "sha256": "54c39954cefd2200935d2225bad457ae4aee191690a65d27f8c92cfdd1cbc38b"
+  },
+  "correct_current_status_at_addendum": {
+    "byte_acquisition_explicitly_released_and_completed": true,
+    "files": 6,
+    "bytes": 35068010,
+    "measurement_access_released": false
+  },
+  "scope": "Only saved transfer/release records inspected. No original patient file, header, coordinate or image opened. The original prospective acquisition manifest and initial review remain byte-for-byte preserved."
+}

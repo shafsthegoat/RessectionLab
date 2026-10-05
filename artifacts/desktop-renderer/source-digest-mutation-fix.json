@@ -1,0 +1,107 @@
+{
+  "caseId": "UCSF-PDGM-0004",
+  "caseHash": "sha256:2dd4c1ccc72a3ee6f821cf8f23a8c32996ec74fe1d616411863d5197bf3d2547",
+  "sourceMriBytes": 35712000,
+  "runtime": "v24.19.0",
+  "scope": "One sequential pass of seven actual stored maps per version using local Node, warm filesystem reads and actual integrity gates. Native QA may run concurrently; these descriptive timings do not isolate cache removal cost and are not UI/GPU latency.",
+  "before": {
+    "sourceIntegritySha256": "0384e0d0eae4aafd8117b6b15c828c0fd675b66f54d0c8c2117a3da00581104e",
+    "sourceArraysUnchanged": true,
+    "samples": [
+      {
+        "mapId": "motor_functional_concordance",
+        "milliseconds": 254.096958,
+        "coverageBytes": 8928000,
+        "valuesBytes": 35712000
+      },
+      {
+        "mapId": "phonology_functional_concordance",
+        "milliseconds": 190.35449999999997,
+        "coverageBytes": 8928000,
+        "valuesBytes": 35712000
+      },
+      {
+        "mapId": "phonology_structural_mask",
+        "milliseconds": 206.883958,
+        "coverageBytes": 8928000,
+        "valuesBytes": 35712000
+      },
+      {
+        "mapId": "semantics_functional_concordance",
+        "milliseconds": 188.36395900000002,
+        "coverageBytes": 8928000,
+        "valuesBytes": 35712000
+      },
+      {
+        "mapId": "semantics_structural_mask",
+        "milliseconds": 207.32470899999998,
+        "coverageBytes": 8928000,
+        "valuesBytes": 35712000
+      },
+      {
+        "mapId": "speech_articulation_functional_concordance",
+        "milliseconds": 166.5736670000001,
+        "coverageBytes": 8928000,
+        "valuesBytes": 35712000
+      },
+      {
+        "mapId": "speech_articulation_structural_mask",
+        "milliseconds": 198.93341600000008,
+        "coverageBytes": 8928000,
+        "valuesBytes": 35712000
+      }
+    ],
+    "totalMilliseconds": 1412.5311670000003,
+    "medianMilliseconds": 198.93341600000008
+  },
+  "after": {
+    "sourceIntegritySha256": "8a525fef3c9c9564c8a7a985d2cafaadd803f5fc5952795708e82709cd2a1f57",
+    "sourceArraysUnchanged": true,
+    "samples": [
+      {
+        "mapId": "motor_functional_concordance",
+        "milliseconds": 211.931792,
+        "coverageBytes": 8928000,
+        "valuesBytes": 35712000
+      },
+      {
+        "mapId": "phonology_functional_concordance",
+        "milliseconds": 212.92870800000003,
+        "coverageBytes": 8928000,
+        "valuesBytes": 35712000
+      },
+      {
+        "mapId": "phonology_structural_mask",
+        "milliseconds": 239.724375,
+        "coverageBytes": 8928000,
+        "valuesBytes": 35712000
+      },
+      {
+        "mapId": "semantics_functional_concordance",
+        "milliseconds": 194.49441699999988,
+        "coverageBytes": 8928000,
+        "valuesBytes": 35712000
+      },
+      {
+        "mapId": "semantics_structural_mask",
+        "milliseconds": 232.75862499999994,
+        "coverageBytes": 8928000,
+        "valuesBytes": 35712000
+      },
+      {
+        "mapId": "speech_articulation_functional_concordance",
+        "milliseconds": 198.54929100000004,
+        "coverageBytes": 8928000,
+        "valuesBytes": 35712000
+      },
+      {
+        "mapId": "speech_articulation_structural_mask",
+        "milliseconds": 233.25662499999999,
+        "coverageBytes": 8928000,
+        "valuesBytes": 35712000
+      }
+    ],
+    "totalMilliseconds": 1523.6438329999999,
+    "medianMilliseconds": 212.92870800000003
+  }
+}

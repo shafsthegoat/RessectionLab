@@ -1,0 +1,29 @@
+{
+  "completed_learning_runs": [
+    "PATIENT_SCRATCH_RL:11",
+    "PATIENT_SCRATCH_RL:23",
+    "PATIENT_SCRATCH_RL:47"
+  ],
+  "current_learning_run": "PROCEDURAL_PRETRAINED_ADAPTED:11",
+  "exception": "ValueError",
+  "final_worlds_used": false,
+  "planned_learning_runs": [
+    "PATIENT_SCRATCH_RL:11",
+    "PATIENT_SCRATCH_RL:23",
+    "PATIENT_SCRATCH_RL:47",
+    "PROCEDURAL_PRETRAINED_ADAPTED:11",
+    "PROCEDURAL_PRETRAINED_ADAPTED:23",
+    "PROCEDURAL_PRETRAINED_ADAPTED:47"
+  ],
+  "reason": "Procedural adaptation worlds differ from registered optimization/selection panels",
+  "run_id": "procedural-transfer-development-c08f97c4-d52d-4feb-a630-80fd1110a842",
+  "scope": "procedural_native_to_patient_development",
+  "started_at": "2026-10-04T10:05:47.421364+00:00",
+  "status": "failed",
+  "total_comparison_seconds": 121.18547787505668,
+  "unfinished_learning_runs": [
+    "PROCEDURAL_PRETRAINED_ADAPTED:11",
+    "PROCEDURAL_PRETRAINED_ADAPTED:23",
+    "PROCEDURAL_PRETRAINED_ADAPTED:47"
+  ]
+}

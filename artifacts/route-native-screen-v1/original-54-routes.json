@@ -1,0 +1,3888 @@
+{
+  "case_id": "UCSF-PDGM-0004",
+  "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+  "planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+  "source_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/route-native-screen-v1/source-snapshot",
+  "search_config": {
+    "targets_per_compartment": 3,
+    "max_target_pool": 12000,
+    "max_windows": 3,
+    "window_radius_mm": 4.0,
+    "max_surface_step_mm": 0.5,
+    "seed": 20261004,
+    "hard_exclusions": [
+      "vessels"
+    ]
+  },
+  "access_support_provenance": {
+    "source": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "method": "finite_nonzero_structural_MRI_support_v1",
+    "evidence_type": "estimated"
+  },
+  "route_count": 54,
+  "screened_route_count": 54,
+  "static_feasible_routes": 31,
+  "exact_native_feasible_routes": 0,
+  "routes_missing_exact_ray_in_bridge_proposals": 54,
+  "elapsed_seconds": 14.188537916983478,
+  "timed_out": false,
+  "max_seconds": 90.0,
+  "environment_steps": 0,
+  "gradient_steps": 0,
+  "tool_scenarios": "original_search_tools_unchanged",
+  "clinical_deficit_probability": null,
+  "groups": [
+    {
+      "window_id": "hypothetical-envelope-1",
+      "tool_id": "generic_suction",
+      "access": {
+        "center_mm": [
+          -161.89188673393926,
+          84.87771654858179,
+          143.39832772728357
+        ],
+        "normal_inward": [
+          -0.0,
+          -0.0,
+          -1.0
+        ],
+        "radius_mm": 4.0
+      },
+      "initial_proposals": {
+        "status": "no_legal_native_actions",
+        "policy_has_nontrivial_action_choice": false,
+        "non_stop_action_count": 0,
+        "non_stop_action_ids": [],
+        "rejected_proposal_count": 4,
+        "rejection_counts": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 1,
+          "HARD_GEOMETRY:ACCESS_APERTURE": 3
+        },
+        "rejected_proposals": [
+          {
+            "tool_id": "generic_suction",
+            "tip_mm": [
+              -162.0,
+              85.0,
+              105.0
+            ],
+            "entry_mm": [
+              -162.0,
+              85.0,
+              143.39832772728357
+            ],
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+          },
+          {
+            "tool_id": "generic_suction",
+            "tip_mm": [
+              -151.0,
+              80.0,
+              105.0
+            ],
+            "entry_mm": [
+              -151.0,
+              80.0,
+              143.39832772728357
+            ],
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE"
+          },
+          {
+            "tool_id": "generic_suction",
+            "tip_mm": [
+              -167.0,
+              89.0,
+              104.0
+            ],
+            "entry_mm": [
+              -167.0,
+              89.0,
+              143.39832772728357
+            ],
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE"
+          },
+          {
+            "tool_id": "generic_suction",
+            "tip_mm": [
+              -166.0,
+              86.0,
+              106.0
+            ],
+            "entry_mm": [
+              -166.0,
+              86.0,
+              143.39832772728357
+            ],
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE"
+          }
+        ],
+        "candidate_tips_mm": [
+          [
+            -162.0,
+            85.0,
+            105.0
+          ],
+          [
+            -151.0,
+            80.0,
+            105.0
+          ],
+          [
+            -167.0,
+            89.0,
+            104.0
+          ],
+          [
+            -166.0,
+            86.0,
+            106.0
+          ]
+        ],
+        "candidate_entries_mm": [
+          [
+            -162.0,
+            85.0,
+            143.39832772728357
+          ],
+          [
+            -151.0,
+            80.0,
+            143.39832772728357
+          ],
+          [
+            -167.0,
+            89.0,
+            143.39832772728357
+          ],
+          [
+            -166.0,
+            86.0,
+            143.39832772728357
+          ]
+        ],
+        "decision_model_hash": "sha256:c12bcc057f29a3e9604fa2593aacbb41bef86d9c90598d4835f030545d4ddc05",
+        "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "tool_dimensions": [
+          {
+            "tool_id": "generic_suction",
+            "tip_radius_mm": 1.0,
+            "shaft_radius_mm": 1.4,
+            "tip_length_mm": 3.0,
+            "shaft_wider_than_active_tip": true
+          }
+        ],
+        "interpretation": "Initial native action availability only; no learning, removal, or clinical benefit is asserted.",
+        "clinical_deficit_probability": null
+      },
+      "exact_routes_screened": 9,
+      "exact_native_routes_feasible": 0,
+      "exact_native_rejection_counts": {
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 9
+      },
+      "elapsed_seconds": 2.2177546670427546
+    },
+    {
+      "window_id": "hypothetical-envelope-1",
+      "tool_id": "generic_aspirator",
+      "access": {
+        "center_mm": [
+          -161.89188673393926,
+          84.87771654858179,
+          143.39832772728357
+        ],
+        "normal_inward": [
+          -0.0,
+          -0.0,
+          -1.0
+        ],
+        "radius_mm": 4.0
+      },
+      "initial_proposals": {
+        "status": "no_legal_native_actions",
+        "policy_has_nontrivial_action_choice": false,
+        "non_stop_action_count": 0,
+        "non_stop_action_ids": [],
+        "rejected_proposal_count": 4,
+        "rejection_counts": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 1,
+          "HARD_GEOMETRY:ACCESS_APERTURE": 3
+        },
+        "rejected_proposals": [
+          {
+            "tool_id": "generic_aspirator",
+            "tip_mm": [
+              -162.0,
+              85.0,
+              105.0
+            ],
+            "entry_mm": [
+              -162.0,
+              85.0,
+              143.39832772728357
+            ],
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+          },
+          {
+            "tool_id": "generic_aspirator",
+            "tip_mm": [
+              -151.0,
+              80.0,
+              105.0
+            ],
+            "entry_mm": [
+              -151.0,
+              80.0,
+              143.39832772728357
+            ],
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE"
+          },
+          {
+            "tool_id": "generic_aspirator",
+            "tip_mm": [
+              -167.0,
+              89.0,
+              104.0
+            ],
+            "entry_mm": [
+              -167.0,
+              89.0,
+              143.39832772728357
+            ],
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE"
+          },
+          {
+            "tool_id": "generic_aspirator",
+            "tip_mm": [
+              -166.0,
+              86.0,
+              106.0
+            ],
+            "entry_mm": [
+              -166.0,
+              86.0,
+              143.39832772728357
+            ],
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE"
+          }
+        ],
+        "candidate_tips_mm": [
+          [
+            -162.0,
+            85.0,
+            105.0
+          ],
+          [
+            -151.0,
+            80.0,
+            105.0
+          ],
+          [
+            -167.0,
+            89.0,
+            104.0
+          ],
+          [
+            -166.0,
+            86.0,
+            106.0
+          ]
+        ],
+        "candidate_entries_mm": [
+          [
+            -162.0,
+            85.0,
+            143.39832772728357
+          ],
+          [
+            -151.0,
+            80.0,
+            143.39832772728357
+          ],
+          [
+            -167.0,
+            89.0,
+            143.39832772728357
+          ],
+          [
+            -166.0,
+            86.0,
+            143.39832772728357
+          ]
+        ],
+        "decision_model_hash": "sha256:a559a829cb0dc6cf9953a8acdf119db48dc8c6b1d4469222954a52429fd3510b",
+        "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "tool_dimensions": [
+          {
+            "tool_id": "generic_aspirator",
+            "tip_radius_mm": 1.7,
+            "shaft_radius_mm": 2.7,
+            "tip_length_mm": 4.0,
+            "shaft_wider_than_active_tip": true
+          }
+        ],
+        "interpretation": "Initial native action availability only; no learning, removal, or clinical benefit is asserted.",
+        "clinical_deficit_probability": null
+      },
+      "exact_routes_screened": 9,
+      "exact_native_routes_feasible": 0,
+      "exact_native_rejection_counts": {
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 9
+      },
+      "elapsed_seconds": 2.0922260839724913
+    },
+    {
+      "window_id": "hypothetical-envelope-2",
+      "tool_id": "generic_suction",
+      "access": {
+        "center_mm": [
+          -181.39188673393926,
+          84.87771654858179,
+          104.56499439395024
+        ],
+        "normal_inward": [
+          1.0,
+          -0.0,
+          -0.0
+        ],
+        "radius_mm": 4.0
+      },
+      "initial_proposals": {
+        "status": "no_legal_native_actions",
+        "policy_has_nontrivial_action_choice": false,
+        "non_stop_action_count": 0,
+        "non_stop_action_ids": [],
+        "rejected_proposal_count": 4,
+        "rejection_counts": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 2,
+          "HARD_GEOMETRY:ACCESS_APERTURE": 2
+        },
+        "rejected_proposals": [
+          {
+            "tool_id": "generic_suction",
+            "tip_mm": [
+              -162.0,
+              85.0,
+              105.0
+            ],
+            "entry_mm": [
+              -181.39188673393926,
+              85.0,
+              105.0
+            ],
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+          },
+          {
+            "tool_id": "generic_suction",
+            "tip_mm": [
+              -151.0,
+              80.0,
+              105.0
+            ],
+            "entry_mm": [
+              -181.39188673393926,
+              80.0,
+              105.0
+            ],
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE"
+          },
+          {
+            "tool_id": "generic_suction",
+            "tip_mm": [
+              -167.0,
+              89.0,
+              104.0
+            ],
+            "entry_mm": [
+              -181.39188673393926,
+              89.0,
+              104.0
+            ],
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE"
+          },
+          {
+            "tool_id": "generic_suction",
+            "tip_mm": [
+              -166.0,
+              86.0,
+              106.0
+            ],
+            "entry_mm": [
+              -181.39188673393926,
+              86.0,
+              106.0
+            ],
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+          }
+        ],
+        "candidate_tips_mm": [
+          [
+            -162.0,
+            85.0,
+            105.0
+          ],
+          [
+            -151.0,
+            80.0,
+            105.0
+          ],
+          [
+            -167.0,
+            89.0,
+            104.0
+          ],
+          [
+            -166.0,
+            86.0,
+            106.0
+          ]
+        ],
+        "candidate_entries_mm": [
+          [
+            -181.39188673393926,
+            85.0,
+            105.0
+          ],
+          [
+            -181.39188673393926,
+            80.0,
+            105.0
+          ],
+          [
+            -181.39188673393926,
+            89.0,
+            104.0
+          ],
+          [
+            -181.39188673393926,
+            86.0,
+            106.0
+          ]
+        ],
+        "decision_model_hash": "sha256:04ce7e15773b97daa699d49c901c1e6417dd9daed9e89404aa74e07f0bdc1f19",
+        "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "tool_dimensions": [
+          {
+            "tool_id": "generic_suction",
+            "tip_radius_mm": 1.0,
+            "shaft_radius_mm": 1.4,
+            "tip_length_mm": 3.0,
+            "shaft_wider_than_active_tip": true
+          }
+        ],
+        "interpretation": "Initial native action availability only; no learning, removal, or clinical benefit is asserted.",
+        "clinical_deficit_probability": null
+      },
+      "exact_routes_screened": 9,
+      "exact_native_routes_feasible": 0,
+      "exact_native_rejection_counts": {
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 3,
+        "HARD_GEOMETRY:ACCESS_ANGLE": 6
+      },
+      "elapsed_seconds": 2.0865860419580713
+    },
+    {
+      "window_id": "hypothetical-envelope-2",
+      "tool_id": "generic_aspirator",
+      "access": {
+        "center_mm": [
+          -181.39188673393926,
+          84.87771654858179,
+          104.56499439395024
+        ],
+        "normal_inward": [
+          1.0,
+          -0.0,
+          -0.0
+        ],
+        "radius_mm": 4.0
+      },
+      "initial_proposals": {
+        "status": "no_legal_native_actions",
+        "policy_has_nontrivial_action_choice": false,
+        "non_stop_action_count": 0,
+        "non_stop_action_ids": [],
+        "rejected_proposal_count": 4,
+        "rejection_counts": {
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 1,
+          "HARD_GEOMETRY:ACCESS_APERTURE": 3
+        },
+        "rejected_proposals": [
+          {
+            "tool_id": "generic_aspirator",
+            "tip_mm": [
+              -162.0,
+              85.0,
+              105.0
+            ],
+            "entry_mm": [
+              -181.39188673393926,
+              85.0,
+              105.0
+            ],
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+          },
+          {
+            "tool_id": "generic_aspirator",
+            "tip_mm": [
+              -151.0,
+              80.0,
+              105.0
+            ],
+            "entry_mm": [
+              -181.39188673393926,
+              80.0,
+              105.0
+            ],
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE"
+          },
+          {
+            "tool_id": "generic_aspirator",
+            "tip_mm": [
+              -167.0,
+              89.0,
+              104.0
+            ],
+            "entry_mm": [
+              -181.39188673393926,
+              89.0,
+              104.0
+            ],
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE"
+          },
+          {
+            "tool_id": "generic_aspirator",
+            "tip_mm": [
+              -166.0,
+              86.0,
+              106.0
+            ],
+            "entry_mm": [
+              -181.39188673393926,
+              86.0,
+              106.0
+            ],
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE"
+          }
+        ],
+        "candidate_tips_mm": [
+          [
+            -162.0,
+            85.0,
+            105.0
+          ],
+          [
+            -151.0,
+            80.0,
+            105.0
+          ],
+          [
+            -167.0,
+            89.0,
+            104.0
+          ],
+          [
+            -166.0,
+            86.0,
+            106.0
+          ]
+        ],
+        "candidate_entries_mm": [
+          [
+            -181.39188673393926,
+            85.0,
+            105.0
+          ],
+          [
+            -181.39188673393926,
+            80.0,
+            105.0
+          ],
+          [
+            -181.39188673393926,
+            89.0,
+            104.0
+          ],
+          [
+            -181.39188673393926,
+            86.0,
+            106.0
+          ]
+        ],
+        "decision_model_hash": "sha256:741456e990162f3d48958bec60a5361390855b837efd33aa86a1af76db6637ac",
+        "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "tool_dimensions": [
+          {
+            "tool_id": "generic_aspirator",
+            "tip_radius_mm": 1.7,
+            "shaft_radius_mm": 2.7,
+            "tip_length_mm": 4.0,
+            "shaft_wider_than_active_tip": true
+          }
+        ],
+        "interpretation": "Initial native action availability only; no learning, removal, or clinical benefit is asserted.",
+        "clinical_deficit_probability": null
+      },
+      "exact_routes_screened": 9,
+      "exact_native_routes_feasible": 0,
+      "exact_native_rejection_counts": {
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 3,
+        "HARD_GEOMETRY:ACCESS_ANGLE": 6
+      },
+      "elapsed_seconds": 2.144436000031419
+    },
+    {
+      "window_id": "hypothetical-envelope-3",
+      "tool_id": "generic_suction",
+      "access": {
+        "center_mm": [
+          -161.89188673393926,
+          188.3777165485818,
+          104.56499439395024
+        ],
+        "normal_inward": [
+          -0.0,
+          -1.0,
+          -0.0
+        ],
+        "radius_mm": 4.0
+      },
+      "initial_proposals": {
+        "status": "no_legal_native_actions",
+        "policy_has_nontrivial_action_choice": false,
+        "non_stop_action_count": 0,
+        "non_stop_action_ids": [],
+        "rejected_proposal_count": 4,
+        "rejection_counts": {
+          "HARD_GEOMETRY:WORKING_REACH": 3,
+          "HARD_GEOMETRY:ACCESS_APERTURE": 1
+        },
+        "rejected_proposals": [
+          {
+            "tool_id": "generic_suction",
+            "tip_mm": [
+              -162.0,
+              85.0,
+              105.0
+            ],
+            "entry_mm": [
+              -162.0,
+              188.3777165485818,
+              105.0
+            ],
+            "reason": "HARD_GEOMETRY:WORKING_REACH"
+          },
+          {
+            "tool_id": "generic_suction",
+            "tip_mm": [
+              -151.0,
+              80.0,
+              105.0
+            ],
+            "entry_mm": [
+              -151.0,
+              188.3777165485818,
+              105.0
+            ],
+            "reason": "HARD_GEOMETRY:WORKING_REACH"
+          },
+          {
+            "tool_id": "generic_suction",
+            "tip_mm": [
+              -167.0,
+              89.0,
+              104.0
+            ],
+            "entry_mm": [
+              -167.0,
+              188.3777165485818,
+              104.0
+            ],
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE"
+          },
+          {
+            "tool_id": "generic_suction",
+            "tip_mm": [
+              -166.0,
+              86.0,
+              106.0
+            ],
+            "entry_mm": [
+              -166.0,
+              188.3777165485818,
+              106.0
+            ],
+            "reason": "HARD_GEOMETRY:WORKING_REACH"
+          }
+        ],
+        "candidate_tips_mm": [
+          [
+            -162.0,
+            85.0,
+            105.0
+          ],
+          [
+            -151.0,
+            80.0,
+            105.0
+          ],
+          [
+            -167.0,
+            89.0,
+            104.0
+          ],
+          [
+            -166.0,
+            86.0,
+            106.0
+          ]
+        ],
+        "candidate_entries_mm": [
+          [
+            -162.0,
+            188.3777165485818,
+            105.0
+          ],
+          [
+            -151.0,
+            188.3777165485818,
+            105.0
+          ],
+          [
+            -167.0,
+            188.3777165485818,
+            104.0
+          ],
+          [
+            -166.0,
+            188.3777165485818,
+            106.0
+          ]
+        ],
+        "decision_model_hash": "sha256:0c8db241459629dc6e7da3bdedfa9326298502ec7bdb0f521e3329699bfd34f5",
+        "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "tool_dimensions": [
+          {
+            "tool_id": "generic_suction",
+            "tip_radius_mm": 1.0,
+            "shaft_radius_mm": 1.4,
+            "tip_length_mm": 3.0,
+            "shaft_wider_than_active_tip": true
+          }
+        ],
+        "interpretation": "Initial native action availability only; no learning, removal, or clinical benefit is asserted.",
+        "clinical_deficit_probability": null
+      },
+      "exact_routes_screened": 9,
+      "exact_native_routes_feasible": 0,
+      "exact_native_rejection_counts": {
+        "HARD_GEOMETRY:WORKING_REACH": 3,
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 6
+      },
+      "elapsed_seconds": 2.154158874996938
+    },
+    {
+      "window_id": "hypothetical-envelope-3",
+      "tool_id": "generic_aspirator",
+      "access": {
+        "center_mm": [
+          -161.89188673393926,
+          188.3777165485818,
+          104.56499439395024
+        ],
+        "normal_inward": [
+          -0.0,
+          -1.0,
+          -0.0
+        ],
+        "radius_mm": 4.0
+      },
+      "initial_proposals": {
+        "status": "no_legal_native_actions",
+        "policy_has_nontrivial_action_choice": false,
+        "non_stop_action_count": 0,
+        "non_stop_action_ids": [],
+        "rejected_proposal_count": 4,
+        "rejection_counts": {
+          "HARD_GEOMETRY:WORKING_REACH": 4
+        },
+        "rejected_proposals": [
+          {
+            "tool_id": "generic_aspirator",
+            "tip_mm": [
+              -162.0,
+              85.0,
+              105.0
+            ],
+            "entry_mm": [
+              -162.0,
+              188.3777165485818,
+              105.0
+            ],
+            "reason": "HARD_GEOMETRY:WORKING_REACH"
+          },
+          {
+            "tool_id": "generic_aspirator",
+            "tip_mm": [
+              -151.0,
+              80.0,
+              105.0
+            ],
+            "entry_mm": [
+              -151.0,
+              188.3777165485818,
+              105.0
+            ],
+            "reason": "HARD_GEOMETRY:WORKING_REACH"
+          },
+          {
+            "tool_id": "generic_aspirator",
+            "tip_mm": [
+              -167.0,
+              89.0,
+              104.0
+            ],
+            "entry_mm": [
+              -167.0,
+              188.3777165485818,
+              104.0
+            ],
+            "reason": "HARD_GEOMETRY:WORKING_REACH"
+          },
+          {
+            "tool_id": "generic_aspirator",
+            "tip_mm": [
+              -166.0,
+              86.0,
+              106.0
+            ],
+            "entry_mm": [
+              -166.0,
+              188.3777165485818,
+              106.0
+            ],
+            "reason": "HARD_GEOMETRY:WORKING_REACH"
+          }
+        ],
+        "candidate_tips_mm": [
+          [
+            -162.0,
+            85.0,
+            105.0
+          ],
+          [
+            -151.0,
+            80.0,
+            105.0
+          ],
+          [
+            -167.0,
+            89.0,
+            104.0
+          ],
+          [
+            -166.0,
+            86.0,
+            106.0
+          ]
+        ],
+        "candidate_entries_mm": [
+          [
+            -162.0,
+            188.3777165485818,
+            105.0
+          ],
+          [
+            -151.0,
+            188.3777165485818,
+            105.0
+          ],
+          [
+            -167.0,
+            188.3777165485818,
+            104.0
+          ],
+          [
+            -166.0,
+            188.3777165485818,
+            106.0
+          ]
+        ],
+        "decision_model_hash": "sha256:a874dcaf91c123d0d59a6bc500d36bcd099c55eba95ab5a0f611c2df663f80a0",
+        "source_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "tool_dimensions": [
+          {
+            "tool_id": "generic_aspirator",
+            "tip_radius_mm": 1.7,
+            "shaft_radius_mm": 2.7,
+            "tip_length_mm": 4.0,
+            "shaft_wider_than_active_tip": true
+          }
+        ],
+        "interpretation": "Initial native action availability only; no learning, removal, or clinical benefit is asserted.",
+        "clinical_deficit_probability": null
+      },
+      "exact_routes_screened": 9,
+      "exact_native_routes_feasible": 0,
+      "exact_native_rejection_counts": {
+        "HARD_GEOMETRY:WORKING_REACH": 8,
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 1
+      },
+      "elapsed_seconds": 2.180287625058554
+    }
+  ],
+  "routes": [
+    {
+      "route_id": "search-f4d43c59bb765d74",
+      "window_id": "hypothetical-envelope-1",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "target_mm": [
+        -151.0,
+        80.0,
+        105.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "dominated",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -161.48597791155643,
+        84.6959382921129,
+        141.9673341473848
+      ],
+      "completed_microsteps_before_failure": 6,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-f4d43c59bb765d74",
+        "selected_route_target_proposed": true,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.16322291747506196,
+          11.934207780714674,
+          6.563995886100339,
+          4.258651752856933
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-1966660ee195e6f2",
+      "window_id": "hypothetical-envelope-1",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "target_mm": [
+        -182.0,
+        105.0,
+        94.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "dominated",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -162.06750344368652,
+        85.0534570154064,
+        142.96690128425053
+      ],
+      "completed_microsteps_before_failure": 2,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-1966660ee195e6f2",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.16322291747506196,
+          11.934207780714674,
+          6.563995886100339,
+          4.258651752856933
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-c1c9c42c7ed82643",
+      "window_id": "hypothetical-envelope-1",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "target_mm": [
+        -172.0,
+        96.0,
+        124.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "dominated",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -162.09609104234454,
+        85.10240914355994,
+        143.00644231865158
+      ],
+      "completed_microsteps_before_failure": 2,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-c1c9c42c7ed82643",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.16322291747506196,
+          11.934207780714674,
+          6.563995886100339,
+          4.258651752856933
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-c97652110e7fe4b7",
+      "window_id": "hypothetical-envelope-1",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "target_mm": [
+        -167.0,
+        89.0,
+        104.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "dominated",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -162.05151527350367,
+        85.00653790643861,
+        142.16712998580596
+      ],
+      "completed_microsteps_before_failure": 5,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-c97652110e7fe4b7",
+        "selected_route_target_proposed": true,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.16322291747506196,
+          11.934207780714674,
+          6.563995886100339,
+          4.258651752856933
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-de4c4fb083f49f08",
+      "window_id": "hypothetical-envelope-1",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "target_mm": [
+        -168.0,
+        72.0,
+        120.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "dominated",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -161.947415036358,
+        84.76064639814014,
+        143.18561565703553
+      ],
+      "completed_microsteps_before_failure": 1,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-de4c4fb083f49f08",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.16322291747506196,
+          11.934207780714674,
+          6.563995886100339,
+          4.258651752856933
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-2798b21d102fa577",
+      "window_id": "hypothetical-envelope-1",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "target_mm": [
+        -174.0,
+        94.0,
+        124.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "dominated",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -162.01419090834392,
+        84.96986082586884,
+        143.20238502296758
+      ],
+      "completed_microsteps_before_failure": 1,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-2798b21d102fa577",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.16322291747506196,
+          11.934207780714674,
+          6.563995886100339,
+          4.258651752856933
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-cf93a6b947243565",
+      "window_id": "hypothetical-envelope-1",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "target_mm": [
+        -166.0,
+        86.0,
+        106.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "dominated",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -162.0279169745373,
+        84.91487825227114,
+        142.15997250452583
+      ],
+      "completed_microsteps_before_failure": 5,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-cf93a6b947243565",
+        "selected_route_target_proposed": true,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.16322291747506196,
+          11.934207780714674,
+          6.563995886100339,
+          4.258651752856933
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-f9b2016b437f786a",
+      "window_id": "hypothetical-envelope-1",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "target_mm": [
+        -172.0,
+        97.0,
+        121.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "dominated",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -162.075670611504,
+        85.09812170224394,
+        142.9910854049693
+      ],
+      "completed_microsteps_before_failure": 2,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-f9b2016b437f786a",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.16322291747506196,
+          11.934207780714674,
+          6.563995886100339,
+          4.258651752856933
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-709b1e6a4f221b91",
+      "window_id": "hypothetical-envelope-1",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "target_mm": [
+        -180.0,
+        94.0,
+        95.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "dominated",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -162.0643449555208,
+        84.9645954385953,
+        142.937391272738
+      ],
+      "completed_microsteps_before_failure": 2,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-709b1e6a4f221b91",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.16322291747506196,
+          11.934207780714674,
+          6.563995886100339,
+          4.258651752856933
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-e8eea12fa7ae6b0f",
+      "window_id": "hypothetical-envelope-1",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "target_mm": [
+        -151.0,
+        80.0,
+        105.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "pareto",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -161.68893232274783,
+        84.78682742034735,
+        142.6828309373342
+      ],
+      "completed_microsteps_before_failure": 3,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-e8eea12fa7ae6b0f",
+        "selected_route_target_proposed": true,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.16322291747506196,
+          11.934207780714674,
+          6.563995886100339,
+          4.258651752856933
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-8a3669159fc94df2",
+      "window_id": "hypothetical-envelope-1",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "target_mm": [
+        -182.0,
+        105.0,
+        94.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "pareto",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-8a3669159fc94df2",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.16322291747506196,
+          11.934207780714674,
+          6.563995886100339,
+          4.258651752856933
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-046893487762fe04",
+      "window_id": "hypothetical-envelope-1",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "target_mm": [
+        -172.0,
+        96.0,
+        124.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "pareto",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-046893487762fe04",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.16322291747506196,
+          11.934207780714674,
+          6.563995886100339,
+          4.258651752856933
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-cdebd9d45c29f9c3",
+      "window_id": "hypothetical-envelope-1",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "target_mm": [
+        -167.0,
+        89.0,
+        104.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "pareto",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -161.955738149765,
+        84.92924509172451,
+        142.90584863069253
+      ],
+      "completed_microsteps_before_failure": 2,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-cdebd9d45c29f9c3",
+        "selected_route_target_proposed": true,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.16322291747506196,
+          11.934207780714674,
+          6.563995886100339,
+          4.258651752856933
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-256583dafc383284",
+      "window_id": "hypothetical-envelope-1",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "target_mm": [
+        -168.0,
+        72.0,
+        120.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "pareto",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-256583dafc383284",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.16322291747506196,
+          11.934207780714674,
+          6.563995886100339,
+          4.258651752856933
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-feaf6808e0940d11",
+      "window_id": "hypothetical-envelope-1",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "target_mm": [
+        -174.0,
+        94.0,
+        124.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "pareto",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-feaf6808e0940d11",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.16322291747506196,
+          11.934207780714674,
+          6.563995886100339,
+          4.258651752856933
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-dde8afc43337fdf4",
+      "window_id": "hypothetical-envelope-1",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "target_mm": [
+        -166.0,
+        86.0,
+        106.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "pareto",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -161.94629883017848,
+        84.89258123005753,
+        142.90298563818047
+      ],
+      "completed_microsteps_before_failure": 2,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-dde8afc43337fdf4",
+        "selected_route_target_proposed": true,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.16322291747506196,
+          11.934207780714674,
+          6.563995886100339,
+          4.258651752856933
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-f34ca2b66ae5e2b2",
+      "window_id": "hypothetical-envelope-1",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "target_mm": [
+        -172.0,
+        97.0,
+        121.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "pareto",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-f34ca2b66ae5e2b2",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.16322291747506196,
+          11.934207780714674,
+          6.563995886100339,
+          4.258651752856933
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-2d6ecfc112ae93f7",
+      "window_id": "hypothetical-envelope-1",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "target_mm": [
+        -180.0,
+        94.0,
+        95.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "pareto",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-2d6ecfc112ae93f7",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.16322291747506196,
+          11.934207780714674,
+          6.563995886100339,
+          4.258651752856933
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-1acc0adf56b7e235",
+      "window_id": "hypothetical-envelope-2",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -151.0,
+        80.0,
+        105.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "dominated",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -180.9016950124241,
+        84.79904370102402,
+        104.57201061340265
+      ],
+      "completed_microsteps_before_failure": 2,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-1acc0adf56b7e235",
+        "selected_route_target_proposed": true,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.45186626316363365,
+          4.897075515611673,
+          4.16082197636857,
+          1.8217467537287955
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-94597f9da1083664",
+      "window_id": "hypothetical-envelope-2",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -182.0,
+        105.0,
+        94.0
+      ],
+      "static_route_feasible": false,
+      "static_route_category": "rejected",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "HARD_GEOMETRY:ACCESS_ANGLE",
+      "failure_tip_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-94597f9da1083664",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.45186626316363365,
+          4.897075515611673,
+          4.16082197636857,
+          1.8217467537287955
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-37889fe92e89ce64",
+      "window_id": "hypothetical-envelope-2",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -172.0,
+        96.0,
+        124.0
+      ],
+      "static_route_feasible": false,
+      "static_route_category": "rejected",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "HARD_GEOMETRY:ACCESS_ANGLE",
+      "failure_tip_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-37889fe92e89ce64",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.45186626316363365,
+          4.897075515611673,
+          4.16082197636857,
+          1.8217467537287955
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-76cd1f124c889307",
+      "window_id": "hypothetical-envelope-2",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -167.0,
+        89.0,
+        104.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "dominated",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -180.91215717614128,
+        85.0151259969624,
+        104.54616124748523
+      ],
+      "completed_microsteps_before_failure": 2,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-76cd1f124c889307",
+        "selected_route_target_proposed": true,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.45186626316363365,
+          4.897075515611673,
+          4.16082197636857,
+          1.8217467537287955
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-9cfa959fe1b4bc62",
+      "window_id": "hypothetical-envelope-2",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -168.0,
+        72.0,
+        120.0
+      ],
+      "static_route_feasible": false,
+      "static_route_category": "rejected",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "HARD_GEOMETRY:ACCESS_ANGLE",
+      "failure_tip_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-9cfa959fe1b4bc62",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.45186626316363365,
+          4.897075515611673,
+          4.16082197636857,
+          1.8217467537287955
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-68ded56b5e7330d5",
+      "window_id": "hypothetical-envelope-2",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -174.0,
+        94.0,
+        124.0
+      ],
+      "static_route_feasible": false,
+      "static_route_category": "rejected",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "HARD_GEOMETRY:ACCESS_ANGLE",
+      "failure_tip_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-68ded56b5e7330d5",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.45186626316363365,
+          4.897075515611673,
+          4.16082197636857,
+          1.8217467537287955
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-110df6a56e19bfbc",
+      "window_id": "hypothetical-envelope-2",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -166.0,
+        86.0,
+        106.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "dominated",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -180.8953742586509,
+        84.91391924056302,
+        104.6112848973712
+      ],
+      "completed_microsteps_before_failure": 2,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-110df6a56e19bfbc",
+        "selected_route_target_proposed": true,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.45186626316363365,
+          4.897075515611673,
+          4.16082197636857,
+          1.8217467537287955
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-aaf9aa79d7dec117",
+      "window_id": "hypothetical-envelope-2",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -172.0,
+        97.0,
+        121.0
+      ],
+      "static_route_feasible": false,
+      "static_route_category": "rejected",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "HARD_GEOMETRY:ACCESS_ANGLE",
+      "failure_tip_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-aaf9aa79d7dec117",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.45186626316363365,
+          4.897075515611673,
+          4.16082197636857,
+          1.8217467537287955
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-9948c32e7db61c31",
+      "window_id": "hypothetical-envelope-2",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -180.0,
+        94.0,
+        95.0
+      ],
+      "static_route_feasible": false,
+      "static_route_category": "rejected",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "HARD_GEOMETRY:ACCESS_ANGLE",
+      "failure_tip_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-9948c32e7db61c31",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.45186626316363365,
+          4.897075515611673,
+          4.16082197636857,
+          1.8217467537287955
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-36fabbaecc81598e",
+      "window_id": "hypothetical-envelope-2",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -151.0,
+        80.0,
+        105.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "pareto",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -181.1467908731817,
+        84.8383801248029,
+        104.56850250367646
+      ],
+      "completed_microsteps_before_failure": 1,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-36fabbaecc81598e",
+        "selected_route_target_proposed": true,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.45186626316363365,
+          4.897075515611673,
+          4.16082197636857,
+          1.8217467537287955
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-c0f9a28b89a991e1",
+      "window_id": "hypothetical-envelope-2",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -182.0,
+        105.0,
+        94.0
+      ],
+      "static_route_feasible": false,
+      "static_route_category": "rejected",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "HARD_GEOMETRY:ACCESS_ANGLE",
+      "failure_tip_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-c0f9a28b89a991e1",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.45186626316363365,
+          4.897075515611673,
+          4.16082197636857,
+          1.8217467537287955
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-e0c893af919c2188",
+      "window_id": "hypothetical-envelope-2",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -172.0,
+        96.0,
+        124.0
+      ],
+      "static_route_feasible": false,
+      "static_route_category": "rejected",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "HARD_GEOMETRY:ACCESS_ANGLE",
+      "failure_tip_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-e0c893af919c2188",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.45186626316363365,
+          4.897075515611673,
+          4.16082197636857,
+          1.8217467537287955
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-5dde0be947f8b6a1",
+      "window_id": "hypothetical-envelope-2",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -167.0,
+        89.0,
+        104.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "pareto",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -180.91215717614128,
+        85.0151259969624,
+        104.54616124748523
+      ],
+      "completed_microsteps_before_failure": 2,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-5dde0be947f8b6a1",
+        "selected_route_target_proposed": true,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.45186626316363365,
+          4.897075515611673,
+          4.16082197636857,
+          1.8217467537287955
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-60465dd9c6eae577",
+      "window_id": "hypothetical-envelope-2",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -168.0,
+        72.0,
+        120.0
+      ],
+      "static_route_feasible": false,
+      "static_route_category": "rejected",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "HARD_GEOMETRY:ACCESS_ANGLE",
+      "failure_tip_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-60465dd9c6eae577",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.45186626316363365,
+          4.897075515611673,
+          4.16082197636857,
+          1.8217467537287955
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-9d8417aaa29d67bd",
+      "window_id": "hypothetical-envelope-2",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -174.0,
+        94.0,
+        124.0
+      ],
+      "static_route_feasible": false,
+      "static_route_category": "rejected",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "HARD_GEOMETRY:ACCESS_ANGLE",
+      "failure_tip_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-9d8417aaa29d67bd",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.45186626316363365,
+          4.897075515611673,
+          4.16082197636857,
+          1.8217467537287955
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-4981dca415170334",
+      "window_id": "hypothetical-envelope-2",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -166.0,
+        86.0,
+        106.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "pareto",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -180.8953742586509,
+        84.91391924056302,
+        104.6112848973712
+      ],
+      "completed_microsteps_before_failure": 2,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-4981dca415170334",
+        "selected_route_target_proposed": true,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.45186626316363365,
+          4.897075515611673,
+          4.16082197636857,
+          1.8217467537287955
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-d98cc8788cef9430",
+      "window_id": "hypothetical-envelope-2",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -172.0,
+        97.0,
+        121.0
+      ],
+      "static_route_feasible": false,
+      "static_route_category": "rejected",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "HARD_GEOMETRY:ACCESS_ANGLE",
+      "failure_tip_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-d98cc8788cef9430",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.45186626316363365,
+          4.897075515611673,
+          4.16082197636857,
+          1.8217467537287955
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-a18eee6a686313aa",
+      "window_id": "hypothetical-envelope-2",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -180.0,
+        94.0,
+        95.0
+      ],
+      "static_route_feasible": false,
+      "static_route_category": "rejected",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "HARD_GEOMETRY:ACCESS_ANGLE",
+      "failure_tip_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-a18eee6a686313aa",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.45186626316363365,
+          4.897075515611673,
+          4.16082197636857,
+          1.8217467537287955
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-4cf864176e7527af",
+      "window_id": "hypothetical-envelope-3",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        188.3777165485818,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -151.0,
+        80.0,
+        105.0
+      ],
+      "static_route_feasible": false,
+      "static_route_category": "rejected",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "HARD_GEOMETRY:WORKING_REACH",
+      "failure_tip_mm": [
+        -151.0,
+        80.0,
+        105.0
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-4cf864176e7527af",
+        "selected_route_target_proposed": true,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.44823917230986904,
+          10.900570008135205,
+          5.139264519763595,
+          4.351532568668018
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-428de962d331d800",
+      "window_id": "hypothetical-envelope-3",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        188.3777165485818,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -182.0,
+        105.0,
+        94.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "dominated",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -161.89188673393926,
+        188.3777165485818,
+        104.56499439395024
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-428de962d331d800",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.44823917230986904,
+          10.900570008135205,
+          5.139264519763595,
+          4.351532568668018
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-e3b4fd4187bd8557",
+      "window_id": "hypothetical-envelope-3",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        188.3777165485818,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -172.0,
+        96.0,
+        124.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "dominated",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -161.89188673393926,
+        188.3777165485818,
+        104.56499439395024
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-e3b4fd4187bd8557",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.44823917230986904,
+          10.900570008135205,
+          5.139264519763595,
+          4.351532568668018
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-35049655244ec7bf",
+      "window_id": "hypothetical-envelope-3",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        188.3777165485818,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -167.0,
+        89.0,
+        104.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "dominated",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -161.90468902282663,
+        188.12864958981342,
+        104.56357836790025
+      ],
+      "completed_microsteps_before_failure": 1,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-35049655244ec7bf",
+        "selected_route_target_proposed": true,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.44823917230986904,
+          10.900570008135205,
+          5.139264519763595,
+          4.351532568668018
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-c9d567fa11d9fd2e",
+      "window_id": "hypothetical-envelope-3",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        188.3777165485818,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -168.0,
+        72.0,
+        120.0
+      ],
+      "static_route_feasible": false,
+      "static_route_category": "rejected",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "HARD_GEOMETRY:WORKING_REACH",
+      "failure_tip_mm": [
+        -168.0,
+        72.0,
+        120.0
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-c9d567fa11d9fd2e",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.44823917230986904,
+          10.900570008135205,
+          5.139264519763595,
+          4.351532568668018
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-d2234ce78d81c9ef",
+      "window_id": "hypothetical-envelope-3",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        188.3777165485818,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -174.0,
+        94.0,
+        124.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "dominated",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -161.89188673393926,
+        188.3777165485818,
+        104.56499439395024
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-d2234ce78d81c9ef",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.44823917230986904,
+          10.900570008135205,
+          5.139264519763595,
+          4.351532568668018
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-f3e0ada8091e8835",
+      "window_id": "hypothetical-envelope-3",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        188.3777165485818,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -166.0,
+        86.0,
+        106.0
+      ],
+      "static_route_feasible": false,
+      "static_route_category": "rejected",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "HARD_GEOMETRY:WORKING_REACH",
+      "failure_tip_mm": [
+        -166.0,
+        86.0,
+        106.0
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-f3e0ada8091e8835",
+        "selected_route_target_proposed": true,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.44823917230986904,
+          10.900570008135205,
+          5.139264519763595,
+          4.351532568668018
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-b87897e883754257",
+      "window_id": "hypothetical-envelope-3",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        188.3777165485818,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -172.0,
+        97.0,
+        121.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "dominated",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -161.89188673393926,
+        188.3777165485818,
+        104.56499439395024
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-b87897e883754257",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.44823917230986904,
+          10.900570008135205,
+          5.139264519763595,
+          4.351532568668018
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-cf447b461999f627",
+      "window_id": "hypothetical-envelope-3",
+      "tool_id": "generic_suction",
+      "tool": {
+        "tool_id": "generic_suction",
+        "tip_radius_mm": 1.0,
+        "shaft_radius_mm": 1.4,
+        "working_length_mm": 100.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 3.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        188.3777165485818,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -180.0,
+        94.0,
+        95.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "dominated",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -161.89188673393926,
+        188.3777165485818,
+        104.56499439395024
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-cf447b461999f627",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.44823917230986904,
+          10.900570008135205,
+          5.139264519763595,
+          4.351532568668018
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-53c610df06f0b52c",
+      "window_id": "hypothetical-envelope-3",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        188.3777165485818,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -151.0,
+        80.0,
+        105.0
+      ],
+      "static_route_feasible": false,
+      "static_route_category": "rejected",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "HARD_GEOMETRY:WORKING_REACH",
+      "failure_tip_mm": [
+        -151.0,
+        80.0,
+        105.0
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-53c610df06f0b52c",
+        "selected_route_target_proposed": true,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.44823917230986904,
+          10.900570008135205,
+          5.139264519763595,
+          4.351532568668018
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-63d6ff8f98caf871",
+      "window_id": "hypothetical-envelope-3",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        188.3777165485818,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -182.0,
+        105.0,
+        94.0
+      ],
+      "static_route_feasible": true,
+      "static_route_category": "dominated",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "failure_tip_mm": [
+        -161.89188673393926,
+        188.3777165485818,
+        104.56499439395024
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-63d6ff8f98caf871",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.44823917230986904,
+          10.900570008135205,
+          5.139264519763595,
+          4.351532568668018
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-3f6e8cbe9d66ab26",
+      "window_id": "hypothetical-envelope-3",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        188.3777165485818,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -172.0,
+        96.0,
+        124.0
+      ],
+      "static_route_feasible": false,
+      "static_route_category": "rejected",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "HARD_GEOMETRY:WORKING_REACH",
+      "failure_tip_mm": [
+        -172.0,
+        96.0,
+        124.0
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-3f6e8cbe9d66ab26",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.44823917230986904,
+          10.900570008135205,
+          5.139264519763595,
+          4.351532568668018
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-c0427347a8126bac",
+      "window_id": "hypothetical-envelope-3",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        188.3777165485818,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -167.0,
+        89.0,
+        104.0
+      ],
+      "static_route_feasible": false,
+      "static_route_category": "rejected",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "HARD_GEOMETRY:WORKING_REACH",
+      "failure_tip_mm": [
+        -167.0,
+        89.0,
+        104.0
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-c0427347a8126bac",
+        "selected_route_target_proposed": true,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.44823917230986904,
+          10.900570008135205,
+          5.139264519763595,
+          4.351532568668018
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-65cea5ecfb346b0a",
+      "window_id": "hypothetical-envelope-3",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        188.3777165485818,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -168.0,
+        72.0,
+        120.0
+      ],
+      "static_route_feasible": false,
+      "static_route_category": "rejected",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "HARD_GEOMETRY:WORKING_REACH",
+      "failure_tip_mm": [
+        -168.0,
+        72.0,
+        120.0
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-65cea5ecfb346b0a",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.44823917230986904,
+          10.900570008135205,
+          5.139264519763595,
+          4.351532568668018
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-41a3988d535c4ee6",
+      "window_id": "hypothetical-envelope-3",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        188.3777165485818,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -174.0,
+        94.0,
+        124.0
+      ],
+      "static_route_feasible": false,
+      "static_route_category": "rejected",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "HARD_GEOMETRY:WORKING_REACH",
+      "failure_tip_mm": [
+        -174.0,
+        94.0,
+        124.0
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-41a3988d535c4ee6",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.44823917230986904,
+          10.900570008135205,
+          5.139264519763595,
+          4.351532568668018
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-ee6ed307b8b1e374",
+      "window_id": "hypothetical-envelope-3",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        188.3777165485818,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -166.0,
+        86.0,
+        106.0
+      ],
+      "static_route_feasible": false,
+      "static_route_category": "rejected",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "HARD_GEOMETRY:WORKING_REACH",
+      "failure_tip_mm": [
+        -166.0,
+        86.0,
+        106.0
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-ee6ed307b8b1e374",
+        "selected_route_target_proposed": true,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.44823917230986904,
+          10.900570008135205,
+          5.139264519763595,
+          4.351532568668018
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-5e3b9012b3c56587",
+      "window_id": "hypothetical-envelope-3",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        188.3777165485818,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -172.0,
+        97.0,
+        121.0
+      ],
+      "static_route_feasible": false,
+      "static_route_category": "rejected",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "HARD_GEOMETRY:WORKING_REACH",
+      "failure_tip_mm": [
+        -172.0,
+        97.0,
+        121.0
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-5e3b9012b3c56587",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.44823917230986904,
+          10.900570008135205,
+          5.139264519763595,
+          4.351532568668018
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    },
+    {
+      "route_id": "search-f273ec546fe59c61",
+      "window_id": "hypothetical-envelope-3",
+      "tool_id": "generic_aspirator",
+      "tool": {
+        "tool_id": "generic_aspirator",
+        "tip_radius_mm": 1.7,
+        "shaft_radius_mm": 2.7,
+        "working_length_mm": 90.0,
+        "max_access_angle_deg": 45.0,
+        "tip_length_mm": 4.0,
+        "parameter_source": "generic research geometry; not a verified commercial device"
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        188.3777165485818,
+        104.56499439395024
+      ],
+      "target_mm": [
+        -180.0,
+        94.0,
+        95.0
+      ],
+      "static_route_feasible": false,
+      "static_route_category": "rejected",
+      "bridge_factory_non_stop_actions": 0,
+      "exact_native_stroke_feasible": false,
+      "exact_native_stroke_reason": "HARD_GEOMETRY:WORKING_REACH",
+      "failure_tip_mm": [
+        -180.0,
+        94.0,
+        95.0
+      ],
+      "completed_microsteps_before_failure": 0,
+      "preview_contained_tissue_mm3": 0.0,
+      "proposal_coverage": {
+        "route_id": "search-f273ec546fe59c61",
+        "selected_route_target_proposed": false,
+        "selected_route_exact_ray_proposed": false,
+        "matching_indices": [],
+        "proposal_problems": [
+          "selected_route_target_not_proposed",
+          "selected_route_entry_target_pair_not_proposed"
+        ],
+        "projected_entry_offsets_mm": [
+          0.44823917230986904,
+          10.900570008135205,
+          5.139264519763595,
+          4.351532568668018
+        ],
+        "access_radius_mm": 4.0,
+        "interpretation": "Proposal coverage differs from native feasibility; a present route can still be rejected by complete-tool checks."
+      },
+      "executed_removal_mm3": 0.0
+    }
+  ],
+  "scope": "development diagnostic; frozen initial geometry only; previews do not remove tissue"
+}

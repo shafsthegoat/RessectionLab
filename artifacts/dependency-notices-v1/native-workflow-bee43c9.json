@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "created_utc": "2026-10-04T11:54:09.039720+00:00",
+  "source_revision": "bee43c9bcaefc582587e80e888c1c25cd6948e55",
+  "capture_receipt": "app-capture-verification.json",
+  "status": "loaded_workflows_passed_unloaded_visual_defect_found",
+  "native_interaction": "macOS accessibility and original window screenshots through computer-use",
+  "checks": {
+    "standalone_start_without_python_environment": true,
+    "unloaded_route_prompt_correct": true,
+    "estimated_support_requires_explicit_choice": true,
+    "chosen_support_enables_generation_prompt": true,
+    "real_case_search_candidate_count": 54,
+    "cleared_both_route_selections_prompts_selection": true,
+    "full_head_pat05_search_disabled_pending_review": true,
+    "motor_atlas_readout": "0.9969",
+    "motor_landmark_ras_mm": [
+      -173,
+      137,
+      112
+    ],
+    "patient_function_remains_unknown": true,
+    "source_restore_clears_overlay_and_updates_footer": true,
+    "source_restore_preserves_cursor_and_annotations": true,
+    "mri_review_window_widths_points": [
+      1460,
+      1050
+    ],
+    "minimum_width_controls_accessible": true,
+    "renderer_or_shader_errors_observed": false
+  },
+  "finding": {
+    "description": "Unloaded center renders both viewer empty placeholder and shell welcome, causing visibly overlapping text. Right-side guidance remains correct.",
+    "screenshot": "unloaded-guidance-recheck.jpg",
+    "corrected_source_pending_native_retest": true
+  },
+  "scope_limits": [
+    "No patient training or final evaluation invoked.",
+    "This focused check does not repeat the historical all-seven-map native validation.",
+    "Two notice source-completeness gaps remain; not a distribution compliance claim."
+  ],
+  "screenshots": {
+    "blocked-full-head-guidance.jpg": "fea8c258f082e0fa12a2603ac71e7e388cafc20721a2b66e4cc5046b78781450",
+    "cleared-route-guidance.jpg": "76736433a1fb3f1f7a2e317fe89b66ea33969398090ba29e9490a00e7191885a",
+    "estimated-support-choice.jpg": "508d503f367899a89e4d28efd82920a5a1865ac020b94cd9543f32cb41448230",
+    "estimated-support-chosen.jpg": "09b22401f1bb7502bcd5332a491848324ce3cdf852eb8297e3a19c47827da677",
+    "motor-mri-review-minimum.jpg": "1088d1ce155792defe2e360d5afc02ceea22df8c8b88714ce2bdac20f88f05e8",
+    "motor-mri-review-wide.jpg": "6a5adaeb9666747ae8b695cde35eaf71830a62d1d82ec0621daa74595f9eea93",
+    "motor-representative.jpg": "250c76826780db7becca19ae6193e7ca6839f79965a6c47714757cd379b83e7e",
+    "source-restored-minimum.jpg": "8ff3076512dd425a24a62213f2429e2d9e849d4e78a01babc78fe1e5a10474ed",
+    "source-restored-wide.jpg": "51cf32f452ecb1fa21ab8404bccbde0fe56b70d261da7fa5638aca7903edc864",
+    "unloaded-guidance-recheck.jpg": "8e158c15f53ba62472d8d64c0918d3888f06fc75788e4facc45a01628b2afa85",
+    "unloaded-guidance.jpg": "8e158c15f53ba62472d8d64c0918d3888f06fc75788e4facc45a01628b2afa85"
+  }
+}

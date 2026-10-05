@@ -1,0 +1,23 @@
+{
+  "cleanup": {
+    "kill_sent": false,
+    "reaped": true
+  },
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/install/bin/febio4",
+    "-noconfig",
+    "-no_title",
+    "-i",
+    "specimen.feb",
+    "-o",
+    "solver.log"
+  ],
+  "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-poc-v1/experiment/runs/compression-N4-S60-reference",
+  "elapsed_seconds": 0.7348852920113131,
+  "exit_code": 0,
+  "pid": 35030,
+  "seconds_cap": 90,
+  "started": true,
+  "status": "completed",
+  "timed_out": false
+}

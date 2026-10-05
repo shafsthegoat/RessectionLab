@@ -1,0 +1,292 @@
+{
+  "access": {
+    "center_mm": [
+      -55.65907797962427,
+      26.85264183295658,
+      9.485966679882779
+    ],
+    "normal_inward": [
+      0.9991420462450487,
+      -0.03669333937540993,
+      -0.01920339216748122
+    ],
+    "radius_mm": 6.0,
+    "window_id": "PAT05-main-provisional-annotation-axis-v1"
+  },
+  "access_derivation": {
+    "annotation_centroid_voxels": [
+      46.010754568505725,
+      137.85992830287663,
+      150.8153361895602
+    ],
+    "cortical_access_permitted": false,
+    "depth_to_annotation_representative_mm": 26.500093391185867,
+    "procedure": "lexicographically first supplied target cell nearest source-index centroid; walk each of six source axes to first non-support cell; select nearest half-voxel exit by physical distance, then axis, then outward sign; inward normal is opposite exit direction; fixed6mm aperture",
+    "representative_voxel": [
+      46,
+      138,
+      151
+    ],
+    "selected_boundary_voxel": [
+      19.5,
+      138.0,
+      151.0
+    ],
+    "six_axis_exit_distances_mm": [
+      {
+        "axis": 0,
+        "distance_mm": 26.500093391185867,
+        "outward_sign": -1
+      },
+      {
+        "axis": 0,
+        "distance_mm": 93.5003295122973,
+        "outward_sign": 1
+      },
+      {
+        "axis": 1,
+        "distance_mm": 91.49999675872577,
+        "outward_sign": -1
+      },
+      {
+        "axis": 1,
+        "distance_mm": 42.499998494490114,
+        "outward_sign": 1
+      },
+      {
+        "axis": 2,
+        "distance_mm": 45.499999333656575,
+        "outward_sign": -1
+      },
+      {
+        "axis": 2,
+        "distance_mm": 50.49999926043202,
+        "outward_sign": 1
+      }
+    ],
+    "source_grid_only_no_native_engine_execution": true,
+    "track": "annotation_assisted"
+  },
+  "adapter_options": {
+    "crop_shape": [
+      32,
+      32,
+      32
+    ],
+    "intensity_normalization": "support_percentile_1_99",
+    "research_support_acknowledgment": {
+      "acknowledge_unreviewed": true,
+      "case_hash": "sha256:2fd887043fc6c7d657e83cadd9f55f0f585940a82c0eefb50da8baa0b3c989ef",
+      "clinical_use_permitted": false,
+      "cortical_access_permitted": false,
+      "declared_at": "2026-10-04T17:41:37.328452+00:00",
+      "declared_by": "RessectionLab research workflow under explicit user-authorized provisional scope",
+      "evidence_hash": "sha256:1d016c7cf0e799ca57d494445f78356dbad12298a0994894b8eb93066780ccfb",
+      "evidence_id": "synthstrip_main_7be541d3d8f3",
+      "mask_hash": "sha256:436199eb3abc24e818e13e342f69bbae45b76b8be1dd6c2ce1071013fce43949",
+      "model_sha256": "sha256:37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33",
+      "planning_hash": "sha256:8233172d1a9455ea69b1026636f4085e97c4fd7db323e4b3d103052667f200d0",
+      "purpose": "native_spatial_provisional_research",
+      "rationale": "Use the exact existing main estimated envelope for annotation-assisted native geometry research. PAT05 main was selected prospectively for complete supplied annotation inclusion; no reward or feasibility sweep, expert review, cortical localization or clinical approval is claimed.",
+      "run_sha256": "sha256:7be541d3d8f3c2784006aae75cf8e3d420bff37790554eac9eb6990b84abd428",
+      "schema_version": 1,
+      "scope": "hypothetical_tissue_support",
+      "source_frame_hash": "sha256:6a956e22ef40ed2ce301f0583a7be3a1d655e0fa9ab2d9ed8c11d2f7b5a156b1",
+      "source_image_hash": "sha256:93e2812263872cbbd3f24de845c015b7dd418a4a89223887437a5f44fff35359"
+    }
+  },
+  "bundle": {
+    "case_hash": "sha256:2fd887043fc6c7d657e83cadd9f55f0f585940a82c0eefb50da8baa0b3c989ef",
+    "case_id": "BTC-ds001226-sub-PAT05-preop",
+    "path": "outputs/cases/BTC-sub-PAT05-structural-evidence.ressectionlab",
+    "planning_hash": "sha256:8233172d1a9455ea69b1026636f4085e97c4fd7db323e4b3d103052667f200d0",
+    "sha256": "c1af712957dc4902343995bd828eb0c3662438f8445c5cb7401e6dd50f7a4e12"
+  },
+  "claims": {
+    "clinical_deficit_probability": null,
+    "cortical_surface_localization": false,
+    "expert_anatomical_review": false,
+    "language_evidence": "unknown",
+    "motor_evidence": "unknown",
+    "patient_learning_executed": false,
+    "patient_profile_executed": false,
+    "vascular_coverage": "unassessed"
+  },
+  "created_at": "2026-10-04T17:41:37.328452+00:00",
+  "schema": "native-spatial-real-input-binding-v1",
+  "selected_support": {
+    "annotation_outside_voxels": 0,
+    "annotation_voxels": 11437,
+    "compared_main_outside_voxels": {
+      "PAT05": 0,
+      "PAT16": 19,
+      "PAT20": 125,
+      "PAT28": 0
+    },
+    "evidence_hash": "sha256:1d016c7cf0e799ca57d494445f78356dbad12298a0994894b8eb93066780ccfb",
+    "evidence_id": "synthstrip_main_7be541d3d8f3",
+    "model_sha256": "sha256:37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33",
+    "review": null,
+    "review_status": "review_required",
+    "run_sha256": "sha256:7be541d3d8f3c2784006aae75cf8e3d420bff37790554eac9eb6990b84abd428",
+    "selection_rule": "prospective supplied-annotation inclusion engineering check, not extraction accuracy or outcome selection",
+    "tie_rule": "PAT05 first already-consulted TRAIN identifier among zero-conflict main estimates"
+  },
+  "source": {
+    "affine_ras_mm": [
+      [
+        0.9991455674171448,
+        0.03670010715723038,
+        0.019190452992916107,
+        -83.10478973388672
+      ],
+      [
+        -0.03669346868991852,
+        0.9993262887001038,
+        -0.0007048094994388521,
+        -110.23243713378906
+      ],
+      [
+        -0.019203459843993187,
+        4.299106848293377e-08,
+        0.9998155832290649,
+        -141.11172485351562
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "brain_mask_present": false,
+    "frame": "RAS+",
+    "shape": [
+      160,
+      256,
+      256
+    ],
+    "structural_file_sha256": "sha256:016779173394c3a3e07fc53f927d37c3c1cb5df04bcbdc398fcfbdc23b40085e"
+  },
+  "static_crop_catalog": {
+    "coverage_scope": "fixed declared local lattice; not full annotation or whole patient coverage",
+    "expected_declared_slots_for_two_tools": 36,
+    "feasibility_unassessed": true,
+    "origin": [
+      11,
+      122,
+      135
+    ],
+    "provided_annotation_fraction_in_crop": 0.2435953484305325,
+    "provided_annotation_voxels_in_crop": 2786,
+    "requested_depth_offsets_voxels": [
+      0,
+      1,
+      2,
+      4,
+      8,
+      16,
+      24,
+      31
+    ],
+    "retained_candidate_voxels": [
+      [
+        20,
+        137,
+        151
+      ],
+      [
+        21,
+        137,
+        151
+      ],
+      [
+        22,
+        137,
+        151
+      ],
+      [
+        24,
+        137,
+        151
+      ],
+      [
+        28,
+        137,
+        151
+      ],
+      [
+        36,
+        137,
+        151
+      ],
+      [
+        20,
+        138,
+        151
+      ],
+      [
+        21,
+        138,
+        151
+      ],
+      [
+        22,
+        138,
+        151
+      ],
+      [
+        24,
+        138,
+        151
+      ],
+      [
+        28,
+        138,
+        151
+      ],
+      [
+        36,
+        138,
+        151
+      ],
+      [
+        20,
+        139,
+        151
+      ],
+      [
+        21,
+        139,
+        151
+      ],
+      [
+        22,
+        139,
+        151
+      ],
+      [
+        24,
+        139,
+        151
+      ],
+      [
+        28,
+        139,
+        151
+      ],
+      [
+        36,
+        139,
+        151
+      ]
+    ],
+    "retained_voxel_count": 18,
+    "shape": [
+      32,
+      32,
+      32
+    ]
+  },
+  "status": "declaration_inputs_only_no_native_preview_or_learning"
+}

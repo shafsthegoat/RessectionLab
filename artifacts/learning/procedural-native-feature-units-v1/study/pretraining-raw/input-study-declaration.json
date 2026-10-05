@@ -1,0 +1,452 @@
+{
+  "schema_version": 1,
+  "study_id": "procedural-native-feature-units-v1",
+  "declared_at_utc": "2026-10-04T10:45:18.551562+00:00",
+  "status": "declared_not_executed",
+  "scope": "procedural_native_feature_units_development",
+  "question": "Does fixed actor-input feature scaling change bounded scratch learning and procedural transfer under the identical physical native planning problem?",
+  "reference_design": {
+    "path": "manifests/experiments/procedural-native-to-ucsf-v1.json",
+    "declaration_content_hash": "sha256:3abf10162ed9d096a7e21ec84a87c1a88ebf12bb074345a78040dfdebb828ac9",
+    "inherit_exact_sections": [
+      "target",
+      "procedural_training",
+      "common_action_contract",
+      "selection_and_evaluation",
+      "source_hashes_at_declaration"
+    ],
+    "completed_reference_attempt": "artifacts/learning/procedural-native-to-ucsf-v2",
+    "reference_runtime_content_hash": "sha256:e1186e12e79263c41e3cdad06112012702b4126a73fd912c14fa1e41d6d8843f",
+    "reference_commit": "68e4fde13b1fa13411e59af663bd17ae63885947",
+    "reuse_reference_weights_or_optimizer_state": false
+  },
+  "cohort": {
+    "human_pretraining_patients": 0,
+    "procedural_families": 2,
+    "patient_derived_development_targets": 1,
+    "target_case_id": "UCSF-PDGM-0004",
+    "target_semantic_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "target_planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+    "group_id": "UCSF-PDGM:UCSF-PDGM-0004",
+    "aliases": [
+      "UCSF-PDGM:UCSF-PDGM-004",
+      "BraTS2021:BraTS2021_00097"
+    ],
+    "outer_split": "development",
+    "target_excluded_from_pretraining": true
+  },
+  "profiles": {
+    "RAW": {
+      "profile_id": "RAW",
+      "version": "native-fixed-action-units-v1",
+      "action_feature_names": [
+        "stop",
+        "target_benefit",
+        "normal_volume",
+        "motor_evidence",
+        "language_evidence",
+        "insertion_distance",
+        "tip_radius",
+        "shaft_radius",
+        "tool_change",
+        "depth",
+        "remaining_target_fraction",
+        "adjacent_target_fraction",
+        "partial_normal_contact_volume",
+        "partial_motor_contact_surrogate",
+        "partial_language_contact_surrogate"
+      ],
+      "action_divisors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "state_divisors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "centering": false,
+      "clipping": false,
+      "running_statistics": false,
+      "return_divisor": 1.0,
+      "critic_output_divisor": 1.0,
+      "state_feature_names": [
+        "remaining_target_fraction",
+        "action_budget_fraction_used",
+        "removed_tissue_fraction",
+        "nominal_severed_edge_fraction",
+        "motor_evidence_available",
+        "language_evidence_available"
+      ],
+      "profile_content_hash": "sha256:b0ae5e34b7fbd206ca7e690fc29c5283ab4be69af25ba45b67f4f5d858b27e12"
+    },
+    "FEATURE_UNITS": {
+      "profile_id": "FEATURE_UNITS",
+      "version": "native-fixed-action-units-v1",
+      "action_feature_names": [
+        "stop",
+        "target_benefit",
+        "normal_volume",
+        "motor_evidence",
+        "language_evidence",
+        "insertion_distance",
+        "tip_radius",
+        "shaft_radius",
+        "tool_change",
+        "depth",
+        "remaining_target_fraction",
+        "adjacent_target_fraction",
+        "partial_normal_contact_volume",
+        "partial_motor_contact_surrogate",
+        "partial_language_contact_surrogate"
+      ],
+      "action_divisors": [
+        1.0,
+        648.0,
+        648.0,
+        648.0,
+        648.0,
+        120.0,
+        2.25,
+        1.1,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        648.0,
+        648.0,
+        648.0
+      ],
+      "state_divisors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "centering": false,
+      "clipping": false,
+      "running_statistics": false,
+      "return_divisor": 1.0,
+      "critic_output_divisor": 1.0,
+      "state_feature_names": [
+        "remaining_target_fraction",
+        "action_budget_fraction_used",
+        "removed_tissue_fraction",
+        "nominal_severed_edge_fraction",
+        "motor_evidence_available",
+        "language_evidence_available"
+      ],
+      "profile_content_hash": "sha256:ae7e392794857e72d3cbd06dd7106dd30bcf557e8a91fe9261bf14d6481cc74b"
+    }
+  },
+  "reference_unit_derivations": {
+    "volume_reference_mm3": {
+      "value": 648.0,
+      "formula": "9 * 9 * 8 * abs(det(identity_3x3))",
+      "source": "Entire all-tissue support of each declared procedural source family;1mm3 per cell",
+      "meaning": "Fixed reference unit, not a universal bound on patient actions or surrogate integrals"
+    },
+    "insertion_distance_mm": {
+      "value": 120.0,
+      "source": "Maximum declared generic-tool working length"
+    },
+    "tip_radius_mm": {
+      "value": 2.25,
+      "source": "Maximum declared generic-tool active-tip radius"
+    },
+    "shaft_radius_mm": {
+      "value": 1.1,
+      "source": "Maximum declared generic-tool shaft radius"
+    },
+    "patient_statistics_used": false,
+    "outcome_fitted_constants": false
+  },
+  "unchanged_learning": {
+    "algorithm": "masked_reinforce_state_value_v2",
+    "action_features": 15,
+    "state_features": 6,
+    "hidden_features": 16,
+    "critic_inputs": "six raw existing state features unchanged",
+    "physical_returns_and_value_predictions": true,
+    "critic_output_layer_initialization": "unchanged seeded initialization",
+    "value_weight": 0.5,
+    "entropy_weight": 0.01,
+    "gradient_clip_global_norm": 5.0,
+    "adam_learning_rate": 0.003,
+    "gamma": 1.0,
+    "return_normalization": false,
+    "new_state_features": false
+  },
+  "initialization": {
+    "paired_trainable_tensors_same_by_seed": true,
+    "paired_critic_initial_outputs_same": true,
+    "initial_action_probabilities_may_differ": true,
+    "trainable_parameter_hash_separate_from_policy_semantic_identity": true,
+    "each_profile_has_independent_fresh_offline_checkpoint": true,
+    "adapted_seed_uses_private_matching_profile_clone_and_fresh_adam": true,
+    "frozen_gradient_steps": 0
+  },
+  "budgets": {
+    "offline_training": {
+      "seed": 101,
+      "max_environment_steps": 256,
+      "max_gradient_steps": 32,
+      "max_wall_seconds": 60.0,
+      "max_episode_steps": 4,
+      "episodes_per_update": 2,
+      "checkpoint_interval": 2,
+      "hidden_features": 16,
+      "learning_rate": 0.003,
+      "gamma": 1.0,
+      "entropy_weight": 0.01,
+      "value_weight": 0.5,
+      "max_gradient_norm": 5.0
+    },
+    "online_scratch_and_adapted_each_seed": {
+      "max_environment_steps": 256,
+      "max_gradient_steps": 32,
+      "max_wall_seconds": 30.0,
+      "max_episode_steps": 4,
+      "episodes_per_update": 2,
+      "checkpoint_interval": 2,
+      "hidden_features": 16,
+      "learning_rate": 0.003,
+      "gamma": 1.0,
+      "entropy_weight": 0.01,
+      "value_weight": 0.5,
+      "max_gradient_norm": 5.0
+    },
+    "search": {
+      "beam_width": 8,
+      "max_expansions": 256,
+      "max_wall_seconds": 30.0
+    },
+    "frozen": {
+      "gradient_steps": 0,
+      "max_wall_seconds_for_complete_selection_panel": 30.0
+    },
+    "primary_matching": "30 seconds optimization plus selection for each learned target arm; search and frozen have the same maximum online algorithm allowance",
+    "transition_budget_claim": "Optimization transitions and selection transitions reported separately; total transitions are not claimed matched",
+    "wall_limit_semantics": "Cooperative; retain and disclose any atomic-operation overshoot",
+    "separate_costs": [
+      "source/model preparation",
+      "cold arm/cache preparation",
+      "shared checkpoint validation/copy/load",
+      "candidate extraction",
+      "independent native audit",
+      "offline pretraining and export"
+    ],
+    "total_expected_max_online_learning_seconds": 360.0,
+    "total_offline_training_wall_allowance_seconds": 120.0
+  },
+  "execution_order": [
+    {
+      "phase": "offline_pretraining",
+      "profile": "RAW",
+      "seed": 101
+    },
+    {
+      "phase": "offline_pretraining",
+      "profile": "FEATURE_UNITS",
+      "seed": 101
+    },
+    {
+      "phase": "geometry_only_baselines",
+      "methods": [
+        "STOP",
+        "GREEDY",
+        "SEARCH"
+      ],
+      "profile": "shared_physical_model"
+    },
+    {
+      "phase": "frozen_selection",
+      "profile": "RAW"
+    },
+    {
+      "phase": "frozen_selection",
+      "profile": "FEATURE_UNITS"
+    },
+    {
+      "phase": "scratch",
+      "profile": "RAW",
+      "seed": 11
+    },
+    {
+      "phase": "scratch",
+      "profile": "FEATURE_UNITS",
+      "seed": 11
+    },
+    {
+      "phase": "adapted",
+      "profile": "RAW",
+      "seed": 11
+    },
+    {
+      "phase": "adapted",
+      "profile": "FEATURE_UNITS",
+      "seed": 11
+    },
+    {
+      "phase": "scratch",
+      "profile": "RAW",
+      "seed": 23
+    },
+    {
+      "phase": "scratch",
+      "profile": "FEATURE_UNITS",
+      "seed": 23
+    },
+    {
+      "phase": "adapted",
+      "profile": "RAW",
+      "seed": 23
+    },
+    {
+      "phase": "adapted",
+      "profile": "FEATURE_UNITS",
+      "seed": 23
+    },
+    {
+      "phase": "scratch",
+      "profile": "RAW",
+      "seed": 47
+    },
+    {
+      "phase": "scratch",
+      "profile": "FEATURE_UNITS",
+      "seed": 47
+    },
+    {
+      "phase": "adapted",
+      "profile": "RAW",
+      "seed": 47
+    },
+    {
+      "phase": "adapted",
+      "profile": "FEATURE_UNITS",
+      "seed": 47
+    }
+  ],
+  "baseline_reuse": {
+    "run_geometry_only_baselines_once_in_this_attempt": true,
+    "reuse_fixed_sequences_across_profiles": true,
+    "reuse_prior_attempt_baseline_for_timing": false,
+    "explicit_shared_baseline_id_and_original_cost_required": true,
+    "physical_masks_actions_rewards_identical_across_profiles": true,
+    "no_extra_proposals_for_any_arm": true
+  },
+  "expected_denominators": {
+    "offline_training_runs": 2,
+    "online_learning_runs": 12,
+    "frozen_policy_runs": 2,
+    "geometry_baseline_candidates": 3,
+    "scratch_initial_candidates": 6,
+    "selected_learning_candidates": 12,
+    "retained_candidates_including_baselines_and_initials": 23,
+    "failed_or_unfinished_runs_remain_in_denominator": true
+  },
+  "selection": {
+    "rule": "maximum physical mean return on complete declared selection panel; initial eligible; earliest checkpoint wins ties",
+    "no_candidate_from_incomplete_initial_selection": true,
+    "optimization_panels_only_for_updates": true,
+    "no_final_or_stress_world_execution": true,
+    "freeze_all_retained_candidate_and_profile_identities_before_independent_geometry": true,
+    "deduplicate_geometry_by_same_case_model_actions_only_with_per_candidate_receipts": true
+  },
+  "checkpoint_contract": {
+    "native_physical_observation_schema": "native-15x6-actual-semantics-v1 unchanged",
+    "profile_id_version_order_divisors_state_identity_and_content_hash_required": true,
+    "nontrainable_persistent_divisor_buffer_for_FEATURE_UNITS": true,
+    "RAW_preserves_legacy_state_keys_and_identity_forward": true,
+    "legacy_missing_profile_allowed_only_for_RAW_without_divisor_buffer": true,
+    "cross_profile_initialization_or_resume_rejected": true,
+    "unknown_profile_or_mutated_divisor_buffer_rejected": true,
+    "full_policy_hash_includes_scaled_profile_buffer": true,
+    "trainable_tensor_hash_used_only_to_prove_paired_initialization": true,
+    "dimensions_alone_never_establish_compatibility": true,
+    "analytic_population_guards_unchanged": true
+  },
+  "endpoints": {
+    "primary_descriptive": [
+      "per-seed FEATURE_UNITS-minus-RAW physical selected return, separately for scratch and adapted",
+      "within-run improvement from initial complete-selection return",
+      "performance and fully disclosed phase costs relative to shared SEARCH"
+    ],
+    "secondary": [
+      "initial action ranking and entropy",
+      "actor tanh activation range/saturation",
+      "critic physical predictions",
+      "actual gradient norms and clipping",
+      "completed Adam steps and optimization/selection transitions",
+      "source-cell target and normal removal plus separately retained partial contacts"
+    ],
+    "statistical_claim": "descriptive one-patient optimizer repeats; no patient-level significance or generalization"
+  },
+  "resource_accounting": {
+    "primary_budget": "same30s cooperative optimization+selection allowance; initial selection included",
+    "actual_update_and_transition_counts_not_claimed_matched": true,
+    "cold_factory_setup_for_each_arm": true,
+    "phase_timings": [
+      "source/model preparation",
+      "cold simulator/cache preparation",
+      "profile validation and checkpoint copy/load",
+      "policy and optimizer initialization",
+      "optimization",
+      "initial and later selection",
+      "export",
+      "candidate extraction",
+      "independent native validation",
+      "full offline call and its internal phase total",
+      "complete attempt and per-arm end-to-end"
+    ],
+    "atomic_overshoot_disclosed": true,
+    "normal_desktop_os_load_uncontrolled_and_recorded": true,
+    "heavy_parallel_work_paused_during_timing": true
+  },
+  "preexecution_gates": [
+    "This declaration committed before registered optimization",
+    "Profile transform, unchanged physical simulator, legacy RAW equivalence, checkpoint mismatch/tamper and resume tests pass",
+    "Actual public target/model/world/config preflight for both profiles and all three online seeds before any offline gradient",
+    "Paired initial trainable tensors and identical critic outputs checked without updates",
+    "Independent audit of profile/checkpoint semantics and denominator/budget boundaries",
+    "Exact committed implementation revision and full numerical source bytes/hashes frozen in execution receipt",
+    "Root explicit execution release"
+  ],
+  "implementation_source_binding": {
+    "geometry_world_source_hashes_must_match_reference": true,
+    "new_implementation_hashes_recorded_before_execution": true,
+    "use_frozen_source_snapshot": true,
+    "implementation_repair_after_failure_requires_preserved_attempt_and_new_attempt_record": true
+  },
+  "interpretation_limits": [
+    "Feature units change actor initialization and gradient conditioning together; outcomes do not isolate tanh saturation causally",
+    "Scaling the whole pretraining/adaptation pipeline does not attribute effects separately to offline and online phases",
+    "Existing critic state aliasing, reward-gradient balance and fixed proposal coverage remain unchanged",
+    "One reused structural mirror, unverified official byte equivalence, unreviewed brain support, hypothetical access, absent motor/language evidence, deterministic worlds",
+    "No clinical safety, uncertainty calibration, population benefit or complete resection claim"
+  ],
+  "output_directory": "artifacts/learning/procedural-native-feature-units-v1",
+  "training_has_executed": false,
+  "final_worlds_used": false,
+  "clinical_deficit_probability": null,
+  "declaration_content_hash": "sha256:b19aac85f9241e37b98ae53d539ad923f3258bf42a106d67e520f37abcf6a237"
+}

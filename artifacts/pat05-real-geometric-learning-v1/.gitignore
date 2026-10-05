@@ -1,0 +1,13 @@
+# Exact execution files and checkpoints are retained in the lossless archive.
+*
+!.gitignore
+!RESULT.md
+!summary.json
+!archive-receipt.json
+!completed-run.tar.gz
+!declaration-input.json
+!receipt.json
+!plot-results.py
+!learning-summary.png
+!independent-check.py
+!independent-check.json

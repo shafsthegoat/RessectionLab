@@ -1,0 +1,436 @@
+{
+  "config": {
+    "absolute_distance_tolerance_mm2": 2e-14,
+    "batch_size": 256,
+    "boxes_per_workload": 1024,
+    "contact_tolerances_mm2": [
+      0.0,
+      1e-10,
+      1e-09
+    ],
+    "memory_box_counts": [
+      1024,
+      16384
+    ],
+    "patient_data_loaded": false,
+    "phase_order": [
+      "scalar_before",
+      "batch",
+      "scalar_after"
+    ],
+    "process_alarm_seconds": 45,
+    "relative_distance_tolerance": 2e-14,
+    "repetitions_per_phase": 2,
+    "seed": 604,
+    "training_or_native_history_runs": 0,
+    "version": "independent-batch-kernel-control-v1",
+    "workloads": [
+      "axial_anisotropic",
+      "oblique_local_segment",
+      "point_segment",
+      "large_translation",
+      "tangency_scalar_fallback"
+    ]
+  },
+  "elapsed_seconds": 1.6172189159551635,
+  "limitations": [
+    "One runtime and one process; other local work may be active",
+    "No patient or full native audit speedup measured",
+    "Only five fixed numerical workloads",
+    "Contact-call samples are single observations, not paired timing estimates",
+    "Memory trace excludes existing inputs and does not capture every resident allocation",
+    "Near-threshold scalar fallback can eliminate the benefit for tangent or large-coordinate boxes"
+  ],
+  "memory": [
+    {
+      "batch_size": 256,
+      "boxes": 1024,
+      "input_bytes_excluded": 49152,
+      "peak_minus_required_output_bytes": 89147,
+      "required_output_bytes": 8192,
+      "traced_current_bytes": 8896,
+      "traced_peak_bytes": 97339
+    },
+    {
+      "batch_size": 256,
+      "boxes": 16384,
+      "input_bytes_excluded": 786432,
+      "peak_minus_required_output_bytes": 89147,
+      "required_output_bytes": 131072,
+      "traced_current_bytes": 131776,
+      "traced_peak_bytes": 220219
+    }
+  ],
+  "peak_process_rss_bytes": 65110016,
+  "production_evaluator_wired": false,
+  "rows": [
+    {
+      "bitwise_distance_matches": 1024,
+      "boxes": 1024,
+      "contact_checks": [
+        {
+          "contacts": 96,
+          "first_witness": 336,
+          "includes_near_threshold_scalar_fallback": true,
+          "indices_sha256": "f5b9f0579020124fcaebcfd83f1ba412b608ae7133a6f929251e77a58a2d2e08",
+          "one_contact_call_seconds": 0.0023514999775215983,
+          "ordered_indices_match": true,
+          "tolerance_mm2": 0.0
+        },
+        {
+          "contacts": 96,
+          "first_witness": 336,
+          "includes_near_threshold_scalar_fallback": true,
+          "indices_sha256": "f5b9f0579020124fcaebcfd83f1ba412b608ae7133a6f929251e77a58a2d2e08",
+          "one_contact_call_seconds": 0.002205875003710389,
+          "ordered_indices_match": true,
+          "tolerance_mm2": 1e-10
+        },
+        {
+          "contacts": 96,
+          "first_witness": 336,
+          "includes_near_threshold_scalar_fallback": true,
+          "indices_sha256": "f5b9f0579020124fcaebcfd83f1ba412b608ae7133a6f929251e77a58a2d2e08",
+          "one_contact_call_seconds": 0.0021297080675140023,
+          "ordered_indices_match": true,
+          "tolerance_mm2": 1e-09
+        }
+      ],
+      "distance_sha256": {
+        "batch": "483bc4e32405693352baa16c657d31df6d6ea73be6472347ad1240c8873d9fc2",
+        "scalar_after": "483bc4e32405693352baa16c657d31df6d6ea73be6472347ad1240c8873d9fc2",
+        "scalar_before": "483bc4e32405693352baa16c657d31df6d6ea73be6472347ad1240c8873d9fc2"
+      },
+      "distance_tolerance_passed": true,
+      "input_sha256": {
+        "end": "a9755e43ce0f937dd584cad3304c4c1f052489cfb9c6d988dc03c48edf805b7e",
+        "lower": "fd71b9b47d99444b049d6888e9387b685871b966a9c332a406a405778a742c44",
+        "start": "90b18fc0a29e806acbd7059cdfb9e67d164e97257926a0de42facb867585dbd0",
+        "upper": "2184878990e26dc8b02c87fa41547d392db653a55ac8d72bfd4d79856e84a4a5"
+      },
+      "interpretation": "Distance-kernel timings only; source transforms, occupancy, native history, and independent full-tool audit are excluded",
+      "max_absolute_distance_difference_mm2": 0.0,
+      "phases": {
+        "batch": {
+          "median_seconds": 0.0022814584663137794,
+          "seconds": [
+            0.0025122499791905284,
+            0.0020506669534370303
+          ]
+        },
+        "scalar_after": {
+          "median_seconds": 0.04939668747829273,
+          "seconds": [
+            0.04993687488604337,
+            0.0488565000705421
+          ]
+        },
+        "scalar_before": {
+          "median_seconds": 0.04908095794962719,
+          "seconds": [
+            0.04874570795800537,
+            0.04941620794124901
+          ]
+        }
+      },
+      "scalar_reversal_identical": true,
+      "workload": "axial_anisotropic"
+    },
+    {
+      "bitwise_distance_matches": 831,
+      "boxes": 1024,
+      "contact_checks": [
+        {
+          "contacts": 443,
+          "first_witness": 17,
+          "includes_near_threshold_scalar_fallback": true,
+          "indices_sha256": "1e94b146173f1865b63bd1d87afcf3535e6df8e1c8b59269ecc9358f8eaf8adb",
+          "one_contact_call_seconds": 0.004184749908745289,
+          "ordered_indices_match": true,
+          "tolerance_mm2": 0.0
+        },
+        {
+          "contacts": 443,
+          "first_witness": 17,
+          "includes_near_threshold_scalar_fallback": true,
+          "indices_sha256": "1e94b146173f1865b63bd1d87afcf3535e6df8e1c8b59269ecc9358f8eaf8adb",
+          "one_contact_call_seconds": 0.004098917008377612,
+          "ordered_indices_match": true,
+          "tolerance_mm2": 1e-10
+        },
+        {
+          "contacts": 443,
+          "first_witness": 17,
+          "includes_near_threshold_scalar_fallback": true,
+          "indices_sha256": "1e94b146173f1865b63bd1d87afcf3535e6df8e1c8b59269ecc9358f8eaf8adb",
+          "one_contact_call_seconds": 0.0041890410939231515,
+          "ordered_indices_match": true,
+          "tolerance_mm2": 1e-09
+        }
+      ],
+      "distance_sha256": {
+        "batch": "6364c86a83a56438e651645a8600f3053ba40cccb87a939ff5e3b055c147e49c",
+        "scalar_after": "ad47707954d2bdcab4708a448112e3e2192deaca420a8f1357d5e49f5ff1ca5c",
+        "scalar_before": "ad47707954d2bdcab4708a448112e3e2192deaca420a8f1357d5e49f5ff1ca5c"
+      },
+      "distance_tolerance_passed": true,
+      "input_sha256": {
+        "end": "358977862ecd653901bc6d5a0966b05b9159eeb70e3f5c1e9aa3f41a4c208561",
+        "lower": "fd71b9b47d99444b049d6888e9387b685871b966a9c332a406a405778a742c44",
+        "start": "69c80785289aeea5ef902aa863ea8f83c2c80e64f8be042c36a3abe41c87c3bd",
+        "upper": "2184878990e26dc8b02c87fa41547d392db653a55ac8d72bfd4d79856e84a4a5"
+      },
+      "interpretation": "Distance-kernel timings only; source transforms, occupancy, native history, and independent full-tool audit are excluded",
+      "max_absolute_distance_difference_mm2": 4.440892098500626e-15,
+      "phases": {
+        "batch": {
+          "median_seconds": 0.004174125497229397,
+          "seconds": [
+            0.004357917001470923,
+            0.003990333992987871
+          ]
+        },
+        "scalar_after": {
+          "median_seconds": 0.10493706248234957,
+          "seconds": [
+            0.10469587496481836,
+            0.10517824999988079
+          ]
+        },
+        "scalar_before": {
+          "median_seconds": 0.10489383299136534,
+          "seconds": [
+            0.10441541590262204,
+            0.10537225008010864
+          ]
+        }
+      },
+      "scalar_reversal_identical": true,
+      "workload": "oblique_local_segment"
+    },
+    {
+      "bitwise_distance_matches": 1024,
+      "boxes": 1024,
+      "contact_checks": [
+        {
+          "contacts": 3,
+          "first_witness": 40,
+          "includes_near_threshold_scalar_fallback": true,
+          "indices_sha256": "90c2bc1482309098d23764ac16f6cde177cb96a4040238dccfcba728d3dea63e",
+          "one_contact_call_seconds": 0.0016792500391602516,
+          "ordered_indices_match": true,
+          "tolerance_mm2": 0.0
+        },
+        {
+          "contacts": 3,
+          "first_witness": 40,
+          "includes_near_threshold_scalar_fallback": true,
+          "indices_sha256": "90c2bc1482309098d23764ac16f6cde177cb96a4040238dccfcba728d3dea63e",
+          "one_contact_call_seconds": 0.00162191700655967,
+          "ordered_indices_match": true,
+          "tolerance_mm2": 1e-10
+        },
+        {
+          "contacts": 3,
+          "first_witness": 40,
+          "includes_near_threshold_scalar_fallback": true,
+          "indices_sha256": "90c2bc1482309098d23764ac16f6cde177cb96a4040238dccfcba728d3dea63e",
+          "one_contact_call_seconds": 0.0015916249249130487,
+          "ordered_indices_match": true,
+          "tolerance_mm2": 1e-09
+        }
+      ],
+      "distance_sha256": {
+        "batch": "4c8ae9b9679a6b2be60bbcf1ca968fd14edbc33b938cbe49324a35394ad9313c",
+        "scalar_after": "4c8ae9b9679a6b2be60bbcf1ca968fd14edbc33b938cbe49324a35394ad9313c",
+        "scalar_before": "4c8ae9b9679a6b2be60bbcf1ca968fd14edbc33b938cbe49324a35394ad9313c"
+      },
+      "distance_tolerance_passed": true,
+      "input_sha256": {
+        "end": "69c80785289aeea5ef902aa863ea8f83c2c80e64f8be042c36a3abe41c87c3bd",
+        "lower": "fd71b9b47d99444b049d6888e9387b685871b966a9c332a406a405778a742c44",
+        "start": "69c80785289aeea5ef902aa863ea8f83c2c80e64f8be042c36a3abe41c87c3bd",
+        "upper": "2184878990e26dc8b02c87fa41547d392db653a55ac8d72bfd4d79856e84a4a5"
+      },
+      "interpretation": "Distance-kernel timings only; source transforms, occupancy, native history, and independent full-tool audit are excluded",
+      "max_absolute_distance_difference_mm2": 0.0,
+      "phases": {
+        "batch": {
+          "median_seconds": 0.0015745419659651816,
+          "seconds": [
+            0.0015739590162411332,
+            0.00157512491568923
+          ]
+        },
+        "scalar_after": {
+          "median_seconds": 0.017862812499515712,
+          "seconds": [
+            0.01789137499872595,
+            0.017834250000305474
+          ]
+        },
+        "scalar_before": {
+          "median_seconds": 0.017908499983604997,
+          "seconds": [
+            0.01801795803476125,
+            0.017799041932448745
+          ]
+        }
+      },
+      "scalar_reversal_identical": true,
+      "workload": "point_segment"
+    },
+    {
+      "bitwise_distance_matches": 1024,
+      "boxes": 1024,
+      "contact_checks": [
+        {
+          "contacts": 23,
+          "first_witness": 22,
+          "includes_near_threshold_scalar_fallback": true,
+          "indices_sha256": "dceb3075d2be5b4175bcd0bf77fd8c7f162aabf8de0ca8261a2096552df1e03f",
+          "one_contact_call_seconds": 0.060141957947053015,
+          "ordered_indices_match": true,
+          "tolerance_mm2": 0.0
+        },
+        {
+          "contacts": 23,
+          "first_witness": 22,
+          "includes_near_threshold_scalar_fallback": true,
+          "indices_sha256": "dceb3075d2be5b4175bcd0bf77fd8c7f162aabf8de0ca8261a2096552df1e03f",
+          "one_contact_call_seconds": 0.06069704191759229,
+          "ordered_indices_match": true,
+          "tolerance_mm2": 1e-10
+        },
+        {
+          "contacts": 23,
+          "first_witness": 22,
+          "includes_near_threshold_scalar_fallback": true,
+          "indices_sha256": "dceb3075d2be5b4175bcd0bf77fd8c7f162aabf8de0ca8261a2096552df1e03f",
+          "one_contact_call_seconds": 0.06077175005339086,
+          "ordered_indices_match": true,
+          "tolerance_mm2": 1e-09
+        }
+      ],
+      "distance_sha256": {
+        "batch": "d763f838d104f5fce9ac75aee89bd191a36121a8c408327971416689092678e4",
+        "scalar_after": "d763f838d104f5fce9ac75aee89bd191a36121a8c408327971416689092678e4",
+        "scalar_before": "d763f838d104f5fce9ac75aee89bd191a36121a8c408327971416689092678e4"
+      },
+      "distance_tolerance_passed": true,
+      "input_sha256": {
+        "end": "707f809d5aee73ac47f197f358d78e87e5dd115d60d859e3da1f79f255e56ef4",
+        "lower": "3a3c1791804b97c0a0bec2ef71f83af0c2d1591fc362a88a895b5037543e119e",
+        "start": "e332eb3a60439d10465eb1778e3a2791692d866cbab69eaf2c5a5edc9bc7bb17",
+        "upper": "98d4d4f8458fd6d097398a28168417a70355c82687dfae00b955d49a76e81640"
+      },
+      "interpretation": "Distance-kernel timings only; source transforms, occupancy, native history, and independent full-tool audit are excluded",
+      "max_absolute_distance_difference_mm2": 0.0,
+      "phases": {
+        "batch": {
+          "median_seconds": 0.003992166952230036,
+          "seconds": [
+            0.004129583947360516,
+            0.003854749957099557
+          ]
+        },
+        "scalar_after": {
+          "median_seconds": 0.055491562467068434,
+          "seconds": [
+            0.05581954098306596,
+            0.055163583951070905
+          ]
+        },
+        "scalar_before": {
+          "median_seconds": 0.055410958477295935,
+          "seconds": [
+            0.05507316696457565,
+            0.05574874999001622
+          ]
+        }
+      },
+      "scalar_reversal_identical": true,
+      "workload": "large_translation"
+    },
+    {
+      "bitwise_distance_matches": 1024,
+      "boxes": 1024,
+      "contact_checks": [
+        {
+          "contacts": 1024,
+          "first_witness": 0,
+          "includes_near_threshold_scalar_fallback": true,
+          "indices_sha256": "2f88e9ce00d238e7e011a7b140b413dcad818f1da41a721f914f1af604d0e217",
+          "one_contact_call_seconds": 0.05159795796498656,
+          "ordered_indices_match": true,
+          "tolerance_mm2": 0.0
+        },
+        {
+          "contacts": 1024,
+          "first_witness": 0,
+          "includes_near_threshold_scalar_fallback": true,
+          "indices_sha256": "2f88e9ce00d238e7e011a7b140b413dcad818f1da41a721f914f1af604d0e217",
+          "one_contact_call_seconds": 0.0017852919409051538,
+          "ordered_indices_match": true,
+          "tolerance_mm2": 1e-10
+        },
+        {
+          "contacts": 1024,
+          "first_witness": 0,
+          "includes_near_threshold_scalar_fallback": true,
+          "indices_sha256": "2f88e9ce00d238e7e011a7b140b413dcad818f1da41a721f914f1af604d0e217",
+          "one_contact_call_seconds": 0.001750833005644381,
+          "ordered_indices_match": true,
+          "tolerance_mm2": 1e-09
+        }
+      ],
+      "distance_sha256": {
+        "batch": "ffc1f5db1faa7b6402489b6c3c21711ad6cb122faa068ac9410c12ab126aa81e",
+        "scalar_after": "ffc1f5db1faa7b6402489b6c3c21711ad6cb122faa068ac9410c12ab126aa81e",
+        "scalar_before": "ffc1f5db1faa7b6402489b6c3c21711ad6cb122faa068ac9410c12ab126aa81e"
+      },
+      "distance_tolerance_passed": true,
+      "input_sha256": {
+        "end": "799cb4055ab7540247416f6a99909e56f71c2fe71b8e8c565823c9c9bc7e110b",
+        "lower": "c8e34b3dab5a29a12724b071ea27319922057bc546908600c342c26a023d653b",
+        "start": "17979bbb7ebf261bfbdd534310401c5c0a6eaebd955c413fbaa338d384ee006d",
+        "upper": "3f1f5d45958ec360b68dcc30bf4586d65e65d82543f08aea90c74e3619c9860b"
+      },
+      "interpretation": "Distance-kernel timings only; source transforms, occupancy, native history, and independent full-tool audit are excluded",
+      "max_absolute_distance_difference_mm2": 0.0,
+      "phases": {
+        "batch": {
+          "median_seconds": 0.0016897710156627,
+          "seconds": [
+            0.0017324580112472177,
+            0.0016470840200781822
+          ]
+        },
+        "scalar_after": {
+          "median_seconds": 0.04942525003571063,
+          "seconds": [
+            0.04955120803788304,
+            0.04929929203353822
+          ]
+        },
+        "scalar_before": {
+          "median_seconds": 0.04958202049601823,
+          "seconds": [
+            0.049632958020083606,
+            0.049531082971952856
+          ]
+        }
+      },
+      "scalar_reversal_identical": true,
+      "workload": "tangency_scalar_fallback"
+    }
+  ],
+  "source_unchanged": true,
+  "sources": {
+    "scripts/independent_geometry_batch_prototype.py": "16de2480f97cc723fee8192e93be78a3936cc4e18b6104ddbdf3ed36da250707",
+    "scripts/probe_independent_geometry_batch.py": "6c071019c9fb3b2198859320820a98e363ee3615c892dbdf2f60a9b44533f99e",
+    "src/resectionlab/evaluation.py": "baaa2f3d6b4e41c4621dc22872da9300d649bc91dfeb923e2ad35f66aadad3b7",
+    "tests/test_independent_geometry_batch.py": "b38457162b144f0c15b3b7ec0b3fc8401b8304dd733f159f895b572528cdd32d"
+  },
+  "status": "completed"
+}

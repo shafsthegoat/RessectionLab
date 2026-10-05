@@ -1,0 +1,204 @@
+{
+  "algorithm": "masked_reinforce_state_value_v2",
+  "clinical_deficit_probability": null,
+  "code_sha256": "f6c490beb563357599fa35bf1674eee47b02f28864a4128122c526e3c995cd48",
+  "config": {
+    "checkpoint_interval": 2,
+    "entropy_weight": 0.01,
+    "episodes_per_update": 2,
+    "gamma": 1.0,
+    "hidden_features": 16,
+    "learning_rate": 0.003,
+    "max_environment_steps": 256,
+    "max_episode_steps": 4,
+    "max_gradient_norm": 5.0,
+    "max_gradient_steps": 32,
+    "max_wall_seconds": 30.0,
+    "seed": 47,
+    "value_weight": 0.5
+  },
+  "contract_hash": "sha256:d8461fa3e36b1a227c7bba8f47d6f88408a1326f050b228e933c2e5de2c9c8ef",
+  "decision_model_hash": "sha256:dd81bd59566ead4e42916c8ede3d48d5615837e523d23d359b268d9a90f63f0b",
+  "dimensions": [
+    15,
+    6,
+    16
+  ],
+  "elapsed_seconds_scope": "cumulative optimization and selection, including initial selection; initialization excluded",
+  "final_evaluation_used_for_optimization": false,
+  "hardware": {
+    "device": "cpu",
+    "machine": "arm64",
+    "platform": "macOS-26.6-arm64-arm-64bit",
+    "processor": "arm",
+    "torch": "2.14.1",
+    "torch_threads": 4
+  },
+  "implementation_sha256": "f6c490beb563357599fa35bf1674eee47b02f28864a4128122c526e3c995cd48",
+  "initial_checkpoint_hash": "sha256:df38b5264d3ee1df4f133ea9e01d5d44e6d4fe896106e3696950fb9e4c19e215",
+  "input_profile": {
+    "action_divisors": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "action_feature_names": [
+      "stop",
+      "target_benefit",
+      "normal_volume",
+      "motor_evidence",
+      "language_evidence",
+      "insertion_distance",
+      "tip_radius",
+      "shaft_radius",
+      "tool_change",
+      "depth",
+      "remaining_target_fraction",
+      "adjacent_target_fraction",
+      "partial_normal_contact_volume",
+      "partial_motor_contact_surrogate",
+      "partial_language_contact_surrogate"
+    ],
+    "centering": false,
+    "clipping": false,
+    "critic_output_divisor": 1.0,
+    "profile_id": "RAW",
+    "return_divisor": 1.0,
+    "running_statistics": false,
+    "state_divisors": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "state_feature_names": [
+      "remaining_target_fraction",
+      "action_budget_fraction_used",
+      "removed_tissue_fraction",
+      "nominal_severed_edge_fraction",
+      "motor_evidence_available",
+      "language_evidence_available"
+    ],
+    "version": "native-fixed-action-units-v1"
+  },
+  "input_profile_hash": "sha256:b0ae5e34b7fbd206ca7e690fc29c5283ab4be69af25ba45b67f4f5d858b27e12",
+  "numerical_source_sha256": {
+    "__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "anatomy.py": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37",
+    "brain_extraction.py": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917",
+    "cohort.py": "d69538f80af8b318068af70dbc963b7a9ca6c3a4f62d6e8e542d6e43548fa874",
+    "core.py": "0600667e8e8662c78e31a86d9060d53aec5ab5a4f2b14e747afd74800f11eeec",
+    "desktop_bridge.py": "b76b76e58cb1a6476cec57fc093184ab7ea8ff598b26ed66b3438e7720fdfbe8",
+    "diffusion.py": "e7f57bf7467fb3cb5d6b9b3f1c80e4665710713124d0720aa84d31ccc03b8e21",
+    "evaluation.py": "baaa2f3d6b4e41c4621dc22872da9300d649bc91dfeb923e2ad35f66aadad3b7",
+    "geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "imaging.py": "ad921fb5cda6d3aed84893ad200cb846212311efa17c1996730a394e8474a95b",
+    "learning.py": "f6c490beb563357599fa35bf1674eee47b02f28864a4128122c526e3c995cd48",
+    "learning_ppo.py": "a3814bc5da4837b66ae20496c38e17edd0edf73ef7863a920924cd7ec2a42d88",
+    "native_refinement.py": "02a1250d40d7129c77d16031e229c61c3d295139c002c9002f5a3eb78097a413",
+    "native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+    "native_routes.py": "97bb55a3bf2894f336a593bc3c3379b3c4dc291198af90b91d319bd0b9a824ea",
+    "native_simulation.py": "2461cc6c32eb25a3927bcc3a9379bb02417794c3a764c4b1e705a00bcac6493c",
+    "planning.py": "f113ce78b239f91a86c65d8add74227a9d9f3c0d718449c7968a983e76ea850d",
+    "policy_inputs.py": "1366cdabceae5eeee9ad44667be7d8c44de2c9ab8f551c4cf05b053f5b1b8b47",
+    "population_learning.py": "49899618825d08b50016f9b34f389b50ce67f6a3aa79a8f339665523e3ae8de2",
+    "preprocessing.py": "dbd2c4ba9551e2aa0d454b638e256ad8bc6cdf45dcdc8ec08e091e43c3eb14e5",
+    "prior_proposals.py": "05340a6911b0330175d606f84aa81c817a330a929a336fef18078d01e3d0bd55",
+    "prior_registration.py": "9828e76ed3e29e232c39dd16ece7d5fefa4cd366d1cab7899121e929ef34a703",
+    "procedural_learning.py": "d4666701930d2baa1f438b2a1bed4819e895ec6161c38a78b6ef4d68331ac2d1",
+    "route_native_diagnostics.py": "f2cf704da9e971f321dce707dadd9f0350ec7234ecc75c0ed0fc1242fd8c82cf",
+    "selection_contract.py": "bef00b486fb6f0f0465a8526080ae5c6e08a5f1922fcf93f4624aec86ec43d72",
+    "simulation.py": "bc43c16643adf8495f969dcacacb770f5f6be7fdeff0831f2a92eb4aed52939f",
+    "structural_evidence.py": "6a1b9e7aa5b13ea971a75d9416d96ab45de2b46901a036edd73ec58194fb7a33",
+    "worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
+  },
+  "partitions": {
+    "optimization": {
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "generator": {
+        "family": "rigid_gaussian",
+        "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+        "rotation_center_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_scale_deg": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "translation_scale_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "version": "rigid-registration-v1"
+      },
+      "partition_hash": "sha256:aa8de3098a046f59a463eca08667916b6e4619417da135a473405457b94b0a1c",
+      "planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+      "role": "optimization",
+      "seeds": [
+        17944101631498118750,
+        16050408593453808557,
+        16285456173753334256
+      ]
+    },
+    "selection": {
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "generator": {
+        "family": "rigid_gaussian",
+        "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+        "rotation_center_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_scale_deg": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "translation_scale_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "version": "rigid-registration-v1"
+      },
+      "partition_hash": "sha256:62f80e45baec7c506272e1b04037c8551267969fdbd2fdb650a61bb720df8dc2",
+      "planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+      "role": "selection",
+      "seeds": [
+        8109736527858856845,
+        8342823306791655420
+      ]
+    }
+  },
+  "population_initialization": null,
+  "procedural_initialization": null,
+  "runtime": {
+    "device": "cpu",
+    "numpy": "2.5.3",
+    "python": "3.12.14",
+    "torch": "2.14.1"
+  },
+  "schema_version": 1,
+  "shared_checkpoint_hash": null,
+  "simulator_implementation_sha256": "2461cc6c32eb25a3927bcc3a9379bb02417794c3a764c4b1e705a00bcac6493c",
+  "timing_contract": "optimization_selection_budget_v2_initialization_separate"
+}

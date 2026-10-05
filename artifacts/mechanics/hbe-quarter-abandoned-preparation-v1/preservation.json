@@ -1,0 +1,16 @@
+{
+  "declaration": {
+    "path": "artifacts/mechanics/hbe-quarter-abandoned-preparation-v1/declaration.json",
+    "sha256": "9adca17326fe1dfa6f21b8e89f359e2b8322f22f596f49de74e799e05bb998a5"
+  },
+  "eligibility": {
+    "path": "artifacts/mechanics/hbe-quarter-eligibility-diagnosis-v1/receipt.json",
+    "sha256": "41646cf5d411de0604d184e604b6d1767acdf0bbf9270ee1a2deb816708e0389"
+  },
+  "former_path": "manifests/experiments/hbe-01-03-quarter-equivalence-v1.json",
+  "measured_curve_reads": 0,
+  "native_solver_calls": 0,
+  "reason": "Saved source quarter geometry failed original coordinate eligibility; no tolerance change.",
+  "schema": "hbe-abandoned-preparation-v1",
+  "status": "abandoned_before_model_execution"
+}

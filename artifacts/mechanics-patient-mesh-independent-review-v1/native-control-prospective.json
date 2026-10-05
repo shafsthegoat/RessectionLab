@@ -1,0 +1,95 @@
+{
+  "array_reads": "NONE; only create fixed in-memory analytic cube, write resulting analytic arrays",
+  "caps": {
+    "native_generation_attempts": 1,
+    "numerical_threads": 1,
+    "retries": 0,
+    "rss_bytes": 2147483648,
+    "seconds": 60
+  },
+  "clinical_validation": false,
+  "created_at": "2026-10-04T21:38:14.681211+00:00",
+  "fixed_unchanged_from_patient_protocol": [
+    "marching cubes options",
+    "Gmsh options",
+    "tet10 ordering/geometry/nonoverlap gates",
+    "bidirectional distance2mm/cover1mm",
+    "relative volume3%"
+  ],
+  "fixture": {
+    "affine_mm": [
+      [
+        0.8660254037844387,
+        -0.49999999999999994,
+        0,
+        31
+      ],
+      [
+        0.49999999999999994,
+        0.8660254037844387,
+        0,
+        -17
+      ],
+      [
+        0,
+        0,
+        1,
+        9
+      ],
+      [
+        0,
+        0,
+        0,
+        1
+      ]
+    ],
+    "meaning": "Pure cube software fixture only, no training or patient evidence.",
+    "positive_box": [
+      2,
+      9
+    ],
+    "shape": [
+      11,
+      11,
+      11
+    ]
+  },
+  "level": {
+    "id": "analytic_cube",
+    "maximum_elements": 2000,
+    "maximum_nodes": 2000,
+    "target_edge_m": 0.002
+  },
+  "output": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/mechanics-patient-mesh-native-cube-v1",
+  "package_versions": {
+    "nibabel": "5.4.2",
+    "numpy": "2.5.3",
+    "scikit-image": "0.26.0",
+    "scipy": "1.18.1",
+    "vtk": "9.7.1"
+  },
+  "root": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+  "root_authorization": "One analytic cube real marching-cubes/Gmsh/VTK control, <=60s/2GiB/oneCPU, no patient data/solver/retry.",
+  "schema": "analytic-patient-mesh-API-control-v1",
+  "script_sha256": "dff786bfe073782e260a7374cbe9265c54e55c45317dc3fbbff1613a66e7970c",
+  "source_bindings": {
+    ".venv/bin/python": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a",
+    "artifacts/mechanics/gmsh-4.15.2-runtime-v1/runtime-receipt.json": "705056d13e78f98fda0ab04884c0c6e3b31ead73f88d01b6dcf3bd99d5417137",
+    "data/optional-runtimes/gmsh-4.15.2/runtime/gmsh.py": "f4b0935cebde899750293d87a643090e5ea33c9b18d249267f507db68a0e01c3",
+    "data/optional-runtimes/gmsh-4.15.2/runtime/lib/libgmsh.4.15.dylib": "def0f5c10988a986e5e879b3db9669d8fe016a81e2d994bbaf2b8497c6b8a58a",
+    "manifests/experiments/resect-case4-patient-mesh-v1.json": "b6b3fd278df85fb0ea89c72dcff37cc5f229644602f5288c81e8ce6e7653173c",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "scripts/mechanics_patient_mesh.py": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d"
+  },
+  "thread_environment": {
+    "MKL_NUM_THREADS": "1",
+    "NUMEXPR_NUM_THREADS": "1",
+    "OMP_NUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PYTHONNOUSERSITE": "1",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "VTK_SMP_IMPLEMENTATION_TYPE": "Sequential",
+    "VTK_SMP_MAX_THREADS": "1"
+  }
+}

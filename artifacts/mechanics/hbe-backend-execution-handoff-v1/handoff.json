@@ -1,0 +1,196 @@
+{
+  "actual_profile_or_decks_created": false,
+  "actual_solver_runs": 0,
+  "archive_contract": {
+    "created_or_executed_here": false,
+    "existing_validation": "source_inventory and verify_release_provenance require the exact nine module members/hashes; access also requires Git PAX comment equal source_commit. Neither requires unrelated tree members.",
+    "external_evidence": "Runtime/build/adapter and eight-control source/output evidence stay separately path/hash bound; checkers execute from the exact accepted control-source directory.",
+    "full_tree_mandatory": false,
+    "member_count": 14,
+    "members": {
+      "artifacts/febio-runtime-investigation-v1/prospective-runtime.json": {
+        "bytes": 10221,
+        "sha256": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48"
+      },
+      "manifests/experiments/hbe-01-03-mechanics-poc-v1.json": {
+        "bytes": 13880,
+        "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+      },
+      "manifests/experiments/hbe-01-03-specimen-roles-v1.json": {
+        "bytes": 6123,
+        "sha256": "c135a65eb14001e31a849197cc5650a15e2484022bee9f950a5c1759a033a432"
+      },
+      "scripts/febio_runtime.py": {
+        "bytes": 24801,
+        "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+      },
+      "scripts/mechanics_febio_verification.py": {
+        "bytes": 20494,
+        "sha256": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5"
+      },
+      "scripts/mechanics_hbe_access.py": {
+        "bytes": 37769,
+        "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+      },
+      "scripts/mechanics_hbe_backend.py": {
+        "bytes": 28370,
+        "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae"
+      },
+      "scripts/mechanics_hbe_evaluation.py": {
+        "bytes": 8744,
+        "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+      },
+      "scripts/mechanics_hbe_experiment.py": {
+        "bytes": 47907,
+        "sha256": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa"
+      },
+      "scripts/mechanics_hbe_mesh.py": {
+        "bytes": 41113,
+        "sha256": "3cb4d99f5d2d7fa2f66fb5af56ebffcf19342b9bee0b4cb2c9acfe98aabdd892"
+      },
+      "scripts/mechanics_hbe_outputs.py": {
+        "bytes": 7200,
+        "sha256": "a372cb89ea9515186d433c74ec650dc3b5cae289619e8b35d481280f6662f473"
+      },
+      "scripts/mechanics_hbe_physics.py": {
+        "bytes": 17656,
+        "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+      },
+      "scripts/mechanics_hbe_readout.py": {
+        "bytes": 14109,
+        "sha256": "21700558e5cb614a11a7cc62dbd5ec8118fabb11b4fbfc88f89cb8aa02012963"
+      },
+      "scripts/mechanics_patient_constraints.py": {
+        "bytes": 19006,
+        "sha256": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66"
+      }
+    },
+    "mode": "prefix-free Git archive with explicit committed path arguments",
+    "sum_file_bytes": 297393
+  },
+  "caps": {
+    "active_output_bytes": 268435456,
+    "aggregate_worker_seconds_including_replay": 900,
+    "common_output_bytes": 1073741824,
+    "each_seconds": 90,
+    "maximum_solver_cases": 20,
+    "numerical_threads": 1,
+    "sampled_process_group_rss_bytes": 3221225472
+  },
+  "case_order": [
+    "compression:N4:S60:reference",
+    "compression:N8:S60:reference",
+    "compression:N12:S60:reference",
+    "tension:N4:S60:reference",
+    "tension:N8:S60:reference",
+    "tension:N12:S60:reference",
+    "torsion_neg:N4:S60:reference",
+    "torsion_neg:N8:S60:reference",
+    "torsion_neg:N12:S60:reference",
+    "torsion_pos:N4:S60:reference",
+    "torsion_pos:N8:S60:reference",
+    "torsion_pos:N12:S60:reference",
+    "compression:N12:S120:reference",
+    "tension:N12:S120:reference",
+    "torsion_neg:N12:S120:reference",
+    "torsion_pos:N12:S120:reference",
+    "compression:N12:S120:double_mu",
+    "torsion_pos:N12:S120:double_mu",
+    "compression:N12:S120:fitted",
+    "tension:N12:S120:fitted"
+  ],
+  "exclusive_marker": "outputs/mechanics/hbe-01-03-poc-v1/.specimen-accelerate-csc-v1-started.json",
+  "execution_authorized": false,
+  "fixed_metadata": {
+    "artifacts/febio-runtime-investigation-v1/prospective-runtime.json": {
+      "sha256": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48"
+    },
+    "artifacts/mechanics/hbe-01-03-mesh-preparation-v1/deck-index.json": {
+      "sha256": "baa6cdcf798021eb9769ff2a0f1a9b1f4e3c0e3beabdf1ae8c69173c5c0362f8"
+    },
+    "artifacts/mechanics/hbe-01-03-mesh-preparation-v1/release-and-source-binding.json": {
+      "sha256": "c7a90d4e71a5c4772a33d8a50a1001e6790411c55700bf26629a1f26d1ce857b"
+    },
+    "artifacts/mechanics/hbe-backend-combined-repin-review-v1/verification.json": {
+      "sha256": "34f32924b4c276dca566f04eec0e30a02bf75a1c99729acc68a877f5bebd403f"
+    },
+    "manifests/experiments/hbe-01-03-mechanics-poc-v1.json": {
+      "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+    },
+    "manifests/experiments/hbe-01-03-specimen-roles-v1.json": {
+      "sha256": "c135a65eb14001e31a849197cc5650a15e2484022bee9f950a5c1759a033a432"
+    }
+  },
+  "fresh_namespace_exists_at_handoff": {
+    "outputs/mechanics/hbe-01-03-poc-v1/.specimen-accelerate-csc-v1-started.json": false,
+    "outputs/mechanics/hbe-01-03-poc-v1/backend-inputs-accelerate-csc-v1": false,
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1": false
+  },
+  "inspected_source_commit": "6486dbcfb0395a4c5b9df3f140b08141d0d96fd7",
+  "measured_member_reads": 0,
+  "not_yet_created_or_accepted_by_this_handoff": [
+    "accepted sparse runtime identity",
+    "actual eight numerical controls and profile",
+    "eighteen copied solver-only specimen decks",
+    "actual specimen execution release/source archive"
+  ],
+  "production_source_changes_needed_found": false,
+  "root_relative_access_ledger": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/access.jsonl",
+  "root_relative_experiment": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1",
+  "schema": "hbe-backend-execution-handoff-v1",
+  "source_closure": {
+    "access": {
+      "archive_member": "scripts/mechanics_hbe_access.py",
+      "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+      "workspace_matches_commit": true
+    },
+    "backend_profile": {
+      "archive_member": "scripts/mechanics_hbe_backend.py",
+      "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+      "workspace_matches_commit": true
+    },
+    "curve_evaluator": {
+      "archive_member": "scripts/mechanics_hbe_evaluation.py",
+      "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+      "workspace_matches_commit": true
+    },
+    "mesh_deck": {
+      "archive_member": "scripts/mechanics_hbe_mesh.py",
+      "sha256": "3cb4d99f5d2d7fa2f66fb5af56ebffcf19342b9bee0b4cb2c9acfe98aabdd892",
+      "workspace_matches_commit": true
+    },
+    "orchestrator": {
+      "archive_member": "scripts/mechanics_hbe_experiment.py",
+      "sha256": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa",
+      "workspace_matches_commit": true
+    },
+    "physics": {
+      "archive_member": "scripts/mechanics_hbe_physics.py",
+      "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+      "workspace_matches_commit": true
+    },
+    "primitive_parser": {
+      "archive_member": "scripts/mechanics_hbe_outputs.py",
+      "sha256": "a372cb89ea9515186d433c74ec650dc3b5cae289619e8b35d481280f6662f473",
+      "workspace_matches_commit": true
+    },
+    "readout": {
+      "archive_member": "scripts/mechanics_hbe_readout.py",
+      "sha256": "21700558e5cb614a11a7cc62dbd5ec8118fabb11b4fbfc88f89cb8aa02012963",
+      "workspace_matches_commit": true
+    },
+    "runtime_driver": {
+      "archive_member": "scripts/febio_runtime.py",
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+      "workspace_matches_commit": true
+    }
+  },
+  "static_tree_inventory": {
+    "commit": "6486dbcfb0395a4c5b9df3f140b08141d0d96fd7",
+    "file_count": 4696,
+    "not_an_archive_measurement": true,
+    "source_archive_reader_limit_bytes": 268435456,
+    "sum_git_file_bytes": 208320112
+  },
+  "status": "static_handoff_only_not_a_release"
+}

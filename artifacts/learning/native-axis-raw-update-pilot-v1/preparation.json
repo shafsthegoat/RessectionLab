@@ -1,0 +1,22 @@
+{
+  "cold_axis_construction_seconds": 8.084368415991776,
+  "initializer_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322",
+  "model_hash": "sha256:1d06e7792ce78ecf7ef461ba5ff2b6f78e2367d3b3bc030a80d70b49e6e747f5",
+  "resource": {
+    "budget": {
+      "hard_termination_grace_seconds": 15.0,
+      "process_peak_rss_bytes": 6442450944,
+      "worker_wall_seconds": 600.0
+    },
+    "budget_request_to_receipt_seconds": null,
+    "cancellation_callback_calls": 64,
+    "cancellation_callback_seconds": 0.00044033455196768045,
+    "cancellation_reason": null,
+    "elapsed_seconds": 9.503615959081799,
+    "observed_peak_rss_bytes": 1473871872,
+    "scope": "worker process RSS; cooperative callback CPU cost; no OS memory reservation"
+  },
+  "seconds": 9.50353412493132,
+  "zero_gradients": true,
+  "zero_transitions": true
+}

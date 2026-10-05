@@ -1,0 +1,13 @@
+{
+  "status": "read_only_preflight_assembly_reference_error",
+  "recorded_at_utc": "2026-10-04T20:56:04.368160+00:00",
+  "error_type": "FileNotFoundError",
+  "missing_archive_member": "artifacts/mechanics/hbe-access-independent-review-v1/verification.json",
+  "source_archive_commit": "add7e8b9c73a8a4fe28badd335bd59fcfbeb91de",
+  "reason": "Final review metadata was appended after the executed-source commit. Root separately committed external review evidence in d5640f2.",
+  "scope": "Source archive and combined219-test result remain unchanged. No release record or specimen attempt existed when this reference error occurred.",
+  "solver_calls": 0,
+  "measured_responses_opened": 0,
+  "retry_of_suite_or_experiment": false,
+  "continuation": "Bind original external review metadata to its separate committed identity as explicitly directed by root."
+}

@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "status": "failed_before_adapter_construction",
+  "exit_code": 1,
+  "source_commit": "558b2e32693a002acc1afbb29a40649bc5296423",
+  "source_changed": [],
+  "source_files_verified": 45,
+  "full_launcher_seconds": 1.063690375071019,
+  "worker_preparation_seconds": 0.6003405830124393,
+  "peak_worker_rss_bytes": 354877440,
+  "error": "Native anatomy differs from prior declared source model",
+  "eligible_candidate_count": 0,
+  "public_patient_gradient_steps": 0,
+  "patient_simulated_transitions": 0,
+  "interpretation": "Strict configuration identity refused the direct factory result before any adapter/inventory construction. Exact differing fields require a separate read-only diagnosis; this result supplies no episode performance measurement."
+}

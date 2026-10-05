@@ -1,0 +1,45 @@
+{
+  "automatic_retry": false,
+  "calibration_members_opened": 0,
+  "conservative_worker_plus_prior_parent_seconds": 134.36992062500212,
+  "continuation_launcher_seconds": 132.1280704580713,
+  "continuation_state_body_seconds": 128.0487154170405,
+  "continuation_worker_seconds": 130.10436683299486,
+  "failed_case": "compression:N12:S60:reference",
+  "fine_cleanup": {
+    "kill_sent": true,
+    "reaped": true
+  },
+  "fine_exit_code": -9,
+  "fine_failed_solver_seconds_including_cleanup": 90.01399054192007,
+  "fine_solver_seconds_cap": 90,
+  "fine_timed_out": true,
+  "fit_created": false,
+  "held_out_members_opened": 0,
+  "later_cases_not_executed": 17,
+  "medium_solver_seconds": 35.90234283299651,
+  "new_completed_solver_cases": [
+    "compression:N8:S60:reference"
+  ],
+  "new_solver_invocations": 2,
+  "no_aggregate_memory_or_output_cap_trigger": true,
+  "observed_maximum_active_run_bytes": 15988417,
+  "observed_maximum_common_output_bytes": 56009458,
+  "original_parent_seconds_debited_once": 4.2655537920072675,
+  "physical_validation_pass": null,
+  "prediction_freeze_created": false,
+  "refinement_validation_pass": null,
+  "release": {
+    "path": "artifacts/mechanics/hbe-01-03-continuation-v1/release.json",
+    "sha256": "7f9f95681a511701576b6b084625ed73faa992d678f1a8151f9356407388c2ff"
+  },
+  "remaining_worker_cap_seconds": 895.7344462079927,
+  "reused_solver_cases": [
+    "compression:N4:S60:reference"
+  ],
+  "sampled_peak_process_group_rss_bytes": 283656192,
+  "solver_invocations_total_including_prior": 3,
+  "source_archive_sha256": "ecf834b983f6cb71eba33141f24f9e0a5623619ef5c59da4e90bf96d83ddb501",
+  "source_commit": "a9f2783adb9ad4dbc41d9eafc29e4c11f0313388",
+  "status": "terminal_fine_compression_per_call_timeout_before_refinement_or_measurements"
+}

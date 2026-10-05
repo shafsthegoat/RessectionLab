@@ -1,0 +1,47 @@
+{
+  "scope": "Independent mathematical and task-contract checks; no anatomy training or clinical validation",
+  "git_head_at_review": "00dbe7eb914c0ef9f2fe27c3afb02a99a412aebd",
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_spatial_policy_review.py",
+    "--junitxml=/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/spatial-policy-independent-review-v1/review.xml"
+  ],
+  "exit_code": 0,
+  "wall_seconds": 2.4802173749776557,
+  "source_hashes_before": {
+    "src/resectionlab/spatial_policy.py": "a346b2e187d943238f2676ce2cb90ef609f4655dc7e798e21b247fae41778cb5",
+    "src/resectionlab/spatial_observations.py": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711",
+    "src/resectionlab/spatial_task.py": "79ae36adbc29a5eaa40c1c38c9080f6cde8c52f2c5babf6acd4664eb6842a225",
+    "tests/test_spatial_policy_review.py": "adaa4f845b0d24087cfdaa88f8f0a428557099cf9e427c01daea76af508cc539"
+  },
+  "source_hashes_after": {
+    "src/resectionlab/spatial_policy.py": "a346b2e187d943238f2676ce2cb90ef609f4655dc7e798e21b247fae41778cb5",
+    "src/resectionlab/spatial_observations.py": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711",
+    "src/resectionlab/spatial_task.py": "79ae36adbc29a5eaa40c1c38c9080f6cde8c52f2c5babf6acd4664eb6842a225",
+    "tests/test_spatial_policy_review.py": "adaa4f845b0d24087cfdaa88f8f0a428557099cf9e427c01daea76af508cc539"
+  },
+  "source_unchanged": true,
+  "pytest_summary": "19 passed in 2.00s",
+  "checks": [
+    "Exact expected gradient for all STOP/OPEN/TAKE paths across three discounts and two state-only baselines",
+    "Equal Monte Carlo episode weighting despite different realized trajectory lengths",
+    "Private reference swap preserves actor pixels, coverage, geometry, actions, logits and scan-estimator search rewards before and after identical cuts",
+    "Frozen access/tool/horizon and separate private evaluator-reference identity",
+    "Independent exhaustive 38-transition/32-terminal opening tree and direct physical cell reward accounting",
+    "Unavailable function remains explicitly unassessed and never creates clinical probabilities",
+    "Canonical anatomy grouping ignores source noise, tools, private function and eight XY rotations/reflections; altered target/support/affine remains distinct"
+  ],
+  "prior_negative_evidence": [
+    "artifacts/spatial-policy-prerequisites-v1/initial-analytic.log",
+    "artifacts/spatial-policy-prerequisites-v1/initial-policy.py.txt",
+    "artifacts/spatial-task-development-v1/pre-freeze-contract-finding.json"
+  ],
+  "limitations": [
+    "Small procedural task uses intersected cells, not canonical native contained-cell mechanics",
+    "No policy performance, clinical harm, real MRI generalization or unseen-patient claim",
+    "Runner separation and held-out evaluation require their own review"
+  ]
+}

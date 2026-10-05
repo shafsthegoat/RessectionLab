@@ -1,0 +1,58 @@
+{
+  "accepted_saved_readout": {
+    "gzip": {
+      "path": "artifacts/mechanics/hbe-time-header-independent-review-v1/saved-coarse-readout.json.gz",
+      "sha256": "d705d5d9b27638947e12f1d805c81d54b1ae438f812054b68dbfcc257df9d260"
+    },
+    "review": {
+      "path": "artifacts/mechanics/hbe-time-header-independent-review-v1/verification.json",
+      "sha256": "a76ee7941d52d16407c5e9f5d52bcecc3bf54a61f6ab9113abffbf836d1eaac2"
+    },
+    "uncompressed_sha256": "062b708ca057de61204137fc051fff0f6ef9c0f203cf02bcb02ccf688c564ed6"
+  },
+  "budget_interpretation": "Conservative debit of the complete original parent interval, including the 0.7348852920113131-second solve; not an exact combined experimental timing estimate. Continuation parsing/replay remains inside the remaining supervised allowance.",
+  "continuation_directory": "continuation-header-v1",
+  "maximum_new_solver_invocations": 19,
+  "original": {
+    "attempt_marker": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/.specimen-experiment-started.json",
+      "sha256": "148b0a8d660fc9b5d5b84ab3ded7245f7cd971d72258b17838e8e1ed09eab139"
+    },
+    "baseline": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment/baseline.json",
+      "sha256": "65c8ed274d593811230c4d653cb1a4e443a58e785d632ca85b99cb8d07116410"
+    },
+    "execution": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment/runs/compression-N4-S60-reference/execution.json",
+      "sha256": "32ab8a835a89589e605955fb8c86e7f6a3427616efb41d68292f73631e00fd77"
+    },
+    "outcome": {
+      "path": "artifacts/mechanics/hbe-01-03-experiment-v1/outcome.json",
+      "sha256": "a0c450480fccbe3b97d602e30f7525dd30f5607f0cb147950a2317d536b2f57e"
+    },
+    "raw_index": {
+      "path": "artifacts/mechanics/hbe-01-03-experiment-v1/raw-output-index.json",
+      "sha256": "ce6f1e0529b22bf7e2e25280d7be98600b9730f5ec323c2f74b8c7112e38ee41"
+    },
+    "release": {
+      "path": "artifacts/mechanics/hbe-01-03-experiment-v1/release.json",
+      "sha256": "d9649a619b4c5adbc6d97d6167ee15ccef1faf4149edc6140535b82900eda362"
+    },
+    "result": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment/result.json",
+      "sha256": "cb788089a37b292b717d86fd383f2323ca4c25514fa0098de8d050c9e650cc5e"
+    },
+    "state": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment/state.json",
+      "sha256": "63a1b78bf2239832dffd269f6a1b2494cb9ccc5f0fc9f00c636489c4fcfa4315"
+    }
+  },
+  "original_source_commit": "add7e8b9c73a8a4fe28badd335bd59fcfbeb91de",
+  "prior_parent_seconds_debit": 4.2655537920072675,
+  "prior_solver_invocations": 1,
+  "repaired_parser_sha256": "a372cb89ea9515186d433c74ec650dc3b5cae289619e8b35d481280f6662f473",
+  "reuse_run_id": "compression:N4:S60:reference",
+  "schema": "hbe-header-continuation-v1",
+  "scope": "Only reuse the completed first coarse solver output after its exact header-format parser repair. No generic resume, additional case, changed model, changed tolerances, changed CSV assumption, or implicit retry.",
+  "status": "prospective_requires_separate_root_release"
+}

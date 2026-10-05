@@ -1,0 +1,67 @@
+{
+  "anatomy_or_registration_approved": false,
+  "archive_read_only": true,
+  "auditor_sha256": "37d37ba7ac1ea75137d592ea4f4d87e0ebf61a9032ae9e595de340d437147934",
+  "before_after_bindings_consistent": 19,
+  "coarse": {
+    "element_cap": 2000,
+    "excess_nodes": 65,
+    "node_cap": 2000,
+    "nodes": 2065,
+    "relative_excess": 0.0325,
+    "volume_elements": 1052
+  },
+  "completed_at": "2026-10-04T22:00:48.791043+00:00",
+  "four_archived_and_working_sources_match_git": true,
+  "image_or_B_or_V_or_motion_reads": 0,
+  "later_levels": "medium/fine not executed",
+  "mask_image_reopened_or_rehashed_by_this_audit": false,
+  "mask_integrity_evidence": "Saved before/after owner digests and worker/launcher checks, cross-bound to frozen protocol.",
+  "mesh_quality_and_fidelity": "not executed; no inference of success or failure",
+  "native_generation_calls": 1,
+  "native_source_surface_metadata": {
+    "components": 1,
+    "euler": 0,
+    "genus": 1,
+    "triangles": 183902,
+    "vertices": 91951
+  },
+  "next_dependency": "Prospective count/memory admission and bounded rejected-geometry retention policy, before any separately authorized new feasibility attempt; current discarded volume geometry cannot be recovered from IDs.",
+  "nonimage_bindings_independently_rehashed": 18,
+  "not_authorized": [
+    "raise caps",
+    "retry meshing",
+    "alter mask/topology or fidelity thresholds",
+    "solver",
+    "B/V or motion access"
+  ],
+  "owner_artifact_index_sha256": "d9d50451a40070edf4d8317977ff2fa781f68aaad6db78024922cadad471dfa3",
+  "owner_artifacts_verified": 15,
+  "owner_raw_index_sha256": "02a054632069298592f0c8347b2b00dc5f3338f4baa0d6e7ad6c4b7930536bf4",
+  "owner_summary_sha256": "95ec3020db75a7a11c94cd8d997c1b89da3dfb1c4ef475f281d06cd61304a52a",
+  "prior_cube_volume_fidelity_failure_preserved": true,
+  "raw_files_blob_hash_verified_without_decoding": 5,
+  "reruns": 0,
+  "resource_observation": {
+    "isolated_benchmark": false,
+    "one_numerical_thread": true,
+    "resource_cap_fired": false,
+    "rss_cap_bytes": 3221225472,
+    "sampled_group_peak_rss_bytes": 658358272,
+    "seconds": 7.789334958069958,
+    "wall_cap_seconds": 180
+  },
+  "returned_volume_mesh_saved": false,
+  "solver_calls": 0,
+  "source_commit": "a49e70ac2a4df747e75fc7bec57c3a887898a6b5",
+  "status": "saved_negative_result_verified",
+  "storage_arithmetic_only": {
+    "2000_node_three_value_arrays_bytes": 432072000,
+    "2065_node_unreduced_dofs": 6195,
+    "additional_three_value_array_bytes": 28538640,
+    "not_full_solver_memory_estimate": true,
+    "one_dense_symmetric_value_array_bytes": 153536880,
+    "three_value_arrays_bytes": 460610640
+  },
+  "worker_and_launcher_input_binding_count": 12
+}

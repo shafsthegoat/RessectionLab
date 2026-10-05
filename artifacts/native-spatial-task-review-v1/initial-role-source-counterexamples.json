@@ -1,0 +1,23 @@
+{
+  "scope": "Archived initial runner with instrumented image loader; no image bytes or policy accessed",
+  "findings": [
+    {
+      "subject": "sub-PAT26",
+      "role_resealed": "population_training",
+      "source_inventory": [
+        "README.md"
+      ],
+      "image_loader_boundary_reached": true,
+      "image_bytes_read": 0
+    },
+    {
+      "subject": "sub-PAT29",
+      "role_resealed": "population_training",
+      "source_inventory": [
+        "README.md"
+      ],
+      "image_loader_boundary_reached": true,
+      "image_bytes_read": 0
+    }
+  ]
+}

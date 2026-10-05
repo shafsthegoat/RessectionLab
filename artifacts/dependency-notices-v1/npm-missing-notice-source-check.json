@@ -1,0 +1,36 @@
+{
+  "observed_at": "2026-10-04T11:36:44.486842+00:00",
+  "package": "react-remove-scroll-bar",
+  "version": "2.3.8",
+  "registry_url": "https://registry.npmjs.org/react-remove-scroll-bar/2.3.8",
+  "registry_response_sha256": "826c618ece09367334160c1ab3a272fd54f8f12e3b0a45f75b0f2660d285855a",
+  "repository": {
+    "url": "git+https://github.com/theKashey/react-remove-scroll-bar.git",
+    "type": "git"
+  },
+  "published_git_head": "b3b1287aad81def2e2ae707274b74531b61ddbaf",
+  "declared_license": "MIT",
+  "upstream_author": {
+    "name": "Anton Korzunov",
+    "email": "thekashey@gmail.com"
+  },
+  "tarball_integrity": "sha512-9r+yi9+mgU33AKcj6IbT9oRCO78WriSj6t/cF8DWBZJ9aOGPOTEDvdUDz1FwKim7QXWwmHqtdHnRJfhAxEG46Q==",
+  "checks": [
+    {
+      "url": "https://raw.githubusercontent.com/theKashey/react-remove-scroll-bar/b3b1287aad81def2e2ae707274b74531b61ddbaf/LICENSE",
+      "http_status": 404
+    },
+    {
+      "url": "https://api.github.com/repos/theKashey/react-remove-scroll-bar/git/trees/b3b1287aad81def2e2ae707274b74531b61ddbaf?recursive=1",
+      "http_status": 422,
+      "message": "Invalid object requested. SHA must identify a commit or a tree."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/theKashey/react-remove-scroll-bar/v2.3.8/package.json",
+      "http_status": 404
+    }
+  ],
+  "installed_package_license_text_found": false,
+  "result": "unresolved_missing_exact_upstream_license_text",
+  "substitute_license_used": false
+}

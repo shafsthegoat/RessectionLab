@@ -1,0 +1,157 @@
+{
+  "all_bound_files_unchanged": true,
+  "executed_counts": {
+    "build": 0,
+    "compiler": 0,
+    "fixture": 0,
+    "solver": 0
+  },
+  "finding": {
+    "affected_fields": [
+      "attributes.transpose",
+      "attributes.triangle",
+      "attributes._reserved",
+      "attributes._allocatedBySparse"
+    ],
+    "assignments": "PreProcess sets rowCount,columnCount,rowIndices,columnStarts,blockSize and later attributes.kind. Other attribute fields are never assigned before direct SparseFactor.",
+    "consequence": "The direct API receives indeterminate attributes. Transpose can change ordinary/QR matrix semantics; triangle selects the symmetric half; the SDK requires reserved bits zero and caller-owned allocation flag zero. This is static proof of missing initialization, not a dynamically reproduced numerical error.",
+    "construction": "Implementation is dynamically allocated with its user-provided constructor; SMS has no member initializer and the constructor performs no aggregate initialization. SDK types are C structs with scalar members and no default member initializers. No guaranteed zero initialization occurs.",
+    "not_rescued_by_sdk": "The explicit-options SparseFactor wrapper forwards Matrix and options to its QR/symmetric implementation without filling matrix attributes.",
+    "object": "SparseMatrixStructure SMS"
+  },
+  "minimal_recommendation": {
+    "effect": "Defines reserved/allocation bits as zero and explicitly fixes transpose/triangle. Existing assignments subsequently define all dimensions/pointers/blockSize/kind. Fits the same contiguous hunk as the CSC repair; no general patch-parser expansion is needed.",
+    "location": "Inside existing macOS availability block in PreProcess, immediately before current SMS.columnCount assignment (upstream line207), after the preserved zero-row/CSC pointer correction.",
+    "restriction": "Iterative mode remains excluded; this finding does not declare full adapter or numerical physics validation.",
+    "statements": [
+      "imp->SMS = {};",
+      "imp->SMS.attributes.transpose = false;",
+      "imp->SMS.attributes.triangle = SparseUpperTriangle;"
+    ],
+    "triangle_basis": "This FEBio CSC path stores both halves, so the upper half exists. SDK SparseUpperTriangle=0 matches aggregate-zero value; explicit selection makes the convention auditable. For SparseOrdinary, SDK documents triangle as ignored."
+  },
+  "primary_line_evidence": [
+    {
+      "lines": "47,75-89,109",
+      "meaning": "Uninitialized SMS member, user-provided constructor and allocation.",
+      "source": "upstream_adapter"
+    },
+    {
+      "lines": "207-221,253,239-282,319-327",
+      "meaning": "All assigned SMS fields, direct calls and later full structure copy into numerical matrix.",
+      "source": "upstream_adapter"
+    },
+    {
+      "lines": "383-412,479-486",
+      "meaning": "Upper=0/lower=1; transpose/triangle semantics and zero requirements; plain aggregate declarations.",
+      "source": "sdk_types"
+    },
+    {
+      "lines": "328-350",
+      "meaning": "Explicit-options wrapper passes structure through to QR/symmetric routines.",
+      "source": "sdk_inline_dispatch"
+    },
+    {
+      "lines": "1380-1388",
+      "meaning": "All seven symbolic option fields declared.",
+      "source": "sdk_types"
+    },
+    {
+      "lines": "213-218,222-235,254-266",
+      "meaning": "Six common SSFO assignments; seventh orderMethod assigned on every branch reaching factorization; unsupported symmetric order returns first.",
+      "source": "upstream_adapter"
+    },
+    {
+      "lines": "167-174",
+      "meaning": "Both symmetric and ordinary CreateSparseMatrix paths allocate zero-offset CCSSparseMatrix.",
+      "source": "upstream_adapter"
+    },
+    {
+      "lines": "287-308",
+      "meaning": "For each column, profile inserts every connected element row; no triangular filtering.",
+      "source": "upstream_profile"
+    },
+    {
+      "lines": "540-597,601-659",
+      "meaning": "CSC retains all profile rows and assembles all element row/column combinations.",
+      "source": "upstream_csc_storage"
+    }
+  ],
+  "prior_evidence_preserved": {
+    "driver_review": "18 focused controls remain valid for build orchestration; the v2 build is withheld for a newly discovered independent adapter issue.",
+    "next_step": "Root may declare a separately pinned combined patch and prospective v3 before any isolated build.",
+    "original_faulty_diagnostic": "Not compiled or executed during this review; previous compile failure and cybersecurity-screen interruption remain untouched.",
+    "pointer_controls": "Six positive-only repaired pointer/zero-row sanitizer controls remain valid for that limited fragment and do not cover matrix attributes or full factorization."
+  },
+  "schema_version": 1,
+  "scope": "Read-only upstream and installed SDK inspection. No C++ compilation, fixtures, builds, solver or measured data access. Only this new review artifact is written.",
+  "source_bindings": {
+    "pointer_repaired_source": {
+      "bytes": 20740,
+      "path": "build/febio-accelerate-csc-bounds-v1/patched/NumCore/AccelerateSparseSolver.cpp",
+      "sha256": "60e5a3f2350826af1b95376ab93c8a476f2312158763d63d82eb80ec54af79c2"
+    },
+    "preserved_driver_review": {
+      "bytes": 4171,
+      "path": "artifacts/febio-accelerate-csc-runtime-independent-review-v2/review.json",
+      "sha256": "f2e32936a09379282adce270c5ce2b084f559ddf6d445c89bd9b6b299e35f143"
+    },
+    "preserved_pointer_patch": {
+      "bytes": 718,
+      "path": "artifacts/febio-accelerate-csc-repair-v1/accelerate-csc-pointer-count.patch",
+      "sha256": "c3c6b068ed8e7b2480a64308099fa57d8b02fdbe04076f1497b0b2fdd3b7c3e0"
+    },
+    "preserved_positive_review": {
+      "bytes": 3689,
+      "path": "artifacts/febio-accelerate-csc-independent-review-v1/positive-control-review.json",
+      "sha256": "d108db018cd98cf8a10db1d0d4bd23d787e82d9d08ca075c802e84b4e1c51e4b"
+    },
+    "preserved_v2_declaration": {
+      "bytes": 8727,
+      "path": "manifests/experiments/febio-accelerate-csc-runtime-v2.json",
+      "sha256": "6079e2198a4c21b71354c8a23054eb6d7ec75415576168ebecdfaa9e8c19bb06"
+    },
+    "preserved_v2_driver": {
+      "bytes": 24658,
+      "path": "scripts/febio_accelerate_runtime.py",
+      "sha256": "a3cf6dfb0db0cdac0311607293a65cf02889f38c52ae4a537d62007b97025d7d"
+    },
+    "sdk_inline_dispatch": {
+      "bytes": 23850,
+      "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers/Sparse/SolveImplementation.h",
+      "sha256": "82a509ffea2e0e27d44473337698e3ebd97b182d3069da704c20fd2995049c17"
+    },
+    "sdk_types": {
+      "bytes": 423862,
+      "path": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers/Sparse/Solve.h",
+      "sha256": "8d2a7b44d05f1ff67cb1688ab8bb6573b021b88c758baa37e10a8aea1c46811a"
+    },
+    "upstream_adapter": {
+      "bytes": 20622,
+      "path": "data/optional-runtimes/febio-4.13/source/NumCore/AccelerateSparseSolver.cpp",
+      "sha256": "f5432e79ab73dd11d4a0550691480edd7fd5f00c392ae2f78eddf9c4b5da51c9"
+    },
+    "upstream_adapter_header": {
+      "bytes": 3134,
+      "path": "data/optional-runtimes/febio-4.13/source/NumCore/AccelerateSparseSolver.h",
+      "sha256": "71c94987d90f36d13ab5c13a43e5fb77d264cf706b7dc4b5f5faa1befd0c29f4"
+    },
+    "upstream_csc_header": {
+      "bytes": 5200,
+      "path": "data/optional-runtimes/febio-4.13/source/FECore/CompactUnSymmMatrix.h",
+      "sha256": "5cea6dfa730a904aad4f5e0bc2c39d44dbe63008602111c74d2ac470c65b68e4"
+    },
+    "upstream_csc_storage": {
+      "bytes": 22092,
+      "path": "data/optional-runtimes/febio-4.13/source/FECore/CompactUnSymmMatrix.cpp",
+      "sha256": "a6863aa736948516348abee435a1d81cd88119925b73ade30aec993b41ebdcca"
+    },
+    "upstream_profile": {
+      "bytes": 8794,
+      "path": "data/optional-runtimes/febio-4.13/source/FECore/MatrixProfile.cpp",
+      "sha256": "d7f2f56530c917bec8b71c66500dc75412b3b62e17a11aa076ce5c4e69312bb3"
+    }
+  },
+  "ssfo_conclusion": "No missing declared SSFO field on the direct path. control,order,ignoreRowsAndColumns,malloc,free,reportError are assigned before branching; orderMethod is assigned on every successful branch. Aggregate initialization would be defensive only and is not needed to establish this repair.",
+  "status": "confirmed_separate_direct_path_initialization_defect_static_only"
+}

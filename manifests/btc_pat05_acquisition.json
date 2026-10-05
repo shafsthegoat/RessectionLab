@@ -1,0 +1,102 @@
+{
+  "dataset": "BTC_preop",
+  "accession": "ds001226",
+  "release": "5.0.1",
+  "git_commit": "359d372c5e972a161966312128adb365870df949",
+  "license": "CC0",
+  "schema_version": 1,
+  "doi": "10.18112/openneuro.ds001226.v5.0.1",
+  "primary_source": "https://openneuro.org/datasets/ds001226/versions/5.0.1",
+  "source_license_url": "https://github.com/OpenNeuroDatasets/ds001226/blob/359d372c5e972a161966312128adb365870df949/dataset_description.json",
+  "annotation_semantics": {
+    "kind": "fractional_source_annotation",
+    "clinical_probability": false,
+    "categorical_compartments": false,
+    "source_values_preserved": true,
+    "threshold_requires_explicit_derived_artifact": true
+  },
+  "subject": "sub-PAT05",
+  "role": "predeclared additional development structural case; not final evaluation",
+  "verified_at": "2026-10-04T08:07:43.364634+00:00",
+  "files": [
+    {
+      "path": "dataset_description.json",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/dataset_description.json",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/dataset_description.json",
+      "bytes": 1209,
+      "sha256": "84185f9c387ae232ddbe87e20b329bacf82b9b5dafe9bde63b64c9bc78bed6f2"
+    },
+    {
+      "path": "participants.tsv",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/participants.tsv",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/participants.tsv",
+      "bytes": 10103,
+      "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d"
+    },
+    {
+      "path": "README",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/README",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/README",
+      "bytes": 3145,
+      "sha256": "fbb3e2e1b00d699835badc0bbda1296f9a90f2995117d93ba3123bd2f8e2d0bb"
+    },
+    {
+      "path": "CHANGES",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/CHANGES",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/CHANGES",
+      "bytes": 434,
+      "sha256": "8c766a15851db0823c661e0a3ec0ac14e2698711461a4f169cab30b3896461c9"
+    },
+    {
+      "path": "sub-PAT05/ses-preop/anat/sub-PAT05_ses-preop_T1w.nii.gz",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT05/ses-preop/anat/sub-PAT05_ses-preop_T1w.nii.gz",
+      "expected_bytes": 7360908,
+      "expected_md5": "eea6f777bc25a73306808634998c9678",
+      "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT05/ses-preop/anat/sub-PAT05_ses-preop_T1w.nii.gz?versionId=iQQSeLGTc1Zc9MIU3.cDdjAzWnmvuGRA",
+      "bytes": 7360908,
+      "sha256": "016779173394c3a3e07fc53f927d37c3c1cb5df04bcbdc398fcfbdc23b40085e"
+    },
+    {
+      "path": "sub-PAT05/ses-preop/anat/sub-PAT05_ses-preop_T1w.json",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT05/ses-preop/anat/sub-PAT05_ses-preop_T1w.json",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT05/ses-preop/anat/sub-PAT05_ses-preop_T1w.json",
+      "bytes": 920,
+      "sha256": "628684f2ff3db0c4d0f5173825f2a058894462d32e096af852d96dc97eba1c01"
+    },
+    {
+      "path": "derivatives/tumor_masks/sub-PAT05/anat/sub-PAT05_space_T1_label-tumor.nii",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/derivatives/tumor_masks/sub-PAT05/anat/sub-PAT05_space_T1_label-tumor.nii",
+      "expected_bytes": 10486112,
+      "expected_md5": "a63042fef197cc0392580cb087bc1999",
+      "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/derivatives/tumor_masks/sub-PAT05/anat/sub-PAT05_space_T1_label-tumor.nii?versionId=n16ELjZacMVWfmGHi93M88sQTQvXy.0W",
+      "bytes": 10486112,
+      "sha256": "497505a1354f075955290f4395217112715ab73242fa10fd2a0f519ca51b8bdc"
+    }
+  ],
+  "selection_manifest": "manifests/btc_pat05_selection.json",
+  "selection_manifest_sha256": "edd2d5ace4db04615ac948f339beb058eb5f637a7a588325fb714e360fd887f3",
+  "acquisition_mode": "structural",
+  "storage_forecast": {
+    "max_download_bytes": 100000000,
+    "file_count": 7,
+    "source_bytes": 17862831,
+    "includes": [
+      "one native preoperative T1",
+      "one source tumor annotation",
+      "T1 acquisition JSON",
+      "four release metadata files"
+    ],
+    "excludes": [
+      "DWI",
+      "fMRI",
+      "postoperative data",
+      "other subjects"
+    ]
+  },
+  "clinical_context": {
+    "source_diagnosis": "Oligo-astrocytoma II",
+    "role": "archival cohort eligibility only; source terminology preserved without modern diagnostic reinterpretation",
+    "preoperative_availability": "unknown",
+    "eligible_as_preoperative_policy_input": false
+  }
+}

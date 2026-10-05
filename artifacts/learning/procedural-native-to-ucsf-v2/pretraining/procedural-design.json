@@ -1,0 +1,954 @@
+{
+  "checkpoint_rule": "fixed_budget_latest",
+  "declaration_hash": "sha256:3abf10162ed9d096a7e21ec84a87c1a88ebf12bb074345a78040dfdebb828ac9",
+  "excluded_targets": [
+    {
+      "aliases": [
+        "UCSF-PDGM:UCSF-PDGM-004",
+        "BraTS2021:BraTS2021_00097"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "excluded_from_pretraining": true,
+      "group_id": "UCSF-PDGM:UCSF-PDGM-0004",
+      "outer_split": "development",
+      "planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+      "source_kind": "public_patient_structural_mirror"
+    }
+  ],
+  "final_worlds_used": false,
+  "members": [
+    {
+      "aliases": [
+        "procedural_generator:native-slab-v1"
+      ],
+      "decision_model_hash": "sha256:c81e119adde1daa22f8515f16ae821ab495ab0b658df86185d65820e07b0d5d5",
+      "family_id": "procedural:native-slab-v1",
+      "generator_manifest": {
+        "aliases": [
+          "procedural_generator:native-slab-v1"
+        ],
+        "case_id": "synthetic_native_procedural_slab_v1",
+        "construction_check": {
+          "action_feature_shape": [
+            5,
+            15
+          ],
+          "gradient_steps": 0,
+          "legal_nonstop_count": 4,
+          "rejection_counts": {},
+          "source_and_model_hashes_reproduced": true,
+          "state_feature_shape": [
+            6
+          ],
+          "transitions_executed": 0
+        },
+        "construction_only": true,
+        "group_id": "procedural:native-slab-v1",
+        "initial_action_ids": [
+          "STOP",
+          "NATIVE:native-fine-aspiration:0",
+          "NATIVE:native-wide-aspiration:0",
+          "NATIVE:native-fine-aspiration:1",
+          "NATIVE:native-wide-aspiration:1"
+        ],
+        "initial_legal_nonstop": 4,
+        "initial_nonstop_action_ids": [
+          "NATIVE:native-fine-aspiration:0",
+          "NATIVE:native-wide-aspiration:0",
+          "NATIVE:native-fine-aspiration:1",
+          "NATIVE:native-wide-aspiration:1"
+        ],
+        "initial_rejection_counts": {},
+        "model_hash": "sha256:c81e119adde1daa22f8515f16ae821ab495ab0b658df86185d65820e07b0d5d5",
+        "native_config_hash": "sha256:f041c131728710b7da1505db940865608b6ca98b4ae4b654211e183b3cdc97fd",
+        "recipe": {
+          "access": {
+            "center_mm": [
+              4.0,
+              4.0,
+              -0.5
+            ],
+            "normal_inward": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "radius_mm": 4.0,
+            "window_id": "hypothetical"
+          },
+          "affine": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "candidate_entries_mm": [
+            [
+              3.0,
+              4.0,
+              -0.5
+            ],
+            [
+              5.0,
+              4.0,
+              -0.5
+            ]
+          ],
+          "candidate_targets_mm": [
+            [
+              3.0,
+              4.0,
+              6.0
+            ],
+            [
+              5.0,
+              4.0,
+              6.0
+            ]
+          ],
+          "case_id": "synthetic_native_procedural_slab_v1",
+          "family_id": "procedural:native-slab-v1",
+          "language_evidence": null,
+          "max_actions": 7,
+          "max_steps": 3,
+          "motor_evidence": null,
+          "partial_contact_weight": 0.05,
+          "shape": [
+            9,
+            9,
+            8
+          ],
+          "source_kind": "procedural_native",
+          "target_boxes_half_open": [
+            [
+              [
+                2,
+                7
+              ],
+              [
+                2,
+                7
+              ],
+              [
+                4,
+                8
+              ]
+            ]
+          ],
+          "target_label": 1,
+          "tissue": "all_true",
+          "tools": [
+            {
+              "max_access_angle_deg": 35.0,
+              "parameter_source": "generic research geometry; not a verified commercial device",
+              "shaft_radius_mm": 0.45,
+              "tip_length_mm": 2.0,
+              "tip_radius_mm": 1.25,
+              "tool_id": "native-fine-aspiration",
+              "working_length_mm": 120.0
+            },
+            {
+              "max_access_angle_deg": 35.0,
+              "parameter_source": "generic research geometry; not a verified commercial device",
+              "shaft_radius_mm": 1.1,
+              "tip_length_mm": 3.0,
+              "tip_radius_mm": 2.25,
+              "tool_id": "native-wide-aspiration",
+              "working_length_mm": 120.0
+            }
+          ],
+          "version": "native-procedural-families-v1"
+        },
+        "source_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+        "target_voxels": 100,
+        "tissue_support_provenance": "procedural solid cube; exact generating mask",
+        "training_gradient_steps": 0,
+        "world_partitions": {
+          "final_evaluation": {
+            "case_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "generator": {
+              "family": "rigid_gaussian",
+              "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+              "rotation_center_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rotation_scale_deg": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "translation_scale_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "version": "rigid-registration-v1"
+            },
+            "interpretation": "deterministic_optimization",
+            "planning_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "role": "final_evaluation",
+            "seeds": [
+              2876800108607767037,
+              9197612259568361627,
+              9562622899901630680
+            ]
+          },
+          "optimization": {
+            "case_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "generator": {
+              "family": "rigid_gaussian",
+              "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+              "rotation_center_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rotation_scale_deg": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "translation_scale_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "version": "rigid-registration-v1"
+            },
+            "interpretation": "deterministic_optimization",
+            "planning_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "role": "optimization",
+            "seeds": [
+              11103855882051260355,
+              11243981505934875939,
+              6936170738492634982
+            ]
+          },
+          "selection": {
+            "case_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "generator": {
+              "family": "rigid_gaussian",
+              "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+              "rotation_center_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rotation_scale_deg": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "translation_scale_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "version": "rigid-registration-v1"
+            },
+            "interpretation": "deterministic_optimization",
+            "planning_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "role": "selection",
+            "seeds": [
+              1943417729305584125,
+              9073826545075957572
+            ]
+          },
+          "stress": {
+            "case_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "generator": {
+              "family": "rigid_uniform",
+              "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+              "rotation_center_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rotation_scale_deg": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "translation_scale_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "version": "rigid-registration-v1"
+            },
+            "interpretation": "deterministic_optimization",
+            "planning_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+            "role": "stress",
+            "seeds": [
+              17462187812550523012,
+              1659979217699667971
+            ]
+          }
+        }
+      },
+      "partitions": {
+        "optimization": {
+          "case_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+          "generator": {
+            "family": "rigid_gaussian",
+            "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+            "rotation_center_mm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation_scale_deg": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "translation_scale_mm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "version": "rigid-registration-v1"
+          },
+          "partition_hash": "sha256:734aa165f9934f7facdda33914b20d6c8492bed964bcf03fe3aafb2231e8fa82",
+          "planning_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+          "role": "optimization",
+          "seeds": [
+            11103855882051260355,
+            11243981505934875939,
+            6936170738492634982
+          ]
+        },
+        "selection": {
+          "case_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+          "generator": {
+            "family": "rigid_gaussian",
+            "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+            "rotation_center_mm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation_scale_deg": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "translation_scale_mm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "version": "rigid-registration-v1"
+          },
+          "partition_hash": "sha256:2c0578167f503390a34e2835d792b8d93e0a959060d189447fc5c0cf03787e02",
+          "planning_hash": "sha256:ed73ad8541396e9a55cd914e9c7316657f25f9ec396748827959f4021105081c",
+          "role": "selection",
+          "seeds": [
+            1943417729305584125,
+            9073826545075957572
+          ]
+        }
+      }
+    },
+    {
+      "aliases": [
+        "procedural_generator:native-split_lobes-v1"
+      ],
+      "decision_model_hash": "sha256:73cce7f2cca5f4899cb646965e8b26184db31a7d2d1783fdf6ca563aa55e7188",
+      "family_id": "procedural:native-split_lobes-v1",
+      "generator_manifest": {
+        "aliases": [
+          "procedural_generator:native-split_lobes-v1"
+        ],
+        "case_id": "synthetic_native_procedural_split_lobes_v1",
+        "construction_check": {
+          "action_feature_shape": [
+            5,
+            15
+          ],
+          "gradient_steps": 0,
+          "legal_nonstop_count": 4,
+          "rejection_counts": {},
+          "source_and_model_hashes_reproduced": true,
+          "state_feature_shape": [
+            6
+          ],
+          "transitions_executed": 0
+        },
+        "construction_only": true,
+        "group_id": "procedural:native-split_lobes-v1",
+        "initial_action_ids": [
+          "STOP",
+          "NATIVE:native-fine-aspiration:0",
+          "NATIVE:native-wide-aspiration:0",
+          "NATIVE:native-fine-aspiration:1",
+          "NATIVE:native-wide-aspiration:1"
+        ],
+        "initial_legal_nonstop": 4,
+        "initial_nonstop_action_ids": [
+          "NATIVE:native-fine-aspiration:0",
+          "NATIVE:native-wide-aspiration:0",
+          "NATIVE:native-fine-aspiration:1",
+          "NATIVE:native-wide-aspiration:1"
+        ],
+        "initial_rejection_counts": {},
+        "model_hash": "sha256:73cce7f2cca5f4899cb646965e8b26184db31a7d2d1783fdf6ca563aa55e7188",
+        "native_config_hash": "sha256:16fed4abf39d89d6d7ec8aa00906ec48f15a90e7f5dcaae2473b8d18dc8e7665",
+        "recipe": {
+          "access": {
+            "center_mm": [
+              4.0,
+              4.0,
+              -0.5
+            ],
+            "normal_inward": [
+              0.0,
+              0.0,
+              1.0
+            ],
+            "radius_mm": 4.0,
+            "window_id": "hypothetical"
+          },
+          "affine": [
+            [
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "candidate_entries_mm": [
+            [
+              3.0,
+              4.0,
+              -0.5
+            ],
+            [
+              5.0,
+              4.0,
+              -0.5
+            ]
+          ],
+          "candidate_targets_mm": [
+            [
+              3.0,
+              4.0,
+              6.0
+            ],
+            [
+              5.0,
+              4.0,
+              6.0
+            ]
+          ],
+          "case_id": "synthetic_native_procedural_split_lobes_v1",
+          "family_id": "procedural:native-split_lobes-v1",
+          "language_evidence": null,
+          "max_actions": 7,
+          "max_steps": 3,
+          "motor_evidence": null,
+          "partial_contact_weight": 0.05,
+          "shape": [
+            9,
+            9,
+            8
+          ],
+          "source_kind": "procedural_native",
+          "target_boxes_half_open": [
+            [
+              [
+                1,
+                4
+              ],
+              [
+                2,
+                7
+              ],
+              [
+                4,
+                7
+              ]
+            ],
+            [
+              [
+                5,
+                8
+              ],
+              [
+                2,
+                7
+              ],
+              [
+                5,
+                8
+              ]
+            ]
+          ],
+          "target_label": 1,
+          "tissue": "all_true",
+          "tools": [
+            {
+              "max_access_angle_deg": 35.0,
+              "parameter_source": "generic research geometry; not a verified commercial device",
+              "shaft_radius_mm": 0.45,
+              "tip_length_mm": 2.0,
+              "tip_radius_mm": 1.25,
+              "tool_id": "native-fine-aspiration",
+              "working_length_mm": 120.0
+            },
+            {
+              "max_access_angle_deg": 35.0,
+              "parameter_source": "generic research geometry; not a verified commercial device",
+              "shaft_radius_mm": 1.1,
+              "tip_length_mm": 3.0,
+              "tip_radius_mm": 2.25,
+              "tool_id": "native-wide-aspiration",
+              "working_length_mm": 120.0
+            }
+          ],
+          "version": "native-procedural-families-v1"
+        },
+        "source_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+        "target_voxels": 90,
+        "tissue_support_provenance": "procedural solid cube; exact generating mask",
+        "training_gradient_steps": 0,
+        "world_partitions": {
+          "final_evaluation": {
+            "case_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+            "generator": {
+              "family": "rigid_gaussian",
+              "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+              "rotation_center_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rotation_scale_deg": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "translation_scale_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "version": "rigid-registration-v1"
+            },
+            "interpretation": "deterministic_optimization",
+            "planning_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+            "role": "final_evaluation",
+            "seeds": [
+              3586485727780767959,
+              12438740218599795306,
+              1625848127013726120
+            ]
+          },
+          "optimization": {
+            "case_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+            "generator": {
+              "family": "rigid_gaussian",
+              "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+              "rotation_center_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rotation_scale_deg": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "translation_scale_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "version": "rigid-registration-v1"
+            },
+            "interpretation": "deterministic_optimization",
+            "planning_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+            "role": "optimization",
+            "seeds": [
+              7161218702232290418,
+              7399955035493491159,
+              17846098911440281578
+            ]
+          },
+          "selection": {
+            "case_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+            "generator": {
+              "family": "rigid_gaussian",
+              "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+              "rotation_center_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rotation_scale_deg": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "translation_scale_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "version": "rigid-registration-v1"
+            },
+            "interpretation": "deterministic_optimization",
+            "planning_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+            "role": "selection",
+            "seeds": [
+              14356669542590053023,
+              15498795532782231477
+            ]
+          },
+          "stress": {
+            "case_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+            "generator": {
+              "family": "rigid_uniform",
+              "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+              "rotation_center_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "rotation_scale_deg": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "translation_scale_mm": [
+                0.0,
+                0.0,
+                0.0
+              ],
+              "version": "rigid-registration-v1"
+            },
+            "interpretation": "deterministic_optimization",
+            "planning_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+            "role": "stress",
+            "seeds": [
+              7524832007186600751,
+              16776302469904887833
+            ]
+          }
+        }
+      },
+      "partitions": {
+        "optimization": {
+          "case_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+          "generator": {
+            "family": "rigid_gaussian",
+            "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+            "rotation_center_mm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation_scale_deg": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "translation_scale_mm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "version": "rigid-registration-v1"
+          },
+          "partition_hash": "sha256:e732e5de1442054fecb7a335959415b7d458bcb378585cd30bb908373a807753",
+          "planning_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+          "role": "optimization",
+          "seeds": [
+            7161218702232290418,
+            7399955035493491159,
+            17846098911440281578
+          ]
+        },
+        "selection": {
+          "case_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+          "generator": {
+            "family": "rigid_gaussian",
+            "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+            "rotation_center_mm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "rotation_scale_deg": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "translation_scale_mm": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "version": "rigid-registration-v1"
+          },
+          "partition_hash": "sha256:3c2b0ff9ba07cc2ba58c56dae82201a8407beaecee845a5b4f688e0c0834509f",
+          "planning_hash": "sha256:79cdd06a36f77b61462f2ba77a94427332a024d146aa25e4cd9a2cfb0041de89",
+          "role": "selection",
+          "seeds": [
+            14356669542590053023,
+            15498795532782231477
+          ]
+        }
+      }
+    }
+  ],
+  "observation_schema": {
+    "action_feature_names": [
+      "stop",
+      "target_benefit",
+      "normal_volume",
+      "motor_evidence",
+      "language_evidence",
+      "insertion_distance",
+      "tip_radius",
+      "shaft_radius",
+      "tool_change",
+      "depth",
+      "remaining_target_fraction",
+      "adjacent_target_fraction",
+      "partial_normal_contact_volume",
+      "partial_motor_contact_surrogate",
+      "partial_language_contact_surrogate"
+    ],
+    "action_feature_units": [
+      "binary",
+      "mm3",
+      "mm3",
+      "spatial_surrogate_mm3",
+      "spatial_surrogate_mm3",
+      "mm",
+      "mm",
+      "mm",
+      "binary",
+      "fraction_of_action_budget",
+      "fraction",
+      "fraction",
+      "mm3",
+      "spatial_surrogate_mm3",
+      "spatial_surrogate_mm3"
+    ],
+    "actor_evidence": "nominal fields and actual cavity only; hidden world excluded",
+    "adapter_version": "native-contained-brush-policy-v2",
+    "depth_semantics": "historical name; completed nonSTOP actions / max_steps; not physical depth",
+    "evidence_available": [
+      false,
+      false
+    ],
+    "max_actions": 7,
+    "max_steps": 3,
+    "partial_contact_weight": 0.05,
+    "removal_semantics": "fully contained exterior-connected native cells only; partial cells retained and costed",
+    "removal_version": "contained-native-cell-connected-suction-v2",
+    "reward": {
+      "action_cost": 0.02,
+      "graph_edge_cost": 1.0,
+      "language_per_mm3": 2.0,
+      "motion_per_mm": 0.0,
+      "motor_per_mm3": 2.0,
+      "normal_per_mm3": 0.2,
+      "target_per_mm3": 1.0,
+      "tool_change_cost": 0.02
+    },
+    "scaling": "identity; raw physical volumes/distances and existing fractions; no learned normalization",
+    "state_feature_names": [
+      "remaining_target_fraction",
+      "action_budget_fraction_used",
+      "removed_tissue_fraction",
+      "nominal_severed_edge_fraction",
+      "motor_evidence_available",
+      "language_evidence_available"
+    ],
+    "state_feature_units": [
+      "fraction",
+      "fraction",
+      "fraction",
+      "fraction",
+      "binary",
+      "binary"
+    ],
+    "tools": [
+      {
+        "max_access_angle_deg": 35.0,
+        "parameter_source": "generic research geometry; not a verified commercial device",
+        "shaft_radius_mm": 0.45,
+        "tip_length_mm": 2.0,
+        "tip_radius_mm": 1.25,
+        "tool_id": "native-fine-aspiration",
+        "working_length_mm": 120.0
+      },
+      {
+        "max_access_angle_deg": 35.0,
+        "parameter_source": "generic research geometry; not a verified commercial device",
+        "shaft_radius_mm": 1.1,
+        "tip_length_mm": 3.0,
+        "tip_radius_mm": 2.25,
+        "tool_id": "native-wide-aspiration",
+        "working_length_mm": 120.0
+      }
+    ],
+    "version": "native-15x6-actual-semantics-v1",
+    "world_generator": {
+      "family": "rigid_gaussian",
+      "parameter_basis": "declared_uncalibrated_sensitivity_scenario",
+      "rotation_center_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "rotation_scale_deg": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "translation_scale_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "version": "rigid-registration-v1"
+    }
+  },
+  "runtime": {
+    "device": "cpu",
+    "numpy": "2.5.3",
+    "python": "3.12.14",
+    "torch": "2.14.1"
+  },
+  "scope": "procedural_native_to_patient_development",
+  "source_sha256": {
+    "__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "anatomy.py": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37",
+    "brain_extraction.py": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917",
+    "cohort.py": "d69538f80af8b318068af70dbc963b7a9ca6c3a4f62d6e8e542d6e43548fa874",
+    "core.py": "0600667e8e8662c78e31a86d9060d53aec5ab5a4f2b14e747afd74800f11eeec",
+    "desktop_bridge.py": "b76b76e58cb1a6476cec57fc093184ab7ea8ff598b26ed66b3438e7720fdfbe8",
+    "diffusion.py": "e7f57bf7467fb3cb5d6b9b3f1c80e4665710713124d0720aa84d31ccc03b8e21",
+    "evaluation.py": "baaa2f3d6b4e41c4621dc22872da9300d649bc91dfeb923e2ad35f66aadad3b7",
+    "geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "imaging.py": "ad921fb5cda6d3aed84893ad200cb846212311efa17c1996730a394e8474a95b",
+    "learning.py": "2056cb4b9ffde0f592aaf61842c1744a6924df7ecf792240bfcc6f712eab4603",
+    "learning_ppo.py": "a3814bc5da4837b66ae20496c38e17edd0edf73ef7863a920924cd7ec2a42d88",
+    "native_refinement.py": "02a1250d40d7129c77d16031e229c61c3d295139c002c9002f5a3eb78097a413",
+    "native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+    "native_routes.py": "97bb55a3bf2894f336a593bc3c3379b3c4dc291198af90b91d319bd0b9a824ea",
+    "native_simulation.py": "2461cc6c32eb25a3927bcc3a9379bb02417794c3a764c4b1e705a00bcac6493c",
+    "planning.py": "f113ce78b239f91a86c65d8add74227a9d9f3c0d718449c7968a983e76ea850d",
+    "population_learning.py": "49899618825d08b50016f9b34f389b50ce67f6a3aa79a8f339665523e3ae8de2",
+    "preprocessing.py": "dbd2c4ba9551e2aa0d454b638e256ad8bc6cdf45dcdc8ec08e091e43c3eb14e5",
+    "prior_proposals.py": "05340a6911b0330175d606f84aa81c817a330a929a336fef18078d01e3d0bd55",
+    "prior_registration.py": "9828e76ed3e29e232c39dd16ece7d5fefa4cd366d1cab7899121e929ef34a703",
+    "procedural_learning.py": "4a2c9d3692667f7361667bb412d3428563c12f10451edabb7e34dc7169481df0",
+    "route_native_diagnostics.py": "f2cf704da9e971f321dce707dadd9f0350ec7234ecc75c0ed0fc1242fd8c82cf",
+    "selection_contract.py": "bef00b486fb6f0f0465a8526080ae5c6e08a5f1922fcf93f4624aec86ec43d72",
+    "simulation.py": "bc43c16643adf8495f969dcacacb770f5f6be7fdeff0831f2a92eb4aed52939f",
+    "structural_evidence.py": "6a1b9e7aa5b13ea971a75d9416d96ab45de2b46901a036edd73ec58194fb7a33",
+    "worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
+  },
+  "training_config": {
+    "checkpoint_interval": 2,
+    "entropy_weight": 0.01,
+    "episodes_per_update": 2,
+    "gamma": 1.0,
+    "hidden_features": 16,
+    "learning_rate": 0.003,
+    "max_environment_steps": 256,
+    "max_episode_steps": 4,
+    "max_gradient_norm": 5.0,
+    "max_gradient_steps": 32,
+    "max_wall_seconds": 60.0,
+    "seed": 101,
+    "value_weight": 0.5
+  },
+  "world_map": {
+    "0": [
+      0,
+      11103855882051260355
+    ],
+    "1": [
+      1,
+      7161218702232290418
+    ],
+    "1000000": [
+      0,
+      1943417729305584125
+    ],
+    "1000001": [
+      1,
+      14356669542590053023
+    ],
+    "1000002": [
+      0,
+      9073826545075957572
+    ],
+    "1000003": [
+      1,
+      15498795532782231477
+    ],
+    "2": [
+      0,
+      11243981505934875939
+    ],
+    "3": [
+      1,
+      7399955035493491159
+    ],
+    "4": [
+      0,
+      6936170738492634982
+    ],
+    "5": [
+      1,
+      17846098911440281578
+    ]
+  }
+}

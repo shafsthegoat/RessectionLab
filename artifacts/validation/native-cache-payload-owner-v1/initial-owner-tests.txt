@@ -1,0 +1,5 @@
+$ .venv/bin/python -m pytest -q tests/test_native_cache_payloads.py
+...............................                                          [100%]
+31 passed in 0.36s
+
+Only tiny synthetic frames and cache calls; no saved public-query sizing.

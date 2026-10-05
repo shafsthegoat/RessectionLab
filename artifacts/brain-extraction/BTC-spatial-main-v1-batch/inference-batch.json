@@ -1,0 +1,231 @@
+{
+  "schema_version": 1,
+  "status": "all_four_inferences_completed_before_overlap_QC",
+  "started_at": "2026-10-04T18:16:46.292141+00:00",
+  "git_commit": "ea501a8991e9a4ec6a6154f117c48a8b6ff1e390",
+  "declaration_sha256": "f6560e7d35a3c85d3e56f2abfbaa487337f22405a4be20dc28ddeb368f78450f",
+  "root_release_sha256": "3bc62f7a736f7d690df24754990b89075491fd7ae787404a264e559cb6b98934",
+  "driver_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/btc-spatial-support-ea501a8/execute_inference.py",
+  "driver_sha256": "dff2b326c94a5dcec8fc6680c87cf4821b2f88501b35073bfa398f251640879a",
+  "attempts": [
+    {
+      "subject": "sub-PAT22",
+      "development_role": "population_training",
+      "patient_group": "BTC:sub-PAT22",
+      "status": "completed",
+      "started_at": "2026-10-04T18:16:46.306149+00:00",
+      "output_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/brain-extraction/BTC-spatial-main-v1/sub-PAT22",
+      "source_t1_sha256": "6ac1bc950dc2b48709367550b1c740684457fce875e3e402d870d3356282334e",
+      "finished_at": "2026-10-04T18:16:56.364398+00:00",
+      "child_elapsed_seconds": 7.901334209018387,
+      "sampled_child_RSS_bytes": 671498240,
+      "mps_memory_samples": {
+        "tensor_bytes_max_sampled": 4117935104,
+        "driver_bytes_max_sampled": 5948243968
+      },
+      "artifact_files": {
+        "LICENSE_FreeSurfer.txt": {
+          "sha256": "632d404ea17b9101d9ac87cf8f09e651d18eb20d2cc0ba8dbee77e85b8516307",
+          "bytes": 10297
+        },
+        "brain_extraction_report.json": {
+          "sha256": "bc36f8be603ebf011183d0c76f548accbbfe54c104319b073f0372a2b4ed04e4",
+          "bytes": 10516
+        },
+        "implementation_snapshot.py": {
+          "sha256": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917",
+          "bytes": 23093
+        },
+        "main_distance_mm.nii.gz": {
+          "sha256": "e01622e26d5fd418495cf1162f13d873b11185cbbff5289cacddb1cd005ffe4f",
+          "bytes": 27929520
+        },
+        "main_inference.log": {
+          "sha256": "e871e38c88571714e1379e9e04fa74d6b25194592bb9bb413c8b5fbc9756146b",
+          "bytes": 1165
+        },
+        "main_inference_record.json": {
+          "sha256": "e3c61b910f2f647c60f537d7438daa48c2262c576ac96b06f9a1e8444e2da6bf",
+          "bytes": 7688
+        },
+        "main_mask.nii.gz": {
+          "sha256": "be7440cdba7fc921cf32615fa632ebc58858bf205bdc688746540dfd73e81591",
+          "bytes": 134513
+        },
+        "main_synthstrip_mps.py": {
+          "sha256": "d39cbcba9c5303ba74eaf0bb53d9105762f8a01a7de7bae2740958242f8f6cf8",
+          "bytes": 13338
+        }
+      }
+    },
+    {
+      "subject": "sub-PAT25",
+      "development_role": "population_training",
+      "patient_group": "BTC:sub-PAT25",
+      "status": "completed",
+      "started_at": "2026-10-04T18:16:56.378951+00:00",
+      "output_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/brain-extraction/BTC-spatial-main-v1/sub-PAT25",
+      "source_t1_sha256": "40f786e7fbdfdb036d6409ffe771ec9309d0c424fca88e44e8a42c43c8900562",
+      "finished_at": "2026-10-04T18:17:05.371383+00:00",
+      "child_elapsed_seconds": 6.847231792053208,
+      "sampled_child_RSS_bytes": 676331520,
+      "mps_memory_samples": {
+        "tensor_bytes_max_sampled": 4117935104,
+        "driver_bytes_max_sampled": 5948243968
+      },
+      "artifact_files": {
+        "LICENSE_FreeSurfer.txt": {
+          "sha256": "632d404ea17b9101d9ac87cf8f09e651d18eb20d2cc0ba8dbee77e85b8516307",
+          "bytes": 10297
+        },
+        "brain_extraction_report.json": {
+          "sha256": "a6d400062bf17972457ee763966202ffe0d69db931ef82367b9e91d04ab2e3af",
+          "bytes": 10533
+        },
+        "implementation_snapshot.py": {
+          "sha256": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917",
+          "bytes": 23093
+        },
+        "main_distance_mm.nii.gz": {
+          "sha256": "5841ff9950495b270e84aeca7165f8924c8cb7d34103c4903c1b29e0e589fe7e",
+          "bytes": 28759285
+        },
+        "main_inference.log": {
+          "sha256": "456a43210bdfefc265a19809cf0f005e202d504c300aa49a2f065e4601d02fb6",
+          "bytes": 1165
+        },
+        "main_inference_record.json": {
+          "sha256": "3c48fd84cf00ef8bb23ccd430fce647dc14af2e2c0f6447f999a552a6716adc9",
+          "bytes": 7705
+        },
+        "main_mask.nii.gz": {
+          "sha256": "70b2b1bfe1234a32946e82ac6525f6c6cbfeefa074d6c340ab0e27f5efce3fc7",
+          "bytes": 137605
+        },
+        "main_synthstrip_mps.py": {
+          "sha256": "d39cbcba9c5303ba74eaf0bb53d9105762f8a01a7de7bae2740958242f8f6cf8",
+          "bytes": 13338
+        }
+      }
+    },
+    {
+      "subject": "sub-PAT26",
+      "development_role": "checkpoint_selection_development",
+      "patient_group": "BTC:sub-PAT26",
+      "status": "completed",
+      "started_at": "2026-10-04T18:17:05.386447+00:00",
+      "output_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/brain-extraction/BTC-spatial-main-v1/sub-PAT26",
+      "source_t1_sha256": "a27b46c82c4df0b4ebae97b5bea22bb4299abc5086577416c498edfa63879595",
+      "finished_at": "2026-10-04T18:17:13.219329+00:00",
+      "child_elapsed_seconds": 6.073116875020787,
+      "sampled_child_RSS_bytes": 678838272,
+      "mps_memory_samples": {
+        "tensor_bytes_max_sampled": 4117935104,
+        "driver_bytes_max_sampled": 5948243968
+      },
+      "artifact_files": {
+        "LICENSE_FreeSurfer.txt": {
+          "sha256": "632d404ea17b9101d9ac87cf8f09e651d18eb20d2cc0ba8dbee77e85b8516307",
+          "bytes": 10297
+        },
+        "brain_extraction_report.json": {
+          "sha256": "5b1da3b664b80a624e5f6f998f897f47e7d0670617c6e479b8d81de5903dfe51",
+          "bytes": 10529
+        },
+        "implementation_snapshot.py": {
+          "sha256": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917",
+          "bytes": 23093
+        },
+        "main_distance_mm.nii.gz": {
+          "sha256": "8068abdb80c426a435d53c53fbe30ba71f7c045638884b3542d1893e2fd0e322",
+          "bytes": 28573539
+        },
+        "main_inference.log": {
+          "sha256": "95d0afe140301a07a33c716560c7288b69e8731d644a72c4b417c1d8176fb33b",
+          "bytes": 1165
+        },
+        "main_inference_record.json": {
+          "sha256": "d82f11cda18627bf64d45feae06f305257c762de9313f5f8c6577c6b9c58475c",
+          "bytes": 7688
+        },
+        "main_mask.nii.gz": {
+          "sha256": "80aa8b90713525c8b95ded63a190113a0f3c50260cc08241f2344f030249b58d",
+          "bytes": 142695
+        },
+        "main_synthstrip_mps.py": {
+          "sha256": "d39cbcba9c5303ba74eaf0bb53d9105762f8a01a7de7bae2740958242f8f6cf8",
+          "bytes": 13338
+        }
+      }
+    },
+    {
+      "subject": "sub-PAT27",
+      "development_role": "checkpoint_selection_development",
+      "patient_group": "BTC:sub-PAT27",
+      "status": "completed",
+      "started_at": "2026-10-04T18:17:13.234848+00:00",
+      "output_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/brain-extraction/BTC-spatial-main-v1/sub-PAT27",
+      "source_t1_sha256": "f12b9c898194467ef43da71d0f517b24cb57b494b2456acc559bf9473e6e75ab",
+      "finished_at": "2026-10-04T18:17:21.316258+00:00",
+      "child_elapsed_seconds": 6.322828415897675,
+      "sampled_child_RSS_bytes": 676036608,
+      "mps_memory_samples": {
+        "tensor_bytes_max_sampled": 4117935104,
+        "driver_bytes_max_sampled": 5948243968
+      },
+      "artifact_files": {
+        "LICENSE_FreeSurfer.txt": {
+          "sha256": "632d404ea17b9101d9ac87cf8f09e651d18eb20d2cc0ba8dbee77e85b8516307",
+          "bytes": 10297
+        },
+        "brain_extraction_report.json": {
+          "sha256": "3eabd2ba26603854f78ccd65cdbbc4cda13789bd759c6e105dbf4bef540a6822",
+          "bytes": 10547
+        },
+        "implementation_snapshot.py": {
+          "sha256": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917",
+          "bytes": 23093
+        },
+        "main_distance_mm.nii.gz": {
+          "sha256": "d568aaf0939facfc8a771ae04fcaff98dc2cda35230cd06b757f648075cc71fc",
+          "bytes": 28420864
+        },
+        "main_inference.log": {
+          "sha256": "d56516f9d916977027d3bcdaee256a8aa5a2c604aa4472cf34e2f0ec86511314",
+          "bytes": 1165
+        },
+        "main_inference_record.json": {
+          "sha256": "5eb3a7cdbf793f602aff1d3b8b9ce3857e93b892bce78bf78c48631864a44731",
+          "bytes": 7706
+        },
+        "main_mask.nii.gz": {
+          "sha256": "4b990b4dda738ed14565624e4e190db8b0145e15fd537ddffb24a36e94811709",
+          "bytes": 147238
+        },
+        "main_synthstrip_mps.py": {
+          "sha256": "d39cbcba9c5303ba74eaf0bb53d9105762f8a01a7de7bae2740958242f8f6cf8",
+          "bytes": 13338
+        }
+      }
+    }
+  ],
+  "failures": [],
+  "target_annotation_opened": false,
+  "source_case_arrays_opened": false,
+  "target_overlap_QC_performed": false,
+  "model_training_performed": false,
+  "brain_reviewed": false,
+  "cortical_access_permitted": false,
+  "working_brain_mask_attached": false,
+  "project_module_origins": {
+    "resectionlab": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/btc-spatial-support-ea501a8/source/src/resectionlab/__init__.py",
+    "resectionlab.core": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/btc-spatial-support-ea501a8/source/src/resectionlab/core.py",
+    "resectionlab.imaging": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/btc-spatial-support-ea501a8/source/src/resectionlab/imaging.py",
+    "resectionlab.brain_extraction": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/btc-spatial-support-ea501a8/source/src/resectionlab/brain_extraction.py"
+  },
+  "finished_at": "2026-10-04T18:17:21.317236+00:00",
+  "elapsed_seconds": 35.0239120000042,
+  "source_files_unchanged": true,
+  "snapshot_files_unchanged": true,
+  "unopened_PAT29_PAT31_absent": true
+}

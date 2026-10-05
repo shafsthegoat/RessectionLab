@@ -1,0 +1,54 @@
+{
+  "curve_values_opened": false,
+  "decks": {
+    "compression-60-reference": {
+      "deck_sha256": "607afe0a102d44c752085745d237744d84a21886f9507c7532cc374f6fee1afd",
+      "loading_sha256": "3eae99b3963006e65246e49a834603789bdd029523bf3b61ad5415b51fab7498"
+    },
+    "tension-60-reference": {
+      "deck_sha256": "30d19a15d2690e7c0f5536506616e81d353c84fb02916ba55d7ae7bd552b61e5",
+      "loading_sha256": "dee82a4402158a78aa52ece104ec7c478b8021319df0f0b4e9227369bfa39cf5"
+    },
+    "torsion_neg-60-reference": {
+      "deck_sha256": "4195443bc0d916b885fb7f52159409e09fedff63dafc426a95996995562d2d72",
+      "loading_sha256": "062487b07275f2c901eec7c1f988cf23505a134b2bbf2a8c597b5f050e632795"
+    },
+    "torsion_pos-60-reference": {
+      "deck_sha256": "a19e88501da3e80af743893a57984656b861ff8459a9c3f8e21416c729a991ed",
+      "loading_sha256": "afa4f5b3891f114cfa0c3a47567d29f6eaf50c4eb6da1c07c65c1ad5ed980650"
+    }
+  },
+  "elapsed_seconds": 0.2713670840021223,
+  "generation_seconds": 0.0019818750442937016,
+  "gmsh_generation_calls": 1,
+  "mesh_N": 4,
+  "mesh_sha256": "4df59e253fa595823eedb7ee498b68e01e1f26d9a5427edee1be7defc257e65a",
+  "native_mesh_sha256": "07c3870cedc82a59f2c8f8df96959457eebe6af8dcf0d57d6090ad9cb951e05a",
+  "protocol_sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035",
+  "quality": {
+    "analytic_cylinder_volume_m3": 2.458781313339728e-07,
+    "checks": {
+      "declared_cell_count": true,
+      "minimum_scaled_jacobian": true,
+      "positive_rest_jacobians": true
+    },
+    "connected_cell_count": 96,
+    "exterior_face_count": 128,
+    "hex8_cell_count": 96,
+    "integrated_volume_m3": 2.3960709771811174e-07,
+    "interior_face_count": 224,
+    "maximum_radial_boundary_sag_m": 7.685887886402492e-05,
+    "maximum_radial_boundary_sag_over_R": 0.019214719716006228,
+    "minimum_rest_determinant_m3": 1.2663518247248196e-10,
+    "minimum_rest_scaled_jacobian": 0.7071067811865471,
+    "node_count": 171,
+    "passed": true,
+    "relative_volume_error": 0.02550464159556826,
+    "sampled_site_count_per_cell": 17
+  },
+  "runtime_receipt_sha256": "705056d13e78f98fda0ab04884c0c6e3b31ead73f88d01b6dcf3bd99d5417137",
+  "runtime_unchanged": true,
+  "solver_calls": 0,
+  "source_sha256": "5b102eb74a171d41a8815e408a6473fd65032dd9b30ff5412cf7243addc7d3e2",
+  "status": "prepared_not_solved"
+}

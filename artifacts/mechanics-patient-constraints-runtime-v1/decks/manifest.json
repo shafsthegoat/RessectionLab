@@ -1,0 +1,241 @@
+{
+  "version": "mechanics-patient-constraints-runtime-v1",
+  "status": "prepared_not_executed",
+  "FEBio_commit": "32ae206ff4881dfb54f62296cd1558e58ed9fcc6",
+  "caps": {
+    "aggregate_seconds": 60,
+    "process_group_rss_bytes": 3221225472,
+    "numerical_threads": 1,
+    "maximum_cases": 3,
+    "time_steps": 4,
+    "retries": 0
+  },
+  "cases": [
+    "tet10_affine",
+    "mpc_translation",
+    "mpc_nonrigid"
+  ],
+  "case_order": "Stop at first solver/checker failure; retain unexecuted statuses; never retry.",
+  "units": "m,N,Pa,J",
+  "mu_Pa": 1000.0,
+  "K_Pa": 9666.666666666666,
+  "nu_initial": 0.45,
+  "pressure_model": 1,
+  "node_count": 27,
+  "element_count": 6,
+  "free_affine_node_ids": [
+    12
+  ],
+  "mesh": "Explicit analytic cube split into6tet10, not anatomy and not an automatic mesher",
+  "H_nodal_averages": [
+    [
+      0.5,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.5,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.5,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  ],
+  "parents_1based": [
+    1,
+    2,
+    4
+  ],
+  "free_1based": [
+    3,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27
+  ],
+  "observation_scope": "Explicit overlapping nodal averages only; NOT fixed5mm patient volume-tent kernels",
+  "targets_m": {
+    "mpc_translation": [
+      [
+        0.0003,
+        -0.0002,
+        0.0001
+      ],
+      [
+        0.0003,
+        -0.0002,
+        0.0001
+      ],
+      [
+        0.0003,
+        -0.0002,
+        0.0001
+      ]
+    ],
+    "mpc_nonrigid": [
+      [
+        0.0,
+        0.0,
+        0.0
+      ],
+      [
+        0.00012,
+        2e-05,
+        0.0
+      ],
+      [
+        -1e-05,
+        -6e-05,
+        3e-05
+      ]
+    ]
+  },
+  "F_affine_final": [
+    [
+      1.03,
+      0.02,
+      0.0
+    ],
+    [
+      0.0,
+      0.99,
+      0.01
+    ],
+    [
+      0.0,
+      0.0,
+      1.01
+    ]
+  ],
+  "time_fractions": [
+    0.0,
+    0.25,
+    0.5,
+    0.75,
+    1.0
+  ],
+  "tolerances": {
+    "position_m": 1e-10,
+    "constraint_m": 1e-10,
+    "force_N": 1e-08,
+    "stress_Pa": 1e-05,
+    "density_Pa": 1e-07,
+    "jacobian": 1e-07,
+    "relative": 2e-06,
+    "minimum_sampled_J": 0.2,
+    "virtual_work_N": 1e-07,
+    "fd_last_change_N": 2e-08,
+    "fd_convergence_roundoff_N": 1e-09
+  },
+  "finite_difference_steps_m": [
+    2e-07,
+    1e-07,
+    5e-08
+  ],
+  "feasible_direction_count": 72,
+  "residual_rtol": 1e-10,
+  "residual_floor_N2": 1e-20,
+  "check_source_sha256": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66",
+  "shared_parser_source_sha256": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5",
+  "decks": {
+    "tet10_affine.feb": "8a75158a97750f3db57a5a2a48ab3f03760a4a95a8818ff3d30218ceca262f62",
+    "mpc_translation.feb": "dad1653d2015d04f3499ea87f37246e5fce3c86f849ffc363e99cddd230386fa",
+    "mpc_nonrigid.feb": "40900e8761e663ca37568f9b911a06bfb34acb3db2bd5b1fd4840c7d55fadb93"
+  },
+  "numerical_method": "Pinned FEBio solid/BFGS/symmetric Skyline; ordinary elastic-solid TET10G8; no new solver",
+  "runtime_wrapper": "Reuse committed scripts/febio_runtime.py supervise; worker checks source/deck/runtime inputs before/after; root must release execution separately"
+}

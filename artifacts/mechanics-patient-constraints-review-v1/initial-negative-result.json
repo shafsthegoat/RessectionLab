@@ -1,0 +1,12 @@
+{
+  "status": "review_oracle_expectation_corrected",
+  "test_source_sha256": "890d93acd98f3230a64df1a585b60e069c4d43ca0218bba7bf4ed035df6e9f32",
+  "command": ".venv/bin/python -m pytest -q tests/test_mechanics_patient_constraints_review.py tests/test_mechanics_patient_constraints_runtime.py",
+  "result": "1 failed, 25 passed in 0.86s",
+  "failure": "Independent volume force at the affine free interior node was asserted below 1e-14 N despite pinned rounded quadrature. Actual at t=.25 was5.7878501389394335e-12 N; t=1 diagnostic was2.2795175577856874e-11 N.",
+  "cause": "Pinned FEBio FETet10G8 rounded coordinates give linear reference moment error2.07792047e-11; exact centroid integration of a linear gradient is distinct from that rounded rule.",
+  "repair": "Compare affine surface forces against exact centroid-integrated gradients; separately require pinned rule force error within unchanged fixture force tolerance1e-8N.",
+  "fixture_source_changed": false,
+  "solver_executed": false,
+  "patient_data_accessed": false
+}

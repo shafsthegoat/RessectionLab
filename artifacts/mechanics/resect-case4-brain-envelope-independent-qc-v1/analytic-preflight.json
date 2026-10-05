@@ -1,0 +1,14 @@
+{
+  "status": "passed_after_pre_execution_syntax_repair",
+  "initial_setup_failure": {
+    "type": "SyntaxError",
+    "description": "Quoted dict key in keyword update call; collection failed before any imports or patient access."
+  },
+  "final_controls": "strict1mm threshold, six-connectivity, largest-component hole filling, full-cell versus centre corner bounds",
+  "patient_arrays_opened": false,
+  "self_test_stdout": {
+    "analytic_controls": "passed",
+    "patient_arrays_opened": false
+  },
+  "script_sha256": "d3a30e4bea65f718da84dac76487ecc71d632a43aa099d6121d42a3fdf4351a2"
+}

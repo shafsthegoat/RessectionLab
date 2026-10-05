@@ -1,0 +1,74 @@
+{
+  "file_sha256": {
+    "artifacts/native-axis-inspection-independent-v1/initial-run.json": "5bb9bdec357ea568d8abe95e9be5a7c0a16931dc2fab097dc0e62de6f0a381a0",
+    "artifacts/native-axis-inspection-independent-v1/initial-tests.txt": "22cc53e3138c5c0544adb27c70334d4c90e18ac22e82465d9a96c35f031a0d5b",
+    "artifacts/native-axis-inspection-independent-v1/lps-negative-tests.txt": "430e8ec9f3bb028a1da4bacf9f51fd20115c9949e581c48f289ee65a8f0c8812",
+    "artifacts/native-axis-inspection-independent-v1/normalization-vector-scan.json": "c27c98eeabd0a6fcda776ec619eccf687c54615a3fbf2c728ccee123e4020219",
+    "artifacts/native-axis-inspection-independent-v1/pre-review-source.py": "9a077f42a2df104eb25f9f4732ac7c4955b9c2f0f2db464e8b4f75aa7e35426a",
+    "artifacts/native-axis-inspection-independent-v1/repaired-run.json": "bff687225cee6b4636017b7a172b10da27d1f271897b1e207551759a31cdcb7a",
+    "artifacts/native-axis-inspection-independent-v1/repaired-tests.txt": "a407ed8931c61fb7b2014ae6070a0f70a73db85f1cea073c88e4ecebd11fd410",
+    "artifacts/native-axis-inspection-independent-v1/reproduce-lps-negative.py": "5d489c18c3669bde8682ddbc3103798b3dabf63e7e61611f675c8033372afe05",
+    "docs/native-axis-inspection.md": "01b80156560450aae23325d87045734a77b998a3f56784132718ee5436d98803",
+    "src/resectionlab/native_axis_refinement.py": "ffb7fa0283194711ef24730dfe088c6d2ddb9108e10537c04d32474ef1ed05a1",
+    "tests/test_native_axis_refinement.py": "6f2891270c195ba2c54bfc4cbeb29760fd94ea36b16bf9b3950e33ca5347fa4c",
+    "tests/test_native_axis_refinement_review.py": "bd9d63617ab2e4f72c87beff8fb42c083667d56b7ef0f18a9c025d1323cdb627"
+  },
+  "initial_source_failure": "1 failed, 22 passed in 0.88s; final callback changed case_id while cached CaseData identities remained unchanged.",
+  "limits": [
+    "Tests are analytic synthetic fixtures, not clinical or public-case validation.",
+    "The machine-roundoff allowance covers direction normalization only; actual native configuration bytes and source provenance are not claimed identical between RAS andLPS.",
+    "A complete supported all-omitted/all-rejected ledger deliberately returns no_actionable_moves with explicit reasons; unsupported geometry raises.",
+    "Accepted review of estimated support is an explicit provenance acknowledgment; separate flag remains required for unreviewed estimates.",
+    "Public AxisPlanningInspection construction is not replay or commit authority; this review is not protection against arbitrary Python process tampering."
+  ],
+  "lps_failure": "1 failed, 23 deselected in 0.09s against retained source; valid oblique LPS request refused for a 1.11e-16 normal component difference.",
+  "protected_baseline_commit": "4fb6db71fe4ccff1e5b0e91ffd8f0876a60c3a05",
+  "protected_modules_byte_identical": {
+    "src/resectionlab/core.py": true,
+    "src/resectionlab/geometry.py": true,
+    "src/resectionlab/native_axis_simulation.py": true,
+    "src/resectionlab/native_proposals.py": true,
+    "src/resectionlab/native_refinement.py": true,
+    "src/resectionlab/native_resection.py": true,
+    "src/resectionlab/native_simulation.py": true,
+    "src/resectionlab/simulation.py": true,
+    "src/resectionlab/structural_evidence.py": true,
+    "src/resectionlab/worlds.py": true
+  },
+  "repairs_reviewed": [
+    "Authoritative uncached semantic/planning manifest identities at entry and exit supplement cached CaseData hashes.",
+    "Model seal follows final external callback, guarding tool/reward/world mutations.",
+    "LPS-only direction roundoff allowance is4 float64 epsilons absolute with zero relative tolerance; requested/actual directions, observed delta and bound are recorded; center/radius/window ID stay exact.",
+    "Outside-image complete-tool uncertainty is retained on accepted previews and top-level unknowns."
+  ],
+  "scope": {
+    "existing_module_edits_by_reviewer": 0,
+    "geometry_model_changes": 0,
+    "policy_training": 0,
+    "public_inspection_runs": 0,
+    "public_patient_cases": 0,
+    "synthetic_grid_shape": [
+      9,
+      9,
+      10
+    ]
+  },
+  "source_sha256": "ffb7fa0283194711ef24730dfe088c6d2ddb9108e10537c04d32474ef1ed05a1",
+  "status": "passed_independent_synthetic_review",
+  "test_command": ".venv/bin/python -m pytest tests/test_native_axis_refinement_review.py -q",
+  "test_result": "33 passed in 0.92s",
+  "vector_probe": {
+    "roundtrip_differences": 75,
+    "scope": "pure algebra diagnostic, not anatomical frequency or performance",
+    "seed": 92817,
+    "vectors": 256
+  },
+  "verified": [
+    "RAS/LPS source cells are not resampled; named tiny physical candidate entry/endpoint/axis outcomes agree.",
+    "Actual nonaxial/fractional access raises;1e-10 factory normal changes and 1e-12 center/radius changes reject in both frames.",
+    "Full-head support prohibitions and pending structural review cannot be bypassed with either acknowledgment.",
+    "Complete blocked inventory retains rejection denominator and no removal/candidate authority.",
+    "Exports are detached; binding excludes timings and changes with source/tool/world/reward/rule.",
+    "Cancellation after one preview returns no partial result; no transitions or native commits occur."
+  ]
+}

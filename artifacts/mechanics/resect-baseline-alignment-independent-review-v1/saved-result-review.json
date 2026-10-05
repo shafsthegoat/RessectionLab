@@ -1,0 +1,59 @@
+{
+  "status": "saved_numerical_artifacts_consistent_supervised_attempt_failed",
+  "created_at_utc": "2026-10-04T20:39:58.483818+00:00",
+  "N_baseline_pairs": 15,
+  "freeze_sha256": "4395f951a35591c184f6f332f25422457598ade0cf8c69131e24a34d67f5a09e",
+  "audit_script_sha256": "98125a39e2008371a75910072ff9f43fc6a31db853a1bc2c1f4e8801a6f02197",
+  "fit_matrix_max_absolute_difference": 3.552713678800501e-14,
+  "per_row_residual_max_absolute_differences_mm": {
+    "raw": 0.0,
+    "fit": 1.2212453270876722e-14,
+    "leave_one_out": 1.4654943925052066e-14
+  },
+  "source_grid_coordinate_max_absolute_differences_voxels": {
+    "FLAIR_reference": 2.842170943040401e-14,
+    "beforeUS_reference": 2.842170943040401e-14,
+    "MRI_reference_in_T1": 2.842170943040401e-14
+  },
+  "recomputed_summaries": {
+    "raw": {
+      "rms_mm": 3.112095795074031,
+      "mean_mm": 2.9859526559956793,
+      "median_mm": 3.128488041087897,
+      "maximum_mm": 4.55145293262723
+    },
+    "fit": {
+      "rms_mm": 1.163941702974383,
+      "mean_mm": 1.1053279147280164,
+      "median_mm": 0.963575555685707,
+      "maximum_mm": 1.736760304463036
+    },
+    "leave_one_out": {
+      "rms_mm": 1.2945054186282872,
+      "mean_mm": 1.2387767673698018,
+      "median_mm": 1.1617847387856222,
+      "maximum_mm": 1.8708136700435785
+    }
+  },
+  "fixed_views_verified": 6,
+  "frozen_artifact_count_verified": 21,
+  "committed_numerical_source_control_bytes_exact": true,
+  "source_header_and_helper_files_rehashed": true,
+  "input_hash_validation": "Saved before/after identities equal pinned declaration; no original patient files reopened",
+  "original_affine_check": "Each saved voxel coordinate recomputed using original pinned header sform; original NIfTI bytes not reopened",
+  "resource_status": "failed",
+  "resource_failure": "RSS_MONITOR_FAILED",
+  "worker_exit_code": 0,
+  "elapsed_seconds": 2.5359583750832826,
+  "maximum_sampled_RSS_bytes": 627851264,
+  "resource_failure_cause": "Unknown: V1 retained no raw ps result; no resource-pass claim",
+  "preparation_chronology": "Committed16-test owner metadata copies verified against Git; pre-execution18-test refresh preserved separately",
+  "scope_evidence": "Previously reviewed exact allowlist/source plus saved flags; no independent OS syscall trace",
+  "original_patient_files_reopened": false,
+  "closed_B_V_or_during_values_accessed": false,
+  "image_arrays_recomputed": false,
+  "image_pixels_independently_interpreted": false,
+  "new_fit_or_tuning": false,
+  "anatomical_or_clinical_acceptance": false,
+  "limitations": "These are baseline calibration/LOO diagnostics, not sealed displacement V or mechanics accuracy. Entire supervised attempt remains failed."
+}

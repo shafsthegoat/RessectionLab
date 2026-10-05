@@ -1,0 +1,24 @@
+{
+  "commit": "2e6ea98c60e0871f97efd1cfeb1414d7667bef50",
+  "archive_sha256_matches": true,
+  "tracked_archive_files_checked": 3762,
+  "changed_or_missing_tracked_files": [],
+  "new_runtime_files": [
+    "scripts/__pycache__/probe_native_discretization.cpython-312.pyc",
+    "src/resectionlab/__pycache__/worlds.cpython-312.pyc",
+    "src/resectionlab/__pycache__/evaluation.cpython-312.pyc",
+    "src/resectionlab/__pycache__/native_resection.cpython-312.pyc",
+    "src/resectionlab/__pycache__/independent_geometry_batch.cpython-312.pyc",
+    "src/resectionlab/__pycache__/__init__.cpython-312.pyc",
+    "src/resectionlab/__pycache__/geometry.cpython-312.pyc"
+  ],
+  "new_files_only_python_bytecode": true,
+  "worker_source_receipt_unchanged": true,
+  "enforced_archive_import_paths": {
+    "evaluation.py": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/independent-native-batch-history-v1/2e6ea98c60e0871f97efd1cfeb1414d7667bef50/src/resectionlab/evaluation.py",
+    "independent_geometry_batch.py": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/independent-native-batch-history-v1/2e6ea98c60e0871f97efd1cfeb1414d7667bef50/src/resectionlab/independent_geometry_batch.py"
+  },
+  "import_verification_scope": "The frozen worker load_runtime asserts each module.__file__ before scene setup; setup/history binding completed. No independent process-memory import capture was performed.",
+  "full_history_comparison_complete": false,
+  "batch_backend_executed": false
+}

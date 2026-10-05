@@ -1,0 +1,95 @@
+{
+  "bytes": 358464168,
+  "file_count": 22,
+  "files": {
+    "baseline.json": {
+      "bytes": 2659919,
+      "sha256": "487ae12c24bd2cb4467afcef9d98a6ecd7d24ae6f376705ab146a24d33768a9a"
+    },
+    "output-watch.json": {
+      "bytes": 195,
+      "sha256": "fc137c8a9883fb2ecc994b4fcb8be194144334e6c4aecf466eccc00de7c8e145"
+    },
+    "result.json": {
+      "bytes": 1724,
+      "sha256": "2eef5cd2f351931d053a7fa950d858d3d670219cf1e06de1d451b2c561ca45ae"
+    },
+    "runs/compression-N16-S60-reference/console.txt": {
+      "bytes": 187169,
+      "sha256": "efff0537ce3a02e4d71ec8d8b82c7fb70651165db413b32fcd608086eca81590"
+    },
+    "runs/compression-N16-S60-reference/elements.log": {
+      "bytes": 45136550,
+      "sha256": "bab78396ae8e4829b4ea52d518522dfa914b53110f6965ca289f3653ae2970cc"
+    },
+    "runs/compression-N16-S60-reference/execution.json": {
+      "bytes": 3587,
+      "sha256": "c8acadcaf0d4f37a102182996ec2a628e9194aa38e5476c3af9e83171e515f0d"
+    },
+    "runs/compression-N16-S60-reference/loading.json": {
+      "bytes": 3636,
+      "sha256": "136c9c2a072e7da817577e9b0ee372459eda24192cbe7fa4cd79c8dbad163066"
+    },
+    "runs/compression-N16-S60-reference/nodes.log": {
+      "bytes": 67448327,
+      "sha256": "04e4ff3b11255f29e6d2e02f52b7c96ea68f94f4838bd5fd8357b596428900e4"
+    },
+    "runs/compression-N16-S60-reference/readout.json": {
+      "bytes": 550907,
+      "sha256": "dbff229c78737d8ee4532cd73f87ea0e0bad3035b8e45e1542b7d107eefc7e28"
+    },
+    "runs/compression-N16-S60-reference/solver-execution.json": {
+      "bytes": 705,
+      "sha256": "5281eb242399b1588ad1ab2cbf6d99e805be57fe6a0982e43f8fd6af6cea70a2"
+    },
+    "runs/compression-N16-S60-reference/solver.log": {
+      "bytes": 890110,
+      "sha256": "738253c38ed94ffdf6a9b61e9ac023be4622bd0a38a73e92f5a501ce0da56bdd"
+    },
+    "runs/compression-N16-S60-reference/specimen.feb": {
+      "bytes": 1596099,
+      "sha256": "7d181c56f50c059f03a65305598141736122b221d9d278ca0845b14f56910432"
+    },
+    "runs/compression-N24-S60-reference/console.txt": {
+      "bytes": 116396,
+      "sha256": "abcf4fc948d97d602da7e560e56e632f0e5c3029965ccd034b09b4388423d315"
+    },
+    "runs/compression-N24-S60-reference/elements.log": {
+      "bytes": 95048658,
+      "sha256": "c3f25ee908aa41dc7a33bc9921d0cadc80ac38afe7957fe36d0b57d52ccb438a"
+    },
+    "runs/compression-N24-S60-reference/loading.json": {
+      "bytes": 3636,
+      "sha256": "0e90bc8c988eaa2c4167932adcb28cd7104aa7c7ee23847b8107a8404f0a17b5"
+    },
+    "runs/compression-N24-S60-reference/nodes.log": {
+      "bytes": 138301819,
+      "sha256": "8d4e271107d94ac50694e8b547f750d98bd8a10d45bf8e4db6ce5ebb8ab472fa"
+    },
+    "runs/compression-N24-S60-reference/solver-execution.json": {
+      "bytes": 1054,
+      "sha256": "25252d59ac9f9e30fa38090e8a9db01390d830536fac5a73f6371d286184a036"
+    },
+    "runs/compression-N24-S60-reference/solver.log": {
+      "bytes": 1667072,
+      "sha256": "ba30544d4634781d3ae4240d1d8624b78334942dea467e732457993be788c64e"
+    },
+    "runs/compression-N24-S60-reference/specimen.feb": {
+      "bytes": 4835235,
+      "sha256": "33dea7a1716bb4b920288f3a4254566fd9dd3549843f41bb6b743b2e83591bd6"
+    },
+    "state.json": {
+      "bytes": 8015,
+      "sha256": "c866681c2e9ee9d05726d264de4f523c41e4d5ad1daacc42fdf9f370f0ad90e0"
+    },
+    "supervision/combined.log": {
+      "bytes": 2204,
+      "sha256": "d71afb13ae6ea2e8212dc32e856fb65c7a3ff6900b8e1e54154452fccf1916e3"
+    },
+    "supervision/supervision.json": {
+      "bytes": 1151,
+      "sha256": "b3f65a6be5e55a9e9f72699ca6ff556a5970c9cb5e85c5bb2b68b0e517439c3a"
+    }
+  },
+  "root": "outputs/mechanics/hbe-01-03-resolution-v1/experiment"
+}

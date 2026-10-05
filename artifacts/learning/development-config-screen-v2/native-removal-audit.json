@@ -1,0 +1,556 @@
+{
+  "role": "independent_implementation_development_geometry_audit",
+  "model_hash": "sha256:ea094d9c6765a2ec6831875859b0a3f0db38ce6db58fffbe186635f3659e7332",
+  "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+  "clinical_deficit_probability": null,
+  "rows": [
+    {
+      "config": "A",
+      "candidate": "STOP",
+      "checkpoint_hash": null,
+      "native": {
+        "feasible": true,
+        "failures": [],
+        "first_failed_action": null,
+        "first_unsupported_source_voxel": null,
+        "first_unsupported_position_mm": null,
+        "claimed_source_tissue_volume_mm3": 0.0,
+        "contained_source_tissue_volume_mm3": 0.0,
+        "unsupported_source_tissue_volume_mm3": 0.0,
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "action_count": 0,
+        "checker_version": "independent-native-footprint-v1",
+        "interpretation": "All eight source-cell corners must lie within the modeled active-tip capsule; tissue mechanics unvalidated"
+      },
+      "declared_grid_feasible": true,
+      "declared_grid_failures": []
+    },
+    {
+      "config": "A",
+      "candidate": "GREEDY",
+      "checkpoint_hash": null,
+      "native": {
+        "feasible": false,
+        "failures": [
+          "unsupported_coarse_removal_footprint"
+        ],
+        "first_failed_action": "REMOVE:patient-generic-suction:30,25,17",
+        "first_unsupported_source_voxel": [
+          180,
+          150,
+          102
+        ],
+        "first_unsupported_position_mm": [
+          -180.0,
+          89.0,
+          102.0
+        ],
+        "claimed_source_tissue_volume_mm3": 1604.0,
+        "contained_source_tissue_volume_mm3": 0.0,
+        "unsupported_source_tissue_volume_mm3": 1604.0,
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "action_count": 8,
+        "checker_version": "independent-native-footprint-v1",
+        "interpretation": "All eight source-cell corners must lie within the modeled active-tip capsule; tissue mechanics unvalidated"
+      },
+      "declared_grid_feasible": true,
+      "declared_grid_failures": []
+    },
+    {
+      "config": "A",
+      "candidate": "SEARCH",
+      "checkpoint_hash": null,
+      "native": {
+        "feasible": false,
+        "failures": [
+          "unsupported_coarse_removal_footprint"
+        ],
+        "first_failed_action": "REMOVE:patient-generic-suction:30,25,17",
+        "first_unsupported_source_voxel": [
+          180,
+          150,
+          102
+        ],
+        "first_unsupported_position_mm": [
+          -180.0,
+          89.0,
+          102.0
+        ],
+        "claimed_source_tissue_volume_mm3": 1604.0,
+        "contained_source_tissue_volume_mm3": 0.0,
+        "unsupported_source_tissue_volume_mm3": 1604.0,
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "action_count": 8,
+        "checker_version": "independent-native-footprint-v1",
+        "interpretation": "All eight source-cell corners must lie within the modeled active-tip capsule; tissue mechanics unvalidated"
+      },
+      "declared_grid_feasible": true,
+      "declared_grid_failures": []
+    },
+    {
+      "config": "A",
+      "candidate": "PATIENT_SCRATCH_RL:11",
+      "checkpoint_hash": "sha256:e5baaec065da9f618be4d5334022e064a5a5f454249e43c6a72fe253f7e06289",
+      "native": {
+        "feasible": false,
+        "failures": [
+          "unsupported_coarse_removal_footprint"
+        ],
+        "first_failed_action": "REMOVE:patient-generic-wide-suction:30,25,17",
+        "first_unsupported_source_voxel": [
+          180,
+          150,
+          102
+        ],
+        "first_unsupported_position_mm": [
+          -180.0,
+          89.0,
+          102.0
+        ],
+        "claimed_source_tissue_volume_mm3": 1820.0,
+        "contained_source_tissue_volume_mm3": 0.0,
+        "unsupported_source_tissue_volume_mm3": 1820.0,
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "action_count": 9,
+        "checker_version": "independent-native-footprint-v1",
+        "interpretation": "All eight source-cell corners must lie within the modeled active-tip capsule; tissue mechanics unvalidated"
+      },
+      "declared_grid_feasible": true,
+      "declared_grid_failures": []
+    },
+    {
+      "config": "A",
+      "candidate": "PATIENT_SCRATCH_RL:23",
+      "checkpoint_hash": "sha256:cb00eca8ade0d1b4856e8a2cefec344c5e01d1b187b4f12503df7f4d1498de5c",
+      "native": {
+        "feasible": false,
+        "failures": [
+          "unsupported_coarse_removal_footprint"
+        ],
+        "first_failed_action": "REMOVE:patient-generic-suction:30,25,17",
+        "first_unsupported_source_voxel": [
+          180,
+          150,
+          102
+        ],
+        "first_unsupported_position_mm": [
+          -180.0,
+          89.0,
+          102.0
+        ],
+        "claimed_source_tissue_volume_mm3": 1820.0,
+        "contained_source_tissue_volume_mm3": 0.0,
+        "unsupported_source_tissue_volume_mm3": 1820.0,
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "action_count": 9,
+        "checker_version": "independent-native-footprint-v1",
+        "interpretation": "All eight source-cell corners must lie within the modeled active-tip capsule; tissue mechanics unvalidated"
+      },
+      "declared_grid_feasible": true,
+      "declared_grid_failures": []
+    },
+    {
+      "config": "A",
+      "candidate": "PATIENT_SCRATCH_RL:47",
+      "checkpoint_hash": "sha256:6a89a21e090511258d5e7d8d5b8c235db02c36baa1dd169793f48a866b9fbb51",
+      "native": {
+        "feasible": false,
+        "failures": [
+          "unsupported_coarse_removal_footprint"
+        ],
+        "first_failed_action": "REMOVE:patient-generic-wide-suction:30,25,17",
+        "first_unsupported_source_voxel": [
+          180,
+          150,
+          102
+        ],
+        "first_unsupported_position_mm": [
+          -180.0,
+          89.0,
+          102.0
+        ],
+        "claimed_source_tissue_volume_mm3": 1820.0,
+        "contained_source_tissue_volume_mm3": 0.0,
+        "unsupported_source_tissue_volume_mm3": 1820.0,
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "action_count": 9,
+        "checker_version": "independent-native-footprint-v1",
+        "interpretation": "All eight source-cell corners must lie within the modeled active-tip capsule; tissue mechanics unvalidated"
+      },
+      "declared_grid_feasible": true,
+      "declared_grid_failures": []
+    },
+    {
+      "config": "B",
+      "candidate": "STOP",
+      "checkpoint_hash": null,
+      "native": {
+        "feasible": true,
+        "failures": [],
+        "first_failed_action": null,
+        "first_unsupported_source_voxel": null,
+        "first_unsupported_position_mm": null,
+        "claimed_source_tissue_volume_mm3": 0.0,
+        "contained_source_tissue_volume_mm3": 0.0,
+        "unsupported_source_tissue_volume_mm3": 0.0,
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "action_count": 0,
+        "checker_version": "independent-native-footprint-v1",
+        "interpretation": "All eight source-cell corners must lie within the modeled active-tip capsule; tissue mechanics unvalidated"
+      },
+      "declared_grid_feasible": true,
+      "declared_grid_failures": []
+    },
+    {
+      "config": "B",
+      "candidate": "GREEDY",
+      "checkpoint_hash": null,
+      "native": {
+        "feasible": false,
+        "failures": [
+          "unsupported_coarse_removal_footprint"
+        ],
+        "first_failed_action": "REMOVE:patient-generic-suction:30,25,17",
+        "first_unsupported_source_voxel": [
+          180,
+          150,
+          102
+        ],
+        "first_unsupported_position_mm": [
+          -180.0,
+          89.0,
+          102.0
+        ],
+        "claimed_source_tissue_volume_mm3": 1604.0,
+        "contained_source_tissue_volume_mm3": 0.0,
+        "unsupported_source_tissue_volume_mm3": 1604.0,
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "action_count": 8,
+        "checker_version": "independent-native-footprint-v1",
+        "interpretation": "All eight source-cell corners must lie within the modeled active-tip capsule; tissue mechanics unvalidated"
+      },
+      "declared_grid_feasible": true,
+      "declared_grid_failures": []
+    },
+    {
+      "config": "B",
+      "candidate": "SEARCH",
+      "checkpoint_hash": null,
+      "native": {
+        "feasible": false,
+        "failures": [
+          "unsupported_coarse_removal_footprint"
+        ],
+        "first_failed_action": "REMOVE:patient-generic-suction:30,25,17",
+        "first_unsupported_source_voxel": [
+          180,
+          150,
+          102
+        ],
+        "first_unsupported_position_mm": [
+          -180.0,
+          89.0,
+          102.0
+        ],
+        "claimed_source_tissue_volume_mm3": 1604.0,
+        "contained_source_tissue_volume_mm3": 0.0,
+        "unsupported_source_tissue_volume_mm3": 1604.0,
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "action_count": 8,
+        "checker_version": "independent-native-footprint-v1",
+        "interpretation": "All eight source-cell corners must lie within the modeled active-tip capsule; tissue mechanics unvalidated"
+      },
+      "declared_grid_feasible": true,
+      "declared_grid_failures": []
+    },
+    {
+      "config": "B",
+      "candidate": "PATIENT_SCRATCH_RL:11",
+      "checkpoint_hash": "sha256:aa8eba2488f07dbd771bf6caf14519025677a2cfe17e4a6d1a7dbc5df8f751b1",
+      "native": {
+        "feasible": false,
+        "failures": [
+          "unsupported_coarse_removal_footprint"
+        ],
+        "first_failed_action": "REMOVE:patient-generic-wide-suction:30,25,17",
+        "first_unsupported_source_voxel": [
+          180,
+          150,
+          102
+        ],
+        "first_unsupported_position_mm": [
+          -180.0,
+          89.0,
+          102.0
+        ],
+        "claimed_source_tissue_volume_mm3": 1820.0,
+        "contained_source_tissue_volume_mm3": 0.0,
+        "unsupported_source_tissue_volume_mm3": 1820.0,
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "action_count": 9,
+        "checker_version": "independent-native-footprint-v1",
+        "interpretation": "All eight source-cell corners must lie within the modeled active-tip capsule; tissue mechanics unvalidated"
+      },
+      "declared_grid_feasible": true,
+      "declared_grid_failures": []
+    },
+    {
+      "config": "B",
+      "candidate": "PATIENT_SCRATCH_RL:23",
+      "checkpoint_hash": "sha256:01fd2009fb7212da354c82278f1b0eb06c21b39dc21232453e0ad601a4f9096e",
+      "native": {
+        "feasible": false,
+        "failures": [
+          "unsupported_coarse_removal_footprint"
+        ],
+        "first_failed_action": "REMOVE:patient-generic-wide-suction:30,25,17",
+        "first_unsupported_source_voxel": [
+          180,
+          150,
+          102
+        ],
+        "first_unsupported_position_mm": [
+          -180.0,
+          89.0,
+          102.0
+        ],
+        "claimed_source_tissue_volume_mm3": 1820.0,
+        "contained_source_tissue_volume_mm3": 0.0,
+        "unsupported_source_tissue_volume_mm3": 1820.0,
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "action_count": 9,
+        "checker_version": "independent-native-footprint-v1",
+        "interpretation": "All eight source-cell corners must lie within the modeled active-tip capsule; tissue mechanics unvalidated"
+      },
+      "declared_grid_feasible": true,
+      "declared_grid_failures": []
+    },
+    {
+      "config": "B",
+      "candidate": "PATIENT_SCRATCH_RL:47",
+      "checkpoint_hash": "sha256:c99ff7af4b68a250cf70534801d006ef0d544ae58bc13223018413bb8075a4b0",
+      "native": {
+        "feasible": false,
+        "failures": [
+          "unsupported_coarse_removal_footprint"
+        ],
+        "first_failed_action": "REMOVE:patient-generic-wide-suction:30,25,17",
+        "first_unsupported_source_voxel": [
+          180,
+          150,
+          102
+        ],
+        "first_unsupported_position_mm": [
+          -180.0,
+          89.0,
+          102.0
+        ],
+        "claimed_source_tissue_volume_mm3": 1820.0,
+        "contained_source_tissue_volume_mm3": 0.0,
+        "unsupported_source_tissue_volume_mm3": 1820.0,
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "action_count": 9,
+        "checker_version": "independent-native-footprint-v1",
+        "interpretation": "All eight source-cell corners must lie within the modeled active-tip capsule; tissue mechanics unvalidated"
+      },
+      "declared_grid_feasible": true,
+      "declared_grid_failures": []
+    },
+    {
+      "config": "C",
+      "candidate": "STOP",
+      "checkpoint_hash": null,
+      "native": {
+        "feasible": true,
+        "failures": [],
+        "first_failed_action": null,
+        "first_unsupported_source_voxel": null,
+        "first_unsupported_position_mm": null,
+        "claimed_source_tissue_volume_mm3": 0.0,
+        "contained_source_tissue_volume_mm3": 0.0,
+        "unsupported_source_tissue_volume_mm3": 0.0,
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "action_count": 0,
+        "checker_version": "independent-native-footprint-v1",
+        "interpretation": "All eight source-cell corners must lie within the modeled active-tip capsule; tissue mechanics unvalidated"
+      },
+      "declared_grid_feasible": true,
+      "declared_grid_failures": []
+    },
+    {
+      "config": "C",
+      "candidate": "GREEDY",
+      "checkpoint_hash": null,
+      "native": {
+        "feasible": false,
+        "failures": [
+          "unsupported_coarse_removal_footprint"
+        ],
+        "first_failed_action": "REMOVE:patient-generic-suction:30,25,17",
+        "first_unsupported_source_voxel": [
+          180,
+          150,
+          102
+        ],
+        "first_unsupported_position_mm": [
+          -180.0,
+          89.0,
+          102.0
+        ],
+        "claimed_source_tissue_volume_mm3": 1604.0,
+        "contained_source_tissue_volume_mm3": 0.0,
+        "unsupported_source_tissue_volume_mm3": 1604.0,
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "action_count": 8,
+        "checker_version": "independent-native-footprint-v1",
+        "interpretation": "All eight source-cell corners must lie within the modeled active-tip capsule; tissue mechanics unvalidated"
+      },
+      "declared_grid_feasible": true,
+      "declared_grid_failures": []
+    },
+    {
+      "config": "C",
+      "candidate": "SEARCH",
+      "checkpoint_hash": null,
+      "native": {
+        "feasible": false,
+        "failures": [
+          "unsupported_coarse_removal_footprint"
+        ],
+        "first_failed_action": "REMOVE:patient-generic-suction:30,25,17",
+        "first_unsupported_source_voxel": [
+          180,
+          150,
+          102
+        ],
+        "first_unsupported_position_mm": [
+          -180.0,
+          89.0,
+          102.0
+        ],
+        "claimed_source_tissue_volume_mm3": 1604.0,
+        "contained_source_tissue_volume_mm3": 0.0,
+        "unsupported_source_tissue_volume_mm3": 1604.0,
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "action_count": 8,
+        "checker_version": "independent-native-footprint-v1",
+        "interpretation": "All eight source-cell corners must lie within the modeled active-tip capsule; tissue mechanics unvalidated"
+      },
+      "declared_grid_feasible": true,
+      "declared_grid_failures": []
+    },
+    {
+      "config": "C",
+      "candidate": "PATIENT_SCRATCH_RL:11",
+      "checkpoint_hash": "sha256:b5b804a5af2760bda1de15c143076457d36f1cb4b3707769321e2138dab59960",
+      "native": {
+        "feasible": false,
+        "failures": [
+          "unsupported_coarse_removal_footprint"
+        ],
+        "first_failed_action": "REMOVE:patient-generic-wide-suction:30,25,17",
+        "first_unsupported_source_voxel": [
+          180,
+          150,
+          102
+        ],
+        "first_unsupported_position_mm": [
+          -180.0,
+          89.0,
+          102.0
+        ],
+        "claimed_source_tissue_volume_mm3": 1604.0,
+        "contained_source_tissue_volume_mm3": 0.0,
+        "unsupported_source_tissue_volume_mm3": 1604.0,
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "action_count": 8,
+        "checker_version": "independent-native-footprint-v1",
+        "interpretation": "All eight source-cell corners must lie within the modeled active-tip capsule; tissue mechanics unvalidated"
+      },
+      "declared_grid_feasible": true,
+      "declared_grid_failures": []
+    },
+    {
+      "config": "C",
+      "candidate": "PATIENT_SCRATCH_RL:23",
+      "checkpoint_hash": "sha256:d0423c6fc6b8ee33f94a65ff898f8dcd3932a68c5bbc5148b690d0cf09d2c0f9",
+      "native": {
+        "feasible": false,
+        "failures": [
+          "unsupported_coarse_removal_footprint"
+        ],
+        "first_failed_action": "REMOVE:patient-generic-suction:30,25,17",
+        "first_unsupported_source_voxel": [
+          180,
+          150,
+          102
+        ],
+        "first_unsupported_position_mm": [
+          -180.0,
+          89.0,
+          102.0
+        ],
+        "claimed_source_tissue_volume_mm3": 1820.0,
+        "contained_source_tissue_volume_mm3": 0.0,
+        "unsupported_source_tissue_volume_mm3": 1820.0,
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "action_count": 9,
+        "checker_version": "independent-native-footprint-v1",
+        "interpretation": "All eight source-cell corners must lie within the modeled active-tip capsule; tissue mechanics unvalidated"
+      },
+      "declared_grid_feasible": true,
+      "declared_grid_failures": []
+    },
+    {
+      "config": "C",
+      "candidate": "PATIENT_SCRATCH_RL:47",
+      "checkpoint_hash": "sha256:08447d55a075cf519aafc88709285a809fe0d30407ea0e7c7989eb20b3a2788b",
+      "native": {
+        "feasible": false,
+        "failures": [
+          "unsupported_coarse_removal_footprint"
+        ],
+        "first_failed_action": "REMOVE:patient-generic-suction:30,25,17",
+        "first_unsupported_source_voxel": [
+          180,
+          150,
+          102
+        ],
+        "first_unsupported_position_mm": [
+          -180.0,
+          89.0,
+          102.0
+        ],
+        "claimed_source_tissue_volume_mm3": 1820.0,
+        "contained_source_tissue_volume_mm3": 0.0,
+        "unsupported_source_tissue_volume_mm3": 1820.0,
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "action_count": 9,
+        "checker_version": "independent-native-footprint-v1",
+        "interpretation": "All eight source-cell corners must lie within the modeled active-tip capsule; tissue mechanics unvalidated"
+      },
+      "declared_grid_feasible": true,
+      "declared_grid_failures": []
+    }
+  ],
+  "interpretation": "Source resolution audit of previously frozen candidate actions; no final stochastic world evaluation and no clinical validation.",
+  "evaluation_implementation_sha256": "67935967fd0c5f845f343b1e42f24a5c85f1e0029626c502afd4be286a8e5db6"
+}

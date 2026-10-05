@@ -1,0 +1,9 @@
+{
+  "status": "accepted_by_owner_for_repair_before_freeze",
+  "finding": "The draft launcher required a fresh output directory but did not bind one attempt directory to the release. The same release could therefore be launched again into another new directory. Existing results.json only prevented worker repetition in its original directory.",
+  "source": "Read-only inspection of scripts/mechanics_patient_constraints_run.py before owner freeze. No subprocess or solver was executed to demonstrate it.",
+  "owner_resolution": "Require one exact absolute attempt_directory in the released record; validate it in both launch and worker; retain fresh-directory gate.",
+  "numerical_checker_or_deck_changes": false,
+  "solver_executed": false,
+  "patient_data_accessed": false
+}

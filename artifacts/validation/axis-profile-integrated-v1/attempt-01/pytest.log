@@ -1,0 +1,447 @@
+........................................................................ [  4%]
+........................................................................ [  9%]
+........................................................................ [ 14%]
+........................................................................ [ 19%]
+........................................................................ [ 24%]
+........................................................................ [ 29%]
+........................................................................ [ 34%]
+........................................................................ [ 38%]
+....................................................FF.................. [ 43%]
+........................................................................ [ 48%]
+........................................................................ [ 53%]
+........................F..........................FFF..FFFF.FF......... [ 58%]
+........................................................................ [ 63%]
+........................................................................ [ 68%]
+........................................................................ [ 72%]
+........................................................................ [ 77%]
+........................................................................ [ 82%]
+........................................................................ [ 87%]
+........................................................................ [ 92%]
+........................................................................ [ 97%]
+..........................................                               [100%]
+=================================== FAILURES ===================================
+__ test_all_actual_tiny_captured_forwards_verify_without_rng_or_policy_class ___
+
+completed = {'output': PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/bu...sodes': 2, 'decision_model_hash': 'sha256:256df86fc8e29049cf77a8bfc9d094f25306c2a979e68906cad829d49212220f', ...}, ...}
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11c2da1e0>
+
+    def test_all_actual_tiny_captured_forwards_verify_without_rng_or_policy_class(completed, monkeypatch):
+        import torch
+        import resectionlab.learning as learning
+        monkeypatch.setattr(learning.MaskedPatientPolicy, "forward", lambda *a, **k: pytest.fail("Independent auditor must not call policy class"))
+        torch_state = torch.get_rng_state().clone()
+        numpy_state = np.random.get_state()
+        path = completed["output"]
+        frozen = json.loads((path / "history-freeze.json").read_text())
+>       states = audit.check_checkpoints(audit.Reader(), path / "learner", completed["declaration"], completed["result"], frozen)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_native_axis_pilot_artifact_audit.py:135: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/audit_native_axis_pilot.py:301: in check_checkpoints
+    require(canonical_hash({key: contract[key] for key in contract_fields}) == contract["contract_hash"] == latest["contract_hash"],
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, message = 'Learner contract checksum differs'
+
+    def require(condition: Any, message: str) -> None:
+        if not condition:
+>           raise AuditError(message)
+E           independent_axis_v2_helpers.AuditError: Learner contract checksum differs
+
+artifacts/native-axis-v2-result-audit/audit.py:34: AuditError
+_________ test_coherently_rehashed_nonfinite_optimizer_state_rejected __________
+
+completed = {'output': PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/bu...sodes': 2, 'decision_model_hash': 'sha256:256df86fc8e29049cf77a8bfc9d094f25306c2a979e68906cad829d49212220f', ...}, ...}
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/axis-profile-full-01/523a72bf3c12a9575184024c13ed31525c33645a/pytest-temp/test_coherently_rehashed_nonfi0')
+
+    def test_coherently_rehashed_nonfinite_optimizer_state_rejected(completed, tmp_path):
+        import torch
+        folder = tmp_path / "learner"
+        shutil.copytree(completed["output"] / "learner", folder)
+        frozen = json.loads((completed["output"] / "history-freeze.json").read_text())
+        checkpoint = torch.load(folder / "checkpoint.pt", map_location="cpu", weights_only=True)
+        state = next(iter(checkpoint["optimizer"]["state"].values()))
+        state["exp_avg"].flatten()[0] = float("nan")
+        torch.save(checkpoint, folder / "checkpoint.pt")
+        frozen["checkpoints"]["files"]["checkpoint.pt"] = audit.file_hash(folder / "checkpoint.pt")
+>       with pytest.raises(audit.AuditError, match="Nonfinite saved optimizer state"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'Nonfinite saved optimizer state'
+E         Actual message: 'Learner contract checksum differs'
+
+tests/test_native_axis_pilot_artifact_audit.py:157: AssertionError
+__________ test_executed_synthetic_saved_fixture_never_calls_geometry __________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x122f3b5c0>
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/axis-profile-full-01/523a72bf3c12a9575184024c13ed31525c33645a/pytest-temp/test_executed_synthetic_saved_0')
+saved_fixture = (PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/valida...bf3c12a9575184024c13ed31525c33645a/pytest-temp/test_executed_synthetic_saved_0/independently-observed-arguments.json'))
+
+    def test_executed_synthetic_saved_fixture_never_calls_geometry(monkeypatch, tmp_path, saved_fixture):
+        fixture = json.loads(saved_fixture[0].read_text())
+        observed = json.loads(saved_fixture[1].read_text())
+        root = tmp_path / "synthetic-only-cli"
+        run = root / "synthetic-run"
+        run.mkdir(parents=True)
+        def write(name, value):
+            path = run / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps(value))
+        runtime = "synthetic-frozen-runtime"
+        result = {"status": "completed", "runtime_content_hash": runtime}
+        write("result.json", result)
+        write("worker-status.json", {"status": "completed", "result_hash": reconstruct.digest(result),
+                                     "runtime_content_hash": runtime})
+        write("launcher-status.json", {"status": "completed"})
+        source_binding = {"synthetic-frozen-callsite": "synthetic-source-hash"}
+        write("launch-source.json", {"file_sha256": source_binding, "runtime_content_hash": runtime})
+        write("preparation.json", {"native_configuration": {"actual": {"components": {"tools": fixture["tools"]}}}})
+        count = len(observed)
+        cache = fixture["cache_metadata"]
+        write("cached_cold/receipt.json", {"cache_before": {**cache, "calls": 0}, "cache_after": {**cache, "calls": count}})
+        write("cached_warm/receipt.json", {"cache_before": {**cache, "calls": count}, "cache_after": {**cache, "calls": 2 * count}})
+        trace = run / "reference_before/scientific-trace.json.gz"
+        trace.parent.mkdir()
+        trace.write_bytes(gzip.compress(json.dumps(fixture["trace"]).encode(), mtime=0))
+        declaration = {"input_run": "synthetic-run", "input_sha256": {
+            str(path.relative_to(root)): reconstruct.file_hash(path) for path in run.rglob("*") if path.is_file()},
+            "frozen_native_source_sha256": source_binding, "expected_queries_per_phase": count,
+            "source_runtime_content_hash": runtime,
+            "maximum_queries": count, "maximum_uncompressed_trace_bytes": 1024**2,
+            "maximum_wall_seconds": 60, "maximum_process_peak_rss_bytes": 512 * 1024**2,
+            "entry_capacities": [0, 4096]}
+        declaration["declaration_content_hash"] = reconstruct.digest(declaration)
+        path = root / reconstruct.DECLARATION
+        path.parent.mkdir(parents=True)
+        path.write_text(json.dumps(declaration))
+        monkeypatch.setattr(reconstruct, "ROOT", root)
+        output = root / "output"
+        monkeypatch.setattr(sys, "argv", ["reconstruct", "--output", str(output), "--execute"])
+        def forbidden(*args, **kwargs):
+            raise AssertionError("saved-artifact reconstruction cannot call cover geometry")
+        monkeypatch.setattr(geometry, "capsule_voxel_indices", forbidden)
+        monkeypatch.setattr(native, "capsule_voxel_indices", forbidden)
+>       reconstruct.main()
+
+tests/test_native_cache_query_reconstruction.py:243: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/reconstruct_native_cache_queries.py:278: in main
+    check_budget()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def check_budget():
+        peak = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss) * (1 if sys.platform == "darwin" else 1024)
+        if time.perf_counter() - started > declaration["maximum_wall_seconds"]:
+            raise InterruptedError("Diagnostic wall budget exceeded")
+        if peak > declaration["maximum_process_peak_rss_bytes"]:
+>           raise InterruptedError("Diagnostic process RSS budget exceeded")
+E           InterruptedError: Diagnostic process RSS budget exceeded
+
+scripts/reconstruct_native_cache_queries.py:276: InterruptedError
+_____ test_resealed_private_inputs_cannot_change_declared_runtime[source] ______
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/axis-profile-full-01/523a72bf3c12a9575184024c13ed31525c33645a/pytest-temp/test_resealed_private_inputs_c0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x12178ba10>
+saved = {'fixture': {'cache_metadata': {'bypasses': 0, 'cache_version': 'experimental-exact-capsule-cover-cache-v1', 'calls': ...f29aaf5d11a1dad9b044', 'saved_fixture_sha256': '67bbd8cb1023c6d5c5e1083def120951c72f49a05106b01bfeac036b6335d280', ...}
+authority = 'source'
+
+    @pytest.mark.parametrize("authority", ["source", "worker", "result"])
+    def test_resealed_private_inputs_cannot_change_declared_runtime(tmp_path, monkeypatch, saved, authority):
+        _, output, _ = private_cli(tmp_path, monkeypatch, saved, runtime_mismatch=authority)
+        with pytest.raises(ValueError, match="(?i)runtime"):
+>           MOD.main()
+
+tests/test_native_cache_query_reconstruction_review.py:262: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/reconstruct_native_cache_queries.py:278: in main
+    check_budget()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def check_budget():
+        peak = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss) * (1 if sys.platform == "darwin" else 1024)
+        if time.perf_counter() - started > declaration["maximum_wall_seconds"]:
+            raise InterruptedError("Diagnostic wall budget exceeded")
+        if peak > declaration["maximum_process_peak_rss_bytes"]:
+>           raise InterruptedError("Diagnostic process RSS budget exceeded")
+E           InterruptedError: Diagnostic process RSS budget exceeded
+
+scripts/reconstruct_native_cache_queries.py:276: InterruptedError
+_____ test_resealed_private_inputs_cannot_change_declared_runtime[worker] ______
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/axis-profile-full-01/523a72bf3c12a9575184024c13ed31525c33645a/pytest-temp/test_resealed_private_inputs_c1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x124115370>
+saved = {'fixture': {'cache_metadata': {'bypasses': 0, 'cache_version': 'experimental-exact-capsule-cover-cache-v1', 'calls': ...f29aaf5d11a1dad9b044', 'saved_fixture_sha256': '67bbd8cb1023c6d5c5e1083def120951c72f49a05106b01bfeac036b6335d280', ...}
+authority = 'worker'
+
+    @pytest.mark.parametrize("authority", ["source", "worker", "result"])
+    def test_resealed_private_inputs_cannot_change_declared_runtime(tmp_path, monkeypatch, saved, authority):
+        _, output, _ = private_cli(tmp_path, monkeypatch, saved, runtime_mismatch=authority)
+        with pytest.raises(ValueError, match="(?i)runtime"):
+>           MOD.main()
+
+tests/test_native_cache_query_reconstruction_review.py:262: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/reconstruct_native_cache_queries.py:278: in main
+    check_budget()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def check_budget():
+        peak = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss) * (1 if sys.platform == "darwin" else 1024)
+        if time.perf_counter() - started > declaration["maximum_wall_seconds"]:
+            raise InterruptedError("Diagnostic wall budget exceeded")
+        if peak > declaration["maximum_process_peak_rss_bytes"]:
+>           raise InterruptedError("Diagnostic process RSS budget exceeded")
+E           InterruptedError: Diagnostic process RSS budget exceeded
+
+scripts/reconstruct_native_cache_queries.py:276: InterruptedError
+_____ test_resealed_private_inputs_cannot_change_declared_runtime[result] ______
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/axis-profile-full-01/523a72bf3c12a9575184024c13ed31525c33645a/pytest-temp/test_resealed_private_inputs_c2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1240f11f0>
+saved = {'fixture': {'cache_metadata': {'bypasses': 0, 'cache_version': 'experimental-exact-capsule-cover-cache-v1', 'calls': ...f29aaf5d11a1dad9b044', 'saved_fixture_sha256': '67bbd8cb1023c6d5c5e1083def120951c72f49a05106b01bfeac036b6335d280', ...}
+authority = 'result'
+
+    @pytest.mark.parametrize("authority", ["source", "worker", "result"])
+    def test_resealed_private_inputs_cannot_change_declared_runtime(tmp_path, monkeypatch, saved, authority):
+        _, output, _ = private_cli(tmp_path, monkeypatch, saved, runtime_mismatch=authority)
+        with pytest.raises(ValueError, match="(?i)runtime"):
+>           MOD.main()
+
+tests/test_native_cache_query_reconstruction_review.py:262: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/reconstruct_native_cache_queries.py:278: in main
+    check_budget()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def check_budget():
+        peak = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss) * (1 if sys.platform == "darwin" else 1024)
+        if time.perf_counter() - started > declaration["maximum_wall_seconds"]:
+            raise InterruptedError("Diagnostic wall budget exceeded")
+        if peak > declaration["maximum_process_peak_rss_bytes"]:
+>           raise InterruptedError("Diagnostic process RSS budget exceeded")
+E           InterruptedError: Diagnostic process RSS budget exceeded
+
+scripts/reconstruct_native_cache_queries.py:276: InterruptedError
+_________________ test_decompression_cap_has_failed_authority __________________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/axis-profile-full-01/523a72bf3c12a9575184024c13ed31525c33645a/pytest-temp/test_decompression_cap_has_fai0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1241c3500>
+saved = {'fixture': {'cache_metadata': {'bypasses': 0, 'cache_version': 'experimental-exact-capsule-cover-cache-v1', 'calls': ...f29aaf5d11a1dad9b044', 'saved_fixture_sha256': '67bbd8cb1023c6d5c5e1083def120951c72f49a05106b01bfeac036b6335d280', ...}
+
+    def test_decompression_cap_has_failed_authority(tmp_path, monkeypatch, saved):
+        root, output, declaration = private_cli(tmp_path, monkeypatch, saved)
+        declaration["maximum_uncompressed_trace_bytes"] = 1
+        declaration.pop("declaration_content_hash")
+        declaration["declaration_content_hash"] = MOD.digest(declaration)
+        (root / MOD.DECLARATION).write_text(json.dumps(declaration))
+        with pytest.raises(ValueError, match="decompression"):
+>           MOD.main()
+
+tests/test_native_cache_query_reconstruction_review.py:302: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/reconstruct_native_cache_queries.py:278: in main
+    check_budget()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def check_budget():
+        peak = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss) * (1 if sys.platform == "darwin" else 1024)
+        if time.perf_counter() - started > declaration["maximum_wall_seconds"]:
+            raise InterruptedError("Diagnostic wall budget exceeded")
+        if peak > declaration["maximum_process_peak_rss_bytes"]:
+>           raise InterruptedError("Diagnostic process RSS budget exceeded")
+E           InterruptedError: Diagnostic process RSS budget exceeded
+
+scripts/reconstruct_native_cache_queries.py:276: InterruptedError
+_____________ test_input_hash_change_rejects_before_reconstruction _____________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/axis-profile-full-01/523a72bf3c12a9575184024c13ed31525c33645a/pytest-temp/test_input_hash_change_rejects0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1241c11c0>
+saved = {'fixture': {'cache_metadata': {'bypasses': 0, 'cache_version': 'experimental-exact-capsule-cover-cache-v1', 'calls': ...f29aaf5d11a1dad9b044', 'saved_fixture_sha256': '67bbd8cb1023c6d5c5e1083def120951c72f49a05106b01bfeac036b6335d280', ...}
+
+    def test_input_hash_change_rejects_before_reconstruction(tmp_path, monkeypatch, saved):
+        root, output, _ = private_cli(tmp_path, monkeypatch, saved)
+        (root / "saved/preparation.json").write_text("{}")
+        monkeypatch.setattr(MOD, "reconstruct", lambda *a, **k: pytest.fail("changed source must reject before reconstruction"))
+        with pytest.raises(ValueError, match="Bound input changed"):
+>           MOD.main()
+
+tests/test_native_cache_query_reconstruction_review.py:311: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/reconstruct_native_cache_queries.py:278: in main
+    check_budget()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def check_budget():
+        peak = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss) * (1 if sys.platform == "darwin" else 1024)
+        if time.perf_counter() - started > declaration["maximum_wall_seconds"]:
+            raise InterruptedError("Diagnostic wall budget exceeded")
+        if peak > declaration["maximum_process_peak_rss_bytes"]:
+>           raise InterruptedError("Diagnostic process RSS budget exceeded")
+E           InterruptedError: Diagnostic process RSS budget exceeded
+
+scripts/reconstruct_native_cache_queries.py:276: InterruptedError
+____________ test_coherently_rehashed_callsite_drift_still_rejects _____________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/axis-profile-full-01/523a72bf3c12a9575184024c13ed31525c33645a/pytest-temp/test_coherently_rehashed_calls0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1241c1a90>
+saved = {'fixture': {'cache_metadata': {'bypasses': 0, 'cache_version': 'experimental-exact-capsule-cover-cache-v1', 'calls': ...f29aaf5d11a1dad9b044', 'saved_fixture_sha256': '67bbd8cb1023c6d5c5e1083def120951c72f49a05106b01bfeac036b6335d280', ...}
+
+    def test_coherently_rehashed_callsite_drift_still_rejects(tmp_path, monkeypatch, saved):
+        root, output, declaration = private_cli(tmp_path, monkeypatch, saved)
+        relative = "saved/launch-source.json"
+        value = json.loads((root / relative).read_text())
+        value["file_sha256"]["synthetic-callsite"] = "different-capsule-formula"
+        reseal_one_private_input(root, declaration, relative, value)
+        with pytest.raises(ValueError, match="callsite"):
+>           MOD.main()
+
+tests/test_native_cache_query_reconstruction_review.py:331: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/reconstruct_native_cache_queries.py:278: in main
+    check_budget()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def check_budget():
+        peak = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss) * (1 if sys.platform == "darwin" else 1024)
+        if time.perf_counter() - started > declaration["maximum_wall_seconds"]:
+            raise InterruptedError("Diagnostic wall budget exceeded")
+        if peak > declaration["maximum_process_peak_rss_bytes"]:
+>           raise InterruptedError("Diagnostic process RSS budget exceeded")
+E           InterruptedError: Diagnostic process RSS budget exceeded
+
+scripts/reconstruct_native_cache_queries.py:276: InterruptedError
+__________ test_coherently_rehashed_warm_denominator_mismatch_rejects __________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/axis-profile-full-01/523a72bf3c12a9575184024c13ed31525c33645a/pytest-temp/test_coherently_rehashed_warm_0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x124114f20>
+saved = {'fixture': {'cache_metadata': {'bypasses': 0, 'cache_version': 'experimental-exact-capsule-cover-cache-v1', 'calls': ...f29aaf5d11a1dad9b044', 'saved_fixture_sha256': '67bbd8cb1023c6d5c5e1083def120951c72f49a05106b01bfeac036b6335d280', ...}
+
+    def test_coherently_rehashed_warm_denominator_mismatch_rejects(tmp_path, monkeypatch, saved):
+        root, output, declaration = private_cli(tmp_path, monkeypatch, saved)
+        relative = "saved/cached_warm/receipt.json"
+        value = json.loads((root / relative).read_text())
+        value["cache_after"]["calls"] += 2
+        reseal_one_private_input(root, declaration, relative, value)
+        with pytest.raises(ValueError, match="denominator"):
+>           MOD.main()
+
+tests/test_native_cache_query_reconstruction_review.py:343: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/reconstruct_native_cache_queries.py:278: in main
+    check_budget()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def check_budget():
+        peak = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss) * (1 if sys.platform == "darwin" else 1024)
+        if time.perf_counter() - started > declaration["maximum_wall_seconds"]:
+            raise InterruptedError("Diagnostic wall budget exceeded")
+        if peak > declaration["maximum_process_peak_rss_bytes"]:
+>           raise InterruptedError("Diagnostic process RSS budget exceeded")
+E           InterruptedError: Diagnostic process RSS budget exceeded
+
+scripts/reconstruct_native_cache_queries.py:276: InterruptedError
+_________ test_late_input_mutation_keeps_diagnostic_payload_ineligible _________
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/axis-profile-full-01/523a72bf3c12a9575184024c13ed31525c33645a/pytest-temp/test_late_input_mutation_keeps0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x124114290>
+saved = {'fixture': {'cache_metadata': {'bypasses': 0, 'cache_version': 'experimental-exact-capsule-cover-cache-v1', 'calls': ...f29aaf5d11a1dad9b044', 'saved_fixture_sha256': '67bbd8cb1023c6d5c5e1083def120951c72f49a05106b01bfeac036b6335d280', ...}
+
+    def test_late_input_mutation_keeps_diagnostic_payload_ineligible(tmp_path, monkeypatch, saved):
+        root, output, _ = private_cli(tmp_path, monkeypatch, saved)
+        original = MOD.summarize
+        def mutate_after_analysis(*args, **kwargs):
+            result = original(*args, **kwargs)
+            (root / "saved/preparation.json").write_text("{}")
+            return result
+        monkeypatch.setattr(MOD, "summarize", mutate_after_analysis)
+        with pytest.raises(ValueError, match="during reconstruction"):
+>           MOD.main()
+
+tests/test_native_cache_query_reconstruction_review.py:367: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/reconstruct_native_cache_queries.py:278: in main
+    check_budget()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def check_budget():
+        peak = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss) * (1 if sys.platform == "darwin" else 1024)
+        if time.perf_counter() - started > declaration["maximum_wall_seconds"]:
+            raise InterruptedError("Diagnostic wall budget exceeded")
+        if peak > declaration["maximum_process_peak_rss_bytes"]:
+>           raise InterruptedError("Diagnostic process RSS budget exceeded")
+E           InterruptedError: Diagnostic process RSS budget exceeded
+
+scripts/reconstruct_native_cache_queries.py:276: InterruptedError
+______ test_no_native_or_numerical_modules_needed_for_saved_synthetic_cli ______
+
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/axis-profile-full-01/523a72bf3c12a9575184024c13ed31525c33645a/pytest-temp/test_no_native_or_numerical_mo0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x124106180>
+saved = {'fixture': {'cache_metadata': {'bypasses': 0, 'cache_version': 'experimental-exact-capsule-cover-cache-v1', 'calls': ...f29aaf5d11a1dad9b044', 'saved_fixture_sha256': '67bbd8cb1023c6d5c5e1083def120951c72f49a05106b01bfeac036b6335d280', ...}
+
+    def test_no_native_or_numerical_modules_needed_for_saved_synthetic_cli(tmp_path, monkeypatch, saved):
+        _, output, _ = private_cli(tmp_path, monkeypatch, saved)
+        import builtins
+        original = builtins.__import__
+        def guarded(name, *args, **kwargs):
+            assert name.split(".")[0] not in {"resectionlab", "numpy", "scipy", "torch", "nibabel"}, name
+            return original(name, *args, **kwargs)
+        monkeypatch.setattr(builtins, "__import__", guarded)
+>       MOD.main()
+
+tests/test_native_cache_query_reconstruction_review.py:381: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/reconstruct_native_cache_queries.py:278: in main
+    check_budget()
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    def check_budget():
+        peak = int(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss) * (1 if sys.platform == "darwin" else 1024)
+        if time.perf_counter() - started > declaration["maximum_wall_seconds"]:
+            raise InterruptedError("Diagnostic wall budget exceeded")
+        if peak > declaration["maximum_process_peak_rss_bytes"]:
+>           raise InterruptedError("Diagnostic process RSS budget exceeded")
+E           InterruptedError: Diagnostic process RSS budget exceeded
+
+scripts/reconstruct_native_cache_queries.py:276: InterruptedError
+=============================== warnings summary ===============================
+tests/test_decision_observer_adversarial.py::test_metadata_reinterpretation_is_rejected_before_journal_export[shape-source_action_features]
+tests/test_decision_observer_adversarial.py::test_metadata_reinterpretation_is_rejected_before_journal_export[shape-action_features]
+tests/test_decision_observer_adversarial.py::test_metadata_reinterpretation_is_rejected_before_journal_export[shape-actor_action_features]
+tests/test_decision_observer_adversarial.py::test_metadata_reinterpretation_is_rejected_before_journal_export[shape-action_mask]
+tests/test_decision_observer_adversarial.py::test_metadata_reinterpretation_is_rejected_before_journal_export[shape-logits]
+  /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/axis-profile-full-01/523a72bf3c12a9575184024c13ed31525c33645a/source/tests/test_decision_observer_adversarial.py:253: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
+  As an alternative, you can create a new view using np.reshape (with copy=False if needed).
+    array.shape = (array.size, 1) if array.ndim == 1 else (array.size,)
+
+tests/test_decision_observer_adversarial.py::test_metadata_reinterpretation_is_rejected_before_journal_export[dtype-source_action_features]
+tests/test_decision_observer_adversarial.py::test_metadata_reinterpretation_is_rejected_before_journal_export[dtype-action_features]
+tests/test_decision_observer_adversarial.py::test_metadata_reinterpretation_is_rejected_before_journal_export[dtype-actor_action_features]
+tests/test_decision_observer_adversarial.py::test_metadata_reinterpretation_is_rejected_before_journal_export[dtype-action_mask]
+tests/test_decision_observer_adversarial.py::test_metadata_reinterpretation_is_rejected_before_journal_export[dtype-logits]
+  /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/axis-profile-full-01/523a72bf3c12a9575184024c13ed31525c33645a/source/tests/test_decision_observer_adversarial.py:255: DeprecationWarning: Setting the dtype on a NumPy array has been deprecated in NumPy 2.5.
+  Instead of changing the dtype on an array x, create a new array with x.view(new_dtype)
+    array.dtype = np.uint8
+
+tests/test_diffusion.py::test_probabilistic_crop_uses_bounded_reproducible_native_world_geometry
+tests/test_diffusion.py::test_probabilistic_crop_uses_bounded_reproducible_native_world_geometry
+tests/test_diffusion.py::test_probabilistic_crop_uses_bounded_reproducible_native_world_geometry
+tests/test_diffusion.py::test_probabilistic_crop_uses_bounded_reproducible_native_world_geometry
+  /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/dipy/testing/decorators.py:192: PendingDeprecationWarning: The legacy descoteaux07 SH basis uses absolute values for negative harmonic phase factors. It is outdated and will be deprecated in a future DIPY release. Consider using the new descoteaux07 basis by settingthe `legacy` parameter to `False`.
+    return func(*args, **kwargs)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED tests/test_native_axis_pilot_artifact_audit.py::test_all_actual_tiny_captured_forwards_verify_without_rng_or_policy_class
+FAILED tests/test_native_axis_pilot_artifact_audit.py::test_coherently_rehashed_nonfinite_optimizer_state_rejected
+FAILED tests/test_native_cache_query_reconstruction.py::test_executed_synthetic_saved_fixture_never_calls_geometry
+FAILED tests/test_native_cache_query_reconstruction_review.py::test_resealed_private_inputs_cannot_change_declared_runtime[source]
+FAILED tests/test_native_cache_query_reconstruction_review.py::test_resealed_private_inputs_cannot_change_declared_runtime[worker]
+FAILED tests/test_native_cache_query_reconstruction_review.py::test_resealed_private_inputs_cannot_change_declared_runtime[result]
+FAILED tests/test_native_cache_query_reconstruction_review.py::test_decompression_cap_has_failed_authority
+FAILED tests/test_native_cache_query_reconstruction_review.py::test_input_hash_change_rejects_before_reconstruction
+FAILED tests/test_native_cache_query_reconstruction_review.py::test_coherently_rehashed_callsite_drift_still_rejects
+FAILED tests/test_native_cache_query_reconstruction_review.py::test_coherently_rehashed_warm_denominator_mismatch_rejects
+FAILED tests/test_native_cache_query_reconstruction_review.py::test_late_input_mutation_keeps_diagnostic_payload_ineligible
+FAILED tests/test_native_cache_query_reconstruction_review.py::test_no_native_or_numerical_modules_needed_for_saved_synthetic_cli
+12 failed, 1470 passed, 14 warnings in 243.45s (0:04:03)

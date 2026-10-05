@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-04T19:30:44.937298+00:00",
+  "git_commit": "4d1d5123572370e8af06730f17ea993813053dfc",
+  "manifest_path": "manifests/experiments/resect-case4-displacement-acquisition-v1.json",
+  "manifest_sha256": "2babb675a77d48bfd7f7df2748956b0de7e268a6a4ee731df508b3376401830d",
+  "authorization": "Root released exactly six RESECT Case4 file transfers and byte/hash verification after commit4d1d512; no image/header array loading, gzip decompression, tag text/coordinate inspection or plots. Partition/access gate remains in force.",
+  "transfer_only_released": true,
+  "measurement_access_released": false,
+  "allowed_total_bytes": 35068010,
+  "file_count": 6,
+  "wall_timeout_seconds_per_file": 45,
+  "automatic_retries": false,
+  "overwrites": false,
+  "originals_directory": "data/mechanics/resect-case4-v1",
+  "existing_patient_splits_changed": false,
+  "pre_transfer_setup_failure": "First tool invocation had a mistyped working directory and could not start; no process, source read, payload transfer or files created. Corrected before this release receipt."
+}

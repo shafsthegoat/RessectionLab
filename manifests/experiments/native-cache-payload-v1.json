@@ -1,0 +1,62 @@
+{
+  "acceptance": "Reproduce every original32MiB/16384 cold and warm cumulative counter and increment, retained entries and raw array bytes exactly. On any mismatch, timeout, RSS excess, interruption or input change preserve partial raw sizes and a failed authority; no larger-capacity interpretation.",
+  "baseline_cache": {
+    "max_entries": 16384,
+    "max_payload_bytes": 33554432
+  },
+  "candidate_payload_bytes": [
+    33554432,
+    50331648,
+    67108864,
+    100663296,
+    134217728
+  ],
+  "declaration_content_hash": "sha256:bbfd679b5cc1988c05056d1ae603967735c87b320db9499b8d3d9e0dc11e8e1c",
+  "expected_ordered_queries": 22364,
+  "expected_unique_queries": 8812,
+  "experiment_id": "native-cache-payload-v1",
+  "frozen_source_sha256": {
+    "src/resectionlab/experimental_capsule_cache.py": "7b47cf36493c4baeb305beb7f18d4f5acf5bd0fa08b0e80738e948a20bd58869",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c"
+  },
+  "geometry_path": "artifacts/benchmarks/native-axis-cache-v1/frozen-source/src/resectionlab/geometry.py",
+  "geometry_sha256": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+  "input_sha256": {
+    "artifacts/benchmarks/native-axis-cache-v1/cached_cold/receipt.json": "c4e9614544506ce34e2c6f2f7b3f65198a500f3a51e30974d79710f09696b93a",
+    "artifacts/benchmarks/native-axis-cache-v1/cached_warm/receipt.json": "53d23e8b7557cbd384bbd9a77ff18abbfd313d706acac82a4bac45e759b12e99",
+    "artifacts/benchmarks/native-axis-cache-v1/frozen-source/src/resectionlab/experimental_capsule_cache.py": "7b47cf36493c4baeb305beb7f18d4f5acf5bd0fa08b0e80738e948a20bd58869",
+    "artifacts/benchmarks/native-axis-cache-v1/frozen-source/src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "artifacts/benchmarks/native-axis-cache-v1/frozen-source/src/resectionlab/native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+    "artifacts/benchmarks/native-axis-cache-v1/launch-source.json": "c067100c907adba159a66af4ac0dc3816555a0ee4f641447bb4c56d28cbfb60e",
+    "artifacts/benchmarks/native-axis-cache-v1/launcher-status.json": "0f9476caad4825590c5edbf4c4eb55870c2a594b08830d658a3bb5ce13aaa0d6",
+    "artifacts/benchmarks/native-axis-cache-v1/result.json": "0e42d6bc19dd1d4d20ee66873fafe3b779cef43294d43120eb7a4d1938f3e3e7",
+    "artifacts/benchmarks/native-axis-cache-v1/worker-status.json": "dfcfcc86a122ac30e4a199acabdd39d45101fb898e0ef91bdc721c294623e3b9",
+    "artifacts/diagnostics/native-cache-query-keys-v1/declaration.json": "28096bde87eca2cac3c2b66590c81905d8729cb7e135ebd0c39563bd4ef18a78",
+    "artifacts/diagnostics/native-cache-query-keys-v1/ordered-query-arguments.json.gz": "534759de882aa54cde6170a689f35d18f61a15e3ce96b690cc9fe56f10517cb5",
+    "artifacts/diagnostics/native-cache-query-keys-v1/status.json": "fc406ddc2ad5d81d51bf6a6dcbe2ede69e2a3189943eacc026e6edb2f707738d",
+    "artifacts/diagnostics/native-cache-query-keys-v1/summary.json": "8e532681554ffe15b7e6712b0958ce1fe9d1f560a33181c7527114245ee56174",
+    "artifacts/native-cache-query-result-audit-v1/audit-01.json": "cc716d7b12a54a4c3f899b974b23ee4bd520f8ea8947d57320241d3d29128797",
+    "artifacts/native-cache-query-result-audit-v1/verification.json": "7f3397d3bdeeb50687eac7be773eb144ca686e21f106391e5e6567df573bcc49"
+  },
+  "limits": "60s and512MiB are cooperative worker checks with a separately recorded external60s timeout. Imports, frame construction, sizing, metadata replay and publication are in the worker budget; one atomic cover call can overshoot before the next check. Actual cumulative process peak RSS retained. Raw array bytes exclude keys/bookkeeping and are not total cache RAM. New inverse/spacing/radius bytes derive from exact frozen code and original NumPy/SciPy versions; old unsaved derived bytes cannot be read back or claimed identical from a saved record. Hypothetical LRU counts do not establish runtime speedup or change any cache default.",
+  "maximum_grid_voxels": 8928000,
+  "maximum_process_peak_rss_bytes": 536870912,
+  "maximum_uncompressed_query_bytes": 33554432,
+  "maximum_wall_seconds": 60,
+  "output_namespace": "artifacts/diagnostics/native-cache-payload-v1",
+  "query_run": "artifacts/diagnostics/native-cache-query-keys-v1",
+  "release_requirement": "Commit script, declaration and independent synthetic review before a separate explicit root release. Run from isolated immutable source with only declared saved files and frozen numerical code, in a fresh process/output. No overwrite or unapproved retry.",
+  "runtime_versions": {
+    "nibabel": "5.4.2",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "torch": "2.14.1"
+  },
+  "schema_version": 1,
+  "scope": "Call only the frozen pure capsule-cover function once for each of 8812 verified exact float64 argument tuples, using an empty 240x240x155 frame constructed from the recorded native RAS affine. No patient/image/tissue loading, simulator/engine construction, world sampling, policies or gradients. Replay exact byte-and-entry LRU as integer metadata after sizing.",
+  "source_cache_run": "artifacts/benchmarks/native-axis-cache-v1",
+  "source_runtime_content_hash": "sha256:55fe17e6a1e5811f606713e857ee8c3142ae44573f4c30f409aa142d3656c92e",
+  "status": "declared_not_executed",
+  "version": "saved-native-pure-cover-payload-v1"
+}

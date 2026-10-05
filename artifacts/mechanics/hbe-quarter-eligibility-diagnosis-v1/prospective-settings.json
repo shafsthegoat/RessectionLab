@@ -1,0 +1,14 @@
+{
+  "scope": "One saved-coordinate and exact-ID incidence diagnosis, including root-requested z-midplane feasibility. No model or decks.",
+  "source_sha256": "5f606759e4822fcdd5175a9c452a540109cbf3032b1aff4e21cf1a4066179f89",
+  "wall_seconds": 60,
+  "sampled_group_rss_bytes": 3221225472,
+  "numerical_threads": 1,
+  "runs": 1,
+  "tolerance_rule": "unchanged1e-10max(R,H)",
+  "no_retry": true,
+  "source_meshes": {
+    "8": "3a6b5bb720bd3998f035abecf15d5c603d46c5ed281ce1d08c4aadec69c1dab9",
+    "12": "0ed154be0d17c8baaac6ee0288381a53ec100f93cd936a194202f69ef32ae033"
+  }
+}

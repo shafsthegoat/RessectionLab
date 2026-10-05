@@ -1,0 +1,34 @@
+{
+  "tested_utc": "2026-10-04T08:34:28.074263+00:00",
+  "status": "passed_native_development_inventory_ui",
+  "scope": "visual_and_accessibility_inspection_only",
+  "case_bundle": "outputs/cases/BTC-sub-PAT28-structural-evidence.ressectionlab",
+  "case_bundle_sha256": "f7fc9491cf74634de5b2be36dd5968c7e161a7b7fc22698a7045d7453c95a747",
+  "renderer_files": {
+    "desktop/dist/index.html": "b46a6e5d34e3bffd1fab0ed4dc911120bc43d9ca8d71d140f2bf61adee5514e6",
+    "desktop/dist/assets/index-BL6y0VVv.css": "038698022ecb3b02e77d8de4527ba6dfc827babc02e9d09f41fda4549b113baf",
+    "desktop/dist/assets/index-QyGjRg0Z.js": "f3d4869156ad0d817cdff1e6990f73337d2bcd84f40bd73e8f8e45e0de332e49",
+    "desktop/dist/assets/index-QyGjRg0Z.js.map": "3318ae7b587d388df52e0a315f64aede87d547da91bb99da14c08ac5e113539b",
+    "desktop/dist/assets/surface.worker-DBy033AL.js": "673b3b1128d4f6fdee9d8d71060318c8259486c1e734dbd3eb9e47fbb175ed23",
+    "desktop/dist/assets/surface.worker-DBy033AL.js.map": "6da4a2ba45a60499eed55bc3f4384b19212e89e3fe9cb44244c95ba3eab39e9e"
+  },
+  "checks": {
+    "source_mri_and_target_visible": true,
+    "two_estimated_structural_proposals": true,
+    "review_required_visible": true,
+    "no_csf_214_annotation_voxels_outside_disclosed": true,
+    "threshold_0_5_derivation_and_nonprobabilistic_values_disclosed": true,
+    "cortical_access_not_certified": true,
+    "candidate_generation_disabled_for_full_head_without_reviewed_support": true,
+    "model_and_source_identity_visible": true
+  },
+  "screenshots": [
+    "artifacts/electron-btc-inventory.jpg",
+    "artifacts/electron-btc-evidence-inspector.jpg"
+  ],
+  "limitations": [
+    "Source runtime, not a standalone bundle validation",
+    "Envelope geometry review and acceptance are not provided by this inventory slice",
+    "No route search, policy update, or final evaluation requested for this full-head case"
+  ]
+}

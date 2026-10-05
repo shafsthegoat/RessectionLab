@@ -1,0 +1,28 @@
+{
+  "actual_runtime_profiles_created": 0,
+  "actual_solver_runs": 0,
+  "actual_specimen_decks_created": 0,
+  "controls": {
+    "count": 71,
+    "log": "owner-attempt-02.txt",
+    "log_sha256": "520628104321cc30875cb867a286c5fb78c68ba2a8a3461c226f4855817527f8",
+    "pytest_seconds": 1.17
+  },
+  "measured_response_reads": 0,
+  "previous_controls": {
+    "count": 69,
+    "pytest_seconds": 1.16,
+    "scope": "Before two additional meaningful pre-solve/fitted-deck orchestration controls; no source defect found."
+  },
+  "scope": "Synthetic temporary XML/receipt/software fixtures only; actual repaired runtime and8same-runtime mechanics controls remain required before an executable release.",
+  "source_and_tests": {
+    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "scripts/mechanics_hbe_backend.py": "c21808c5799819734d6f5ac7a68c66187ea445bb3a1f5efdb112267ec625445b",
+    "scripts/mechanics_hbe_experiment.py": "9109a1dbb40dc5958221230d7d4c1d9543ef75910cea37b8e83e118c1363d3f9",
+    "tests/test_mechanics_hbe_backend.py": "bc9e0b70c301236181f7cc8f274ad0745ee942fce855dafab8aab2c90826c9e2",
+    "tests/test_mechanics_hbe_continuation_review.py": "78c6932e6a795e1eb8a74957c470eb6f76c645ccee612a9c3253a275c126d363",
+    "tests/test_mechanics_hbe_experiment.py": "3e4aacabdbf5d713a131704f1ceae089d49fdef095cd58ff5db0929a23c8ec67",
+    "tests/test_mechanics_hbe_experiment_review.py": "03fe4f050adc3137ef96a4523a45d98aabdd166dc482fd2cd45413834408658c"
+  },
+  "status": "source_preparation_only_pending_independent_review_and_actual_runtime_controls"
+}

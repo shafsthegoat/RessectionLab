@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/hbe-continuation-a9f2783/frozen-source/scripts/mechanics_hbe_experiment.py",
+    "--root",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "--protocol",
+    "outputs/validation/hbe-continuation-a9f2783/frozen-source/manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+    "--protocol-sha256",
+    "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035",
+    "--release",
+    "artifacts/mechanics/hbe-01-03-continuation-v1/release.json",
+    "--release-sha256",
+    "7f9f95681a511701576b6b084625ed73faa992d678f1a8151f9356407388c2ff",
+    "--execute",
+    "--reuse-verified-coarse"
+  ],
+  "pid": 36771,
+  "started_at_utc": "2026-10-04T21:25:05.779931+00:00"
+}

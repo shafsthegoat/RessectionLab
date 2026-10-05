@@ -1,0 +1,159 @@
+{
+  "dataset": "BTC_preop",
+  "accession": "ds001226",
+  "release": "5.0.1",
+  "git_commit": "359d372c5e972a161966312128adb365870df949",
+  "license": "CC0",
+  "subject": "sub-PAT28",
+  "files": [
+    {
+      "path": "dataset_description.json",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/dataset_description.json",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/dataset_description.json",
+      "bytes": 1209,
+      "sha256": "84185f9c387ae232ddbe87e20b329bacf82b9b5dafe9bde63b64c9bc78bed6f2"
+    },
+    {
+      "path": "participants.tsv",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/participants.tsv",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/participants.tsv",
+      "bytes": 10103,
+      "sha256": "2ae814b3e90e5c45ea95342a3658e58ba21d3f2d7bf1caa83ef8f1c74986e71d"
+    },
+    {
+      "path": "README",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/README",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/README",
+      "bytes": 3145,
+      "sha256": "fbb3e2e1b00d699835badc0bbda1296f9a90f2995117d93ba3123bd2f8e2d0bb"
+    },
+    {
+      "path": "CHANGES",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/CHANGES",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/CHANGES",
+      "bytes": 434,
+      "sha256": "8c766a15851db0823c661e0a3ec0ac14e2698711461a4f169cab30b3896461c9"
+    },
+    {
+      "path": "derivatives/tumor_masks/sub-PAT28/anat/sub-PAT28_space_T1_label-tumor.nii",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/derivatives/tumor_masks/sub-PAT28/anat/sub-PAT28_space_T1_label-tumor.nii",
+      "expected_bytes": 10486112,
+      "expected_md5": "15531588aad08c214c4e0613412a6502",
+      "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/derivatives/tumor_masks/sub-PAT28/anat/sub-PAT28_space_T1_label-tumor.nii?versionId=oylhu8qdf_OtewR.hAgwpKAHt1SjQvZI",
+      "bytes": 10486112,
+      "sha256": "ff989398438cf6d628471acf1c5449e132c089bba07da3f2142757c21c3e8d71"
+    },
+    {
+      "path": "sub-PAT28/ses-preop/anat/sub-PAT28_ses-preop_T1w.json",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT28/ses-preop/anat/sub-PAT28_ses-preop_T1w.json",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT28/ses-preop/anat/sub-PAT28_ses-preop_T1w.json",
+      "bytes": 925,
+      "sha256": "dbb37c0b89207e03331e379e4b33d45e656ee34056ba82f550d67a0ece6f6a51"
+    },
+    {
+      "path": "sub-PAT28/ses-preop/anat/sub-PAT28_ses-preop_T1w.nii.gz",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT28/ses-preop/anat/sub-PAT28_ses-preop_T1w.nii.gz",
+      "expected_bytes": 7444400,
+      "expected_md5": "2ba1aa890588b55f777b88da805d428e",
+      "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT28/ses-preop/anat/sub-PAT28_ses-preop_T1w.nii.gz?versionId=V6adVIQXeVlvM_3FSWbGxoZ68jlHDUmQ",
+      "bytes": 7444400,
+      "sha256": "70c5c1e4e28143318d2820788343e239efdc205344204f8f50497b81281b32c6"
+    },
+    {
+      "path": "sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-AP_dwi.bval",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-AP_dwi.bval",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-AP_dwi.bval",
+      "bytes": 476,
+      "sha256": "a678931600142ebf20236adba60c52b41e85b9aa241b78dc69c6385c089576c2"
+    },
+    {
+      "path": "sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-AP_dwi.bvec",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-AP_dwi.bvec",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-AP_dwi.bvec",
+      "bytes": 2766,
+      "sha256": "7cb61a14071980a8f884173a0b05ec8e9069992a85af0689694fd9d9e5869fc9"
+    },
+    {
+      "path": "sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-AP_dwi.json",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-AP_dwi.json",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-AP_dwi.json",
+      "bytes": 1647,
+      "sha256": "6a70c2872b854770044e7748fb19bc7247c088796eb29b952c81a855a9bff3bd"
+    },
+    {
+      "path": "sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-AP_dwi.nii.gz",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-AP_dwi.nii.gz",
+      "expected_bytes": 45750278,
+      "expected_md5": "a593165993d2b18d04e61a6856c4ec15",
+      "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-AP_dwi.nii.gz?versionId=mED8UsR_K9F5SQ9pgHWge3FwFcNG2FUs",
+      "bytes": 45750278,
+      "sha256": "1075093345c46c95ac0f958ce2cd630b9c5323c8d5c9f81d00713e9725c9c3bd"
+    },
+    {
+      "path": "sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-PA_dwi.bval",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-PA_dwi.bval",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-PA_dwi.bval",
+      "bytes": 4,
+      "sha256": "0ccdb5a77ba5bf7687f2565a8ed97dfb9c1af45503c496fb646312239fab5101"
+    },
+    {
+      "path": "sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-PA_dwi.bvec",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-PA_dwi.bvec",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-PA_dwi.bvec",
+      "bytes": 12,
+      "sha256": "1097c9882126db5f7d6f7a4856ec9d3db40cc1dd03515d68ac46f454a9bf1ae4"
+    },
+    {
+      "path": "sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-PA_dwi.json",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-PA_dwi.json",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-PA_dwi.json",
+      "bytes": 1068,
+      "sha256": "00aa4159cd7196363102cbca2ebf7e69a2f6e9d3f79fd8c4a1adc563777d4c7a"
+    },
+    {
+      "path": "sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-PA_dwi.nii.gz",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds001226/359d372c5e972a161966312128adb365870df949/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-PA_dwi.nii.gz",
+      "expected_bytes": 1106184,
+      "expected_md5": "9b1706b9f8a51387636e93f81cfdc0ce",
+      "source_url": "https://s3.amazonaws.com/openneuro.org/ds001226/sub-PAT28/ses-preop/dwi/sub-PAT28_ses-preop_acq-PA_dwi.nii.gz?versionId=Zo6tyBjD7f7oicNOPSbngXeEtGk_dvQL",
+      "bytes": 1106184,
+      "sha256": "eb47b86669db4e742c1b27ace80d17b94b1f610662ccc658907579a09f73bd4f"
+    }
+  ],
+  "role": "development diffusion pipeline feasibility; documented departure from UCSF priority",
+  "schema_version": 1,
+  "verified_at": "2026-10-04T06:39:07.674269+00:00",
+  "doi": "10.18112/openneuro.ds001226.v5.0.1",
+  "primary_source": "https://openneuro.org/datasets/ds001226/versions/5.0.1",
+  "source_license_url": "https://github.com/OpenNeuroDatasets/ds001226/blob/359d372c5e972a161966312128adb365870df949/dataset_description.json",
+  "storage_forecast": {
+    "max_download_bytes": 64808763,
+    "file_count": 15,
+    "includes": [
+      "one native T1",
+      "one native fractional tumor annotation",
+      "raw AP diffusion",
+      "reverse PA b0",
+      "gradients and metadata"
+    ],
+    "excludes": [
+      "resting-state fMRI",
+      "other subjects",
+      "postoperative imaging",
+      "processed tractograms"
+    ]
+  },
+  "annotation_semantics": {
+    "kind": "fractional_source_annotation",
+    "clinical_probability": false,
+    "categorical_compartments": false,
+    "source_values_preserved": true,
+    "threshold_requires_explicit_derived_artifact": true
+  },
+  "clinical_context": {
+    "source_diagnosis": "Oligodendroglioma II",
+    "role": "cohort eligibility only",
+    "preoperative_availability": "unknown",
+    "eligible_as_preoperative_policy_input": false
+  }
+}

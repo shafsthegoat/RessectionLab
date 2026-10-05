@@ -1,0 +1,6 @@
+# Reconstructible from the pinned Git commit in root-release.json.
+# Keep local executed copies; commit their hashes and results without duplicate source trees.
+/source.tar
+/source_archive/
+/run/source_snapshot/src/
+/run/source_snapshot/scripts/

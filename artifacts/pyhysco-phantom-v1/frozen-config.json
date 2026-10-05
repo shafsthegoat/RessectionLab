@@ -1,0 +1,30 @@
+{
+  "alpha": 300,
+  "amplitude_mm": 4.0,
+  "beta": 0.0001,
+  "correction": "jac",
+  "evaluation_support_fraction_of_truth_peak": 0.05,
+  "experiment": "analytic_pyhysco_geometry_v1",
+  "max_iter": 25,
+  "precision": "single",
+  "predeclared_checks": {
+    "distorted_image_rmse_after_over_before_max": 0.75,
+    "field_rmse_mm_max": 1.0,
+    "minimum_estimated_jacobian": 0.0,
+    "zero_field_rmse_mm_max": 0.05,
+    "zero_image_relative_rmse_max": 0.002
+  },
+  "relative_rotation_deg": 0.8,
+  "rss_limit_bytes": 8589934592,
+  "schema_version": 1,
+  "script_sha256": "f03c91f29a6a70b3afca6b79dff5a9fe29f88b0e1e9cb3bf17ede23b477d2f8b",
+  "shape": [
+    96,
+    96,
+    60
+  ],
+  "spacing_mm": 2.5,
+  "threads": 2,
+  "timeout_seconds_per_case": 90,
+  "wheel_sha256": "589e6509602b98b5f275d6e772c8ead8c8641ed1f4f20e2e24efaefb022bd884"
+}

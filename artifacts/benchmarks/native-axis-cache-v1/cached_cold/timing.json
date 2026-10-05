@@ -1,0 +1,35 @@
+{
+  "adapter_proposal_accounting": {
+    "integrity_calls": 9,
+    "integrity_seconds": 2.790416459320113,
+    "preview_calls": 66,
+    "preview_seconds": 16.333981167292222
+  },
+  "full_proposal_verification": {
+    "calls": 10,
+    "seconds": 3.124095875886269
+  },
+  "process_cumulative_peak_rss_bytes": 1851260928,
+  "reset_seconds": 7.76651149999816,
+  "seconds_before_export": 22.411699415999465,
+  "transitions": [
+    {
+      "action_id": "AXISv1:733fc018d7bf3838d0cdc4b8",
+      "reward": 373.24,
+      "terminated": false,
+      "transition_and_next_inventory_seconds": 6.466569083975628
+    },
+    {
+      "action_id": "AXISv1:655c3d5433c0c367b0806d85",
+      "reward": 364.03000000000003,
+      "terminated": false,
+      "transition_and_next_inventory_seconds": 5.5007516669575125
+    },
+    {
+      "action_id": "AXISv1:bb274fe18711b9d4160bdc31",
+      "reward": 361.5,
+      "terminated": true,
+      "transition_and_next_inventory_seconds": 1.0012167079839855
+    }
+  ]
+}

@@ -1,0 +1,239 @@
+{
+  "candidate_hashes": [
+    [
+      "GREEDY",
+      "sha256:5d03da9a3b9145ec19db580ab16018e72c32f5c073c9314ebcd58bbadc2208e9"
+    ],
+    [
+      "INITIAL:11",
+      "sha256:844372c55caebcdf132286af03bcb57afd1666c9e72f537299222c68baab2aa4"
+    ],
+    [
+      "INITIAL:23",
+      "sha256:27e3e3e1cb92a9608c4f19cb67ca86dd1aa6e80fe021e557c3abb67397ea6052"
+    ],
+    [
+      "INITIAL:47",
+      "sha256:d1ce3b6df1270e6b957a2eef08a74a2d93b4286e2b2a9e9e275694c35e092b7c"
+    ],
+    [
+      "PATIENT_SCRATCH_RL:11",
+      "sha256:44302a94437b6e15b21c7d31612bd82e87e3388e31ed66d1c440b134a244aaf9"
+    ],
+    [
+      "PATIENT_SCRATCH_RL:23",
+      "sha256:d54fa703e9bb0c45be17850c34a531cbf1ab0b3e4a549201c5a0059a56a3b6ef"
+    ],
+    [
+      "PATIENT_SCRATCH_RL:47",
+      "sha256:9a423ce33ed663bf4e8015e2c018a2c81bffc88947f37ec170daf72beddc086e"
+    ],
+    [
+      "PROCEDURAL_PRETRAINED_ADAPTED:11",
+      "sha256:f8ef6abb5dbd768e70a5fbacebfc359ef11df59a4918a4eb466c766d8eec5113"
+    ],
+    [
+      "PROCEDURAL_PRETRAINED_ADAPTED:23",
+      "sha256:fe2eee8f45db0d1e258f5c6c8fbe6818bd08728595fd5de8f40dc943081478ed"
+    ],
+    [
+      "PROCEDURAL_PRETRAINED_ADAPTED:47",
+      "sha256:a1b4e57feff2200d5323716b75d24d53c6a696090b0715cc37d2d615b69f58f7"
+    ],
+    [
+      "PROCEDURAL_PRETRAINED_FROZEN",
+      "sha256:eec9357f2966c02f6b3f0e19058d3ebfd4a2088ef3ced38693ebd0c237fc5588"
+    ],
+    [
+      "SEARCH",
+      "sha256:e0579e9b5633d553ed3ae98691e6bc82ebeddeabfedb3c5a09d58e9d034e2d96"
+    ],
+    [
+      "STOP",
+      "sha256:09bfe1237e410b2c35059b9908434f42392fec027d8a2a91f55b841a083c4098"
+    ]
+  ],
+  "candidates": [
+    {
+      "actions": [
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "STOP",
+      "plan_id": "STOP",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": null,
+      "shared_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "NATIVE:native-wide-aspiration:0",
+        "NATIVE:native-wide-aspiration:3",
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "GREEDY",
+      "plan_id": "GREEDY",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": null,
+      "shared_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "NATIVE:native-wide-aspiration:0",
+        "NATIVE:native-wide-aspiration:3",
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "SEARCH",
+      "plan_id": "SEARCH",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": null,
+      "shared_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "NATIVE:native-fine-aspiration:3",
+        "NATIVE:native-fine-aspiration:0",
+        "NATIVE:native-wide-aspiration:3"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PROCEDURAL_PRETRAINED_FROZEN",
+      "plan_id": "PROCEDURAL_PRETRAINED_FROZEN",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57",
+      "shared_checkpoint_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57"
+    },
+    {
+      "actions": [
+        "NATIVE:native-wide-aspiration:0",
+        "NATIVE:native-wide-aspiration:3",
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PATIENT_SCRATCH_RL",
+      "plan_id": "PATIENT_SCRATCH_RL:11",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:9356db7deb702a192ceba1b538385c6dd635844afd05b90ebaa7ae001010cb8d",
+      "shared_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "STOP"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "INITIAL_POLICY",
+      "plan_id": "INITIAL:11",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322",
+      "shared_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "NATIVE:native-fine-aspiration:0",
+        "NATIVE:native-fine-aspiration:3",
+        "NATIVE:native-wide-aspiration:0"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PATIENT_SCRATCH_RL",
+      "plan_id": "PATIENT_SCRATCH_RL:23",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:435e605ae7df4d64e5929702a690098954baf7a962fdf4218133dab6494fd326",
+      "shared_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "NATIVE:native-fine-aspiration:0",
+        "NATIVE:native-fine-aspiration:3",
+        "NATIVE:native-wide-aspiration:0"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "INITIAL_POLICY",
+      "plan_id": "INITIAL:23",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:435e605ae7df4d64e5929702a690098954baf7a962fdf4218133dab6494fd326",
+      "shared_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "NATIVE:native-fine-aspiration:0",
+        "NATIVE:native-wide-aspiration:3",
+        "NATIVE:native-wide-aspiration:0"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PATIENT_SCRATCH_RL",
+      "plan_id": "PATIENT_SCRATCH_RL:47",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:7b77aef4802730f8e1a52b0952c6992ef16edf181f9b025bf0f4a54a95f9fd97",
+      "shared_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "NATIVE:native-fine-aspiration:0",
+        "NATIVE:native-fine-aspiration:3",
+        "NATIVE:native-wide-aspiration:3"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "INITIAL_POLICY",
+      "plan_id": "INITIAL:47",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:df38b5264d3ee1df4f133ea9e01d5d44e6d4fe896106e3696950fb9e4c19e215",
+      "shared_checkpoint_hash": null
+    },
+    {
+      "actions": [
+        "NATIVE:native-fine-aspiration:0",
+        "NATIVE:native-fine-aspiration:3",
+        "NATIVE:native-wide-aspiration:0"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PROCEDURAL_PRETRAINED_ADAPTED",
+      "plan_id": "PROCEDURAL_PRETRAINED_ADAPTED:11",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:3ca1f7d23de440257bf1819f2d36ef1beb348ba6452b0b234b740e41d06de566",
+      "shared_checkpoint_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57"
+    },
+    {
+      "actions": [
+        "NATIVE:native-fine-aspiration:3",
+        "NATIVE:native-fine-aspiration:0",
+        "NATIVE:native-wide-aspiration:0"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PROCEDURAL_PRETRAINED_ADAPTED",
+      "plan_id": "PROCEDURAL_PRETRAINED_ADAPTED:23",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:9591d9e40207b4a150a685f753680fca29f3b4f1b4f113d4a167980a8738847a",
+      "shared_checkpoint_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57"
+    },
+    {
+      "actions": [
+        "NATIVE:native-wide-aspiration:3",
+        "NATIVE:native-fine-aspiration:0",
+        "NATIVE:native-wide-aspiration:0"
+      ],
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "optimizer_mode": "PROCEDURAL_PRETRAINED_ADAPTED",
+      "plan_id": "PROCEDURAL_PRETRAINED_ADAPTED:47",
+      "plan_type": "simulated_resection_sequence",
+      "selected_checkpoint_hash": "sha256:cc4c86f79827b0500e2628da6e7546c53819b720f12203dc1bb73571c2ed61ce",
+      "shared_checkpoint_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57"
+    }
+  ],
+  "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+  "decision_model_fingerprint": "sha256:ffe264c83cf64b4d52fac9bf6169d94f364c776bd0394ed313741c1fac403658",
+  "development_seeds": [
+    17944101631498118750,
+    16050408593453808557,
+    16285456173753334256,
+    8109736527858856845,
+    8342823306791655420
+  ],
+  "fingerprint": "sha256:62a3c76cb004c99b78f81ddeca5faa43bccad57eafecc00961472bb46f2481e0",
+  "frozen_at": "2026-10-04T10:26:59.383130+00:00",
+  "generator_family": "rigid_gaussian",
+  "generator_fingerprint": "sha256:65178826778d6f02e623f38390d72c121c9e2cd84e5c0b69f882353a64f09a48",
+  "optimization_partition_hash": "sha256:aa8de3098a046f59a463eca08667916b6e4619417da135a473405457b94b0a1c",
+  "selection_partition_hash": "sha256:62f80e45baec7c506272e1b04037c8551267969fdbd2fdb650a61bb720df8dc2",
+  "selection_rule": "declared baselines, initial scratch actors, selected scratch/adapted actors; maximum selection mean, earliest tie"
+}

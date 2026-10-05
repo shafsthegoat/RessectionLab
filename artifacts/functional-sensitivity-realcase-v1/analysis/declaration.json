@@ -1,0 +1,162 @@
+{
+  "acceptance": [
+    "Independent native audits of retained histories against original source anatomy",
+    "Complete tool geometry for all routes; static access never labeled removal",
+    "Numerically nonidentical transforms under nonzero panels",
+    "Evidence/tool/uncertainty response reported even when ranking stays identical",
+    "Missing component remains unknown and clinical probabilities remain null"
+  ],
+  "budgets": {
+    "automatic_retries": 0,
+    "cpu_threads": 1,
+    "peak_rss_gib": 3,
+    "wall_seconds": 180
+  },
+  "case_id": "UCSF-PDGM-0004",
+  "cvar_alpha": 0.95,
+  "development_worlds_opened": false,
+  "evidence": {
+    "language": [
+      "phonology_functional_concordance",
+      "semantics_functional_concordance",
+      "speech_articulation_functional_concordance"
+    ],
+    "language_aggregation": "maximum_of_declared_components",
+    "language_coverage": "intersection_of_declared_components",
+    "missing_component_variants": [
+      "motor_only",
+      "language_only"
+    ],
+    "motor": "motor_functional_concordance",
+    "provenance": "population_prior",
+    "review_status": "alignment_review_required",
+    "structural_prior_masks": "Retained inspectable source records, not silently mixed with functional concordance"
+  },
+  "generator_version": "rigid-registration-v1",
+  "inputs": {
+    "fine_history": {
+      "path": "artifacts/native-route-alternatives-v1b/native-fine-aspiration-candidate.json",
+      "sha256": "8f71b10f387b72c7a3ff5ccf0c65631e3f0bf0a68d80d2fa9c0be3cfb68f5f79"
+    },
+    "original_case": {
+      "path": "outputs/cases/UCSF-PDGM-0004.ressectionlab",
+      "sha256": "11cca797ad0216e5c8d940e7354f2dd23fb6954dc2aed7e4b0423f6adc6cefcf"
+    },
+    "original_routes": {
+      "path": "artifacts/route-native-screen-v1/original-54-routes.json",
+      "sha256": "990793b1eecfa0f9334afd74b0af212acf0e6484fe70273d9327cc0607dc9827"
+    },
+    "prior_case": {
+      "path": "outputs/cases/UCSF-PDGM-0004-prior-proposals.ressectionlab",
+      "sha256": "59c213b82af205516491058145ad3581a4d1832e1126fb5559118f250ea1bacc"
+    },
+    "wide_history": {
+      "path": "artifacts/native-route-alternatives-v1b/native-wide-aspiration-candidate.json",
+      "sha256": "e7b2acd0f5f25e29ca97651b241376e4212149bd156b3fb62862bbb5e41142d8"
+    }
+  },
+  "limitations": [
+    "One previously consulted human development patient; no new-patient generalization",
+    "Structural mirror official TCIA byte equivalence unverified",
+    "Global prior alignment unreviewed and not reliable near tumor mass effect",
+    "Estimated brain support and hypothetical access unreviewed",
+    "Patient diffusion, vascular anatomy, forces and clinical outcomes unavailable",
+    "No parameter updates or synthetic training data"
+  ],
+  "master_seed": 202610041,
+  "matched_randomness": "Panels reuse a separately recorded paired development-sensitivity seed list; each panel freezes its own evidence/definition/model before evaluation. No outcome-driven selection or tuning.",
+  "memory_budget_basis": {
+    "base_case_copy_bytes": 89280128,
+    "estimated_persistent_array_bytes": 1294560896,
+    "functional_field_array_bytes": 357120000,
+    "live_case_versions": 7,
+    "note": "Original plus prior case plus five evidence case versions; prior objects/arrays are shared across replace(). Excludes Python/geometry/transient NPZ copies; actual peak guarded at 3GiB.",
+    "shared_seven_prior_array_bytes": 312480000,
+    "source": "Pinned NPZ array headers and CaseData/FunctionalEvidence immutable-copy contracts, no event calculation"
+  },
+  "optimization_worlds": 2,
+  "original_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+  "parameter_basis": "declared_uncalibrated_population_prior_alignment_sensitivity",
+  "prior_case_hash": "sha256:2dd4c1ccc72a3ee6f821cf8f23a8c32996ec74fe1d616411863d5197bf3d2547",
+  "purpose": "One previously consulted real patient, fixed existing plans, population-prior sensitivity; no training or clinical validation",
+  "rotation_center": "Physical RAS image centre affine @ ((shape-1)/2)",
+  "schema": "resectionlab.real-patient-functional-sensitivity.v1",
+  "selected_static_route_ids": [
+    "search-046893487762fe04",
+    "search-110df6a56e19bfbc",
+    "search-35049655244ec7bf"
+  ],
+  "selection_rule": "Retain the two previously validated native-axis histories; select lexicographically first original route ID per original window without looking at functional values; retain STOP",
+  "selection_worlds": 2,
+  "static_window_normals_ras": {
+    "hypothetical-envelope-1": [
+      0,
+      0,
+      -1
+    ],
+    "hypothetical-envelope-2": [
+      1,
+      0,
+      0
+    ],
+    "hypothetical-envelope-3": [
+      0,
+      -1,
+      0
+    ]
+  },
+  "static_window_radius_mm": 4.0,
+  "threshold_basis": "Prespecified unitless map-support sensitivity choices; neither is a validated individual functional boundary or clinical safe margin",
+  "thresholds": [
+    0.5,
+    0.1
+  ],
+  "uncertainty_panels": [
+    {
+      "family": "rigid_gaussian",
+      "name": "gaussian_1mm_1deg",
+      "rotation_scale_deg": [
+        1,
+        1,
+        1
+      ],
+      "translation_scale_mm": [
+        1,
+        1,
+        1
+      ],
+      "worlds": 64
+    },
+    {
+      "family": "rigid_gaussian",
+      "name": "gaussian_2mm_2deg",
+      "rotation_scale_deg": [
+        2,
+        2,
+        2
+      ],
+      "translation_scale_mm": [
+        2,
+        2,
+        2
+      ],
+      "worlds": 64
+    },
+    {
+      "family": "rigid_gaussian",
+      "name": "deterministic_control",
+      "rotation_scale_deg": [
+        0,
+        0,
+        0
+      ],
+      "translation_scale_mm": [
+        0,
+        0,
+        0
+      ],
+      "worlds": 32
+    }
+  ],
+  "window_basis": "Unchanged normals/radius from the source-bound three-window historical straight-access algorithm; entries/targets copied exactly from retained route records"
+}

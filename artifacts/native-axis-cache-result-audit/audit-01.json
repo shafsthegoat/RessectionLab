@@ -1,0 +1,232 @@
+{
+  "audit_status": "passed",
+  "auditor_sha256": "53e763d4ea082b478764bcd9a488e188cf68d9443380fd47778c04949abb4eb8",
+  "cache_deltas": {
+    "cached_cold": {
+      "bypasses": 0,
+      "calls": 22364,
+      "compute_seconds": 11.731056619086303,
+      "evictions": 16902,
+      "hits": 0,
+      "misses": 22364,
+      "query_seconds": 12.658882041228935
+    },
+    "cached_warm": {
+      "bypasses": 0,
+      "calls": 22364,
+      "compute_seconds": 11.717499764752574,
+      "evictions": 22364,
+      "hits": 0,
+      "misses": 22364,
+      "query_seconds": 12.662573550711386
+    }
+  },
+  "clinical_deficit_probability": null,
+  "created_utc": "2026-10-04T13:59:24.486756+00:00",
+  "declaration_hash": "sha256:90b245b72f84acac1cbe32cb338d64e47222fd75b2f20673439dbb34e6e4f9d6",
+  "final_worlds_used": false,
+  "full_scientific_traces_compared": 4,
+  "geometry_checks_rerun": 0,
+  "inclusive_time_ratios": {
+    "cached_cold": {
+      "reference_after": 0.9464367322471361,
+      "reference_before": 0.9251230836413085
+    },
+    "cached_warm": {
+      "reference_after": 0.9401297822522544,
+      "reference_before": 0.9189581654499116
+    }
+  },
+  "independent_helper_sha256": "8390d427f70635549554c3935fb4b77a3027baa39994cb41af2dd443c303b346",
+  "input_file_sha256": {
+    "artifacts/benchmarks/native-axis-cache-v1/cache-construction.json": "633793114298da42da6cd13eb7b66f990ce05e62e6e21fa4643c738eeb1f3068",
+    "artifacts/benchmarks/native-axis-cache-v1/cached_cold-independent-audit.json": "b9a43a72b97637c3be09843cd3611116a1c331a5ab779b0943e080c4798380b7",
+    "artifacts/benchmarks/native-axis-cache-v1/cached_cold/progress.json": "93d8a6ff0755d9089064d846f2b71f86f9d9b778fa9839517d6e40948a76e5f6",
+    "artifacts/benchmarks/native-axis-cache-v1/cached_cold/receipt.json": "c4e9614544506ce34e2c6f2f7b3f65198a500f3a51e30974d79710f09696b93a",
+    "artifacts/benchmarks/native-axis-cache-v1/cached_cold/timing.json": "8dd4aa333a5d826796491fe25f23b8d2deffeb8db5149c0ae54040bc0c418cb6",
+    "artifacts/benchmarks/native-axis-cache-v1/cached_warm-independent-audit.json": "745bb45bad1d4dd5242d7daf15f92d27d0d6928c1fb6977ccae4426793d21a6f",
+    "artifacts/benchmarks/native-axis-cache-v1/cached_warm/progress.json": "4b4e249907f78d3814f3ad8a30e421288f52683092392f8e7a8c525b7cf3bd16",
+    "artifacts/benchmarks/native-axis-cache-v1/cached_warm/receipt.json": "53d23e8b7557cbd384bbd9a77ff18abbfd313d706acac82a4bac45e759b12e99",
+    "artifacts/benchmarks/native-axis-cache-v1/cached_warm/timing.json": "d0be536641b445b9e8eea8db7d86b353c6e96b70e9d116b825d156441508edbb",
+    "artifacts/benchmarks/native-axis-cache-v1/declaration.json": "dc867e89dbc5785f7d2ec7bc0a1fb9820f0fbd6cc8d1768f3031543a4bd6d366",
+    "artifacts/benchmarks/native-axis-cache-v1/launch-source.json": "c067100c907adba159a66af4ac0dc3816555a0ee4f641447bb4c56d28cbfb60e",
+    "artifacts/benchmarks/native-axis-cache-v1/launcher-status.json": "0f9476caad4825590c5edbf4c4eb55870c2a594b08830d658a3bb5ce13aaa0d6",
+    "artifacts/benchmarks/native-axis-cache-v1/preparation.json": "621b5f0b49fb7dc87e7d8e41312af6f48c0b86176c80e1ce4c20bc24c831a62c",
+    "artifacts/benchmarks/native-axis-cache-v1/reference_after-independent-audit.json": "175e8225d938b592a7204193db12e1e0042e3ad7949451ea0fadd27df5dec3c4",
+    "artifacts/benchmarks/native-axis-cache-v1/reference_after/progress.json": "ced85c8757c442792ac8daa43868373382b85547e048b14784120498ba65fbe7",
+    "artifacts/benchmarks/native-axis-cache-v1/reference_after/receipt.json": "3fd70637063b5b6503ca215ad104a34fab51c6a8c20d0e0311e1e2d254f09380",
+    "artifacts/benchmarks/native-axis-cache-v1/reference_after/timing.json": "951d224d3fffe8d8d651cd917051a8c6ff15b8bcb5825601b9f21ca7d7120e84",
+    "artifacts/benchmarks/native-axis-cache-v1/reference_before-independent-audit.json": "45327890f3afba5fee157353ee4f74de7a5723af289f6cbf3531f44a816ba430",
+    "artifacts/benchmarks/native-axis-cache-v1/reference_before/progress.json": "6995186551d9f0d4211dd7c80d262c4e5c88f7a08e3df2d35c6ccd2d47183c82",
+    "artifacts/benchmarks/native-axis-cache-v1/reference_before/receipt.json": "53e199ee541238e3606c2449bf5ec0c52723c3d9123ee00127441fb4dab52dd4",
+    "artifacts/benchmarks/native-axis-cache-v1/reference_before/timing.json": "bebc400cd66c427ab507cca17e5ee62d4abe2f546276057c9be44437bf79234f",
+    "artifacts/benchmarks/native-axis-cache-v1/result.json": "0e42d6bc19dd1d4d20ee66873fafe3b779cef43294d43120eb7a4d1938f3e3e7",
+    "artifacts/benchmarks/native-axis-cache-v1/template.json": "6a88ba4f6a92afa92cb9ce11f7780bd184d39bc67ca0bf6adbe8942da89edc75",
+    "artifacts/benchmarks/native-axis-cache-v1/worker-resource.json": "1d70a6798b59408626852546c504a98b64deb59b742b9c1ff539b28231d71569",
+    "artifacts/benchmarks/native-axis-cache-v1/worker-status.json": "dfcfcc86a122ac30e4a199acabdd39d45101fb898e0ef91bdc721c294623e3b9",
+    "artifacts/validation/native-axis-cache-public-v1/execution-baseline.json": "f3709aa794562fa12e482472fe3b94f26403b19ed1f639923654ab86feca01f6",
+    "build/validation/native-axis-cache-v1/43857b5a4931a9b4c3909f9c2914833e795b685b/source/artifacts/preflight/native-axis-v2/profile/model.json": "cbfce67b631e13a657bcf578fd793d3407a89b9e20c3e0833a9192388cc83019",
+    "build/validation/native-axis-cache-v1/43857b5a4931a9b4c3909f9c2914833e795b685b/source/artifacts/preflight/native-axis-v2/profile/sequence-freeze.json": "31ece55a360bc07daf31908400804dbe882e1da4e49ce7571f653eef5de102dc",
+    "build/validation/native-axis-cache-v1/43857b5a4931a9b4c3909f9c2914833e795b685b/source/manifests/experiments/native-axis-preflight-v2.json": "35402cd0634e1db0798189e41a1dbbd4c880988b3e107ce38338eb8c966fb955",
+    "build/validation/native-axis-cache-v1/43857b5a4931a9b4c3909f9c2914833e795b685b/source/manifests/experiments/procedural-native-to-ucsf-v1.json": "6011ec40117f49653df4ab2fb0194c1e630bd2cf09870f87332f340fe3c6fde0"
+  },
+  "mask_evidence": "Saved digests were compared with independent source-cell set reconstruction and full exterior flood. Raw engine masks were not persisted; their direct byte equality is a separate frozen-runner observation.",
+  "native_certificate_receipts": 4,
+  "negative_preview_count_in_this_trace": 0,
+  "new_gradients": 0,
+  "phase_timing": [
+    {
+      "adapter_proposal_accounting": {
+        "integrity_calls": 9,
+        "integrity_seconds": 2.7796560840215534,
+        "preview_calls": 66,
+        "preview_seconds": 14.938501670025289
+      },
+      "before_export_seconds": 20.729252958088182,
+      "cache_delta": null,
+      "comparison_and_export_inclusive_seconds": 21.181820416008122,
+      "full_proposal_verification": {
+        "calls": 10,
+        "seconds": 3.063500499818474
+      },
+      "mode": "reference_before",
+      "process_cumulative_peak_rss_bytes": 1582891008,
+      "reset_seconds": 7.147247457993217,
+      "transitions_seconds": 12.114769916050136
+    },
+    {
+      "adapter_proposal_accounting": {
+        "integrity_calls": 9,
+        "integrity_seconds": 2.790416459320113,
+        "preview_calls": 66,
+        "preview_seconds": 16.333981167292222
+      },
+      "before_export_seconds": 22.411699415999465,
+      "cache_delta": {
+        "bypasses": 0,
+        "calls": 22364,
+        "compute_seconds": 11.731056619086303,
+        "evictions": 16902,
+        "hits": 0,
+        "misses": 22364,
+        "query_seconds": 12.658882041228935
+      },
+      "comparison_and_export_inclusive_seconds": 22.89621866599191,
+      "full_proposal_verification": {
+        "calls": 10,
+        "seconds": 3.124095875886269
+      },
+      "mode": "cached_cold",
+      "process_cumulative_peak_rss_bytes": 1938948096,
+      "reset_seconds": 7.76651149999816,
+      "transitions_seconds": 12.968537458917126
+    },
+    {
+      "adapter_proposal_accounting": {
+        "integrity_calls": 9,
+        "integrity_seconds": 2.7663044589571655,
+        "preview_calls": 66,
+        "preview_seconds": 16.478355417842977
+      },
+      "before_export_seconds": 22.584606832941063,
+      "cache_delta": {
+        "bypasses": 0,
+        "calls": 22364,
+        "compute_seconds": 11.717499764752574,
+        "evictions": 22364,
+        "hits": 0,
+        "misses": 22364,
+        "query_seconds": 12.662573550711386
+      },
+      "comparison_and_export_inclusive_seconds": 23.04982012498658,
+      "full_proposal_verification": {
+        "calls": 10,
+        "seconds": 3.097148041939363
+      },
+      "mode": "cached_warm",
+      "process_cumulative_peak_rss_bytes": 2188296192,
+      "reset_seconds": 7.815383541048504,
+      "transitions_seconds": 13.049629665794782
+    },
+    {
+      "adapter_proposal_accounting": {
+        "integrity_calls": 9,
+        "integrity_seconds": 2.7411802910501137,
+        "preview_calls": 66,
+        "preview_seconds": 15.158033630112186
+      },
+      "before_export_seconds": 21.1896197500173,
+      "cache_delta": null,
+      "comparison_and_export_inclusive_seconds": 21.669822375057265,
+      "full_proposal_verification": {
+        "calls": 10,
+        "seconds": 3.073092208011076
+      },
+      "mode": "reference_after",
+      "process_cumulative_peak_rss_bytes": 2289762304,
+      "reset_seconds": 7.167777666007169,
+      "transitions_seconds": 12.388978792121634
+    }
+  ],
+  "public_episodes_rerun": 0,
+  "restoration_evidence": {
+    "basis": "Frozen runner checks native callable/proposer restoration after each phase and checks unchanged cache calls around four audits before completing. Reference-after saved cache counters are unchanged. No pointer observation or before/after-audit counter values were persisted.",
+    "explicit_runtime_restoration_receipt": false,
+    "source_bound_completion_inference": true
+  },
+  "runtime_content_hash": "sha256:55fe17e6a1e5811f606713e857ee8c3142ae44573f4c30f409aa142d3656c92e",
+  "scientific_equivalence_verified": true,
+  "scientific_model_hash": "sha256:1d06e7792ce78ecf7ef461ba5ff2b6f78e2367d3b3bc030a80d70b49e6e747f5",
+  "scope": "Four paired fixed replays on one previously studied structural case. Time ratios include comparison/export and are descriptive; not a whole-learning or clinical-performance claim.",
+  "source_commit": "43857b5a4931a9b4c3909f9c2914833e795b685b",
+  "stress_worlds_used": false,
+  "timers_nested_not_additive": true,
+  "trace_hash": "sha256:34c52fa24522d0a5cf0bd7f925639bc268435b799ac05e8acb35fe6e5f6d7430",
+  "unique_scientific_trace": {
+    "accepted_preview_certificates": 66,
+    "inventory_counts": [
+      {
+        "certified": 26,
+        "fallback_previews": 0,
+        "previews": 26,
+        "rejected_previews": 0,
+        "slots": 26
+      },
+      {
+        "certified": 22,
+        "fallback_previews": 0,
+        "previews": 22,
+        "rejected_previews": 0,
+        "slots": 26
+      },
+      {
+        "certified": 18,
+        "fallback_previews": 0,
+        "previews": 18,
+        "rejected_previews": 0,
+        "slots": 26
+      },
+      {
+        "certified": 0,
+        "fallback_previews": 0,
+        "previews": 0,
+        "rejected_previews": 0,
+        "slots": 26
+      }
+    ],
+    "removed_mm3": 1175.0,
+    "score": {
+      "cumulative_partial_normal_contact_mm3": 177.0,
+      "nonstop_actions": 3,
+      "normal_removed_mm3": 62.0,
+      "score": 1098.77,
+      "step_rewards": [
+        373.24,
+        364.03000000000003,
+        361.5
+      ],
+      "target_removed_mm3": 1113.0
+    },
+    "source_mask_states_verified": 4
+  }
+}

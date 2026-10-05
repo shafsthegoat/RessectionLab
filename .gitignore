@@ -1,0 +1,81 @@
+.venv/
+.tools/
+node_modules/
+.pnpm-store/
+*.tsbuildinfo
+desktop/dist/
+desktop/release/
+desktop/public/preview/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+.DS_Store
+build/
+dist/
+data/
+outputs/
+*.nii
+*.nii.gz
+*.dcm
+*.nrrd
+*.mha
+*.mhd
+*.pt
+*.pth
+*.npz
+*.npy
+*.ressectionlab
+*.rslcase
+*.app/
+*.dmg
+*.zip
+# Local validation archives retain exact bytes; compact receipts are versioned.
+/artifacts/validation/procedural-transfer-*/baseline.tar
+/artifacts/validation/procedural-transfer-*/frozen-source/
+/artifacts/validation/procedural-transfer-*/pretest-initial/
+/artifacts/learning/procedural-native-to-ucsf-*/frozen-source/
+/artifacts/learning/procedural-native-to-ucsf-*/comparison/source-snapshot/
+/artifacts/learning/procedural-native-to-ucsf-*/pretraining/source-snapshot/
+
+# Full native replay remains local; lossless gzip and roundtrip receipt are versioned.
+/artifacts/learning/procedural-native-to-ucsf-v2/comparison/development-geometry-e8a2cc46-0d88-4fc3-93be-176711ee19aa/native-history-replay.json
+/artifacts/native-frontier-expansion-v1/experiment-2/patient-expanded-candidate.json
+/artifacts/native-frontier-expansion-v1/experiment-2/frontier-solid-candidate.json
+/artifacts/native-frontier-expansion-v1/experiment-2/frontier-barrier-candidate.json
+
+# Feature-unit experiments retain exact executable snapshots locally.
+/artifacts/learning/procedural-native-feature-units-*/frozen-source/
+/artifacts/learning/procedural-native-feature-units-*/study/source-snapshot/
+/artifacts/learning/procedural-native-feature-units-*/study/pretraining-*/source-snapshot/
+
+# Full feature-unit native replay is retained locally; lossless gzip is versioned.
+/artifacts/learning/procedural-native-feature-units-v1/study/development-geometry-825d1885-6d54-4d69-963c-b5c585fb6d8c/native-history-replay.json
+
+# New action-model preflights retain exact executable copies locally.
+/artifacts/preflight/native-axis-*/frozen-source/
+
+# Completed V2 episodes retain raw local bytes; lossless gzip is versioned.
+/artifacts/preflight/native-axis-v2/profile/greedy/episode.json
+/artifacts/preflight/native-axis-v2/profile/selection-1/episode.json
+/artifacts/preflight/native-axis-v2/profile/selection-2/episode.json
+/artifacts/preflight/native-axis-v2/profile/untrained-selection-1/episode.json
+/artifacts/preflight/native-axis-v2/profile/untrained-selection-2/episode.json
+
+# Exact one-update source and raw receipts remain local; lossless gzip is versioned.
+/artifacts/learning/native-axis-raw-update-pilot-v1/frozen-source/
+/artifacts/learning/native-axis-raw-update-pilot-v1/pilot/accounting.json
+/artifacts/learning/native-axis-raw-update-pilot-v1/pilot/history-freeze.json
+/artifacts/learning/native-axis-raw-update-pilot-v1/pilot/candidate-record.json
+
+# Fixed-trace cache probe retains its exact executable snapshot locally.
+/artifacts/benchmarks/native-axis-cache-v1/frozen-source/
+
+# Tiny descriptor sources are retained in verified archives instead of duplicate trees.
+/artifacts/native-spatial-feature-v2/frozen-source/
+/artifacts/native-spatial-feature-v2/repair-01/frozen-source/
+
+# Original transport receipts contain temporary CDN query credentials.
+# Public acquisition summaries retain payload hashes and original receipt hashes.
+/artifacts/febio-runtime-build-v1/acquire-01/acquisition.json
+/artifacts/febio-runtime-build-v1/acquire-01/worker-progress.json

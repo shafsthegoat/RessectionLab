@@ -1,0 +1,37 @@
+{
+  "collected": 2140,
+  "finished": 2135,
+  "failed": [],
+  "skipped": [
+    {
+      "nodeid": "tests/test_procedural_transfer_runner.py::test_available_public_bundle_matches_declared_inventory_without_stepping",
+      "when": "call",
+      "reason": "('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/python-regression-575eccd/source/tests/test_procedural_transfer_runner.py', 91, 'Skipped: Pinned public development bundle is not installed')"
+    },
+    {
+      "nodeid": "tests/test_remind_development_acquisition.py::test_dicom_row_column_lps_to_ras_mapping_with_permuted_planes",
+      "when": "setup",
+      "reason": "('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/python-regression-575eccd/source/tests/test_remind_development_acquisition.py', 94, 'Skipped: Run in the isolated IDC acquisition environment for DICOM controls')"
+    },
+    {
+      "nodeid": "tests/test_remind_development_acquisition.py::test_realistic_decimal_rounding_is_fit_without_relaxing_tolerance",
+      "when": "setup",
+      "reason": "('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/python-regression-575eccd/source/tests/test_remind_development_acquisition.py', 103, 'Skipped: Run in the isolated IDC acquisition environment for DICOM controls')"
+    },
+    {
+      "nodeid": "tests/test_remind_development_acquisition.py::test_nonuniform_or_duplicate_planes_are_rejected[positions0]",
+      "when": "setup",
+      "reason": "('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/python-regression-575eccd/source/tests/test_remind_development_acquisition.py', 109, 'Skipped: Run in the isolated IDC acquisition environment for DICOM controls')"
+    },
+    {
+      "nodeid": "tests/test_remind_development_acquisition.py::test_nonuniform_or_duplicate_planes_are_rejected[positions1]",
+      "when": "setup",
+      "reason": "('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/python-regression-575eccd/source/tests/test_remind_development_acquisition.py', 109, 'Skipped: Run in the isolated IDC acquisition environment for DICOM controls')"
+    },
+    {
+      "nodeid": "tests/test_remind_development_acquisition.py::test_nonorthogonal_orientation_is_rejected",
+      "when": "setup",
+      "reason": "('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/python-regression-575eccd/source/tests/test_remind_development_acquisition.py', 116, 'Skipped: Run in the isolated IDC acquisition environment for DICOM controls')"
+    }
+  ]
+}

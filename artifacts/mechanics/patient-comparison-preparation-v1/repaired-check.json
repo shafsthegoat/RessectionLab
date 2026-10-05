@@ -1,0 +1,21 @@
+{
+  "status": "30_controls_passed_pending_independent_final_rerun",
+  "result": "30 passed in0.31s",
+  "source_bindings": {
+    "scripts/mechanics_patient_comparison.py": "cacd557107fa7bca3d83873faa776f16c70864366e89c096f9f1ae09ac402587",
+    "tests/test_mechanics_patient_comparison.py": "8223455a2e9771e155015cf5607ceb1aecd48c914696b4145c3d62be3aad08e8",
+    "docs/patient-displacement-comparison.md": "207b75e79564d88c7550fa116d3bc9cb152733fa6a3a5f90d69210fa9e974587"
+  },
+  "repairs": [
+    "Exact sampler source AND top-level entrypoint before reveal",
+    "Read bound applied to actual bytes rather than stat size",
+    "Exact12-field external manifest; reject unknown later inputs/settings"
+  ],
+  "additional_null_statuses": [
+    "ambiguous_reference_location",
+    "nonconforming_reference_mesh",
+    "uncertain_reference_boundary"
+  ],
+  "real_patient_data_access": false,
+  "solver_invocations": 0
+}

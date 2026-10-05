@@ -1,0 +1,162 @@
+{
+  "cases": {
+    "compression:N16:S60:reference": {
+      "backend_source_deck": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/N16/generated/compression-60-reference/specimen.feb",
+        "sha256": "706a323f0bc0a6b34264b34c4f137529f4583aff7375416286925c773005ef7b"
+      },
+      "deck": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/cases/compression-N16-S60-reference/specimen.feb",
+        "sha256": "7d181c56f50c059f03a65305598141736122b221d9d278ca0845b14f56910432"
+      },
+      "loading": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/cases/compression-N16-S60-reference/loading.json",
+        "sha256": "136c9c2a072e7da817577e9b0ee372459eda24192cbe7fa4cd79c8dbad163066"
+      },
+      "mesh": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/N16/generated/mesh.json",
+        "sha256": "5fefdc7e0ba068461ea5d64074e11fe734a6460552798487fb2794ff65075f6b"
+      }
+    },
+    "compression:N24:S60:reference": {
+      "backend_source_deck": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/N24/generated/compression-60-reference/specimen.feb",
+        "sha256": "e942de70e534b926552494c0115546bd4a4dd1066f2f7d1b08e1cde7fc292efd"
+      },
+      "deck": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/cases/compression-N24-S60-reference/specimen.feb",
+        "sha256": "33dea7a1716bb4b920288f3a4254566fd9dd3549843f41bb6b743b2e83591bd6"
+      },
+      "loading": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/cases/compression-N24-S60-reference/loading.json",
+        "sha256": "0e90bc8c988eaa2c4167932adcb28cd7104aa7c7ee23847b8107a8404f0a17b5"
+      },
+      "mesh": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/N24/generated/mesh.json",
+        "sha256": "61f27d63cdcb6328bcbe94e05ac1802a162d613cadd01610caf649a16f30643b"
+      }
+    },
+    "tension:N16:S60:reference": {
+      "backend_source_deck": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/N16/generated/tension-60-reference/specimen.feb",
+        "sha256": "7afae1318cd0e6be00310d34911c2ca8f90f2d13fcc934c019f51ec41c4d4c76"
+      },
+      "deck": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/cases/tension-N16-S60-reference/specimen.feb",
+        "sha256": "68e72af8df1f2d2bcb07cdd106724e55ec69682dafae0f7615985e3dd5eede97"
+      },
+      "loading": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/cases/tension-N16-S60-reference/loading.json",
+        "sha256": "5441f108b2df4f439450809eecec818b955324201742f9010a2923cd0bfd36a7"
+      },
+      "mesh": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/N16/generated/mesh.json",
+        "sha256": "5fefdc7e0ba068461ea5d64074e11fe734a6460552798487fb2794ff65075f6b"
+      }
+    },
+    "tension:N24:S60:reference": {
+      "backend_source_deck": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/N24/generated/tension-60-reference/specimen.feb",
+        "sha256": "3b1657cdeff46e36681a3424eed3d1474f3fed00624cff48cc7f6fd6792dd890"
+      },
+      "deck": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/cases/tension-N24-S60-reference/specimen.feb",
+        "sha256": "df0a499623ac489e6428f157d2d63d0edbf8c26f8d10cc6c90c2f4ee7fa4cd73"
+      },
+      "loading": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/cases/tension-N24-S60-reference/loading.json",
+        "sha256": "1e2740f77472e20de135b092ad7a73403c922760c379e4912aa63b01e7a72fb6"
+      },
+      "mesh": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/N24/generated/mesh.json",
+        "sha256": "61f27d63cdcb6328bcbe94e05ac1802a162d613cadd01610caf649a16f30643b"
+      }
+    }
+  },
+  "levels": {
+    "16": {
+      "elapsed_seconds": 1.0481615830212831,
+      "generation_seconds": 0.023653500014916062,
+      "mesh_sha256": "5fefdc7e0ba068461ea5d64074e11fe734a6460552798487fb2794ff65075f6b",
+      "native_mesh_sha256": "22bab9516195da1ffe913479fa82d99e330c3bb38dd5967eb46f247d6f115f86",
+      "quality": {
+        "analytic_cylinder_volume_m3": 2.458781313339728e-07,
+        "checks": {
+          "declared_cell_count": true,
+          "declared_node_count": true,
+          "finest_boundary_sag": true,
+          "finest_volume": true,
+          "minimum_scaled_jacobian": true,
+          "positive_rest_jacobians": true
+        },
+        "connected_cell_count": 6144,
+        "exterior_face_count": 2048,
+        "hex8_cell_count": 6144,
+        "integrated_volume_m3": 2.454833476939137e-07,
+        "interior_face_count": 17408,
+        "maximum_radial_boundary_sag_m": 4.818175219111105e-06,
+        "maximum_radial_boundary_sag_over_R": 0.0012045438047777763,
+        "minimum_rest_determinant_m3": 1.978674726137647e-12,
+        "minimum_rest_scaled_jacobian": 0.7071067811865468,
+        "node_count": 7209,
+        "passed": true,
+        "relative_volume_error": 0.001605606964382066,
+        "sampled_site_count_per_cell": 17
+      },
+      "receipt": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/N16/generated/receipt.json",
+        "sha256": "1f8dfda34a09a92d3d58514cfcb9cb77839ae8c629eaeb449b13bb1119c970f2"
+      }
+    },
+    "24": {
+      "elapsed_seconds": 2.8554330420447513,
+      "generation_seconds": 0.07194329099729657,
+      "mesh_sha256": "61f27d63cdcb6328bcbe94e05ac1802a162d613cadd01610caf649a16f30643b",
+      "native_mesh_sha256": "6995c3fac3d36cea62f7baa6dad6636415cd56bcc05cfb9db3b8c3b62915c8a0",
+      "quality": {
+        "analytic_cylinder_volume_m3": 2.458781313339728e-07,
+        "checks": {
+          "declared_cell_count": true,
+          "declared_node_count": true,
+          "finest_boundary_sag": true,
+          "finest_volume": true,
+          "minimum_scaled_jacobian": true,
+          "positive_rest_jacobians": true
+        },
+        "connected_cell_count": 20736,
+        "exterior_face_count": 4608,
+        "hex8_cell_count": 20736,
+        "integrated_volume_m3": 2.4570262495555224e-07,
+        "interior_face_count": 59904,
+        "maximum_radial_boundary_sag_m": 2.141650116130843e-06,
+        "maximum_radial_boundary_sag_over_R": 0.0005354125290327107,
+        "minimum_rest_determinant_m3": 5.862739929299536e-13,
+        "minimum_rest_scaled_jacobian": 0.7071067811865447,
+        "node_count": 23101,
+        "passed": true,
+        "relative_volume_error": 0.0007137941770923635,
+        "sampled_site_count_per_cell": 17
+      },
+      "receipt": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/N24/generated/receipt.json",
+        "sha256": "527b4b44db9567943daf4d94e9e0c366ed194281d62cf19c509e6dd475586470"
+      }
+    }
+  },
+  "method": "Copy of hash-verified actual generation quality receipts; no geometry recomputation or native execution by collector.",
+  "solver_calls": 0,
+  "solver_runs": {
+    "compression:N16:S60:reference": {
+      "status": "not_executed"
+    },
+    "compression:N24:S60:reference": {
+      "status": "not_executed"
+    },
+    "tension:N16:S60:reference": {
+      "status": "not_executed"
+    },
+    "tension:N24:S60:reference": {
+      "status": "not_executed"
+    }
+  }
+}

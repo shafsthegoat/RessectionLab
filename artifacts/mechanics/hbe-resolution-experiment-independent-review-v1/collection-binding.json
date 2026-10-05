@@ -1,0 +1,14 @@
+{
+  "schema": "hbe-resolution-terminal-collection-binding-v1",
+  "collector_index": {
+    "path": "artifacts/mechanics/hbe-resolution-experiment-result-v1/artifact-index.json",
+    "sha256": "019e2b93b00fc7a93695b4682aabe6a416af2306bbb7a402b8052755884ce422"
+  },
+  "run_outcomes": {
+    "path": "artifacts/mechanics/hbe-resolution-experiment-result-v1/run-outcomes.json",
+    "sha256": "b52a8dc2820bd54dcdeb57ca4d7a34bcd1e19f5bef2af5263e3e076559f1dbef"
+  },
+  "owner_statuses_and_N16_metrics_match_saved_state_and_independent_replay": true,
+  "all16_per_run_retained_files_match_final_index": true,
+  "progress_banners_match_independent_scan": true
+}

@@ -1,0 +1,239 @@
+{
+  "accepted_episodes": [
+    {
+      "method": "frozen_policy",
+      "normal_mm3": 126.99962768787412,
+      "removed_cells": 825,
+      "reward": 672.296999270337,
+      "subject": "sub-PAT22",
+      "target_access_success": true,
+      "target_fraction": 0.050161695691290045,
+      "target_mm3": 697.9979248046875
+    },
+    {
+      "method": "greedy_search",
+      "normal_mm3": 152.99955483081055,
+      "removed_cells": 973,
+      "reward": 789.0966476308048,
+      "subject": "sub-PAT22",
+      "target_access_success": true,
+      "target_fraction": 0.05892921245187094,
+      "target_mm3": 819.99755859375
+    },
+    {
+      "method": "frozen_policy",
+      "normal_mm3": 0.0,
+      "removed_cells": 0,
+      "reward": 0.0,
+      "subject": "sub-PAT25",
+      "target_access_success": false,
+      "target_fraction": 0.0,
+      "target_mm3": 0.0
+    },
+    {
+      "method": "greedy_search",
+      "normal_mm3": 0.0,
+      "removed_cells": 0,
+      "reward": 0.0,
+      "subject": "sub-PAT25",
+      "target_access_success": false,
+      "target_fraction": 0.0,
+      "target_mm3": 0.0
+    },
+    {
+      "method": "random_legal",
+      "normal_mm3": 0.0,
+      "removed_cells": 0,
+      "reward": 0.0,
+      "subject": "sub-PAT25",
+      "target_access_success": false,
+      "target_fraction": 0.0,
+      "target_mm3": 0.0
+    },
+    {
+      "method": "random_legal",
+      "normal_mm3": 108.99978788280993,
+      "removed_cells": 400,
+      "reward": 268.98645496120463,
+      "subject": "sub-PAT28",
+      "target_access_success": true,
+      "target_fraction": 0.028337714892538075,
+      "target_mm3": 290.9994125366211
+    }
+  ],
+  "accepted_episodes_checked": 6,
+  "checker_sha256": "5a9dd3d1fecabc4d88881d8aeef11bc7a81c73c6db18fc42aa5f7cbc03f42470",
+  "checkpoint_tensors_loaded": false,
+  "complete_primary_pairs": 2,
+  "failed_episodes_retained_unassessed": [
+    {
+      "failure": {
+        "message": "Independent episode accounting mismatch: target_removed_mm3",
+        "type": "ValueError"
+      },
+      "method": "random_legal",
+      "outcomes": null,
+      "saved_arithmetic_drift_only": {
+        "normal_removed_mm3": {
+          "aggregate": 54.99983596801758,
+          "per_action_sum": 54.99982633431518,
+          "sum_minus_aggregate": -9.633702397593424e-06
+        },
+        "target_removed_mm3": {
+          "aggregate": 271.9991760253906,
+          "per_action_sum": 271.9992035627365,
+          "sum_minus_aggregate": 2.753734588623047e-05
+        }
+      },
+      "subject": "sub-PAT22"
+    },
+    {
+      "failure": {
+        "message": "Independent episode accounting mismatch: normal_removed_mm3",
+        "type": "ValueError"
+      },
+      "method": "frozen_policy",
+      "outcomes": null,
+      "saved_arithmetic_drift_only": {
+        "normal_removed_mm3": {
+          "aggregate": 185.99961853027344,
+          "per_action_sum": 185.9996501258536,
+          "sum_minus_aggregate": 3.159558016818664e-05
+        },
+        "target_removed_mm3": {
+          "aggregate": 530.9989013671875,
+          "per_action_sum": 530.9989166259766,
+          "sum_minus_aggregate": 1.52587890625e-05
+        }
+      },
+      "subject": "sub-PAT28"
+    },
+    {
+      "failure": {
+        "message": "Independent episode accounting mismatch: normal_removed_mm3",
+        "type": "ValueError"
+      },
+      "method": "greedy_search",
+      "outcomes": null,
+      "saved_arithmetic_drift_only": {
+        "normal_removed_mm3": {
+          "aggregate": 155.9996795654297,
+          "per_action_sum": 155.99969783593238,
+          "sum_minus_aggregate": 1.8270502692985247e-05
+        },
+        "target_removed_mm3": {
+          "aggregate": 643.9987182617188,
+          "per_action_sum": 643.9987030029297,
+          "sum_minus_aggregate": -1.52587890625e-05
+        }
+      },
+      "subject": "sub-PAT28"
+    }
+  ],
+  "input_sha256": {
+    "declaration-input.json": "3e46a2bba38f0b2bea127d49c831c6af597a51aad360afdcdfdadf82b27c23f3",
+    "output-sha256.json": "5373388b9f978ca431cf485bf8d3c9e7a3497ef5a86d8543236e141f51e55868",
+    "sub-PAT16/closure-check.json": "086f693e688a8ebbf1ffdd27138eacda8d4d1580c1ebc35ed9d05dba6c69e2f8",
+    "sub-PAT16/preparation.json": "190b5ebbf9e351e7dbb1ad905ea17f3581c19b40998cef9033e69e927a945154",
+    "sub-PAT16/receipt.json": "2055ab7217aca524d121dea8bb1da969f80a058893dad0817abedb60dfce31b8",
+    "sub-PAT16/supervisor.json": "5e7042d86c25afbcbe893135d8d1b926d313ed4191802c685d92758b90615c46",
+    "sub-PAT20/closure-check.json": "086f693e688a8ebbf1ffdd27138eacda8d4d1580c1ebc35ed9d05dba6c69e2f8",
+    "sub-PAT20/preparation.json": "dd32db2c04566fd904262f3ebceac0576608a9bdfd3fbd22fff6891612dedc1a",
+    "sub-PAT20/receipt.json": "d980391afc008ae4ef4baf3aeaaca4d9b76598b8cf23b23f7b13415f44e3f1bb",
+    "sub-PAT20/supervisor.json": "4a6f80c85e48bc8fb82eae088377a5a90bcffccfb336c7b319171ae8608da505",
+    "sub-PAT22/closure-check.json": "086f693e688a8ebbf1ffdd27138eacda8d4d1580c1ebc35ed9d05dba6c69e2f8",
+    "sub-PAT22/frozen_policy.json": "55fad22689c830199caf640e90f71b5e095b85616224902adc7667ce2fb1e716",
+    "sub-PAT22/greedy_search.json": "1a80ce91ff8f0b782e9419c5f46c9d1147c3425a8c3f80ef175922ef10302904",
+    "sub-PAT22/preparation.json": "7db799e7a6e0b8591af6727777dfec82aeec92ba39cec19f7b86f1885f5b4b7c",
+    "sub-PAT22/random_legal.json": "9dd7eea43486b850eb4a9dddfad4f37dd794c6929febe47f4ce586d1f2058689",
+    "sub-PAT22/receipt.json": "415ded35574a1e5c2533bffb1ea09f6e90b538572cfdd26ebb02ba37fd9256a8",
+    "sub-PAT22/supervisor.json": "9d4035dee1d38c10a83018bf2c91568db7b725d0de9aba9da5530d84ac2da134",
+    "sub-PAT25/closure-check.json": "086f693e688a8ebbf1ffdd27138eacda8d4d1580c1ebc35ed9d05dba6c69e2f8",
+    "sub-PAT25/frozen_policy.json": "823bc0beb347b3383954c07686fa2760f7ac9447b7d0ac3ff22375054b9160f0",
+    "sub-PAT25/greedy_search.json": "52589bb6b667375b1e980dcc12656a2edc29dca696881d37380fb8e488dceef8",
+    "sub-PAT25/preparation.json": "c4bee2093993ee79baf4e807bf2fe7de824110a4e3845303e893876efa09b8af",
+    "sub-PAT25/random_legal.json": "c0dbf3d06dc49efa80784a9a36b0b9076a9d7ee0e36e66ac2dc73ff764cee515",
+    "sub-PAT25/receipt.json": "a7da138930db7a8e0636dd66813a8710110a0fa88869d66ddb5fa1d9bf0afe46",
+    "sub-PAT25/supervisor.json": "9ebbcf37095aa26937e9551aef06c8bc2730849ffbc411f11d2a73e2b2b997d9",
+    "sub-PAT28/closure-check.json": "086f693e688a8ebbf1ffdd27138eacda8d4d1580c1ebc35ed9d05dba6c69e2f8",
+    "sub-PAT28/frozen_policy.json": "fe4238ad447fe000ce75d6336008d1d76e92c56e826da60e55924f43dff41755",
+    "sub-PAT28/greedy_search.json": "59fb7adcee5a4f729c5bb01c1ac22d83d5e3122b84c10a463c1116e1d6e357f7",
+    "sub-PAT28/preparation.json": "ba5f24c4a3d1b488748343f67e579011fcc5f0432fb0b9256a0b858f4160742b",
+    "sub-PAT28/random_legal.json": "fb49c00588f72e2e6ba03c89bc3e04b36d21f3acc794430c0941b2a75956a619",
+    "sub-PAT28/receipt.json": "7ac009ba3055a96da53c9f9bb081dce743f4930ef00b68d1288a4317163b9780",
+    "sub-PAT28/supervisor.json": "fdcf57197a686ba9e61fcf97ef1532d9de31071f0858d08d28064489ca2e2152",
+    "summary.json": "ee75c0afe38782807180d0b2ccce592fe4eb93e0da7bd34a2d89a0ded4f2df05"
+  },
+  "interpretation": "Stored evidence accounting and denominator check. Three original accounting rejections remain failed/null; STOP-only is valid zero-target. Existing TRAIN development transfer is not held-out clinical generalization.",
+  "native_geometry_rerun": false,
+  "paired_return_difference": {
+    "sub-PAT22": -116.79964836046781,
+    "sub-PAT25": 0.0
+  },
+  "patient_arrays_opened": false,
+  "patients": [
+    {
+      "full_target_cells": 45400,
+      "methods": {
+        "frozen_policy": "not_executed",
+        "greedy_search": "not_executed",
+        "random_legal": "not_executed"
+      },
+      "outside_support_cells": 19,
+      "preparation_status": "blocked_support_conflict",
+      "subject": "sub-PAT16"
+    },
+    {
+      "full_target_cells": 12451,
+      "methods": {
+        "frozen_policy": "not_executed",
+        "greedy_search": "not_executed",
+        "random_legal": "not_executed"
+      },
+      "outside_support_cells": 125,
+      "preparation_status": "blocked_support_conflict",
+      "subject": "sub-PAT20"
+    },
+    {
+      "accepted_initial_actions": 76,
+      "full_target_cells": 13915,
+      "methods": {
+        "frozen_policy": "complete",
+        "greedy_search": "complete",
+        "random_legal": "failed"
+      },
+      "outside_actor_crop_cells": 0,
+      "outside_support_cells": 0,
+      "preparation_status": "prepared",
+      "subject": "sub-PAT22"
+    },
+    {
+      "accepted_initial_actions": 0,
+      "full_target_cells": 16526,
+      "methods": {
+        "frozen_policy": "complete",
+        "greedy_search": "complete",
+        "random_legal": "complete"
+      },
+      "outside_actor_crop_cells": 0,
+      "outside_support_cells": 0,
+      "preparation_status": "prepared",
+      "subject": "sub-PAT25"
+    },
+    {
+      "accepted_initial_actions": 70,
+      "full_target_cells": 10269,
+      "methods": {
+        "frozen_policy": "failed",
+        "greedy_search": "failed",
+        "random_legal": "complete"
+      },
+      "outside_actor_crop_cells": 0,
+      "outside_support_cells": 0,
+      "preparation_status": "prepared",
+      "subject": "sub-PAT28"
+    }
+  ],
+  "patients_prescribed": 5,
+  "status": "passed"
+}

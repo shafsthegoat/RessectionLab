@@ -1,0 +1,107 @@
+{
+  "audit_source_sha256": "cfba4ee655a7fb234271ba78482f5b7c48526e8fb829f172c7c9185cc570012e",
+  "center_error_scope": "Only binary64 arithmetic rounding allowed; state/features/masks/pairing/ranks use exact comparisons",
+  "checkpoint_binding_scope": "Actual file bytes match pinned source receipt; tensor/profile/forward semantics use the matching prior pinned audit, without rerunning it",
+  "input_files_unchanged": true,
+  "max_centered_delta_error_against_exact_rational": 2.7755575615628914e-17,
+  "new_geometry_checks": 0,
+  "new_gradient_steps": 0,
+  "new_policy_forwards": 0,
+  "new_random_draws": 0,
+  "new_simulator_calls": 0,
+  "pairs": [
+    {
+      "changed_ordinal_ranks_including_stop": 8,
+      "initial_margin": 0.00025175511837005615,
+      "latest_margin": 0.004095122218132019,
+      "nonstop_rows": 26,
+      "seed": 8109736527858856845,
+      "step": 0,
+      "value_delta": 0.02985251694917679
+    },
+    {
+      "changed_ordinal_ranks_including_stop": 17,
+      "initial_margin": 0.006669357419013977,
+      "latest_margin": 0.010174572467803955,
+      "nonstop_rows": 24,
+      "seed": 8109736527858856845,
+      "step": 1,
+      "value_delta": 0.03178883343935013
+    },
+    {
+      "changed_ordinal_ranks_including_stop": 12,
+      "initial_margin": 0.01813638210296631,
+      "latest_margin": 0.03003963828086853,
+      "nonstop_rows": 22,
+      "seed": 8109736527858856845,
+      "step": 2,
+      "value_delta": 0.03352860361337662
+    },
+    {
+      "changed_ordinal_ranks_including_stop": 8,
+      "initial_margin": 0.00025175511837005615,
+      "latest_margin": 0.004095122218132019,
+      "nonstop_rows": 26,
+      "seed": 8342823306791655420,
+      "step": 0,
+      "value_delta": 0.02985251694917679
+    },
+    {
+      "changed_ordinal_ranks_including_stop": 17,
+      "initial_margin": 0.006669357419013977,
+      "latest_margin": 0.010174572467803955,
+      "nonstop_rows": 24,
+      "seed": 8342823306791655420,
+      "step": 1,
+      "value_delta": 0.03178883343935013
+    },
+    {
+      "changed_ordinal_ranks_including_stop": 12,
+      "initial_margin": 0.01813638210296631,
+      "latest_margin": 0.03003963828086853,
+      "nonstop_rows": 22,
+      "seed": 8342823306791655420,
+      "step": 2,
+      "value_delta": 0.03352860361337662
+    }
+  ],
+  "physical_input_sha256": {
+    "artifacts/learning/native-axis-raw-update-pilot-v1/declaration.json": "afab17c97ff225692d881e07a6cf2eb1d93e586ff0f77b09e1a0b24fa05da13e",
+    "artifacts/learning/native-axis-raw-update-pilot-v1/launcher-status.json": "031f43b0a7e1872cefbd8b459013f320c2a4825605c832f1a25e7a2d9d18bb7f",
+    "artifacts/learning/native-axis-raw-update-pilot-v1/pilot/accounting.json": "dc3da53529062d10ee0eeb199ec4216d74250ec5b9b9c093bd6803b5abeab846",
+    "artifacts/learning/native-axis-raw-update-pilot-v1/pilot/accounting.json.gz": "5ecc57a08a33a481deba9e5b54102134378c92685222a97490f5a7c7d3735d3f",
+    "artifacts/learning/native-axis-raw-update-pilot-v1/pilot/candidate-record.json": "c045f1fcd4a3deaec2457cf861b78eabdd5bbec1e01072cf8d0dae5d049900f6",
+    "artifacts/learning/native-axis-raw-update-pilot-v1/pilot/candidate-record.json.gz": "222ba71065b2bbae39f0dff1a5809f5d23419120551561c360a92059edc2c3cb",
+    "artifacts/learning/native-axis-raw-update-pilot-v1/pilot/learner/checkpoint.pt": "832eff13f60b5670708a5598776ee6831fdfb857816f33c72052fdf0bfa2a31a",
+    "artifacts/learning/native-axis-raw-update-pilot-v1/pilot/learner/contract.json": "1a547a9b4036fe2fcfc3fa2cfb4972de4f7cbd89744668499daf66bbc839bed7",
+    "artifacts/learning/native-axis-raw-update-pilot-v1/pilot/learner/initial.pt": "8947317e9b7eb10cc21177beeb11555e12dd8b773135cafc9cc0fb04489660b2",
+    "artifacts/learning/native-axis-raw-update-pilot-v1/pilot/learner/result.json": "27842b81846ce1bdcdf202a5cb4d94d9277e92f2f696e80b225cb096e8cbdc9b",
+    "artifacts/learning/native-axis-raw-update-pilot-v1/pilot/status.json": "aa038d39f9a1aea3808e7cf049853c7c8fbd9f857a10afa09ffcef3888e927af",
+    "artifacts/learning/native-axis-raw-update-pilot-v1/report-v1/report-source.json": "d2fb38139898d842961220d19aec7f481a9a8567bdb288737ffc627cd2450ea0",
+    "artifacts/learning/native-axis-raw-update-pilot-v1/worker-status.json": "6b6077d74ef5ddb1b6d884721bf1311a51609a2ea628d2198e101ecda0eaf324",
+    "artifacts/native-axis-decision-diagnostics-v2/diagnostic.json": "d13bb1d298c69dd176db397adb0b63b609672d66af89343066de1462f953b4ec",
+    "artifacts/native-axis-pilot-result-audit/audit-02.json": "37b9bec653545486446cd78f845615867654838938a7f9a69ba07c0451d0eb21",
+    "scripts/audit_native_axis_pilot.py": "11d274eb50087624b157e95e533a5387f36d44f7087b6589017a52e39affa856",
+    "scripts/report_native_axis_decision_diagnostics.py": "c3d3036d568383b01ffd86b6834f6ef6ba4bb8973e908259c06393ce0bf0d271"
+  },
+  "prior_forward_audit_sha256": "37b9bec653545486446cd78f845615867654838938a7f9a69ba07c0451d0eb21",
+  "report": "artifacts/native-axis-decision-diagnostics-v2",
+  "scope": "Independent saved-float arithmetic and pinned-byte checks only",
+  "selection_pairs": 6,
+  "state_pair_indices": [
+    [
+      0,
+      3
+    ],
+    [
+      1,
+      4
+    ],
+    [
+      2,
+      5
+    ]
+  ],
+  "status": "passed",
+  "unique_states": 3
+}

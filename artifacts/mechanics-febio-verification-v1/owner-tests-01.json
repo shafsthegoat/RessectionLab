@@ -1,0 +1,17 @@
+{
+  "scope": "Analytic/XML/extraction corruption tests only; no FEBio process, specimen or patient arrays",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_mechanics_febio_verification.py"
+  ],
+  "exit_code": 0,
+  "seconds": 0.6699604580644518,
+  "sources": {
+    "scripts/mechanics_febio_verification.py": "32479f7e58bac44ddda53fd0c19d88a0226ec5a361cb6e304ecc1e51d3e3d2b9",
+    "tests/test_mechanics_febio_verification.py": "3fa49814c9d7d3274f85b467fe2c5e33f5113e3071b2aecf5113db51fac54c68"
+  },
+  "source_unchanged": true
+}

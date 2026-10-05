@@ -1,0 +1,40 @@
+{
+  "tested_utc": "2026-10-04T10:05:03.681313+00:00",
+  "status": "passed_final_footer_and_saved_replay_checks",
+  "identity": {
+    "renderer_source_digest": "75d7f69b4427c31e0ff851fe727277cc63653a109c9e2d6f0dd4a7abd3bb0f90",
+    "source_revision": "e70edc18a085b19f2e4026420ba3be553b6a6387",
+    "renderer_archive_sha256": "9ee458449ec0deab1d101a03d995ab5dcc2d076b300627cb47035540d095c274",
+    "engine_executable_sha256": "d88dd33cbccfdeb512c17cf492614422d7d01d8f9b20fbe86f2bc9f63275cbb3",
+    "python_source_digest": "377284f6d80164a86ca69d6b8f9f606e4015266b8c5285070d12d1d147b2ef62",
+    "architecture": "arm64",
+    "bundle_id": "org.ressectionlab.electron"
+  },
+  "capture_verification": "footer-capture-verification.json",
+  "initial_full_structural_workflow_receipt": "native-validation.json",
+  "checks": {
+    "pat05_nocsf_estimate_displayed": true,
+    "source_view_clears_contour_and_banner": true,
+    "source_view_footer_now_matches_restored_source": true,
+    "exact_restored_footer": "Source imaging restored \u00b7 Source annotations preserved",
+    "saved_ucsf_replay_independently_rechecked_without_new_training": true,
+    "saved_replay_native_target_mm3": 174,
+    "saved_replay_native_normal_mm3": 11,
+    "saved_replay_native_residual_target_mm3": 41745,
+    "no_estimate_in_saved_replay": true,
+    "source_view_after_replay_restores_anatomy_and_footer": true,
+    "new_training_started": false,
+    "final_evaluation_requested": false
+  },
+  "screenshots": [
+    "pat05-source-cleared-final.jpg",
+    "ucsf-replay-final.jpg",
+    "ucsf-source-final.jpg"
+  ],
+  "validation_limits": [
+    "Initial two-case contour, outside-point, cancellation and switch receipts identify their earlier renderer4aba8275 separately. This final renderer differs by the committed source-restoration footer fix; every captured input matches e70edc1 exactly.",
+    "Same-case BTC proposal-to-accepted-replay transition remains unexercised because the cases intentionally lack reviewed planning support and accepted runs. Source code suppresses proposal display during replay.",
+    "Registered-prior, layout and new numerical changes under active development are deliberately absent from this exact snapshot.",
+    "Local ad hoc signing only; no distribution signing or notarization."
+  ]
+}

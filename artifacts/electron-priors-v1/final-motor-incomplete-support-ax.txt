@@ -1,0 +1,130 @@
+Window: "RessectionLab", App: RessectionLab.
+0 standard window RessectionLab, Secondary Actions: Raise
+	1 container RessectionLab
+		2 container
+			3 HTML content RessectionLab, URL: file:///Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/desktop/release/RessectionLab-darwin-arm64/RessectionLab.app/Contents/Resources/app.asar/dist/index.html
+				4 container
+					5 text Ressection Lab Patient-specific planning Research workspace
+					6 button Open case ⌘O
+						7 text Open case
+						8 text ⌘O
+					9 button Import MRI
+					10 button Save
+					11 container Workspace navigation
+						12 button Toggle case and evidence panel
+						13 button Focus route comparison
+					14 text CASE & EVIDENCE
+					15 button Collapse case panel
+					16 heading UCSF-PDGM-0004, Value: 1
+						17 text UCSF-PDGM-0004
+					18 text Annotation-assisted structural workspace
+					19 text Public mirror · source match unverified
+					20 container
+						21 heading Source imaging 01, Value: 2
+							22 text Source imaging 01
+						23 text T1c 240 × 240 × 155 voxels 1.0 × 1.0 × 1.0 mm ·  RAS+
+					24 container
+						25 heading Target annotations 03, Value: 2
+							26 text Target annotations 03
+						27 checkbox FLAIR Abnormality 18.65 mL · supplied annotation, Value: 1
+						28 text FLAIR Abnormality
+						29 text 18.65  mL · supplied annotation
+						30 checkbox Enhancing Target 15.67 mL · supplied annotation, Value: 1
+						31 text Enhancing Target
+						32 text 15.67  mL · supplied annotation
+						33 checkbox Nonenhancing Or Necrotic Core 7.59 mL · supplied annotation, Value: 1
+						34 text Nonenhancing Or Necrotic Core
+						35 text 7.59  mL · supplied annotation Overlay opacity 32 %
+						36 slider Overlay opacity 32%, Value: 0.32, Secondary Actions: Increment, Decrement
+					37 container
+						38 heading Population priors 07, Value: 2
+							39 text Population priors 07
+						40 text Population prior Alignment review required · inspection only Inspect one released map
+						41 pop up button Inspect one released map, Value: Motor · functional network
+							42 (selected) Motor · functional network
+						43 text Atlas concordance (unitless, 0–1) 0 1 Normative connectivity-map concordance. This is not an injury probability or patient connectivity. AT LINKED CURSOR · INTERPOLATED ATLAS SAMPLE Incomplete atlas sampling support — unknown No complete atlas sample is available here. Patient function is unknown.
+						44 button Return to source view
+						45 text Not used in route scoring Patient language dominance: unknown Patient-specific function: unknown
+					46 pop up button Inspect evidence
+					47 text Local processing · source preserved Workspace Route comparison
+					48 heading Anatomy, in context, Value: 2
+						49 text Anatomy, in context
+					50 container Camera framing
+						51 toggle button Focus anatomy, Value: 1
+						52 toggle button Fit instruments, Value: 0
+					53 text Population prior
+					54 text Motor · functional network
+					55 text Alignment review required · inspection only · not used in route scoring
+					56 button Source view
+					57 container Linked patient imaging workspace
+						58 toolbar Imaging layout and 3D controls
+							59 container View layout
+								60 toggle button 3D focus, Value: 0
+								61 toggle button MRI review, Value: 0
+							62 text Coronal  MRI expanded
+						63 container
+							64 text Coronal 106.0 mm
+							65 toggle button Description: Restore linked views, Value: 1
+							66 container Coronal source MRI, neurological convention, slice position 106.0 millimeters. Click to set cursor; scroll or arrow keys change slice.
+								67 text L
+								68 text R
+								69 text S
+								70 text I
+								71 text 20
+								72 text  mm
+								73 text SOURCE MRI
+						74 text Linked views
+						75 text RAS
+						76 text -39.8 / 106.0 / 77.0  mm
+						77 container
+							78 text Contrast
+							79 slider Description: Source MRI window width, Value: 1, Secondary Actions: Increment, Decrement
+						80 text Neurological convention
+					81 text Linked physical coordinates · RAS+ mm Anatomy focus may crop instruments
+					82 tab group Planning workflows
+						83 tab (selected) Routes, Value: 1
+						84 tab (settable, integer) Refine, Value: 0
+					85 container Routes
+						86 text INSTRUMENT-AWARE SEARCH
+						87 heading Compare the alternatives, Value: 2
+							88 text Compare the alternatives
+						89 text Inspect modeled access under shared geometric assumptions.
+						90 container
+							91 disclosure triangle Search settings
+								92 text Search settings
+							93 text Instrument configuration
+							94 pop up button Instrument configuration, Value: Compare both generic tools
+								95 (selected) Compare both generic tools
+							96 text Generic research geometry · whole shaft and active tip
+							97 checkbox Use estimated image support for hypothetical access windows, Value: 0
+							98 text Use estimated image support for
+							99 text hypothetical
+							100 text  access windows
+							101 button (disabled) Generate candidate routes
+						102 pop up button Description: Candidate category, Value: Retained alternatives
+							103 (selected) Retained alternatives
+						104 text 0
+						105 container
+							106 text A
+							107 pop up button (disabled) Description: Primary route A, Value: Select a route
+						108 container
+							109 text B
+							110 pop up button (disabled) Description: Comparison route B, Value: Add a comparison
+						111 heading A route starts with the case, Value: 3
+							112 text A route starts with the case
+						113 text Review the anatomy, choose an instrument, then generate alternatives to compare.
+					114 text Research use only
+					115 text Clinical outcomes are not predicted. Functional and vascular anatomy remain unassessed.
+					116 text Population prior shown · alignment review required · not used in route scoring
+					117 text RAS -39.8 / 106.0 / 77.0 mm
+	118 close button
+	119 full screen button Help: this button also has an action to zoom the window, Secondary Actions: zoom the window
+	120 minimize button
+121 menu bar
+	122 RessectionLab
+	123 File
+	124 Edit
+	125 View
+	126 Window
+
+The focused UI element is 41 pop up button Inspect one released map, Value: Motor · functional network

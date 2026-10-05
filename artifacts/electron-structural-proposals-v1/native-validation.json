@@ -1,0 +1,110 @@
+{
+  "tested_utc": "2026-10-04T10:00:35.671555+00:00",
+  "status": "passed_structural_view_checks_with_minor_footer_issue",
+  "identity": {
+    "engine_executable_sha256": "d88dd33cbccfdeb512c17cf492614422d7d01d8f9b20fbe86f2bc9f63275cbb3",
+    "renderer_archive_sha256": "a619a7ff876578dea5f831f4d013cba05f6025bda420d392ce2ff86eee0fcb50",
+    "python_source_digest": "377284f6d80164a86ca69d6b8f9f606e4015266b8c5285070d12d1d147b2ef62",
+    "renderer_source_digest": "4aba8275549449014d47dcb363ed40f0c35ce040ce723ea007af5493d95813ff",
+    "architecture": "arm64",
+    "bundle_id": "org.ressectionlab.electron",
+    "source_checkpoint": "353cff0"
+  },
+  "build_seconds": 11.331,
+  "internal_symlinks": 41,
+  "local_adhoc_signature_verified": true,
+  "cases": [
+    {
+      "case_id": "BTC-ds001226-sub-PAT28-preop",
+      "bundle": "outputs/cases/BTC-sub-PAT28-structural-evidence.ressectionlab",
+      "bundle_sha256": "f7fc9491cf74634de5b2be36dd5968c7e161a7b7fc22698a7045d7453c95a747",
+      "source_case_hash": "sha256:69e57559a86b00a55c3b8b5e2b5e8cc7312d0170af6ba4496a951b76e7213228",
+      "proposal_status": "review_required",
+      "expected_main_outside_count": 0,
+      "native_nocsf_outside_count": 214,
+      "source_point_mm": [
+        -13.999932285631076,
+        9.317959476313263,
+        64.3339069030313
+      ],
+      "native_displayed_point_mm": [
+        -14.0,
+        9.3,
+        64.3
+      ],
+      "native_checks": {
+        "main_contour_shown_on_three_original_mri_planes": true,
+        "nocsf_contour_shown_on_three_original_mri_planes": true,
+        "source_annotation_volume_display_preserved": true,
+        "explicit_estimate_review_required_view_only_label": true,
+        "hypothetical_route_generation_remains_disabled": true,
+        "outside_annotation_cursor_matches_source_cell_at_display_precision": true
+      }
+    },
+    {
+      "case_id": "BTC-ds001226-sub-PAT05-preop",
+      "bundle": "outputs/cases/BTC-sub-PAT05-structural-evidence.ressectionlab",
+      "bundle_sha256": "c1af712957dc4902343995bd828eb0c3662438f8445c5cb7401e6dd50f7a4e12",
+      "source_case_hash": "sha256:2fd887043fc6c7d657e83cadd9f55f0f585940a82c0eefb50da8baa0b3c989ef",
+      "proposal_status": "review_required",
+      "expected_main_outside_count": 0,
+      "native_nocsf_outside_count": 538,
+      "source_point_mm": [
+        -41.24990986287594,
+        27.324141682649497,
+        3.208623055761535
+      ],
+      "native_displayed_point_mm": [
+        -41.2,
+        27.3,
+        3.2
+      ],
+      "native_checks": {
+        "main_contour_shown_on_three_original_mri_planes": true,
+        "nocsf_contour_shown_on_three_original_mri_planes": true,
+        "source_annotation_volume_display_preserved": true,
+        "explicit_estimate_review_required_view_only_label": true,
+        "hypothetical_route_generation_remains_disabled": true,
+        "outside_annotation_cursor_matches_source_cell_at_display_precision": true
+      }
+    }
+  ],
+  "checks": {
+    "source_view_removes_estimate_banner_and_contours": true,
+    "case_switch_clears_selected_estimate": true,
+    "cancelled_native_case_dialog_preserves_current_case_and_estimate": true,
+    "case_switch_to_ucsf_and_saved_replay_show_no_estimate": true,
+    "existing_signed_ucsf_replay_independently_rechecked": true,
+    "source_view_restored_after_replay": true,
+    "new_training_started": false,
+    "final_evaluation_requested": false
+  },
+  "tests": {
+    "main": 31,
+    "renderer": 47,
+    "viewer": 19,
+    "production_typescript_and_vite_build": "passed"
+  },
+  "known_issues": [
+    {
+      "issue": "After clearing the structural proposal, the footer still states that the estimated envelope is shown. The banner, contour, MRI captions and toggle selection clear correctly.",
+      "severity": "minor_stale_status_copy",
+      "source_fix": "Desktop owner fixing separately; not included in this captured renderer."
+    }
+  ],
+  "validation_limits": [
+    "Same-case proposal-to-accepted-replay transition was not exercised because BTC cases intentionally lack reviewed planning support and accepted runs. Existing UCSF replay after case switching was checked; source tests and explicit renderer suppression cover simultaneous proposal/replay exclusion.",
+    "Images are local native visual QA of displayed estimates, not anatomical or clinical validation.",
+    "Numerical engine is the previous verified snapshot; newer in-progress numerical source is not included.",
+    "Distribution signing and notarization were not performed."
+  ],
+  "screenshots": [
+    "pat05-case-switch.jpg",
+    "pat05-main.jpg",
+    "pat05-nocsf-outside.jpg",
+    "pat28-main.jpg",
+    "pat28-nocsf-outside.jpg",
+    "pat28-source-cleared.jpg",
+    "ucsf-replay-after-case-switch.jpg"
+  ]
+}

@@ -1,0 +1,361 @@
+{
+  "all_bound_sources_inputs_and_estimates_unchanged": true,
+  "brain_reviewed": false,
+  "completed_at": "2026-10-04T21:16:31.029674+00:00",
+  "cortical_access_permitted": false,
+  "elapsed_seconds": 16.271789042046294,
+  "geometry": {
+    "SDT": {
+      "affine_exactly_equal_to_T1": true,
+      "affine_ras_mm": [
+        [
+          0.0869971364736557,
+          0.007269168272614479,
+          -0.9961820840835571,
+          91.50908660888672
+        ],
+        [
+          -0.9962085485458374,
+          0.0006349085597321391,
+          -0.08699482679367065,
+          142.4852752685547
+        ],
+        [
+          1.0446104425909652e-07,
+          0.9999734163284302,
+          0.007296843454241753,
+          -156.06825256347656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "array_dtype": "float32",
+      "maximum_full_cell_corner_difference_mm": 0.0,
+      "maximum_voxel_center_corner_difference_mm": 0.0,
+      "orientation": [
+        "P",
+        "S",
+        "L"
+      ],
+      "qform": null,
+      "qform_code": 0,
+      "sform": [
+        [
+          0.0869971364736557,
+          0.007269168272614479,
+          -0.9961820840835571,
+          91.50908660888672
+        ],
+        [
+          -0.9962085485458374,
+          0.0006349085597321391,
+          -0.08699482679367065,
+          142.4852752685547
+        ],
+        [
+          1.0446104425909652e-07,
+          0.9999734163284302,
+          0.007296843454241753,
+          -156.06825256347656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "sform_code": 1,
+      "shape": [
+        256,
+        256,
+        192
+      ],
+      "spacing_mm": [
+        0.9999999869752153,
+        1.0000000386399026,
+        1.000000044231157
+      ],
+      "units": [
+        "mm",
+        "sec"
+      ]
+    },
+    "T1": {
+      "affine_exactly_equal_to_T1": true,
+      "affine_ras_mm": [
+        [
+          0.0869971364736557,
+          0.007269168272614479,
+          -0.9961820840835571,
+          91.50908660888672
+        ],
+        [
+          -0.9962085485458374,
+          0.0006349085597321391,
+          -0.08699482679367065,
+          142.4852752685547
+        ],
+        [
+          1.0446104425909652e-07,
+          0.9999734163284302,
+          0.007296843454241753,
+          -156.06825256347656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "array_dtype": "float32",
+      "maximum_full_cell_corner_difference_mm": 0.0,
+      "maximum_voxel_center_corner_difference_mm": 0.0,
+      "orientation": [
+        "P",
+        "S",
+        "L"
+      ],
+      "qform": null,
+      "qform_code": 0,
+      "sform": [
+        [
+          0.0869971364736557,
+          0.007269168272614479,
+          -0.9961820840835571,
+          91.50908660888672
+        ],
+        [
+          -0.9962085485458374,
+          0.0006349085597321391,
+          -0.08699482679367065,
+          142.4852752685547
+        ],
+        [
+          1.0446104425909652e-07,
+          0.9999734163284302,
+          0.007296843454241753,
+          -156.06825256347656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "sform_code": 1,
+      "shape": [
+        256,
+        256,
+        192
+      ],
+      "spacing_mm": [
+        0.9999999869752153,
+        1.0000000386399026,
+        1.000000044231157
+      ],
+      "units": [
+        "mm",
+        "sec"
+      ]
+    },
+    "mask": {
+      "affine_exactly_equal_to_T1": true,
+      "affine_ras_mm": [
+        [
+          0.0869971364736557,
+          0.007269168272614479,
+          -0.9961820840835571,
+          91.50908660888672
+        ],
+        [
+          -0.9962085485458374,
+          0.0006349085597321391,
+          -0.08699482679367065,
+          142.4852752685547
+        ],
+        [
+          1.0446104425909652e-07,
+          0.9999734163284302,
+          0.007296843454241753,
+          -156.06825256347656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "array_dtype": "uint8",
+      "maximum_full_cell_corner_difference_mm": 0.0,
+      "maximum_voxel_center_corner_difference_mm": 0.0,
+      "orientation": [
+        "P",
+        "S",
+        "L"
+      ],
+      "qform": null,
+      "qform_code": 0,
+      "sform": [
+        [
+          0.0869971364736557,
+          0.007269168272614479,
+          -0.9961820840835571,
+          91.50908660888672
+        ],
+        [
+          -0.9962085485458374,
+          0.0006349085597321391,
+          -0.08699482679367065,
+          142.4852752685547
+        ],
+        [
+          1.0446104425909652e-07,
+          0.9999734163284302,
+          0.007296843454241753,
+          -156.06825256347656
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "sform_code": 1,
+      "shape": [
+        256,
+        256,
+        192
+      ],
+      "spacing_mm": [
+        0.9999999869752153,
+        1.0000000386399026,
+        1.000000044231157
+      ],
+      "units": [
+        "mm",
+        "sec"
+      ]
+    }
+  },
+  "inference_attempts": 0,
+  "measurements": {
+    "FOV_boundary_union_contact_voxels": 0,
+    "FOV_face_contact_voxels": {
+      "i_high": 0,
+      "i_low": 0,
+      "j_high": 0,
+      "j_low": 0,
+      "k_high": 0,
+      "k_low": 0
+    },
+    "SDT_exterior_fill_100_count": 3818304,
+    "SDT_range_mm": [
+      -5.186264514923096,
+      100.0
+    ],
+    "T1_range": [
+      -0.0004125904233660549,
+      2013.880126953125
+    ],
+    "anatomical_thresholds_or_accuracy_claims": null,
+    "component_sizes_descending": [
+      1186021
+    ],
+    "mask_components_6_connectivity": 1,
+    "mask_volume_ml": 1186.0210828391498,
+    "mask_volume_mm3": 1186021.0828391497,
+    "mask_voxels": 1186021,
+    "voxel_volume_mm3": 1.0000000698462757
+  },
+  "optimizer_updates": 0,
+  "other_patient_or_motion_or_annotation_arrays_opened": false,
+  "peak_self_rss_bytes": 510459904,
+  "prospective_sha256": "0c20523874370b9738cb3ceeb9e00c271e701fcfb5dcc9ba211093b6bb83f025",
+  "reconstruction": {
+    "discarded_threshold_voxels": 0,
+    "filled_hole_voxels": 76,
+    "largest_component_label": 1,
+    "largest_component_size_ties": 1,
+    "largest_component_voxels": 1185945,
+    "reconstructed_mask_mismatch_voxels": 0,
+    "threshold_components_6_connectivity": 1,
+    "threshold_voxels": 1185945
+  },
+  "roundtrip": {
+    "SDT": {
+      "bytes": 50332080,
+      "native_array_dtype_values_affine_geometry_exact": true,
+      "path": "outputs/mechanics/resect-case4-brain-envelope-independent-qc-v1/native-roundtrip/SDT-native-roundtrip.nii",
+      "sha256": "fc1c5318e9ed9f36fd52b74047ce64cd4689669b6ee52e39f37ab15d95c46618"
+    },
+    "T1": {
+      "bytes": 50332000,
+      "native_array_dtype_values_affine_geometry_exact": true,
+      "path": "outputs/mechanics/resect-case4-brain-envelope-independent-qc-v1/native-roundtrip/T1-native-roundtrip.nii",
+      "sha256": "29519162ed7740b7b0123592559c4b9adad032e7477ef32d9eddb706b169bbe3"
+    },
+    "mask": {
+      "bytes": 12583344,
+      "native_array_dtype_values_affine_geometry_exact": true,
+      "path": "outputs/mechanics/resect-case4-brain-envelope-independent-qc-v1/native-roundtrip/mask-native-roundtrip.nii",
+      "sha256": "99430af4cbe2cba6af804167f7790b57d34e5f9b74e1c584b077ba9a9b3ffed9"
+    }
+  },
+  "runtime": {
+    "matplotlib": "3.11.2",
+    "matplotlib_origin": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/matplotlib/__init__.py",
+    "nibabel": "5.4.2",
+    "nibabel_origin": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/nibabel/__init__.py",
+    "numpy": "2.2.6",
+    "numpy_origin": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.tools/synthstrip-runtime/lib/python3.12/site-packages/numpy/__init__.py",
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "scipy": "1.18.1",
+    "scipy_origin": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/scipy/__init__.py"
+  },
+  "script_sha256": "d3a30e4bea65f718da84dac76487ecc71d632a43aa099d6121d42a3fdf4351a2",
+  "stage": "complete",
+  "started_at": "2026-10-04T21:16:14.757956+00:00",
+  "status": "engineering_checks_passed_anatomy_unreviewed",
+  "visual": {
+    "anatomical_review": "pending_root_review",
+    "file": "Case4-fixed-native-planes.png",
+    "native_index_display_no_resampling": true,
+    "planes": [
+      {
+        "axis": 0,
+        "index": 128,
+        "mask_voxels_in_plane": 10557
+      },
+      {
+        "axis": 1,
+        "index": 128,
+        "mask_voxels_in_plane": 13981
+      },
+      {
+        "axis": 2,
+        "index": 96,
+        "mask_voxels_in_plane": 11285
+      }
+    ],
+    "sha256": "70a64cb177e1151eb3716bd49fd2a4b1bfd16e419fe820df828c69bd0e949546",
+    "window_percentiles": [
+      1,
+      99.5
+    ],
+    "window_values": [
+      0.0,
+      717.3151245117188
+    ]
+  },
+  "working_brain_mask": null,
+  "world_transform_accepted": false
+}

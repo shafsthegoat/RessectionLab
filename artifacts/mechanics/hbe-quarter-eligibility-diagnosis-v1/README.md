@@ -1,0 +1,11 @@
+# Saved symmetry eligibility diagnosis
+
+The exact Cartesian quarter proposal fails the original coordinate criterion on both saved full meshes. The failure was found before any helper, deck, remeshing or solver implementation. The first N8 no-straddler assertion is retained in `initial-quarter-probe-failure.txt`; a saved-coordinate follow-up quantified it. Root then authorized the separate, bounded node/cell-incidence and half-height check recorded here.
+
+The unchanged tolerance is 4.89159e-13 m. N8 has 32 straddling cells at each of x=0 and y=0; N12 has 72 at each. Maximum smaller-side plane departure is 9.18104e-12 m. Of the nominal plane nodes identified by nearest-reflection-ID fixed points, 45/85 (N8) and 91/175 (N12) lie inside the original tolerance. Full reflected node mismatch reaches 1.836208e-11 m for either single x/y reflection. Closest signed coordinates, offending element IDs and nominal plane node positions/IDs are retained in the receipt.
+
+Nearest-node ID pairings remain bijective and recover every cell's node incidence if the coordinate gate is ignored. This distinguishes tiny mesher coordinate drift from missing nominal symmetry topology, but does not authorize ignoring the gate. Under the actual criterion, only 256/768 N8 and 864/2592 N12 reflected cells pass each single-axis check. No snapping, clipping or tolerance change was applied; the quarter helper preparation is stopped.
+
+The distinct z=H/2 saved-geometry check passes: neither mesh has straddling cells; all 209 N8 and 457 N12 midplane nodes lie exactly at the saved half height. Every node and cell has a unique reflected counterpart inside the same original tolerance, with maximum coordinate mismatch 2.1684e-19 m (N8) and 4.3368e-19 m (N12). This establishes geometric eligibility only. A half-height axial model would need a separately declared moving cut-plane condition and comparison with the saved full solutions; no such model or deck was generated here.
+
+The bounded follow-up completed in 0.521 s with sampled group RSS 63,848,448 bytes under 60 s / 3 GiB and one numerical thread. Both source mesh hashes were verified before and after. No Gmsh, mechanics solver, response curves, source edits or geometry corrections were used. Resource observations are not solver-performance predictions.

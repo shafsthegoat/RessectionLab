@@ -1,0 +1,8 @@
+{
+  "scope": "collector setup only; no native/solver attempt",
+  "error": "System Python lacks hashlib.file_digest; failure before verification/output writes/freeze.",
+  "raw_content_changed": false,
+  "solver_calls": 0,
+  "mesher_calls": 0,
+  "repair": "Collector uses compatible streaming hashlib.sha256; reruns only saved-file collection."
+}

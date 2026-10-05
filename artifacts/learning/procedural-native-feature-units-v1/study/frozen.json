@@ -1,0 +1,136 @@
+{
+  "FEATURE_UNITS": {
+    "complete_arm_seconds_before_independent_audit": 4.7609494170174,
+    "elapsed_seconds": 1.8179751669522375,
+    "elapsed_seconds_scope": "selection panel only; cold setup and shared initialization separately measured",
+    "execution_context_after": {
+      "cpu_count": 10,
+      "load_average_1_5_15_minutes": [
+        1.66015625,
+        1.59326171875,
+        1.93017578125
+      ],
+      "process_peak_rss_bytes": 2762424320,
+      "recorded_at": "2026-10-04T11:18:27.794800+00:00"
+    },
+    "execution_context_before": {
+      "cpu_count": 10,
+      "load_average_1_5_15_minutes": [
+        1.630859375,
+        1.58642578125,
+        1.93017578125
+      ],
+      "process_peak_rss_bytes": 2762424320,
+      "recorded_at": "2026-10-04T11:18:25.972314+00:00"
+    },
+    "gradient_steps": 0,
+    "input_profile": "FEATURE_UNITS",
+    "optimization_environment_steps": 0,
+    "optimizer_mode": "POPULATION_FROZEN",
+    "policy_diagnostics": {
+      "action_ids": [
+        "STOP",
+        "NATIVE:native-fine-aspiration:0",
+        "NATIVE:native-wide-aspiration:0",
+        "NATIVE:native-fine-aspiration:3",
+        "NATIVE:native-wide-aspiration:3"
+      ],
+      "action_probabilities": [
+        0.08206912875175476,
+        0.19506296515464783,
+        0.2663000524044037,
+        0.19336223602294922,
+        0.2632056474685669
+      ],
+      "actor_preactivation_max": 0.6717047691345215,
+      "actor_preactivation_min": -0.7213233709335327,
+      "actor_tanh_fraction_abs_above_0_95": 0.0,
+      "actor_tanh_max": 0.586100161075592,
+      "actor_tanh_min": -0.6177283525466919,
+      "critic_physical_value": 0.7776009440422058,
+      "diagnostic_scope": "initial permitted optimization state; no transitions or gradients",
+      "entropy_nats": 1.5454189777374268
+    },
+    "preparation_seconds": 1.9081065841019154,
+    "pretraining_cost_accounted_separately": true,
+    "selected_checkpoint_hash": "sha256:b9adca0f70959d8f74f0b6d81e7445c73001a7f71740fe517381c59281e73b11",
+    "selection_environment_steps": 6,
+    "selection_panel_complete": true,
+    "selection_partition_hash": "sha256:62f80e45baec7c506272e1b04037c8551267969fdbd2fdb650a61bb720df8dc2",
+    "selection_return": 245.24,
+    "selection_returns": [
+      245.24,
+      245.24
+    ],
+    "shared_checkpoint_hash": "sha256:b9adca0f70959d8f74f0b6d81e7445c73001a7f71740fe517381c59281e73b11",
+    "shared_checkpoint_initialization_seconds": 0.9973535420140252,
+    "status": "completed"
+  },
+  "RAW": {
+    "complete_arm_seconds_before_independent_audit": 5.072784584015608,
+    "elapsed_seconds": 1.978417083970271,
+    "elapsed_seconds_scope": "selection panel only; cold setup and shared initialization separately measured",
+    "execution_context_after": {
+      "cpu_count": 10,
+      "load_average_1_5_15_minutes": [
+        1.630859375,
+        1.58642578125,
+        1.93017578125
+      ],
+      "process_peak_rss_bytes": 2762424320,
+      "recorded_at": "2026-10-04T11:18:22.924695+00:00"
+    },
+    "execution_context_before": {
+      "cpu_count": 10,
+      "load_average_1_5_15_minutes": [
+        1.51171875,
+        1.56298828125,
+        1.92431640625
+      ],
+      "process_peak_rss_bytes": 2762424320,
+      "recorded_at": "2026-10-04T11:18:20.943970+00:00"
+    },
+    "gradient_steps": 0,
+    "input_profile": "RAW",
+    "optimization_environment_steps": 0,
+    "optimizer_mode": "POPULATION_FROZEN",
+    "policy_diagnostics": {
+      "action_ids": [
+        "STOP",
+        "NATIVE:native-fine-aspiration:0",
+        "NATIVE:native-wide-aspiration:0",
+        "NATIVE:native-fine-aspiration:3",
+        "NATIVE:native-wide-aspiration:3"
+      ],
+      "action_probabilities": [
+        0.08341757953166962,
+        0.28876540064811707,
+        0.16210459172725677,
+        0.30265408754348755,
+        0.1630582958459854
+      ],
+      "actor_preactivation_max": 40.95100021362305,
+      "actor_preactivation_min": -34.74564743041992,
+      "actor_tanh_fraction_abs_above_0_95": 0.6499999761581421,
+      "actor_tanh_max": 1.0,
+      "actor_tanh_min": -1.0,
+      "critic_physical_value": 0.819017767906189,
+      "diagnostic_scope": "initial permitted optimization state; no transitions or gradients",
+      "entropy_nats": 1.5182912349700928
+    },
+    "preparation_seconds": 1.9948011660017073,
+    "pretraining_cost_accounted_separately": true,
+    "selected_checkpoint_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57",
+    "selection_environment_steps": 6,
+    "selection_panel_complete": true,
+    "selection_partition_hash": "sha256:62f80e45baec7c506272e1b04037c8551267969fdbd2fdb650a61bb720df8dc2",
+    "selection_return": 139.62,
+    "selection_returns": [
+      139.62,
+      139.62
+    ],
+    "shared_checkpoint_hash": "sha256:346b3db95466864cae21f0d7b4cb6afe71b23007a7551d81ecf3bbab9f909f57",
+    "shared_checkpoint_initialization_seconds": 1.066249041003175,
+    "status": "completed"
+  }
+}

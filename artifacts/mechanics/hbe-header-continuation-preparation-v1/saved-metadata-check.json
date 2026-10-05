@@ -1,0 +1,68 @@
+{
+  "authenticated_input_file_count": 98,
+  "continuation": {
+    "accepted_readout": {
+      "gzip": {
+        "path": "artifacts/mechanics/hbe-time-header-independent-review-v1/saved-coarse-readout.json.gz",
+        "sha256": "d705d5d9b27638947e12f1d805c81d54b1ae438f812054b68dbfcc257df9d260"
+      },
+      "review": {
+        "path": "artifacts/mechanics/hbe-time-header-independent-review-v1/verification.json",
+        "sha256": "a76ee7941d52d16407c5e9f5d52bcecc3bf54a61f6ab9113abffbf836d1eaac2"
+      },
+      "uncompressed_sha256": "062b708ca057de61204137fc051fff0f6ef9c0f203cf02bcb02ccf688c564ed6"
+    },
+    "declaration": {
+      "path": "manifests/experiments/hbe-01-03-header-continuation-v1.json",
+      "sha256": "7e74bfdfd8889fd38698990c76aad0a96611fdb223ebd1d738c9d8d06b4a6c7d"
+    },
+    "execution": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment/runs/compression-N4-S60-reference/execution.json",
+      "sha256": "32ab8a835a89589e605955fb8c86e7f6a3427616efb41d68292f73631e00fd77"
+    },
+    "prior_parent_seconds_debit": 4.2655537920072675,
+    "prior_solver_invocations": 1
+  },
+  "elapsed_seconds": 0.3776431659935042,
+  "manifest": {
+    "path": "manifests/experiments/hbe-01-03-header-continuation-v1.json",
+    "sha256": "7e74bfdfd8889fd38698990c76aad0a96611fdb223ebd1d738c9d8d06b4a6c7d"
+  },
+  "remaining_supervised_seconds": 895.7344462079927,
+  "scope": "In-memory candidate metadata, no release generated or full archived-source preflight. No solver, primitive replay, curve, cohort, or patient access.",
+  "source_bindings": {
+    "access": {
+      "path": "scripts/mechanics_hbe_access.py",
+      "sha256": "b1e4f90b2ec84c39949ee02c1088bc0404f34904e24c2d4f328d503d96f76fe0"
+    },
+    "curve_evaluator": {
+      "path": "scripts/mechanics_hbe_evaluation.py",
+      "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+    },
+    "mesh_deck": {
+      "path": "scripts/mechanics_hbe_mesh.py",
+      "sha256": "3cb4d99f5d2d7fa2f66fb5af56ebffcf19342b9bee0b4cb2c9acfe98aabdd892"
+    },
+    "orchestrator": {
+      "path": "scripts/mechanics_hbe_experiment.py",
+      "sha256": "ce921239857d45ac4c5d70052c515c3a7804e32e8101f14315953c8b0aa53daa"
+    },
+    "physics": {
+      "path": "scripts/mechanics_hbe_physics.py",
+      "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+    },
+    "primitive_parser": {
+      "path": "scripts/mechanics_hbe_outputs.py",
+      "sha256": "a372cb89ea9515186d433c74ec650dc3b5cae289619e8b35d481280f6662f473"
+    },
+    "readout": {
+      "path": "scripts/mechanics_hbe_readout.py",
+      "sha256": "21700558e5cb614a11a7cc62dbd5ec8118fabb11b4fbfc88f89cb8aa02012963"
+    },
+    "runtime_driver": {
+      "path": "scripts/febio_runtime.py",
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+    }
+  },
+  "status": "passed_continuation_dependency_metadata_only"
+}

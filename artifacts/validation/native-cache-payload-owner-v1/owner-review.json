@@ -1,0 +1,72 @@
+{
+  "actual_earlier_failures": {
+    "command_typo": "Nonexistent pluralized review filename caused no tests to run; corrected filename retained in harness failure note.",
+    "owner_fixture": {
+      "cause": "Inconsistent cache namespace in synthetic child fixture; default capacity differed from tiny receipt capacity. Production correctly rejected it before geometry import. Fixture only repaired.",
+      "failed": 1,
+      "passed": 84,
+      "seconds": 0.7
+    },
+    "production_draft": {
+      "launcher_contradictions": 3,
+      "post_write_baseline_tampering_accepted": 1,
+      "retained_under": "artifacts/validation/native-cache-payload-independent-v1"
+    }
+  },
+  "created_utc": "2026-10-04T14:57:15.886803+00:00",
+  "declaration_content_hash": "sha256:bbfd679b5cc1988c05056d1ae603967735c87b320db9499b8d3d9e0dc11e8e1c",
+  "declared_input_count": 15,
+  "declared_input_hashes_rechecked": true,
+  "final_worlds_used": false,
+  "limits": [
+    "Derived inverse/spacing/radius computed anew from frozen source and original dependency versions; original unsaved derived bytes cannot be directly verified",
+    "Raw array payload excludes cache keys/bookkeeping; processRSS separate",
+    "Integer LRU capacity scenarios predict counts only, not cache speedup or clinical benefit",
+    "Caps cooperative around atomic calls; future external60s timeout separately recorded",
+    "No changes to cache/engine/app defaults or production geometry"
+  ],
+  "patient_loads": 0,
+  "pending_public_execution": true,
+  "policy_or_gradient_updates": 0,
+  "prospective_caps": {
+    "cumulative_process_peak_rss_bytes": 536870912,
+    "ordered_queries": 22364,
+    "uncompressed_query_bytes": 33554432,
+    "unique_cover_calls": 8812,
+    "wall_seconds": 60
+  },
+  "public_query_pure_cover_calls": 0,
+  "simulator_steps": 0,
+  "source_sha256": {
+    "artifacts/validation/native-cache-payload-owner-v1/final-combined-tests.txt": "2050956a6886b3da500afec42ec5569406d26a8b5b9c23cab1c90974d60f849b",
+    "artifacts/validation/native-cache-payload-owner-v1/first-combined-harness-failure.txt": "a57c46105eb5a65c8f55fe61a2c858b6e0b9cf064e3e78afc64f5882fdad29a9",
+    "artifacts/validation/native-cache-payload-owner-v1/initial-owner-tests.txt": "3793850060b3180dca978c93442e9dc256ae88638a414fdc072e6aec88ac1e3e",
+    "artifacts/validation/native-cache-payload-owner-v1/pre-fixture-repair-test.py.txt": "3d48d3e04e1de68c49cb1ffc4cedcc651c2138f5b2c6196183c51aee1058b654",
+    "docs/native-cache-payload-sizing.md": "7df01fd96281886f2b3829c8d749d3eec62bb6ec2180035dd0f033d65f658232",
+    "manifests/experiments/native-cache-payload-v1.json": "a66b1b10dd3a5e23987e29e8cd0d2c5ba73f89be164015db827a798638679037",
+    "scripts/measure_native_cache_payloads.py": "5c5ccb618ce16e1b87b1df0c8a7ebbb6418909b103245a17f9f9d446746f68b7",
+    "tests/test_native_cache_payload_review.py": "0ed23c1cf0e9f902e097ac230210f9b5c62f9d24082df9b8c5019cb25f6ba1a0",
+    "tests/test_native_cache_payloads.py": "2d478456ed66f0bbd1ad828598af3def204e366d46fe404d2b0ccf1078c29ad4"
+  },
+  "status": "synthetic_review_passed_awaiting_independent_final_receipt_and_parent_release",
+  "stress_worlds_used": false,
+  "tests": {
+    "combined_failed": 0,
+    "combined_passed": 85,
+    "command": ".venv/bin/python -m pytest -q tests/test_native_cache_payloads.py tests/test_native_cache_payload_review.py",
+    "independent": 53,
+    "owner": 32,
+    "seconds": 1.03
+  },
+  "validated_scope": [
+    "Actual ExactCapsuleCoverCache cold/warm counts and raw bytes equal metadata replay on tiny frames",
+    "No-capacity and oversized bypass do not evict; empty arrays consume admitted entries",
+    "Exact signed-zero/ULP argument identity; five affine frames including rotated, mirrored and anisotropic RAS coordinates",
+    "Strict immutable C-contiguous int64Nx3 ndarray payload; filtered tissue contacts never used",
+    "All cumulative counters/increments/retained bytes and entries bound to original namespace/admission policy",
+    "Completed source/worker/result/launcher agreement and no timeout/kill",
+    "Completed partial rows/attempt counts retained on cooperative budget/cancellation failure",
+    "Post-write output/source mutation blocks completed publication",
+    "Fresh isolated Python child loads exact standalone geometry and uses actual512MiB RSS guard"
+  ]
+}

@@ -1,0 +1,279 @@
+{
+  "schemaVersion": 1,
+  "sourceBundle": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/cases/UCSF-PDGM-0004-prior-proposals.ressectionlab",
+  "sourceBundleSha256": "59c213b82af205516491058145ad3581a4d1832e1126fb5559118f250ea1bacc",
+  "caseHash": "sha256:2dd4c1ccc72a3ee6f821cf8f23a8c32996ec74fe1d616411863d5197bf3d2547",
+  "proposalId": "motor_functional_concordance_851c3e8fac7c",
+  "mapId": "motor_functional_concordance",
+  "mapKind": "functional_concordance",
+  "evidenceHash": "sha256:de1490e682050abe22d8f6ec5eed704499f6b4f6f17771ef6514f37d14f84813",
+  "dataHash": "sha256:7ff809ab85bceb4019a1069df2ef8173bd3eb70d8c5149352e3030824fc108f3",
+  "samplingCoverageHash": "sha256:e5a02c1f4e15c9fd083eefd5538c8e9e63827623ce2d54a5059dc1ab378f6418",
+  "shape": [
+    240,
+    240,
+    155
+  ],
+  "affineRasMm": [
+    [
+      -1,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      -1,
+      0,
+      239
+    ],
+    [
+      0,
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      1
+    ]
+  ],
+  "coverageMeaning": "atlas field of view, not patient functional coverage",
+  "patientSpecificFunction": false,
+  "planningEligible": false,
+  "clinicalDeficitProbability": null,
+  "samples": [
+    {
+      "label": "incomplete_interpolation_support",
+      "rasMm": [
+        -39.75,
+        106,
+        77
+      ],
+      "continuousVoxel": [
+        39.75,
+        133,
+        77
+      ],
+      "nearestVoxel": [
+        40,
+        133,
+        77
+      ],
+      "nearestCenterCovered": true,
+      "insideSourceGrid": true,
+      "contributors": [
+        {
+          "voxel": [
+            39,
+            133,
+            77
+          ],
+          "weight": 0.25,
+          "coverage": false,
+          "storedValue": 0
+        },
+        {
+          "voxel": [
+            40,
+            133,
+            77
+          ],
+          "weight": 0.75,
+          "coverage": true,
+          "storedValue": 0
+        }
+      ],
+      "expected": {
+        "covered": false,
+        "value": null,
+        "reason": "incomplete-interpolation-support",
+        "voxel": [
+          40,
+          133,
+          77
+        ]
+      },
+      "actualTypeScriptSample": {
+        "covered": false,
+        "value": null,
+        "reason": "incomplete-interpolation-support",
+        "voxel": [
+          40,
+          133,
+          77
+        ]
+      },
+      "formattedValue": null
+    },
+    {
+      "label": "covered_zero",
+      "rasMm": [
+        -32,
+        24,
+        18
+      ],
+      "continuousVoxel": [
+        32,
+        215,
+        18
+      ],
+      "nearestVoxel": [
+        32,
+        215,
+        18
+      ],
+      "nearestCenterCovered": true,
+      "insideSourceGrid": true,
+      "contributors": [
+        {
+          "voxel": [
+            32,
+            215,
+            18
+          ],
+          "weight": 1,
+          "coverage": true,
+          "storedValue": 0
+        }
+      ],
+      "expected": {
+        "covered": true,
+        "value": 0,
+        "reason": null,
+        "voxel": [
+          32,
+          215,
+          18
+        ]
+      },
+      "actualTypeScriptSample": {
+        "covered": true,
+        "value": 0,
+        "reason": null,
+        "voxel": [
+          32,
+          215,
+          18
+        ]
+      },
+      "formattedValue": "0.0000"
+    },
+    {
+      "label": "covered_small_positive",
+      "rasMm": [
+        -54,
+        106,
+        77
+      ],
+      "continuousVoxel": [
+        54,
+        133,
+        77
+      ],
+      "nearestVoxel": [
+        54,
+        133,
+        77
+      ],
+      "nearestCenterCovered": true,
+      "insideSourceGrid": true,
+      "contributors": [
+        {
+          "voxel": [
+            54,
+            133,
+            77
+          ],
+          "weight": 1,
+          "coverage": true,
+          "storedValue": 0.00014824711252003908
+        }
+      ],
+      "expected": {
+        "covered": true,
+        "value": 0.00014824711252003908,
+        "reason": null,
+        "voxel": [
+          54,
+          133,
+          77
+        ]
+      },
+      "actualTypeScriptSample": {
+        "covered": true,
+        "value": 0.00014824711252003908,
+        "reason": null,
+        "voxel": [
+          54,
+          133,
+          77
+        ]
+      },
+      "formattedValue": "0.0001"
+    },
+    {
+      "label": "outside_atlas_coverage",
+      "rasMm": [
+        0,
+        239,
+        0
+      ],
+      "continuousVoxel": [
+        0,
+        0,
+        0
+      ],
+      "nearestVoxel": [
+        0,
+        0,
+        0
+      ],
+      "nearestCenterCovered": false,
+      "insideSourceGrid": true,
+      "contributors": [
+        {
+          "voxel": [
+            0,
+            0,
+            0
+          ],
+          "weight": 1,
+          "coverage": false,
+          "storedValue": 0
+        }
+      ],
+      "expected": {
+        "covered": false,
+        "value": null,
+        "reason": "outside-atlas-coverage",
+        "voxel": [
+          0,
+          0,
+          0
+        ]
+      },
+      "actualTypeScriptSample": {
+        "covered": false,
+        "value": null,
+        "reason": "outside-atlas-coverage",
+        "voxel": [
+          0,
+          0,
+          0
+        ]
+      },
+      "formattedValue": null
+    }
+  ],
+  "samplingVerification": {
+    "passed": true,
+    "method": "Actual TypeScript cursor sampler on all contributing source-array vertices for each listed point; unused vertices are sparse placeholders.",
+    "sourceHashes": {
+      "desktop/src/prior-data.ts": "b1a33a0592ef5b6bb503499d6af728d0b08b4e342824a87965239e7cbb33376f",
+      "desktop/src/viewer/priorLayer.ts": "23e44181a37e5847701e9f815f1712be48917771f1306429ea2857504ed8ee2c"
+    }
+  }
+}

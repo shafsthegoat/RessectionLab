@@ -1,0 +1,30 @@
+{
+  "schema": "hbe-symmetry-eligibility-evidence-index-v1",
+  "files": {
+    "initial-quarter-probe-failure.txt": {
+      "sha256": "925944ca817ff6b521408950162343a4a1df9709aaf115f4ef019a79b69747be",
+      "bytes": 612
+    },
+    "prospective-settings.json": {
+      "sha256": "74741eb01f8b2c5b6225767ffff706008a1bc5b0781ec8fcc23664bdf33e47ab",
+      "bytes": 575
+    },
+    "diagnose_saved.py": {
+      "sha256": "5f606759e4822fcdd5175a9c452a540109cbf3032b1aff4e21cf1a4066179f89",
+      "bytes": 6812
+    },
+    "receipt.json": {
+      "sha256": "41646cf5d411de0604d184e604b6d1767acdf0bbf9270ee1a2deb816708e0389",
+      "bytes": 35916
+    },
+    "supervision.json": {
+      "sha256": "4e0615b2f1b0b6cea423ebc82f6e8f916a90b15a4aaa0a72ea4d7e0c853228f5",
+      "bytes": 812
+    },
+    "README.md": {
+      "sha256": "13ba9c562fd7136ea7694f968661bb6c1ad70dae1b9fb1a84596686b4ce3a402",
+      "bytes": 2306
+    }
+  },
+  "raw_supervision_root": "outputs/validation/hbe-quarter-eligibility-v1"
+}

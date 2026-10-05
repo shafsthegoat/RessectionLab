@@ -1,0 +1,28 @@
+Independent analytic regression; no image access, training, or optimizer.
+Command: .venv/bin/python -m pytest -q tests/test_real_learning_helpers_review.py -k failed_transition_is_charged
+Reviewed observed_search.py SHA256: 6f2c445c60632c81c97e7171987f8ec642d38c5ae57792a03168e0704a9e8a12
+
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_ test_failed_transition_is_charged_without_inventing_an_evaluated_stop_prefix _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10de8c050>
+
+    def test_failed_transition_is_charged_without_inventing_an_evaluated_stop_prefix(monkeypatch):
+        def failed_step(self, action):
+            raise RuntimeError("Analytic transition failure")
+    
+        monkeypatch.setattr(ObservedTree, "step", failed_step)
+        with pytest.raises(RuntimeError, match="Analytic transition failure") as failure:
+            observed_beam_search(PrivateSourceTrap(ObservedTree([])), max_calls=1, beam_width=2)
+        row = failure.value.accounting
+        assert row["model_transition_calls"] == 1
+>       assert row["implicit_stop_prefix_count"] == 1  # Only the initial state exists.
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       assert 2 == 1
+
+tests/test_real_learning_helpers_review.py:181: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_real_learning_helpers_review.py::test_failed_transition_is_charged_without_inventing_an_evaluated_stop_prefix
+1 failed, 5 deselected in 0.74s
+

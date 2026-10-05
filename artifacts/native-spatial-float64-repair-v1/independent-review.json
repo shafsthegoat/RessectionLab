@@ -1,0 +1,49 @@
+{
+  "checks": {
+    "acceptance_guard_AST_identical_to_original": true,
+    "evaluator_other_helpers_AST_unchanged": true,
+    "excluded_reference_mass_control": true,
+    "float64_reduction_precedes_physical_multiplication": true,
+    "fractional_and_near_one_membership_controls": true,
+    "geometry_and_source_grid_rules_unchanged_by_reviewed_diff": true,
+    "nonunit_voxel_volume_controls": true,
+    "normal_is_total_removed_volume_minus_target": true,
+    "per_action_evaluator_uses_independent_math_fsum": true,
+    "source_memberships_not_changed": true,
+    "split_stroke_and_unique_union_controls": true,
+    "task_code_outside_two_accounting_methods_AST_unchanged": true
+  },
+  "limits": [
+    "Float64 resolves the demonstrated float32 reduction/product mismatch; finite-precision sums are not asserted bitwise partition invariant.",
+    "Original five-case rejections remain failed/null; this review does not retroactively accept or rerun their outcomes.",
+    "Physical fidelity, clinical accuracy and cross-patient efficacy are not established by these analytical tests."
+  ],
+  "original_HEAD_source_sha256": {
+    "src/resectionlab/native_spatial_evaluation.py": "c1f3f2806d8b8fdfec9ad2edfeba64052a5d996845a8fc3a52cacc926a19ac1e",
+    "src/resectionlab/native_spatial_task.py": "d5b24e392c0e5b7d129412971f8edf66924922d0ae0a07814caeff851af9b6b3"
+  },
+  "process_seconds": 1.758398583973758,
+  "scope": "Independent arithmetic/source review and the eight focused analytical regression controls only; no patient arrays, native patient replay or training.",
+  "source_sha256": {
+    "artifacts/native-spatial-float64-repair-v1/before.json": "662d6086c7d449020458aad75ce54a8e2108e8e186518461115b7c0bc53e3db7",
+    "src/resectionlab/native_spatial_evaluation.py": "a3f0ac4c73e6242804ee1de59a7ab429374ae8fc7f21bb34671062fd591dfffa",
+    "src/resectionlab/native_spatial_task.py": "61b3d8167152d06a578e1ab7c146b7af937d86ccca6ed9e20bf3081cbf2f6711",
+    "tests/test_native_spatial_precision.py": "c37042f3f99926e611d26ec1dd1ac40b4737c8e9c3c9a41e5b942e84958455e1"
+  },
+  "status": "passed",
+  "test_command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_native_spatial_precision.py"
+  ],
+  "test_exit_code": 0,
+  "test_log_sha256": "eb89e2b25528b4b0f8477dc39579f0a808fc3a7dd53920e9fb08eb142c46d8b9",
+  "test_result": "........                                                                 [100%]\n8 passed in 1.52s",
+  "tolerance": {
+    "absolute": 1e-07,
+    "relative": 1e-07,
+    "unchanged": true
+  }
+}

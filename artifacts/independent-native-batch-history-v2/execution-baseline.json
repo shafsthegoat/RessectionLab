@@ -1,0 +1,33 @@
+{
+  "prepared_utc": "2026-10-04T19:11:07.504959+00:00",
+  "commit": "ba437632417b2df7a42481f6fc4314c03fbd0d6b",
+  "archive": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/independent-native-batch-history-v2/ba437632417b2df7a42481f6fc4314c03fbd0d6b.tar",
+  "archive_sha256": "17fc8696538133c960fbea9d11fded7e96341e2fbcc42fb57840a2101f1aeaeb",
+  "archive_bytes": 189470720,
+  "source_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/independent-native-batch-history-v2/ba437632417b2df7a42481f6fc4314c03fbd0d6b",
+  "archive_file_count": 3804,
+  "archive_file_manifest": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/independent-native-batch-history-v2/archive-files-before.json.gz",
+  "archive_file_manifest_sha256": "54ab727a93add212e00631b168fcb2e37155c69aac8a207b1d7ec0ec90563322",
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/independent-native-batch-history-v2/ba437632417b2df7a42481f6fc4314c03fbd0d6b/scripts/compare_independent_native_batch.py",
+    "--output",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/independent-native-batch-history-v2/attempt-01"
+  ],
+  "working_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/independent-native-batch-history-v2/ba437632417b2df7a42481f6fc4314c03fbd0d6b",
+  "source_import_root": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/independent-native-batch-history-v2/ba437632417b2df7a42481f6fc4314c03fbd0d6b/src",
+  "declaration_sha256": "a65509aa64bfcc04c796f143b22aaca16868e78ea904e1b84efa1169c1f5b2ad",
+  "runner_sha256": "14d7c9c8e8eb1dfec24b5bb9b6d709ec9d2a198e573fd8212d9bb271333edee1",
+  "all_declared_files_verified_before_launch": true,
+  "historical_row_verified": "tilted_20_degrees-0.125mm",
+  "release": "Root explicitly released exactly one V2 scalar/batch/scalar comparison from ba43763 with fixed history/order/caps; no retries or expanded matrix; quiet slot",
+  "caps": {
+    "cooperative_seconds": 140,
+    "parent_wall_seconds": 150,
+    "worker_rss_bytes": 3221225472,
+    "poll_seconds": 0.05,
+    "cpu_workers": 1,
+    "numerical_threads": 1
+  },
+  "preparation_only": true
+}

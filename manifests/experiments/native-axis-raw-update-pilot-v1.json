@@ -1,0 +1,411 @@
+{
+  "schema_version": 1,
+  "pilot_id": "native-axis-raw-update-pilot-v1",
+  "status": "declared_not_executed",
+  "execution_authorized": false,
+  "purpose": "Validate one complete patient-specific RAW actor update, selection, durable accounting and independent geometry pipeline; not estimate efficacy.",
+  "references": {
+    "preflight_declaration": {
+      "path": "manifests/experiments/native-axis-preflight-v2.json",
+      "file_sha256": "35402cd0634e1db0798189e41a1dbbd4c880988b3e107ce38338eb8c966fb955",
+      "content_hash": "sha256:089dca680b992a5808c104a559ab562a034de9bea91de6df939da40d87650fe3"
+    },
+    "physical_and_world_declaration": {
+      "path": "manifests/experiments/procedural-native-to-ucsf-v1.json",
+      "file_sha256": "6011ec40117f49653df4ab2fb0194c1e630bd2cf09870f87332f340fe3c6fde0",
+      "content_hash": "sha256:3abf10162ed9d096a7e21ec84a87c1a88ebf12bb074345a78040dfdebb828ac9"
+    },
+    "preflight_cost_report": {
+      "path": "artifacts/preflight/native-axis-v2/cost-summary.json",
+      "file_sha256": "4d3a8925c07e98ba8579ccb81ac49bc94878f9ee10df5b47625123d4d8917885"
+    },
+    "accounting_commit": "f25b13e",
+    "independent_v2_verification": {
+      "path": "artifacts/native-axis-v2-result-audit/verification.json",
+      "file_sha256": "684170781dcf911d1abc838b0d7113dcb3cf0069a6544679923b184d51a68394"
+    },
+    "independent_v2_artifact_audit": {
+      "path": "artifacts/native-axis-v2-result-audit/audit-02.json",
+      "file_sha256": "45b70f59083e2073320a332d78d727e1b7606740bca346bba5a96a7ef5db1bbb"
+    },
+    "preflight_initial_policy_freeze": {
+      "path": "artifacts/preflight/native-axis-v2/profile/untrained-policy-freeze.json",
+      "file_sha256": "03be2c438288b7dd617470327cf2d41c7cd836fbd68cb76dc3d21a2356dff736"
+    }
+  },
+  "frozen_model": {
+    "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+    "planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+    "decision_model_hash": "sha256:1d06e7792ce78ecf7ef461ba5ff2b6f78e2367d3b3bc030a80d70b49e6e747f5",
+    "native_config_hash": "sha256:6d817c5c7441cc7d6c6bcaeac4542cfd3266f2474c9c1904a2d6279870b3143b",
+    "proposal_model_hash": "sha256:b9cc28313cba81017718bb884bd90042c0c64432bd2a2901b4f97e3485cc1135",
+    "initial_policy_hash": "sha256:e9399769384678821712a540bab184d36f6f38fc0778a30f0d7ef8973022f322",
+    "input_profile": "RAW",
+    "action_features": 15,
+    "state_features": 6,
+    "hidden_features": 16,
+    "action_model": {
+      "adapter_version": "experimental-native-axis-column-policy-v1",
+      "input_profile": "RAW",
+      "proposal_rule": {
+        "offsets_source_voxels": [
+          [
+            0,
+            0
+          ],
+          [
+            -2,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            0,
+            -2
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            -2,
+            -2
+          ],
+          [
+            -2,
+            2
+          ],
+          [
+            2,
+            -2
+          ],
+          [
+            2,
+            2
+          ],
+          [
+            -3,
+            0
+          ],
+          [
+            3,
+            0
+          ],
+          [
+            0,
+            -3
+          ],
+          [
+            0,
+            3
+          ]
+        ],
+        "max_primary_rays": 26,
+        "version": "experimental-residual-axis-columns-v1"
+      },
+      "max_cuts": 3,
+      "max_actions_including_stop": 27,
+      "primary_policy": "distal_remaining_target_in_each_source_column",
+      "fallback_policy": "proximal_only_after_primary_preview_rejection",
+      "feasibility": "complete native tool preview required; no uncertified proposal is an action",
+      "identity": "new decision-model and proposal-model hashes persisted before greedy episode",
+      "constructor_initialization": {
+        "seed": 0,
+        "gradient_steps": 0,
+        "transitions": 0,
+        "interpretation": "deterministic initial inventory preparation only; no optimization or selection score"
+      }
+    },
+    "physical_reward": {
+      "target_per_mm3": 1.0,
+      "normal_per_mm3": 0.2,
+      "motor_per_mm3": 2.0,
+      "language_per_mm3": 2.0,
+      "action_cost": 0.02,
+      "motion_per_mm": 0.0,
+      "tool_change_cost": 0.02,
+      "graph_edge_cost": 1.0
+    },
+    "partial_contact_weight": 0.05,
+    "physical_configuration_reference": "preflight_declaration.native_configuration; exact source/support/tools/access retained",
+    "no_model_or_input_changes": true,
+    "input_profile_manifest": {
+      "action_divisors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "action_feature_names": [
+        "stop",
+        "target_benefit",
+        "normal_volume",
+        "motor_evidence",
+        "language_evidence",
+        "insertion_distance",
+        "tip_radius",
+        "shaft_radius",
+        "tool_change",
+        "depth",
+        "remaining_target_fraction",
+        "adjacent_target_fraction",
+        "partial_normal_contact_volume",
+        "partial_motor_contact_surrogate",
+        "partial_language_contact_surrogate"
+      ],
+      "centering": false,
+      "clipping": false,
+      "critic_output_divisor": 1.0,
+      "profile_id": "RAW",
+      "return_divisor": 1.0,
+      "running_statistics": false,
+      "state_divisors": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "state_feature_names": [
+        "remaining_target_fraction",
+        "action_budget_fraction_used",
+        "removed_tissue_fraction",
+        "nominal_severed_edge_fraction",
+        "motor_evidence_available",
+        "language_evidence_available"
+      ],
+      "version": "native-fixed-action-units-v1"
+    },
+    "input_profile_hash": "sha256:b0ae5e34b7fbd206ca7e690fc29c5283ab4be69af25ba45b67f4f5d858b27e12"
+  },
+  "world_partitions": {
+    "optimization": {
+      "role": "optimization",
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+      "generator": {
+        "family": "rigid_gaussian",
+        "translation_scale_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_scale_deg": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_center_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "version": "rigid-registration-v1",
+        "parameter_basis": "declared_uncalibrated_sensitivity_scenario"
+      },
+      "seeds": [
+        17944101631498118750,
+        16050408593453808557,
+        16285456173753334256
+      ],
+      "interpretation": "deterministic_optimization"
+    },
+    "selection": {
+      "role": "selection",
+      "case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+      "planning_hash": "sha256:31a2ce4be0717e96a490e3528bc1aa0029c2940265a595d32dd8a312ae95b63e",
+      "generator": {
+        "family": "rigid_gaussian",
+        "translation_scale_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_scale_deg": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "rotation_center_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "version": "rigid-registration-v1",
+        "parameter_basis": "declared_uncalibrated_sensitivity_scenario"
+      },
+      "seeds": [
+        8109736527858856845,
+        8342823306791655420
+      ],
+      "interpretation": "deterministic_optimization"
+    }
+  },
+  "training_config": {
+    "seed": 11,
+    "max_environment_steps": 8,
+    "max_gradient_steps": 1,
+    "max_wall_seconds": 300.0,
+    "max_episode_steps": 4,
+    "episodes_per_update": 2,
+    "checkpoint_interval": 1,
+    "hidden_features": 16,
+    "learning_rate": 0.003,
+    "gamma": 1.0,
+    "entropy_weight": 0.01,
+    "value_weight": 0.5,
+    "max_gradient_norm": 5.0
+  },
+  "budget_approval": "300s online, 600s worker, 6GiB measured peak RSS and15s hard-termination grace accepted for implementation; execution remains held until tests, commit, immutable source and explicit release.",
+  "resource_budget": {
+    "worker_wall_seconds": 600.0,
+    "process_peak_rss_bytes": 6442450944,
+    "hard_termination_grace_seconds": 15.0
+  },
+  "budget_rationale": {
+    "measured_untrained_two_world_reset_episode_seconds": 48.19391770695802,
+    "measured_panel_episode_export_seconds": 0.21412220795173198,
+    "measured_initial_clone_seconds": 0.2930660831043497,
+    "measured_cold_factory_seconds": 8.046592625090852,
+    "illustration": "3 measured panels + 6 measured initial clones; different learner read pattern, wrapper/logging and stochastic routes remain unmeasured",
+    "illustrative_six_episode_seconds": 146.34014961950015,
+    "proposed_online_headroom_seconds": 153.65985038049985,
+    "is_measured_generic_learner_time": false,
+    "is_guaranteed_bound": false,
+    "setup": "Template cold construction, source load/snapshot and one learner shape-probe clone+optimization reset plus policy/optimizer/contract initialization reported separately; no transition or score from shape probe.",
+    "online": "Initial full selection, optimization, one update, later full selection, online factories/clones/resets/integrity/previews/traces/accounting and intermediate checkpoint exports within current learner timing contract.",
+    "outside_online": "Source and initialization, last checkpoint export, independent native audit, final publication, parent process overhead; every component and full elapsed disclosed.",
+    "atomic_overshoot": "Cooperative deadline; preserve actual overshoot/last operation. Hard termination or incomplete export remains ineligible."
+  },
+  "execution_order": [
+    "freeze tested exact source and verify declaration/source/model/worlds before optimizer",
+    "initialize seed11 scratch RAW and verify preflight initial policy hash",
+    "initial full selection panel on both prescribed worlds",
+    "two complete optimization episodes on first two manifest seeds",
+    "one existing REINFORCE Adam update",
+    "updated full selection panel on both same selection worlds",
+    "freeze initial/latest/selected checkpoint and all histories",
+    "independent native history audit of six completed episodes, exact-history dedup only",
+    "publish only after every receipt and worker/launcher gate completes"
+  ],
+  "expected_denominators": {
+    "shape_probe_resets": 1,
+    "shape_probe_transitions": 0,
+    "initial_selection_episodes": 2,
+    "complete_optimization_episodes": 2,
+    "adam_steps": 1,
+    "updated_selection_episodes": 2,
+    "maximum_optimization_transitions": 6,
+    "maximum_all_episode_transitions": 18,
+    "completed_episode_audit_receipts": 6,
+    "maximum_unique_native_audits": 6,
+    "final_evaluation_worlds": 0,
+    "stress_worlds": 0
+  },
+  "optimization_episode_seeds": [
+    17944101631498118750,
+    16050408593453808557
+  ],
+  "selection_rule": "maximum full-panel mean deterministic return; earliest checkpoint wins ties",
+  "logging_implementation_gate": {
+    "status": "separate supported observer and accounting implementation in progress; requires independent tests before execution",
+    "seam": "optional common learner and rollout observer after already-computed forward/action, before step; copied primitive records only",
+    "no_extra_policy_forwards_or_random_draws": true,
+    "no_extra_simulator_reads_or_transitions": true,
+    "forced_no_forward": "record absent outputs with reason when the existing forced-STOP branch performs no policy forward",
+    "serialization": "finite legal logits; masked negative infinity encoded as string -inf with mask; arrays retain dtype/shape/values; no live autograd/model/simulator objects",
+    "join": "durable attempted decision precedes step and joins accounting by explicit episode/decision order; trace alone never proves execution",
+    "observer_export_failure": "fail before attempted transition; preserve previous trace and receipt",
+    "capture_schema_version": "learner-decision-observer-v1",
+    "actual_record_fields": [
+      "version",
+      "role",
+      "update",
+      "episode",
+      "panel",
+      "seed",
+      "step",
+      "inputs.action_ids",
+      "inputs.source_action_features",
+      "inputs.source_state_features",
+      "inputs.action_features",
+      "inputs.state_features",
+      "inputs.actor_action_features",
+      "inputs.action_mask",
+      "logits",
+      "value",
+      "selected_index",
+      "selected_action_id",
+      "decision_rule",
+      "forced_reason",
+      "forward_evaluated"
+    ],
+    "joined_provenance_fields": {
+      "decision_id": "accounting monotonic attempt identifier",
+      "model_hash": "accounting frozen model identity",
+      "policy_hash": "initial checkpoint at update0, latest checkpoint at update1; joined after freeze, not captured inside forward",
+      "profile_hash": "frozen checkpoint profile joined by update identity"
+    },
+    "optional_derived_fields": {
+      "probabilities": "may be calculated from saved masked logits afterward; label derived and preserve calculation, never label as captured distribution tensor"
+    }
+  },
+  "success_and_candidate_gates": [
+    "successful worker and launcher final states with hash-bound final exports",
+    "one finite Adam step from exactly two complete optimization episodes",
+    "finite positive actor gradient and changed actor parameter hash",
+    "two complete selection rows at updates0and1, each2worlds and matching checkpoint identity",
+    "one retained zero-transition setup reset; no incomplete decision-bearing episode",
+    "complete accounting counts and no committed-but-unreturned transitions",
+    "generic optimization/selection counters equal corresponding authenticated returned transitions",
+    "complete actual online decision trace joined to every attempted step",
+    "independent geometry accepted for all six completed histories after freeze",
+    "only runner grants candidate eligibility; accounting receipt stays ineligible"
+  ],
+  "failure_policy": {
+    "fresh_output_required": true,
+    "automatic_retry": false,
+    "resume_supported": false,
+    "automatic_budget_extension": false,
+    "retain_all_failed_attempts": true,
+    "retain_postcommit_raw_history": true,
+    "zero_actor_change": "negative integration outcome even if critic changed",
+    "incomplete_panel_or_update": "no pilot candidate, even if initial panel completed",
+    "initial_checkpoint_retained_after_valid_update": "honest valid selection outcome; no improvement claim"
+  },
+  "release_gates": [
+    "reviewed prospective declaration",
+    "tested supported decision observer and accounting linkage",
+    "tiny actual2episode1update pipeline and failure gates",
+    "integrated regressions on exact immutable source",
+    "root commit/source snapshot and explicit execution release"
+  ],
+  "interpretation": {
+    "independent_human_patients": 1,
+    "previously_studied_development_case": true,
+    "deterministic_worlds_are_uncertainty_samples": false,
+    "clinical_deficit_probability": null,
+    "motor_language_assessed": false,
+    "brain_support_reviewed": false,
+    "cortical_access_approved": false,
+    "efficacy_comparison": false,
+    "clinical_use_validated": false,
+    "next_experiment_settings_selected_by_this_pilot": false
+  },
+  "source_binding": "Before execution record tested commit, exact executable source bytes and runtime/dependency versions in immutable snapshot; assert unchanged physical decision/native/proposal identities and declaration hashes before optimizer.",
+  "declaration_content_hash": "sha256:7783126ab41fab01be6b148131c23fdd305c1e3276d27edb2971a734b644e385"
+}

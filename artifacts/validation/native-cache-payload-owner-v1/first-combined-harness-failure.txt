@@ -1,0 +1,9 @@
+First command named nonexistent tests/test_native_cache_payloads_review.py: no tests ran in0.00s, exit4. Correct filename is test_native_cache_payload_review.py.
+
+Corrected command:
+.venv/bin/python -m pytest -q tests/test_native_cache_payloads.py tests/test_native_cache_payload_review.py
+
+1 failed,84 passed in0.70s.
+FAILED tests/test_native_cache_payloads.py::test_fresh_process_runs_full_synthetic_pipeline_with_real_geometry
+Child stderr: validate_baseline_binding raised ValueError("Original cache frame binding changed").
+Cause: test query binding used default32MiB/16384-entry cache namespace, while tiny baseline receipts used240-byte/2-entry cache; namespace includes admission limits. Production correctly rejected the inconsistent fixture before importing geometry. The test fixture will bind its declared cache namespace consistently; no production change follows from this failure.

@@ -1,0 +1,392 @@
+{
+  "baseline_points": [
+    [
+      -162.0,
+      85.0,
+      105.0
+    ],
+    [
+      -151.0,
+      80.0,
+      105.0
+    ],
+    [
+      -167.0,
+      89.0,
+      104.0
+    ],
+    [
+      -166.0,
+      86.0,
+      106.0
+    ]
+  ],
+  "baseline_entries": [
+    [
+      -181.5,
+      85.0,
+      105.0
+    ],
+    [
+      -181.5,
+      80.0,
+      105.0
+    ],
+    [
+      -181.5,
+      89.0,
+      104.0
+    ],
+    [
+      -181.5,
+      86.0,
+      106.0
+    ]
+  ],
+  "baseline_failures": [
+    {
+      "tool_id": "native-fine-aspiration",
+      "tip_mm": [
+        -162.0,
+        85.0,
+        105.0
+      ],
+      "entry_mm": [
+        -181.5,
+        85.0,
+        105.0
+      ],
+      "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS"
+    },
+    {
+      "tool_id": "native-wide-aspiration",
+      "tip_mm": [
+        -162.0,
+        85.0,
+        105.0
+      ],
+      "entry_mm": [
+        -181.5,
+        85.0,
+        105.0
+      ],
+      "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS"
+    },
+    {
+      "tool_id": "native-fine-aspiration",
+      "tip_mm": [
+        -151.0,
+        80.0,
+        105.0
+      ],
+      "entry_mm": [
+        -181.5,
+        80.0,
+        105.0
+      ],
+      "reason": "HARD_GEOMETRY:ACCESS_APERTURE"
+    },
+    {
+      "tool_id": "native-wide-aspiration",
+      "tip_mm": [
+        -151.0,
+        80.0,
+        105.0
+      ],
+      "entry_mm": [
+        -181.5,
+        80.0,
+        105.0
+      ],
+      "reason": "HARD_GEOMETRY:ACCESS_APERTURE"
+    },
+    {
+      "tool_id": "native-fine-aspiration",
+      "tip_mm": [
+        -167.0,
+        89.0,
+        104.0
+      ],
+      "entry_mm": [
+        -181.5,
+        89.0,
+        104.0
+      ],
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+    },
+    {
+      "tool_id": "native-wide-aspiration",
+      "tip_mm": [
+        -167.0,
+        89.0,
+        104.0
+      ],
+      "entry_mm": [
+        -181.5,
+        89.0,
+        104.0
+      ],
+      "reason": "HARD_GEOMETRY:ACCESS_APERTURE"
+    },
+    {
+      "tool_id": "native-fine-aspiration",
+      "tip_mm": [
+        -166.0,
+        86.0,
+        106.0
+      ],
+      "entry_mm": [
+        -181.5,
+        86.0,
+        106.0
+      ],
+      "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS"
+    },
+    {
+      "tool_id": "native-wide-aspiration",
+      "tip_mm": [
+        -166.0,
+        86.0,
+        106.0
+      ],
+      "entry_mm": [
+        -181.5,
+        86.0,
+        106.0
+      ],
+      "reason": "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS"
+    }
+  ],
+  "probes": [
+    {
+      "offset": [
+        0,
+        0
+      ],
+      "tip_mm": [
+        -139.0,
+        85.0,
+        105.0
+      ],
+      "entry_mm": [
+        -181.5,
+        85.0,
+        105.0
+      ],
+      "tool": "native-fine-aspiration",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "target_mm3": 22,
+      "normal_mm3": 0,
+      "seconds": 0.15493645903188735,
+      "failure_tip_mm": null
+    },
+    {
+      "offset": [
+        0,
+        0
+      ],
+      "tip_mm": [
+        -139.0,
+        85.0,
+        105.0
+      ],
+      "entry_mm": [
+        -181.5,
+        85.0,
+        105.0
+      ],
+      "tool": "native-wide-aspiration",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "target_mm3": 202,
+      "normal_mm3": 5,
+      "seconds": 0.2741327499970794,
+      "failure_tip_mm": null
+    },
+    {
+      "offset": [
+        2,
+        0
+      ],
+      "tip_mm": [
+        -139.0,
+        83.0,
+        105.0
+      ],
+      "entry_mm": [
+        -181.5,
+        83.0,
+        105.0
+      ],
+      "tool": "native-fine-aspiration",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "target_mm3": 41,
+      "normal_mm3": 1,
+      "seconds": 0.17244349990505725,
+      "failure_tip_mm": null
+    },
+    {
+      "offset": [
+        2,
+        0
+      ],
+      "tip_mm": [
+        -139.0,
+        83.0,
+        105.0
+      ],
+      "entry_mm": [
+        -181.5,
+        83.0,
+        105.0
+      ],
+      "tool": "native-wide-aspiration",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "target_mm3": 310,
+      "normal_mm3": 17,
+      "seconds": 0.2818456670502201,
+      "failure_tip_mm": null
+    },
+    {
+      "offset": [
+        -2,
+        0
+      ],
+      "tip_mm": [
+        -139.0,
+        87.0,
+        105.0
+      ],
+      "entry_mm": [
+        -181.5,
+        87.0,
+        105.0
+      ],
+      "tool": "native-fine-aspiration",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "target_mm3": 27,
+      "normal_mm3": 0,
+      "seconds": 0.15975595905911177,
+      "failure_tip_mm": null
+    },
+    {
+      "offset": [
+        -2,
+        0
+      ],
+      "tip_mm": [
+        -139.0,
+        87.0,
+        105.0
+      ],
+      "entry_mm": [
+        -181.5,
+        87.0,
+        105.0
+      ],
+      "tool": "native-wide-aspiration",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "target_mm3": 289,
+      "normal_mm3": 13,
+      "seconds": 0.2826675421092659,
+      "failure_tip_mm": null
+    },
+    {
+      "offset": [
+        0,
+        2
+      ],
+      "tip_mm": [
+        -139.0,
+        85.0,
+        107.0
+      ],
+      "entry_mm": [
+        -181.5,
+        85.0,
+        107.0
+      ],
+      "tool": "native-fine-aspiration",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "target_mm3": 27,
+      "normal_mm3": 0,
+      "seconds": 0.15974187501706183,
+      "failure_tip_mm": null
+    },
+    {
+      "offset": [
+        0,
+        2
+      ],
+      "tip_mm": [
+        -139.0,
+        85.0,
+        107.0
+      ],
+      "entry_mm": [
+        -181.5,
+        85.0,
+        107.0
+      ],
+      "tool": "native-wide-aspiration",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "target_mm3": 284,
+      "normal_mm3": 7,
+      "seconds": 0.2878531669266522,
+      "failure_tip_mm": null
+    },
+    {
+      "offset": [
+        0,
+        -2
+      ],
+      "tip_mm": [
+        -140.0,
+        85.0,
+        103.0
+      ],
+      "entry_mm": [
+        -181.5,
+        85.0,
+        103.0
+      ],
+      "tool": "native-fine-aspiration",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "target_mm3": 41,
+      "normal_mm3": 2,
+      "seconds": 0.1574471660424024,
+      "failure_tip_mm": null
+    },
+    {
+      "offset": [
+        0,
+        -2
+      ],
+      "tip_mm": [
+        -140.0,
+        85.0,
+        103.0
+      ],
+      "entry_mm": [
+        -181.5,
+        85.0,
+        103.0
+      ],
+      "tool": "native-wide-aspiration",
+      "feasible": true,
+      "reason": "NATIVE_CONNECTED_STROKE",
+      "target_mm3": 312,
+      "normal_mm3": 15,
+      "seconds": 0.2775238750036806,
+      "failure_tip_mm": null
+    }
+  ]
+}

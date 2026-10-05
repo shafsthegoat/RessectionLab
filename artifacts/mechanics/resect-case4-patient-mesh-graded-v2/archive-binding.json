@@ -1,0 +1,15 @@
+{
+  "source_commit": "715f0bf99fdd76eb984e5522aa2c7fa538498f63",
+  "source_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-graded-source-715f0bf",
+  "source_sha256": {
+    "scripts/mechanics_patient_mesh_candidate_run.py": "3eb34cb35cb1bfe41cf12cb55f7df35e61efe452eb747411c64b1b8ff87173bd",
+    "scripts/mechanics_patient_mesh_candidate.py": "ff4a64f1593a3384601e10f0ea33564769e46050d88e1432ca34f5d11d0771fe",
+    "scripts/mechanics_patient_mesh.py": "d8aae815c66ae017e925c1b4ba16f1e6a64c1d2ee314153ef9889c165d64b74d",
+    "manifests/experiments/resect-case4-patient-mesh-v1.json": "b6b3fd278df85fb0ea89c72dcff37cc5f229644602f5288c81e8ce6e7653173c",
+    "manifests/experiments/resect-case4-patient-mesh-graded-v2.json": "ff27037c4141c5da99266da0c92efd5f6a673f5eb0bba6ac3032e916ba5db54e",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "artifacts/febio-runtime-investigation-v1/prospective-runtime.json": "1fae86f48714f83f1be4fb94be173bc434721ee78043732c695b547529425c48"
+  },
+  "release_sha256": "e2d8d8d0b38f267f9b48e0a347bdeb31d5fce285cece0e288419e1c2728c22bf",
+  "method": "Exact git show bytes compared to working files and independent review; archivefiles444/directories555."
+}

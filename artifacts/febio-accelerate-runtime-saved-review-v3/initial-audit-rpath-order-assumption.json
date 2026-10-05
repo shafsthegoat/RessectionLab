@@ -1,0 +1,26 @@
+{
+  "status": "reviewer_assertion_failure_not_runtime_failure",
+  "source_sha256": "255240258422a8a6ae41d3267b2c143f82ef825e811928f2d58ad1c15e9a84be",
+  "assertion": "rpaths == declared CMAKE_INSTALL_RPATH.split(semicolon)",
+  "declared_contract": "Exact allowed set with actual per-file search-order resolution; no same-order requirement across all targets.",
+  "failure": "AssertionError at audit.py line101; receipt not published. Saved and directly parsed per-file RPATH arrays matched before this comparison.",
+  "actual_differently_ordered_files": [
+    {
+      "path": "install/lib/libfebioopt.dylib",
+      "rpaths": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib",
+        "@loader_path",
+        "@executable_path/../lib"
+      ]
+    },
+    {
+      "path": "install/lib/libnumcore.dylib",
+      "rpaths": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13/openmp/lib",
+        "@loader_path",
+        "@executable_path/../lib"
+      ]
+    }
+  ],
+  "runtime_executed": false
+}

@@ -1,0 +1,84 @@
+[
+  {
+    "actions": [
+      "NATIVE:native-wide-aspiration:0",
+      "NATIVE:native-wide-aspiration:3",
+      "STOP"
+    ],
+    "complete_arm_seconds_before_independent_audit": 2.807360374950804,
+    "elapsed_seconds": 0.7812823330750689,
+    "environment_steps": 2,
+    "execution_context_after": {
+      "cpu_count": 10,
+      "load_average_1_5_15_minutes": [
+        1.60546875,
+        1.58251953125,
+        1.93603515625
+      ],
+      "process_peak_rss_bytes": 2167226368,
+      "recorded_at": "2026-10-04T11:18:09.511663+00:00"
+    },
+    "execution_context_before": {
+      "cpu_count": 10,
+      "load_average_1_5_15_minutes": [
+        1.60546875,
+        1.58251953125,
+        1.93603515625
+      ],
+      "process_peak_rss_bytes": 2112552960,
+      "recorded_at": "2026-10-04T11:18:08.728746+00:00"
+    },
+    "method": "GREEDY",
+    "nominal_score": 245.24,
+    "observability": "nominal_evidence_only",
+    "optimizer_mode": "SEARCH",
+    "preparation_seconds": 2.0244342079386115,
+    "reused_by_profiles": [
+      "RAW",
+      "FEATURE_UNITS"
+    ],
+    "shared_baseline_id": "GREEDY",
+    "termination": "greedy_stop"
+  },
+  {
+    "actions": [
+      "NATIVE:native-wide-aspiration:0",
+      "NATIVE:native-wide-aspiration:3",
+      "STOP"
+    ],
+    "complete_arm_seconds_before_independent_audit": 8.222431125002913,
+    "elapsed_seconds": 6.126940249931067,
+    "environment_steps": 21,
+    "execution_context_after": {
+      "cpu_count": 10,
+      "load_average_1_5_15_minutes": [
+        1.51171875,
+        1.56298828125,
+        1.92431640625
+      ],
+      "process_peak_rss_bytes": 2747891712,
+      "recorded_at": "2026-10-04T11:18:17.734187+00:00"
+    },
+    "execution_context_before": {
+      "cpu_count": 10,
+      "load_average_1_5_15_minutes": [
+        1.60546875,
+        1.58251953125,
+        1.93603515625
+      ],
+      "process_peak_rss_bytes": 2708930560,
+      "recorded_at": "2026-10-04T11:18:11.603572+00:00"
+    },
+    "method": "SEARCH",
+    "nominal_score": 245.24,
+    "observability": "nominal_evidence_only",
+    "optimizer_mode": "SEARCH",
+    "preparation_seconds": 2.09139620908536,
+    "reused_by_profiles": [
+      "RAW",
+      "FEATURE_UNITS"
+    ],
+    "shared_baseline_id": "SEARCH",
+    "termination": "search_exhausted"
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "script_sha256": "a213174801a27ffcdcd32c924678cd8e63d7f02b512db139df855b683516add4",
+  "declaration_sha256": "56e30a05c7d748bab2cde6d3f5d5cbe8bafe8962ebcca2045f8a028a8ad7ca02",
+  "coordinate_justification_sha256": "f293613dd1ca5adf58bfd768c2fe2b4d50e352fe0534ee28264225739f88c2ec",
+  "authorizer": "root explicit task release",
+  "created_at_utc": "2026-10-04T20:35:04.635155+00:00",
+  "source_commit": "324741158b343d734e650bd61e9fbbf55ea792b8",
+  "committed_source_binding_sha256": "f9a473d0accb55ec0fd7702982bc386ff0abddf8d54641d4bc00c06744d8fc6b",
+  "scope": "One supervised baseline-only run; T1, FLAIR, before-US, MRI-before-US tags only; no before-during tag or during-US image; no B/V motion; unchanged fixed fit/LOO/six views.",
+  "wall_seconds": 115,
+  "RSS_bytes": 2147483648,
+  "threads": 1,
+  "retries": 0
+}

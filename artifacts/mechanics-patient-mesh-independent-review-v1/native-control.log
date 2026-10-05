@@ -1,0 +1,72 @@
+Info    : Clearing all models and views...
+Info    : Done clearing all models and views
+Info    : Classifying surfaces (angle: 180)...
+Info    : Splitting triangulations to make them parametrizable:
+Info    :  - Level 0 partition with 584 triangles split in 2 parts because poincare characteristic 2 is not 0
+Info    : Found 2 model surfaces
+Info    : Found 1 model curves
+Info    : Done classifying surfaces (Wall 0.0107463s, CPU 0.007102s)
+Info    : Creating geometry of discrete curves...
+Info    : Done creating geometry of discrete curves (Wall 3.33367e-06s, CPU 3e-06s)
+Info    : Creating geometry of discrete surfaces...
+Info    : Done creating geometry of discrete surfaces (Wall 0.00313442s, CPU 0.00291s)
+Info    : Meshing 1D...
+Info    : Meshing curve 3 (Discrete curve)
+Info    : Done meshing 1D (Wall 0.000116625s, CPU 6e-05s)
+Info    : Meshing 2D...
+Info    : [  0%] Meshing surface 2 (Discrete surface, Frontal-Delaunay)
+Info    : [ 60%] Meshing surface 3 (Discrete surface, Frontal-Delaunay)
+Info    : Done meshing 2D (Wall 0.00389887s, CPU 0.003458s)
+Info    : Meshing 3D...
+Info    : 3D Meshing 1 volume with 1 connected component
+Info    : Tetrahedrizing 82 nodes...
+Info    : Done tetrahedrizing 90 nodes (Wall 0.000524625s, CPU 0.000446s)
+Info    : Reconstructing mesh...
+Info    :  - Creating surface mesh
+Info    :  - Identifying boundary edges
+Info    :  - Recovering boundary
+Info    : Done reconstructing mesh (Wall 0.00129783s, CPU 0.001096s)
+Info    : Found volume 1
+Info    : It. 0 - 0 nodes created - worst tet radius 1.65092 (nodes removed 0 0)
+Info    : 3D refinement terminated (91 nodes total):
+Info    :  - 0 Delaunay cavities modified for star shapeness
+Info    :  - 0 nodes could not be inserted
+Info    :  - 255 tetrahedra created in 0.00040575 sec. (628466 tets/s)
+Info    : 0 node relocations
+Info    : Done meshing 3D (Wall 0.00271517s, CPU 0.002283s)
+Info    : Optimizing mesh...
+Info    : Optimizing volume 1
+Info    : Optimization starts (volume = 3.04851e-07) with worst = 0.0317881 / average = 0.73197:
+Info    : 0.00 < quality < 0.10 :         2 elements
+Info    : 0.10 < quality < 0.20 :         1 elements
+Info    : 0.20 < quality < 0.30 :         4 elements
+Info    : 0.30 < quality < 0.40 :         6 elements
+Info    : 0.40 < quality < 0.50 :        13 elements
+Info    : 0.50 < quality < 0.60 :        21 elements
+Info    : 0.60 < quality < 0.70 :        39 elements
+Info    : 0.70 < quality < 0.80 :        66 elements
+Info    : 0.80 < quality < 0.90 :        72 elements
+Info    : 0.90 < quality < 1.00 :        31 elements
+Info    : 7 edge swaps, 0 node relocations (volume = 3.04851e-07): worst = 0.325019 / average = 0.747863 (Wall 0.000121292s, CPU 8e-05s)
+Info    : No ill-shaped tets in the mesh :-)
+Info    : 0.00 < quality < 0.10 :         0 elements
+Info    : 0.10 < quality < 0.20 :         0 elements
+Info    : 0.20 < quality < 0.30 :         0 elements
+Info    : 0.30 < quality < 0.40 :         6 elements
+Info    : 0.40 < quality < 0.50 :        12 elements
+Info    : 0.50 < quality < 0.60 :        20 elements
+Info    : 0.60 < quality < 0.70 :        40 elements
+Info    : 0.70 < quality < 0.80 :        69 elements
+Info    : 0.80 < quality < 0.90 :        73 elements
+Info    : 0.90 < quality < 1.00 :        29 elements
+Info    : Done optimizing mesh (Wall 0.000302792s, CPU 0.000216s)
+Info    : Meshing order 2 (curvilinear off)...
+Info    : [  0%] Meshing curve 3 order 2
+Info    : [ 30%] Meshing surface 2 order 2
+Info    : [ 60%] Meshing surface 3 order 2
+Info    : [ 80%] Meshing volume 1 order 2
+Info    : Done meshing order 2 (Wall 0.000948625s, CPU 0.000809s)
+Info    : 510 nodes 424 elements
+Info    : Writing '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/mechanics-patient-mesh-native-cube-v1/cube-tet10.msh'...
+Info    : Done writing '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/validation/mechanics-patient-mesh-native-cube-v1/cube-tet10.msh'
+{"status": "failed_or_incomplete", "phase": "actual_VTK_bidirectional_distance", "seconds": 1.2215792089700699}

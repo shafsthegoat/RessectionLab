@@ -1,0 +1,30 @@
+{
+  "status": "prepared_not_executed",
+  "files": {
+    "scripts/mechanics_patient_constraints.py": "04119660cf0a230428fe862d7897ea17953c51cf8756f87fa3152b426e303c66",
+    "scripts/mechanics_febio_verification.py": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "tests/test_mechanics_patient_constraints_runtime.py": "f218d3660480575fbbc3a346683545a833a8bdffca3b99b13d067d5a123a9d54",
+    "artifacts/mechanics-patient-constraints-runtime-v1/README.md": "f1d99e7e22fd33c7c41189b73fb0258edbd5f93b892d750df5df87260e269c28",
+    "artifacts/mechanics-patient-constraints-runtime-v1/decks/manifest.json": "73a20d14551742159f05145bfd39444fde4d8bc81415d6139d85e8d890d0c330",
+    "artifacts/mechanics-patient-constraints-runtime-v1/decks/mpc_nonrigid.feb": "40900e8761e663ca37568f9b911a06bfb34acb3db2bd5b1fd4840c7d55fadb93",
+    "artifacts/mechanics-patient-constraints-runtime-v1/decks/mpc_translation.feb": "dad1653d2015d04f3499ea87f37246e5fce3c86f849ffc363e99cddd230386fa",
+    "artifacts/mechanics-patient-constraints-runtime-v1/decks/tet10_affine.feb": "8a75158a97750f3db57a5a2a48ab3f03760a4a95a8818ff3d30218ceca262f62",
+    "artifacts/mechanics-patient-constraints-runtime-v1/owner-tests-01.txt": "6320bc21f6d91e1394326621455046285ed9abfe002251b7ef04464f1d80f353"
+  },
+  "pinned_FEBio_commit": "32ae206ff4881dfb54f62296cd1558e58ed9fcc6",
+  "pinned_source_files": {
+    "FECore/FESolidElementShape.cpp": "e99bc00dd80dc8a7bc2236b79a114d808ea64fcf611f6770ecd9b0fe1baab45d",
+    "FECore/FEElementTraits.cpp": "6d6a9fe2a52351997ece0c711bffe4900ad4d65765d9f8ad75d50227c35a9327",
+    "FECore/FEAnalysis.cpp": "82b2bd1fbe22343a02b1f142878c5954cb86b036495a57d4f6c27c61afa9fa66",
+    "FECore/FETimeStepController.cpp": "34e1363ac2834bb26477da69c5c613d8277d337ebb7ccfd3e94f6529149af333",
+    "FEBioXML/FEBioBoundarySection3.cpp": "59fc7179458aa86e37b04a7fac492044cd42239ca65a6f2aecd6833cae0ad724",
+    "FEBioXML/FEBioMeshDomainsSection4.cpp": "1efcd31d640e5ddd7dd207e5d40451951e03a5ae1cef7e23669dd8623410815c",
+    "FEBioXML/FEModelBuilder.cpp": "0b5584efadeab7da681d51a08a944398972bc4dc1fcf746040adc27c94ca09a8",
+    "FECore/FELinearConstraintManager.cpp": "d87fb27814c7bd9be0a4c01f77c7ebf40c4fc94bf579461033a17c049a1a5909"
+  },
+  "tests": "18 owner controls passed in0.75s; no solver call",
+  "unchanged_semantics_after_tests": "Removed optional undeclared output-cap field before bundle generation; no numerical source changes. Recheck planned after independent review.",
+  "runtime_execution": "requires separate root release",
+  "material_scale": "arbitrary numerical mu1000Pa,nu.45; not human tissue fit"
+}

@@ -1,0 +1,14 @@
+Read-only hash-bound N8 saved-mesh probe; no mesher, deck, solver or measured-data access.
+The original no-straddling assertion failed before N12 or reflection checks ran.
+
+Traceback (most recent call last):
+  File "<stdin>", line 10, in <module>
+AssertionError
+
+Rejected condition:
+not any((cell_coordinate_min[:,:2] < -4.89159e-13) &
+        (cell_coordinate_max[:,:2] >  4.89159e-13))
+
+A subsequent saved-coordinate read quantified the failure without changing the criterion:
+N8:32 straddlers per axis; N12:72 per axis; maximum smaller-side extent9.18104e-12m.
+No quadrant preparation or acceptance followed.

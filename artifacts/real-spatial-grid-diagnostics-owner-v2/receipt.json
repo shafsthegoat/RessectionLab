@@ -1,0 +1,26 @@
+{
+  "compatibility": "explicit native_affine=source equals default-none diagnostics; geometry scaling examples are analytic helper tests, not allowed adapter corrections",
+  "frame_contract": "original source affine determines proposal axis and offsets; derived native affine determines physical depth, crop inversion and actor rays; both recorded",
+  "header_matrix_check": "all8 expected binding fields recompute exactly using committed roundoff helper from declared original matrix",
+  "maximum_corner_displacement_mm": 1.0842083020239977e-07,
+  "prospective_declaration_unsealed": true,
+  "scope": "Owner diagnostics software and header-matrix checks only; no patient bundle read, engine execution, policy forward or training",
+  "sole_adapter_delta": "native_grid_reconciliation=orthogonal_roundoff_1e-6mm",
+  "source_sha256": {
+    "scripts/preflight_real_spatial_policy.py": "1ed1ac591afe4996b82609842622c8ea2bdfbc2a6a439b0af0c22c767eb742cf",
+    "src/resectionlab/spatial_policy_diagnostics.py": "77bda1bc2a222ef7a823cda5b9a03214717dce6776efa234418024ffb8a0a883",
+    "tests/test_real_spatial_preflight.py": "d26d8720c1a9e2617e601921310f0f98f8082af242120ef5d0fa9e72b53fbccb",
+    "tests/test_spatial_policy_diagnostics.py": "88cd5218a1d6c82f8edce296f6591b2c7445257caa920c31b88f95b74b0f0e38"
+  },
+  "test_runs": [
+    {
+      "command": ".venv/bin/python -m pytest tests/test_spatial_policy_diagnostics.py tests/test_real_spatial_preflight.py -q",
+      "result": "28 passed in3.30s"
+    },
+    {
+      "command": ".venv/bin/python -m pytest tests/test_real_spatial_preflight.py -q -k threads_native_grid",
+      "result": "1 passed18deselected in1.02s"
+    }
+  ],
+  "unchanged_v1_declaration_fields": 24
+}

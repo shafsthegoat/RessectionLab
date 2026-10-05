@@ -1,0 +1,31 @@
+{
+  "status": "prepared_not_compiled",
+  "patch_apply_stdout": "patching file 'NumCore/AccelerateSparseSolver.cpp'\n",
+  "patch_apply_stderr": "",
+  "compiler": "/Library/Developer/CommandLineTools/usr/bin/clang++",
+  "compiler_sha256": "f30550eab15fdf5ab8c0dc54c52679711241e5d4b636b027e18c09fef531775d",
+  "files": {
+    "original": {
+      "source_sha256": "f5432e79ab73dd11d4a0550691480edd7fd5f00c392ae2f78eddf9c4b5da51c9",
+      "fragment_sha256": "72ba3876984f924487d9cf3fb3c8102da218a9a04787bbb5f0d350789f1cc54e",
+      "fixture": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/febio-accelerate-csc-bounds-v1/original.cpp",
+      "fixture_sha256": "9de7e16aa026bff5075d3826c64564401f889d09af375aea7af5e0daf8635cec"
+    },
+    "patched": {
+      "source_sha256": "60e5a3f2350826af1b95376ab93c8a476f2312158763d63d82eb80ec54af79c2",
+      "fragment_sha256": "88315d2f9d1499688c66c202ad600d963f89e158c99c3ef6170dd71754fefa1b",
+      "fixture": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/febio-accelerate-csc-bounds-v1/patched.cpp",
+      "fixture_sha256": "2ebf76a9f59e52d8aa240232023203aea16ff2b94b50ec1bb9df56b451c24deb"
+    }
+  },
+  "original_source_unchanged": true,
+  "profiles": [
+    "dense3/9",
+    "diagonal3/3",
+    "empty-columns4/2",
+    "single1/1",
+    "zero-created",
+    "zero-null"
+  ],
+  "scope": "Exact source-extracted conversion fragment with mock matrix storage; not full adapter or factorization validation."
+}

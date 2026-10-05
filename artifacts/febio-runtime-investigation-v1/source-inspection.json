@@ -1,0 +1,169 @@
+{
+  "tag": "v4.13",
+  "annotated_tag": "9184ff860ca560bec32980ee05ce04724881c64c",
+  "commit": "32ae206ff4881dfb54f62296cd1558e58ed9fcc6",
+  "files": {
+    "CMakeLists.txt": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/CMakeLists.txt",
+      "bytes": 16115,
+      "sha256": "4b06e7c9a30255fa10fb9f15253398c47f124e1a0141489641e5aabcb4390afe"
+    },
+    "LICENSE": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/LICENSE",
+      "bytes": 1149,
+      "sha256": "82c4d113462cdd34a9f9f8be170f14ddf312cbba1e319d1fd197df0257754e0f"
+    },
+    "BUILD.md": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/BUILD.md",
+      "bytes": 12568,
+      "sha256": "a508168a1e4457e47d84638a18da581a354146858d779f0985bffae3d3b46dd7"
+    },
+    "FEBioLib/CMakeLists.txt": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FEBioLib/CMakeLists.txt",
+      "error": "HTTP Error 404: Not Found"
+    },
+    "FEBio/CMakeLists.txt": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FEBio/CMakeLists.txt",
+      "error": "HTTP Error 404: Not Found"
+    },
+    "NumCore/CMakeLists.txt": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/NumCore/CMakeLists.txt",
+      "error": "HTTP Error 404: Not Found"
+    },
+    "FindDependencies.cmake": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FindDependencies.cmake",
+      "bytes": 11228,
+      "sha256": "de69167f0cb6f5f6b1d1b6bc15fd926488dc152dc88cadbe0efa93aa31cb3208"
+    },
+    "FECore/stdafx.h": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FECore/stdafx.h",
+      "bytes": 1532,
+      "sha256": "6ec1e0a95b8356b11fe23373ef1607fe599c00a60204c414cdbe8044ed48ca3c"
+    },
+    "NumCore/stdafx.h": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/NumCore/stdafx.h",
+      "bytes": 1510,
+      "sha256": "cb6f5c8578dd4be20edf368deb84d42c4da693905b885a0dcd0ddb55ea0900ec"
+    },
+    "FEBioMech/stdafx.h": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FEBioMech/stdafx.h",
+      "bytes": 1311,
+      "sha256": "39e0298bc43cbf316fd9d02d8a7cac02a9abf2c07306ccfc40069e7a5f588c04"
+    },
+    "FEBioLib/stdafx.h": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FEBioLib/stdafx.h",
+      "bytes": 1492,
+      "sha256": "04fde1d7d4f93e70bc3767bfbff7e6fb21fe778bb396557117dd326dfa2cb58d"
+    },
+    "FEBio/version.h": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FEBio/version.h",
+      "error": "HTTP Error 404: Not Found"
+    },
+    "FEBioLib/version.h": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FEBioLib/version.h",
+      "bytes": 2104,
+      "sha256": "d3a840528d5638ca5a4da985d8239e2326610c8cb78efd0196e2dc2857e7d997"
+    },
+    "NumCore/NumCore.cpp": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/NumCore/NumCore.cpp",
+      "bytes": 3847,
+      "sha256": "99d1e1a81c96196226a47dc1fb24c40527586eb72045560a44c228d29394d47a"
+    },
+    "NumCore/SkylineSolver.cpp": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/NumCore/SkylineSolver.cpp",
+      "error": "HTTP Error 404: Not Found"
+    },
+    "FECore/omp.h": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FECore/omp.h",
+      "error": "HTTP Error 404: Not Found"
+    },
+    "FECore/SkylineSolver.cpp": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FECore/SkylineSolver.cpp",
+      "bytes": 2894,
+      "sha256": "325472e777095eb90bb57976ef8e57304e9e01712bd82317cb5bf1b8e2eaacd0"
+    },
+    "NumCore/AccelerateSparseSolver.cpp": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/NumCore/AccelerateSparseSolver.cpp",
+      "bytes": 20622,
+      "sha256": "f5432e79ab73dd11d4a0550691480edd7fd5f00c392ae2f78eddf9c4b5da51c9"
+    },
+    "FEBioMech/FESolidSolver2.cpp": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FEBioMech/FESolidSolver2.cpp",
+      "bytes": 50649,
+      "sha256": "0558262b37931ff591b53e9645d7c5a809e149ecd399656d59aa4bf84f245bf6"
+    },
+    "FEBio/FEBio.cpp": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FEBio/FEBio.cpp",
+      "bytes": 1706,
+      "sha256": "a76631af4f1939e050cf92a9b14877608a8dd607aaa1d15f042ad34c27d6d6df"
+    },
+    "FECore/sys.h": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FECore/sys.h",
+      "bytes": 1747,
+      "sha256": "5e0ecce258bbb3155f51d19683333fd726e1c136c66f6ee1101db5f5aa923ab7"
+    },
+    "ci/macOS/cmake.sh": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/ci/macOS/cmake.sh",
+      "bytes": 354,
+      "sha256": "bc85479423e098d7f0d784c58e368e2b263358c5e0cc8901ee31798e3c012549"
+    },
+    "NumCore/AccelerateSparseSolver.h": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/NumCore/AccelerateSparseSolver.h",
+      "bytes": 3134,
+      "sha256": "71c94987d90f36d13ab5c13a43e5fb77d264cf706b7dc4b5f5faa1befd0c29f4"
+    },
+    "FECore/SkylineSolver.h": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FECore/SkylineSolver.h",
+      "bytes": 1960,
+      "sha256": "07036168774c728d52b12d5b47ea3c39bcea7dccaa4e351947ebae8927ea77e3"
+    },
+    "Documentation/Copyright-FEBio.txt": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/Documentation/Copyright-FEBio.txt",
+      "bytes": 2644,
+      "sha256": "4bb04ca4d77260db0ab3041cc22d57ea8ffe3a0bdbfc29eb25685f12c224cdd4"
+    },
+    "FECore/sys.cpp": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FECore/sys.cpp",
+      "error": "HTTP Error 404: Not Found"
+    },
+    "FECore/vector.cpp": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FECore/vector.cpp",
+      "bytes": 5472,
+      "sha256": "2fbbc872cc3228c39a204828394f1c0a09669e661e11d4472482fd5aeab5e041"
+    },
+    "FEBioMech/FEElasticSolidDomain.cpp": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FEBioMech/FEElasticSolidDomain.cpp",
+      "bytes": 23082,
+      "sha256": "14b38c357a2cd7a36c1f641b906a439279904967eb1846e6c338538b56df2134"
+    },
+    "FEBioMech/FESolidDomain.cpp": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FEBioMech/FESolidDomain.cpp",
+      "error": "HTTP Error 404: Not Found"
+    },
+    "FECore/FEGlobalVector.cpp": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FECore/FEGlobalVector.cpp",
+      "bytes": 2955,
+      "sha256": "f021c7899c64d7a708289b48f02007272ce3a78bb9e79f67dde9c048b8055540"
+    },
+    "FECore/FEGlobalMatrix.cpp": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FECore/FEGlobalMatrix.cpp",
+      "bytes": 9708,
+      "sha256": "5df3d4b6dbb8ee2f309a49a2ed1626d69b0d9d0baaacd5975b1fe1d376c86ce3"
+    },
+    "FECore/FELinearSystem.cpp": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FECore/FELinearSystem.cpp",
+      "bytes": 3755,
+      "sha256": "9aa72d91b93ae2127fe3ed1e91d634bb76f55cb87f9647b460e14a6b7ee94c1e"
+    },
+    "FEBioMech/FEResidualVector.cpp": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FEBioMech/FEResidualVector.cpp",
+      "bytes": 5967,
+      "sha256": "7e11906bdab31ea44e195abeb01d00eff5f137d3f3ac07f995bfc16b6165279f"
+    },
+    "FEBio/FEBioApp.cpp": {
+      "url": "https://raw.githubusercontent.com/febiosoftware/FEBio/32ae206ff4881dfb54f62296cd1558e58ed9fcc6/FEBio/FEBioApp.cpp",
+      "bytes": 14825,
+      "sha256": "900731ec513ae136b35bc61dc90b85bd44c63f2b4e7c5a2b3e85bdbbff27d1df"
+    }
+  }
+}

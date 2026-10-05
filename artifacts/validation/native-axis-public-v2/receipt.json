@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "revision": "69304172a74c50a8b83025c863edd979ff26e4fd",
+  "archive_sha256": "a4f24a49dd0d30ad872e80260f6b1275c5cd1756d0261ae3eda1745b72e5c9c5",
+  "case_sha256": "11cca797ad0216e5c8d940e7354f2dd23fb6954dc2aed7e4b0423f6adc6cefcf",
+  "source_file_count": 2710,
+  "source_manifest_sha256": "420034a2ded556275c2b5a56d2ead9aedd9d3e5eefb9290398849c17c36d976f",
+  "source_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-v2/69304172a74c50a8b83025c863edd979ff26e4fd/source",
+  "started_utc": "2026-10-04T12:27:38Z",
+  "argv": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_native_axis_preflight.py",
+    "tests/test_native_axis_preflight_adversarial.py",
+    "tests/test_native_axis_public_configuration.py",
+    "tests/test_native_axis_accounting.py",
+    "tests/test_native_axis_accounting_independent.py",
+    "tests/test_native_axis_learning.py",
+    "--basetemp",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-v2/69304172a74c50a8b83025c863edd979ff26e4fd/pytest-temp"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 23.8492792500183,
+  "source_changed": [],
+  "log_sha256": "da802d9bd253a414a5b78875cbf07af2f67691a7fa88f14d5b0bcdea66e954b1",
+  "finished_utc": "2026-10-04T12:28:02Z"
+}

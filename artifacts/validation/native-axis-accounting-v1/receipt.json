@@ -1,0 +1,35 @@
+{
+  "status": "passed",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_native_axis_accounting.py",
+    "-q"
+  ],
+  "returncode": 0,
+  "wall_seconds": 3.7060272090602666,
+  "source_hashes_before": {
+    "src/resectionlab/native_axis_accounting.py": "8856bc2989c8516bbe837ea1534b745235cee9bc00f5f265170856fcfe94391a",
+    "tests/test_native_axis_accounting.py": "55b1ff51a4d0cec3517603d9f75ed2c13dc6abedaf83a04439f1c0cda0edd5d4",
+    "tests/test_native_axis_accounting_independent.py": "4169a379b25ab0d50bb1f319caaed2f2d260b6367400430a37643853c2cee622",
+    "docs/native-axis-accounting.md": "742f04cfdf20a5887abf74048324ed158584a2ffd4927dada481d0a30a77f62e"
+  },
+  "source_hashes_after": {
+    "src/resectionlab/native_axis_accounting.py": "8856bc2989c8516bbe837ea1534b745235cee9bc00f5f265170856fcfe94391a",
+    "tests/test_native_axis_accounting.py": "55b1ff51a4d0cec3517603d9f75ed2c13dc6abedaf83a04439f1c0cda0edd5d4",
+    "tests/test_native_axis_accounting_independent.py": "4169a379b25ab0d50bb1f319caaed2f2d260b6367400430a37643853c2cee622",
+    "docs/native-axis-accounting.md": "742f04cfdf20a5887abf74048324ed158584a2ffd4927dada481d0a30a77f62e"
+  },
+  "independent_review": "artifacts/native-axis-accounting-review-v1/receipt.json",
+  "scope": "synthetic fixtures only; one tiny actual RAW gradient update; no patient execution",
+  "existing_shared_sources_changed": false,
+  "candidate_eligible": false,
+  "clinical_deficit_probability": null,
+  "protected_source_hashes": {
+    "src/resectionlab/native_axis_simulation.py": "e1b8306050b53e636e1d602290720655d1f06fe72bf8309ba80afb2025122b70",
+    "src/resectionlab/native_simulation.py": "2461cc6c32eb25a3927bcc3a9379bb02417794c3a764c4b1e705a00bcac6493c",
+    "src/resectionlab/learning.py": "f6c490beb563357599fa35bf1674eee47b02f28864a4128122c526e3c995cd48",
+    "src/resectionlab/procedural_learning.py": "d4666701930d2baa1f438b2a1bed4819e895ec6161c38a78b6ef4d68331ac2d1"
+  }
+}

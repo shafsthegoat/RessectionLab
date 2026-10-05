@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-10-04T18:25:05.460176+00:00",
+  "authorization": "Root released exactly the four fixed case outputs for post-inference array QC and unreviewed proposal bundle persistence after PAT05v2 finished. No inference retries, original input/output mutations, role changes, or review promotion.",
+  "inference_batch_sha256": "57b41c12d937358165ca4aa8e46d0085b9577ee1619034a375e2c90d84bbc975",
+  "inference_root_release_sha256": "3bc62f7a736f7d690df24754990b89075491fd7ae787404a264e559cb6b98934",
+  "snapshot": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/btc-spatial-support-ea501a8/source",
+  "git_commit": "ea501a8991e9a4ec6a6154f117c48a8b6ff1e390",
+  "numerical_threads": 1,
+  "independent_review_owner": "imaging agent; native reconstruction and visual review recorded separately",
+  "source_originals_mutable": false,
+  "new_report_directory": "outputs/brain-extraction/BTC-spatial-main-v1-qc",
+  "source_wrapper_sha256": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917",
+  "source_imaging_sha256": "26928ec3eb948924b961d7d70289014ee243c1cf6ea6e3f9ba60e8bf96e8d866",
+  "previous_failed_setup_receipt_sha256": "74dd210a342fc71f40dfe085b26aeb78185b96b7da34c9b4e425e4077e0afbf1",
+  "driver_sha256": "91c11aff9f59b9219d0e14fa06cca7f370b1aec5d40e526bca6b30de4fbf1032",
+  "parent_argv": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-I",
+    "-S",
+    "-B",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/brain-extraction/BTC-spatial-main-v1-integration/attempt-02/integration-driver.py",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab"
+  ]
+}

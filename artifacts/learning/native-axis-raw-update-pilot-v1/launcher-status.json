@@ -1,0 +1,27 @@
+{
+  "consumer_authority": "Require completed launcher + hash-bound worker + pilot status; payload presence alone is not eligibility.",
+  "eligible_candidate_count": 1,
+  "final_worlds_used": false,
+  "full_launcher_seconds": 221.1391212909948,
+  "gradient_steps": 1,
+  "hard_killed": false,
+  "launch_preparation_seconds": 0.046079833060503006,
+  "parent_timeout_requested": false,
+  "resource_budget": {
+    "hard_termination_grace_seconds": 15.0,
+    "process_peak_rss_bytes": 6442450944,
+    "worker_wall_seconds": 600.0
+  },
+  "status": "completed",
+  "stress_worlds_used": false,
+  "worker_command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/native-axis-raw-update-pilot-v1/frozen-source/scripts/run_native_axis_pilot.py",
+    "--worker",
+    "--output",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/native-axis-raw-update-pilot-v1",
+    "--case-bundle",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/native-axis-pilot-v1-full-01/f3a05910bc142e44c253cae7b747da3fb315d3ea/source/outputs/cases/UCSF-PDGM-0004.ressectionlab"
+  ],
+  "worker_returncode": 0
+}

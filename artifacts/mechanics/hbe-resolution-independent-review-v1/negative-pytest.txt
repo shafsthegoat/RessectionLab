@@ -1,0 +1,19 @@
+FF..                                                                     [100%]
+=================================== FAILURES ===================================
+_________ test_bound_preparation_level_receipt_is_checked_before_solve _________
+tests/test_mechanics_hbe_resolution_review.py:100: in test_bound_preparation_level_receipt_is_checked_before_solve
+    resolution.preflight(tmp_path, study, release, 'solve')
+scripts/mechanics_hbe_resolution.py:148: in preflight
+    raise ValueError('Prepared mesh/loading identity differs')
+E   ValueError: Prepared mesh/loading identity differs
+__________ test_valid_level_receipts_join_ongoing_input_integrity_set __________
+tests/test_mechanics_hbe_resolution_review.py:109: in test_valid_level_receipts_join_ongoing_input_integrity_set
+    plan = resolution.preflight(tmp_path, study, release, 'solve')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+scripts/mechanics_hbe_resolution.py:148: in preflight
+    raise ValueError('Prepared mesh/loading identity differs')
+E   ValueError: Prepared mesh/loading identity differs
+=========================== short test summary info ============================
+FAILED tests/test_mechanics_hbe_resolution_review.py::test_bound_preparation_level_receipt_is_checked_before_solve
+FAILED tests/test_mechanics_hbe_resolution_review.py::test_valid_level_receipts_join_ongoing_input_integrity_set
+2 failed, 2 passed in 0.17s

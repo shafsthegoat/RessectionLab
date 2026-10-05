@@ -1,0 +1,595 @@
+{
+  "archived_alias_geometry": {
+    "candidate_coordinates_mm": [
+      [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        6.5
+      ],
+      [
+        1.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        6.5
+      ]
+    ],
+    "distinguishes_pair": true,
+    "frame_receipt": {
+      "basis_columns": [
+        [
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "conditioning": {
+        "automatic_axis_selection": false,
+        "engineering_condition_only": true,
+        "minimum_sine": 0.1,
+        "roundoff_rejection_half_width": 1.4210854715202004e-14,
+        "status": "accepted",
+        "tangent_normalization_factor": 1.0,
+        "tangent_sine": 1.0
+      },
+      "normal_inward": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "orientation": "right_handed",
+      "origin_mm": [
+        3.0,
+        3.0,
+        -0.5
+      ],
+      "reference": {
+        "coordinate_frame": "RAS+",
+        "declaration_id": "explicit-synthetic-fixture-x-reference",
+        "source_hash": "synthetic-axis-learner-fixture-v1",
+        "vector": [
+          1.0,
+          0.0,
+          0.0
+        ]
+      },
+      "reference_hash": "sha256:fc6787b2d71d1128bce1abca8d0367bf9708bbc6afd1dbb218c40b780945e984",
+      "units": "millimetres",
+      "version": "synthetic-declared-tangent-frame-v2"
+    },
+    "historical_two_cut_returns_not_recomputed": [
+      39.42999999999999,
+      39.67999999999999
+    ],
+    "source_report_sha256": "f7ac523a033e7b9dbfb8119c0a78916d0ef3dc420d7156d8459f25d21bd0c79c"
+  },
+  "contract": {
+    "action_names": [
+      "entry_u_mm",
+      "entry_v_mm",
+      "entry_inward_mm",
+      "tip_u_mm",
+      "tip_v_mm",
+      "tip_inward_mm"
+    ],
+    "conditioning_interpretation": "engineering rejection margin, not a global floating-point bound or clinical threshold",
+    "descriptor_hash": "sha256:9a4cf063a78c7230ba2f18c252189e735bd49ae76e8aac36fdd82a2ec1eb05c8",
+    "frame": "access center; inward normal; explicit reference cross products; no source-axis selection",
+    "global_cross_patient_tangent_convention_claimed": false,
+    "markov_completeness_claimed": false,
+    "minimum_sine": 0.1,
+    "normalization": "none; candidate mm and state mm3/mm",
+    "omitted_state": [
+      "partial_contact_history",
+      "current_tool",
+      "remaining_action_budget",
+      "full_geometry",
+      "topology",
+      "candidate_interactions"
+    ],
+    "production_input_profiles_changed": false,
+    "reference": "externally declared physical vector, source hash, coordinate frame and declaration ID",
+    "roundoff_rejection_half_width": 1.4210854715202004e-14,
+    "shared_summary_version": "synthetic-access-coordinate-centroid-probe-v1",
+    "state_names": [
+      "cavity_volume_mm3",
+      "cavity_centroid_u_mm",
+      "cavity_centroid_v_mm",
+      "cavity_centroid_inward_mm",
+      "residual_target_volume_mm3",
+      "residual_target_centroid_u_mm",
+      "residual_target_centroid_v_mm",
+      "residual_target_centroid_inward_mm"
+    ],
+    "version": "synthetic-declared-tangent-frame-v2"
+  },
+  "elapsed_seconds": 0.0023718340089544654,
+  "engineering_boundary_results": [
+    {
+      "receipt": {
+        "automatic_axis_selection": false,
+        "engineering_condition_only": true,
+        "minimum_sine": 0.1,
+        "normal_inward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "origin_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "reference": {
+          "coordinate_frame": "RAS+",
+          "declaration_id": "declared-engineering-boundary-probe",
+          "source_hash": "sha256:109c1b89e57a16898ea3cae3e1ed3feb6439ac23230fc99c83cf8f2e76adc5ef",
+          "vector": [
+            0.9950874333444273,
+            0.099,
+            0.0
+          ]
+        },
+        "reference_hash": "sha256:e3376651e27ab920eb5968e72836f7033aef67fe496b2cce75c125e662769295",
+        "rejection_reason": "declared_tangent_below_engineering_condition_limit",
+        "roundoff_rejection_half_width": 1.4210854715202004e-14,
+        "status": "rejected",
+        "tangent_sine": 0.09900000000000002,
+        "version": "synthetic-declared-tangent-frame-v2"
+      },
+      "requested_sine": 0.099
+    },
+    {
+      "receipt": {
+        "automatic_axis_selection": false,
+        "engineering_condition_only": true,
+        "minimum_sine": 0.1,
+        "normal_inward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "origin_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "reference": {
+          "coordinate_frame": "RAS+",
+          "declaration_id": "declared-engineering-boundary-probe",
+          "source_hash": "sha256:109c1b89e57a16898ea3cae3e1ed3feb6439ac23230fc99c83cf8f2e76adc5ef",
+          "vector": [
+            0.9949874371066206,
+            0.0999999999999929,
+            0.0
+          ]
+        },
+        "reference_hash": "sha256:f729f62a3a9d79d0eb2bfb782086a603611038927c43b4bcf55f611723694303",
+        "rejection_reason": "declared_tangent_in_roundoff_rejection_band",
+        "roundoff_rejection_half_width": 1.4210854715202004e-14,
+        "status": "rejected",
+        "tangent_sine": 0.0999999999999929,
+        "version": "synthetic-declared-tangent-frame-v2"
+      },
+      "requested_sine": 0.0999999999999929
+    },
+    {
+      "receipt": {
+        "automatic_axis_selection": false,
+        "engineering_condition_only": true,
+        "minimum_sine": 0.1,
+        "normal_inward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "origin_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "reference": {
+          "coordinate_frame": "RAS+",
+          "declaration_id": "declared-engineering-boundary-probe",
+          "source_hash": "sha256:109c1b89e57a16898ea3cae3e1ed3feb6439ac23230fc99c83cf8f2e76adc5ef",
+          "vector": [
+            0.99498743710662,
+            0.1,
+            0.0
+          ]
+        },
+        "reference_hash": "sha256:9329f38cac9881fa7dd6bb01bad10852cb3f599f6942802750e504a5a0ec41ec",
+        "rejection_reason": "declared_tangent_in_roundoff_rejection_band",
+        "roundoff_rejection_half_width": 1.4210854715202004e-14,
+        "status": "rejected",
+        "tangent_sine": 0.1,
+        "version": "synthetic-declared-tangent-frame-v2"
+      },
+      "requested_sine": 0.1
+    },
+    {
+      "receipt": {
+        "automatic_axis_selection": false,
+        "engineering_condition_only": true,
+        "minimum_sine": 0.1,
+        "normal_inward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "origin_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "reference": {
+          "coordinate_frame": "RAS+",
+          "declaration_id": "declared-engineering-boundary-probe",
+          "source_hash": "sha256:109c1b89e57a16898ea3cae3e1ed3feb6439ac23230fc99c83cf8f2e76adc5ef",
+          "vector": [
+            0.9949874371066192,
+            0.10000000000000711,
+            0.0
+          ]
+        },
+        "reference_hash": "sha256:2d1cd27154c4134b9fbe559a67b86ff3ffa8a930106ddee94f2a292b2c5bf1fc",
+        "rejection_reason": "declared_tangent_in_roundoff_rejection_band",
+        "roundoff_rejection_half_width": 1.4210854715202004e-14,
+        "status": "rejected",
+        "tangent_sine": 0.10000000000000711,
+        "version": "synthetic-declared-tangent-frame-v2"
+      },
+      "requested_sine": 0.10000000000000711
+    },
+    {
+      "receipt": {
+        "basis_columns": [
+          [
+            0.0,
+            0.0,
+            1.0
+          ],
+          [
+            1.0,
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "conditioning": {
+          "automatic_axis_selection": false,
+          "engineering_condition_only": true,
+          "minimum_sine": 0.1,
+          "roundoff_rejection_half_width": 1.4210854715202004e-14,
+          "status": "accepted",
+          "tangent_normalization_factor": 9.900990099009901,
+          "tangent_sine": 0.101
+        },
+        "coordinates_mm": [
+          [
+            1.0,
+            1.0,
+            0.0
+          ]
+        ],
+        "normal_inward": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "orientation": "right_handed",
+        "origin_mm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "reference": {
+          "coordinate_frame": "RAS+",
+          "declaration_id": "declared-engineering-boundary-probe",
+          "source_hash": "sha256:109c1b89e57a16898ea3cae3e1ed3feb6439ac23230fc99c83cf8f2e76adc5ef",
+          "vector": [
+            0.9948864256788309,
+            0.101,
+            0.0
+          ]
+        },
+        "reference_hash": "sha256:61003bddf0fceb3a92ac81999e2070d5e0eff32eb2881eb6db04a7b71515d458",
+        "status": "accepted",
+        "units": "millimetres",
+        "version": "synthetic-declared-tangent-frame-v2"
+      },
+      "requested_sine": 0.101
+    }
+  ],
+  "fixed_explicit_reference": {
+    "max_abs_error_mm": 2.220446049250313e-16,
+    "original": {
+      "basis_columns": [
+        [
+          -1e-08,
+          0.0,
+          1.0
+        ],
+        [
+          1.0,
+          0.0,
+          1e-08
+        ],
+        [
+          0.0,
+          1.0,
+          0.0
+        ]
+      ],
+      "conditioning": {
+        "automatic_axis_selection": false,
+        "engineering_condition_only": true,
+        "minimum_sine": 0.1,
+        "roundoff_rejection_half_width": 1.4210854715202004e-14,
+        "status": "accepted",
+        "tangent_normalization_factor": 1.0,
+        "tangent_sine": 1.0
+      },
+      "coordinates_mm": [
+        [
+          1.0,
+          1.0,
+          1e-08
+        ]
+      ],
+      "normal_inward": [
+        1.0,
+        1e-08,
+        0.0
+      ],
+      "orientation": "right_handed",
+      "origin_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reference": {
+        "coordinate_frame": "RAS+",
+        "declaration_id": "externally-fixed-y-reference-for-audited-example",
+        "source_hash": "sha256:109c1b89e57a16898ea3cae3e1ed3feb6439ac23230fc99c83cf8f2e76adc5ef",
+        "vector": [
+          0.0,
+          1.0,
+          0.0
+        ]
+      },
+      "reference_hash": "sha256:e400872bf61da339cccffcf8a727a0bb2ac172f627b604350bd250f4493abf2f",
+      "status": "accepted",
+      "units": "millimetres",
+      "version": "synthetic-declared-tangent-frame-v2"
+    },
+    "rotated": {
+      "basis_columns": [
+        [
+          0.7490924559765055,
+          -0.6191162575597471,
+          -0.23570225290459135
+        ],
+        [
+          -0.33076808697531773,
+          -0.04127441717064976,
+          -0.9428090448897443
+        ],
+        [
+          0.5739799343511719,
+          0.7842139262423463,
+          -0.2357022546557165
+        ]
+      ],
+      "conditioning": {
+        "automatic_axis_selection": false,
+        "engineering_condition_only": true,
+        "minimum_sine": 0.1,
+        "roundoff_rejection_half_width": 1.4210854715202004e-14,
+        "status": "accepted",
+        "tangent_normalization_factor": 1.0000000000000002,
+        "tangent_sine": 0.9999999999999998
+      },
+      "coordinates_mm": [
+        [
+          0.9999999999999998,
+          1.0000000000000002,
+          1.0000000138093653e-08
+        ]
+      ],
+      "normal_inward": [
+        -0.23570225290459135,
+        -0.9428090448897443,
+        -0.2357022546557165
+      ],
+      "orientation": "right_handed",
+      "origin_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reference": {
+        "coordinate_frame": "DECLARED_ROTATED_RAS+",
+        "declaration_id": "externally-fixed-y-reference-for-audited-example",
+        "source_hash": "sha256:109c1b89e57a16898ea3cae3e1ed3feb6439ac23230fc99c83cf8f2e76adc5ef",
+        "vector": [
+          0.749092453619483,
+          -0.3307680964034083,
+          0.5739799319941493
+        ]
+      },
+      "reference_hash": "sha256:7d0350531f96513f05724e9967e444ffa59463ea4db12bd9680aaa74cc739546",
+      "status": "accepted",
+      "units": "millimetres",
+      "version": "synthetic-declared-tangent-frame-v2"
+    }
+  },
+  "gradients": 0,
+  "limits": [
+    "No globally shared cross-patient tangent convention supplied",
+    "Reference metadata equality is checked; external provenance authenticity is not established here",
+    "Roundoff rejection band is an engineering margin, not a rigorous global error bound",
+    "Coordinate changes must transport the explicit reference vector",
+    "Contact history, tool, remaining budget, geometry/topology and candidate interactions remain incomplete",
+    "No new learned-policy evidence or production profile"
+  ],
+  "native_transitions": 0,
+  "near_parallel_declared_reference_rejections": [
+    {
+      "automatic_axis_selection": false,
+      "engineering_condition_only": true,
+      "minimum_sine": 0.1,
+      "normal_inward": [
+        1.0,
+        1e-08,
+        0.0
+      ],
+      "origin_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reference": {
+        "coordinate_frame": "RAS+",
+        "declaration_id": "externally-fixed-near-parallel-x-reference",
+        "source_hash": "sha256:109c1b89e57a16898ea3cae3e1ed3feb6439ac23230fc99c83cf8f2e76adc5ef",
+        "vector": [
+          1.0,
+          0.0,
+          0.0
+        ]
+      },
+      "reference_hash": "sha256:cc37374431912b18492dadda33ac5ba14e334eef588f2bcc1ee0629ab85dfa22",
+      "rejection_reason": "declared_tangent_below_engineering_condition_limit",
+      "roundoff_rejection_half_width": 1.4210854715202004e-14,
+      "status": "rejected",
+      "tangent_sine": 1e-08,
+      "version": "synthetic-declared-tangent-frame-v2"
+    },
+    {
+      "automatic_axis_selection": false,
+      "engineering_condition_only": true,
+      "minimum_sine": 0.1,
+      "normal_inward": [
+        -0.23570225290459135,
+        -0.9428090448897443,
+        -0.2357022546557165
+      ],
+      "origin_mm": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "reference": {
+        "coordinate_frame": "DECLARED_ROTATED_RAS+",
+        "declaration_id": "externally-fixed-near-parallel-x-reference",
+        "source_hash": "sha256:109c1b89e57a16898ea3cae3e1ed3feb6439ac23230fc99c83cf8f2e76adc5ef",
+        "vector": [
+          -0.2357022603955159,
+          -0.9428090415820632,
+          -0.2357022603955158
+        ]
+      },
+      "reference_hash": "sha256:46d086fd1bed2c4c5e95f45e02fc2c996fe901ce72b5898be8a901f8af0b1bab",
+      "rejection_reason": "declared_tangent_below_engineering_condition_limit",
+      "roundoff_rejection_half_width": 1.4210854715202004e-14,
+      "status": "rejected",
+      "tangent_sine": 1.000000001647018e-08,
+      "version": "synthetic-declared-tangent-frame-v2"
+    }
+  ],
+  "optimizers_constructed": 0,
+  "patients_loaded": 0,
+  "policies_evaluated": 0,
+  "saved_v1_rotation_counterexample_error_mm": 2.0000000003436784,
+  "simulators_constructed": 0,
+  "source_receipt": {
+    "files": {
+      "artifacts/native-spatial-feature-independent-v1/conditioning-counterexample.json": "109c1b89e57a16898ea3cae3e1ed3feb6439ac23230fc99c83cf8f2e76adc5ef",
+      "artifacts/native-spatial-feature-probe-v1/probe/report.json": "f7ac523a033e7b9dbfb8119c0a78916d0ef3dc420d7156d8459f25d21bd0c79c",
+      "research/native_spatial_features.py": "b412a0f38ff4c33edae29be41ee6368430812ccd0ab6ea0a6d897db8e9434ef4",
+      "research/native_spatial_features_v2.py": "9e4eec9d69c0a426ea4689832ee1b5335e25d52f39fae75d5e81576507da83ea",
+      "scripts/probe_native_spatial_features_v2.py": "deea168082dee4048693cb6c6ded6c2d261a878d9253b7127dc2241773783e50",
+      "tests/test_native_spatial_features_v2.py": "0f6fa9293bc32b5370e1fc0382f544dd0ac98468ea82fd00c891b3e07b2bcc0f"
+    },
+    "numpy": "2.5.3",
+    "platform": "macOS-26.6-arm64-arm-64bit",
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]"
+  },
+  "status": "completed_synthetic_declared_tangent_probe",
+  "unchanged_lossy_summary_counterexample": {
+    "cavity_a_indices": [
+      [
+        2,
+        2,
+        3
+      ],
+      [
+        2,
+        3,
+        3
+      ],
+      [
+        3,
+        2,
+        3
+      ],
+      [
+        3,
+        3,
+        3
+      ]
+    ],
+    "cavity_b_indices": [
+      [
+        1,
+        2,
+        3
+      ],
+      [
+        1,
+        3,
+        3
+      ],
+      [
+        4,
+        2,
+        3
+      ],
+      [
+        4,
+        3,
+        3
+      ]
+    ],
+    "equal_summary": [
+      4.0,
+      -0.5,
+      -0.5,
+      3.5,
+      121.0,
+      0.016528925619834656,
+      0.016528925619834656,
+      4.533057851239669
+    ],
+    "native_reachability_verified": false
+  }
+}

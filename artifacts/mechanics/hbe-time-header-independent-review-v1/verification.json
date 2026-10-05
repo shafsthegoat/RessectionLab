@@ -1,0 +1,104 @@
+{
+  "schema": 1,
+  "status": "pass_source_and_saved_primitive_review_only",
+  "source_and_test_sha256": {
+    "scripts/mechanics_hbe_outputs.py": "a372cb89ea9515186d433c74ec650dc3b5cae289619e8b35d481280f6662f473",
+    "scripts/mechanics_hbe_readout.py": "21700558e5cb614a11a7cc62dbd5ec8118fabb11b4fbfc88f89cb8aa02012963",
+    "scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "scripts/mechanics_hbe_access.py": "b1e4f90b2ec84c39949ee02c1088bc0404f34904e24c2d4f328d503d96f76fe0",
+    "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "tests/test_mechanics_hbe_time_header_review.py": "7930a8ca2c10fd34c99fe69335bb60a78b289a50ea043679162d559dee38d362",
+    "tests/test_mechanics_hbe_layers_review.py": "8b11de32cab855d4993d56f68e789da0fb96930c2423bdd2142aace222a2f942",
+    "tests/test_mechanics_hbe_outputs.py": "604265e1373538f87efde72916fe968b1c8d2d83203401db21a03ff70d283cb5",
+    "tests/test_mechanics_hbe_readout.py": "d5830fd7076c6c1c9cd98af3e5d65f586219a1afb176abc1a06878c0f7dd797e",
+    "tests/test_mechanics_hbe_readout_review.py": "e479ae9e25e67d69ed91220335053f7654542ae1d4a88e0a8c5cd4cf86c0e74f"
+  },
+  "tests": {
+    "passed": 43,
+    "pytest_seconds": 0.58,
+    "process_seconds": 0.7791098329471424,
+    "independent_new_cases": 8,
+    "all_ten_bound_files_unchanged": true,
+    "receipt_sha256": "bcad6fa9adf63e890c1ee166dd60191ce9c1529cb8c72f45330d61da5f41aa49"
+  },
+  "initial_failure": {
+    "preserved_parser_sha256": "a86191769ee71e79596d9f3871da575dd7e2b2d62e1a9c919162242a335fa65d",
+    "original_parser_source_commit": "826bd5c3e1ab76e2c71b89687578a1af7e40d6c3",
+    "negative_receipt_sha256": "a97b5923cbcffd6900f3fab3b96ea02357b07e82484770f16e5592a22753849c",
+    "both_logs_rejected": true,
+    "wrongly_rejected_headers_per_log": 40,
+    "states_per_log": 61,
+    "reviewer_setup_error_retained": true
+  },
+  "time_contract": {
+    "pinned_source_sha256": "7805baf31c36d6380d675f2f20c8fcf3ff6d9382e9389aeb8dd51893ad8542e9",
+    "primitive_header_significant_digits": 9,
+    "primitive_numeric_row_significant_digits": 12,
+    "solver_status_significant_digits": 6,
+    "exact_rounded_declared_time_equality": true,
+    "mechanical_tolerances_changed": false,
+    "full_declaration_grid_alias_rejected_before_input": true
+  },
+  "saved_coarse_readout": {
+    "run_id": "compression:N4:S60:reference",
+    "receipt_sha256": "3f7b3d02ab5884c7779ec1fa78b45dad5c1a2f4885e0908bdc5d562ee0571098",
+    "complete_readout_gzip_sha256": "d705d5d9b27638947e12f1d805c81d54b1ae438f812054b68dbfcc257df9d260",
+    "complete_readout_uncompressed_sha256": "062b708ca057de61204137fc051fff0f6ef9c0f203cf02bcb02ccf688c564ed6",
+    "nodes": 171,
+    "elements": 96,
+    "frame_count": 61,
+    "normal_termination": true,
+    "nonzero_residual_states": 60,
+    "passed_declared_single_run_checks": true,
+    "criteria": {
+      "force_balance": {
+        "actual": 8.431221366080136e-08,
+        "limit": 1.0,
+        "units": "ratio_to_declared_numerical_tolerance"
+      },
+      "moment_balance": {
+        "actual": 5.254196532082779e-08,
+        "limit": 1.0,
+        "units": "ratio_to_declared_numerical_tolerance"
+      },
+      "prescribed_motion": {
+        "actual": 0.00015788320748067125,
+        "limit": 1.0,
+        "units": "ratio_to_declared_numerical_tolerance"
+      },
+      "primitive_consistency": {
+        "actual": 0.000941050809941387,
+        "limit": 1.0,
+        "units": "ratio_to_declared_numerical_tolerance"
+      },
+      "work_energy": {
+        "actual": 0.0010421914474217976,
+        "limit": 1.0,
+        "units": "ratio_to_declared_numerical_tolerance"
+      },
+      "solver_residual": {
+        "actual": 4.017206672224029e-12,
+        "limit": 1.0,
+        "units": "ratio_to_declared_numerical_tolerance"
+      },
+      "minimum_sampled_J": {
+        "actual": 0.8499999999908006,
+        "limit": 0.0,
+        "units": "dimensionless_strictly_positive"
+      }
+    },
+    "logged_J_minimum_diagnostic": 0.988511042314,
+    "all_twelve_bound_source_input_files_unchanged": true,
+    "readout_seconds": 0.17375829198863357,
+    "whole_child_wall_seconds": 0.34351766703184694,
+    "process_peak_rss_bytes_macos": 38076416
+  },
+  "limits": [
+    "No solver launched and no measured HBE curve read. Original failed attempt and raw output bytes unchanged.",
+    "One coarse compression reference solve is insufficient for mesh/step convergence, stiffness-scale confirmation, calibrated predictions or held-out physical validation.",
+    "Nodal reconstructed sampled Jacobian and logged element Jacobian are separately reported; positivity is not an everywhere guarantee.",
+    "The previous independent layer test used twelve-digit synthetic headers. It is corrected to the pinned nine-digit header format; original committed test/evidence remain historical.",
+    "Replay of full saved readout requires ignored original primitive files and source dependencies matching hashes. Hashes cannot recover missing files.",
+    "Later experiment continuation and measurement access require their own root-controlled release."
+  ]
+}

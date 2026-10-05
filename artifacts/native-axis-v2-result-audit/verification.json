@@ -1,0 +1,56 @@
+{
+  "final_audit": "audit-02.json",
+  "geometry_checker_reruns": 0,
+  "gradients": 0,
+  "gzip_bytes_total": 665699,
+  "model_or_episode_reruns": 0,
+  "old_outputs_modified": false,
+  "raw_bytes_total": 39286826,
+  "source_sha256": {
+    "audit-01.json": "b7854875d548003dadcbf243b23417b3a263fabdecef83ad5eacb67667956b4e",
+    "audit-02.json": "45b70f59083e2073320a332d78d727e1b7606740bca346bba5a96a7ef5db1bbb",
+    "audit.py": "8390d427f70635549554c3935fb4b77a3027baa39994cb41af2dd443c303b346",
+    "test_audit.py": "665fa2cefee83e0b1046a3742a4a38be0076d99343477b8a3dbf098f1e2fe8a9"
+  },
+  "status": "passed",
+  "supplementary_engine_and_lossless_compression_checks": {
+    "greedy": {
+      "gzip_bytes": 163735,
+      "gzip_sha256": "6d52eab008e31f320ab2e58651514fbe5a5066013eaf0280dce9df8ea257c77d",
+      "nested_engine_quantities_match_source_cell_audit": true,
+      "raw_bytes": 9729026,
+      "raw_sha256": "a55abcf745c5c59cae3d2a3968503e4a9a9f3c5783f003f536792c8d3efc4e80"
+    },
+    "selection-1": {
+      "gzip_bytes": 163753,
+      "gzip_sha256": "60c6979fc4c33bcde954deb27aba0c0b0fcd20764cbd27d27653e18208f2cd01",
+      "nested_engine_quantities_match_source_cell_audit": true,
+      "raw_bytes": 9729029,
+      "raw_sha256": "12ea9651789f14b8e1a9f87cffcad6032c31e3d61569056ded26cf8d4881cb07"
+    },
+    "selection-2": {
+      "gzip_bytes": 163755,
+      "gzip_sha256": "2b055efa8040a6729b8a54e110fddf24e8964190af0b221bf02fbb167854e9b5",
+      "nested_engine_quantities_match_source_cell_audit": true,
+      "raw_bytes": 9729034,
+      "raw_sha256": "c14f857c2b3f4bec58c482f3e57f8e03e4544f6f8f7d6a13a53f23144f66d1da"
+    },
+    "untrained-selection-1": {
+      "gzip_bytes": 87232,
+      "gzip_sha256": "5b322d69654a2ffe1d715ec654caa5d2bf9f85e3abfb5b23abfd4b9dfbb385d1",
+      "nested_engine_quantities_match_source_cell_audit": true,
+      "raw_bytes": 5049870,
+      "raw_sha256": "48186342e3b401f0643b7a289e54ffcc07aed88f2c5001ba7fd39e84d10b7536"
+    },
+    "untrained-selection-2": {
+      "gzip_bytes": 87224,
+      "gzip_sha256": "50c10276650cabe44b698d62683bbb659b8a43b10099d627cafa10eb3fd8fedc",
+      "nested_engine_quantities_match_source_cell_audit": true,
+      "raw_bytes": 5049867,
+      "raw_sha256": "79d29c11c46456d69ef394ae4410fd138ca734b7db6ec79a3be08301f6e3e2cb"
+    }
+  },
+  "test_command": ".venv/bin/python -m pytest -q artifacts/native-axis-v2-result-audit/test_audit.py",
+  "test_seconds": 0.08,
+  "tests_passed": 25
+}

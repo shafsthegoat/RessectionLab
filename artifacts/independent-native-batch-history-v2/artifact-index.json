@@ -1,0 +1,70 @@
+{
+  "files": {
+    "RESULT.md": {
+      "bytes": 3680,
+      "sha256": "eda5e6ed7982d9116d1d886b6f17f85199bdc6d6262e10eb72c77aa8980c4e81"
+    },
+    "archive-and-parity-verification.json": {
+      "bytes": 3311,
+      "sha256": "1ce4301ad30dfad50431838ee3653a449baeae1bbed0e0dbee60790074eae726"
+    },
+    "archive-files-before.json.gz": {
+      "bytes": 138883,
+      "sha256": "54ab727a93add212e00631b168fcb2e37155c69aac8a207b1d7ec0ec90563322"
+    },
+    "attempt-01/batch-trace.json.gz": {
+      "bytes": 348596,
+      "sha256": "b7c99af19e1ab1ad62c85ae4c3ef1c0bb381e0890fb5f6edbe85be9e6f55970d"
+    },
+    "attempt-01/launcher.json": {
+      "bytes": 550,
+      "sha256": "2786f8a94559518575255e3378da879100a7c06e03dc68f6fd9d9f812fe35efe"
+    },
+    "attempt-01/native-history.json.gz": {
+      "bytes": 1407332,
+      "sha256": "f792899eddda2d794eeb0b4b7f3d5ff0610dd53495f2ce93ad0450360a65e350"
+    },
+    "attempt-01/phase-status.json": {
+      "bytes": 55,
+      "sha256": "b18f5a4f3619313075301f5a07cdd047e289a84cb4930e8e75c9d83078ffe9ae"
+    },
+    "attempt-01/prospective.json": {
+      "bytes": 13525,
+      "sha256": "b1b37e2676acc08c5c9827d06d7ddaa3a3de605160aecc0844168ee595ee30e5"
+    },
+    "attempt-01/report.json": {
+      "bytes": 13295,
+      "sha256": "c5c29f26e18ffa5e117830cad4a6125fa9473cba3aa5b1c27343d0b64e6289f4"
+    },
+    "attempt-01/scalar_after-trace.json.gz": {
+      "bytes": 348596,
+      "sha256": "b7c99af19e1ab1ad62c85ae4c3ef1c0bb381e0890fb5f6edbe85be9e6f55970d"
+    },
+    "attempt-01/scalar_before-trace.json.gz": {
+      "bytes": 348596,
+      "sha256": "b7c99af19e1ab1ad62c85ae4c3ef1c0bb381e0890fb5f6edbe85be9e6f55970d"
+    },
+    "attempt-01/worker.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "execution-baseline.json": {
+      "bytes": 2649,
+      "sha256": "70fe04ec42f7dbf535ba813842ba51a82da347a70a3e5d41c84149a3baddf7d2"
+    },
+    "execution-wrapper.json": {
+      "bytes": 953,
+      "sha256": "9e29cd65e9aa359e1a5e335f03862c488d476c74b516a2134497995e0ca3fc35"
+    },
+    "launch-console.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "timing-summary.json": {
+      "bytes": 1344,
+      "sha256": "f686a55380a08f392953b725b7dd5b1b5c05bc37ba6db9141118250fce4d6e7a"
+    }
+  },
+  "scope": "One fixed analytic history; exact certificate/full trace parity; no patient or training performance claim",
+  "status": "completed"
+}

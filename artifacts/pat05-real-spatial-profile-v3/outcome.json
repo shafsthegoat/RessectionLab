@@ -1,0 +1,628 @@
+{
+  "all56_snapshot_sources_unchanged": true,
+  "archive_sha256": "2c10affb7f13c36c8975055ee76d666b2ecafbba0a35ffcedc07205759475ad5",
+  "archive_unchanged": true,
+  "attempts_per_member": 1,
+  "automatic_retry": false,
+  "comparison_scope": "Matched64cube actor context; provider-only declared pair difference. Fixed first-legal-action histories are order-dependent software probes, not learned-policy/search efficacy.",
+  "execution_order": [
+    "fixed64",
+    "nominal64"
+  ],
+  "limitations": [
+    "One previously consulted real TRAIN patient; no population or unseen-patient efficacy.",
+    "Supplied target and unreviewed source-derived support remain explicitly annotation-assisted; access hypothetical.",
+    "No tissue-deformation/force model, motor/language evidence, complete vascular coverage or validated clinical probabilities.",
+    "Emitted/accepted envelopes apply only to the current catalog; future dynamic states can change it. Raw slot caps are not counts of unique omitted paths."
+  ],
+  "main_findings": [
+    "Both64cube crops contain all11,437supplied nominal target voxels; historical32cube profile contained24.36percent.",
+    "Fixed emitted48/accepted48 versus nominal emitted78/accepted70 initially, with zero cap-omitted slots. All eight initial nominal rejections were working-reach failures; their partial crop rays remain in emitted diagnostics, excluded from accepted envelopes.",
+    "Nominal current accepted axial bound reduces excluded target centers645to211; broad active-sweep bounding-box exclusions remain10,742and9,124 respectively, showing a substantial lateral catalog gap. Being inside either envelope does not establish reachability or removal.",
+    "Both3action histories pass independent full-tool/frontier audit, with0unsupported source volume; no target removed by these fixed shallow histories. Geometric audit does not validate tissue mechanics.",
+    "No optimizer update, search, checkpoint selection, repeat attempt or follow-on run occurred."
+  ],
+  "members": {
+    "fixed64": {
+      "actions_are_learned_policy_choices": false,
+      "all56_snapshot_sources_unchanged": true,
+      "committed_microsteps": 16,
+      "committed_transitions": 3,
+      "crop_origin_source_voxels": [
+        2.9999999999999964,
+        106.00000000000001,
+        119.0
+      ],
+      "crop_shape": [
+        64,
+        64,
+        64
+      ],
+      "declaration_sha256": "92e4ababa7ad3a4c4b05ade06cabe6134c34e7155964457728d45e7435a43aea",
+      "executed_action_rule": "first_legal_inventory_row; not a search teacher",
+      "fraction_nominal_centers_beyond_initial_accepted_axial_bound": 0.056395908017836845,
+      "fraction_nominal_centers_outside_initial_accepted_aabb": 0.939232316166827,
+      "independent_geometry_audit": {
+        "action_count": 3,
+        "checker_version": "independent-native-sequence-v2",
+        "claimed_source_tissue_volume_mm3": 26.00009032729799,
+        "complete_tool_checked": true,
+        "contained_source_tissue_volume_mm3": 26.00009032729799,
+        "failures": [],
+        "feasible": true,
+        "first_failed_action": null,
+        "first_unsupported_position_mm": null,
+        "first_unsupported_source_voxel": null,
+        "frontier_checked": true,
+        "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+        "source_case_hash": "sha256:afba3599204f319a2742e3081b27b2309e9d36d767f44310c5feadddb7d55baf",
+        "source_voxel_volume_mm3": 1.0000034741268458,
+        "unsupported_source_tissue_volume_mm3": 0.0
+      },
+      "initial_accepted_envelope": {
+        "active_sweep_aabb_ras_mm": [
+          [
+            -60.943204225264004,
+            22.44747126343401,
+            6.631057663406892
+          ],
+          [
+            -21.899292512143347,
+            30.212048132789718,
+            11.793576910752499
+          ]
+        ],
+        "distal_active_tip_axial_upper_bound_mm": 33.75011099994147,
+        "endpoint_depth_range_mm": [
+          0.5000017491961,
+          31.50011099994147
+        ],
+        "proposal_count": 48,
+        "target_centers_beyond_axial_bound": 645,
+        "target_centers_outside_aabb": 10742
+      },
+      "initial_emitted_envelope": {
+        "active_sweep_aabb_ras_mm": [
+          [
+            -60.943204225264004,
+            22.44747126343401,
+            6.631057663406892
+          ],
+          [
+            -21.899292512143347,
+            30.212048132789718,
+            11.793576910752499
+          ]
+        ],
+        "distal_active_tip_axial_upper_bound_mm": 33.75011099994147,
+        "endpoint_depth_range_mm": [
+          0.5000017491961,
+          31.50011099994147
+        ],
+        "proposal_count": 48,
+        "target_centers_beyond_axial_bound": 645,
+        "target_centers_outside_aabb": 10742
+      },
+      "initial_emitted_ray_coverage": {
+        "full": 48,
+        "none": 0,
+        "partial": 0
+      },
+      "initial_inventory_metadata": {
+        "accepted_count": 48,
+        "all_support_cell_tool_pairs": 2804270,
+        "basis": "fixed_access_grid_3columns_8depths_within_actor_crop",
+        "cavity_state_hash": "sha256:a3e81bdd982559fdb504cecd72b3387852c5717c1a888a1e8eff6104cc8ceb66",
+        "complete": true,
+        "decision_model_hash": "sha256:1cc4a980bbdeea3e14116773898a0d8be57aaf5845a8df05728c30d58f2c71f8",
+        "declared_slots": 48,
+        "emitted_count": 48,
+        "evaluated_slots": 48,
+        "max_steps": 3,
+        "omitted_count": 0,
+        "rejected_count": 0,
+        "remaining_steps": 3,
+        "scope": "complete_declared_source_normal_primitives_not_all_surgical_paths",
+        "source_hash": "sha256:afba3599204f319a2742e3081b27b2309e9d36d767f44310c5feadddb7d55baf",
+        "steps_taken": 0,
+        "terminal": false,
+        "terminated_slots": 0
+      },
+      "inventory_progression": [
+        {
+          "accepted": 47,
+          "accepted_envelope": {
+            "active_sweep_aabb_ras_mm": [
+              [
+                -60.943204225264004,
+                22.44747126343401,
+                6.631057663406892
+              ],
+              [
+                -21.899292512143347,
+                30.212048132789718,
+                11.793576910752499
+              ]
+            ],
+            "distal_active_tip_axial_upper_bound_mm": 33.75011099994147,
+            "endpoint_depth_range_mm": [
+              0.5000017491961,
+              31.50011099994147
+            ],
+            "proposal_count": 47,
+            "target_centers_beyond_axial_bound": 645,
+            "target_centers_outside_aabb": 10742
+          },
+          "action_id": "NATIVE-SPATIAL:2f5f381f8aca7ee53a19c86f",
+          "after_steps": 1,
+          "declared_slots": 48,
+          "emitted": 48,
+          "omitted_slots": 0,
+          "policy_selected_action_id": "NATIVE-SPATIAL:21e7b12ab387876590a59b6e",
+          "ray_coverage": {
+            "full": 48,
+            "none": 0,
+            "partial": 0
+          },
+          "remaining_steps": 2,
+          "terminal": false
+        },
+        {
+          "accepted": 43,
+          "accepted_envelope": {
+            "active_sweep_aabb_ras_mm": [
+              [
+                -60.943204225264004,
+                22.44747126343401,
+                6.631057663406892
+              ],
+              [
+                -21.899292512143347,
+                30.212048132789718,
+                11.793576910752499
+              ]
+            ],
+            "distal_active_tip_axial_upper_bound_mm": 33.75011099994147,
+            "endpoint_depth_range_mm": [
+              0.5000017495355396,
+              31.50011099994147
+            ],
+            "proposal_count": 43,
+            "target_centers_beyond_axial_bound": 645,
+            "target_centers_outside_aabb": 10742
+          },
+          "action_id": "NATIVE-SPATIAL:fe8122d305437ea9569a71be",
+          "after_steps": 2,
+          "declared_slots": 48,
+          "emitted": 48,
+          "omitted_slots": 0,
+          "policy_selected_action_id": "NATIVE-SPATIAL:c362c3c4f6e7770d9d3de20c",
+          "ray_coverage": {
+            "full": 48,
+            "none": 0,
+            "partial": 0
+          },
+          "remaining_steps": 1,
+          "terminal": false
+        },
+        {
+          "accepted": 0,
+          "accepted_envelope": {
+            "active_sweep_aabb_ras_mm": null,
+            "distal_active_tip_axial_upper_bound_mm": null,
+            "endpoint_depth_range_mm": null,
+            "proposal_count": 0,
+            "target_centers_beyond_axial_bound": null,
+            "target_centers_outside_aabb": null
+          },
+          "action_id": "NATIVE-SPATIAL:874d75278ae2b39731062074",
+          "after_steps": 3,
+          "declared_slots": 48,
+          "emitted": 0,
+          "omitted_slots": 0,
+          "policy_selected_action_id": "NATIVE-SPATIAL:f151ce772b2b27bff006a840",
+          "ray_coverage": {
+            "full": 0,
+            "none": 0,
+            "partial": 0
+          },
+          "remaining_steps": 0,
+          "terminal": true
+        }
+      ],
+      "nominal_target_mass_fraction_visible": 1.0,
+      "nominal_target_voxels_in_crop": 11437,
+      "nominal_target_voxels_total": 11437,
+      "optimizer_updates": 0,
+      "original_bundle_sha256_after": "c1af712957dc4902343995bd828eb0c3662438f8445c5cb7401e6dd50f7a4e12",
+      "outcomes": {
+        "currently_retained_contacted_tissue_upper_bound_mm3": 78.00027098189398,
+        "functional_evidence_available": {
+          "language": false,
+          "motor": false
+        },
+        "normal_removed_mm3": 26.000089645385742,
+        "simulated_removed_volume_mm3": 26.00009032729799,
+        "target_removed_mm3": 0.0,
+        "total_reward": -5.325018083003166
+      },
+      "policy_parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+      "policy_parameter_hash_unchanged": true,
+      "precision_note": {
+        "aggregate_minus_per_action_mm3": -6.819122475576478e-07,
+        "aggregate_normal_volume_mm3": 26.000089645385742,
+        "interpretation": "Raw aggregate float32 and per-action geometric float64 arithmetic retained separately; reward uses per-action values",
+        "per_action_normal_volume_sum_mm3": 26.00009032729799
+      },
+      "preview_accounting": {
+        "feasible": 186,
+        "raised": 0,
+        "rejected": 6,
+        "returned": 192,
+        "returned_microsteps": 9024,
+        "started": 192
+      },
+      "preview_phases": {
+        "initial_task_preparation": {
+          "feasible": 48,
+          "raised": 0,
+          "rejected": 0,
+          "rejection_reasons": {},
+          "returned": 48,
+          "returned_microsteps": 2256,
+          "seconds": 2.355868455953896,
+          "started": 48
+        },
+        "untrained_fixed_inventory_profile": {
+          "feasible": 138,
+          "raised": 0,
+          "rejected": 6,
+          "rejection_reasons": {
+            "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS": 6
+          },
+          "returned": 144,
+          "returned_microsteps": 6768,
+          "seconds": 7.028049918124452,
+          "started": 144
+        }
+      },
+      "rollout_forward_calls": 3,
+      "sampled_peak_rss_bytes": 1779875840,
+      "search_calls": 0,
+      "source_shape": [
+        160,
+        256,
+        256
+      ],
+      "status": "complete",
+      "timing": {
+        "episode_fresh_setup_seconds": 2.8337720830459148,
+        "episode_online_seconds": 9.432431958033703,
+        "independent_audit_seconds": 0.5316889591049403,
+        "initial_task_preparation_seconds": 3.305723874946125,
+        "input_seconds": 0.4073175420053303,
+        "native_step_seconds": 5.0406704569468275,
+        "note": "Preview times are nested inside setup/episode, not additive. Initial diagnostics, integrity, policy setup and output writing not fully separated.",
+        "per_transition_diagnostics_seconds": 0.2517130410997197,
+        "policy_forward_seconds": 0.9461388760246336,
+        "preview_fraction_of_worker": 0.6322872378788217,
+        "preview_seconds_nested_in_setup_and_episode": 9.383918374078348,
+        "supervisor_seconds": 16.347916916944087,
+        "worker_seconds": 14.841226916993037
+      },
+      "worker_peak_rss_bytes": 1761214464
+    },
+    "nominal64": {
+      "actions_are_learned_policy_choices": false,
+      "all56_snapshot_sources_unchanged": true,
+      "committed_microsteps": 24,
+      "committed_transitions": 3,
+      "crop_origin_source_voxels": [
+        2.9999999999999964,
+        106.00000000000001,
+        119.0
+      ],
+      "crop_shape": [
+        64,
+        64,
+        64
+      ],
+      "declaration_sha256": "5a27d1815a728d05c9d6d69d3f04e7ac9b87edb61c5f7ff752ab9bcb0b00df64",
+      "executed_action_rule": "first_legal_inventory_row; not a search teacher",
+      "fraction_nominal_centers_beyond_initial_accepted_axial_bound": 0.01844889394071872,
+      "fraction_nominal_centers_outside_initial_accepted_aabb": 0.7977616507825479,
+      "independent_geometry_audit": {
+        "action_count": 3,
+        "checker_version": "independent-native-sequence-v2",
+        "claimed_source_tissue_volume_mm3": 3.0000104223805373,
+        "complete_tool_checked": true,
+        "contained_source_tissue_volume_mm3": 3.0000104223805373,
+        "failures": [],
+        "feasible": true,
+        "first_failed_action": null,
+        "first_unsupported_position_mm": null,
+        "first_unsupported_source_voxel": null,
+        "frontier_checked": true,
+        "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+        "source_case_hash": "sha256:27b51658c4445dc0eb12c0ecef2a2709e1b5873bb5bc8a3f9034e8195f4b9267",
+        "source_voxel_volume_mm3": 1.0000034741268458,
+        "unsupported_source_tissue_volume_mm3": 0.0
+      },
+      "initial_accepted_envelope": {
+        "active_sweep_aabb_ras_mm": [
+          [
+            -61.018285238644026,
+            20.412125216979604,
+            3.6124074971118034
+          ],
+          [
+            -19.825920364067834,
+            32.210700709561024,
+            14.793023617864925
+          ]
+        ],
+        "distal_active_tip_axial_upper_bound_mm": 35.75011804912632,
+        "endpoint_depth_range_mm": [
+          0.5000017488544832,
+          33.50011804912632
+        ],
+        "proposal_count": 70,
+        "target_centers_beyond_axial_bound": 211,
+        "target_centers_outside_aabb": 9124
+      },
+      "initial_emitted_envelope": {
+        "active_sweep_aabb_ras_mm": [
+          [
+            -61.018285239356906,
+            17.183099942402322,
+            2.922318548047059
+          ],
+          [
+            66.95294357324676,
+            32.210700709561024,
+            14.793023617864925
+          ]
+        ],
+        "distal_active_tip_axial_upper_bound_mm": 122.7504246527939,
+        "endpoint_depth_range_mm": [
+          0.5000017488544832,
+          120.5004246527939
+        ],
+        "proposal_count": 78,
+        "target_centers_beyond_axial_bound": 0,
+        "target_centers_outside_aabb": 8377
+      },
+      "initial_emitted_ray_coverage": {
+        "full": 70,
+        "none": 0,
+        "partial": 8
+      },
+      "initial_inventory_metadata": {
+        "accepted_count": 70,
+        "all_support_cell_tool_pairs": 2804270,
+        "basis": "permitted_nominal_and_observed_cavity_columns_without_crop_clipping",
+        "candidate_cap": 96,
+        "cavity_state_hash": "sha256:5148f3614d606555cdbd57e2da96c637353340aa2e9f0a765412d5b89c03cd76",
+        "complete": true,
+        "crop_clipping": false,
+        "decision_model_hash": "sha256:015836c3dc0fa235307e55728cc0c24e0a630bd2aaf119ffd09d3a44167ea061",
+        "declared_slots": 78,
+        "disposition_counts": {
+          "PROPOSED_UNCERTIFIED": 78
+        },
+        "duplicate_count": 0,
+        "emitted_count": 78,
+        "endpoint_centers_in_actor_crop": 70,
+        "evaluated_slots": 78,
+        "ledger_complete": true,
+        "max_steps": 3,
+        "nominal_provenance_hash": "sha256:0f0d7f582c4eead45b7e6ebfabc290e549fc7bf2d77b0a9524e40f78f4bd583e",
+        "nominal_target_hash": "sha256:11ff75579cca7d3675317dd0b3df9c5ea87d1e47ef539880d280e1d05b56d2a2",
+        "omitted_count": 0,
+        "provider_model_hash": "sha256:d61ad96d6aacf8e41ec48343bffa85c17ee34e8df5415b3a1f7dd4e115c715f0",
+        "provider_version": "permitted-nominal-cavity-columns-v1",
+        "rejected_count": 8,
+        "remaining_steps": 3,
+        "scope": "complete_dispositions_for_declared_columns_and_families_not_all_surgical_paths",
+        "source_hash": "sha256:27b51658c4445dc0eb12c0ecef2a2709e1b5873bb5bc8a3f9034e8195f4b9267",
+        "steps_taken": 0,
+        "terminal": false,
+        "terminated_slots": 0,
+        "unavailable_count": 0
+      },
+      "inventory_progression": [
+        {
+          "accepted": 70,
+          "accepted_envelope": {
+            "active_sweep_aabb_ras_mm": [
+              [
+                -61.018285238644026,
+                20.412125216979604,
+                3.6124074971118034
+              ],
+              [
+                -19.825920364067834,
+                32.210700709561024,
+                14.793023617864925
+              ]
+            ],
+            "distal_active_tip_axial_upper_bound_mm": 35.75011804912632,
+            "endpoint_depth_range_mm": [
+              0.5000017488544832,
+              33.50011804912632
+            ],
+            "proposal_count": 70,
+            "target_centers_beyond_axial_bound": 211,
+            "target_centers_outside_aabb": 9124
+          },
+          "action_id": "nominal-cavity-49e487c5504f7880fc952091",
+          "after_steps": 1,
+          "declared_slots": 78,
+          "emitted": 78,
+          "omitted_slots": 0,
+          "policy_selected_action_id": "nominal-cavity-c602adecf82625d834fe12bb",
+          "ray_coverage": {
+            "full": 70,
+            "none": 0,
+            "partial": 8
+          },
+          "remaining_steps": 2,
+          "terminal": false
+        },
+        {
+          "accepted": 70,
+          "accepted_envelope": {
+            "active_sweep_aabb_ras_mm": [
+              [
+                -61.018285238644026,
+                20.412125216979604,
+                3.6124074971118034
+              ],
+              [
+                -19.825920364067834,
+                32.210700709561024,
+                14.793023617864925
+              ]
+            ],
+            "distal_active_tip_axial_upper_bound_mm": 35.75011804912632,
+            "endpoint_depth_range_mm": [
+              0.5000017488544832,
+              33.50011804912632
+            ],
+            "proposal_count": 70,
+            "target_centers_beyond_axial_bound": 211,
+            "target_centers_outside_aabb": 9124
+          },
+          "action_id": "nominal-cavity-1ab81db0b61f918b7a5d292e",
+          "after_steps": 2,
+          "declared_slots": 78,
+          "emitted": 78,
+          "omitted_slots": 0,
+          "policy_selected_action_id": "nominal-cavity-b8428dcb56b20487c574957b",
+          "ray_coverage": {
+            "full": 70,
+            "none": 0,
+            "partial": 8
+          },
+          "remaining_steps": 1,
+          "terminal": false
+        },
+        {
+          "accepted": 0,
+          "accepted_envelope": {
+            "active_sweep_aabb_ras_mm": null,
+            "distal_active_tip_axial_upper_bound_mm": null,
+            "endpoint_depth_range_mm": null,
+            "proposal_count": 0,
+            "target_centers_beyond_axial_bound": null,
+            "target_centers_outside_aabb": null
+          },
+          "action_id": "nominal-cavity-a454475771a77025f2e9b5d2",
+          "after_steps": 3,
+          "declared_slots": 78,
+          "emitted": 0,
+          "omitted_slots": 0,
+          "policy_selected_action_id": "nominal-cavity-44bda5c943c679c49514211f",
+          "ray_coverage": {
+            "full": 0,
+            "none": 0,
+            "partial": 0
+          },
+          "remaining_steps": 0,
+          "terminal": true
+        }
+      ],
+      "nominal_target_mass_fraction_visible": 1.0,
+      "nominal_target_voxels_in_crop": 11437,
+      "nominal_target_voxels_total": 11437,
+      "optimizer_updates": 0,
+      "original_bundle_sha256_after": "c1af712957dc4902343995bd828eb0c3662438f8445c5cb7401e6dd50f7a4e12",
+      "outcomes": {
+        "currently_retained_contacted_tissue_upper_bound_mm3": 32.000111172059064,
+        "functional_evidence_available": {
+          "language": false,
+          "motor": false
+        },
+        "normal_removed_mm3": 3.0000104904174805,
+        "simulated_removed_volume_mm3": 3.0000104223805373,
+        "target_removed_mm3": 0.0,
+        "total_reward": -0.6990021161184948
+      },
+      "policy_parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+      "policy_parameter_hash_unchanged": true,
+      "precision_note": {
+        "aggregate_minus_per_action_mm3": 6.803694319046372e-08,
+        "aggregate_normal_volume_mm3": 3.0000104904174805,
+        "interpretation": "Raw aggregate float32 and per-action geometric float64 arithmetic retained separately; reward uses per-action values",
+        "per_action_normal_volume_sum_mm3": 3.0000104223805373
+      },
+      "preview_accounting": {
+        "feasible": 280,
+        "raised": 0,
+        "rejected": 32,
+        "returned": 312,
+        "returned_microsteps": 21592,
+        "started": 312
+      },
+      "preview_phases": {
+        "initial_task_preparation": {
+          "feasible": 70,
+          "raised": 0,
+          "rejected": 8,
+          "rejection_reasons": {
+            "HARD_GEOMETRY:WORKING_REACH": 8
+          },
+          "returned": 78,
+          "returned_microsteps": 5392,
+          "seconds": 5.734620248898864,
+          "started": 78
+        },
+        "untrained_fixed_inventory_profile": {
+          "feasible": 210,
+          "raised": 0,
+          "rejected": 24,
+          "rejection_reasons": {
+            "HARD_GEOMETRY:WORKING_REACH": 24
+          },
+          "returned": 234,
+          "returned_microsteps": 16200,
+          "seconds": 17.32464829622768,
+          "started": 234
+        }
+      },
+      "rollout_forward_calls": 3,
+      "sampled_peak_rss_bytes": 1943126016,
+      "search_calls": 0,
+      "source_shape": [
+        160,
+        256,
+        256
+      ],
+      "status": "complete",
+      "timing": {
+        "episode_fresh_setup_seconds": 6.6384394590277225,
+        "episode_online_seconds": 20.822531417012215,
+        "independent_audit_seconds": 0.5182403329527006,
+        "initial_task_preparation_seconds": 7.178565832902677,
+        "input_seconds": 0.3879203329561278,
+        "native_step_seconds": 12.562148874741979,
+        "note": "Preview times are nested inside setup/episode, not additive. Initial diagnostics, integrity, policy setup and output writing not fully separated.",
+        "per_transition_diagnostics_seconds": 0.41148341610096395,
+        "policy_forward_seconds": 0.7551448759622872,
+        "preview_fraction_of_worker": 0.7680542731640766,
+        "preview_seconds_nested_in_setup_and_episode": 23.059268545126542,
+        "supervisor_seconds": 31.584006124990992,
+        "worker_seconds": 30.022967582917772
+      },
+      "worker_peak_rss_bytes": 1943126016
+    }
+  },
+  "next_scope": "Bounded profile work complete. Per latest steering, substantial RL or sweeps remain deferred pending measured tissue-mechanics proof of concept; this artifact authorizes no additional run.",
+  "original_bundle_sha256_after": "c1af712957dc4902343995bd828eb0c3662438f8445c5cb7401e6dd50f7a4e12",
+  "original_bundle_unchanged": true,
+  "policy_weights_identical_between_members": true,
+  "recorded_at": "2026-10-04T19:02:27.072546+00:00",
+  "source_commit": "4cea5c4371bea158b5e5fb7db9042dbb3c0eed32",
+  "status": "paired_engineering_profiles_complete",
+  "sum_member_supervised_seconds": 47.93192304193508
+}

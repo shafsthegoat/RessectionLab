@@ -1,0 +1,38 @@
+{
+  "initial_findings": {
+    "path": "initial-findings.json",
+    "sha256": "1a1c5fcc1f629df2a713996e867c1aa9d3cb1c8e47a1c49b4f2b08659e630de1"
+  },
+  "no_unresolved_blockers_in_reviewed_orchestration_scope": true,
+  "resolved_findings": [
+    "Immutable historical mesh preparation binds original source and cb72a84 Git archive; current canonical builder binds independently and fitted decks may change only three exact stiffness-related scalar values.",
+    "Solver failures persist argv/cwd, actual exit when available, elapsed, timeout, PID and cleanup in solver-execution.json; failed run rows bind that receipt.",
+    "Cleanup crossing the final accounted per-case wall limit is a persisted failure even when the subprocess already exited zero."
+  ],
+  "reviewed_contracts": {
+    "boundaries": "One exclusive attempt marker; single external worker process group supervised for900s and sampled3GiB total RSS; inherited solver children limited to90s or remaining time; watcher samples256MiB active and1GiB total output; no retry or automatic budget change.",
+    "fixed_order": "18 reference/step/scale cases; reference numerical gate; two released axial calibration members; fit; two fitted confirmations; complete numerical gate; durable parameters/predictions freeze; held-out torque access.",
+    "independent_lifecycle_controls": "Interrupt calibration or held-out access after durable attempt: report uncertain completion, preserve freeze when present, never retry or fabricate completed metrics. Change pinned input after held-out access: retain actual access and artifacts but fail integrity. Mock a zero-exit subprocess whose cleanup crosses deadline: fail and retain actual exit/cleanup.",
+    "provenance": "Executing eight-module origin and source hashes verified against current Git tar, exact verified runtime executable/libraries/OpenMP/interpreter, original cb72a84 preparation archive and immutable mesh/deck receipts. Copied solver inputs and actual output readouts bind protocol/run/command/cwd."
+  },
+  "reviewed_orchestrator_sha256": "09c92e2d62f0996a4308b9efabb70292d169b0a23ca95796b24590f291c2a444",
+  "reviewer_owned_files": [
+    "tests/test_mechanics_hbe_experiment_review.py",
+    "artifacts/mechanics/hbe-experiment-independent-review-v1/initial-findings.json",
+    "artifacts/mechanics/hbe-experiment-independent-review-v1/tests.txt",
+    "artifacts/mechanics/hbe-experiment-independent-review-v1/test-receipt.json",
+    "artifacts/mechanics/hbe-experiment-independent-review-v1/review.json"
+  ],
+  "scope_limits": [
+    "No specimen equilibrium solve or measured response access was performed by this review.",
+    "Process and output limits sample observed use; transient peaks between samples are not a continuous resource guarantee.",
+    "Inherited process-group cleanup does not claim containment of deliberately detached processes.",
+    "Successful orchestration is not a physical validation or clinical accuracy claim."
+  ],
+  "status": "ready_for_root_commit_and_separate_execution_release",
+  "test_receipt": {
+    "path": "test-receipt.json",
+    "sha256": "2be009d2f7572479fc97148ce2759ff77d97581984cec42ef35950dd73ad8eca"
+  },
+  "tests": "31 passed in 0.73s (27 owner controls plus4 independent controls)"
+}

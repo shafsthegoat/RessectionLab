@@ -1,0 +1,594 @@
+{
+  "alternatives": [
+    {
+      "certificate": {
+        "checker_version": "independent-native-sequence-v2",
+        "collision_position_mm": null,
+        "conservative": true,
+        "failures": [],
+        "feasible": true,
+        "unknowns": [
+          "brain_segmentation_unassessed",
+          "diffusion_not_audited",
+          "language_function_unassessed",
+          "motor_function_unassessed",
+          "native_frame_provenance_requires_review",
+          "skull_anatomy_unassessed",
+          "vascular_anatomy_unassessed"
+        ]
+      },
+      "entry_mm": [
+        -181.5,
+        85.0,
+        105.0
+      ],
+      "id": "native_native-fine-aspiration",
+      "independent_native_audit": {
+        "action_count": 1,
+        "checker_version": "independent-native-sequence-v2",
+        "claimed_source_tissue_volume_mm3": 20.0,
+        "complete_tool_checked": true,
+        "contained_source_tissue_volume_mm3": 20.0,
+        "failures": [],
+        "feasible": true,
+        "first_failed_action": null,
+        "first_unsupported_position_mm": null,
+        "first_unsupported_source_voxel": null,
+        "frontier_checked": true,
+        "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "unsupported_source_tissue_volume_mm3": 0.0
+      },
+      "plan_type": "simulated_resection",
+      "removed_by_compartment_mm3": {
+        "FLAIR_abnormality": 0.0,
+        "enhancing_target": 3.0,
+        "nonenhancing_or_necrotic_core": 16.0
+      },
+      "removed_normal_tissue_mm3": 1.0,
+      "removed_tissue_mm3": 20.0,
+      "residual_by_compartment_mm3": {
+        "FLAIR_abnormality": 18654.0,
+        "enhancing_target": 15669.0,
+        "nonenhancing_or_necrotic_core": 7577.0
+      },
+      "source_candidate_hash": "sha256:ff5ea440955b7699b5f8de0fa2dcb40a8cdcc433df743c7a35b07100863c4653",
+      "target_mm": [
+        -162.0,
+        85.0,
+        105.0
+      ],
+      "tool": {
+        "max_access_angle_deg": 35.0,
+        "parameter_source": "generic research geometry; not a verified commercial device",
+        "shaft_radius_mm": 0.45,
+        "tip_length_mm": 2.0,
+        "tip_radius_mm": 1.25,
+        "tool_id": "native-fine-aspiration",
+        "working_length_mm": 120.0
+      }
+    },
+    {
+      "certificate": {
+        "checker_version": "independent-native-sequence-v2",
+        "collision_position_mm": null,
+        "conservative": true,
+        "failures": [],
+        "feasible": true,
+        "unknowns": [
+          "brain_segmentation_unassessed",
+          "diffusion_not_audited",
+          "language_function_unassessed",
+          "motor_function_unassessed",
+          "native_frame_provenance_requires_review",
+          "skull_anatomy_unassessed",
+          "vascular_anatomy_unassessed"
+        ]
+      },
+      "entry_mm": [
+        -181.5,
+        85.0,
+        105.0
+      ],
+      "id": "native_native-wide-aspiration",
+      "independent_native_audit": {
+        "action_count": 1,
+        "checker_version": "independent-native-sequence-v2",
+        "claimed_source_tissue_volume_mm3": 185.0,
+        "complete_tool_checked": true,
+        "contained_source_tissue_volume_mm3": 185.0,
+        "failures": [],
+        "feasible": true,
+        "first_failed_action": null,
+        "first_unsupported_position_mm": null,
+        "first_unsupported_source_voxel": null,
+        "frontier_checked": true,
+        "interpretation": "Source-grid prefix audit in RAS+: explicit entries within one aperture, contained connected cell removal, prior-tissue swept-shaft clearance, full-tool hard-exclusion clearance, and recorded partial active contact; tissue mechanics unvalidated",
+        "source_case_hash": "sha256:cd4756876845943c54d94f98a851c0f07d092631998b4ae327714295cc236b13",
+        "source_voxel_volume_mm3": 1.0,
+        "unsupported_source_tissue_volume_mm3": 0.0
+      },
+      "plan_type": "simulated_resection",
+      "removed_by_compartment_mm3": {
+        "FLAIR_abnormality": 0.0,
+        "enhancing_target": 33.0,
+        "nonenhancing_or_necrotic_core": 141.0
+      },
+      "removed_normal_tissue_mm3": 11.0,
+      "removed_tissue_mm3": 185.0,
+      "residual_by_compartment_mm3": {
+        "FLAIR_abnormality": 18654.0,
+        "enhancing_target": 15639.0,
+        "nonenhancing_or_necrotic_core": 7452.0
+      },
+      "source_candidate_hash": "sha256:b9b0e0d500eb296aefa0c6416a2d80b2ffd6bf402edc9129fef0d0e7ade0752c",
+      "target_mm": [
+        -162.0,
+        85.0,
+        105.0
+      ],
+      "tool": {
+        "max_access_angle_deg": 35.0,
+        "parameter_source": "generic research geometry; not a verified commercial device",
+        "shaft_radius_mm": 1.1,
+        "tip_length_mm": 3.0,
+        "tip_radius_mm": 2.25,
+        "tool_id": "native-wide-aspiration",
+        "working_length_mm": 120.0
+      }
+    },
+    {
+      "certificate": {
+        "checker_version": "historical-execution-gate-plus-independent-static-check-v1",
+        "collision_position_mm": null,
+        "conservative": true,
+        "failures": [
+          "historical_native_execution_rejection:SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+        ],
+        "feasible": false,
+        "unknowns": [
+          "brain_segmentation_unassessed",
+          "diffusion_not_audited",
+          "geometry_checks_only_supplied_anatomical_obstacles",
+          "language_function_unassessed",
+          "motor_function_unassessed",
+          "native_frame_provenance_requires_review",
+          "proximal_tool_outside_image_coverage_unassessed",
+          "skull_anatomy_unassessed",
+          "vascular_anatomy_unassessed"
+        ]
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        84.87771654858179,
+        143.39832772728357
+      ],
+      "historical_native_execution_rejection": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "historical_native_rejection_retested": false,
+      "id": "static_search-046893487762fe04",
+      "plan_type": "route_only",
+      "removed_tissue_mm3": null,
+      "source_candidate_hash": "sha256:5caee95424b675eaa39f3b177fb8259f4cbc9b48f9bda3e5e7e7f475937321d1",
+      "static_geometry_certificate": {
+        "checker_version": "independent-cell-capsule-v1",
+        "collision_position_mm": null,
+        "conservative": true,
+        "failures": [],
+        "feasible": true,
+        "unknowns": [
+          "brain_segmentation_unassessed",
+          "diffusion_not_audited",
+          "geometry_checks_only_supplied_anatomical_obstacles",
+          "language_function_unassessed",
+          "motor_function_unassessed",
+          "native_frame_provenance_requires_review",
+          "proximal_tool_outside_image_coverage_unassessed",
+          "skull_anatomy_unassessed",
+          "vascular_anatomy_unassessed"
+        ]
+      },
+      "target_mm": [
+        -172.0,
+        96.0,
+        124.0
+      ],
+      "tool": {
+        "max_access_angle_deg": 45.0,
+        "parameter_source": "generic research geometry; not a verified commercial device",
+        "shaft_radius_mm": 2.7,
+        "tip_length_mm": 4.0,
+        "tip_radius_mm": 1.7,
+        "tool_id": "generic_aspirator",
+        "working_length_mm": 90.0
+      }
+    },
+    {
+      "certificate": {
+        "checker_version": "historical-execution-gate-plus-independent-static-check-v1",
+        "collision_position_mm": null,
+        "conservative": true,
+        "failures": [
+          "historical_native_execution_rejection:SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+        ],
+        "feasible": false,
+        "unknowns": [
+          "brain_segmentation_unassessed",
+          "diffusion_not_audited",
+          "geometry_checks_only_supplied_anatomical_obstacles",
+          "language_function_unassessed",
+          "motor_function_unassessed",
+          "native_frame_provenance_requires_review",
+          "proximal_tool_outside_image_coverage_unassessed",
+          "skull_anatomy_unassessed",
+          "vascular_anatomy_unassessed"
+        ]
+      },
+      "entry_mm": [
+        -181.39188673393926,
+        84.87771654858179,
+        104.56499439395024
+      ],
+      "historical_native_execution_rejection": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "historical_native_rejection_retested": false,
+      "id": "static_search-110df6a56e19bfbc",
+      "plan_type": "route_only",
+      "removed_tissue_mm3": null,
+      "source_candidate_hash": "sha256:c0b21add8a4e427ac1d1058e2f62fe295077ae3d704e6a28cf1be778fc9e6e33",
+      "static_geometry_certificate": {
+        "checker_version": "independent-cell-capsule-v1",
+        "collision_position_mm": null,
+        "conservative": true,
+        "failures": [],
+        "feasible": true,
+        "unknowns": [
+          "brain_segmentation_unassessed",
+          "diffusion_not_audited",
+          "geometry_checks_only_supplied_anatomical_obstacles",
+          "language_function_unassessed",
+          "motor_function_unassessed",
+          "native_frame_provenance_requires_review",
+          "proximal_tool_outside_image_coverage_unassessed",
+          "skull_anatomy_unassessed",
+          "vascular_anatomy_unassessed"
+        ]
+      },
+      "target_mm": [
+        -166.0,
+        86.0,
+        106.0
+      ],
+      "tool": {
+        "max_access_angle_deg": 45.0,
+        "parameter_source": "generic research geometry; not a verified commercial device",
+        "shaft_radius_mm": 1.4,
+        "tip_length_mm": 3.0,
+        "tip_radius_mm": 1.0,
+        "tool_id": "generic_suction",
+        "working_length_mm": 100.0
+      }
+    },
+    {
+      "certificate": {
+        "checker_version": "historical-execution-gate-plus-independent-static-check-v1",
+        "collision_position_mm": null,
+        "conservative": true,
+        "failures": [
+          "historical_native_execution_rejection:SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE"
+        ],
+        "feasible": false,
+        "unknowns": [
+          "brain_segmentation_unassessed",
+          "diffusion_not_audited",
+          "geometry_checks_only_supplied_anatomical_obstacles",
+          "language_function_unassessed",
+          "motor_function_unassessed",
+          "native_frame_provenance_requires_review",
+          "proximal_tool_outside_image_coverage_unassessed",
+          "skull_anatomy_unassessed",
+          "vascular_anatomy_unassessed"
+        ]
+      },
+      "entry_mm": [
+        -161.89188673393926,
+        188.3777165485818,
+        104.56499439395024
+      ],
+      "historical_native_execution_rejection": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "historical_native_rejection_retested": false,
+      "id": "static_search-35049655244ec7bf",
+      "plan_type": "route_only",
+      "removed_tissue_mm3": null,
+      "source_candidate_hash": "sha256:e23a13e67982124d5c4157378f9d31a51fc233f1ca67e837432622604b5a8193",
+      "static_geometry_certificate": {
+        "checker_version": "independent-cell-capsule-v1",
+        "collision_position_mm": null,
+        "conservative": true,
+        "failures": [],
+        "feasible": true,
+        "unknowns": [
+          "brain_segmentation_unassessed",
+          "diffusion_not_audited",
+          "geometry_checks_only_supplied_anatomical_obstacles",
+          "language_function_unassessed",
+          "motor_function_unassessed",
+          "native_frame_provenance_requires_review",
+          "proximal_tool_outside_image_coverage_unassessed",
+          "skull_anatomy_unassessed",
+          "vascular_anatomy_unassessed"
+        ]
+      },
+      "target_mm": [
+        -167.0,
+        89.0,
+        104.0
+      ],
+      "tool": {
+        "max_access_angle_deg": 45.0,
+        "parameter_source": "generic research geometry; not a verified commercial device",
+        "shaft_radius_mm": 1.4,
+        "tip_length_mm": 3.0,
+        "tip_radius_mm": 1.0,
+        "tool_id": "generic_suction",
+        "working_length_mm": 100.0
+      }
+    },
+    {
+      "certificate": {
+        "checker_version": "independent-cell-capsule-v1",
+        "collision_position_mm": null,
+        "conservative": true,
+        "failures": [],
+        "feasible": true,
+        "unknowns": []
+      },
+      "id": "STOP",
+      "plan_type": "route_only",
+      "removed_tissue_mm3": null,
+      "source_candidate_hash": "sha256:2d0fc55a090c55709fd377799572776ab7ddd2398837f989829ec8dbb4171e42",
+      "tool": null
+    }
+  ],
+  "clocks": {
+    "native_native-fine-aspiration": {
+      "footprint_seconds": 0.042177499970421195,
+      "independent_audit_seconds": 1.108632041956298
+    },
+    "native_native-wide-aspiration": {
+      "footprint_seconds": 0.07921887503471226,
+      "independent_audit_seconds": 2.00083266699221
+    },
+    "static_search-046893487762fe04": {
+      "footprint_seconds": 4.951066375011578,
+      "independent_audit_seconds": 0.0015009160852059722
+    },
+    "static_search-110df6a56e19bfbc": {
+      "footprint_seconds": 0.3559440840035677,
+      "independent_audit_seconds": 0.0008472499903291464
+    },
+    "static_search-35049655244ec7bf": {
+      "footprint_seconds": 1.2986046250443906,
+      "independent_audit_seconds": 0.0007893749279901385
+    }
+  },
+  "hard_exclusions": "unavailable vascular anatomy; no supplied hard mask; no claim of vessel clearance",
+  "retained_historical_rejections": [
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-f4d43c59bb765d74"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-1966660ee195e6f2"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-c1c9c42c7ed82643"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-c97652110e7fe4b7"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-de4c4fb083f49f08"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-2798b21d102fa577"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-cf93a6b947243565"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-f9b2016b437f786a"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-709b1e6a4f221b91"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-e8eea12fa7ae6b0f"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-8a3669159fc94df2"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-046893487762fe04"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-cdebd9d45c29f9c3"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-256583dafc383284"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-feaf6808e0940d11"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-dde8afc43337fdf4"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-f34ca2b66ae5e2b2"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-2d6ecfc112ae93f7"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-1acc0adf56b7e235"
+    },
+    {
+      "reason": "HARD_GEOMETRY:ACCESS_ANGLE",
+      "route_id": "search-94597f9da1083664"
+    },
+    {
+      "reason": "HARD_GEOMETRY:ACCESS_ANGLE",
+      "route_id": "search-37889fe92e89ce64"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-76cd1f124c889307"
+    },
+    {
+      "reason": "HARD_GEOMETRY:ACCESS_ANGLE",
+      "route_id": "search-9cfa959fe1b4bc62"
+    },
+    {
+      "reason": "HARD_GEOMETRY:ACCESS_ANGLE",
+      "route_id": "search-68ded56b5e7330d5"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-110df6a56e19bfbc"
+    },
+    {
+      "reason": "HARD_GEOMETRY:ACCESS_ANGLE",
+      "route_id": "search-aaf9aa79d7dec117"
+    },
+    {
+      "reason": "HARD_GEOMETRY:ACCESS_ANGLE",
+      "route_id": "search-9948c32e7db61c31"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-36fabbaecc81598e"
+    },
+    {
+      "reason": "HARD_GEOMETRY:ACCESS_ANGLE",
+      "route_id": "search-c0f9a28b89a991e1"
+    },
+    {
+      "reason": "HARD_GEOMETRY:ACCESS_ANGLE",
+      "route_id": "search-e0c893af919c2188"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-5dde0be947f8b6a1"
+    },
+    {
+      "reason": "HARD_GEOMETRY:ACCESS_ANGLE",
+      "route_id": "search-60465dd9c6eae577"
+    },
+    {
+      "reason": "HARD_GEOMETRY:ACCESS_ANGLE",
+      "route_id": "search-9d8417aaa29d67bd"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-4981dca415170334"
+    },
+    {
+      "reason": "HARD_GEOMETRY:ACCESS_ANGLE",
+      "route_id": "search-d98cc8788cef9430"
+    },
+    {
+      "reason": "HARD_GEOMETRY:ACCESS_ANGLE",
+      "route_id": "search-a18eee6a686313aa"
+    },
+    {
+      "reason": "HARD_GEOMETRY:WORKING_REACH",
+      "route_id": "search-4cf864176e7527af"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-428de962d331d800"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-e3b4fd4187bd8557"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-35049655244ec7bf"
+    },
+    {
+      "reason": "HARD_GEOMETRY:WORKING_REACH",
+      "route_id": "search-c9d567fa11d9fd2e"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-d2234ce78d81c9ef"
+    },
+    {
+      "reason": "HARD_GEOMETRY:WORKING_REACH",
+      "route_id": "search-f3e0ada8091e8835"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-b87897e883754257"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-cf447b461999f627"
+    },
+    {
+      "reason": "HARD_GEOMETRY:WORKING_REACH",
+      "route_id": "search-53c610df06f0b52c"
+    },
+    {
+      "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+      "route_id": "search-63d6ff8f98caf871"
+    },
+    {
+      "reason": "HARD_GEOMETRY:WORKING_REACH",
+      "route_id": "search-3f6e8cbe9d66ab26"
+    },
+    {
+      "reason": "HARD_GEOMETRY:WORKING_REACH",
+      "route_id": "search-c0427347a8126bac"
+    },
+    {
+      "reason": "HARD_GEOMETRY:WORKING_REACH",
+      "route_id": "search-65cea5ecfb346b0a"
+    },
+    {
+      "reason": "HARD_GEOMETRY:WORKING_REACH",
+      "route_id": "search-41a3988d535c4ee6"
+    },
+    {
+      "reason": "HARD_GEOMETRY:WORKING_REACH",
+      "route_id": "search-ee6ed307b8b1e374"
+    },
+    {
+      "reason": "HARD_GEOMETRY:WORKING_REACH",
+      "route_id": "search-5e3b9012b3c56587"
+    },
+    {
+      "reason": "HARD_GEOMETRY:WORKING_REACH",
+      "route_id": "search-f273ec546fe59c61"
+    }
+  ],
+  "tissue_support_provenance": "hole_filled_nonzero_native_MRI_support; unreviewed skull_strip_assumption; source targets retained; source_frame=RAS+; simulation_frame=RAS+"
+}

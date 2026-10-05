@@ -1,0 +1,25 @@
+{
+  "schema_version": 1,
+  "status": "passed_preparation_controls_only",
+  "recorded_at": "2026-10-04T20:45:03.613820+00:00",
+  "command": "PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 QT_QPA_PLATFORM=offscreen .venv/bin/python -B -m pytest -q -p no:cacheprovider tests/test_resect_brain_envelope.py tests/test_febio_runtime.py",
+  "captured_terminal_summary": "35 passed in 1.01s",
+  "passed": 35,
+  "elapsed_seconds_pytest": 1.01,
+  "failures": 0,
+  "source_hashes_recorded_after_tests": {
+    "scripts/run_resect_brain_envelope.py": "dad389ba8bbfe3e0f25184e48a6c1cb29f040df23944f19916ff1c93b0bbb3bb",
+    "tests/test_resect_brain_envelope.py": "663e3fe60d8e3749e4a30ac2e22ecac076b4af5623f613f80f4c499688aa0be8",
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "tests/test_febio_runtime.py": "106f6fb743f9cc2abe580dd8fe3a0f4cd23ea03c3ef4ba50861a4a4f9029b773",
+    "src/resectionlab/brain_extraction.py": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917",
+    "manifests/experiments/resect-case4-brain-envelope-v1.json": "2a6fadfa1eed72399580b2a6eda2aa3f5d97063c973f5b531da0d3ff4472dabe",
+    "docs/resect-brain-domain-readiness.md": "746641a305c9deda054216f3f51871018cfc5c14ba32ee520df250079de432c8"
+  },
+  "source_edit_between_test_and_receipt": false,
+  "input_arrays_opened": false,
+  "inference_performed": false,
+  "patient_landmarks_opened": false,
+  "analytical_unit_fixtures_used_for_clinical_training": false,
+  "test_scope": "Mock exact model call/access/configuration checks plus existing small real-process supervisor controls; no model/FEA/data benchmark."
+}

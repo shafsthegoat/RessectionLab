@@ -1,0 +1,162 @@
+{
+  "actor_parameters_changed": true,
+  "clinical_deficit_probability": null,
+  "completed_episodes": 16,
+  "decision_model_hash": "sha256:d1ab7b03040e5cfb2cff4c48ef1d8d1f0b796620f621c0d9d2596b6b393c112c",
+  "discarded_partial_batches": 0,
+  "elapsed_seconds": 0.08292812504805624,
+  "episode_index": 16,
+  "gradient_steps": 8,
+  "initial_actor_hash": "sha256:1e92b406a32f6f493591e281ecc6309da8e94a00fcc68028e8828e729bd10e41",
+  "initial_checkpoint_hash": "sha256:3ffe11ea901cac5d4d0b27c17c6a9de587fbe995087c52f3917acd195958d202",
+  "initial_selection_return": 0.0,
+  "latest_actor_hash": "sha256:668e8fdea262db94dc04fc2d1f3ff741b950fb7b6aacd52ee2f5429169798a1f",
+  "latest_checkpoint_hash": "sha256:55713fafc4f797ce61d1d08bf25e4fe611217ba5569a0551d756ec61fda5bb3e",
+  "learning_improvement_guaranteed": false,
+  "optimization_environment_steps": 57,
+  "optimization_history": [
+    {
+      "actor_gradient_norm_after_clip": 0.8170736149203357,
+      "episode_source_case_hashes": [
+        "synthetic-branching-v1",
+        "synthetic-branching-v1"
+      ],
+      "gradient_norm_before_clip": 5.035024642944336,
+      "gradient_steps": 1,
+      "loss": -2.4714865684509277,
+      "mean_return": -0.56,
+      "optimization_environment_steps": 6
+    },
+    {
+      "actor_gradient_norm_after_clip": 0.25590863598503266,
+      "episode_source_case_hashes": [
+        "synthetic-branching-v1",
+        "synthetic-branching-v1"
+      ],
+      "gradient_norm_before_clip": 1.1844345331192017,
+      "gradient_steps": 2,
+      "loss": -0.3888057768344879,
+      "mean_return": -0.21,
+      "optimization_environment_steps": 14
+    },
+    {
+      "actor_gradient_norm_after_clip": 0.17483286244723462,
+      "episode_source_case_hashes": [
+        "synthetic-branching-v1",
+        "synthetic-branching-v1"
+      ],
+      "gradient_norm_before_clip": 2.3116302490234375,
+      "gradient_steps": 3,
+      "loss": -1.3646661043167114,
+      "mean_return": -0.33999999999999997,
+      "optimization_environment_steps": 19
+    },
+    {
+      "actor_gradient_norm_after_clip": 0.28901438648940253,
+      "episode_source_case_hashes": [
+        "synthetic-branching-v1",
+        "synthetic-branching-v1"
+      ],
+      "gradient_norm_before_clip": 2.5297367572784424,
+      "gradient_steps": 4,
+      "loss": -1.4452707767486572,
+      "mean_return": -0.44999999999999996,
+      "optimization_environment_steps": 25
+    },
+    {
+      "actor_gradient_norm_after_clip": 0.9435234756376863,
+      "episode_source_case_hashes": [
+        "synthetic-branching-v1",
+        "synthetic-branching-v1"
+      ],
+      "gradient_norm_before_clip": 3.653452157974243,
+      "gradient_steps": 5,
+      "loss": -1.3491274118423462,
+      "mean_return": -0.42999999999999994,
+      "optimization_environment_steps": 35
+    },
+    {
+      "actor_gradient_norm_after_clip": 0.1788049466735473,
+      "episode_source_case_hashes": [
+        "synthetic-branching-v1",
+        "synthetic-branching-v1"
+      ],
+      "gradient_norm_before_clip": 0.6874991059303284,
+      "gradient_steps": 6,
+      "loss": 0.836016058921814,
+      "mean_return": -0.06000000000000001,
+      "optimization_environment_steps": 42
+    },
+    {
+      "actor_gradient_norm_after_clip": 0.2687937454275614,
+      "episode_source_case_hashes": [
+        "synthetic-branching-v1",
+        "synthetic-branching-v1"
+      ],
+      "gradient_norm_before_clip": 0.5453053116798401,
+      "gradient_steps": 7,
+      "loss": -0.20371100306510925,
+      "mean_return": -0.08,
+      "optimization_environment_steps": 49
+    },
+    {
+      "actor_gradient_norm_after_clip": 0.9487832648176305,
+      "episode_source_case_hashes": [
+        "synthetic-branching-v1",
+        "synthetic-branching-v1"
+      ],
+      "gradient_norm_before_clip": 4.539784908294678,
+      "gradient_steps": 8,
+      "loss": -2.6036601066589355,
+      "mean_return": -0.79,
+      "optimization_environment_steps": 57
+    }
+  ],
+  "optimizer_mode": "PATIENT_SCRATCH_RL",
+  "output_dir": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/learning/population-synthetic-v1/comparison/scratch-11",
+  "selected_checkpoint_hash": "sha256:3ffe11ea901cac5d4d0b27c17c6a9de587fbe995087c52f3917acd195958d202",
+  "selected_selection_return": 0.0,
+  "selection_environment_steps": 10,
+  "selection_history": [
+    {
+      "checkpoint_hash": "sha256:3ffe11ea901cac5d4d0b27c17c6a9de587fbe995087c52f3917acd195958d202",
+      "gradient_steps": 0,
+      "mean_return": 0.0,
+      "optimization_environment_steps": 0,
+      "world_count": 2
+    },
+    {
+      "checkpoint_hash": "sha256:e0f1ab2fd958cb5d4404e13a9c24778a584451c50d777aa5b2bbdb8e8eeaad7d",
+      "gradient_steps": 2,
+      "mean_return": 0.0,
+      "optimization_environment_steps": 14,
+      "world_count": 2
+    },
+    {
+      "checkpoint_hash": "sha256:a3871adff1f7bd4f5317fa47885a3dc2d3f4eb0ae4cde91519875fa91d5ab454",
+      "gradient_steps": 4,
+      "mean_return": 0.0,
+      "optimization_environment_steps": 25,
+      "world_count": 2
+    },
+    {
+      "checkpoint_hash": "sha256:35fd8ac0ad1c14f23dac9d6000905cdd35ab61261d3391005241a1021a60a964",
+      "gradient_steps": 6,
+      "mean_return": 0.0,
+      "optimization_environment_steps": 42,
+      "world_count": 2
+    },
+    {
+      "checkpoint_hash": "sha256:55713fafc4f797ce61d1d08bf25e4fe611217ba5569a0551d756ec61fda5bb3e",
+      "gradient_steps": 8,
+      "mean_return": 0.0,
+      "optimization_environment_steps": 57,
+      "world_count": 2
+    }
+  ],
+  "selection_rule": "maximum mean deterministic selection return; earliest wins ties",
+  "selection_seconds": 0.009908832958899438,
+  "shared_checkpoint_hash": null,
+  "status": "gradient_budget",
+  "wall_limit_semantics": "cooperative; a simulator/gradient call may overrun the deadline"
+}

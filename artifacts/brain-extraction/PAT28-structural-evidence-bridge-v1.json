@@ -1,0 +1,61 @@
+{
+  "case_id": "BTC-ds001226-sub-PAT28-preop",
+  "case_hash": "sha256:69e57559a86b00a55c3b8b5e2b5e8cc7312d0170af6ba4496a951b76e7213228",
+  "planning_hash": "sha256:8a2421f977f0639ee7560df445d2b81fdade3cc5b7bcdd747327b9eeef66dc70",
+  "shape": [
+    160,
+    256,
+    256
+  ],
+  "brain_mask": null,
+  "brain_support": {
+    "usableForResearchSimulation": false,
+    "reviewStatus": "unassessed",
+    "corticalAccessPermitted": false
+  },
+  "structural_evidence": [
+    {
+      "evidenceId": "synthstrip_main_f59f40dea254",
+      "kind": "whole_brain_envelope",
+      "provenance": "estimated",
+      "reviewStatus": "review_required",
+      "reviewRequired": true,
+      "corticalAccessPermitted": false,
+      "sourceHash": "sha256:8dc0cee0d6a32bb2a32228fac0ee8d07aaceb9faccddf5c3e6e8620e05470d10",
+      "sourceFrameHash": "sha256:e8bbb7e2b8bad5b91b87a2039504d861b5782c6908ae9edb4aa3fd5ab6cc477e",
+      "sourceFileHash": "sha256:70c5c1e4e28143318d2820788343e239efdc205344204f8f50497b81281b32c6",
+      "maskHash": "sha256:fa0f3f7f4d07afa02d379eee63c2615eb420f9017265fa5edd7698a5c734cb7b",
+      "modelHash": "sha256:37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33",
+      "runHash": "sha256:f59f40dea25424d41407bfb018fd0ff0c7f81c9fca81acadc1bcd1ce2b64100e",
+      "evidenceHash": "sha256:438cc633203229fba184170563ce35bb0eec5c0a4419b5a7b670f1f5a6a9628b",
+      "method": "SynthStrip version 1 main; native-grid model-estimated whole-brain envelope",
+      "review": null
+    },
+    {
+      "evidenceId": "synthstrip_nocsf_f59f40dea254",
+      "kind": "whole_brain_envelope",
+      "provenance": "estimated",
+      "reviewStatus": "review_required",
+      "reviewRequired": true,
+      "corticalAccessPermitted": false,
+      "sourceHash": "sha256:8dc0cee0d6a32bb2a32228fac0ee8d07aaceb9faccddf5c3e6e8620e05470d10",
+      "sourceFrameHash": "sha256:e8bbb7e2b8bad5b91b87a2039504d861b5782c6908ae9edb4aa3fd5ab6cc477e",
+      "sourceFileHash": "sha256:70c5c1e4e28143318d2820788343e239efdc205344204f8f50497b81281b32c6",
+      "maskHash": "sha256:0dd53a94d30f420715a374426defe75c19248fca378d9d18b83458540509ee04",
+      "modelHash": "sha256:62bf01137c45b5f0cc04d59dbaed5b9ac138b3f25b766c062a7c1a0d696ecb28",
+      "runHash": "sha256:f59f40dea25424d41407bfb018fd0ff0c7f81c9fca81acadc1bcd1ce2b64100e",
+      "evidenceHash": "sha256:b6d70afea2727510e749eab7b4617b4a61ed01a3001d2decc95787873e393d8b",
+      "method": "SynthStrip version 1 nocsf; native-grid model-estimated whole-brain envelope",
+      "review": null
+    }
+  ],
+  "planning_attempt": {
+    "id": "routes",
+    "event": "error",
+    "error": {
+      "code": "FULL_HEAD_SUPPORT_NOT_CORTEX",
+      "message": "Full-head MRI cannot define cortical access; supply a reviewed cerebral mask"
+    }
+  },
+  "interpretation": "Imported model envelopes are visible proposals only; no working brain or cortical clearance was inferred."
+}

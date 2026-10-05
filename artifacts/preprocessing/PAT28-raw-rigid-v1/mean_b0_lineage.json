@@ -1,0 +1,15 @@
+{
+  "method": "arithmetic mean of six b<=50 volumes, no motion correction",
+  "volume_indices": [
+    0,
+    1,
+    26,
+    51,
+    76,
+    101
+  ],
+  "raw_dwi_sha256": "1075093345c46c95ac0f958ce2cd630b9c5323c8d5c9f81d00713e9725c9c3bd",
+  "bvals_sha256": "a678931600142ebf20236adba60c52b41e85b9aa241b78dc69c6385c089576c2",
+  "mean_b0_sha256": "e5963131a8fb62993294e27a18edf2633ec6ccd9c964439cde4c1164cf7afb87",
+  "source_state": "raw_uncorrected"
+}

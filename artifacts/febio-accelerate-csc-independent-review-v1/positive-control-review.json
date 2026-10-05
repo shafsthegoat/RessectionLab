@@ -1,0 +1,43 @@
+{
+  "assessment": "No blocker found in the narrow offset-length/zero-row patch or its repaired-only bounds controls. Suitable evidence for a separately declared isolated runtime build; not runtime/physics validation.",
+  "binary_sha256": "50c2dbcbe73be4e4847c624af0c393f38b92e90f2ec5ae36115fea4194217433",
+  "fixture_sha256": "a3bc8fd50e43806be662f9084b9c0c749a9ee213cdd0ed97db2681afcd9765dd",
+  "fragment_sha256": "88315d2f9d1499688c66c202ad600d963f89e158c99c3ef6170dd71754fefa1b",
+  "limitations": [
+    "Original defect is established by static allocator/loop/API mismatch; no dynamic reproduction of the old defect is claimed.",
+    "Standalone mock storage exercises extracted conversion only, not full adapter, Apple factorization/solve, matrix assembly, state reuse, iterative mode, mechanics or performance.",
+    "No patient, specimen-model or measured-response execution occurred in these controls.",
+    "The reviewer rehashed saved files and inspected binary metadata only; no compiler, fixture, solver or model was rerun."
+  ],
+  "original_source_sha256": "f5432e79ab73dd11d4a0550691480edd7fd5f00c392ae2f78eddf9c4b5da51c9",
+  "patch_sha256": "c3c6b068ed8e7b2480a64308099fa57d8b02fdbe04076f1497b0b2fdd3b7c3e0",
+  "patched_source_sha256": "60e5a3f2350826af1b95376ab93c8a476f2312158763d63d82eb80ec54af79c2",
+  "positive_control_driver_sha256": "927cbcfe58cde972ec4bc51f350cb86556f24f5f73100ea049fa64a386c78268",
+  "positive_release_sha256": "ace4eb84973424384640e735cf69b856308226e4ceb2af435091cd574cea2d6e",
+  "positive_result_sha256": "d52166ffca9929473dcacdb39478011c141d89771befe6ea5295e5bcefbeb72b",
+  "positive_supervision_sha256": "a7f8cc14a272b0944be3782141760232c698a5cad76039386afdc94022b54ee8",
+  "preserved_failures_and_history": {
+    "bounds_release_manifest_sha256": "7517aa3bd9a40cce9ce2864e5118c52185448a1a3eb1bab24b42ae9e9e4026b2",
+    "metadata_reading_correction": "Root initially inferred a manifest divergence from an earlier reported SHA592d91\u2026 without hashing the file then, and subsequently corrected that inference. No divergent snapshot is preserved or established. Independently measured current runtime-v1 SHA7517aa\u2026 matches the original failed-release manifest hash.",
+    "next_runtime_declaration": "A distinct runtime-v2 declaration is needed to bind the reduced positive-only validation scope and exact build options, not to repair a proven history gap. Earlier records remain retained.",
+    "original_compile_failure": "cassert unavailable before any fixture executable was produced; one failed compiler call and its stdout/receipts retained.",
+    "runtime_v1_manifest_current_sha256": "7517aa3bd9a40cce9ce2864e5118c52185448a1a3eb1bab24b42ae9e9e4026b2",
+    "screen_interruption": "Root reported preparation was stopped by an automatic cybersecurity screen before a corrected diagnostic. No original faulty code was run; safer replacement tests only repaired code."
+  },
+  "reviewer_execution_count": 0,
+  "saved_result_checks": {
+    "asan_linkage_and_asan_ubsan_handlers_present": true,
+    "compiler_and_positive_binary_exit_zero": true,
+    "destination_size_assertion_precedes_terminal_access": true,
+    "every_release_pin_unchanged": true,
+    "literal_patched_fragment_exact": true,
+    "no_sanitizer_diagnostics_in_saved_logs": true,
+    "original_installed_source_unchanged": true,
+    "sampled_peak_rss_bytes": 157351936,
+    "six_expected_profiles_exact_log_match": true,
+    "source_array_length_and_all_copied_offsets_checked": true,
+    "supervised_seconds": 2.2028407499892637,
+    "zero_created_and_null_no_work_branches_pass": true
+  },
+  "status": "independent_static_patch_and_positive_controls_review_passed"
+}
