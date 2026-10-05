@@ -44,9 +44,9 @@ N16 compression passed in 88.59 seconds; N24 compression timed out at the fixed
 required mesh comparison ran. Supervised elapsed time was 517.52 seconds and
 sampled peak RSS 1,491 MiB. All partial outputs and previous evidence are retained;
 there was no retry, measured-response access or material fitting. The completed
-case reported 60.78 seconds in its linear solver. A quarter-cylinder axial
-symmetry equivalence check is in preparation as a bounded cost optimization,
-not an accepted substitute for the full model. See
+case reported 60.78 seconds in its linear solver. A saved-mesh eligibility
+check is investigating whether symmetry can reduce cost without changing the
+discretization; no reduced model is accepted or released. See
 `artifacts/mechanics/hbe-resolution-experiment-result-v1/RESULT.md`.
 
 One analytical Gmsh control confirmed that the existing discrete-surface path
@@ -56,9 +56,13 @@ ellipsoid triangulation, with node counts increasing from 269 to 2,806. It took
 2.795 seconds and used no patient inputs or physics solver. This is a framework
 capability check, not patient validation or a patient resource prediction. A new
 patient candidate using that profile passed 95 focused preparation checks,
-including independent review. Its exact archive and input hashes passed preflight;
-one mesh attempt is released to run after the specimen process finishes. Existing
-anatomy, physical-fidelity criteria and prior failed results remain fixed. See
+including independent review. Its one actual patient attempt then stopped at
+180.028 seconds before returning a volume mesh: boundary-curve meshing alone
+took 170.079 seconds. The exact terminal cause is a final RSS-sampling timeout
+with 11.74 ms remaining, recorded as a supervision exception. Counts and shape
+fidelity are unassessed, not failed geometry tests. All 27 inputs and both prior
+attempts remain unchanged; no retry or solver call occurred. See
+`artifacts/mechanics/resect-case4-patient-mesh-curvature-v3/RESULT.md` and
 `artifacts/mechanics/gmsh-discrete-curvature-capability-v1/RESULT.md`.
 
 **Latest steering (October 4): real-patient learning and probability-aware planning.**

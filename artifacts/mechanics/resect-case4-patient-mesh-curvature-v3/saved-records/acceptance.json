@@ -1,0 +1,103 @@
+{
+  "status": "failed_or_incomplete",
+  "worker_started": true,
+  "solver_authorized": false,
+  "clinical_validation": false,
+  "anatomical_registration_accepted": false,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-B",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source/scripts/mechanics_patient_mesh_curvature_run.py",
+    "worker",
+    "--release",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-curvature-v3/release.json",
+    "--output",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-curvature-v3"
+  ],
+  "thread_environment": {
+    "OMP_NUM_THREADS": "1",
+    "OMP_DYNAMIC": "FALSE",
+    "VECLIB_MAXIMUM_THREADS": "1",
+    "OPENBLAS_NUM_THREADS": "1",
+    "MKL_NUM_THREADS": "1",
+    "VTK_SMP_MAX_THREADS": "1",
+    "VTK_SMP_IMPLEMENTATION_TYPE": "Sequential"
+  },
+  "supervision": {
+    "status": "failed_or_incomplete",
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+      "-B",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source/scripts/mechanics_patient_mesh_curvature_run.py",
+      "worker",
+      "--release",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-curvature-v3/release.json",
+      "--output",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-curvature-v3"
+    ],
+    "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source",
+    "wall_cap_seconds": 180,
+    "rss_cap_bytes": 3221225472,
+    "sampled_peak_process_group_rss_bytes": 590708736,
+    "exit_code": -9,
+    "kill_reason": "supervision_exception",
+    "error": {
+      "type": "TimeoutExpired",
+      "message": "Command '['/bin/ps', '-axo', 'pid=,pgid=,rss=']' timed out after 0.011743584065698087 seconds"
+    },
+    "cleanup_error": null,
+    "no_retry": true,
+    "sampling_note": "Group RSS is sampled; brief between-sample peaks may be missed.",
+    "pid": 61370,
+    "elapsed_seconds": 180.0281012909254
+  },
+  "output_guard": {
+    "scope": "Sampled whole-attempt output plus hard child per-file limit",
+    "aggregate_bytes_cap": 33554432,
+    "per_file_bytes_cap": 8388608,
+    "maximum_files": 32,
+    "observations": 1395,
+    "peak_sampled_bytes": 14297,
+    "error": null,
+    "final_usage": {
+      "files": 4,
+      "bytes": 14468,
+      "largest_file_bytes": 7582
+    }
+  },
+  "candidate_output_checks": {},
+  "inputs_after": {
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-curvature-v3/release.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source/artifacts/febio-runtime-investigation-v1/prospective-runtime.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source/manifests/experiments/resect-case4-patient-mesh-curvature-v3.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source/manifests/experiments/resect-case4-patient-mesh-graded-v2.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source/manifests/experiments/resect-case4-patient-mesh-v1.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source/scripts/febio_runtime.py": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source/scripts/mechanics_patient_mesh.py": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source/scripts/mechanics_patient_mesh_candidate.py": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source/scripts/mechanics_patient_mesh_candidate_run.py": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source/scripts/mechanics_patient_mesh_curvature.py": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source/scripts/mechanics_patient_mesh_curvature_run.py": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-brain-envelope-v1/main_mask.nii.gz": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-baseline-header-qc-v1/header-receipt.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/gmsh-4.15.2-runtime-v1/runtime-receipt.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/gmsh-4.15.2/runtime/gmsh.py": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/gmsh-4.15.2/runtime/lib/libgmsh.4.15.dylib": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-v1/native-surface.npz": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/qc-receipt.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-baseline-alignment-v3/comparison-and-outcome.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-brain-envelope-independent-qc-v1/root-visual-decision.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-v1/saved-records/worker.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics-patient-mesh-curvature-independent-review-v3/receipt.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/gmsh-discrete-curvature-capability-v1/declaration.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/gmsh-discrete-curvature-capability-v1/summary.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/gmsh-discrete-curvature-capability-independent-review-v1/verification.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-saved-mesh-diagnostic-v1/summary.json": true,
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-graded-independent-audit-v2/verification.json": true
+  },
+  "final_output_usage": {
+    "files": 4,
+    "bytes": 14468,
+    "largest_file_bytes": 7582
+  }
+}

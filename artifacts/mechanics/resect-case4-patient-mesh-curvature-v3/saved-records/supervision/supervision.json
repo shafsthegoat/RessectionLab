@@ -1,0 +1,28 @@
+{
+  "cleanup_error": null,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-B",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source/scripts/mechanics_patient_mesh_curvature_run.py",
+    "worker",
+    "--release",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/resect-case4-patient-mesh-curvature-v3/release.json",
+    "--output",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/resect-case4-patient-mesh-curvature-v3"
+  ],
+  "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/resect-case4-patient-mesh-curvature-v3/source",
+  "elapsed_seconds": 180.0281012909254,
+  "error": {
+    "message": "Command '['/bin/ps', '-axo', 'pid=,pgid=,rss=']' timed out after 0.011743584065698087 seconds",
+    "type": "TimeoutExpired"
+  },
+  "exit_code": -9,
+  "kill_reason": "supervision_exception",
+  "no_retry": true,
+  "pid": 61370,
+  "rss_cap_bytes": 3221225472,
+  "sampled_peak_process_group_rss_bytes": 590708736,
+  "sampling_note": "Group RSS is sampled; brief between-sample peaks may be missed.",
+  "status": "failed_or_incomplete",
+  "wall_cap_seconds": 180
+}

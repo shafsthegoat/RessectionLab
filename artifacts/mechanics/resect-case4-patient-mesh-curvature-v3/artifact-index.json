@@ -1,0 +1,58 @@
+{
+  "schema": "case4-curvature-candidate-artifact-index-v3",
+  "files": {
+    "RESULT.md": {
+      "sha256": "f1fd1b778464f41113749551c4878043ae7f605640d7e052de8f858cc019145e",
+      "bytes": 2451
+    },
+    "execution-baseline.json": {
+      "sha256": "06a972148e934b01114c985601b6a006ae7187c3997db5fb7ac8ce3076f5b286",
+      "bytes": 8969
+    },
+    "post-execution-verification.json": {
+      "sha256": "232f6493c9f39f57e5872824f5dc9f2aca824856b0da537e1136d57b6e5bf8aa",
+      "bytes": 7629
+    },
+    "preflight.json": {
+      "sha256": "e8e3736ab2feb797604b7f8270c5a577abd151462dd8358e430f46503aae5764",
+      "bytes": 377
+    },
+    "raw-output-index.json": {
+      "sha256": "f4aa0600bf3b1254cc03ea88019046ce796fb4fdbd0431f6ca5e32276c0ce59e",
+      "bytes": 1033
+    },
+    "release.json": {
+      "sha256": "ac226fb7ff677ff9d06e204be7f565a0e9a6b30240e9506444ec2a0f1d54ffe9",
+      "bytes": 4156
+    },
+    "saved-records/acceptance.json": {
+      "sha256": "c71846f0a3463771605f593f4e867904d30a4f3133bc1c8472d68a7277ffb374",
+      "bytes": 8525
+    },
+    "saved-records/candidate/result.json": {
+      "sha256": "fad09acf0ee25bb37d5893ee816d5d52fdf901c24ebfed69a52d721579e4f0fa",
+      "bytes": 455
+    },
+    "saved-records/supervision/combined.log": {
+      "sha256": "d6c32951b0642036b8fbca6f21b98cd5def235823204f272521ffb88740c7898",
+      "bytes": 4968
+    },
+    "saved-records/supervision/supervision.json": {
+      "sha256": "13243ef3209b9130b24e505fd2035970a2b86c77d145f163c8ce483673b6feb9",
+      "bytes": 1463
+    },
+    "saved-records/worker.json": {
+      "sha256": "227b09ce4af3db54c3b6cc967ee874e3691d0e5971481036321f30fbe952ae55",
+      "bytes": 7582
+    },
+    "summary.json": {
+      "sha256": "f27114619be8012c837ed3ad6bf77353231fdb5a97eac97527383f74211162a9",
+      "bytes": 2204
+    }
+  },
+  "file_count": 12,
+  "total_bytes": 49812,
+  "status": "frozen_terminal_failed_attempt",
+  "source_commit": "b8de4416e777b11d31f1b75adbf164522a92eaa3",
+  "index_excludes_itself": true
+}
