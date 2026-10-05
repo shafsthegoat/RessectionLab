@@ -1,0 +1,6 @@
+# Exact macOS arm64 / CPython3.12 runtime additions. Install with --no-deps --require-hashes.
+# Existing project NumPy2.5.3 and SciPy1.18.1 are reused and checked separately.
+scikit-learn==1.9.1 --hash=sha256:8c14ce41d561f7749f990b41d6703fe02c4669fbc485e598e069e0a1967b488e
+joblib==1.5.3 --hash=sha256:5fc3c5039fc5ca8c0276333a188bbd59d6b7ab37fe6632daa76bc7f9ec18e713
+threadpoolctl==3.6.0 --hash=sha256:43a0b8fd5a2928500110039e43a5eed8480b918967083ea48dc3ab9f13c4a7fb
+narwhals==2.0.1 --hash=sha256:837457e36a2ba1710c881fb69e1f79ce44fb81728c92ac378f70892a53af8ddb

@@ -1,0 +1,9 @@
+{
+  "kind": "isolated-runtime-check",
+  "status": "failed_before_fit",
+  "error": "ModuleNotFoundError: narwhals",
+  "cause": "Scikit-learn1.9.1 requires additional base dependency narwhals; initial installation explicitly used no-deps.",
+  "patient_rows_read": 0,
+  "fixture_fits": 0,
+  "initial_dependency_receipt_sha256": "411c9b48816600b393b5da954f57edd35de51872b8b79ca343ec2dd21b48d2a8"
+}

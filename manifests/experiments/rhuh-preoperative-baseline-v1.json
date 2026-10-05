@@ -1,0 +1,335 @@
+{
+  "schema_version": 1,
+  "study_id": "rhuh-preoperative-baseline-v1",
+  "status": "prospective_to_fitting_not_outcome_blind",
+  "execution_authorized": false,
+  "scope": "Exploratory internal observational association with the recorded postoperative deficit category; no surgery causality, route effects, clinical deployment, or planner reward.",
+  "source": {
+    "dataset_doi": "10.7937/4545-c905",
+    "source_version": "TCIA-v1-2023-06-09",
+    "uri": "https://www.cancerimagingarchive.net/wp-content/uploads/clinical_data_TCIA_RHUH-GBM.csv",
+    "local_path": "artifacts/rhuh-outcome-audit-v1/clinical_data_TCIA_RHUH-GBM.csv",
+    "bytes": 7087,
+    "sha256": "32d638906d34aaf8f66f5ec41c53c044216aed73bac22c776fb399bf2f741728",
+    "license": "CC BY 4.0",
+    "attribution": "Cepeda et al. (2023), RHUH-GBM, TCIA; DOI 10.7937/4545-c905",
+    "source_audit": "docs/rhuh-outcome-audit.md"
+  },
+  "cohort": {
+    "ordered_patient_ids": [
+      "RHUH-0001",
+      "RHUH-0002",
+      "RHUH-0003",
+      "RHUH-0004",
+      "RHUH-0005",
+      "RHUH-0006",
+      "RHUH-0007",
+      "RHUH-0008",
+      "RHUH-0009",
+      "RHUH-0010",
+      "RHUH-0011",
+      "RHUH-0012",
+      "RHUH-0013",
+      "RHUH-0014",
+      "RHUH-0015",
+      "RHUH-0016",
+      "RHUH-0017",
+      "RHUH-0018",
+      "RHUH-0019",
+      "RHUH-0020",
+      "RHUH-0021",
+      "RHUH-0022",
+      "RHUH-0023",
+      "RHUH-0024",
+      "RHUH-0025",
+      "RHUH-0026",
+      "RHUH-0027",
+      "RHUH-0028",
+      "RHUH-0029",
+      "RHUH-0030",
+      "RHUH-0031",
+      "RHUH-0032",
+      "RHUH-0033",
+      "RHUH-0034",
+      "RHUH-0035",
+      "RHUH-0036",
+      "RHUH-0037",
+      "RHUH-0038",
+      "RHUH-0039",
+      "RHUH-0040"
+    ],
+    "independent_patient_count": 40,
+    "role": "exploratory_internal_leave_one_patient_out",
+    "all_outcomes_previously_QA_inspected": true,
+    "untouched_external_or_final_test_patients": 0,
+    "visits_and_derivatives_grouped_by": "Patient ID",
+    "record_exclusions": [],
+    "no_posthoc_exclusion": "Keep previously treated records and published eligibility/rounding discrepancies; source drift, missingness or schema inconsistency fails this protocol rather than changing cohort."
+  },
+  "endpoint": {
+    "source_header": "Postoperative Neurological Deficit",
+    "name": "any_recorded_postoperative_deficit",
+    "mapping": {
+      "No": 0,
+      "Transient": 1,
+      "Minor Persistent": 1,
+      "Major Persistent": 1
+    },
+    "expected_raw_counts": {
+      "No": 26,
+      "Transient": 6,
+      "Minor Persistent": 6,
+      "Major Persistent": 2
+    },
+    "expected_binary_counts": {
+      "0": 26,
+      "1": 14
+    },
+    "raw_categories_retained": true,
+    "missing_is_not_No": true,
+    "assessment_time": "postoperative per source; exact clinical assessment date/interval unknown",
+    "domain": "unspecified neurological domain",
+    "new_or_worsened_vs_baseline": "unknown",
+    "severity_and_persistence_definition": "not supplied; retain source categories only"
+  },
+  "predictors": {
+    "projection_only": true,
+    "patient_and_source_identity_not_features": true,
+    "full_csv_hash_provenance_only": true,
+    "preoperative_kps": {
+      "source_header": "Preoperative KPS",
+      "unit": "KPS score points",
+      "transformation": "none before train-fold standardization",
+      "assumption": "Numeric KPS enters a linear log-odds term; this is not an interval harm scale."
+    },
+    "preoperative_ce_volume_cm3": {
+      "source_header": "Preoperative  contrast enhancing tumor volume (cm3)",
+      "unit": "cm3",
+      "transformation": "none before train-fold standardization"
+    },
+    "availability": "Source-labelled preoperative; exact measurement and availability timestamps unknown. Retrospective CSV is not proof of real-time availability.",
+    "exclude_all_other_fields": true,
+    "examples_excluded": [
+      "Postoperative KPS",
+      "residual tumour",
+      "EOR",
+      "adjuvant treatment",
+      "radiotherapy details",
+      "PFS",
+      "OS",
+      "molecular and pathology data without established preoperative availability"
+    ]
+  },
+  "comparators": [
+    {
+      "id": "FOLD_PREVALENCE",
+      "features": [],
+      "probability": "mean training-fold binary endpoint; no smoothing"
+    },
+    {
+      "id": "KPS",
+      "features": [
+        "preoperative_kps"
+      ]
+    },
+    {
+      "id": "KPS_CE_VOLUME",
+      "features": [
+        "preoperative_kps",
+        "preoperative_ce_volume_cm3"
+      ]
+    }
+  ],
+  "validation": {
+    "method": "deterministic leave-one-patient-out",
+    "ordered_folds": "one holdout for each ordered_patient_id; all other patients train",
+    "fit_count_observed_logistic": 80,
+    "predictions_per_comparator": 40,
+    "threshold": 0.5,
+    "threshold_rule": "predict positive iff probability >= 0.5",
+    "no_fold_selection": true,
+    "no_final_full_cohort_fit": true
+  },
+  "logistic": {
+    "implementation": "sklearn.linear_model.LogisticRegression",
+    "penalty": "l2",
+    "C": 1.0,
+    "solver": "lbfgs",
+    "fit_intercept": true,
+    "intercept_penalized": false,
+    "tol": 1e-08,
+    "max_iter": 1000,
+    "class_weight": null,
+    "sample_weight": null,
+    "random_state": 0,
+    "warm_start": false,
+    "n_jobs": null,
+    "scaler": {
+      "implementation": "sklearn.preprocessing.StandardScaler",
+      "fit_scope": "training fold only, independently for each model/fold/permutation/deletion",
+      "with_mean": true,
+      "with_std": true,
+      "variance_ddof": 0,
+      "constant_column_scale": 1.0
+    },
+    "imputation": null,
+    "feature_selection": null,
+    "hyperparameter_search": null,
+    "oversampling": null,
+    "calibration": null,
+    "additional_transforms": null
+  },
+  "metrics": {
+    "primary": "paired mean Brier difference KPS_CE_VOLUME minus KPS; negative favors addition of CE volume",
+    "brier": "mean((probability - binary_endpoint)**2) over all eligible held-out patients",
+    "secondary_paired_differences": [
+      "KPS minus FOLD_PREVALENCE",
+      "KPS_CE_VOLUME minus FOLD_PREVALENCE"
+    ],
+    "secondary": [
+      "ROC_AUC for the two logistic comparators",
+      "confusion counts TN FP FN TP at fixed threshold",
+      "sensitivity",
+      "specificity",
+      "precision",
+      "negative_predictive_value",
+      "balanced_accuracy",
+      "accuracy"
+    ],
+    "null_rules": {
+      "FOLD_PREVALENCE_ROC_AUC": "null: per-LOO prevalence=(total positives - heldout y)/(n-1), creating inverse ordering of heldout labels; a pooled AUC would be an artifact, not useful discrimination.",
+      "per_fold_ROC_AUC": "null: one heldout patient per fold",
+      "zero_denominator": "null with explicit reason, never zero substituted",
+      "confidence_intervals": "not estimated: overlapping LOO fits and n=40 do not create independent fold observations",
+      "clinical_calibration_validation": "not established by reporting Brier; no calibration model fitted"
+    },
+    "raw_four_category_performance": "descriptive category counts only; no severe/persistence-specific model claims"
+  },
+  "label_permutation_diagnostic": {
+    "count": 99,
+    "generator": "numpy.random.Generator(numpy.random.PCG64(20261005))",
+    "order": "99 successive permutations of original ordered 40-label vector; preserve each permutation index and label vector",
+    "shared_across_comparators": true,
+    "rerun": "all training-fold scaling, prevalence calculation and logistic fits under each permuted endpoint; same patient holdouts/features/configuration",
+    "statistic": "Brier(KPS_CE_VOLUME) minus Brier(FOLD_PREVALENCE)",
+    "tail": "smaller is better",
+    "p_value": "(1 + count(permuted statistic <= observed statistic)) / 100",
+    "minimum_p_value": 0.01,
+    "interpretation": "Finite Monte Carlo chance/leakage diagnostic under exchangeable labels. Destroys KPS association too; NOT a conditional test that volume adds information given KPS, and NOT a causal or external-validation result.",
+    "not_a_model_selection_criterion": true,
+    "fit_count_logistic": 7920,
+    "incomplete_rule": "If any planned permutation fails or is unexecuted, p_value=null; retain all attempted values/failures and planned denominator99, never divide by completed count."
+  },
+  "positive_deletion_influence": {
+    "planned_count": 14,
+    "deleted_ids": "all original endpoint-positive patients, in fixed lexicographic ID order",
+    "operation": "remove one positive patient, rerun full39-patientLOO for all three comparators; each logistic trainingfold has38patients",
+    "fit_count_logistic": 1092,
+    "outputs": [
+      "deleted_patient_id",
+      "all117heldout predictions per deletion",
+      "threeBrier scores",
+      "paired KPS_CE_VOLUME minus KPS Brier difference",
+      "difference from observed full-cohort paired difference"
+    ],
+    "summary": "if all14 complete, range and sign counts of paired difference; otherwise summary=null with planned/completed/failed counts",
+    "interpretation": "Descriptive sensitivity to individual event records; reduced evaluation cohorts differ. Not a confidence interval, extra patients, causal patient effects, or a reason to remove an inconvenient patient."
+  },
+  "resources": {
+    "cpu_threads": 1,
+    "worker_wall_seconds": 180,
+    "worker_wall_scope": "imports, parsing, all observed/permuted/influence fits, metrics and final writes",
+    "rss_limit_bytes": 1073741824,
+    "termination_grace_seconds": 15,
+    "max_logistic_fits": 9092,
+    "network_access_during_fitting": false,
+    "paid_compute": false,
+    "retries": 0,
+    "resume": false,
+    "deadline_semantics": "cooperative checks before/after each fit plus parent hard stop after grace; preserve actual elapsed/overshoot and failure; no budget enlargement during run"
+  },
+  "failure_policy": {
+    "invalid_inputs": "fail before fitting on hash/schema/ID/count/missingness/nonfinite mismatch; never impute or drop silently",
+    "fit_failure": "exception, nonfinite probabilities/coefficients, ConvergenceWarning or n_iter reaching1000 makes affected fold failed; preserve warning/error/model/fold identity",
+    "no_partial_observed_metrics": "Require all40predictions per comparator for observed pooled metrics; no failures omitted from denominator",
+    "diagnostics": "Preserve incomplete/failed diagnostic attempts; never treat them as successful completed diagnostics",
+    "publication": "Only completed worker and launcher authorities with unchanged input/source/configuration and fit receipts authorize complete status; partial artifacts remain explicitly incomplete."
+  },
+  "required_outputs": [
+    "frozen declaration and runtime/source/input hashes",
+    "adapter/projection schema and feature-order receipts",
+    "all observed patient IDs/raw categories/labels/probabilities/predictions/squared errors",
+    "train/holdout ID lists or reversible fold specification",
+    "fold scaler means/scales, coefficients/intercepts, iterations and convergence status",
+    "all99 permutation maps/statistics and failures",
+    "all14 influence deletion identities/predictions/statistics and failures",
+    "model/phase fit counts and separate timings, peak RSS, cancellation/overshoot",
+    "all null metrics with reasons and planned/completed/failed denominators",
+    "prohibited-field shadow-input hash, projection equalities and same-fit prediction invariance receipts"
+  ],
+  "execution_freeze": {
+    "required_before_execution": [
+      "root review/release",
+      "byte-bound adapter and projection tests",
+      "immutable source archive including runner/adapter/declaration",
+      "record Python/NumPy/SciPy/scikit-learn versions, platform, numerical backend and thread settings",
+      "fresh no-overwrite output namespace"
+    ],
+    "root_release_is_separate_from_declaration": true
+  },
+  "limitations": [
+    "QA-informed prospective-to-fit protocol, not outcome-blind",
+    "40 selected patients and14events; two major persistent records do not support a major-risk model",
+    "cohort selected for extensive resections, treatment and recurrence imaging; transportability limited",
+    "outcome timing/domains/baseline focal deficits and course definitions unknown",
+    "preoperative features are source-labelled with exact availability unknown",
+    "observational association under actual care only",
+    "no patient-specific clinical risk, surgical-route harm, planner reward, causal intervention, or external validation claim"
+  ],
+  "adapter": {
+    "module": "resectionlab.rhuh_outcomes",
+    "loader": "load_rhuh_csv(path, expected_sha256=declared_source_sha256)",
+    "dataset_records": "RHUHOutcomes.records",
+    "source_digest": "dataset.source.sha256 and record.source.sha256 bind the mixed source; never predictors",
+    "projection": "record.preoperative_projection()",
+    "projection_fields": [
+      "patient_id",
+      "collection_id",
+      "source_version",
+      "preoperative_kps",
+      "preoperative_ce_volume_cm3"
+    ],
+    "permitted_model_fields": [
+      "preoperative_kps",
+      "preoperative_ce_volume_cm3"
+    ],
+    "collection_id": "RHUH-GBM",
+    "source_version": "TCIA-v1-2023-06-09",
+    "projection_semantic_hash": "Only stable identity, allowed preoperative fields, schema and units; excludes full mixed CSV hash and postoperative values",
+    "label": "record.any_recorded_postoperative_deficit",
+    "raw_category": "record.deficit_category",
+    "incomplete_input": "null values fail fixed-cohort protocol before fitting; no missing-to-No conversion"
+  },
+  "prohibited_field_invariance": {
+    "stage": "after original source/schema validation and before fitting; predictions checked during observedLOO",
+    "protected_headers": [
+      "Patient ID",
+      "Postoperative Neurological Deficit",
+      "Preoperative KPS",
+      "Preoperative  contrast enhancing tumor volume (cm3)"
+    ],
+    "mutation": "Sort rows by declared Patient ID. For every other column, set row i to the original value from row (i+1) modulo40; preserve protected columns and exact header names.",
+    "derived_source": "Serialize as an explicitly derived shadow CSV, record new SHA256 and parse using that explicit expected digest. Never claim it has the original source SHA.",
+    "required_equalities": [
+      "ordered patient IDs and raw target categories",
+      "preoperative projection semantic hashes",
+      "ordered permitted feature arrays and binary endpoint",
+      "for each observed fold and comparator, exactly equal predicted probability on corresponding original/shadow heldout features using the SAME fitted scaler/model or training-fold prevalence"
+    ],
+    "additional_logistic_fits": 0,
+    "shadow_predictions_are_additional_patients": false,
+    "failure": "Any mismatch fails before metrics publication. Preserve derived input hash and comparison receipt.",
+    "scope": "Negative control for use of forbidden columns through this adapter/projection and prediction path; not proof against every possible leakage mechanism."
+  },
+  "declaration_content_hash": "sha256:4992bfecceb4e8d0167b815d50a2ac960049fab508627b2b5272ebcc5c6b3d9f"
+}

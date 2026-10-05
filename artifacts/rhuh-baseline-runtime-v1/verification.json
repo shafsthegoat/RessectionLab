@@ -1,0 +1,39 @@
+{
+  "kind": "isolated-sklearn-analytical-runtime-check",
+  "status": "passed",
+  "versions": {
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.9.1",
+    "joblib": "1.5.3",
+    "threadpoolctl": "3.6.0",
+    "narwhals": "2.0.1"
+  },
+  "threadpools": [
+    {
+      "user_api": "openmp",
+      "internal_api": "openmp",
+      "num_threads": 1,
+      "prefix": "libomp",
+      "filepath": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/rhuh-baseline-runtime-v1/site-packages/sklearn/.dylibs/libomp.dylib",
+      "version": null
+    }
+  ],
+  "fixture_rows": 4,
+  "patient_rows_read": 0,
+  "patient_models_fitted": 0,
+  "fixture_fits": 1,
+  "checks": {
+    "monotonic_probabilities": true,
+    "symmetric_probabilities": true,
+    "finite_coefficients": true
+  },
+  "warnings": [
+    {
+      "category": "FutureWarning",
+      "message": "'penalty' was deprecated in version 1.8 and will be removed in 1.10. To avoid this warning, leave 'penalty' set to its default value and use 'l1_ratio' or 'C' instead. Use l1_ratio=0 instead of penalty='l2', l1_ratio=1 instead of penalty='l1', l1_ratio set to a float between 0 and 1 instead of penalty='elasticnet', and C=np.inf instead of penalty=None."
+    }
+  ],
+  "elapsed_seconds": 11.308994958992116
+}
