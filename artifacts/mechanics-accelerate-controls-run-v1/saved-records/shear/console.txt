@@ -1,0 +1,244 @@
+===========================================================================
+         ________    _________   _______       __     _________            
+        |        |\ |        |\ |       \\    |  |\  /         \\          
+        |    ____|| |    ____|| |    __  ||   |__|| |    ___    ||         
+        |   |\___\| |   |\___\| |   |\_| ||    \_\| |   //  \   ||         
+        |   ||__    |   ||__    |   ||_| ||   |  |\ |  ||    |  ||         
+        |       |\  |       |\  |         \\  |  || |  ||    |  ||         
+        |    ___||  |    ___||  |    ___   || |  || |  ||    |  ||         
+        |   |\__\|  |   |\__\|  |   |\__|  || |  || |  ||    |  ||         
+        |   ||      |   ||___   |   ||__|  || |  || |   \\__/   ||         
+        |   ||      |        |\ |          || |  || |           ||         
+        |___||      |________|| |_________//  |__||  \_________//          
+                                                                           
+      F I N I T E   E L E M E N T S   F O R   B I O M E C H A N I C S      
+                                                                           
+  version 4.13.0
+  FEBio is a registered trademark.                                         
+  copyright (c) 2006-2026 - All rights reserved                            
+                                                                           
+===========================================================================
+
+Starting without configuration file
+Default linear solver: skyline
+Reading file shear.feb ...SUCCESS!
+
+
+
+Data Record #1
+===========================================================================
+Step = 0
+Time = 0
+Data = mechanics_nodes_si
+File = shear.nodes.log
+
+Data Record #2
+===========================================================================
+Step = 0
+Time = 0
+Data = mechanics_elements_si
+File = shear.elements.log
+
+ *************************************************************************
+ * Selecting linear solver accelerate                                    *
+ *************************************************************************
+
+===== beginning time step 1 : 0.25 =====
+
+
+Reforming stiffness matrix: reformation #1
+
+===== reforming stiffness matrix:
+	Nr of equations ........................... : 81
+	Nr of nonzeroes in stiffness matrix ....... : 3087
+ 1
+ Nonlinear solution status: time= 0.25
+	stiffness updates             = 0
+	right hand side evaluations   = 2
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            3.018102e-04    1.309244e-32    3.018102e-14 
+	   energy              2.171586e-06    8.514375e-21    2.171586e-16 
+	   displacement        1.562500e-08    1.562500e-08    1.562500e-28 
+
+ *************************************************************************
+ *                               WARNING                                 *
+ * No force acting on the system.                                        *
+ *************************************************************************
+
+convergence summary
+    number of iterations   : 1
+    number of reformations : 1
+
+------- converged at time : 0.25
+
+
+Data Record #1
+===========================================================================
+Step = 1
+Time = 0.25
+Data = mechanics_nodes_si
+File = shear.nodes.log
+
+Data Record #2
+===========================================================================
+Step = 1
+Time = 0.25
+Data = mechanics_elements_si
+File = shear.elements.log
+
+===== beginning time step 2 : 0.5 =====
+
+
+Reforming stiffness matrix: reformation #1
+
+ 1
+ Nonlinear solution status: time= 0.5
+	stiffness updates             = 0
+	right hand side evaluations   = 2
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            3.019860e-04    1.287529e-32    3.019860e-14 
+	   energy              2.171610e-06    9.161508e-21    2.171610e-16 
+	   displacement        1.562500e-08    1.562500e-08    1.562500e-28 
+
+ *************************************************************************
+ *                               WARNING                                 *
+ * No force acting on the system.                                        *
+ *************************************************************************
+
+convergence summary
+    number of iterations   : 1
+    number of reformations : 1
+
+------- converged at time : 0.5
+
+
+Data Record #1
+===========================================================================
+Step = 2
+Time = 0.5
+Data = mechanics_nodes_si
+File = shear.nodes.log
+
+Data Record #2
+===========================================================================
+Step = 2
+Time = 0.5
+Data = mechanics_elements_si
+File = shear.elements.log
+
+===== beginning time step 3 : 0.75 =====
+
+
+Reforming stiffness matrix: reformation #1
+
+ 1
+ Nonlinear solution status: time= 0.75
+	stiffness updates             = 0
+	right hand side evaluations   = 2
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            3.025133e-04    5.827807e-32    3.025133e-14 
+	   energy              2.171682e-06    2.615638e-20    2.171682e-16 
+	   displacement        1.562500e-08    1.562500e-08    1.562500e-28 
+
+ *************************************************************************
+ *                               WARNING                                 *
+ * No force acting on the system.                                        *
+ *************************************************************************
+
+convergence summary
+    number of iterations   : 1
+    number of reformations : 1
+
+------- converged at time : 0.75
+
+
+Data Record #1
+===========================================================================
+Step = 3
+Time = 0.75
+Data = mechanics_nodes_si
+File = shear.nodes.log
+
+Data Record #2
+===========================================================================
+Step = 3
+Time = 0.75
+Data = mechanics_elements_si
+File = shear.elements.log
+
+===== beginning time step 4 : 1 =====
+
+
+Reforming stiffness matrix: reformation #1
+
+ 1
+ Nonlinear solution status: time= 1
+	stiffness updates             = 0
+	right hand side evaluations   = 2
+	stiffness matrix reformations = 1
+	step from line search         = 1.000000
+	convergence norms :     INITIAL         CURRENT         REQUIRED
+	   residual            3.033924e-04    6.438490e-32    3.033924e-14 
+	   energy              2.171803e-06    1.097755e-20    2.171803e-16 
+	   displacement        1.562500e-08    1.562500e-08    1.562500e-28 
+
+ *************************************************************************
+ *                               WARNING                                 *
+ * No force acting on the system.                                        *
+ *************************************************************************
+
+convergence summary
+    number of iterations   : 1
+    number of reformations : 1
+
+------- converged at time : 1
+
+
+Data Record #1
+===========================================================================
+Step = 4
+Time = 1
+Data = mechanics_nodes_si
+File = shear.nodes.log
+
+Data Record #2
+===========================================================================
+Step = 4
+Time = 1
+Data = mechanics_elements_si
+File = shear.elements.log
+
+
+ N O N L I N E A R   I T E R A T I O N   I N F O R M A T I O N
+
+	Number of time steps completed .................... : 4
+
+	Total number of equilibrium iterations ............ : 4
+
+	Average number of equilibrium iterations .......... : 1
+
+	Total number of right hand evaluations ............ : 8
+
+	Total number of stiffness reformations ............ : 4
+
+
+ L I N E A R   S O L V E R   S T A T S
+
+	Total calls to linear solver ........ : 4
+
+	Avg iterations per solve ............ : 1
+
+	Time in linear solver: 0:00:00
+
+
+ Elapsed time : 0:00:00
+
+
+ N O R M A L   T E R M I N A T I O N
+

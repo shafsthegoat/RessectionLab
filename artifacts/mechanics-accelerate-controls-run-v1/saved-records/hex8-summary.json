@@ -1,0 +1,441 @@
+{
+  "source_commit": "2cb40187be6364c71072c46d8dd02ba50ec61d44",
+  "runtime_identity_sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57",
+  "solver_backend": "accelerate",
+  "execution_accepted": true,
+  "numerical_threads": 1,
+  "evidence": {
+    "execution": {
+      "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/execution.json",
+      "sha256": "7b3a15d237b034ec1988c5088f09b81adb935974b50dde59d2e87b028e61c0a5"
+    },
+    "results": {
+      "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/results.json",
+      "sha256": "765dc5ae422ac66d399b095a6f4df95e2e108e2276583441c13210d7440e24cf"
+    },
+    "baseline": {
+      "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/execution-baseline.json",
+      "sha256": "2a5c447b3d5bc407e71c189bce81fa374b2daeb88d9d95069e1ff6d924ae6a94"
+    }
+  },
+  "status": "passed_all_five_fixed_patch_controls",
+  "rows": [
+    {
+      "case": "zero",
+      "status": "passed",
+      "deck_sha256": "a20221e487f4a192924d28791aa077fbf268756f42367e48db6b6990d8cace9d",
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+        "-noconfig",
+        "-no_title",
+        "-i",
+        "zero.feb",
+        "-o",
+        "zero.log"
+      ],
+      "solver_seconds": 3.6440797919640318,
+      "solver_exit_code": 0,
+      "backend_evidence": {
+        "solver_backend": "accelerate",
+        "actual_selection_lines": [
+          "* Selecting linear solver accelerate                                    *"
+        ],
+        "solver_xml": "<linear_solver type=\"accelerate\"><iterative>0</iterative><factorization>4</factorization><order_method>0</order_method><print_condition_number>0</print_condition_number></linear_solver>",
+        "solver_only_change_verified": true,
+        "runtime_identity_sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57",
+        "executed_deck_sha256": "a20221e487f4a192924d28791aa077fbf268756f42367e48db6b6990d8cace9d"
+      },
+      "checker_passed": true,
+      "output_hashes": {
+        "checked.json": "cf1fe679155ffc40803de5a143825fd91e24a79442a64d6d1463b31402a07937",
+        "console.txt": "785124fd601fcea82278f5564bb296c0e14f4373a07f8120856301b39536ece9",
+        "zero.elements.log": "1547e3a2e60b48cd581d14f32a7ea2b92df09e9d31e3edd2d22d2fe9942818d3",
+        "zero.feb": "a20221e487f4a192924d28791aa077fbf268756f42367e48db6b6990d8cace9d",
+        "zero.log": "c7c370f91397f5f42774eb181e3a6c1cc797f04866652f4659e450a299808bbb",
+        "zero.nodes.log": "b28810dc7b15ddb5c0467c4e588038148074c2d3d1c11be26c2940ca8c269bd9",
+        "zero.xplt": "aa8e9d9f2239e65f306a2b8a2637fcc5019c26219080f6140c7dba0cc99f97a5"
+      },
+      "passed": true,
+      "evidence": {
+        "original_deck": {
+          "path": "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-febio-verification-v1/decks/zero.feb",
+          "sha256": "d202aa532e5cc2ec9f8219ba672d37c4606b74cbfeca9b6ea1ebbcd40a061f67"
+        },
+        "executed_deck": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/zero/zero.feb",
+          "sha256": "a20221e487f4a192924d28791aa077fbf268756f42367e48db6b6990d8cace9d"
+        },
+        "console": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/zero/console.txt",
+          "sha256": "785124fd601fcea82278f5564bb296c0e14f4373a07f8120856301b39536ece9"
+        },
+        "nodes": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/zero/zero.nodes.log",
+          "sha256": "b28810dc7b15ddb5c0467c4e588038148074c2d3d1c11be26c2940ca8c269bd9"
+        },
+        "elements": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/zero/zero.elements.log",
+          "sha256": "1547e3a2e60b48cd581d14f32a7ea2b92df09e9d31e3edd2d22d2fe9942818d3"
+        },
+        "solver_log": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/zero/zero.log",
+          "sha256": "c7c370f91397f5f42774eb181e3a6c1cc797f04866652f4659e450a299808bbb"
+        },
+        "checked": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/zero/checked.json",
+          "sha256": "cf1fe679155ffc40803de5a143825fd91e24a79442a64d6d1463b31402a07937"
+        },
+        "checker_source": {
+          "path": "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_febio_verification.py",
+          "sha256": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5"
+        }
+      }
+    },
+    {
+      "case": "translation",
+      "status": "passed",
+      "deck_sha256": "1b5fa399cc71e2561647b3f9a6baf2f18b5428e62650898fc8e330fc146fe93d",
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+        "-noconfig",
+        "-no_title",
+        "-i",
+        "translation.feb",
+        "-o",
+        "translation.log"
+      ],
+      "solver_seconds": 0.0409992499044165,
+      "solver_exit_code": 0,
+      "backend_evidence": {
+        "solver_backend": "accelerate",
+        "actual_selection_lines": [
+          "* Selecting linear solver accelerate                                    *"
+        ],
+        "solver_xml": "<linear_solver type=\"accelerate\"><iterative>0</iterative><factorization>4</factorization><order_method>0</order_method><print_condition_number>0</print_condition_number></linear_solver>",
+        "solver_only_change_verified": true,
+        "runtime_identity_sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57",
+        "executed_deck_sha256": "1b5fa399cc71e2561647b3f9a6baf2f18b5428e62650898fc8e330fc146fe93d"
+      },
+      "checker_passed": true,
+      "output_hashes": {
+        "checked.json": "01bd99f36f8b52143ab13c290ee1220605c3079a46460a1db903d5e1baf86a5f",
+        "console.txt": "4386db19eb7b6c1de5877560124968391e84fbc311c6f5fee3df2862d794db08",
+        "translation.elements.log": "a5ba50416863d872ccd0a9cfafa7722191cb2295bb82e7425087f3eadfc25e26",
+        "translation.feb": "1b5fa399cc71e2561647b3f9a6baf2f18b5428e62650898fc8e330fc146fe93d",
+        "translation.log": "f4e31f67f20ea268b009af5739d48e1d1f9de36bd51ac1d07e2a1ad7d64b1d61",
+        "translation.nodes.log": "a3e367341989c71db0f6ae3d56b99f1c9516b0f88031020a9a128bdbeff35569",
+        "translation.xplt": "1690dae9423be0e83353db2247f18e79c6dd06bd7d1623d7079267b4fe36c0e6"
+      },
+      "passed": true,
+      "evidence": {
+        "original_deck": {
+          "path": "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-febio-verification-v1/decks/translation.feb",
+          "sha256": "98a34f49115f260feff3ce45a231c3dfcb3d5f7bcd15edf1777cd230566a8481"
+        },
+        "executed_deck": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/translation/translation.feb",
+          "sha256": "1b5fa399cc71e2561647b3f9a6baf2f18b5428e62650898fc8e330fc146fe93d"
+        },
+        "console": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/translation/console.txt",
+          "sha256": "4386db19eb7b6c1de5877560124968391e84fbc311c6f5fee3df2862d794db08"
+        },
+        "nodes": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/translation/translation.nodes.log",
+          "sha256": "a3e367341989c71db0f6ae3d56b99f1c9516b0f88031020a9a128bdbeff35569"
+        },
+        "elements": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/translation/translation.elements.log",
+          "sha256": "a5ba50416863d872ccd0a9cfafa7722191cb2295bb82e7425087f3eadfc25e26"
+        },
+        "solver_log": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/translation/translation.log",
+          "sha256": "f4e31f67f20ea268b009af5739d48e1d1f9de36bd51ac1d07e2a1ad7d64b1d61"
+        },
+        "checked": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/translation/checked.json",
+          "sha256": "01bd99f36f8b52143ab13c290ee1220605c3079a46460a1db903d5e1baf86a5f"
+        },
+        "checker_source": {
+          "path": "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_febio_verification.py",
+          "sha256": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5"
+        }
+      }
+    },
+    {
+      "case": "finite_stretch",
+      "status": "passed",
+      "deck_sha256": "0d72a0ee80fb6a8ad88f8bae84c3771321345ef43fa2311786b488ad67c58b22",
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+        "-noconfig",
+        "-no_title",
+        "-i",
+        "finite_stretch.feb",
+        "-o",
+        "finite_stretch.log"
+      ],
+      "solver_seconds": 0.03962391696404666,
+      "solver_exit_code": 0,
+      "backend_evidence": {
+        "solver_backend": "accelerate",
+        "actual_selection_lines": [
+          "* Selecting linear solver accelerate                                    *"
+        ],
+        "solver_xml": "<linear_solver type=\"accelerate\"><iterative>0</iterative><factorization>4</factorization><order_method>0</order_method><print_condition_number>0</print_condition_number></linear_solver>",
+        "solver_only_change_verified": true,
+        "runtime_identity_sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57",
+        "executed_deck_sha256": "0d72a0ee80fb6a8ad88f8bae84c3771321345ef43fa2311786b488ad67c58b22"
+      },
+      "checker_passed": true,
+      "output_hashes": {
+        "checked.json": "b1c6a350dab731cd54f37ddd9ebb5c0ef62094959cd16ad3a0a118755dadee72",
+        "console.txt": "8accdd12df1e9e67aa8e14c6352a89d9029c98c6457705b7f97f88ad8f1357de",
+        "finite_stretch.elements.log": "6ea157973658d3c7fe40cf01acf1dd54a84b3d995daa7d2286b659e072825aa8",
+        "finite_stretch.feb": "0d72a0ee80fb6a8ad88f8bae84c3771321345ef43fa2311786b488ad67c58b22",
+        "finite_stretch.log": "14d683113e74ca7ce7f624392984dcdfc8548ab2f9fddb2485e85c90bee02af8",
+        "finite_stretch.nodes.log": "3b72774c5dec70762594cca01a69df7bf1be9ae6c3e05fe05e72751069689e93",
+        "finite_stretch.xplt": "c0a672719f501dbbff5cdef22dbc6740673099cc8da1bd0355fd3222a717e9b3"
+      },
+      "passed": true,
+      "evidence": {
+        "original_deck": {
+          "path": "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-febio-verification-v1/decks/finite_stretch.feb",
+          "sha256": "51f7966c5054f009f7e1bf8cefa3306364196b58ede0170b39cbeab18391dee6"
+        },
+        "executed_deck": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/finite_stretch/finite_stretch.feb",
+          "sha256": "0d72a0ee80fb6a8ad88f8bae84c3771321345ef43fa2311786b488ad67c58b22"
+        },
+        "console": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/finite_stretch/console.txt",
+          "sha256": "8accdd12df1e9e67aa8e14c6352a89d9029c98c6457705b7f97f88ad8f1357de"
+        },
+        "nodes": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/finite_stretch/finite_stretch.nodes.log",
+          "sha256": "3b72774c5dec70762594cca01a69df7bf1be9ae6c3e05fe05e72751069689e93"
+        },
+        "elements": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/finite_stretch/finite_stretch.elements.log",
+          "sha256": "6ea157973658d3c7fe40cf01acf1dd54a84b3d995daa7d2286b659e072825aa8"
+        },
+        "solver_log": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/finite_stretch/finite_stretch.log",
+          "sha256": "14d683113e74ca7ce7f624392984dcdfc8548ab2f9fddb2485e85c90bee02af8"
+        },
+        "checked": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/finite_stretch/checked.json",
+          "sha256": "b1c6a350dab731cd54f37ddd9ebb5c0ef62094959cd16ad3a0a118755dadee72"
+        },
+        "checker_source": {
+          "path": "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_febio_verification.py",
+          "sha256": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5"
+        }
+      }
+    },
+    {
+      "case": "shear",
+      "status": "passed",
+      "deck_sha256": "fa8c1c1f5bac69cb310c72c3fa590e83a87576ac62a99cbd0a6201f029b9c593",
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+        "-noconfig",
+        "-no_title",
+        "-i",
+        "shear.feb",
+        "-o",
+        "shear.log"
+      ],
+      "solver_seconds": 0.04094674997031689,
+      "solver_exit_code": 0,
+      "backend_evidence": {
+        "solver_backend": "accelerate",
+        "actual_selection_lines": [
+          "* Selecting linear solver accelerate                                    *"
+        ],
+        "solver_xml": "<linear_solver type=\"accelerate\"><iterative>0</iterative><factorization>4</factorization><order_method>0</order_method><print_condition_number>0</print_condition_number></linear_solver>",
+        "solver_only_change_verified": true,
+        "runtime_identity_sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57",
+        "executed_deck_sha256": "fa8c1c1f5bac69cb310c72c3fa590e83a87576ac62a99cbd0a6201f029b9c593"
+      },
+      "checker_passed": true,
+      "output_hashes": {
+        "checked.json": "b01f3ac1d2a0100379d870341c8da97d02d97de7fcfa55e9f6a37f5d9aa345c9",
+        "console.txt": "24110f91138c7711b0aa1f7772213e2435919c397c0a9aea0dd33111e851e78e",
+        "shear.elements.log": "d86f10d2e8475da91e98ef2e9f34ebfef625a9dde733dc1588b91cd004cb82cd",
+        "shear.feb": "fa8c1c1f5bac69cb310c72c3fa590e83a87576ac62a99cbd0a6201f029b9c593",
+        "shear.log": "2145982f6336447e71aed39e0753118b4eafce7fed8853f50c0c51c003eaf6cb",
+        "shear.nodes.log": "49d68b3b66abec99fe7026a6a85c8336d478c88af2935c6b12901f9599fb4469",
+        "shear.xplt": "6dbf461160fcb07f66797bd4b08dfbca2816a1cfd3e3b3d4e3579e881150fbac"
+      },
+      "passed": true,
+      "evidence": {
+        "original_deck": {
+          "path": "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-febio-verification-v1/decks/shear.feb",
+          "sha256": "509c6ea97211d44d81e00d35d004e0e503517c0d0d5d8857a4af89abbec2b5b6"
+        },
+        "executed_deck": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/shear/shear.feb",
+          "sha256": "fa8c1c1f5bac69cb310c72c3fa590e83a87576ac62a99cbd0a6201f029b9c593"
+        },
+        "console": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/shear/console.txt",
+          "sha256": "24110f91138c7711b0aa1f7772213e2435919c397c0a9aea0dd33111e851e78e"
+        },
+        "nodes": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/shear/shear.nodes.log",
+          "sha256": "49d68b3b66abec99fe7026a6a85c8336d478c88af2935c6b12901f9599fb4469"
+        },
+        "elements": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/shear/shear.elements.log",
+          "sha256": "d86f10d2e8475da91e98ef2e9f34ebfef625a9dde733dc1588b91cd004cb82cd"
+        },
+        "solver_log": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/shear/shear.log",
+          "sha256": "2145982f6336447e71aed39e0753118b4eafce7fed8853f50c0c51c003eaf6cb"
+        },
+        "checked": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/shear/checked.json",
+          "sha256": "b01f3ac1d2a0100379d870341c8da97d02d97de7fcfa55e9f6a37f5d9aa345c9"
+        },
+        "checker_source": {
+          "path": "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_febio_verification.py",
+          "sha256": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5"
+        }
+      }
+    },
+    {
+      "case": "shear_double_stiffness",
+      "status": "passed",
+      "deck_sha256": "7e8e6c73909f544ef1cce49f1d83aea2a9050ae2db467c913a027c405ea56dba",
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+        "-noconfig",
+        "-no_title",
+        "-i",
+        "shear_double_stiffness.feb",
+        "-o",
+        "shear_double_stiffness.log"
+      ],
+      "solver_seconds": 0.040336750098504126,
+      "solver_exit_code": 0,
+      "backend_evidence": {
+        "solver_backend": "accelerate",
+        "actual_selection_lines": [
+          "* Selecting linear solver accelerate                                    *"
+        ],
+        "solver_xml": "<linear_solver type=\"accelerate\"><iterative>0</iterative><factorization>4</factorization><order_method>0</order_method><print_condition_number>0</print_condition_number></linear_solver>",
+        "solver_only_change_verified": true,
+        "runtime_identity_sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57",
+        "executed_deck_sha256": "7e8e6c73909f544ef1cce49f1d83aea2a9050ae2db467c913a027c405ea56dba"
+      },
+      "checker_passed": true,
+      "output_hashes": {
+        "checked.json": "d831db77aacff7a86545484fc9e2d9328693b93463e3a293e3af479d2b6293a6",
+        "console.txt": "cf23fb9697746ccfe5614ce4cbd5cd4b58a343de8dc1dfe544cc78f939490d8a",
+        "shear_double_stiffness.elements.log": "d40640b320c8272696c94b29e85f412821ea97c77b0bd1a0fff2049326295bed",
+        "shear_double_stiffness.feb": "7e8e6c73909f544ef1cce49f1d83aea2a9050ae2db467c913a027c405ea56dba",
+        "shear_double_stiffness.log": "619084b2172ed2beb1e00e22357a993003d7d985f7d64540637e5825eded2b47",
+        "shear_double_stiffness.nodes.log": "6ac397c1ba84c2dc2b76994d01006475382f93ff864e52f120b5a77da3d6d2f5",
+        "shear_double_stiffness.xplt": "28ea41cca82c0b27305d2040bb3acbd3948b88257938e6c3b301413a82e907fd"
+      },
+      "passed": true,
+      "evidence": {
+        "original_deck": {
+          "path": "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/artifacts/mechanics-febio-verification-v1/decks/shear_double_stiffness.feb",
+          "sha256": "af78dc2a965892293d20786149224ae8337392347fdca19ec7e3ced8db987ac5"
+        },
+        "executed_deck": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/shear_double_stiffness/shear_double_stiffness.feb",
+          "sha256": "7e8e6c73909f544ef1cce49f1d83aea2a9050ae2db467c913a027c405ea56dba"
+        },
+        "console": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/shear_double_stiffness/console.txt",
+          "sha256": "cf23fb9697746ccfe5614ce4cbd5cd4b58a343de8dc1dfe544cc78f939490d8a"
+        },
+        "nodes": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/shear_double_stiffness/shear_double_stiffness.nodes.log",
+          "sha256": "6ac397c1ba84c2dc2b76994d01006475382f93ff864e52f120b5a77da3d6d2f5"
+        },
+        "elements": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/shear_double_stiffness/shear_double_stiffness.elements.log",
+          "sha256": "d40640b320c8272696c94b29e85f412821ea97c77b0bd1a0fff2049326295bed"
+        },
+        "solver_log": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/shear_double_stiffness/shear_double_stiffness.log",
+          "sha256": "619084b2172ed2beb1e00e22357a993003d7d985f7d64540637e5825eded2b47"
+        },
+        "checked": {
+          "path": "outputs/mechanics/accelerate-controls-v1/attempt-01/shear_double_stiffness/checked.json",
+          "sha256": "d831db77aacff7a86545484fc9e2d9328693b93463e3a293e3af479d2b6293a6"
+        },
+        "checker_source": {
+          "path": "build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_febio_verification.py",
+          "sha256": "b3f373743d6d107de929bf3283c167c6a3e0a68dfe74396ea0f1f8ad7cce2be5"
+        }
+      }
+    }
+  ],
+  "solver_invocations": 5,
+  "case_order": [
+    "zero",
+    "translation",
+    "finite_stretch",
+    "shear",
+    "shear_double_stiffness"
+  ],
+  "original_numerical_checker_unchanged": true,
+  "checker_inputs_after": {
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_febio_verification.py": {
+      "unchanged": true
+    },
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/validation/mechanics-accelerate-controls-execution-2cb40187/source/scripts/mechanics_patient_constraints.py": {
+      "unchanged": true
+    }
+  },
+  "stiffness_scaling": {
+    "passed": true,
+    "states": [
+      {
+        "time": 0.0,
+        "same_motion": true,
+        "double_reaction": true,
+        "same_J": true,
+        "double_stress": true,
+        "double_energy": true
+      },
+      {
+        "time": 0.25,
+        "same_motion": true,
+        "double_reaction": true,
+        "same_J": true,
+        "double_stress": true,
+        "double_energy": true
+      },
+      {
+        "time": 0.5,
+        "same_motion": true,
+        "double_reaction": true,
+        "same_J": true,
+        "double_stress": true,
+        "double_energy": true
+      },
+      {
+        "time": 0.75,
+        "same_motion": true,
+        "double_reaction": true,
+        "same_J": true,
+        "double_stress": true,
+        "double_energy": true
+      },
+      {
+        "time": 1.0,
+        "same_motion": true,
+        "double_reaction": true,
+        "same_J": true,
+        "double_stress": true,
+        "double_energy": true
+      }
+    ]
+  }
+}

@@ -358,6 +358,15 @@ These are runner checks, not new FEM results. The repaired runtime must be
 built and accepted before the actual eight controls can run. See
 `docs/mechanics-accelerate-controls.md` and its independent review.
 
+The separately released repaired-runtime attempt then passed all eight actual
+numerical controls, including five-state stiffness scaling and both constrained
+tet10 cases. Every solver log selected Accelerate and only the solver subtree
+changed. One supervised sequence took 5.091 s at 45.4 MB peak sampled group
+memory (5.783 s including launcher), with eight calls, no retries and unchanged
+inputs. Complete analytical records are preserved for independent saved-output
+replay. This is numerical verification, not measured tissue or patient accuracy.
+See `artifacts/mechanics-accelerate-controls-run-v1/RESULT.md`.
+
 A separate patient-mesh candidate helper passed 52 analytical/mocked checks.
 It preserves complete bounded coordinate/connectivity/ID diagnostics before
 count rejection, and rejects same-length corrupted writes; the original
