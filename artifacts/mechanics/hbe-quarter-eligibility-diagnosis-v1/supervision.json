@@ -1,0 +1,20 @@
+{
+  "status": "completed",
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-B",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/mechanics/hbe-quarter-eligibility-diagnosis-v1/diagnose_saved.py"
+  ],
+  "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+  "wall_cap_seconds": 60,
+  "rss_cap_bytes": 3221225472,
+  "sampled_peak_process_group_rss_bytes": 63848448,
+  "exit_code": 0,
+  "kill_reason": null,
+  "error": null,
+  "cleanup_error": null,
+  "no_retry": true,
+  "sampling_note": "Group RSS is sampled; brief between-sample peaks may be missed.",
+  "pid": 63223,
+  "elapsed_seconds": 0.5208769999444485
+}
