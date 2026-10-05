@@ -72,6 +72,6 @@ Sparse observed-motion agreement cannot license retractor controls or force rewa
 
 ## Later decision-making boundary
 
-Only after the relevant gate passes compare search, imitation and RL on the same observations, actions, frozen mechanics and budgets. Keep geometric planning as a baseline.
+Only after the relevant physical gate passes compare search, imitation and RL on a task that claims this mechanical fidelity, using the same observations, actions, frozen mechanics and budgets. The latest user steering in `CORE_IDEA_VALIDATION_STEERING.md` separately authorizes small geometric real-patient learning experiments now; those experiments cannot establish cutting, retraction, force or tissue-damage fidelity. Keep geometric planning as a baseline. Further mechanics execution is deferred while that first learning comparison runs.
 Deployment inputs may contain available images, measured instrument state and uncertain estimated mechanics. Hidden simulator material values, unobserved loads, withheld displacements and solver truth must not enter the policy.
 Preserve every failure, exclusion and dependency; passing specimen or conditional-displacement validation does not mark the surgical action-response gate complete.

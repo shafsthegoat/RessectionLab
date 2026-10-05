@@ -4,21 +4,41 @@ Updated October 4, 2026. The three revised specification documents remain the
 authoritative requirements and have been read completely. This file records
 executed work and open gates, not a replacement plan.
 
-**Latest user steering: validate tissue mechanics before substantial RL.**
-Finish and commit the bounded proposal, real-data preparation and geometric
-search comparison already underway. Further substantial training and model
-sweeps are on hold while one narrow tissue interaction is selected against
-accessible physical measurements or intraoperative imaging. Compare established
-simulation frameworks; preserve the geometric planner as the baseline. A proof
-of concept must state mechanical assumptions, check numerical convergence and
-use independent measurements on real anatomy. Brain-shift images may validate
-displacement, not cutting forces. Missing force/material calibration remains
-an explicit dependency; do not invent patient-specific properties. Simulated
-interactions stay distinct from observed surgery, with hidden simulator fields
-excluded from deployment inputs. Compare search, imitation and RL on that task
-only after its physical validation. Existing patient splits remain unchanged.
+**Current priority: execute a small real-patient learning comparison.**
+The latest user request is preserved verbatim in
+`docs/CORE_IDEA_VALIDATION_STEERING.md`. It supersedes the earlier requirement to
+finish tissue mechanics before beginning geometric learning experiments. UI,
+packaging, broad infrastructure, further mechanics runs and model sweeps are
+deferred. Preserve all existing patient assignments and negative results.
 
-**Current mechanics checkpoint:** the repaired optional solver passed all eight
+The immediate task is annotation-assisted target access with at most three
+certified native tool strokes on TRAIN patient PAT05, with STOP available.
+Observations contain the permitted preoperative image, supplied target annotation,
+provisional tissue support, observed cavity and tool geometry. Supplied annotation
+is an input in this track; this is not scan-only inference. Success requires
+independently checked positive target removal, with absolute target and other
+tissue volumes and full-target fraction reported. It is not whole-target removal,
+validated tissue damage, surgical usefulness or patient generalization.
+
+The first executed reachability check completed in 26.21 seconds without an
+environment change: one initial motion then STOP removed 175.0006 mm³ of target
+and 121.0004 mm³ of other tissue, with geometric reward 150.7035. Independent
+full-tool/frontier/containment checks passed, with zero unsupported volume. This
+is 1.5301% of the 11,437.0397 mm³ supplied target. The current action catalog does
+not establish full-target coverage. No optimizer update occurred in this check.
+The next experiment is a modest existing spatial policy with actual REINFORCE
+updates, random legal and observed search baselines under the same task budget,
+and independent accounting. No SELECT or unopened patient is needed for this
+first pipeline experiment. Transfer remains a later, separate test.
+
+**Deferred mechanics preparation:** half-height source components are committed;
+34 preparation checks and 35 readout checks passed (separate focused suites,
+not a combined repository regression). No actual half-height mesh or solver run
+was released. The metre/millimetre meshing control remains unfinished with one
+owner assertion failure and one independently observed nonfinite-input guard
+failure. It was not executed natively and must not be described as validated.
+
+**Earlier mechanics checkpoint (preserved):** the repaired optional solver passed all eight
 numerical controls and independent saved-output replay. The graded real-patient
 mesh failed the unchanged 2 mm surface-fidelity gate and remains excluded from
 solves. The fixed specimen experiment completed 18 numerical cases in 396.3 seconds
@@ -47,8 +67,8 @@ there was no retry, measured-response access or material fitting. The completed
 case reported 60.78 seconds in its linear solver. Saved-mesh checks rejected
 exact Cartesian quarter extraction: tiny coordinate departures exceed its
 declared tolerance. The separate midheight plane passes that same geometric
-criterion on both N8/N12 meshes. A half-height axial equivalence comparison is
-in preparation; no reduced model is accepted or released. See
+criterion on both N8/N12 meshes. A half-height axial equivalence comparison has source preparation only and is
+now deferred; no reduced model is accepted or released. See
 `artifacts/mechanics/hbe-quarter-eligibility-diagnosis-v1/README.md` and
 `artifacts/mechanics/hbe-resolution-experiment-result-v1/RESULT.md`.
 
@@ -68,7 +88,7 @@ attempts remain unchanged; no retry or solver call occurred. See
 `artifacts/mechanics/resect-case4-patient-mesh-curvature-v3/RESULT.md` and
 `artifacts/mechanics/gmsh-discrete-curvature-capability-v1/RESULT.md`.
 
-**Latest steering (October 4): real-patient learning and probability-aware planning.**
+**Earlier steering (October 4): real-patient learning and probability-aware planning.**
 The user supplied `docs/CODEX_STEERING_PROMPT.md` and
 `docs/DATASET_ACQUISITION_ADDENDUM.md`; both were read completely and copied
 unchanged from the supplied files. They supersede the proposed procedural
