@@ -1,0 +1,110 @@
+{
+  "schema": "resectionlab.rhuh-inspection-launch-independent-review.v1",
+  "created_at": "2026-10-05T06:59:56.045291+00:00",
+  "accepted_for_bounded_software_review": true,
+  "source_hashes": {
+    "artifacts/rhuh-single-image-inspection-v1/run_once.py": "57727639196be34e1fc5adc4b5f4d3cb943b2c25cd2b341e92e62a42bce77803",
+    "scripts/rhuh_public_transfer.py": "a4a1f775b6c0798b3ea2b721289590057ec388e479ec071961bd3616f83eea9d",
+    "scripts/inspect_rhuh_single_image.py": "268d23d8560c963461f633fe2d66ef581b8bd47e74e6431b89c23d7058979a6f",
+    "tests/test_rhuh_single_image_inspection_launch.py": "e2abb72514c535d0791212f1eeb3738956c3e075e2223ceaa240e90549641c58",
+    "tests/test_rhuh_single_image_inspection_launch_review.py": "38b3ee200a8d7f40c0c618f210cb42c012505343cbffa55a7bdf05f4b5772949"
+  },
+  "source_unchanged_during_test_session": true,
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_rhuh_single_image_inspection_launch.py",
+    "tests/test_rhuh_single_image_inspection_launch_review.py"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 0.37293554199999995,
+  "pytest_summary": "33 passed in 0.21s",
+  "controls": {
+    "owner": 21,
+    "independent": 12,
+    "total": 33
+  },
+  "preserved_negative_results": [
+    {
+      "source_sha256": "73f4a368b2213488f980d9b33d19c7843d0bc86faab8ad0a2247880a0e4e2655",
+      "failed": 4,
+      "passed": 1,
+      "finding": "Missing or duplicate live launcher RSS rows could count as valid under-cap memory samples.",
+      "repair": "Exactly one launcher RSS row is required; absent child group after exit remains valid."
+    },
+    {
+      "source_sha256": "4c5a9f3200bf9b0e4e5280bb1878dc901daa7c20644ad356b90861fd40349bcc",
+      "failed": 2,
+      "passed": 10,
+      "finding": "Source or request drift during final byte reconciliation could be accepted and marked unchanged.",
+      "repair": "Repeat source, request, release and manifest validation after final byte reconciliation and before acceptance."
+    }
+  ],
+  "reviewed_boundaries": [
+    "Exact request/release/source identity and consumed single-attempt directory",
+    "Whole-action watchdog and unconditional process-group cleanup, including exited leaders",
+    "Sampled launcher-plus-child RSS, with unavailable measurements rejected",
+    "Separate 65536-byte stdout and stderr limits without accepted truncation",
+    "Rejected child outcomes cannot be promoted",
+    "Final metadata/source consistency and provisional receipt requiring launcher exit zero"
+  ],
+  "scope": "Constructed metadata, inert non-image bytes, mocked child lifecycle and RSS. No actual patient image read, preflight, decompression, voxel inspection, network, transfer, solver or production execution.",
+  "limits": [
+    "RSS is sampled, not a continuous kernel-enforced address-space bound.",
+    "Software control checks do not authorize an actual inspection or establish scientific or clinical validity.",
+    "Any saved provisional launcher receipt still requires successful launcher exit."
+  ],
+  "evidence": {
+    ".gitattributes": {
+      "sha256": "b101c2afa7850396aad7ce9c59aa37ef71a65af5d72e8880155b80c3a05f8708",
+      "bytes": 116
+    },
+    "final-drift-review-tests.py.gz": {
+      "sha256": "42d30cfb0f106fd5334d613a761bbc64262ae3174e51a5a961c2047eff5f4461",
+      "bytes": 1248
+    },
+    "final-drift-review.json": {
+      "sha256": "8f11c4ae9a46dde1dfafd7a8763d819bbdf1e4a9070c98b4375ee12ac25d66a6",
+      "bytes": 469
+    },
+    "final-drift-tests.txt": {
+      "sha256": "d6ce86860bba45ad735ad945ff44f9913fed173e546c57c74eba0ea37d282ae9",
+      "bytes": 5818
+    },
+    "final-source.py.gz": {
+      "sha256": "5745c5c91063644d55ee8e137ce94b06e46d4f04d590eeb59bf5d8dbddcec702",
+      "bytes": 4143
+    },
+    "final-tests.txt": {
+      "sha256": "8897988223bf2e92ec0f5f54a45e14bb3b40d6c000c210a74a9b73926c6338be",
+      "bytes": 99
+    },
+    "initial-review-tests.py.gz": {
+      "sha256": "26702552fe49c611c636d27a88aa64ae00dfee05bbf336176dabe81d470efc5c",
+      "bytes": 566
+    },
+    "initial-review.json": {
+      "sha256": "58f9a4442a73cc69c9aa4630a8b06474a402f7a4ac2ddf5683837633f9fb1753",
+      "bytes": 489
+    },
+    "initial-source.py.gz": {
+      "sha256": "9cdcda82cb7032e2b3844a7805a684a428a95f75c46e0201ff50d12248f27de1",
+      "bytes": 4087
+    },
+    "initial-tests.txt": {
+      "sha256": "33bd409172c12012ee65b22f86d30288085d7a41b9e7c8c2b3628854c1c72bd6",
+      "bytes": 4816
+    },
+    "rss-repair-source.py.gz": {
+      "sha256": "816914234c955980cccb0a0b19912d4a97ff00318d82d55d1048d9b4ceedd12f",
+      "bytes": 4128
+    }
+  },
+  "root_integration_receipt": {
+    "path": "artifacts/rhuh-single-image-inspection-v1/root-integration-tests.json",
+    "sha256": "28dff446a3ee279310ab057df281c73b5b709ee92e17f9a174ce791bf718bb6f",
+    "result": "153 controls passed; separate parent-run integrated evidence, not a second independent decoder review"
+  }
+}
