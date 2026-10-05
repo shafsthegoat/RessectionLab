@@ -1,0 +1,230 @@
+{
+  "schema": "resectionlab.rhuh-saved-inspection-independent-audit.v1",
+  "accepted_for_saved_result_consistency": true,
+  "audited_at": "2026-10-05T07:07:00.477232+00:00",
+  "reviewer_source": {
+    "path": "artifacts/rhuh-single-image-inspection-v1/independent-result-audit.py",
+    "sha256": "f0b4f7f936f0fb8e74f7de1f0ddcf6cefd797ad1007e039fddeb44f06d4a903d"
+  },
+  "release_and_history": {
+    "release_commit": "dd633a21edfb48b27cacb72da1c2e042f6cd7c21",
+    "source_commit": "285a00fde70c11c097f052b75d23645e80b6c521",
+    "release_preceded_execution": true,
+    "archive_files_verified": 23,
+    "archive_current_and_committed_bytes_match": true,
+    "declared_maximum_attempts": 1
+  },
+  "observed_receipt_bounds": {
+    "root_elapsed_seconds": 0.3280346249230206,
+    "launcher_elapsed_seconds": 0.272976,
+    "peak_sampled_combined_rss_bytes": 192675840,
+    "rss_samples": 3,
+    "stdout_bytes": 2140,
+    "stderr_bytes": 0
+  },
+  "independent_saved_arithmetic": {
+    "shape": [
+      240,
+      240,
+      155
+    ],
+    "voxels": 8928000,
+    "voxel_storage_bytes": 35712000,
+    "uncompressed_bytes": 35712352,
+    "reported_finite_counts_consistent": true,
+    "reported_min_mean_max_ordered_and_finite": [
+      -8.976038932800293,
+      -7.312970503158375,
+      10.492466926574707
+    ],
+    "coded_qform_determinant": 1.0,
+    "column_norms_mm": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "numeric_axis_codes": [
+      "L",
+      "P",
+      "S"
+    ],
+    "full_cell_bounds_mm": [
+      [
+        -239.5,
+        0.5
+      ],
+      [
+        -0.5,
+        239.5
+      ],
+      [
+        -0.5,
+        154.5
+      ]
+    ],
+    "second_coded_form_available": false
+  },
+  "original_compressed_verification": {
+    "path": "outputs/rhuh-single-image-v2/quarantine/run-kxn_jecp/RHUH-0001_0_t1.nii.gz",
+    "bytes": 6337221,
+    "sha256": "b3b9fa69b87221062261b8b16fbddfdac2c678104b354ba371b069fd784e3625",
+    "candidate_md5": "a5c579950d0431d04928e5b59e91ce9d",
+    "mode": "0o444",
+    "unchanged_during_read": true
+  },
+  "consulted_inputs": {
+    "artifacts/rhuh-single-image-inspection-v1/launch-manifest.json": {
+      "sha256": "a8d5770eabaad9cad264df46e2e1fea82bc12617e0d17800914ed011407ec9fa",
+      "bytes": 1048
+    },
+    "artifacts/rhuh-single-image-inspection-v1/request.json": {
+      "sha256": "52c641a59a27adc90fa2782bb0d3ce83cacbd9e8eaf43bed8b3295c7b5c71ab0",
+      "bytes": 2665
+    },
+    "artifacts/rhuh-single-image-inspection-v1/release.json": {
+      "sha256": "56ed79b17e0125800657a4eaaf4d60bd5897548bb9db466f030f1b9f975578d2",
+      "bytes": 474
+    },
+    "scripts/inspect_rhuh_single_image.py": {
+      "sha256": "268d23d8560c963461f633fe2d66ef581b8bd47e74e6431b89c23d7058979a6f",
+      "bytes": 23777
+    },
+    "artifacts/rhuh-single-image-inspection-v1/run_once.py": {
+      "sha256": "57727639196be34e1fc5adc4b5f4d3cb943b2c25cd2b341e92e62a42bce77803",
+      "bytes": 12987
+    },
+    "scripts/rhuh_public_transfer.py": {
+      "sha256": "a4a1f775b6c0798b3ea2b721289590057ec388e479ec071961bd3616f83eea9d",
+      "bytes": 15037
+    },
+    "outputs/rhuh-one-pair/metadata/checksum-quarantine/run-1jjo0q5c/RHUH-GBM-nii-v1.sums": {
+      "sha256": "7c6ba3fa767bf169679db30caa854e671796416ca365fac6e57662796177c130",
+      "bytes": 61787
+    },
+    "artifacts/rhuh-single-image-acquisition-v2/parent-execution.json": {
+      "sha256": "a59e7753a801347515a8e8e1005813a6263df133d8f753c8eb67f0d5dc329cdc",
+      "bytes": 1337
+    },
+    "artifacts/rhuh-single-image-acquisition-v2/parent-summary.json": {
+      "sha256": "5853796ca7eba872e798bba56eadf02eb38e8fa7cd19c1cf6a7cd2c284ccabac",
+      "bytes": 842
+    },
+    "artifacts/rhuh-single-image-acquisition-proposal-v2/proposal.json": {
+      "sha256": "d1d8fea9771865bf33f282dfa5edfbd217021e01c7cd3212a513e5db9e8da9b2",
+      "bytes": 6317
+    },
+    "artifacts/rhuh-single-image-acquisition-v2/independent-byte-audit.json": {
+      "sha256": "281b2307bcbdc8b1e48962bb1a1ee0e3a2b3575a2f309cfed80ca3640811a8cf",
+      "bytes": 11294
+    },
+    "artifacts/rhuh-single-image-acquisition-v2/release.json": {
+      "sha256": "caf8df79f86383eaa35a7814a0620ddbfed901d45a2f353b9c9ae160839dad4a",
+      "bytes": 2632
+    },
+    "artifacts/rhuh-single-image-acquisition-v2/worker-receipt.json": {
+      "sha256": "d1f7375193e3d2afb9e9fc761a95bdc86fea4431c1f5f40ee09293ae73f8a426",
+      "bytes": 1477
+    },
+    "scripts/acquire_rhuh_checksum.py": {
+      "sha256": "1c22f81aebd654c967260d0f1c01465904508416f4fd0e4026cf8f69e8ba773b",
+      "bytes": 9889
+    },
+    "scripts/acquire_rhuh_single_image.py": {
+      "sha256": "ffbea033b805a4e52e7705bdfaf7acab842911de2971a09515cbb9e0433b2bba",
+      "bytes": 10927
+    },
+    "artifacts/rhuh-single-image-inspection-v1/execution-started.json": {
+      "sha256": "c41a298cc6f9bc1f8d65e695ccf6a671e0b15ba89fccec2d464a59864dfe8bb1",
+      "bytes": 990
+    },
+    "artifacts/rhuh-single-image-inspection-v1/parent-summary.json": {
+      "sha256": "a28dfcf3fd96c70cbf5c0e361dc3fda9a64b935ceba07ec22fae4a50c4c0f59e",
+      "bytes": 1127
+    },
+    "artifacts/rhuh-single-image-inspection-v1/root-terminal.json": {
+      "sha256": "8d9287aed3301dc8e93014b970b9dcfef0034fa541b0a285566fbe6316ca0040",
+      "bytes": 410
+    },
+    "artifacts/rhuh-single-image-inspection-v1/execution-release-record.json": {
+      "sha256": "54e77020fd00ebf981911c90c92b70ffee07ec0c8bcfe0088f7d1c0c4cd8239d",
+      "bytes": 1946
+    },
+    "artifacts/rhuh-single-image-inspection-v1/source-archive.json": {
+      "sha256": "d2cd01e3c9b16338e255aa44ffd2b759721bf7c3889d73bb004e693d972c3ae3",
+      "bytes": 3423
+    },
+    "artifacts/rhuh-single-image-inspection-v1/source.tar.gz": {
+      "sha256": "cd5a991cb3aafdcda756eb5843c855fd9d4831c7d350b34d46f117a659cf7e3d",
+      "bytes": 66899
+    },
+    "artifacts/rhuh-single-image-inspection-launch-review-v1/verification.json": {
+      "sha256": "a7fadf0baf5cd3625c7f73778da7e128b0cd7040777b76408cd0a57f82da1d1e",
+      "bytes": 4934
+    },
+    "artifacts/rhuh-single-image-inspection-review-v1/verification.json": {
+      "sha256": "ef93e68a74d5277d23b5ed8bbbe8074defa53722e503d4c936cc679c92bef11d",
+      "bytes": 3395
+    },
+    "artifacts/rhuh-checksum-transfer-v1/received-checksums.sums": {
+      "sha256": "7c6ba3fa767bf169679db30caa854e671796416ca365fac6e57662796177c130",
+      "bytes": 61787
+    },
+    "artifacts/rhuh-single-image-acquisition-v2/independent-byte-audit.py": {
+      "sha256": "454a2a5329e1ff0c2db8829e07b149615783a368ecc213b7e338fc315690bcee",
+      "bytes": 15066
+    },
+    "artifacts/rhuh-single-image-inspection-v1/preparation.json": {
+      "sha256": "12364e5e2f5bc52e14e4721f21b617fe58d4b26d3877033d21d3c70a9538f8ac",
+      "bytes": 2174
+    },
+    "artifacts/rhuh-single-image-inspection-v1/root-integration-tests.json": {
+      "sha256": "28dff446a3ee279310ab057df281c73b5b709ee92e17f9a174ce791bf718bb6f",
+      "bytes": 1660
+    },
+    "docs/rhuh-single-image-inspection.md": {
+      "sha256": "148e800178bd0e5fb6b75bc1c8e08d76bb5ff84cd444fe55396fc59010fce0f3",
+      "bytes": 8145
+    },
+    "pyproject.toml": {
+      "sha256": "7b2ea11f08bcba66915eac703244a2e07c4de38c2c364aadf26830f6c35bb053",
+      "bytes": 937
+    },
+    "tests/test_rhuh_single_image_inspection.py": {
+      "sha256": "8dbf4c44408a5b9cb78f643ea450ba01158ddf744f37d8b7038273eba773f2b8",
+      "bytes": 14452
+    },
+    "tests/test_rhuh_single_image_inspection_launch.py": {
+      "sha256": "e2abb72514c535d0791212f1eeb3738956c3e075e2223ceaa240e90549641c58",
+      "bytes": 9797
+    },
+    "tests/test_rhuh_single_image_inspection_launch_review.py": {
+      "sha256": "38b3ee200a8d7f40c0c618f210cb42c012505343cbffa55a7bdf05f4b5772949",
+      "bytes": 3498
+    },
+    "tests/test_rhuh_single_image_inspection_review.py": {
+      "sha256": "384af0e0e57a642ec0e5c795e0032afce7cd97ca1883fb7c0fdcc50581e9eb58",
+      "bytes": 23369
+    },
+    "outputs/rhuh-single-image-inspection-v1/run-first/stdout.json": {
+      "sha256": "7a0bdb595034c519967c7ce044f130d2119d0a361e550d5fd424ba03fbf3c9b1",
+      "bytes": 2140
+    },
+    "outputs/rhuh-single-image-inspection-v1/run-first/stderr.txt": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "outputs/rhuh-single-image-inspection-v1/run-first/launch.json": {
+      "sha256": "a28dfcf3fd96c70cbf5c0e361dc3fda9a64b935ceba07ec22fae4a50c4c0f59e",
+      "bytes": 1127
+    }
+  },
+  "checker_failures": [],
+  "scope": "Saved JSON/source/history audit plus one compressed-byte hash pass. Source tar archive only was unpacked; no patient gzip, header or voxel re-decode, no inspector invocation and no network.",
+  "limits": [
+    "Intensity summaries and gzip/footer validity are reported by the frozen child; only their saved arithmetic and bindings were independently checked here.",
+    "Affine math and numeric axis codes do not verify anatomy, modality, scanner provenance, registration or clinical usefulness.",
+    "Recorded timings and sampled memory do not reconstruct OS execution or prove a continuous memory maximum or unrecorded attempt count.",
+    "Read-only permissions and stable hashes do not create an OS immutable-file guarantee.",
+    "Publisher checksum algorithm and prior compressed length remain undeclared. Scientific use, case import and training remain unreleased."
+  ]
+}
