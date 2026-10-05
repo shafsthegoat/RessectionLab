@@ -324,6 +324,14 @@ installed arm64 Mach-O files and dependencies bound by parent acceptance. No
 new runtime execution or numerical result is claimed. See
 `artifacts/febio-accelerate-csc-runtime-v3/RESULT.md`.
 
+The independent saved-build audit rehashed original/new source and installation
+inventories and parsed all thirteen actual arm64 binaries' dependency and RPATH
+records. They match the accepted build and resolve only to the new libraries,
+the exact existing private OpenMP, or system libraries. Its initial overly strict
+RPATH-order assertion and correction are preserved. No executable was launched
+by this audit; numerical validation remains pending. See
+`artifacts/febio-accelerate-runtime-saved-review-v3/review.json`.
+
 The optional backend comparison/access integration passed 127 focused checks
 including 14 independent controls. It now verifies the actual accepted build,
 complete library inventory and saved eight-control execution/checker evidence,
