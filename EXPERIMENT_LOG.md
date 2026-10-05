@@ -1541,3 +1541,31 @@ The opt-in planning/replay budget passed53 controls after two retained defects:
 inherited-method cleanup could block the next arm, and new work could begin at an
 already exhausted deadline. Repairs preserve the common468-entry/90-second
 limits. These are software preparation results; the new comparison has not run.
+
+## October 5, 2026 — actual preparation succeeds; comparison V1 remains failed
+
+The released four-patient comparison finished in339.944 seconds with unchanged
+70-file numerical sources and inputs. Initial accepted previews were70/76/78/70
+of78 for PAT05/PAT22/PAT25/PAT28; only PAT25 changed access. Every crop retained
+the full supplied nominal target, and PAT05's complete historical grid joined
+successfully. PAT16/PAT20 remain the two historical support blocks.
+
+All12 STOP/frozen-imitation/greedy attempts failed before independent evaluation
+because saved JSON coordinate lists were compared directly with live tuples.
+Zero comparisons are accepted. All124 original files are losslessly archived;
+independent saved-record checking reconciles70 sources,146 inputs, resource
+counts and failure disposition. Final runtime weight equality was not measured
+after the failure. No optimizer updates were performed.
+
+The defect reproduced on real tiny analytical native tasks through the actual
+rollout and independent-audit boundary. The complete-record canonical JSON fix
+retains exact fields and numeric values, including one-ULP mutation refusal;
+61 combined controls pass. V2 has its own committed declaration/release and is
+running under the same patient, checkpoint, task and budget settings. V1 remains
+unchanged. See `artifacts/prepared-training-planner-comparison-v1/RESULT.md`.
+
+Separately, the fixed-plane RHUH display completed in1.696 seconds with sampled
+worker peak302,055,424 bytes. Both saved-image visual reviews and the saved-result
+audit passed within their scope. Inferior anatomical coverage remains unresolved;
+no registration, mask, injury label or planning eligibility was accepted. Exact
+figures and scope are in `artifacts/rhuh-fixed-plane-qc-v1/RESULT.md`.

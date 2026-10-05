@@ -35,5 +35,10 @@ reward, patient assignment or geometry is changed by this diagnosis.
 including source snapshots and the copied frozen model; it contains no source
 patient images. Its hash is
 `801b7857a7468dda3e3f99ed75005db75919d30f90a3b4db934cefa1208dee90`.
-Independent saved-result verification is reported separately and cannot turn a
-failed, unaudited method into an accepted result.
+The independent saved-result audit passed, reconciling70 executed sources and146
+bound inputs. It checked recorded preparations, worker resource receipts and
+saved arithmetic while retaining all failed outcomes as null. Counts were1,872
+static screens,624 shared preparation previews and1,632 online previews, with
+their scopes kept separate. Final runtime parameter hashes were not retained
+after the failure; unchanged checkpoint files do not substitute for that missing
+measurement. This audit does not turn failed methods into accepted results.

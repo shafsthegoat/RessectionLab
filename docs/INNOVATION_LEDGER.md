@@ -46,8 +46,9 @@ released single-image compatibility experiment succeeded. The latter received
 predeclared compressed-byte MD5 candidate; an independent byte/provenance audit
 passed. The separately released format inspection now accepts scalar 240 x 240 x
 155 float32 storage, a numeric 1-mm qform and finite values; its saved-result audit
-also passed. Source-frame interpretation and anatomical visual inspection remain
-next. This does not confirm the publisher's algorithm, supply target/injury labels
+also passed. A fixed three-plane display and saved-result audit now pass; visual
+review leaves inferior anatomical extent unresolved. Registration and full-volume
+coverage remain unaccepted. This does not confirm the publisher's algorithm, supply target/injury labels
 or satisfy the unchanged 12-file declaration. See
 [single-image format evidence](../artifacts/rhuh-single-image-inspection-v1/RESULT.md).
 Observation coverage, full-tool ingress and action coverage remain separate gaps.

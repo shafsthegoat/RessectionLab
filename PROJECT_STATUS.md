@@ -55,16 +55,25 @@ The opt-in access preparation is now reusable without changing the default
 shortest-exit constructor. Its shared derivation was moved unchanged; 81 focused
 owner, independent and legacy compatibility checks pass. It returns a selected
 source without constructing another full inventory or invoking a policy, and
-requires the upstream subject-specific source binding. Other TRAIN cases have
-not yet been run with it. See `docs/native-access-preparation.md`.
+requires the upstream subject-specific source binding. The first four-patient
+comparison used it successfully for preparation, with70/76/78/70 initial accepted
+previews on PAT05/PAT22/PAT25/PAT28. Only PAT25's access changed; all four crops
+retained the supplied target. See `docs/native-access-preparation.md`.
 
 PAT05's historical access metadata now has an explicit adapter: all saved fields
 and the executed twenty-field grid remain exact, while previously absent exit
-boundaries are labeled newly derived. Its 123 focused controls pass; actual
-patient rederivation remains pending. A separate opt-in planning budget now counts
+boundaries are labeled newly derived. Its 123 focused controls pass, and actual
+PAT05 rederivation now succeeded in that preparation. A separate opt-in planning budget counts
 native preview entries across search and replay under one clock; 53 controls pass
 after inherited-method cleanup and exact-deadline admission defects were fixed.
-These components prepare the next comparison, not a completed patient run.
+The first comparison completed in339.944 seconds but all12 methods failed before
+independent evaluation: direct Python equality confused saved JSON lists with
+native coordinate tuples. Zero method outcomes were accepted. Both historical
+support blocks remain, and exact V1 histories/sources are archived. An independent
+saved-record audit confirms the failure disposition and preparation evidence.
+The narrow whole-record canonical JSON correction passes61 checks, including
+actual tiny native STOP/removal episodes and independent audits. A separately
+released V2 is running with unchanged patients, checkpoint, task and budgets.
 
 A post-hoc saved-record diagnostic independently reproduces the frozen model's
 initial greedy-action ranks: eighth of 77 legal actions on PAT22 and fourth of 71
@@ -103,10 +112,15 @@ scaled values finite, valid single-member gzip/NIfTI-1. The finite invertible
 qform declares L/P/S voxel axes; sform is absent. This does not establish native
 scanner provenance or anatomical registration. Execution took 0.328035 seconds
 at the root, with 192,675,840 bytes sampled combined peak memory. The independent
-saved-result audit passed without re-decoding. No anatomical visual inspection,
-case import or training use has occurred. The original 12-file declaration stays
-unmet and unchanged. See `artifacts/rhuh-single-image-inspection-v1/RESULT.md` and
-the earlier `artifacts/rhuh-single-image-acquisition-v2/RESULT.md`.
+saved-result audit passed without re-decoding. A separately released fixed-plane
+display then completed in 1.696 seconds, with sampled worker peak302,055,424 bytes.
+Both root and another reviewer inspected the saved views; a separate saved-result
+audit reconciled all source/output bindings. The three sampled planes are readable,
+but visible tissue approaches/touches the inferior image edge and full anatomical
+coverage remains unresolved. No anatomical registration, mask, injury label, case
+import or training use was accepted. The original 12-file declaration stays unmet
+and unchanged. See `artifacts/rhuh-fixed-plane-qc-v1/RESULT.md`, the earlier format
+inspection and acquisition records.
 
 The RHUH public table has 40 patients and 14 recorded postoperative deficits
 (six transient, six minor persistent, two major persistent); 26 are recorded `No`.
