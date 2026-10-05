@@ -1,0 +1,26 @@
+{
+  "schema": "independent-analytical-inspection-review-inputs-v1",
+  "inputs": [
+    {
+      "path": "scripts/inspect_rhuh_single_image.py",
+      "sha256": "47a09d8aa3202f2fa63fcff43acb6f82e1649251eeeb5a59a5c5427211cdf2b9",
+      "bytes": 23289
+    },
+    {
+      "path": "tests/test_rhuh_single_image_inspection.py",
+      "sha256": "4305c45a38f03e489d15a2863ffe60760ca4354624a1f40e9f7624c0250446c6",
+      "bytes": 13176
+    },
+    {
+      "path": "tests/test_rhuh_single_image_inspection_review.py",
+      "sha256": "da80220f9828dc658d4bc966101b2b880ab6401be3aac27a282975840c38a63b",
+      "bytes": 19740
+    },
+    {
+      "path": "docs/rhuh-single-image-inspection.md",
+      "sha256": "5aaa728c28ef0f76e861b618d862bd56e4bf91199815aa2be80bfeb304ef6a11",
+      "bytes": 7141
+    }
+  ],
+  "patient_access": false
+}

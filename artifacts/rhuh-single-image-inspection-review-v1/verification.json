@@ -1,0 +1,77 @@
+{
+  "schema": "rhuh-single-image-inspection-independent-review-v1",
+  "status": "passed",
+  "inputs": [
+    {
+      "path": "scripts/inspect_rhuh_single_image.py",
+      "sha256": "268d23d8560c963461f633fe2d66ef581b8bd47e74e6431b89c23d7058979a6f",
+      "bytes": 23777
+    },
+    {
+      "path": "tests/test_rhuh_single_image_inspection.py",
+      "sha256": "8dbf4c44408a5b9cb78f643ea450ba01158ddf744f37d8b7038273eba773f2b8",
+      "bytes": 14452
+    },
+    {
+      "path": "tests/test_rhuh_single_image_inspection_review.py",
+      "sha256": "384af0e0e57a642ec0e5c795e0032afce7cd97ca1883fb7c0fdcc50581e9eb58",
+      "bytes": 23369
+    },
+    {
+      "path": "docs/rhuh-single-image-inspection.md",
+      "sha256": "c931e5c7eeadb2da8db2d2a92a28d1dff3856acbf9eb5becd2b90d944a4f0ef8",
+      "bytes": 7683
+    }
+  ],
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-m",
+    "pytest",
+    "tests/test_rhuh_single_image_inspection_review.py",
+    "tests/test_rhuh_single_image_inspection.py",
+    "-q"
+  ],
+  "exit_code": 0,
+  "process_wall_seconds": 0.7209991668350995,
+  "unchanged_inputs": true,
+  "scope": {
+    "analytical_gzip_nifti_fixtures": true,
+    "metadata_receipts_constructed": true,
+    "authorized_wrapper_decoder_mocked": true,
+    "real_patient_headers_or_pixels_read": false,
+    "network_or_acquisition": false,
+    "actual_inspection_cli": false,
+    "execution_release_created": false,
+    "clinical_or_scientific_use_approved": false
+  },
+  "initial_result": {
+    "path": "initial-test-output.txt",
+    "exit_code": 1,
+    "failed": 12,
+    "passed": 63,
+    "classification": "Independent fixture used .txt for checksum index; frozen helper correctly required .sums. Corrected fixture only; all 75 then passed in 0.29 seconds. No production defect from that result."
+  },
+  "production_followup": "Owner compatibility correction authenticates preserved worker-copy bytes against original accepted quarantine receipt; admits nine explicitly documentary fields and corrects no-stat wording. Both initial and final source pins are retained. No parser/scientific threshold changes.",
+  "verified": [
+    "Scalar NIfTI1/NIfTI2 both byte orders; exact geometry and scaling",
+    "Header dimensions/dtype/storage/offset caps before intensity interpretation",
+    "Exact gzip footer CRC EOF single-member and decompressed size",
+    "Opaque bounded extensions and report whitelist",
+    "Unknown units/absent or nonfinite affine preserved as unresolved, no fallback",
+    "Nonfinite intensities counted; no replacement or scientific promotion",
+    "Parent launcher worker proposal checksum index exact source joins",
+    "Actual acquisition source bytes and exact source-bound release",
+    "Preserved worker copy and original receipt bytes agree; symlinks and hash drift rejected",
+    "Fixed documentary allowlist; no documentary path traversal or output leakage"
+  ],
+  "limits": [
+    "Constructed fixtures verify software boundaries, not correctness or resource performance of the actual MRI.",
+    "One-attempt enforcement and runtime environment/resource supervision remain external workflow obligations; this stateless helper does not grant scientific use."
+  ],
+  "final_tests": {
+    "independent": 82,
+    "owner": 38,
+    "combined_passed": 120,
+    "pytest_seconds": 0.51
+  }
+}
