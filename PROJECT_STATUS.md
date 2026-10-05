@@ -1,18 +1,29 @@
 # Project status
 
-Updated October 4, 2026. The three revised specification documents remain the
+Updated October 5, 2026. The three revised specification documents remain the
 authoritative requirements and have been read completely. This file records
 executed work and open gates, not a replacement plan.
 
-**Current priority: execute a small real-patient learning comparison.**
+**Current priority: credible planning comparisons and neurological-outcome evidence.**
 The latest user request is preserved verbatim in
 `docs/CORE_IDEA_VALIDATION_STEERING.md`. It supersedes the earlier requirement to
 finish tissue mechanics before beginning geometric learning experiments. UI,
 packaging, broad infrastructure, further mechanics runs and model sweeps are
 deferred. Preserve all existing patient assignments and negative results.
 
-The immediate task is annotation-assisted target access with at most three
-decisions (a certified native tool stroke or STOP) on TRAIN patient PAT05.
+The subsequently supplied `docs/MEDIVIS_SUPERGOAL_NEUROLOGICAL_HARM.md` is a
+research charter, not evidence that its data/model claims already hold. It extends
+the target toward neurological outcomes, robustness, changing anatomy and an
+inspectable research interface. Geometric non-target volume stays a baseline;
+it is not neurological harm. Separate RHUH, BTC and connectivity outcome audits
+are underway before any harm-model training or reward integration. Claims and
+hypothesis decisions are tracked in `docs/MEDIVIS_RESEARCH_TARGET.md` and
+`docs/INNOVATION_LEDGER.md`. Current useful work and all patient roles remain intact.
+
+The task is annotation-assisted target access with at most three decisions
+(a certified native tool stroke or STOP). Initial learning used TRAIN patient
+PAT05; the same declared task is now being compared on the other five TRAIN
+cases with a frozen checkpoint and no adaptation.
 Observations contain the permitted preoperative image, supplied target annotation,
 provisional tissue support, observed cavity and tool geometry. Supplied annotation
 is an input in this track; this is not scan-only inference. Success requires
@@ -81,12 +92,32 @@ See `artifacts/pat05-real-visited-imitation-v1/RESULT.md` and its comparison plo
 Eight focused guard/isolation checks passed; the prior integrated five-file
 verification passed 81 checks. No SELECT or unopened patient was accessed.
 
-The next bounded work is to establish the same source/access/grid/action
-contracts on the remaining TRAIN cases and measure their search and frozen-policy
-outcomes. This moves toward real population training and transfer without more
-PAT05-only tuning. Existing failures and patient roles stay in the denominator.
-Population training, repeated-seed advantage, transfer and physical fidelity
-remain unproved.
+The first comparison on the remaining five TRAIN patients then completed with
+zero optimizer updates: 171.484 seconds summed supervised time, peak sampled RSS
+1.802 GB. The frozen visited-state checkpoint, greedy search and one diagnostic
+random episode used the unchanged task. PAT16/PAT20 retained their 19/125-cell
+support conflicts. PAT22's accepted primary pair scored 672.297 for the policy
+(697.998 mm³ target / 127.000 other) and 789.097 for greedy (819.998 / 153.000).
+PAT25 had all 78 proposals shaft-blocked; every method correctly selected STOP,
+with zero removal and zero score. All three prepared cases saw the full supplied
+target in the fixed 64³ crop.
+
+PAT22's random episode and both PAT28 primary episodes failed the independent
+accounting check. Their outcomes remain null, not retrospectively accepted. Saved
+per-action versus aggregate target/other volumes differ by small amounts; source
+inspection and analytical regressions identify float32 reduction/product errors.
+PAT28's random episode passed. A standalone independent check confirmed six
+accepted episodes, three retained failed episodes and two complete primary pairs
+out of five prescribed patients, one of them STOP-only. The original source,
+records and failure evidence are losslessly archived. See
+`artifacts/remaining-training-frozen-spatial-v1/RESULT.md`.
+
+Next: repair that arithmetic with explicit double precision and independent
+accumulation, keeping the audit tolerance, weights and geometry unchanged, then
+repeat the declared fixed-policy comparison under a new source binding. No new
+training is justified while accounting and action coverage remain unresolved.
+Population training, repeated-seed advantage, protected-patient transfer and
+physical or neurological fidelity remain unproved.
 
 A metadata-only population-readiness check found existing structural-evidence
 bundles for all six TRAIN and both SELECT cases; no acquisition is needed for
