@@ -60,10 +60,10 @@ population-generalization test. SELECT and unopened patients remain untouched.
 This is the next step toward population training, not a claim that such training
 has already occurred.
 
-These are reusable planning and bookkeeping components, not a trained model or
-an efficacy result. They open no images, run no optimizer, and do not alter
-geometry, observations, reward, or patient roles. The first population runner
-still requires a frozen declaration and a valid common decision problem.
+The module-level cohort and batch helpers below are bookkeeping components.
+They open no images, run no optimizer, and do not alter geometry, observations,
+reward or patient roles. The executed single-patient experiments above use them;
+population training still requires a valid common decision problem.
 
 `observed_search.observed_beam_search(task, max_calls=..., beam_width=...,
 seconds=..., policy=None, objective_source=...)` uses the task's observed-only
