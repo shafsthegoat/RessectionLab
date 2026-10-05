@@ -1,0 +1,36 @@
+{
+  "raw_directory": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/gmsh-discrete-curvature-capability-v1",
+  "files": {
+    "acceptance.json": {
+      "sha256": "6fe377e1464e064f6e32e719e604c9b2b8f0d5509fb359296a9a21bd825dce92",
+      "bytes": 1454
+    },
+    "analytical-input.npz": {
+      "sha256": "c6576810ec04388621baf5e486c8edbc74a022989d63084352e7eca69b00e027",
+      "bytes": 25236
+    },
+    "curvature_off.npz": {
+      "sha256": "342f1f167b11f34e29b5fd730676485c57db79cf8098f97f3205a534350d84e6",
+      "bytes": 8496
+    },
+    "curvature_on.npz": {
+      "sha256": "d37e537192a4cf958063671902ec30c8c16905b6f735dfad60ab56b2a9696d7a",
+      "bytes": 91730
+    },
+    "result.json": {
+      "sha256": "e60e5a1d73d41d9a4f4c1586c47f86073cbdb8d217bebb1f89b2454b6a216064",
+      "bytes": 10133
+    },
+    "supervision/combined.log": {
+      "sha256": "2a0febed284b8af5e8899df89e6f5f0caa01c4ddda51effcb588b6fc3e1f25b2",
+      "bytes": 7494
+    },
+    "supervision/supervision.json": {
+      "sha256": "3be5a4856c316141cd8b7cd79ba6af14180d2ee1e3a9c94a68cd756748dd6c70",
+      "bytes": 967
+    }
+  },
+  "total_bytes": 145510,
+  "native_generations": 2,
+  "raw_outputs_frozen": true
+}

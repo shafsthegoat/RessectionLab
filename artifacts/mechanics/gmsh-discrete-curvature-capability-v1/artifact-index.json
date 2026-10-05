@@ -1,0 +1,47 @@
+{
+  "schema": "gmsh-discrete-curvature-capability-v1-index",
+  "files": {
+    "RESULT.md": {
+      "sha256": "bd3448561bfc6bcccc1cc703fbd9e0066cf34d42ccf54068c48325d79da3f24e",
+      "bytes": 4074
+    },
+    "declaration.json": {
+      "sha256": "05c356691e809c53f846d23fee5ef78cbc99a90971087a7791117741cc9a4b8e",
+      "bytes": 4249
+    },
+    "official-source-inspection.json": {
+      "sha256": "8fa14c377107b530f5cba6a98c2341cc3f2ee6bc1c9c2fa4a606d2ab7cebae45",
+      "bytes": 2136
+    },
+    "post-execution-verification.json": {
+      "sha256": "91422ddfca710dbb211cfeb33f24b7d7a9edd8e37be4d9e30f9c7104ef5c9d8e",
+      "bytes": 5193
+    },
+    "raw-output-index.json": {
+      "sha256": "5f74aae02a129c013a95e97b352ab8d1eb1c66c6ffb2eb8559d79f5df54e7e34",
+      "bytes": 1254
+    },
+    "saved-records/acceptance.json": {
+      "sha256": "6fe377e1464e064f6e32e719e604c9b2b8f0d5509fb359296a9a21bd825dce92",
+      "bytes": 1454
+    },
+    "saved-records/result.json": {
+      "sha256": "e60e5a1d73d41d9a4f4c1586c47f86073cbdb8d217bebb1f89b2454b6a216064",
+      "bytes": 10133
+    },
+    "saved-records/supervision/combined.log": {
+      "sha256": "2a0febed284b8af5e8899df89e6f5f0caa01c4ddda51effcb588b6fc3e1f25b2",
+      "bytes": 7494
+    },
+    "saved-records/supervision/supervision.json": {
+      "sha256": "3be5a4856c316141cd8b7cd79ba6af14180d2ee1e3a9c94a68cd756748dd6c70",
+      "bytes": 967
+    },
+    "summary.json": {
+      "sha256": "e10e1c5c3ece08ff46de3eecf253fbcd4ac4e909042828ba383ca4fbd12900f0",
+      "bytes": 2479
+    }
+  },
+  "total_bytes": 39433,
+  "scope": "One predeclared analytical pair; no patient or solver"
+}

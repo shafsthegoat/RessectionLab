@@ -1,0 +1,41 @@
+{
+  "status": "completed",
+  "supervision": {
+    "status": "completed",
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+      "-B",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/mechanics_gmsh_curvature_control.py",
+      "worker",
+      "--output",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/gmsh-discrete-curvature-capability-v1"
+    ],
+    "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "wall_cap_seconds": 30,
+    "rss_cap_bytes": 1073741824,
+    "sampled_peak_process_group_rss_bytes": 171065344,
+    "exit_code": 0,
+    "kill_reason": null,
+    "error": null,
+    "cleanup_error": null,
+    "no_retry": true,
+    "sampling_note": "Group RSS is sampled; brief between-sample peaks may be missed.",
+    "pid": 55724,
+    "elapsed_seconds": 2.79509849997703
+  },
+  "output_guard": {
+    "scope": "Sampled whole-attempt output plus hard child per-file limit",
+    "aggregate_bytes_cap": 16777216,
+    "per_file_bytes_cap": 4194304,
+    "maximum_files": 32,
+    "observations": 23,
+    "peak_sampled_bytes": 144058,
+    "error": null,
+    "final_usage": {
+      "files": 6,
+      "bytes": 144056,
+      "largest_file_bytes": 91730
+    }
+  },
+  "no_retry": true
+}

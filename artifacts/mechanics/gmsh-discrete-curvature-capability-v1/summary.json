@@ -1,0 +1,77 @@
+{
+  "status": "completed_one_analytical_pair",
+  "supervised_seconds": 2.79509849997703,
+  "sampled_peak_process_group_rss_bytes": 171065344,
+  "raw_output_bytes": 145510,
+  "native_generations": 2,
+  "source_polyhedral_volume_error_relative_to_analytic_ellipsoid": 0.00400937791008793,
+  "cases": [
+    {
+      "case": "curvature_off",
+      "nodes": 269,
+      "elements": 116,
+      "native_curvature": {
+        "patches": 2,
+        "samples": 64,
+        "minimum_per_m": 24.952336261970647,
+        "median_per_m": 26.310366950864175,
+        "maximum_per_m": 27.66869131437138,
+        "nonzero": 64
+      },
+      "source_to_mesh": {
+        "sample_count": 120056,
+        "maximum_sample_distance_m": 0.004803145797907024,
+        "full_surface_upper_bound_m": 0.005302166534453029,
+        "cover_radius_cap_m": 0.0005
+      },
+      "mesh_to_source": {
+        "sample_count": 37140,
+        "maximum_sample_distance_m": 0.004435667329768893,
+        "full_surface_upper_bound_m": 0.004934613076023256,
+        "cover_radius_cap_m": 0.0005
+      },
+      "boundary_edge_quantiles_m": [
+        0.006580694163995654,
+        0.008631929699852497,
+        0.010749433989280403,
+        0.01345721802016582,
+        0.017118641763556115
+      ],
+      "elapsed_seconds": 0.3046219169627875
+    },
+    {
+      "case": "curvature_on",
+      "nodes": 2806,
+      "elements": 1340,
+      "native_curvature": {
+        "patches": 2,
+        "samples": 64,
+        "minimum_per_m": 24.952336261970647,
+        "median_per_m": 26.310366950864175,
+        "maximum_per_m": 27.66869131437138,
+        "nonzero": 64
+      },
+      "source_to_mesh": {
+        "sample_count": 120056,
+        "maximum_sample_distance_m": 0.000437352367469547,
+        "full_surface_upper_bound_m": 0.0009363731040155517,
+        "cover_radius_cap_m": 0.0005
+      },
+      "mesh_to_source": {
+        "sample_count": 52334,
+        "maximum_sample_distance_m": 0.0004198529010073066,
+        "full_surface_upper_bound_m": 0.0009198176888275602,
+        "cover_radius_cap_m": 0.0005
+      },
+      "boundary_edge_quantiles_m": [
+        0.0019424712353430878,
+        0.0025837432186524355,
+        0.0031673009155131393,
+        0.005254901840716855,
+        0.01143917236836951
+      ],
+      "elapsed_seconds": 1.5368226249702275
+    }
+  ],
+  "scope": "Joint curvature-plus-minimum-size profile effect on one analytical input. No isolated factorial claim or patient cost/accuracy prediction."
+}
