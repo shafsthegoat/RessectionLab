@@ -1,0 +1,56 @@
+{
+  "schema": "hbe-halfheight-preparation-independent-review-v1",
+  "status": "bounded_source_review_complete_no_execution_release_work_stopped_for_user_priority",
+  "source_bindings": {
+    "scripts/mechanics_hbe_halfheight_mesh.py": "6d8aef586fd454c262cd4afd3ad4e2b43580c9e74db0c380a020838dc8379084",
+    "scripts/mechanics_hbe_halfheight_experiment.py": "25d10588a36d161e31cb49d62ddd42ff458f824c1a15a07592120a473a53d809",
+    "tests/test_mechanics_hbe_halfheight_mesh.py": "faf9457099ae0e5507580cb0edb46008dfb2b3193f1a3cc0819fb72b97264a85",
+    "tests/test_mechanics_hbe_halfheight_experiment.py": "0ebb4956a0396d5c426822ef47f09b89d58a82376f419eea937e8aa4832eada3",
+    "tests/test_mechanics_hbe_halfheight_preparation_review.py": "24a57763930e7383d137f59670eb43a173a4232ed8c03bd42ea57a2885f88965",
+    "scripts/mechanics_hbe_mesh.py": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414",
+    "scripts/mechanics_hbe_backend.py": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+    "scripts/mechanics_hbe_experiment.py": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa",
+    "manifests/experiments/hbe-01-03-halfheight-equivalence-v1.json": "0df5587ab7a70eb1ac092919ff067b4d85ce6c7457af9726875beb58af19ad1e",
+    "manifests/experiments/hbe-01-03-mechanics-poc-v1.json": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+  },
+  "all10_bound_files_unchanged": true,
+  "tests": {
+    "passed": 34,
+    "failed": 0,
+    "seconds": 0.75,
+    "independent_checks": 7,
+    "log": "focused-pytest.txt",
+    "files": [
+      "tests/test_mechanics_hbe_halfheight_preparation_review.py",
+      "tests/test_mechanics_hbe_halfheight_mesh.py",
+      "tests/test_mechanics_hbe_halfheight_experiment.py"
+    ]
+  },
+  "reviewed_scope": [
+    "Exact source coordinates and incidence remain unchanged under extraction, including reversed original node/cell numbering.",
+    "Reflections retain explicit whole-cell/orientation maps; below-tolerance mismatch is recorded without snapping, above-tolerance mismatch refuses.",
+    "Actual XML uses full original H load coordinate, cut-z amplitude0.5, no cut-x/y prescription, original bottomxyz and unchanged material/backend-only substitution.",
+    "Prepared mesh/mapping/deck/loading are rebuilt in memory before any solve; coherently rehashed wrong cut amplitude, mapping or full height refuses before invocation.",
+    "Static review of strict declaration/runtime/old full references,14-member source closure,separate phase budgets and exclusive no-retry markers found no blocking discrepancy.",
+    "Existing owner controls cover partial solver/equivalence failures, cap and input drift refusal, and the exact four-call dispatch with explicit test doubles."
+  ],
+  "caps": {
+    "pure_preparation_seconds": 60,
+    "each_solver_seconds": 90,
+    "aggregate_solver_phase_seconds": 420,
+    "rss_bytes": 3221225472,
+    "threads": 1,
+    "active_output_bytes": 134217728,
+    "new_total_output_bytes": 536870912
+  },
+  "limits": [
+    "No actual saved specimen mesh extraction, Gmsh/FEBio, solver/readout replay, measured response or patient data was performed.",
+    "Analytical boxes deliberately bypass only public specimen-count eligibility. Real extraction core, deck generation, exact backend transform and runner revalidation execute unmocked.",
+    "Numerical field reconstruction/readout has a separate independent review; this receipt does not establish actual four-case equivalence.",
+    "New user priority stopped further review expansion or archive/release/native-phase work after the already completed bounded checks.",
+    "Prepared geometry alone establishes no speedup, stability, fine-mesh convergence, material fidelity or clinical relevance."
+  ],
+  "production_findings": [],
+  "new_failed_tests": 0,
+  "work_remaining_in_this_review": false
+}

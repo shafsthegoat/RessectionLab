@@ -21,3 +21,11 @@ Root's separately authorized final preparation release must use schema `hbe-half
 ```
 
 Omitting `--execute` performs metadata/hash checks only. The native solve release uses the same schema and source closure with `phase:"solve"` and adds `preparation:{path,sha256}` pointing to the accepted `outputs/mechanics/hbe-01-03-halfheight-equivalence-v1/preparation/result.json`. Its CLI differs only in phase and release binding. Each phase creates an exclusive marker and fresh directory; an attempted phase cannot be silently restarted.
+
+## Accepted preparation record shape
+
+The preparation parent writes `preparation/result.json` with schema `hbe-halfheight-supervised-result-v1`, `phase:"prepare"`, `status:"prepared_not_solved"`, bindings `baseline` and `state`, the actual `supervision` record, and `measured_data_accessed:false`. Success requires completed supervision, integer exit0, no kill/cleanup error, elapsed strictly below60 seconds and the exact3-GiB cap.
+
+`state.json` has schema `hbe-halfheight-state-v1`, phase/status, `solver_invocations:0`, `gmsh_generation_calls:0`, `extraction_invocations:2`, `measured_data_accessed:false`, `elapsed_seconds`, and `levels` keyed `"8"`/`"12"`. Each level has exactly `mesh` and `reconstruction` bindings to `preparation/N<N>/{mesh,reconstruction}.json`. `cases` has the four declaration run IDs; each row has exactly `mesh`, `reconstruction`, `deck`, `loading`, and `backend_source_deck` bindings. Per-case files are `preparation/cases/<hyphenated-run-id>/{specimen.feb,loading.json,skyline.feb}`. The `runs` rows remain `not_executed` in this pure phase.
+
+The solve release's sole added dependency is `preparation` bound to that parent result. A successful extraction record is not a numerical-equivalence pass. The solve worker independently regenerates the half mesh/map/verification and both axial decks per level from the exact full inputs, checks byte/JSON equality against these immutable records, then invokes at most the four ordered native cases.

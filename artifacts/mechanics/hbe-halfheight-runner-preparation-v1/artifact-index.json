@@ -1,0 +1,38 @@
+{
+  "files": {
+    "README.md": {
+      "bytes": 5290,
+      "sha256": "19a6a806763e034e285820bfe002c42a234af7ca7a8208493c6989c400759d90"
+    },
+    "initial-check.json": {
+      "bytes": 733,
+      "sha256": "d4356287f5e9e1c3b8655a03dc5990b929bd1ab99cd2eb60e14cc46789dd1f54"
+    },
+    "initial-test-fixture.py.gz": {
+      "bytes": 3056,
+      "sha256": "b4091299302e938eda023cd7324d1932269d251374226e04c0a08db63fa1ac6f"
+    },
+    "owner-checks.json": {
+      "bytes": 1007,
+      "sha256": "a16e73b21c9067331247200bf42aa77c2984ab3ee023f92e3b9b637875c09740"
+    },
+    "owner-tests.txt": {
+      "bytes": 99,
+      "sha256": "bf6453fe3563a760ccad1c2505a563ded070945dcccdaff7a6d6472aa4a721a8"
+    },
+    "prepare-release-draft.json": {
+      "bytes": 2476,
+      "sha256": "94dbe17752050fcacde2a1d65d6aa113405084bb77c6a26877886701ea72e960"
+    },
+    "source-closure.json": {
+      "bytes": 2567,
+      "sha256": "38769b024185890ac1572b976910264e3817de733b47231013f2d5cdb8ea9780"
+    },
+    "source-files.txt": {
+      "bytes": 540,
+      "sha256": "ad9e203e2b30f7e686382ba38ae32ba4ce3dcc681b879b8691876d89abac61c8"
+    }
+  },
+  "schema": "hbe-halfheight-runner-preparation-index-v1",
+  "scope": "source and mocked orchestration only; independent review pending; no native or curve access"
+}
