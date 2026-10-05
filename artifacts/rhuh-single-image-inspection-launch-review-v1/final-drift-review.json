@@ -1,0 +1,8 @@
+{
+  "source_sha256": "4c5a9f3200bf9b0e4e5280bb1878dc901daa7c20644ad356b90861fd40349bcc",
+  "review_tests_sha256": "38b3ee200a8d7f40c0c618f210cb42c012505343cbffa55a7bdf05f4b5772949",
+  "exit_code": 1,
+  "source_unchanged_during_test_session": true,
+  "scope": "Constructed metadata, inert non-image bytes and simulated child/RSS only.",
+  "finding": "Source or request changed inside final readback is subsequently labeled source_closure_unchanged=true and accepted."
+}

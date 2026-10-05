@@ -1,0 +1,28 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_rhuh_single_image_inspection.py",
+    "tests/test_rhuh_single_image_inspection_review.py",
+    "tests/test_rhuh_single_image_inspection_launch.py",
+    "tests/test_rhuh_single_image_inspection_launch_review.py"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 0.7639341249596328,
+  "stdout": "........................................................................ [ 47%]\n........................................................................ [ 94%]\n.........                                                                [100%]\n153 passed in 0.59s\n",
+  "stderr": "",
+  "source_hashes": {
+    "scripts/inspect_rhuh_single_image.py": "268d23d8560c963461f633fe2d66ef581b8bd47e74e6431b89c23d7058979a6f",
+    "scripts/rhuh_public_transfer.py": "a4a1f775b6c0798b3ea2b721289590057ec388e479ec071961bd3616f83eea9d",
+    "artifacts/rhuh-single-image-inspection-v1/run_once.py": "57727639196be34e1fc5adc4b5f4d3cb943b2c25cd2b341e92e62a42bce77803",
+    "tests/test_rhuh_single_image_inspection.py": "8dbf4c44408a5b9cb78f643ea450ba01158ddf744f37d8b7038273eba773f2b8",
+    "tests/test_rhuh_single_image_inspection_review.py": "384af0e0e57a642ec0e5c795e0032afce7cd97ca1883fb7c0fdcc50581e9eb58",
+    "tests/test_rhuh_single_image_inspection_launch.py": "e2abb72514c535d0791212f1eeb3738956c3e075e2223ceaa240e90549641c58",
+    "tests/test_rhuh_single_image_inspection_launch_review.py": "38b3ee200a8d7f40c0c618f210cb42c012505343cbffa55a7bdf05f4b5772949"
+  },
+  "source_unchanged": true,
+  "patient_image_reads": 0,
+  "scope": "constructed format and mocked lifecycle controls only"
+}

@@ -1,0 +1,8 @@
+{
+  "source_sha256": "73f4a368b2213488f980d9b33d19c7843d0bc86faab8ad0a2247880a0e4e2655",
+  "review_tests_sha256": "529f9bff5f02704c8f89290684d05ab4f5b30b3d58fd84707b7757ea9d1c3c12",
+  "exit_code": 1,
+  "source_unchanged": true,
+  "finding": "Missing or duplicated live-launcher RSS observation is treated as a valid under-cap sample; empty output becomes zero.",
+  "scope": "Constructed ps output only; no actual ps, process launch, image read, preflight, decoder, transfer or network."
+}
