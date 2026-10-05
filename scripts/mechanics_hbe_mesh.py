@@ -29,6 +29,7 @@ import numpy as np
 
 VERSION = "hbe-specimen-hex8-v1"
 PROTOCOL_SHA256 = "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+RESOLUTION_SHA256 = "23b4f5e4d8a0b5ff05fcd45fbca88463a32460793d5b0f27d1a913a5e0a2443c"
 HEX_SIGNS = np.array([[-1,-1,-1], [1,-1,-1], [1,1,-1], [-1,1,-1],
                       [-1,-1,1], [1,-1,1], [1,1,1], [-1,1,1]], dtype=float)
 # Outward local face cycles in FEBio's documented hex8 ordering.
@@ -501,6 +502,135 @@ def verify_runtime(path, expected_sha256, protocol):
     if Path(sys.executable).resolve() != interpreter or sha256(interpreter) != value["interpreter"]["sha256"]:
         raise ValueError("Mesh worker must use the verified interpreter")
     return value
+
+
+def read_resolution_protocol(protocol_path, extension_path, extension_sha256):
+    """Read the separate fixed N16/N24 declaration without opening any curves.
+
+    The original protocol remains byte-bound; only its returned copy's mesh
+    levels change. The experiment orchestrator owns the independent mesh and
+    solver releases, aggregate budgets, old results and co-primary comparisons.
+    """
+    if extension_sha256 != RESOLUTION_SHA256 or sha256(extension_path) != RESOLUTION_SHA256:
+        raise ValueError("Exact source-bound axial resolution declaration required")
+    extension = json.loads(Path(extension_path).read_text())
+    if (extension["schema"] != "hbe-axial-mesh-resolution-v1"
+            or extension["original_protocol"]["sha256"] != PROTOCOL_SHA256
+            or extension["branches"] != ["compression", "tension"]
+            or extension["steps"] != 60 or extension["mu_Pa"] != 1000.0
+            or extension["measured_data_access"] is not False or extension["calibration"] is not False):
+        raise ValueError("Fixed axial-only numerical extension required")
+    levels = extension["mesh_levels"]
+    if levels != [{"N":16,"expected_nodes":7209,"nominal_hex8_cells":6144},
+                  {"N":24,"expected_nodes":23101,"nominal_hex8_cells":20736}]:
+        raise ValueError("Only the declared N16 and N24 meshes are permitted")
+    protocol = read_protocol(protocol_path)
+    protocol["mesher"]["levels"] = json.loads(json.dumps(levels))
+    return protocol, extension
+
+
+def prepare_resolution_level(N, protocol_path, extension_path, extension_sha256,
+                             runtime_path, runtime_sha256, output):
+    """Prepare one separately released finer mesh and two original Skyline decks.
+
+    The parent must supervise the process and enforce the extension's aggregate
+    preparation budget. This additive worker leaves the legacy worker and CLI
+    unchanged. It imports the private mesher only after exact declaration and
+    runtime verification, never launches FEBio and never reads measured curves.
+    """
+    output = Path(output)
+    output.mkdir(parents=True, exist_ok=False)
+    started = time.monotonic()
+    record = {"status":"starting", "mesh_N":N, "gmsh_generation_calls":0,
+              "solver_calls":0, "curve_values_opened":False, "decks":{},
+              "source_sha256":sha256(__file__), "protocol_sha256":PROTOCOL_SHA256,
+              "resolution_declaration_sha256":extension_sha256,
+              "runtime_receipt_sha256":runtime_sha256}
+    write_json(output/"receipt.json", record)
+    gmsh = None
+    initialized = False
+    inserted_gmsh = False
+    try:
+        protocol, extension = read_resolution_protocol(protocol_path, extension_path, extension_sha256)
+        level = _level(protocol, N)
+        runtime = verify_runtime(runtime_path, runtime_sha256, protocol)
+        if "gmsh" in sys.modules:
+            raise RuntimeError("An ambient Gmsh import cannot enter the released worker")
+        spec = importlib.util.spec_from_file_location("gmsh", runtime["module"]["path"])
+        if spec is None or spec.loader is None:
+            raise RuntimeError("Private Gmsh module could not be resolved")
+        gmsh = importlib.util.module_from_spec(spec)
+        sys.modules["gmsh"] = gmsh
+        inserted_gmsh = True
+        spec.loader.exec_module(gmsh)
+        if (Path(gmsh.__file__).resolve() != Path(runtime["module"]["path"]).resolve()
+                or Path(gmsh.lib._name).resolve() != Path(runtime["library"]["path"]).resolve()
+                or gmsh.__version__ != runtime["version"]):
+            raise RuntimeError("Loaded Gmsh module/library/version differs from the frozen runtime")
+        gmsh.initialize([], readConfigFiles=False, run=False)
+        initialized = True
+        if gmsh.option.getString("General.Version") != runtime["version"]:
+            raise RuntimeError("Initialized Gmsh reports a different version")
+        for option in ("General.NumThreads", "Mesh.MaxNumThreads1D", "Mesh.MaxNumThreads2D", "Mesh.MaxNumThreads3D"):
+            gmsh.option.setNumber(option, 1)
+        gmsh.option.setNumber("Mesh.ElementOrder", 1)
+        gmsh.option.setNumber("Mesh.Binary", 1)
+        geometry = build_five_block_geometry(gmsh, N, protocol)
+        record.update(gmsh_generation_calls=1, status="generating")
+        write_json(output/"receipt.json", record)
+        generation_started = time.monotonic()
+        gmsh.model.mesh.generate(3)
+        record["generation_seconds"] = time.monotonic()-generation_started
+        actual = extract_mesh(gmsh, N, protocol, geometry)
+        write_json(output/"mesh.json", actual)
+        gmsh.write(str(output/"specimen.msh"))
+        quality = mesh_quality(actual, protocol)
+        limits = protocol["mesher"]["mesh_quality"]
+        # Both new levels meet the unchanged original finest geometry gates.
+        quality["checks"].update(
+            declared_node_count=len(actual["node_ids"]) == level["expected_nodes"],
+            finest_volume=quality["relative_volume_error"] <= limits["finest_relative_volume_error_max"],
+            finest_boundary_sag=quality["maximum_radial_boundary_sag_over_R"] <= limits["finest_max_radial_sag_over_R"])
+        quality["passed"] = all(quality["checks"].values())
+        record.update(status="quality_checked", quality=quality)
+        write_json(output/"receipt.json", record)
+        if not quality["passed"]:
+            raise ValueError("Actual resolution mesh failed unchanged specimen quality gates")
+        for branch in extension["branches"]:
+            name = f"{branch}-60-reference"
+            directory = output/name
+            directory.mkdir()
+            xml, deck_record = specimen_deck(actual, branch, 60, 1000.0, protocol)
+            (directory/"specimen.feb").write_text(xml)
+            deck_record.update(role="reference", mesh_sha256=sha256(output/"mesh.json"),
+                               protocol_sha256=PROTOCOL_SHA256, resolution_declaration_sha256=extension_sha256)
+            write_json(directory/"loading.json", deck_record)
+            record["decks"][name] = {"deck_sha256":deck_record["deck_sha256"], "loading_sha256":sha256(directory/"loading.json")}
+            write_json(output/"receipt.json", record)
+        gmsh.finalize()
+        initialized = False
+        verify_runtime(runtime_path, runtime_sha256, protocol)
+        if (sha256(__file__) != record["source_sha256"]
+                or sha256(protocol_path) != PROTOCOL_SHA256
+                or sha256(extension_path) != extension_sha256):
+            raise RuntimeError("Mesh/deck source or declaration changed during preparation")
+        record.update(status="prepared_not_solved", mesh_sha256=sha256(output/"mesh.json"),
+                      native_mesh_sha256=sha256(output/"specimen.msh"), runtime_unchanged=True,
+                      elapsed_seconds=time.monotonic()-started)
+    except BaseException as error:
+        record.update(status="failed", error_type=type(error).__name__, reason=str(error),
+                      traceback=traceback.format_exc(), elapsed_seconds=time.monotonic()-started)
+        raise
+    finally:
+        if initialized:
+            try:
+                gmsh.finalize()
+            except BaseException as error:
+                record["finalize_error"] = str(error)
+        if inserted_gmsh:
+            sys.modules.pop("gmsh", None)
+        write_json(output/"receipt.json", record)
+    return record
 
 
 def prepare_level(N, protocol, runtime_path, runtime_sha256, output):

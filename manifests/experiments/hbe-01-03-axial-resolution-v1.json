@@ -1,0 +1,139 @@
+{
+  "branches": [
+    "compression",
+    "tension"
+  ],
+  "budgets": {
+    "aggregate_specimen_seconds": 1200,
+    "each_active_run_output_bytes": 536870912,
+    "each_solver_seconds": 420,
+    "generated_output_bytes": 2147483648,
+    "gmsh_aggregate_preparation_seconds": 120,
+    "gmsh_generation_calls": 2,
+    "maximum_specimen_solver_calls": 4,
+    "runtime_threads": 1,
+    "sampled_process_family_rss_bytes": 3221225472
+  },
+  "calibration": false,
+  "co_primary_triplets": [
+    [
+      12,
+      16,
+      24
+    ],
+    [
+      8,
+      16,
+      24
+    ]
+  ],
+  "comparison_rule": "Both co-primary triplets must pass every unchanged mesh reaction/motion absolute and refinement-trend criterion. Do not choose a favorable triplet after results.",
+  "diagnosis": {
+    "path": "artifacts/mechanics/hbe-cross-mesh-diagnosis-v1/receipt.json",
+    "sha256": "c75e36e28a1e54c328cb698c362defaf13a3ef1cb102ba7959d435fe7bb02f3c"
+  },
+  "limits": [
+    "Numerical resolution study only; no material fitting or experimental-response member reads.",
+    "Existing failed mesh gates and original caps remain immutable.",
+    "No claim of patient-specific mechanics, physical validation, or clinical adequacy.",
+    "Predicted time/storage are feasibility estimates, not completed-run evidence."
+  ],
+  "measured_data_access": false,
+  "mesh_levels": [
+    {
+      "N": 16,
+      "expected_nodes": 7209,
+      "nominal_hex8_cells": 6144
+    },
+    {
+      "N": 24,
+      "expected_nodes": 23101,
+      "nominal_hex8_cells": 20736
+    }
+  ],
+  "mu_Pa": 1000.0,
+  "ordered_runs": [
+    "compression:N16:S60:reference",
+    "compression:N24:S60:reference",
+    "tension:N16:S60:reference",
+    "tension:N24:S60:reference"
+  ],
+  "original_protocol": {
+    "path": "manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+    "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+  },
+  "output_root": "outputs/mechanics/hbe-01-03-resolution-v1",
+  "output_scope": "All new study meshes, decks, raw logs, readouts and supervision within this root; immutable historical evidence remains outside and is not duplicated.",
+  "parser_item_limit": 25000,
+  "prior_failure": {
+    "aggregate_gates": {
+      "path": "artifacts/mechanics/hbe-accelerate-experiment-result-v1/aggregate-gates.json",
+      "sha256": "b0bd14decf8e756aa8d8aef170380e4d0f8d9efa21d3062fc56198d927cd18ae"
+    },
+    "outcome": {
+      "path": "artifacts/mechanics/hbe-accelerate-experiment-result-v1/outcome.json",
+      "sha256": "fc3f5211e40beee246f1ceb2d9dfb0ff08f19840d61d9d6699c3cde2e1db2b4f"
+    },
+    "state": {
+      "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/state.json",
+      "sha256": "d984a8213a0a6799fa1c51ae5ac6872b7ec36af6c810b9338736613d60f904f8"
+    }
+  },
+  "prior_runs": {
+    "compression:N12:S60:reference": {
+      "execution": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S60-reference/execution.json",
+        "sha256": "458ebfdcc9c28952c70e7c720af7818d8642480c7e2369932b7c537ee24db6ff"
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S60-reference/readout.json",
+        "sha256": "f000ebd0e22d64923fe88fd3d1d53e8a260f240af0cb45368cf7708425014538"
+      }
+    },
+    "compression:N8:S60:reference": {
+      "execution": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/execution.json",
+        "sha256": "901c1c701a95730abc5d6ff25083733f66471ef67d7d6e82d050d59494c2b1b4"
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/readout.json",
+        "sha256": "41e38786c9a07d045270f1a5a7da656bd3eddd9abed16d6fbc6fe30149a2d03d"
+      }
+    },
+    "tension:N12:S60:reference": {
+      "execution": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S60-reference/execution.json",
+        "sha256": "883c197bc8c347523e23de96aad830ef447a14d817058e8cb67961aceeb11168"
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S60-reference/readout.json",
+        "sha256": "7a269ca2c1f7a4a9225b84d7660455a8832e0ed593867821d5c8a25cc9401d6a"
+      }
+    },
+    "tension:N8:S60:reference": {
+      "execution": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N8-S60-reference/execution.json",
+        "sha256": "a72afec40b1f0c2f9a89a6eade8c8dca6301c976bc06e202fbf1f7c88efa96f8"
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N8-S60-reference/readout.json",
+        "sha256": "a9cb82b68a52d7b7f3267d83df741d6f416bb8569e3dbb2bbf7d7a94d9e50e18"
+      }
+    }
+  },
+  "schema": "hbe-axial-mesh-resolution-v1",
+  "solver_retries": 0,
+  "status": "prospective_preparation_only_separate_releases_required",
+  "steps": 60,
+  "study_id": "hbe-01-03-axial-resolution-v1",
+  "unchanged_science": [
+    "original_geometry",
+    "five_block_Gmsh_generator",
+    "Ogden_alpha2_mu1000_K149mu_over3",
+    "bonded_prescribed_platens",
+    "loading_60_equal_steps",
+    "solver_tolerances",
+    "75_fixed_physical_probes",
+    "mesh_comparison_thresholds"
+  ]
+}
