@@ -1,0 +1,39 @@
+{
+  "schema": "observation-acquisition-integration-v1",
+  "status": "passed_focused_software_checks",
+  "source_checkpoint": "7e5d903022d17cfc716bbb3938b141a0d824346e",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_spatial_multiscale_views.py",
+    "tests/test_spatial_multiscale_views_review.py",
+    "tests/test_training_observation_coverage.py",
+    "tests/test_training_observation_coverage_review.py",
+    "tests/test_rhuh_checksum_acquisition.py",
+    "tests/test_acquire_rhuh_checksum_review.py"
+  ],
+  "exit_code": 0,
+  "summary": "109 passed in 4.81s",
+  "bound_files": {
+    "src/resectionlab/spatial_multiscale_views.py": "743531e800f9f2913b6ec8101b2d5632dbb9ec2482d196fe9400d1459b29c0fe",
+    "scripts/diagnose_training_observation_coverage.py": "b85805c69821e8ca12fb28f0e6c48b500dc00329685853cef4064a5c2179c1b2",
+    "scripts/acquire_rhuh_checksum.py": "f9ad9f4d64cab2314be865aad47e4300e23aa8b83457ee83656a6921e12edaf0",
+    "tests/test_spatial_multiscale_views.py": "c583c961ba3927d6e97c6c4e7458b2d0aea13caa1a9439f66606c2d686a07467",
+    "tests/test_spatial_multiscale_views_review.py": "1561f503d926e74f14ba52fb538c0ffba3a5c58ad45a5183cd73d45d86659e70",
+    "tests/test_training_observation_coverage.py": "65757c7e243f700f859c3f63c6698438dcac9c7819ef95c26db2f038cc964446",
+    "tests/test_training_observation_coverage_review.py": "923b3e7235aa58859554d3f76c26fd565109955764289c513b391b0f8bfaf759",
+    "tests/test_rhuh_checksum_acquisition.py": "0c346b4472d1dcf9be2e4089a4405d1bb2317c47a1b7dd80c017954af890873f",
+    "tests/test_acquire_rhuh_checksum_review.py": "ae93ae0588cb0c3c1ebe24fa6e29245496759229b605dd13c0c1cca9dc9ac740"
+  },
+  "activity": {
+    "patient_experiment_rerun": false,
+    "training": false,
+    "checksum_or_image_transfer": false
+  },
+  "limitations": [
+    "Focused software checks, not a full repository suite or clinical validation.",
+    "The separately archived observation experiment remains incomplete."
+  ]
+}
