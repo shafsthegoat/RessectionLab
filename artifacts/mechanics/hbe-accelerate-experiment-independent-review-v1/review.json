@@ -1,0 +1,92 @@
+{
+  "status": "saved_failure_independently_reproduced",
+  "release_sha256": "edb91bdbaa542852ec65a87eba8e2676556d926d9c979ceea3cb8e460624ba6b",
+  "new_solver_calls_by_auditor": 0,
+  "measured_curve_reads_by_auditor": 0,
+  "recorded_solver_calls": 18,
+  "individual_run_checks_passed": 18,
+  "unexecuted_fitted_cases": [
+    "compression:N12:S120:fitted",
+    "tension:N12:S120:fitted"
+  ],
+  "aggregate_metrics": 30,
+  "failed_aggregate_metrics": [
+    {
+      "metric": "mesh.compression.motion",
+      "actual": 2.2356144373333107e-05,
+      "limit": 8e-06,
+      "units": "m"
+    },
+    {
+      "metric": "mesh.tension.motion",
+      "actual": 2.325768976023929e-05,
+      "limit": 8e-06,
+      "units": "m"
+    },
+    {
+      "metric": "mesh.tension.reaction_trend",
+      "actual": 0.00022774250190189804,
+      "comparison": "lt",
+      "limit": 0.00019948362350659735,
+      "units": "N"
+    }
+  ],
+  "mesh_and_step_metric_groups_independently_recomputed": 8,
+  "scale_metrics_pass_in_saved_report": true,
+  "scale_raw_replay_performed": false,
+  "selected_raw_replays": [
+    {
+      "run_id": "tension:N8:S60:reference",
+      "complete_readout_exact_match": true,
+      "frames": 61,
+      "elapsed_seconds": 1.0287180410232395
+    },
+    {
+      "run_id": "tension:N12:S60:reference",
+      "complete_readout_exact_match": true,
+      "frames": 61,
+      "elapsed_seconds": 2.875492832972668
+    }
+  ],
+  "numerical_reference_sha256": "6f596eb45fd1e39bcf485dbbcbfbc8bfd2bd5397e9e54b67d63a77fcbfac686a",
+  "no_calibration_or_heldout_access_attempt_recorded": true,
+  "access_ledger_fit_freeze_validation_absent": true,
+  "physical_validation_pass": null,
+  "automatic_retry": false,
+  "supervision": {
+    "elapsed_seconds": 396.3033522500191,
+    "wall_cap_seconds": 900.0,
+    "exit_code": 1,
+    "kill_reason": null,
+    "sampled_peak_process_group_rss_bytes": 253722624,
+    "rss_cap_bytes": 3221225472,
+    "sampling_note": "Group RSS is sampled; brief between-sample peaks may be missed."
+  },
+  "worker_elapsed_seconds": 394.0622269170126,
+  "sum_nested_solver_seconds": 338.5155295818113,
+  "maximum_single_solver_seconds": 41.28799983300269,
+  "per_solver_cap_seconds": 90,
+  "output_watch": {
+    "maximum_active_bytes": 105300864,
+    "maximum_total_bytes": 997830113,
+    "sampling_interval_seconds": 0.1,
+    "sampling_limit": "Between-sample peaks may be missed.",
+    "status": "watching"
+  },
+  "final_output_bytes": 914390988,
+  "unique_rehashed_inputs_and_outputs": 384,
+  "all_checked_files_unchanged": true,
+  "original_skyline_failure_hashes_unchanged": {
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment/result.json": "cb788089a37b292b717d86fd383f2323ca4c25514fa0098de8d050c9e650cc5e",
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment/state.json": "63a1b78bf2239832dffd269f6a1b2494cb9ccc5f0fc9f00c636489c4fcfa4315"
+  },
+  "audit_source_sha256": "81e3a6ac9e43ea27fbaa18d6a0a26f3a97e53bff011774d8ef644b22d1edb092",
+  "elapsed_seconds": 6.220206166035496,
+  "limits": [
+    "Mesh-refinement rejection is numerical convergence evidence, not comparison with experimental measurements.",
+    "No constitutive fit, held-out prediction or physical-validation accuracy is available.",
+    "Solver elapsed times are nested within worker/parent timings and must not be added to them.",
+    "RSS and output-watch peaks are sampled and may miss between-sample peaks.",
+    "Only two raw run readouts were replayed; remaining individual and scale results are hash-bound saved results."
+  ]
+}

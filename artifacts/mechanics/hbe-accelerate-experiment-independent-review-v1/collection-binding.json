@@ -1,0 +1,19 @@
+{
+  "status": "final_collector_receipts_match_independent_replay",
+  "raw_files_rehashed": 169,
+  "raw_bytes": 914390988,
+  "raw_files_and_directories_without_write_bits": true,
+  "outcome_counts_metrics_timings_match_independent_review": true,
+  "actual_access_fit_and_freeze_artifacts_absent": true,
+  "owner_preservation_receipt_bound": true,
+  "sealed_data_archive_opened_by_this_auditor": false,
+  "bindings_sha256": {
+    "artifacts/mechanics/hbe-accelerate-experiment-independent-review-v1/review.json": "289d72991067b84129ae86193420de91340b445de8ac60dadbde5c6b6e85d0ff",
+    "artifacts/mechanics/hbe-accelerate-experiment-result-v1/outcome.json": "fc3f5211e40beee246f1ceb2d9dfb0ff08f19840d61d9d6699c3cde2e1db2b4f",
+    "artifacts/mechanics/hbe-accelerate-experiment-result-v1/raw-output-index.json": "385fdbf2a52972509a18a31a693aa139553ee02e99a62decfc0391fda8fe94e9",
+    "artifacts/mechanics/hbe-accelerate-experiment-result-v1/readonly-freeze.json": "8e0882e53320561f99d1d94f230e76976cf417a3ca800e5ea9d2f9039ddd6a4c",
+    "artifacts/mechanics/hbe-accelerate-experiment-result-v1/access-chronology.json": "b63d7a6d05736c9b1004a56879f3e1ad96a6bc19839f45362f8bddb73fe4f661",
+    "artifacts/mechanics/hbe-accelerate-experiment-result-v1/preservation.json": "86102ca7b7cf10fb559c70f0e4981e2d7a5e978940e92e293a5bebe778ff9cb7"
+  },
+  "scope": "Saved collector comparison and raw-output rehash only; no repeated physics replay, solvers or measurement archive access."
+}
