@@ -1,0 +1,66 @@
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+________ test_observer_exception_cannot_resume_a_later_unguarded_phase _________
+
+    def test_observer_exception_cannot_resume_a_later_unguarded_phase():
+        namespace = {"__name__": "resectionlab.native_spatial_task", "body_ran": False}
+        exec("def step():\n    global body_ran\n    body_ran = True\n", namespace)
+        trace = d.InitialOnlyTrace()
+        with trace:
+            trace.begin("original")
+            with pytest.raises(RuntimeError, match="prohibited"):
+                namespace["step"]()
+            assert namespace["body_ran"] is False
+            assert sys.getprofile() is None  # CPython really removed the failing callback.
+            trace.end()
+>           with pytest.raises(RuntimeError):
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           Failed: DID NOT RAISE RuntimeError
+
+tests/test_pat25_ingress_access_review.py:25: Failed
+_ test_full_attempt_budget_includes_last_input_hash_and_acceptance_publication _
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b892720>
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-577/test_full_attempt_budget_inclu0')
+
+    def test_full_attempt_budget_includes_last_input_hash_and_acceptance_publication(monkeypatch, tmp_path):
+        manifest, release, output, state, _ = parent_fixture(monkeypatch, tmp_path)
+        real_write = d.write_json
+        def unchanged(bound):
+            state["unchanged_calls"] += 1
+            if state["unchanged_calls"] == 2:
+                state["seconds"] += 20.  # Final encoded-input/source hashing costs real time.
+            return True
+        def write(path, payload):
+            if Path(path).name == "acceptance.json":
+                state["seconds"] += 10.  # Final serialization/publication also belongs to lifecycle.
+            return real_write(path, payload)
+        monkeypatch.setattr(d, "unchanged", unchanged)
+        monkeypatch.setattr(d, "write_json", write)
+        result = d.run(manifest, release, output)
+        assert state["seconds"] >= 190.
+>       assert result["status"] != "complete", "Late hashing/publication exceeded180s but was accepted"
+E       AssertionError: Late hashing/publication exceeded180s but was accepted
+E       assert 'complete' != 'complete'
+
+tests/test_pat25_ingress_access_review.py:72: AssertionError
+_____ test_parent_binds_manifest_and_release_bytes_into_worker_invocation ______
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10cc23e60>
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-577/test_parent_binds_manifest_and0')
+
+    def test_parent_binds_manifest_and_release_bytes_into_worker_invocation(monkeypatch, tmp_path):
+        manifest, release, output, state, digests = parent_fixture(monkeypatch, tmp_path)
+        d.run(manifest, release, output)
+        assert len(state["commands"]) == 1
+        command = state["commands"][0]
+>       assert digests[str(manifest)] in command, "Worker must receive the parent's exact declaration byte identity"
+E       AssertionError: Worker must receive the parent's exact declaration byte identity
+E       assert '1111111111111111111111111111111111111111111111111111111111111111' in ['/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python', '/U...f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-577/test_parent_binds_manifest_and0/manifest.json', '--release', ...]
+
+tests/test_pat25_ingress_access_review.py:80: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_pat25_ingress_access_review.py::test_observer_exception_cannot_resume_a_later_unguarded_phase
+FAILED tests/test_pat25_ingress_access_review.py::test_full_attempt_budget_includes_last_input_hash_and_acceptance_publication
+FAILED tests/test_pat25_ingress_access_review.py::test_parent_binds_manifest_and_release_bytes_into_worker_invocation
+3 failed in 0.50s

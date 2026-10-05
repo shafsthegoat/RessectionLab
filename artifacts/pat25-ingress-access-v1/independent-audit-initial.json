@@ -1,0 +1,179 @@
+{
+  "audit_wall_seconds": 1.5919624590314925,
+  "authoritative_parent_exit": 0,
+  "bound_input_count": 75,
+  "checker_sha256": "411c3a7a54bf7d40917ebaf9766fb1d1817524e88d5ab6f806c762eec4a6c497",
+  "comparisons": {
+    "original": {
+      "accepted": 0,
+      "by_tool": {
+        "native-fine-aspiration": {
+          "rejected": 39
+        },
+        "native-wide-aspiration": {
+          "rejected": 39
+        }
+      },
+      "completed_trace_rows": 78,
+      "coverage": {
+        "accepted_denominator": 0,
+        "accepted_samples": {
+          "full": 0,
+          "none": 0,
+          "partial": 0
+        },
+        "cavity_cells": 0,
+        "emitted_segments_checked": 234,
+        "mean_accepted_ray_fraction": null,
+        "target_fraction_visible": 1.0
+      },
+      "rejected": 78,
+      "started_previews": 78,
+      "status": "complete"
+    },
+    "screened_selected": {
+      "accepted": 78,
+      "by_tool": {
+        "native-fine-aspiration": {
+          "accepted": 39
+        },
+        "native-wide-aspiration": {
+          "accepted": 39
+        }
+      },
+      "completed_trace_rows": 78,
+      "coverage": {
+        "accepted_denominator": 78,
+        "accepted_samples": {
+          "full": 78,
+          "none": 0,
+          "partial": 0
+        },
+        "cavity_cells": 0,
+        "emitted_segments_checked": 234,
+        "mean_accepted_ray_fraction": 1.0,
+        "target_fraction_visible": 1.0
+      },
+      "rejected": 0,
+      "started_previews": 78,
+      "status": "complete"
+    }
+  },
+  "declaration_sha256": "12416c632ae5f297ef0d5fec282e9922c55c688c88e2a492a37bdea7f106b994",
+  "inner_acceptance_status": "complete",
+  "limits": [
+    "No dense patient mask is decoded: blocked-cell membership, first-cell minimality, full-mask hashes, nominal crop integrals and clearance cannot be independently recomputed.",
+    "Source/Git/archive/receipt bindings and small-coordinate arithmetic are checked, not protection against an authorized host rewriting the entire history.",
+    "No-fallback/call counts and unchanged state are reconciled from the frozen code and saved trace/invariant receipts; this is not independent operating-system instruction tracing.",
+    "Recorded sampled RSS can miss transient peaks. Saved supervision establishes its reported outcome, not an independent OS-enforced hard memory limit.",
+    "The outer clock begins at its first stdlib timestamp; preceding interpreter startup and OS scheduling are explicitly not bounded by that receipt.",
+    "Centerline/crop visibility and initial ingress do not certify whole-tool visibility, later stroke feasibility, skull access, clinical safety or efficacy.",
+    "Target-center exclusions in saved envelope summaries cannot be reconstructed without the nominal array; their bounds/nulls and envelope arithmetic can be checked."
+  ],
+  "numerical_absolute_tolerance": 1e-12,
+  "parent_status": "complete",
+  "physical_coordinate_absolute_tolerance_mm": 1e-08,
+  "raw_output_sha256": {
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/pat25-ingress-access-v1.outer.json": "6899adcfea2c30104733248a42b23e6d42528f16fa99530f5320b9cf7369f3e4",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/pat25-ingress-access-v1.outer.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/pat25-ingress-access-v1/acceptance.json": "84229bc17b34925474559d81ecfe19273b7940ec7192d6a42368e8e68e3f13cc",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/pat25-ingress-access-v1/execution-baseline.json": "3830de3ce1ca0d2818a1e961b524395e328631e0bb587d961b6242c844940fa9",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/pat25-ingress-access-v1/receipt.json": "b02ac66155132a0ddc8554d69bfe3b5a8cfdbca4e80516099a21803baa41a267",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/pat25-ingress-access-v1/supervisor.json": "1b37b303c7150de5d3ca16364d0d952c93729e3b7e68312a35dc2f366293f849",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/pat25-ingress-access-v1/worker.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "raw_outputs_unchanged": true,
+  "release_sha256": "1830c565c7a46d8ae129c6727ecb1d6cab6e25ea5c3e5ee7c28c85737237bcea",
+  "resources": {
+    "outer": {
+      "acceptance_sha256": "84229bc17b34925474559d81ecfe19273b7940ec7192d6a42368e8e68e3f13cc",
+      "automatic_retry": false,
+      "clock_scope": "first stdlib timestamp through final receipt; interpreter startup before that timestamp and OS scheduling are not bounded",
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/scripts/diagnose_pat25_ingress_access.py",
+        "--orchestrator",
+        "--manifest",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/pat25-ingress-access-v1/declaration.json",
+        "--release",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/pat25-ingress-access-v1/release.json",
+        "--output",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/pat25-ingress-access-v1",
+        "--expected-manifest-sha256",
+        "12416c632ae5f297ef0d5fec282e9922c55c688c88e2a492a37bdea7f106b994",
+        "--expected-release-sha256",
+        "1830c565c7a46d8ae129c6727ecb1d6cab6e25ea5c3e5ee7c28c85737237bcea",
+        "--outer-parent-pid",
+        "82874"
+      ],
+      "elapsed_seconds": 36.75463420897722,
+      "group_gone": true,
+      "hard_cleanup_seconds": 178.0,
+      "manifest_sha256": "12416c632ae5f297ef0d5fec282e9922c55c688c88e2a492a37bdea7f106b994",
+      "max_group_rss_bytes": 6442450944,
+      "owned_process_group": 82875,
+      "reason": null,
+      "release_sha256": "1830c565c7a46d8ae129c6727ecb1d6cab6e25ea5c3e5ee7c28c85737237bcea",
+      "returncode": 0,
+      "rss_samples": 292,
+      "sampled_peak_group_rss_bytes": 2609086464,
+      "soft_stop_seconds": 174.0,
+      "status": "complete",
+      "whole_attempt_seconds_limit": 180.0
+    },
+    "parent_seconds": 36.620395249919966,
+    "supervisor": {
+      "automatic_retry": false,
+      "declaration_sha256": "12416c632ae5f297ef0d5fec282e9922c55c688c88e2a492a37bdea7f106b994",
+      "inherits_outer_process_group": true,
+      "returncode": 0,
+      "rss_samples": 321,
+      "sampled_peak_rss_bytes": 2579251200,
+      "seconds": 34.87833704194054,
+      "status": "complete",
+      "termination_reason": null,
+      "timed_out": false
+    },
+    "timing_scope": "nested worker/phase/supervisor times are not additive",
+    "worker_peak_rss_bytes": 2579759104,
+    "worker_seconds": 34.40068820817396
+  },
+  "schema": "pat25-ingress-saved-independent-check-v1",
+  "scope": "Saved records and opaque hashes only; zero patient-array decode, native calls, training or refits",
+  "screening": {
+    "complete_exits": 6,
+    "eligible_exits": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        -1
+      ],
+      [
+        1,
+        1
+      ],
+      [
+        2,
+        -1
+      ],
+      [
+        2,
+        1
+      ]
+    ],
+    "selected_exit": [
+      2,
+      -1
+    ],
+    "static_checks": 468,
+    "status": "selected"
+  },
+  "source_archive_sha256": "0c3d4d9c0d36da438283f5931c1e746a4bbb1a86134e5c649817d955c41029e9",
+  "source_commit": "fd32d20a9fad710e5e05e29d18c036cf22248ebf",
+  "status": "passed_saved_complete_evidence",
+  "study_status": "complete",
+  "total_native_previews": 156
+}

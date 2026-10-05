@@ -1,0 +1,73 @@
+{
+  "actual_operations": {
+    "commits": 0,
+    "committed_cuts": 0,
+    "native_constructors": 0,
+    "native_previews": 0,
+    "optimizer_updates": 0,
+    "patient_decodes": 0,
+    "policy_forwards": 0,
+    "releases": 0,
+    "searches": 0
+  },
+  "gate": "offline runner preparation only; not execution authorization or clinical validation",
+  "independent_tests": {
+    "file": "tests/test_pat25_ingress_access_review.py",
+    "log": "repaired-candidate-tests.txt",
+    "log_sha256": "67c96b26314c3a41db4a0d6a71999e92518b8910940df32ad5142e2fc6ffd9c6",
+    "passed": 68,
+    "pytest_seconds": 0.48,
+    "run_receipt": "repaired-candidate-tests.json",
+    "run_receipt_sha256": "16382be30605edf79904a1fb08f749e6d092ee70be68098486251cb392ecf484",
+    "sources_unchanged_during_run": true
+  },
+  "limitations": [
+    "resource/process checks here are mocked, not an actual OS timing or RSS benchmark",
+    "first stdlib timestamp excludes interpreter startup and OS scheduling; sampled RSS can miss transient peaks",
+    "static ingress eligibility does not certify complete motion, useful removal, generalization or clinical safety",
+    "no manifest, release or patient experiment created by this reviewer"
+  ],
+  "preserved_initial_negatives": {
+    "artifacts": {
+      "initial-diagnose_pat25_ingress_access.py.gz": "0351b7763bb878f13bf6795cc3f302dac9ae48de58d3d73fc6b7755cf5cabe04",
+      "initial-negatives.json": "1b2cc52f2e8145c67b25d86dc704d2fc13e80b51b2ccdfde034ec3f94f31ab6e",
+      "initial-negatives.txt": "c56982be570e8ba38da2f140f9861386a82e3bce1bb84484d8ea53ca5732a543",
+      "initial-test_pat25_ingress_access_review.py.gz": "7d867502a5c003c34ad2a75a230f44f5eff7c6367a2477d9c568fb792df5d212"
+    },
+    "failure_count": 3,
+    "findings": [
+      "caught CPython callback failure allowed a later phase without profiling",
+      "mocked final hashing and acceptance publication were accepted after the 180-second lifecycle",
+      "native-worker invocation lacked exact parent manifest and release byte identities"
+    ],
+    "tested_runner_sha256": "238c44868fa0ffe7c07d53e382d81157c930006a55533c0c003e6f5d3560a8f8"
+  },
+  "prior_core_module_review": {
+    "path": "artifacts/native-ingress-review-v1/verification.json",
+    "sha256": "8c5c04d5a1dfeaeb649f976808b0be22f49a2fa09c6a37e0e95e960130aee3c7"
+  },
+  "schema_version": 1,
+  "source_commit_before_pending_runner_commit": "ae2703b919c3f2a76aef5e4e81d40103eff9f7a1",
+  "source_hashes": {
+    "docs/pat25-ingress-access-diagnostic.md": "f067033d3949fcdb5feff1562eaf71b65b852406c4f720f055058bd00eb22c3d",
+    "scripts/diagnose_pat25_access.py": "a88f8176b8c79d528b15207811d99b9d061a2fcda19029dfbf058d61acf97f6a",
+    "scripts/diagnose_pat25_ingress_access.py": "b3afc7510fcfcc3f53b0535c7128296f130b82431fb83d061058a8658cbe10e2",
+    "scripts/diagnose_training_observation_coverage.py": "9c4432777fb1556b58693f652af94b8f292045c00cf54d04e954c239c5979daf",
+    "scripts/preflight_real_spatial_policy.py": "cfac175b072dbd8218c19f079d7ec3fa9143966b5059fe4cdfd918dff818ed3f",
+    "scripts/prepare_real_training_cases.py": "7533e829f0663fd68d982a84ad49982442e5e04345ea045f15c546d7bf247e6a",
+    "src/resectionlab/native_ingress.py": "cd27eb57062d0afd72dba3b392f9ed03973a9fe5b353bb8fd0da74e6a1c6761f",
+    "tests/test_pat25_ingress_access_review.py": "bcaa214197be83d778bf93df896f60366712ab08eec914595786c91e8bac2328"
+  },
+  "status": "passed",
+  "verified_scopes": [
+    "exact six source-axis exit distances, axis/sign descriptors and fixed tie order, including one-ULP distance mutations",
+    "PAT25 TRAIN role before registry access; original case/planning/support identity and exact committed Git object/source-root guards",
+    "whole-attempt mocked deadline includes elapsed imports/preflight, final hashing and acceptance/outer receipt publication",
+    "owned process-group aggregate RSS, one-thread environment, inherited native-worker group, leader-exit surviving-descendant cleanup",
+    "manifest/release byte pins across outer-to-orchestrator and orchestrator-to-worker boundaries before preflight/decode",
+    "sticky callback failures and prohibited-operation guards block mock function bodies while allowing module definitions",
+    "complete static screen and 468-call cap; original and selected inventories only, 156 combined mocked previews",
+    "selected failure/no admissible access preserved without fallback; selection unchanged by zero versus full final feasibility and crop visibility",
+    "unchanged original and selected objective/horizon; partial diagnostics durable"
+  ]
+}

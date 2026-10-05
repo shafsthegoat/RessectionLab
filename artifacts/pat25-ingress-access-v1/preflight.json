@@ -1,0 +1,18 @@
+{
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/scripts/diagnose_pat25_ingress_access.py",
+    "--preflight",
+    "--manifest",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/pat25-ingress-access-v1/declaration.json",
+    "--release",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/pat25-ingress-access-v1/release.json",
+    "--output",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/pat25-ingress-access-v1"
+  ],
+  "exit_code": 0,
+  "seconds": 1.7624234999530017,
+  "stdout": "{\"status\": \"preflight_only\", \"bindings\": 75, \"patient_decoded\": false}\n",
+  "stderr": "",
+  "patient_decode_authorized": false
+}

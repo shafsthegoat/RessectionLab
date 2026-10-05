@@ -1,0 +1,44 @@
+{
+  "schema": "pat25-ingress-prospective-independent-checks-v1",
+  "status": "prospective checker frozen before actual results; awaiting separately authorized execution and root terminal confirmation",
+  "checker_sha256": "411c3a7a54bf7d40917ebaf9766fb1d1817524e88d5ab6f806c762eec4a6c497",
+  "actual_outputs_opened": false,
+  "patient_arrays_decoded": 0,
+  "native_calls": 0,
+  "learning_updates": 0,
+  "numerical_absolute_tolerance": 1e-12,
+  "physical_coordinate_absolute_tolerance_mm": 1e-08,
+  "geometry_boundary_roundoff": "64 * float64 epsilon in normalized coordinates; same declared sampling convention, not a clearance tolerance",
+  "execution_gate": "Require parent/root confirmed terminated attempt and explicit authoritative parent exit; no result success is reported prospectively.",
+  "planned_checks": [
+    "All six original ordered axis/sign exits and all78 tool/column/family dispositions; no capped slots or silent omissions.",
+    "Exact tool+float64 entry+raw-axis byte signatures determine reuse; saved screen indices/counts and <=468 bound reconcile.",
+    "ANY admissible tool-entry makes an exit eligible; all six must complete before exact distance/axis/sign selection; no native outcome fallback.",
+    "Original and at most one selected complete initial inventory; each emitted ray joins its actual saved preview result; <=78 each and <=156 total; no committed state transitions.",
+    "Before/after task state/inventory/observation hashes agree; original inventory equals historical source-bound preparation; selected provider/cavity/proposal identities join screening.",
+    "Baseline and selected target ratios, initial empty cavity, five physical sample domains, continuous centerline intervals, accepted-only denominators and empty-envelope null rules.",
+    "Immutable Git/archive/source/release/input closure, fixed TRAIN role, original/derived frames, original estimated support, tools, reward, horizon and unreviewed/clinical-false metadata.",
+    "Parent/worker/supervisor statuses, exact receipt hashes and reported wall/RSS/call caps; partial/failed runs remain incomplete even when retained arithmetic passes.",
+    "Sibling outer receipt must bind exact manifest/release and inner acceptance, successful exit and group disappearance, no reason, elapsed<180s and sampled group RSS<=6GiB; inner acceptance alone cannot promote outer failure."
+  ],
+  "limitations": [
+    "No fresh mask occupancy, dense target/cavity integral or native geometry recomputation; saved witness geometry/count consistency only.",
+    "State/call receipts do not constitute independent OS instruction tracing or hard enforcement; RSS samples may miss peaks.",
+    "No clinical safety, skull accessibility, full-stroke feasibility, whole-tool visibility or efficacy inference.",
+    "No final complete-run fixture exists yet. Ten small coordinate/metadata checker controls have run; end-to-end artifact-schema errors will be retained if encountered, never treated as a scientific result.",
+    "Outer clock excludes interpreter startup before its first stdlib timestamp and cannot bound OS scheduling. Observer violations make prohibited-operation counters unknown/null."
+  ],
+  "preparation_validation": {
+    "ast_parsed": true,
+    "self_test_stdout": "{\"status\": \"analytical_checker_self_test_only\", \"checks\": 10, \"actual_run_accessed\": false}",
+    "exit_code": 0,
+    "controls": "Four coordinate/interval cases; assertion-refusal case; one constructed complete six-exit selection; four deliberate selected-exit/eligibility/count/ledger corruptions. No project imports or native calls.",
+    "final_source_ast_parsed": true
+  },
+  "required_invocation": ".venv/bin/python artifacts/pat25-ingress-access-v1/post-run-check.py --root-confirmed-terminal --terminal-exit <root-reported-code> --repository <repo> --run <terminated-run> --manifest <frozen-manifest> --release <authorized-release> --source-archive <Git-source-tar> --source-archive-sha256 <root-bound-SHA256>",
+  "output_policy": "Print JSON to stdout; keep first failed receipt if any. Does not modify or overwrite producer outputs.",
+  "reviewed_producer_sources_sha256": {
+    "scripts/diagnose_pat25_ingress_access.py": "b3afc7510fcfcc3f53b0535c7128296f130b82431fb83d061058a8658cbe10e2",
+    "src/resectionlab/native_ingress.py": "cd27eb57062d0afd72dba3b392f9ed03973a9fe5b353bb8fd0da74e6a1c6761f"
+  }
+}

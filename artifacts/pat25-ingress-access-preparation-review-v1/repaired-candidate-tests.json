@@ -1,0 +1,30 @@
+{
+  "elapsed_seconds": 0.6601394161116332,
+  "exit_code": 0,
+  "native_constructors": 0,
+  "optimizer_steps": 0,
+  "patient_decodes": 0,
+  "policy_forwards": 0,
+  "preview_calls": 0,
+  "scope": "independent offline and mocked controls only; no native constructors, previews or patient decoding",
+  "source_hashes_after": {
+    "docs/pat25-ingress-access-diagnostic.md": "f067033d3949fcdb5feff1562eaf71b65b852406c4f720f055058bd00eb22c3d",
+    "scripts/diagnose_pat25_access.py": "a88f8176b8c79d528b15207811d99b9d061a2fcda19029dfbf058d61acf97f6a",
+    "scripts/diagnose_pat25_ingress_access.py": "b3afc7510fcfcc3f53b0535c7128296f130b82431fb83d061058a8658cbe10e2",
+    "scripts/diagnose_training_observation_coverage.py": "9c4432777fb1556b58693f652af94b8f292045c00cf54d04e954c239c5979daf",
+    "scripts/preflight_real_spatial_policy.py": "cfac175b072dbd8218c19f079d7ec3fa9143966b5059fe4cdfd918dff818ed3f",
+    "scripts/prepare_real_training_cases.py": "7533e829f0663fd68d982a84ad49982442e5e04345ea045f15c546d7bf247e6a",
+    "src/resectionlab/native_ingress.py": "cd27eb57062d0afd72dba3b392f9ed03973a9fe5b353bb8fd0da74e6a1c6761f",
+    "tests/test_pat25_ingress_access_review.py": "bcaa214197be83d778bf93df896f60366712ab08eec914595786c91e8bac2328"
+  },
+  "source_hashes_before": {
+    "docs/pat25-ingress-access-diagnostic.md": "f067033d3949fcdb5feff1562eaf71b65b852406c4f720f055058bd00eb22c3d",
+    "scripts/diagnose_pat25_access.py": "a88f8176b8c79d528b15207811d99b9d061a2fcda19029dfbf058d61acf97f6a",
+    "scripts/diagnose_pat25_ingress_access.py": "b3afc7510fcfcc3f53b0535c7128296f130b82431fb83d061058a8658cbe10e2",
+    "scripts/diagnose_training_observation_coverage.py": "9c4432777fb1556b58693f652af94b8f292045c00cf54d04e954c239c5979daf",
+    "scripts/preflight_real_spatial_policy.py": "cfac175b072dbd8218c19f079d7ec3fa9143966b5059fe4cdfd918dff818ed3f",
+    "scripts/prepare_real_training_cases.py": "7533e829f0663fd68d982a84ad49982442e5e04345ea045f15c546d7bf247e6a",
+    "src/resectionlab/native_ingress.py": "cd27eb57062d0afd72dba3b392f9ed03973a9fe5b353bb8fd0da74e6a1c6761f",
+    "tests/test_pat25_ingress_access_review.py": "bcaa214197be83d778bf93df896f60366712ab08eec914595786c91e8bac2328"
+  }
+}

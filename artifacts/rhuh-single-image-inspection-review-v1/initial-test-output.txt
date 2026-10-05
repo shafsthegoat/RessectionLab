@@ -1,0 +1,309 @@
+...............................F................................FFFFFFFF [ 96%]
+FFF                                                                      [100%]
+=================================== FAILURES ===================================
+__________ test_metadata_preflight_has_no_payload_file_and_no_decoder __________
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-585/test_metadata_preflight_has_no0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10bc71310>
+
+    def test_metadata_preflight_has_no_payload_file_and_no_decoder(tmp_path, monkeypatch):
+        graph = ReceiptGraph(tmp_path, monkeypatch)
+        monkeypatch.setattr(inspection, "inspect_stream", lambda *a: pytest.fail("preflight attempted decoding"))
+        assert not (tmp_path / graph.payload["path"]).exists()
+>       result = inspection.preflight(tmp_path, graph.seal())
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_rhuh_single_image_inspection_review.py:288: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/inspect_rhuh_single_image.py:311: in preflight
+    need(Path(request["checksum_index"]["path"]).suffix == ".sums", "checksum_index_path_required")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, code = 'checksum_index_path_required'
+
+    def need(condition, code):
+        if not condition:
+>           raise Rejected(code)
+E           scripts.inspect_rhuh_single_image.Rejected: checksum_index_path_required
+
+scripts/inspect_rhuh_single_image.py:50: Rejected
+__________ test_bound_metadata_byte_drift_is_rejected[checksum_index] __________
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-585/test_bound_metadata_byte_drift1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10bc73650>
+field = 'checksum_index'
+
+    @pytest.mark.parametrize("field", ["proposal", "checksum_index", "parent_summary", "parent_execution",
+                                        "worker_receipt", "reconciliation"])
+    def test_bound_metadata_byte_drift_is_rejected(tmp_path, monkeypatch, field):
+        graph = ReceiptGraph(tmp_path, monkeypatch)
+        request = graph.seal()
+        with (tmp_path / request[field]["path"]).open("ab") as stream:
+            stream.write(b" ")
+>       with pytest.raises(inspection.Rejected, match="hash"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'hash'
+E         Actual message: 'checksum_index_path_required'
+
+tests/test_rhuh_single_image_inspection_review.py:332: AssertionError
+__________ test_bound_metadata_byte_drift_is_rejected[parent_summary] __________
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-585/test_bound_metadata_byte_drift2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10bc71760>
+field = 'parent_summary'
+
+    @pytest.mark.parametrize("field", ["proposal", "checksum_index", "parent_summary", "parent_execution",
+                                        "worker_receipt", "reconciliation"])
+    def test_bound_metadata_byte_drift_is_rejected(tmp_path, monkeypatch, field):
+        graph = ReceiptGraph(tmp_path, monkeypatch)
+        request = graph.seal()
+        with (tmp_path / request[field]["path"]).open("ab") as stream:
+            stream.write(b" ")
+>       with pytest.raises(inspection.Rejected, match="hash"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'hash'
+E         Actual message: 'checksum_index_path_required'
+
+tests/test_rhuh_single_image_inspection_review.py:332: AssertionError
+_________ test_bound_metadata_byte_drift_is_rejected[parent_execution] _________
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-585/test_bound_metadata_byte_drift3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10bc718b0>
+field = 'parent_execution'
+
+    @pytest.mark.parametrize("field", ["proposal", "checksum_index", "parent_summary", "parent_execution",
+                                        "worker_receipt", "reconciliation"])
+    def test_bound_metadata_byte_drift_is_rejected(tmp_path, monkeypatch, field):
+        graph = ReceiptGraph(tmp_path, monkeypatch)
+        request = graph.seal()
+        with (tmp_path / request[field]["path"]).open("ab") as stream:
+            stream.write(b" ")
+>       with pytest.raises(inspection.Rejected, match="hash"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'hash'
+E         Actual message: 'checksum_index_path_required'
+
+tests/test_rhuh_single_image_inspection_review.py:332: AssertionError
+__________ test_bound_metadata_byte_drift_is_rejected[worker_receipt] __________
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-585/test_bound_metadata_byte_drift4')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10bc70e60>
+field = 'worker_receipt'
+
+    @pytest.mark.parametrize("field", ["proposal", "checksum_index", "parent_summary", "parent_execution",
+                                        "worker_receipt", "reconciliation"])
+    def test_bound_metadata_byte_drift_is_rejected(tmp_path, monkeypatch, field):
+        graph = ReceiptGraph(tmp_path, monkeypatch)
+        request = graph.seal()
+        with (tmp_path / request[field]["path"]).open("ab") as stream:
+            stream.write(b" ")
+>       with pytest.raises(inspection.Rejected, match="hash"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'hash'
+E         Actual message: 'checksum_index_path_required'
+
+tests/test_rhuh_single_image_inspection_review.py:332: AssertionError
+__________ test_bound_metadata_byte_drift_is_rejected[reconciliation] __________
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-585/test_bound_metadata_byte_drift5')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b074680>
+field = 'reconciliation'
+
+    @pytest.mark.parametrize("field", ["proposal", "checksum_index", "parent_summary", "parent_execution",
+                                        "worker_receipt", "reconciliation"])
+    def test_bound_metadata_byte_drift_is_rejected(tmp_path, monkeypatch, field):
+        graph = ReceiptGraph(tmp_path, monkeypatch)
+        request = graph.seal()
+        with (tmp_path / request[field]["path"]).open("ab") as stream:
+            stream.write(b" ")
+>       with pytest.raises(inspection.Rejected, match="hash"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'hash'
+E         Actual message: 'checksum_index_path_required'
+
+tests/test_rhuh_single_image_inspection_review.py:332: AssertionError
+_ test_separate_release_and_current_source_are_required_before_payload_open[unreleased] _
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-585/test_separate_release_and_curr0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b04f560>
+mutation = 'unreleased'
+
+    @pytest.mark.parametrize("mutation", ["unreleased", "source_drift", "request_drift", "extra_path"])
+    def test_separate_release_and_current_source_are_required_before_payload_open(tmp_path, monkeypatch, mutation):
+        graph = ReceiptGraph(tmp_path, monkeypatch)
+        request, release = graph.execution_bindings()
+        if mutation == "unreleased":
+            release["released"] = False
+        elif mutation == "source_drift":
+            release["inspector_source_sha256"] = "0" * 64
+        elif mutation == "request_drift":
+            release["request"] = {**request, "sha256": "0" * 64}
+        else:
+            release["postoperative_image"] = "forbidden"
+        monkeypatch.setattr(inspection, "inspect_stream", lambda *a: pytest.fail("release gate attempted decoding"))
+        assert not (tmp_path / graph.payload["path"]).exists()
+>       with pytest.raises(inspection.Rejected, match="release"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'release'
+E         Actual message: 'checksum_index_path_required'
+
+tests/test_rhuh_single_image_inspection_review.py:350: AssertionError
+_ test_separate_release_and_current_source_are_required_before_payload_open[source_drift] _
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-585/test_separate_release_and_curr1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b04d610>
+mutation = 'source_drift'
+
+    @pytest.mark.parametrize("mutation", ["unreleased", "source_drift", "request_drift", "extra_path"])
+    def test_separate_release_and_current_source_are_required_before_payload_open(tmp_path, monkeypatch, mutation):
+        graph = ReceiptGraph(tmp_path, monkeypatch)
+        request, release = graph.execution_bindings()
+        if mutation == "unreleased":
+            release["released"] = False
+        elif mutation == "source_drift":
+            release["inspector_source_sha256"] = "0" * 64
+        elif mutation == "request_drift":
+            release["request"] = {**request, "sha256": "0" * 64}
+        else:
+            release["postoperative_image"] = "forbidden"
+        monkeypatch.setattr(inspection, "inspect_stream", lambda *a: pytest.fail("release gate attempted decoding"))
+        assert not (tmp_path / graph.payload["path"]).exists()
+>       with pytest.raises(inspection.Rejected, match="release"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'release'
+E         Actual message: 'checksum_index_path_required'
+
+tests/test_rhuh_single_image_inspection_review.py:350: AssertionError
+_ test_separate_release_and_current_source_are_required_before_payload_open[request_drift] _
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-585/test_separate_release_and_curr2')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b02b3e0>
+mutation = 'request_drift'
+
+    @pytest.mark.parametrize("mutation", ["unreleased", "source_drift", "request_drift", "extra_path"])
+    def test_separate_release_and_current_source_are_required_before_payload_open(tmp_path, monkeypatch, mutation):
+        graph = ReceiptGraph(tmp_path, monkeypatch)
+        request, release = graph.execution_bindings()
+        if mutation == "unreleased":
+            release["released"] = False
+        elif mutation == "source_drift":
+            release["inspector_source_sha256"] = "0" * 64
+        elif mutation == "request_drift":
+            release["request"] = {**request, "sha256": "0" * 64}
+        else:
+            release["postoperative_image"] = "forbidden"
+        monkeypatch.setattr(inspection, "inspect_stream", lambda *a: pytest.fail("release gate attempted decoding"))
+        assert not (tmp_path / graph.payload["path"]).exists()
+>       with pytest.raises(inspection.Rejected, match="release"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'release'
+E         Actual message: 'checksum_index_path_required'
+
+tests/test_rhuh_single_image_inspection_review.py:350: AssertionError
+_ test_separate_release_and_current_source_are_required_before_payload_open[extra_path] _
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-585/test_separate_release_and_curr3')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b02ac00>
+mutation = 'extra_path'
+
+    @pytest.mark.parametrize("mutation", ["unreleased", "source_drift", "request_drift", "extra_path"])
+    def test_separate_release_and_current_source_are_required_before_payload_open(tmp_path, monkeypatch, mutation):
+        graph = ReceiptGraph(tmp_path, monkeypatch)
+        request, release = graph.execution_bindings()
+        if mutation == "unreleased":
+            release["released"] = False
+        elif mutation == "source_drift":
+            release["inspector_source_sha256"] = "0" * 64
+        elif mutation == "request_drift":
+            release["request"] = {**request, "sha256": "0" * 64}
+        else:
+            release["postoperative_image"] = "forbidden"
+        monkeypatch.setattr(inspection, "inspect_stream", lambda *a: pytest.fail("release gate attempted decoding"))
+        assert not (tmp_path / graph.payload["path"]).exists()
+>       with pytest.raises(inspection.Rejected, match="release"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'release'
+E         Actual message: 'checksum_index_path_required'
+
+tests/test_rhuh_single_image_inspection_review.py:350: AssertionError
+_ test_mocked_authorized_wrapper_authenticates_original_bytes_without_actual_decode _
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-585/test_mocked_authorized_wrapper0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b028050>
+
+    def test_mocked_authorized_wrapper_authenticates_original_bytes_without_actual_decode(tmp_path, monkeypatch):
+        graph = ReceiptGraph(tmp_path, monkeypatch)
+        request, release = graph.execution_bindings()
+        binding(tmp_path, graph.payload["path"], graph.packed)
+        calls = []
+        def fake_decoder(stream):
+            calls.append(stream.read())
+            return {"compressed_sha256": graph.payload["sha256"], "compressed_bytes": len(graph.packed)}
+        monkeypatch.setattr(inspection, "inspect_stream", fake_decoder)
+        rel = binding(tmp_path, "a/release.json", release)
+>       result = inspection.inspect_authorized(tmp_path, request, rel)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/test_rhuh_single_image_inspection_review.py:364: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/inspect_rhuh_single_image.py:384: in inspect_authorized
+    preflight(root, request)
+scripts/inspect_rhuh_single_image.py:311: in preflight
+    need(Path(request["checksum_index"]["path"]).suffix == ".sums", "checksum_index_path_required")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+condition = False, code = 'checksum_index_path_required'
+
+    def need(condition, code):
+        if not condition:
+>           raise Rejected(code)
+E           scripts.inspect_rhuh_single_image.Rejected: checksum_index_path_required
+
+scripts/inspect_rhuh_single_image.py:50: Rejected
+___ test_symlinked_payload_and_unbound_request_fields_do_not_get_interpreted ___
+
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-585/test_symlinked_payload_and_unb0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b003890>
+
+    def test_symlinked_payload_and_unbound_request_fields_do_not_get_interpreted(tmp_path, monkeypatch):
+        graph = ReceiptGraph(tmp_path, monkeypatch)
+        request = graph.seal()
+        request["postoperative_outcome"] = "forbidden"
+        with pytest.raises(inspection.Rejected, match="schema"):
+            inspection.preflight(tmp_path, request)
+        del request["postoperative_outcome"]
+        original = tmp_path / graph.payload["path"]
+        original.parent.mkdir(parents=True)
+        outside = tmp_path / "outside.gz"
+        outside.write_bytes(graph.packed)
+        original.symlink_to(outside)
+>       with pytest.raises(inspection.Rejected, match="symlink"):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'symlink'
+E         Actual message: 'checksum_index_path_required'
+
+tests/test_rhuh_single_image_inspection_review.py:386: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_rhuh_single_image_inspection_review.py::test_metadata_preflight_has_no_payload_file_and_no_decoder
+FAILED tests/test_rhuh_single_image_inspection_review.py::test_bound_metadata_byte_drift_is_rejected[checksum_index]
+FAILED tests/test_rhuh_single_image_inspection_review.py::test_bound_metadata_byte_drift_is_rejected[parent_summary]
+FAILED tests/test_rhuh_single_image_inspection_review.py::test_bound_metadata_byte_drift_is_rejected[parent_execution]
+FAILED tests/test_rhuh_single_image_inspection_review.py::test_bound_metadata_byte_drift_is_rejected[worker_receipt]
+FAILED tests/test_rhuh_single_image_inspection_review.py::test_bound_metadata_byte_drift_is_rejected[reconciliation]
+FAILED tests/test_rhuh_single_image_inspection_review.py::test_separate_release_and_current_source_are_required_before_payload_open[unreleased]
+FAILED tests/test_rhuh_single_image_inspection_review.py::test_separate_release_and_current_source_are_required_before_payload_open[source_drift]
+FAILED tests/test_rhuh_single_image_inspection_review.py::test_separate_release_and_current_source_are_required_before_payload_open[request_drift]
+FAILED tests/test_rhuh_single_image_inspection_review.py::test_separate_release_and_current_source_are_required_before_payload_open[extra_path]
+FAILED tests/test_rhuh_single_image_inspection_review.py::test_mocked_authorized_wrapper_authenticates_original_bytes_without_actual_decode
+FAILED tests/test_rhuh_single_image_inspection_review.py::test_symlinked_payload_and_unbound_request_fields_do_not_get_interpreted
+12 failed, 63 passed in 0.37s

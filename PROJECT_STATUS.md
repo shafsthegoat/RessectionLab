@@ -37,8 +37,19 @@ corrected patient run has been released. A separate opt-in ingress helper passes
 43 analytical checks after two metadata-label binding defects were repaired. It
 screens all six exits and selects by physical distance only after any tool-entry
 pose is admissible; full motion validation remains mandatory. The existing access
-baseline is unchanged. A bounded PAT25 preparation comparison is being prepared.
-See `artifacts/training-observation-coverage-v1/RESULT.md`.
+baseline is unchanged. The separately released PAT25 preparation comparison now
+completed in 36.754634 supervised seconds, with sampled process-group peak
+2,609,086,464 bytes. All six existing exits received 468 static checks; five were
+eligible. The fixed distance/axis/sign rule selected axis 2, sign -1. The original
+inventory reproduced exactly with 0/78 admissible previews; the selected access
+had 78/78, including 39/39 for each tool. Both crops retained 100% of supplied
+target mass. All 468 static poses still carry outside-image and normal-tissue
+exposure unknowns; deepest-shaft centerline coverage decreased. The frozen
+saved-record audit passed on its first run, with 75 bound inputs and all seven raw
+outputs unchanged. No tissue was removed and no policy ran. This is a TRAIN
+preparation improvement informed by the earlier failure, not independent patient
+generalization or a learning gain. See `artifacts/pat25-ingress-access-v1/RESULT.md`
+and the unchanged `artifacts/training-observation-coverage-v1/RESULT.md`.
 
 The isolated, signed native public-transfer client passes a version-only smoke
 check. The checksum-only helper has 37 passing offline controls; three lifecycle
