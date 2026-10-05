@@ -55,6 +55,7 @@ def analytical_arrays():
 
 
 def test_real_sklearn_fold_scaler_is_train_only_and_shadow_identical():
+    pytest.importorskip('sklearn', reason='Requires the isolated RHUH research runtime')
     X,y=analytical_arrays();rows=[];counts={'attempted':0,'completed':0}
     output=runner.loo(X,y,[f'synthetic-{i}' for i in range(6)],study(),deadline=runner.time.monotonic()+15,
         counts=counts,on_fold=rows.append,job='synthetic',shadow_X=X.copy())
@@ -79,6 +80,7 @@ def test_metrics_ties_null_precision_and_prevalence_auc_rule():
 
 @pytest.mark.parametrize('failure',['warning','limit','nonfinite','deadline'])
 def test_failed_fit_is_recorded_without_continuing(failure):
+    pytest.importorskip('sklearn', reason='Requires the isolated RHUH research runtime')
     from sklearn.preprocessing import StandardScaler
     from sklearn.exceptions import ConvergenceWarning
     X,y=analytical_arrays();rows=[];counts={'attempted':0,'completed':0}

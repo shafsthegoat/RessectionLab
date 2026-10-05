@@ -22,6 +22,7 @@ def study():
 
 
 def test_convergence_warning_subclass_cannot_be_marked_converged():
+    pytest.importorskip("sklearn", reason="Requires the isolated RHUH research runtime")
     from sklearn.exceptions import ConvergenceWarning
     from sklearn.preprocessing import StandardScaler
 
@@ -52,6 +53,7 @@ def test_convergence_warning_subclass_cannot_be_marked_converged():
 
 
 def test_runtime_refuses_numpy_from_outside_the_declared_interpreter(tmp_path, monkeypatch):
+    pytest.importorskip("sklearn", reason="Requires the isolated RHUH research runtime")
     dependency = json.loads((ROOT / "artifacts/rhuh-baseline-runtime-v1/receipt.json").read_text())
     foreign = tmp_path / "foreign_numpy_init.py"
     foreign.write_text("# constructed unrelated numerical source\n")
@@ -63,6 +65,7 @@ def test_runtime_refuses_numpy_from_outside_the_declared_interpreter(tmp_path, m
 
 
 def test_constant_features_reduce_to_training_prevalence_without_penalized_intercept():
+    pytest.importorskip("sklearn", reason="Requires the isolated RHUH research runtime")
     X = np.tile([3., 9.], (6, 1))
     y = np.array([0, 0, 0, 1, 1, 1])
     rows = []
@@ -157,6 +160,7 @@ def test_shadow_rotates_every_excluded_column_and_never_moves_the_target():
 
 
 def test_exact_fit_cap_prevents_constructing_an_additional_estimator():
+    pytest.importorskip("sklearn", reason="Requires the isolated RHUH research runtime")
     counts = {"attempted": 9092, "completed": 9092}
     rows = []
 
