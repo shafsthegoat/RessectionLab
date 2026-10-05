@@ -1,0 +1,22 @@
+{
+  "scope": "Independent analytical/mocked controls only; no patient arrays/native operations/learning",
+  "command": [
+    ".venv/bin/python",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/test_training_observation_coverage_review.py",
+    "tests/test_spatial_multiscale_views_review.py"
+  ],
+  "source_sha256": {
+    "scripts/diagnose_training_observation_coverage.py": "b85805c69821e8ca12fb28f0e6c48b500dc00329685853cef4064a5c2179c1b2",
+    "src/resectionlab/spatial_multiscale_views.py": "743531e800f9f2913b6ec8101b2d5632dbb9ec2482d196fe9400d1459b29c0fe",
+    "tests/test_training_observation_coverage_review.py": "e5b1fb12fcf1567b1ca1ae157c20d56a641a3040cd8a4762a2157f19611f2ffe",
+    "tests/test_spatial_multiscale_views_review.py": "1561f503d926e74f14ba52fb538c0ffba3a5c58ad45a5183cd73d45d86659e70"
+  },
+  "source_unchanged": true,
+  "exit_code": 1,
+  "elapsed_seconds": 3.3214264169801027,
+  "stdout": "F......................                                                  [100%]\n=================================== FAILURES ===================================\n________ test_preview_cap_violation_aborts_worker_before_any_next_case _________\n\ntmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-558/test_preview_cap_violation_abo0')\nmonkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b223980>\n\n    def test_preview_cap_violation_aborts_worker_before_any_next_case(tmp_path, monkeypatch):\n        # A profiler exception disables profiling in CPython. The worker must stop,\n        # not continue subsequent cases with a silently absent observer.\n        calls, bodies = [], []\n        def preview(self=None):\n            bodies.append(\"entered\")\n        monkeypatch.setattr(NativeResectionEngine, \"preview_stroke\", preview)\n        originals = {subject:{\"coverage\":{\"historical\":\"constructed\"}} for subject in diagnostic.SUBJECTS}\n        monkeypatch.setattr(diagnostic,\"validate_release\",lambda *a:None)\n        monkeypatch.setattr(diagnostic,\"validate\",lambda record:originals)\n        monkeypatch.setattr(diagnostic,\"peak_rss_bytes\",lambda:0)\n        monkeypatch.setattr(diagnostic,\"original_records\",lambda:originals)\n        monkeypatch.setattr(diagnostic,\"source_inventory\",lambda:{})\n        monkeypatch.setattr(diagnostic,\"ROOT\",tmp_path)\n        bundle = tmp_path/\"analytical.fixture\"; bundle.write_bytes(b\"no patient arrays\")\n        member = {\"case_bundle\":bundle.name,\"case_bundle_sha256\":hashlib.sha256(bundle.read_bytes()).hexdigest()}\n        record = {\"members\":{subject:{\"member\":member} for subject in diagnostic.SUBJECTS},\"source_sha256\":{}}\n        def load(subject,*args):\n            calls.append(subject)\n            for _ in range(diagnostic.SETTINGS[\"max_initial_previews_per_case\"]+1):\n                preview()\n            return object()\n        monkeypatch.setattr(diagnostic,\"load_initial\",load)\n        monkeypatch.setattr(diagnostic,\"inspect_task\",lambda *args:{\"status\":\"complete\"})\n        with pytest.raises(RuntimeError):\n>           diagnostic.worker(record,tmp_path,manifest_sha256=\"0\"*64,release={})\n\ntests/test_training_observation_coverage_review.py:43: \n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \nscripts/diagnose_training_observation_coverage.py:507: in worker\n    report[\"initial_import_paths\"] = loaded_source_paths()\n                                     ^^^^^^^^^^^^^^^^^^^^^\n_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ \n\n    def loaded_source_paths():\n        paths = {}\n        for name, module in tuple(sys.modules.items()):\n            if name == \"resectionlab\" or name.startswith(\"resectionlab.\"):\n                path = Path(module.__file__).resolve()\n                if not path.is_relative_to((ROOT / \"src/resectionlab\").resolve()):\n>                   raise ValueError(\"Numerical import escaped the released source root\")\nE                   ValueError: Numerical import escaped the released source root\n\nscripts/diagnose_training_observation_coverage.py:480: ValueError\n=========================== short test summary info ============================\nFAILED tests/test_training_observation_coverage_review.py::test_preview_cap_violation_aborts_worker_before_any_next_case\n1 failed, 22 passed in 2.93s\n",
+  "stderr": ""
+}
