@@ -15,8 +15,8 @@ phase_labels = ('Original baseline','Screened selection')
 colors = ('#73808D','#007E87')
 eligibility_colors = {'eligible':'#007E87','rejected':'#AC6840','unknown':'#AAB2BB'}
 plt.rcParams.update({'font.family':'DejaVu Sans','font.size':9,'pdf.fonttype':42,'svg.fonttype':'none'})
-fig,axes=plt.subplots(2,2,figsize=(12.8,9.3))
-fig.subplots_adjust(left=.13,right=.965,top=.78,bottom=.18,wspace=.48,hspace=.56)
+fig,axes=plt.subplots(2,2,figsize=(12.8,8.8))
+fig.subplots_adjust(left=.13,right=.965,top=.78,bottom=.13,wspace=.48,hspace=.56)
 fig.suptitle('PAT25 ingress diagnostic: original versus deterministic screened access',
              x=.055,y=.958,ha='left',fontsize=15,weight='bold')
 fig.text(.055,.914,f"Recorded attempt status: {summary['status']} · six fixed source-axis exits · initial uncommitted inventories only",
@@ -92,8 +92,8 @@ for j,phase in enumerate(phases):
             if v is not None:ax.scatter(100*v,y,s=35,marker=marker,facecolors=face,edgecolors=colors[j],zorder=3)
 ax.set(yticks=range(3),yticklabels=['Entry to tip','Approach shaft','Deepest shaft'],
        ylim=(2.6,-.6),xlim=(-3,105),xlabel='Mean fraction of emitted centerline within grid domain (%)')
-fig.text(.628,.105,'Filled circle: center interpolation domain. Open square: full-cell extent.\nAll emitted previews; accepted-subset summaries retained separately.',
-         va='top',fontsize=8,color='#465364')
+ax.text(0,-.25,'Filled circle: center interpolation domain. Open square: full-cell extent.\nAll emitted previews; accepted-subset summaries retained separately.',
+        transform=ax.transAxes,va='top',fontsize=8,color='#465364')
 for ax in axes.flat:
     ax.spines[['top','right','left']].set_visible(False);ax.tick_params(axis='y',length=0)
     ax.spines['bottom'].set_color('#CBD2DA');ax.grid(axis='x',color='#E7EBEF',lw=.7);ax.set_axisbelow(True)

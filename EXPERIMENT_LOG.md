@@ -1470,3 +1470,27 @@ result. No header, voxels, surgical observations or new patient outcomes were
 inspected. The original 12-file acquisition declaration remains unmet; no decode,
 scientific use or learning was released. Evidence is retained in
 `artifacts/rhuh-single-image-acquisition-v2/`.
+
+## October 5, 2026 — fixed whole-tool ingress rule restores PAT25 initial actions
+
+After 89 offline controls, a committed 72-file source/metadata archive, fixed
+declaration, prospective reporting and separate execution release, one PAT25
+TRAIN diagnostic completed in 36.754634 supervised seconds. The outer process
+group's sampled peak was 2,609,086,464 bytes; termination and cleanup completed.
+No patient retry occurred. The original 78-slot inventory reproduced exactly:
+all previews were shaft-blocked. Of six existing exits, five passed the ANY-entry
+rule. Selection used only distance/axis/sign and chose axis 2, sign -1, where all
+78 initial native previews passed (39 for each tool). The attempt used exactly
+468 static checks and 156 native previews, with no cuts, policy forwards or updates.
+
+Both access-relative crops retained the full supplied target. Deepest-shaft
+centerline coverage decreased, and all 468 static poses retained outside-image
+and normal-tissue-exposure unknowns. Thus the availability gain does not imply
+better representation coverage, executed removal, clinical clearance or learned
+policy improvement. The original STOP-only comparison remains unchanged.
+The frozen independent saved-only checker passed on its first run, reconciling
+75 bound inputs and all seven unchanged raw outputs without decoding patient
+arrays or repeating simulation. Raw records are retained losslessly in
+`artifacts/pat25-ingress-access-v1/completed-run.tar.gz`; the report and fixed
+comparison plot are in the same directory. This TRAIN repair was informed by
+previously inspected failures; it is not untouched validation.

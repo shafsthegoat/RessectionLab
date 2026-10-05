@@ -1,0 +1,1266 @@
+{
+  "claim_boundaries": [
+    "Static ingress eligibility is not whole-stroke feasibility.",
+    "Geometry unknowns are separate from eligibility and remain unknown.",
+    "Center interpolation domains and full-cell extents are distinct from complete-tool clearance.",
+    "Zero initial cavity is an empty procedure state, not unavailable evidence.",
+    "No resection, learned policy benefit, clinical benefit or neurological-risk claim."
+  ],
+  "execution_binding": {
+    "archive_root": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source",
+    "declaration_sha256": "12416c632ae5f297ef0d5fec282e9922c55c688c88e2a492a37bdea7f106b994",
+    "inputs_before": {
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/pat25-ingress-access-v1/declaration.json": "12416c632ae5f297ef0d5fec282e9922c55c688c88e2a492a37bdea7f106b994",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/pat25-ingress-access-v1/release.json": "1830c565c7a46d8ae129c6727ecb1d6cab6e25ea5c3e5ee7c28c85737237bcea",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/artifacts/brain-extraction/BTC-spatial-main-v1-integration/attempt-02/integration-record.json": "548681883bfaeceb97176a59497be9d1c975b46d634f2f37d8b2357d6c4ee68e",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/artifacts/brain-extraction/PAT28-structural-evidence-bridge-v1.json": "f627befcd04a7732e60a29261589dadd6ad93f06eaf065cc940dc326c3760354",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/artifacts/electron-btc-inventory-validation.json": "dec2aa49581bd55db76641bad4f710702689eb0a6b931f95e4d0cc1424d5612b",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/artifacts/pat05-real-geometric-learning-v1/declaration-input.json": "d69c9b6cf1f0f329d698c3857bca13efaa4a4a9a7b424208711affd4ac8480f4",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/artifacts/remaining-training-frozen-spatial-float64-v1/completed-run.tar.gz": "ee11dc1b7ca194a43c51ea7bac0194e62c7c6d00a89329c5dbccc52bfde9bfea",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/docs/brain-extraction-pat16-pat20-bundle-integration.json": "006e223b8b6a2b689173c264584e007fdbce0e96da611b67fb74f4e841d88946",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/manifests/experiments/btc-spatial-development-cohort-v1.json": "962d964e1d71427f3625cdbebc0f7e4759e5d2345d8f95cb211ed45810ed2985",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/outputs/cases/BTC-sub-PAT25-structural-evidence.ressectionlab": "d635a72cc24066c2b16dc7b6d6805baae04d1750c50ca351b2410a70d913428a",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/scripts/diagnose_pat25_access.py": "a88f8176b8c79d528b15207811d99b9d061a2fcda19029dfbf058d61acf97f6a",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/scripts/diagnose_pat25_ingress_access.py": "b3afc7510fcfcc3f53b0535c7128296f130b82431fb83d061058a8658cbe10e2",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/scripts/diagnose_training_observation_coverage.py": "9c4432777fb1556b58693f652af94b8f292045c00cf54d04e954c239c5979daf",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/scripts/preflight_real_spatial_policy.py": "cfac175b072dbd8218c19f079d7ec3fa9143966b5059fe4cdfd918dff818ed3f",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/scripts/prepare_real_training_cases.py": "7533e829f0663fd68d982a84ad49982442e5e04345ea045f15c546d7bf247e6a",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/anatomy.py": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/app/__init__.py": "cad7c4e1282136061456123711d5bddb56413db3ddfb69314ee78f744d2d6d1e",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/app/annotation.py": "724debbe3ec4bef2a3b6eeba83b497c579f26b8a3549117edc5d72bdd993b6a5",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/app/desktop.py": "e9b33c7c2dce2dd6b329f9af97033fb33096dbe8b1b9e734e5ae56af489a0f96",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/app/refinement.py": "ce6116509a83582c904e844305deceb11c9282c2c6267d7fdaea01a734695c2c",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/app/reslice.py": "f397f7317da203ed88561d6638b8b41af54349bd145af5d0ccea01aa54d54796",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/app/scene.py": "21a2100de199360a990a12cd4e77fe627cdce5bb6ef79fb1cc2aa074d71f1b5b",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/app/slice_view.py": "63b279123a94e748222fc5102eeda7c1d30a3eebab2833aecc15b2335df14367",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/app/style.py": "aca2726fe243e19d11e85463589ef9b5db9e7806e4b36d8646ff8167c2d29468",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/app/training_view.py": "07fa2bfdacdb470d080cf37d6c3df52d5eee540041619cad9ae6c94132fd88d1",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/app/workers.py": "d3cb30b107fcfb930c50c26e9ef87cf277bcd90c4ec824909d6c375e9f4f2f8c",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/brain_extraction.py": "702f5df214fd1d25372275bae5333e4c915c34e9cb3745a9fe8d6eb392b74917",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/cohort.py": "d69538f80af8b318068af70dbc963b7a9ca6c3a4f62d6e8e542d6e43548fa874",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/core.py": "f1f0b8ae334cabc864c3ec85d4f6b49e4842de2b580edaadd7562276ea0c92db",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/desktop_bridge.py": "ef3005a35cafa9690898d9a85e123a08508ef375cf4136e3f61d936fb9370c74",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/diffusion.py": "e7f57bf7467fb3cb5d6b9b3f1c80e4665710713124d0720aa84d31ccc03b8e21",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/evaluation.py": "8fe1467d2dc53deb62f16c86c79eebc1596047bc58d52a8b7be3598f50334d18",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/experimental_capsule_cache.py": "7b47cf36493c4baeb305beb7f18d4f5acf5bd0fa08b0e80738e948a20bd58869",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/functional_events.py": "5a7ba030a4e4a0a4e35a48aa950a7bcc133b890dd02eee0b4301ed3a385f8faa",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/functional_evidence.py": "58ca24b6b0d63ef3860b33a247301a2f210857eec9719ad14ac5cab8517d5426",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/imaging.py": "26928ec3eb948924b961d7d70289014ee243c1cf6ea6e3f9ba60e8bf96e8d866",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/independent_geometry_batch.py": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/learning.py": "23ed946d9fee0d1402b4aa89cd3c5dabcb27ab7e57cd824dc38baa98dce08e94",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/learning_ppo.py": "a3814bc5da4837b66ae20496c38e17edd0edf73ef7863a920924cd7ec2a42d88",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/mechanics_landmarks.py": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/native_axis_accounting.py": "c75eea141a636072465d6c88fc113c4bf53d8901428f1a1511623539ee541ce8",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/native_axis_policy_schema.py": "672a5dfd8ba7981bf6bc7a81746b15b094001145c0db942f16599f24a72dcafe",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/native_axis_refinement.py": "68220ab6a5f633dda1fd65aa87a5a00f0c15fb5a63b3941a1ddae1f2243a35d7",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/native_axis_simulation.py": "5ca0147885e2a8c918d10246f4889e4bbfb9c06724f62d8abc9e8cc605a540bf",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/native_functional_evaluation.py": "2c2284e32bc0bd87b4e6dbee82e2713777bb4d509b9e22837702a9ec3ab7da13",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/native_ingress.py": "cd27eb57062d0afd72dba3b392f9ed03973a9fe5b353bb8fd0da74e6a1c6761f",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/native_proposals.py": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/native_refinement.py": "53af6d77caeddc33072717dffba5c7ca42c776ba7ae1f25125aa1d11e669a0db",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/native_resection.py": "29b20c2f0ed836d543fb2c9df0539ee0ac99c12ae0320f344b03a8286e49657c",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/native_routes.py": "97bb55a3bf2894f336a593bc3c3379b3c4dc291198af90b91d319bd0b9a824ea",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/native_simulation.py": "4790bfd16baa2cc73cb9da8b36c88a1fe945c2b29a824c232a6a941ab17a4f8f",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/native_spatial_evaluation.py": "a3f0ac4c73e6242804ee1de59a7ab429374ae8fc7f21bb34671062fd591dfffa",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/native_spatial_task.py": "61b3d8167152d06a578e1ab7c146b7af937d86ccca6ed9e20bf3081cbf2f6711",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/observed_search.py": "cdbacc079fa3e4f8d49a356e76dfdc77e4484ef4bb1a3383970a0e937c72febd",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/planning.py": "f113ce78b239f91a86c65d8add74227a9d9f3c0d718449c7968a983e76ea850d",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/policy_inputs.py": "1366cdabceae5eeee9ad44667be7d8c44de2c9ab8f551c4cf05b053f5b1b8b47",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/population_learning.py": "49899618825d08b50016f9b34f389b50ce67f6a3aa79a8f339665523e3ae8de2",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/preprocessing.py": "dbd2c4ba9551e2aa0d454b638e256ad8bc6cdf45dcdc8ec08e091e43c3eb14e5",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/prior_proposals.py": "8d0f40aa3690845465f024708d19c68b3441d0d19cd356b900566fb074730f5f",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/prior_registration.py": "9828e76ed3e29e232c39dd16ece7d5fefa4cd366d1cab7899121e929ef34a703",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/procedural_learning.py": "d4666701930d2baa1f438b2a1bed4819e895ec6161c38a78b6ef4d68331ac2d1",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/real_patient_learning.py": "51107e30dd26a623aaadc9bca7f5b2dda56b798ee5ef59fa4c4d6d9aa2e58512",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/rhuh_outcomes.py": "82981de054aca89789b9065620844cd8a8842120df71cdb89bdd147c0bc57d36",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/route_native_diagnostics.py": "f2cf704da9e971f321dce707dadd9f0350ec7234ecc75c0ed0fc1242fd8c82cf",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/selection_contract.py": "bef00b486fb6f0f0465a8526080ae5c6e08a5f1922fcf93f4624aec86ec43d72",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/simulation.py": "234b82653650ebd1baf6a58ef5cecf45d20047dce6299b32463bb021a987e62f",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/spatial_multiscale_views.py": "743531e800f9f2913b6ec8101b2d5632dbb9ec2482d196fe9400d1459b29c0fe",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/spatial_observations.py": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/spatial_policy.py": "129d6195f76bb7a5105d6097ea41cce681c34b88b79bef287e61fd56e961073f",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/spatial_policy_diagnostics.py": "257d355a017023831621107800d029b813f7036e1af6a8a16fd38e5760066493",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/spatial_task.py": "79ae36adbc29a5eaa40c1c38c9080f6cde8c52f2c5babf6acd4664eb6842a225",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/structural_evidence.py": "6a1b9e7aa5b13ea971a75d9416d96ab45de2b46901a036edd73ec58194fb7a33",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/src/resectionlab/worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
+    },
+    "release_sha256": "1830c565c7a46d8ae129c6727ecb1d6cab6e25ea5c3e5ee7c28c85737237bcea",
+    "source_commit": "fd32d20a9fad710e5e05e29d18c036cf22248ebf"
+  },
+  "exits": [
+    {
+      "admissible_pose_count": 0,
+      "axis": 0,
+      "chosen": false,
+      "derived_exit_metadata": {
+        "access": {
+          "center_mm": [
+            10.540931854397058,
+            32.110253999591805,
+            -16.86848910932173
+          ],
+          "normal_inward": [
+            0.9996282252725837,
+            0.024371308712790318,
+            -0.01222499693295372
+          ],
+          "radius_mm": 6.0,
+          "window_id": "PAT25-main-provisional-annotation-axis-v1"
+        },
+        "axis": 0,
+        "boundary_voxel": [
+          91.5,
+          139.0,
+          118.0
+        ],
+        "distance_mm": 17.5000953155969,
+        "exit_index": 0,
+        "outside_neighbor_voxel": [
+          91,
+          139,
+          118
+        ],
+        "outward_sign": -1,
+        "selected_original": true
+      },
+      "distance_mm": 17.5000953155969,
+      "eligibility": "rejected",
+      "geometry_unknown_pose_count": 78,
+      "geometry_unknown_reasons": {
+        "normal_tissue_exposure_unassessed": 78,
+        "tool_geometry_outside_image_unassessed": 78
+      },
+      "original": true,
+      "outward_sign": -1,
+      "rejected_pose_count": 78,
+      "rejection_reasons": {
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 78
+      },
+      "reported_eligible_flag": false,
+      "returned_pose_count": 78,
+      "reused_pose_count": 0,
+      "screen_status": "screened",
+      "unique_returned_static_checks": 78
+    },
+    {
+      "admissible_pose_count": 78,
+      "axis": 0,
+      "chosen": false,
+      "derived_exit_metadata": {
+        "access": {
+          "center_mm": [
+            57.52371433749795,
+            33.255711747915484,
+            -17.443067094653145
+          ],
+          "normal_inward": [
+            -0.9996282252725837,
+            -0.024371308712790318,
+            0.01222499693295372
+          ],
+          "radius_mm": 6.0,
+          "window_id": "PAT25-existing-exit-axis0-sign+1-v1"
+        },
+        "axis": 0,
+        "boundary_voxel": [
+          138.5,
+          139.0,
+          118.0
+        ],
+        "distance_mm": 29.50016067486335,
+        "exit_index": 1,
+        "outside_neighbor_voxel": [
+          139,
+          139,
+          118
+        ],
+        "outward_sign": 1,
+        "selected_original": false
+      },
+      "distance_mm": 29.50016067486335,
+      "eligibility": "eligible",
+      "geometry_unknown_pose_count": 78,
+      "geometry_unknown_reasons": {
+        "normal_tissue_exposure_unassessed": 78,
+        "tool_geometry_outside_image_unassessed": 78
+      },
+      "original": false,
+      "outward_sign": 1,
+      "rejected_pose_count": 0,
+      "rejection_reasons": {},
+      "reported_eligible_flag": true,
+      "returned_pose_count": 78,
+      "reused_pose_count": 0,
+      "screen_status": "screened",
+      "unique_returned_static_checks": 78
+    },
+    {
+      "admissible_pose_count": 66,
+      "axis": 1,
+      "chosen": false,
+      "derived_exit_metadata": {
+        "access": {
+          "center_mm": [
+            30.38652802631259,
+            -63.934578563435934,
+            -17.082426075134208
+          ],
+          "normal_inward": [
+            -0.024373129027640154,
+            0.9997029311657547,
+            -1.705437392528639e-08
+          ],
+          "radius_mm": 6.0,
+          "window_id": "PAT25-existing-exit-axis1-sign-1-v1"
+        },
+        "axis": 1,
+        "boundary_voxel": [
+          109.0,
+          42.5,
+          118.0
+        ],
+        "distance_mm": 96.49999993095156,
+        "exit_index": 2,
+        "outside_neighbor_voxel": [
+          109,
+          42,
+          118
+        ],
+        "outward_sign": -1,
+        "selected_original": false
+      },
+      "distance_mm": 96.49999993095156,
+      "eligibility": "eligible",
+      "geometry_unknown_pose_count": 78,
+      "geometry_unknown_reasons": {
+        "normal_tissue_exposure_unassessed": 78,
+        "tool_geometry_outside_image_unassessed": 78
+      },
+      "original": false,
+      "outward_sign": -1,
+      "rejected_pose_count": 12,
+      "rejection_reasons": {
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 12
+      },
+      "reported_eligible_flag": true,
+      "returned_pose_count": 78,
+      "reused_pose_count": 0,
+      "screen_status": "screened",
+      "unique_returned_static_checks": 78
+    },
+    {
+      "admissible_pose_count": 60,
+      "axis": 1,
+      "chosen": false,
+      "derived_exit_metadata": {
+        "access": {
+          "center_mm": [
+            27.41300628706813,
+            58.02917895151768,
+            -17.08242815576783
+          ],
+          "normal_inward": [
+            0.024373129027640154,
+            -0.9997029311657547,
+            1.705437392528639e-08
+          ],
+          "radius_mm": 6.0,
+          "window_id": "PAT25-existing-exit-axis1-sign+1-v1"
+        },
+        "axis": 1,
+        "boundary_voxel": [
+          109.0,
+          164.5,
+          118.0
+        ],
+        "distance_mm": 25.49999998175404,
+        "exit_index": 3,
+        "outside_neighbor_voxel": [
+          109,
+          165,
+          118
+        ],
+        "outward_sign": 1,
+        "selected_original": false
+      },
+      "distance_mm": 25.49999998175404,
+      "eligibility": "eligible",
+      "geometry_unknown_pose_count": 78,
+      "geometry_unknown_reasons": {
+        "normal_tissue_exposure_unassessed": 78,
+        "tool_geometry_outside_image_unassessed": 78
+      },
+      "original": false,
+      "outward_sign": 1,
+      "rejected_pose_count": 18,
+      "rejection_reasons": {
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 18
+      },
+      "reported_eligible_flag": true,
+      "returned_pose_count": 78,
+      "reused_pose_count": 0,
+      "screen_status": "screened",
+      "unique_returned_static_checks": 78
+    },
+    {
+      "admissible_pose_count": 78,
+      "axis": 2,
+      "chosen": true,
+      "derived_exit_metadata": {
+        "access": {
+          "center_mm": [
+            27.783983108587563,
+            32.530645666556666,
+            -37.58089546427806
+          ],
+          "normal_inward": [
+            0.012221364501955857,
+            0.0002979784670019027,
+            0.9999252719371301
+          ],
+          "radius_mm": 6.0,
+          "window_id": "PAT25-existing-exit-axis2-sign-1-v1"
+        },
+        "axis": 2,
+        "boundary_voxel": [
+          109.0,
+          139.0,
+          97.5
+        ],
+        "distance_mm": 20.49999966866083,
+        "exit_index": 4,
+        "outside_neighbor_voxel": [
+          109,
+          139,
+          97
+        ],
+        "outward_sign": -1,
+        "selected_original": false
+      },
+      "distance_mm": 20.49999966866083,
+      "eligibility": "eligible",
+      "geometry_unknown_pose_count": 78,
+      "geometry_unknown_reasons": {
+        "normal_tissue_exposure_unassessed": 78,
+        "tool_geometry_outside_image_unassessed": 78
+      },
+      "original": false,
+      "outward_sign": -1,
+      "rejected_pose_count": 0,
+      "rejection_reasons": {},
+      "reported_eligible_flag": true,
+      "returned_pose_count": 78,
+      "reused_pose_count": 0,
+      "screen_status": "screened",
+      "unique_returned_static_checks": 78
+    },
+    {
+      "admissible_pose_count": 72,
+      "axis": 2,
+      "chosen": false,
+      "derived_exit_metadata": {
+        "access": {
+          "center_mm": [
+            29.079447724856436,
+            32.56223138354835,
+            68.41118164791982
+          ],
+          "normal_inward": [
+            -0.012221364501955857,
+            -0.0002979784670019027,
+            -0.9999252719371301
+          ],
+          "radius_mm": 6.0,
+          "window_id": "PAT25-existing-exit-axis2-sign+1-v1"
+        },
+        "axis": 2,
+        "boundary_voxel": [
+          109.0,
+          139.0,
+          203.5
+        ],
+        "distance_mm": 85.49999861807322,
+        "exit_index": 5,
+        "outside_neighbor_voxel": [
+          109,
+          139,
+          204
+        ],
+        "outward_sign": 1,
+        "selected_original": false
+      },
+      "distance_mm": 85.49999861807322,
+      "eligibility": "eligible",
+      "geometry_unknown_pose_count": 78,
+      "geometry_unknown_reasons": {
+        "normal_tissue_exposure_unassessed": 78,
+        "tool_geometry_outside_image_unassessed": 78
+      },
+      "original": false,
+      "outward_sign": 1,
+      "rejected_pose_count": 6,
+      "rejection_reasons": {
+        "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 6
+      },
+      "reported_eligible_flag": true,
+      "returned_pose_count": 78,
+      "reused_pose_count": 0,
+      "screen_status": "screened",
+      "unique_returned_static_checks": 78
+    }
+  ],
+  "independent_audit": {
+    "limitations": [
+      "No dense patient mask is decoded: blocked-cell membership, first-cell minimality, full-mask hashes, nominal crop integrals and clearance cannot be independently recomputed.",
+      "Source/Git/archive/receipt bindings and small-coordinate arithmetic are checked, not protection against an authorized host rewriting the entire history.",
+      "No-fallback/call counts and unchanged state are reconciled from the frozen code and saved trace/invariant receipts; this is not independent operating-system instruction tracing.",
+      "Recorded sampled RSS can miss transient peaks. Saved supervision establishes its reported outcome, not an independent OS-enforced hard memory limit.",
+      "The outer clock begins at its first stdlib timestamp; preceding interpreter startup and OS scheduling are explicitly not bounded by that receipt.",
+      "Centerline/crop visibility and initial ingress do not certify whole-tool visibility, later stroke feasibility, skull access, clinical safety or efficacy.",
+      "Target-center exclusions in saved envelope summaries cannot be reconstructed without the nominal array; their bounds/nulls and envelope arithmetic can be checked."
+    ],
+    "path": "artifacts/pat25-ingress-access-v1/independent-audit-initial.json",
+    "report_attachment": "Added after the frozen summarizer completed; no numerical summary fields changed.",
+    "scope": "Saved records and opaque hashes only; zero patient-array decode, native calls, training or refits",
+    "sha256": "b7465d38a889e1b96fe65fb63def597bbb2523c32c3b17c158e8715dafb41b31",
+    "status": "passed_saved_complete_evidence"
+  },
+  "operations": {
+    "automatic_retry": false,
+    "candidate_setup_seconds": 5.258874125080183,
+    "checkpoints": 0,
+    "commits": 0,
+    "executed_transitions": 0,
+    "optimizer_updates": 0,
+    "policy_forwards": 0,
+    "screening_seconds": 6.4896125420928,
+    "searches": 0,
+    "total_preview_calls": 156
+  },
+  "phases": {
+    "original": {
+      "accepted_proposal_envelope": {
+        "active_sweep_aabb_ras_mm": null,
+        "distal_active_tip_axial_upper_bound_mm": null,
+        "endpoint_depth_range_mm": null,
+        "proposal_count": 0,
+        "target_centers_beyond_axial_bound": null,
+        "target_centers_outside_aabb": null
+      },
+      "actor": {
+        "cavity_channel_available": true,
+        "cavity_source_cells": 0,
+        "cavity_visible_cells": 0,
+        "channel_available": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "channel_order": [
+          "structural_intensity",
+          "nominal_tissue",
+          "nominal_target",
+          "observed_cavity",
+          "nominal_motor",
+          "nominal_language"
+        ],
+        "coverage_fraction_range": [
+          [
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "crop_affine_ras_mm": [
+          [
+            0.9996336698705912,
+            -0.024373129635353444,
+            0.012221364479309809,
+            -5.5641672781436
+          ],
+          [
+            0.024371440828543825,
+            0.9997029304351983,
+            0.00029797846650615745,
+            -0.291903917743781
+          ],
+          [
+            -0.012225063342748916,
+            -1.704667198018609e-08,
+            0.9999252557733127,
+            -48.66438318659361
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "crop_last_center_source_voxels": [
+          138.00000000000003,
+          170.0,
+          149.0
+        ],
+        "crop_origin_source_voxels": [
+          75.00000000000003,
+          106.99999999999999,
+          86.00000000000001
+        ],
+        "crop_shape": [
+          64,
+          64,
+          64
+        ],
+        "frame_basis": "unchanged source voxel indices; native physical affine defines actor crop and tool rays",
+        "interpretation": "image-center-domain coverage only; neither tool clearance nor clinical evidence adequacy",
+        "legal_nonstop_actions": 0,
+        "native_physical_affine_ras_mm": [
+          [
+            0.9996336698705912,
+            -0.024373129635353444,
+            0.012221364479309809,
+            -78.97980499267578
+          ],
+          [
+            0.024371440828543825,
+            0.9997029304351983,
+            0.00029797846650615745,
+            -109.11360168457031
+          ],
+          [
+            -0.012225063342748916,
+            -1.704667198018609e-08,
+            0.9999252557733127,
+            -133.74107360839844
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "nominal_target_available": true,
+        "nominal_target_mass_fraction_visible": 1.0,
+        "nominal_target_mass_in_crop": 16526.0,
+        "nominal_target_mass_total": 16526.0,
+        "nominal_target_positive_voxels_in_crop": 16526,
+        "nominal_target_positive_voxels_total": 16526,
+        "original_source_affine_ras_mm": [
+          [
+            0.9996336698532104,
+            -0.0243731290102005,
+            0.012221364304423332,
+            -78.97980499267578
+          ],
+          [
+            0.024371441453695297,
+            0.9997029304504395,
+            0.00029797846218571067,
+            -109.11360168457031
+          ],
+          [
+            -0.012225063517689705,
+            -1.705437391308351e-08,
+            0.9999252557754517,
+            -133.74107360839844
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "sample_coverage_counts": {
+          "full": 0,
+          "none": 0,
+          "partial": 0
+        },
+        "source_shape": [
+          160,
+          256,
+          256
+        ],
+        "target_basis": "static permitted nominal annotation/estimate; not private reference or residual volume"
+      },
+      "centerline_visibility": {
+        "accepted": {
+          "action_count": 0,
+          "segments": {
+            "approach_shaft_centerline": {
+              "mean_continuous_center_domain_fraction": null,
+              "mean_continuous_fullcell_extent_fraction": null,
+              "mean_five_sample_center_fraction": null
+            },
+            "deepest_shaft_centerline": {
+              "mean_continuous_center_domain_fraction": null,
+              "mean_continuous_fullcell_extent_fraction": null,
+              "mean_five_sample_center_fraction": null
+            },
+            "entry_to_tip": {
+              "mean_continuous_center_domain_fraction": null,
+              "mean_continuous_fullcell_extent_fraction": null,
+              "mean_five_sample_center_fraction": null
+            }
+          }
+        },
+        "emitted": {
+          "action_count": 78,
+          "segments": {
+            "approach_shaft_centerline": {
+              "mean_continuous_center_domain_fraction": 0.11913375107887013,
+              "mean_continuous_fullcell_extent_fraction": 0.12338917046088341,
+              "mean_five_sample_center_fraction": 0.2
+            },
+            "deepest_shaft_centerline": {
+              "mean_continuous_center_domain_fraction": 0.2907689989226076,
+              "mean_continuous_fullcell_extent_fraction": 0.2950244183046209,
+              "mean_five_sample_center_fraction": 0.3384615384615385
+            },
+            "entry_to_tip": {
+              "mean_continuous_center_domain_fraction": 0.99784075573243,
+              "mean_continuous_fullcell_extent_fraction": 0.998920377866215,
+              "mean_five_sample_center_fraction": 0.9794871794871796
+            }
+          }
+        }
+      },
+      "decision_model_hash": "sha256:24a8b518cbdd9c096b48fcd9aff06f9675e4d46cc1756b9377547d966c891e31",
+      "elapsed_seconds": 2.812906000064686,
+      "exit": {
+        "access": {
+          "center_mm": [
+            10.540931854397058,
+            32.110253999591805,
+            -16.86848910932173
+          ],
+          "normal_inward": [
+            0.9996282252725837,
+            0.024371308712790318,
+            -0.01222499693295372
+          ],
+          "radius_mm": 6.0,
+          "window_id": "PAT25-main-provisional-annotation-axis-v1"
+        },
+        "axis": 0,
+        "boundary_voxel": [
+          91.5,
+          139.0,
+          118.0
+        ],
+        "distance_mm": 17.5000953155969,
+        "exit_index": 0,
+        "outside_neighbor_voxel": [
+          91,
+          139,
+          118
+        ],
+        "outward_sign": -1,
+        "selected_original": true
+      },
+      "historical_inventory_exactly_reproduced": true,
+      "horizon": 3,
+      "invariants": {
+        "cavity_state_hash": "sha256:5eacc00a3dbe4972c0f2f3c2ac44a694d0cbb4629db4f2c96511fe3267ce9f12",
+        "decision_model_hash": "sha256:24a8b518cbdd9c096b48fcd9aff06f9675e4d46cc1756b9377547d966c891e31",
+        "inventory_hash": "sha256:bdd1cc408c9e5a1bcded24316741a6ea9219153c16aa900d4b69c567936aa4bf",
+        "observation_hash": "sha256:f9ba28c325f52a51820c65e2a9834f8c152b4be2a6d29aa61a4a7cb1370e695b",
+        "physical_inventory_hash": "sha256:7389a834ca6dff51f89fc697ec3ca34a6e7268963c83766d9396dc029d56ada3",
+        "source_hash": "sha256:1cb0e871bdbfdeac335980cbd324eba952053f67175d950141c052ab66a641d4",
+        "state_array_hashes": {
+          "connected_free_mask": "sha256:94e2e54ef195cbaed227fcda08b4ec92b2433586af0011ceab510e24063f6572",
+          "contact_mask": "sha256:f668a7c2544740a7fda0854abc4c42a76981a9948282f68780f7b2e101efdce3",
+          "remaining_mask": "sha256:9c84881e6e52e3fc49da5f2e7b3fda16d188eec4c2b826b08efd9205416b6a2e",
+          "removed_mask": "sha256:f668a7c2544740a7fda0854abc4c42a76981a9948282f68780f7b2e101efdce3"
+        }
+      },
+      "invariants_after": {
+        "cavity_state_hash": "sha256:5eacc00a3dbe4972c0f2f3c2ac44a694d0cbb4629db4f2c96511fe3267ce9f12",
+        "decision_model_hash": "sha256:24a8b518cbdd9c096b48fcd9aff06f9675e4d46cc1756b9377547d966c891e31",
+        "inventory_hash": "sha256:bdd1cc408c9e5a1bcded24316741a6ea9219153c16aa900d4b69c567936aa4bf",
+        "observation_hash": "sha256:f9ba28c325f52a51820c65e2a9834f8c152b4be2a6d29aa61a4a7cb1370e695b",
+        "physical_inventory_hash": "sha256:7389a834ca6dff51f89fc697ec3ca34a6e7268963c83766d9396dc029d56ada3",
+        "source_hash": "sha256:1cb0e871bdbfdeac335980cbd324eba952053f67175d950141c052ab66a641d4",
+        "state_array_hashes": {
+          "connected_free_mask": "sha256:94e2e54ef195cbaed227fcda08b4ec92b2433586af0011ceab510e24063f6572",
+          "contact_mask": "sha256:f668a7c2544740a7fda0854abc4c42a76981a9948282f68780f7b2e101efdce3",
+          "remaining_mask": "sha256:9c84881e6e52e3fc49da5f2e7b3fda16d188eec4c2b826b08efd9205416b6a2e",
+          "removed_mask": "sha256:f668a7c2544740a7fda0854abc4c42a76981a9948282f68780f7b2e101efdce3"
+        }
+      },
+      "invariants_equal": true,
+      "inventory": {
+        "accepted_count": 0,
+        "all_support_cell_tool_pairs": 3012666,
+        "basis": "permitted_nominal_and_observed_cavity_columns_without_crop_clipping",
+        "candidate_cap": 96,
+        "cavity_state_hash": "sha256:5eacc00a3dbe4972c0f2f3c2ac44a694d0cbb4629db4f2c96511fe3267ce9f12",
+        "complete": true,
+        "crop_clipping": false,
+        "decision_model_hash": "sha256:24a8b518cbdd9c096b48fcd9aff06f9675e4d46cc1756b9377547d966c891e31",
+        "declared_slots": 78,
+        "disposition_counts": {
+          "PROPOSED_UNCERTIFIED": 78
+        },
+        "duplicate_count": 0,
+        "emitted_count": 78,
+        "endpoint_centers_in_actor_crop": 70,
+        "evaluated_slots": 78,
+        "ledger_complete": true,
+        "max_steps": 3,
+        "nominal_provenance_hash": "sha256:4a494af3cc5c653a0d0a205a5dabd16bd6c4df15dbbbd9337443f1b4979dc71e",
+        "nominal_target_hash": "sha256:201d9f696a27e59736b94c8c112cbd1b36c34cce7e87c1475998ac68b4ceaebc",
+        "omitted_count": 0,
+        "per_tool": {
+          "native-fine-aspiration": {
+            "accepted": 0,
+            "declared_slots": 39,
+            "emitted": 39,
+            "proposal_dispositions": {
+              "PROPOSED_UNCERTIFIED": 39
+            },
+            "rejected": 39,
+            "rejection_reasons": {
+              "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 39
+            }
+          },
+          "native-wide-aspiration": {
+            "accepted": 0,
+            "declared_slots": 39,
+            "emitted": 39,
+            "proposal_dispositions": {
+              "PROPOSED_UNCERTIFIED": 39
+            },
+            "rejected": 39,
+            "rejection_reasons": {
+              "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 39
+            }
+          }
+        },
+        "provider_model_hash": "sha256:fe13f3247c05c0e1dc1d43f158358be0e38d7d3ca22f27f26aa08ca6d79eaa64",
+        "provider_version": "permitted-nominal-cavity-columns-v1",
+        "rejected_count": 78,
+        "remaining_steps": 3,
+        "scope": "complete_dispositions_for_declared_columns_and_families_not_all_surgical_paths",
+        "source_hash": "sha256:1cb0e871bdbfdeac335980cbd324eba952053f67175d950141c052ab66a641d4",
+        "steps_taken": 0,
+        "terminal": false,
+        "terminated_slots": 0,
+        "unavailable_count": 0
+      },
+      "preview_calls": 78,
+      "reward": {
+        "action_cost": 0.03,
+        "graph_edge_cost": 0.0,
+        "language_per_mm3": 0.0,
+        "motion_per_mm": 0.001,
+        "motor_per_mm3": 0.0,
+        "normal_per_mm3": 0.2,
+        "target_per_mm3": 1.0,
+        "tool_change_cost": 0.03
+      },
+      "status": "complete"
+    },
+    "screened_selected": {
+      "accepted_proposal_envelope": {
+        "active_sweep_aabb_ras_mm": [
+          [
+            22.498417937367478,
+            27.280642870012077,
+            -42.86734646880821
+          ],
+          [
+            33.43007839582657,
+            37.79003464511794,
+            1.203051581406669
+          ]
+        ],
+        "distal_active_tip_axial_upper_bound_mm": 38.74999942965733,
+        "endpoint_depth_range_mm": [
+          0.5000000109962077,
+          36.49999942965733
+        ],
+        "proposal_count": 78,
+        "target_centers_beyond_axial_bound": 0,
+        "target_centers_outside_aabb": 13301
+      },
+      "actor": {
+        "cavity_channel_available": true,
+        "cavity_source_cells": 0,
+        "cavity_visible_cells": 0,
+        "channel_available": [
+          true,
+          true,
+          true,
+          true,
+          false,
+          false
+        ],
+        "channel_order": [
+          "structural_intensity",
+          "nominal_tissue",
+          "nominal_target",
+          "observed_cavity",
+          "nominal_motor",
+          "nominal_language"
+        ],
+        "coverage_fraction_range": [
+          [
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "crop_affine_ras_mm": [
+          [
+            0.9996336698705912,
+            -0.024373129635353444,
+            0.012221364479309809,
+            -3.6260067607989726
+          ],
+          [
+            0.024371440828543825,
+            0.9997029304351983,
+            0.00029797846650615745,
+            -0.24465092841923308
+          ],
+          [
+            -0.012225063342748916,
+            -1.704667198018609e-08,
+            0.9999252557733127,
+            -53.688459592145676
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "crop_last_center_source_voxels": [
+          140.0,
+          169.99999999999997,
+          144.0
+        ],
+        "crop_origin_source_voxels": [
+          77.0,
+          106.99999999999997,
+          81.00000000000001
+        ],
+        "crop_shape": [
+          64,
+          64,
+          64
+        ],
+        "frame_basis": "unchanged source voxel indices; native physical affine defines actor crop and tool rays",
+        "interpretation": "image-center-domain coverage only; neither tool clearance nor clinical evidence adequacy",
+        "legal_nonstop_actions": 78,
+        "native_physical_affine_ras_mm": [
+          [
+            0.9996336698705912,
+            -0.024373129635353444,
+            0.012221364479309809,
+            -78.97980499267578
+          ],
+          [
+            0.024371440828543825,
+            0.9997029304351983,
+            0.00029797846650615745,
+            -109.11360168457031
+          ],
+          [
+            -0.012225063342748916,
+            -1.704667198018609e-08,
+            0.9999252557733127,
+            -133.74107360839844
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "nominal_target_available": true,
+        "nominal_target_mass_fraction_visible": 1.0,
+        "nominal_target_mass_in_crop": 16526.0,
+        "nominal_target_mass_total": 16526.0,
+        "nominal_target_positive_voxels_in_crop": 16526,
+        "nominal_target_positive_voxels_total": 16526,
+        "original_source_affine_ras_mm": [
+          [
+            0.9996336698532104,
+            -0.0243731290102005,
+            0.012221364304423332,
+            -78.97980499267578
+          ],
+          [
+            0.024371441453695297,
+            0.9997029304504395,
+            0.00029797846218571067,
+            -109.11360168457031
+          ],
+          [
+            -0.012225063517689705,
+            -1.705437391308351e-08,
+            0.9999252557754517,
+            -133.74107360839844
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "sample_coverage_counts": {
+          "full": 78,
+          "none": 0,
+          "partial": 0
+        },
+        "source_shape": [
+          160,
+          256,
+          256
+        ],
+        "target_basis": "static permitted nominal annotation/estimate; not private reference or residual volume"
+      },
+      "centerline_visibility": {
+        "accepted": {
+          "action_count": 78,
+          "segments": {
+            "approach_shaft_centerline": {
+              "mean_continuous_center_domain_fraction": 0.11913298322631895,
+              "mean_continuous_fullcell_extent_fraction": 0.12338837936208819,
+              "mean_five_sample_center_fraction": 0.2
+            },
+            "deepest_shaft_centerline": {
+              "mean_continuous_center_domain_fraction": 0.2405754423402552,
+              "mean_continuous_fullcell_extent_fraction": 0.24483083847602452,
+              "mean_five_sample_center_fraction": 0.26666666666666666
+            },
+            "entry_to_tip": {
+              "mean_continuous_center_domain_fraction": 1.0,
+              "mean_continuous_fullcell_extent_fraction": 1.0,
+              "mean_five_sample_center_fraction": 1.0
+            }
+          }
+        },
+        "emitted": {
+          "action_count": 78,
+          "segments": {
+            "approach_shaft_centerline": {
+              "mean_continuous_center_domain_fraction": 0.11913298322631895,
+              "mean_continuous_fullcell_extent_fraction": 0.12338837936208819,
+              "mean_five_sample_center_fraction": 0.2
+            },
+            "deepest_shaft_centerline": {
+              "mean_continuous_center_domain_fraction": 0.2405754423402552,
+              "mean_continuous_fullcell_extent_fraction": 0.24483083847602452,
+              "mean_five_sample_center_fraction": 0.26666666666666666
+            },
+            "entry_to_tip": {
+              "mean_continuous_center_domain_fraction": 1.0,
+              "mean_continuous_fullcell_extent_fraction": 1.0,
+              "mean_five_sample_center_fraction": 1.0
+            }
+          }
+        }
+      },
+      "decision_model_hash": "sha256:749d5ee42e669fce0a212372cad4b1626478532f5938100628ac929555fc3852",
+      "elapsed_seconds": 12.004727124935016,
+      "exit": {
+        "access": {
+          "center_mm": [
+            27.783983108587563,
+            32.530645666556666,
+            -37.58089546427806
+          ],
+          "normal_inward": [
+            0.012221364501955857,
+            0.0002979784670019027,
+            0.9999252719371301
+          ],
+          "radius_mm": 6.0,
+          "window_id": "PAT25-existing-exit-axis2-sign-1-v1"
+        },
+        "axis": 2,
+        "boundary_voxel": [
+          109.0,
+          139.0,
+          97.5
+        ],
+        "distance_mm": 20.49999966866083,
+        "exit_index": 4,
+        "outside_neighbor_voxel": [
+          109,
+          139,
+          97
+        ],
+        "outward_sign": -1,
+        "selected_original": false
+      },
+      "horizon": 3,
+      "invariants": {
+        "cavity_state_hash": "sha256:8b5ca739c98310bc06b065975bc9c8f2666f2b3fbad96ee617e7683522d3c517",
+        "decision_model_hash": "sha256:749d5ee42e669fce0a212372cad4b1626478532f5938100628ac929555fc3852",
+        "inventory_hash": "sha256:80c0a33ec3558118286b831921acf6e900d71dba4ee01da58bd15577bd7970f5",
+        "observation_hash": "sha256:749c373b6e8eaa42a6b4a74a94c9bdd3337dce9229ca1439d905853e7ed288cc",
+        "physical_inventory_hash": "sha256:d765926cfac67c84084f4ab3dc14f2983d0532672ab35823d90a6e0b79631e7d",
+        "source_hash": "sha256:2a15b67cd83e53929cfd0b6469dca5a4084d0e3067ca93d5d60d76b718e3929d",
+        "state_array_hashes": {
+          "connected_free_mask": "sha256:94e2e54ef195cbaed227fcda08b4ec92b2433586af0011ceab510e24063f6572",
+          "contact_mask": "sha256:f668a7c2544740a7fda0854abc4c42a76981a9948282f68780f7b2e101efdce3",
+          "remaining_mask": "sha256:9c84881e6e52e3fc49da5f2e7b3fda16d188eec4c2b826b08efd9205416b6a2e",
+          "removed_mask": "sha256:f668a7c2544740a7fda0854abc4c42a76981a9948282f68780f7b2e101efdce3"
+        }
+      },
+      "invariants_after": {
+        "cavity_state_hash": "sha256:8b5ca739c98310bc06b065975bc9c8f2666f2b3fbad96ee617e7683522d3c517",
+        "decision_model_hash": "sha256:749d5ee42e669fce0a212372cad4b1626478532f5938100628ac929555fc3852",
+        "inventory_hash": "sha256:80c0a33ec3558118286b831921acf6e900d71dba4ee01da58bd15577bd7970f5",
+        "observation_hash": "sha256:749c373b6e8eaa42a6b4a74a94c9bdd3337dce9229ca1439d905853e7ed288cc",
+        "physical_inventory_hash": "sha256:d765926cfac67c84084f4ab3dc14f2983d0532672ab35823d90a6e0b79631e7d",
+        "source_hash": "sha256:2a15b67cd83e53929cfd0b6469dca5a4084d0e3067ca93d5d60d76b718e3929d",
+        "state_array_hashes": {
+          "connected_free_mask": "sha256:94e2e54ef195cbaed227fcda08b4ec92b2433586af0011ceab510e24063f6572",
+          "contact_mask": "sha256:f668a7c2544740a7fda0854abc4c42a76981a9948282f68780f7b2e101efdce3",
+          "remaining_mask": "sha256:9c84881e6e52e3fc49da5f2e7b3fda16d188eec4c2b826b08efd9205416b6a2e",
+          "removed_mask": "sha256:f668a7c2544740a7fda0854abc4c42a76981a9948282f68780f7b2e101efdce3"
+        }
+      },
+      "invariants_equal": true,
+      "inventory": {
+        "accepted_count": 78,
+        "all_support_cell_tool_pairs": 3012666,
+        "basis": "permitted_nominal_and_observed_cavity_columns_without_crop_clipping",
+        "candidate_cap": 96,
+        "cavity_state_hash": "sha256:8b5ca739c98310bc06b065975bc9c8f2666f2b3fbad96ee617e7683522d3c517",
+        "complete": true,
+        "crop_clipping": false,
+        "decision_model_hash": "sha256:749d5ee42e669fce0a212372cad4b1626478532f5938100628ac929555fc3852",
+        "declared_slots": 78,
+        "disposition_counts": {
+          "PROPOSED_UNCERTIFIED": 78
+        },
+        "duplicate_count": 0,
+        "emitted_count": 78,
+        "endpoint_centers_in_actor_crop": 78,
+        "evaluated_slots": 78,
+        "ledger_complete": true,
+        "max_steps": 3,
+        "nominal_provenance_hash": "sha256:46cf8a45c5fcd92ce7e1dcc6e5cf6a2fd742f5e622a421c5a7a0d522e97a89fa",
+        "nominal_target_hash": "sha256:201d9f696a27e59736b94c8c112cbd1b36c34cce7e87c1475998ac68b4ceaebc",
+        "omitted_count": 0,
+        "per_tool": {
+          "native-fine-aspiration": {
+            "accepted": 39,
+            "declared_slots": 39,
+            "emitted": 39,
+            "proposal_dispositions": {
+              "PROPOSED_UNCERTIFIED": 39
+            },
+            "rejected": 0,
+            "rejection_reasons": {}
+          },
+          "native-wide-aspiration": {
+            "accepted": 39,
+            "declared_slots": 39,
+            "emitted": 39,
+            "proposal_dispositions": {
+              "PROPOSED_UNCERTIFIED": 39
+            },
+            "rejected": 0,
+            "rejection_reasons": {}
+          }
+        },
+        "provider_model_hash": "sha256:f551592c3fe1341aa3187fa31f523a4738cb6d62ba9a874f5d15ceb28cac31d3",
+        "provider_version": "permitted-nominal-cavity-columns-v1",
+        "rejected_count": 0,
+        "remaining_steps": 3,
+        "scope": "complete_dispositions_for_declared_columns_and_families_not_all_surgical_paths",
+        "source_hash": "sha256:2a15b67cd83e53929cfd0b6469dca5a4084d0e3067ca93d5d60d76b718e3929d",
+        "steps_taken": 0,
+        "terminal": false,
+        "terminated_slots": 0,
+        "unavailable_count": 0
+      },
+      "preview_calls": 78,
+      "reward": {
+        "action_cost": 0.03,
+        "graph_edge_cost": 0.0,
+        "language_per_mm3": 0.0,
+        "motion_per_mm": 0.001,
+        "motor_per_mm3": 0.0,
+        "normal_per_mm3": 0.2,
+        "target_per_mm3": 1.0,
+        "tool_change_cost": 0.03
+      },
+      "status": "complete"
+    }
+  },
+  "receipt_path": "outputs/pat25-ingress-access-v1/receipt.json",
+  "receipt_sha256": "b02ac66155132a0ddc8554d69bfe3b5a8cfdbca4e80516099a21803baa41a267",
+  "role": "TRAIN",
+  "schema": "pat25-ingress-access-saved-summary-v1",
+  "selection": {
+    "complete": true,
+    "error": null,
+    "max_screens": 468,
+    "screen_count": 468,
+    "selected_exit": [
+      2,
+      -1
+    ],
+    "selection": "any_entry_then_distance_axis_outward_sign",
+    "status": "selected"
+  },
+  "settings": {
+    "automatic_retry": false,
+    "cooperative_seconds": 170.0,
+    "cpu_threads": 1,
+    "max_initial_inventories": 2,
+    "max_initial_previews_per_inventory": 78,
+    "max_rss_bytes": 6442450944,
+    "max_static_screens": 468,
+    "max_total_previews": 156,
+    "max_wall_seconds": 174.0,
+    "whole_worker_envelope_seconds": 180.0
+  },
+  "six_exit_denominator": 6,
+  "status": "complete",
+  "subject": "sub-PAT25",
+  "termination": {
+    "acceptance": {
+      "automatic_retry": false,
+      "elapsed_seconds": 36.620395249919966,
+      "inputs_unchanged": true,
+      "parent_preflight_seconds": 1.6992251670453697,
+      "status": "complete",
+      "supervisor": {
+        "automatic_retry": false,
+        "declaration_sha256": "12416c632ae5f297ef0d5fec282e9922c55c688c88e2a492a37bdea7f106b994",
+        "inherits_outer_process_group": true,
+        "returncode": 0,
+        "rss_samples": 321,
+        "sampled_peak_rss_bytes": 2579251200,
+        "seconds": 34.87833704194054,
+        "status": "complete",
+        "termination_reason": null,
+        "timed_out": false
+      },
+      "supervisor_settings": {
+        "automatic_retry": false,
+        "cooperative_seconds": 170.0,
+        "cpu_threads": 1,
+        "max_initial_inventories": 2,
+        "max_initial_previews_per_inventory": 78,
+        "max_rss_bytes": 6442450944,
+        "max_static_screens": 468,
+        "max_total_previews": 156,
+        "max_wall_seconds": 172.3005599998869,
+        "whole_worker_envelope_seconds": 180.0
+      },
+      "worker_receipt_sha256": "b02ac66155132a0ddc8554d69bfe3b5a8cfdbca4e80516099a21803baa41a267"
+    },
+    "acceptance_path": "outputs/pat25-ingress-access-v1/acceptance.json",
+    "acceptance_sha256": "84229bc17b34925474559d81ecfe19273b7940ec7192d6a42368e8e68e3f13cc",
+    "outer": {
+      "acceptance_sha256": "84229bc17b34925474559d81ecfe19273b7940ec7192d6a42368e8e68e3f13cc",
+      "automatic_retry": false,
+      "clock_scope": "first stdlib timestamp through final receipt; interpreter startup before that timestamp and OS scheduling are not bounded",
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat25-ingress-access-v1-source/scripts/diagnose_pat25_ingress_access.py",
+        "--orchestrator",
+        "--manifest",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/pat25-ingress-access-v1/declaration.json",
+        "--release",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/artifacts/pat25-ingress-access-v1/release.json",
+        "--output",
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/pat25-ingress-access-v1",
+        "--expected-manifest-sha256",
+        "12416c632ae5f297ef0d5fec282e9922c55c688c88e2a492a37bdea7f106b994",
+        "--expected-release-sha256",
+        "1830c565c7a46d8ae129c6727ecb1d6cab6e25ea5c3e5ee7c28c85737237bcea",
+        "--outer-parent-pid",
+        "82874"
+      ],
+      "elapsed_seconds": 36.75463420897722,
+      "group_gone": true,
+      "hard_cleanup_seconds": 178.0,
+      "manifest_sha256": "12416c632ae5f297ef0d5fec282e9922c55c688c88e2a492a37bdea7f106b994",
+      "max_group_rss_bytes": 6442450944,
+      "owned_process_group": 82875,
+      "reason": null,
+      "release_sha256": "1830c565c7a46d8ae129c6727ecb1d6cab6e25ea5c3e5ee7c28c85737237bcea",
+      "returncode": 0,
+      "rss_samples": 292,
+      "sampled_peak_group_rss_bytes": 2609086464,
+      "soft_stop_seconds": 174.0,
+      "status": "complete",
+      "whole_attempt_seconds_limit": 180.0
+    },
+    "outer_path": "outputs/pat25-ingress-access-v1.outer.json",
+    "outer_sha256": "6899adcfea2c30104733248a42b23e6d42528f16fa99530f5320b9cf7369f3e4",
+    "receipt_links": {
+      "inner_acceptance_matches": true,
+      "worker_receipt_matches": true
+    },
+    "scope": "Saved lifecycle receipt consistency only; root terminal confirmation and independent evidence audit remain required."
+  },
+  "worker": {
+    "elapsed_seconds": 34.40068820817396,
+    "error": null,
+    "inputs_unchanged": true,
+    "observer_health_verified": true,
+    "observer_violation": null,
+    "peak_rss_bytes": 2579759104
+  },
+  "worker_status": "complete"
+}

@@ -1,0 +1,27 @@
+{
+  "schema": "pat25-plot-formatting-provenance-v1",
+  "reason": "Visual inspection found panel D explanatory note overlapping global footer; layout-only correction, unchanged metrics and fixed panel comparisons.",
+  "initial_helper": {
+    "path": "artifacts/pat25-ingress-access-v1/plot_saved_summary.initial.py.txt",
+    "sha256": "f8714aa38cacfcf2e1eefac1c9812cf339224c2d6136eb9cd3dffd90c89f6678"
+  },
+  "initial_render_hashes": {
+    "ingress-comparison.png": "225e2e21c2298bfaa3d82fd425091d3de209f3f77eedaf9337c47bfb4fea7244",
+    "ingress-comparison.pdf": "a1db680ab727391f2620401fcc50626beead8ebd84ae7d98be974db0e9dbdb48",
+    "ingress-comparison.svg": "bcd70267db860bfcd27adf443cdb7d35977944b1fd2f9b545ea8970f7b393f39"
+  },
+  "initial_render_status": "completed; visually inspected; footer overlap detected",
+  "metric_changes": false,
+  "final_helper_sha256": "8ae532575b724f629452ca8756843eb83886bf00cd0f21f25671288c1a063c24",
+  "final_render_hashes": {
+    "ingress-comparison.png": "698651ef6839c120c27be13ee9c0a52da0924ea0f2cbdb24c7277d24cddc1242",
+    "ingress-comparison.pdf": "bdc359d3440ef3bf033cfc1e5af7beae5a48383fd82ac2490e4725a07722435a",
+    "ingress-comparison.svg": "9a9614d3f9512f27d5fdc0633bc281bd5820fa34525a55ba0d14cd9680233ba0"
+  },
+  "final_render_status": "completed; visually inspected; note and footer separated; fixed panels and numerical values unchanged",
+  "frozen_summarizer_sha256": "b2d94b416c3fa7dacc255dc0169f86feb16c945fb2bda9ea7fe416a7e062bbb5",
+  "summary_before_audit_attachment_sha256": "04ed1dc848588ea34c8f03ad28f1123904027c2025a8706144d7797b3c147a12",
+  "summary_after_audit_attachment_sha256": "2ddcd3002191e24da8ab5471f8574a4027a9078f56d8916594b68ee581e8762c",
+  "independent_audit_sha256": "b7465d38a889e1b96fe65fb63def597bbb2523c32c3b17c158e8715dafb41b31",
+  "summary_change_after_render": "Only separate independent_audit metadata attached; no plotted field changed."
+}

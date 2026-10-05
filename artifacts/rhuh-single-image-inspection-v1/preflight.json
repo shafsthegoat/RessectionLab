@@ -1,0 +1,15 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "scripts/inspect_rhuh_single_image.py",
+    "--request",
+    "artifacts/rhuh-single-image-inspection-v1/request.json",
+    "--request-sha256",
+    "52c641a59a27adc90fa2782bb0d3ce83cacbd9e8eaf43bed8b3295c7b5c71ab0"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 0.18818920804187655,
+  "stdout": "{\"patient_bytes_opened\": false, \"payload_sha256\": \"b3b9fa69b87221062261b8b16fbddfdac2c678104b354ba371b069fd784e3625\", \"scientific_use_released\": false, \"source\": \"/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t1.nii.gz\", \"status\": \"preflight_metadata_only_passed\"}\n",
+  "stderr": "",
+  "scope": "metadata-only preflight; payload not opened or decoded"
+}
