@@ -1,0 +1,63 @@
+         34079784 function calls (28243450 primitive calls) in 26.173 seconds
+
+   Ordered by: cumulative time
+   List reduced from 1434 to 55 due to restriction <55>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        8    0.002    0.000   15.456    1.932 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/native_spatial_task.py:446(_prepare_inventory)
+        4    0.000    0.000   15.075    3.769 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/native_spatial_task.py:495(observation)
+      148    0.004    0.000   13.399    0.091 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/spatial_policy_diagnostics.py:267(measured)
+      148    0.363    0.002   13.395    0.091 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/native_resection.py:320(preview_stroke)
+    21368    0.768    0.000    9.343    0.000 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/geometry.py:357(capsule_voxel_indices)
+        2    0.001    0.000    9.337    4.669 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/native_spatial_task.py:523(step)
+        2    0.001    0.000    9.337    4.668 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/native_spatial_task.py:539(_transition)
+        1    0.000    0.000    8.914    8.914 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/compare_real_spatial_search.py:109(load_member)
+        1    0.000    0.000    8.417    8.417 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/native_spatial_task.py:759(native_spatial_task_from_case)
+        1    0.000    0.000    7.766    7.766 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/native_spatial_task.py:383(__init__)
+        1    0.000    0.000    7.347    7.347 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/native_spatial_task.py:431(reset)
+        1    0.000    0.000    6.612    6.612 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/native_spatial_task.py:686(independent_geometry_check)
+        1    0.025    0.025    6.158    6.158 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py:842(independent_check_native_history)
+    21368    3.937    0.000    5.882    0.000 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/geometry.py:319(_segment_cell_distances)
+    88745    1.977    0.000    5.241    0.000 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py:302(segment_box_distance_sq)
+      136    0.216    0.002    3.106    0.023 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py:424(_native_active_contacts)
+      423    0.014    0.000    2.791    0.007 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/core.py:86(semantic_digest)
+      952    0.136    0.000    2.587    0.003 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py:358(_cell_collision)
+       12    0.000    0.000    2.246    0.187 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/native_spatial_task.py:417(_assert_frozen)
+   838152    1.611    0.000    1.611    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+      148    0.023    0.000    1.567    0.011 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/native_resection.py:345(finish)
+   440573    1.447    0.000    1.447    0.000 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py:323(distance)
+1443256/437    0.667    0.000    1.394    0.003 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/core.py:54(freeze_json)
+1782985/4670    0.296    0.000    1.383    0.000 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/core.py:73(<genexpr>)
+    31771    0.704    0.000    1.352    0.000 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/geometry.py:285(point_segment_distances)
+        4    0.000    0.000    1.344    0.336 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/scipy/ndimage/_morphology.py:407(binary_dilation)
+        4    0.000    0.000    1.343    0.336 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/scipy/ndimage/_morphology.py:216(_binary_erosion)
+7424913/7424857    0.694    0.000    1.309    0.000 {built-in method builtins.isinstance}
+1443763/443    0.455    0.000    1.299    0.003 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/core.py:77(thaw_json)
+    86285    0.082    0.000    1.143    0.000 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:66(_wrapreduction)
+   251094    0.161    0.000    1.093    0.000 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:2245(clip)
+    64278    0.047    0.000    1.063    0.000 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:2342(sum)
+        3    0.005    0.002    1.023    0.341 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/scipy/ndimage/_morphology.py:1083(binary_fill_holes)
+   288516    0.084    0.000    1.021    0.000 {built-in method builtins.min}
+   253950    0.151    0.000    1.016    0.000 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:48(_wrapfunc)
+      133    0.016    0.000    0.955    0.007 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/native_resection.py:431(_result_digest)
+   353404    0.083    0.000    0.937    0.000 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/evaluation.py:328(<genexpr>)
+      283    0.931    0.003    0.931    0.003 {method 'update' of '_hashlib.HASH' objects}
+        4    0.930    0.233    0.930    0.233 {built-in method scipy.ndimage._nd_image.binary_erosion2}
+      137    0.001    0.000    0.927    0.007 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/core.py:104(array_digest)
+        4    0.000    0.000    0.918    0.229 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/native_spatial_task.py:414(_seal)
+    10536    0.185    0.000    0.860    0.000 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/native_resection.py:210(contained_capsule_cells)
+      205    0.006    0.000    0.794    0.004 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/native_resection.py:189(to_history_record)
+    16336    0.710    0.000    0.784    0.000 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/native_resection.py:152(to_dict)
+    22006    0.751    0.000    0.751    0.000 {method 'sort' of 'numpy.ndarray' objects}
+        2    0.005    0.002    0.732    0.366 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/native_proposals.py:524(propose)
+        2    0.008    0.004    0.714    0.357 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/native_proposals.py:147(_verify_cavity)
+        2    0.030    0.015    0.672    0.336 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/src/resectionlab/native_spatial_task.py:655(metrics)
+      697    0.002    0.000    0.661    0.001 /Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/__init__.py:183(dumps)
+      697    0.014    0.000    0.659    0.001 /Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/encoder.py:183(encode)
+      638    0.005    0.000    0.658    0.001 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/lib/_arraysetops_impl.py:145(unique)
+153764/153761    0.086    0.000    0.642    0.000 {built-in method builtins.any}
+      638    0.010    0.000    0.633    0.001 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/lib/_arraysetops_impl.py:350(_unique1d)
+  1807876    0.431    0.000    0.615    0.000 <frozen abc>:117(__instancecheck__)
+    21368    0.091    0.000    0.613    0.000 /Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/lib/python3.12/site-packages/numpy/lib/_function_base_impl.py:5062(meshgrid)
+
+
