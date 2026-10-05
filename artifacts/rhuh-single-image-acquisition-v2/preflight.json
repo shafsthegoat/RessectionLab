@@ -1,0 +1,14 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "scripts/acquire_rhuh_single_image.py"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 0.13974962500000002,
+  "summary": {
+    "status": "preflight_passed_no_network_no_transfer_no_decode",
+    "source": "/RHUH-GBM_nii_v1/RHUH-0001/0/RHUH-0001_0_t1.nii.gz"
+  },
+  "stderr_bytes": 0,
+  "release_commit": "2b4772e91791c43932f02e14b29f674babad1225"
+}

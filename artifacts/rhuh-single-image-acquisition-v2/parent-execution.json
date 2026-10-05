@@ -1,0 +1,31 @@
+{
+  "exit_code": 0,
+  "elapsed_seconds_observed_by_launcher": 11.535158333,
+  "stdout_bytes": 842,
+  "stderr_bytes": 0,
+  "parent_summary_sha256": "5853796ca7eba872e798bba56eadf02eb38e8fa7cd19c1cf6a7cd2c284ccabac",
+  "parent_summary": {
+    "status": "compressed_digest_compatible_quarantined",
+    "images_requested": true,
+    "receipt": "outputs/rhuh-single-image-v2/quarantine/run-kxn_jecp-receipt.json",
+    "final_payload": {
+      "path": "outputs/rhuh-single-image-v2/quarantine/run-kxn_jecp/RHUH-0001_0_t1.nii.gz",
+      "measured_compressed_bytes": 6337221,
+      "expected_compressed_bytes": null,
+      "prior_length_match_claim": false,
+      "sha256": "b3b9fa69b87221062261b8b16fbddfdac2c678104b354ba371b069fd784e3625",
+      "candidate_md5_of_original_compressed_bytes": "a5c579950d0431d04928e5b59e91ce9d",
+      "published_checksum_token": "a5c579950d0431d04928e5b59e91ce9d",
+      "candidate_matches_published_token": true,
+      "publisher_algorithm_confirmed": false,
+      "acceptance_scope": "format_byte_domain_compatibility_only",
+      "decoded": false,
+      "scientific_use_released": false
+    },
+    "elapsed_seconds": 11.450222,
+    "accepted": true
+  },
+  "stderr_retained": false,
+  "release_sha256": "caf8df79f86383eaa35a7814a0620ddbfed901d45a2f353b9c9ae160839dad4a",
+  "source_closure_unchanged": true
+}
