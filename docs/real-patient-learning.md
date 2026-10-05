@@ -28,6 +28,23 @@ costs. Functional evidence is unavailable in this task. Independent complete-too
 replay and separately recomputed reward/accounting are required for every accepted
 episode; neither establishes cutting or retraction fidelity.
 
+The next controlled diagnostic keeps the BC8 weights and Adam state fixed at
+initialization in both branches. Each receives eight additional updates and six
+examples per update: the original three teacher states repeated twice, or the
+original three plus three states visited by the frozen learned policy. The common
+initial state appears twice in the augmented data; six examples therefore contain
+at most five unique states. Additional labels use only the permitted nominal
+objective at each live pre-action state, and collection cannot change the
+behavior policy or its actual simulated trajectory. Terminal states are excluded.
+
+This is a small application of the dataset-aggregation idea in
+[Ross, Gordon and Bagnell (2011)](https://proceedings.mlr.press/v15/ross11a.html):
+request expert labels at states reached by the learner to address the shift from
+expert trajectories. Here the labeler is a geometric greedy planner, not a
+surgeon; one bounded iteration does not inherit a clinical or generalization
+guarantee. The matched control separates added state coverage from merely
+performing more optimizer updates. It remains imitation learning, not RL.
+
 These are reusable planning and bookkeeping components, not a trained model or
 an efficacy result. They open no images, run no optimizer, and do not alter
 geometry, observations, reward, or patient roles. The first population runner
