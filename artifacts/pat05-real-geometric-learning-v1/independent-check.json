@@ -1,0 +1,138 @@
+{
+  "checker_sha256": "da0e2d36e470968a2acef2b78f2d0d0cd21ecf3a75551cc3fdd86d32eb01e58f",
+  "checkpoint_tensors_loaded": false,
+  "checks": [
+    "micro_to_macro_union",
+    "no_repeated_removal",
+    "reward_arithmetic",
+    "recorded_independent_audit_acceptance",
+    "retained_contact_volume",
+    "selected_action_inventory_membership",
+    "attempt_commit_counts",
+    "full_target_fraction_denominator",
+    "reported_parameter_hash_chain",
+    "input_unchanged"
+  ],
+  "completed_episodes_checked": 10,
+  "episodes": [
+    {
+      "episode": "greedy_search",
+      "passed": true,
+      "recorded_independent_geometry_accepted": true,
+      "removed_cells": 905,
+      "retained_contacted_cells": 1014,
+      "reward": 410.312421263048
+    },
+    {
+      "episode": "initial_policy",
+      "passed": true,
+      "recorded_independent_geometry_accepted": true,
+      "removed_cells": 37,
+      "retained_contacted_cells": 302,
+      "reward": 12.703044515404144
+    },
+    {
+      "episode": "latest_policy",
+      "passed": true,
+      "recorded_independent_geometry_accepted": true,
+      "removed_cells": 37,
+      "retained_contacted_cells": 302,
+      "reward": 12.703044515404144
+    },
+    {
+      "episode": "optimization_0_0",
+      "passed": true,
+      "recorded_independent_geometry_accepted": true,
+      "removed_cells": 50,
+      "retained_contacted_cells": 421,
+      "reward": 10.213035441174041
+    },
+    {
+      "episode": "optimization_0_1",
+      "passed": true,
+      "recorded_independent_geometry_accepted": true,
+      "removed_cells": 434,
+      "retained_contacted_cells": 730,
+      "reward": 99.00734238524095
+    },
+    {
+      "episode": "optimization_1_0",
+      "passed": true,
+      "recorded_independent_geometry_accepted": true,
+      "removed_cells": 64,
+      "retained_contacted_cells": 471,
+      "reward": 12.179041721251517
+    },
+    {
+      "episode": "optimization_1_1",
+      "passed": true,
+      "recorded_independent_geometry_accepted": true,
+      "removed_cells": 15,
+      "retained_contacted_cells": 70,
+      "reward": -3.1250104399275
+    },
+    {
+      "episode": "random_legal_0",
+      "passed": true,
+      "recorded_independent_geometry_accepted": true,
+      "removed_cells": 430,
+      "retained_contacted_cells": 727,
+      "reward": 169.37559338855945
+    },
+    {
+      "episode": "random_legal_1",
+      "passed": true,
+      "recorded_independent_geometry_accepted": true,
+      "removed_cells": 292,
+      "retained_contacted_cells": 466,
+      "reward": -25.013086916104037
+    },
+    {
+      "episode": "random_legal_2",
+      "passed": true,
+      "recorded_independent_geometry_accepted": true,
+      "removed_cells": 704,
+      "retained_contacted_cells": 1170,
+      "reward": 246.5478578103793
+    }
+  ],
+  "greedy_return": 410.312421263048,
+  "initial_return": 12.703044515404144,
+  "input_sha256": {
+    "declaration-input.json": "d69c9b6cf1f0f329d698c3857bca13efaa4a4a9a7b424208711affd4ac8480f4",
+    "greedy_search.json": "303261a362fda633b9459ed11001324fa77064d4b4f4955a218c52724e02b4d5",
+    "initial_policy.json": "9ed4ba0c05f1823efbedd1ea0f61200d8d9ca30d98d06c29acf30702668ebe19",
+    "latest_policy.json": "cad8e2b011e2ca587c2c7bda44965c4f9f05a91e059df0d4fe58dc578e807d09",
+    "optimization_0_0.json": "4bd2923a291c9b8cff5a758dce5e58da7999d2ff5fc0b003bd84b89acd8f5c6d",
+    "optimization_0_1.json": "e80fbd6990cf8ca7d7e242ac8b27146ea6eba29a5ea9879cf2f2ca3e36461077",
+    "optimization_1_0.json": "20886aa3ff8673c9491d8f44630d8dacb073b5cd50c95228bd08a2084cc55bdd",
+    "optimization_1_1.json": "4b2416123af556d5db6679ede69bd62b955b955ddebbd18413fb80f38aedb752",
+    "random_legal_0.json": "cb154a582e14595f4819571f9385b5e9ea5e8d388deba145855c69aa37561283",
+    "random_legal_1.json": "8f50c95b115d8081b5285f99af8663d7cb818f6f2675f3ae3dfc32fb0a8b5300",
+    "random_legal_2.json": "e03385e24762784875d9ad410ac3780ce695a3d40e393028c697fb593a5bf6e8",
+    "receipt.json": "fdc575e6695a7f949f65de93e7165f7833b514fcd193094a24ac3e0f94e7ee77"
+  },
+  "interpretation": "Stored-result integrity/accounting check; recorded geometry certificates reused. No useful deterministic RL gain, physical validation or generalization established.",
+  "latest_return": 12.703044515404144,
+  "native_geometry_rerun": false,
+  "patient_arrays_opened": false,
+  "random_three_mean_return": 130.3034547609449,
+  "same_state_logit_changes": [
+    {
+      "KL_initial_to_latest": 5.766083002677978e-05,
+      "maximum_absolute_logit_change": 0.08538180589675903,
+      "same_argmax_action": true
+    },
+    {
+      "KL_initial_to_latest": 7.010872042667012e-05,
+      "maximum_absolute_logit_change": 0.08358633518218994,
+      "same_argmax_action": true
+    },
+    {
+      "KL_initial_to_latest": 7.002917982629233e-05,
+      "maximum_absolute_logit_change": 0.08329936861991882,
+      "same_argmax_action": true
+    }
+  ],
+  "status": "passed"
+}

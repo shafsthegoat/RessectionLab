@@ -26,10 +26,30 @@ and 121.0004 mm³ of other tissue, with geometric reward 150.7035. Independent
 full-tool/frontier/containment checks passed, with zero unsupported volume. This
 is 1.5301% of the 11,437.0397 mm³ supplied target. The current action catalog does
 not establish full-target coverage. No optimizer update occurred in this check.
-The next experiment is a modest existing spatial policy with actual REINFORCE
-updates, random legal and observed search baselines under the same task budget,
-and independent accounting. No SELECT or unopened patient is needed for this
-first pipeline experiment. Transfer remains a later, separate test.
+The first complete learning comparison then ran in 205.84 seconds supervised
+(203.77 seconds in the worker), peaking at 1.91 GB. The existing 30,827-parameter
+spatial policy received two real REINFORCE updates from four complete on-policy
+PAT05 episodes. All ten completed episodes passed independent full-tool and
+reward/tissue-accounting checks, with zero invalid action attempts. An independent
+saved-record calculation also agreed. Weights changed, but the fixed-latest
+argmax plan did not: target 17.0001 mm³, other tissue 20.0001 mm³ and geometric
+return 12.7030 both before and after training. This is a negative learning result,
+not evidence that the algorithm can never learn.
+
+Random legal returns were 169.3756, -25.0131 and 246.5479. Same-horizon greedy
+search completed in 17.40 seconds plus 20.09 seconds execution/audit, with the
+shared 8.18-second preparation reported separately. Its accepted plan removed
+493.0017 mm³ of target and 412.0014 mm³ of other tissue, return 410.3124. Target
+fraction is 4.311%; this is not full resection. Search is stronger under this
+fixed geometric objective. The network's subsecond decision time excludes the
+required candidate/tool previews and cannot establish an end-to-end speed gain.
+See `artifacts/pat05-real-geometric-learning-v1/RESULT.md` and the saved curve.
+
+The next single experiment is eight imitation-learning updates from the same
+initial weights on the independently accepted three-action search trajectory.
+This checks whether the architecture can learn a useful available ranking;
+imitation and RL gains remain separate. No SELECT or unopened patient was
+accessed. Population training, transfer and physical fidelity remain unproved.
 
 **Deferred mechanics preparation:** half-height source components are committed;
 34 preparation checks and 35 readout checks passed (separate focused suites,
