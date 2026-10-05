@@ -1,0 +1,74 @@
+{
+  "files": {
+    "acquisition.json": {
+      "bytes": 3144,
+      "sha256": "2b9249fef872fedbb2d873e33a8dcdab2d0b827895221b85e97e527d4415c5dd"
+    },
+    "audit-summary.txt": {
+      "bytes": 1878,
+      "sha256": "d931a50b1195bae85ed8a223d654884a267c27490b30ef257b397bb61a3bcc9b"
+    },
+    "audit_clinical.py": {
+      "bytes": 5359,
+      "sha256": "b59510b9db4a081379ae5eb69d97d17a3ba539850bfeec967cd897b0f7f50064"
+    },
+    "cc-by-4.0.html": {
+      "bytes": 31950,
+      "sha256": "8dda1ccec4be91fc80821d4e4fd5c568072b9a3a74b2fdc07c249a27e920ef01"
+    },
+    "cc-by-4.0.txt": {
+      "bytes": 5209,
+      "sha256": "4c677e224cb34d20c5a2d254bab9d96db18bf0c41afbbfae6e410cf12bf6865e"
+    },
+    "clinical-audit.json": {
+      "bytes": 11131,
+      "sha256": "aa41b776a188044219dd8c6cfb8767d99c4dd0dddbba16f77ad20e5199914920"
+    },
+    "clinical-download-headers.txt": {
+      "bytes": 237,
+      "sha256": "b59f331f426f3cc8434513ae5d76c91b9082c28944e4fe23111f3b4f2767592d"
+    },
+    "clinical_data_TCIA_RHUH-GBM.csv": {
+      "bytes": 7087,
+      "sha256": "32d638906d34aaf8f66f5ec41c53c044216aed73bac22c776fb399bf2f741728"
+    },
+    "collection-page.html": {
+      "bytes": 305265,
+      "sha256": "0a62ce3c9844048774e54cc40616c1bc0909867d19039fa8a43d549c410d7be3"
+    },
+    "collection-page.txt": {
+      "bytes": 17164,
+      "sha256": "45a7fdd7b37589ab328bb1c7bbbd12f66ec76e47f15119b2fa0eb937c85623cb"
+    },
+    "paper-arxiv-v2.html": {
+      "bytes": 113139,
+      "sha256": "a9620ec12a73fcc16693368bf6aff9d76ffbd081c8028005d62144b513f2dd48"
+    },
+    "paper-arxiv-v2.txt": {
+      "bytes": 22371,
+      "sha256": "d06db05ea66517bf2a74cd3be5cf52db9ef06508ee08fd766e79726157f5be3a"
+    },
+    "paper-published.html": {
+      "bytes": 140666,
+      "sha256": "545accedc6237fbeaf2f57c35445a9b408b8d6f7c95f93899cba5c9faf19f5ac"
+    },
+    "paper-published.txt": {
+      "bytes": 24623,
+      "sha256": "60e73522073399cd760518a7cc0cbb9b1afaec6b39c4e88df646ec2edd691c8b"
+    },
+    "tcia-data-usage-policy.html": {
+      "bytes": 269690,
+      "sha256": "2d17cea7ceb139cdc1481f5eeef14631f669839f4e16a31e3a52d0a9a865acfe"
+    },
+    "tcia-data-usage-policy.txt": {
+      "bytes": 6868,
+      "sha256": "b7a7d3a9ecd3b770db67ef04a80070df555c55dcb2c91e4e407f9613047f5bff"
+    }
+  },
+  "report": {
+    "path": "docs/rhuh-outcome-audit.md",
+    "sha256": "48d35dda5612973471effc965b4ddfc0e53c1c026b6522335dcde6da2ca1431c"
+  },
+  "schema": "rhuh-outcome-audit-index-v1",
+  "scope": "descriptive public clinical QA only; all40labelsinspected, no fitting, images, protectedBTCdata or route-risk estimate"
+}

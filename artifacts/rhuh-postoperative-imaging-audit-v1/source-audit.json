@@ -1,0 +1,529 @@
+{
+  "audit_date": "2026-10-05",
+  "scope": "metadata/source-code only; no patient image bytes",
+  "sources": [
+    {
+      "url": "https://www.cancerimagingarchive.net/collection/rhuh-gbm/",
+      "local_path": "data/rhuh_source/metadata/tcia-collection.html",
+      "bytes": 305265,
+      "sha256": "0a62ce3c9844048774e54cc40616c1bc0909867d19039fa8a43d549c410d7be3"
+    },
+    {
+      "url": "https://www.cancerimagingarchive.net/wp-content/uploads/RHUH-GBM_v1_20230606-nbia-digest.xlsx",
+      "local_path": "data/rhuh_source/metadata/RHUH-GBM_v1_20230606-nbia-digest.xlsx",
+      "bytes": 119503,
+      "sha256": "7065902a6ca359338c68c0922fbf25dbce8d746d4eead8e41733e2f68cedafb3"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/smcch/RHUH-GBM-dataset-MRI-preprocessing/46cf3825278243036c08131b62dcfcfb1d3bba39/README.md",
+      "local_path": "data/rhuh_source/metadata/README.md",
+      "bytes": 8537,
+      "sha256": "fadd2eeb14bb93a31e8d7e09f63b79f2234f06c0c4e2d311c7bdd465b6924426"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/smcch/RHUH-GBM-dataset-MRI-preprocessing/46cf3825278243036c08131b62dcfcfb1d3bba39/final_pipeline.sh",
+      "local_path": "data/rhuh_source/metadata/final_pipeline.sh",
+      "bytes": 4252,
+      "sha256": "2da2b83156bfe14146c85886afc0b050c78e180ad9e31ca3990f3c23fa690951"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/smcch/RHUH-GBM-dataset-MRI-preprocessing/46cf3825278243036c08131b62dcfcfb1d3bba39/preprocess_mri.py",
+      "local_path": "data/rhuh_source/metadata/preprocess_mri.py",
+      "bytes": 12174,
+      "sha256": "3b878d79af200b935863c04c8e94d248465d7bf12d36154fed6a36b011cc1559"
+    }
+  ],
+  "author_repo_commit": "46cf3825278243036c08131b62dcfcfb1d3bba39",
+  "raw_dicom_digest_summary": {
+    "patients": 40,
+    "studies": 120,
+    "series": 600,
+    "instances": 37425,
+    "bytes": 15964322448,
+    "licenses": {
+      "TCIA Limited Access License": 600
+    },
+    "patients_summary": {
+      "RHUH-0001": {
+        "series": 15,
+        "studies": 3,
+        "images": 874,
+        "bytes": 397207568,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0002": {
+        "series": 15,
+        "studies": 3,
+        "images": 880,
+        "bytes": 411407228,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0003": {
+        "series": 15,
+        "studies": 3,
+        "images": 894,
+        "bytes": 404772064,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0004": {
+        "series": 15,
+        "studies": 3,
+        "images": 862,
+        "bytes": 400371788,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0005": {
+        "series": 15,
+        "studies": 3,
+        "images": 796,
+        "bytes": 366162698,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0006": {
+        "series": 15,
+        "studies": 3,
+        "images": 755,
+        "bytes": 333820616,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0007": {
+        "series": 15,
+        "studies": 3,
+        "images": 910,
+        "bytes": 422648864,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0008": {
+        "series": 15,
+        "studies": 3,
+        "images": 1016,
+        "bytes": 461556232,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0009": {
+        "series": 15,
+        "studies": 3,
+        "images": 849,
+        "bytes": 384830936,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0010": {
+        "series": 15,
+        "studies": 3,
+        "images": 979,
+        "bytes": 441034016,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0011": {
+        "series": 15,
+        "studies": 3,
+        "images": 878,
+        "bytes": 396256754,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0012": {
+        "series": 15,
+        "studies": 3,
+        "images": 907,
+        "bytes": 416693598,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0013": {
+        "series": 15,
+        "studies": 3,
+        "images": 842,
+        "bytes": 389691696,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0014": {
+        "series": 15,
+        "studies": 3,
+        "images": 906,
+        "bytes": 422188684,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0015": {
+        "series": 15,
+        "studies": 3,
+        "images": 808,
+        "bytes": 362250986,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0016": {
+        "series": 15,
+        "studies": 3,
+        "images": 864,
+        "bytes": 399864026,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0017": {
+        "series": 15,
+        "studies": 3,
+        "images": 886,
+        "bytes": 413125018,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0018": {
+        "series": 15,
+        "studies": 3,
+        "images": 854,
+        "bytes": 396112600,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0019": {
+        "series": 15,
+        "studies": 3,
+        "images": 864,
+        "bytes": 340369774,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0020": {
+        "series": 15,
+        "studies": 3,
+        "images": 920,
+        "bytes": 429563616,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0021": {
+        "series": 15,
+        "studies": 3,
+        "images": 896,
+        "bytes": 410073468,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0022": {
+        "series": 15,
+        "studies": 3,
+        "images": 857,
+        "bytes": 396888690,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0023": {
+        "series": 15,
+        "studies": 3,
+        "images": 909,
+        "bytes": 424413402,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0024": {
+        "series": 15,
+        "studies": 3,
+        "images": 933,
+        "bytes": 434128898,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0025": {
+        "series": 15,
+        "studies": 3,
+        "images": 916,
+        "bytes": 421705910,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0026": {
+        "series": 15,
+        "studies": 3,
+        "images": 1244,
+        "bytes": 360798788,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0027": {
+        "series": 15,
+        "studies": 3,
+        "images": 846,
+        "bytes": 279009846,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0028": {
+        "series": 15,
+        "studies": 3,
+        "images": 728,
+        "bytes": 262405604,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0029": {
+        "series": 15,
+        "studies": 3,
+        "images": 838,
+        "bytes": 278210050,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0030": {
+        "series": 15,
+        "studies": 3,
+        "images": 880,
+        "bytes": 348851144,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0031": {
+        "series": 15,
+        "studies": 3,
+        "images": 821,
+        "bytes": 296747320,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0032": {
+        "series": 15,
+        "studies": 3,
+        "images": 914,
+        "bytes": 414111208,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0033": {
+        "series": 15,
+        "studies": 3,
+        "images": 968,
+        "bytes": 442128656,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0034": {
+        "series": 15,
+        "studies": 3,
+        "images": 1802,
+        "bytes": 618798972,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0035": {
+        "series": 15,
+        "studies": 3,
+        "images": 1369,
+        "bytes": 458272628,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0036": {
+        "series": 15,
+        "studies": 3,
+        "images": 857,
+        "bytes": 335451752,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0037": {
+        "series": 15,
+        "studies": 3,
+        "images": 936,
+        "bytes": 427402186,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0038": {
+        "series": 15,
+        "studies": 3,
+        "images": 902,
+        "bytes": 420115538,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0039": {
+        "series": 15,
+        "studies": 3,
+        "images": 1116,
+        "bytes": 474181736,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      },
+      "RHUH-0040": {
+        "series": 15,
+        "studies": 3,
+        "images": 1149,
+        "bytes": 470697890,
+        "study_series_counts": [
+          5,
+          5,
+          5
+        ]
+      }
+    }
+  },
+  "critical_conflicts": [
+    {
+      "field": "ADC physical units",
+      "paper": "Not normalized; mm2/s",
+      "shell_code": "Preprocessing ADC -zn1 then rename adc_norm to adc",
+      "python_code": "normalize_intensity loop includes adc; optional computed ADC scaled by1000 before Zscore",
+      "release_bytes_verified": false
+    },
+    {
+      "field": "enhancing tumor numeric label",
+      "paper": 3,
+      "author_readme_and_python": 4,
+      "release_bytes_verified": false
+    }
+  ],
+  "supported_provided_labels": [
+    "necrosis",
+    "peritumoral signal alteration including edema/nonenhancing tumor",
+    "enhancing tumor"
+  ],
+  "unproven_labels": [
+    "resection cavity",
+    "ischemia",
+    "injury",
+    "diffusion restriction"
+  ],
+  "public_processed_images_in_native_scanner_grid": false,
+  "paper_described_resampling": "T1ce\u2192SRI24, othermodalities\u2192atlasT1ce,1mm isotropic,skull-stripped",
+  "native_or_between_visit_transforms_verified": false,
+  "paper_sources": [
+    {
+      "url": "https://arxiv.org/abs/2305.00005v2",
+      "version": "2023-05-02; requested source"
+    },
+    {
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10551826/",
+      "doi": "10.1016/j.dib.2023.109617",
+      "version": "published 2023-09-23; methods sections3.1/3.2 inspected"
+    }
+  ]
+}

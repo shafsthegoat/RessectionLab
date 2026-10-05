@@ -1,0 +1,68 @@
+{
+  "clinical_collection_version_label": "Version 1: Updated 2023/06/09",
+  "clinical_data_license": "CC BY 4.0 per current collection row",
+  "controlled_dicoms_downloaded": 0,
+  "data_doi": "10.7937/4545-c905",
+  "model_fits": 0,
+  "observed_tool_limitation": "web open returned500forTCIA collection/policy; bounded direct HTTPS GET succeeded and rawbytes are retained.",
+  "patient_image_files_downloaded": 0,
+  "privacy_scope": "Published deidentified clinical rows only; no participant identification or linkage outside declared public collection IDs.",
+  "recorded_utc": "2026-10-05T04:04:18.306870+00:00",
+  "schema": "rhuh-outcome-source-acquisition-v1",
+  "sources": [
+    {
+      "bytes": 305265,
+      "download_method": "bounded curl HTTPS GET; no credentials",
+      "local_file_modified_utc": "2026-10-05T03:57:03.408625+00:00",
+      "path": "collection-page.html",
+      "permission_after_freeze": "0444",
+      "sha256": "0a62ce3c9844048774e54cc40616c1bc0909867d19039fa8a43d549c410d7be3",
+      "url": "https://www.cancerimagingarchive.net/collection/rhuh-gbm/"
+    },
+    {
+      "bytes": 7087,
+      "download_method": "bounded curl HTTPS GET; no credentials",
+      "local_file_modified_utc": "2026-10-05T03:57:41.768698+00:00",
+      "path": "clinical_data_TCIA_RHUH-GBM.csv",
+      "permission_after_freeze": "0444",
+      "sha256": "32d638906d34aaf8f66f5ec41c53c044216aed73bac22c776fb399bf2f741728",
+      "url": "https://www.cancerimagingarchive.net/wp-content/uploads/clinical_data_TCIA_RHUH-GBM.csv"
+    },
+    {
+      "bytes": 140666,
+      "download_method": "bounded curl HTTPS GET; no credentials",
+      "local_file_modified_utc": "2026-10-05T03:59:25.706873+00:00",
+      "path": "paper-published.html",
+      "permission_after_freeze": "0444",
+      "sha256": "545accedc6237fbeaf2f57c35445a9b408b8d6f7c95f93899cba5c9faf19f5ac",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10551826/"
+    },
+    {
+      "bytes": 113139,
+      "download_method": "bounded curl HTTPS GET; no credentials",
+      "local_file_modified_utc": "2026-10-05T03:59:25.582570+00:00",
+      "path": "paper-arxiv-v2.html",
+      "permission_after_freeze": "0444",
+      "sha256": "a9620ec12a73fcc16693368bf6aff9d76ffbd081c8028005d62144b513f2dd48",
+      "url": "https://arxiv.org/html/2305.00005v2"
+    },
+    {
+      "bytes": 269690,
+      "download_method": "bounded curl HTTPS GET; no credentials",
+      "local_file_modified_utc": "2026-10-05T03:59:26.339031+00:00",
+      "path": "tcia-data-usage-policy.html",
+      "permission_after_freeze": "0444",
+      "sha256": "2d17cea7ceb139cdc1481f5eeef14631f669839f4e16a31e3a52d0a9a865acfe",
+      "url": "https://www.cancerimagingarchive.net/data-usage-policies-and-restrictions/"
+    },
+    {
+      "bytes": 31950,
+      "download_method": "bounded curl HTTPS GET; no credentials",
+      "local_file_modified_utc": "2026-10-05T03:59:25.586043+00:00",
+      "path": "cc-by-4.0.html",
+      "permission_after_freeze": "0444",
+      "sha256": "8dda1ccec4be91fc80821d4e4fd5c568072b9a3a74b2fdc07c249a27e920ef01",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
+    }
+  ]
+}

@@ -1,0 +1,411 @@
+{
+  "EOR_definition_conflicts": [
+    {
+      "EOR_recomputed_from_rounded_source_volumes_percent": 94.5945945945946,
+      "interpretation": "Recorded NTR label conflicts with >95% definition and recomputed rounded volumes. No relabeling or exclusion applied.",
+      "patient_id": "RHUH-0017",
+      "source_EOR_percent": 94.6,
+      "source_category": "NTR",
+      "source_post_ce_cm3": 0.2,
+      "source_pre_ce_cm3": 3.7
+    },
+    {
+      "EOR_recomputed_from_rounded_source_volumes_percent": 95.02051983584131,
+      "interpretation": "Displayed 95.0% is not strictly >95%; rounded source volumes imply >95%, so this is a boundary-rounding ambiguity, not a confirmed eligibility violation. No relabeling or exclusion applied.",
+      "patient_id": "RHUH-0023",
+      "source_EOR_percent": 95.0,
+      "source_category": "NTR",
+      "source_post_ce_cm3": 1.82,
+      "source_pre_ce_cm3": 36.55
+    }
+  ],
+  "KPS_change": {
+    "by_recorded_deficit": {
+      "Major Persistent": {
+        "decreased": 2
+      },
+      "Minor Persistent": {
+        "decreased": 2,
+        "increased": 2,
+        "unchanged": 2
+      },
+      "No": {
+        "decreased": 1,
+        "increased": 9,
+        "unchanged": 16
+      },
+      "Transient": {
+        "increased": 2,
+        "unchanged": 4
+      }
+    },
+    "counts": {
+      "-30": 1,
+      "-20": 1,
+      "-10": 3,
+      "0": 22,
+      "10": 9,
+      "20": 4
+    },
+    "decreased": 5,
+    "definition": "Postoperative KPS minus Preoperative KPS; timing unknown; global function, not domain deficit",
+    "increased": 13,
+    "max": 20,
+    "median": 0.0,
+    "min": -30,
+    "unchanged": 22
+  },
+  "all_cell_count": 920,
+  "column_count": 23,
+  "columns": {
+    "Adjuvant therapy (Radiotherapy [RT], Temozolomide [TMZ])": {
+      "empty_cells": 0,
+      "explicit_missing_token_cells": 0,
+      "observed_values": {
+        "RT + TMZ": 40
+      },
+      "surrounding_whitespace_cells": 0,
+      "unique_values": 1
+    },
+    "Age": {
+      "empty_cells": 0,
+      "explicit_missing_token_cells": 0,
+      "numeric_summary": {
+        "max": 78.0,
+        "mean": 62.95,
+        "median": 64.0,
+        "min": 45.0,
+        "sample_sd": 9.15941438056341
+      },
+      "surrounding_whitespace_cells": 0,
+      "unique_values": 27
+    },
+    "Days from earliest imaging to surgery ": {
+      "empty_cells": 0,
+      "explicit_missing_token_cells": 0,
+      "numeric_summary": {
+        "max": 33.0,
+        "mean": 6.3,
+        "median": 5.0,
+        "min": 1.0,
+        "sample_sd": 6.6994067858319575
+      },
+      "surrounding_whitespace_cells": 0,
+      "unique_values": 16
+    },
+    "EOR = (Gross total resection [GTR : 100%], Near total resection [NTR : > 95%], Subtotal resection [STR : 91 - 94%], Partial resection [PR : < 90 %]": {
+      "empty_cells": 0,
+      "explicit_missing_token_cells": 0,
+      "observed_values": {
+        "GTR": 27,
+        "NTR": 13
+      },
+      "surrounding_whitespace_cells": 0,
+      "unique_values": 2
+    },
+    "Extent of resection [EOR]  %": {
+      "empty_cells": 0,
+      "explicit_missing_token_cells": 0,
+      "numeric_summary": {
+        "max": 100.0,
+        "mean": 99.31,
+        "median": 100.0,
+        "min": 94.6,
+        "sample_sd": 1.359637960861414
+      },
+      "surrounding_whitespace_cells": 0,
+      "unique_values": 13
+    },
+    "Histopathological subtype": {
+      "empty_cells": 0,
+      "explicit_missing_token_cells": 0,
+      "observed_values": {
+        "glioblastoma": 40
+      },
+      "surrounding_whitespace_cells": 0,
+      "unique_values": 1
+    },
+    "IDH status = (mutant [mut], wild type [wt], NOS)": {
+      "empty_cells": 0,
+      "explicit_missing_token_cells": 0,
+      "observed_values": {
+        "mut": 4,
+        "wt": 36
+      },
+      "surrounding_whitespace_cells": 0,
+      "unique_values": 2
+    },
+    "Operative adjuncts = (5' aminolevulinic acid [5ALA], Sodium Fluorescein - Yellow 560 [FL], Neuronavigation [NAV],  Intraoperative monitoring [IONM], Direct electrical stimulation [DES], intraoperative ultrasound [ioUS])": {
+      "empty_cells": 0,
+      "explicit_missing_token_cells": 0,
+      "observed_values": {
+        "5ALA+FL+NAV+ioUS": 7,
+        "5ALA+NAV+DES+ioUS": 2,
+        "5ALA+NAV+IONM+DES+ioUS": 1,
+        "5ALA+NAV+IONM+ioUS": 3,
+        "5ALA+NAV+ioUS": 27
+      },
+      "surrounding_whitespace_cells": 0,
+      "unique_values": 5
+    },
+    "Overall survival [OS] (days)": {
+      "empty_cells": 0,
+      "explicit_missing_token_cells": 0,
+      "numeric_summary": {
+        "max": 1244.0,
+        "mean": 437.425,
+        "median": 364.0,
+        "min": 90.0,
+        "sample_sd": 272.3503482272185
+      },
+      "surrounding_whitespace_cells": 0,
+      "unique_values": 39
+    },
+    "Patient ID": {
+      "empty_cells": 0,
+      "explicit_missing_token_cells": 0,
+      "surrounding_whitespace_cells": 0,
+      "unique_values": 40
+    },
+    "Postoperative KPS": {
+      "empty_cells": 0,
+      "explicit_missing_token_cells": 0,
+      "numeric_summary": {
+        "max": 90.0,
+        "mean": 78.25,
+        "median": 80.0,
+        "min": 50.0,
+        "sample_sd": 11.067971810589327
+      },
+      "surrounding_whitespace_cells": 0,
+      "unique_values": 5
+    },
+    "Postoperative Neurological Deficit": {
+      "empty_cells": 0,
+      "explicit_missing_token_cells": 0,
+      "observed_values": {
+        "Major Persistent": 2,
+        "Minor Persistent": 6,
+        "No": 26,
+        "Transient": 6
+      },
+      "surrounding_whitespace_cells": 0,
+      "unique_values": 4
+    },
+    "Postoperative T2/FLAIR abmnormality (cm3)": {
+      "empty_cells": 0,
+      "explicit_missing_token_cells": 0,
+      "numeric_summary": {
+        "max": 107.69,
+        "mean": 34.99975,
+        "median": 26.55,
+        "min": 1.05,
+        "sample_sd": 26.738806954907222
+      },
+      "surrounding_whitespace_cells": 0,
+      "unique_values": 40
+    },
+    "Postoperative contrast enhancing residual tumor (cm3)": {
+      "empty_cells": 0,
+      "explicit_missing_token_cells": 0,
+      "numeric_summary": {
+        "max": 1.82,
+        "mean": 0.227,
+        "median": 0.0,
+        "min": 0.0,
+        "sample_sd": 0.4709303394509475
+      },
+      "surrounding_whitespace_cells": 0,
+      "unique_values": 13
+    },
+    "Preoperative  contrast enhancing tumor volume (cm3)": {
+      "empty_cells": 0,
+      "explicit_missing_token_cells": 0,
+      "numeric_summary": {
+        "max": 113.23,
+        "mean": 34.991,
+        "median": 31.375,
+        "min": 1.6,
+        "sample_sd": 26.585517534253544
+      },
+      "surrounding_whitespace_cells": 0,
+      "unique_values": 40
+    },
+    "Preoperative KPS": {
+      "empty_cells": 0,
+      "explicit_missing_token_cells": 0,
+      "numeric_summary": {
+        "max": 90.0,
+        "mean": 76.0,
+        "median": 80.0,
+        "min": 60.0,
+        "sample_sd": 8.711913446392582
+      },
+      "surrounding_whitespace_cells": 0,
+      "unique_values": 4
+    },
+    "Preoperative T2/FLAIR abnormality  (cm3) ": {
+      "empty_cells": 0,
+      "explicit_missing_token_cells": 0,
+      "numeric_summary": {
+        "max": 161.03,
+        "mean": 73.14125,
+        "median": 63.325,
+        "min": 10.02,
+        "sample_sd": 43.633526523293696
+      },
+      "surrounding_whitespace_cells": 0,
+      "unique_values": 40
+    },
+    "Previous treatment = (no, surgery, surgery + QT/RT)": {
+      "empty_cells": 0,
+      "explicit_missing_token_cells": 0,
+      "observed_values": {
+        "no": 38,
+        "surgery + QT/RT": 2
+      },
+      "surrounding_whitespace_cells": 0,
+      "unique_values": 2
+    },
+    "Progression free survival [PFS] (days)": {
+      "empty_cells": 0,
+      "explicit_missing_token_cells": 0,
+      "numeric_summary": {
+        "max": 718.0,
+        "mean": 265.725,
+        "median": 197.5,
+        "min": 23.0,
+        "sample_sd": 196.1777043057306
+      },
+      "surrounding_whitespace_cells": 0,
+      "unique_values": 39
+    },
+    "Radiotherapy treatment details (technique/dose/number of fractions)": {
+      "empty_cells": 0,
+      "explicit_missing_token_cells": 0,
+      "observed_values": {
+        "VMAT-IMRT-IGRT/34 Gy /10 fx": 1,
+        "VMAT-IMRT-IGRT/40.5 Gy /15 fx": 7,
+        "VMAT-IMRT-IGRT/50 Gy /20 fx": 2,
+        "VMAT-IMRT-IGRT/54 Gy /27 fx": 1,
+        "VMAT-IMRT-IGRT/60 Gy /30 fx": 29
+      },
+      "surrounding_whitespace_cells": 0,
+      "unique_values": 5
+    },
+    "Right Censored": {
+      "empty_cells": 0,
+      "explicit_missing_token_cells": 0,
+      "observed_values": {
+        "no": 31,
+        "yes": 9
+      },
+      "surrounding_whitespace_cells": 0,
+      "unique_values": 2
+    },
+    "Sex": {
+      "empty_cells": 0,
+      "explicit_missing_token_cells": 0,
+      "observed_values": {
+        "female": 12,
+        "male": 28
+      },
+      "surrounding_whitespace_cells": 0,
+      "unique_values": 2
+    },
+    "WHO grade": {
+      "empty_cells": 0,
+      "explicit_missing_token_cells": 0,
+      "numeric_summary": {
+        "max": 4.0,
+        "mean": 4.0,
+        "median": 4.0,
+        "min": 4.0,
+        "sample_sd": 0.0
+      },
+      "surrounding_whitespace_cells": 0,
+      "unique_values": 1
+    }
+  },
+  "derived_label_counts": {
+    "any_recorded_category_other_than_No": 14,
+    "recorded_persistent_categories": 8
+  },
+  "duplicate_ids": 0,
+  "empty_cell_count": 0,
+  "explicit_missing_token_cell_count": 0,
+  "fit_or_patient_image_processing": false,
+  "id_sequence_complete_0001_0040": true,
+  "outcome_counts": {
+    "Major Persistent": 2,
+    "Minor Persistent": 6,
+    "No": 26,
+    "Transient": 6
+  },
+  "parser": {
+    "delimiter": ",",
+    "encoding": "utf-8-sig",
+    "header": true,
+    "source_headers_preserved": true
+  },
+  "patient_count": 40,
+  "patient_id_header": "Patient ID",
+  "patient_ids": [
+    "RHUH-0001",
+    "RHUH-0002",
+    "RHUH-0003",
+    "RHUH-0004",
+    "RHUH-0005",
+    "RHUH-0006",
+    "RHUH-0007",
+    "RHUH-0008",
+    "RHUH-0009",
+    "RHUH-0010",
+    "RHUH-0011",
+    "RHUH-0012",
+    "RHUH-0013",
+    "RHUH-0014",
+    "RHUH-0015",
+    "RHUH-0016",
+    "RHUH-0017",
+    "RHUH-0018",
+    "RHUH-0019",
+    "RHUH-0020",
+    "RHUH-0021",
+    "RHUH-0022",
+    "RHUH-0023",
+    "RHUH-0024",
+    "RHUH-0025",
+    "RHUH-0026",
+    "RHUH-0027",
+    "RHUH-0028",
+    "RHUH-0029",
+    "RHUH-0030",
+    "RHUH-0031",
+    "RHUH-0032",
+    "RHUH-0033",
+    "RHUH-0034",
+    "RHUH-0035",
+    "RHUH-0036",
+    "RHUH-0037",
+    "RHUH-0038",
+    "RHUH-0039",
+    "RHUH-0040"
+  ],
+  "schema": "rhuh-public-clinical-audit-v1",
+  "source": {
+    "bytes": 7087,
+    "filename": "clinical_data_TCIA_RHUH-GBM.csv",
+    "sha256": "32d638906d34aaf8f66f5ec41c53c044216aed73bac22c776fb399bf2f741728"
+  },
+  "source_values_changed": false,
+  "structurally_absent_outcome_fields": [
+    "preoperative domain-specific neurological deficit",
+    "postoperative domain",
+    "clinical assessment date or days since surgery",
+    "new or worsened relative to baseline",
+    "minor/major severity definition",
+    "transient/persistent duration threshold",
+    "longitudinal recovery observations"
+  ]
+}
