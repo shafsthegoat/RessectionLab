@@ -1,0 +1,11 @@
+# Saved graded Case4 mesh audit
+
+The saved evidence consistently rejects the single graded candidate. Its 5,223 nodes and 2,761 tet10 elements fit the preparation caps; its recorded topology, midpoint, Jacobian and non-overlap checks passed. Surface fidelity failed in both directions: maximum sampled distances were 5.45995 mm and 3.83373 mm, with covering upper bounds 6.16706 mm and 4.83081 mm against the fixed 2 mm limit. The samples themselves exceed the limit. The 1.20838% volume difference does not establish local shape accuracy or override the rejection.
+
+The independent audit verified all 13 indexed owner records, all 10 raw files (446,610 bytes), and the exact seven-file source archive against committed and current bytes. The complete diagnostic packet is 413,290 bytes: four untruncated NPY arrays plus the manifest. Shapes, dtypes, payload framing, hashes, finite values, connectivity ranges and unique positive native IDs match the declared 5,223/2,761 counts. Packet completeness is not geometric or solver approval.
+
+All 28 saved before/after bindings agree, including the 19 worker/launcher bindings. This audit independently rehashed 26 current nonimage/nonsurface bindings. The original mask and source-surface archive were deliberately not reread; their preservation is supported by the saved execution hashes. No image, landmark, source-surface array, native mesher, distance engine or solver was loaded or run here. Recorded geometric checks were checked for consistency, not independently recomputed.
+
+The worker exited with code 1 after 10.4794 seconds with no cap kill; sampled process-group RSS was 647,561,216 bytes. Final raw output is below the declared bounds. Runtime and RSS are observations, not an isolated benchmark; sampled checks can miss transient peaks. The old failed v1 remains unchanged.
+
+The narrow next dependency is localization of the saved surface mismatch, if separately authorized. The current directional records contain aggregate maxima but no spatial witness locations. The retained diagnostic mesh permits that diagnosis without generating another mesh. There is no basis here to select new sizes, loosen the 2 mm gate, approve the estimated anatomy, or authorize a mechanics solve.

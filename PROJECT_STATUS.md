@@ -403,6 +403,15 @@ bindings stayed unchanged, and no retry, MRI re-extraction, B/V access or solve
 occurred. The patient mesh remains unaccepted. See
 `artifacts/mechanics/resect-case4-patient-mesh-graded-v2/RESULT.md`.
 
+Independent saved-mesh review confirmed the complete four-array packet, finite
+coordinates, connectivity and unique native IDs, and all raw/output/source
+records. It independently rehashed 26 non-image bindings and checked the saved
+before/after evidence for all 28; it did not reload the original mask or source
+surface arrays or recompute geometry. The mesh remains rejected. The next
+diagnostic is to locate the saved discrepancies, because aggregate maxima alone
+cannot identify their spatial cause. See
+`artifacts/mechanics/resect-case4-patient-mesh-graded-independent-audit-v2/`.
+
 One bounded Gmsh preparation generated the three measured-specimen meshes
 (96/768/2,592 hex elements) and 18 fixed loading decks in 3.43 s, with
 140.2 MB maximum sampled memory. Independent native-mesh and deck review
