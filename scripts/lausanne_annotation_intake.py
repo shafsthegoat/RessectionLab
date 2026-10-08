@@ -40,6 +40,7 @@ CACHE = DATA / "train-annotation-intake-v1"
 MANIFEST = ROOT / "manifests/lausanne-train-annotations-v1.json"
 MANIFEST_SHA = "f779066f5cb784f623446f12565eb1405994ac9e3b41c1fef8210546598de624"
 SOURCE_NAMES = (*originals.SOURCE_NAMES, "scripts/lausanne_annotation_intake.py",
+                "scripts/lausanne_deferred_qc.py", "manifests/lausanne-deferred-qc-v1.json",
                 "src/resectionlab/critical_evidence.py", str(MANIFEST.relative_to(ROOT)),
                 "manifests/lausanne-component-cohort-v1.json", "manifests/lausanne-train-originals-v1.json")
 HEX = re.compile(r"[0-9a-f]{64}")
@@ -416,9 +417,13 @@ def grid_proof(mask: dict, reference: dict) -> dict:
                 "reference_mm_inherited": units[0] == "unknown", "array_operation": "unchanged source voxel indices"}
 
 
-def verify_reference(row: dict, original: dict, manifest: dict, trial: Path, deadline: float) -> dict:
+def verify_reference(row: dict, original: dict, manifest: dict, trial: Path, deadline: float,
+                     *, separate_review_receipt: Path | None = None) -> dict:
     from resectionlab.critical_evidence import nifti1_header_record
 
+    if separate_review_receipt is not None:
+        from lausanne_deferred_qc import separately_reviewed_reference
+        return separately_reviewed_reference(row, original, manifest, trial, deadline, separate_review_receipt)
     receipt_path = safe_path(originals.CACHE / "acquired" / (row["subject"] + "_" + row["session"] + ".json"))
     if not receipt_path.exists():
         return {"status": "deferred_missing_original_receipt", "receipt_path": str(receipt_path.relative_to(ROOT))}

@@ -1,0 +1,70 @@
+{
+  "schema": "lausanne-deferred-qc-independent-final-review-v1",
+  "conclusion": "lifecycle_repairs_independently_verified_ready_for_declared_separate_QC_execution",
+  "source_hashes": {
+    "manifests/lausanne-deferred-qc-v1.json": "65224289e26db6656d99ee9bdfb089bf80ca309fcbdee63fb469989e9e3d6e19",
+    "scripts/lausanne_deferred_qc.py": "2e2b49718889afbc1bf4451f35a88493df3a651db00ccb8971530bdab912b860",
+    "tests/test_lausanne_deferred_qc.py": "9035b4bc2d397167574fb9057c936bc1be103944887e76ee022ab60f54f5b2fa",
+    "scripts/lausanne_annotation_intake.py": "dffa4b49ff82c5d510d2862c06b429e539458d0088c49ee3975d1baa2e8984f1",
+    "tests/test_lausanne_annotation_intake.py": "703bf4960421ddf14fe957a18d71f039664e8ff08d130a73e4bfce65b699b883"
+  },
+  "material_open_lifecycle_findings": [],
+  "targeted_recheck": {
+    "passed": 11,
+    "failed": 0,
+    "seconds": 1.65,
+    "independent_original_regressions": 3,
+    "owner_new_lifecycle_controls": 8,
+    "output_sha256": "1a5ed9584af47de9a863e38b73b7035bc3eda32f644aaba2b947e72085ed09ac",
+    "scope": "Targeted lifecycle recheck only; prior92control pass evidence retained, not redundantly rerun."
+  },
+  "findings_resolved": [
+    {
+      "id": "late-parent-accounting",
+      "evidence": "Parent refuses completion after supervision, receipt validation, per-attempt execution validation, and final batch execution validation. Existing receipt hash/status is retained. If only final batch closure expires, earlier timely per-file completion remains valid while batch is failed."
+    },
+    {
+      "id": "interrupted-receipt-binding",
+      "evidence": "Every attempted outcome carries its attempt path. Valid receipt bytes are hash-bound with review_status even on KeyboardInterrupt/OSError; malformed receipt bytes retain raw hash plus explicit receipt_binding_error, while original failure remains authoritative."
+    }
+  ],
+  "preservation": {
+    "initial_negative_sha256": "180cda549d0666cf82728c7b95712dcdfc14acc6260ae7bd09e0fe7332cd1b84",
+    "initial_negative_unchanged": true,
+    "manifest_and_annotation_adapter_unchanged": true,
+    "protected_live_acquisition_sources_unchanged": true,
+    "frozen_counts": {
+      "original_images": 26,
+      "original_sessions": 13,
+      "reference_followups": 27,
+      "followup_sessions": 21,
+      "followups_using_separate_review": 15,
+      "followups_using_legacy_review": 12,
+      "preserved_T1_conflicts": 6,
+      "preserved_mask_grid_failures": 1,
+      "metadata_exclusions": 4
+    }
+  },
+  "permissions_observed": {
+    "patient_images_or_masks_opened": 0,
+    "scientific_decodes": 0,
+    "network_requests": 0,
+    "tracked_edits": 0,
+    "live_download_helpers_edited": 0,
+    "continuous_downloads_gated_or_interrupted": false,
+    "guard": "Audit hook refused socket.connect and .nii/.nii.gz/.nii.gz.partial file opens throughout targeted controls."
+  },
+  "owner_report": {
+    "path": "build/lausanne-deferred-qc-implementation-v2/review.json",
+    "sha256": "0c1cb3ab3cd4a86ff2f4eb465af75a042e06baaf456b3541fff76e2b45c62f4e",
+    "owner_claimed_controls": 103,
+    "independently_reexecuted_this_recheck": 11
+  },
+  "limits": [
+    "This verifies control and receipt lifecycle, not scalar arrays or new clinical/anatomical findings.",
+    "Only the frozen 26 original images and 27 reference followups are in the declared scope.",
+    "Six prior T1 conflicts, the sub454 grid failure, and four metadata exclusions remain unresolved.",
+    "No old acquired/QC receipts are relabeled; scanner, planning and training admission remains false and availability unknown.",
+    "Continuous downloading remains a separate process without per-batch QC review gates."
+  ]
+}

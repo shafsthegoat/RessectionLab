@@ -1,0 +1,49 @@
+{
+  "schema": "lausanne-deferred-qc-independent-initial-review-v1",
+  "conclusion": "two_material_parent_accounting_gaps_reproduced",
+  "source_hashes": {
+    "manifests/lausanne-deferred-qc-v1.json": "65224289e26db6656d99ee9bdfb089bf80ca309fcbdee63fb469989e9e3d6e19",
+    "scripts/lausanne_deferred_qc.py": "d8a959a60a9938bed969d8dcd1adce9788492e80acd7098a14da07e53f80e08a",
+    "tests/test_lausanne_deferred_qc.py": "2b88e352f164fd3d816c6667abbe868e633252b9555c0219bb3749da3d5aaf4a",
+    "scripts/lausanne_annotation_intake.py": "dffa4b49ff82c5d510d2862c06b429e539458d0088c49ee3975d1baa2e8984f1",
+    "tests/test_lausanne_annotation_intake.py": "703bf4960421ddf14fe957a18d71f039664e8ff08d130a73e4bfce65b699b883"
+  },
+  "checks": {
+    "owner_controls_passed": 92,
+    "independent_deadline_control_failed": 1,
+    "independent_interruption_controls_failed": 2,
+    "scientific_payload_decodes": 0,
+    "network_requests": 0,
+    "tracked_edits": 0,
+    "continuous_downloads_affected": false
+  },
+  "findings": [
+    {
+      "id": "late-parent-accounting",
+      "priority": "P1",
+      "source_lines": [
+        560,
+        577
+      ],
+      "observed": "31s control under30s budget returns bounded_attempts_finished with item completed. Parent checks budget before supervisor but does not refuse late receipt/source accounting.",
+      "required": "Enforce final item/batch deadline after receipt and source validation, retaining late evidence without completion authority."
+    },
+    {
+      "id": "interrupted-receipt-binding",
+      "priority": "P2",
+      "source_lines": [
+        563,
+        575
+      ],
+      "observed": "Supervisor KeyboardInterrupt or OSError after receipt publication leaves retained receipt without receipt_sha256/review_status in parent outcome.",
+      "required": "Bind any present raw receipt and validation result during finalization; preserve original failure and never promote interrupted outcome."
+    }
+  ],
+  "evidence": {
+    "test_review_boundaries.py": "97d8a0d1278bd7615aab9e9f29916054f9f7afdc1af5915e023b276bca8924c9",
+    "test_interruption_evidence.py": "b30e6689801960259ca615f0addc88bd8cd99c2d3860e842889c6ebaec4b5f76",
+    "initial-controls.txt": "07cc763482122d9a9844340c422c04c127a526b9b32a08e0f44d70e134488138",
+    "initial-interruption-controls.txt": "0bf2f98bfd4ab38391573f440a9e7982abc1588bf8f2a4e9718839421388eae0"
+  },
+  "note": "Initial source snapshots retained; final verdict requires repaired frozen source. Review has not decoded images or gated downloads."
+}

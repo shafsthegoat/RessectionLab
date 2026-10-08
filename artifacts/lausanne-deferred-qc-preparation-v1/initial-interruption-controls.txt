@@ -1,0 +1,78 @@
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+__ test_interruption_binds_existing_failed_worker_receipt[KeyboardInterrupt] ___
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10918b5c0>
+failure = <class 'KeyboardInterrupt'>
+
+    @pytest.mark.parametrize('failure',[KeyboardInterrupt,OSError])
+    def test_interruption_binds_existing_failed_worker_receipt(monkeypatch,failure):
+     metadata=qc.preflight();m,am,sessions=metadata;row=m['originals'][0]
+     with tempfile.TemporaryDirectory(dir=ROOT/'build',prefix='deferred-interruption-control-') as folder:
+      cache=pathlib.Path(folder)
+      monkeypatch.setattr(qc,'CACHE',cache)
+      monkeypatch.setattr(qc,'preflight',lambda:metadata)
+      monkeypatch.setattr(qc,'execution_source',lambda m:{'files':{}})
+      monkeypatch.setattr(qc,'validate_execution',lambda *a,**kw:None)
+      def supervisor(command,log,**kw):
+       kw['on_start'](123)
+       trial=log.parent;intent=qc.bound_json(trial/'intent.json')
+       qc.save(trial/'receipt.json',{'schema':'lausanne-file-review-v1','manifest_sha256':qc.MANIFEST_SHA,'path':row['path'],'subject':row['subject'],'session':row['session'],'role':'TRAIN','intent_sha256':qc.digest(qc.encode(intent)),'declaration_sha256':intent['declaration_sha256'],'status':'failed_or_incomplete',**qc.CLAIMS})
+       raise failure('metadata-only interruption')
+      monkeypatch.setattr(qc,'supervise',supervisor)
+      report=qc.batch('metadata-interruption-control','originals',30,only_path=row['path'])
+      item=next(r for r in report['outcomes'] if r['path']==row['path'])
+      assert report['status']=='failed_or_incomplete' and item['status']=='failed_or_incomplete'
+      path=cache/'runs/metadata-interruption-control/items'/qc.review_key(row['path'])/'receipt.json'
+      assert path.exists()
+>     assert item.get('receipt_sha256')==qc.digest(path.read_bytes()),item
+E     AssertionError: {'path': 'sub-467/ses-20140817/anat/sub-467_ses-20140817_angio.nii.gz', 'status': 'failed_or_incomplete', 'intent_sha256': 'f07c917555eeaa005f89e277753e93b9c68c25a6c58b47bc11a46b0269b5625e', 'worker_pid': 123, ...}
+E     assert None == 'b15b30f948fbf2a894333afbcca80aacd8fc701cf18c40b39fb971a06fcb2cac'
+E      +  where None = <built-in method get of dict object at 0x109730dc0>('receipt_sha256')
+E      +    where <built-in method get of dict object at 0x109730dc0> = {'path': 'sub-467/ses-20140817/anat/sub-467_ses-20140817_angio.nii.gz', 'status': 'failed_or_incomplete', 'intent_sha256': 'f07c917555eeaa005f89e277753e93b9c68c25a6c58b47bc11a46b0269b5625e', 'worker_pid': 123, ...}.get
+E      +  and   'b15b30f948fbf2a894333afbcca80aacd8fc701cf18c40b39fb971a06fcb2cac' = <function digest at 0x109007d80>(b'{\n  "schema": "lausanne-file-review-v1",\n  "manifest_sha256": "65224289e26db6656d99ee9bdfb089bf80ca309fcbdee63fb46...  "optimizer_updates": 0,\n  "recorded_rl_transitions": 0,\n  "network_requests": 0,\n  "array_operation": "none"\n}\n')
+E      +    where <function digest at 0x109007d80> = qc.digest
+E      +    and   b'{\n  "schema": "lausanne-file-review-v1",\n  "manifest_sha256": "65224289e26db6656d99ee9bdfb089bf80ca309fcbdee63fb46...  "optimizer_updates": 0,\n  "recorded_rl_transitions": 0,\n  "network_requests": 0,\n  "array_operation": "none"\n}\n' = read_bytes()
+E      +      where read_bytes = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/deferred-interruption-control-asz7avbd/runs/metadata-interruption-control/items/4f0b6c68be6f7de5f6d6de3e/receipt.json').read_bytes
+
+build/lausanne-deferred-qc-independent-v1/test_interruption_evidence.py:28: AssertionError
+_______ test_interruption_binds_existing_failed_worker_receipt[OSError] ________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10971da90>
+failure = <class 'OSError'>
+
+    @pytest.mark.parametrize('failure',[KeyboardInterrupt,OSError])
+    def test_interruption_binds_existing_failed_worker_receipt(monkeypatch,failure):
+     metadata=qc.preflight();m,am,sessions=metadata;row=m['originals'][0]
+     with tempfile.TemporaryDirectory(dir=ROOT/'build',prefix='deferred-interruption-control-') as folder:
+      cache=pathlib.Path(folder)
+      monkeypatch.setattr(qc,'CACHE',cache)
+      monkeypatch.setattr(qc,'preflight',lambda:metadata)
+      monkeypatch.setattr(qc,'execution_source',lambda m:{'files':{}})
+      monkeypatch.setattr(qc,'validate_execution',lambda *a,**kw:None)
+      def supervisor(command,log,**kw):
+       kw['on_start'](123)
+       trial=log.parent;intent=qc.bound_json(trial/'intent.json')
+       qc.save(trial/'receipt.json',{'schema':'lausanne-file-review-v1','manifest_sha256':qc.MANIFEST_SHA,'path':row['path'],'subject':row['subject'],'session':row['session'],'role':'TRAIN','intent_sha256':qc.digest(qc.encode(intent)),'declaration_sha256':intent['declaration_sha256'],'status':'failed_or_incomplete',**qc.CLAIMS})
+       raise failure('metadata-only interruption')
+      monkeypatch.setattr(qc,'supervise',supervisor)
+      report=qc.batch('metadata-interruption-control','originals',30,only_path=row['path'])
+      item=next(r for r in report['outcomes'] if r['path']==row['path'])
+      assert report['status']=='failed_or_incomplete' and item['status']=='failed_or_incomplete'
+      path=cache/'runs/metadata-interruption-control/items'/qc.review_key(row['path'])/'receipt.json'
+      assert path.exists()
+>     assert item.get('receipt_sha256')==qc.digest(path.read_bytes()),item
+E     AssertionError: {'path': 'sub-467/ses-20140817/anat/sub-467_ses-20140817_angio.nii.gz', 'status': 'failed_or_incomplete', 'intent_sha256': '16007e8142ffef2e33def3d1e4acdedc4c8dc186b50ed2d79137f81d9e442c64', 'worker_pid': 123, ...}
+E     assert None == '2ac2af46931a45e130e526377db59abc78e0a7d9c9fdeaa28d40bc66c080d010'
+E      +  where None = <built-in method get of dict object at 0x1092b0980>('receipt_sha256')
+E      +    where <built-in method get of dict object at 0x1092b0980> = {'path': 'sub-467/ses-20140817/anat/sub-467_ses-20140817_angio.nii.gz', 'status': 'failed_or_incomplete', 'intent_sha256': '16007e8142ffef2e33def3d1e4acdedc4c8dc186b50ed2d79137f81d9e442c64', 'worker_pid': 123, ...}.get
+E      +  and   '2ac2af46931a45e130e526377db59abc78e0a7d9c9fdeaa28d40bc66c080d010' = <function digest at 0x109007d80>(b'{\n  "schema": "lausanne-file-review-v1",\n  "manifest_sha256": "65224289e26db6656d99ee9bdfb089bf80ca309fcbdee63fb46...  "optimizer_updates": 0,\n  "recorded_rl_transitions": 0,\n  "network_requests": 0,\n  "array_operation": "none"\n}\n')
+E      +    where <function digest at 0x109007d80> = qc.digest
+E      +    and   b'{\n  "schema": "lausanne-file-review-v1",\n  "manifest_sha256": "65224289e26db6656d99ee9bdfb089bf80ca309fcbdee63fb46...  "optimizer_updates": 0,\n  "recorded_rl_transitions": 0,\n  "network_requests": 0,\n  "array_operation": "none"\n}\n' = read_bytes()
+E      +      where read_bytes = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/deferred-interruption-control-6s0q9wmr/runs/metadata-interruption-control/items/4f0b6c68be6f7de5f6d6de3e/receipt.json').read_bytes
+
+build/lausanne-deferred-qc-independent-v1/test_interruption_evidence.py:28: AssertionError
+=========================== short test summary info ============================
+FAILED build/lausanne-deferred-qc-independent-v1/test_interruption_evidence.py::test_interruption_binds_existing_failed_worker_receipt[KeyboardInterrupt]
+FAILED build/lausanne-deferred-qc-independent-v1/test_interruption_evidence.py::test_interruption_binds_existing_failed_worker_receipt[OSError]
+2 failed in 0.78s

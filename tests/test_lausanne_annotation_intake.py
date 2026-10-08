@@ -208,6 +208,35 @@ def test_missing_original_receipt_explicitly_defers_reference(metadata, tmp_path
     assert "raw_grid" not in result
 
 
+def test_explicit_separate_tof_review_uses_typed_resolver(metadata, tmp_path, monkeypatch):
+    import lausanne_deferred_qc as deferred
+    manifest, sessions = metadata
+    row = manifest["records"][0]
+    receipt = tmp_path / "separate-review.json"
+    calls = []
+    def resolve(*args):
+        calls.append(args)
+        return {"status": "control_route_only", "full_pair_current_fixity_checked": False}
+    monkeypatch.setattr(deferred, "separately_reviewed_reference", resolve)
+    result = intake.verify_reference(row, sessions[(row["subject"], row["session"])], manifest,
+        tmp_path / "trial", time.monotonic() + 1, separate_review_receipt=receipt)
+    assert result["status"] == "control_route_only"
+    assert len(calls) == 1 and calls[0][-1] == receipt
+    assert result["full_pair_current_fixity_checked"] is False
+
+
+def test_separate_resolver_failure_does_not_fall_back_to_legacy(metadata, tmp_path, monkeypatch):
+    import lausanne_deferred_qc as deferred
+    manifest, sessions = metadata
+    row = manifest["records"][0]
+    def refuse(*args):
+        raise intake.AcquisitionError("separate review failed")
+    monkeypatch.setattr(deferred, "separately_reviewed_reference", refuse)
+    with pytest.raises(intake.AcquisitionError, match="separate review failed"):
+        intake.verify_reference(row, sessions[(row["subject"], row["session"])], manifest,
+            tmp_path / "trial", time.monotonic() + 1, separate_review_receipt=tmp_path / "receipt.json")
+
+
 @pytest.mark.parametrize("change", ["role", "identity", "missing_tof", "file_hash", "claim"])
 def test_original_receipt_metadata_mismatch_refused(metadata, change):
     manifest, sessions = metadata

@@ -1,0 +1,105 @@
+{
+  "schema": "lausanne-deferred-qc-implementation-review-v1",
+  "status": "implemented_and_control_tested_pending_independent_review",
+  "files": {
+    "manifests/lausanne-deferred-qc-v1.json": {
+      "bytes": 128752,
+      "sha256": "65224289e26db6656d99ee9bdfb089bf80ca309fcbdee63fb469989e9e3d6e19"
+    },
+    "scripts/lausanne_deferred_qc.py": {
+      "bytes": 40686,
+      "sha256": "2e2b49718889afbc1bf4451f35a88493df3a651db00ccb8971530bdab912b860"
+    },
+    "tests/test_lausanne_deferred_qc.py": {
+      "bytes": 18134,
+      "sha256": "9035b4bc2d397167574fb9057c936bc1be103944887e76ee022ab60f54f5b2fa"
+    },
+    "scripts/lausanne_annotation_intake.py": {
+      "bytes": 41250,
+      "sha256": "dffa4b49ff82c5d510d2862c06b429e539458d0088c49ee3975d1baa2e8984f1"
+    },
+    "tests/test_lausanne_annotation_intake.py": {
+      "bytes": 22716,
+      "sha256": "703bf4960421ddf14fe957a18d71f039664e8ff08d130a73e4bfce65b699b883"
+    }
+  },
+  "test_result": {
+    "command": ".venv/bin/python -m pytest -q tests/test_lausanne_deferred_qc.py tests/test_lausanne_annotation_intake.py build/lausanne-deferred-qc-independent-v1/test_interruption_evidence.py build/lausanne-deferred-qc-independent-v1/test_review_boundaries.py",
+    "passed": 103,
+    "owner_controls": 100,
+    "independent_regressions": 3,
+    "failed": 0,
+    "scientific_payloads_accessed": false
+  },
+  "metadata_preflight": "passed",
+  "frozen_counts": {
+    "original_images": 26,
+    "original_sessions": 13,
+    "reference_followups": 27,
+    "followup_sessions": 21,
+    "followups_using_separate_review": 15,
+    "followups_using_legacy_review": 12,
+    "preserved_T1_conflicts": 6,
+    "preserved_mask_grid_failures": 1,
+    "metadata_exclusions": 4
+  },
+  "protected_live_sources_unchanged": {
+    "scripts/continuous_source_acquisition.py": "7244a4a97530a985468b967c4655da4644d4e78b85ee743e4b27a1b4cf74769a",
+    "scripts/resect_train_intake.py": "f1db114086aae742b1913aa552095daa57eb321bfeafe6b78bd84693508bcdaa",
+    "scripts/lausanne_train_intake.py": "4b195d44276ff656bbbd464e72641bd1a1ac1bbbe7de7fd61919422b0e9bd88f",
+    "scripts/acquire_btc_case.py": "2978b5c7756f46aac9dc8aa9f308fdf6f84a054326a48bd704fe3addc5bca0bf",
+    "scripts/acquire_public_case.py": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb",
+    "scripts/acquire_lausanne_pilot.py": "1eabdba674427829bfb3c50d72be74a62cf77d1a5b0cfb0cb803ff380c39642a",
+    "scripts/acquire_resect_cavity.py": "6ece649ba346c9e7a0e93af462a91a9bf863728bea3fba83f5eccd681e1d0d51",
+    "scripts/real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8"
+  },
+  "scientific_qc_launched": false,
+  "commits_created": 0,
+  "execution_source": {
+    "files": {
+      "manifests/lausanne-component-cohort-v1.json": "891a53680edfce604eed9a1791bc790efa615db8ce54da0c92de834a6b87d49a",
+      "manifests/lausanne-deferred-qc-v1.json": "65224289e26db6656d99ee9bdfb089bf80ca309fcbdee63fb469989e9e3d6e19",
+      "manifests/lausanne-train-annotations-v1.json": "f779066f5cb784f623446f12565eb1405994ac9e3b41c1fef8210546598de624",
+      "manifests/lausanne-train-originals-v1.json": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+      "scripts/acquire_btc_case.py": "2978b5c7756f46aac9dc8aa9f308fdf6f84a054326a48bd704fe3addc5bca0bf",
+      "scripts/acquire_lausanne_pilot.py": "1eabdba674427829bfb3c50d72be74a62cf77d1a5b0cfb0cb803ff380c39642a",
+      "scripts/acquire_public_case.py": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb",
+      "scripts/acquire_resect_cavity.py": "6ece649ba346c9e7a0e93af462a91a9bf863728bea3fba83f5eccd681e1d0d51",
+      "scripts/continuous_source_acquisition.py": "7244a4a97530a985468b967c4655da4644d4e78b85ee743e4b27a1b4cf74769a",
+      "scripts/lausanne_annotation_intake.py": "dffa4b49ff82c5d510d2862c06b429e539458d0088c49ee3975d1baa2e8984f1",
+      "scripts/lausanne_deferred_qc.py": "2e2b49718889afbc1bf4451f35a88493df3a651db00ccb8971530bdab912b860",
+      "scripts/lausanne_train_intake.py": "4b195d44276ff656bbbd464e72641bd1a1ac1bbbe7de7fd61919422b0e9bd88f",
+      "scripts/real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8",
+      "scripts/resect_train_intake.py": "f1db114086aae742b1913aa552095daa57eb321bfeafe6b78bd84693508bcdaa",
+      "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+      "src/resectionlab/critical_evidence.py": "ce228327299066a52a11d941d1c8d767c8696e44d8a15f2f5698e81633fd3e99",
+      "src/resectionlab/data_policy.py": "13f95f00763fcb0816406011d52976f25ab7df4a70ad46bde7116eb95fc13a84",
+      "src/resectionlab/imaging.py": "0b3fbc7890c9a79daee6d5f7f94d2b677dc98ae6b03e1067a2fe0449bbdc8bb2",
+      "src/resectionlab/structural_evidence.py": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019"
+    },
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "numpy": "2.5.3",
+    "nibabel": "5.4.2"
+  },
+  "limitations": [
+    "No new source-image header/scalar QC or reference followup executed.",
+    "New original-review consumers require the same reviewed implementation/runtime; source changes fail closed.",
+    "The six prior T1 conflicts, sub454 grid failure, and four metadata exclusions remain unresolved.",
+    "Anatomy and annotation semantics remain unreviewed; timestamps stay unknown; no training or spatial planning admission."
+  ],
+  "next_commands_after_independent_review_only": [
+    ".venv/bin/python scripts/lausanne_deferred_qc.py batch --stage originals --execute --manifest-sha 65224289e26db6656d99ee9bdfb089bf80ca309fcbdee63fb469989e9e3d6e19 --run-id new-originals-review-01 --max-seconds 1800",
+    ".venv/bin/python scripts/lausanne_deferred_qc.py batch --stage references --execute --manifest-sha 65224289e26db6656d99ee9bdfb089bf80ca309fcbdee63fb469989e9e3d6e19 --run-id pending-mask-references-01 --review-run new-originals-review-01 --max-seconds 1800"
+  ],
+  "revision": "lifecycle-repair-v2",
+  "prior_report_sha256": "fa6c749b7fd973a2202ccef5eb164c0a5e7775f6d8a9d5b2ed2c008120ae44b4",
+  "changes_from_initial": [
+    "scripts/lausanne_deferred_qc.py",
+    "tests/test_lausanne_deferred_qc.py"
+  ],
+  "lifecycle_repairs": [
+    "Parent checks deadline after supervision, receipt validation, each attempted-source validation, and final batch-source validation.",
+    "Every attempted path retains immutable receipt hash and validated status, or explicit binding error, including interrupted and late outcomes.",
+    "Prior completed per-file work remains recorded if only later final batch closure exceeds its deadline; batch completion is refused."
+  ]
+}

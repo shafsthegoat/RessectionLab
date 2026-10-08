@@ -1,0 +1,38 @@
+........................................................................ [ 77%]
+....................F                                                    [100%]
+=================================== FAILURES ===================================
+_____ test_parent_rejects_completed_worker_accounted_after_batch_deadline ______
+
+metadata = ({'schema': 'lausanne-deferred-qc-v1', 'scope': 'Offline review only of 26 newly transferred TRAIN originals and 27 pr...215', 'role': 'TRAIN', 'cohort_sha256': '891a53680edfce604eed9a1791bc790efa615db8ce54da0c92de834a6b87d49a', ...}, ...})
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1079970b0>
+
+    def test_parent_rejects_completed_worker_accounted_after_batch_deadline(metadata,monkeypatch):
+     m,am,sessions=metadata;row=m['originals'][0]
+     with tempfile.TemporaryDirectory(dir=ROOT/'build',prefix='deferred-parent-boundary-') as folder:
+      cache=pathlib.Path(folder);offset=[0];clock=time.monotonic
+      monkeypatch.setattr(qc,'CACHE',cache)
+      monkeypatch.setattr(qc,'preflight',lambda:metadata)
+      monkeypatch.setattr(qc,'execution_source',lambda m:{'files':{}})
+      monkeypatch.setattr(qc,'validate_execution',lambda *a,**kw:None)
+      monkeypatch.setattr(qc.time,'monotonic',lambda:clock()+offset[0])
+      def supervisor(command,log,**kw):
+       kw['on_start'](123)
+       trial=log.parent;intent=qc.bound_json(trial/'intent.json')
+       # Process-state control receipt: no scientific positive fields.
+       qc.save(trial/'receipt.json',{'schema':'lausanne-file-review-v1','manifest_sha256':qc.MANIFEST_SHA,'path':row['path'],'subject':row['subject'],'session':row['session'],'role':'TRAIN','intent_sha256':qc.digest(qc.encode(intent)),'declaration_sha256':intent['declaration_sha256'],'status':'review_failed',**qc.CLAIMS})
+       offset[0]=31
+       return 'completed',0
+      monkeypatch.setattr(qc,'supervise',supervisor)
+      report=qc.batch('metadata-deadline-control','originals',30,only_path=row['path'])
+      assert report['elapsed_seconds']>=30
+>     assert report['status']=='failed_or_incomplete',report
+E     AssertionError: {'schema': 'lausanne-deferred-qc-batch-v1', 'manifest_sha256': '65224289e26db6656d99ee9bdfb089bf80ca309fcbdee63fb469989e9e3d6e19', 'run_id': 'metadata-deadline-control', 'stage': 'originals', ...}
+E     assert 'bounded_attempts_finished' == 'failed_or_incomplete'
+E       
+E       - failed_or_incomplete
+E       + bounded_attempts_finished
+
+build/lausanne-deferred-qc-independent-v1/test_review_boundaries.py:41: AssertionError
+=========================== short test summary info ============================
+FAILED build/lausanne-deferred-qc-independent-v1/test_review_boundaries.py::test_parent_rejects_completed_worker_accounted_after_batch_deadline
+1 failed, 92 passed in 1.39s

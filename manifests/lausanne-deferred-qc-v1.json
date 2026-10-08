@@ -1,0 +1,2562 @@
+{
+  "schema": "lausanne-deferred-qc-v1",
+  "scope": "Offline review only of 26 newly transferred TRAIN originals and 27 previously content-reviewed same-source mask references. No acquisition or training.",
+  "basis_queue": {
+    "path": "build/lausanne-deferred-qc-bridge-v1/queue.json",
+    "bytes": 800103,
+    "sha256": "a6af6307ffd6b4a6a51f7bb9dce7805c7f41d443d1d3f16bdee67e2629239c00"
+  },
+  "cohort": {
+    "path": "manifests/lausanne-component-cohort-v1.json",
+    "bytes": 62650,
+    "sha256": "891a53680edfce604eed9a1791bc790efa615db8ce54da0c92de834a6b87d49a"
+  },
+  "original_index": {
+    "path": "manifests/lausanne-train-originals-v1.json",
+    "bytes": 1586099,
+    "sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66"
+  },
+  "annotation_manifest": {
+    "path": "manifests/lausanne-train-annotations-v1.json",
+    "bytes": 466329,
+    "sha256": "f779066f5cb784f623446f12565eb1405994ac9e3b41c1fef8210546598de624"
+  },
+  "protected_live_sources": {
+    "scripts/continuous_source_acquisition.py": "7244a4a97530a985468b967c4655da4644d4e78b85ee743e4b27a1b4cf74769a",
+    "scripts/resect_train_intake.py": "f1db114086aae742b1913aa552095daa57eb321bfeafe6b78bd84693508bcdaa",
+    "scripts/lausanne_train_intake.py": "4b195d44276ff656bbbd464e72641bd1a1ac1bbbe7de7fd61919422b0e9bd88f",
+    "scripts/acquire_btc_case.py": "2978b5c7756f46aac9dc8aa9f308fdf6f84a054326a48bd704fe3addc5bca0bf",
+    "scripts/acquire_public_case.py": "9871654b5e1dc0e4d51fa4982a869d79dc5890c33a2386709da62b48dfdc2bcb",
+    "scripts/acquire_lausanne_pilot.py": "1eabdba674427829bfb3c50d72be74a62cf77d1a5b0cfb0cb803ff380c39642a",
+    "scripts/acquire_resect_cavity.py": "6ece649ba346c9e7a0e93af462a91a9bf863728bea3fba83f5eccd681e1d0d51",
+    "scripts/real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8"
+  },
+  "counts": {
+    "original_images": 26,
+    "original_sessions": 13,
+    "reference_followups": 27,
+    "followup_sessions": 21,
+    "followups_using_separate_review": 15,
+    "followups_using_legacy_review": 12,
+    "preserved_T1_conflicts": 6,
+    "preserved_mask_grid_failures": 1,
+    "metadata_exclusions": 4
+  },
+  "bounds": {
+    "max_batch_seconds": 1800,
+    "max_worker_seconds": 120,
+    "max_source_file_bytes": 268435456,
+    "max_nifti_data_offset": 65536,
+    "max_voxels": 134217728,
+    "max_native_payload_bytes": 1073741824,
+    "scalar_chunk_voxels": 262144,
+    "max_scalar_workspace_bytes": 8388608,
+    "max_metadata_bytes": 2097152,
+    "workers": 1,
+    "network_requests": 0,
+    "automatic_retries": 0
+  },
+  "semantics": {
+    "anatomy_qc": "not_run",
+    "annotation_semantics_review": "not_run",
+    "training_admitted": false,
+    "scanner_frame_admitted": false,
+    "spatial_planning_admitted": false,
+    "annotation_available_at": null,
+    "review_available_at": null,
+    "background": "unknown; never a safe-tissue or negative vascular domain",
+    "optimizer_updates": 0,
+    "recorded_rl_transitions": 0
+  },
+  "originals": [
+    {
+      "path": "sub-467/ses-20140817/anat/sub-467_ses-20140817_angio.nii.gz",
+      "subject": "sub-467",
+      "session": "ses-20140817",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-4f0b6c68be6f7de5f6d6de3e",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-467",
+        "session": "ses-20140817",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-467/ses-20140817/anat/sub-467_ses-20140817_angio.nii.gz",
+          "bytes": 94343762,
+          "sha256": null,
+          "expected_md5": "aa9ea2b817740ef9b9add7453cc641d3",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-467/ses-20140817/anat/sub-467_ses-20140817_angio.nii.gz?versionId=MkB3LQb4u4JvtWd9DuUgehdbR.NzJPLM",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-467/ses-20140817/anat/sub-467_ses-20140817_angio.nii.gz",
+          "pointer_sha256": "f13a038d81a9061a4f6507009890ef2aeafdaa6ca8d1c2297f0a586a32f62e4d",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzL0ZQL3YzL01ENUUtczk0MzQzNzYyLS1hYTllYTJiODE3NzQwZWY5YjlhZGQ3NDUzY2M2NDFkMy5uaWkuZ3ovTUQ1RS1zOTQzNDM3NjItLWFhOWVhMmI4MTc3NDBlZjliOWFkZDc0NTNjYzY0MWQzLm5paS5neg=="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-4f0b6c68be6f7de5f6d6de3e/attempts/20261008T170324297184Z-1b598954/intent.json",
+          "bytes": 476,
+          "sha256": "d99fb092858b189373d2a46abafc979ba372ccb4468439d92f0fdf84c0fafcee"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-4f0b6c68be6f7de5f6d6de3e/attempts/20261008T170324297184Z-1b598954/result.json",
+          "bytes": 2159,
+          "sha256": "2e11535ce0e618b5b32d20708aac43267665968029386aa8cd834c6a912baba5"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-4f0b6c68be6f7de5f6d6de3e/attempts/20261008T170324297184Z-1b598954/outcome.json",
+          "bytes": 1137,
+          "sha256": "a004a5e4c8e4aa3fa1a8be5f4ba0d433fcaff1547a925b22716901919c838cd2"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    },
+    {
+      "path": "sub-474/ses-20140630/anat/sub-474_ses-20140630_angio.nii.gz",
+      "subject": "sub-474",
+      "session": "ses-20140630",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-69276ccb390649ff4b916e49",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-474",
+        "session": "ses-20140630",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-474/ses-20140630/anat/sub-474_ses-20140630_angio.nii.gz",
+          "bytes": 88288312,
+          "sha256": null,
+          "expected_md5": "a3cb0f3078bbd2a17a475336f9c477cf",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-474/ses-20140630/anat/sub-474_ses-20140630_angio.nii.gz?versionId=abrD2DX0Zb7NQVhlWilNgw2EupmQAr1Y",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-474/ses-20140630/anat/sub-474_ses-20140630_angio.nii.gz",
+          "pointer_sha256": "c8aeff5e143f36316338d0246be69c598fa79be5c4ca306b9823200f822795e7",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzLzdwL0pQL01ENUUtczg4Mjg4MzEyLS1hM2NiMGYzMDc4YmJkMmExN2E0NzUzMzZmOWM0NzdjZi5uaWkuZ3ovTUQ1RS1zODgyODgzMTItLWEzY2IwZjMwNzhiYmQyYTE3YTQ3NTMzNmY5YzQ3N2NmLm5paS5neg=="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-69276ccb390649ff4b916e49/attempts/20261008T170333923262Z-075faa22/intent.json",
+          "bytes": 476,
+          "sha256": "8fee241d11509c9fa933cb51e2062e1a082c709487f274d387d74a9011cb9812"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-69276ccb390649ff4b916e49/attempts/20261008T170333923262Z-075faa22/result.json",
+          "bytes": 2159,
+          "sha256": "5d34269e385196cc08af3844a3fca68d9d60084ddc0ac34a12d7f65864dac114"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-69276ccb390649ff4b916e49/attempts/20261008T170333923262Z-075faa22/outcome.json",
+          "bytes": 1138,
+          "sha256": "0b8fcbb0db8802b5d3d1584b1b19a61bd9f588bd3c27ca906e989bf64bbdb88f"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    },
+    {
+      "path": "sub-475/ses-20140503/anat/sub-475_ses-20140503_angio.nii.gz",
+      "subject": "sub-475",
+      "session": "ses-20140503",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-798779215c979b1e663eec02",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-475",
+        "session": "ses-20140503",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-475/ses-20140503/anat/sub-475_ses-20140503_angio.nii.gz",
+          "bytes": 57856213,
+          "sha256": null,
+          "expected_md5": "89928b8493da954348d5e1c6ab9ceaf4",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-475/ses-20140503/anat/sub-475_ses-20140503_angio.nii.gz?versionId=1.WDOTIuyaJyNJkfm4LnjF3R8v6O8Qqt",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-475/ses-20140503/anat/sub-475_ses-20140503_angio.nii.gz",
+          "pointer_sha256": "b2741121cb75daa19cbcd58f207b28c138ac87df375946ca4979c196b0c7d4cf",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzLzJXLzVHL01ENUUtczU3ODU2MjEzLS04OTkyOGI4NDkzZGE5NTQzNDhkNWUxYzZhYjljZWFmNC5uaWkuZ3ovTUQ1RS1zNTc4NTYyMTMtLTg5OTI4Yjg0OTNkYTk1NDM0OGQ1ZTFjNmFiOWNlYWY0Lm5paS5neg=="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-798779215c979b1e663eec02/attempts/20261008T170342119788Z-94304db2/intent.json",
+          "bytes": 476,
+          "sha256": "284070165b7c1cbbd0db633daa2d9ef12e0433ad51acb89f8ce79894d93a17c7"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-798779215c979b1e663eec02/attempts/20261008T170342119788Z-94304db2/result.json",
+          "bytes": 2159,
+          "sha256": "5576cbe88ae22ddd28b0a2ee9330a09e14f2bc13b11c99b48a5d6b630bd35580"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-798779215c979b1e663eec02/attempts/20261008T170342119788Z-94304db2/outcome.json",
+          "bytes": 1138,
+          "sha256": "ca5afdacb43268ec6d28161d25654c5a14fc9b007183ffdda6f0dfa62cab5abe"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    },
+    {
+      "path": "sub-478/ses-20140513/anat/sub-478_ses-20140513_angio.nii.gz",
+      "subject": "sub-478",
+      "session": "ses-20140513",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-2df6a579ce77637847231daf",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-478",
+        "session": "ses-20140513",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-478/ses-20140513/anat/sub-478_ses-20140513_angio.nii.gz",
+          "bytes": 75518550,
+          "sha256": null,
+          "expected_md5": "0da37c553c9cec65e541b7528cfed700",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-478/ses-20140513/anat/sub-478_ses-20140513_angio.nii.gz?versionId=HQKRbLVn1O.ZrTLCPdnF5KEncJVnB50X",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-478/ses-20140513/anat/sub-478_ses-20140513_angio.nii.gz",
+          "pointer_sha256": "e14370488629d512385a14733e54b392d8891ec3be30d8db349bd54e8a37a7be",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzL3dwL21YL01ENUUtczc1NTE4NTUwLS0wZGEzN2M1NTNjOWNlYzY1ZTU0MWI3NTI4Y2ZlZDcwMC5uaWkuZ3ovTUQ1RS1zNzU1MTg1NTAtLTBkYTM3YzU1M2M5Y2VjNjVlNTQxYjc1MjhjZmVkNzAwLm5paS5neg=="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-2df6a579ce77637847231daf/attempts/20261008T170351665417Z-e230395a/intent.json",
+          "bytes": 476,
+          "sha256": "11b7aa364adbb314f672a36dfff61767b634194b5edbf3557f021f094c49783d"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-2df6a579ce77637847231daf/attempts/20261008T170351665417Z-e230395a/result.json",
+          "bytes": 2159,
+          "sha256": "1a95934ff32672d6136b9157d1a24d927c52672d00aae31e40c20e764f28639a"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-2df6a579ce77637847231daf/attempts/20261008T170351665417Z-e230395a/outcome.json",
+          "bytes": 1138,
+          "sha256": "c7b8023d07f1a0e3cbb1b9615f31840b73580cf2b30a94923ce4ea7585ba2e81"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    },
+    {
+      "path": "sub-480/ses-20140208/anat/sub-480_ses-20140208_angio.nii.gz",
+      "subject": "sub-480",
+      "session": "ses-20140208",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-9428c56970fff571fd744d83",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-480",
+        "session": "ses-20140208",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-480/ses-20140208/anat/sub-480_ses-20140208_angio.nii.gz",
+          "bytes": 20236054,
+          "sha256": null,
+          "expected_md5": "0c36038008d7200796e57929aa514658",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-480/ses-20140208/anat/sub-480_ses-20140208_angio.nii.gz?versionId=0FRfpIZw0PXXj9EY.FuGdekrlb.kN7Rp",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-480/ses-20140208/anat/sub-480_ses-20140208_angio.nii.gz",
+          "pointer_sha256": "4a141c5fd1958b5167f5f9851416460a7a4aa13b32512fdeac9adaa775544a55",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzL3F4L3A3L01ENUUtczIwMjM2MDU0LS0wYzM2MDM4MDA4ZDcyMDA3OTZlNTc5MjlhYTUxNDY1OC5uaWkuZ3ovTUQ1RS1zMjAyMzYwNTQtLTBjMzYwMzgwMDhkNzIwMDc5NmU1NzkyOWFhNTE0NjU4Lm5paS5neg=="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-9428c56970fff571fd744d83/attempts/20261008T170359180108Z-f32019ff/intent.json",
+          "bytes": 476,
+          "sha256": "979e1464d0fe836d17f4660d0617bf1b5a2cc9f077f2ebaae3bcc004c9c8efd3"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-9428c56970fff571fd744d83/attempts/20261008T170359180108Z-f32019ff/result.json",
+          "bytes": 2159,
+          "sha256": "0859d6b9ec39d04795e448136274191df568f2bde618a41d4b86fca19c6f1272"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-9428c56970fff571fd744d83/attempts/20261008T170359180108Z-f32019ff/outcome.json",
+          "bytes": 1139,
+          "sha256": "e862aa82813295659f963c19d83746e566e1dd464c88c14908af9c0b84c947b7"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    },
+    {
+      "path": "sub-481/ses-20140201/anat/sub-481_ses-20140201_angio.nii.gz",
+      "subject": "sub-481",
+      "session": "ses-20140201",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-3e9615d2333a1217de95f997",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-481",
+        "session": "ses-20140201",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-481/ses-20140201/anat/sub-481_ses-20140201_angio.nii.gz",
+          "bytes": 62173186,
+          "sha256": null,
+          "expected_md5": "36b02e15af46295ad94b32cf286665f5",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-481/ses-20140201/anat/sub-481_ses-20140201_angio.nii.gz?versionId=TsK9uIIWF.PQJbORo1iZ90D1.gEJ2QN.",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-481/ses-20140201/anat/sub-481_ses-20140201_angio.nii.gz",
+          "pointer_sha256": "dd1911b88f83425b1aa8599b23fce4361072ca27dc12707a92c4a367d656b68e",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzL3dqL3F3L01ENUUtczYyMTczMTg2LS0zNmIwMmUxNWFmNDYyOTVhZDk0YjMyY2YyODY2NjVmNS5uaWkuZ3ovTUQ1RS1zNjIxNzMxODYtLTM2YjAyZTE1YWY0NjI5NWFkOTRiMzJjZjI4NjY2NWY1Lm5paS5neg=="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-3e9615d2333a1217de95f997/attempts/20261008T170401605810Z-0140d19b/intent.json",
+          "bytes": 476,
+          "sha256": "491d84b305011783a44702479737f3000c4a1b1b84d671a2c2a5f0c1d0d044ea"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-3e9615d2333a1217de95f997/attempts/20261008T170401605810Z-0140d19b/result.json",
+          "bytes": 2159,
+          "sha256": "e60c59908204652e94351adea81ec03a8c4a9ba3431166a3e1a2591e3ef87a05"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-3e9615d2333a1217de95f997/attempts/20261008T170401605810Z-0140d19b/outcome.json",
+          "bytes": 1138,
+          "sha256": "7effce4e7f88fc5e0adc4e9f73610a87890c7f776441552bc966fcb100ea762c"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    },
+    {
+      "path": "sub-484/ses-20140116/anat/sub-484_ses-20140116_angio.nii.gz",
+      "subject": "sub-484",
+      "session": "ses-20140116",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-d437c9de716c7cacbddace0a",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-484",
+        "session": "ses-20140116",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-484/ses-20140116/anat/sub-484_ses-20140116_angio.nii.gz",
+          "bytes": 17671984,
+          "sha256": null,
+          "expected_md5": "bd07aa77bc82e8ab6f07fa953cfbe17e",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-484/ses-20140116/anat/sub-484_ses-20140116_angio.nii.gz?versionId=Q1tJIqWcphJsIpgqPvcliB_QhdgJjEVb",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-484/ses-20140116/anat/sub-484_ses-20140116_angio.nii.gz",
+          "pointer_sha256": "bee0535e8f98cb4f0d5339f019e77ad91adc6d70235fd2855362510053fe20be",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzLzZrL2s2L01ENUUtczE3NjcxOTg0LS1iZDA3YWE3N2JjODJlOGFiNmYwN2ZhOTUzY2ZiZTE3ZS5uaWkuZ3ovTUQ1RS1zMTc2NzE5ODQtLWJkMDdhYTc3YmM4MmU4YWI2ZjA3ZmE5NTNjZmJlMTdlLm5paS5neg=="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-d437c9de716c7cacbddace0a/attempts/20261008T170419079189Z-41aef43a/intent.json",
+          "bytes": 476,
+          "sha256": "f2ea147bb0b5f312cb0b99257a370da7ae2269bc00024b1ad236473418161482"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-d437c9de716c7cacbddace0a/attempts/20261008T170419079189Z-41aef43a/result.json",
+          "bytes": 2159,
+          "sha256": "afbb0dbaf22a4521df21aad9322021563fa212b0182d73b17fdecc8d66a9293a"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-d437c9de716c7cacbddace0a/attempts/20261008T170419079189Z-41aef43a/outcome.json",
+          "bytes": 1139,
+          "sha256": "b5ba39d320ffe4135c8c65a909ea27f5f59d9c8f73cc53182b2ab1f6e7440fa5"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    },
+    {
+      "path": "sub-485/ses-20140131/anat/sub-485_ses-20140131_angio.nii.gz",
+      "subject": "sub-485",
+      "session": "ses-20140131",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-38fdb87cde629bfa89fc5e9b",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-485",
+        "session": "ses-20140131",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-485/ses-20140131/anat/sub-485_ses-20140131_angio.nii.gz",
+          "bytes": 23040126,
+          "sha256": null,
+          "expected_md5": "774b4c093174c2a08aa16ab46198f7a2",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-485/ses-20140131/anat/sub-485_ses-20140131_angio.nii.gz?versionId=.lw4hkZ.UaUMTaStfWvWyy9UQ4kPEUTH",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-485/ses-20140131/anat/sub-485_ses-20140131_angio.nii.gz",
+          "pointer_sha256": "ff04b6f6a4cbd7f32fb5f6e53e16c7dc2595d3131140b9779cb17ce9d71a8d0d",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzLzNLL3FtL01ENUUtczIzMDQwMTI2LS03NzRiNGMwOTMxNzRjMmEwOGFhMTZhYjQ2MTk4ZjdhMi5uaWkuZ3ovTUQ1RS1zMjMwNDAxMjYtLTc3NGI0YzA5MzE3NGMyYTA4YWExNmFiNDYxOThmN2EyLm5paS5neg=="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-38fdb87cde629bfa89fc5e9b/attempts/20261008T170422240798Z-bfcf5479/intent.json",
+          "bytes": 475,
+          "sha256": "e0dfabddd8c8bfb1260bb6fe64ea872a2f07ae401fc969169f94178ad55834bb"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-38fdb87cde629bfa89fc5e9b/attempts/20261008T170422240798Z-bfcf5479/result.json",
+          "bytes": 2159,
+          "sha256": "30076f81e444d852d74bd274d0d2917fc1c4462982aa866f21e365f5ed6f92c1"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-38fdb87cde629bfa89fc5e9b/attempts/20261008T170422240798Z-bfcf5479/outcome.json",
+          "bytes": 1138,
+          "sha256": "67614aa4626b3480b3c99003ac83b22730223b7413c6ae68c456fc476713e264"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    },
+    {
+      "path": "sub-486/ses-20140121/anat/sub-486_ses-20140121_angio.nii.gz",
+      "subject": "sub-486",
+      "session": "ses-20140121",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-b2b04b5cc8eadb849a9b72c3",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-486",
+        "session": "ses-20140121",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-486/ses-20140121/anat/sub-486_ses-20140121_angio.nii.gz",
+          "bytes": 15662765,
+          "sha256": null,
+          "expected_md5": "07f561df84e45de7389c41927fbc3bd5",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-486/ses-20140121/anat/sub-486_ses-20140121_angio.nii.gz?versionId=tYsB4UsOYv4joCdu6jicdscW01zstizU",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-486/ses-20140121/anat/sub-486_ses-20140121_angio.nii.gz",
+          "pointer_sha256": "ad3a40107c493e2512a6add2621469914259b1ce5edd2aa85022e090954efac9",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzLzVNL1ozL01ENUUtczE1NjYyNzY1LS0wN2Y1NjFkZjg0ZTQ1ZGU3Mzg5YzQxOTI3ZmJjM2JkNS5uaWkuZ3ovTUQ1RS1zMTU2NjI3NjUtLTA3ZjU2MWRmODRlNDVkZTczODljNDE5MjdmYmMzYmQ1Lm5paS5neg=="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-b2b04b5cc8eadb849a9b72c3/attempts/20261008T170426028034Z-f55619a5/intent.json",
+          "bytes": 476,
+          "sha256": "3a24be3ea890aa082bff8b1b54d7a29bb565ccbf1afe25b04866055e1b2955fb"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-b2b04b5cc8eadb849a9b72c3/attempts/20261008T170426028034Z-f55619a5/result.json",
+          "bytes": 2159,
+          "sha256": "1e5551e61900139cb7d5568856b55ed05d01e3ca80581646d1e316477441203b"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-b2b04b5cc8eadb849a9b72c3/attempts/20261008T170426028034Z-f55619a5/outcome.json",
+          "bytes": 1138,
+          "sha256": "44b8049fde744373783ef94f16d65775746f0fa56f7197f17bca80d50e52279c"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    },
+    {
+      "path": "sub-489/ses-20151226/anat/sub-489_ses-20151226_angio.nii.gz",
+      "subject": "sub-489",
+      "session": "ses-20151226",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-86dde587108ffc082b64872a",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-489",
+        "session": "ses-20151226",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-489/ses-20151226/anat/sub-489_ses-20151226_angio.nii.gz",
+          "bytes": 14624710,
+          "sha256": null,
+          "expected_md5": "9799749a4eb987273a2388843f8a1c82",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-489/ses-20151226/anat/sub-489_ses-20151226_angio.nii.gz?versionId=AOep66.fqmPLI3L_yV7aMOQZI4xrMfLp",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-489/ses-20151226/anat/sub-489_ses-20151226_angio.nii.gz",
+          "pointer_sha256": "d60dae79ab5fa7572e6d073140c8bbca68f3404c4cb322aa25baa9a94519d18c",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzL3BxL3pLL01ENUUtczE0NjI0NzEwLS05Nzk5NzQ5YTRlYjk4NzI3M2EyMzg4ODQzZjhhMWM4Mi5uaWkuZ3ovTUQ1RS1zMTQ2MjQ3MTAtLTk3OTk3NDlhNGViOTg3MjczYTIzODg4NDNmOGExYzgyLm5paS5neg=="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-86dde587108ffc082b64872a/attempts/20261008T170428204460Z-99792a9d/intent.json",
+          "bytes": 476,
+          "sha256": "cb78ece1f584b9b185e651fc932f57b699acf6fae09b80003393b7f7f614e32b"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-86dde587108ffc082b64872a/attempts/20261008T170428204460Z-99792a9d/result.json",
+          "bytes": 2159,
+          "sha256": "5b46aebb34cd3caea4238b970a204de27ba24b145776353d9d71e43df45d0f30"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-86dde587108ffc082b64872a/attempts/20261008T170428204460Z-99792a9d/outcome.json",
+          "bytes": 1139,
+          "sha256": "1209cc984d007c8b5486222a86ec630534eaa9275da1b9bb9c723a01c617965a"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    },
+    {
+      "path": "sub-491/ses-20151124/anat/sub-491_ses-20151124_angio.nii.gz",
+      "subject": "sub-491",
+      "session": "ses-20151124",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-d4a80338a19a7e0288373423",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-491",
+        "session": "ses-20151124",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-491/ses-20151124/anat/sub-491_ses-20151124_angio.nii.gz",
+          "bytes": 75159803,
+          "sha256": null,
+          "expected_md5": "e0d216d6ea0da0bb3f486fae84a97775",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-491/ses-20151124/anat/sub-491_ses-20151124_angio.nii.gz?versionId=7i9u.4T9K9LeBoSL.nMPmQxmHqNHtI5g",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-491/ses-20151124/anat/sub-491_ses-20151124_angio.nii.gz",
+          "pointer_sha256": "f0cdda81b539abbd588aa96f0c1b4ad646992a476a4e890e5e5021474a15daee",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzL3hXL3hxL01ENUUtczc1MTU5ODAzLS1lMGQyMTZkNmVhMGRhMGJiM2Y0ODZmYWU4NGE5Nzc3NS5uaWkuZ3ovTUQ1RS1zNzUxNTk4MDMtLWUwZDIxNmQ2ZWEwZGEwYmIzZjQ4NmZhZTg0YTk3Nzc1Lm5paS5neg=="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-d4a80338a19a7e0288373423/attempts/20261008T170430426620Z-dd79eace/intent.json",
+          "bytes": 476,
+          "sha256": "703c3448164b01a4cb95029d3e697d6c665c501b1459953733a37de00c40283c"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-d4a80338a19a7e0288373423/attempts/20261008T170430426620Z-dd79eace/result.json",
+          "bytes": 2159,
+          "sha256": "4617d6cecc4d9625e10e75ee4d60adf82a17c872497c0ae6491e23c1a5cedeaa"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-d4a80338a19a7e0288373423/attempts/20261008T170430426620Z-dd79eace/outcome.json",
+          "bytes": 1137,
+          "sha256": "9919680edaff585fa7cd77b1e81398f089a140d6d8784d480ede454ed27e970f"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    },
+    {
+      "path": "sub-492/ses-20151228/anat/sub-492_ses-20151228_angio.nii.gz",
+      "subject": "sub-492",
+      "session": "ses-20151228",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-a2d0425e76a93943912d776e",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-492",
+        "session": "ses-20151228",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-492/ses-20151228/anat/sub-492_ses-20151228_angio.nii.gz",
+          "bytes": 74754302,
+          "sha256": null,
+          "expected_md5": "334282dec6febac82b901f80f7c43602",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-492/ses-20151228/anat/sub-492_ses-20151228_angio.nii.gz?versionId=ugGHuocpZJXteUrZLM68UthtU1Bfxvw1",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-492/ses-20151228/anat/sub-492_ses-20151228_angio.nii.gz",
+          "pointer_sha256": "460835590feaf12e2ea7eda524c78a517f9ed6e797c1c77d68a748d9db5e5f58",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzLzJKL1BWL01ENUUtczc0NzU0MzAyLS0zMzQyODJkZWM2ZmViYWM4MmI5MDFmODBmN2M0MzYwMi5uaWkuZ3ovTUQ1RS1zNzQ3NTQzMDItLTMzNDI4MmRlYzZmZWJhYzgyYjkwMWY4MGY3YzQzNjAyLm5paS5neg=="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-a2d0425e76a93943912d776e/attempts/20261008T170437036436Z-df49492b/intent.json",
+          "bytes": 476,
+          "sha256": "02ca86b62e63865ab90f5e2212a6d9725e81774e9134662221413bc0c57ec517"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-a2d0425e76a93943912d776e/attempts/20261008T170437036436Z-df49492b/result.json",
+          "bytes": 2159,
+          "sha256": "bb6cc56aca4a78217f97333d59cd58b8f826f95911301cd7e14eff17a56a2edc"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-a2d0425e76a93943912d776e/attempts/20261008T170437036436Z-df49492b/outcome.json",
+          "bytes": 1138,
+          "sha256": "b008258a2c69b151800465fe822b4cdc44d1cb08618d0ad8820be888174f3976"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    },
+    {
+      "path": "sub-467/ses-20140817/anat/sub-467_ses-20140817_T1w.nii.gz",
+      "subject": "sub-467",
+      "session": "ses-20140817",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-6fb403977e29c3f1d1abd353",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-467",
+        "session": "ses-20140817",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-467/ses-20140817/anat/sub-467_ses-20140817_T1w.nii.gz",
+          "bytes": 4993849,
+          "sha256": null,
+          "expected_md5": "e48348a8191a0bf6dfb913e0e87c2ec9",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-467/ses-20140817/anat/sub-467_ses-20140817_T1w.nii.gz?versionId=HmqbH5tQIWi2t.AG2ecYqjWWvxXdDbq0",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-467/ses-20140817/anat/sub-467_ses-20140817_T1w.nii.gz",
+          "pointer_sha256": "e34bb8b1b8531ca32c0d7167bea84c19a21cf44d2cbb2bb9f5f8ff9b20e25630",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzL2c4LzJqL01ENUUtczQ5OTM4NDktLWU0ODM0OGE4MTkxYTBiZjZkZmI5MTNlMGU4N2MyZWM5Lm5paS5nei9NRDVFLXM0OTkzODQ5LS1lNDgzNDhhODE5MWEwYmY2ZGZiOTEzZTBlODdjMmVjOS5uaWkuZ3o="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-6fb403977e29c3f1d1abd353/attempts/20261008T170323536742Z-095d0c21/intent.json",
+          "bytes": 476,
+          "sha256": "f14ef16341baf60b274db987ed93c531c8275646bdc2221551bc8bc3a329eef3"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-6fb403977e29c3f1d1abd353/attempts/20261008T170323536742Z-095d0c21/result.json",
+          "bytes": 2147,
+          "sha256": "50f754f78804dd79c5b972e856b6c710d28cb4def868decb1186ace444a859e9"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-6fb403977e29c3f1d1abd353/attempts/20261008T170323536742Z-095d0c21/outcome.json",
+          "bytes": 1138,
+          "sha256": "228a0a2dc8c3eb10a8917c8b7587bf3156e73e04a8b6b4a68cfa99dd1e4aca8f"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    },
+    {
+      "path": "sub-474/ses-20140630/anat/sub-474_ses-20140630_T1w.nii.gz",
+      "subject": "sub-474",
+      "session": "ses-20140630",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-9a95515db72e47065386b844",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-474",
+        "session": "ses-20140630",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-474/ses-20140630/anat/sub-474_ses-20140630_T1w.nii.gz",
+          "bytes": 3996780,
+          "sha256": null,
+          "expected_md5": "285d8df4d194be01955b829ff512e760",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-474/ses-20140630/anat/sub-474_ses-20140630_T1w.nii.gz?versionId=S86MTkgmE39rLhTgW5KTrLsnF0Bw4FbE",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-474/ses-20140630/anat/sub-474_ses-20140630_T1w.nii.gz",
+          "pointer_sha256": "cbbd8f54d5469cabeef73e405a4d0cf8a6e4d9a0f1fae4a8a28f8cc843a36333",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzL3BWL2Y1L01ENUUtczM5OTY3ODAtLTI4NWQ4ZGY0ZDE5NGJlMDE5NTViODI5ZmY1MTJlNzYwLm5paS5nei9NRDVFLXMzOTk2NzgwLS0yODVkOGRmNGQxOTRiZTAxOTU1YjgyOWZmNTEyZTc2MC5uaWkuZ3o="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-9a95515db72e47065386b844/attempts/20261008T170333233733Z-8a181bf7/intent.json",
+          "bytes": 476,
+          "sha256": "6162f4f0d37f6bcaf8358e5b1bac30be0c7721caf96aee9455340152dc4bc015"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-9a95515db72e47065386b844/attempts/20261008T170333233733Z-8a181bf7/result.json",
+          "bytes": 2147,
+          "sha256": "4d013967aa97f67ae42f3d027df273a39b8ae4e1bad4ffb6f91de4a81a87271d"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-9a95515db72e47065386b844/attempts/20261008T170333233733Z-8a181bf7/outcome.json",
+          "bytes": 1138,
+          "sha256": "cb0ccbc299fd33ba48e18fce4d066d85b0986f7c89d3feba8e532db8a44bf913"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    },
+    {
+      "path": "sub-475/ses-20140503/anat/sub-475_ses-20140503_T1w.nii.gz",
+      "subject": "sub-475",
+      "session": "ses-20140503",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-65e9e3d01a079d5c517609f9",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-475",
+        "session": "ses-20140503",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-475/ses-20140503/anat/sub-475_ses-20140503_T1w.nii.gz",
+          "bytes": 4166173,
+          "sha256": null,
+          "expected_md5": "6ce974cb4505be4db17760e435e44f4f",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-475/ses-20140503/anat/sub-475_ses-20140503_T1w.nii.gz?versionId=tH9_OSWCYtX6oCXbMX9GAEOh1MRKGUaU",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-475/ses-20140503/anat/sub-475_ses-20140503_T1w.nii.gz",
+          "pointer_sha256": "53eeed57e02274e7bccdfbf274dafb385de5d5cb4a64eb81d06af1408013b8c0",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzL01aL3hGL01ENUUtczQxNjYxNzMtLTZjZTk3NGNiNDUwNWJlNGRiMTc3NjBlNDM1ZTQ0ZjRmLm5paS5nei9NRDVFLXM0MTY2MTczLS02Y2U5NzRjYjQ1MDViZTRkYjE3NzYwZTQzNWU0NGY0Zi5uaWkuZ3o="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-65e9e3d01a079d5c517609f9/attempts/20261008T170341369705Z-1658b969/intent.json",
+          "bytes": 476,
+          "sha256": "7803aa5bee01e99766286192c51d03b1fc1cf76055fabb9d5b60cf8a388c3e24"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-65e9e3d01a079d5c517609f9/attempts/20261008T170341369705Z-1658b969/result.json",
+          "bytes": 2147,
+          "sha256": "2872c1adec0d47c187bfb4983acd96170aadd73cd65ec9427813fc41c3e49c81"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-65e9e3d01a079d5c517609f9/attempts/20261008T170341369705Z-1658b969/outcome.json",
+          "bytes": 1138,
+          "sha256": "94f23ade0835bc8881d3a011af272e301d0e22673ee5347b540f24df42bb2a16"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    },
+    {
+      "path": "sub-478/ses-20140513/anat/sub-478_ses-20140513_T1w.nii.gz",
+      "subject": "sub-478",
+      "session": "ses-20140513",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-3aba2d7e1fdbf6e65c38754a",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-478",
+        "session": "ses-20140513",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-478/ses-20140513/anat/sub-478_ses-20140513_T1w.nii.gz",
+          "bytes": 7836284,
+          "sha256": null,
+          "expected_md5": "54371866d693a29fac1037a67a8c8924",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-478/ses-20140513/anat/sub-478_ses-20140513_T1w.nii.gz?versionId=o1JXsoVMg5tuvBrPo1HaG_r.adfQLuwG",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-478/ses-20140513/anat/sub-478_ses-20140513_T1w.nii.gz",
+          "pointer_sha256": "c2d843af897d72bae883efdc21d3c8f500a55912d5b03e6ef01b617cd88d70c7",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzL1hmL1hGL01ENUUtczc4MzYyODQtLTU0MzcxODY2ZDY5M2EyOWZhYzEwMzdhNjdhOGM4OTI0Lm5paS5nei9NRDVFLXM3ODM2Mjg0LS01NDM3MTg2NmQ2OTNhMjlmYWMxMDM3YTY3YThjODkyNC5uaWkuZ3o="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-3aba2d7e1fdbf6e65c38754a/attempts/20261008T170350690663Z-1a2680c0/intent.json",
+          "bytes": 476,
+          "sha256": "32851ce3a42e808cfb30f3bec89ada6724d65054daf02648a3ccdb14171b3628"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-3aba2d7e1fdbf6e65c38754a/attempts/20261008T170350690663Z-1a2680c0/result.json",
+          "bytes": 2147,
+          "sha256": "60cf89673e209a8cc7250ae7274c1359609aacc9fbaedd15351f446d99744b55"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-3aba2d7e1fdbf6e65c38754a/attempts/20261008T170350690663Z-1a2680c0/outcome.json",
+          "bytes": 1138,
+          "sha256": "1df3bd43eeac8331d81583c79e3d3e780a1ecf3720411844e99fe0c69f4bb0c4"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    },
+    {
+      "path": "sub-480/ses-20140208/anat/sub-480_ses-20140208_T1w.nii.gz",
+      "subject": "sub-480",
+      "session": "ses-20140208",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-090a8da8e64db7939accbbca",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-480",
+        "session": "ses-20140208",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-480/ses-20140208/anat/sub-480_ses-20140208_T1w.nii.gz",
+          "bytes": 6783237,
+          "sha256": null,
+          "expected_md5": "5b0dc0f1407c764360f7b545c7a1ce33",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-480/ses-20140208/anat/sub-480_ses-20140208_T1w.nii.gz?versionId=3xJz_fFz3a30dGUYuknDe5vX6rTruO71",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-480/ses-20140208/anat/sub-480_ses-20140208_T1w.nii.gz",
+          "pointer_sha256": "d7be3ad6fe21233de40dfc193a9fbcaa2d8a385580c4e45719a5b65ddc3bb9ca",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzL3BGL0txL01ENUUtczY3ODMyMzctLTViMGRjMGYxNDA3Yzc2NDM2MGY3YjU0NWM3YTFjZTMzLm5paS5nei9NRDVFLXM2NzgzMjM3LS01YjBkYzBmMTQwN2M3NjQzNjBmN2I1NDVjN2ExY2UzMy5uaWkuZ3o="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-090a8da8e64db7939accbbca/attempts/20261008T170358264825Z-97f4cc12/intent.json",
+          "bytes": 476,
+          "sha256": "890b8ef27003179be7d88c46b34dbcb7064cf03570e7330b9663f0cda56c5c48"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-090a8da8e64db7939accbbca/attempts/20261008T170358264825Z-97f4cc12/result.json",
+          "bytes": 2147,
+          "sha256": "539889fb9ad04ddc78a3c8067c36318b3dfac610d1c44678b97c3ff179152f24"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-090a8da8e64db7939accbbca/attempts/20261008T170358264825Z-97f4cc12/outcome.json",
+          "bytes": 1138,
+          "sha256": "1ad50f57aea05172e8c711a62568fbf5275b0d564f4d86bbb56be624189810cf"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    },
+    {
+      "path": "sub-481/ses-20140201/anat/sub-481_ses-20140201_T1w.nii.gz",
+      "subject": "sub-481",
+      "session": "ses-20140201",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-ac9b78c49f58fa6c08063461",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-481",
+        "session": "ses-20140201",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-481/ses-20140201/anat/sub-481_ses-20140201_T1w.nii.gz",
+          "bytes": 4049219,
+          "sha256": null,
+          "expected_md5": "8c315721f0064fb3b94f1ed81fe44b23",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-481/ses-20140201/anat/sub-481_ses-20140201_T1w.nii.gz?versionId=bwNEoVMO34w6oB8.jl5xyhAtQLP5gUBd",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-481/ses-20140201/anat/sub-481_ses-20140201_T1w.nii.gz",
+          "pointer_sha256": "ce09cdb46bdada174e64317078d1642ff804210f1c0ff91a10f36b9c62b97c56",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzLzNKL1dWL01ENUUtczQwNDkyMTktLThjMzE1NzIxZjAwNjRmYjNiOTRmMWVkODFmZTQ0YjIzLm5paS5nei9NRDVFLXM0MDQ5MjE5LS04YzMxNTcyMWYwMDY0ZmIzYjk0ZjFlZDgxZmU0NGIyMy5uaWkuZ3o="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-ac9b78c49f58fa6c08063461/attempts/20261008T170400963622Z-ca586fee/intent.json",
+          "bytes": 476,
+          "sha256": "a00940ae6291a67b27a80d0c8f3491c213d450e0edbf76aa63fd70626c94c475"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-ac9b78c49f58fa6c08063461/attempts/20261008T170400963622Z-ca586fee/result.json",
+          "bytes": 2147,
+          "sha256": "a29d264bc8c48038cbdfa4d3fa09544ca991fb3407729f731d968afd19e10de7"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-ac9b78c49f58fa6c08063461/attempts/20261008T170400963622Z-ca586fee/outcome.json",
+          "bytes": 1138,
+          "sha256": "095b0984782ca16f36d8ce52e34c152d310f5abb60c00bbf1a95d90b2129547e"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    },
+    {
+      "path": "sub-482/ses-20140210/anat/sub-482_ses-20140210_T1w.nii.gz",
+      "subject": "sub-482",
+      "session": "ses-20140210",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-673eedf64ddd350b2816943b",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-482",
+        "session": "ses-20140210",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-482/ses-20140210/anat/sub-482_ses-20140210_T1w.nii.gz",
+          "bytes": 3627373,
+          "sha256": null,
+          "expected_md5": "4cb535783898af4eeba2a21974e0ffd2",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-482/ses-20140210/anat/sub-482_ses-20140210_T1w.nii.gz?versionId=g5i3mK..l0fmlS6uszzdB_etqAh6jbPP",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-482/ses-20140210/anat/sub-482_ses-20140210_T1w.nii.gz",
+          "pointer_sha256": "ed416d0537fc0ba0c18b8921e6f40037740cc1c21d94e3a336efda8fffdda2b3",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzL0d6L01HL01ENUUtczM2MjczNzMtLTRjYjUzNTc4Mzg5OGFmNGVlYmEyYTIxOTc0ZTBmZmQyLm5paS5nei9NRDVFLXMzNjI3MzczLS00Y2I1MzU3ODM4OThhZjRlZWJhMmEyMTk3NGUwZmZkMi5uaWkuZ3o="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-673eedf64ddd350b2816943b/attempts/20261008T170410299636Z-da5e1ba5/intent.json",
+          "bytes": 476,
+          "sha256": "95254d23672d828adcf075a96516fc2a202e5bc182d306a123a3898fd9576a02"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-673eedf64ddd350b2816943b/attempts/20261008T170410299636Z-da5e1ba5/result.json",
+          "bytes": 2147,
+          "sha256": "0386369bceae542f47b481dafe0c0a28c77947f80c3aa3b422a823cee9b776a3"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-673eedf64ddd350b2816943b/attempts/20261008T170410299636Z-da5e1ba5/outcome.json",
+          "bytes": 1138,
+          "sha256": "063892e5df0ce443d7208268192080436f2c14135bc0dc64efdac3aa39bddc2d"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    },
+    {
+      "path": "sub-482/ses-20140210/anat/sub-482_ses-20140210_angio.nii.gz",
+      "subject": "sub-482",
+      "session": "ses-20140210",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-cd0f7cdffe4f297ddbbca65a",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-482",
+        "session": "ses-20140210",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-482/ses-20140210/anat/sub-482_ses-20140210_angio.nii.gz",
+          "bytes": 53839547,
+          "sha256": null,
+          "expected_md5": "c3a1ba791b6b03b49f8ec1e952b5e19f",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-482/ses-20140210/anat/sub-482_ses-20140210_angio.nii.gz?versionId=R7MIdnwKnNNTpHWq3pUlZTwsPQuONHt2",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-482/ses-20140210/anat/sub-482_ses-20140210_angio.nii.gz",
+          "pointer_sha256": "671c869bbef8507f4be574cde3d90337416bb8030098cad6c0daec1f5a2a0f32",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzLzRnL1o4L01ENUUtczUzODM5NTQ3LS1jM2ExYmE3OTFiNmIwM2I0OWY4ZWMxZTk1MmI1ZTE5Zi5uaWkuZ3ovTUQ1RS1zNTM4Mzk1NDctLWMzYTFiYTc5MWI2YjAzYjQ5ZjhlYzFlOTUyYjVlMTlmLm5paS5neg=="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-cd0f7cdffe4f297ddbbca65a/attempts/20261008T170411014865Z-76ed4ccd/intent.json",
+          "bytes": 476,
+          "sha256": "b9979f41dbbe0c2790931e1a2e11ab4662d5e61071c364810f10bbab5afb9c8c"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-cd0f7cdffe4f297ddbbca65a/attempts/20261008T170411014865Z-76ed4ccd/result.json",
+          "bytes": 2159,
+          "sha256": "ea03aca8678287ebd410f69c3c44d49c935d2dec89da5a6aceb5bc1b44f946b6"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-cd0f7cdffe4f297ddbbca65a/attempts/20261008T170411014865Z-76ed4ccd/outcome.json",
+          "bytes": 1138,
+          "sha256": "05a9bca5180177c26b214847dc528dc3c2ae0eabb81e724f9c2932680459815f"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    },
+    {
+      "path": "sub-484/ses-20140116/anat/sub-484_ses-20140116_T1w.nii.gz",
+      "subject": "sub-484",
+      "session": "ses-20140116",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-87ca5291746dc91df2942732",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-484",
+        "session": "ses-20140116",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-484/ses-20140116/anat/sub-484_ses-20140116_T1w.nii.gz",
+          "bytes": 3973114,
+          "sha256": null,
+          "expected_md5": "8870912a5b603b9e6002545cab388943",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-484/ses-20140116/anat/sub-484_ses-20140116_T1w.nii.gz?versionId=2jQ8Gpt6C61ekRxQbZfqGzxtWusWQsID",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-484/ses-20140116/anat/sub-484_ses-20140116_T1w.nii.gz",
+          "pointer_sha256": "195c23f56c07344defb26675efd253878289e48c7cb19f99c8c464f3fe872a20",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzL3p4L2tGL01ENUUtczM5NzMxMTQtLTg4NzA5MTJhNWI2MDNiOWU2MDAyNTQ1Y2FiMzg4OTQzLm5paS5nei9NRDVFLXMzOTczMTE0LS04ODcwOTEyYTViNjAzYjllNjAwMjU0NWNhYjM4ODk0My5uaWkuZ3o="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-87ca5291746dc91df2942732/attempts/20261008T170418391524Z-b29b6ce0/intent.json",
+          "bytes": 476,
+          "sha256": "3e254ad7b6d915b37d1e97c289aee17a13e96d0d6f0397185a893eb834bbcb30"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-87ca5291746dc91df2942732/attempts/20261008T170418391524Z-b29b6ce0/result.json",
+          "bytes": 2147,
+          "sha256": "ca0f72b90e889baa03894be077079643efdb1644222bfaa7477577b1951db5bf"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-87ca5291746dc91df2942732/attempts/20261008T170418391524Z-b29b6ce0/outcome.json",
+          "bytes": 1138,
+          "sha256": "6be486b6398be7667364073694978ed8b1d3882f7833ba870de50154b9e708be"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    },
+    {
+      "path": "sub-485/ses-20140131/anat/sub-485_ses-20140131_T1w.nii.gz",
+      "subject": "sub-485",
+      "session": "ses-20140131",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-50ac326bc4fe0939a93d25e8",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-485",
+        "session": "ses-20140131",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-485/ses-20140131/anat/sub-485_ses-20140131_T1w.nii.gz",
+          "bytes": 8920685,
+          "sha256": null,
+          "expected_md5": "3f766360a762cb673237bfd0a485d12a",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-485/ses-20140131/anat/sub-485_ses-20140131_T1w.nii.gz?versionId=xN71b9junhc2kb_TYpkUIyO2alMw3Ndu",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-485/ses-20140131/anat/sub-485_ses-20140131_T1w.nii.gz",
+          "pointer_sha256": "6e67b8b22822d706f56ab26d3d62728b89b6448d5bf078e919d966231015b257",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzL3AyLzRnL01ENUUtczg5MjA2ODUtLTNmNzY2MzYwYTc2MmNiNjczMjM3YmZkMGE0ODVkMTJhLm5paS5nei9NRDVFLXM4OTIwNjg1LS0zZjc2NjM2MGE3NjJjYjY3MzIzN2JmZDBhNDg1ZDEyYS5uaWkuZ3o="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-50ac326bc4fe0939a93d25e8/attempts/20261008T170420882927Z-f95374b2/intent.json",
+          "bytes": 476,
+          "sha256": "fee784469927ca0204a3c6a12ba66b03b0ddaa72ef6b41af4555095e9df2e73f"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-50ac326bc4fe0939a93d25e8/attempts/20261008T170420882927Z-f95374b2/result.json",
+          "bytes": 2147,
+          "sha256": "6814906dd8e84f4cd95e8fcccc4fd0e998165773b9e26ac6670e74cc0ffd3846"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-50ac326bc4fe0939a93d25e8/attempts/20261008T170420882927Z-f95374b2/outcome.json",
+          "bytes": 1138,
+          "sha256": "107fd6df2b5d665101ddcaf0e6ac70c8745b5aeef9f397c28503566fe0c3251f"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    },
+    {
+      "path": "sub-486/ses-20140121/anat/sub-486_ses-20140121_T1w.nii.gz",
+      "subject": "sub-486",
+      "session": "ses-20140121",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-20034a1f81137b6228abf013",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-486",
+        "session": "ses-20140121",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-486/ses-20140121/anat/sub-486_ses-20140121_T1w.nii.gz",
+          "bytes": 3636701,
+          "sha256": null,
+          "expected_md5": "fae71273560297997f8feea79fbbc892",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-486/ses-20140121/anat/sub-486_ses-20140121_T1w.nii.gz?versionId=9w5j7wyRKar1CnsEnyyYVYRndTpBm7GG",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-486/ses-20140121/anat/sub-486_ses-20140121_T1w.nii.gz",
+          "pointer_sha256": "0e9cffd1cf1f4a455ea9e1b897ad34550c72d2531a4c974b90fca73445d153ed",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzL0pnL3h6L01ENUUtczM2MzY3MDEtLWZhZTcxMjczNTYwMjk3OTk3ZjhmZWVhNzlmYmJjODkyLm5paS5nei9NRDVFLXMzNjM2NzAxLS1mYWU3MTI3MzU2MDI5Nzk5N2Y4ZmVlYTc5ZmJiYzg5Mi5uaWkuZ3o="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-20034a1f81137b6228abf013/attempts/20261008T170425386121Z-12ac201f/intent.json",
+          "bytes": 476,
+          "sha256": "558102970eada499e98198a3b90476719f4ec5d3ba5a7c8011874ebe6c244f10"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-20034a1f81137b6228abf013/attempts/20261008T170425386121Z-12ac201f/result.json",
+          "bytes": 2147,
+          "sha256": "43d81f6f720dc8a4af35b17b21dba8385cdcfc601ccaac4d977b740d97f89f69"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-20034a1f81137b6228abf013/attempts/20261008T170425386121Z-12ac201f/outcome.json",
+          "bytes": 1138,
+          "sha256": "b61c88375b5e50be55a66d64195a07c3ed875ed48ce77dc433dca7e0938dda1c"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    },
+    {
+      "path": "sub-489/ses-20151226/anat/sub-489_ses-20151226_T1w.nii.gz",
+      "subject": "sub-489",
+      "session": "ses-20151226",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-74b517c56b884a663bbfdf4b",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-489",
+        "session": "ses-20151226",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-489/ses-20151226/anat/sub-489_ses-20151226_T1w.nii.gz",
+          "bytes": 5688307,
+          "sha256": null,
+          "expected_md5": "b03ffaf6ece42a17a691172cea7e870f",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-489/ses-20151226/anat/sub-489_ses-20151226_T1w.nii.gz?versionId=2aPBmjvtE8DLvpEhspc8Wyai_AqZR.As",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-489/ses-20151226/anat/sub-489_ses-20151226_T1w.nii.gz",
+          "pointer_sha256": "179942a4e0ce44f89d144377d0dac2278e2c4ca3ce980c8224968468040c2f7a",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzLzl2L1AyL01ENUUtczU2ODgzMDctLWIwM2ZmYWY2ZWNlNDJhMTdhNjkxMTcyY2VhN2U4NzBmLm5paS5nei9NRDVFLXM1Njg4MzA3LS1iMDNmZmFmNmVjZTQyYTE3YTY5MTE3MmNlYTdlODcwZi5uaWkuZ3o="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-74b517c56b884a663bbfdf4b/attempts/20261008T170427499780Z-5a36eef5/intent.json",
+          "bytes": 476,
+          "sha256": "5bbb1ca6d04bab1236d837a09e2921ddb2b555a65ff7b29a598b1968801a6bc3"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-74b517c56b884a663bbfdf4b/attempts/20261008T170427499780Z-5a36eef5/result.json",
+          "bytes": 2147,
+          "sha256": "47a9e9a5ba1ba4ec82d6c9e1016dcccc45bd8c8567c29d45e9ad451f03989db4"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-74b517c56b884a663bbfdf4b/attempts/20261008T170427499780Z-5a36eef5/outcome.json",
+          "bytes": 1138,
+          "sha256": "da096fc85eaaf1269373eadf45fb086f0127f338ba2c1cc10bc2ca8abc143ca6"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    },
+    {
+      "path": "sub-491/ses-20151124/anat/sub-491_ses-20151124_T1w.nii.gz",
+      "subject": "sub-491",
+      "session": "ses-20151124",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-4762a3f20500a9f1bcfcae5e",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-491",
+        "session": "ses-20151124",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-491/ses-20151124/anat/sub-491_ses-20151124_T1w.nii.gz",
+          "bytes": 4293383,
+          "sha256": null,
+          "expected_md5": "929a2e855e1b3a3981e51cf119da0bee",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-491/ses-20151124/anat/sub-491_ses-20151124_T1w.nii.gz?versionId=E0Bmp4Uy51JKQWP7UddfBUrV8mlye62s",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-491/ses-20151124/anat/sub-491_ses-20151124_T1w.nii.gz",
+          "pointer_sha256": "0a780aeae903bcdb74af57fefe10360a036da15fb013a3ef3ccb42d209c99907",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzL1gyLzhrL01ENUUtczQyOTMzODMtLTkyOWEyZTg1NWUxYjNhMzk4MWU1MWNmMTE5ZGEwYmVlLm5paS5nei9NRDVFLXM0MjkzMzgzLS05MjlhMmU4NTVlMWIzYTM5ODFlNTFjZjExOWRhMGJlZS5uaWkuZ3o="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-4762a3f20500a9f1bcfcae5e/attempts/20261008T170429781202Z-e9a1c723/intent.json",
+          "bytes": 476,
+          "sha256": "00e1a18c55a347ac2e1b4104170b524dece2219f90a99b34b642cc42bf0b0720"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-4762a3f20500a9f1bcfcae5e/attempts/20261008T170429781202Z-e9a1c723/result.json",
+          "bytes": 2147,
+          "sha256": "cedba1035ea81e5ff60c7f2b6181734cfbae0aeed95a76580464d87f05cf1748"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-4762a3f20500a9f1bcfcae5e/attempts/20261008T170429781202Z-e9a1c723/outcome.json",
+          "bytes": 1138,
+          "sha256": "4fc1b6a9be92159fc843bd9ef78a913d70e2ac713cc7ee1cf1c8b3fa3952feea"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    },
+    {
+      "path": "sub-492/ses-20151228/anat/sub-492_ses-20151228_T1w.nii.gz",
+      "subject": "sub-492",
+      "session": "ses-20151228",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "source": {
+        "key": "lausanne-043f10cb9195f3af78975475",
+        "dataset": "lausanne",
+        "role": "TRAIN",
+        "person": "sub-492",
+        "session": "ses-20151228",
+        "provider": "openneuro_s3",
+        "release": {
+          "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+          "license": "CC0"
+        },
+        "manifest_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+        "entry": {
+          "path": "sub-492/ses-20151228/anat/sub-492_ses-20151228_T1w.nii.gz",
+          "bytes": 4697593,
+          "sha256": null,
+          "expected_md5": "69d17c95dccfe62cc5c065f972c6e440",
+          "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-492/ses-20151228/anat/sub-492_ses-20151228_T1w.nii.gz?versionId=ocK3Q7PojNDiUkFbDfaTeYB2xAVrAya4",
+          "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-492/ses-20151228/anat/sub-492_ses-20151228_T1w.nii.gz",
+          "pointer_sha256": "a639f461d05b923d37e200e07933a7f46077a76d8b5116f25f80aaffdedf8985",
+          "pointer_base64": "Li4vLi4vLi4vLmdpdC9hbm5leC9vYmplY3RzL0pxL1Z4L01ENUUtczQ2OTc1OTMtLTY5ZDE3Yzk1ZGNjZmU2MmNjNWMwNjVmOTcyYzZlNDQwLm5paS5nei9NRDVFLXM0Njk3NTkzLS02OWQxN2M5NWRjY2ZlNjJjYzVjMDY1Zjk3MmM2ZTQ0MC5uaWkuZ3o="
+        }
+      },
+      "transfer": {
+        "intent": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-043f10cb9195f3af78975475/attempts/20261008T170436285839Z-06ce8434/intent.json",
+          "bytes": 475,
+          "sha256": "1572e010ed3c856d905bce6bcd7d9a47639833ba67fa756f1aa92ea3f904e03a"
+        },
+        "result": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-043f10cb9195f3af78975475/attempts/20261008T170436285839Z-06ce8434/result.json",
+          "bytes": 2147,
+          "sha256": "7ff8a16cecf227d7cb341108ec756f760608df7a5864ce845212af01b381288d"
+        },
+        "outcome": {
+          "path": "data/acquisition/continuous-source-v1/objects/lausanne-043f10cb9195f3af78975475/attempts/20261008T170436285839Z-06ce8434/outcome.json",
+          "bytes": 1138,
+          "sha256": "50a9483c5a3263924f54698e03cb3329d230496370db82d4de8a0f89c9b9c8ec"
+        }
+      },
+      "declaration": {
+        "path": "data/acquisition/continuous-source-v1/runs/20261008T170225682983Z-9180ced1/declaration.json",
+        "bytes": 2854,
+        "sha256": "dab0abcde06408763473c9229bab46c9f9bd958e17173aab7c5683bec7409dce"
+      }
+    }
+  ],
+  "reference_followups": [
+    {
+      "path": "derivatives/manual_masks/sub-452/ses-20141127/anat/sub-452_ses-20141127_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-452",
+      "session": "ses-20141127",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-452/ses-20141127/anat/sub-452_ses-20141127_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-452_ses-20141127_desc-Lesion_1_mask.nii.gz/receipt.json",
+        "bytes": 7173,
+        "sha256": "9ce9c32642f544016fa5a4c0417cb809f7283785156f67d1f56676e687616962"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "legacy_session_receipt",
+      "legacy_receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-452_ses-20141127.json",
+        "bytes": 7606,
+        "sha256": "16d263e88d80e09d24c80c52f33d6307df1f1d5854d0737b8ae3f78aaeee23c3"
+      }
+    },
+    {
+      "path": "derivatives/manual_masks/sub-452/ses-20141127/anat/sub-452_ses-20141127_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-452",
+      "session": "ses-20141127",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-452/ses-20141127/anat/sub-452_ses-20141127_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-452_ses-20141127_desc-Lesion_2_mask.nii.gz/receipt.json",
+        "bytes": 7173,
+        "sha256": "e40582cb7732288c1f733c112e22a4ec59e7e173cea27e3324ac5b8b316bd7c2"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "legacy_session_receipt",
+      "legacy_receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-452_ses-20141127.json",
+        "bytes": 7606,
+        "sha256": "16d263e88d80e09d24c80c52f33d6307df1f1d5854d0737b8ae3f78aaeee23c3"
+      }
+    },
+    {
+      "path": "derivatives/manual_masks/sub-452/ses-20141127/anat/sub-452_ses-20141127_desc-Lesion_3_mask.nii.gz",
+      "subject": "sub-452",
+      "session": "ses-20141127",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-452/ses-20141127/anat/sub-452_ses-20141127_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-452_ses-20141127_desc-Lesion_3_mask.nii.gz/receipt.json",
+        "bytes": 7192,
+        "sha256": "f349c8f3671a956af9dbc97be08454db1fce2bfe31b8a4392a0e6b8512f6f63f"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "legacy_session_receipt",
+      "legacy_receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-452_ses-20141127.json",
+        "bytes": 7606,
+        "sha256": "16d263e88d80e09d24c80c52f33d6307df1f1d5854d0737b8ae3f78aaeee23c3"
+      }
+    },
+    {
+      "path": "derivatives/manual_masks/sub-453/ses-20141021/anat/sub-453_ses-20141021_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-453",
+      "session": "ses-20141021",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-453/ses-20141021/anat/sub-453_ses-20141021_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-453_ses-20141021_desc-Lesion_1_mask.nii.gz/receipt.json",
+        "bytes": 7191,
+        "sha256": "c3c54c2e28644b0ac33ec0a654b1877f64533ec9685fae3341e714b6d6756591"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "legacy_session_receipt",
+      "legacy_receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-453_ses-20141021.json",
+        "bytes": 7631,
+        "sha256": "114f56a089630e7f5796550dd4f6348de972ec156d652faac7859698cc591847"
+      }
+    },
+    {
+      "path": "derivatives/manual_masks/sub-460/ses-20140812/anat/sub-460_ses-20140812_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-460",
+      "session": "ses-20140812",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-460/ses-20140812/anat/sub-460_ses-20140812_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-460_ses-20140812_desc-Lesion_1_mask.nii.gz/receipt.json",
+        "bytes": 7215,
+        "sha256": "9083c9963eebf45923312709a4be4225f52a9f3c1631062bdcd4e68549ac1163"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "legacy_session_receipt",
+      "legacy_receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-460_ses-20140812.json",
+        "bytes": 7612,
+        "sha256": "b065577c56c96b188c2e1d2211ccf60dabe4085dc13206b1746db247b00bfef6"
+      }
+    },
+    {
+      "path": "derivatives/manual_masks/sub-461/ses-20140802/anat/sub-461_ses-20140802_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-461",
+      "session": "ses-20140802",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-461/ses-20140802/anat/sub-461_ses-20140802_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-461_ses-20140802_desc-Lesion_1_mask.nii.gz/receipt.json",
+        "bytes": 7178,
+        "sha256": "8cb170afa5046cc003ce673231db2a5bed04065087d79554b68a294e4f970acb"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "legacy_session_receipt",
+      "legacy_receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-461_ses-20140802.json",
+        "bytes": 7622,
+        "sha256": "2cfc3cdccf39a52104571197b3a7358413f060bbdfd46ef8bc7634c1af3ffbd7"
+      }
+    },
+    {
+      "path": "derivatives/manual_masks/sub-464/ses-20140724/anat/sub-464_ses-20140724_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-464",
+      "session": "ses-20140724",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-464/ses-20140724/anat/sub-464_ses-20140724_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-464_ses-20140724_desc-Lesion_1_mask.nii.gz/receipt.json",
+        "bytes": 7198,
+        "sha256": "7a26b892a59baa04b8919ac7a5f81c6aa1700d882e000d9eb5e9ef67018ca57d"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "legacy_session_receipt",
+      "legacy_receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-464_ses-20140724.json",
+        "bytes": 7609,
+        "sha256": "002b66dbd4d36a3424f094fe79815012f47a7db8eab3abf6b5383d5963804193"
+      }
+    },
+    {
+      "path": "derivatives/manual_masks/sub-464/ses-20140724/anat/sub-464_ses-20140724_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-464",
+      "session": "ses-20140724",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-464/ses-20140724/anat/sub-464_ses-20140724_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-464_ses-20140724_desc-Lesion_2_mask.nii.gz/receipt.json",
+        "bytes": 7198,
+        "sha256": "e3e39485db60c577d09378c19ac77d40aea80bcaf25ec3d63bd21dece71b61a2"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "legacy_session_receipt",
+      "legacy_receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-464_ses-20140724.json",
+        "bytes": 7609,
+        "sha256": "002b66dbd4d36a3424f094fe79815012f47a7db8eab3abf6b5383d5963804193"
+      }
+    },
+    {
+      "path": "derivatives/manual_masks/sub-466/ses-20140901/anat/sub-466_ses-20140901_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-466",
+      "session": "ses-20140901",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-466/ses-20140901/anat/sub-466_ses-20140901_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-466_ses-20140901_desc-Lesion_1_mask.nii.gz/receipt.json",
+        "bytes": 7172,
+        "sha256": "32cd7d66aed20fea4c5d1bdaa839e4fa8a34a747f64ef65df80659403dd9dfd4"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "legacy_session_receipt",
+      "legacy_receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-466_ses-20140901.json",
+        "bytes": 7619,
+        "sha256": "66759824d9d9618ebfec77bf81beb273ce12d7125704c630f69b6f507b3a2750"
+      }
+    },
+    {
+      "path": "derivatives/manual_masks/sub-467/ses-20140817/anat/sub-467_ses-20140817_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-467",
+      "session": "ses-20140817",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-467/ses-20140817/anat/sub-467_ses-20140817_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-467_ses-20140817_desc-Lesion_1_mask.nii.gz/receipt.json",
+        "bytes": 7194,
+        "sha256": "571e2629e88422712e0b5c474ccc0fdeb8df7fdf9c95ca244ef7e67d55083f32"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "separate_original_review",
+      "legacy_receipt": null
+    },
+    {
+      "path": "derivatives/manual_masks/sub-470/ses-20140807/anat/sub-470_ses-20140807_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-470",
+      "session": "ses-20140807",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-470/ses-20140807/anat/sub-470_ses-20140807_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-470_ses-20140807_desc-Lesion_1_mask.nii.gz/receipt.json",
+        "bytes": 7177,
+        "sha256": "a0e683835303651c64861a61b854575d25755b06065e15dba4fb5bf7d5ef28ea"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "legacy_session_receipt",
+      "legacy_receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-470_ses-20140807.json",
+        "bytes": 7599,
+        "sha256": "ccde6d1e8d99c7bb60beaefab5a3244db5c67cc67912fb7350126df367ac8a20"
+      }
+    },
+    {
+      "path": "derivatives/manual_masks/sub-472/ses-20140705/anat/sub-472_ses-20140705_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-472",
+      "session": "ses-20140705",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-472/ses-20140705/anat/sub-472_ses-20140705_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-472_ses-20140705_desc-Lesion_1_mask.nii.gz/receipt.json",
+        "bytes": 7172,
+        "sha256": "be8d8cfd07afc81b340888f258cd1211c651b81cb83f0c507dd560d81bc93d16"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "legacy_session_receipt",
+      "legacy_receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-472_ses-20140705.json",
+        "bytes": 7607,
+        "sha256": "02fda3843ad31ce69136cb43c0d238fdcecf843d3bc8397345b179e7db462911"
+      }
+    },
+    {
+      "path": "derivatives/manual_masks/sub-473/ses-20140701/anat/sub-473_ses-20140701_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-473",
+      "session": "ses-20140701",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-473/ses-20140701/anat/sub-473_ses-20140701_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-473_ses-20140701_desc-Lesion_1_mask.nii.gz/receipt.json",
+        "bytes": 7174,
+        "sha256": "fa55d2e758710e97c3790d4c766027631222b9ea8166dc6d6845ad1c3f2c3af9"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "legacy_session_receipt",
+      "legacy_receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-473_ses-20140701.json",
+        "bytes": 4935,
+        "sha256": "7ba7b71f095f373d851843bb9d77a47c25d52ca2e32965f6baf781dbfbcb6132"
+      }
+    },
+    {
+      "path": "derivatives/manual_masks/sub-474/ses-20140630/anat/sub-474_ses-20140630_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-474",
+      "session": "ses-20140630",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-474/ses-20140630/anat/sub-474_ses-20140630_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-474_ses-20140630_desc-Lesion_1_mask.nii.gz/receipt.json",
+        "bytes": 7197,
+        "sha256": "928fe52e096699e61a1ec74db4e4cf0f3487c88d2ef469a61d9358179c3cc54c"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "separate_original_review",
+      "legacy_receipt": null
+    },
+    {
+      "path": "derivatives/manual_masks/sub-475/ses-20140503/anat/sub-475_ses-20140503_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-475",
+      "session": "ses-20140503",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-475/ses-20140503/anat/sub-475_ses-20140503_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-475_ses-20140503_desc-Lesion_1_mask.nii.gz/receipt.json",
+        "bytes": 7197,
+        "sha256": "593b3cc4f18cbc76ab58bbb05cae23fb8a95c716ab270c6dec8e73ecd2daeb7c"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "separate_original_review",
+      "legacy_receipt": null
+    },
+    {
+      "path": "derivatives/manual_masks/sub-478/ses-20140513/anat/sub-478_ses-20140513_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-478",
+      "session": "ses-20140513",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_exact_crosswalk",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-478/ses-20140513/anat/sub-478_ses-20140513_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-478_ses-20140513_desc-Lesion_1_mask.nii.gz/receipt.json",
+        "bytes": 7183,
+        "sha256": "5a61e50709e174f8c0d0d64cfb4ff770cf5a8a37d15d52b18f25baedc96307f2"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "separate_original_review",
+      "legacy_receipt": null
+    },
+    {
+      "path": "derivatives/manual_masks/sub-480/ses-20140208/anat/sub-480_ses-20140208_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-480",
+      "session": "ses-20140208",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-480/ses-20140208/anat/sub-480_ses-20140208_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-480_ses-20140208_desc-Lesion_1_mask.nii.gz/receipt.json",
+        "bytes": 7174,
+        "sha256": "ef3cdf33f9d060efcccfc849a36a6a2e7b31897a26d66fe6456d4b245da98c11"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "separate_original_review",
+      "legacy_receipt": null
+    },
+    {
+      "path": "derivatives/manual_masks/sub-480/ses-20140208/anat/sub-480_ses-20140208_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-480",
+      "session": "ses-20140208",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-480/ses-20140208/anat/sub-480_ses-20140208_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-480_ses-20140208_desc-Lesion_2_mask.nii.gz/receipt.json",
+        "bytes": 7174,
+        "sha256": "3b9a6af5e61e05ddb4a6852869eaf4c8f088b4a9a07f11ebe591f773c32c5774"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "separate_original_review",
+      "legacy_receipt": null
+    },
+    {
+      "path": "derivatives/manual_masks/sub-481/ses-20140201/anat/sub-481_ses-20140201_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-481",
+      "session": "ses-20140201",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-481/ses-20140201/anat/sub-481_ses-20140201_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-481_ses-20140201_desc-Lesion_1_mask.nii.gz/receipt.json",
+        "bytes": 7062,
+        "sha256": "59550b1bc21ec02bb98ec1f2f119042928d8f7c6eb575e0f65646d39a2d32acb"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "separate_original_review",
+      "legacy_receipt": null
+    },
+    {
+      "path": "derivatives/manual_masks/sub-481/ses-20140201/anat/sub-481_ses-20140201_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-481",
+      "session": "ses-20140201",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-481/ses-20140201/anat/sub-481_ses-20140201_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-481_ses-20140201_desc-Lesion_2_mask.nii.gz/receipt.json",
+        "bytes": 7042,
+        "sha256": "94b4555d556bf1d7eb9aa466add705de3fdc03ad29f2c84026ea2678cfe98bf3"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "separate_original_review",
+      "legacy_receipt": null
+    },
+    {
+      "path": "derivatives/manual_masks/sub-484/ses-20140116/anat/sub-484_ses-20140116_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-484",
+      "session": "ses-20140116",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-484/ses-20140116/anat/sub-484_ses-20140116_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-484_ses-20140116_desc-Lesion_1_mask.nii.gz/receipt.json",
+        "bytes": 7186,
+        "sha256": "1a0efb3610b7df0c1189e80bf05e3891f320b26735f4e8e687131f422a96db2a"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "separate_original_review",
+      "legacy_receipt": null
+    },
+    {
+      "path": "derivatives/manual_masks/sub-485/ses-20140131/anat/sub-485_ses-20140131_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-485",
+      "session": "ses-20140131",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-485/ses-20140131/anat/sub-485_ses-20140131_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-485_ses-20140131_desc-Lesion_1_mask.nii.gz/receipt.json",
+        "bytes": 7194,
+        "sha256": "d65aa292c7924d8e0c5283a929d514de546e15909ff0960257e10d3fe383eab1"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "separate_original_review",
+      "legacy_receipt": null
+    },
+    {
+      "path": "derivatives/manual_masks/sub-486/ses-20140121/anat/sub-486_ses-20140121_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-486",
+      "session": "ses-20140121",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-486/ses-20140121/anat/sub-486_ses-20140121_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-486_ses-20140121_desc-Lesion_1_mask.nii.gz/receipt.json",
+        "bytes": 7193,
+        "sha256": "4caa8b4570bcb345f789276ca1f53bddb849fc1de325e6e223abc11ff8345221"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "separate_original_review",
+      "legacy_receipt": null
+    },
+    {
+      "path": "derivatives/manual_masks/sub-486/ses-20140121/anat/sub-486_ses-20140121_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-486",
+      "session": "ses-20140121",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-486/ses-20140121/anat/sub-486_ses-20140121_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-486_ses-20140121_desc-Lesion_2_mask.nii.gz/receipt.json",
+        "bytes": 7171,
+        "sha256": "d5fe51d8d07c8d2a30c34bcb0acd77162e2fd09448d3386f08fcc45beefbe33e"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "separate_original_review",
+      "legacy_receipt": null
+    },
+    {
+      "path": "derivatives/manual_masks/sub-489/ses-20151226/anat/sub-489_ses-20151226_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-489",
+      "session": "ses-20151226",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-489/ses-20151226/anat/sub-489_ses-20151226_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-489_ses-20151226_desc-Lesion_1_mask.nii.gz/receipt.json",
+        "bytes": 7191,
+        "sha256": "d5860abf4afa57f8635db092557bff30bff309cd8b645f1653629cde3a0019c1"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "separate_original_review",
+      "legacy_receipt": null
+    },
+    {
+      "path": "derivatives/manual_masks/sub-491/ses-20151124/anat/sub-491_ses-20151124_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-491",
+      "session": "ses-20151124",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-491/ses-20151124/anat/sub-491_ses-20151124_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-491_ses-20151124_desc-Lesion_1_mask.nii.gz/receipt.json",
+        "bytes": 7214,
+        "sha256": "9800b64945173cac92009fb5ac30746b478a8b98a2551fa36602340aecd41739"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "separate_original_review",
+      "legacy_receipt": null
+    },
+    {
+      "path": "derivatives/manual_masks/sub-492/ses-20151228/anat/sub-492_ses-20151228_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-492",
+      "session": "ses-20151228",
+      "role": "TRAIN",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "background_semantics": "unknown",
+      "reference_path": "sub-492/ses-20151228/anat/sub-492_ses-20151228_angio.nii.gz",
+      "receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-492_ses-20151228_desc-Lesion_1_mask.nii.gz/receipt.json",
+        "bytes": 7214,
+        "sha256": "de0c829a20c9fe6ea56d235c5152cd5712c9bc14c9fa3918fc6833b2130d095d"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/batch.json",
+        "bytes": 120986,
+        "sha256": "82cca3ac73b5b3e1eedac425c2c5910d901ea6ad47c64e5e71885a26f0024c46"
+      },
+      "source": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/source.json",
+        "bytes": 1666,
+        "sha256": "32572ad163e59004912875b4b5193a9e5f59ef85ea7202859a652379a9785d01"
+      },
+      "reference_mode": "separate_original_review",
+      "legacy_receipt": null
+    }
+  ],
+  "preserved_failures": [
+    {
+      "kind": "original",
+      "path": "sub-253/ses-20110628/anat/sub-253_ses-20110628_T1w.nii.gz",
+      "subject": "sub-253",
+      "session": "ses-20110628",
+      "canonical_person": "Lausanne:sub-253",
+      "source_group": "control",
+      "role": "TRAIN",
+      "modality": "T1",
+      "priority": 30,
+      "next_qc_stage": "known_frame_conflict_review",
+      "source_index_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+      "expected_bytes": 23410961,
+      "expected_md5": "99c95c71e447a3c075467b0fd6835fb3",
+      "historical_receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-253_ses-20110628.json",
+        "sha256": "dbda41dcfa35591e27657a595cf3fcc776f56edfcacd3582c3ddb6bb94363fbb",
+        "bytes": 4058
+      },
+      "historical_qc_status": "qc_failed",
+      "historical_failure_reason": "QFORM_SFORM_DISAGREEMENT: Active qform and sform differ across the image extent; review the source transform.",
+      "download_only_receipt_observed": false,
+      "anatomy_review": "not_established_by_these_intake_receipts",
+      "downloads_blocked_by_qc": false,
+      "training_admitted": false,
+      "spatial_planning_admitted": false,
+      "queue_rank": 54
+    },
+    {
+      "kind": "original",
+      "path": "sub-410/ses-20131015/anat/sub-410_ses-20131015_T1w.nii.gz",
+      "subject": "sub-410",
+      "session": "ses-20131015",
+      "canonical_person": "Lausanne:sub-410",
+      "source_group": "patient",
+      "role": "TRAIN",
+      "modality": "T1",
+      "priority": 30,
+      "next_qc_stage": "known_frame_conflict_review",
+      "source_index_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+      "expected_bytes": 7886850,
+      "expected_md5": "0f1f89bd5171b63f2f2a3bc1446b3f68",
+      "historical_receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-410_ses-20131015.json",
+        "sha256": "d49b388f8b678e373ccb99e4dc969ac81aab80b6e6a65dd7da38f07d75869a03",
+        "bytes": 3964
+      },
+      "historical_qc_status": "qc_failed",
+      "historical_failure_reason": "QFORM_SFORM_DISAGREEMENT: Active qform and sform differ across the image extent; review the source transform.",
+      "download_only_receipt_observed": false,
+      "anatomy_review": "not_established_by_these_intake_receipts",
+      "downloads_blocked_by_qc": false,
+      "training_admitted": false,
+      "spatial_planning_admitted": false,
+      "queue_rank": 55
+    },
+    {
+      "kind": "original",
+      "path": "sub-411/ses-20131109/anat/sub-411_ses-20131109_T1w.nii.gz",
+      "subject": "sub-411",
+      "session": "ses-20131109",
+      "canonical_person": "Lausanne:sub-411",
+      "source_group": "patient",
+      "role": "TRAIN",
+      "modality": "T1",
+      "priority": 30,
+      "next_qc_stage": "known_frame_conflict_review",
+      "source_index_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+      "expected_bytes": 9626867,
+      "expected_md5": "09e36e07b8e3c9634ed2104b8b54e38c",
+      "historical_receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-411_ses-20131109.json",
+        "sha256": "b790af773abc2ac6f83586d1fe7bbd9bde386102fb338426f7ebcd8c9f87e8f7",
+        "bytes": 3987
+      },
+      "historical_qc_status": "qc_failed",
+      "historical_failure_reason": "QFORM_SFORM_DISAGREEMENT: Active qform and sform differ across the image extent; review the source transform.",
+      "download_only_receipt_observed": false,
+      "anatomy_review": "not_established_by_these_intake_receipts",
+      "downloads_blocked_by_qc": false,
+      "training_admitted": false,
+      "spatial_planning_admitted": false,
+      "queue_rank": 56
+    },
+    {
+      "kind": "original",
+      "path": "sub-418/ses-20130908/anat/sub-418_ses-20130908_T1w.nii.gz",
+      "subject": "sub-418",
+      "session": "ses-20130908",
+      "canonical_person": "Lausanne:sub-418",
+      "source_group": "patient",
+      "role": "TRAIN",
+      "modality": "T1",
+      "priority": 30,
+      "next_qc_stage": "known_frame_conflict_review",
+      "source_index_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+      "expected_bytes": 7430274,
+      "expected_md5": "7e064fcf4e595d97309330c7dc41bea3",
+      "historical_receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-418_ses-20130908.json",
+        "sha256": "8a7e48d2cb388500002d7aa1cba27a91367b935aae5cd666b023155b88bfe49a",
+        "bytes": 3986
+      },
+      "historical_qc_status": "qc_failed",
+      "historical_failure_reason": "QFORM_SFORM_DISAGREEMENT: Active qform and sform differ across the image extent; review the source transform.",
+      "download_only_receipt_observed": false,
+      "anatomy_review": "not_established_by_these_intake_receipts",
+      "downloads_blocked_by_qc": false,
+      "training_admitted": false,
+      "spatial_planning_admitted": false,
+      "queue_rank": 57
+    },
+    {
+      "kind": "original",
+      "path": "sub-424/ses-20130818/anat/sub-424_ses-20130818_T1w.nii.gz",
+      "subject": "sub-424",
+      "session": "ses-20130818",
+      "canonical_person": "Lausanne:sub-424",
+      "source_group": "patient",
+      "role": "TRAIN",
+      "modality": "T1",
+      "priority": 30,
+      "next_qc_stage": "known_frame_conflict_review",
+      "source_index_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+      "expected_bytes": 5568928,
+      "expected_md5": "78e3f51a00475e879105cf2c4c5f827f",
+      "historical_receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-424_ses-20130818.json",
+        "sha256": "fdcff9f2403a69676a0741e9e4a42be5b5ed65189e0c8067d9a30052934c9fba",
+        "bytes": 3987
+      },
+      "historical_qc_status": "qc_failed",
+      "historical_failure_reason": "QFORM_SFORM_DISAGREEMENT: Active qform and sform differ across the image extent; review the source transform.",
+      "download_only_receipt_observed": false,
+      "anatomy_review": "not_established_by_these_intake_receipts",
+      "downloads_blocked_by_qc": false,
+      "training_admitted": false,
+      "spatial_planning_admitted": false,
+      "queue_rank": 58
+    },
+    {
+      "kind": "manual_mask",
+      "path": "derivatives/manual_masks/sub-454/ses-20141123/anat/sub-454_ses-20141123_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-454",
+      "session": "ses-20141123",
+      "canonical_person": "Lausanne:sub-454",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "priority": 30,
+      "next_qc_stage": "known_mask_grid_conflict_review",
+      "source_manifest_sha256": "f779066f5cb784f623446f12565eb1405994ac9e3b41c1fef8210546598de624",
+      "metadata_status": "metadata_qualified",
+      "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "historical_receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-annotation-intake-v1/attempts/full-train-annotations-01/sub-454_ses-20141123_desc-Lesion_1_mask.nii.gz/receipt.json",
+        "sha256": "461e5c605181471d85e3512f4cb045e5792ba0ba334f3cc5ecf791615c3c25b7",
+        "bytes": 16217
+      },
+      "historical_content_qc": "passed",
+      "historical_reference_qc": "passed",
+      "historical_grid_qc": "unresolved",
+      "historical_grid_reason": "Unresolved coded grid: Active raw qform/sform disagree beyond serialization precision",
+      "reference_path": "sub-454/ses-20141123/anat/sub-454_ses-20141123_angio.nii.gz",
+      "current_historical_TOF_qc": "header_and_scalar_checks_passed",
+      "metadata_failure": null,
+      "background_semantics": "unknown",
+      "downloads_blocked_by_qc": false,
+      "training_admitted": false,
+      "spatial_planning_admitted": false,
+      "queue_rank": 59
+    },
+    {
+      "kind": "original",
+      "path": "sub-473/ses-20140701/anat/sub-473_ses-20140701_T1w.nii.gz",
+      "subject": "sub-473",
+      "session": "ses-20140701",
+      "canonical_person": "Lausanne:sub-473",
+      "source_group": "patient",
+      "role": "TRAIN",
+      "modality": "T1",
+      "priority": 30,
+      "next_qc_stage": "known_frame_conflict_review",
+      "source_index_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+      "expected_bytes": 4489218,
+      "expected_md5": "3f4a613d1f885dc936bd28d96f746983",
+      "historical_receipt": {
+        "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-473_ses-20140701.json",
+        "sha256": "7ba7b71f095f373d851843bb9d77a47c25d52ca2e32965f6baf781dbfbcb6132",
+        "bytes": 4935
+      },
+      "historical_qc_status": "qc_failed",
+      "historical_failure_reason": "QFORM_SFORM_DISAGREEMENT: Active qform and sform differ across the image extent; review the source transform.",
+      "download_only_receipt_observed": false,
+      "anatomy_review": "not_established_by_these_intake_receipts",
+      "downloads_blocked_by_qc": false,
+      "training_admitted": false,
+      "spatial_planning_admitted": false,
+      "queue_rank": 60
+    },
+    {
+      "kind": "manual_mask",
+      "path": "derivatives/manual_masks/sub-148/ses-20111106/anat/sub-148_ses-20111106_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-148",
+      "session": "ses-20111106",
+      "canonical_person": "Lausanne:sub-148",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "priority": 99,
+      "next_qc_stage": "metadata_excluded_not_in_qualified_download_scope",
+      "source_manifest_sha256": "f779066f5cb784f623446f12565eb1405994ac9e3b41c1fef8210546598de624",
+      "metadata_status": "metadata_failed",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "historical_receipt": null,
+      "historical_content_qc": "not_run",
+      "historical_reference_qc": "not_run",
+      "historical_grid_qc": "not_run",
+      "historical_grid_reason": null,
+      "reference_path": null,
+      "current_historical_TOF_qc": null,
+      "metadata_failure": {
+        "type": "ValueError",
+        "message": "Metadata request failed; no retry"
+      },
+      "background_semantics": "unknown",
+      "downloads_blocked_by_qc": false,
+      "training_admitted": false,
+      "spatial_planning_admitted": false,
+      "queue_rank": 565
+    },
+    {
+      "kind": "manual_mask",
+      "path": "derivatives/manual_masks/sub-163/ses-20111014/anat/sub-163_ses-20111014_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-163",
+      "session": "ses-20111014",
+      "canonical_person": "Lausanne:sub-163",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "priority": 99,
+      "next_qc_stage": "metadata_excluded_not_in_qualified_download_scope",
+      "source_manifest_sha256": "f779066f5cb784f623446f12565eb1405994ac9e3b41c1fef8210546598de624",
+      "metadata_status": "metadata_failed",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "historical_receipt": null,
+      "historical_content_qc": "not_run",
+      "historical_reference_qc": "not_run",
+      "historical_grid_qc": "not_run",
+      "historical_grid_reason": null,
+      "reference_path": null,
+      "current_historical_TOF_qc": null,
+      "metadata_failure": {
+        "type": "ValueError",
+        "message": "Metadata request failed; no retry"
+      },
+      "background_semantics": "unknown",
+      "downloads_blocked_by_qc": false,
+      "training_admitted": false,
+      "spatial_planning_admitted": false,
+      "queue_rank": 566
+    },
+    {
+      "kind": "manual_mask",
+      "path": "derivatives/manual_masks/sub-163/ses-20111014/anat/sub-163_ses-20111014_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-163",
+      "session": "ses-20111014",
+      "canonical_person": "Lausanne:sub-163",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "priority": 99,
+      "next_qc_stage": "metadata_excluded_not_in_qualified_download_scope",
+      "source_manifest_sha256": "f779066f5cb784f623446f12565eb1405994ac9e3b41c1fef8210546598de624",
+      "metadata_status": "metadata_failed",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "historical_receipt": null,
+      "historical_content_qc": "not_run",
+      "historical_reference_qc": "not_run",
+      "historical_grid_qc": "not_run",
+      "historical_grid_reason": null,
+      "reference_path": null,
+      "current_historical_TOF_qc": null,
+      "metadata_failure": {
+        "type": "ValueError",
+        "message": "Sidecar does not bind exact same-session original TOF"
+      },
+      "background_semantics": "unknown",
+      "downloads_blocked_by_qc": false,
+      "training_admitted": false,
+      "spatial_planning_admitted": false,
+      "queue_rank": 567
+    },
+    {
+      "kind": "manual_mask",
+      "path": "derivatives/manual_masks/sub-220/ses-20110626/anat/sub-220_ses-20110626_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-220",
+      "session": "ses-20110626",
+      "canonical_person": "Lausanne:sub-220",
+      "role": "TRAIN",
+      "source_group": "patient",
+      "priority": 99,
+      "next_qc_stage": "metadata_excluded_not_in_qualified_download_scope",
+      "source_manifest_sha256": "f779066f5cb784f623446f12565eb1405994ac9e3b41c1fef8210546598de624",
+      "metadata_status": "metadata_failed",
+      "annotation_subtype_status": "manual_region_subtype_unresolved",
+      "annotation_available_at": null,
+      "review_available_at": null,
+      "historical_receipt": null,
+      "historical_content_qc": "not_run",
+      "historical_reference_qc": "not_run",
+      "historical_grid_qc": "not_run",
+      "historical_grid_reason": null,
+      "reference_path": null,
+      "current_historical_TOF_qc": null,
+      "metadata_failure": {
+        "type": "ValueError",
+        "message": "Sidecar does not bind exact same-session original TOF"
+      },
+      "background_semantics": "unknown",
+      "downloads_blocked_by_qc": false,
+      "training_admitted": false,
+      "spatial_planning_admitted": false,
+      "queue_rank": 568
+    }
+  ]
+}
