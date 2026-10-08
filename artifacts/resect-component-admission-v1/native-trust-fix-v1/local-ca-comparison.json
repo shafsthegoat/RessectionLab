@@ -1,0 +1,9 @@
+{
+  "openssl": "OpenSSL 3.5.8 25 Aug 2026",
+  "default_ca_file": "/private/etc/ssl/cert.pem",
+  "target_root_sha256": "d95d0e8eda79525bf9beb11b14d2100d3294985f0c62d9fabd9cd999eccb7b1d",
+  "default_ca_count": 128,
+  "presented_root_in_python_default_store": false,
+  "system_root_lookup_exit_code": 0,
+  "system_root_details": "subject= /C=GR/O=Hellenic Academic and Research Institutions CA/CN=HARICA TLS RSA Root CA 2021\nissuer= /C=GR/O=Hellenic Academic and Research Institutions CA/CN=HARICA TLS RSA Root CA 2021\nSHA256 Fingerprint=D9:5D:0E:8E:DA:79:52:5B:F9:BE:B1:1B:14:D2:10:0D:32:94:98:5F:0C:62:D9:FA:BD:9C:D9:99:EC:CB:7B:1D\n"
+}

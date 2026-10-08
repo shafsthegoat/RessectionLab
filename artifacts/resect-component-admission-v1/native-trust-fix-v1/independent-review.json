@@ -1,0 +1,54 @@
+{
+  "schema": "resectionlab.resect-native-trust-independent-review.v1",
+  "status": "clear",
+  "source_sha256": "6ece649ba346c9e7a0e93af462a91a9bf863728bea3fba83f5eccd681e1d0d51",
+  "tests_sha256": "d374128831ddcb971f08172b6888d39ca3a2140691d812954dede165e54af704",
+  "focused_controls": {
+    "passed": 32,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 0.98
+  },
+  "independent_real_child_control": {
+    "child_processes": 1,
+    "timeout_seconds": 0.2,
+    "observed_seconds": 0.2042340838816017,
+    "killed_and_reaped": true,
+    "partial_bytes": 0,
+    "publication": false,
+    "response_receipt_retained": true
+  },
+  "runtime": {
+    "executable": "/usr/bin/curl",
+    "platform": "darwin",
+    "macos_version": "26.6",
+    "trust": "existing_macos_system_store",
+    "available": true,
+    "sha256": "9b3d0c8eae03bd1be5e5c13c35a2464fc9a7ec719eff5deb94b2905dad25244e",
+    "version": "curl 8.7.1 (x86_64-apple-darwin25.0) libcurl/8.7.1 (SecureTransport) LibreSSL/3.3.6 zlib/1.2.12 nghttp2/1.68.1"
+  },
+  "frozen_manifest_sha256": "9765796da5abc4464a50e063703c60ef9d77387667475d4ccb317eb596e0f08f",
+  "frozen_cohort_sha256": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77",
+  "source_identity": {
+    "exact_frozen_original_url_only": true,
+    "expected_bytes": 9156131,
+    "published_md5": "5043491e6b4cea1fe3be1003a42a2cf5",
+    "sha256_computed_on_acquisition": true
+  },
+  "reviewed_controls": [
+    "Absolute /usr/bin/curl and runtime/platform digest binding",
+    "Native SecureTransport trust; no TLS bypass or new CA",
+    "Default curl config disabled; ambient CA/backend overrides removed",
+    "Exact NIRD URL, HTTPS only, no redirects/retries",
+    "Remaining wall deadline, independent process timeout and outer worker-group cleanup",
+    "Pinned byte ceiling plus exact Content-Length/identity encoding/status contract",
+    "Published MD5 verification plus computed SHA256 before exclusive hard-link publication",
+    "Exclusive partial/header files; preexisting destinations not overwritten",
+    "Generic errors and sanitized public route/response receipts",
+    "OSF mask remains on prior independently bounded Python transport"
+  ],
+  "network_requests": 0,
+  "scientific_payload_bytes_read_or_generated": 0,
+  "tracked_files_edited": false,
+  "substantive_findings": []
+}

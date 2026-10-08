@@ -1,0 +1,25 @@
+{
+  "request_number": 1,
+  "method": "HEAD",
+  "url": "https://data.archive.sigma2.no/dataset/5686d8fa-2003-4837-8e66-8e887fabe21e/download/RESECT/NIFTI/Case3/US/Case3-US-during.nii.gz",
+  "started_utc": "2026-10-08T09:10:44.667533+00:00",
+  "body_bytes_read": 0,
+  "tls_verification": true,
+  "http_status": 302,
+  "headers": {
+    "Content-Length": "1090",
+    "Content-Type": "text/html; charset=utf-8",
+    "ETag": null,
+    "Last-Modified": null,
+    "Server": null,
+    "Retry-After": null,
+    "Date": "Thu, 08 Oct 2026 09:10:46 GMT"
+  },
+  "redirect": {
+    "scheme": "https",
+    "host": "s3.nird.sigma2.no",
+    "path": "/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case3/US/Case3-US-during.nii.gz",
+    "full_url_sha256": "83d3bddbc4d740a08f6ecc2b98eccbe08348bd5cba5e71582c8bcc05f255acfe"
+  },
+  "elapsed_seconds": 1.3714342918246984
+}

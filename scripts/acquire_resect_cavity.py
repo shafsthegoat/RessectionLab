@@ -8,12 +8,15 @@ from __future__ import annotations
 
 import argparse
 from datetime import datetime, timezone
+from email.parser import BytesHeaderParser
 import fcntl
 import hashlib
 import json
 import math
 import os
 from pathlib import Path
+import platform
+import subprocess
 import sys
 import threading
 import time
@@ -126,7 +129,117 @@ def safe_route(url: str) -> dict:
             "full_url_sha256": hashlib.sha256(url.encode()).hexdigest()}
 
 
+def system_curl_environment() -> dict:
+    # Use the existing macOS system trust diagnosed for this exact source.
+    # Ambient CA/backend overrides must not silently change that trust choice.
+    return {key: value for key, value in os.environ.items()
+            if key not in {"CURL_CA_BUNDLE", "SSL_CERT_FILE", "SSL_CERT_DIR", "CURL_SSL_BACKEND"}}
+
+
+def system_curl_binding(*, timeout: float = 5.) -> dict:
+    executable = Path("/usr/bin/curl")
+    binding = {"executable": str(executable), "platform": sys.platform,
+               "macos_version": platform.mac_ver()[0], "trust": "existing_macos_system_store"}
+    if sys.platform != "darwin" or not executable.is_file():
+        return {**binding, "available": False}
+    try:
+        result = subprocess.run([str(executable), "-q", "--version"], stdout=subprocess.PIPE,
+                                stderr=subprocess.DEVNULL, timeout=timeout, check=False,
+                                env=system_curl_environment())
+    except (OSError, subprocess.TimeoutExpired):
+        return {**binding, "available": False}
+    version = result.stdout.decode("ascii", errors="replace").splitlines()[0] if result.stdout else ""
+    return {**binding, "available": result.returncode == 0 and "(SecureTransport)" in version,
+            "sha256": sha(executable), "version": version[:1024]}
+
+
+def nird_response_headers(path: Path) -> tuple[int, object]:
+    # Proxy CONNECT and informational responses may precede the final response.
+    # Keep raw headers local; only reviewed status/length/encoding enter receipts.
+    with path.open("rb") as handle:
+        data = handle.read(65537)
+    if len(data) > 65536:
+        raise ValueError("Original image response headers exceed byte limit")
+    blocks = [block for block in data.replace(b"\r\n", b"\n").split(b"\n\n")
+              if block.startswith(b"HTTP/")]
+    if not blocks:
+        raise ValueError("Original image response headers missing")
+    status_line, separator, fields = blocks[-1].partition(b"\n")
+    parts = status_line.split()
+    if not separator or len(parts) < 2 or len(parts[1]) != 3 or not parts[1].isdigit():
+        raise ValueError("Original image response status invalid")
+    return int(parts[1]), BytesHeaderParser().parsebytes(fields + b"\n\n")
+
+
+def transfer_nird_original(source: dict, attempt: Path, *, deadline: float, events: list) -> dict:
+    """One exact NIRD GET through verified native macOS trust; never a fallback."""
+    if source != SOURCES[1]:
+        raise ValueError("System curl is restricted to the exact frozen NIRD original image")
+    validate_url(source["source_url"], source)
+    check_deadline(deadline)
+    target = DATA / source["path"]
+    if target.exists():
+        digest = verify_source_file(target, source, deadline=deadline)
+        return {"path": source["path"], "status": "existing_verified", "sha256": digest, "bytes": source["bytes"]}
+    client = system_curl_binding(timeout=min(5., max(.001, deadline - time.monotonic())))
+    check_deadline(deadline)
+    if not client["available"]:
+        raise ValueError("Verified macOS system curl SecureTransport is unavailable")
+    event = {"source_path": source["path"], **safe_route(source["source_url"]), "transport": client}
+    events.append(event)
+    number = len(events)
+    atomic_preserve(attempt / f"request-{number:02d}.json", encode(event))
+    partial = attempt / (target.name + ".partial")
+    headers_path = attempt / f"nird-headers-{number:02d}.txt"
+    try:
+        # curl receives already-exclusive file descriptors. It cannot reopen or
+        # replace a source/destination path; it remains in the supervised worker's
+        # process group so the outer watchdog also cleans up this child.
+        with partial.open("xb") as output, headers_path.open("xb") as headers:
+            remaining = deadline - time.monotonic()
+            check_deadline(deadline)
+            command = ["/usr/bin/curl", "-q", "--no-location", "--max-redirs", "0",
+                       "--silent", "--fail", "--proto", "=https", "--tlsv1.2", "--retry", "0",
+                       "--connect-timeout", str(min(30., remaining)), "--max-time", str(remaining),
+                       "--max-filesize", str(source["bytes"]), "--header", "Accept-Encoding: identity",
+                       "--dump-header", f"/dev/fd/{headers.fileno()}", "--output", "-", source["source_url"]]
+            process = subprocess.Popen(command, stdout=output, stderr=subprocess.DEVNULL,
+                                       pass_fds=(headers.fileno(),), env=system_curl_environment())
+            try:
+                event["curl_exit_code"] = process.wait(timeout=max(.001, deadline - time.monotonic()))
+            except subprocess.TimeoutExpired:
+                event["deadline_exceeded"] = True
+                raise TimeoutError("Original image system curl deadline exceeded; no automatic retry") from None
+            finally:
+                if process.poll() is None:
+                    process.kill()
+                process.wait()
+            output.flush()
+            os.fsync(output.fileno())
+        check_deadline(deadline)
+        if event["curl_exit_code"]:
+            raise RuntimeError(f"Original image system curl failed (exit {event['curl_exit_code']}); no automatic retry")
+        status, headers = nird_response_headers(headers_path)
+        lengths = headers.get_all("Content-Length", [])
+        encodings = headers.get_all("Content-Encoding", [])
+        event.update(status=status, content_length=lengths[0] if len(lengths) == 1 else None,
+                     content_encoding=encodings[0] if len(encodings) == 1 else "identity" if not encodings else "invalid")
+        if (status != 200 or lengths != [str(source["bytes"])]
+                or (encodings and encodings != ["identity"])):
+            raise ValueError("Original image response status, encoding or declared byte length differs")
+        digest = verify_source_file(partial, source, deadline=deadline)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        os.link(partial, target)
+        partial.unlink()
+        return {"path": source["path"], "status": "downloaded_verified", "sha256": digest,
+                "bytes": source["bytes"], "transport": client}
+    finally:
+        atomic_preserve(attempt / f"response-{number:02d}.json", encode(event))
+
+
 def transfer(source: dict, attempt: Path, *, deadline: float, events: list) -> dict:
+    if source["kind"] == "acquired_during_resection_ultrasound":
+        return transfer_nird_original(source, attempt, deadline=deadline, events=events)
     target = DATA / source["path"]
     if target.exists():
         digest = verify_source_file(target, source, deadline=deadline)
@@ -211,7 +324,8 @@ def structural_qc() -> dict:
 def code_binding() -> dict:
     import importlib.metadata
     return {"files": {name: sha(ROOT / name) for name in SOURCE_CODE}, "python": sys.version,
-            "numpy": importlib.metadata.version("numpy"), "nibabel": importlib.metadata.version("nibabel")}
+            "numpy": importlib.metadata.version("numpy"), "nibabel": importlib.metadata.version("nibabel"),
+            "nird_original_transport": system_curl_binding()}
 
 
 def worker(scope: str, attempt: Path) -> None:

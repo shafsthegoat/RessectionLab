@@ -1,0 +1,35 @@
+{
+  "request_number": 2,
+  "method": "TLS_HANDSHAKE_ONLY",
+  "host": "s3.nird.sigma2.no",
+  "port": 443,
+  "tls_chain_verification": true,
+  "ca_file": "/private/etc/ssl/cert.pem",
+  "started_utc": "2026-10-08T09:10:44.654938+00:00",
+  "scientific_body_read": false,
+  "exit_code": 0,
+  "presented_certificates": [
+    {
+      "index": 1,
+      "details": "subject= /CN=s3.nird.sigma2.no\nissuer= /C=GR/O=Hellenic Academic and Research Institutions CA/CN=GEANT TLS RSA 1\nnotBefore=Jan 12 12:29:30 2026 GMT\nnotAfter=Jan 12 12:29:30 2027 GMT\nSHA256 Fingerprint=EB:38:82:95:71:35:79:C6:30:6B:F1:29:0F:AD:68:5D:A8:89:02:B5:5F:71:C7:48:8D:B8:54:E2:C0:85:22:86\n"
+    },
+    {
+      "index": 2,
+      "details": "subject= /C=GR/O=Hellenic Academic and Research Institutions CA/CN=GEANT TLS RSA 1\nissuer= /C=GR/O=Hellenic Academic and Research Institutions CA/CN=HARICA TLS RSA Root CA 2021\nnotBefore=Jan  3 11:15:00 2025 GMT\nnotAfter=Dec 31 11:14:59 2039 GMT\nSHA256 Fingerprint=5B:67:8D:C4:40:95:A5:28:95:B6:3B:31:F2:72:27:F4:B3:6C:3E:34:74:91:BF:2B:FA:69:18:37:A5:FB:8C:79\n"
+    },
+    {
+      "index": 3,
+      "details": "subject= /C=GR/O=Hellenic Academic and Research Institutions CA/CN=HARICA TLS RSA Root CA 2021\nissuer= /C=GR/O=Hellenic Academic and Research Institutions CA/CN=HARICA TLS RSA Root CA 2021\nnotBefore=Feb 19 10:55:38 2021 GMT\nnotAfter=Feb 13 10:55:37 2045 GMT\nSHA256 Fingerprint=D9:5D:0E:8E:DA:79:52:5B:F9:BE:B1:1B:14:D2:10:0D:32:94:98:5F:0C:62:D9:FA:BD:9C:D9:99:EC:CB:7B:1D\n"
+    }
+  ],
+  "verification_output": [
+    "subject=/CN=s3.nird.sigma2.no",
+    "issuer=/C=GR/O=Hellenic Academic and Research Institutions CA/CN=GEANT TLS RSA 1",
+    "    Verify return code: 0 (ok)",
+    "verify depth is 8",
+    "depth=2 C = GR, O = Hellenic Academic and Research Institutions CA, CN = HARICA TLS RSA Root CA 2021",
+    "verify error:num=19:self signed certificate in certificate chain",
+    "verify return:0"
+  ],
+  "elapsed_seconds": 0.5228762498591095
+}

@@ -1,0 +1,13 @@
+{
+  "request_number": 3,
+  "method": "HEAD",
+  "url": "https://s3.nird.sigma2.no/archive-ro/5686d8fa-2003-4837-8e66-8e887fabe21e/RESECT/NIFTI/Case3/US/Case3-US-during.nii.gz",
+  "client": "/usr/bin/curl -q, default TLS verification",
+  "started_utc": "2026-10-08T09:11:40.483026+00:00",
+  "body_bytes_read": 0,
+  "new_trust_anchors": false,
+  "exit_code": 0,
+  "stderr": "",
+  "http_headers": "HTTP/1.1 200 OK\r\nServer: NooBaa/5.21.4\r\nx-amz-request-id: muzbhrjg-c938o0-963\r\nx-amz-id-2: muzbhrjg-c938o0-963\r\nETag: \"mtime-b7kbamcx8hz4-ino-9rkw7c\"\r\nLast-Modified: Mon, 03 Oct 2016 11:41:55 GMT\r\nContent-Type: application/gzip\r\nContent-Length: 9156131\r\nAccept-Ranges: bytes\r\nDate: Thu, 08 Oct 2026 09:11:40 GMT\r\nConnection: keep-alive\r\nKeep-Alive: timeout=5\r\n\r\n",
+  "elapsed_seconds": 0.4537622909992933
+}

@@ -1,0 +1,9 @@
+{
+  "operation": "offline verification of presented leaf and intermediate against existing macOS trust store",
+  "hostname": "s3.nird.sigma2.no",
+  "explicit_root_anchor_supplied": false,
+  "network_fetches_allowed": false,
+  "exit_code": 0,
+  "stdout": "...certificate verification successful.\n---\nNo extended validation result found\nCertificate Transparency (CT) status: \u001b[32mverified\u001b[0m\n",
+  "stderr": ""
+}
