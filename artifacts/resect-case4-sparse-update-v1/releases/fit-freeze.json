@@ -1,0 +1,26 @@
+{
+  "authorized": true,
+  "authorizer": "root",
+  "declaration_sha256": "64229fe7523a65a90a878b02050273424ff8c9fb9f84d76c28110f097c2d7c5e",
+  "dependencies": {
+    "frame_qc": {
+      "path": "artifacts/resect-case4-sparse-update-v1/header-qc/frame-qc.json",
+      "sha256": "6eb373f00de4778220c18aa73b4c13b83878e18138b59fb96194b267c5834ad9"
+    },
+    "header_supervision": {
+      "path": "artifacts/resect-case4-sparse-update-v1/header-qc/supervision.json",
+      "sha256": "ee92114424ed82974a5b4c4f0f044738bb6db840bb5de0270fdd0bbbd2b687ca"
+    }
+  },
+  "phase": "fit-freeze",
+  "schema": "resect-case4-sparse-update-v1-release",
+  "source_commit": "694022d13394ec9c2a28f0b56fcf1e00289321af",
+  "source_sha256": {
+    "scripts/mechanics_patient_comparison.py": "cacd557107fa7bca3d83873faa776f16c70864366e89c096f9f1ae09ac402587",
+    "scripts/real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8",
+    "scripts/run_resect_case4_sparse_update.py": "0ab08e48899017707451d1d67528decbdf1452f0c5828c8c2ac2f3a1bbc797f6",
+    "src/resectionlab/__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/mechanics_landmarks.py": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc"
+  }
+}

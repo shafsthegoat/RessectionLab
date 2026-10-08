@@ -1,0 +1,763 @@
+{
+  "B_residuals": {
+    "inverse_distance_squared": {
+      "meaning": "residual on the six conditioning observations, not validation",
+      "per_landmark": [
+        {
+          "error_mm": 1.1102230246251565e-16,
+          "row_id": 1
+        },
+        {
+          "error_mm": 0.0,
+          "row_id": 14
+        },
+        {
+          "error_mm": 0.0,
+          "row_id": 8
+        },
+        {
+          "error_mm": 0.0,
+          "row_id": 17
+        },
+        {
+          "error_mm": 0.0,
+          "row_id": 19
+        },
+        {
+          "error_mm": 0.0,
+          "row_id": 7
+        }
+      ],
+      "summary": {
+        "count": 6,
+        "maximum_mm": 1.1102230246251565e-16,
+        "median_mm": 0.0,
+        "rms_mm": 4.5324665183683945e-17
+      }
+    },
+    "no_shift": {
+      "meaning": "residual on the six conditioning observations, not validation",
+      "per_landmark": [
+        {
+          "error_mm": 4.088861312506699,
+          "row_id": 1
+        },
+        {
+          "error_mm": 4.276875988428705,
+          "row_id": 14
+        },
+        {
+          "error_mm": 3.138348725491478,
+          "row_id": 8
+        },
+        {
+          "error_mm": 4.196385768281317,
+          "row_id": 17
+        },
+        {
+          "error_mm": 5.220798035326974,
+          "row_id": 19
+        },
+        {
+          "error_mm": 3.211905196838315,
+          "row_id": 7
+        }
+      ],
+      "summary": {
+        "count": 6,
+        "maximum_mm": 5.220798035326974,
+        "median_mm": 4.142623540394008,
+        "rms_mm": 4.08334847095475
+      }
+    },
+    "proper_rigid": {
+      "meaning": "residual on the six conditioning observations, not validation",
+      "per_landmark": [
+        {
+          "error_mm": 1.1963074218363787,
+          "row_id": 1
+        },
+        {
+          "error_mm": 1.1020140597801635,
+          "row_id": 14
+        },
+        {
+          "error_mm": 0.8470239507416357,
+          "row_id": 8
+        },
+        {
+          "error_mm": 0.21493809377770015,
+          "row_id": 17
+        },
+        {
+          "error_mm": 1.631987856524987,
+          "row_id": 19
+        },
+        {
+          "error_mm": 0.8393869372585808,
+          "row_id": 7
+        }
+      ],
+      "summary": {
+        "count": 6,
+        "maximum_mm": 1.631987856524987,
+        "median_mm": 0.9745190052608996,
+        "rms_mm": 1.0627942092322862
+      }
+    }
+  },
+  "baseline_support_meaning": "global mathematical evaluation, not verified retained tissue",
+  "clinical_injury_probability": null,
+  "common_supported_ids": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    9,
+    10,
+    11,
+    12,
+    13,
+    15,
+    16,
+    18
+  ],
+  "confidence_interval": null,
+  "external_mechanics_validated_by_this_helper": false,
+  "frame": "RAS+",
+  "freeze": {
+    "path": "artifacts/resect-case4-sparse-update-v1/fit-freeze/comparison/freeze.json",
+    "sha256": "b7f5f232a12e32cb6d5d945aea773ec1e6a882874ad2b9a90ad9c1460f081205"
+  },
+  "landmark_freeze_hash": "sha256:60444c2c4649ffc4d3a7d0f26fc47852d05aba0ef32b022c338c0b20d5b6ae0e",
+  "methods": {
+    "inverse_distance_squared": {
+      "all_supported": {
+        "count": 13,
+        "maximum_mm": 1.8315212044407356,
+        "median_mm": 1.001596504106044,
+        "rms_mm": 1.104198690271258
+      },
+      "common_supported": {
+        "count": 13,
+        "maximum_mm": 1.8315212044407356,
+        "median_mm": 1.001596504106044,
+        "rms_mm": 1.104198690271258
+      },
+      "excluded_counts": {},
+      "per_landmark": [
+        {
+          "error_mm": 0.16267223024377617,
+          "predicted_ras_mm": [
+            49.72467726257547,
+            6.8907436487752465,
+            -6.678922852423985
+          ],
+          "row_id": 2,
+          "status": "supported"
+        },
+        {
+          "error_mm": 0.7451684294212506,
+          "predicted_ras_mm": [
+            41.800208684434416,
+            3.4215511121814086,
+            2.5267806976902376
+          ],
+          "row_id": 3,
+          "status": "supported"
+        },
+        {
+          "error_mm": 1.3981492675159197,
+          "predicted_ras_mm": [
+            48.82718053845308,
+            22.178154339270627,
+            -20.795012551476322
+          ],
+          "row_id": 4,
+          "status": "supported"
+        },
+        {
+          "error_mm": 0.8098895471459093,
+          "predicted_ras_mm": [
+            41.10378983367986,
+            11.457904165445989,
+            2.4815698756796003
+          ],
+          "row_id": 5,
+          "status": "supported"
+        },
+        {
+          "error_mm": 1.8315212044407356,
+          "predicted_ras_mm": [
+            43.14567379283928,
+            0.2963503465929031,
+            -9.025431910167175
+          ],
+          "row_id": 6,
+          "status": "supported"
+        },
+        {
+          "error_mm": 1.3841169987293915,
+          "predicted_ras_mm": [
+            50.11846044287442,
+            24.150974774111003,
+            -16.490309341953687
+          ],
+          "row_id": 9,
+          "status": "supported"
+        },
+        {
+          "error_mm": 0.5282457045132746,
+          "predicted_ras_mm": [
+            53.46609986692468,
+            22.228293108835597,
+            -8.944864835120526
+          ],
+          "row_id": 10,
+          "status": "supported"
+        },
+        {
+          "error_mm": 0.2813950977355882,
+          "predicted_ras_mm": [
+            43.03786459671408,
+            29.173268932185863,
+            -6.080915901706954
+          ],
+          "row_id": 11,
+          "status": "supported"
+        },
+        {
+          "error_mm": 0.2746479696626519,
+          "predicted_ras_mm": [
+            46.3810381922339,
+            8.040801439055532,
+            -6.219878301934971
+          ],
+          "row_id": 12,
+          "status": "supported"
+        },
+        {
+          "error_mm": 1.1256000998615996,
+          "predicted_ras_mm": [
+            50.8434645553443,
+            19.77881590620335,
+            -14.002952907982632
+          ],
+          "row_id": 13,
+          "status": "supported"
+        },
+        {
+          "error_mm": 1.8263911695301347,
+          "predicted_ras_mm": [
+            51.71622441252772,
+            11.318520258591253,
+            -25.590654256378752
+          ],
+          "row_id": 15,
+          "status": "supported"
+        },
+        {
+          "error_mm": 1.001596504106044,
+          "predicted_ras_mm": [
+            53.0319606779635,
+            3.0520577974371395,
+            -10.855604532924984
+          ],
+          "row_id": 16,
+          "status": "supported"
+        },
+        {
+          "error_mm": 1.1610543295429205,
+          "predicted_ras_mm": [
+            48.63056174707628,
+            3.9159429812701907,
+            -17.65204891893739
+          ],
+          "row_id": 18,
+          "status": "supported"
+        }
+      ],
+      "total_landmarks": 13
+    },
+    "no_shift": {
+      "all_supported": {
+        "count": 13,
+        "maximum_mm": 5.22190119960671,
+        "median_mm": 3.697382115617212,
+        "rms_mm": 4.044969215175695
+      },
+      "common_supported": {
+        "count": 13,
+        "maximum_mm": 5.22190119960671,
+        "median_mm": 3.697382115617212,
+        "rms_mm": 4.044969215175695
+      },
+      "excluded_counts": {},
+      "per_landmark": [
+        {
+          "error_mm": 3.540660288396222,
+          "predicted_ras_mm": [
+            48.007931,
+            7.316612,
+            -9.61003
+          ],
+          "row_id": 2,
+          "status": "supported"
+        },
+        {
+          "error_mm": 3.224404390229922,
+          "predicted_ras_mm": [
+            40.576977,
+            3.767663,
+            -1.20726
+          ],
+          "row_id": 3,
+          "status": "supported"
+        },
+        {
+          "error_mm": 4.757517481898093,
+          "predicted_ras_mm": [
+            46.687168,
+            23.032818,
+            -23.396431
+          ],
+          "row_id": 4,
+          "status": "supported"
+        },
+        {
+          "error_mm": 3.577108719604284,
+          "predicted_ras_mm": [
+            39.911716,
+            11.829591,
+            -1.234281
+          ],
+          "row_id": 5,
+          "status": "supported"
+        },
+        {
+          "error_mm": 4.417506107492102,
+          "predicted_ras_mm": [
+            41.644726,
+            0.521484,
+            -12.791658
+          ],
+          "row_id": 6,
+          "status": "supported"
+        },
+        {
+          "error_mm": 4.1824452666823975,
+          "predicted_ras_mm": [
+            48.001373,
+            25.22146,
+            -18.618963
+          ],
+          "row_id": 9,
+          "status": "supported"
+        },
+        {
+          "error_mm": 3.0258832506626887,
+          "predicted_ras_mm": [
+            51.435596,
+            23.146484,
+            -11.324409
+          ],
+          "row_id": 10,
+          "status": "supported"
+        },
+        {
+          "error_mm": 3.3801796820328938,
+          "predicted_ras_mm": [
+            41.097092,
+            29.977308,
+            -8.725097
+          ],
+          "row_id": 11,
+          "status": "supported"
+        },
+        {
+          "error_mm": 3.5024481129662712,
+          "predicted_ras_mm": [
+            44.809734,
+            8.445333,
+            -9.442419
+          ],
+          "row_id": 12,
+          "status": "supported"
+        },
+        {
+          "error_mm": 4.3846008440884345,
+          "predicted_ras_mm": [
+            48.786499,
+            20.700005,
+            -16.399775
+          ],
+          "row_id": 13,
+          "status": "supported"
+        },
+        {
+          "error_mm": 5.22190119960671,
+          "predicted_ras_mm": [
+            48.8806,
+            12.184183,
+            -28.491198
+          ],
+          "row_id": 15,
+          "status": "supported"
+        },
+        {
+          "error_mm": 4.93161254550862,
+          "predicted_ras_mm": [
+            51.337494,
+            3.329111,
+            -14.415065
+          ],
+          "row_id": 16,
+          "status": "supported"
+        },
+        {
+          "error_mm": 3.697382115617212,
+          "predicted_ras_mm": [
+            46.803478,
+            4.008276,
+            -21.831179
+          ],
+          "row_id": 18,
+          "status": "supported"
+        }
+      ],
+      "total_landmarks": 13
+    },
+    "proper_rigid": {
+      "all_supported": {
+        "count": 13,
+        "maximum_mm": 1.6633105577978184,
+        "median_mm": 0.8187292211537057,
+        "rms_mm": 1.0202529418791566
+      },
+      "common_supported": {
+        "count": 13,
+        "maximum_mm": 1.6633105577978184,
+        "median_mm": 0.8187292211537057,
+        "rms_mm": 1.0202529418791566
+      },
+      "excluded_counts": {},
+      "per_landmark": [
+        {
+          "error_mm": 0.46421938353647885,
+          "predicted_ras_mm": [
+            49.61081740428613,
+            7.163478461385698,
+            -6.2062844158568655
+          ],
+          "row_id": 2,
+          "status": "supported"
+        },
+        {
+          "error_mm": 0.8598099603102971,
+          "predicted_ras_mm": [
+            41.82100303750419,
+            4.1317569920425,
+            2.0730946122477385
+          ],
+          "row_id": 3,
+          "status": "supported"
+        },
+        {
+          "error_mm": 1.2494647740738258,
+          "predicted_ras_mm": [
+            49.04617786811647,
+            22.207944464961987,
+            -20.77177868590612
+          ],
+          "row_id": 4,
+          "status": "supported"
+        },
+        {
+          "error_mm": 1.488185180277655,
+          "predicted_ras_mm": [
+            41.28481957929402,
+            12.191379029071705,
+            1.6337936571827494
+          ],
+          "row_id": 5,
+          "status": "supported"
+        },
+        {
+          "error_mm": 1.6633105577978184,
+          "predicted_ras_mm": [
+            43.2620634996069,
+            0.3116542486335523,
+            -9.293796027844206
+          ],
+          "row_id": 6,
+          "status": "supported"
+        },
+        {
+          "error_mm": 0.8187292211537057,
+          "predicted_ras_mm": [
+            50.21847014755812,
+            24.60757615636049,
+            -16.05913742707785
+          ],
+          "row_id": 9,
+          "status": "supported"
+        },
+        {
+          "error_mm": 0.6966415090758684,
+          "predicted_ras_mm": [
+            53.349167610442265,
+            22.84166475330609,
+            -8.549795153238266
+          ],
+          "row_id": 10,
+          "status": "supported"
+        },
+        {
+          "error_mm": 0.7899668006295643,
+          "predicted_ras_mm": [
+            43.03153075206931,
+            29.93510920815127,
+            -6.670790157208208
+          ],
+          "row_id": 11,
+          "status": "supported"
+        },
+        {
+          "error_mm": 0.55443108782217,
+          "predicted_ras_mm": [
+            46.426880753315466,
+            8.3437626345442,
+            -6.213012503868791
+          ],
+          "row_id": 12,
+          "status": "supported"
+        },
+        {
+          "error_mm": 0.938334427424967,
+          "predicted_ras_mm": [
+            50.849914596530674,
+            20.188770381316594,
+            -13.597388666024957
+          ],
+          "row_id": 13,
+          "status": "supported"
+        },
+        {
+          "error_mm": 1.4888936688936216,
+          "predicted_ras_mm": [
+            51.253356221588085,
+            11.09478451053998,
+            -25.253599256783012
+          ],
+          "row_id": 15,
+          "status": "supported"
+        },
+        {
+          "error_mm": 0.8118652674694884,
+          "predicted_ras_mm": [
+            53.05112928776389,
+            2.9008130578153066,
+            -10.686067128087531
+          ],
+          "row_id": 16,
+          "status": "supported"
+        },
+        {
+          "error_mm": 0.4372725784614166,
+          "predicted_ras_mm": [
+            48.80390003747399,
+            3.282218907101092,
+            -18.29086076894916
+          ],
+          "row_id": 18,
+          "status": "supported"
+        }
+      ],
+      "total_landmarks": 13
+    }
+  },
+  "paired_differences": {
+    "no_shift_minus_inverse_distance_squared": {
+      "count": 13,
+      "definition": "Euclidean error first minus second; negative favors first",
+      "mean_error_difference_mm": 3.0240924194105117,
+      "per_landmark": [
+        {
+          "error_difference_mm": 3.3779880581524457,
+          "row_id": 2
+        },
+        {
+          "error_difference_mm": 2.4792359608086714,
+          "row_id": 3
+        },
+        {
+          "error_difference_mm": 3.3593682143821733,
+          "row_id": 4
+        },
+        {
+          "error_difference_mm": 2.7672191724583746,
+          "row_id": 5
+        },
+        {
+          "error_difference_mm": 2.585984903051366,
+          "row_id": 6
+        },
+        {
+          "error_difference_mm": 2.798328267953006,
+          "row_id": 9
+        },
+        {
+          "error_difference_mm": 2.4976375461494142,
+          "row_id": 10
+        },
+        {
+          "error_difference_mm": 3.0987845842973054,
+          "row_id": 11
+        },
+        {
+          "error_difference_mm": 3.2278001433036194,
+          "row_id": 12
+        },
+        {
+          "error_difference_mm": 3.259000744226835,
+          "row_id": 13
+        },
+        {
+          "error_difference_mm": 3.395510030076575,
+          "row_id": 15
+        },
+        {
+          "error_difference_mm": 3.9300160414025758,
+          "row_id": 16
+        },
+        {
+          "error_difference_mm": 2.5363277860742914,
+          "row_id": 18
+        }
+      ]
+    },
+    "no_shift_minus_proper_rigid": {
+      "count": 13,
+      "definition": "Euclidean error first minus second; negative favors first",
+      "mean_error_difference_mm": 3.044809660604536,
+      "per_landmark": [
+        {
+          "error_difference_mm": 3.076440904859743,
+          "row_id": 2
+        },
+        {
+          "error_difference_mm": 2.3645944299196247,
+          "row_id": 3
+        },
+        {
+          "error_difference_mm": 3.508052707824267,
+          "row_id": 4
+        },
+        {
+          "error_difference_mm": 2.088923539326629,
+          "row_id": 5
+        },
+        {
+          "error_difference_mm": 2.754195549694283,
+          "row_id": 6
+        },
+        {
+          "error_difference_mm": 3.3637160455286916,
+          "row_id": 9
+        },
+        {
+          "error_difference_mm": 2.32924174158682,
+          "row_id": 10
+        },
+        {
+          "error_difference_mm": 2.5902128814033296,
+          "row_id": 11
+        },
+        {
+          "error_difference_mm": 2.948017025144101,
+          "row_id": 12
+        },
+        {
+          "error_difference_mm": 3.446266416663468,
+          "row_id": 13
+        },
+        {
+          "error_difference_mm": 3.7330075307130883,
+          "row_id": 15
+        },
+        {
+          "error_difference_mm": 4.1197472780391315,
+          "row_id": 16
+        },
+        {
+          "error_difference_mm": 3.2601095371557953,
+          "row_id": 18
+        }
+      ]
+    },
+    "proper_rigid_minus_inverse_distance_squared": {
+      "count": 13,
+      "definition": "Euclidean error first minus second; negative favors first",
+      "mean_error_difference_mm": -0.020717241194024575,
+      "per_landmark": [
+        {
+          "error_difference_mm": 0.30154715329270265,
+          "row_id": 2
+        },
+        {
+          "error_difference_mm": 0.1146415308890465,
+          "row_id": 3
+        },
+        {
+          "error_difference_mm": -0.1486844934420939,
+          "row_id": 4
+        },
+        {
+          "error_difference_mm": 0.6782956331317456,
+          "row_id": 5
+        },
+        {
+          "error_difference_mm": -0.16821064664291718,
+          "row_id": 6
+        },
+        {
+          "error_difference_mm": -0.5653877775756858,
+          "row_id": 9
+        },
+        {
+          "error_difference_mm": 0.16839580456259384,
+          "row_id": 10
+        },
+        {
+          "error_difference_mm": 0.508571702893976,
+          "row_id": 11
+        },
+        {
+          "error_difference_mm": 0.27978311815951806,
+          "row_id": 12
+        },
+        {
+          "error_difference_mm": -0.1872656724366326,
+          "row_id": 13
+        },
+        {
+          "error_difference_mm": -0.33749750063651307,
+          "row_id": 15
+        },
+        {
+          "error_difference_mm": -0.18973123663655556,
+          "row_id": 16
+        },
+        {
+          "error_difference_mm": -0.7237817510815039,
+          "row_id": 18
+        }
+      ]
+    }
+  },
+  "physical_action_response_validated": false,
+  "schema": "conditional-displacement-comparison-v1",
+  "units": "mm",
+  "validation_landmarks": 13
+}

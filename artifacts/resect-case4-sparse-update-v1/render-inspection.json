@@ -1,0 +1,36 @@
+{
+  "files": [
+    {
+      "bytes": 10541,
+      "path": "build/resect-case4-figure-v1/plot.py",
+      "sha256": "46c352d05890aab4641df696120d557195e542d586dc0666afa8929ddb8dc244"
+    },
+    {
+      "bytes": 3420,
+      "path": "build/resect-case4-figure-v1/provenance.json",
+      "sha256": "e3121ed598aff3d66b4729962684321f78bf5286b5e9a823c3b545cf25699e68"
+    },
+    {
+      "bytes": 306910,
+      "path": "build/resect-case4-figure-v1/case4-held-out-landmark-errors.png",
+      "sha256": "f5c416a1a9517e6dbb0d73f1c7098dca04e343d6b115e7e56f9e93582315f049"
+    },
+    {
+      "bytes": 40683,
+      "path": "build/resect-case4-figure-v1/case4-held-out-landmark-errors.pdf",
+      "sha256": "b06a3415288ad7665972785ac51cde8d0b7bd23cbdca532a2edffbf51538798f"
+    }
+  ],
+  "layout": "Initial xlabel/table-heading overlap corrected by increasing vertical gap; final PNG and rasterized PDF have readable separate labels, all13 landmark rows, all39 method markers and all13 paired differences.",
+  "pdf_inspected_via": "pdftoppm -singlefile -scale-to 1900 -png",
+  "pdf_inspection_image": {
+    "bytes": 195424,
+    "path": "build/resect-case4-figure-v1/pdf-render-check.png",
+    "sha256": "d34a99bb2412acdf605f57aa4c6a2289f519e177dd40cce2199b4d40300f7c9d"
+  },
+  "png_inspected": true,
+  "preliminary_pdf_tool_unavailable": "The project environment lacks fitz; the installed pdftoppm renderer was used instead. No dependency installation.",
+  "schema": "resect-case4-figure-render-inspection.v1",
+  "scientific_values_changed_for_layout": false,
+  "source_data_access": "Only the exact frozen evaluation.json; no Tag/image/field or new fit."
+}

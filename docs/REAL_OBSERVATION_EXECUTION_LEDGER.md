@@ -288,3 +288,18 @@ The Case3 original ultrasound transfer succeeded after the reviewed native-trust
 repair. Its mask was rate-limited, leaving no complete pair or QC admission.
 The [partial failure](../artifacts/resect-component-admission-v1/acquisition-native-trust-01/worker-result.json)
 and independent review are retained. No component or RL update occurred.
+
+## October 8: real held-out ultrasound correspondence result
+
+The [Case4 study](../artifacts/resect-case4-sparse-update-v1/RESULT.md) completed
+separate header, six-B fit/freeze and thirteen-V evaluation stages. All points
+were retained. RMS errors are 4.044969 mm without update, 1.020253 mm rigid and
+1.104199 mm fixed IDW; independent original-tag/quaternion calculations match
+within 8.53e-14 mm. No V-dependent tuning or method promotion occurred.
+
+This advances the measured-correspondence part of Objective 4A. Actual imaging
+observations condition the update; this is not preoperative-only inference,
+learned surgery, dense retained-tissue accuracy or demonstrated decision benefit.
+The historical failures remain. Case4 V is consumed for future adapted methods.
+Next: observed-state replay and stale-result invalidation, with unsupported
+clearance/cavity decisions remaining unavailable.

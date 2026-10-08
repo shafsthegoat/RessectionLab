@@ -1,0 +1,132 @@
+{
+  "hard_memory_limit_claimed": false,
+  "independent_header_checks": {
+    "before": {
+      "affine_determinant_mm3": 0.009663604537997287,
+      "affine_exact_match": true,
+      "bounds_maximum_difference_mm": 0.0,
+      "column_norms_mm": [
+        0.21299999874876877,
+        0.21300008337440374,
+        0.21300008402550352
+      ],
+      "decompressed_bytes_returned": 348,
+      "header_sha256": "b09acdaa866a6c7ec817d3eb5613abee959b8271b5994a36f1ace12d26168354",
+      "native_axis_codes": [
+        "L",
+        "I",
+        "P"
+      ],
+      "qform_code": 0,
+      "sform_code": 1,
+      "shape": [
+        337,
+        303,
+        293
+      ],
+      "spatial_units": "mm"
+    },
+    "during": {
+      "affine_determinant_mm3": 0.008489670202981246,
+      "affine_exact_match": true,
+      "bounds_maximum_difference_mm": 0.0,
+      "column_norms_mm": [
+        0.20399999891024237,
+        0.204000073715519,
+        0.20400007642708057
+      ],
+      "decompressed_bytes_returned": 348,
+      "header_sha256": "1a541a6a4adcd6ee3259585660da20e29740b3acc0aa6a6e7472bff04b815ca6",
+      "native_axis_codes": [
+        "L",
+        "I",
+        "P"
+      ],
+      "qform_code": 0,
+      "sform_code": 1,
+      "shape": [
+        327,
+        319,
+        287
+      ],
+      "spatial_units": "mm"
+    }
+  },
+  "interpretation": "Original NIfTI1 3D headers independently parsed with struct offsets; both mm, qform0/sform1, finite invertible oblique RAS world mappings. Different native voxel grids remain intact. Creator tag world-coordinate convention supports identity world-to-RAS transforms; voxel affines must not be reapplied to tag world points.",
+  "method": "Bounded zlib output exactly348 bytes per original; independent struct header/corner algebra and matching polar-axis labeling convention. No nibabel parser/image constructor/array proxy/tag parser/stage runner called. Original compressed streams hashed for fixity only.",
+  "original_compressed_fixity": {
+    "before": {
+      "before_after_equal": true,
+      "bytes": 9955302,
+      "md5": "984ab4b314a55b014e770b32e623b16c",
+      "path": "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/US/Case4-US-before.nii.gz",
+      "sha256": "62f6b6217774653267702acd4a55b16ad5c8cc4980237afaa39e92b102240379"
+    },
+    "during": {
+      "before_after_equal": true,
+      "bytes": 9796312,
+      "md5": "14b8b7acee3beccd4ee04e96e9201f0c",
+      "path": "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/US/Case4-US-during.nii.gz",
+      "sha256": "90fd3e82fbf99f7d45ed25108829f8e61a632ecf6d9a8706b5e4ac6866760a8a"
+    }
+  },
+  "parent_elapsed_seconds": 0.6070104169193655,
+  "release": {
+    "path": "artifacts/resect-case4-sparse-update-v1/releases/header-qc.json",
+    "sha256": "ccff5fe74a940f49f5669530e54d9434b406cae4b9554a13d59f447716511be7"
+  },
+  "remaining_gates": [
+    "Separate root fit-freeze release must bind the accepted header/frame dependencies.",
+    "Header semantics do not establish anatomical registration or correspondence accuracy; B and V remain closed.",
+    "No brain/cavity/physical-clearance support or full goal4A integration is established."
+  ],
+  "review_elapsed_seconds": 0.2730229590088129,
+  "reviewer_correction": {
+    "path": "build/resect-case4-header-independent-review-v1/initial-reviewer-axis-label-negative.json",
+    "sha256": "c30d68223a8d9515846c29272e95e5d3ba452d977d98ab3037b484bdfed7964d"
+  },
+  "runtime": {
+    "executable": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "executable_sha256": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a",
+    "nibabel": "5.4.2",
+    "numpy": "2.5.3",
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]"
+  },
+  "schema": "resect-case4-header-independent-review-v1",
+  "scope": {
+    "B_or_V_numeric_conversions": 0,
+    "MRI_reads": 0,
+    "fit_or_evaluate_calls": 0,
+    "image_arrays_read": 0,
+    "native_solver_calls": 0,
+    "opened_patient_paths": [
+      "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/US/Case4-US-before.nii.gz",
+      "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/US/Case4-US-during.nii.gz"
+    ],
+    "tag_reads": 0,
+    "tracked_writes": 0
+  },
+  "source_and_declaration_sha256": {
+    "manifests/experiments/resect-case4-sparse-update-v1.json": "64229fe7523a65a90a878b02050273424ff8c9fb9f84d76c28110f097c2d7c5e",
+    "scripts/mechanics_patient_comparison.py": "cacd557107fa7bca3d83873faa776f16c70864366e89c096f9f1ae09ac402587",
+    "scripts/real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8",
+    "scripts/run_resect_case4_sparse_update.py": "0ab08e48899017707451d1d67528decbdf1452f0c5828c8c2ac2f3a1bbc797f6",
+    "src/resectionlab/__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/mechanics_landmarks.py": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc"
+  },
+  "source_commit": "694022d13394ec9c2a28f0b56fcf1e00289321af",
+  "stage_artifacts_sha256": {
+    "artifacts/resect-case4-sparse-update-v1/header-qc/attempt.json": "d93f2a3acf9154724b8789b3e6bceaec6182efcf7045819057ae32e8f945807d",
+    "artifacts/resect-case4-sparse-update-v1/header-qc/frame-qc.json": "6eb373f00de4778220c18aa73b4c13b83878e18138b59fb96194b267c5834ad9",
+    "artifacts/resect-case4-sparse-update-v1/header-qc/process.json": "25d28c5c8c4fa005bb200c491e27d0324c514b3129cde4c5f42143628d324df2",
+    "artifacts/resect-case4-sparse-update-v1/header-qc/result.json": "e152d593403e1dc48a014b1dde4207d22909324ca9b73973021e1257cac2e93c",
+    "artifacts/resect-case4-sparse-update-v1/header-qc/supervision.json": "ee92114424ed82974a5b4c4f0f044738bb6db840bb5de0270fdd0bbbd2b687ca",
+    "artifacts/resect-case4-sparse-update-v1/header-qc/worker-started.json": "a75d5c0bdf49a8a56914506edaf0dae84695e4acf53cb278cb263def7b1482ca",
+    "artifacts/resect-case4-sparse-update-v1/header-qc/worker.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "status": "PASS_declared_coordinate_convention_only",
+  "wall_limit_seconds": 30,
+  "worker_elapsed_seconds": 0.4996783339884132,
+  "worker_observed_peak_rss_bytes": 46858240
+}

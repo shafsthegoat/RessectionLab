@@ -1,0 +1,7 @@
+{
+  "cause": "Reviewer used global maximum-sum axis assignment (LAI), which is not nibabel sequential polar-axis labeling (LIP) for these oblique matrices. Raw affine equality is unaffected.",
+  "correction": "Use normalized-column polar decomposition and sequential dominant unused output axes, matching the frozen nibabel convention.",
+  "initial_exception": "AssertionError at independent header equality/axis-label assertion",
+  "patient_scope": "First original before-US compressed fixity and bounded348-byte header; no tag/array/landmark access.",
+  "status": "reviewer_harness_assertion_corrected_not_product_failure"
+}

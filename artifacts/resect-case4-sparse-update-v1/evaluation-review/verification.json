@@ -1,0 +1,594 @@
+{
+  "B_conditioning_metrics_not_validation": {
+    "inverse_distance_squared": {
+      "count": 6,
+      "maximum_mm": 1.1102230246251565e-16,
+      "median_mm": 0.0,
+      "rms_mm": 4.5324665183683945e-17
+    },
+    "no_shift": {
+      "count": 6,
+      "maximum_mm": 5.220798035326974,
+      "median_mm": 4.142623540394008,
+      "rms_mm": 4.08334847095475
+    },
+    "proper_rigid": {
+      "count": 6,
+      "maximum_mm": 1.6319878565249897,
+      "median_mm": 0.9745190052609263,
+      "rms_mm": 1.062794209232291
+    }
+  },
+  "B_ids": [
+    1,
+    14,
+    8,
+    17,
+    19,
+    7
+  ],
+  "B_source_rank_ratio": 0.289608142874653,
+  "V_ids": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    9,
+    10,
+    11,
+    12,
+    13,
+    15,
+    16,
+    18
+  ],
+  "V_metrics": {
+    "inverse_distance_squared": {
+      "count": 13,
+      "maximum_mm": 1.8315212044407356,
+      "median_mm": 1.001596504106044,
+      "rms_mm": 1.104198690271258
+    },
+    "no_shift": {
+      "count": 13,
+      "maximum_mm": 5.22190119960671,
+      "median_mm": 3.697382115617212,
+      "rms_mm": 4.044969215175695
+    },
+    "proper_rigid": {
+      "count": 13,
+      "maximum_mm": 1.6633105577978122,
+      "median_mm": 0.8187292211537276,
+      "rms_mm": 1.020252941879162
+    }
+  },
+  "V_per_landmark": [
+    {
+      "inverse_distance_squared": 0.16267223024377567,
+      "no_shift": 3.540660288396222,
+      "proper_rigid": 0.46421938353645675,
+      "row_id": 2
+    },
+    {
+      "inverse_distance_squared": 0.7451684294212506,
+      "no_shift": 3.224404390229922,
+      "proper_rigid": 0.8598099603103192,
+      "row_id": 3
+    },
+    {
+      "inverse_distance_squared": 1.3981492675159197,
+      "no_shift": 4.757517481898093,
+      "proper_rigid": 1.2494647740738456,
+      "row_id": 4
+    },
+    {
+      "inverse_distance_squared": 0.8098895471459098,
+      "no_shift": 3.577108719604284,
+      "proper_rigid": 1.488185180277661,
+      "row_id": 5
+    },
+    {
+      "inverse_distance_squared": 1.8315212044407356,
+      "no_shift": 4.417506107492102,
+      "proper_rigid": 1.6633105577978122,
+      "row_id": 6
+    },
+    {
+      "inverse_distance_squared": 1.3841169987293915,
+      "no_shift": 4.1824452666823975,
+      "proper_rigid": 0.8187292211537276,
+      "row_id": 9
+    },
+    {
+      "inverse_distance_squared": 0.5282457045132746,
+      "no_shift": 3.0258832506626887,
+      "proper_rigid": 0.6966415090758482,
+      "row_id": 10
+    },
+    {
+      "inverse_distance_squared": 0.2813950977355882,
+      "no_shift": 3.3801796820328938,
+      "proper_rigid": 0.7899668006295317,
+      "row_id": 11
+    },
+    {
+      "inverse_distance_squared": 0.27464796966265215,
+      "no_shift": 3.5024481129662712,
+      "proper_rigid": 0.5544310878221842,
+      "row_id": 12
+    },
+    {
+      "inverse_distance_squared": 1.1256000998615996,
+      "no_shift": 4.3846008440884345,
+      "proper_rigid": 0.9383344274249857,
+      "row_id": 13
+    },
+    {
+      "inverse_distance_squared": 1.8263911695301347,
+      "no_shift": 5.22190119960671,
+      "proper_rigid": 1.4888936688936392,
+      "row_id": 15
+    },
+    {
+      "inverse_distance_squared": 1.001596504106044,
+      "no_shift": 4.93161254550862,
+      "proper_rigid": 0.8118652674695074,
+      "row_id": 16
+    },
+    {
+      "inverse_distance_squared": 1.1610543295429205,
+      "no_shift": 3.697382115617212,
+      "proper_rigid": 0.4372725784614033,
+      "row_id": 18
+    }
+  ],
+  "all_bound_sha256": {
+    "artifacts/resect-case4-sparse-update-v1/evaluate/attempt.json": "b08080d271ee24750bfe0697e4640e3e380d67c38971b8f13fbd784992aa8f29",
+    "artifacts/resect-case4-sparse-update-v1/evaluate/process.json": "344eccf84493b168753cb9bae552441878b8606f4bef779be83c2bbd89c6a046",
+    "artifacts/resect-case4-sparse-update-v1/evaluate/result.json": "95808228e4eb1483e66cc62d83f3575c505f0dab477165f1b6ecdb56447ba746",
+    "artifacts/resect-case4-sparse-update-v1/evaluate/supervision.json": "add47d7d33f585bf7cf4d74c77ea9a827a6ce4356dc9656edfe5d7831f8ec73c",
+    "artifacts/resect-case4-sparse-update-v1/evaluate/worker-started.json": "82689cbe9597f51f883463e3fed332a0d5b714be3304f74e7cfc588a94ebaa31",
+    "artifacts/resect-case4-sparse-update-v1/fit-freeze/attempt.json": "0e4ee21c3a4d17f2e0afce1af6b38996864062169e522d3ac7fbb3d1b214b918",
+    "artifacts/resect-case4-sparse-update-v1/fit-freeze/comparison/evaluation.json": "928898feaed7b106e4fc3f4e7d280678402f1db24cdc4192cd58d10c3fe0480a",
+    "artifacts/resect-case4-sparse-update-v1/fit-freeze/comparison/freeze.json": "b7f5f232a12e32cb6d5d945aea773ec1e6a882874ad2b9a90ad9c1460f081205",
+    "artifacts/resect-case4-sparse-update-v1/fit-freeze/comparison/model.json": "f52ba7bfc040fba1d538bfffa764ee246e3b05f54114a38b586e203ab3455279",
+    "artifacts/resect-case4-sparse-update-v1/fit-freeze/comparison/prediction-field.json": "5e3944a40a0240af99e8c82360fb02241ea4ab3a7148c60950e2829e64e79858",
+    "artifacts/resect-case4-sparse-update-v1/fit-freeze/comparison/validation-attempt.json": "3f0e3a026fc2c3a9c4d57110ed4dee9a724f34f4e84f68b29d8acc98332c4561",
+    "artifacts/resect-case4-sparse-update-v1/fit-freeze/process.json": "c7f7372f72ba22f06bd0155091be4b34b182f06f68044fd2edef976b80d527a7",
+    "artifacts/resect-case4-sparse-update-v1/fit-freeze/result.json": "fece1293528cc69a1e1a9ebae079ba41b04f0927615fcc97c265d3a5e0975c80",
+    "artifacts/resect-case4-sparse-update-v1/fit-freeze/supervision.json": "16f3a0703bf28583f89ac455287f79f0a8119102c719ebe1a887cb9256b3600f",
+    "artifacts/resect-case4-sparse-update-v1/fit-freeze/worker-started.json": "b810bd98eeef9729d089553b4d4aeba167d076a70ca30de59bc72ce8131427b8",
+    "artifacts/resect-case4-sparse-update-v1/header-qc/attempt.json": "d93f2a3acf9154724b8789b3e6bceaec6182efcf7045819057ae32e8f945807d",
+    "artifacts/resect-case4-sparse-update-v1/header-qc/frame-qc.json": "6eb373f00de4778220c18aa73b4c13b83878e18138b59fb96194b267c5834ad9",
+    "artifacts/resect-case4-sparse-update-v1/header-qc/process.json": "25d28c5c8c4fa005bb200c491e27d0324c514b3129cde4c5f42143628d324df2",
+    "artifacts/resect-case4-sparse-update-v1/header-qc/result.json": "e152d593403e1dc48a014b1dde4207d22909324ca9b73973021e1257cac2e93c",
+    "artifacts/resect-case4-sparse-update-v1/header-qc/supervision.json": "ee92114424ed82974a5b4c4f0f044738bb6db840bb5de0270fdd0bbbd2b687ca",
+    "artifacts/resect-case4-sparse-update-v1/header-qc/worker-started.json": "a75d5c0bdf49a8a56914506edaf0dae84695e4acf53cb278cb263def7b1482ca",
+    "artifacts/resect-case4-sparse-update-v1/releases/evaluate.json": "86aceacd2bc3e6ad3b90ffe9d1fcf4600b7ae9b58690f9b7101a1705a473c508",
+    "artifacts/resect-case4-sparse-update-v1/releases/fit-freeze.json": "4f47c45d8d9a9a16d6aa450d9a58d34c0aa74c80ec810fff704b70506ec2201b",
+    "artifacts/resect-case4-sparse-update-v1/releases/header-qc.json": "ccff5fe74a940f49f5669530e54d9434b406cae4b9554a13d59f447716511be7",
+    "build/resect-case4-header-independent-review-v1/verification.json": "0b6ed60315e54523ab993920f4fd7eacd95a2a22cc22e90de27d112091a46bd9",
+    "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/Landmarks/Case4-beforeUS-duringUS-full.tag": "9e2c3c2765bffd2914f8113f8b2e223c06b2f0640e561f03a94049752e8ddec1",
+    "manifests/experiments/resect-case4-sparse-update-v1.json": "64229fe7523a65a90a878b02050273424ff8c9fb9f84d76c28110f097c2d7c5e",
+    "scripts/mechanics_patient_comparison.py": "cacd557107fa7bca3d83873faa776f16c70864366e89c096f9f1ae09ac402587",
+    "scripts/real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8",
+    "scripts/run_resect_case4_sparse_update.py": "0ab08e48899017707451d1d67528decbdf1452f0c5828c8c2ac2f3a1bbc797f6",
+    "src/resectionlab/__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/mechanics_landmarks.py": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc"
+  },
+  "audit_float_comparison_limit_mm": 1e-10,
+  "case": "RESECT:Case4",
+  "chronology_basis": "Release/freeze hash graph, authenticated unchanged code ordering and saved separate-stage times; file mtimes corroborate, not hostile-host proof.",
+  "chronology_file_mtimes": [
+    {
+      "mtime_ns": 1791454805404366231,
+      "path": "artifacts/resect-case4-sparse-update-v1/fit-freeze/comparison/model.json"
+    },
+    {
+      "mtime_ns": 1791454805405031144,
+      "path": "artifacts/resect-case4-sparse-update-v1/fit-freeze/comparison/prediction-field.json"
+    },
+    {
+      "mtime_ns": 1791454805406292762,
+      "path": "artifacts/resect-case4-sparse-update-v1/fit-freeze/comparison/freeze.json"
+    },
+    {
+      "mtime_ns": 1791454805423610376,
+      "path": "artifacts/resect-case4-sparse-update-v1/fit-freeze/result.json"
+    },
+    {
+      "mtime_ns": 1791454805485972700,
+      "path": "artifacts/resect-case4-sparse-update-v1/fit-freeze/supervision.json"
+    },
+    {
+      "mtime_ns": 1791454853033865550,
+      "path": "artifacts/resect-case4-sparse-update-v1/releases/evaluate.json"
+    },
+    {
+      "mtime_ns": 1791454853679467966,
+      "path": "artifacts/resect-case4-sparse-update-v1/evaluate/attempt.json"
+    },
+    {
+      "mtime_ns": 1791454854450272778,
+      "path": "artifacts/resect-case4-sparse-update-v1/fit-freeze/comparison/validation-attempt.json"
+    },
+    {
+      "mtime_ns": 1791454854456659744,
+      "path": "artifacts/resect-case4-sparse-update-v1/fit-freeze/comparison/evaluation.json"
+    },
+    {
+      "mtime_ns": 1791454854474406813,
+      "path": "artifacts/resect-case4-sparse-update-v1/evaluate/result.json"
+    },
+    {
+      "mtime_ns": 1791454854527889936,
+      "path": "artifacts/resect-case4-sparse-update-v1/evaluate/supervision.json"
+    }
+  ],
+  "code": {
+    "path": "build/resect-case4-evaluation-independent-review-v1/review.py",
+    "sha256": "025c616d42055c927c43048fa9348db23d18792d817dab9982f203bba30865ac"
+  },
+  "coverage": {
+    "observed_destination": {
+      "B6": {
+        "count": 6,
+        "inside_full_cell_box": 6,
+        "inside_voxel_center_box": 6,
+        "roundtrip_max_mm": 1.4210854715202004e-14,
+        "voxel_maximum": [
+          164.82727338955254,
+          187.54478455387556,
+          257.70357816609715
+        ],
+        "voxel_minimum": [
+          75.3470538486824,
+          75.12166214729481,
+          127.91902275057913
+        ]
+      },
+      "V13": {
+        "count": 13,
+        "inside_full_cell_box": 13,
+        "inside_voxel_center_box": 13,
+        "roundtrip_max_mm": 1.4210854715202004e-14,
+        "voxel_maximum": [
+          168.10337889703095,
+          198.88437572361403,
+          233.2593183890338
+        ],
+        "voxel_minimum": [
+          66.40687521574137,
+          73.50806671690096,
+          102.99512494939046
+        ]
+      },
+      "all19": {
+        "count": 19,
+        "inside_full_cell_box": 19,
+        "inside_voxel_center_box": 19,
+        "roundtrip_max_mm": 1.4210854715202004e-14,
+        "voxel_maximum": [
+          168.10337889703095,
+          198.88437572361403,
+          257.70357816609715
+        ],
+        "voxel_minimum": [
+          66.40687521574137,
+          73.50806671690096,
+          102.99512494939046
+        ]
+      },
+      "world_extent_max_mm": [
+        54.911758,
+        29.347878,
+        2.037124
+      ],
+      "world_extent_min_mm": [
+        39.797383,
+        -4.728131,
+        -29.563873
+      ],
+      "world_extent_size_mm": [
+        15.114374999999995,
+        34.076009,
+        31.600997
+      ]
+    },
+    "source": {
+      "B6": {
+        "count": 6,
+        "inside_full_cell_box": 6,
+        "inside_voxel_center_box": 6,
+        "roundtrip_max_mm": 7.105427357601002e-15,
+        "voxel_maximum": [
+          155.29151861623157,
+          171.59845293337816,
+          251.40510505736478
+        ],
+        "voxel_minimum": [
+          67.34172148921942,
+          63.197830084202295,
+          139.0000049987321
+        ]
+      },
+      "V13": {
+        "count": 13,
+        "inside_full_cell_box": 13,
+        "inside_voxel_center_box": 13,
+        "roundtrip_max_mm": 1.2434497875801753e-14,
+        "voxel_maximum": [
+          160.3967021941592,
+          184.09330031470978,
+          229.99505823764034
+        ],
+        "voxel_minimum": [
+          60.663876731582974,
+          59.08868593760097,
+          106.96793243328497
+        ]
+      },
+      "all19": {
+        "count": 19,
+        "inside_full_cell_box": 19,
+        "inside_voxel_center_box": 19,
+        "roundtrip_max_mm": 1.2434497875801753e-14,
+        "voxel_maximum": [
+          160.3967021941592,
+          184.09330031470978,
+          251.40510505736478
+        ],
+        "voxel_minimum": [
+          60.663876731582974,
+          59.08868593760097,
+          106.96793243328497
+        ]
+      },
+      "world_extent_max_mm": [
+        51.69672,
+        29.977308,
+        -1.20726
+      ],
+      "world_extent_min_mm": [
+        38.829018,
+        -4.644383,
+        -32.170658
+      ],
+      "world_extent_size_mm": [
+        12.867702000000001,
+        34.621691,
+        30.963398
+      ]
+    }
+  },
+  "limitations": [
+    "Conditional sparse observed correspondence from six intraoperative observations, not preoperative-only or dense tissue prediction.",
+    "All13V retained; same-case points are not independent patients and no confidence interval or clinical threshold is inferred.",
+    "Inside image extent is not observed tissue/cavity/clearance coverage or validated anatomy.",
+    "Case4 V is consumed for future tuned/selected methods; fixed IDW is reported without V-driven promotion.",
+    "Earlier failed cases remain failed; this does not complete full goal4A integration or validate forces/safety."
+  ],
+  "maximum_saved_numeric_disagreement_mm": 8.526512829121202e-14,
+  "originals": {
+    "US_fixity_source": "Previously authenticated header review; no original images reopened in this audit.",
+    "tag_MD5": "14259fc0f9ab32dfecbe1f2b8830ae86",
+    "tag_bytes": 1304,
+    "tag_sha256": "9e2c3c2765bffd2914f8113f8b2e223c06b2f0640e561f03a94049752e8ddec1"
+  },
+  "paired_errors": {
+    "no_shift_minus_inverse_distance_squared": {
+      "mean_error_difference_mm": 3.024092419410512,
+      "per_landmark": [
+        {
+          "error_difference_mm": 3.377988058152446,
+          "row_id": 2
+        },
+        {
+          "error_difference_mm": 2.4792359608086714,
+          "row_id": 3
+        },
+        {
+          "error_difference_mm": 3.3593682143821733,
+          "row_id": 4
+        },
+        {
+          "error_difference_mm": 2.7672191724583746,
+          "row_id": 5
+        },
+        {
+          "error_difference_mm": 2.585984903051366,
+          "row_id": 6
+        },
+        {
+          "error_difference_mm": 2.798328267953006,
+          "row_id": 9
+        },
+        {
+          "error_difference_mm": 2.4976375461494142,
+          "row_id": 10
+        },
+        {
+          "error_difference_mm": 3.0987845842973054,
+          "row_id": 11
+        },
+        {
+          "error_difference_mm": 3.227800143303619,
+          "row_id": 12
+        },
+        {
+          "error_difference_mm": 3.259000744226835,
+          "row_id": 13
+        },
+        {
+          "error_difference_mm": 3.395510030076575,
+          "row_id": 15
+        },
+        {
+          "error_difference_mm": 3.9300160414025758,
+          "row_id": 16
+        },
+        {
+          "error_difference_mm": 2.5363277860742914,
+          "row_id": 18
+        }
+      ]
+    },
+    "no_shift_minus_proper_rigid": {
+      "mean_error_difference_mm": 3.0448096606045327,
+      "per_landmark": [
+        {
+          "error_difference_mm": 3.076440904859765,
+          "row_id": 2
+        },
+        {
+          "error_difference_mm": 2.364594429919603,
+          "row_id": 3
+        },
+        {
+          "error_difference_mm": 3.5080527078242474,
+          "row_id": 4
+        },
+        {
+          "error_difference_mm": 2.0889235393266232,
+          "row_id": 5
+        },
+        {
+          "error_difference_mm": 2.7541955496942894,
+          "row_id": 6
+        },
+        {
+          "error_difference_mm": 3.36371604552867,
+          "row_id": 9
+        },
+        {
+          "error_difference_mm": 2.3292417415868405,
+          "row_id": 10
+        },
+        {
+          "error_difference_mm": 2.590212881403362,
+          "row_id": 11
+        },
+        {
+          "error_difference_mm": 2.948017025144087,
+          "row_id": 12
+        },
+        {
+          "error_difference_mm": 3.4462664166634487,
+          "row_id": 13
+        },
+        {
+          "error_difference_mm": 3.7330075307130706,
+          "row_id": 15
+        },
+        {
+          "error_difference_mm": 4.119747278039113,
+          "row_id": 16
+        },
+        {
+          "error_difference_mm": 3.2601095371558086,
+          "row_id": 18
+        }
+      ]
+    },
+    "proper_rigid_minus_inverse_distance_squared": {
+      "mean_error_difference_mm": -0.020717241194021116,
+      "per_landmark": [
+        {
+          "error_difference_mm": 0.3015471532926811,
+          "row_id": 2
+        },
+        {
+          "error_difference_mm": 0.11464153088906859,
+          "row_id": 3
+        },
+        {
+          "error_difference_mm": -0.14868449344207413,
+          "row_id": 4
+        },
+        {
+          "error_difference_mm": 0.6782956331317511,
+          "row_id": 5
+        },
+        {
+          "error_difference_mm": -0.1682106466429234,
+          "row_id": 6
+        },
+        {
+          "error_difference_mm": -0.5653877775756639,
+          "row_id": 9
+        },
+        {
+          "error_difference_mm": 0.16839580456257364,
+          "row_id": 10
+        },
+        {
+          "error_difference_mm": 0.5085717028939436,
+          "row_id": 11
+        },
+        {
+          "error_difference_mm": 0.27978311815953205,
+          "row_id": 12
+        },
+        {
+          "error_difference_mm": -0.18726567243661385,
+          "row_id": 13
+        },
+        {
+          "error_difference_mm": -0.33749750063649553,
+          "row_id": 15
+        },
+        {
+          "error_difference_mm": -0.18973123663653657,
+          "row_id": 16
+        },
+        {
+          "error_difference_mm": -0.7237817510815172,
+          "row_id": 18
+        }
+      ]
+    }
+  },
+  "partition_hash": "sha256:cc9d7776cbb4bb6ba745519e24f008c53e556bfe60d3c0509917377c9db02982",
+  "primary_rigid_minus_no_shift_RMS_mm": -3.024716273296533,
+  "review_elapsed_seconds": 0.18020504200831056,
+  "rigid_reconstruction": {
+    "largest_eigenvalue_gap_mm2": 1170.4837057348811,
+    "method": "Horn quaternion maximum-eigenvalue proper rotation from fixed six B",
+    "rotation_max_difference": 5.898059818321144e-15,
+    "translation_max_difference_mm": 2.6645352591003757e-13
+  },
+  "role": "DEVELOPMENT",
+  "runtime": {
+    "executable": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "executable_sha256": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a",
+    "nibabel": "5.4.2",
+    "numpy": "2.5.3",
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]"
+  },
+  "schema": "resect-case4-sparse-independent-evaluation-v1",
+  "scope": {
+    "MRI_reads": 0,
+    "image_reads": 0,
+    "native_solver_calls": 0,
+    "original_patient_paths_opened": [
+      "data/mechanics/resect-case4-v1/RESECT/NIFTI/Case4/Landmarks/Case4-beforeUS-duringUS-full.tag"
+    ],
+    "production_fit_or_evaluate_calls": 0,
+    "tracked_writes": 0,
+    "training_calls": 0
+  },
+  "source_commit": "694022d13394ec9c2a28f0b56fcf1e00289321af",
+  "stage_observed_seconds": {
+    "evaluate": 0.8487901659682393,
+    "fit-freeze": 0.5438808749895543,
+    "header-qc": 0.6070104169193655
+  },
+  "stage_observed_worker_peak_rss_bytes": {
+    "evaluate": 40042496,
+    "fit-freeze": 40091648,
+    "header-qc": 46858240
+  },
+  "status": "PASS_saved_fixed_sparse_comparison_verified"
+}

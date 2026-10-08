@@ -1,0 +1,16 @@
+{
+  "phase": "header-qc",
+  "release_sha256": "ccff5fe74a940f49f5669530e54d9434b406cae4b9554a13d59f447716511be7",
+  "schema": "resect-case4-sparse-update-v1-supervision",
+  "scientific_result_accepted": false,
+  "source_sha256": {
+    "scripts/mechanics_patient_comparison.py": "cacd557107fa7bca3d83873faa776f16c70864366e89c096f9f1ae09ac402587",
+    "scripts/real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8",
+    "scripts/run_resect_case4_sparse_update.py": "0ab08e48899017707451d1d67528decbdf1452f0c5828c8c2ac2f3a1bbc797f6",
+    "src/resectionlab/__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/mechanics_landmarks.py": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc"
+  },
+  "started_at_utc": "2026-10-08T10:12:47.554446+00:00",
+  "status": "not_started"
+}

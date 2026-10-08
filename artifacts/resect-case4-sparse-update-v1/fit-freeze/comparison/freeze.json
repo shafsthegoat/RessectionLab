@@ -1,0 +1,28 @@
+{
+  "directory": "artifacts/resect-case4-sparse-update-v1/fit-freeze/comparison",
+  "freeze_hash": "sha256:60444c2c4649ffc4d3a7d0f26fc47852d05aba0ef32b022c338c0b20d5b6ae0e",
+  "landmark_freeze": {
+    "forward_hash": "sha256:f2251ab384bdc9454d54281ca9911a697deb193a37252e873931e9b70dfe65d2",
+    "model_sha256": "sha256:f52ba7bfc040fba1d538bfffa764ee246e3b05f54114a38b586e203ab3455279",
+    "partition_hash": "sha256:cc9d7776cbb4bb6ba745519e24f008c53e556bfe60d3c0509917377c9db02982",
+    "prediction_sha256": "sha256:5e3944a40a0240af99e8c82360fb02241ea4ab3a7148c60950e2829e64e79858",
+    "source_audit_hash": "sha256:d3b66b0f5591f1cc0fed780f6d805120e3b5840a01a31d1c2a28833c77231a2b"
+  },
+  "model": {
+    "path": "artifacts/resect-case4-sparse-update-v1/fit-freeze/comparison/model.json",
+    "sha256": "f52ba7bfc040fba1d538bfffa764ee246e3b05f54114a38b586e203ab3455279"
+  },
+  "prediction_field": {
+    "path": "artifacts/resect-case4-sparse-update-v1/fit-freeze/comparison/prediction-field.json",
+    "sha256": "5e3944a40a0240af99e8c82360fb02241ea4ab3a7148c60950e2829e64e79858"
+  },
+  "protocol": {
+    "path": "manifests/experiments/resect-case4-sparse-update-v1.json",
+    "sha256": "64229fe7523a65a90a878b02050273424ff8c9fb9f84d76c28110f097c2d7c5e"
+  },
+  "running_sources": {
+    "comparison": "cacd557107fa7bca3d83873faa776f16c70864366e89c096f9f1ae09ac402587",
+    "landmarks": "d5c5e285d0e9b828362cf55d8533df001f39bc0d76d0d19e914eaa58882a72bc"
+  },
+  "schema": "conditional-comparison-freeze-v1"
+}

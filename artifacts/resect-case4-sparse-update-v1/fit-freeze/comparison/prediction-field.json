@@ -1,0 +1,189 @@
+{
+  "baseline": {
+    "forward_hash": "sha256:f2251ab384bdc9454d54281ca9911a697deb193a37252e873931e9b70dfe65d2",
+    "frame": "RAS+",
+    "observations": {
+      "boundary_ids": [
+        1,
+        14,
+        8,
+        17,
+        19,
+        7
+      ],
+      "destination_world_to_ras_mm": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "frame": "RAS+",
+      "observed_ras_mm": [
+        [
+          39.797383,
+          7.849663,
+          -0.643385
+        ],
+        [
+          54.911758,
+          10.007047,
+          -29.563873
+        ],
+        [
+          50.728449,
+          24.9833,
+          -13.543211
+        ],
+        [
+          48.172318,
+          -4.728131,
+          -8.24925
+        ],
+        [
+          51.128942,
+          0.191632,
+          -20.363391
+        ],
+        [
+          52.15369,
+          9.635545,
+          -5.423177
+        ]
+      ],
+      "partition_hash": "sha256:cc9d7776cbb4bb6ba745519e24f008c53e556bfe60d3c0509917377c9db02982",
+      "patient_group": "RESECT:Case4",
+      "role": "observed_internal_displacements_not_tool_boundaries",
+      "schema_version": 1,
+      "source_image_sha256": "sha256:62f6b6217774653267702acd4a55b16ad5c8cc4980237afaa39e92b102240379",
+      "source_ras_mm": [
+        [
+          38.829018,
+          8.186083,
+          -4.601652
+        ],
+        [
+          51.69672,
+          11.08402,
+          -32.170658
+        ],
+        [
+          48.59494,
+          26.117413,
+          -15.545999
+        ],
+        [
+          46.798889,
+          -4.644383,
+          -12.213633
+        ],
+        [
+          49.412739,
+          -0.052127,
+          -25.288019
+        ],
+        [
+          50.355251,
+          10.096829,
+          -8.044087
+        ]
+      ],
+      "source_world_to_ras_mm": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "units": "mm"
+    },
+    "protocol_sha256": "64229fe7523a65a90a878b02050273424ff8c9fb9f84d76c28110f097c2d7c5e",
+    "rigid": {
+      "rotation": [
+        [
+          0.9991998745905102,
+          0.015821611996284173,
+          -0.036732645046989046
+        ],
+        [
+          -0.014027045077403204,
+          0.9987193942741991,
+          0.04860878014282398
+        ],
+        [
+          0.03745467427045035,
+          -0.04805463655482142,
+          0.9981422239745592
+        ]
+      ],
+      "singular_values_mm2": [
+        632.7823815445128,
+        534.7371176544777,
+        50.5047352129632
+      ],
+      "status": "available",
+      "translation_mm": [
+        1.1725363526639896,
+        0.9967774042521667,
+        1.9393680132747573
+      ]
+    },
+    "rules": {
+      "idw_coincidence": "exact_coordinate_equality",
+      "idw_duplicate_B": "reject",
+      "idw_equal_distance": "equal_weights",
+      "idw_neighbors": "all_six",
+      "idw_power": 2,
+      "material_properties_are_deployment_observations": false,
+      "methods": [
+        "no_shift",
+        "proper_rigid",
+        "inverse_distance_squared"
+      ],
+      "observation_status": "six_observed_intraoperative_internal_motions",
+      "preoperative_scan_only_model": false,
+      "rigid_rank_ratio": 1e-12
+    },
+    "schema": "conditional-baseline-field-v1",
+    "units": "mm"
+  },
+  "external_field": null
+}

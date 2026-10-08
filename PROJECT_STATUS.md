@@ -106,6 +106,16 @@ then acquired the exact 9,156,131-byte original with published MD5 verification.
 The mask source returned HTTP429; no mask, pair QC or training admission follows.
 The 17.266-second partial failure and independent review are preserved. See
 [intake result](artifacts/resect-component-admission-v1/RESULT.md).
+The separately frozen Case4 ultrasound study now has an independently verified
+real result: thirteen held-out landmark RMS errors are 4.044969 mm without update,
+1.020253 mm with rigid correction and 1.104199 mm with fixed IDW. Six observed
+intraoperative correspondences condition the models. All points were retained;
+independent quaternion/IDW recomputation agrees within 8.53e-14 mm. All three
+stages finished under one second each. This is sparse correspondence accuracy,
+not dense tissue/force validation or surgical decision acceptance. Case4 stays
+DEVELOPMENT; its thirteen validation points are now consumed for future tuning.
+See [observed update](artifacts/resect-case4-sparse-update-v1/RESULT.md).
+
 The measured-interaction candidate is creator-accepted MULTIS donor004 run005;
 verified HTTPS/fixity and force/pose/surface pairing remain unresolved.
 

@@ -1,0 +1,179 @@
+{
+  "anatomical_alignment_accepted": false,
+  "cavity_support": null,
+  "convention": "Creator paired-world-mm convention: first triplet before-US, second during-US; each original NIfTI sform maps voxel centres to RAS millimetres. Identity conversions express that convention, not anatomical registration accuracy.",
+  "destination_image_sha256": "90fd3e82fbf99f7d45ed25108829f8e61a632ecf6d9a8706b5e4ac6866760a8a",
+  "destination_world_to_ras_mm": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "headers": {
+    "before": {
+      "affine_replaced": false,
+      "decompressed_bytes_returned": 348,
+      "full_cell_bounds_ras_mm": {
+        "maximum": [
+          85.78667270950973,
+          70.0509777739644,
+          35.021867169067264
+        ],
+        "minimum": [
+          -22.967634281143546,
+          -44.35839445143938,
+          -68.79367779009044
+        ]
+      },
+      "header_sha256": "b09acdaa866a6c7ec817d3eb5613abee959b8271b5994a36f1ace12d26168354",
+      "image_array_accessed": false,
+      "native_axis_codes": [
+        "L",
+        "I",
+        "P"
+      ],
+      "qform_code": 0,
+      "selected_affine": [
+        [
+          -0.16510844230651855,
+          -0.057761553674936295,
+          0.12153928726911545,
+          50.124996185302734
+        ],
+        [
+          -0.12536945939064026,
+          0.13592872023582458,
+          -0.10571147501468658,
+          28.816999435424805
+        ],
+        [
+          -0.048894789069890976,
+          -0.1534797102212906,
+          -0.13936398923397064,
+          34.85099792480469
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "sform_code": 1,
+      "shape": [
+        337,
+        303,
+        293
+      ],
+      "spatial_units": "mm"
+    },
+    "during": {
+      "affine_replaced": false,
+      "decompressed_bytes_returned": 348,
+      "full_cell_bounds_ras_mm": {
+        "maximum": [
+          87.83042305521667,
+          67.748659260571,
+          38.21665081568062
+        ],
+        "minimum": [
+          -14.934023415669799,
+          -42.101284839212894,
+          -62.29509281553328
+        ]
+      },
+      "header_sha256": "1a541a6a4adcd6ee3259585660da20e29740b3acc0aa6a6e7472bff04b815ca6",
+      "image_array_accessed": false,
+      "native_axis_codes": [
+        "L",
+        "I",
+        "P"
+      ],
+      "qform_code": 0,
+      "selected_affine": [
+        [
+          -0.15813203155994415,
+          -0.055320922285318375,
+          0.11640382558107376,
+          54.374000549316406
+        ],
+        [
+          -0.12007215619087219,
+          0.13018524646759033,
+          -0.10124479234218597,
+          26.173999786376953
+        ],
+        [
+          -0.04682881012558937,
+          -0.14699465036392212,
+          -0.13347536325454712,
+          38.053001403808594
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "sform_code": 1,
+      "shape": [
+        327,
+        319,
+        287
+      ],
+      "spatial_units": "mm"
+    }
+  },
+  "physical_clearance_mm": null,
+  "schema": "resect-case4-sparse-update-v1-frame-qc",
+  "source_image_sha256": "62f6b6217774653267702acd4a55b16ad5c8cc4980237afaa39e92b102240379",
+  "source_world_to_ras_mm": [
+    [
+      1.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      1.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      1.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "status": "coordinate_convention_verified",
+  "total_registration_uncertainty_mm": null
+}

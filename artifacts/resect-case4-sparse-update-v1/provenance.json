@@ -1,0 +1,139 @@
+{
+  "all_plotted_point_errors_mm": {
+    "inverse_distance_squared": [
+      0.16267223024377617,
+      0.7451684294212506,
+      1.3981492675159197,
+      0.8098895471459093,
+      1.8315212044407356,
+      1.3841169987293915,
+      0.5282457045132746,
+      0.2813950977355882,
+      0.2746479696626519,
+      1.1256000998615996,
+      1.8263911695301347,
+      1.001596504106044,
+      1.1610543295429205
+    ],
+    "no_shift": [
+      3.540660288396222,
+      3.224404390229922,
+      4.757517481898093,
+      3.577108719604284,
+      4.417506107492102,
+      4.1824452666823975,
+      3.0258832506626887,
+      3.3801796820328938,
+      3.5024481129662712,
+      4.3846008440884345,
+      5.22190119960671,
+      4.93161254550862,
+      3.697382115617212
+    ],
+    "proper_rigid": [
+      0.46421938353647885,
+      0.8598099603102971,
+      1.2494647740738258,
+      1.488185180277655,
+      1.6633105577978184,
+      0.8187292211537057,
+      0.6966415090758684,
+      0.7899668006295643,
+      0.55443108782217,
+      0.938334427424967,
+      1.4888936688936216,
+      0.8118652674694884,
+      0.4372725784614166
+    ]
+  },
+  "artifacts": {
+    "case4-held-out-landmark-errors.pdf": {
+      "bytes": 40683,
+      "sha256": "b06a3415288ad7665972785ac51cde8d0b7bd23cbdca532a2edffbf51538798f"
+    },
+    "case4-held-out-landmark-errors.png": {
+      "bytes": 306910,
+      "sha256": "f5c416a1a9517e6dbb0d73f1c7098dca04e343d6b115e7e56f9e93582315f049"
+    }
+  },
+  "confidence_interval": null,
+  "dataset_role": "single DEVELOPMENT patient",
+  "display_names": [
+    "No shift",
+    "Proper rigid",
+    "Fixed IDW (1 / distance\u00b2)"
+  ],
+  "excluded_points": 0,
+  "fitting_row_ids": [
+    1,
+    14,
+    8,
+    17,
+    19,
+    7
+  ],
+  "held_out_row_ids": [
+    2,
+    3,
+    4,
+    5,
+    6,
+    9,
+    10,
+    11,
+    12,
+    13,
+    15,
+    16,
+    18
+  ],
+  "limits": [
+    "Observed paired-US conditional update; not preoperative-only or RL.",
+    "No dense-mechanics or clinical-safety validation.",
+    "Global mathematical support is not verified retained tissue.",
+    "Six fitting residuals are conditioning diagnostics, not validation."
+  ],
+  "method_keys": [
+    "no_shift",
+    "proper_rigid",
+    "inverse_distance_squared"
+  ],
+  "new_fitting": false,
+  "original_patient_tags_or_images_read": false,
+  "paired_difference": {
+    "definition": "fixed IDW error minus proper rigid error; positive means IDW worse",
+    "idw_higher_count": 7,
+    "idw_lower_count": 6,
+    "values_mm": [
+      -0.30154715329270265,
+      -0.1146415308890465,
+      0.1486844934420939,
+      -0.6782956331317456,
+      0.16821064664291718,
+      0.5653877775756858,
+      -0.16839580456259384,
+      -0.508571702893976,
+      -0.27978311815951806,
+      0.1872656724366326,
+      0.33749750063651307,
+      0.18973123663655556,
+      0.7237817510815039
+    ]
+  },
+  "schema": "resect-case4-frozen-error-figure.v1",
+  "script": {
+    "path": "build/resect-case4-figure-v1/plot.py",
+    "sha256": "46c352d05890aab4641df696120d557195e542d586dc0666afa8929ddb8dc244"
+  },
+  "source": {
+    "bytes": 18847,
+    "path": "artifacts/resect-case4-sparse-update-v1/fit-freeze/comparison/evaluation.json",
+    "sha256": "928898feaed7b106e4fc3f4e7d280678402f1db24cdc4192cd58d10c3fe0480a"
+  },
+  "source_unchanged_after_plot": true,
+  "versions": {
+    "matplotlib": "3.11.2",
+    "numpy": "2.5.3",
+    "python": "3.12.14"
+  }
+}
