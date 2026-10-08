@@ -22,6 +22,10 @@ completed 16 imitation and 16 scratch RL updates: exact search scored 1.1,
 imitation stopped at 0, and final RL scored −0.896 versus the initial −0.464.
 All 78 simulated episodes passed their geometry audits; this does not establish
 useful learning or physical fidelity. Legacy patient/model-loading guards remain.
+The [five-state diagnostic](artifacts/native-opening-learning-diagnostic-v1/RESULT.md)
+shows that BC's average loss improved while all three tool-label states worsened.
+RL sampled every terminal route, including successful openings. A fixed longer
+fit will test optimization capacity before architecture or reward changes.
 
 The [full eligible annotation intake](artifacts/lausanne-annotation-full-intake-v1/RESULT.md)
 completed all 144 masks (13,977,015 bytes). Independent content checks passed for

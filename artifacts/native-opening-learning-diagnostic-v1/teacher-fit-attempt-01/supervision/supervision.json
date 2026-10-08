@@ -1,0 +1,24 @@
+{
+  "cleanup_error": null,
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-opening-learning-diagnostic-v1/teacher_fit.py",
+    "--worker",
+    "--settings",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/native-opening-learning-diagnostic-v1/teacher-fit-settings.json",
+    "--expected-sha256",
+    "4f2c0adb0e596a05a3242adf6917a7762899fac04291d1cbce8e6dd7259404c8"
+  ],
+  "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+  "elapsed_seconds": 3.12643662490882,
+  "error": null,
+  "exit_code": 0,
+  "kill_reason": null,
+  "no_retry": true,
+  "pid": 79192,
+  "rss_cap_bytes": 2147483648,
+  "sampled_peak_process_group_rss_bytes": 339165184,
+  "sampling_note": "Group RSS is sampled; brief between-sample peaks may be missed.",
+  "status": "completed",
+  "wall_cap_seconds": 30.0
+}

@@ -1,0 +1,460 @@
+{
+  "evaluations": {
+    "BC": {
+      "return": 0.0,
+      "root_action": "STOP",
+      "root_probabilities": {
+        "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1": 0.17901024222373962,
+        "NATIVE-SPATIAL:7c300ab776942c7446a122a0": 0.18247440457344055,
+        "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5": 0.1778075098991394,
+        "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9": 0.1812518835067749,
+        "STOP": 0.2794559895992279
+      },
+      "root_teacher_cross_entropy": 1.7270537188914066,
+      "root_teacher_probability": 0.1778075098991394,
+      "root_value": 0.1874246597290039
+    },
+    "initial": {
+      "return": -0.464,
+      "root_action": "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+      "root_probabilities": {
+        "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1": 0.20720994472503662,
+        "NATIVE-SPATIAL:7c300ab776942c7446a122a0": 0.21006624400615692,
+        "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5": 0.20745907723903656,
+        "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9": 0.21106208860874176,
+        "STOP": 0.16420266032218933
+      },
+      "root_teacher_cross_entropy": 1.5728211768865608,
+      "root_teacher_probability": 0.20745907723903656,
+      "root_value": 0.19706064462661743
+    },
+    "scratch-RL": {
+      "return": -0.8960000000000001,
+      "root_action": "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+      "root_probabilities": {
+        "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1": 0.19990739226341248,
+        "NATIVE-SPATIAL:7c300ab776942c7446a122a0": 0.2053101509809494,
+        "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5": 0.19857613742351532,
+        "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9": 0.2034955769777298,
+        "STOP": 0.19271080195903778
+      },
+      "root_teacher_cross_entropy": 1.6165826885502745,
+      "root_teacher_probability": 0.19857613742351532,
+      "root_value": 0.07255958765745163
+    }
+  },
+  "exploration": {
+    "all_16_terminal_sequences_observed": true,
+    "conditional_root_samples": [
+      {
+        "episodes": 16,
+        "mean_recorded_advantage": 0.13808759255334735,
+        "mean_sampled_return": 0.0,
+        "positive_return_episodes": 0,
+        "root_action": "STOP"
+      },
+      {
+        "episodes": 18,
+        "mean_recorded_advantage": -0.4064162313905028,
+        "mean_sampled_return": -0.42716666666666675,
+        "positive_return_episodes": 4,
+        "root_action": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5"
+      },
+      {
+        "episodes": 7,
+        "mean_recorded_advantage": -0.518529902952058,
+        "mean_sampled_return": -0.4914285714285715,
+        "positive_return_episodes": 0,
+        "root_action": "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9"
+      },
+      {
+        "episodes": 9,
+        "mean_recorded_advantage": 0.35245403788487106,
+        "mean_sampled_return": 0.23255555555555543,
+        "positive_return_episodes": 6,
+        "root_action": "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1"
+      },
+      {
+        "episodes": 14,
+        "mean_recorded_advantage": -0.6710457878410817,
+        "mean_sampled_return": -0.6813571428571429,
+        "positive_return_episodes": 0,
+        "root_action": "NATIVE-SPATIAL:7c300ab776942c7446a122a0"
+      }
+    ],
+    "episodes": 64,
+    "exact_optimal_episodes": 3,
+    "first_positive_return_episode": "rl-04-1",
+    "near_optimal_1_098_episodes": 4,
+    "sequences": [
+      {
+        "actions": [
+          "STOP"
+        ],
+        "count": 16
+      },
+      {
+        "actions": [
+          "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+          "NATIVE-SPATIAL:7afd144506d396798a525e1e"
+        ],
+        "count": 3
+      },
+      {
+        "actions": [
+          "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+          "NATIVE-SPATIAL:9cfc4e00074d6cf93eb5cb82"
+        ],
+        "count": 4
+      },
+      {
+        "actions": [
+          "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+          "NATIVE-SPATIAL:89b67ded73fcfa7092918c12"
+        ],
+        "count": 8
+      },
+      {
+        "actions": [
+          "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+          "NATIVE-SPATIAL:f985c763473c0225d9b56230"
+        ],
+        "count": 5
+      },
+      {
+        "actions": [
+          "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+          "STOP"
+        ],
+        "count": 5
+      },
+      {
+        "actions": [
+          "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+          "NATIVE-SPATIAL:1186a2ff80d07c1941c4434b"
+        ],
+        "count": 3
+      },
+      {
+        "actions": [
+          "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+          "STOP"
+        ],
+        "count": 3
+      },
+      {
+        "actions": [
+          "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+          "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07"
+        ],
+        "count": 4
+      },
+      {
+        "actions": [
+          "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+          "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+        ],
+        "count": 3
+      },
+      {
+        "actions": [
+          "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+          "STOP"
+        ],
+        "count": 2
+      },
+      {
+        "actions": [
+          "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+          "NATIVE-SPATIAL:8169300cfa7db4a4742e3063"
+        ],
+        "count": 1
+      },
+      {
+        "actions": [
+          "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+          "NATIVE-SPATIAL:81d9c8d011c2b37342ee27df"
+        ],
+        "count": 2
+      },
+      {
+        "actions": [
+          "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+          "STOP"
+        ],
+        "count": 3
+      },
+      {
+        "actions": [
+          "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+          "NATIVE-SPATIAL:0d78540299fe5eb3a1770d83"
+        ],
+        "count": 1
+      },
+      {
+        "actions": [
+          "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+          "NATIVE-SPATIAL:b4c22140396ffbcc5f14ef15"
+        ],
+        "count": 1
+      }
+    ],
+    "state_coverage": [
+      {
+        "action_counts": {
+          "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8": 3,
+          "NATIVE-SPATIAL:9cfc4e00074d6cf93eb5cb82": 4,
+          "NATIVE-SPATIAL:b4c22140396ffbcc5f14ef15": 1,
+          "NATIVE-SPATIAL:f985c763473c0225d9b56230": 5,
+          "STOP": 5
+        },
+        "observation_hash": "sha256:ccca16824aab833104e49e21de526444c7bc8bc1bcb52ee5a4e370c9a564124d",
+        "teacher_action": "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8",
+        "teacher_selected": 3,
+        "visits": 18
+      },
+      {
+        "action_counts": {
+          "NATIVE-SPATIAL:0d78540299fe5eb3a1770d83": 1,
+          "NATIVE-SPATIAL:7afd144506d396798a525e1e": 3,
+          "NATIVE-SPATIAL:8169300cfa7db4a4742e3063": 1,
+          "STOP": 2
+        },
+        "observation_hash": "sha256:e4d32b8f85642482f33aa7849ac74394e7d6a707168073343bbee9ce20ed988c",
+        "teacher_action": "STOP",
+        "teacher_selected": 2,
+        "visits": 7
+      },
+      {
+        "action_counts": {
+          "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07": 4,
+          "NATIVE-SPATIAL:81d9c8d011c2b37342ee27df": 2,
+          "STOP": 3
+        },
+        "observation_hash": "sha256:b6219c3ec2d4cac1a962c3a9c123734fb2f2eb9a5854c2f920d214b467faba54",
+        "teacher_action": "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07",
+        "teacher_selected": 4,
+        "visits": 9
+      },
+      {
+        "action_counts": {
+          "NATIVE-SPATIAL:1186a2ff80d07c1941c4434b": 3,
+          "NATIVE-SPATIAL:89b67ded73fcfa7092918c12": 8,
+          "STOP": 3
+        },
+        "observation_hash": "sha256:a5bba06653b8644cf38722b6d99c5c21236284999afdfbe938c9055d1d6e543d",
+        "teacher_action": "STOP",
+        "teacher_selected": 3,
+        "visits": 14
+      },
+      {
+        "action_counts": {
+          "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1": 9,
+          "NATIVE-SPATIAL:7c300ab776942c7446a122a0": 14,
+          "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5": 18,
+          "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9": 7,
+          "STOP": 16
+        },
+        "observation_hash": "sha256:c9458a99068bfaae90ba69062073a674c55ee31ad66d11a5c86461ef2c834eba",
+        "teacher_action": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+        "teacher_selected": 18,
+        "visits": 64
+      }
+    ],
+    "target_episodes": 10,
+    "transitions": 112,
+    "two_target_episodes": 7
+  },
+  "gradients": {
+    "BC": {
+      "all_parameters_changed": true,
+      "clipped_updates": [],
+      "gradient_ranges": {
+        "actor_gradient_norm_before_clip": [
+          0.1341308206319809,
+          0.3802349865436554
+        ],
+        "critic_gradient_norm_before_clip": [
+          0.0,
+          0.0
+        ],
+        "encoder_gradient_norm_before_clip": [
+          0.1417718529701233,
+          0.47037917375564575
+        ],
+        "gradient_norm_before_clip": [
+          0.20443299412727356,
+          0.650999903678894
+        ],
+        "stop_gradient_norm_before_clip": [
+          0.03446115180850029,
+          0.2939828038215637
+        ]
+      },
+      "logged_preupdate_loss_first": {
+        "kind": "search_action_behavior_cloning",
+        "loss": 1.4025094509124756,
+        "loss_forward_calls": 5,
+        "supervised_actions": 5
+      },
+      "logged_preupdate_loss_last": {
+        "kind": "search_action_behavior_cloning",
+        "loss": 1.2921037673950195,
+        "loss_forward_calls": 5,
+        "supervised_actions": 5
+      },
+      "updates": 16
+    },
+    "scratch-RL": {
+      "all_parameters_changed": true,
+      "clipped_updates": [
+        {
+          "factor": 0.8514619534750381,
+          "update": 7
+        }
+      ],
+      "gradient_ranges": {
+        "actor_gradient_norm_before_clip": [
+          0.08078604936599731,
+          0.868257462978363
+        ],
+        "critic_gradient_norm_before_clip": [
+          0.18404051661491394,
+          3.523611307144165
+        ],
+        "encoder_gradient_norm_before_clip": [
+          0.18178413808345795,
+          4.560650825500488
+        ],
+        "gradient_norm_before_clip": [
+          0.39255291223526,
+          5.872251987457275
+        ],
+        "stop_gradient_norm_before_clip": [
+          0.01602797769010067,
+          0.7170119881629944
+        ]
+      },
+      "logged_preupdate_loss_first": {
+        "actor_reduction": "mean_episodes_sum_discounted_score_terms",
+        "completed_episodes": 4,
+        "entropy": 1.5130689144134521,
+        "kind": "masked_reinforce_spatial_value_v1",
+        "loss": -1.3510011434555054,
+        "loss_forward_calls": 7,
+        "mean_return": -0.5055000000000001,
+        "policy_loss": -1.5211355686187744,
+        "regularizer_reduction": "mean_episodes_mean_actions",
+        "value_loss": 0.37053006887435913
+      },
+      "logged_preupdate_loss_last": {
+        "actor_reduction": "mean_episodes_sum_discounted_score_terms",
+        "completed_episodes": 4,
+        "entropy": 1.4172488451004028,
+        "kind": "masked_reinforce_spatial_value_v1",
+        "loss": -1.31812584400177,
+        "loss_forward_calls": 8,
+        "mean_return": -0.69825,
+        "policy_loss": -1.4844183921813965,
+        "regularizer_reduction": "mean_episodes_mean_actions",
+        "value_loss": 0.3609299957752228
+      },
+      "updates": 16
+    }
+  },
+  "input_json_sha256": {
+    "BC-updates.json": "5df5c0ec90a579fe4e2c9534a0a391008fdcb2953e20733bbb0b219fdc285c9b",
+    "BC.json": "a96446564d63dc692950862c268a34d25b3d1bfa50fd3e31dabd76a8b93d99dc",
+    "declaration-input.json": "963238d34dce36f4a9128c782f0d3ca667640123a58a2eb2498abb01d68c5212",
+    "initial.json": "564f4b1f6315311ba094a3f0913c974f0b2e8c07fd79f13a5acdde1b60867e0f",
+    "rl-00-0.json": "19801a12d9082a983d7087a8efbb23d2fc24a523f9ad712bec925f2aca12fae6",
+    "rl-00-1.json": "28ccbf8f06f64037b62d5224354952415f5fd6b5ef28d51539614fb38812462b",
+    "rl-00-2.json": "3a7d080548ee58b46f5ea5c02fb3b7df4cee6acda089ab6550a2aead3da847bb",
+    "rl-00-3.json": "653bb865661c5e4c55fa119a06342de2b7d6fc80836ba6c5427aa63adef9e3f8",
+    "rl-01-0.json": "8f5359d3b5433dd4b5eed98f20c55d64e0550f1696ad2506fb332f11bcbdac9b",
+    "rl-01-1.json": "94a49857893782e0158303745bb25f472c29b954eab5762fe15b109e95770df7",
+    "rl-01-2.json": "1f0e72a3c59a7ce214fdcecbc8b8212a1115faa7d432b0e23c19d7f750ff9e1d",
+    "rl-01-3.json": "56223e7810af484d1517df9f5932d25ef3e5502e93ccac949cd396d2f4982c66",
+    "rl-02-0.json": "192faac266eb3c7d9383ef9e875c7a8b1bc9c95eb2206a62e725862cd624ba25",
+    "rl-02-1.json": "260e89d5c98022c63ef64cd87b91999abeb32f4d2c2b2fca4ea4c8bb103753af",
+    "rl-02-2.json": "6040ab70e10d974cb781318c2693d7de4d89a8b8a57239853c3108e667f1043e",
+    "rl-02-3.json": "68b7cdb87bec52078b59f35c18cdf99c5627ae3debe10edc04466edc636d636e",
+    "rl-03-0.json": "43a0d41437d061ecef7878b974d00d9fbd8b75dfb5777c81e4a1112871fc9bea",
+    "rl-03-1.json": "5fe7a91559c425e7d931bfd0777d109b8e3af0263080685ca86b584a31f2146c",
+    "rl-03-2.json": "ef9035a829ce922acd975640f035efbea2a3aeec633e5890b7af9e3c958f6b08",
+    "rl-03-3.json": "4c4ef31b80c4819232378b5d1bd49a1540742b911d348e6bef7059157fdfc918",
+    "rl-04-0.json": "c573d3b6a228b7469362bc09195e3d664e223cbb008311739bd0d4348f203763",
+    "rl-04-1.json": "e4c4a96c09755e18b3ee253d1f6c2d533eb971ded1848d7fb7e7158de417e9c6",
+    "rl-04-2.json": "8beef1c28a39a7705a85e8c4df1540b7ce72e71b41304cbaaeeba403201218da",
+    "rl-04-3.json": "c7ce72af5c5d67da506ca47aed7f1fb622201284cafe8e17cb6ffcf674a311cc",
+    "rl-05-0.json": "e457d5fc1412bb1f134a6559bb2a743ae52ea43304ef29e2cce7250bdc845538",
+    "rl-05-1.json": "1f467f0f657abedf2f768f0e823d656416b664044173b86e2c64e76a9726fa03",
+    "rl-05-2.json": "ce57ed79d115cd600ede2ec4fcc015e63c7b6fec3357a7d17b580bb029b1a9e3",
+    "rl-05-3.json": "061ac19570640e324ed2e62d2dbf56a866841ddebc1e98d589f1ca094e892e93",
+    "rl-06-0.json": "9205e635763678322612cf8cb0582080689cca77c2c7565d15fe84fc01575360",
+    "rl-06-1.json": "02df2e7c46436b60aa5fea57c537c8133c2d5df8ed4a1ed24fb24c1ad3cf3be6",
+    "rl-06-2.json": "8d33914163adbda2d8b8475e2afcdc52f905eed5fb260efe5d8848f50044aa06",
+    "rl-06-3.json": "9ec84e8e9a7b812c909029fd7a0e807e07ac0cfb7025c86fac324d8f0499e34a",
+    "rl-07-0.json": "a81fcd4df40d2f1db859280da7193a8c1a213e90eddd3d7b4ba50e06bc0e0de0",
+    "rl-07-1.json": "54ef8efc44c59a87d9260ca5e7f6767b94a0cbfedcc5abe0324e7beb9f6396de",
+    "rl-07-2.json": "ee2704cc68e826ca9059cd26fb0692ea67e4b7db274fc8c595c306eebef31070",
+    "rl-07-3.json": "2055f0d25d94fb1663734a71b504e8d16d45c690a77324f5a7356f9bcbde0779",
+    "rl-08-0.json": "8cd5656119b86ad812a2c01ee32d4c7e79385476a4480e5a55ea61cefce31067",
+    "rl-08-1.json": "4cd229e1195743783cb2382b1dc99ce2360d0e632200f127794561011f2a97ef",
+    "rl-08-2.json": "189afd0aeed42b3f5c9fc90c0904cf07ae9837f74ebfe0f4cf5c82fade2c3a6a",
+    "rl-08-3.json": "c10c4cf4dd04d4334614a15ac816e4f653fe7b1417b44ddc1e62c29b872345e0",
+    "rl-09-0.json": "1df792131a2b168ae849738ad2fb1a0d55da4e5b8aa6426a7f0647cd2ff31f16",
+    "rl-09-1.json": "56eab34587b5f63cc2248b7f1c818b1af7e2314e72f144f8f125506bf13feb28",
+    "rl-09-2.json": "495c1d5e0e8d338f4bd246dc033da1dfbb25e2f01924ff8e515a8d01390b05af",
+    "rl-09-3.json": "1795aac4f7a583e6b1cd4394fd258686fce73a90881b71724d4119a10a87192e",
+    "rl-10-0.json": "452ed7accf3f3f9b972944c4e2358da68b5c55c9ea1dce6dcaf44c11cb3d5613",
+    "rl-10-1.json": "d8b10b094aaa13d3cda119fbc64227a0643e8f27cfd89655e183b8bcfb8536a9",
+    "rl-10-2.json": "1a6672f3bc3b795c1a385bd1c936149fb2a5292db657a1bacdf30a47cb10cd29",
+    "rl-10-3.json": "b5d98593608b06a3d3feb34d0fd3cfbb0dcea9e04ccfd0e3e3ec68bc4c1f2b93",
+    "rl-11-0.json": "258d3c6b63593caccc21c7d6ff0ae57641d8875c2c2e0b07eadc419fbe7308ff",
+    "rl-11-1.json": "6f4d3f6ab9b7c9322a5f492483991e5f19a2f41f184183c8681c3011dc2e4bef",
+    "rl-11-2.json": "32552a17502e4860e607aad58e7f1d07e951f66bfec8a8ad203a3a33b8a6c007",
+    "rl-11-3.json": "a4be01dae73da7415f9619692e5b1f2df2bf36abf60416f6ce5de1f2d94849c0",
+    "rl-12-0.json": "692264ec04bf2b265af6aae3c77a1a524150638f6c222aebe835218aae8c6e4e",
+    "rl-12-1.json": "4eccfb7439bd2190cf45baf82bd0efa0c44c9d683cabc12399bad7c834948983",
+    "rl-12-2.json": "b11e4f3356aeae23b8da0bd68a8e9f8566908bfdbfa9cbbb9152dea0e1b07bc2",
+    "rl-12-3.json": "65d144fe6d5d3248edf81e47083c6d53cdf74afd294e2068cbe6587177909b08",
+    "rl-13-0.json": "9198868dfc9a7e601b1a0da4cd1daf5fc27771184740c21f55185b6fb7e840f0",
+    "rl-13-1.json": "4e6aa9ff50cecf7c85aa10f64dafb9b74eb2f44451af5c0fae0e27b3ce23d2b7",
+    "rl-13-2.json": "280a279e5064f7573238bb19affb873f8207bdd72269bb30045d418ddd273e6a",
+    "rl-13-3.json": "379d90af4c09bfa7233d029303e08abe22a369e68a0c5dcfe262829b65d7a391",
+    "rl-14-0.json": "88edba6d1ec5d3304c23d9b25563a0be32f22442f3a92daf844bf48441817fab",
+    "rl-14-1.json": "7a0111517ddcf9397b55cbbb77b9388f1e204f4a043f84971815432d12a7b8a5",
+    "rl-14-2.json": "8233f710bf0eb8e4863f3df86f43a8bfa8a4a0ba1ae5e3f9048a5db7c49bdee5",
+    "rl-14-3.json": "ddfc7c3a0032191c204d0b19479a9f43a724798f23bf1d505ba52eb5808c6a3d",
+    "rl-15-0.json": "07757a8f276ce3be427201a3f46867fc776a885aae936356c1472fc4991834b7",
+    "rl-15-1.json": "abfe86de728e4ea40e6a5b393bfb620d0f37ab652a637815f5674fe609585954",
+    "rl-15-2.json": "b19bebbf9b19d6a3b3a5fdda1618bcffb08734088f5a7a2f9e69f377876c8629",
+    "rl-15-3.json": "18f5e7b410d09771b0766f8d16770c46d24054841b9670c4cdefcbfcf827a5ae",
+    "scratch-RL-updates.json": "d11d8c9045242ddc4b78f080d431ac507bf90621e58e248908535f8eed9e8e34",
+    "scratch-RL.json": "24a0715d64f4fb96583bf415410bd52b002590c5bb6cd9d7f8d0428b07ea4a27",
+    "teacher.json": "d40c9e75fb47563212d1b2c88d5f96edc25de823e45d7e230f198a13547f1d87"
+  },
+  "limitations": [
+    "Conditional empirical returns combine changing policies; they are not optimal Q values.",
+    "Logged BC loss is measured before each update, not the final post-update loss.",
+    "Final BC predictions are saved only at the root because it immediately stops.",
+    "Shared encoder actor/critic objective gradients and their cosine are not recorded.",
+    "No claim that shared-loss interference, insufficient iterations or STOP pressure is the causal explanation.",
+    "Toy-fixture training coverage is not anatomy or clinical generalization."
+  ],
+  "next_diagnostic": "One prospective zero-update teacher-fit readout: unchanged initial and final BC checkpoints on the same five independently replayed teacher observations; ten forward calls, per-state CE/rank/STOP probability and non-STOP ranking. No new search, labels, rollout collection or optimizer step.",
+  "scope": "Read-only saved JSON and source arithmetic. No new policy/optimizer/rollout/checkpoint/holdout access.",
+  "source_sha256": {
+    "scripts/run_native_opening_learning.py": "380ec02502840c9ab8acd30bf5c7542728ee622f819c5d12c73e135cea4bf508",
+    "src/resectionlab/native_spatial_task.py": "7fe3a6dd8c602a3ac8e70d183eb1b286f0a52cdb4a0b7848daa1b366c23e58f0",
+    "src/resectionlab/spatial_policy.py": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4"
+  },
+  "teacher": {
+    "observation_conflicts": 0,
+    "state_weight": 0.2,
+    "states": 5,
+    "stop_labels": 2,
+    "tool_labels": 3
+  }
+}

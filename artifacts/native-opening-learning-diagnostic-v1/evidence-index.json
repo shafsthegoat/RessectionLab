@@ -1,0 +1,45 @@
+{
+  "files": [
+    {
+      "bytes": 18990,
+      "path": "diagnostic.json",
+      "sha256": "5f583c9037342361d275c19524a675cfc6de6818cf8052286fb4350c1963cec4"
+    },
+    {
+      "bytes": 6913,
+      "path": "read_saved.py",
+      "sha256": "0b82427ab8ef05238f93bd3c7b355843f609090cc6b8daa0e3f4d74d13a339e8"
+    },
+    {
+      "bytes": 21551,
+      "path": "teacher-fit-attempt-01/readout.json",
+      "sha256": "555bcc56f333e9ca505735e6ed85855e2cb034ed7179d3ac4ec06f5d873d75cd"
+    },
+    {
+      "bytes": 11367,
+      "path": "teacher-fit-attempt-01/release.json",
+      "sha256": "4f2c0adb0e596a05a3242adf6917a7762899fac04291d1cbce8e6dd7259404c8"
+    },
+    {
+      "bytes": 0,
+      "path": "teacher-fit-attempt-01/supervision/combined.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 1089,
+      "path": "teacher-fit-attempt-01/supervision/supervision.json",
+      "sha256": "43ca278d9f5510336d95f4c768828dcf9c00ec7394c85eaa0a1aa6c069d29f48"
+    },
+    {
+      "bytes": 11367,
+      "path": "teacher-fit-settings.json",
+      "sha256": "4f2c0adb0e596a05a3242adf6917a7762899fac04291d1cbce8e6dd7259404c8"
+    },
+    {
+      "bytes": 12543,
+      "path": "teacher_fit.py",
+      "sha256": "52a0dea34e7476a71574dd16b10151bd023f79a5ec171c204b1e04fa74690296"
+    }
+  ],
+  "scope": "Only this ignored saved-trace and released15-forward diagnostic; no training/patient/holdout access."
+}
