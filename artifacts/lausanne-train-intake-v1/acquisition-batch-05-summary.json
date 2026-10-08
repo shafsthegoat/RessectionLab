@@ -1,0 +1,25 @@
+{
+  "status": "bounded_batch_finished",
+  "local_run": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T064025830178Z",
+  "elapsed_seconds": 60.897838624892756,
+  "source_size_budget": 21050678,
+  "attempted_source_bytes": 21050678,
+  "byte_accounting": "source-size budget, not measured network transfer",
+  "new_complete_people": 1,
+  "new_complete_source_bytes": 21050678,
+  "total_complete_people_at_closure": 16,
+  "total_complete_sessions_at_closure": 16,
+  "total_complete_source_bytes_at_closure": 599364210,
+  "remaining_incomplete_train_sessions_at_closure": 194,
+  "new_sessions": [
+    "sub-476/ses-20140519"
+  ],
+  "excluded_attempts": [],
+  "root_reverified_published_fixity_and_receipt_sha256": true,
+  "independent_audit": "independent_policy_audit verified all sixteen retained original receipts/source snapshots; no image decoding",
+  "header_scalar_checks": "Worker passes; no independent anatomical or scanner-frame acceptance",
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "spatial_admissions": 0,
+  "selection_reason": "Exact source-author voxelwise annotation crosswalk membership and frozen TRAIN role, chosen before annotation payload; no performance/outcome selection"
+}

@@ -1,0 +1,46 @@
+{
+  "status": "bounded_batch_finished",
+  "local_run": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T062841681634Z",
+  "elapsed_seconds": 599.1411455001216,
+  "source_size_budget": 268435456,
+  "attempted_source_bytes": 267911302,
+  "byte_accounting": "source-size budget, not measured network transfer",
+  "new_complete_people": 5,
+  "new_complete_source_bytes": 241628307,
+  "total_complete_people_at_closure": 15,
+  "total_complete_sessions_at_closure": 15,
+  "total_complete_source_bytes_at_closure": 578313532,
+  "remaining_incomplete_train_sessions_at_closure": 195,
+  "new_sessions": [
+    "sub-030/ses-20101012",
+    "sub-034/ses-20101005",
+    "sub-035/ses-20101019",
+    "sub-036/ses-20101030",
+    "sub-045/ses-20101006"
+  ],
+  "excluded_attempts": [
+    {
+      "session": "sub-077/ses-20100414",
+      "status": "timeout",
+      "exit_code": 124,
+      "output": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T062841681634Z/sub-077_ses-20100414/acquisition.json",
+      "log": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T062841681634Z/sub-077_ses-20100414/worker.log"
+    }
+  ],
+  "root_reverified_published_fixity_and_receipt_sha256": true,
+  "independent_audit": "independent_policy_audit verified all sixteen retained original receipts/source snapshots; no image decoding",
+  "header_scalar_checks": "Worker passes; no independent anatomical or scanner-frame acceptance",
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "spatial_admissions": 0,
+  "retained_timeout": {
+    "subject": "sub-077",
+    "session": "ses-20100414",
+    "exit_code": 124,
+    "worker_allowance_seconds": 18.968,
+    "retained_partial_bytes": 5242880,
+    "expected_T1_bytes": 7094141,
+    "acquisition_receipt": null,
+    "interpretation": "process timeout, not dataset-quality failure"
+  }
+}

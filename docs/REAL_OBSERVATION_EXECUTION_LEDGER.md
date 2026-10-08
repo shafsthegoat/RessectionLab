@@ -34,7 +34,7 @@ compact execution record, not a replacement specification.
 
 | Workstream | Verified state / missing evidence | Next implementation or acquisition |
 |---|---|---|
-| Data and anatomy | Lausanne originals are CC0 acquired T1/TOF; 284 people, 296 sessions. Full 199-person/210-session TRAIN index is frozen (10.02 GB). Ten original pairs acquired; the prior partial resumed successfully. Bounded intake/cache checks pass; no acquisition batch remains running. TOF orientation provenance and interscan alignment unresolved. | Continue remaining 200 TRAIN sessions using the tested runner. Exclude atlas-derived vessel maps from measurement truth. |
+| Data and anatomy | Lausanne originals are CC0 acquired T1/TOF; 284 people, 296 sessions. Full 199-person/210-session TRAIN index is frozen (10.02 GB). Sixteen original pairs acquired (599,364,210 bytes); sub077 timeout/partial remains excluded. Bounded intake/cache checks pass; no acquisition batch remains running. TOF orientation provenance and interscan alignment unresolved. | Continue remaining 194 TRAIN sessions using the tested runner; separately qualify sub476's source-manual aneurysm annotation. Exclude atlas-derived vessel maps from measurement truth. |
 | Learning | No inspected historical checkpoint meets the new lineage rule. Scans supply no recorded actions/next observations. RESECT family roles are frozen (14 TRAIN/4 SELECT/4 EVAL/Case4 DEVELOPMENT); the bounded Case3 source/rights/QC runner passes 24 combined controls. A rights-only HTTP429 stopped acquisition. | Archive exact rights text when service permits, then acquire/QC the frozen image/mask before cavity-component fitting. Case4 and missing labels remain protected. No recorded-action cohort acquired or outreach sent. |
 | Navigation / integration | Typed source-bound critical evidence now reaches static/desktop/native planning, coarse exclusions and independent native auditing. Replay bindings and future-history-independent beam ties are checked. Real-source absence/refusal, clock and ordering checks pass; no positive vascular acceptance yet. | Acquire an eligible same-person image/annotation pair and verify positive route changes, coverage and invalidation through the desktop/API. Source declarations still require independent authentication. |
 | Operative science | Four supplied research reviews are read; proposed mechanisms are not implemented evidence. | Introduce an evidence-timed action/observation timeline with observed events distinct from proposals and model predictions. |
@@ -51,6 +51,12 @@ refusal, plus the existing 42 policy checks. Independent reviews found additiona
 consumption and hash-dependent ordering gaps; these are repaired. No generated
 patient, fabricated label, simulator trajectory or learning update was used.
 Positive vascular behavior and clinical coverage remain unproved.
+
+The [annotation source audit](critical-annotation-source-audit.md) records a
+specific IXI SynthStrip-lineage exclusion; COSTA's restricted dataset and unresolved
+release rights/ancestry; and TubeTK's documented clinical MRA/tube pair with
+unresolved release metadata. COSTA's separate weights archive is not patient data.
+No label payload was acquired and no existing patient assignment changed.
 
 See [guard receipt](../artifacts/real-observation-policy-v1/RESULT.md).
 No patient fixture, model forward pass, optimizer update or simulator episode was
@@ -101,12 +107,28 @@ are acquisition/header/scalar checks, with zero spatial admissions or learning.
 
 The third [bounded expansion](../artifacts/lausanne-train-intake-v1/acquisition-batch-03-summary.json)
 completed sub-007/021/022/450 in 527.2644 seconds, adding 133,217,934 bytes.
-Current totals are ten people/ten sessions/40 files/336,685,225 bytes, with
+Closure totals were ten people/ten sessions/40 files/336,685,225 bytes, with
 200 sessions deferred by the byte budget. Root and an independent reviewer
 reverified all ten source receipts, published fixity and historical code
 snapshots. The current edited imaging/core files differ from those retained
 execution versions; this does not rewrite the batch's source provenance.
 No registration, anatomical acceptance or training contribution is claimed.
+
+The fourth [bounded expansion](../artifacts/lausanne-train-intake-v1/acquisition-batch-04-summary.json)
+completed sub030/034/035/036/045 in 599.141 seconds, adding 241,628,307 bytes.
+Its 267,911,302-byte attempted-source budget includes the sub077 attempt and
+is not measured network transfer. Sub077 exhausted an 18.968-second worker
+allowance (exit124); its 5,242,880-byte partial has no acquisition receipt.
+All 210 sessions reconcile: ten cached, five completed, one timeout and194
+byte-budget deferrals. This is a process failure, not a data-quality finding.
+
+The separate [sub476 intake](../artifacts/lausanne-train-intake-v1/acquisition-batch-05-summary.json)
+completed in 60.898 seconds and added 21,050,678 bytes. Selection followed an
+exact source-author voxelwise-label crosswalk and frozen TRAIN membership,
+before annotation payload inspection. Current totals are16 people/16 sessions,
+64 files and599,364,210 bytes;194 sessions remain incomplete. Root and independent
+review reverified every source receipt, original-file fixity and retained source
+snapshot. All spatial admissions and fitting/IL/RL contributions remain zero.
 
 RESECT's official file-version endpoint now resolves revision2 to its explicit
 download route. The [bounded pilot](../artifacts/resect-component-admission-v1/RESULT.md)

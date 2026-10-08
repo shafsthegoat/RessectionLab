@@ -14,8 +14,8 @@ results remain unchanged. See [receipt](artifacts/real-observation-policy-v1/RES
 
 Lausanne's CC0 source metadata confirms 284 unique people and 296 original paired
 T1/TOF sessions. A fixed split now assigns 199 TRAIN / 43 SELECT / 42 measurement
-evaluation people, grouping visits and TopCoW copies. Ten TRAIN original pairs
-and their sidecars are acquired (336,685,225 bytes); published byte fixity and
+evaluation people, grouping visits and TopCoW copies. Sixteen TRAIN original pairs
+and their sidecars are acquired (599,364,210 bytes); published byte fixity and
 worker header/scalar checks pass. Independent pilot inspection found TOF
 sidecar versus NIfTI orientation differs by about 1.70 degrees,
 so scanner-frame provenance and interscan registration remain unresolved. Two
@@ -31,10 +31,16 @@ The first 600-second expansion batch completed one additional person, then
 timed out on the next with a resumable 6,291,456-byte partial. All workers exited;
 The next batch resumed that partial and acquired four more people in 521.3543
 seconds. The third batch acquired sub-007/021/022/450 in 527.2644 seconds;
-200 TRAIN sessions remain incomplete. Root and independent byte/receipt audits
-reverified all ten originals and execution snapshots. [The third closed batch](artifacts/lausanne-train-intake-v1/acquisition-batch-03-summary.json)
+Those batches left 200 TRAIN sessions incomplete. [The third closed batch](artifacts/lausanne-train-intake-v1/acquisition-batch-03-summary.json)
 retains its historical source bindings; subsequent code edits are distinct.
-The first timeout is preserved. No acquisition batch is currently running.
+The fourth batch completed five further people in 599.141 seconds; sub077 timed
+out with a retained 5,242,880-byte partial and no admission. A separate source-
+annotation-led intake completed sub476 in 60.898 seconds. Root and independent
+byte/receipt audits reverified all sixteen originals and execution snapshots.
+There are 194 incomplete TRAIN sessions. [Batch04](artifacts/lausanne-train-intake-v1/acquisition-batch-04-summary.json)
+and [batch05](artifacts/lausanne-train-intake-v1/acquisition-batch-05-summary.json)
+retain all excluded cases and separate closure totals. Both timeouts are
+preserved. No acquisition batch is currently running.
 Full TRAIN acquisition/use and annotation eligibility remain outstanding. No newly compliant
 RL training has run: eligible recorded surgical transitions remain missing.
 Before further code edits, a fresh fetch again verified remote/local main at
