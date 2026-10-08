@@ -1,0 +1,28 @@
+{
+  "scope": "Three bounded first-MiB GETs of already acquired sub-000 T1; reported by read-only real_data_program agent; no files written by diagnostic",
+  "date_utc": "2026-10-08",
+  "range": "bytes 0-1048575/8250277",
+  "version_id": "Fd_dldJuHqxHdkXkR8no4V7bSeXyhYuZ",
+  "response_status_all": 206,
+  "prefix_sha256": "bd7ee06564abe26e8e3ebb9aee742981ccaa1f1d819e7c9393a5be95603bb9cc",
+  "matches_existing_local_original": true,
+  "samples": [
+    {
+      "client": "urllib",
+      "elapsed_seconds": 13.462,
+      "bytes_per_second": 77892
+    },
+    {
+      "client": "curl 8.7.1 HTTP/1.1",
+      "elapsed_seconds": 8.875,
+      "bytes_per_second": 118148
+    },
+    {
+      "client": "urllib repeat",
+      "elapsed_seconds": 9.046,
+      "bytes_per_second": 115911
+    }
+  ],
+  "decision": "Retain urllib: no useful client speed advantage established; body transfer dominated timed samples",
+  "limitations": "Same first MiB of one existing object; order/network variability; not full-cohort throughput or provider-throttling proof"
+}

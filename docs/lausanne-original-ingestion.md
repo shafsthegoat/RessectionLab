@@ -81,10 +81,79 @@ verification does not by itself settle that lineage. Annotation rights,
 lineage, image identity, geometry and coverage must pass before training use.
 CoW labels would still cover selected main vessels, not all cerebral vasculature.
 
-Next: build a resumable source-indexed intake for all 210 TRAIN sessions, using
-the fixed cohort and the same byte/frame checks. Record each failed or deferred
-record; unresolved scanner-world frames cannot enter spatial planning. At the
-observed pilot throughput, a roughly 10 GB TRAIN intake could take many hours;
-use measured batches and checkpointed receipts, not an unbounded download.
+The full source-indexed intake is implemented below. Record each failed or
+deferred record; unresolved scanner-world frames cannot enter spatial planning.
+At the observed pilot throughput, the roughly 10 GB TRAIN intake could take many
+hours; use measured batches and checkpointed receipts, not an unbounded download.
 Separately resolve human annotation rights/lineage or acquire an alternative
 eligible label source. No new RL sweep is justified by this ingestion result.
+
+## Full TRAIN source index and bounded intake
+
+The [full TRAIN index](../manifests/lausanne-train-originals-v1.json) now resolves
+all **199 people / 210 sessions / 840 source files**, totaling **10,020,802,851
+bytes**. Its SHA256 is
+`6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66`.
+Every image is bound to the pinned Git-annex size/MD5 and a matching immutable
+S3 object version; every source JSON is retained verbatim in the index.
+The first index attempt retained 201 sessions and nine actual network failures;
+one metadata-only resume resolved all nine. [Failure and index receipts](../artifacts/lausanne-train-intake-v1/source-index.json)
+preserve this history. Index completion is not image acquisition or training.
+
+The new `scripts/lausanne_train_intake.py` uses one supervised acquisition worker
+at a time. Existing originals are verified against source fixity, and every
+cached QC receipt resolves to a retained source/runtime record and code snapshot.
+Sessions remain distinct from people. The full denominator includes failed,
+unattempted and deferred records; failures cannot disappear through resumption.
+The byte budget counts full source sizes per attempted session, not measured
+network traffic. Each image decode is limited to 512 MiB of float32 samples;
+this is not an operating-system memory cap. A worker has a separate watchdog.
+Ordinary parent termination runs cleanup and closes receipts; SIGKILL or an
+unwritable filesystem cannot guarantee a final receipt.
+
+Use `--session sub-000/ses-20110101 --existing-only` for an acquisition-free
+recheck of the existing pilot. The explicit identity restriction applies even
+when that session already has a cached receipt. SELECT and MEASUREMENT_EVAL
+payloads remain outside this runner's input allowlist.
+
+The [bounded acceptance runs](../artifacts/lausanne-train-intake-v1/RESULT.md)
+completed one fresh existing-pilot QC worker and one cache-only verification;
+each excluded the other 209 sessions. Fourteen focused software controls pass.
+Reproduction after the original pilot has been acquired:
+
+```sh
+.venv/bin/python scripts/lausanne_train_intake.py index
+.venv/bin/python scripts/lausanne_train_intake.py batch \
+  --session sub-000/ses-20110101 --existing-only \
+  --index-sha 6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66 \
+  --max-seconds 120 --max-bytes 36661729
+.venv/bin/python -m pytest tests/test_real_intake_io.py -q
+```
+
+Subsequent bounded TRAIN acquisition uses the same command without `--session`
+and `--existing-only`, with explicit time/source-byte budgets. Retain the lock,
+frozen index, source snapshots and attempted-run receipts between batches.
+
+A [three-request transport diagnostic](../artifacts/lausanne-train-intake-v1/transport-diagnostic.json)
+compared urllib, curl and urllib again on the same existing first MiB. The
+repeat urllib measurement was close to curl (9.046 versus 8.875 seconds).
+Retain the existing downloader; this small ordered sample does not justify a
+client replacement or establish full-cohort throughput.
+
+## Scanner-frame provenance follow-up
+
+Read-only upstream investigation found the pilot's pointer/sidecar mismatch
+already in both v1.0.0 and v1.0.1. Release changes do not explain a geometry
+correction. The NIfTI `descrip` fields contain `6.0.1`; this is consistent with
+an FSL version but does not prove which transformation occurred. The TOF has no
+active alternative sform or extension carrying the missing transform, and its
+JSON lacks DICOM position information. Direction metadata alone cannot recover
+a scanner transform.
+
+The [author's processing response](https://github.com/connectomicslab/Aneurysm_Detection/issues/10#issuecomment-3538848996)
+describes BET and unavailable original N4/registration scripts. A released
+193-byte `out_T1_2_TOF_0GenericAffine.mat` and registration-quality metrics are
+available, but are algorithmic estimates, not measured landmark errors. The
+filename does not establish transformation direction or ITK point/image
+conventions. No transform was applied. Source-frame provenance and independent
+same-person registration validation remain required for spatial use.

@@ -1,0 +1,16 @@
+{
+  "scope": "Pinned source metadata only; image acquisition and learning are separate",
+  "index": "manifests/lausanne-train-originals-v1.json",
+  "index_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+  "train_people": 199,
+  "train_sessions": 210,
+  "source_files": 840,
+  "source_bytes": 10020802851,
+  "first_attempt_indexed_sessions": 201,
+  "first_attempt_unresolved_sessions": 9,
+  "resume_resolved_sessions": 9,
+  "payloads_acquired_by_indexing": 0,
+  "component_optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "failure_receipt": "artifacts/lausanne-train-intake-v1/index-attempt-1-failures.json"
+}

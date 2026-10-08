@@ -34,7 +34,7 @@ compact execution record, not a replacement specification.
 
 | Workstream | Verified state / missing evidence | Next implementation or acquisition |
 |---|---|---|
-| Data and anatomy | Lausanne originals are CC0 acquired T1/TOF; 284 people, 296 sessions. One original TRAIN pair acquired; independent byte/header/value checks pass. TOF orientation provenance and interscan alignment unresolved. TopCoW overlaps 20 people, including proposed pilot 000. | Grouped roles are frozen (199/43/42); expand to full eligible TRAIN originals with per-record QC. Exclude atlas-derived vessel maps from measurement truth. |
+| Data and anatomy | Lausanne originals are CC0 acquired T1/TOF; 284 people, 296 sessions. Full 199-person/210-session TRAIN index is frozen (10.02 GB). One original pair acquired; bounded intake and cache-resume checks pass. TOF orientation provenance and interscan alignment unresolved. TopCoW overlaps 20 people. | Expand to full eligible TRAIN originals with per-record QC using the tested bounded runner. Exclude atlas-derived vessel maps from measurement truth. |
 | Learning | No inspected historical checkpoint meets the new lineage rule. Scans supply no recorded actions/next observations. | Build source-bound component/recorded-experience admission; acquire real reviewed labels for component learning. Tracked glioma tools from Juvekar et al. need access/rights and action/endpoint fields; no outreach sent. |
 | Navigation / integration | Desktop route calls omit vascular critical masks; CaseData has no typed vascular evidence/coverage. | Add source-bound critical evidence and coverage, wire both planners and invalidation; positive acceptance requires actual same-person annotations. |
 | Operative science | Four supplied research reviews are read; proposed mechanisms are not implemented evidence. | Introduce an evidence-timed action/observation timeline with observed events distinct from proposals and model predictions. |
@@ -61,6 +61,14 @@ records zero fitting/RL contributions and the unresolved geometry gate. A
 source-review timeout defect was repaired; two focused controls pass.
 [TopCoW annotation access](lausanne-original-ingestion.md) is practical but
 rights and per-case model-assisted lineage remain unresolved; none acquired.
+
+The [full TRAIN intake acceptance](../artifacts/lausanne-train-intake-v1/RESULT.md)
+freezes all 210 sessions; nine initial network failures resolved on metadata
+resume. Fourteen focused controls pass after independent review found scope,
+termination and provenance defects. The acquisition-free replay verified the
+existing person's four source hashes and scalar/header QC; the cache-only
+resume launched no worker. Each excluded the other 209 sessions. Neither adds
+people, acquired source bytes, learning contributions or spatial admission.
 
 ## Remaining delivery gates
 

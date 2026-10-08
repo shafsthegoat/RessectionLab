@@ -1,0 +1,58 @@
+{
+  "failures": [
+    {
+      "subject": "sub-149",
+      "session": "ses-20111126",
+      "type": "RemoteDisconnected",
+      "reason": "Remote end closed connection without response"
+    },
+    {
+      "subject": "sub-159",
+      "session": "ses-20111127",
+      "type": "URLError",
+      "reason": "<urlopen error _ssl.c:993: The handshake operation timed out>"
+    },
+    {
+      "subject": "sub-160",
+      "session": "ses-20111010",
+      "type": "URLError",
+      "reason": "<urlopen error _ssl.c:993: The handshake operation timed out>"
+    },
+    {
+      "subject": "sub-153",
+      "session": "ses-20111127",
+      "type": "URLError",
+      "reason": "<urlopen error _ssl.c:993: The handshake operation timed out>"
+    },
+    {
+      "subject": "sub-234",
+      "session": "ses-20110613",
+      "type": "URLError",
+      "reason": "<urlopen error [Errno 54] Connection reset by peer>"
+    },
+    {
+      "subject": "sub-264",
+      "session": "ses-20110622",
+      "type": "URLError",
+      "reason": "<urlopen error [Errno 54] Connection reset by peer>"
+    },
+    {
+      "subject": "sub-276",
+      "session": "ses-20110609",
+      "type": "URLError",
+      "reason": "<urlopen error [Errno 54] Connection reset by peer>"
+    },
+    {
+      "subject": "sub-280",
+      "session": "ses-20110411",
+      "type": "URLError",
+      "reason": "<urlopen error [Errno 54] Connection reset by peer>"
+    },
+    {
+      "subject": "sub-452",
+      "session": "ses-20141127",
+      "type": "URLError",
+      "reason": "<urlopen error [Errno 54] Connection reset by peer>"
+    }
+  ]
+}

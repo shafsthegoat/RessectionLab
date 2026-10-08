@@ -1,6 +1,6 @@
 {
   "schema": "real-observation-data-use-v1",
-  "updated_at": "2026-10-08T04:16:57.338906+00:00",
+  "updated_at": "2026-10-08T05:02:41.935634+00:00",
   "scope": "New admissions in the October6 real-observation program, not a complete historical data inventory",
   "sources": [
     {
@@ -34,7 +34,15 @@
       "checkpoint_contributions": [],
       "receipt": "artifacts/lausanne-original-pilot-v1/acquisition.json",
       "geometry_gate": "TOF sidecar/NIfTI orientation mismatch; T1/TOF alignment unresolved",
-      "next": "Resumable full TRAIN original intake, retaining source/geometry failures; no SELECT/EVAL image intake in that batch"
+      "next": "Resumable full TRAIN original intake, retaining source/geometry failures; no SELECT/EVAL image intake in that batch",
+      "train_source_index": "manifests/lausanne-train-originals-v1.json",
+      "train_source_index_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+      "indexed_train_people": 199,
+      "indexed_train_sessions": 210,
+      "indexed_source_files": 840,
+      "indexed_source_bytes": 10020802851,
+      "intake_acceptance_receipt": "artifacts/lausanne-train-intake-v1/RESULT.md",
+      "remaining_train_sessions_to_acquire": 209
     },
     {
       "accession": "TopCoW external Lausanne",

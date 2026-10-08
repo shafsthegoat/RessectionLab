@@ -21,10 +21,16 @@ so scanner-frame provenance and interscan registration remain unresolved. Two
 source/deadline software controls pass after a timeout-propagation correction.
 See [ingestion result](artifacts/lausanne-original-pilot-v1/RESULT.md) and the
 [machine-readable use ledger](manifests/real_observation_data_use_v1.json).
+The full TRAIN source index is now frozen: 210 sessions / 840 files /
+10,020,802,851 bytes, with nine initial metadata failures retained and resolved
+on resume. The bounded intake runner passes 14 focused controls. An acquisition-free
+pilot replay and a cache-only resume each excluded all other 209 sessions;
+they add no new independent people. See [intake acceptance](artifacts/lausanne-train-intake-v1/RESULT.md).
 Full TRAIN acquisition/use and annotation eligibility remain outstanding. No newly compliant
 RL training has run: eligible recorded surgical transitions remain missing.
-The current branch, local main and remote main were verified at a4659cc before
-these code edits; unfinished desktop and other unrelated files were preserved.
+Before these code edits, a fresh fetch verified remote/local main at a4659cc;
+the working branch contained every main commit and two newer local milestones.
+All 82 inventoried unfinished desktop/other files were preserved byte-for-byte.
 
 ## Historical status through October 5
 
