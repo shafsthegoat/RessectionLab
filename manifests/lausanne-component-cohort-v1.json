@@ -1,0 +1,2881 @@
+{
+  "schema": "lausanne-component-cohort-v1",
+  "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+  "declared_at": "2026-10-08T04:06:13.601769+00:00",
+  "metadata_sha256": {
+    "README": "b66e136ee47c7a520d8c22380a9bdf7600b9bc387f5991a89f28c4d205faa23f",
+    "dataset_description.json": "39baee3ef549835c0ae13c83eed3235a6597d7ea24b1f94bf361fc1f32fffc35",
+    "participants.tsv": "4f3fde676fec18cc6f3cfaddc5e3c22c0d194881a8c65f4af60c8d7042cf2c96"
+  },
+  "split_namespace": "RessectionLab:Lausanne:component:v1",
+  "role_counts_by_group": {
+    "control": {
+      "TRAIN": 89,
+      "SELECT": 19,
+      "MEASUREMENT_EVAL": 19
+    },
+    "patient": {
+      "TRAIN": 110,
+      "SELECT": 24,
+      "MEASUREMENT_EVAL": 23
+    }
+  },
+  "rule": "Pin 000 TRAIN; SHA256 UTF-8 namespace:subject rank within control/patient; role blocks in listed order",
+  "members": [
+    {
+      "subject": "sub-000",
+      "canonical_person": "Lausanne:sub-000",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110101"
+      ],
+      "topcow_overlap": true
+    },
+    {
+      "subject": "sub-001",
+      "canonical_person": "Lausanne:sub-001",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20101222"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-002",
+      "canonical_person": "Lausanne:sub-002",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110127"
+      ],
+      "topcow_overlap": true
+    },
+    {
+      "subject": "sub-005",
+      "canonical_person": "Lausanne:sub-005",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20101215"
+      ],
+      "topcow_overlap": true
+    },
+    {
+      "subject": "sub-006",
+      "canonical_person": "Lausanne:sub-006",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20101217"
+      ],
+      "topcow_overlap": true
+    },
+    {
+      "subject": "sub-007",
+      "canonical_person": "Lausanne:sub-007",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20101225"
+      ],
+      "topcow_overlap": true
+    },
+    {
+      "subject": "sub-013",
+      "canonical_person": "Lausanne:sub-013",
+      "group": "patient",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20101220"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-015",
+      "canonical_person": "Lausanne:sub-015",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20101111"
+      ],
+      "topcow_overlap": true
+    },
+    {
+      "subject": "sub-021",
+      "canonical_person": "Lausanne:sub-021",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20101111"
+      ],
+      "topcow_overlap": true
+    },
+    {
+      "subject": "sub-022",
+      "canonical_person": "Lausanne:sub-022",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20101011"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-026",
+      "canonical_person": "Lausanne:sub-026",
+      "group": "patient",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20101106"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-030",
+      "canonical_person": "Lausanne:sub-030",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20101012"
+      ],
+      "topcow_overlap": true
+    },
+    {
+      "subject": "sub-033",
+      "canonical_person": "Lausanne:sub-033",
+      "group": "control",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20101021"
+      ],
+      "topcow_overlap": true
+    },
+    {
+      "subject": "sub-034",
+      "canonical_person": "Lausanne:sub-034",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20101005"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-035",
+      "canonical_person": "Lausanne:sub-035",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20101019"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-036",
+      "canonical_person": "Lausanne:sub-036",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20101030"
+      ],
+      "topcow_overlap": true
+    },
+    {
+      "subject": "sub-037",
+      "canonical_person": "Lausanne:sub-037",
+      "group": "control",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20100921"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-039",
+      "canonical_person": "Lausanne:sub-039",
+      "group": "control",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20101028"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-043",
+      "canonical_person": "Lausanne:sub-043",
+      "group": "patient",
+      "role": "SELECT",
+      "sessions": [
+        "20101007"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-045",
+      "canonical_person": "Lausanne:sub-045",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20101006"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-047",
+      "canonical_person": "Lausanne:sub-047",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20100908"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-051",
+      "canonical_person": "Lausanne:sub-051",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20100920"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-052",
+      "canonical_person": "Lausanne:sub-052",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20100920"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-053",
+      "canonical_person": "Lausanne:sub-053",
+      "group": "control",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20100808"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-062",
+      "canonical_person": "Lausanne:sub-062",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20100601"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-065",
+      "canonical_person": "Lausanne:sub-065",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20100703"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-066",
+      "canonical_person": "Lausanne:sub-066",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20100526"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-069",
+      "canonical_person": "Lausanne:sub-069",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20100513"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-073",
+      "canonical_person": "Lausanne:sub-073",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20100426"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-074",
+      "canonical_person": "Lausanne:sub-074",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20100421",
+        "20101117"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-075",
+      "canonical_person": "Lausanne:sub-075",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20100502"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-076",
+      "canonical_person": "Lausanne:sub-076",
+      "group": "patient",
+      "role": "SELECT",
+      "sessions": [
+        "20100506"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-077",
+      "canonical_person": "Lausanne:sub-077",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20100414"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-078",
+      "canonical_person": "Lausanne:sub-078",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20100430"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-079",
+      "canonical_person": "Lausanne:sub-079",
+      "group": "control",
+      "role": "SELECT",
+      "sessions": [
+        "20100502"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-081",
+      "canonical_person": "Lausanne:sub-081",
+      "group": "patient",
+      "role": "SELECT",
+      "sessions": [
+        "20100406"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-091",
+      "canonical_person": "Lausanne:sub-091",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20100405"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-092",
+      "canonical_person": "Lausanne:sub-092",
+      "group": "control",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20100313"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-099",
+      "canonical_person": "Lausanne:sub-099",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20100321"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-100",
+      "canonical_person": "Lausanne:sub-100",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20100213"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-101",
+      "canonical_person": "Lausanne:sub-101",
+      "group": "patient",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20100323"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-103",
+      "canonical_person": "Lausanne:sub-103",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20100301"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-104",
+      "canonical_person": "Lausanne:sub-104",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20100228"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-105",
+      "canonical_person": "Lausanne:sub-105",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20100212"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-106",
+      "canonical_person": "Lausanne:sub-106",
+      "group": "patient",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20100301"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-107",
+      "canonical_person": "Lausanne:sub-107",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20100206"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-109",
+      "canonical_person": "Lausanne:sub-109",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20100120"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-111",
+      "canonical_person": "Lausanne:sub-111",
+      "group": "control",
+      "role": "SELECT",
+      "sessions": [
+        "20100208"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-112",
+      "canonical_person": "Lausanne:sub-112",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20100121"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-116",
+      "canonical_person": "Lausanne:sub-116",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20091229"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-119",
+      "canonical_person": "Lausanne:sub-119",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20091226"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-120",
+      "canonical_person": "Lausanne:sub-120",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20100117"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-121",
+      "canonical_person": "Lausanne:sub-121",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20100128"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-125",
+      "canonical_person": "Lausanne:sub-125",
+      "group": "patient",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20100129"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-126",
+      "canonical_person": "Lausanne:sub-126",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20100105"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-127",
+      "canonical_person": "Lausanne:sub-127",
+      "group": "patient",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20100110"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-128",
+      "canonical_person": "Lausanne:sub-128",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20120124"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-129",
+      "canonical_person": "Lausanne:sub-129",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20120107"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-130",
+      "canonical_person": "Lausanne:sub-130",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20111130"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-131",
+      "canonical_person": "Lausanne:sub-131",
+      "group": "patient",
+      "role": "SELECT",
+      "sessions": [
+        "20120103"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-132",
+      "canonical_person": "Lausanne:sub-132",
+      "group": "patient",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20111218"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-134",
+      "canonical_person": "Lausanne:sub-134",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20111127"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-140",
+      "canonical_person": "Lausanne:sub-140",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20111208"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-141",
+      "canonical_person": "Lausanne:sub-141",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20111229"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-144",
+      "canonical_person": "Lausanne:sub-144",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20111211"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-147",
+      "canonical_person": "Lausanne:sub-147",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20111209"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-148",
+      "canonical_person": "Lausanne:sub-148",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20111106"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-149",
+      "canonical_person": "Lausanne:sub-149",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20111126"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-151",
+      "canonical_person": "Lausanne:sub-151",
+      "group": "control",
+      "role": "SELECT",
+      "sessions": [
+        "20111130"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-153",
+      "canonical_person": "Lausanne:sub-153",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20111127"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-157",
+      "canonical_person": "Lausanne:sub-157",
+      "group": "patient",
+      "role": "SELECT",
+      "sessions": [
+        "20111119"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-159",
+      "canonical_person": "Lausanne:sub-159",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20111127"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-160",
+      "canonical_person": "Lausanne:sub-160",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20111010"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-162",
+      "canonical_person": "Lausanne:sub-162",
+      "group": "control",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20111102"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-163",
+      "canonical_person": "Lausanne:sub-163",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20111014"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-164",
+      "canonical_person": "Lausanne:sub-164",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20111124"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-165",
+      "canonical_person": "Lausanne:sub-165",
+      "group": "control",
+      "role": "SELECT",
+      "sessions": [
+        "20111105"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-167",
+      "canonical_person": "Lausanne:sub-167",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20111013"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-170",
+      "canonical_person": "Lausanne:sub-170",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20100422",
+        "20111112"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-171",
+      "canonical_person": "Lausanne:sub-171",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20111105"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-172",
+      "canonical_person": "Lausanne:sub-172",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20111110"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-175",
+      "canonical_person": "Lausanne:sub-175",
+      "group": "control",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20111004"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-176",
+      "canonical_person": "Lausanne:sub-176",
+      "group": "control",
+      "role": "SELECT",
+      "sessions": [
+        "20111113"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-178",
+      "canonical_person": "Lausanne:sub-178",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20111105"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-179",
+      "canonical_person": "Lausanne:sub-179",
+      "group": "control",
+      "role": "SELECT",
+      "sessions": [
+        "20111101"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-183",
+      "canonical_person": "Lausanne:sub-183",
+      "group": "control",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20111002"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-185",
+      "canonical_person": "Lausanne:sub-185",
+      "group": "control",
+      "role": "SELECT",
+      "sessions": [
+        "20111009"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-186",
+      "canonical_person": "Lausanne:sub-186",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110925"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-187",
+      "canonical_person": "Lausanne:sub-187",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20111023"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-188",
+      "canonical_person": "Lausanne:sub-188",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20111013"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-189",
+      "canonical_person": "Lausanne:sub-189",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110927"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-191",
+      "canonical_person": "Lausanne:sub-191",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20111010"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-192",
+      "canonical_person": "Lausanne:sub-192",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20110930"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-193",
+      "canonical_person": "Lausanne:sub-193",
+      "group": "patient",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20110927"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-194",
+      "canonical_person": "Lausanne:sub-194",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20110911"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-195",
+      "canonical_person": "Lausanne:sub-195",
+      "group": "patient",
+      "role": "SELECT",
+      "sessions": [
+        "20111024"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-197",
+      "canonical_person": "Lausanne:sub-197",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110914"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-198",
+      "canonical_person": "Lausanne:sub-198",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110922"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-200",
+      "canonical_person": "Lausanne:sub-200",
+      "group": "patient",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20110909"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-202",
+      "canonical_person": "Lausanne:sub-202",
+      "group": "control",
+      "role": "SELECT",
+      "sessions": [
+        "20110912"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-203",
+      "canonical_person": "Lausanne:sub-203",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20110727"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-204",
+      "canonical_person": "Lausanne:sub-204",
+      "group": "control",
+      "role": "SELECT",
+      "sessions": [
+        "20110727"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-207",
+      "canonical_person": "Lausanne:sub-207",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20110729"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-208",
+      "canonical_person": "Lausanne:sub-208",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20110808"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-209",
+      "canonical_person": "Lausanne:sub-209",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110724"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-211",
+      "canonical_person": "Lausanne:sub-211",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20110817"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-214",
+      "canonical_person": "Lausanne:sub-214",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110901"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-215",
+      "canonical_person": "Lausanne:sub-215",
+      "group": "control",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20110721"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-216",
+      "canonical_person": "Lausanne:sub-216",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20110729"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-217",
+      "canonical_person": "Lausanne:sub-217",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20100819",
+        "20110811"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-220",
+      "canonical_person": "Lausanne:sub-220",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20110626"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-222",
+      "canonical_person": "Lausanne:sub-222",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110808"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-224",
+      "canonical_person": "Lausanne:sub-224",
+      "group": "control",
+      "role": "SELECT",
+      "sessions": [
+        "20110802"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-225",
+      "canonical_person": "Lausanne:sub-225",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20100515",
+        "20110617"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-226",
+      "canonical_person": "Lausanne:sub-226",
+      "group": "control",
+      "role": "SELECT",
+      "sessions": [
+        "20110621"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-228",
+      "canonical_person": "Lausanne:sub-228",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110626"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-231",
+      "canonical_person": "Lausanne:sub-231",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20110617"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-234",
+      "canonical_person": "Lausanne:sub-234",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20110613",
+        "20111203"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-235",
+      "canonical_person": "Lausanne:sub-235",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20110528"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-239",
+      "canonical_person": "Lausanne:sub-239",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110628"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-240",
+      "canonical_person": "Lausanne:sub-240",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110701"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-242",
+      "canonical_person": "Lausanne:sub-242",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110710"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-243",
+      "canonical_person": "Lausanne:sub-243",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110620"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-245",
+      "canonical_person": "Lausanne:sub-245",
+      "group": "control",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20110709"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-246",
+      "canonical_person": "Lausanne:sub-246",
+      "group": "control",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20110622"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-247",
+      "canonical_person": "Lausanne:sub-247",
+      "group": "patient",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20110616"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-248",
+      "canonical_person": "Lausanne:sub-248",
+      "group": "control",
+      "role": "SELECT",
+      "sessions": [
+        "20110602"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-250",
+      "canonical_person": "Lausanne:sub-250",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110525"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-251",
+      "canonical_person": "Lausanne:sub-251",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110702"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-252",
+      "canonical_person": "Lausanne:sub-252",
+      "group": "control",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20110522"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-253",
+      "canonical_person": "Lausanne:sub-253",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110628"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-254",
+      "canonical_person": "Lausanne:sub-254",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20110622"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-255",
+      "canonical_person": "Lausanne:sub-255",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110526"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-256",
+      "canonical_person": "Lausanne:sub-256",
+      "group": "control",
+      "role": "SELECT",
+      "sessions": [
+        "20110526"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-257",
+      "canonical_person": "Lausanne:sub-257",
+      "group": "control",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20110517",
+        "20110619"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-258",
+      "canonical_person": "Lausanne:sub-258",
+      "group": "patient",
+      "role": "SELECT",
+      "sessions": [
+        "20110613"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-259",
+      "canonical_person": "Lausanne:sub-259",
+      "group": "patient",
+      "role": "SELECT",
+      "sessions": [
+        "20110504"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-261",
+      "canonical_person": "Lausanne:sub-261",
+      "group": "control",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20110615"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-262",
+      "canonical_person": "Lausanne:sub-262",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110620"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-263",
+      "canonical_person": "Lausanne:sub-263",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20110611"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-264",
+      "canonical_person": "Lausanne:sub-264",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110622"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-265",
+      "canonical_person": "Lausanne:sub-265",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110507"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-266",
+      "canonical_person": "Lausanne:sub-266",
+      "group": "control",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20110421"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-267",
+      "canonical_person": "Lausanne:sub-267",
+      "group": "control",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20110618"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-268",
+      "canonical_person": "Lausanne:sub-268",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110522"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-269",
+      "canonical_person": "Lausanne:sub-269",
+      "group": "control",
+      "role": "SELECT",
+      "sessions": [
+        "20110608"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-270",
+      "canonical_person": "Lausanne:sub-270",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110522"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-271",
+      "canonical_person": "Lausanne:sub-271",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110518"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-273",
+      "canonical_person": "Lausanne:sub-273",
+      "group": "control",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20110530"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-274",
+      "canonical_person": "Lausanne:sub-274",
+      "group": "patient",
+      "role": "SELECT",
+      "sessions": [
+        "20110609"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-275",
+      "canonical_person": "Lausanne:sub-275",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110612"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-276",
+      "canonical_person": "Lausanne:sub-276",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110609"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-277",
+      "canonical_person": "Lausanne:sub-277",
+      "group": "control",
+      "role": "SELECT",
+      "sessions": [
+        "20110604"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-278",
+      "canonical_person": "Lausanne:sub-278",
+      "group": "control",
+      "role": "SELECT",
+      "sessions": [
+        "20110527"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-279",
+      "canonical_person": "Lausanne:sub-279",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110413"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-280",
+      "canonical_person": "Lausanne:sub-280",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110411"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-282",
+      "canonical_person": "Lausanne:sub-282",
+      "group": "control",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20110528"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-283",
+      "canonical_person": "Lausanne:sub-283",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20110505"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-284",
+      "canonical_person": "Lausanne:sub-284",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110515"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-286",
+      "canonical_person": "Lausanne:sub-286",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110530"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-287",
+      "canonical_person": "Lausanne:sub-287",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110506"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-288",
+      "canonical_person": "Lausanne:sub-288",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110503"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-289",
+      "canonical_person": "Lausanne:sub-289",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20110420"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-291",
+      "canonical_person": "Lausanne:sub-291",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110330"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-293",
+      "canonical_person": "Lausanne:sub-293",
+      "group": "control",
+      "role": "SELECT",
+      "sessions": [
+        "20110407"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-294",
+      "canonical_person": "Lausanne:sub-294",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110429"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-295",
+      "canonical_person": "Lausanne:sub-295",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110505"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-297",
+      "canonical_person": "Lausanne:sub-297",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110316"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-299",
+      "canonical_person": "Lausanne:sub-299",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110422"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-303",
+      "canonical_person": "Lausanne:sub-303",
+      "group": "patient",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20110314"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-304",
+      "canonical_person": "Lausanne:sub-304",
+      "group": "control",
+      "role": "SELECT",
+      "sessions": [
+        "20110409"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-306",
+      "canonical_person": "Lausanne:sub-306",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110328"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-307",
+      "canonical_person": "Lausanne:sub-307",
+      "group": "patient",
+      "role": "SELECT",
+      "sessions": [
+        "20110225"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-308",
+      "canonical_person": "Lausanne:sub-308",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110401"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-309",
+      "canonical_person": "Lausanne:sub-309",
+      "group": "patient",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20110317"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-310",
+      "canonical_person": "Lausanne:sub-310",
+      "group": "patient",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20110207"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-311",
+      "canonical_person": "Lausanne:sub-311",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20100925",
+        "20110406"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-315",
+      "canonical_person": "Lausanne:sub-315",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20100817",
+        "20110320"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-316",
+      "canonical_person": "Lausanne:sub-316",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110219"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-317",
+      "canonical_person": "Lausanne:sub-317",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20110228"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-318",
+      "canonical_person": "Lausanne:sub-318",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110202"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-319",
+      "canonical_person": "Lausanne:sub-319",
+      "group": "control",
+      "role": "SELECT",
+      "sessions": [
+        "20110206"
+      ],
+      "topcow_overlap": true
+    },
+    {
+      "subject": "sub-324",
+      "canonical_person": "Lausanne:sub-324",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110210"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-325",
+      "canonical_person": "Lausanne:sub-325",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20100414",
+        "20110127"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-327",
+      "canonical_person": "Lausanne:sub-327",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20101207",
+        "20110124",
+        "20110923"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-328",
+      "canonical_person": "Lausanne:sub-328",
+      "group": "patient",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20110126"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-329",
+      "canonical_person": "Lausanne:sub-329",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20110126",
+        "20110823"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-330",
+      "canonical_person": "Lausanne:sub-330",
+      "group": "patient",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20110213"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-331",
+      "canonical_person": "Lausanne:sub-331",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20110121"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-332",
+      "canonical_person": "Lausanne:sub-332",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20110217"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-333",
+      "canonical_person": "Lausanne:sub-333",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20110214"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-334",
+      "canonical_person": "Lausanne:sub-334",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110101"
+      ],
+      "topcow_overlap": true
+    },
+    {
+      "subject": "sub-335",
+      "canonical_person": "Lausanne:sub-335",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20110516"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-336",
+      "canonical_person": "Lausanne:sub-336",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20110109"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-337",
+      "canonical_person": "Lausanne:sub-337",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110120"
+      ],
+      "topcow_overlap": true
+    },
+    {
+      "subject": "sub-339",
+      "canonical_person": "Lausanne:sub-339",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20110125"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-340",
+      "canonical_person": "Lausanne:sub-340",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20121220"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-341",
+      "canonical_person": "Lausanne:sub-341",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20121128"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-343",
+      "canonical_person": "Lausanne:sub-343",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20121210"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-344",
+      "canonical_person": "Lausanne:sub-344",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20121218"
+      ],
+      "topcow_overlap": true
+    },
+    {
+      "subject": "sub-345",
+      "canonical_person": "Lausanne:sub-345",
+      "group": "control",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20121218"
+      ],
+      "topcow_overlap": true
+    },
+    {
+      "subject": "sub-347",
+      "canonical_person": "Lausanne:sub-347",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20121115"
+      ],
+      "topcow_overlap": true
+    },
+    {
+      "subject": "sub-349",
+      "canonical_person": "Lausanne:sub-349",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20121111"
+      ],
+      "topcow_overlap": true
+    },
+    {
+      "subject": "sub-350",
+      "canonical_person": "Lausanne:sub-350",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20121217"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-351",
+      "canonical_person": "Lausanne:sub-351",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20121116"
+      ],
+      "topcow_overlap": true
+    },
+    {
+      "subject": "sub-352",
+      "canonical_person": "Lausanne:sub-352",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20121128"
+      ],
+      "topcow_overlap": true
+    },
+    {
+      "subject": "sub-353",
+      "canonical_person": "Lausanne:sub-353",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20121011"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-354",
+      "canonical_person": "Lausanne:sub-354",
+      "group": "control",
+      "role": "TRAIN",
+      "sessions": [
+        "20121111"
+      ],
+      "topcow_overlap": true
+    },
+    {
+      "subject": "sub-401",
+      "canonical_person": "Lausanne:sub-401",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20140127"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-402",
+      "canonical_person": "Lausanne:sub-402",
+      "group": "patient",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20140111"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-403",
+      "canonical_person": "Lausanne:sub-403",
+      "group": "patient",
+      "role": "SELECT",
+      "sessions": [
+        "20131228"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-404",
+      "canonical_person": "Lausanne:sub-404",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20131216"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-405",
+      "canonical_person": "Lausanne:sub-405",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20131225"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-407",
+      "canonical_person": "Lausanne:sub-407",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20131207"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-408",
+      "canonical_person": "Lausanne:sub-408",
+      "group": "patient",
+      "role": "SELECT",
+      "sessions": [
+        "20131021"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-409",
+      "canonical_person": "Lausanne:sub-409",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20131203"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-410",
+      "canonical_person": "Lausanne:sub-410",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20131015"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-411",
+      "canonical_person": "Lausanne:sub-411",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20131109"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-412",
+      "canonical_person": "Lausanne:sub-412",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20131030"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-413",
+      "canonical_person": "Lausanne:sub-413",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20131005"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-415",
+      "canonical_person": "Lausanne:sub-415",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20131031"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-416",
+      "canonical_person": "Lausanne:sub-416",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20131029"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-417",
+      "canonical_person": "Lausanne:sub-417",
+      "group": "patient",
+      "role": "SELECT",
+      "sessions": [
+        "20130912"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-418",
+      "canonical_person": "Lausanne:sub-418",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20130908"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-419",
+      "canonical_person": "Lausanne:sub-419",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20130912"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-420",
+      "canonical_person": "Lausanne:sub-420",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20130912"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-421",
+      "canonical_person": "Lausanne:sub-421",
+      "group": "patient",
+      "role": "SELECT",
+      "sessions": [
+        "20130829"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-423",
+      "canonical_person": "Lausanne:sub-423",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20130819"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-424",
+      "canonical_person": "Lausanne:sub-424",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20130818"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-425",
+      "canonical_person": "Lausanne:sub-425",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20130724"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-426",
+      "canonical_person": "Lausanne:sub-426",
+      "group": "patient",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20130713"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-427",
+      "canonical_person": "Lausanne:sub-427",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20130810"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-428",
+      "canonical_person": "Lausanne:sub-428",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20130629"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-429",
+      "canonical_person": "Lausanne:sub-429",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20130531"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-430",
+      "canonical_person": "Lausanne:sub-430",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20130525"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-431",
+      "canonical_person": "Lausanne:sub-431",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20130526"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-432",
+      "canonical_person": "Lausanne:sub-432",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20130521"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-433",
+      "canonical_person": "Lausanne:sub-433",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20130414"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-434",
+      "canonical_person": "Lausanne:sub-434",
+      "group": "patient",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20130501"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-435",
+      "canonical_person": "Lausanne:sub-435",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20130425"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-436",
+      "canonical_person": "Lausanne:sub-436",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20130402"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-437",
+      "canonical_person": "Lausanne:sub-437",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20130325"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-438",
+      "canonical_person": "Lausanne:sub-438",
+      "group": "patient",
+      "role": "SELECT",
+      "sessions": [
+        "20130227"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-439",
+      "canonical_person": "Lausanne:sub-439",
+      "group": "patient",
+      "role": "SELECT",
+      "sessions": [
+        "20130321"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-440",
+      "canonical_person": "Lausanne:sub-440",
+      "group": "patient",
+      "role": "SELECT",
+      "sessions": [
+        "20130105"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-441",
+      "canonical_person": "Lausanne:sub-441",
+      "group": "patient",
+      "role": "SELECT",
+      "sessions": [
+        "20130101"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-450",
+      "canonical_person": "Lausanne:sub-450",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20141125"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-451",
+      "canonical_person": "Lausanne:sub-451",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20141129"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-452",
+      "canonical_person": "Lausanne:sub-452",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20141127"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-453",
+      "canonical_person": "Lausanne:sub-453",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20141021"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-454",
+      "canonical_person": "Lausanne:sub-454",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20141123"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-455",
+      "canonical_person": "Lausanne:sub-455",
+      "group": "patient",
+      "role": "SELECT",
+      "sessions": [
+        "20141113"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-457",
+      "canonical_person": "Lausanne:sub-457",
+      "group": "patient",
+      "role": "SELECT",
+      "sessions": [
+        "20140823"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-458",
+      "canonical_person": "Lausanne:sub-458",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20140915"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-459",
+      "canonical_person": "Lausanne:sub-459",
+      "group": "patient",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20140829"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-460",
+      "canonical_person": "Lausanne:sub-460",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20140812"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-461",
+      "canonical_person": "Lausanne:sub-461",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20140802"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-462",
+      "canonical_person": "Lausanne:sub-462",
+      "group": "patient",
+      "role": "SELECT",
+      "sessions": [
+        "20140902"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-464",
+      "canonical_person": "Lausanne:sub-464",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20140724"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-465",
+      "canonical_person": "Lausanne:sub-465",
+      "group": "patient",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20140729"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-466",
+      "canonical_person": "Lausanne:sub-466",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20140901"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-467",
+      "canonical_person": "Lausanne:sub-467",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20140817"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-469",
+      "canonical_person": "Lausanne:sub-469",
+      "group": "patient",
+      "role": "SELECT",
+      "sessions": [
+        "20140705"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-470",
+      "canonical_person": "Lausanne:sub-470",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20140807"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-471",
+      "canonical_person": "Lausanne:sub-471",
+      "group": "patient",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20140712"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-472",
+      "canonical_person": "Lausanne:sub-472",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20140705"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-473",
+      "canonical_person": "Lausanne:sub-473",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20140701"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-474",
+      "canonical_person": "Lausanne:sub-474",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20140630"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-475",
+      "canonical_person": "Lausanne:sub-475",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20140503"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-476",
+      "canonical_person": "Lausanne:sub-476",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20140519"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-478",
+      "canonical_person": "Lausanne:sub-478",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20140513"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-479",
+      "canonical_person": "Lausanne:sub-479",
+      "group": "patient",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20140415"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-480",
+      "canonical_person": "Lausanne:sub-480",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20140208"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-481",
+      "canonical_person": "Lausanne:sub-481",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20140201"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-482",
+      "canonical_person": "Lausanne:sub-482",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20140210"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-484",
+      "canonical_person": "Lausanne:sub-484",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20140116"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-485",
+      "canonical_person": "Lausanne:sub-485",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20140131"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-486",
+      "canonical_person": "Lausanne:sub-486",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20140121"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-487",
+      "canonical_person": "Lausanne:sub-487",
+      "group": "patient",
+      "role": "SELECT",
+      "sessions": [
+        "20140214"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-488",
+      "canonical_person": "Lausanne:sub-488",
+      "group": "patient",
+      "role": "SELECT",
+      "sessions": [
+        "20140107"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-489",
+      "canonical_person": "Lausanne:sub-489",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20151226"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-490",
+      "canonical_person": "Lausanne:sub-490",
+      "group": "patient",
+      "role": "MEASUREMENT_EVAL",
+      "sessions": [
+        "20151206"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-491",
+      "canonical_person": "Lausanne:sub-491",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20151124"
+      ],
+      "topcow_overlap": false
+    },
+    {
+      "subject": "sub-492",
+      "canonical_person": "Lausanne:sub-492",
+      "group": "patient",
+      "role": "TRAIN",
+      "sessions": [
+        "20151228"
+      ],
+      "topcow_overlap": false
+    }
+  ],
+  "scope": "single-site anatomy component development; not surgical RL or site holdout",
+  "derivative_rule": "All sessions and derivatives inherit canonical person's role",
+  "overlap_source": "https://zenodo.org/records/15692630/preview/MRA_Lausanne.zip?include_deleted=0"
+}

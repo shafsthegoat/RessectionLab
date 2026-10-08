@@ -1,0 +1,11 @@
+--- a/scripts/acquire_lausanne_pilot.py
++++ b/scripts/acquire_lausanne_pilot.py
+@@ -209,6 +209,8 @@
+                         minimum=float(array.min()), maximum=float(array.max()),
+                         nonzero_voxels=int(np.count_nonzero(array)), voxels=int(array.size))
+             del array
++        except TimeoutError:
++            raise
+         except (ValueError, OSError, AcquisitionError) as error:
+             item.update(status="qc_failed", reason=str(error))
+         qc.append(item)

@@ -1,0 +1,121 @@
+{
+  "status": "byte_and_scalar_checks_passed_geometry_provenance_unresolved",
+  "source_acquisition_sha256": "3952929357250335a6d2f1a5cb5119485ba2b5b9632e2fc5ffa9eacbee2b30b0",
+  "audit_script_sha256": "8aeb003968173c57bf3370d160939bb553f0a0b9ca4191f87e7f9066f8efa5b9",
+  "source_checks": [
+    {
+      "path": "sub-000/ses-20110101/anat/sub-000_ses-20110101_T1w.nii.gz",
+      "sha256": "404a3b927f5efd5debc6e886aca57ae0e9a6fd830d047382c1f0fb929ab3ff0f",
+      "source_byte_checks": "passed"
+    },
+    {
+      "path": "sub-000/ses-20110101/anat/sub-000_ses-20110101_angio.nii.gz",
+      "sha256": "8e1e772825aafbdf898e0c06e9482640098d9722514b59566957bc3ff22cc2b2",
+      "source_byte_checks": "passed"
+    },
+    {
+      "path": "sub-000/ses-20110101/anat/sub-000_ses-20110101_T1w.json",
+      "sha256": "adf8342710f042d4370f82ceddefe859c04381d1d86ebdae850936be1830f0a6",
+      "source_byte_checks": "passed"
+    },
+    {
+      "path": "sub-000/ses-20110101/anat/sub-000_ses-20110101_angio.json",
+      "sha256": "63983f59dc5c1495394c4625a49a29089de0bac96e62295e340ef3339af144d5",
+      "source_byte_checks": "passed"
+    }
+  ],
+  "geometry": [
+    {
+      "path": "sub-000/ses-20110101/anat/sub-000_ses-20110101_T1w.nii.gz",
+      "shape": [
+        37,
+        420,
+        448
+      ],
+      "orientation": [
+        "L",
+        "A",
+        "S"
+      ],
+      "spacing_mm": [
+        3.8999980030715524,
+        0.5580357371691489,
+        0.5580356846718691
+      ],
+      "qform_code": 1,
+      "sform_code": 1,
+      "maximum_qform_sform_corner_disagreement_mm": 0.000421856963505797,
+      "finite_voxels": 6961920,
+      "nonzero_voxels": 5255895,
+      "minimum": 0.0,
+      "maximum": 2362.0,
+      "decoded_float32_bytes": 27847680,
+      "sidecar_to_nifti_axis_disagreement_degrees": [
+        1.4787793334710982e-06,
+        1.2074182697257333e-06,
+        2.831646840510158e-06
+      ],
+      "sidecar_orientation_consistent_at_0_05_degrees": true,
+      "orientation_threshold_scope": "metadata-rounding screen, not clinical accuracy",
+      "sidecar_spacing_between_slices": 3.9,
+      "sidecar_image_type": [
+        "ORIGINAL",
+        "PRIMARY",
+        "M",
+        "ND",
+        "NORM"
+      ],
+      "scanner_frame_admission": "unresolved",
+      "cross_scan_registration": "unverified"
+    },
+    {
+      "path": "sub-000/ses-20110101/anat/sub-000_ses-20110101_angio.nii.gz",
+      "shape": [
+        350,
+        448,
+        160
+      ],
+      "orientation": [
+        "R",
+        "A",
+        "S"
+      ],
+      "spacing_mm": [
+        0.46875,
+        0.46875,
+        0.699999988079071
+      ],
+      "qform_code": 1,
+      "sform_code": 0,
+      "maximum_qform_sform_corner_disagreement_mm": null,
+      "finite_voxels": 25088000,
+      "nonzero_voxels": 20753627,
+      "minimum": 0.0,
+      "maximum": 843.0,
+      "decoded_float32_bytes": 100352000,
+      "sidecar_to_nifti_axis_disagreement_degrees": [
+        1.6999972374593324,
+        1.6999972374593324,
+        0.0
+      ],
+      "sidecar_orientation_consistent_at_0_05_degrees": false,
+      "orientation_threshold_scope": "metadata-rounding screen, not clinical accuracy",
+      "sidecar_spacing_between_slices": 21,
+      "sidecar_image_type": [
+        "ORIGINAL",
+        "PRIMARY",
+        "M",
+        "ND",
+        "NORM"
+      ],
+      "scanner_frame_admission": "unresolved",
+      "cross_scan_registration": "unverified"
+    }
+  ],
+  "limits": [
+    "No source header modified or missing geometry inferred",
+    "Storage-axis agreement alone does not certify DICOM/scanner position",
+    "Multislab spacing metadata is not silently substituted for voxel spacing",
+    "No anatomical coverage, vascular annotation, clinical validation or learning acceptance"
+  ]
+}

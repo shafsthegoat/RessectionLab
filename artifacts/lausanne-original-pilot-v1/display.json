@@ -1,0 +1,99 @@
+{
+  "source_acquisition_sha256": "3952929357250335a6d2f1a5cb5119485ba2b5b9632e2fc5ffa9eacbee2b30b0",
+  "script_sha256": "883c361cd33cab9b5496744a8d556cc91c3cfe675fc88a47fd0f471935c5f589",
+  "output": "outputs/lausanne-original-pilot-v1/midplanes.png",
+  "output_sha256": "82622133677c070c037753a66c3c93bbde482ef52c0f0f6aa5affb1e4f71fa0d",
+  "files": [
+    {
+      "path": "sub-000/ses-20110101/anat/sub-000_ses-20110101_T1w.nii.gz",
+      "sha256": "404a3b927f5efd5debc6e886aca57ae0e9a6fd830d047382c1f0fb929ab3ff0f",
+      "canonical_midpoint_indices": [
+        18,
+        210,
+        224
+      ],
+      "canonical_affine": [
+        [
+          3.8901591300964355,
+          -0.026970544829964638,
+          0.029014142230153084,
+          -59.89205741882324
+        ],
+        [
+          0.1739605814218521,
+          0.5560872554779053,
+          0.039386145770549774,
+          -123.30854803323746
+        ],
+        [
+          -0.21536964178085327,
+          -0.037992604076862335,
+          0.5558873414993286,
+          -110.1128351688385
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "window": [
+        1.0091707706451416,
+        1498.0057373046875
+      ],
+      "window_rule": "1st/99th percentile of positive acquired voxels",
+      "canonical_spacing_mm": [
+        3.8999980030715524,
+        0.5580357371691489,
+        0.5580356846718691
+      ]
+    },
+    {
+      "path": "sub-000/ses-20110101/anat/sub-000_ses-20110101_angio.nii.gz",
+      "sha256": "8e1e772825aafbdf898e0c06e9482640098d9722514b59566957bc3ff22cc2b2",
+      "canonical_midpoint_indices": [
+        175,
+        224,
+        80
+      ],
+      "canonical_affine": [
+        [
+          0.46875,
+          0.0,
+          0.0,
+          -81.5625
+        ],
+        [
+          0.0,
+          0.46875,
+          0.0,
+          -104.53125
+        ],
+        [
+          0.0,
+          0.0,
+          0.699999988079071,
+          -56.0
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "window": [
+        0.9999999403953552,
+        184.0
+      ],
+      "window_rule": "1st/99th percentile of positive acquired voxels",
+      "canonical_spacing_mm": [
+        0.46875,
+        0.46875,
+        0.699999988079071
+      ]
+    }
+  ],
+  "interpretation": "Display integrity only; no anatomical, vessel-label or registration acceptance"
+}

@@ -13,8 +13,15 @@ processing, model evaluation or optimization ran in this milestone. Historical
 results remain unchanged. See [receipt](artifacts/real-observation-policy-v1/RESULT.md).
 
 Lausanne's CC0 source metadata confirms 284 unique people and 296 original paired
-T1/TOF sessions. Source metadata is acquired; image acquisition/QC is next.
-Known TopCoW overlap will inherit the same subject roles. No newly compliant
+T1/TOF sessions. A fixed split now assigns 199 TRAIN / 43 SELECT / 42 measurement
+evaluation people, grouping visits and TopCoW copies. One TRAIN original pair
+and two sidecars are acquired (36,661,729 bytes); independent byte/header/value
+checks pass. TOF sidecar versus NIfTI orientation differs by about 1.70 degrees,
+so scanner-frame provenance and interscan registration remain unresolved. Two
+source/deadline software controls pass after a timeout-propagation correction.
+See [ingestion result](artifacts/lausanne-original-pilot-v1/RESULT.md) and the
+[machine-readable use ledger](manifests/real_observation_data_use_v1.json).
+Full TRAIN acquisition/use and annotation eligibility remain outstanding. No newly compliant
 RL training has run: eligible recorded surgical transitions remain missing.
 The current branch, local main and remote main were verified at a4659cc before
 these code edits; unfinished desktop and other unrelated files were preserved.

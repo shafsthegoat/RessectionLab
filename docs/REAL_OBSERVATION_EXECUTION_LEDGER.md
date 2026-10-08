@@ -34,7 +34,7 @@ compact execution record, not a replacement specification.
 
 | Workstream | Verified state / missing evidence | Next implementation or acquisition |
 |---|---|---|
-| Data and anatomy | Lausanne originals are CC0 acquired T1/TOF; 284 people, 296 sessions. Metadata acquired; images pending. TopCoW overlaps 20 people, including proposed pilot 000. | Freeze grouped roles and derivative aliases before image access; verify one original pair, then process full eligible TRAIN portion. Exclude atlas-derived vessel maps from measurement truth. |
+| Data and anatomy | Lausanne originals are CC0 acquired T1/TOF; 284 people, 296 sessions. One original TRAIN pair acquired; independent byte/header/value checks pass. TOF orientation provenance and interscan alignment unresolved. TopCoW overlaps 20 people, including proposed pilot 000. | Grouped roles are frozen (199/43/42); expand to full eligible TRAIN originals with per-record QC. Exclude atlas-derived vessel maps from measurement truth. |
 | Learning | No inspected historical checkpoint meets the new lineage rule. Scans supply no recorded actions/next observations. | Build source-bound component/recorded-experience admission; acquire real reviewed labels for component learning. Tracked glioma tools from Juvekar et al. need access/rights and action/endpoint fields; no outreach sent. |
 | Navigation / integration | Desktop route calls omit vascular critical masks; CaseData has no typed vascular evidence/coverage. | Add source-bound critical evidence and coverage, wire both planners and invalidation; positive acceptance requires actual same-person annotations. |
 | Operative science | Four supplied research reviews are read; proposed mechanisms are not implemented evidence. | Introduce an evidence-timed action/observation timeline with observed events distinct from proposals and model predictions. |
@@ -52,6 +52,15 @@ exercise control flow only. Forty initial checks passed, but independent source
 review found two outer failure loggers still able to write before refusal. Their
 ordering was repaired and destination-absent regression checks added: **42 pass**.
 This verifies the named refusal paths, not physical fidelity or clinical benefit.
+
+## Real source ingestion evidence
+
+The [Lausanne pilot](../artifacts/lausanne-original-pilot-v1/RESULT.md) acquired
+36,661,729 bytes from one TRAIN person. The [data-use ledger](../manifests/real_observation_data_use_v1.json)
+records zero fitting/RL contributions and the unresolved geometry gate. A
+source-review timeout defect was repaired; two focused controls pass.
+[TopCoW annotation access](lausanne-original-ingestion.md) is practical but
+rights and per-case model-assisted lineage remain unresolved; none acquired.
 
 ## Remaining delivery gates
 

@@ -1,0 +1,53 @@
+{
+  "schema": "lausanne-original-pilot-v1",
+  "git_commit": "896b8846d899acee68c0246cc987ca96e77267d4",
+  "license": "CC0",
+  "subject": "sub-000",
+  "session": "ses-20110101",
+  "role": "TRAIN",
+  "cohort_sha256": "891a53680edfce604eed9a1791bc790efa615db8ce54da0c92de834a6b87d49a",
+  "files": [
+    {
+      "path": "sub-000/ses-20110101/anat/sub-000_ses-20110101_T1w.nii.gz",
+      "bytes": 8250277,
+      "expected_md5": "97a96ee22f374a7a4d166e50b1460013",
+      "sha256": null,
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-000/ses-20110101/anat/sub-000_ses-20110101_T1w.nii.gz",
+      "pointer_sha256": "eb1d6dfc53943c93c83e258cbf7750808921a72b1972c5b240a7197f7ac91571",
+      "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-000/ses-20110101/anat/sub-000_ses-20110101_T1w.nii.gz?versionId=Fd_dldJuHqxHdkXkR8no4V7bSeXyhYuZ"
+    },
+    {
+      "path": "sub-000/ses-20110101/anat/sub-000_ses-20110101_angio.nii.gz",
+      "bytes": 28408253,
+      "expected_md5": "66f8a1a067e70c7bfa756133d46f1074",
+      "sha256": null,
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-000/ses-20110101/anat/sub-000_ses-20110101_angio.nii.gz",
+      "pointer_sha256": "f316b6b2330814a0158ec191e184563f1552eb67c35236c9e97a2f3bd9f39320",
+      "source_url": "https://s3.amazonaws.com/openneuro.org/ds003949/sub-000/ses-20110101/anat/sub-000_ses-20110101_angio.nii.gz?versionId=WcfGrEnFSmBdKz4mehhm24qZYBAf2Q5n"
+    },
+    {
+      "path": "sub-000/ses-20110101/anat/sub-000_ses-20110101_T1w.json",
+      "bytes": 1630,
+      "sha256": "adf8342710f042d4370f82ceddefe859c04381d1d86ebdae850936be1830f0a6",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-000/ses-20110101/anat/sub-000_ses-20110101_T1w.json",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-000/ses-20110101/anat/sub-000_ses-20110101_T1w.json"
+    },
+    {
+      "path": "sub-000/ses-20110101/anat/sub-000_ses-20110101_angio.json",
+      "bytes": 1569,
+      "sha256": "63983f59dc5c1495394c4625a49a29089de0bac96e62295e340ef3339af144d5",
+      "git_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-000/ses-20110101/anat/sub-000_ses-20110101_angio.json",
+      "source_url": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/sub-000/ses-20110101/anat/sub-000_ses-20110101_angio.json"
+    }
+  ],
+  "payload_bytes": 36661729,
+  "max_wall_seconds": 240,
+  "max_decoded_image_bytes": 536870912,
+  "excluded": [
+    "all derivatives",
+    "atlas labels",
+    "model weights",
+    "other patient images"
+  ],
+  "direct_recorded_rl_transitions": 0
+}

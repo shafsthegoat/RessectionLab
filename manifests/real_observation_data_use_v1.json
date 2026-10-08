@@ -1,0 +1,60 @@
+{
+  "schema": "real-observation-data-use-v1",
+  "updated_at": "2026-10-08T04:16:57.338906+00:00",
+  "scope": "New admissions in the October6 real-observation program, not a complete historical data inventory",
+  "sources": [
+    {
+      "accession": "ds003949",
+      "version": "1.0.1",
+      "family": "Lausanne",
+      "institutions": [
+        "CHUV"
+      ],
+      "license": "CC0",
+      "declared_cohort": "manifests/lausanne-component-cohort-v1.json",
+      "cohort_sha256": "891a53680edfce604eed9a1791bc790efa615db8ce54da0c92de834a6b87d49a",
+      "discovered_people": 284,
+      "declared_train_people": 199,
+      "declared_train_sessions": 210,
+      "acquired_train_people": 1,
+      "acquired_train_sessions": 1,
+      "acquired_modalities": [
+        "T1w",
+        "TOF-MRA"
+      ],
+      "acquired_bytes": 36661729,
+      "byte_and_scalar_qc_passed_people": 1,
+      "scanner_frame_accepted_people": 0,
+      "prepared_for_spatial_planning_people": 0,
+      "used_in_component_fitting_people": 0,
+      "component_optimizer_updates": 0,
+      "recorded_surgical_transitions": 0,
+      "used_in_imitation_people": 0,
+      "used_in_offline_rl_people": 0,
+      "checkpoint_contributions": [],
+      "receipt": "artifacts/lausanne-original-pilot-v1/acquisition.json",
+      "geometry_gate": "TOF sidecar/NIfTI orientation mismatch; T1/TOF alignment unresolved",
+      "next": "Resumable full TRAIN original intake, retaining source/geometry failures; no SELECT/EVAL image intake in that batch"
+    },
+    {
+      "accession": "TopCoW external Lausanne",
+      "version": "Zenodo15692630",
+      "family": "Lausanne",
+      "known_duplicate_people": 20,
+      "eligible_unique_people_added": 0,
+      "overlap_train": 17,
+      "overlap_select": 1,
+      "overlap_measurement_eval": 2,
+      "annotation_payloads_acquired": 0,
+      "annotation_rights": "unresolved independently of source MRI CC0",
+      "annotation_model_ancestry": "per-case manual/model-assisted origin and initializer lineage unresolved",
+      "next": "Resolve annotation rights and ancestry or use independently sourced eligible human labels; no outreach sent"
+    }
+  ],
+  "preserved_roles": "Earlier BTC/UPenn/UTSW and other frozen assignments unchanged",
+  "claims": {
+    "broad_component_training": false,
+    "compliant_offline_rl": false,
+    "clinical_or_physical_validation": false
+  }
+}
