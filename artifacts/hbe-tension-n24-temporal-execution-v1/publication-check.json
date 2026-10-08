@@ -1,0 +1,19 @@
+{
+  "accepted": true,
+  "cap_seconds": 600,
+  "clock_scope": "through_result_fsync_directory_fsync_and_retained_scan_excludes_closeout_publication",
+  "durable_result_publication_checked": true,
+  "elapsed_through_result_publication_seconds": 301.9558984998148,
+  "hard_real_time_or_power_loss_guarantee": false,
+  "output_cap_bytes": 1073741824,
+  "own_publication_inside_clock_claim": false,
+  "phase": "solve",
+  "result": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-tension-n24-temporal-v1/experiment/result.json",
+    "sha256": "51dcd02916322c80218776f098f7c6553a26e95887db9b19103761c72db0bfdf"
+  },
+  "result_status": "completed_numerical_diagnostic_only",
+  "retained_bytes_before_closeout": 394514530,
+  "retained_bytes_including_closeout": 394515352,
+  "schema": "hbe-n36-result-publication-check-v1"
+}

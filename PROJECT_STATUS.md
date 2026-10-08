@@ -67,8 +67,11 @@ The [N36/S120 increment check passed](artifacts/hbe-n36-temporal-execution-v1/RE
 Independent reconstruction verified all 121 states: force and probe changes are
 1.87025e-12 N and 2.31371e-14 m, within unchanged limits, with no spatial-screen
 classification changes. The 1,946.3351-second phase completed within its cap.
-A separate tension increment check and fitted axial confirmations remain required;
-physical validation and calibration remain unestablished. The additional
+The [N24/S120 tension check also passed](artifacts/hbe-tension-n24-temporal-execution-v1/RESULT.md):
+all 121 states independently reproduce, with force/probe changes 6.51507e-12 N /
+1.41419e-14 m and no changed classifications. It completed in 301.9559 seconds.
+A branch-specific one-scale fit and two actual fitted axial confirmations remain
+next; physical validation and calibration remain unestablished. The additional
 [104-file RESECT originals queue is complete](artifacts/resect-train-originals-execution-v1/RESULT.md):
 28 MRI, 17 ultrasound and 59 correspondence files from the existing 14 TRAIN people.
 All 672,336,857 bytes passed independent size/MD5/SHA256 checks after a continuous

@@ -1,0 +1,47 @@
+{
+  "aggregate_cap_seconds": 600,
+  "baseline": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-tension-n24-temporal-v1/experiment/baseline.json",
+    "sha256": "4578dda47cbb711bf1d7f6d3636d8524ab2081b58cec0698e81a3da8268c81c1"
+  },
+  "measured_data_accessed": false,
+  "output_cap_bytes": 1073741824,
+  "phase": "solve",
+  "phase_elapsed_before_result_publication_seconds": 301.9536645829212,
+  "preparation_nested_in_aggregate": true,
+  "schema": "hbe-tension-n24-temporal-result-v1",
+  "state": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-tension-n24-temporal-v1/experiment/state.json",
+    "sha256": "9d514ac9f0dcca5199250037df3678f559543cf1a1533eb809f07c199e7a22bd"
+  },
+  "status": "completed_numerical_diagnostic_only",
+  "supervision": {
+    "cleanup_error": null,
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+      "-B",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-tension-n24-temporal-v1/source/scripts/mechanics_hbe_halfheight_tension_n24_temporal_experiment.py",
+      "--root",
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+      "--worker-baseline",
+      "outputs/mechanics/hbe-01-03-halfheight-tension-n24-temporal-v1/experiment/baseline.json",
+      "--baseline-sha256",
+      "4578dda47cbb711bf1d7f6d3636d8524ab2081b58cec0698e81a3da8268c81c1",
+      "--deadline",
+      "1231805.919235625"
+    ],
+    "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "elapsed_seconds": 300.96245708409697,
+    "error": null,
+    "exit_code": 0,
+    "kill_reason": null,
+    "no_retry": true,
+    "pid": 12308,
+    "rss_cap_bytes": 3221225472,
+    "sampled_peak_process_group_rss_bytes": 557350912,
+    "sampling_note": "Group RSS is sampled; brief between-sample peaks may be missed.",
+    "status": "completed",
+    "wall_cap_seconds": 599.2038092501462
+  },
+  "timing_scope": "payload_before_publication; acceptance_requires_publication-check.json"
+}

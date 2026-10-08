@@ -1,0 +1,14 @@
+{
+  "exit_code": 0,
+  "command": [
+    ".venv/bin/python",
+    "-B",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "tests/test_mechanics_hbe_halfheight_tension_n24_temporal.py"
+  ],
+  "elapsed_seconds": 6.109774207929149
+}

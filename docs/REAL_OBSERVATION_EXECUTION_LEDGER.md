@@ -108,8 +108,14 @@ The [N36/S120 solve and independent review passed](../artifacts/hbe-n36-temporal
 all 121 states and 61 common-state comparisons are verified. Force change is
 1.87025e-12 N; probe change is 2.31371e-14 m. No spatial-screen classification changed.
 The 1,946.3351-second phase used one native solve and zero remeshing. The original
-failures and a reporting-only independent-audit repair remain. Tension N24/S120 and
-branch-specific fitted confirmations remain next; no measured response was accessed.
+failures and a reporting-only independent-audit repair remain. The [N24/S120 tension
+run](../artifacts/hbe-tension-n24-temporal-execution-v1/RESULT.md) also passes, with
+independent exact reconstruction of all 121 states and both sensitivity groups.
+Force/probe changes are 6.51507e-12 N / 1.41419e-14 m, with no classification changes;
+the full phase took 301.9559 seconds within its 600-second cap. No measured response
+was accessed. Next is the declared branch-specific common-scale calibration using
+compression N36/S120, tension N24/S120 and torsion ± N12/S120. Two actual fitted
+axial confirmations must precede freezing and opening withheld torsion measurements.
 
 ## Evidence and decisions before the October 8 steering
 

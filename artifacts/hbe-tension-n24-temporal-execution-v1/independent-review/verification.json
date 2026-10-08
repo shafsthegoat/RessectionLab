@@ -1,0 +1,319 @@
+{
+  "audit_source": {
+    "path": "build/hbe-tension-n24-temporal-output-review-v1/audit.py",
+    "sha256": "d73474418cb15629296c725145e2ee958270399156a87b608c31d0fd0d80c4b7"
+  },
+  "blocking_record_mismatches": [],
+  "comparison": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-tension-n24-temporal-v1/experiment/comparison.json",
+    "sha256": "52ed06cfec8486771d166646cf90b8e8499f43535d6cec8b56972fda6b81da65"
+  },
+  "complete121_native_readout_canonical_equal": true,
+  "complete_comparison_canonical_equal": true,
+  "conclusion": {
+    "automatic_next_run_permitted": false,
+    "calibration_released": false,
+    "original_global_failure_preserved": true,
+    "physical_validation_pass": null,
+    "spatial_convergence_accepted": false,
+    "status": "tension_temporal_candidate",
+    "tension_temporal_candidate": true
+  },
+  "costs": {
+    "native_seconds": 245.9516257501673,
+    "output_watch": {
+      "maximum_active_bytes": 389488783,
+      "maximum_total_bytes": 394511168,
+      "sampling_interval_seconds": 0.1,
+      "sampling_limit": "Between-sample peaks may be missed.",
+      "status": "watching"
+    },
+    "preparation_seconds": 4.7520218749996275,
+    "publication_seconds": 301.9558984998148,
+    "retained_bytes": 394515352,
+    "sampled_rss_bytes": 557350912
+  },
+  "created_at": "2026-10-08T21:02:00.877256+00:00",
+  "independent_mixed_groups": {
+    "tension:N12-N16-N24": {
+      "S120_substitution": {
+        "motion": {
+          "actual": 3.6385681355813716e-06,
+          "limit": 8e-06,
+          "units": "m"
+        },
+        "motion_trend": {
+          "actual": 3.6385681355813716e-06,
+          "comparison": "lt",
+          "limit": 8.716502921432704e-06,
+          "units": "m"
+        },
+        "reaction": {
+          "actual": 0.00012035211002778962,
+          "limit": 0.0005316156871032982,
+          "units": "N"
+        },
+        "reaction_trend": {
+          "actual": 0.00012035211002778962,
+          "comparison": "lt",
+          "limit": 0.0001243693117838028,
+          "units": "N"
+        }
+      },
+      "S60": {
+        "motion": {
+          "actual": 3.6385681355813716e-06,
+          "limit": 8e-06,
+          "units": "m"
+        },
+        "motion_trend": {
+          "actual": 3.6385681355813716e-06,
+          "comparison": "lt",
+          "limit": 8.716502921432704e-06,
+          "units": "m"
+        },
+        "reaction": {
+          "actual": 0.00012035211271966759,
+          "limit": 0.0005316156870494607,
+          "units": "N"
+        },
+        "reaction_trend": {
+          "actual": 0.00012035211271966759,
+          "comparison": "lt",
+          "limit": 0.0001243693117838028,
+          "units": "N"
+        }
+      }
+    },
+    "tension:N8-N16-N24": {
+      "S120_substitution": {
+        "motion": {
+          "actual": 3.6385681355813716e-06,
+          "limit": 8e-06,
+          "units": "m"
+        },
+        "motion_trend": {
+          "actual": 3.6385681355813716e-06,
+          "comparison": "lt",
+          "limit": 2.390542583923037e-05,
+          "units": "m"
+        },
+        "reaction": {
+          "actual": 0.00012035211002778962,
+          "limit": 0.0005316156871032982,
+          "units": "N"
+        },
+        "reaction_trend": {
+          "actual": 0.00012035211002778962,
+          "comparison": "lt",
+          "limit": 0.00035211181368570085,
+          "units": "N"
+        }
+      },
+      "S60": {
+        "motion": {
+          "actual": 3.6385681355813716e-06,
+          "limit": 8e-06,
+          "units": "m"
+        },
+        "motion_trend": {
+          "actual": 3.6385681355813716e-06,
+          "comparison": "lt",
+          "limit": 2.390542583923037e-05,
+          "units": "m"
+        },
+        "reaction": {
+          "actual": 0.00012035211271966759,
+          "limit": 0.0005316156870494607,
+          "units": "N"
+        },
+        "reaction_trend": {
+          "actual": 0.00012035211271966759,
+          "comparison": "lt",
+          "limit": 0.00035211181368570085,
+          "units": "N"
+        }
+      }
+    }
+  },
+  "independent_temporal": {
+    "common_probe_vector_shifts_m": [
+      0.0,
+      1.0000029894380703e-14,
+      7.573782367324006e-15,
+      1.0710943346560852e-14,
+      3.43139566953114e-15,
+      1.00002471591075e-14,
+      1.000068087380619e-15,
+      5.73570054299144e-16,
+      1.0710945742331815e-14,
+      7.573616348866344e-15,
+      4.852773727564291e-15,
+      1.0000247159050012e-14,
+      5.73570054299144e-16,
+      5.887217796596289e-17,
+      7.57380269611474e-15,
+      5.887895422954093e-17,
+      2.6493632049491567e-15,
+      7.57345710667226e-15,
+      3.43139566953114e-15,
+      9.999813477380171e-15,
+      1.000024715877992e-14,
+      1.0710485754311097e-14,
+      1.821161799942139e-19,
+      3.6753369445086115e-15,
+      1.071095532541567e-14,
+      1.8377904449987104e-16,
+      4.995685126425037e-15,
+      5.73570054299144e-16,
+      2.4264173569682468e-15,
+      5.73570054299144e-16,
+      1.8375871570913693e-16,
+      1.8375871570913693e-16,
+      5.735958041007405e-15,
+      5.887759897682532e-16,
+      7.573450330408682e-15,
+      1.0000247160472633e-14,
+      5.887217796596289e-17,
+      2.497798517499261e-15,
+      2.08171540006806e-19,
+      1.9222472000531232e-19,
+      1.922899958508293e-19,
+      1.000003031942825e-14,
+      1.0000680839353578e-14,
+      1.1115332253952749e-14,
+      1.0000030318017808e-14,
+      1.414194850542493e-14,
+      1.0000247160041232e-14,
+      1.0710936159247961e-14,
+      1.0000030318148028e-14,
+      1.0000030317801804e-14,
+      1.0000030317839298e-14,
+      9.99981347743768e-15,
+      1.0000247160032045e-14,
+      1.0710495337407813e-14,
+      1.0000030317750826e-14,
+      1.0000247160421267e-14,
+      1.000068083918546e-14,
+      1.0000030318149268e-14,
+      1.0049901775394135e-14,
+      1.0000030320300604e-14,
+      1.0000030319467133e-14
+    ],
+    "common_states": 61,
+    "criteria": {
+      "motion": {
+        "actual": 1.414194850542493e-14,
+        "limit": 8e-07,
+        "units": "m"
+      },
+      "reaction": {
+        "actual": 6.515066264256575e-12,
+        "limit": 5.316156871032982e-05,
+        "units": "N"
+      }
+    },
+    "maximum_shift_state": 41,
+    "probes": 75,
+    "signed_endpoint_shift_N": 2.691877970528722e-12,
+    "signed_force_shift_N": [
+      0.0,
+      -5.690731089483259e-13,
+      -5.68294977049133e-13,
+      -5.667610478155005e-13,
+      -5.648229280119654e-13,
+      -5.626900854982519e-13,
+      -5.587891260816491e-13,
+      -5.554823094555683e-13,
+      -5.505795472315889e-13,
+      -5.453805809740864e-13,
+      -5.39649921971197e-13,
+      -5.335298175479508e-13,
+      -5.272197609040852e-13,
+      -5.194499344551851e-13,
+      -5.110304540645316e-13,
+      -5.031903713148544e-13,
+      -4.947188492199217e-13,
+      -4.84820517065998e-13,
+      -4.753697435688764e-13,
+      -4.637904643667312e-13,
+      -4.5197005860142525e-13,
+      -4.4315939806693905e-13,
+      -4.311898060826991e-13,
+      -4.192583780149306e-13,
+      -4.091900429603612e-13,
+      -3.9522031480832e-13,
+      -3.8273030578128697e-13,
+      -3.7155001297861645e-13,
+      -3.5896979833083265e-13,
+      -3.4692908268407763e-13,
+      -3.3670115306971837e-13,
+      -3.238503215596822e-13,
+      -3.1106194009478116e-13,
+      -2.986881575406386e-13,
+      -2.8739857715898154e-13,
+      -2.7845087346989317e-13,
+      -2.665194454021247e-13,
+      -2.5554905414004736e-13,
+      -2.433608869978343e-13,
+      -2.336325577445564e-13,
+      -2.249693487055282e-13,
+      6.515066264256575e-12,
+      6.246562295197933e-12,
+      5.975692163318058e-12,
+      5.7260828023597554e-12,
+      5.472133163264559e-12,
+      5.2212123513584174e-12,
+      4.9942792956780835e-12,
+      4.756289112561873e-12,
+      4.547362486562179e-12,
+      4.334196196387197e-12,
+      4.1324825506006135e-12,
+      3.937829229361256e-12,
+      3.756741445704037e-12,
+      3.58089599639122e-12,
+      3.421141842041564e-12,
+      3.2556908557968e-12,
+      3.099014100893527e-12,
+      2.960919703864917e-12,
+      2.8262669982126454e-12,
+      2.691877970528722e-12
+    ]
+  },
+  "input_inventory": {
+    "path": "build/hbe-tension-n24-temporal-output-review-v1/input-hashes.json",
+    "sha256": "db48ef122eda7c4410d54b826dfcf7c25a5f2b9c4918d17510bbd88c3d3559ad"
+  },
+  "limits": [
+    "Static tension increment check; not physical rate dependence or tissue validation.",
+    "Only N24 is replaced by S120 in sensitivity groups, not a new homogeneous spatial refinement study.",
+    "Full-domain quantities are reconstructed from half-native fields; no new native-full equivalence run.",
+    "Memory and output peaks sampled; own closeout publication outside its recorded clock."
+  ],
+  "mixed_classification_changes": [],
+  "publication": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-tension-n24-temporal-v1/experiment/publication-check.json",
+    "sha256": "3f8c6716cf308ff89de379cecf8185991d4b20117ba84cd6f901b7b7a6de609c"
+  },
+  "result": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-tension-n24-temporal-v1/experiment/result.json",
+    "sha256": "51dcd02916322c80218776f098f7c6553a26e95887db9b19103761c72db0bfdf"
+  },
+  "review_seconds": 49.70986779197119,
+  "schema": "hbe-tension-n24-temporal-independent-output-review-v1",
+  "scope": {
+    "all_inputs_and_outputs_unchanged": true,
+    "measured_curve_reads": 0,
+    "old_raw_response_replays": 0,
+    "review_mesher_calls": 0,
+    "review_native_solver_calls": 0,
+    "saved_native_frames_reconstructed": 121,
+    "tracked_edits": false
+  },
+  "source_archive": {
+    "path": "build/hbe-halfheight-tension-n24-temporal-v1/source.tar",
+    "sha256": "860527629a93f34f4a331c7b29dce0a845e7b16b997b47bdd269c37659e7c5b6"
+  },
+  "source_commit": "2911d310a880c5bbdf121acb470f06c8d2bd58a8",
+  "status": "saved_execution_and_temporal_diagnostic_verified"
+}

@@ -1,0 +1,17 @@
+{
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-B",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-tension-n24-temporal-v1/source/scripts/mechanics_hbe_halfheight_tension_n24_temporal_experiment.py",
+    "--root",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "--release",
+    "build/hbe-halfheight-tension-n24-temporal-v1/solve-release.json",
+    "--release-sha256",
+    "f2c21af48d1200af2002a09578082f84d3d879debc5388a77e8790a57ca26b1d",
+    "--execute"
+  ],
+  "source_commit": "2911d310a880c5bbdf121acb470f06c8d2bd58a8",
+  "started_at_utc": "2026-10-08T20:55:09.516519+00:00",
+  "automatic_retry": false
+}

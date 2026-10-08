@@ -1,0 +1,86 @@
+{
+  "backend_profile": {
+    "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+    "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+  },
+  "backend_source_deck": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-tension-n24-temporal-v1/experiment/preparation/skyline.feb",
+    "sha256": "7cb01e65143d8defb88830d179607e729c74ef04cd36aa281c01e862117ecb69"
+  },
+  "command": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+    "-noconfig",
+    "-no_title",
+    "-i",
+    "specimen.feb",
+    "-o",
+    "solver.log"
+  ],
+  "executable": {
+    "path": "data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+    "sha256": "d7d4855d1d541a6407f22efd4381e23d7057cc49ec726144f06599aa5184f7b6"
+  },
+  "execution": {
+    "cleanup": {
+      "kill_sent": false,
+      "reaped": true
+    },
+    "command": [
+      "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+      "-noconfig",
+      "-no_title",
+      "-i",
+      "specimen.feb",
+      "-o",
+      "solver.log"
+    ],
+    "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-tension-n24-temporal-v1/experiment/run",
+    "elapsed_seconds": 245.9516257501673,
+    "exit_code": 0,
+    "pid": 12355,
+    "seconds_cap": 420,
+    "started": true,
+    "status": "completed",
+    "timed_out": false
+  },
+  "primitive_bindings": {
+    "deck": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-tension-n24-temporal-v1/experiment/run/specimen.feb",
+      "sha256": "32f2a595b9cd1f22bb4bd16d32e0ec2d72293c6d037debd05fa38ace6423e3d8"
+    },
+    "elements": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-tension-n24-temporal-v1/experiment/run/elements.log",
+      "sha256": "37d680966aaaa4e8d8eb90537664ae20402b0728b22b497f7060fd8fc5279cd3"
+    },
+    "loading": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-tension-n24-temporal-v1/experiment/run/loading.json",
+      "sha256": "58c90046e99c8068ec4da671a66002b80023674fab6a4508b0ccc7ce201c463f"
+    },
+    "mesh": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/N24/mesh.json",
+      "sha256": "f8a934c3e035fbf478583719b901490f72478579b72d0b4d8b0a6dea1a3b99a2"
+    },
+    "nodes": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-tension-n24-temporal-v1/experiment/run/nodes.log",
+      "sha256": "16d302e6e00b40d7549a579abcb9f1324253212cce8c29b5ebc6f4a6e9e2e291"
+    },
+    "solver": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-tension-n24-temporal-v1/experiment/run/solver.log",
+      "sha256": "f759819af256de9076917918ae0bc6f188df0b370a6748737adc571aa699a81e"
+    }
+  },
+  "reconstruction": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/N24/reconstruction.json",
+    "sha256": "ec2240c6cb47f345c5efc0659ea13678e7b7b7a6a1ee9f8db9d73313f8f98cd7"
+  },
+  "run_id": "tension:N24:S120:reference",
+  "runtime_identity": {
+    "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+    "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+  },
+  "schema": "hbe-tension-n24-native-execution-v1",
+  "study": {
+    "path": "manifests/experiments/hbe-01-03-halfheight-tension-n24-temporal-v1.json",
+    "sha256": "eefc84557f68dce12f6dd41b72600ae60da1eae6d1dab63dc3de9561a6be8d8e"
+  }
+}

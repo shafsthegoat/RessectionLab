@@ -1,0 +1,254 @@
+{
+  "artifacts/mechanics/hbe-halfheight-spatial-execution-v1/comparison.json": {
+    "bytes": 3772,
+    "sha256": "2f4c5bad95b7c81dd888901972857ec5905f2c0004fa6caf8e02d2c70b92e6f7"
+  },
+  "artifacts/mechanics/hbe-halfheight-spatial-execution-v1/independent-review.json": {
+    "bytes": 940,
+    "sha256": "c828100a4c92aa9880b9a6096469541513670f2409e530e773599f8e6665f5bd"
+  },
+  "artifacts/mechanics/hbe-halfheight-spatial-execution-v1/solve-release.json": {
+    "bytes": 4054,
+    "sha256": "4d1bb87690228fa52256594f00f1530cfb743a0a5976f1e20b1109b840ad1d7a"
+  },
+  "build/hbe-halfheight-spatial-v1/source.tar": {
+    "bytes": 409600,
+    "sha256": "50702506705e52f5ed2bbd056d93a0e1c0c85f9ceea08916ec222d1a2074328e"
+  },
+  "build/hbe-halfheight-spatial-v1/source/scripts/febio_runtime.py": {
+    "bytes": 24801,
+    "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+  },
+  "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_access.py": {
+    "bytes": 37769,
+    "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+  },
+  "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_backend.py": {
+    "bytes": 28370,
+    "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae"
+  },
+  "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_evaluation.py": {
+    "bytes": 8744,
+    "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+  },
+  "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_experiment.py": {
+    "bytes": 47907,
+    "sha256": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa"
+  },
+  "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_halfheight_mesh.py": {
+    "bytes": 12115,
+    "sha256": "6d8aef586fd454c262cd4afd3ad4e2b43580c9e74db0c380a020838dc8379084"
+  },
+  "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_halfheight_readout.py": {
+    "bytes": 27043,
+    "sha256": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30"
+  },
+  "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_halfheight_spatial.py": {
+    "bytes": 10144,
+    "sha256": "9093900ce30a7fb35aaded799c9f8aedbc9abc22f7fface57b83092ae83066da"
+  },
+  "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_halfheight_spatial_experiment.py": {
+    "bytes": 29337,
+    "sha256": "2c793883238d15ad65539c4b04f777aa283ab07a104734080420055180cd6abd"
+  },
+  "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_halfheight_spatial_readout.py": {
+    "bytes": 13490,
+    "sha256": "f193dde271438145632907414161ceb8c210008d5fa4e97058d1c477d195032c"
+  },
+  "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_mesh.py": {
+    "bytes": 48654,
+    "sha256": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414"
+  },
+  "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_outputs.py": {
+    "bytes": 8702,
+    "sha256": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19"
+  },
+  "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_physics.py": {
+    "bytes": 17656,
+    "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+  },
+  "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_readout.py": {
+    "bytes": 18789,
+    "sha256": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0"
+  },
+  "manifests/experiments/hbe-01-03-halfheight-spatial-v1.json": {
+    "bytes": 19148,
+    "sha256": "00d38fd5fca1472b6f01543c6817cea8537f340e8c56a4466752914571c9230c"
+  },
+  "manifests/experiments/hbe-01-03-halfheight-tension-n24-temporal-v1.json": {
+    "bytes": 19460,
+    "sha256": "eefc84557f68dce12f6dd41b72600ae60da1eae6d1dab63dc3de9561a6be8d8e"
+  },
+  "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/baseline.json": {
+    "bytes": 97857,
+    "sha256": "c84dbb008da9c1adbdf20a7b3e34e739188d82702c8c3fe40cc7129d9f757b41"
+  },
+  "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/result.json": {
+    "bytes": 2085,
+    "sha256": "601fe2e4b45987b493ed561bbeda9943fafc9fc1ef64044d703f922f2c8fed6a"
+  },
+  "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N16-S60-reference/readout.json": {
+    "bytes": 550145,
+    "sha256": "2a93754c4ae837e57ecd1b3b4db728e7be095fbc9861eec7495bef10e427ebcc"
+  },
+  "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N24-S60-reference/elements.log": {
+    "bytes": 74280577,
+    "sha256": "f7641cbedeafc8fcd1e1ae04fa38e50676585cc0cfdde57e8f2c3b68fc26842b"
+  },
+  "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N24-S60-reference/execution.json": {
+    "bytes": 3818,
+    "sha256": "78870007328a7a2f1bd8adf46b4b76388bc5152fbea9d11cf07d481efb9dd802"
+  },
+  "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N24-S60-reference/loading.json": {
+    "bytes": 4263,
+    "sha256": "aa208869148bb70d9138bf4f824a06c15d307ba7522adaccb65b3b2f209a52d4"
+  },
+  "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N24-S60-reference/nodes.log": {
+    "bytes": 118311269,
+    "sha256": "8c02d7bd449d5eb195e2b300bda7f9d8fc683e17494850b4320396379add4644"
+  },
+  "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N24-S60-reference/readout.json": {
+    "bytes": 550835,
+    "sha256": "a99c627448268ce9a9130e7bbc68f038dad5fa49898d80f4362d12c638adb0f6"
+  },
+  "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N24-S60-reference/solver.log": {
+    "bytes": 697238,
+    "sha256": "e596de211fc3dd1e593d609218f6c7aa2659d08fc127d0092e4526aaf97bb5a8"
+  },
+  "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N24-S60-reference/specimen.feb": {
+    "bytes": 2458297,
+    "sha256": "eef01651bd04a7426934dee3fdfe04c70515208fb6b243059f50135e4845e613"
+  },
+  "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/state.json": {
+    "bytes": 15417,
+    "sha256": "c9e4d76743b1781a75458191fef085ddc4ef6f679e44b3708115881f28db26b5"
+  },
+  "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/N24/mesh.json": {
+    "bytes": 3108096,
+    "sha256": "f8a934c3e035fbf478583719b901490f72478579b72d0b4d8b0a6dea1a3b99a2"
+  },
+  "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/N24/reconstruction.json": {
+    "bytes": 4026387,
+    "sha256": "ec2240c6cb47f345c5efc0659ea13678e7b7b7a6a1ee9f8db9d73313f8f98cd7"
+  },
+  "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/cases/tension-N24-S60-reference/skyline.feb": {
+    "bytes": 2458144,
+    "sha256": "0b66988b46c7d9af1286b24a646ba6279975f17c9bda9d3c78a7b242bdc670c5"
+  },
+  "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/result.json": {
+    "bytes": 2073,
+    "sha256": "011a8e07f44127cbea2d6752d8eb4a90f1223085066491a8145331844f0028ff"
+  },
+  "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S60-reference/readout.json": {
+    "bytes": 545614,
+    "sha256": "7a269ca2c1f7a4a9225b84d7660455a8832e0ed593867821d5c8a25cc9401d6a"
+  },
+  "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N8-S60-reference/readout.json": {
+    "bytes": 545016,
+    "sha256": "a9cb82b68a52d7b7f3267d83df741d6f416bb8569e3dbb2bbf7d7a94d9e50e18"
+  },
+  "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/N24/generated/mesh.json": {
+    "bytes": 5805250,
+    "sha256": "61f27d63cdcb6328bcbe94e05ac1802a162d613cadd01610caf649a16f30643b"
+  },
+  "scripts/febio_runtime.py": {
+    "bytes": 24801,
+    "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+  },
+  "scripts/mechanics_hbe_access.py": {
+    "bytes": 37769,
+    "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+  },
+  "scripts/mechanics_hbe_backend.py": {
+    "bytes": 28370,
+    "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae"
+  },
+  "scripts/mechanics_hbe_evaluation.py": {
+    "bytes": 8744,
+    "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+  },
+  "scripts/mechanics_hbe_experiment.py": {
+    "bytes": 47907,
+    "sha256": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa"
+  },
+  "scripts/mechanics_hbe_halfheight_global.py": {
+    "bytes": 12780,
+    "sha256": "a56c3dd761ed8bab5f57ff9051ce5305743ae2c85e4e91d5398cd0995a0de2d0"
+  },
+  "scripts/mechanics_hbe_halfheight_global_experiment.py": {
+    "bytes": 35804,
+    "sha256": "0ea6c6d2026cb32bf470967f5e7b9f08f0ffbdbefeb6fa7426e79e6c37bc91f2"
+  },
+  "scripts/mechanics_hbe_halfheight_global_n36.py": {
+    "bytes": 12828,
+    "sha256": "61024ff1b3c874a870bf83d5af84ee37e566ea37ed0f967d52fd3a6ca92b360d"
+  },
+  "scripts/mechanics_hbe_halfheight_global_n36_experiment.py": {
+    "bytes": 42053,
+    "sha256": "21d5a26d6edc0075d9bd362968ea1edb15ac5e6c5f4d09123c654376ae3f2e80"
+  },
+  "scripts/mechanics_hbe_halfheight_global_n36_readout.py": {
+    "bytes": 26682,
+    "sha256": "d7384416693efb5d8383a4cff06ca2581e678abc7ce630b01f99894d09fb7a27"
+  },
+  "scripts/mechanics_hbe_halfheight_global_n36_temporal.py": {
+    "bytes": 8765,
+    "sha256": "5af7a1d9beac06412c9a20c91fb6cf8d3834c2b8eb91c3053541f8d0256a9c93"
+  },
+  "scripts/mechanics_hbe_halfheight_global_readout.py": {
+    "bytes": 22887,
+    "sha256": "5a6b3af67f20c8a0f9630e17c5b5c139d6e6528b7999e81f92f38cae5b722343"
+  },
+  "scripts/mechanics_hbe_halfheight_mesh.py": {
+    "bytes": 12115,
+    "sha256": "6d8aef586fd454c262cd4afd3ad4e2b43580c9e74db0c380a020838dc8379084"
+  },
+  "scripts/mechanics_hbe_halfheight_readout.py": {
+    "bytes": 27043,
+    "sha256": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30"
+  },
+  "scripts/mechanics_hbe_halfheight_spatial.py": {
+    "bytes": 10144,
+    "sha256": "9093900ce30a7fb35aaded799c9f8aedbc9abc22f7fface57b83092ae83066da"
+  },
+  "scripts/mechanics_hbe_halfheight_spatial_experiment.py": {
+    "bytes": 29337,
+    "sha256": "2c793883238d15ad65539c4b04f777aa283ab07a104734080420055180cd6abd"
+  },
+  "scripts/mechanics_hbe_halfheight_spatial_readout.py": {
+    "bytes": 13490,
+    "sha256": "f193dde271438145632907414161ceb8c210008d5fa4e97058d1c477d195032c"
+  },
+  "scripts/mechanics_hbe_halfheight_temporal_common.py": {
+    "bytes": 9791,
+    "sha256": "6e8824f65a370648ee231d4ac90222455a8a6c0ac8a58d513d48f71e625dd2b5"
+  },
+  "scripts/mechanics_hbe_halfheight_tension_n24_temporal.py": {
+    "bytes": 10335,
+    "sha256": "1fbfe3e5582324c43315ad8cc467b65a2218d132d8a8577f2169421a5c209a73"
+  },
+  "scripts/mechanics_hbe_halfheight_tension_n24_temporal_experiment.py": {
+    "bytes": 19306,
+    "sha256": "b3530852ed4bee66dfbcbf50ad66dbd6f1a1a83d83a1c13f8a0b449719329178"
+  },
+  "scripts/mechanics_hbe_mesh.py": {
+    "bytes": 48654,
+    "sha256": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414"
+  },
+  "scripts/mechanics_hbe_outputs.py": {
+    "bytes": 8702,
+    "sha256": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19"
+  },
+  "scripts/mechanics_hbe_physics.py": {
+    "bytes": 17656,
+    "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+  },
+  "scripts/mechanics_hbe_readout.py": {
+    "bytes": 18789,
+    "sha256": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0"
+  },
+  "tests/test_mechanics_hbe_halfheight_tension_n24_temporal.py": {
+    "bytes": 7370,
+    "sha256": "e4d2e897018b1df96fccdb7ea40af4dc174d21ecdabc3865bdaeceb08e1e8b45"
+  }
+}

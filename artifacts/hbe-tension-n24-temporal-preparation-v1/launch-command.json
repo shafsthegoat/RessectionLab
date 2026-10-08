@@ -1,0 +1,25 @@
+{
+  "preflight": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-B",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-tension-n24-temporal-v1/source/scripts/mechanics_hbe_halfheight_tension_n24_temporal_experiment.py",
+    "--root",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "--release",
+    "build/hbe-halfheight-tension-n24-temporal-v1/solve-release.json",
+    "--release-sha256",
+    "f2c21af48d1200af2002a09578082f84d3d879debc5388a77e8790a57ca26b1d"
+  ],
+  "execute": [
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+    "-B",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/hbe-halfheight-tension-n24-temporal-v1/source/scripts/mechanics_hbe_halfheight_tension_n24_temporal_experiment.py",
+    "--root",
+    "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab",
+    "--release",
+    "build/hbe-halfheight-tension-n24-temporal-v1/solve-release.json",
+    "--release-sha256",
+    "f2c21af48d1200af2002a09578082f84d3d879debc5388a77e8790a57ca26b1d",
+    "--execute"
+  ]
+}

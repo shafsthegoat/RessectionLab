@@ -1,0 +1,16 @@
+{
+  "verification": {
+    "path": "build/hbe-tension-n24-temporal-output-review-v1/verification.json",
+    "sha256": "34fc2905d21fb449772dc90245bd706880b17653fc3126d693ca2a116918fb21"
+  },
+  "conclusion": {
+    "status": "tension_temporal_candidate",
+    "tension_temporal_candidate": true,
+    "original_global_failure_preserved": true,
+    "calibration_released": false,
+    "spatial_convergence_accepted": false,
+    "physical_validation_pass": null,
+    "automatic_next_run_permitted": false
+  },
+  "review_seconds": 49.70986779197119
+}

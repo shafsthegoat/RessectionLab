@@ -1,0 +1,137 @@
+{
+  "actual_baseline_binding_check": {
+    "baseline_comparison": {
+      "path": "artifacts/mechanics/hbe-halfheight-spatial-execution-v1/comparison.json",
+      "sha256": "2f4c5bad95b7c81dd888901972857ec5905f2c0004fa6caf8e02d2c70b92e6f7"
+    },
+    "baseline_readout": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N24-S60-reference/readout.json",
+      "sha256": "a99c627448268ce9a9130e7bbc68f038dad5fa49898d80f4362d12c638adb0f6"
+    },
+    "historical_archive_verified": true,
+    "individual_tension_N24_S60_passed": true,
+    "original_failed_group": "compression:N12-N16-N24/reaction_trend",
+    "original_global_status": "failed_or_incomplete",
+    "performed": true,
+    "raw_primitive_action": "chunk_hash_only_no_response_parse"
+  },
+  "blocking_findings": [],
+  "created_at": "2026-10-08T20:54:30.212931+00:00",
+  "direct_controls": {
+    "count": 18,
+    "coverage": [
+      "Historical global failure cannot be promoted; individual tension/runtime/cleanup evidence must remain exact.",
+      "Both actual original tension comparison groups reproduce and pass while the original global comparison remains failed.",
+      "Actual retained N24 deck refuses added body loads/contact, changed midplane sign, changed endpoint/odd load samples and extra controllers.",
+      "Preparation timeout kills/reaps; durable child-receipt publication overrun fails; child remains in outer supervised process group.",
+      "Source inventory requires exact imported origins and requests a commit-bound32-file archive comprising24 modules and8 declarations.",
+      "Native121-state arithmetic loop is AST-identical to accepted N36/S120 reader after explicit branch-name normalization."
+    ],
+    "failed": 0,
+    "junit_sha256": "7ade078847681b6e8fdbbfeded0f4be6931e1edb2e3bc8a0b7b1746b95c323d8",
+    "log_sha256": "a30ec2dc645e9c02f3e303e54f60eac640b86ccbdd53bec2145861e77a89a199",
+    "passed": 18,
+    "pytest_seconds": 5.36,
+    "test_source_sha256": "e5b4e582826831b8c0b4a0a165563ba50baee2a045b835e6028c7086d38277e6"
+  },
+  "executable_review": {
+    "branches_compared": [
+      "tension:N12-N16-N24",
+      "tension:N8-N16-N24"
+    ],
+    "common_map": "S60 i -> S120 2*i",
+    "common_pairs": 61,
+    "midplane_constraints": 1777,
+    "mixed_substitution": "only N24 uses S120; other levels S60",
+    "native_cells": 10368,
+    "native_frames": 121,
+    "no_spatial_or_calibration_acceptance": true,
+    "node_count": 12439,
+    "nonzero_solver_states": 120,
+    "only_schedule_changes": [
+      60,
+      120
+    ],
+    "probes": 75,
+    "same_mesh": true
+  },
+  "files": {
+    "manifests/experiments/hbe-01-03-halfheight-tension-n24-temporal-v1.json": {
+      "bytes": 19460,
+      "sha256": "eefc84557f68dce12f6dd41b72600ae60da1eae6d1dab63dc3de9561a6be8d8e"
+    },
+    "scripts/mechanics_hbe_halfheight_temporal_common.py": {
+      "bytes": 9791,
+      "sha256": "6e8824f65a370648ee231d4ac90222455a8a6c0ac8a58d513d48f71e625dd2b5"
+    },
+    "scripts/mechanics_hbe_halfheight_tension_n24_temporal.py": {
+      "bytes": 10335,
+      "sha256": "1fbfe3e5582324c43315ad8cc467b65a2218d132d8a8577f2169421a5c209a73"
+    },
+    "scripts/mechanics_hbe_halfheight_tension_n24_temporal_experiment.py": {
+      "bytes": 19306,
+      "sha256": "b3530852ed4bee66dfbcbf50ad66dbd6f1a1a83d83a1c13f8a0b449719329178"
+    },
+    "tests/test_mechanics_hbe_halfheight_tension_n24_temporal.py": {
+      "bytes": 7370,
+      "sha256": "e4d2e897018b1df96fccdb7ea40af4dc174d21ecdabc3865bdaeceb08e1e8b45"
+    }
+  },
+  "inherited_modules_unchanged": 21,
+  "input_hash_inventory": {
+    "path": "build/hbe-tension-n24-temporal-independent-review-v1/input-hashes.json",
+    "sha256": "69295620b1f08ead49493fc41667fa885a3527c224b28de11e9c328961bcf620"
+  },
+  "limits": [
+    "Preexecution software/refusal review is not an empirical tensionS120 result.",
+    "Mixed-step comparison is sensitivity of existing criteria, not new homogeneous spatial convergence or physical validation.",
+    "Historical global failure remains explicit despite the individually accepted tension case."
+  ],
+  "owner_controls": {
+    "count": 22,
+    "receipt": {
+      "path": "build/hbe-tension-n24-temporal-implementation-v1/verification.json",
+      "sha256": "3412906110bf74159b15714a6c9b57ea38b5b27f44310a5d137b64bbceb06b81"
+    },
+    "status": "owner_reported_passing_and_hash_bound_not_repeated_by_reviewer"
+  },
+  "release_review": {
+    "execution_requirement": "Root must freeze exact reviewed files in32-file Git archive and bind full commit/archive/source origins in separately authorized solve release; executable preflight checks actual archive before any work.",
+    "new_committed_archive_available_and_checked": false,
+    "release_created": false,
+    "source_inventory_control_scope": "Archive verifier dispatch and expected32-file inventory tested; no fake archive was asserted to be valid."
+  },
+  "resource_contract": {
+    "aggregate_specimen_seconds": 600,
+    "each_active_run_output_bytes": 536870912,
+    "each_solver_seconds": 420,
+    "generated_output_bytes": 1073741824,
+    "gmsh_generation_calls": 0,
+    "maximum_specimen_solver_calls": 1,
+    "preparation_nested_in_aggregate": true,
+    "pure_preparation_seconds": 60,
+    "runtime_threads": 1,
+    "sampled_process_family_rss_bytes": 3221225472
+  },
+  "resource_review": [
+    "600s aggregate clock starts before preflight and includes publication.",
+    "Nested preparation60s includes child-receipt write and parent prepared-input checks.",
+    "One420s native call is truncated to aggregate remainder; no retry or remeshing.",
+    "3GiB sampled process-family RSS;512MiB active and1GiB generated output;256MiB per node/element parser.",
+    "Final result requires separate durable publication check; its own small closeout write is outside that measured clock, explicitly disclosed."
+  ],
+  "schema": "hbe-tension-n24-temporal-independent-implementation-review-v1",
+  "scope": {
+    "all_reviewed_sources_unchanged": true,
+    "calibration_performed": false,
+    "measured_response_reads": 0,
+    "mesher_calls": 0,
+    "new_meshes": 0,
+    "new_native_solver_calls": 0,
+    "phase_execution_calls": 0,
+    "raw_response_replays": 0,
+    "scientific_response_fixtures_created": false,
+    "tracked_source_edits": false
+  },
+  "status": "no_blocking_implementation_defect_pending_committed_archive_and_separate_execution_release"
+}

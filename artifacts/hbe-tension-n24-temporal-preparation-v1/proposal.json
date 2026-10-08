@@ -1,0 +1,311 @@
+{
+  "authorized": false,
+  "case": {
+    "K_Pa": 49666.666666666664,
+    "common_states": 61,
+    "element_fields": 8,
+    "full_axial_endpoint_m": 0.0007337385,
+    "full_height_m": 0.00489159,
+    "full_reconstructed_cells": 20736,
+    "full_reconstructed_nodes": 23101,
+    "midplane_nodes": 1777,
+    "mu_Pa": 1000.0,
+    "native_frames": 121,
+    "native_hex8_cells": 10368,
+    "native_midplane_endpoint_m": 0.00036686925,
+    "native_nodes": 12439,
+    "new_mesher_calls": 0,
+    "new_solver_calls": 1,
+    "node_fields": 9,
+    "nonzero_solver_residual_states": 120,
+    "physical_probes": 75,
+    "physics": "Same original exponent2 Ogden/three-field hex8, pressure model1, laugon0, bonded bottom and free side; artificial midplane z=d/2, x/y free; full force scale1, energy scale2. Static load increments, not physical tissue time.",
+    "radius_m": 0.004,
+    "run_id": "tension:N24:S120:reference",
+    "steps": 120
+  },
+  "decision": "One tension:N24:S120:reference solve, reusing the accepted N24 half geometry and unchanged specimen physics. This is independent of the still-uninterpreted live compression S120 result; joint qualification requires both accepted outcomes.",
+  "evidence": {
+    "backend_profile": {
+      "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+      "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+    },
+    "baseline_readout": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N24-S60-reference/readout.json",
+      "sha256": "a99c627448268ce9a9130e7bbc68f038dad5fa49898d80f4362d12c638adb0f6"
+    },
+    "comparison": {
+      "path": "artifacts/mechanics/hbe-halfheight-spatial-execution-v1/comparison.json",
+      "sha256": "2f4c5bad95b7c81dd888901972857ec5905f2c0004fa6caf8e02d2c70b92e6f7"
+    },
+    "declaration": {
+      "path": "manifests/experiments/hbe-01-03-halfheight-spatial-v1.json",
+      "sha256": "00d38fd5fca1472b6f01543c6817cea8537f340e8c56a4466752914571c9230c"
+    },
+    "execution": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N24-S60-reference/execution.json",
+      "sha256": "78870007328a7a2f1bd8adf46b4b76388bc5152fbea9d11cf07d481efb9dd802"
+    },
+    "full_mesh": {
+      "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/N24/generated/mesh.json",
+      "sha256": "61f27d63cdcb6328bcbe94e05ac1802a162d613cadd01610caf649a16f30643b"
+    },
+    "independent_review": {
+      "path": "artifacts/mechanics/hbe-halfheight-spatial-execution-v1/independent-review.json",
+      "sha256": "c828100a4c92aa9880b9a6096469541513670f2409e530e773599f8e6665f5bd"
+    },
+    "interpreter": {
+      "path": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "sha256": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a"
+    },
+    "older_tension_readouts_for_sensitivity": {
+      "8": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N8-S60-reference/readout.json",
+        "sha256": "a9cb82b68a52d7b7f3267d83df741d6f416bb8569e3dbb2bbf7d7a94d9e50e18"
+      },
+      "12": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S60-reference/readout.json",
+        "sha256": "7a269ca2c1f7a4a9225b84d7660455a8832e0ed593867821d5c8a25cc9401d6a"
+      },
+      "16": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N16-S60-reference/readout.json",
+        "sha256": "2a93754c4ae837e57ecd1b3b4db728e7be095fbc9861eec7495bef10e427ebcc"
+      }
+    },
+    "primitive_bindings": {
+      "deck": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N24-S60-reference/specimen.feb",
+        "sha256": "eef01651bd04a7426934dee3fdfe04c70515208fb6b243059f50135e4845e613"
+      },
+      "elements": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N24-S60-reference/elements.log",
+        "sha256": "f7641cbedeafc8fcd1e1ae04fa38e50676585cc0cfdde57e8f2c3b68fc26842b"
+      },
+      "loading": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N24-S60-reference/loading.json",
+        "sha256": "aa208869148bb70d9138bf4f824a06c15d307ba7522adaccb65b3b2f209a52d4"
+      },
+      "mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/N24/mesh.json",
+        "sha256": "f8a934c3e035fbf478583719b901490f72478579b72d0b4d8b0a6dea1a3b99a2"
+      },
+      "nodes": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N24-S60-reference/nodes.log",
+        "sha256": "8c02d7bd449d5eb195e2b300bda7f9d8fc683e17494850b4320396379add4644"
+      },
+      "solver": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/tension-N24-S60-reference/solver.log",
+        "sha256": "e596de211fc3dd1e593d609218f6c7aa2659d08fc127d0092e4526aaf97bb5a8"
+      }
+    },
+    "reconstruction": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/preparation/N24/reconstruction.json",
+      "sha256": "ec2240c6cb47f345c5efc0659ea13678e7b7b7a6a1ee9f8db9d73313f8f98cd7"
+    },
+    "release": {
+      "path": "artifacts/mechanics/hbe-halfheight-spatial-execution-v1/solve-release.json",
+      "sha256": "4d1bb87690228fa52256594f00f1530cfb743a0a5976f1e20b1109b840ad1d7a"
+    },
+    "result": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/result.json",
+      "sha256": "601fe2e4b45987b493ed561bbeda9943fafc9fc1ef64044d703f922f2c8fed6a"
+    },
+    "runtime_identity": {
+      "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+      "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+    },
+    "scale_homogeneity_note": {
+      "path": "artifacts/hbe-n36-temporal-preparation-v1/scale-homogeneity.md",
+      "sha256": "e7c5f4aaf0693299f20d872b95de18a28f568cba7fa95520c48994f1105c57b0"
+    },
+    "source_archive": {
+      "path": "build/hbe-halfheight-spatial-v1/source.tar",
+      "sha256": "50702506705e52f5ed2bbd056d93a0e1c0c85f9ceea08916ec222d1a2074328e"
+    },
+    "source_bindings": {
+      "access": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_access.py",
+        "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+      },
+      "backend_profile": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_backend.py",
+        "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae"
+      },
+      "curve_evaluator": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_evaluation.py",
+        "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+      },
+      "halfheight_mesh": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_halfheight_mesh.py",
+        "sha256": "6d8aef586fd454c262cd4afd3ad4e2b43580c9e74db0c380a020838dc8379084"
+      },
+      "halfheight_readout": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_halfheight_readout.py",
+        "sha256": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30"
+      },
+      "halfheight_spatial": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_halfheight_spatial.py",
+        "sha256": "9093900ce30a7fb35aaded799c9f8aedbc9abc22f7fface57b83092ae83066da"
+      },
+      "halfheight_spatial_readout": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_halfheight_spatial_readout.py",
+        "sha256": "f193dde271438145632907414161ceb8c210008d5fa4e97058d1c477d195032c"
+      },
+      "halfheight_spatial_runner": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_halfheight_spatial_experiment.py",
+        "sha256": "2c793883238d15ad65539c4b04f777aa283ab07a104734080420055180cd6abd"
+      },
+      "mesh_deck": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_mesh.py",
+        "sha256": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414"
+      },
+      "orchestrator": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_experiment.py",
+        "sha256": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa"
+      },
+      "physics": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_physics.py",
+        "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+      },
+      "primitive_parser": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_outputs.py",
+        "sha256": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19"
+      },
+      "readout": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/mechanics_hbe_readout.py",
+        "sha256": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0"
+      },
+      "runtime_driver": {
+        "path": "build/hbe-halfheight-spatial-v1/source/scripts/febio_runtime.py",
+        "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+      }
+    },
+    "source_commit": "3de9f373a6e5e66cfda2f3bd1b7e9f6c97454125",
+    "state": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/state.json",
+      "sha256": "c9e4d76743b1781a75458191fef085ddc4ef6f679e44b3708115881f28db26b5"
+    }
+  },
+  "minimal_future_implementation_scope": {
+    "controls": "Exact saved-geometry/XML schedule-only check,121-frame/61-common-grid dispatch without fabricated response logs, positive tension sign, source/release refusals and nested budget controls.",
+    "historical_readout_policy": "Authenticate existing complete accepted S60 readout/native execution and independent8-readout replay receipt. No redundant historical raw replays in this one-case study.",
+    "new_files": [
+      "scripts/mechanics_hbe_halfheight_tension_n24_temporal.py",
+      "scripts/mechanics_hbe_halfheight_tension_n24_temporal_readout.py",
+      "scripts/mechanics_hbe_halfheight_tension_n24_temporal_experiment.py",
+      "manifests/experiments/hbe-01-03-halfheight-tension-n24-temporal-v1.json",
+      "tests/test_mechanics_hbe_halfheight_tension_n24_temporal.py"
+    ],
+    "reuse": "Original saved-mesh extraction and deck builder; exact S120 adapter pattern; original public bounded parser, half/full mechanics, refinement arithmetic, solve/OutputWatch/runtime supervisor and durable publication. New thin exact-case wrappers only; preserve all existing source/declarations."
+  },
+  "mixed_step_sensitivity": {
+    "basis": "Both original tension triplets N12/16/24 and N8/16/24 pass at S60; the complete historical study remains failed because of compression.",
+    "observed_N12_to_N16_max_force_difference_N": 0.0001243693117838028,
+    "observed_N16_to_N24_max_force_difference_N": 0.00012035211271966759,
+    "observed_max_difference_trend_slack_N": 4.017199064135224e-06,
+    "requirement": "Recompute the unchanged original reaction/motion/trend metrics of both tension triplets with only N24 replaced by S120 even-index values. Report all old and new classifications; keep original S60 study unchanged. This is mixed-step sensitivity, not a new homogeneous spatial convergence result or continuum error bound.",
+    "slack_scope": "Difference between two recorded maxima, not an endpoint perturbation margin or error bound. Temporal allowance exceeds this slack, so a temporal pass alone cannot guarantee unchanged spatial classification."
+  },
+  "performed_now": {
+    "implementation_created": false,
+    "live_run_or_response_log_reads": 0,
+    "measured_curve_access": false,
+    "mesh_calls": 0,
+    "native_calls": 0,
+    "release_created": false,
+    "source_edits": 0
+  },
+  "preparation": "Hash-bind and algebraically verify accepted full/half geometry and reconstruction; no new mesh. Generate only the S120 deck/loading through original deterministic deck/half-boundary mathematics, and prove canonical XML identical except120 steps, step_size=dtmin=dtmax=1/120 and121 samples of the same affine loading path. Preserve endpoints, every common coordinate, fields, output_stride1, solver tolerances and backend. No retry/cutback.",
+  "prospective_caps": {
+    "aggregate_scope": "From source/input preflight through nested deck preparation, one native call, readout/comparison, cleanup, result file/directory fsync and output scan; tiny closing receipt timing disclosed as existing contract.",
+    "aggregate_seconds": 600,
+    "each_active_run_output_bytes": 536870912,
+    "each_solver_seconds": 420,
+    "elements_maximum_bytes": 268435456,
+    "new_total_output_bytes": 1073741824,
+    "no_retry_resume_refinement_or_automatic_cap_increase": true,
+    "nodes_maximum_bytes": 268435456,
+    "preparation_nested_in_aggregate": true,
+    "pure_deck_preparation_seconds": 60,
+    "runtime_threads": 1,
+    "sampled_process_family_rss_bytes": 3221225472,
+    "solver_maximum_bytes": 16777216
+  },
+  "readout": "Stream all121 complete native node/element records and120 residual records, including actual initial state. Preserve independent half/full balance, free-DOF, prescribed motion, positive sampled Jacobians, reconstruction and all121-state work/energy checks. Retain75 physical probes. Full values are reconstructed, not a full-native equivalence claim. Hash raw logs before/after parsing with existing bounded chunked hashing.",
+  "resource_basis": {
+    "forecast_not_observation": {
+      "active_bytes_121_over_61": 389737602.08196723,
+      "elements_bytes_121_over_61": 147343439.62295082,
+      "native_seconds_x2": 253.7224179157056,
+      "native_x2_plus_twice_entire_old_overhead_plus_full_preparation_cap_seconds": 489.49766908213496,
+      "nodes_bytes_121_over_61": 234683009.0
+    },
+    "interpretation": "These are cost scenarios, not upper bounds. The older phase included three native calls and historical readouts; its overhead is not a measured per-case readout timer. Native420s is retained from prior N24 study, while600s aggregate covers this one case. Default256MiB log limits already cover the projection; exact12439/10368 native counts also fit the existing20000-item public streaming parser. No global parser expansion or new streaming infrastructure is needed. Same mesh/system dimensions, no retained field histories, unchanged3GiB cap. Refer to old inputs instead of copying raw logs into new total.",
+    "observed_S60_closed_run_bytes": 196479287,
+    "observed_S60_element_log_bytes": 74280577,
+    "observed_S60_native_seconds": 126.8612089578528,
+    "observed_S60_node_log_bytes": 118311269,
+    "observed_prior_three_run_non_native_difference_seconds": 87.88762558321469,
+    "observed_prior_three_run_phase_seconds": 365.7986551250797,
+    "observed_prior_whole_study_sampled_peak_RSS_bytes": 761856000
+  },
+  "schema": "hbe-tension-n24-s120-prospective-temporal-diagnostic-v1",
+  "status": "proposal_only_not_implementation_or_execution_release",
+  "stopping_and_claims": "Any source, resource, native, individual-state or original temporal failure is terminal with retained evidence. A temporal pass that changes mixed-step spatial classification remains flagged for review. No S240, remesh, automatic repetition, calibration access or patient/tool validation follows. Pass is only a tension load-increment candidate; the unchanged physical validation gate remains closed.",
+  "successor_branch_map_before_any_fitted_mu_work": {
+    "branches": {
+      "compression": {
+        "evidence": "Must await complete independent S120 outcome; do not read or assume live result.",
+        "load_coordinate_field": "load_coordinate_m",
+        "mesh_N": 36,
+        "reference_run_id": "compression:N36:S120:reference",
+        "representation": "accepted native lower-half plus reflected full readout",
+        "response_field": "applied_force_N",
+        "steps": 120
+      },
+      "tension": {
+        "evidence": "Requires this one-case outcome plus explicit acceptance of its branch-specific spatial qualification.",
+        "load_coordinate_field": "load_coordinate_m",
+        "mesh_N": 24,
+        "reference_run_id": "tension:N24:S120:reference",
+        "representation": "accepted native lower-half plus reflected full readout",
+        "response_field": "applied_force_N",
+        "steps": 120
+      },
+      "torsion_neg": {
+        "evidence": "Retain original mesh/step controls; measured torsion stays sealed.",
+        "load_coordinate_field": "load_coordinate",
+        "mesh_N": 12,
+        "reference_run_id": "torsion_neg:N12:S120:reference",
+        "representation": "original full-native",
+        "response_field": "applied_torque_Nm",
+        "steps": 120
+      },
+      "torsion_pos": {
+        "evidence": "Retain original mesh/step/double-mu controls; measured torsion stays sealed.",
+        "load_coordinate_field": "load_coordinate",
+        "mesh_N": 12,
+        "reference_run_id": "torsion_pos:N12:S120:reference",
+        "representation": "original full-native",
+        "response_field": "applied_torque_Nm",
+        "steps": 120
+      }
+    },
+    "exact_interface_changes": [
+      "Replace hardcoded N12 reference selection in mechanics_hbe_experiment.curves with a frozen branch map of exact readout, mesh, reconstruction, source/backend and numerical-evidence bindings; no caller-selected levels. Normalize declared SI coordinate fields explicitly.",
+      "Replace expected_runs/_check_report/freeze_predictions fixed N12 assumptions in a separately reviewed successor qualification interface. Retain original18-run aggregate as failed historical evidence; accept only an explicit new branch-specific qualification record, never relabel it passed.",
+      "Use the same one-positive-scale axial fit, weights, units/sign/no-offset/no-extrapolation rules. Preserve two actual121-state fitted confirmations on compressionN36 and tensionN24 at the identified mu, with onlyc1/K/min_residual changes and actualmu in readout tolerances. Match each confirmation to its own reference geometry.",
+      "Require unchanged displacement and correctly scaled raw nodal reactions/torque at every fitted state under original scale tolerances; retain independent individual checks. Algebraic homogeneity has same-equilibrium-branch scope and does not establish actual fine-mesh scale-run completion.",
+      "Before opening torsion responses, freeze the common fitted parameter, two successful confirmations, source/numerical/role bindings and both scaled original N12 torsion predictions. Preserve donor/mode roles and all historical negative results."
+    ],
+    "reference_mu_Pa": 1000.0,
+    "status": "Separate prospective source-bound qualification/fit interface required; no current implementation or release."
+  },
+  "temporal_gate": {
+    "S60_based_force_allowance_forecast_N": 5.3161568704946066e-05,
+    "force": "max_i |F120[2*i]-F60[i]| <= 1.6e-8 N + .002*max_i |F120[2*i]|, using61 common states exactly as original.",
+    "mapping": "S60 i maps exactly to S120 2*i, i=0..60; no interpolation or odd-state deletion.",
+    "motion": "max_i,p norm(u120[2*i,p]-u60[i,p]) <= 8e-7 m.",
+    "signed_shift": "F120[2*i]-F60[i], positive means increased tensile force; retain all61 shifts and maximum/state."
+  }
+}
