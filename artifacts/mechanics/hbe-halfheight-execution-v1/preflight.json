@@ -1,0 +1,25 @@
+{
+  "scope": "Preflight of exact source/runtime/full-reference bindings and replay of saved numerical control checks; zero mesher or solver calls",
+  "attempts": [
+    {
+      "invocation": "bound base Python executable",
+      "exit_code": 1,
+      "failure": "ModuleNotFoundError: No module named scipy",
+      "phase_marker_created": false
+    },
+    {
+      "invocation": ".venv/bin/python",
+      "exit_code": 0,
+      "stdout": "Metadata verified; neither phase has executed.",
+      "qualification": "Printed text understates work: saved numerical controls were rechecked; no new solver launched."
+    }
+  ],
+  "python_invoked": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/.venv/bin/python",
+  "python_resolved": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+  "python_binary_sha256": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a",
+  "numpy_version": "2.5.3",
+  "scipy_version": "1.18.1",
+  "source_commit": "437bbeddb9ea110644315a10d11846a0d52c4a0d",
+  "prepare_release_sha256": "62243e3d9e54a2ba263c884e35e73fcf248ec743f7859aae77ff903a9528c68f",
+  "outcome_recording": "Root records completed tool outcomes; this is not a solver or empirical measurement result"
+}
