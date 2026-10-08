@@ -45,6 +45,12 @@ No force push, paid infrastructure, billing change or external outreach is autho
 
 ## Latest acquisition checkpoint
 
+All [Lausanne TRAIN originals](../artifacts/lausanne-train-acquisition-complete-v1/RESULT.md)
+are acquired and byte-verified: 199 people, 210 sessions, 840 files and
+10,020,802,851 bytes. The continuous runner finished the final 52 files without
+batch review pauses. Separate QC remains for 26 newly downloaded images; six
+historical T1 conflicts are retained. No fitting or spatial admission is implied.
+
 The [full eligible Lausanne annotation intake](../artifacts/lausanne-annotation-full-intake-v1/RESULT.md)
 completed all 144 masks from 106 people/117 sessions. Independent content checks
 verified all 13,977,015 compressed bytes and 1,134,965 positive voxels. At the

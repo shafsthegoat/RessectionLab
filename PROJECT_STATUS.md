@@ -30,6 +30,10 @@ sub022 failure remain preserved. No anatomical or training admission is implied.
 The [continuous download runner](artifacts/continuous-source-acquisition-v1/RESULT.md)
 passes 143 focused controls and is running the full frozen 890-file queue. New
 receipts report byte verification only, with all scientific QC separately pending.
+All [Lausanne TRAIN originals](artifacts/lausanne-train-acquisition-complete-v1/RESULT.md)
+are now complete: 840 files, 199 people, 210 sessions and 10,020,802,851 bytes.
+The final 26 images await separate header/scalar QC. Six earlier T1 frame conflicts
+remain unresolved; download completion does not establish anatomical admission.
 The [observed six-landmark desktop API](artifacts/observed-landmark-replay-v1/RESULT.md)
 now advances acquired phases/points and reopens bound snapshots. Independent review
 cleared transport and packaged-startup repairs. Sparse landmarks still provide no
