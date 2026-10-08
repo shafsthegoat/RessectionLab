@@ -14,8 +14,8 @@ results remain unchanged. See [receipt](artifacts/real-observation-policy-v1/RES
 
 Lausanne's CC0 source metadata confirms 284 unique people and 296 original paired
 T1/TOF sessions. A fixed split now assigns 199 TRAIN / 43 SELECT / 42 measurement
-evaluation people, grouping visits and TopCoW copies. Six TRAIN original pairs
-and their sidecars are acquired (203,467,291 bytes); published byte fixity and
+evaluation people, grouping visits and TopCoW copies. Ten TRAIN original pairs
+and their sidecars are acquired (336,685,225 bytes); published byte fixity and
 worker header/scalar checks pass. Independent pilot inspection found TOF
 sidecar versus NIfTI orientation differs by about 1.70 degrees,
 so scanner-frame provenance and interscan registration remain unresolved. Two
@@ -30,9 +30,11 @@ they add no new independent people. See [intake acceptance](artifacts/lausanne-t
 The first 600-second expansion batch completed one additional person, then
 timed out on the next with a resumable 6,291,456-byte partial. All workers exited;
 The next batch resumed that partial and acquired four more people in 521.3543
-seconds. Now 204 TRAIN sessions remain incomplete. [The second closed batch](artifacts/lausanne-train-intake-v1/acquisition-batch-02-summary.json)
-retains its exact source bindings; the first timeout is preserved. No acquisition
-batch is currently running.
+seconds. The third batch acquired sub-007/021/022/450 in 527.2644 seconds;
+200 TRAIN sessions remain incomplete. Root and independent byte/receipt audits
+reverified all ten originals and execution snapshots. [The third closed batch](artifacts/lausanne-train-intake-v1/acquisition-batch-03-summary.json)
+retains its historical source bindings; subsequent code edits are distinct.
+The first timeout is preserved. No acquisition batch is currently running.
 Full TRAIN acquisition/use and annotation eligibility remain outstanding. No newly compliant
 RL training has run: eligible recorded surgical transitions remain missing.
 Before further code edits, a fresh fetch again verified remote/local main at

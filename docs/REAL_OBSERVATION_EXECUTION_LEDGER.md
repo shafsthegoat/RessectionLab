@@ -34,7 +34,7 @@ compact execution record, not a replacement specification.
 
 | Workstream | Verified state / missing evidence | Next implementation or acquisition |
 |---|---|---|
-| Data and anatomy | Lausanne originals are CC0 acquired T1/TOF; 284 people, 296 sessions. Full 199-person/210-session TRAIN index is frozen (10.02 GB). Six original pairs acquired; the prior partial resumed successfully. Bounded intake/cache checks pass; no acquisition batch remains running. TOF orientation provenance and interscan alignment unresolved. | Continue remaining 204 TRAIN sessions using the tested runner. Exclude atlas-derived vessel maps from measurement truth. |
+| Data and anatomy | Lausanne originals are CC0 acquired T1/TOF; 284 people, 296 sessions. Full 199-person/210-session TRAIN index is frozen (10.02 GB). Ten original pairs acquired; the prior partial resumed successfully. Bounded intake/cache checks pass; no acquisition batch remains running. TOF orientation provenance and interscan alignment unresolved. | Continue remaining 200 TRAIN sessions using the tested runner. Exclude atlas-derived vessel maps from measurement truth. |
 | Learning | No inspected historical checkpoint meets the new lineage rule. Scans supply no recorded actions/next observations. RESECT family roles are frozen (14 TRAIN/4 SELECT/4 EVAL/Case4 DEVELOPMENT); the bounded Case3 source/rights/QC runner passes 24 combined controls. A rights-only HTTP429 stopped acquisition. | Archive exact rights text when service permits, then acquire/QC the frozen image/mask before cavity-component fitting. Case4 and missing labels remain protected. No recorded-action cohort acquired or outreach sent. |
 | Navigation / integration | Desktop route calls omit vascular critical masks; CaseData has no typed vascular evidence/coverage. | Add source-bound critical evidence and coverage, wire both planners and invalidation; positive acceptance requires actual same-person annotations. |
 | Operative science | Four supplied research reviews are read; proposed mechanisms are not implemented evidence. | Introduce an evidence-timed action/observation timeline with observed events distinct from proposals and model predictions. |
@@ -88,9 +88,18 @@ published fixity, receipt identity and source snapshots; no anatomy was accepted
 
 The second [bounded expansion](../artifacts/lausanne-train-intake-v1/acquisition-batch-02-summary.json)
 resumed sub-002 and completed sub-005/006/015 in 521.3543 seconds. Current totals
-are six people/six sessions/203,467,291 complete source bytes; 204 sessions remain
+were six people/six sessions/203,467,291 complete source bytes; 204 sessions remained
 incomplete. All six source receipts and published fixity were reverified. These
 are acquisition/header/scalar checks, with zero spatial admissions or learning.
+
+The third [bounded expansion](../artifacts/lausanne-train-intake-v1/acquisition-batch-03-summary.json)
+completed sub-007/021/022/450 in 527.2644 seconds, adding 133,217,934 bytes.
+Current totals are ten people/ten sessions/40 files/336,685,225 bytes, with
+200 sessions deferred by the byte budget. Root and an independent reviewer
+reverified all ten source receipts, published fixity and historical code
+snapshots. The current edited imaging/core files differ from those retained
+execution versions; this does not rewrite the batch's source provenance.
+No registration, anatomical acceptance or training contribution is claimed.
 
 RESECT's official file-version endpoint now resolves revision2 to its explicit
 download route. The [bounded pilot](../artifacts/resect-component-admission-v1/RESULT.md)

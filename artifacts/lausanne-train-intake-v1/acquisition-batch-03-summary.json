@@ -1,0 +1,25 @@
+{
+  "status": "bounded_batch_finished",
+  "local_run": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T055310920558Z",
+  "elapsed_seconds": 527.2644242090173,
+  "source_size_budget": 134217728,
+  "attempted_source_bytes": 133217934,
+  "new_complete_people": 4,
+  "total_complete_people": 10,
+  "total_complete_sessions": 10,
+  "total_complete_source_bytes": 336685225,
+  "remaining_incomplete_train_sessions": 200,
+  "new_sessions": [
+    "sub-007/ses-20101225",
+    "sub-021/ses-20101111",
+    "sub-022/ses-20101011",
+    "sub-450/ses-20141125"
+  ],
+  "root_reverified_published_fixity_and_receipt_sha256": true,
+  "independent_audit": "core_contracts read-only byte/receipt audit passed; no image decoding",
+  "source_qualification": "Retained execution sources verified; current core.py/imaging.py have subsequent edits",
+  "header_scalar_checks": "Worker passes; no independent anatomical or scanner-frame acceptance",
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "spatial_admissions": 0
+}

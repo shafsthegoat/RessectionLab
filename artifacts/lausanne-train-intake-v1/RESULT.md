@@ -98,3 +98,21 @@ connection/header-time confounding and cannot establish sustained throughput or
 a 3.09-fold speedup. The acquisition runner remains serial. A bounded two-request
 full-object trial, with balanced timing, would be required before a performance
 claim. [Diagnostic record](transport-concurrency-diagnostic.json).
+# Third bounded TRAIN expansion, October 8
+
+The [batch03 summary](acquisition-batch-03-summary.json) records four additional
+people: sub-007, sub-021, sub-022 and sub-450. All four workers exited zero and
+their original-image/sidecar receipts pass source fixity and saved QC checks.
+The run took 527.264424209 seconds of 600 and used 133,217,934 bytes of its
+134,217,728-byte source-size budget. This budget measures declared source size,
+not network traffic. The remaining 200 sessions were deferred, not failed.
+
+Root independently repeated `validate_receipt` for all ten acquired sessions;
+a separate read-only reviewer also rehashed all originals and execution
+snapshots. Totals are ten unique people, ten sessions, 40 files and 336,685,225
+bytes. Batch receipt SHA256 is
+`da8b6cded6f4e3afd8b57dffa4eec576c10d0c1eeca5b6b1d876c82441bb31fc`.
+All patient roles and source-index hashes are unchanged. Current imaging/core
+edits postdate this execution; its retained historical snapshots are authoritative.
+These checks establish acquisition and worker QC, not registration, vascular
+annotation admission, component training or recorded surgical experience.
