@@ -1,0 +1,71 @@
+{
+  "started_utc": "2026-10-08T08:42:07.944113+00:00",
+  "source_url": "https://osf.io/download/4mkfg/?revision=2",
+  "expected": {
+    "bytes": 1656,
+    "md5": "bae7e9b837bfc3b53d7b74d750df0b4b",
+    "sha256": "0a75fef344487ee2649a831919388940f2000bf4cb936979e0da2f73a9aa81a9"
+  },
+  "body_limit_bytes": 8192,
+  "total_timeout_seconds": 20,
+  "request_limit": 3,
+  "requests": [
+    {
+      "request": 1,
+      "host": "osf.io",
+      "path": "/download/4mkfg/",
+      "full_url_sha256": "509e401e4042ebb212b1e41646a5be39a4d7f3244d52c27c92a1f0cb62e2d937",
+      "http_status": 302,
+      "retry_after": null,
+      "content_type": "text/html; charset=utf-8",
+      "content_length": "0",
+      "content_encoding": "identity",
+      "date": "Thu, 08 Oct 2026 08:42:08 GMT",
+      "redirect_destination": {
+        "host": "files.de-1.osf.io",
+        "path": "/v1/resources/jv8bk/providers/osfstorage/65cddcd16d0cb801d21a96bc",
+        "full_url_sha256": "6b0515e9fabed5924d2cc712327350b2e9b4b63072ed0f0107987b2a30640fd8"
+      }
+    },
+    {
+      "request": 2,
+      "host": "files.de-1.osf.io",
+      "path": "/v1/resources/jv8bk/providers/osfstorage/65cddcd16d0cb801d21a96bc",
+      "full_url_sha256": "6b0515e9fabed5924d2cc712327350b2e9b4b63072ed0f0107987b2a30640fd8",
+      "http_status": 302,
+      "retry_after": null,
+      "content_type": "text/html; charset=UTF-8",
+      "content_length": "0",
+      "content_encoding": "identity",
+      "date": "Thu, 08 Oct 2026 08:42:09 GMT",
+      "redirect_destination": {
+        "host": "storage.googleapis.com",
+        "path": "/cos-osf-prod-files-de-1/0a75fef344487ee2649a831919388940f2000bf4cb936979e0da2f73a9aa81a9",
+        "full_url_sha256": "62e21a0f890ad282f779950ca6cf05bd2e82a9e59515ec2d3ec538f961b1cc07"
+      }
+    },
+    {
+      "request": 3,
+      "host": "storage.googleapis.com",
+      "path": "/cos-osf-prod-files-de-1/0a75fef344487ee2649a831919388940f2000bf4cb936979e0da2f73a9aa81a9",
+      "full_url_sha256": "62e21a0f890ad282f779950ca6cf05bd2e82a9e59515ec2d3ec538f961b1cc07",
+      "http_status": 200,
+      "retry_after": null,
+      "content_type": "application/octet-stream",
+      "content_length": "1656",
+      "content_encoding": "identity",
+      "date": "Thu, 08 Oct 2026 08:42:10 GMT"
+    }
+  ],
+  "status": "verified_exact_rights_bytes",
+  "scientific_payload_accessed": false,
+  "response_body": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/resect-rights-followup-v2/completed-attempt-v1/response-body.bin",
+    "bytes": 1656,
+    "md5": "bae7e9b837bfc3b53d7b74d750df0b4b",
+    "sha256": "0a75fef344487ee2649a831919388940f2000bf4cb936979e0da2f73a9aa81a9"
+  },
+  "verified_rights_path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/resect-rights-followup-v2/completed-attempt-v1/README.txt",
+  "elapsed_seconds": 2.8890527919999998,
+  "completed_utc": "2026-10-08T08:42:10.836998+00:00"
+}

@@ -64,6 +64,39 @@ def test_unreviewed_destination_rejected_before_request(intake, url):
         intake.validate_url(url, intake.SOURCES[0])
 
 
+@pytest.mark.parametrize("source_index", [0, 2])
+def test_osf_storage_redirect_requires_exact_frozen_object(intake, source_index):
+    source = intake.SOURCES[source_index]
+    route = f"https://storage.googleapis.com/cos-osf-prod-files-de-1/{source['sha256']}"
+    intake.validate_url(route + "?X-Goog-Signature=transport-control", source)
+    for bad in (route.replace("https:", "http:"), route + "/extra",
+                route.replace("cos-osf-prod-files-de-1", "unrelated-bucket"),
+                route.replace(source['sha256'], "0" * 64)):
+        with pytest.raises(ValueError, match="Unreviewed source"):
+            intake.validate_url(bad, source)
+    saved = intake.safe_route(route + "?X-Goog-Signature=transport-control")
+    assert "transport-control" not in json.dumps(saved)
+    assert set(saved) == {"host", "path", "full_url_sha256"}
+
+
+def test_malformed_signed_query_cannot_reach_network_or_error_text(intake, tmp_path, monkeypatch):
+    source = dict(intake.SOURCES[0])
+    monkeypatch.setattr(intake, "DATA", tmp_path / "unacquired")
+    def forbidden(*args, **kwargs):
+        pytest.fail("Malformed URL must be refused before network")
+    class NoNetwork:
+        open = staticmethod(forbidden)
+    monkeypatch.setattr(intake, "build_opener", lambda *args: NoNetwork())
+    for character in (" ", "\n", "\x00", "\x7f", "é"):
+        source["source_url"] = ("https://storage.googleapis.com/cos-osf-prod-files-de-1/"
+                                + source["sha256"] + "?X-Goog-Signature=private" + character + "value")
+        with pytest.raises(ValueError) as error:
+            intake.transfer(source, tmp_path, deadline=time.monotonic() + 2, events=[])
+        assert "private" not in str(error.value)
+        assert "Signature" not in str(error.value)
+    assert not list(tmp_path.glob("request-*.json"))
+
+
 def test_rate_limit_is_not_retried_and_retains_retry_after(intake, tmp_path, monkeypatch):
     """HTTP status/header control only; no acquired or fabricated medical bytes."""
     calls = []

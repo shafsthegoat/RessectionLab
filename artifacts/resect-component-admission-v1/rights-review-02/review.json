@@ -1,0 +1,21 @@
+{
+  "schema": "resect-exact-osf-object-redirect-review-v1",
+  "status": "passed_before_scientific_acquisition",
+  "source_sha256": "4f8fda98e6a184682b97c70c230489b7cca406eea24ded2e724e0608fc22f493",
+  "tests_sha256": "eee5f719231de0b31cbd0f95f2d9b9cc56c688ca07f690b92ab725a298c835f4",
+  "tests_passed": 13,
+  "tests_seconds": 0.38,
+  "independent_review": "Exact frozen-object host/bucket/path permitted; no original-image URL/manifest/cohort changes; no remaining substantive finding",
+  "retained_findings": [
+    "Historical HTTP429 rights failure unchanged",
+    "Deliberate followup stopped at local overly narrow allowlist, not source access denial; subsequent explicitly reviewed official chain acquired exact bytes",
+    "Independent review found malformed signed query could leak through InvalidURL; generic encoding refusal and no-network regression repaired before payload acquisition"
+  ],
+  "rights_sha256": "0a75fef344487ee2649a831919388940f2000bf4cb936979e0da2f73a9aa81a9",
+  "rights_bytes": 1656,
+  "runtime_rights_path": "data/annotations/resect-seg-v1/rights/README.txt",
+  "license": "CC-BY-NC-SA-4.0",
+  "purpose": "Noncommercial observation-component research; no commercial-use clearance",
+  "scientific_payload_accessed": false,
+  "optimizer_updates": 0
+}

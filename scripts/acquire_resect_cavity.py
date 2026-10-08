@@ -95,8 +95,21 @@ class NoRedirect(HTTPRedirectHandler):
 
 
 def validate_url(url: str, source: dict) -> None:
+    # http.client includes a malformed request target in InvalidURL messages.
+    # Refuse it here before a signed query can reach an exception/log.
+    if any(not 33 <= ord(character) <= 126 for character in url):
+        raise ValueError("Unreviewed source URL encoding; no request sent")
     parsed = urlparse(url)
     allowed = {"osf.io", "files.osf.io", "files.de-1.osf.io"}
+    # OSF's authenticated redirect now uses this content-addressed bucket.
+    # Admit only the exact reviewed object for this frozen annotation/notice;
+    # the complete response still has to match its declared size and hashes.
+    digest = source.get("sha256")
+    if (source["kind"] in {"annotation_rights_and_release_notes", "human_reviewed_visible_cavity_annotation"}
+            and isinstance(digest, str) and len(digest) == 64
+            and all(c in "0123456789abcdef" for c in digest)
+            and parsed.path == f"/cos-osf-prod-files-de-1/{digest}"):
+        allowed.add("storage.googleapis.com")
     if source["kind"] == "acquired_during_resection_ultrasound":
         allowed = {"s3.nird.sigma2.no"}
         if url != source["source_url"]:

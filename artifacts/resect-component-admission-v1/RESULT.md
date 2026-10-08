@@ -56,3 +56,21 @@ Reproducible commands (separate invocations; stop on failure):
 .venv/bin/python scripts/acquire_resect_cavity.py acquire
 .venv/bin/python scripts/acquire_resect_cavity.py qc
 ```
+
+## Exact rights archival and current OSF route, October 8
+
+A deliberate new bounded follow-up acquired the exact revision2 README through
+OSF's official redirect chain in2.889seconds. All1656bytes, published MD5 and
+SHA256 match. [Original rights text](rights-review-02/README.txt),
+[HTTP receipt](rights-review-02/retrieval.json) and
+[independent source review](rights-review-02/review.json) are retained.
+The earlier429 and an intermediate local redirect refusal remain failures.
+
+The downloader now permits only the exact OSF storage bucket/object identified
+by the frozen rights/mask SHA256. Thirteen controls pass; independent review
+verified the source and repaired malformed-query exception logging before
+scientific acquisition. Source roles, manifests, declared bytes/hashes and
+no-retry behavior are unchanged. The authenticated README is installed at the
+runtime prerequisite path. The license is CC BY-NC-SA4.0, with the stated
+financial-benefit restriction; this is noncommercial research, not commercial
+clearance. Scientific acquisition and QC remain the next separate invocations.
