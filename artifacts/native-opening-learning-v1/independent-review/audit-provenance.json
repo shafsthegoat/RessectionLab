@@ -1,0 +1,14 @@
+{
+  "scope": "Review-tool provenance; original study outputs remain unchanged.",
+  "initial_attempt": "Saved-record checks passed through10042; default weights-only loader refused NumPy float64 architecture metadata. This was audit-tool compatibility, not a failed study.",
+  "repair": "Static pickle inspection identified only numpy._core.multiarray.scalar and numpy.dtype, with f8 metadata, in all three checkpoints. A local safe_globals context admits precisely that scalar/dtype and Float64DType while weights_only=True remains enabled. No unrestricted pickle load, policy forward or optimizer step.",
+  "accounting_note": "verification.totals.actual_episode_native_previews=756 means actual native preview calls within all guarded episode scopes, including48 nominal-search previews. Total native calls including shared preparation=768. These differ from137 committed episode transitions and20 nominal search-tree transition calls.",
+  "files": {
+    "audit.py": "78cc0a1466ee40729228ff94ed5b2aa29584fbc2dc8f57119c13596543037b91",
+    "audit-repaired.py": "17a84907aa58e0b51f7b5d9c77ba96b6bf7683379d04f0d9a75b71e10a59f657",
+    "audit-initial.log": "d35c520572ca7c3e530ec7619735c5c4a4a6303d1469995318607b6a36b39e48",
+    "audit-repaired.log": "22e08fe02694f51b844e29388ef4dff5442f05e5e69127d48209322e2a7a3dbb",
+    "failure-initial.json": "ca5b791e6c1282c9faa31e6da7f8966ee36e6aea5c45e8efca39f3ff78cf9a62",
+    "verification.json": "faed3f45068a513272ac1927e2ce696563b346320f400c2733d5d1990bd75223"
+  }
+}

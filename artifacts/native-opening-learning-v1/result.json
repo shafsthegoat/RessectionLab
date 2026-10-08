@@ -1,0 +1,1147 @@
+{
+  "elapsed_seconds": 6.54656691593118,
+  "initial_parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+  "methods": {
+    "BC": {
+      "accepted": true,
+      "actions": [
+        "STOP"
+      ],
+      "online_seconds": 0.07324066595174372,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 2.0,
+        "total_reward": 0.0
+      },
+      "parameter_hash": "sha256:1fbf11d5bd9e78ce26a55a21ceb4e4a1a6126cac5842b17bfa26353e1b453a7f",
+      "planning": {},
+      "replay_seconds": 0.005577834090217948,
+      "status": "complete"
+    },
+    "STOP": {
+      "accepted": true,
+      "actions": [
+        "STOP"
+      ],
+      "online_seconds": 0.007061999989673495,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 2.0,
+        "total_reward": 0.0
+      },
+      "parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+      "planning": {},
+      "replay_seconds": 0.004807374905794859,
+      "status": "complete"
+    },
+    "depth2-search": {
+      "accepted": true,
+      "actions": [
+        "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+        "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+      ],
+      "online_seconds": 0.2745113328564912,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 10.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 6.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 2,
+        "normal_removed_mm3": 4.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 2,
+        "reference_target_fraction_removed": 1.0,
+        "simulated_removed_volume_mm3": 6.0,
+        "target_removed_mm3": 2.0,
+        "tool_changes": 1,
+        "total_reference_target_mm3": 2.0,
+        "total_reward": 1.1
+      },
+      "parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+      "planning": {
+        "complete": true,
+        "model_transition_calls": 20,
+        "nominal_optimum": 1.1,
+        "observation_conflicts": 0,
+        "reference_fields_used": false,
+        "sequence": [
+          "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+          "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+        ],
+        "state_rows": [
+          {
+            "action_ids": [
+              "STOP",
+              "NATIVE-SPATIAL:9cfc4e00074d6cf93eb5cb82",
+              "NATIVE-SPATIAL:f985c763473c0225d9b56230",
+              "NATIVE-SPATIAL:b4c22140396ffbcc5f14ef15",
+              "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+            ],
+            "observation_hash": "sha256:ccca16824aab833104e49e21de526444c7bc8bc1bcb52ee5a4e370c9a564124d",
+            "scores": [
+              {
+                "action_id": "STOP",
+                "nominal_return_to_go": 0.0
+              },
+              {
+                "action_id": "NATIVE-SPATIAL:9cfc4e00074d6cf93eb5cb82",
+                "nominal_return_to_go": -0.233
+              },
+              {
+                "action_id": "NATIVE-SPATIAL:f985c763473c0225d9b56230",
+                "nominal_return_to_go": -0.265
+              },
+              {
+                "action_id": "NATIVE-SPATIAL:b4c22140396ffbcc5f14ef15",
+                "nominal_return_to_go": 0.733
+              },
+              {
+                "action_id": "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8",
+                "nominal_return_to_go": 1.731
+              }
+            ],
+            "selected_action_id": "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8",
+            "state_hash": "sha256:9473d34df29b099a2a270ccc0fd542c65fc752f4b570af64eecbc42447de2f05"
+          },
+          {
+            "action_ids": [
+              "STOP",
+              "NATIVE-SPATIAL:0d78540299fe5eb3a1770d83",
+              "NATIVE-SPATIAL:8169300cfa7db4a4742e3063",
+              "NATIVE-SPATIAL:7afd144506d396798a525e1e"
+            ],
+            "observation_hash": "sha256:e4d32b8f85642482f33aa7849ac74394e7d6a707168073343bbee9ce20ed988c",
+            "scores": [
+              {
+                "action_id": "STOP",
+                "nominal_return_to_go": 0.0
+              },
+              {
+                "action_id": "NATIVE-SPATIAL:0d78540299fe5eb3a1770d83",
+                "nominal_return_to_go": -0.4610000000000001
+              },
+              {
+                "action_id": "NATIVE-SPATIAL:8169300cfa7db4a4742e3063",
+                "nominal_return_to_go": -0.6630000000000001
+              },
+              {
+                "action_id": "NATIVE-SPATIAL:7afd144506d396798a525e1e",
+                "nominal_return_to_go": -0.233
+              }
+            ],
+            "selected_action_id": "STOP",
+            "state_hash": "sha256:7f755521e0c6e4474b1889dffba56ec4444d1d5610967fa33cd368475be80ab4"
+          },
+          {
+            "action_ids": [
+              "STOP",
+              "NATIVE-SPATIAL:81d9c8d011c2b37342ee27df",
+              "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07"
+            ],
+            "observation_hash": "sha256:b6219c3ec2d4cac1a962c3a9c123734fb2f2eb9a5854c2f920d214b467faba54",
+            "scores": [
+              {
+                "action_id": "STOP",
+                "nominal_return_to_go": 0.0
+              },
+              {
+                "action_id": "NATIVE-SPATIAL:81d9c8d011c2b37342ee27df",
+                "nominal_return_to_go": 0.9329999999999999
+              },
+              {
+                "action_id": "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07",
+                "nominal_return_to_go": 1.931
+              }
+            ],
+            "selected_action_id": "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07",
+            "state_hash": "sha256:b3a37d4408a761d373cc329b7b42dc3c06b11f8fc5ceaa693d5ac3ac213bfa37"
+          },
+          {
+            "action_ids": [
+              "STOP",
+              "NATIVE-SPATIAL:89b67ded73fcfa7092918c12",
+              "NATIVE-SPATIAL:1186a2ff80d07c1941c4434b"
+            ],
+            "observation_hash": "sha256:a5bba06653b8644cf38722b6d99c5c21236284999afdfbe938c9055d1d6e543d",
+            "scores": [
+              {
+                "action_id": "STOP",
+                "nominal_return_to_go": 0.0
+              },
+              {
+                "action_id": "NATIVE-SPATIAL:89b67ded73fcfa7092918c12",
+                "nominal_return_to_go": -0.261
+              },
+              {
+                "action_id": "NATIVE-SPATIAL:1186a2ff80d07c1941c4434b",
+                "nominal_return_to_go": -0.4630000000000001
+              }
+            ],
+            "selected_action_id": "STOP",
+            "state_hash": "sha256:a24a88df8d399aaa31f2acb8ed231003b944dd2f972efc09943d39966774a3af"
+          },
+          {
+            "action_ids": [
+              "STOP",
+              "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+              "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+              "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+              "NATIVE-SPATIAL:7c300ab776942c7446a122a0"
+            ],
+            "observation_hash": "sha256:c9458a99068bfaae90ba69062073a674c55ee31ad66d11a5c86461ef2c834eba",
+            "scores": [
+              {
+                "action_id": "STOP",
+                "nominal_return_to_go": 0.0
+              },
+              {
+                "action_id": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+                "nominal_return_to_go": 1.1
+              },
+              {
+                "action_id": "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+                "nominal_return_to_go": -0.231
+              },
+              {
+                "action_id": "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+                "nominal_return_to_go": 1.0979999999999999
+              },
+              {
+                "action_id": "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+                "nominal_return_to_go": -0.43300000000000005
+              }
+            ],
+            "selected_action_id": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "state_hash": "sha256:15e85a278cd752abc31db6e48cbf1512f8771da4fdaa10844b4f6593f4b04de7"
+          }
+        ],
+        "supervised_state_demonstrations": [
+          {
+            "complete_demonstration": [
+              "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+              "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+            ],
+            "observation_hash": "sha256:ccca16824aab833104e49e21de526444c7bc8bc1bcb52ee5a4e370c9a564124d",
+            "prefix": [
+              "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5"
+            ],
+            "selected_action_id": "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+          },
+          {
+            "complete_demonstration": [
+              "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+              "STOP"
+            ],
+            "observation_hash": "sha256:e4d32b8f85642482f33aa7849ac74394e7d6a707168073343bbee9ce20ed988c",
+            "prefix": [
+              "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9"
+            ],
+            "selected_action_id": "STOP"
+          },
+          {
+            "complete_demonstration": [
+              "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+              "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07"
+            ],
+            "observation_hash": "sha256:b6219c3ec2d4cac1a962c3a9c123734fb2f2eb9a5854c2f920d214b467faba54",
+            "prefix": [
+              "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1"
+            ],
+            "selected_action_id": "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07"
+          },
+          {
+            "complete_demonstration": [
+              "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+              "STOP"
+            ],
+            "observation_hash": "sha256:a5bba06653b8644cf38722b6d99c5c21236284999afdfbe938c9055d1d6e543d",
+            "prefix": [
+              "NATIVE-SPATIAL:7c300ab776942c7446a122a0"
+            ],
+            "selected_action_id": "STOP"
+          },
+          {
+            "complete_demonstration": [
+              "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+              "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+            ],
+            "observation_hash": "sha256:c9458a99068bfaae90ba69062073a674c55ee31ad66d11a5c86461ef2c834eba",
+            "prefix": [],
+            "selected_action_id": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5"
+          }
+        ],
+        "terminal_sequences": 16,
+        "unique_supervised_states": 5
+      },
+      "replay_seconds": 0.050454708049073815,
+      "status": "complete"
+    },
+    "greedy": {
+      "accepted": true,
+      "actions": [
+        "STOP"
+      ],
+      "online_seconds": 0.009066417114809155,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 0.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 0,
+        "normal_removed_mm3": 0.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 2.0,
+        "total_reward": 0.0
+      },
+      "parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+      "planning": {
+        "complete": true,
+        "decisions": [
+          {
+            "all_current_legal_actions_scored": true,
+            "legal_nonstop_actions": 4,
+            "scored_nonstop_actions": 4,
+            "scores": [
+              {
+                "action_id": "STOP",
+                "complete_tool_path_length_mm": 0.0,
+                "insertion_distance_mm": 0.0,
+                "normal_removed_mm3": 0.0,
+                "reward": 0.0,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+                "complete_tool_path_length_mm": 1.0,
+                "insertion_distance_mm": 0.5,
+                "normal_removed_mm3": 3.0,
+                "reward": -0.6310000000000001,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+                "complete_tool_path_length_mm": 1.0,
+                "insertion_distance_mm": 0.5,
+                "normal_removed_mm3": 1.0,
+                "reward": -0.231,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+                "complete_tool_path_length_mm": 3.0,
+                "insertion_distance_mm": 1.5,
+                "normal_removed_mm3": 4.0,
+                "reward": -0.8330000000000001,
+                "target_removed_mm3": 0.0
+              },
+              {
+                "action_id": "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+                "complete_tool_path_length_mm": 3.0,
+                "insertion_distance_mm": 1.5,
+                "normal_removed_mm3": 2.0,
+                "reward": -0.43300000000000005,
+                "target_removed_mm3": 0.0
+              }
+            ],
+            "selected_action_id": "STOP",
+            "source_state_hash": "sha256:56c2016605106bfde3793d1ce171cb7d1a46dc67e6af2a2c9a5b6af689ef3ba1",
+            "step": 0
+          }
+        ],
+        "estimated_incremental_return": 0.0,
+        "evaluated_nonstop_actions": 4,
+        "global_optimality_proven": false,
+        "initial_source_preparation": "outside_this_call; caller_must_report_and_charge",
+        "initial_steps": 0,
+        "max_steps": 2,
+        "method": "observed_greedy",
+        "model_transition_calls": 1,
+        "native_replay_required": true,
+        "objective_source": "permitted_nominal_target_and_frozen_geometric_costs",
+        "planning_seconds": 0.0021546250209212303,
+        "time_budget_seconds": 10.0,
+        "within_call_costs": "nominal clone, certificate checks, all candidate scoring, selected commits and needed inventories"
+      },
+      "replay_seconds": 0.004546042066067457,
+      "status": "complete"
+    },
+    "initial": {
+      "accepted": true,
+      "actions": [
+        "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+        "NATIVE-SPATIAL:7afd144506d396798a525e1e"
+      ],
+      "online_seconds": 0.07119266595691442,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 4.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 4.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 2.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 2,
+        "normal_removed_mm3": 2.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 2.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 2.0,
+        "total_reward": -0.464
+      },
+      "parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+      "planning": {},
+      "replay_seconds": 0.06738700019195676,
+      "status": "complete"
+    },
+    "random-0": {
+      "accepted": true,
+      "actions": [
+        "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+        "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07"
+      ],
+      "online_seconds": 0.06058045802637935,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 12.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 6.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 2,
+        "normal_removed_mm3": 4.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 2,
+        "reference_target_fraction_removed": 1.0,
+        "simulated_removed_volume_mm3": 6.0,
+        "target_removed_mm3": 2.0,
+        "tool_changes": 1,
+        "total_reference_target_mm3": 2.0,
+        "total_reward": 1.0979999999999999
+      },
+      "parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+      "planning": {},
+      "replay_seconds": 0.05324270902201533,
+      "status": "complete"
+    },
+    "random-1": {
+      "accepted": true,
+      "actions": [
+        "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+        "NATIVE-SPATIAL:0d78540299fe5eb3a1770d83"
+      ],
+      "online_seconds": 0.04325045784935355,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 2.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 4.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 2,
+        "normal_removed_mm3": 3.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 3.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 1,
+        "total_reference_target_mm3": 2.0,
+        "total_reward": -0.6920000000000001
+      },
+      "parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+      "planning": {},
+      "replay_seconds": 0.04017433291301131,
+      "status": "complete"
+    },
+    "random-2": {
+      "accepted": true,
+      "actions": [
+        "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+        "STOP"
+      ],
+      "online_seconds": 0.047147874953225255,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 1.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 4.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 1,
+        "normal_removed_mm3": 3.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 3.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 2.0,
+        "total_reward": -0.6310000000000001
+      },
+      "parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+      "planning": {},
+      "replay_seconds": 0.044834458036348224,
+      "status": "complete"
+    },
+    "scratch-RL": {
+      "accepted": true,
+      "actions": [
+        "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+        "NATIVE-SPATIAL:1186a2ff80d07c1941c4434b"
+      ],
+      "online_seconds": 0.04995816689915955,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 6.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 5.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 2,
+        "normal_removed_mm3": 4.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 4.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 1,
+        "total_reference_target_mm3": 2.0,
+        "total_reward": -0.8960000000000001
+      },
+      "parameter_hash": "sha256:5134b5ff817c87dbc31f9b51fb082626a06883efb75471cfe38e8d41f6ccbfa7",
+      "planning": {},
+      "replay_seconds": 0.04520445805974305,
+      "status": "complete"
+    }
+  },
+  "offline_teacher_validation": {
+    "complete_episodes": 5,
+    "reference_reward_not_used_for_labels": true,
+    "seconds": 0.3857009999919683,
+    "transitions": 10
+  },
+  "preparation": {
+    "decision_model_hash": "sha256:f607b51b66d00164c33ff9c8fa7725b0e6e15bab1b566d161efbe3fb4f4e730b",
+    "initial_observation_hash": "sha256:c9458a99068bfaae90ba69062073a674c55ee31ad66d11a5c86461ef2c834eba",
+    "inventory": {
+      "accepted_count": 4,
+      "all_support_cell_tool_pairs": 12,
+      "basis": "all_observed_support_cells_in_small_source",
+      "cavity_state_hash": "sha256:56c2016605106bfde3793d1ce171cb7d1a46dc67e6af2a2c9a5b6af689ef3ba1",
+      "complete": true,
+      "decision_model_hash": "sha256:f607b51b66d00164c33ff9c8fa7725b0e6e15bab1b566d161efbe3fb4f4e730b",
+      "declared_slots": 12,
+      "emitted": [
+        {
+          "action_id": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "feasible": true,
+          "reason": "NATIVE_CONNECTED_STROKE",
+          "tip_mm": [
+            4.0,
+            4.0,
+            1.0
+          ],
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            1
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "feasible": true,
+          "reason": "NATIVE_CONNECTED_STROKE",
+          "tip_mm": [
+            4.0,
+            4.0,
+            1.0
+          ],
+          "tool_id": "long-narrow-cutter",
+          "voxel": [
+            4,
+            4,
+            1
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "feasible": true,
+          "reason": "NATIVE_CONNECTED_STROKE",
+          "tip_mm": [
+            4.0,
+            4.0,
+            2.0
+          ],
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            2
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "feasible": true,
+          "reason": "NATIVE_CONNECTED_STROKE",
+          "tip_mm": [
+            4.0,
+            4.0,
+            2.0
+          ],
+          "tool_id": "long-narrow-cutter",
+          "voxel": [
+            4,
+            4,
+            2
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:e8884845acdac10ba7c6349a",
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "feasible": false,
+          "reason": "HARD_GEOMETRY:WORKING_REACH",
+          "tip_mm": [
+            4.0,
+            4.0,
+            3.0
+          ],
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            3
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:1a11b1896a5d31ce1144394c",
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "feasible": false,
+          "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "tip_mm": [
+            4.0,
+            4.0,
+            3.0
+          ],
+          "tool_id": "long-narrow-cutter",
+          "voxel": [
+            4,
+            4,
+            3
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:e1ac057a60f075830c6e7de7",
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "feasible": false,
+          "reason": "HARD_GEOMETRY:WORKING_REACH",
+          "tip_mm": [
+            4.0,
+            4.0,
+            4.0
+          ],
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:7bef67f4f83d62f7e1d4d5c4",
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "feasible": false,
+          "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "tip_mm": [
+            4.0,
+            4.0,
+            4.0
+          ],
+          "tool_id": "long-narrow-cutter",
+          "voxel": [
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:29db489d04a2956d8ade9c21",
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "feasible": false,
+          "reason": "HARD_GEOMETRY:WORKING_REACH",
+          "tip_mm": [
+            4.0,
+            4.0,
+            5.0
+          ],
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            5
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:29d7a6427a98194d624f8b42",
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "feasible": false,
+          "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "tip_mm": [
+            4.0,
+            4.0,
+            5.0
+          ],
+          "tool_id": "long-narrow-cutter",
+          "voxel": [
+            4,
+            4,
+            5
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:53cb2c493848e8f816d72c5e",
+          "entry_mm": [
+            5.0,
+            5.0,
+            0.5
+          ],
+          "feasible": false,
+          "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+          "tip_mm": [
+            5.0,
+            5.0,
+            1.0
+          ],
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            5,
+            5,
+            1
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:609c1e1268b52dc2a8b38066",
+          "entry_mm": [
+            5.0,
+            5.0,
+            0.5
+          ],
+          "feasible": false,
+          "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+          "tip_mm": [
+            5.0,
+            5.0,
+            1.0
+          ],
+          "tool_id": "long-narrow-cutter",
+          "voxel": [
+            5,
+            5,
+            1
+          ]
+        }
+      ],
+      "emitted_count": 12,
+      "evaluated_slots": 12,
+      "ledger": [
+        {
+          "action_id": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "feasible": true,
+          "reason": "NATIVE_CONNECTED_STROKE",
+          "tip_mm": [
+            4.0,
+            4.0,
+            1.0
+          ],
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            1
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "feasible": true,
+          "reason": "NATIVE_CONNECTED_STROKE",
+          "tip_mm": [
+            4.0,
+            4.0,
+            1.0
+          ],
+          "tool_id": "long-narrow-cutter",
+          "voxel": [
+            4,
+            4,
+            1
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "feasible": true,
+          "reason": "NATIVE_CONNECTED_STROKE",
+          "tip_mm": [
+            4.0,
+            4.0,
+            2.0
+          ],
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            2
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "feasible": true,
+          "reason": "NATIVE_CONNECTED_STROKE",
+          "tip_mm": [
+            4.0,
+            4.0,
+            2.0
+          ],
+          "tool_id": "long-narrow-cutter",
+          "voxel": [
+            4,
+            4,
+            2
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:e8884845acdac10ba7c6349a",
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "feasible": false,
+          "reason": "HARD_GEOMETRY:WORKING_REACH",
+          "tip_mm": [
+            4.0,
+            4.0,
+            3.0
+          ],
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            3
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:1a11b1896a5d31ce1144394c",
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "feasible": false,
+          "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "tip_mm": [
+            4.0,
+            4.0,
+            3.0
+          ],
+          "tool_id": "long-narrow-cutter",
+          "voxel": [
+            4,
+            4,
+            3
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:e1ac057a60f075830c6e7de7",
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "feasible": false,
+          "reason": "HARD_GEOMETRY:WORKING_REACH",
+          "tip_mm": [
+            4.0,
+            4.0,
+            4.0
+          ],
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:7bef67f4f83d62f7e1d4d5c4",
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "feasible": false,
+          "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "tip_mm": [
+            4.0,
+            4.0,
+            4.0
+          ],
+          "tool_id": "long-narrow-cutter",
+          "voxel": [
+            4,
+            4,
+            4
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:29db489d04a2956d8ade9c21",
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "feasible": false,
+          "reason": "HARD_GEOMETRY:WORKING_REACH",
+          "tip_mm": [
+            4.0,
+            4.0,
+            5.0
+          ],
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            4,
+            4,
+            5
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:29d7a6427a98194d624f8b42",
+          "entry_mm": [
+            4.0,
+            4.0,
+            0.5
+          ],
+          "feasible": false,
+          "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+          "tip_mm": [
+            4.0,
+            4.0,
+            5.0
+          ],
+          "tool_id": "long-narrow-cutter",
+          "voxel": [
+            4,
+            4,
+            5
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:53cb2c493848e8f816d72c5e",
+          "entry_mm": [
+            5.0,
+            5.0,
+            0.5
+          ],
+          "feasible": false,
+          "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+          "tip_mm": [
+            5.0,
+            5.0,
+            1.0
+          ],
+          "tool_id": "short-wide-opener",
+          "voxel": [
+            5,
+            5,
+            1
+          ]
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:609c1e1268b52dc2a8b38066",
+          "entry_mm": [
+            5.0,
+            5.0,
+            0.5
+          ],
+          "feasible": false,
+          "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+          "tip_mm": [
+            5.0,
+            5.0,
+            1.0
+          ],
+          "tool_id": "long-narrow-cutter",
+          "voxel": [
+            5,
+            5,
+            1
+          ]
+        }
+      ],
+      "max_steps": 2,
+      "omitted_count": 0,
+      "rejected_count": 8,
+      "remaining_steps": 2,
+      "scope": "complete_declared_source_normal_primitives_not_all_surgical_paths",
+      "source_hash": "sha256:9b39c31e1e012b0822d538451a0452fa9c564acc863d22dabb311ec4cf8c5d4e",
+      "steps_taken": 0,
+      "terminal": false,
+      "terminated_slots": 0
+    },
+    "lineage": {
+      "cavity_channel": "exact simulated committed removal; not observed operative cavity",
+      "clinical_use": false,
+      "human_roles_opened": [],
+      "images": "generated",
+      "real_patient_count": 0,
+      "teacher": "complete depth-two search over permitted nominal planning clones",
+      "transitions": "simulator_generated"
+    },
+    "preview_profile": {
+      "phases": {
+        "unclassified": {
+          "feasible": 4,
+          "raised": 0,
+          "rejected": 8,
+          "rejection_reasons": {
+            "HARD_GEOMETRY:ACCESS_APERTURE": 2,
+            "HARD_GEOMETRY:WORKING_REACH": 3,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 3
+          },
+          "returned": 12,
+          "returned_microsteps": 47,
+          "seconds": 0.030176790663972497,
+          "started": 12
+        }
+      },
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "reference_hash": "sha256:c6693c3aff6e316fb13ae7e9f495775418e1fb78241a6bc7bf468cc245684535",
+    "seconds": 0.038635874865576625,
+    "source_hash": "sha256:9b39c31e1e012b0822d538451a0452fa9c564acc863d22dabb311ec4cf8c5d4e"
+  },
+  "real_patient_count": 0,
+  "status": "complete",
+  "training": {
+    "BC": {
+      "fit_seconds": 0.24162625009194016,
+      "initial_parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+      "latest_parameter_hash": "sha256:1fbf11d5bd9e78ce26a55a21ceb4e4a1a6126cac5842b17bfa26353e1b453a7f",
+      "loss_forward_calls": 80,
+      "optimization_transitions": 0,
+      "status": "complete",
+      "updates": 16
+    },
+    "scratch-RL": {
+      "fit_seconds": 4.023205250035971,
+      "initial_parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+      "latest_parameter_hash": "sha256:5134b5ff817c87dbc31f9b51fb082626a06883efb75471cfe38e8d41f6ccbfa7",
+      "loss_forward_calls": 112,
+      "optimization_transitions": 112,
+      "status": "complete",
+      "updates": 16
+    }
+  },
+  "version": "native-opening-learning-v1"
+}

@@ -1,0 +1,1906 @@
+[
+  {
+    "episodes": [
+      {
+        "decisions": 1,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 0.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 0,
+          "normal_removed_mm3": 0.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 0.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 0.0
+        },
+        "return": 0.0
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 4.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 4.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 2.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 2.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 2.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.464
+        },
+        "return": -0.464
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 4.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 5.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 4.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.8640000000000001
+        },
+        "return": -0.8640000000000001
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 4.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 4.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 3.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 3.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.6940000000000001
+        },
+        "return": -0.6940000000000001
+      }
+    ],
+    "fit_elapsed_seconds": 0.2432566659990698,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.2588489353656769,
+      "critic_gradient_norm_before_clip": 1.3115836381912231,
+      "encoder_gradient_norm_before_clip": 0.512759268283844,
+      "gradient_norm_after_clip": 1.4442635774612427,
+      "gradient_norm_before_clip": 1.4442633390426636,
+      "initial_parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.1889995038509369,
+      "updated_parameter_hash": "sha256:a736f834fb90f51f289bf8b266bf838f7e31105207e6728d44a5ce98c68d78e5"
+    },
+    "loss": {
+      "actor_reduction": "mean_episodes_sum_discounted_score_terms",
+      "completed_episodes": 4,
+      "entropy": 1.5130689144134521,
+      "kind": "masked_reinforce_spatial_value_v1",
+      "loss": -1.3510011434555054,
+      "loss_forward_calls": 7,
+      "mean_return": -0.5055000000000001,
+      "policy_loss": -1.5211355686187744,
+      "regularizer_reduction": "mean_episodes_mean_actions",
+      "value_loss": 0.37053006887435913
+    },
+    "loss_update_seconds": 0.023809999926015735,
+    "update": 1
+  },
+  {
+    "episodes": [
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 6.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 5.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 4.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.8960000000000001
+        },
+        "return": -0.8960000000000001
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 4.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 5.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 4.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.8640000000000001
+        },
+        "return": -0.8640000000000001
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 1.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 4.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 1,
+          "normal_removed_mm3": 3.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 3.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.6310000000000001
+        },
+        "return": -0.6310000000000001
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 4.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 5.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 4.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.8640000000000001
+        },
+        "return": -0.8640000000000001
+      }
+    ],
+    "fit_elapsed_seconds": 0.5465562080498785,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.5195356011390686,
+      "critic_gradient_norm_before_clip": 1.4336858987808228,
+      "encoder_gradient_norm_before_clip": 1.0514146089553833,
+      "gradient_norm_after_clip": 1.870488166809082,
+      "gradient_norm_before_clip": 1.8704880475997925,
+      "initial_parameter_hash": "sha256:a736f834fb90f51f289bf8b266bf838f7e31105207e6728d44a5ce98c68d78e5",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.26053938269615173,
+      "updated_parameter_hash": "sha256:6cf08dcff2d530a51ee4a6f1b47f3d51b00e4ba796ab5124af0af35ec6f28a43"
+    },
+    "loss": {
+      "actor_reduction": "mean_episodes_sum_discounted_score_terms",
+      "completed_episodes": 4,
+      "entropy": 1.607053279876709,
+      "kind": "masked_reinforce_spatial_value_v1",
+      "loss": -1.5591896772384644,
+      "loss_forward_calls": 8,
+      "mean_return": -0.8137500000000002,
+      "policy_loss": -1.7568130493164062,
+      "regularizer_reduction": "mean_episodes_mean_actions",
+      "value_loss": 0.4273875951766968
+    },
+    "loss_update_seconds": 0.01607999997213483,
+    "update": 2
+  },
+  {
+    "episodes": [
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 4.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 4.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 3.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 3.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.6940000000000001
+        },
+        "return": -0.6940000000000001
+      },
+      {
+        "decisions": 1,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 0.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 0,
+          "normal_removed_mm3": 0.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 0.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 0.0
+        },
+        "return": 0.0
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 4.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 4.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 2.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 2.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 2.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.464
+        },
+        "return": -0.464
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 6.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 5.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 4.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.8960000000000001
+        },
+        "return": -0.8960000000000001
+      }
+    ],
+    "fit_elapsed_seconds": 0.7809182079508901,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.36314472556114197,
+      "critic_gradient_norm_before_clip": 0.7334080934524536,
+      "encoder_gradient_norm_before_clip": 0.845501720905304,
+      "gradient_norm_after_clip": 1.1980725526809692,
+      "gradient_norm_before_clip": 1.1980724334716797,
+      "initial_parameter_hash": "sha256:6cf08dcff2d530a51ee4a6f1b47f3d51b00e4ba796ab5124af0af35ec6f28a43",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.2252623587846756,
+      "updated_parameter_hash": "sha256:30b6e45ef792faa568dd0cf887b02316a126926c072f6bed0d55eaeb11dc5a18"
+    },
+    "loss": {
+      "actor_reduction": "mean_episodes_sum_discounted_score_terms",
+      "completed_episodes": 4,
+      "entropy": 1.4529826641082764,
+      "kind": "masked_reinforce_spatial_value_v1",
+      "loss": -0.788794994354248,
+      "loss_forward_calls": 7,
+      "mean_return": -0.5135000000000001,
+      "policy_loss": -0.8598973751068115,
+      "regularizer_reduction": "mean_episodes_mean_actions",
+      "value_loss": 0.17126435041427612
+    },
+    "loss_update_seconds": 0.014030082849785686,
+    "update": 3
+  },
+  {
+    "episodes": [
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 3.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 5.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 1,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 4.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.8330000000000001
+        },
+        "return": -0.8330000000000001
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 4.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 4.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 3.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 3.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.6940000000000001
+        },
+        "return": -0.6940000000000001
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 3.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 5.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 1,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 4.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.8330000000000001
+        },
+        "return": -0.8330000000000001
+      },
+      {
+        "decisions": 1,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 0.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 0,
+          "normal_removed_mm3": 0.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 0.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 0.0
+        },
+        "return": 0.0
+      }
+    ],
+    "fit_elapsed_seconds": 1.0082436660304666,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.5510974526405334,
+      "critic_gradient_norm_before_clip": 0.18404051661491394,
+      "encoder_gradient_norm_before_clip": 0.6331446766853333,
+      "gradient_norm_after_clip": 0.9606072306632996,
+      "gradient_norm_before_clip": 0.96060711145401,
+      "initial_parameter_hash": "sha256:30b6e45ef792faa568dd0cf887b02316a126926c072f6bed0d55eaeb11dc5a18",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.42931899428367615,
+      "updated_parameter_hash": "sha256:152935a1c94ed3360dcaabe3db375a56218759f3a6003ad65de10535a1e49401"
+    },
+    "loss": {
+      "actor_reduction": "mean_episodes_sum_discounted_score_terms",
+      "completed_episodes": 4,
+      "entropy": 1.4178154468536377,
+      "kind": "masked_reinforce_spatial_value_v1",
+      "loss": -0.2953171730041504,
+      "loss_forward_calls": 7,
+      "mean_return": -0.5900000000000001,
+      "policy_loss": -0.35612553358078003,
+      "regularizer_reduction": "mean_episodes_mean_actions",
+      "value_loss": 0.1499730497598648
+    },
+    "loss_update_seconds": 0.014494666131213307,
+    "update": 4
+  },
+  {
+    "episodes": [
+      {
+        "decisions": 1,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 0.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 0,
+          "normal_removed_mm3": 0.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 0.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 0.0
+        },
+        "return": 0.0
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 12.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 6.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 2,
+          "reference_target_fraction_removed": 1.0,
+          "simulated_removed_volume_mm3": 6.0,
+          "target_removed_mm3": 2.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 1.0979999999999999
+        },
+        "return": 1.0979999999999999
+      },
+      {
+        "decisions": 1,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 0.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 0,
+          "normal_removed_mm3": 0.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 0.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 0.0
+        },
+        "return": 0.0
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 6.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 5.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 4.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.8960000000000001
+        },
+        "return": -0.8960000000000001
+      }
+    ],
+    "fit_elapsed_seconds": 1.2206313330680132,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.43876171112060547,
+      "critic_gradient_norm_before_clip": 2.990866184234619,
+      "encoder_gradient_norm_before_clip": 3.9152143001556396,
+      "gradient_norm_after_clip": 4.956167697906494,
+      "gradient_norm_before_clip": 4.9561662673950195,
+      "initial_parameter_hash": "sha256:152935a1c94ed3360dcaabe3db375a56218759f3a6003ad65de10535a1e49401",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.311293363571167,
+      "updated_parameter_hash": "sha256:c085b71a5a99efe163fb67bde07f69d66c0810c6ac0fa72bc0ddce7a9c726247"
+    },
+    "loss": {
+      "actor_reduction": "mean_episodes_sum_discounted_score_terms",
+      "completed_episodes": 4,
+      "entropy": 1.5426933765411377,
+      "kind": "masked_reinforce_spatial_value_v1",
+      "loss": 2.261066198348999,
+      "loss_forward_calls": 6,
+      "mean_return": 0.050499999999999934,
+      "policy_loss": 1.663055658340454,
+      "regularizer_reduction": "mean_episodes_mean_actions",
+      "value_loss": 1.2268747091293335
+    },
+    "loss_update_seconds": 0.012458249926567078,
+    "update": 5
+  },
+  {
+    "episodes": [
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 6.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 5.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 4.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.8960000000000001
+        },
+        "return": -0.8960000000000001
+      },
+      {
+        "decisions": 1,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 0.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 0,
+          "normal_removed_mm3": 0.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 0.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 0.0
+        },
+        "return": 0.0
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 10.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 6.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 2,
+          "reference_target_fraction_removed": 1.0,
+          "simulated_removed_volume_mm3": 6.0,
+          "target_removed_mm3": 2.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 1.1
+        },
+        "return": 1.1
+      },
+      {
+        "decisions": 1,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 0.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 0,
+          "normal_removed_mm3": 0.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 0.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 0.0
+        },
+        "return": 0.0
+      }
+    ],
+    "fit_elapsed_seconds": 1.4230208748485893,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.2664806544780731,
+      "critic_gradient_norm_before_clip": 2.296872854232788,
+      "encoder_gradient_norm_before_clip": 2.6055378913879395,
+      "gradient_norm_after_clip": 3.485217332839966,
+      "gradient_norm_before_clip": 3.485217571258545,
+      "initial_parameter_hash": "sha256:c085b71a5a99efe163fb67bde07f69d66c0810c6ac0fa72bc0ddce7a9c726247",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.10618451237678528,
+      "updated_parameter_hash": "sha256:6df1b04ece82afaa13549aa2de844e2e3afe4b3ff2aee318f22fa25d38e3e3a7"
+    },
+    "loss": {
+      "actor_reduction": "mean_episodes_sum_discounted_score_terms",
+      "completed_episodes": 4,
+      "entropy": 1.5420089960098267,
+      "kind": "masked_reinforce_spatial_value_v1",
+      "loss": 2.090087413787842,
+      "loss_forward_calls": 6,
+      "mean_return": 0.05099999999999999,
+      "policy_loss": 1.607827067375183,
+      "regularizer_reduction": "mean_episodes_mean_actions",
+      "value_loss": 0.9953612089157104
+    },
+    "loss_update_seconds": 0.012337707914412022,
+    "update": 6
+  },
+  {
+    "episodes": [
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 10.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 6.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 2,
+          "reference_target_fraction_removed": 1.0,
+          "simulated_removed_volume_mm3": 6.0,
+          "target_removed_mm3": 2.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 1.1
+        },
+        "return": 1.1
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 12.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 6.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 2,
+          "reference_target_fraction_removed": 1.0,
+          "simulated_removed_volume_mm3": 6.0,
+          "target_removed_mm3": 2.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 1.0979999999999999
+        },
+        "return": 1.0979999999999999
+      },
+      {
+        "decisions": 1,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 0.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 0,
+          "normal_removed_mm3": 0.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 0.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 0.0
+        },
+        "return": 0.0
+      },
+      {
+        "decisions": 1,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 0.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 0,
+          "normal_removed_mm3": 0.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 0.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 0.0
+        },
+        "return": 0.0
+      }
+    ],
+    "fit_elapsed_seconds": 1.6523950409609824,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.868257462978363,
+      "critic_gradient_norm_before_clip": 3.523611307144165,
+      "encoder_gradient_norm_before_clip": 4.560650825500488,
+      "gradient_norm_after_clip": 4.999999523162842,
+      "gradient_norm_before_clip": 5.872251987457275,
+      "initial_parameter_hash": "sha256:6df1b04ece82afaa13549aa2de844e2e3afe4b3ff2aee318f22fa25d38e3e3a7",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.7170119881629944,
+      "updated_parameter_hash": "sha256:02bb2ea8e979d53f0731b39f6a59d22c6b14caf4b776153a1f523cab784f6626"
+    },
+    "loss": {
+      "actor_reduction": "mean_episodes_sum_discounted_score_terms",
+      "completed_episodes": 4,
+      "entropy": 1.542675495147705,
+      "kind": "masked_reinforce_spatial_value_v1",
+      "loss": 3.674259662628174,
+      "loss_forward_calls": 6,
+      "mean_return": 0.5495,
+      "policy_loss": 2.8440804481506348,
+      "regularizer_reduction": "mean_episodes_mean_actions",
+      "value_loss": 1.6912119388580322
+    },
+    "loss_update_seconds": 0.012886750046163797,
+    "update": 7
+  },
+  {
+    "episodes": [
+      {
+        "decisions": 1,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 0.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 0,
+          "normal_removed_mm3": 0.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 0.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 0.0
+        },
+        "return": 0.0
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 10.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 6.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 2,
+          "reference_target_fraction_removed": 1.0,
+          "simulated_removed_volume_mm3": 6.0,
+          "target_removed_mm3": 2.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 1.1
+        },
+        "return": 1.1
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 4.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 4.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 3.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 3.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.6940000000000001
+        },
+        "return": -0.6940000000000001
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 1.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 3.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 2.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 1,
+          "normal_removed_mm3": 1.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 1.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.231
+        },
+        "return": -0.231
+      }
+    ],
+    "fit_elapsed_seconds": 1.8945140829309821,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.19447265565395355,
+      "critic_gradient_norm_before_clip": 1.1328893899917603,
+      "encoder_gradient_norm_before_clip": 1.1924113035202026,
+      "gradient_norm_after_clip": 1.6600266695022583,
+      "gradient_norm_before_clip": 1.6600261926651,
+      "initial_parameter_hash": "sha256:02bb2ea8e979d53f0731b39f6a59d22c6b14caf4b776153a1f523cab784f6626",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.11218668520450592,
+      "updated_parameter_hash": "sha256:d8b0236d6c93c60628bc84416ed1ea822609b23b67b392194403e529a573bf53"
+    },
+    "loss": {
+      "actor_reduction": "mean_episodes_sum_discounted_score_terms",
+      "completed_episodes": 4,
+      "entropy": 1.5164382457733154,
+      "kind": "masked_reinforce_spatial_value_v1",
+      "loss": 1.489047884941101,
+      "loss_forward_calls": 7,
+      "mean_return": 0.043750000000000004,
+      "policy_loss": 1.1493340730667114,
+      "regularizer_reduction": "mean_episodes_mean_actions",
+      "value_loss": 0.7097563147544861
+    },
+    "loss_update_seconds": 0.01395604107528925,
+    "update": 8
+  },
+  {
+    "episodes": [
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 4.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 5.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 4.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.8940000000000001
+        },
+        "return": -0.8940000000000001
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 1.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 4.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 1,
+          "normal_removed_mm3": 3.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 3.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.6310000000000001
+        },
+        "return": -0.6310000000000001
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 6.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 5.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 4.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.8960000000000001
+        },
+        "return": -0.8960000000000001
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 12.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 6.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 2,
+          "reference_target_fraction_removed": 1.0,
+          "simulated_removed_volume_mm3": 6.0,
+          "target_removed_mm3": 2.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 1.0979999999999999
+        },
+        "return": 1.0979999999999999
+      }
+    ],
+    "fit_elapsed_seconds": 2.218385415850207,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.24493075907230377,
+      "critic_gradient_norm_before_clip": 0.2278822958469391,
+      "encoder_gradient_norm_before_clip": 0.21728062629699707,
+      "gradient_norm_after_clip": 0.40687814354896545,
+      "gradient_norm_before_clip": 0.40687811374664307,
+      "initial_parameter_hash": "sha256:d8b0236d6c93c60628bc84416ed1ea822609b23b67b392194403e529a573bf53",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.08010952919721603,
+      "updated_parameter_hash": "sha256:7aa662018cb279f761df93ff835e13b92dc82e3905ea535b287fc490f877db86"
+    },
+    "loss": {
+      "actor_reduction": "mean_episodes_sum_discounted_score_terms",
+      "completed_episodes": 4,
+      "entropy": 1.517366647720337,
+      "kind": "masked_reinforce_spatial_value_v1",
+      "loss": 0.3303035497665405,
+      "loss_forward_calls": 8,
+      "mean_return": -0.3307500000000001,
+      "policy_loss": -0.12531709671020508,
+      "regularizer_reduction": "mean_episodes_mean_actions",
+      "value_loss": 0.9415886402130127
+    },
+    "loss_update_seconds": 0.015816125087440014,
+    "update": 9
+  },
+  {
+    "episodes": [
+      {
+        "decisions": 1,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 0.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 0,
+          "normal_removed_mm3": 0.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 0.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 0.0
+        },
+        "return": 0.0
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 12.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 6.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 2,
+          "reference_target_fraction_removed": 1.0,
+          "simulated_removed_volume_mm3": 6.0,
+          "target_removed_mm3": 2.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 1.0979999999999999
+        },
+        "return": 1.0979999999999999
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 4.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 4.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 3.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 3.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.6940000000000001
+        },
+        "return": -0.6940000000000001
+      },
+      {
+        "decisions": 1,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 0.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 0,
+          "normal_removed_mm3": 0.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 0.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 0.0
+        },
+        "return": 0.0
+      }
+    ],
+    "fit_elapsed_seconds": 2.4215826659929007,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.2890775203704834,
+      "critic_gradient_norm_before_clip": 0.6528767347335815,
+      "encoder_gradient_norm_before_clip": 0.7076390981674194,
+      "gradient_norm_after_clip": 1.0305719375610352,
+      "gradient_norm_before_clip": 1.0305720567703247,
+      "initial_parameter_hash": "sha256:7aa662018cb279f761df93ff835e13b92dc82e3905ea535b287fc490f877db86",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.2269618809223175,
+      "updated_parameter_hash": "sha256:d649f647d3ef479371b1e09e4e771a38d26de645aed91cda9e119d70ca4444a0"
+    },
+    "loss": {
+      "actor_reduction": "mean_episodes_sum_discounted_score_terms",
+      "completed_episodes": 4,
+      "entropy": 1.4816213846206665,
+      "kind": "masked_reinforce_spatial_value_v1",
+      "loss": 0.9492750763893127,
+      "loss_forward_calls": 6,
+      "mean_return": 0.10099999999999995,
+      "policy_loss": 0.6185898184776306,
+      "regularizer_reduction": "mean_episodes_mean_actions",
+      "value_loss": 0.6910029053688049
+    },
+    "loss_update_seconds": 0.012313165934756398,
+    "update": 10
+  },
+  {
+    "episodes": [
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 10.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 6.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 1,
+          "reference_target_fraction_removed": 0.5,
+          "simulated_removed_volume_mm3": 5.0,
+          "target_removed_mm3": 1.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 0.09999999999999987
+        },
+        "return": 0.09999999999999987
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 4.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 5.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 4.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.8640000000000001
+        },
+        "return": -0.8640000000000001
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 6.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 5.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 4.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.8960000000000001
+        },
+        "return": -0.8960000000000001
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 4.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 4.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 3.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 3.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.6940000000000001
+        },
+        "return": -0.6940000000000001
+      }
+    ],
+    "fit_elapsed_seconds": 2.783001583069563,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.2363789826631546,
+      "critic_gradient_norm_before_clip": 0.7048041820526123,
+      "encoder_gradient_norm_before_clip": 0.6048662066459656,
+      "gradient_norm_after_clip": 0.9702710509300232,
+      "gradient_norm_before_clip": 0.9702708721160889,
+      "initial_parameter_hash": "sha256:d649f647d3ef479371b1e09e4e771a38d26de645aed91cda9e119d70ca4444a0",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.1514555662870407,
+      "updated_parameter_hash": "sha256:09e0217e875e6296ebcf65a85213aa0d3f32914a9e7ea9a0a11ff483199466fe"
+    },
+    "loss": {
+      "actor_reduction": "mean_episodes_sum_discounted_score_terms",
+      "completed_episodes": 4,
+      "entropy": 1.481600284576416,
+      "kind": "masked_reinforce_spatial_value_v1",
+      "loss": -0.922848641872406,
+      "loss_forward_calls": 8,
+      "mean_return": -0.5885000000000001,
+      "policy_loss": -1.1198792457580566,
+      "regularizer_reduction": "mean_episodes_mean_actions",
+      "value_loss": 0.4236932396888733
+    },
+    "loss_update_seconds": 0.016251915832981467,
+    "update": 11
+  },
+  {
+    "episodes": [
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 1.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 4.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 1,
+          "normal_removed_mm3": 3.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 3.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.6310000000000001
+        },
+        "return": -0.6310000000000001
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 3.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 4.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 2.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 1,
+          "normal_removed_mm3": 2.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 2.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.43300000000000005
+        },
+        "return": -0.43300000000000005
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 4.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 4.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 2.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 2.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 2.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.464
+        },
+        "return": -0.464
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 2.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 4.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 3.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 3.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.6920000000000001
+        },
+        "return": -0.6920000000000001
+      }
+    ],
+    "fit_elapsed_seconds": 3.051037832861766,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.26696690917015076,
+      "critic_gradient_norm_before_clip": 0.9583556652069092,
+      "encoder_gradient_norm_before_clip": 0.7693928480148315,
+      "gradient_norm_after_clip": 1.2726317644119263,
+      "gradient_norm_before_clip": 1.2726315259933472,
+      "initial_parameter_hash": "sha256:09e0217e875e6296ebcf65a85213aa0d3f32914a9e7ea9a0a11ff483199466fe",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.19470348954200745,
+      "updated_parameter_hash": "sha256:532b44b3362773cdb0f8a667b4a30b3444e7c4e11902411d84dcaf8d68929e20"
+    },
+    "loss": {
+      "actor_reduction": "mean_episodes_sum_discounted_score_terms",
+      "completed_episodes": 4,
+      "entropy": 1.4895830154418945,
+      "kind": "masked_reinforce_spatial_value_v1",
+      "loss": -1.2492555379867554,
+      "loss_forward_calls": 8,
+      "mean_return": -0.555,
+      "policy_loss": -1.364769458770752,
+      "regularizer_reduction": "mean_episodes_mean_actions",
+      "value_loss": 0.26081955432891846
+    },
+    "loss_update_seconds": 0.01600595796480775,
+    "update": 12
+  },
+  {
+    "episodes": [
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 6.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 5.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 4.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.8960000000000001
+        },
+        "return": -0.8960000000000001
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 3.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 4.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 2.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 1,
+          "normal_removed_mm3": 2.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 2.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.43300000000000005
+        },
+        "return": -0.43300000000000005
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 1.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 3.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 2.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 1,
+          "normal_removed_mm3": 1.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 1.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.231
+        },
+        "return": -0.231
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 4.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 4.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 3.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 3.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.6940000000000001
+        },
+        "return": -0.6940000000000001
+      }
+    ],
+    "fit_elapsed_seconds": 3.357430415926501,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.2448776215314865,
+      "critic_gradient_norm_before_clip": 0.9483420252799988,
+      "encoder_gradient_norm_before_clip": 0.6013844013214111,
+      "gradient_norm_after_clip": 1.1638035774230957,
+      "gradient_norm_before_clip": 1.1638035774230957,
+      "initial_parameter_hash": "sha256:532b44b3362773cdb0f8a667b4a30b3444e7c4e11902411d84dcaf8d68929e20",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.18291550874710083,
+      "updated_parameter_hash": "sha256:ffffdf3eb604a4ca3f0291992d6e816cfb449114439607fe2e3549b80bc2d9bf"
+    },
+    "loss": {
+      "actor_reduction": "mean_episodes_sum_discounted_score_terms",
+      "completed_episodes": 4,
+      "entropy": 1.4535038471221924,
+      "kind": "masked_reinforce_spatial_value_v1",
+      "loss": -1.2134090662002563,
+      "loss_forward_calls": 8,
+      "mean_return": -0.5635000000000001,
+      "policy_loss": -1.3398401737213135,
+      "regularizer_reduction": "mean_episodes_mean_actions",
+      "value_loss": 0.2819322347640991
+    },
+    "loss_update_seconds": 0.016391291050240397,
+    "update": 13
+  },
+  {
+    "episodes": [
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 4.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 4.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 3.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 3.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.6940000000000001
+        },
+        "return": -0.6940000000000001
+      },
+      {
+        "decisions": 1,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 0.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 0,
+          "normal_removed_mm3": 0.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 0.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 0.0
+        },
+        "return": 0.0
+      },
+      {
+        "decisions": 1,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 0.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 0,
+          "normal_removed_mm3": 0.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 0.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 0.0
+        },
+        "return": 0.0
+      },
+      {
+        "decisions": 1,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 0.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 0,
+          "normal_removed_mm3": 0.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 0.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 0.0
+        },
+        "return": 0.0
+      }
+    ],
+    "fit_elapsed_seconds": 3.466634332900867,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.08078604936599731,
+      "critic_gradient_norm_before_clip": 0.46126729249954224,
+      "encoder_gradient_norm_before_clip": 0.23537661135196686,
+      "gradient_norm_after_clip": 0.5243595242500305,
+      "gradient_norm_before_clip": 0.5243594646453857,
+      "initial_parameter_hash": "sha256:ffffdf3eb604a4ca3f0291992d6e816cfb449114439607fe2e3549b80bc2d9bf",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.01602797769010067,
+      "updated_parameter_hash": "sha256:c1f8db59f569c75760bbb5792ac610d69d6d76a186f00e8bd73cff86c6f5f111"
+    },
+    "loss": {
+      "actor_reduction": "mean_episodes_sum_discounted_score_terms",
+      "completed_episodes": 4,
+      "entropy": 1.5453405380249023,
+      "kind": "masked_reinforce_spatial_value_v1",
+      "loss": -0.4867900609970093,
+      "loss_forward_calls": 5,
+      "mean_return": -0.17350000000000002,
+      "policy_loss": -0.520792543888092,
+      "regularizer_reduction": "mean_episodes_mean_actions",
+      "value_loss": 0.09891174733638763
+    },
+    "loss_update_seconds": 0.010650374926626682,
+    "update": 14
+  },
+  {
+    "episodes": [
+      {
+        "decisions": 1,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 0.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 0.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 0,
+          "normal_removed_mm3": 0.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 0.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 0.0
+        },
+        "return": 0.0
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 1.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 4.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 1,
+          "normal_removed_mm3": 3.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 3.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.6310000000000001
+        },
+        "return": -0.6310000000000001
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 8.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 6.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 1,
+          "reference_target_fraction_removed": 0.5,
+          "simulated_removed_volume_mm3": 5.0,
+          "target_removed_mm3": 1.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 0.10199999999999987
+        },
+        "return": 0.10199999999999987
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 10.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 6.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 1,
+          "reference_target_fraction_removed": 0.5,
+          "simulated_removed_volume_mm3": 5.0,
+          "target_removed_mm3": 1.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": 0.09999999999999987
+        },
+        "return": 0.09999999999999987
+      }
+    ],
+    "fit_elapsed_seconds": 3.7336229579523206,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.2059248983860016,
+      "critic_gradient_norm_before_clip": 0.24992364645004272,
+      "encoder_gradient_norm_before_clip": 0.18178413808345795,
+      "gradient_norm_after_clip": 0.39255291223526,
+      "gradient_norm_before_clip": 0.39255291223526,
+      "initial_parameter_hash": "sha256:c1f8db59f569c75760bbb5792ac610d69d6d76a186f00e8bd73cff86c6f5f111",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.1272220015525818,
+      "updated_parameter_hash": "sha256:d9211f5c08ea16a590edfa8002006cd0d00d6b8c9504ecb6fa65705eea968c74"
+    },
+    "loss": {
+      "actor_reduction": "mean_episodes_sum_discounted_score_terms",
+      "completed_episodes": 4,
+      "entropy": 1.5451315641403198,
+      "kind": "masked_reinforce_spatial_value_v1",
+      "loss": 0.20397725701332092,
+      "loss_forward_calls": 7,
+      "mean_return": -0.1072500000000001,
+      "policy_loss": 0.11651742458343506,
+      "regularizer_reduction": "mean_episodes_mean_actions",
+      "value_loss": 0.20582230389118195
+    },
+    "loss_update_seconds": 0.014583917101845145,
+    "update": 15
+  },
+  {
+    "episodes": [
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 6.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 5.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 2,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 4.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 1,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.8960000000000001
+        },
+        "return": -0.8960000000000001
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 1.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 4.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 1,
+          "normal_removed_mm3": 3.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 3.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.6310000000000001
+        },
+        "return": -0.6310000000000001
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 3.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 4.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 2.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 1,
+          "normal_removed_mm3": 2.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 2.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.43300000000000005
+        },
+        "return": -0.43300000000000005
+      },
+      {
+        "decisions": 2,
+        "outcomes": {
+          "clinical_deficit_probability": null,
+          "complete_tool_path_length_mm": 3.0,
+          "cumulative_contacted_tissue_upper_bound_mm3": 5.0,
+          "currently_retained_contacted_tissue_upper_bound_mm3": 1.0,
+          "language_surrogate": null,
+          "motor_surrogate": null,
+          "nonstop_actions": 1,
+          "normal_removed_mm3": 4.0,
+          "partial_contact_reward_weight": 0.0,
+          "positive_target_source_cells_removed": 0,
+          "reference_target_fraction_removed": 0.0,
+          "simulated_removed_volume_mm3": 4.0,
+          "target_removed_mm3": 0.0,
+          "tool_changes": 0,
+          "total_reference_target_mm3": 2.0,
+          "total_reward": -0.8330000000000001
+        },
+        "return": -0.8330000000000001
+      }
+    ],
+    "fit_elapsed_seconds": 4.018107125069946,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.24554242193698883,
+      "critic_gradient_norm_before_clip": 0.9870687127113342,
+      "encoder_gradient_norm_before_clip": 0.5216811895370483,
+      "gradient_norm_after_clip": 1.1574289798736572,
+      "gradient_norm_before_clip": 1.1574289798736572,
+      "initial_parameter_hash": "sha256:d9211f5c08ea16a590edfa8002006cd0d00d6b8c9504ecb6fa65705eea968c74",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.1813695728778839,
+      "updated_parameter_hash": "sha256:5134b5ff817c87dbc31f9b51fb082626a06883efb75471cfe38e8d41f6ccbfa7"
+    },
+    "loss": {
+      "actor_reduction": "mean_episodes_sum_discounted_score_terms",
+      "completed_episodes": 4,
+      "entropy": 1.4172488451004028,
+      "kind": "masked_reinforce_spatial_value_v1",
+      "loss": -1.31812584400177,
+      "loss_forward_calls": 8,
+      "mean_return": -0.69825,
+      "policy_loss": -1.4844183921813965,
+      "regularizer_reduction": "mean_episodes_mean_actions",
+      "value_loss": 0.3609299957752228
+    },
+    "loss_update_seconds": 0.01593683403916657,
+    "update": 16
+  }
+]

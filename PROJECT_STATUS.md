@@ -5,7 +5,8 @@ remains active, with the [later human steering](docs/REAL_OBSERVATION_EXECUTION_
 superseding its incompatible real-data-only training restriction. Synthetic data
 and simulator-generated RL experience are now permitted, separately labeled from
 observed patient records, with held-out real-patient and physical validation still
-required. No new RL update under this policy has run at this checkpoint.
+required. The first fixed generated-development comparison has now run and
+retains a negative learning result; no real-patient training or transfer is claimed.
 
 Eligible downloads will continue without small-batch review pauses; detailed image,
 geometry and anatomical QC is a separate phase. Unreviewed data stays unreviewed.
@@ -16,10 +17,11 @@ normal pushes of completed reviewed commits to `origin/main`.
 
 The records below retain earlier policy and acquisition checkpoints. A
 [scoped generated opening-task learner](artifacts/native-opening-learning-preparation-v1/RESULT.md)
-is now enabled and independently checked. One accepted simulated opening/cut
-profile and one imitation gradient completed; the declared full comparison is
-prepared. Legacy patient/model-loading guards remain, and real-patient transfer
-is not established.
+is enabled and independently checked. The [fixed comparison](artifacts/native-opening-learning-v1/RESULT.md)
+completed 16 imitation and 16 scratch RL updates: exact search scored 1.1,
+imitation stopped at 0, and final RL scored −0.896 versus the initial −0.464.
+All 78 simulated episodes passed their geometry audits; this does not establish
+useful learning or physical fidelity. Legacy patient/model-loading guards remain.
 
 The [full eligible annotation intake](artifacts/lausanne-annotation-full-intake-v1/RESULT.md)
 completed all 144 masks (13,977,015 bytes). Independent content checks passed for

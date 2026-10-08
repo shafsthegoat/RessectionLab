@@ -1,0 +1,215 @@
+{
+  "complete": true,
+  "model_transition_calls": 20,
+  "nominal_optimum": 1.1,
+  "observation_conflicts": 0,
+  "reference_fields_used": false,
+  "sequence": [
+    "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+    "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+  ],
+  "state_rows": [
+    {
+      "action_ids": [
+        "STOP",
+        "NATIVE-SPATIAL:9cfc4e00074d6cf93eb5cb82",
+        "NATIVE-SPATIAL:f985c763473c0225d9b56230",
+        "NATIVE-SPATIAL:b4c22140396ffbcc5f14ef15",
+        "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+      ],
+      "observation_hash": "sha256:ccca16824aab833104e49e21de526444c7bc8bc1bcb52ee5a4e370c9a564124d",
+      "scores": [
+        {
+          "action_id": "STOP",
+          "nominal_return_to_go": 0.0
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:9cfc4e00074d6cf93eb5cb82",
+          "nominal_return_to_go": -0.233
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:f985c763473c0225d9b56230",
+          "nominal_return_to_go": -0.265
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:b4c22140396ffbcc5f14ef15",
+          "nominal_return_to_go": 0.733
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8",
+          "nominal_return_to_go": 1.731
+        }
+      ],
+      "selected_action_id": "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8",
+      "state_hash": "sha256:9473d34df29b099a2a270ccc0fd542c65fc752f4b570af64eecbc42447de2f05"
+    },
+    {
+      "action_ids": [
+        "STOP",
+        "NATIVE-SPATIAL:0d78540299fe5eb3a1770d83",
+        "NATIVE-SPATIAL:8169300cfa7db4a4742e3063",
+        "NATIVE-SPATIAL:7afd144506d396798a525e1e"
+      ],
+      "observation_hash": "sha256:e4d32b8f85642482f33aa7849ac74394e7d6a707168073343bbee9ce20ed988c",
+      "scores": [
+        {
+          "action_id": "STOP",
+          "nominal_return_to_go": 0.0
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:0d78540299fe5eb3a1770d83",
+          "nominal_return_to_go": -0.4610000000000001
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:8169300cfa7db4a4742e3063",
+          "nominal_return_to_go": -0.6630000000000001
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:7afd144506d396798a525e1e",
+          "nominal_return_to_go": -0.233
+        }
+      ],
+      "selected_action_id": "STOP",
+      "state_hash": "sha256:7f755521e0c6e4474b1889dffba56ec4444d1d5610967fa33cd368475be80ab4"
+    },
+    {
+      "action_ids": [
+        "STOP",
+        "NATIVE-SPATIAL:81d9c8d011c2b37342ee27df",
+        "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07"
+      ],
+      "observation_hash": "sha256:b6219c3ec2d4cac1a962c3a9c123734fb2f2eb9a5854c2f920d214b467faba54",
+      "scores": [
+        {
+          "action_id": "STOP",
+          "nominal_return_to_go": 0.0
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:81d9c8d011c2b37342ee27df",
+          "nominal_return_to_go": 0.9329999999999999
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07",
+          "nominal_return_to_go": 1.931
+        }
+      ],
+      "selected_action_id": "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07",
+      "state_hash": "sha256:b3a37d4408a761d373cc329b7b42dc3c06b11f8fc5ceaa693d5ac3ac213bfa37"
+    },
+    {
+      "action_ids": [
+        "STOP",
+        "NATIVE-SPATIAL:89b67ded73fcfa7092918c12",
+        "NATIVE-SPATIAL:1186a2ff80d07c1941c4434b"
+      ],
+      "observation_hash": "sha256:a5bba06653b8644cf38722b6d99c5c21236284999afdfbe938c9055d1d6e543d",
+      "scores": [
+        {
+          "action_id": "STOP",
+          "nominal_return_to_go": 0.0
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:89b67ded73fcfa7092918c12",
+          "nominal_return_to_go": -0.261
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:1186a2ff80d07c1941c4434b",
+          "nominal_return_to_go": -0.4630000000000001
+        }
+      ],
+      "selected_action_id": "STOP",
+      "state_hash": "sha256:a24a88df8d399aaa31f2acb8ed231003b944dd2f972efc09943d39966774a3af"
+    },
+    {
+      "action_ids": [
+        "STOP",
+        "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+        "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+        "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+        "NATIVE-SPATIAL:7c300ab776942c7446a122a0"
+      ],
+      "observation_hash": "sha256:c9458a99068bfaae90ba69062073a674c55ee31ad66d11a5c86461ef2c834eba",
+      "scores": [
+        {
+          "action_id": "STOP",
+          "nominal_return_to_go": 0.0
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+          "nominal_return_to_go": 1.1
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+          "nominal_return_to_go": -0.231
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+          "nominal_return_to_go": 1.0979999999999999
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+          "nominal_return_to_go": -0.43300000000000005
+        }
+      ],
+      "selected_action_id": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+      "state_hash": "sha256:15e85a278cd752abc31db6e48cbf1512f8771da4fdaa10844b4f6593f4b04de7"
+    }
+  ],
+  "supervised_state_demonstrations": [
+    {
+      "complete_demonstration": [
+        "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+        "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+      ],
+      "observation_hash": "sha256:ccca16824aab833104e49e21de526444c7bc8bc1bcb52ee5a4e370c9a564124d",
+      "prefix": [
+        "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5"
+      ],
+      "selected_action_id": "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+    },
+    {
+      "complete_demonstration": [
+        "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+        "STOP"
+      ],
+      "observation_hash": "sha256:e4d32b8f85642482f33aa7849ac74394e7d6a707168073343bbee9ce20ed988c",
+      "prefix": [
+        "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9"
+      ],
+      "selected_action_id": "STOP"
+    },
+    {
+      "complete_demonstration": [
+        "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+        "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07"
+      ],
+      "observation_hash": "sha256:b6219c3ec2d4cac1a962c3a9c123734fb2f2eb9a5854c2f920d214b467faba54",
+      "prefix": [
+        "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1"
+      ],
+      "selected_action_id": "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07"
+    },
+    {
+      "complete_demonstration": [
+        "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+        "STOP"
+      ],
+      "observation_hash": "sha256:a5bba06653b8644cf38722b6d99c5c21236284999afdfbe938c9055d1d6e543d",
+      "prefix": [
+        "NATIVE-SPATIAL:7c300ab776942c7446a122a0"
+      ],
+      "selected_action_id": "STOP"
+    },
+    {
+      "complete_demonstration": [
+        "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+        "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+      ],
+      "observation_hash": "sha256:c9458a99068bfaae90ba69062073a674c55ee31ad66d11a5c86461ef2c834eba",
+      "prefix": [],
+      "selected_action_id": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5"
+    }
+  ],
+  "terminal_sequences": 16,
+  "unique_supervised_states": 5
+}

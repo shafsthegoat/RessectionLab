@@ -43,6 +43,18 @@ The user's hourly push request is scheduled as the active thread heartbeat
 to `origin/main`, verify the remote, and preserve unfinished work and running transfers.
 No force push, paid infrastructure, billing change or external outreach is authorized.
 
+## Latest generated-learning checkpoint
+
+The [fixed native opening pilot](../artifacts/native-opening-learning-v1/RESULT.md)
+completed 16 BC and 16 scratch RL updates from identical initial weights. Search
+scored 1.1, BC stopped at zero, and final RL scored −0.896 versus initial −0.464.
+Independent saved-output review verified all 278 indexed outputs, actual tensor
+changes, all nine comparison arms and 78 accepted simulated histories. The run
+took 8.6398 seconds overall with 332,644,352 bytes sampled peak RSS. There were
+no retries or cap changes. Positive experiences occurred during training, so
+their complete absence cannot explain the failed learning. A saved-state fit
+diagnostic precedes configuration changes. No patient or held-out record was used.
+
 ## Latest acquisition checkpoint
 
 All [Lausanne TRAIN originals](../artifacts/lausanne-train-acquisition-complete-v1/RESULT.md)

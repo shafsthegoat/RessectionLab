@@ -17,8 +17,9 @@ The active Mac application uses **Electron, React and TypeScript**. The Python
 engine handles physical geometry, evidence and independent validation. Legacy
 patient/policy entry points retain their existing guards. A [scoped generated
 opening-task learner](docs/native-opening-learning.md) now supports an explicit
-development context; its small comparison is prepared, not yet executed at this
-checkpoint. The earlier Qt prototype is retained as a tested
+development context. Its [first fixed comparison](artifacts/native-opening-learning-v1/RESULT.md)
+completed with a negative learning result: complete search outperformed both
+learned policies. The earlier Qt prototype is retained as a tested
 historical reference. Application source is in `desktop/`; the
 [desktop workflow guide](docs/desktop-workflow.md) covers opening imaging,
 inspecting evidence, comparing routes, refinement, replay and local saving.

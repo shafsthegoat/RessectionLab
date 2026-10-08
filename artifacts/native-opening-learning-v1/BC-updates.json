@@ -1,0 +1,386 @@
+[
+  {
+    "episodes": [],
+    "fit_elapsed_seconds": 0.05060129193589091,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.36406588554382324,
+      "critic_gradient_norm_before_clip": 0.0,
+      "encoder_gradient_norm_before_clip": 0.24953407049179077,
+      "gradient_norm_after_clip": 0.5162961483001709,
+      "gradient_norm_before_clip": 0.5162961483001709,
+      "initial_parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.26786288619041443,
+      "updated_parameter_hash": "sha256:46129578067948276df1144b22498fab53ac896652bbbecc4c07393f7b54dc4b"
+    },
+    "loss": {
+      "kind": "search_action_behavior_cloning",
+      "loss": 1.4025094509124756,
+      "loss_forward_calls": 5,
+      "supervised_actions": 5
+    },
+    "loss_update_seconds": 0.04881279217079282,
+    "update": 1
+  },
+  {
+    "episodes": [],
+    "fit_elapsed_seconds": 0.06445554201491177,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.3389092683792114,
+      "critic_gradient_norm_before_clip": 0.0,
+      "encoder_gradient_norm_before_clip": 0.19575732946395874,
+      "gradient_norm_after_clip": 0.4625827670097351,
+      "gradient_norm_before_clip": 0.4625827670097351,
+      "initial_parameter_hash": "sha256:46129578067948276df1144b22498fab53ac896652bbbecc4c07393f7b54dc4b",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.24658140540122986,
+      "updated_parameter_hash": "sha256:d6898064eb6a50cfdfd443f7f85f71926d095ec57cccb8bcb87397da34585f36"
+    },
+    "loss": {
+      "kind": "search_action_behavior_cloning",
+      "loss": 1.3846899271011353,
+      "loss_forward_calls": 5,
+      "supervised_actions": 5
+    },
+    "loss_update_seconds": 0.009560500038787723,
+    "update": 2
+  },
+  {
+    "episodes": [],
+    "fit_elapsed_seconds": 0.0771272499114275,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.26866278052330017,
+      "critic_gradient_norm_before_clip": 0.0,
+      "encoder_gradient_norm_before_clip": 0.2444276362657547,
+      "gradient_norm_after_clip": 0.4264332354068756,
+      "gradient_norm_before_clip": 0.42643317580223083,
+      "initial_parameter_hash": "sha256:d6898064eb6a50cfdfd443f7f85f71926d095ec57cccb8bcb87397da34585f36",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.22342942655086517,
+      "updated_parameter_hash": "sha256:b58503a984c7acf82e246fa2f5e54613b7534c5765a40e0c7deca54d8603e00b"
+    },
+    "loss": {
+      "kind": "search_action_behavior_cloning",
+      "loss": 1.3689677715301514,
+      "loss_forward_calls": 5,
+      "supervised_actions": 5
+    },
+    "loss_update_seconds": 0.008812124840915203,
+    "update": 3
+  },
+  {
+    "episodes": [],
+    "fit_elapsed_seconds": 0.09009408392012119,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.31974509358406067,
+      "critic_gradient_norm_before_clip": 0.0,
+      "encoder_gradient_norm_before_clip": 0.24019894003868103,
+      "gradient_norm_after_clip": 0.4649665355682373,
+      "gradient_norm_before_clip": 0.4649665057659149,
+      "initial_parameter_hash": "sha256:b58503a984c7acf82e246fa2f5e54613b7534c5765a40e0c7deca54d8603e00b",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.23719492554664612,
+      "updated_parameter_hash": "sha256:80808b48efd66a0714d6622854e7f379d1c91913afb6c00fc90ea719c66e179b"
+    },
+    "loss": {
+      "kind": "search_action_behavior_cloning",
+      "loss": 1.3569387197494507,
+      "loss_forward_calls": 5,
+      "supervised_actions": 5
+    },
+    "loss_update_seconds": 0.00887299980968237,
+    "update": 4
+  },
+  {
+    "episodes": [],
+    "fit_elapsed_seconds": 0.10235645901411772,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.27004340291023254,
+      "critic_gradient_norm_before_clip": 0.0,
+      "encoder_gradient_norm_before_clip": 0.25108999013900757,
+      "gradient_norm_after_clip": 0.43279585242271423,
+      "gradient_norm_before_clip": 0.43279585242271423,
+      "initial_parameter_hash": "sha256:80808b48efd66a0714d6622854e7f379d1c91913afb6c00fc90ea719c66e179b",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.2265891134738922,
+      "updated_parameter_hash": "sha256:06a4ca7086ebf0318a9772b327424d0f4a0c8d3f03d9721d02a2734bacef904a"
+    },
+    "loss": {
+      "kind": "search_action_behavior_cloning",
+      "loss": 1.342799425125122,
+      "loss_forward_calls": 5,
+      "supervised_actions": 5
+    },
+    "loss_update_seconds": 0.00865795905701816,
+    "update": 5
+  },
+  {
+    "episodes": [],
+    "fit_elapsed_seconds": 0.11450024996884167,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.28512412309646606,
+      "critic_gradient_norm_before_clip": 0.0,
+      "encoder_gradient_norm_before_clip": 0.2628719210624695,
+      "gradient_norm_after_clip": 0.4357832372188568,
+      "gradient_norm_before_clip": 0.4357832074165344,
+      "initial_parameter_hash": "sha256:06a4ca7086ebf0318a9772b327424d0f4a0c8d3f03d9721d02a2734bacef904a",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.19877028465270996,
+      "updated_parameter_hash": "sha256:4c0340585be5a1b6d578649bc16e5e62280b0f19cc4762fe443631ef011f11b1"
+    },
+    "loss": {
+      "kind": "search_action_behavior_cloning",
+      "loss": 1.3271706104278564,
+      "loss_forward_calls": 5,
+      "supervised_actions": 5
+    },
+    "loss_update_seconds": 0.008611832978203893,
+    "update": 6
+  },
+  {
+    "episodes": [],
+    "fit_elapsed_seconds": 0.12666054209694266,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.2170306295156479,
+      "critic_gradient_norm_before_clip": 0.0,
+      "encoder_gradient_norm_before_clip": 0.22832749783992767,
+      "gradient_norm_after_clip": 0.3428918421268463,
+      "gradient_norm_before_clip": 0.3428918421268463,
+      "initial_parameter_hash": "sha256:4c0340585be5a1b6d578649bc16e5e62280b0f19cc4762fe443631ef011f11b1",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.13542184233665466,
+      "updated_parameter_hash": "sha256:20a5499fe338f8552c214e4845f25266af66f7c391a30ea85c831533d0784f4f"
+    },
+    "loss": {
+      "kind": "search_action_behavior_cloning",
+      "loss": 1.3112281560897827,
+      "loss_forward_calls": 5,
+      "supervised_actions": 5
+    },
+    "loss_update_seconds": 0.008638208033517003,
+    "update": 7
+  },
+  {
+    "episodes": [],
+    "fit_elapsed_seconds": 0.13892149995081127,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.3802349865436554,
+      "critic_gradient_norm_before_clip": 0.0,
+      "encoder_gradient_norm_before_clip": 0.24035020172595978,
+      "gradient_norm_after_clip": 0.4563917815685272,
+      "gradient_norm_before_clip": 0.45639169216156006,
+      "initial_parameter_hash": "sha256:20a5499fe338f8552c214e4845f25266af66f7c391a30ea85c831533d0784f4f",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.0771142989397049,
+      "updated_parameter_hash": "sha256:8d68bff7e91f35e8d8523d4eb2d913c3ba6bb4f20101b5a6279d1d0b3308bd0c"
+    },
+    "loss": {
+      "kind": "search_action_behavior_cloning",
+      "loss": 1.3044719696044922,
+      "loss_forward_calls": 5,
+      "supervised_actions": 5
+    },
+    "loss_update_seconds": 0.008604707894846797,
+    "update": 8
+  },
+  {
+    "episodes": [],
+    "fit_elapsed_seconds": 0.1510769589804113,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.2657640874385834,
+      "critic_gradient_norm_before_clip": 0.0,
+      "encoder_gradient_norm_before_clip": 0.3431837558746338,
+      "gradient_norm_after_clip": 0.4816618859767914,
+      "gradient_norm_before_clip": 0.4816618263721466,
+      "initial_parameter_hash": "sha256:8d68bff7e91f35e8d8523d4eb2d913c3ba6bb4f20101b5a6279d1d0b3308bd0c",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.20878823101520538,
+      "updated_parameter_hash": "sha256:8ab4b8b0bbbdf63b9d74b9bdd2715f658b283d2e1cae7507edca7078b4a6b326"
+    },
+    "loss": {
+      "kind": "search_action_behavior_cloning",
+      "loss": 1.3080651760101318,
+      "loss_forward_calls": 5,
+      "supervised_actions": 5
+    },
+    "loss_update_seconds": 0.008557749912142754,
+    "update": 9
+  },
+  {
+    "episodes": [],
+    "fit_elapsed_seconds": 0.16322900005616248,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.34076160192489624,
+      "critic_gradient_norm_before_clip": 0.0,
+      "encoder_gradient_norm_before_clip": 0.47037917375564575,
+      "gradient_norm_after_clip": 0.6509999632835388,
+      "gradient_norm_before_clip": 0.650999903678894,
+      "initial_parameter_hash": "sha256:8ab4b8b0bbbdf63b9d74b9bdd2715f658b283d2e1cae7507edca7078b4a6b326",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.2939828038215637,
+      "updated_parameter_hash": "sha256:63578ff4a0dd79d99442beb4ed23b248155ee8107557f36b9baa5e2d6825d54b"
+    },
+    "loss": {
+      "kind": "search_action_behavior_cloning",
+      "loss": 1.311950445175171,
+      "loss_forward_calls": 5,
+      "supervised_actions": 5
+    },
+    "loss_update_seconds": 0.008582207839936018,
+    "update": 10
+  },
+  {
+    "episodes": [],
+    "fit_elapsed_seconds": 0.17542145890183747,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.30739980936050415,
+      "critic_gradient_norm_before_clip": 0.0,
+      "encoder_gradient_norm_before_clip": 0.4282490909099579,
+      "gradient_norm_after_clip": 0.5881784558296204,
+      "gradient_norm_before_clip": 0.5881784558296204,
+      "initial_parameter_hash": "sha256:63578ff4a0dd79d99442beb4ed23b248155ee8107557f36b9baa5e2d6825d54b",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.2608868181705475,
+      "updated_parameter_hash": "sha256:37272b162f0ac46b5e10794f92dc3078d8d20e140ea6b3c92c47637418fb7b22"
+    },
+    "loss": {
+      "kind": "search_action_behavior_cloning",
+      "loss": 1.3081352710723877,
+      "loss_forward_calls": 5,
+      "supervised_actions": 5
+    },
+    "loss_update_seconds": 0.008547000121325254,
+    "update": 11
+  },
+  {
+    "episodes": [],
+    "fit_elapsed_seconds": 0.1878139590844512,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.21339377760887146,
+      "critic_gradient_norm_before_clip": 0.0,
+      "encoder_gradient_norm_before_clip": 0.28816816210746765,
+      "gradient_norm_after_clip": 0.40066060423851013,
+      "gradient_norm_before_clip": 0.40066060423851013,
+      "initial_parameter_hash": "sha256:37272b162f0ac46b5e10794f92dc3078d8d20e140ea6b3c92c47637418fb7b22",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.17874877154827118,
+      "updated_parameter_hash": "sha256:68be956423c551aee1716f2ccaa451d754974b4ff4b5a7197234f1aedaf60166"
+    },
+    "loss": {
+      "kind": "search_action_behavior_cloning",
+      "loss": 1.301476240158081,
+      "loss_forward_calls": 5,
+      "supervised_actions": 5
+    },
+    "loss_update_seconds": 0.008665625005960464,
+    "update": 12
+  },
+  {
+    "episodes": [],
+    "fit_elapsed_seconds": 0.19994862494058907,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.1341308206319809,
+      "critic_gradient_norm_before_clip": 0.0,
+      "encoder_gradient_norm_before_clip": 0.1417718529701233,
+      "gradient_norm_after_clip": 0.20945224165916443,
+      "gradient_norm_before_clip": 0.20945222675800323,
+      "initial_parameter_hash": "sha256:68be956423c551aee1716f2ccaa451d754974b4ff4b5a7197234f1aedaf60166",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.07602572441101074,
+      "updated_parameter_hash": "sha256:475dddcef137b9147beb08bf20e2079c35fb7032504b7cdcec5e80509ef689e3"
+    },
+    "loss": {
+      "kind": "search_action_behavior_cloning",
+      "loss": 1.2958940267562866,
+      "loss_forward_calls": 5,
+      "supervised_actions": 5
+    },
+    "loss_update_seconds": 0.008554707979783416,
+    "update": 13
+  },
+  {
+    "episodes": [],
+    "fit_elapsed_seconds": 0.21238462487235665,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.13716962933540344,
+      "critic_gradient_norm_before_clip": 0.0,
+      "encoder_gradient_norm_before_clip": 0.14761364459991455,
+      "gradient_norm_after_clip": 0.20443303883075714,
+      "gradient_norm_before_clip": 0.20443299412727356,
+      "initial_parameter_hash": "sha256:475dddcef137b9147beb08bf20e2079c35fb7032504b7cdcec5e80509ef689e3",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.03446115180850029,
+      "updated_parameter_hash": "sha256:c545c8eca069d80e1c1920244c15cbdb6e5d14c790ea01b191c6f3a4d36d338c"
+    },
+    "loss": {
+      "kind": "search_action_behavior_cloning",
+      "loss": 1.2931865453720093,
+      "loss_forward_calls": 5,
+      "supervised_actions": 5
+    },
+    "loss_update_seconds": 0.008570499951019883,
+    "update": 14
+  },
+  {
+    "episodes": [],
+    "fit_elapsed_seconds": 0.22482662508264184,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.17929112911224365,
+      "critic_gradient_norm_before_clip": 0.0,
+      "encoder_gradient_norm_before_clip": 0.19800609350204468,
+      "gradient_norm_after_clip": 0.2777164876461029,
+      "gradient_norm_before_clip": 0.2777164876461029,
+      "initial_parameter_hash": "sha256:c545c8eca069d80e1c1920244c15cbdb6e5d14c790ea01b191c6f3a4d36d338c",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.07599157840013504,
+      "updated_parameter_hash": "sha256:1d2b8b4714b75370cefe8d71369a2a0f874c0992b56ddc7c7fa4bc48ba4ecae8"
+    },
+    "loss": {
+      "kind": "search_action_behavior_cloning",
+      "loss": 1.292494535446167,
+      "loss_forward_calls": 5,
+      "supervised_actions": 5
+    },
+    "loss_update_seconds": 0.008566791890189052,
+    "update": 15
+  },
+  {
+    "episodes": [],
+    "fit_elapsed_seconds": 0.23811820894479752,
+    "gradient": {
+      "actor_gradient_norm_before_clip": 0.21198928356170654,
+      "critic_gradient_norm_before_clip": 0.0,
+      "encoder_gradient_norm_before_clip": 0.2893731892108917,
+      "gradient_norm_after_clip": 0.37530410289764404,
+      "gradient_norm_before_clip": 0.37530413269996643,
+      "initial_parameter_hash": "sha256:1d2b8b4714b75370cefe8d71369a2a0f874c0992b56ddc7c7fa4bc48ba4ecae8",
+      "optimizer_steps": 1,
+      "parameters_changed": true,
+      "stop_gradient_norm_before_clip": 0.1103489026427269,
+      "updated_parameter_hash": "sha256:1fbf11d5bd9e78ce26a55a21ceb4e4a1a6126cac5842b17bfa26353e1b453a7f"
+    },
+    "loss": {
+      "kind": "search_action_behavior_cloning",
+      "loss": 1.2921037673950195,
+      "loss_forward_calls": 5,
+      "supervised_actions": 5
+    },
+    "loss_update_seconds": 0.008708124980330467,
+    "update": 16
+  }
+]
