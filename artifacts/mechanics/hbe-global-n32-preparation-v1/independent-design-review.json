@@ -1,0 +1,433 @@
+{
+  "acceptance_scope": [
+    "Positive p, decreasing adjacent differences, or a small boundary-only P4 indicator alone cannot establish total spatial accuracy.",
+    "Order drift and latest-limit disagreement are prospective diagnostics; their absence is not proof of asymptotic convergence. The two-limit envelope has no rigorous error-bound coverage.",
+    "Keep original failed co-primary spatial gates unchanged. The current boundary result remains spatial_convergence_accepted=false and calibration_released=false.",
+    "Each E requires both corresponding eligible finite triplet limits. Missing/unresolved non-rest states must remain explicit and preclude a full-curve claim; a maximum over eligible states cannot conceal them.",
+    "All original individual physics, motion and temporal requirements remain. Even a favorable N32 screen permits only review for later S120 verification, not calibration or physical/surgical validation.",
+    "No full-native N32 symmetry equivalence is established by reconstructed counts. This design inherits the separately accepted half-height assumptions.",
+    "Single-run caps and terminal resource failures are preserved; no automatic next mesh, retry, resumed solve or increased budget is approved."
+  ],
+  "algebra": {
+    "controls": [
+      {
+        "C_sign": -1,
+        "N": [
+          8,
+          12,
+          16
+        ],
+        "known_p": 0.25,
+        "passed": true
+      },
+      {
+        "C_sign": 1,
+        "N": [
+          8,
+          12,
+          16
+        ],
+        "known_p": 0.25,
+        "passed": true
+      },
+      {
+        "C_sign": -1,
+        "N": [
+          8,
+          12,
+          16
+        ],
+        "known_p": 1.0,
+        "passed": true
+      },
+      {
+        "C_sign": 1,
+        "N": [
+          8,
+          12,
+          16
+        ],
+        "known_p": 1.0,
+        "passed": true
+      },
+      {
+        "C_sign": -1,
+        "N": [
+          8,
+          12,
+          16
+        ],
+        "known_p": 2.0,
+        "passed": true
+      },
+      {
+        "C_sign": 1,
+        "N": [
+          8,
+          12,
+          16
+        ],
+        "known_p": 2.0,
+        "passed": true
+      },
+      {
+        "C_sign": -1,
+        "N": [
+          8,
+          12,
+          16
+        ],
+        "known_p": 4.0,
+        "passed": true
+      },
+      {
+        "C_sign": 1,
+        "N": [
+          8,
+          12,
+          16
+        ],
+        "known_p": 4.0,
+        "passed": true
+      },
+      {
+        "C_sign": -1,
+        "N": [
+          12,
+          16,
+          24
+        ],
+        "known_p": 0.25,
+        "passed": true
+      },
+      {
+        "C_sign": 1,
+        "N": [
+          12,
+          16,
+          24
+        ],
+        "known_p": 0.25,
+        "passed": true
+      },
+      {
+        "C_sign": -1,
+        "N": [
+          12,
+          16,
+          24
+        ],
+        "known_p": 1.0,
+        "passed": true
+      },
+      {
+        "C_sign": 1,
+        "N": [
+          12,
+          16,
+          24
+        ],
+        "known_p": 1.0,
+        "passed": true
+      },
+      {
+        "C_sign": -1,
+        "N": [
+          12,
+          16,
+          24
+        ],
+        "known_p": 2.0,
+        "passed": true
+      },
+      {
+        "C_sign": 1,
+        "N": [
+          12,
+          16,
+          24
+        ],
+        "known_p": 2.0,
+        "passed": true
+      },
+      {
+        "C_sign": -1,
+        "N": [
+          12,
+          16,
+          24
+        ],
+        "known_p": 4.0,
+        "passed": true
+      },
+      {
+        "C_sign": 1,
+        "N": [
+          12,
+          16,
+          24
+        ],
+        "known_p": 4.0,
+        "passed": true
+      },
+      {
+        "C_sign": -1,
+        "N": [
+          16,
+          24,
+          32
+        ],
+        "known_p": 0.25,
+        "passed": true
+      },
+      {
+        "C_sign": 1,
+        "N": [
+          16,
+          24,
+          32
+        ],
+        "known_p": 0.25,
+        "passed": true
+      },
+      {
+        "C_sign": -1,
+        "N": [
+          16,
+          24,
+          32
+        ],
+        "known_p": 1.0,
+        "passed": true
+      },
+      {
+        "C_sign": 1,
+        "N": [
+          16,
+          24,
+          32
+        ],
+        "known_p": 1.0,
+        "passed": true
+      },
+      {
+        "C_sign": -1,
+        "N": [
+          16,
+          24,
+          32
+        ],
+        "known_p": 2.0,
+        "passed": true
+      },
+      {
+        "C_sign": 1,
+        "N": [
+          16,
+          24,
+          32
+        ],
+        "known_p": 2.0,
+        "passed": true
+      },
+      {
+        "C_sign": -1,
+        "N": [
+          16,
+          24,
+          32
+        ],
+        "known_p": 4.0,
+        "passed": true
+      },
+      {
+        "C_sign": 1,
+        "N": [
+          16,
+          24,
+          32
+        ],
+        "known_p": 4.0,
+        "passed": true
+      },
+      {
+        "expected": "opposite_signs",
+        "passed": true,
+        "refusal": "opposite"
+      },
+      {
+        "expected": "below_original_difference_floor",
+        "passed": true,
+        "refusal": "low_both"
+      },
+      {
+        "expected": "insufficient_increment_resolution",
+        "passed": true,
+        "refusal": "one_low"
+      },
+      {
+        "expected": "no_admissible_positive_root",
+        "passed": true,
+        "refusal": "no_positive"
+      },
+      {
+        "expected": "invalid",
+        "passed": true,
+        "refusal": "nonfinite"
+      },
+      {
+        "control": "1600_strictly_increasing_ratio_samples_and_endpoint_domain",
+        "passed": true
+      }
+    ],
+    "derivation": "d12=C*N2^(-p)*(1-exp(p*a)); d23=C*N2^(-p)*(exp(-p*b)-1); quotient is expm1(p*a)/(-expm1(-p*b)). F_infinity-F3=d23/expm1(p*b).",
+    "forecast_only": {
+      "F32_N": -0.03619295507815217,
+      "T_force_N": 0.0007240191015630435,
+      "remaining_N": 0.0009777177259420108,
+      "remaining_over_allowance": 1.3504032197925053,
+      "would_pass_remaining_screen": false
+    },
+    "previous_triplet_12_16_24": {
+      "d12": 0.00020345392111919408,
+      "d23": 0.00024278095280086398,
+      "force_limit": -0.03521523735221016,
+      "p": 0.4825833378127983,
+      "positive_ratio_lower_limit": 0.7095112913514545,
+      "ratio": 0.8380143449147468,
+      "signed_remaining": 0.001123328665520275,
+      "status": "eligible"
+    },
+    "previous_triplet_8_12_16": {
+      "d12": 0.0003216196557785031,
+      "d23": 0.00020345392111919408,
+      "force_limit": -0.034538595562188044,
+      "p": 0.33003322965017934,
+      "positive_ratio_lower_limit": 1.4094208396532095,
+      "ratio": 1.5807985120624992,
+      "signed_remaining": 0.0020427514083432552,
+      "status": "eligible"
+    },
+    "pure_controls_passed": 30,
+    "signs": "Signed increments retained; correction has their common sign. Positive correction in these compression results makes the negative force less negative.",
+    "unique_positive_root": "For a,b,p>0, d(log q)/dp=a/(1-exp(-pa))-b/(exp(pb)-1)>1/p-1/p=0. q(0+)=a/b; therefore R>a/b is necessary and sufficient without the declared finite p cap. With cap16 require R<=q(16); p<1e-6 remains unresolved."
+  },
+  "blocking_defects": [],
+  "created_at": "2026-10-08T09:59:11.602088+00:00",
+  "implementation_handoffs": [
+    "New exact wrapper must authenticate node logs using384MiB both before and after parse rather than the legacy256MiB binding default.",
+    "Numerical/source-contract implementation is under separate review; this receipt verifies design algebra/counts against saved metadata, not executable enforcement.",
+    "Aggregate clock includes source preflight, authenticated prior replay, native solve, readout and cleanup as declared. Preparation has its separate60s cap; neither is a measured throughput claim."
+  ],
+  "input_bindings": {
+    "artifacts/mechanics/hbe-halfheight-boundary-execution-v1/comparison.json": {
+      "bytes": 24198,
+      "sha256": "01e0fdcba6a21ba6c28e5845fd32c2c61feef7e8ae223368eee7ed632c5d2302"
+    },
+    "artifacts/mechanics/hbe-halfheight-boundary-execution-v1/solve-state.json": {
+      "bytes": 14067,
+      "sha256": "339ede519fe96d5c903a1ab9e32e2f94f739977142e827ba9088545e732de83c"
+    },
+    "artifacts/mechanics/hbe-halfheight-spatial-execution-v1/RESULT.md": {
+      "bytes": 3660,
+      "sha256": "f9f3e7a0a6b8f9ab6698934541d3d2e62aa625d32abdf0dfbab3fc7c591e1170"
+    },
+    "build/hbe-n32-global-design-v1/proposal.json": {
+      "bytes": 11850,
+      "sha256": "2d605f412474910e3f9a991d77cd1c1915e9ce37d85d619088aeebb2298794e1"
+    },
+    "git:54e281a:artifacts/mechanics/hbe-halfheight-boundary-execution-v1/RESULT.md": {
+      "bytes": 3262,
+      "sha256": "b275affaa7e470a751c212ad058aeb7e76ed98392d36546dc21b703c764f808a"
+    },
+    "git:54e281a:artifacts/mechanics/hbe-halfheight-boundary-execution-v1/comparison.json": {
+      "bytes": 24198,
+      "sha256": "01e0fdcba6a21ba6c28e5845fd32c2c61feef7e8ae223368eee7ed632c5d2302"
+    },
+    "manifests/experiments/hbe-01-03-halfheight-spatial-v1.json": {
+      "bytes": 19148,
+      "sha256": "00d38fd5fca1472b6f01543c6817cea8537f340e8c56a4466752914571c9230c"
+    },
+    "manifests/experiments/hbe-01-03-mechanics-poc-v1.json": {
+      "bytes": 13880,
+      "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+    },
+    "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/comparison.json": {
+      "bytes": 24198,
+      "sha256": "01e0fdcba6a21ba6c28e5845fd32c2c61feef7e8ae223368eee7ed632c5d2302"
+    },
+    "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/compression-N24-S60-reference/readout.json": {
+      "bytes": 555519,
+      "sha256": "57c879166fa79db87c4870d79854d60343ee33235cb0cd46802a12ce81c94aa2"
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S60-reference/readout.json": {
+      "bytes": 550687,
+      "sha256": "f000ebd0e22d64923fe88fd3d1d53e8a260f240af0cb45368cf7708425014538"
+    },
+    "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/readout.json": {
+      "bytes": 549557,
+      "sha256": "41e38786c9a07d045270f1a5a7da656bd3eddd9abed16d6fbc6fe30149a2d03d"
+    },
+    "outputs/mechanics/hbe-01-03-resolution-v1/experiment/runs/compression-N16-S60-reference/readout.json": {
+      "bytes": 550907,
+      "sha256": "dbff229c78737d8ee4532cd73f87ea0e0bad3035b8e45e1542b7d107eefc7e28"
+    },
+    "scripts/mechanics_hbe_mesh.py": {
+      "bytes": 48654,
+      "sha256": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414"
+    },
+    "scripts/mechanics_hbe_outputs.py": {
+      "bytes": 8702,
+      "sha256": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19"
+    },
+    "scripts/mechanics_hbe_physics.py": {
+      "bytes": 17656,
+      "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+    }
+  },
+  "mesh_and_parser": {
+    "byte_caps_sum_B": 687865856,
+    "count_derivation": "Cross-section has 3*N^2 quads and (by disk Euler/boundary count) 3*N^2+2*N+1 vertices. N32 full extrusion has16 axial layers; accepted half has8. Full nodes=2*half-midplane.",
+    "counts": {
+      "cross_section_quads": 3072,
+      "half_hex8_cells": 24576,
+      "half_nodes": 28233,
+      "midplane_nodes": 3137,
+      "reconstructed_full_hex8_cells": 49152,
+      "reconstructed_full_nodes": 53329
+    },
+    "exact_native_grid": "61 S60 states; 28233 node rows x9 fields;24576 element rows x8 fields. Existing25000 wrapper cannot read native nodes; full53329-node geometry needs separate exact wrapper.",
+    "legacy_limits_unchanged_required": true,
+    "proposed_parser_byte_caps": {
+      "elements": 268435456,
+      "nodes": 402653184,
+      "solver": 16777216
+    },
+    "remaining_active_cap_for_other_files_B": 117440512
+  },
+  "proposal_sha256": "2d605f412474910e3f9a991d77cd1c1915e9ce37d85d619088aeebb2298794e1",
+  "resource_plausibility": {
+    "assessment": "430MiB-scale primitive estimate and separate384/256MiB caps are consistent with saved P4 log metadata.768MiB active cap retains128MiB beyond the three parser maxima.750s native and1200s aggregate are plausible experiment bounds, not performance guarantees; sparse fill, conditioning, readout and replay may still exhaust them.3GiB sampled RSS is not a proven memory requirement or strict continuous peak measurement.",
+    "linear_count_projected_N32_element_log_bytes": 181399104.79012346,
+    "linear_count_projected_N32_node_log_bytes": 275841470.3323016,
+    "linear_count_projected_primitive_MiB": 436.05859291307934,
+    "prior_P4_cells": 15552,
+    "prior_P4_nodes": 17770,
+    "prior_P4_saved_element_log_bytes": 114791621,
+    "prior_P4_saved_node_log_bytes": 173616085
+  },
+  "review_actions": {
+    "mesher_calls": 0,
+    "native_primitive_logs_opened": 0,
+    "native_solver_calls": 0,
+    "network_requests": 0,
+    "new_meshes": 0,
+    "raw_measured_curves_opened": 0,
+    "source_edits": 0
+  },
+  "review_harness_correction": "Initial audit-only assertion expected physical_validation_pass=false; saved result correctly uses null for unevaluated physical validation. Assertion corrected to null; no proposal or production source changed.",
+  "review_script_sha256": "fd8d0abc788c055d8e025aafb00770e6beb9b3d1bcd1a688bba75ae1cb583435",
+  "reviewed_committed_result": "54e281a",
+  "schema": "hbe-n32-global-independent-numerical-design-review-v1",
+  "status": "design_clear_with_scope_limits_not_execution_release"
+}

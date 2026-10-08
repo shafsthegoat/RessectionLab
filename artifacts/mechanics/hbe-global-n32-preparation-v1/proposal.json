@@ -1,0 +1,171 @@
+{
+  "case": {
+    "N": 32,
+    "branch": "compression",
+    "frames": 61,
+    "half_hex8_cells": 24576,
+    "half_nodes": 28233,
+    "midplane_nodes": 3137,
+    "mu_Pa": 1000.0,
+    "physics": "unchanged original Ogden exponent2, K=149mu/3, hex8 three-field, laugon0, bonded plates/free side; accepted axial half-height reconstruction",
+    "reconstructed_full_hex8_cells": 49152,
+    "reconstructed_full_nodes": 53329,
+    "reference_choice": "original uniform N24 P1 and original uniform full N16; do not mix P4 into the global sequence",
+    "reference_geometry": "same measured specimen dimensions and original five-block uniform extrusion rule",
+    "steps": 60
+  },
+  "evidence": {
+    "boundary_comparison": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/comparison.json",
+      "sha256": "01e0fdcba6a21ba6c28e5845fd32c2c61feef7e8ae223368eee7ed632c5d2302"
+    },
+    "original_protocol": {
+      "path": "manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+      "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+    },
+    "original_spatial_declaration": {
+      "path": "manifests/experiments/hbe-01-03-halfheight-spatial-v1.json",
+      "sha256": "00d38fd5fca1472b6f01543c6817cea8537f340e8c56a4466752914571c9230c"
+    },
+    "prior_complete_readouts": {
+      "N12": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S60-reference/readout.json",
+        "sha256": "f000ebd0e22d64923fe88fd3d1d53e8a260f240af0cb45368cf7708425014538"
+      },
+      "N16": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/experiment/runs/compression-N16-S60-reference/readout.json",
+        "sha256": "dbff229c78737d8ee4532cd73f87ea0e0bad3035b8e45e1542b7d107eefc7e28"
+      },
+      "N24": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1/experiment/runs/compression-N24-S60-reference/readout.json",
+        "sha256": "57c879166fa79db87c4870d79854d60343ee33235cb0cd46802a12ce81c94aa2"
+      },
+      "N8": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/readout.json",
+        "sha256": "41e38786c9a07d045270f1a5a7da656bd3eddd9abed16d6fbc6fe30149a2d03d"
+      }
+    },
+    "spatial_result": {
+      "path": "artifacts/mechanics/hbe-halfheight-spatial-execution-v1/RESULT.md",
+      "sha256": "f9f3e7a0a6b8f9ab6698934541d3d2e62aa625d32abdf0dfbab3fc7c591e1170"
+    }
+  },
+  "forecast_not_observation": {
+    "N24_to_N32_signed_change_N": 0.00014561093957826676,
+    "basis": "frozen existing N12/16/24 endpoint power law; N32 has not been generated or solved",
+    "endpoint_force_N": -0.03619295507815217,
+    "expected_implication": "approximately2.7percent remaining bias could still exceed2percent allowance; this prospective check is not expected or promised to unlock calibration",
+    "remaining_percent_of_predicted_abs_force": 2.7014034190654104,
+    "signed_remaining_indicator_N": 0.0009777177259420108
+  },
+  "generalized_order": {
+    "N16_24_32_constants": {
+      "a": 0.4054651081081644,
+      "b": 0.28768207245178085,
+      "positive_order_ratio_lower_limit": 1.4094208396532095
+    },
+    "apply_at": "each of the 61 common signed-force states; state0 reported as rest/not_estimated; endpoint at minus15percent strain separately primary",
+    "eligibility": "all finite; both abs increments strictly greater than1.6e-7N; same nonzero sign; R>a/b; unique p in[1e-6,16]; no clipping, sign repair or prescribed nominal order",
+    "equation": "R=d12/d23=expm1(p*a)/(-expm1(-p*b)), a=ln(n2/n1), b=ln(n3/n2)",
+    "inputs": "n1<n2<n3; d12=F(n2)-F(n1); d23=F(n3)-F(n2); preserve signed forces",
+    "low_difference_states": "if both abs increments<=1.6e-7N label below_original_difference_floor and do not estimate order; this is not a remainder bound; if only one is below, label insufficient_increment_resolution",
+    "model": "F(N)=F_infinity+C*(1/N)^p; conditional discretization model, not an observed continuum limit",
+    "order_uncertainty": "report p history and both consecutive absolute p changes; do not infer asymptotic behavior from positive p alone",
+    "other_triplets": "apply the identical algorithm to N8/12/16 and N12/16/24, including cases with increasing raw adjacent differences; retain their original frozen study status",
+    "root_algorithm": "bisect p on[0,16] for80iterations; at0 evaluate a/b; stable expm1 expression otherwise; refuse if R<=a/b or R>q(16); return null if final p<1e-6 or any intermediate/limit is nonfinite",
+    "signed_remaining_indicator": "e32=d23/expm1(p*ln(32/24)); F_infinity_est=F32+e32; report abs(e32) and signed e32"
+  },
+  "instability_and_screen": {
+    "T_force": "1.6e-7N+0.02*max_over61states(abs(F_N32)); identical original series-wide force-change allowance used as a conservative remaining-error screen without weakening it",
+    "all_state_reporting": "report every state, eligibility counts, maximum eligible E and the state attaining it; do not hide unestimated states under a maximum over eligible states",
+    "candidate_screen": "all original individual and N24/N32 change checks pass; endpoint order eligible; no instability flags at resolved states; all resolved-state E<=T_force; unresolved non-rest states prevent a full-curve spatial-accuracy claim",
+    "drift_flag": "where all three triplet orders are eligible, flag increasing_order_drift when abs(p16_24_32-p12_16_24)>abs(p12_16_24-p8_12_16)+1e-6; this is a prospective diagnostic judgment, not an original gate or universal theorem",
+    "eligibility_failure": "opposite signs, missing/invalid states, no admissible positive root, unresolved increments or nonfinite extrapolation => no order-based accuracy screen at that state",
+    "limit_disagreement_flag": "flag force_limit_instability when abs(F_infinity_est16_24_32-F_infinity_est12_16_24)>T_force; report earlier8/12/16 limit separately as coarse-grid history",
+    "two_latest_limit_envelope": "at each eligible state E=max(abs(F_infinity_est16_24_32-F32),abs(F_infinity_est12_16_24-F32)); model-sensitivity envelope only, not a rigorous bound",
+    "when_remaining_bias_exceeds_tolerance": "No acceptance of numerical force accuracy under the original force allowance is supported, even if adjacent changes pass2percent. Report remaining_spatial_error_not_within_allowance, retain the historical failure and keep calibration closed. The exceedance is conditional extrapolation evidence, not proof of divergence.",
+    "when_screen_is_satisfied": "At most a candidate for finest-level temporal verification and independent review; not continuum certification, physical validation or automatic calibration release."
+  },
+  "parser_and_source_contract": {
+    "binding_byte_bounds": "authenticate node-log bytes with the explicit384MiB bound before and after parsing; do not let the historical default256MiB binding check truncate/reject the declared larger log implicitly",
+    "full_geometry": "separate exact53329-node/49152-cell reconstructed geometry contract; no full-native N32 equivalence claim",
+    "historical_API_limits": "original20000-item parser and25000-item resolution/full-geometry wrappers remain unchanged",
+    "mesh_dependency": "one separately released N32 Gmsh geometry generation using the existing pinned mesher identity; exact counts, original quality gates and half coverage required; no geometry generated for this proposal",
+    "native_byte_bounds": {
+      "elements": 268435456,
+      "nodes": 402653184,
+      "solver": 16777216
+    },
+    "native_wrapper": "new declaration-bound N32/S60 wrapper around existing bounded primitive-parser mathematics; exactly61 states,28233 node rows with9 fields and24576 element rows with8 fields; reject every other case/count/grid",
+    "prior_replay": "authenticate complete prior receipts and native execution origin; replay N24 in its original accepted archived source context; count all replay and rechecks inside aggregate",
+    "reuse": "fourteen unchanged spatial-study source modules, original mesher mathematics, independent hex8 physics, reflection, backend/runtime, solver/primitive parsing and supervision; only new exact N32 preparation/readout/execution adapters",
+    "source_closure": "prospectively bind14 inherited modules plus3 new adapters and5 declarations, including original protocol/resolution/halfheight/spatial and the new study; no archive/release created by this proposal"
+  },
+  "proposal_only_controls": {
+    "measured_curves_opened": 0,
+    "mesh_preparation_calls": 0,
+    "native_calls": 0,
+    "opposite_sign_and_no_positive_order_refusals_passed": true,
+    "three_pure_geometric_sequence_root_controls_passed": true,
+    "tracked_edits": 0
+  },
+  "prospective_budgets": {
+    "active_case_output_bytes": 805306368,
+    "aggregate_solve_seconds_including_preflight_prior_replay_readout_cleanup": 1200,
+    "maximum_new_mesher_calls": 1,
+    "maximum_new_native_solver_calls": 1,
+    "native_solver_seconds": 750,
+    "planning_estimate": "480-650s native from N24uniform130.3s and N24P4 257.5s; actual sparse fill/conditioning uncertain; roughly430MiB primitive logs before auxiliary files, so512MiB active cap offers little margin",
+    "preparation_seconds_including_quality": 60,
+    "retry_or_resume": false,
+    "sampled_family_rss_bytes": 3221225472,
+    "threads": 1,
+    "total_new_output_bytes": 2147483648
+  },
+  "purpose": "One uniform global N32 compression observation to test the retained slow spatial trend; no new plate-refinement loop.",
+  "retained_observations": {
+    "N": [
+      8,
+      12,
+      16,
+      24
+    ],
+    "endpoint_force_N": [
+      -0.037106420547429,
+      -0.036784800891650496,
+      -0.0365813469705313,
+      -0.03633856601773044
+    ],
+    "old_spatial_failure_preserved": true,
+    "origin": "previously inspected saved numerical endpoints, not measured calibration curves; future execution must reproduce them from complete authenticated readouts",
+    "plate_normal_P4_remainder_indicator_N": 3.6083935117203667e-06,
+    "plate_normal_indicator_is_total_error_bound": false,
+    "triplet_12_16_24": {
+      "force_limit_N": -0.03521523735221016,
+      "p": 0.4825833378127983,
+      "signed_correction_to_limit_N": 0.001123328665520275
+    },
+    "triplet_8_12_16": {
+      "force_limit_N": -0.034538595562188044,
+      "p": 0.33003322965017934,
+      "signed_correction_to_limit_N": 0.0020427514083432552
+    }
+  },
+  "schema": "hbe-n32-global-prospective-design-v1",
+  "status": "proposal_only_root_review_required;not_a_release",
+  "stopping_rules": [
+    "Require independent numerical-design review before implementation; then freeze source and issue separate preparation/solve releases before their respective execution.",
+    "Stop terminally on first resource, preparation, native or individual-readout failure; preserve partial evidence.",
+    "Finish and report this single N32 observation even if the spatial screen fails; no automatic N40/N48 sweep or further plate split.",
+    "Do not launch S120 until the spatial model is selected by explicit review; temporal-only agreement cannot cure unresolved spatial error.",
+    "Before calibration, selected axial levels still requireS120 using original0.2percent reaction and0.8micrometer motion tolerances; torsion holdouts remain closed and unchanged."
+  ],
+  "unchanged_observation_checks": {
+    "N16_full_N24_half": "use accepted reconstruction identities; no new N16 symmetry study",
+    "complete_native_and_reconstructed_physics": true,
+    "force_change_limit": "T_force",
+    "motion_limit_m": 8e-06,
+    "original_raw_trend": "retain and report original strict decrease/floor comparison as its own historical-style metric; never substitute it for generalized-order/remainder analysis",
+    "probe_count": 75
+  }
+}
