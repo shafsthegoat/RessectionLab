@@ -86,6 +86,8 @@ class RouteCandidate:
     accessible_union_volume_mm3: float = 0.0
     simulated_removed_target_volume_mm3: None = None
     clinical_deficit_probability: None = None
+    critical_evidence: Mapping[str, Any] = field(default_factory=dict)
+    structure_annotation_coverage: Mapping[str, Any] = field(default_factory=dict)
     metric_definitions: Mapping[str, str] = field(default_factory=lambda: {
         "accessible_target_volume_mm3": "Target voxel centres inside the active-tip swept tube; conditional static accessibility, not removal.",
         "normal_tissue_exposure_mm3": "Conservative unique-voxel full-tool swept-envelope overlap with the supplied non-target brain mask; not removed tissue.",
@@ -120,6 +122,9 @@ class RouteCandidate:
                     raise ValueError("Geometric volume metrics must be finite and nonnegative")
             object.__setattr__(self, name, MappingProxyType(values))
         object.__setattr__(self, "metric_definitions", MappingProxyType(dict(self.metric_definitions)))
+        from .core import freeze_json
+        for name in ("critical_evidence", "structure_annotation_coverage"):
+            object.__setattr__(self, name, freeze_json(getattr(self, name)))
         for name in ("unknowns", "assumptions", "dominated_by"):
             object.__setattr__(self, name, tuple(getattr(self, name)))
 
@@ -175,11 +180,14 @@ class SearchResult:
     optimizer_mode: str = "SEARCH"
     optimizer_version: str = SEARCH_VERSION
     gradient_steps: int = 0
+    critical_evidence: Mapping[str, Any] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "candidates", tuple(self.candidates))
         object.__setattr__(self, "assumptions", tuple(self.assumptions))
         object.__setattr__(self, "access_support", MappingProxyType(dict(self.access_support)))
+        from .core import freeze_json
+        object.__setattr__(self, "critical_evidence", freeze_json(self.critical_evidence))
 
     @property
     def pareto_candidates(self) -> tuple[RouteCandidate, ...]:
@@ -361,7 +369,9 @@ def _objective(candidate: RouteCandidate) -> np.ndarray:
     values.append(candidate.route_length_mm)
     if candidate.normal_tissue_exposure_mm3 is not None:
         values.append(candidate.normal_tissue_exposure_mm3)
-    values.extend(float(v) for _, v in sorted(candidate.structure_contact_volume_mm3.items()) if v is not None)
+    allowed = candidate.critical_evidence.get("objective_structures", candidate.structure_contact_volume_mm3)
+    values.extend(float(v) for name, v in sorted(candidate.structure_contact_volume_mm3.items())
+                  if v is not None and name in allowed)
     return np.asarray(values, dtype=float)
 
 
@@ -426,6 +436,10 @@ def generate_candidate_routes(
     """
     started = perf_counter()
     config = config or SearchConfig()
+    from .critical_evidence import resolve_critical_evidence, require_canonical_masks
+    constraints = resolve_critical_evidence(case)
+    require_canonical_masks(constraints, critical_masks)
+    critical_masks = constraints.masks
     _, support_record = _access_support(case, support_mask, support_provenance)
     if windows is not None and support_mask is not None:
         raise ValueError("Supply explicit windows or support for automatic windows, not both")
@@ -475,6 +489,8 @@ def generate_candidate_routes(
     union_points = {"union": _world(np.argwhere(union), case.affine)}
     normal = None if case.brain_mask is None else case.brain_mask & ~union
     forbidden = np.zeros(case.mri.shape, dtype=bool)
+    if constraints.hard_exclusion is not None:
+        forbidden |= constraints.hard_exclusion
     for name in config.hard_exclusions:
         if masks.get(name) is not None:
             forbidden |= masks[name]
@@ -492,6 +508,8 @@ def generate_candidate_routes(
         "tools": [asdict(t) for t in tools], "critical_masks": mask_hashes,
         "access_support": support_record,
     }
+    if constraints.planning_binding is not None:
+        frozen["critical_evidence"] = constraints.planning_binding
     if explicit_targets is not None:
         # The default search receipt and original route IDs remain unchanged.
         frozen["explicit_targets"] = proposals
@@ -502,12 +520,15 @@ def generate_candidate_routes(
         "Accessibility is conditional on establishing the straight access; brain-envelope overlap is recorded, not silently cleared.",
         "Only supplied anatomical constraints are checked; absent functional and vascular anatomy remains unassessed.",
         "Sampled geometric Pareto set within the declared candidate budget; no global or clinical optimum is claimed.",
+        "Critical contact is overlap with supplied labels only; annotation-domain coverage does not establish complete anatomical detection.",
     )
     if support_mask is not None:
         assumptions += (f"Hypothetical window support: {support_record['evidence_type']}; {support_record['method']}; source {support_record['source']}. This support does not label intervening tissue.",)
     unknowns = tuple(dict.fromkeys(
         tuple(case.unknowns) + tuple(f"{name}_anatomy_unassessed" for name in sorted(set(CRITICAL_EVIDENCE + config.hard_exclusions)) if masks.get(name) is None)
         + (("normal_tissue_exposure_unassessed",) if normal is None else ())
+        + tuple(f"{name}_annotation_coverage_partial" for name, coverage in constraints.annotation_coverage.items()
+                if coverage is not None and not np.all(coverage))
         + ("skull_and_scalp_unassessed", "tissue_forces_unmodeled", "clinical_outcomes_unavailable")
     ))
     requested = len(proposals) * len(windows) * len(tools)
@@ -547,9 +568,12 @@ def generate_candidate_routes(
                     normal_tissue_exposure_mm3=certificate.exposure_volume_mm3,
                     structure_contact_volume_mm3=contacts,
                     unknowns=tuple(dict.fromkeys(unknowns + tuple(certificate.unknowns))), assumptions=assumptions,
-                    assessment="incomplete" if any(masks[name] is None for name in CRITICAL_EVIDENCE) else "supplied_anatomy_only",
+                    assessment=("incomplete" if len(constraints.receipt["objective_structures"]) != len(CRITICAL_EVIDENCE)
+                                or certificate.unknowns else "supplied_anatomy_only"),
                     planning_model_hash=model_hash,
                     accessible_union_volume_mm3=accessible_union,
+                    critical_evidence=constraints.planning_receipt,
+                    structure_annotation_coverage=constraints.route_coverage(indices),
                 ))
                 if progress:
                     progress(len(candidates), requested)
@@ -557,7 +581,8 @@ def generate_candidate_routes(
                 break
         if cancelled:
             break
-    return SearchResult(classify_candidates(candidates), case_hash, model_hash, perf_counter() - started, cancelled, requested, assumptions, support_record)
+    return SearchResult(classify_candidates(candidates), case_hash, model_hash, perf_counter() - started,
+                        cancelled, requested, assumptions, support_record, critical_evidence=constraints.planning_receipt)
 
 
 def replay_route(candidate: RouteCandidate, *, step_mm: float = 0.5) -> tuple[ToolPose, ...]:

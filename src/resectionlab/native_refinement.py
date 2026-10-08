@@ -122,9 +122,18 @@ def _evidence_request(case, *, world_generator, hard_exclusion, hard_exclusion_p
     from .worlds import WorldGeneratorConfig
     if world_generator is not None and not isinstance(world_generator, WorldGeneratorConfig):
         raise TypeError("World assumptions must be a frozen WorldGeneratorConfig")
+    from .critical_evidence import canonical_hard_exclusion
+    supplied = hard_exclusion is not None
+    hard_exclusion, critical = canonical_hard_exclusion(case, hard_exclusion)
+    if supplied and hard_exclusion_provenance != critical.fingerprint:
+        raise ValueError("Hard exclusion provenance differs from canonical critical evidence")
+    if hard_exclusion is not None:
+        hard_exclusion_provenance = critical.fingerprint
     if (hard_exclusion is None) != (hard_exclusion_provenance is None):
         raise ValueError("Hard exclusions require both a source-grid mask and provenance")
     result = {}
+    if critical.planning_binding is not None:
+        result["critical_evidence"] = critical.planning_binding
     if hard_exclusion is not None:
         array = np.asarray(hard_exclusion)
         if (array.shape != case.mri.shape or not np.isin(array, (0, 1)).all()
@@ -195,6 +204,24 @@ def native_partial_contact_accounting(case: Any, history: list[dict[str, Any]]) 
             "previously_partial_normal_later_removed_mm3": float(len(normal & removed) * volume)}
 
 
+def _validate_critical_replay_binding(case: Any, binding: dict | None) -> None:
+    """Check claimed consumption against current canonical source evidence."""
+    from .core import array_digest
+    from .critical_evidence import canonical_hard_exclusion
+
+    hard_exclusion, critical = canonical_hard_exclusion(case)
+    expected_receipt = critical.planning_binding
+    if expected_receipt is not None and binding is None:
+        raise ValueError("Native replay requires a route binding for critical evidence")
+    record = {} if binding is None else binding.get("evidence_and_constraints", {})
+    if record.get("critical_evidence") != expected_receipt:
+        raise ValueError("Native replay critical evidence differs from the current case")
+    expected_hard = None if hard_exclusion is None else {
+        "mask_hash": array_digest(hard_exclusion), "provenance": critical.fingerprint}
+    if record.get("hard_exclusion") != expected_hard:
+        raise ValueError("Native replay hard exclusion differs from canonical critical evidence")
+
+
 def validate_native_replay(case: Any, replay: dict[str, Any]) -> bool:
     if replay.get("case_hash") != case.semantic_hash or replay.get("role") != "selection" or replay.get("final_evaluation") is not False:
         raise ValueError("Native replay is stale or is not a selection artifact")
@@ -213,6 +240,7 @@ def validate_native_replay(case: Any, replay: dict[str, Any]) -> bool:
         raise ValueError("Native replay physical frame differs from source")
     metrics = replay["metrics"]
     binding = replay.get("route_binding")
+    _validate_critical_replay_binding(case, binding)
     if binding is not None:
         if binding.get("binding_hash") != content_hash({key: value for key, value in binding.items() if key != "binding_hash"}):
             raise ValueError("Native route binding changed after preparation")

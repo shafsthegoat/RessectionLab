@@ -591,6 +591,15 @@ def greedy_search(simulator: SequentialSimulator, *, max_wall_seconds: float | N
     return SearchResult(tuple(actions), score, len(actions) - 1, time.perf_counter() - started, "greedy_stop")
 
 
+def _rank_search_children(children: list[tuple]) -> list[tuple]:
+    """Stable descending score: ties retain parent/proposal traversal order.
+
+    Artifact identifiers include case history, including withheld evidence.
+    They must not participate in decision ordering.
+    """
+    return sorted(children, key=lambda node: -node[0])
+
+
 def beam_search(simulator: SequentialSimulator, *, beam_width: int = 8,
                 max_expansions: int = 256, max_wall_seconds: float | None = None) -> SearchResult:
     """Bounded lookahead using the same proposals as RL and nominal evidence.
@@ -629,8 +638,7 @@ def beam_search(simulator: SequentialSimulator, *, beam_width: int = 8,
                 if value > best_score + 1e-12:
                     best_score, best_actions = value, sequence
                 children.append((value, sequence, child))
-        children.sort(key=lambda node: (-node[0], node[1]))
-        beam = children[:beam_width]
+        beam = _rank_search_children(children)[:beam_width]
     return SearchResult(best_actions + ("STOP",), best_score, expansions,
                         time.perf_counter() - started,
                         "wall_budget" if timed_out else "expansion_budget" if expansions >= max_expansions else "search_exhausted")
@@ -656,6 +664,8 @@ def make_patient_simulator(case: Any, *, block_size: int = 6, max_steps: int = 4
     population prior or patient tract is invented. MRI support is used only as a
     declared envelope approximation when an inspected brain mask is absent.
     """
+    from .critical_evidence import canonical_hard_exclusion
+    native_hard, critical = canonical_hard_exclusion(case)
     if not isinstance(block_size, int) or isinstance(block_size, bool) or block_size < 1:
         raise ValueError("block_size must be a positive integer")
     native_shape = tuple(case.mri.shape)
@@ -742,7 +752,11 @@ def make_patient_simulator(case: Any, *, block_size: int = 6, max_steps: int = 4
         "requires_independent_finer_resolution_removal_check": True,
         "functional_mode": "supplied_evidence" if nominal_motor is not None and nominal_language is not None else "restricted_missing_functional_evidence",
     }
+    if critical.planning_binding is not None:
+        derivation["critical_evidence"] = critical.planning_binding
+        derivation["critical_pooling"] = "any_source_label_excludes_entire_coarse_cell"
     config = SimulationConfig(tissue, labels, affine, access, tools,
+                              hard_exclusion=None if native_hard is None else pool(native_hard).astype(bool),
                               nominal_motor=None if nominal_motor is None else pool(nominal_motor),
                               nominal_language=None if nominal_language is None else pool(nominal_language),
                               max_steps=max_steps, max_actions=max_actions, proposal_scan_limit=proposal_scan_limit,

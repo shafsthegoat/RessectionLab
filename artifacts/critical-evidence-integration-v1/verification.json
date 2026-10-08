@@ -1,0 +1,47 @@
+{
+  "created_at": "2026-10-08T06:26:59.083185+00:00",
+  "scope": "Source-bound critical-evidence integration; positive vascular acceptance unproved",
+  "source_sha256": {
+    "src/resectionlab/critical_evidence.py": "89604f029cb2099f352a8c37cc8c73ab8e312813277f12292f9e399a3087c12b",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/imaging.py": "0b3fbc7890c9a79daee6d5f7f94d2b677dc98ae6b03e1067a2fe0449bbdc8bb2",
+    "src/resectionlab/planning.py": "e1c1e377a8bdf4416c7b0f7e3f0c3c6d12d63ad46f174d0b0700b86f598a2b24",
+    "src/resectionlab/native_resection.py": "240705acaef263f58e2bce91e94d655f60a66a01fd0eb3e649ecf99cfd97ef40",
+    "src/resectionlab/native_simulation.py": "64552e5e5b5c245d4e815d0943ef4e9e5837b38d251ea891479c2a86ce026749",
+    "src/resectionlab/native_refinement.py": "eec54a623eeff6a6efae64823c93746083602018cf2f3b187b7763487bc0f3c4",
+    "src/resectionlab/native_axis_refinement.py": "51e62d4475e1ba2a5292499581e2a697efcc3419cb5bf0ab4d476e336c917e0e",
+    "src/resectionlab/native_spatial_task.py": "7fe3a6dd8c602a3ac8e70d183eb1b286f0a52cdb4a0b7848daa1b366c23e58f0",
+    "src/resectionlab/desktop_bridge.py": "9170b8b68a0b8dac8fa479e183eabbe46f912c8c18a7c3170445901b1d46ced2",
+    "src/resectionlab/simulation.py": "b8e26d956c3d5637fbcd3f00962bc912264cdb1d5544356a919cb84b98991253",
+    "src/resectionlab/evaluation.py": "df49cd606450f7d086b27ff40a0a3d643b8d60849ecf40b953b1cebcb7fac10b",
+    "desktop/src/types.ts": "35c64b4d9d21433c4c9eb87f3457655f73105eec7549f8a0d4e7c868fd54a555",
+    "tests/test_critical_evidence_real_source.py": "24671776af57d0c231f50c9035f85291059ebd61400f5b0055ac40f54d52319b",
+    "tests/test_real_observation_policy.py": "da21e42641db147973fa38e622f9737ba59b747962a0ee064f0303ec9f48e13b"
+  },
+  "verification": {
+    "pytest_command": ".venv/bin/python -m pytest -q tests/test_critical_evidence_real_source.py tests/test_real_observation_policy.py",
+    "passed": 64,
+    "seconds": 4.95,
+    "source_and_metadata_clock_order_checks": 22,
+    "policy_refusal_checks": 42,
+    "typescript": "passed; bundled Node PATH; ./node_modules/.bin/tsc --noEmit",
+    "earlier_environment_failure": "Default PATH typecheck could not locate node; no source change needed",
+    "independent_reviewers": [
+      "critical_structure_integration",
+      "independent_policy_audit"
+    ],
+    "independent_review_scope": "Source inspection; no positive vascular run or source-authenticity certification"
+  },
+  "actual_source": {
+    "dataset": "ds003949-v1.0.1",
+    "participant": "sub-000",
+    "session": "ses-20110101",
+    "role": "TRAIN",
+    "t1_original_sha256": "404a3b927f5efd5debc6e886aca57ae0e9a6fd830d047382c1f0fb929ab3ff0f"
+  },
+  "positive_vascular_case_verified": false,
+  "clinical_validation": false,
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "readme": "docs/critical-structure-evidence.md"
+}

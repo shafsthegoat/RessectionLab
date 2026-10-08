@@ -871,6 +871,9 @@ def native_spatial_task_from_case(case, *, access, tools, max_steps=3,
     working anatomy or grants cortical/clinical approval on the source case.
     """
     from .structural_evidence import planning_brain_support
+    from .critical_evidence import resolve_critical_evidence
+    if resolve_critical_evidence(case).planning_binding is not None:
+        raise ValueError("CRITICAL_EVIDENCE_UNSUPPORTED: this historical spatial-learning adapter does not consume critical annotations")
     if track not in {"annotation_assisted", "inference_only"}:
         raise ValueError("Real cases require annotation_assisted or inference_only track")
     if research_support_acknowledgment is not None:

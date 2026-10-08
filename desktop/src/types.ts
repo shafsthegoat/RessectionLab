@@ -133,6 +133,16 @@ export interface CasePayload {
     reason?: string;
   };
   structuralEvidence?: StructuralEvidence[];
+  criticalEvidence?: {
+    schema: "critical-constraints-v1";
+    records: Record<string, unknown>;
+    missing: string[];
+    objective_structures: string[];
+    time_scope: string;
+    coverage_meaning: string;
+    trajectory_coverage: "not_computed";
+    clinical_clearance: false;
+  };
   priorProposals?: PriorProposal[];
   compartments: {
     name: string;

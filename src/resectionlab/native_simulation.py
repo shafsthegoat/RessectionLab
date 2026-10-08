@@ -22,7 +22,8 @@ from scipy.ndimage import binary_fill_holes
 from .geometry import AccessWindow, ToolGeometry
 from .simulation import (ACTION_FEATURE_NAMES, InvalidActionError, MacroAction,
                          RewardSpec, SearchResult, SequentialSimulator,
-                         SimulationConfig, SimulationObservation, StepResult, _readonly)
+                         SimulationConfig, SimulationObservation, StepResult,
+                         _rank_search_children, _readonly)
 from .worlds import WorldGeneratorConfig
 
 NATIVE_ADAPTER_VERSION = "native-contained-brush-policy-v2"
@@ -389,8 +390,7 @@ def native_beam_search(simulator: NativeSequentialSimulator, *, beam_width: int 
                 if value > best_score + 1e-10:
                     best_score, best_sequence = value, candidate
                 children.append((value, candidate, child))
-        children.sort(key=lambda item: (-item[0], item[1]))
-        beam = children[:beam_width]
+        beam = _rank_search_children(children)[:beam_width]
     return SearchResult(best_sequence + ("STOP",), best_score, expansions, time.perf_counter() - started, reason)
 
 
@@ -438,6 +438,8 @@ def make_native_patient_simulator(case: Any, *, access: AccessWindow | None = No
     added. candidate_count and entry_mode then do not change the selected ray.
     """
     from .native_resection import NATIVE_GENERIC_TOOLS, NativeResectionConfig
+    from .critical_evidence import canonical_hard_exclusion
+    hard_exclusion, critical = canonical_hard_exclusion(case, hard_exclusion)
     evidence = functional_evidence if functional_evidence is not None else getattr(case, "functional_evidence", None)
     evidence_record = None
     motor_coverage = language_coverage = None
@@ -552,6 +554,8 @@ def make_native_patient_simulator(case: Any, *, access: AccessWindow | None = No
         points = points[:candidate_count]
         normal = np.asarray(access.normal_inward)
         entries = [np.asarray(point) - normal * np.dot(np.asarray(point) - entry, normal) for point in points] if entry_mode == "parallel" else [entry for _ in points]
+    if critical.planning_binding is not None:
+        provenance += f"; critical_evidence={critical.fingerprint}; annotation_domain_only"
     native = NativeResectionConfig(tissue, labels, affine, access, NATIVE_GENERIC_TOOLS if tools is None else tools,
                                    hard_exclusion=hard_exclusion,
                                    source_hash=case.semantic_hash, tissue_support_provenance=provenance,

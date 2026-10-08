@@ -404,6 +404,12 @@ def save_case(case: CaseData, path: str | Path, *, artifacts: Mapping[str, Any] 
         arrays[key] = evidence.mask
         structural_records[name] = {"array_key": key, "manifest": evidence.to_manifest()}
     prior_records = {}
+    critical_records = {}
+    for position, (name, evidence) in enumerate(case.critical_evidence.items()):
+        mask_key, coverage_key = f"critical_mask_{position}", f"critical_coverage_{position}"
+        arrays[mask_key], arrays[coverage_key] = evidence.mask, evidence.annotation_coverage
+        critical_records[name] = {"mask_key": mask_key, "coverage_key": coverage_key,
+                                  "manifest": evidence.to_manifest()}
     for position, (name, proposal) in enumerate(getattr(case, "prior_proposals", {}).items()):
         data_key, coverage_key = f"prior_values_{position}", f"prior_coverage_{position}"
         arrays[data_key], arrays[coverage_key] = proposal.data, proposal.sampling_coverage
@@ -429,6 +435,8 @@ def save_case(case: CaseData, path: str | Path, *, artifacts: Mapping[str, Any] 
     }
     if structural_records:
         manifest["structural_evidence"] = structural_records
+    if critical_records:
+        manifest["critical_evidence"] = critical_records
     if prior_records:
         manifest["prior_proposals"] = prior_records
     if functional is not None:
@@ -488,6 +496,13 @@ def load_case(path: str | Path) -> CaseData:
                     for name, record in manifest["structural_evidence"].items()
                 }
             extra = {"structural_evidence": structural} if structural else {}
+            if manifest.get("critical_evidence"):
+                from .critical_evidence import CriticalStructureEvidence
+                extra["critical_evidence"] = {
+                    name: CriticalStructureEvidence.from_manifest(record["manifest"],
+                        mask=arrays[record["mask_key"]], annotation_coverage=arrays[record["coverage_key"]])
+                    for name, record in manifest["critical_evidence"].items()
+                }
             if manifest.get("prior_proposals"):
                 from .prior_proposals import RegisteredPriorProposal
                 extra["prior_proposals"] = {

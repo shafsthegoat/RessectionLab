@@ -473,6 +473,8 @@ def native_config_from_case(case: Any, *, access: AccessWindow,
     The supplied access is interpreted in ``case.frame``. LPS-to-RAS conversion
     changes only physical coordinate convention, never image samples or cells.
     """
+    from .critical_evidence import canonical_hard_exclusion
+    hard_exclusion, critical = canonical_hard_exclusion(case, hard_exclusion)
     if not case.compartments:
         raise ValueError("Native case requires explicit source target compartments")
     labels = np.zeros(case.mri.shape, np.int16)
@@ -504,6 +506,8 @@ def native_config_from_case(case: Any, *, access: AccessWindow,
         access = AccessWindow(conversion[:3, :3] @ access.center_mm,
                               conversion[:3, :3] @ access.normal_inward, access.radius_mm, access.window_id)
     provenance += f"; source_frame={frame}; simulation_frame=RAS+"
+    if critical.planning_binding is not None:
+        provenance += f"; critical_evidence={critical.fingerprint}; annotation_domain_only"
     return NativeResectionConfig(tissue, labels, affine, access, tools, case.semantic_hash,
                                  provenance, case_id=case.case_id, hard_exclusion=hard_exclusion,
                                  max_tip_step_mm=max_tip_step_mm)

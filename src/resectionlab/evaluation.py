@@ -873,6 +873,10 @@ def independent_check_native_history(case: Any, tools: Sequence[Any],
     from .geometry import ToolPose
     from .independent_geometry_batch import IndependentBatchCancelled, MAX_BATCH_SIZE
 
+    if hasattr(case, "critical_evidence"):
+        from .critical_evidence import canonical_hard_exclusion
+        hard_exclusion, _ = canonical_hard_exclusion(case, hard_exclusion)
+
     if not isinstance(distance_backend, str) or distance_backend not in {"scalar", "batch"}:
         raise ValueError("Native distance backend must be 'scalar' or 'batch'")
     if isinstance(distance_batch_size, (bool, np.bool_)) or not isinstance(distance_batch_size, (int, np.integer)) or not 1 <= distance_batch_size <= MAX_BATCH_SIZE:

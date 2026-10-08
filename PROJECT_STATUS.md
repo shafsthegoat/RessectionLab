@@ -41,6 +41,15 @@ Before further code edits, a fresh fetch again verified remote/local main at
 a4659cc; the working branch contained every main commit (zero behind).
 All 82 inventoried unfinished desktop/other files were preserved byte-for-byte.
 
+Source-bound critical annotations now connect to static/desktop routes, native
+planning, coarse geometric planning and independent native audits. Replay checks
+current canonical exclusions; equal-score beam ties no longer depend on hashes
+containing future case history. The focused real-source/refusal/clock suite passes
+64 checks and TypeScript checking passes. This proves the named absent-evidence
+and protocol behavior; positive vascular acceptance remains unverified without
+an eligible acquired image/annotation pair. See
+[contract and evidence](docs/critical-structure-evidence.md).
+
 RESECT cavity-component roles are now frozen at14 TRAIN/four SELECT/four
 evaluation/Case4 protected DEVELOPMENT; an independent metadata review
 recomputed membership and preserved Case4's earlier measurement partition.

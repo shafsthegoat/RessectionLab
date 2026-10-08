@@ -85,6 +85,10 @@ def _require_json_budget(value: Any, limit: int, code: str, message: str) -> Non
 def _require_axis_output_binding(binding: dict, *, case: CaseData, access: AccessWindow,
                                  preset: dict, expected_binding: str | None) -> None:
     """Join a returned report to server inputs, not merely to its own hashes."""
+    from .critical_evidence import resolve_critical_evidence
+    expected_critical = resolve_critical_evidence(case).planning_binding
+    if binding.get("critical_evidence") != expected_critical:
+        raise BridgeError("AXIS_SOURCE_BINDING_MISMATCH", "Returned critical evidence differs from this case")
     requested = {"center_mm": access.center_mm.tolist(), "normal_inward": access.normal_inward.tolist(),
                  "radius_mm": access.radius_mm, "window_id": access.window_id}
     canonical_affine = (np.diag([-1., -1., 1., 1.]) @ case.affine
@@ -261,6 +265,8 @@ class BridgeSession:
     def _case_array_bytes(case: CaseData) -> int:
         arrays = [case.mri, case.affine, *case.compartments.values(), *case.source_compartments.values()]
         arrays.extend(item.mask for item in case.structural_evidence.values())
+        for item in case.critical_evidence.values():
+            arrays.extend((item.mask, item.annotation_coverage, item.affine_ras_mm))
         if case.brain_mask is not None:
             arrays.append(case.brain_mask)
         for item in case.prior_proposals.values():
@@ -298,7 +304,7 @@ class BridgeSession:
         request.check()
         if case.mri.size * 4 > MAX_ARRAY_BYTES:
             raise BridgeError("ARRAY_SIZE_LIMIT", "Selected MRI is too large for this desktop view")
-        if (len(case.compartments) > 32 or len(case.structural_evidence) > 8
+        if (len(case.compartments) > 32 or len(case.structural_evidence) > 8 or len(case.critical_evidence) > 3
                 or len(case.prior_proposals) > MAX_PRIOR_PROPOSALS or self._case_array_bytes(case) > MAX_CASE_BYTES):
             raise BridgeError("CASE_SIZE_LIMIT", "Expanded case arrays exceed the desktop cache limit")
         if case.semantic_hash in self.cases:
@@ -310,6 +316,8 @@ class BridgeSession:
         # Native voxels stay unchanged. The affine explicitly declares RAS or
         # LPS physical coordinates; renderers must respect that declaration.
         from .structural_evidence import planning_brain_support
+        from .critical_evidence import resolve_critical_evidence
+        critical = resolve_critical_evidence(case)
         brain_support = {"usableForResearchSimulation": False, "reviewStatus": "unassessed",
                          "corticalAccessPermitted": False}
         if case.brain_mask is not None:
@@ -343,6 +351,7 @@ class BridgeSession:
             "priorProposals": [self._prior_descriptor(item) for _, item in sorted(case.prior_proposals.items())],
             "functionalEvidence": (None if case.functional_evidence is None
                                    else case.functional_evidence.to_manifest()),
+            "criticalEvidence": thaw_json(critical.receipt),
             "unknowns": list(case.unknowns), "metadata": thaw_json(case.metadata),
             "context": None if case.context is None else case.context.planning_view(),
             "planningAsOf": None if case.context is None else case.context.planning_as_of.isoformat(),
@@ -470,6 +479,10 @@ class BridgeSession:
 
     @staticmethod
     def _run_options(config: dict, case: CaseData) -> dict:
+        from .critical_evidence import resolve_critical_evidence
+        critical = resolve_critical_evidence(case)
+        if (critical.planning_binding is not None or "criticalEvidenceHash" in config) and config.get("criticalEvidenceHash") != critical.fingerprint:
+            raise BridgeError("EVIDENCE_VERSION_MISMATCH", "Critical evidence differs from the frozen route")
         access = None if config.get("access") is None else AccessWindow(**config["access"])
         ids = config.get("toolIds")
         tools = None if ids is None else tuple(tool for tool in RESEARCH_TOOLS if tool.tool_id in ids)
@@ -477,6 +490,8 @@ class BridgeSession:
             raise BridgeError("TOOL_UNAVAILABLE", "Frozen run references an unknown research tool")
         result = {"access": access, "tools": tools, "selected_entry_mm": config.get("selectedEntryMm"),
                   "selected_target_mm": config.get("selectedTargetMm")}
+        if critical.hard_exclusion is not None:
+            result.update(hard_exclusion=critical.hard_exclusion, hard_exclusion_provenance=critical.fingerprint)
         evidence = case.functional_evidence
         if evidence is not None:
             from .worlds import content_hash
@@ -492,9 +507,13 @@ class BridgeSession:
 
     @staticmethod
     def _route_config(entry: _CaseEntry, route_id: Any) -> dict:
+        from .critical_evidence import resolve_critical_evidence
+        critical = resolve_critical_evidence(entry.case)
         config = {"routeId": route_id, "access": None, "toolIds": None,
                   "selectedEntryMm": None, "selectedTargetMm": None, "coordinateFrame": "RAS+",
                   "scope": "default_native_candidate_search", "optimizationChoiceScope": "finite_native_candidate_actions"}
+        if critical.planning_binding is not None:
+            config["criticalEvidenceHash"] = critical.fingerprint
         if entry.case.functional_evidence is not None:
             evidence = entry.case.functional_evidence
             evidence.assert_matches(entry.case)
@@ -891,10 +910,12 @@ class BridgeSession:
         if operation == "inspectEvidence":
             _keys(args, {"caseHash"})
             case = self._get_case(args.get("caseHash")).case
+            from .critical_evidence import resolve_critical_evidence
             return {"caseHash": case.semantic_hash, "sourceRefs": [source.to_dict() for source in case.source_refs],
                     "metadata": thaw_json(case.metadata), "unknowns": list(case.unknowns),
                     "patientContext": None if case.context is None else case.context.planning_view(),
                     "structuralEvidence": [item.to_manifest() for item in case.structural_evidence.values()],
+                    "criticalEvidence": thaw_json(resolve_critical_evidence(case).receipt),
                     "priorProposals": [item.to_manifest() for _, item in sorted(case.prior_proposals.items())],
                     "clinicalDeficitProbability": None, "clinicalRiskReason": "no_validated_clinical_outcome_model"}
         if operation == "importStructuralEvidence":

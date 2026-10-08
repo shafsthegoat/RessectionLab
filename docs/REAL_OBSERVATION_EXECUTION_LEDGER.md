@@ -36,7 +36,7 @@ compact execution record, not a replacement specification.
 |---|---|---|
 | Data and anatomy | Lausanne originals are CC0 acquired T1/TOF; 284 people, 296 sessions. Full 199-person/210-session TRAIN index is frozen (10.02 GB). Ten original pairs acquired; the prior partial resumed successfully. Bounded intake/cache checks pass; no acquisition batch remains running. TOF orientation provenance and interscan alignment unresolved. | Continue remaining 200 TRAIN sessions using the tested runner. Exclude atlas-derived vessel maps from measurement truth. |
 | Learning | No inspected historical checkpoint meets the new lineage rule. Scans supply no recorded actions/next observations. RESECT family roles are frozen (14 TRAIN/4 SELECT/4 EVAL/Case4 DEVELOPMENT); the bounded Case3 source/rights/QC runner passes 24 combined controls. A rights-only HTTP429 stopped acquisition. | Archive exact rights text when service permits, then acquire/QC the frozen image/mask before cavity-component fitting. Case4 and missing labels remain protected. No recorded-action cohort acquired or outreach sent. |
-| Navigation / integration | Desktop route calls omit vascular critical masks; CaseData has no typed vascular evidence/coverage. | Add source-bound critical evidence and coverage, wire both planners and invalidation; positive acceptance requires actual same-person annotations. |
+| Navigation / integration | Typed source-bound critical evidence now reaches static/desktop/native planning, coarse exclusions and independent native auditing. Replay bindings and future-history-independent beam ties are checked. Real-source absence/refusal, clock and ordering checks pass; no positive vascular acceptance yet. | Acquire an eligible same-person image/annotation pair and verify positive route changes, coverage and invalidation through the desktop/API. Source declarations still require independent authentication. |
 | Operative science | Four supplied research reviews are read; proposed mechanisms are not implemented evidence. | Introduce an evidence-timed action/observation timeline with observed events distinct from proposals and model predictions. |
 | Exposure / instruments | Generic capsule tools; hypothetical zero-thickness brain opening; no synchronized pair checking or measured skull/tool bundle. | Acquire same-person skull evidence and device metrology; implement synchronized full-pose checks after contracts. |
 | Tissue / vascular | HBE half-height N8/N12 axial equivalence passed with independent raw-log reconstruction; spatial convergence and RESECT mesh fidelity remain unresolved. No calibrated cutting/bleeding response. MULTIS donor004 run005 is creator-accepted; earlier001 candidate was rejected. Core234 files/343.5 MB identified; authenticated transfer, pairing and spatial transform unverified. | Prospectively declare/review the next HBE spatial-refinement test; no automatic promotion or curve access. Separately resolve MULTIS transfer, freeze donor role and acquire measurement support. Cadaver leg evidence cannot validate brain forces. Retain FEBio; compare SOFA for later interaction. |
@@ -44,6 +44,13 @@ compact execution record, not a replacement specification.
 | Independent evaluation | Refusal-only tests and read-only review expose bounded exclusion defects; historical negatives preserved. | Challenge source/role/ancestry and real-case behavior per slice; do not run generated-patient suites as new acceptance evidence. |
 
 ## Guard milestone evidence
+
+The [critical-evidence integration](critical-structure-evidence.md) passes 64
+combined checks, including actual-source save/reopen and desktop missing-support
+refusal, plus the existing 42 policy checks. Independent reviews found additional
+consumption and hash-dependent ordering gaps; these are repaired. No generated
+patient, fabricated label, simulator trajectory or learning update was used.
+Positive vascular behavior and clinical coverage remain unproved.
 
 See [guard receipt](../artifacts/real-observation-policy-v1/RESULT.md).
 No patient fixture, model forward pass, optimizer update or simulator episode was

@@ -21,6 +21,7 @@ import numpy as np
 from numpy.typing import ArrayLike, NDArray
 
 if TYPE_CHECKING:
+    from .critical_evidence import CriticalStructureEvidence
     from .functional_evidence import FunctionalEvidence
     from .prior_proposals import RegisteredPriorProposal
     from .structural_evidence import StructuralEvidence
@@ -297,6 +298,7 @@ class CaseData:
     structural_evidence: Mapping[str, StructuralEvidence] = field(default_factory=dict)
     prior_proposals: Mapping[str, RegisteredPriorProposal] = field(default_factory=dict)
     functional_evidence: FunctionalEvidence | None = None
+    critical_evidence: Mapping[str, CriticalStructureEvidence] = field(default_factory=dict)
     _semantic_hash: str = field(init=False, repr=False)
     _planning_hash: str = field(init=False, repr=False)
     _prior_registration_input_hash: str = field(init=False, repr=False)
@@ -351,6 +353,19 @@ class CaseData:
                 raise ValueError("Structural evidence IDs and typed records must agree")
             proposal.assert_matches(self)
         object.__setattr__(self, "structural_evidence", MappingProxyType(evidence))
+        from .critical_evidence import CriticalStructureEvidence
+        if not isinstance(self.critical_evidence, Mapping):
+            raise ValueError("critical_evidence must map IDs to CriticalStructureEvidence")
+        critical = dict(self.critical_evidence)
+        kinds = set()
+        for identity, item in critical.items():
+            if not isinstance(item, CriticalStructureEvidence) or identity != item.evidence_id:
+                raise ValueError("Critical evidence IDs and typed records must agree")
+            if item.structure in kinds:
+                raise ValueError("Only one selected critical record per structure is supported")
+            kinds.add(item.structure)
+            item.assert_matches(self)
+        object.__setattr__(self, "critical_evidence", MappingProxyType(critical))
         if not isinstance(self.prior_proposals, Mapping):
             raise ValueError("prior_proposals must map IDs to RegisteredPriorProposal")
         proposals = dict(self.prior_proposals)
@@ -370,6 +385,7 @@ class CaseData:
         object.__setattr__(self, "_planning_hash", semantic_digest(self._planning_manifest(manifest)))
         registration_manifest = self._planning_manifest(manifest)
         registration_manifest.pop("functional_evidence", None)
+        registration_manifest.pop("critical_evidence", None)
         object.__setattr__(self, "_prior_registration_input_hash", semantic_digest(registration_manifest))
         object.__setattr__(self, "_array_state", self._array_signature())
         # A registered preview refers to the historical registration case, while
@@ -402,6 +418,8 @@ class CaseData:
         if self.brain_mask is not None:
             arrays.append(self.brain_mask)
         arrays.extend(item.mask for item in self.structural_evidence.values())
+        for item in self.critical_evidence.values():
+            arrays.extend((item.mask, item.annotation_coverage, item.affine_ras_mm))
         for item in self.prior_proposals.values():
             arrays.extend((item.data, item.sampling_coverage, item.affine_ras_mm,
                            item.source_prior_affine_ras_mm, item.mni_ras_to_patient_ras_mm))
@@ -423,6 +441,7 @@ class CaseData:
             return self._prior_registration_input_hash
         manifest = self._planning_manifest(self.to_manifest(include_hash=False))
         manifest.pop("functional_evidence", None)
+        manifest.pop("critical_evidence", None)
         return semantic_digest(manifest)
 
     def _planning_manifest(self, manifest: Mapping[str, Any]) -> dict[str, Any]:
@@ -433,6 +452,13 @@ class CaseData:
         result.pop("structural_evidence", None)
         # Registered functional previews are view-only population evidence.
         result.pop("prior_proposals", None)
+        if self.critical_evidence:
+            selected = {key: item.to_manifest() for key, item in self.critical_evidence.items()
+                        if item.exclusion_reason(self) is None}
+            if selected:
+                result["critical_evidence"] = selected
+            else:
+                result.pop("critical_evidence", None)
         if self.context is not None:
             result["context"] = {
                 "planning_as_of": self.context.planning_as_of.isoformat(),
@@ -481,6 +507,8 @@ class CaseData:
         }
         if self.structural_evidence:
             result["structural_evidence"] = {key: value.to_manifest() for key, value in self.structural_evidence.items()}
+        if self.critical_evidence:
+            result["critical_evidence"] = {key: value.to_manifest() for key, value in self.critical_evidence.items()}
         if self.prior_proposals:
             result["prior_proposals"] = {key: value.to_manifest() for key, value in self.prior_proposals.items()}
         if self.functional_evidence is not None:

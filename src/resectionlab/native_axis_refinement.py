@@ -129,6 +129,13 @@ def inspect_axis_planning(
         motor, language = evidence.planning_arrays()
         motor_coverage, language_coverage = evidence.motor_coverage, evidence.language_coverage
         evidence_record = evidence.to_manifest()
+    from .critical_evidence import canonical_hard_exclusion
+    supplied = hard_exclusion is not None
+    hard_exclusion, critical = canonical_hard_exclusion(case, hard_exclusion)
+    if supplied and hard_exclusion_provenance != critical.fingerprint:
+        raise ValueError("Hard exclusion provenance differs from canonical critical evidence")
+    if hard_exclusion is not None:
+        hard_exclusion_provenance = critical.fingerprint
     if (hard_exclusion is None) != (hard_exclusion_provenance is None):
         raise ValueError("A supplied hard-exclusion mask requires its own provenance")
     if hard_exclusion_provenance is not None and (not isinstance(hard_exclusion_provenance, str) or not hard_exclusion_provenance.strip()):
@@ -202,13 +209,16 @@ def inspect_axis_planning(
         "world_generator_hash": simulator.world_generator_fingerprint,
         "world_role": None, "world_partitions_created": False,
         "functional_evidence_available": {"motor": motor is not None, "language": language is not None},
-        "vascular_evidence_status": "unassessed", "population_priors_used": evidence is not None,
+        "vascular_evidence_status": "unassessed" if critical.hard_exclusion is None else "supplied_labels_only",
+        "population_priors_used": evidence is not None,
         "partial_contact_policy": "retained_tissue_exposure_not_removed",
         "fallback_policy": "only_after_primary_preview_rejection",
         "ordering": "STOP_then_provider_column_tool_order",
     }
     if evidence_record is not None:
         binding["functional_evidence"] = evidence_record
+    if critical.planning_binding is not None:
+        binding["critical_evidence"] = critical.planning_binding
     binding = json.loads(_json(binding))
     binding["binding_hash"] = content_hash(binding)
     if expected_binding_hash is not None and binding["binding_hash"] != expected_binding_hash:
