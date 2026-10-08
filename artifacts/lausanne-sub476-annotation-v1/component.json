@@ -1,0 +1,646 @@
+{
+  "schema": "lausanne-sub476-positive-component-v1",
+  "scope": "retrospective_source_coded_frame_component",
+  "case_hash": "sha256:fa1bfa1d487acc8ab5527adb7bdce8094988443745c37b4d55c6bb03bd3ef885",
+  "critical_binding_hash": "sha256:f71fb0d2447da5e870928f769f2ee29f6c5bea376fc0a9c7791919b6ef41a4d8",
+  "evidence": {
+    "schema": "critical-structure-evidence-v1",
+    "evidence_id": "Lausanne-sub476-manual-aneurysm-positive-v1",
+    "structure": "vessels",
+    "case_id": "Lausanne-sub476-ses20140519-TOF-component",
+    "reference_image_hash": "sha256:5d6f090a9185afd452b2e03731e2cd5842b605903ebe57ac493c35dd76898675",
+    "reference_source_id": "structural",
+    "reference_source_sha256": "sha256:6a8dffc432e43c5ddf0aa445c22ea5a36687ffcd15f4ab4e57c318feef639678",
+    "shape": [
+      306,
+      384,
+      160
+    ],
+    "mask_hash": "sha256:1f678f59c5467f253aab08a69c3d51540abeff126147392751675dfcf3ab2fe0",
+    "annotation_coverage_hash": "sha256:1f678f59c5467f253aab08a69c3d51540abeff126147392751675dfcf3ab2fe0",
+    "affine_ras_mm": [
+      [
+        0.5445199012756348,
+        0.01616097427904606,
+        0.061508893966674805,
+        -95.22366333007812
+      ],
+      [
+        -0.004947871435433626,
+        0.5328119993209839,
+        -0.15759623050689697,
+        -102.3204574584961
+      ],
+      [
+        -0.050456803292036057,
+        0.12215769290924072,
+        0.6792460083961487,
+        -106.03179168701172
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "source": {
+      "source_id": "Lausanne-sub476-original-manual-aneurysm",
+      "uri": "https://s3.amazonaws.com/openneuro.org/ds003949/derivatives/manual_masks/sub-476/ses-20140519/anat/sub-476_ses-20140519_desc-Lesion_1_mask.nii.gz?versionId=o2G8mwmecJU6sRJDlz2GDmDIRXIK9umG",
+      "sha256": "1687ac04ca817691ce91de4ccb4457b31dbbbfca414db019d4e29bd88b0a03ee",
+      "license": "CC0",
+      "native_frame": "source_orig_declared_units_missing_retained",
+      "provenance": "observed"
+    },
+    "source_binding": {
+      "dataset": "ds003949-v1.0.1",
+      "participant": "sub-476",
+      "timepoint": "ses-20140519",
+      "linkage_source": {
+        "source_id": "Lausanne-sub476-annotation-sidecar",
+        "uri": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/derivatives/manual_masks/sub-476/ses-20140519/anat/sub-476_ses-20140519_desc-Lesion_1_mask.json",
+        "sha256": "f589cb0e384b29740ae6e0b6140ab7a553be8783cbc7b5886cc32106940baf2e",
+        "license": "CC0",
+        "native_frame": "not_applicable",
+        "provenance": "observed"
+      },
+      "coverage_source": {
+        "source_id": "Lausanne-sub476-original-manual-aneurysm",
+        "uri": "https://s3.amazonaws.com/openneuro.org/ds003949/derivatives/manual_masks/sub-476/ses-20140519/anat/sub-476_ses-20140519_desc-Lesion_1_mask.nii.gz?versionId=o2G8mwmecJU6sRJDlz2GDmDIRXIK9umG",
+        "sha256": "1687ac04ca817691ce91de4ccb4457b31dbbbfca414db019d4e29bd88b0a03ee",
+        "license": "CC0",
+        "native_frame": "source_orig_declared_units_missing_retained",
+        "provenance": "observed"
+      },
+      "coverage_meaning": "source_documented_annotation_domain",
+      "coverage_policy": "positive_support_only",
+      "positive_class": "source_manual_voxelwise_aneurysm_region",
+      "background_meaning": "unknown_for_vascular_anatomy",
+      "coverage_restriction": "Adapter restricts consumption to source positive voxels; no negative vessel annotation domain is inferred.",
+      "original_release_manifest_sha256": "39537b60333a22e8e8e81f792ac5ba9dad306ef72ff3a4a4f768f6b7ab59230f",
+      "cohort_sha256": "891a53680edfce604eed9a1791bc790efa615db8ce54da0c92de834a6b87d49a"
+    },
+    "derivation": {
+      "method": "source_reference_grid_normalization",
+      "source_image_sha256": "6a8dffc432e43c5ddf0aa445c22ea5a36687ffcd15f4ab4e57c318feef639678",
+      "annotation_sha256": "1687ac04ca817691ce91de4ccb4457b31dbbbfca414db019d4e29bd88b0a03ee",
+      "annotation_raw_grid": {
+        "source_file_sha256": "sha256:1687ac04ca817691ce91de4ccb4457b31dbbbfca414db019d4e29bd88b0a03ee",
+        "header_base64": "XAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAMgGAAaAAAQABAAEAAQAAAAAAAAAAAAAAAAAAAAIACAAAAAAAgD///ws/AQAMP/YyMz8AAIA/AACAPwAAgD8AAIA/AACwQwAAgD8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAN1e5z1D2Tk9TUsfvIJyvsIRpMzCRhDUwqdlCz8FZIQ8vfB7PYJyvsLBIaK7XmYIP+dgIb4RpMzCyqtOvc4t+j0P4y0/RhDUwgAAAAAAAAAAAAAAAAAAAABuKzEA",
+        "header_sha256": "8fb9dd12d0c444ca21780b9f3b745e93305376cc9deac190646808452a2dd23e",
+        "raw_grid": {
+          "shape": [
+            306,
+            384,
+            160
+          ],
+          "spatial_units": "unknown",
+          "xyzt_units_code": 0,
+          "pixdim": [
+            1.0,
+            0.5468749403953552,
+            0.5468750596046448,
+            0.6999963521957397,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "qform_code": 0,
+          "sform_code": 2,
+          "qform_numeric_including_inactive": [
+            [
+              0.5445198166196917,
+              0.01616097513823133,
+              0.061508883700758826,
+              -95.22364807128906
+            ],
+            [
+              -0.004947871782733344,
+              0.5328120238366006,
+              -0.15759620389905504,
+              -102.32044219970703
+            ],
+            [
+              -0.05045679642726255,
+              0.12215768889149352,
+              0.6792458957033426,
+              -106.03178405761719
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "sform_numeric": [
+            [
+              0.54451984167099,
+              0.01616097427904606,
+              0.06150888279080391,
+              -95.22364807128906
+            ],
+            [
+              -0.004947871435433626,
+              0.5328119993209839,
+              -0.15759621560573578,
+              -102.32044219970703
+            ],
+            [
+              -0.05045679956674576,
+              0.12215767800807953,
+              0.6792458891868591,
+              -106.03178405761719
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        }
+      },
+      "reference_raw_grid": {
+        "source_file_sha256": "sha256:6a8dffc432e43c5ddf0aa445c22ea5a36687ffcd15f4ab4e57c318feef639678",
+        "header_base64": "XAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAByNgMAMgGAAaAAAQABAAEAAQAAAAAAAAAAAAAAAAAAAAQAEAAAAAAAgD8AAAw/AAAMP/YyMz/0/dQ8AAAAAAAAAAAAAAAAAACwQ60ALTytAK1DAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFRFPTc7VGltZT0xNTA4MzYuMTUyO3BoYXNlPTEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQABAN5e5z1C2Tk9TEsfvIRyvsITpMzCRxDUwqhlCz8FZIQ8wPB7PYRyvsLBIaK7XmYIP+hgIb4TpMzCy6tOvdAt+j0R4y0/RxDUwgAAAAAAAAAAAAAAAAAAAABuKzEA",
+        "header_sha256": "9e3223561a47bfc1606b9f8332d6086a4a3718df0b723227a318801a06a00aa2",
+        "raw_grid": {
+          "shape": [
+            306,
+            384,
+            160
+          ],
+          "spatial_units": "mm",
+          "xyzt_units_code": 10,
+          "pixdim": [
+            1.0,
+            0.546875,
+            0.546875,
+            0.6999963521957397,
+            0.026000000536441803,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "qform_code": 1,
+          "sform_code": 1,
+          "qform_numeric_including_inactive": [
+            [
+              0.5445198763572054,
+              0.016160972268139565,
+              0.06150887852783623,
+              -95.22366333007812
+            ],
+            [
+              -0.004947871394456595,
+              0.5328119639432473,
+              -0.15759621403610596,
+              -102.3204574584961
+            ],
+            [
+              -0.05045679781355195,
+              0.1221576836686429,
+              0.6792458938198124,
+              -106.03179168701172
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ],
+          "sform_numeric": [
+            [
+              0.5445199012756348,
+              0.01616097427904606,
+              0.061508893966674805,
+              -95.22366333007812
+            ],
+            [
+              -0.004947871435433626,
+              0.5328119993209839,
+              -0.15759623050689697,
+              -102.3204574584961
+            ],
+            [
+              -0.050456803292036057,
+              0.12215769290924072,
+              0.6792460083961487,
+              -106.03179168701172
+            ],
+            [
+              0.0,
+              0.0,
+              0.0,
+              1.0
+            ]
+          ]
+        }
+      },
+      "array_operation": "unchanged_binary_positive_support",
+      "positive_mask_hash": "sha256:1f678f59c5467f253aab08a69c3d51540abeff126147392751675dfcf3ab2fe0",
+      "sidecar_source": {
+        "source_id": "Lausanne-sub476-annotation-sidecar",
+        "uri": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/derivatives/manual_masks/sub-476/ses-20140519/anat/sub-476_ses-20140519_desc-Lesion_1_mask.json",
+        "sha256": "f589cb0e384b29740ae6e0b6140ab7a553be8783cbc7b5886cc32106940baf2e",
+        "license": "CC0",
+        "native_frame": "not_applicable",
+        "provenance": "observed"
+      },
+      "sidecar_base64": "eyJUeXBlIjogIkxlc2lvbiIsICJSYXdTb3VyY2VzIjogInN1Yi00NzZfc2VzLTIwMTQwNTE5X2FuZ2lvLm5paS5neiIsICJTcGFjZSI6ICJvcmlnIn0=",
+      "reference_filename": "sub-476_ses-20140519_angio.nii.gz",
+      "precision_equivalence": {
+        "rule": "nifti1_float32_four_ulp_and_unchanged_indices_v1",
+        "maximum_allowed_float32_steps": 4,
+        "maximum_observed_float32_steps": 3,
+        "maximum_support_displacement_reference_mm": 2.803332224464873e-05,
+        "maximum_support_displacement_voxels": 4.624365564998158e-05,
+        "maximum_support_component_voxels": 3.114035558745249e-05,
+        "serialization_component_bound_reference_mm": [
+          0.00010858848690986633,
+          0.00013202708214521408,
+          8.452683687210083e-05
+        ],
+        "serialization_component_bound_voxels": [
+          0.00021415156364677622,
+          0.0002756059674702636,
+          0.0001732683725374509
+        ],
+        "all_voxel_centres_keep_reference_index": true
+      },
+      "unit_interpretation": "reference_mm_from_explicit_RawSources_orig",
+      "scope": "retrospective_source_coded_frame_component",
+      "scanner_frame_admitted": false,
+      "spatial_planning_admitted": false,
+      "inference_rationale": "The pinned source declares this exact RawSources and Space=orig. Identical shape and a bounded float32 serialization difference support source-grid unit inheritance and coordinate normalization. This is an explicit interpretation, not proven software history or scanner validation. Both raw headers and original files remain unchanged.",
+      "normalization_record_hash": "sha256:beac722e927074feb28a02f18228b93cad4a8872965fb0f44de5a0be7f9252b5"
+    },
+    "lineage": {
+      "kind": "manual",
+      "model_sha256": [],
+      "source": {
+        "source_id": "DiNoto2022-annotation-methods",
+        "uri": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9931814/fullTextXML",
+        "sha256": "105ae182b2b7da8c0d29f23700b5a3b82c6feb3255e5f09c8c4349495fd1e954",
+        "license": "CC-BY-4.0",
+        "native_frame": "not_applicable",
+        "provenance": "observed"
+      },
+      "membership_source": {
+        "source_id": "Lausanne-source-voxelwise-membership",
+        "uri": "https://raw.githubusercontent.com/connectomicslab/Aneurysm_Detection/5ecdf6e5b9a811e4ec7472c210dada42e60cc3dc/extra_files/patients_with_voxelwise_labels.pkl",
+        "sha256": "18824f1c3f14a1909b966247ed7e6ac2d6144be762c6aa487ecc853baa3150eb",
+        "license": "Apache-2.0",
+        "native_frame": "not_applicable",
+        "provenance": "observed"
+      },
+      "membership_license_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+      "membership": "sub-476_ses-20140519",
+      "method": "Radiologist drew axial slices in ITK-SNAP 3.6.0; no learned initializer in the documented voxelwise protocol."
+    },
+    "acquisition_time": null,
+    "available_at": null,
+    "review": {
+      "status": "source_human_reviewed",
+      "source": {
+        "source_id": "DiNoto2022-annotation-methods",
+        "uri": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9931814/fullTextXML",
+        "sha256": "105ae182b2b7da8c0d29f23700b5a3b82c6feb3255e5f09c8c4349495fd1e954",
+        "license": "CC-BY-4.0",
+        "native_frame": "not_applicable",
+        "provenance": "observed"
+      },
+      "available_at": null,
+      "content_hash": "sha256:b0a19a0e68c0bf08baeea344131d523bb1ccbaacab9b100fb037c0073d96ea3c",
+      "binding_kind": "software_provenance_binding_not_clinician_signature",
+      "scope": "Paper-reported source annotation double-check by a senior neuroradiologist to exclude false positives/negatives. This does not assert review of our content hash, normalization, positive-only domain, adapter, or planning use.",
+      "annotation_source_sha256": "1687ac04ca817691ce91de4ccb4457b31dbbbfca414db019d4e29bd88b0a03ee",
+      "membership_source": {
+        "source_id": "Lausanne-source-voxelwise-membership",
+        "uri": "https://raw.githubusercontent.com/connectomicslab/Aneurysm_Detection/5ecdf6e5b9a811e4ec7472c210dada42e60cc3dc/extra_files/patients_with_voxelwise_labels.pkl",
+        "sha256": "18824f1c3f14a1909b966247ed7e6ac2d6144be762c6aa487ecc853baa3150eb",
+        "license": "Apache-2.0",
+        "native_frame": "not_applicable",
+        "provenance": "observed"
+      }
+    },
+    "evidence_hash": "sha256:0b81a40dd0a660401215922dbc820916a6eea360a7207b399c2e88e398d08947"
+  },
+  "constraints": {
+    "schema": "critical-constraints-v1",
+    "records": {
+      "Lausanne-sub476-manual-aneurysm-positive-v1": {
+        "evidence_hash": "sha256:0b81a40dd0a660401215922dbc820916a6eea360a7207b399c2e88e398d08947",
+        "structure": "vessels",
+        "exclusion_reason": null,
+        "source": {
+          "source_id": "Lausanne-sub476-original-manual-aneurysm",
+          "uri": "https://s3.amazonaws.com/openneuro.org/ds003949/derivatives/manual_masks/sub-476/ses-20140519/anat/sub-476_ses-20140519_desc-Lesion_1_mask.nii.gz?versionId=o2G8mwmecJU6sRJDlz2GDmDIRXIK9umG",
+          "sha256": "1687ac04ca817691ce91de4ccb4457b31dbbbfca414db019d4e29bd88b0a03ee",
+          "license": "CC0",
+          "native_frame": "source_orig_declared_units_missing_retained",
+          "provenance": "observed"
+        },
+        "source_binding": {
+          "dataset": "ds003949-v1.0.1",
+          "participant": "sub-476",
+          "timepoint": "ses-20140519",
+          "linkage_source": {
+            "source_id": "Lausanne-sub476-annotation-sidecar",
+            "uri": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/derivatives/manual_masks/sub-476/ses-20140519/anat/sub-476_ses-20140519_desc-Lesion_1_mask.json",
+            "sha256": "f589cb0e384b29740ae6e0b6140ab7a553be8783cbc7b5886cc32106940baf2e",
+            "license": "CC0",
+            "native_frame": "not_applicable",
+            "provenance": "observed"
+          },
+          "coverage_source": {
+            "source_id": "Lausanne-sub476-original-manual-aneurysm",
+            "uri": "https://s3.amazonaws.com/openneuro.org/ds003949/derivatives/manual_masks/sub-476/ses-20140519/anat/sub-476_ses-20140519_desc-Lesion_1_mask.nii.gz?versionId=o2G8mwmecJU6sRJDlz2GDmDIRXIK9umG",
+            "sha256": "1687ac04ca817691ce91de4ccb4457b31dbbbfca414db019d4e29bd88b0a03ee",
+            "license": "CC0",
+            "native_frame": "source_orig_declared_units_missing_retained",
+            "provenance": "observed"
+          },
+          "coverage_meaning": "source_documented_annotation_domain",
+          "coverage_policy": "positive_support_only",
+          "positive_class": "source_manual_voxelwise_aneurysm_region",
+          "background_meaning": "unknown_for_vascular_anatomy",
+          "coverage_restriction": "Adapter restricts consumption to source positive voxels; no negative vessel annotation domain is inferred.",
+          "original_release_manifest_sha256": "39537b60333a22e8e8e81f792ac5ba9dad306ef72ff3a4a4f768f6b7ab59230f",
+          "cohort_sha256": "891a53680edfce604eed9a1791bc790efa615db8ce54da0c92de834a6b87d49a"
+        },
+        "review": {
+          "status": "source_human_reviewed",
+          "source": {
+            "source_id": "DiNoto2022-annotation-methods",
+            "uri": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9931814/fullTextXML",
+            "sha256": "105ae182b2b7da8c0d29f23700b5a3b82c6feb3255e5f09c8c4349495fd1e954",
+            "license": "CC-BY-4.0",
+            "native_frame": "not_applicable",
+            "provenance": "observed"
+          },
+          "available_at": null,
+          "content_hash": "sha256:b0a19a0e68c0bf08baeea344131d523bb1ccbaacab9b100fb037c0073d96ea3c",
+          "binding_kind": "software_provenance_binding_not_clinician_signature",
+          "scope": "Paper-reported source annotation double-check by a senior neuroradiologist to exclude false positives/negatives. This does not assert review of our content hash, normalization, positive-only domain, adapter, or planning use.",
+          "annotation_source_sha256": "1687ac04ca817691ce91de4ccb4457b31dbbbfca414db019d4e29bd88b0a03ee",
+          "membership_source": {
+            "source_id": "Lausanne-source-voxelwise-membership",
+            "uri": "https://raw.githubusercontent.com/connectomicslab/Aneurysm_Detection/5ecdf6e5b9a811e4ec7472c210dada42e60cc3dc/extra_files/patients_with_voxelwise_labels.pkl",
+            "sha256": "18824f1c3f14a1909b966247ed7e6ac2d6144be762c6aa487ecc853baa3150eb",
+            "license": "Apache-2.0",
+            "native_frame": "not_applicable",
+            "provenance": "observed"
+          }
+        },
+        "derivation": {
+          "method": "source_reference_grid_normalization",
+          "source_image_sha256": "6a8dffc432e43c5ddf0aa445c22ea5a36687ffcd15f4ab4e57c318feef639678",
+          "annotation_sha256": "1687ac04ca817691ce91de4ccb4457b31dbbbfca414db019d4e29bd88b0a03ee",
+          "annotation_raw_grid": {
+            "source_file_sha256": "sha256:1687ac04ca817691ce91de4ccb4457b31dbbbfca414db019d4e29bd88b0a03ee",
+            "header_base64": "XAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMAMgGAAaAAAQABAAEAAQAAAAAAAAAAAAAAAAAAAAIACAAAAAAAgD///ws/AQAMP/YyMz8AAIA/AACAPwAAgD8AAIA/AACwQwAAgD8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAN1e5z1D2Tk9TUsfvIJyvsIRpMzCRhDUwqdlCz8FZIQ8vfB7PYJyvsLBIaK7XmYIP+dgIb4RpMzCyqtOvc4t+j0P4y0/RhDUwgAAAAAAAAAAAAAAAAAAAABuKzEA",
+            "header_sha256": "8fb9dd12d0c444ca21780b9f3b745e93305376cc9deac190646808452a2dd23e",
+            "raw_grid": {
+              "shape": [
+                306,
+                384,
+                160
+              ],
+              "spatial_units": "unknown",
+              "xyzt_units_code": 0,
+              "pixdim": [
+                1.0,
+                0.5468749403953552,
+                0.5468750596046448,
+                0.6999963521957397,
+                1.0,
+                1.0,
+                1.0,
+                1.0
+              ],
+              "qform_code": 0,
+              "sform_code": 2,
+              "qform_numeric_including_inactive": [
+                [
+                  0.5445198166196917,
+                  0.01616097513823133,
+                  0.061508883700758826,
+                  -95.22364807128906
+                ],
+                [
+                  -0.004947871782733344,
+                  0.5328120238366006,
+                  -0.15759620389905504,
+                  -102.32044219970703
+                ],
+                [
+                  -0.05045679642726255,
+                  0.12215768889149352,
+                  0.6792458957033426,
+                  -106.03178405761719
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "sform_numeric": [
+                [
+                  0.54451984167099,
+                  0.01616097427904606,
+                  0.06150888279080391,
+                  -95.22364807128906
+                ],
+                [
+                  -0.004947871435433626,
+                  0.5328119993209839,
+                  -0.15759621560573578,
+                  -102.32044219970703
+                ],
+                [
+                  -0.05045679956674576,
+                  0.12215767800807953,
+                  0.6792458891868591,
+                  -106.03178405761719
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ]
+            }
+          },
+          "reference_raw_grid": {
+            "source_file_sha256": "sha256:6a8dffc432e43c5ddf0aa445c22ea5a36687ffcd15f4ab4e57c318feef639678",
+            "header_base64": "XAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAByNgMAMgGAAaAAAQABAAEAAQAAAAAAAAAAAAAAAAAAAAQAEAAAAAAAgD8AAAw/AAAMP/YyMz/0/dQ8AAAAAAAAAAAAAAAAAACwQ60ALTytAK1DAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFRFPTc7VGltZT0xNTA4MzYuMTUyO3BoYXNlPTEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQABAN5e5z1C2Tk9TEsfvIRyvsITpMzCRxDUwqhlCz8FZIQ8wPB7PYRyvsLBIaK7XmYIP+hgIb4TpMzCy6tOvdAt+j0R4y0/RxDUwgAAAAAAAAAAAAAAAAAAAABuKzEA",
+            "header_sha256": "9e3223561a47bfc1606b9f8332d6086a4a3718df0b723227a318801a06a00aa2",
+            "raw_grid": {
+              "shape": [
+                306,
+                384,
+                160
+              ],
+              "spatial_units": "mm",
+              "xyzt_units_code": 10,
+              "pixdim": [
+                1.0,
+                0.546875,
+                0.546875,
+                0.6999963521957397,
+                0.026000000536441803,
+                0.0,
+                0.0,
+                0.0
+              ],
+              "qform_code": 1,
+              "sform_code": 1,
+              "qform_numeric_including_inactive": [
+                [
+                  0.5445198763572054,
+                  0.016160972268139565,
+                  0.06150887852783623,
+                  -95.22366333007812
+                ],
+                [
+                  -0.004947871394456595,
+                  0.5328119639432473,
+                  -0.15759621403610596,
+                  -102.3204574584961
+                ],
+                [
+                  -0.05045679781355195,
+                  0.1221576836686429,
+                  0.6792458938198124,
+                  -106.03179168701172
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ],
+              "sform_numeric": [
+                [
+                  0.5445199012756348,
+                  0.01616097427904606,
+                  0.061508893966674805,
+                  -95.22366333007812
+                ],
+                [
+                  -0.004947871435433626,
+                  0.5328119993209839,
+                  -0.15759623050689697,
+                  -102.3204574584961
+                ],
+                [
+                  -0.050456803292036057,
+                  0.12215769290924072,
+                  0.6792460083961487,
+                  -106.03179168701172
+                ],
+                [
+                  0.0,
+                  0.0,
+                  0.0,
+                  1.0
+                ]
+              ]
+            }
+          },
+          "array_operation": "unchanged_binary_positive_support",
+          "positive_mask_hash": "sha256:1f678f59c5467f253aab08a69c3d51540abeff126147392751675dfcf3ab2fe0",
+          "sidecar_source": {
+            "source_id": "Lausanne-sub476-annotation-sidecar",
+            "uri": "https://raw.githubusercontent.com/OpenNeuroDatasets/ds003949/896b8846d899acee68c0246cc987ca96e77267d4/derivatives/manual_masks/sub-476/ses-20140519/anat/sub-476_ses-20140519_desc-Lesion_1_mask.json",
+            "sha256": "f589cb0e384b29740ae6e0b6140ab7a553be8783cbc7b5886cc32106940baf2e",
+            "license": "CC0",
+            "native_frame": "not_applicable",
+            "provenance": "observed"
+          },
+          "sidecar_base64": "eyJUeXBlIjogIkxlc2lvbiIsICJSYXdTb3VyY2VzIjogInN1Yi00NzZfc2VzLTIwMTQwNTE5X2FuZ2lvLm5paS5neiIsICJTcGFjZSI6ICJvcmlnIn0=",
+          "reference_filename": "sub-476_ses-20140519_angio.nii.gz",
+          "precision_equivalence": {
+            "rule": "nifti1_float32_four_ulp_and_unchanged_indices_v1",
+            "maximum_allowed_float32_steps": 4,
+            "maximum_observed_float32_steps": 3,
+            "maximum_support_displacement_reference_mm": 2.803332224464873e-05,
+            "maximum_support_displacement_voxels": 4.624365564998158e-05,
+            "maximum_support_component_voxels": 3.114035558745249e-05,
+            "serialization_component_bound_reference_mm": [
+              0.00010858848690986633,
+              0.00013202708214521408,
+              8.452683687210083e-05
+            ],
+            "serialization_component_bound_voxels": [
+              0.00021415156364677622,
+              0.0002756059674702636,
+              0.0001732683725374509
+            ],
+            "all_voxel_centres_keep_reference_index": true
+          },
+          "unit_interpretation": "reference_mm_from_explicit_RawSources_orig",
+          "scope": "retrospective_source_coded_frame_component",
+          "scanner_frame_admitted": false,
+          "spatial_planning_admitted": false,
+          "inference_rationale": "The pinned source declares this exact RawSources and Space=orig. Identical shape and a bounded float32 serialization difference support source-grid unit inheritance and coordinate normalization. This is an explicit interpretation, not proven software history or scanner validation. Both raw headers and original files remain unchanged.",
+          "normalization_record_hash": "sha256:beac722e927074feb28a02f18228b93cad4a8872965fb0f44de5a0be7f9252b5"
+        },
+        "lineage": {
+          "kind": "manual",
+          "model_sha256": [],
+          "source": {
+            "source_id": "DiNoto2022-annotation-methods",
+            "uri": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9931814/fullTextXML",
+            "sha256": "105ae182b2b7da8c0d29f23700b5a3b82c6feb3255e5f09c8c4349495fd1e954",
+            "license": "CC-BY-4.0",
+            "native_frame": "not_applicable",
+            "provenance": "observed"
+          },
+          "membership_source": {
+            "source_id": "Lausanne-source-voxelwise-membership",
+            "uri": "https://raw.githubusercontent.com/connectomicslab/Aneurysm_Detection/5ecdf6e5b9a811e4ec7472c210dada42e60cc3dc/extra_files/patients_with_voxelwise_labels.pkl",
+            "sha256": "18824f1c3f14a1909b966247ed7e6ac2d6144be762c6aa487ecc853baa3150eb",
+            "license": "Apache-2.0",
+            "native_frame": "not_applicable",
+            "provenance": "observed"
+          },
+          "membership_license_sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+          "membership": "sub-476_ses-20140519",
+          "method": "Radiologist drew axial slices in ITK-SNAP 3.6.0; no learned initializer in the documented voxelwise protocol."
+        },
+        "acquisition_time": null,
+        "available_at": null,
+        "annotated_cells": 193,
+        "image_cells": 18800640,
+        "coverage_hash": "sha256:1f678f59c5467f253aab08a69c3d51540abeff126147392751675dfcf3ab2fe0"
+      }
+    },
+    "missing": [
+      "motor",
+      "language"
+    ],
+    "objective_structures": [],
+    "time_scope": "retrospective_image_geometry_availability_unassessed",
+    "coverage_meaning": "Annotation domain only; unseen structures and outside-image anatomy remain unknown",
+    "trajectory_coverage": "not_computed",
+    "clinical_clearance": false
+  },
+  "positive_voxels": 193,
+  "negative_annotation_voxels": 0,
+  "background_unknown_voxels": 18800447,
+  "scanner_frame_admitted": false,
+  "spatial_planning_admitted": false,
+  "generated_routes": 0,
+  "simulator_episodes": 0,
+  "component_optimizer_updates": 0,
+  "recorded_rl_transitions": 0
+}

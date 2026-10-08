@@ -1,0 +1,26 @@
+{
+  "scope": "Actual source annotation component; no generated routes or surgical planning admission",
+  "checks": 77,
+  "post_desktop_derivation_change_seconds": 14.73,
+  "affected_checks_after_license_binding": 13,
+  "affected_check_seconds": 10.29,
+  "independent_review": "core_contracts source and real/refusal test review accepted final derivation exposure; licenses authenticated separately by root",
+  "changed_sources": {
+    "src/resectionlab/critical_evidence.py": "ce228327299066a52a11d941d1c8d767c8696e44d8a15f2f5698e81633fd3e99",
+    "src/resectionlab/lausanne_sub476_component.py": "c885c0d45f21c3bb56b0aeeb20cf1a5fcf26cc3df320cfae2fcd48cf6a061867",
+    "tests/test_lausanne_sub476_component.py": "5496d201e86490b80791a13a4fdecf5a3e1f03c7e217cd7430e716ccbed22900"
+  },
+  "methods_source": {
+    "path": "data/anatomy/ds003949-v1.0.1/manual-annotation-sub476-v1/source/methods-PMC9931814.xml",
+    "bytes": 124982,
+    "sha256": "105ae182b2b7da8c0d29f23700b5a3b82c6feb3255e5f09c8c4349495fd1e954",
+    "license": "CC-BY-4.0",
+    "license_basis": "Archived XML permissions element"
+  },
+  "component_receipt_sha256": "1c2bfeb33fb241b2766e734a762061e9582fa3ec6b90c8e827cb29547638c79e",
+  "original_files_unchanged": true,
+  "positive_voxels": 193,
+  "generated_patient_records": 0,
+  "generated_routes": 0,
+  "optimizer_updates": 0
+}

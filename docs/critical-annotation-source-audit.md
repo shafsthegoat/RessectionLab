@@ -57,8 +57,10 @@ no undocumented date crosswalk was inferred.
 The [sub476 result](../artifacts/lausanne-sub476-annotation-v1/RESULT.md) records
 the successful82,420-byte binary-mask acquisition and failed direct-grid gate.
 Shape matches but units are unknown and affine coefficients differ slightly.
-The next action is a source-supported coordinate interpretation with explicit
-derivation and independent checks; original headers must remain unchanged.
-Any admitted derived component must retain aneurysm-only positive support,
-unknown background and unknown review/annotation availability. The planner's
-`vessels` channel cannot turn it into complete vascular or negative coverage.
+An explicit source-reference normalization now preserves both original headers
+and proves unchanged nearest voxel indices within a float32 serialization bound.
+The derived retrospective component passes positive-exclusion, roundtrip and
+desktop-inspection checks while retaining aneurysm-only support, unknown
+background and unknown review/annotation availability. The planner's `vessels`
+channel cannot turn it into complete vascular or negative coverage. Source-frame,
+brain-support and surgical planning admission remain separate unresolved gates.

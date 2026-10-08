@@ -7,10 +7,16 @@ This module neither performs registration nor supplies learning observations.
 from __future__ import annotations
 
 from collections.abc import Mapping
+import base64
 from dataclasses import dataclass, field
 from datetime import datetime
+import hashlib
+from itertools import product
+import json
+from pathlib import PurePosixPath
 from types import MappingProxyType
 from typing import Any
+from urllib.parse import unquote, urlsplit
 
 import numpy as np
 
@@ -19,6 +25,156 @@ from .data_policy import DataPolicyError, require_admitted_model
 from .structural_evidence import _hash, _text, _time
 
 STRUCTURES = ("motor", "language", "vessels")
+
+# A bounded NIfTI-1 serialization envelope, not an anatomical/clinical tolerance.
+# No caller may enlarge it. Both the coefficient bound and voxel-index bound
+# must pass; this does not license registration or a change of acquisition.
+_SERIALIZATION_ULPS = 4
+
+
+def nifti1_header_record(raw: bytes, source_file_sha256: str) -> dict:
+    """Retain the untouched 348-byte header and its original file binding."""
+    if len(raw) != 348:
+        raise ValueError("Normalization requires the original NIfTI-1 header")
+    import nibabel as nib
+
+    header = nib.Nifti1Header(binaryblock=raw, check=False)
+    return {"source_file_sha256": _hash(source_file_sha256, "header source file"),
+            "header_base64": base64.b64encode(raw).decode("ascii"),
+            "header_sha256": hashlib.sha256(raw).hexdigest(),
+            "raw_grid": _header_summary(header)}
+
+
+def _header_summary(header) -> dict:
+    return {"shape": list(header.get_data_shape()), "spatial_units": header.get_xyzt_units()[0],
+            "xyzt_units_code": int(header["xyzt_units"]), "pixdim": header["pixdim"].tolist(),
+            "qform_code": int(header["qform_code"]), "sform_code": int(header["sform_code"]),
+            "qform_numeric_including_inactive": header.get_qform().tolist(),
+            "sform_numeric": header.get_sform().tolist()}
+
+
+def _raw_grid(record: Mapping):
+    import nibabel as nib
+
+    _hash(record.get("source_file_sha256"), "raw grid source file")
+    try:
+        raw = base64.b64decode(record["header_base64"], validate=True)
+    except (KeyError, ValueError, TypeError) as error:
+        raise ValueError("Raw grid needs an intact encoded NIfTI-1 header") from error
+    if (len(raw) != 348 or _hash(hashlib.sha256(raw).hexdigest(), "raw header")
+            != _hash(record.get("header_sha256"), "declared header")):
+        raise ValueError("Raw grid header hash differs")
+    header = nib.Nifti1Header(binaryblock=raw, check=False)
+    if thaw_json(record.get("raw_grid")) != _header_summary(header):
+        raise ValueError("Raw grid summary differs from preserved header bytes")
+    if int(header["sizeof_hdr"]) != 348 or bytes(header["magic"]) != b"n+1\x00":
+        raise ValueError("Normalization requires a single-file NIfTI-1 source")
+    shape = header.get_data_shape()
+    affine = header.get_sform()
+    if (len(shape) != 3 or any(n <= 0 for n in shape) or int(header["sform_code"]) not in (1, 2)
+            or not np.isfinite(affine).all() or not np.array_equal(affine[3], [0, 0, 0, 1])
+            or abs(np.linalg.det(affine[:3, :3])) < 1e-12):
+        raise ValueError("Normalization requires a finite, coded native sform")
+    if int(header["qform_code"]) and _float32_steps(header.get_qform(), affine).max() > _SERIALIZATION_ULPS:
+        raise ValueError("Active raw qform/sform disagree beyond serialization precision")
+    return header, shape, affine
+
+
+def _float32_steps(first, second) -> np.ndarray:
+    # Main sform entries are stored as float32. Rounding is only relevant when
+    # checking the quaternion-derived qform against those serialized entries.
+    a, b = np.asarray(first, dtype=np.float32), np.asarray(second, dtype=np.float32)
+    if not np.isfinite(a).all() or not np.isfinite(b).all() or np.any(np.signbit(a) != np.signbit(b)):
+        raise ValueError("Normalization cannot change an affine coefficient sign")
+    return np.abs(a.view(np.int32).astype(np.int64) - b.view(np.int32).astype(np.int64))
+
+
+def source_reference_grid_metrics(annotation_grid: Mapping, reference_grid: Mapping) -> dict:
+    """Check precision equivalence from raw headers without fitting a transform.
+
+    The infinity norm of an affine displacement reaches its maximum at a box
+    corner. Bounding the full voxel-support box therefore proves that every
+    voxel centre retains its nearest reference index, without a resampling.
+    """
+    label, shape, a = _raw_grid(annotation_grid)
+    reference, reference_shape, b = _raw_grid(reference_grid)
+    if shape != reference_shape:
+        raise ValueError("Normalization cannot change dimensions or voxel order")
+    if reference.get_xyzt_units()[0] != "mm" or label.get_xyzt_units()[0] not in {"unknown", "mm"}:
+        raise ValueError("Only explicit reference-mm inheritance is supported")
+    steps = _float32_steps(a, b)
+    if steps.max() > _SERIALIZATION_ULPS:
+        raise ValueError("Raw grids differ beyond float32 serialization precision")
+    corners = np.array([(*point, 1.) for point in product(*[(-.5, n-.5) for n in shape])])
+    displacement = ((a-b) @ corners.T)[:3]
+    voxel_displacement = (np.linalg.inv(b)[:3, :3] @ displacement)
+    # Independently propagate the allowed coefficient rounding envelope. This
+    # bound depends on stored precision and extent, never on clinical distance.
+    ulp = np.maximum(np.abs(np.spacing(a.astype(np.float32))).astype(float),
+                     np.abs(np.spacing(b.astype(np.float32))).astype(float))
+    extent = np.array([*(n-.5 for n in shape), 1.])
+    world_bound = (_SERIALIZATION_ULPS * ulp[:3]) @ extent
+    voxel_bound = np.abs(np.linalg.inv(b)[:3, :3]) @ world_bound
+    if (np.any(np.max(np.abs(displacement), axis=1) > world_bound)
+            or np.max(voxel_bound) >= .5 or np.max(np.abs(voxel_displacement)) >= .5):
+        raise ValueError("Serialization envelope cannot guarantee unchanged voxel indices")
+    return {"rule": "nifti1_float32_four_ulp_and_unchanged_indices_v1",
+            "maximum_allowed_float32_steps": _SERIALIZATION_ULPS,
+            "maximum_observed_float32_steps": int(steps.max()),
+            "maximum_support_displacement_reference_mm": float(np.linalg.norm(displacement, axis=0).max()),
+            "maximum_support_displacement_voxels": float(np.linalg.norm(voxel_displacement, axis=0).max()),
+            "maximum_support_component_voxels": float(np.abs(voxel_displacement).max()),
+            "serialization_component_bound_reference_mm": world_bound.tolist(),
+            "serialization_component_bound_voxels": voxel_bound.tolist(),
+            "all_voxel_centres_keep_reference_index": True}
+
+
+def _validate_reference_normalization(item, mask, coverage, affine) -> None:
+    record = item.derivation
+    proof = thaw_json(record)
+    declared_hash = proof.pop("normalization_record_hash", None)
+    if declared_hash != semantic_digest(proof):
+        raise ValueError("Source-reference normalization record hash differs")
+    if (item.structure != "vessels" or item.lineage["kind"] != "manual"
+            or record.get("array_operation") != "unchanged_binary_positive_support"
+            or not np.array_equal(mask, coverage)
+            or record.get("positive_mask_hash") != array_digest(mask)):
+        raise ValueError("Normalization requires unchanged manual positive-only vessel support")
+    semantics = item.source_binding
+    if (semantics.get("positive_class") != "source_manual_voxelwise_aneurysm_region"
+            or semantics.get("coverage_policy") != "positive_support_only"
+            or semantics.get("background_meaning") != "unknown_for_vascular_anatomy"):
+        raise ValueError("Normalization requires explicit aneurysm-only positive semantics")
+    if (record.get("unit_interpretation") != "reference_mm_from_explicit_RawSources_orig"
+            or record.get("scope") != "retrospective_source_coded_frame_component"
+            or record.get("scanner_frame_admitted") is not False
+            or record.get("spatial_planning_admitted") is not False):
+        raise ValueError("Normalization cannot claim scanner or spatial planning admission")
+    linkage = SourceRef.from_dict(record.get("sidecar_source", {}))
+    _source(linkage, "normalization linkage")
+    if linkage.to_dict() != SourceRef.from_dict(semantics["linkage_source"]).to_dict():
+        raise ValueError("Normalization linkage differs from annotation binding")
+    try:
+        sidecar = base64.b64decode(record["sidecar_base64"], validate=True)
+        declaration = json.loads(sidecar)
+    except (KeyError, ValueError, TypeError) as error:
+        raise ValueError("Normalization needs the authentic source sidecar") from error
+    if _hash(hashlib.sha256(sidecar).hexdigest(), "sidecar") != _hash(linkage.sha256, "sidecar source"):
+        raise ValueError("Normalization sidecar hash differs")
+    if declaration != {"Type": "Lesion", "RawSources": record.get("reference_filename"), "Space": "orig"}:
+        raise ValueError("Normalization needs an explicit matching RawSources/orig declaration")
+    _text(record.get("reference_filename"), "normalization reference filename")
+    _text(record.get("inference_rationale"), "normalization inference rationale")
+    annotation_grid, reference_grid = record["annotation_raw_grid"], record["reference_raw_grid"]
+    if (_hash(annotation_grid["source_file_sha256"], "annotation grid file") != _hash(item.source.sha256, "annotation")
+            or _hash(reference_grid["source_file_sha256"], "reference grid file") != item.reference_source_sha256):
+        raise ValueError("Raw grids are bound to different original files")
+    _, shape, _ = _raw_grid(annotation_grid)
+    _, _, reference_affine = _raw_grid(reference_grid)
+    if shape != mask.shape or not np.array_equal(affine, reference_affine):
+        raise ValueError("Normalized arrays must retain the exact reference source grid")
+    if thaw_json(record.get("precision_equivalence")) != source_reference_grid_metrics(annotation_grid, reference_grid):
+        raise ValueError("Normalization precision receipt differs from original headers")
 
 
 def availability_exclusion(available_at, review_available_at, cutoff) -> str | None:
@@ -83,10 +239,13 @@ class CriticalStructureEvidence:
         _source(SourceRef.from_dict(binding.get("coverage_source", {})), "annotation coverage")
         if binding.get("coverage_meaning") != "source_documented_annotation_domain":
             raise ValueError("Coverage must describe a documented annotation domain")
-        # Only an exact native grid is supported in this first adapter. A matching
-        # shape alone cannot admit a registration or a different acquisition.
-        if self.derivation.get("method") != "identity_grid":
+        # Precision normalization has its own source-bound proof below. It must
+        # never be described as equality of the untouched source headers.
+        if self.derivation.get("method") not in {"identity_grid", "source_reference_grid_normalization"}:
             raise ValueError("Critical annotation registration/resampling is not yet admitted")
+        if self.derivation["method"] == "identity_grid" and any(
+                key in self.derivation for key in ("annotation_raw_grid", "reference_raw_grid", "normalization_record_hash")):
+            raise ValueError("Normalization provenance cannot be relabeled identity_grid")
         if _hash(self.derivation.get("source_image_sha256"), "derivation image") != self.reference_source_sha256:
             raise ValueError("Annotation derivation refers to another acquired image")
         if _hash(self.derivation.get("annotation_sha256"), "derivation annotation") != _hash(self.source.sha256, "annotation hash"):
@@ -119,6 +278,8 @@ class CriticalStructureEvidence:
                 or not np.allclose(affine[3], [0, 0, 0, 1], atol=1e-12, rtol=0)
                 or abs(np.linalg.det(affine[:3, :3])) < 1e-12):
             raise ValueError("Evidence affine must be an invertible RAS+ millimeter transform")
+        if self.derivation["method"] == "source_reference_grid_normalization":
+            _validate_reference_normalization(self, mask, coverage, affine)
         for name, value in (("mask", mask), ("annotation_coverage", coverage), ("affine_ras_mm", affine)):
             object.__setattr__(self, name, immutable_array(value))
         object.__setattr__(self, "_array_state", self._layout())
@@ -196,6 +357,14 @@ class CriticalStructureEvidence:
         if (len(refs) != 1 or refs[0].sha256 is None or refs[0].provenance != "observed"
                 or _hash(refs[0].sha256, "case image SHA") != self.reference_source_sha256):
             raise ValueError("Critical reference acquisition is absent from case provenance")
+        if self.derivation["method"] == "source_reference_grid_normalization":
+            filename = PurePosixPath(unquote(urlsplit(refs[0].uri).path)).name
+            if filename != self.derivation["reference_filename"]:
+                raise ValueError("Normalized source filename differs from reference acquisition")
+            if (case.metadata.get("evidence_scope") != "retrospective_source_coded_frame_component"
+                    or case.metadata.get("scanner_frame_admitted") is not False
+                    or case.metadata.get("spatial_planning_admitted") is not False):
+                raise ValueError("Normalized evidence requires explicit source-frame component limits")
 
     def exclusion_reason(self, case: Any) -> str | None:
         self.assert_matches(case)
@@ -293,6 +462,7 @@ def resolve_critical_evidence(case: Any) -> CriticalConstraints:
         records[key] = {"evidence_hash": item.evidence_hash, "structure": item.structure,
                         "exclusion_reason": reason, "source": item.source.to_dict(),
                         "source_binding": thaw_json(item.source_binding), "review": thaw_json(item.review),
+                        "derivation": thaw_json(item.derivation),
                         "lineage": thaw_json(item.lineage),
                         "acquisition_time": None if item.acquisition_time is None else item.acquisition_time.isoformat(),
                         "available_at": None if item.available_at is None else item.available_at.isoformat(),

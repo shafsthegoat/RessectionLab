@@ -1,4 +1,4 @@
-# Original manual aneurysm annotation: acquired, grid gate open
+# Original manual aneurysm annotation: retrospective component verified
 
 The frozen TRAIN person `sub-476/ses-20140519` is an exact member of the author's
 38-person voxelwise crosswalk. Membership was inspected with `pickletools`
@@ -33,3 +33,34 @@ automatic repeat. The initial acquisition-free preflight exposed a Path indexing
 typo, repaired before scientific access. Original and source-snapshot bytes are
 retained under the ignored data directory; Git contains only provenance and
 compact results. The current source and frozen declaration reproduce the checks.
+
+## Explicit derived component
+
+Subsequent independent coordinate checks found at most three float32 steps of
+coefficient difference and 2.80333e-5 mm displacement over the full voxel-support
+boundary. A separately named `source_reference_grid_normalization` now inherits
+units from the exact `RawSources` image and retains the original array ordering.
+It preserves both untouched headers, file and sidecar hashes, inference rationale
+and a precision-envelope proof that every voxel centre retains its nearest
+reference index. No registration, interpolation or resampling occurs. The
+untouched headers are still not described as identical.
+
+All 193 positives reach canonical exclusions and survive save/reopen and desktop
+inspection, with positive-only coverage and unknown background. Motor/language
+remain missing. Unknown annotation/review timestamps exclude timestamped use.
+The desktop receipt explicitly exposes normalization, original unknown units
+and false scanner/spatial-planning admission flags. Source-review text binds
+the paper's reported review; it is not a clinician signature on our conversion.
+
+The focused actual-source/refusal suite passes 77 checks in 14.73 seconds. After
+adding authenticated crosswalk-license binding, all 13 affected component checks
+passed again in 10.29 seconds. Independent review found no remaining code blocker.
+Both the methods XML's CC BY 4.0 notice and pinned repository Apache 2.0 license
+were authenticated. See [component receipt](component.json),
+[verification](component-verification.json) and [license source](membership-license.json).
+
+Run `.venv/bin/python -m resectionlab.lausanne_sub476_component` after acquiring
+the hash-pinned originals and source records. This builds an inspectable real
+component; it creates no target, brain support, route, simulator episode or
+training example. Surgical route acceptance and source-to-scanner accuracy
+remain unproved.
