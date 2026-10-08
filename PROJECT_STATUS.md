@@ -14,8 +14,8 @@ results remain unchanged. See [receipt](artifacts/real-observation-policy-v1/RES
 
 Lausanne's CC0 source metadata confirms 284 unique people and 296 original paired
 T1/TOF sessions. A fixed split now assigns 199 TRAIN / 43 SELECT / 42 measurement
-evaluation people, grouping visits and TopCoW copies. Twenty TRAIN original pairs
-and their sidecars are acquired (813,195,818 bytes); published byte fixity and
+evaluation people, grouping visits and TopCoW copies. Thirty-three TRAIN original
+pairs from 32 people and their sidecars are acquired (1,340,954,110 bytes); published byte fixity and
 worker header/scalar checks pass. Independent pilot inspection found TOF
 sidecar versus NIfTI orientation differs by about 1.70 degrees,
 so scanner-frame provenance and interscan registration remain unresolved. Two
@@ -42,10 +42,16 @@ and [batch05](artifacts/lausanne-train-intake-v1/acquisition-batch-05-summary.js
 retain all excluded cases and separate closure totals. Both timeouts are
 preserved. The sixth batch added sub047/051/052/062 in 598.517 seconds and
 stopped before starting another worker. All 20 source receipts and snapshots
-passed root and independent rechecks; 190 TRAIN sessions remain incomplete.
+passed root and independent rechecks; 190 TRAIN sessions remained incomplete.
 Its closure lists 192 sessions not reverified within that batch, including two
 previously acquired sessions that this separate audit verified. See
 [batch06](artifacts/lausanne-train-intake-v1/acquisition-batch-06-summary.json).
+The seventh and eighth batches added 13 sessions from 12 new people in
+559.201 and 508.879 seconds. Sub074's two visits count as one person. All 33
+receipts and originals passed root and independent verification; 177 sessions
+remain. Sub077's previous partial is now complete and verified; its timeout
+record remains unchanged. See [batch07](artifacts/lausanne-train-intake-v1/acquisition-batch-07-summary.json)
+and [batch08](artifacts/lausanne-train-intake-v1/acquisition-batch-08-summary.json).
 No acquisition batch is currently running.
 Full TRAIN acquisition/use and annotation eligibility remain outstanding. No newly compliant
 RL training has run: eligible recorded surgical transitions remain missing.
@@ -93,10 +99,27 @@ raw replay reproduced all eight readouts (488 states) exactly. The failure is
 retained; measured curves and material fitting remain closed. Posthoc diagnosis
 suggests slow positive-order force convergence, with uncertain remaining error.
 See [finer result](artifacts/mechanics/hbe-halfheight-spatial-execution-v1/RESULT.md).
+Saved field inspection indicates growing plate-edge concentration with relatively
+stable core fields. Independent review supports a separately declared plate-layer
+versus matched-size interior-refinement diagnostic. Its scope is local numerical
+sensitivity, not proof of a singularity, total continuum accuracy or calibration
+release. See [next diagnostic](docs/hbe-halfheight-spatial.md#next-diagnostic-after-the-failed-study).
 
-[VitalDB source/parser research](docs/vitaldb-recorded-component-intake.md)
-identifies a 6.54 MB recorded perioperative component candidate and native-time
-import requirements. No signal payload or training has been acquired from it.
+[VitalDB replay](artifacts/vitaldb-recorded-component-v1/RESULT.md) now imports
+21,970 actual pump/cuff-monitor records from one separate DEVELOPMENT person.
+All records and seven headers match an independent parser; all 7,207 event
+boundaries preserve exact timestamp prefixes. Fifteen focused checks pass and
+root reproduced the saved CLI snapshot continuation. The original arterial
+request failed because those tracks are absent. Native time origin contradicts
+the initial release-relative assumption and remains unresolved; replay preserves
+unshifted source timestamps with a null origin. Monitor-record age is not cuff
+measurement age. No dosing, physiological accuracy, fitting or RL result follows.
+Fresh-checkout cache preparation and desktop integration remain to be completed.
+
+NFBS supplies source-reviewed brain-extraction labels with CC0 metadata, but
+release-specific BEaST augmentation ancestry remains unresolved. LPBA40 would
+require a new research agreement. Neither was acquired or admitted; see the
+[source audit](docs/critical-annotation-source-audit.md#brain-support-source-follow-up).
 
 ## Historical status through October 5
 

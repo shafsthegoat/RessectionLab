@@ -1,6 +1,6 @@
 {
   "schema": "real-observation-data-use-v1",
-  "updated_at": "2026-10-08T06:52:47.120174+00:00",
+  "updated_at": "2026-10-08T08:11:29.398459+00:00",
   "scope": "New admissions in the October6 real-observation program, not a complete historical data inventory",
   "sources": [
     {
@@ -16,14 +16,14 @@
       "discovered_people": 284,
       "declared_train_people": 199,
       "declared_train_sessions": 210,
-      "acquired_train_people": 20,
-      "acquired_train_sessions": 20,
+      "acquired_train_people": 32,
+      "acquired_train_sessions": 33,
       "acquired_modalities": [
         "T1w",
         "TOF-MRA"
       ],
-      "acquired_bytes": 813195818,
-      "byte_and_scalar_qc_passed_people": 20,
+      "acquired_bytes": 1340954110,
+      "byte_and_scalar_qc_passed_people": 32,
       "scanner_frame_accepted_people": 0,
       "prepared_for_spatial_planning_people": 0,
       "used_in_component_fitting_people": 0,
@@ -34,7 +34,7 @@
       "checkpoint_contributions": [],
       "receipt": "artifacts/lausanne-original-pilot-v1/acquisition.json",
       "geometry_gate": "TOF sidecar/NIfTI orientation mismatch; T1/TOF alignment unresolved",
-      "next": "Continue remaining190 TRAINsessions; preserve scanner/inter-scan gates; qualify actualsource aneurysm component separately from surgical planning",
+      "next": "Continue remaining177 TRAINsessions; preserve source-frame/registration gates; develop eligible annotation components before fitting",
       "train_source_index": "manifests/lausanne-train-originals-v1.json",
       "train_source_index_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
       "indexed_train_people": 199,
@@ -42,8 +42,8 @@
       "indexed_source_files": 840,
       "indexed_source_bytes": 10020802851,
       "intake_acceptance_receipt": "artifacts/lausanne-train-intake-v1/RESULT.md",
-      "remaining_train_sessions_to_acquire": 190,
-      "latest_bounded_intake": "artifacts/lausanne-train-intake-v1/acquisition-batch-06-summary.json",
+      "remaining_train_sessions_to_acquire": 177,
+      "latest_bounded_intake": "artifacts/lausanne-train-intake-v1/acquisition-batch-08-summary.json",
       "acquired_source_manual_aneurysm_masks": 1,
       "manual_annotation_bytes": 82420,
       "manual_annotation_positive_voxels": 193,
@@ -97,6 +97,49 @@
         "Case4 prior exposed/protected development observations are not new TRAIN acquisitions",
         "Case11 has no cavity label; Case15 lacks a during label; missing does not mean negative",
         "Later ultrasound is unavailable to preoperative policy inputs"
+      ]
+    },
+    {
+      "accession": "VitalDB",
+      "version": "PhysioNet1.0.0",
+      "family": "VitalDB",
+      "institutions": [
+        "Seoul National University Hospital"
+      ],
+      "license": "CC-BY-4.0",
+      "declared_cohort": "manifests/vitaldb-development-v1.json",
+      "native_component": "manifests/vitaldb-native-component-v1.json",
+      "acquired_development_people": 1,
+      "acquired_development_cases": 1,
+      "subject_id": 2861,
+      "case_id": 3,
+      "acquired_bytes": 6537712,
+      "source_sha256": "573db0941d580167833f84497f5d1c4a1391443eeec3f95852287ea09db024e4",
+      "prepared_recorded_component_people": 1,
+      "selected_numeric_records": 21970,
+      "record_types": [
+        "pump_monitor_rate_and_volume",
+        "intermittent_cuff_monitor_pressure"
+      ],
+      "independently_compared_records": 21970,
+      "independently_checked_clock_boundaries": 7207,
+      "other_people": "unopened and unassigned",
+      "time_basis": "unmapped_native_source_seconds",
+      "recording_start_offset": null,
+      "actual_cuff_measurement_times": "unavailable; monitor record times are retained",
+      "original_arterial_task": "failed_missing_tracks",
+      "used_in_component_fitting_people": 0,
+      "component_optimizer_updates": 0,
+      "recorded_surgical_transitions": 0,
+      "used_in_imitation_people": 0,
+      "used_in_offline_rl_people": 0,
+      "checkpoint_contributions": [],
+      "receipt": "artifacts/vitaldb-recorded-component-v1/RESULT.md",
+      "next": "Resolve release-specific native origin and integrate separate observed component; qualify recorded action/endpoint support before any physiology learning or RL",
+      "limits": [
+        "Non-neurosurgical component, not linked to a glioma patient",
+        "Pump names may be retrospective; no delivered dose or administration action inferred",
+        "No continuous pressure or causal drug-response validation"
       ]
     }
   ],

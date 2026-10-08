@@ -34,13 +34,13 @@ compact execution record, not a replacement specification.
 
 | Workstream | Verified state / missing evidence | Next implementation or acquisition |
 |---|---|---|
-| Data and anatomy | Lausanne originals are CC0 acquired T1/TOF; 284 people, 296 sessions. Full 199-person/210-session TRAIN index is frozen (10.02 GB). Twenty original pairs acquired (813,195,818 bytes); sub077 timeout/partial remains excluded. One source-manual aneurysm component is prepared for retrospective inspection. TOF scanner-frame provenance and interscan alignment unresolved. | Continue remaining 190 TRAIN sessions and eligible annotation preparation. Exclude atlas-derived vessel maps from measurement truth. |
+| Data and anatomy | Lausanne originals are CC0 acquired T1/TOF; 284 people, 296 sessions. Full 199-person/210-session TRAIN index is frozen (10.02 GB). Thirty-three pairs from32people acquired (1,340,954,110bytes); sub077 partial now completed, original timeout retained. One source-manual aneurysm component is prepared for retrospective inspection. TOF scanner-frame provenance and interscan alignment unresolved. | Continue remaining177 TRAINsessions and eligible annotation preparation. NFBS brain-support label ancestry unresolved; LPBA40 requires new terms. Exclude atlas-derived vessel maps from measurement truth. |
 | Learning | No inspected historical checkpoint meets the new lineage rule. Scans supply no recorded actions/next observations. RESECT family roles are frozen (14 TRAIN/4 SELECT/4 EVAL/Case4 DEVELOPMENT); the bounded Case3 source/rights/QC runner passes 24 combined controls. A rights-only HTTP429 stopped acquisition. | Archive exact rights text when service permits, then acquire/QC the frozen image/mask before cavity-component fitting. Case4 and missing labels remain protected. No recorded-action cohort acquired or outreach sent. |
 | Navigation / integration | Typed evidence reaches canonical exclusions and desktop inspection with the actual 193-positive sub476 annotation. Explicit source-grid normalization, unknown background/timing and false planning-admission flags survive replay/export. The focused suite passes 77 checks. | Obtain accepted source-frame/brain-support evidence before claiming positive surgical route changes. This component is aneurysm-only, not whole-vascular or glioma acceptance. |
 | Operative science | Four supplied research reviews are read; proposed mechanisms are not implemented evidence. | Introduce an evidence-timed action/observation timeline with observed events distinct from proposals and model predictions. |
 | Exposure / instruments | Generic capsule tools; hypothetical zero-thickness brain opening; no synchronized pair checking or measured skull/tool bundle. | Acquire same-person skull evidence and device metrology; implement synchronized full-pose checks after contracts. |
-| Tissue / vascular | Three finer axial native runs pass individually; spatial study fails one compression reaction-trend criterion, reproduced independently. Fine motion differences fall below 8 µm. Material calibration remains closed. MULTIS donor004 run005 transfer/fixity remains unresolved. | Use saved force-order/error diagnostics to prospectively resolve the spatial accuracy question before additional mesh sweeps or curve access. Preserve the failed result and all original thresholds. Retain FEBio; compare SOFA for later interaction. |
-| Physiology | VitalDB case3/subject2861 DEVELOPMENT candidate has pinned 6,537,712-byte source metadata. Official native parser inspected; resampling helpers and permissive parse failures cannot certify native timing. No signal payload or validated response. | Follow the [source/parser record](vitaldb-recorded-component-intake.md): bounded local-file numeric importer, then original-record acquisition/QC and common-clock replay; no inferred dose or fabricated baselines. |
+| Tissue / vascular | Three finer axial native runs pass individually; spatial study fails one compression reaction-trend criterion, reproduced independently. Saved fields show plate-edge concentration and more stable core values. Material calibration remains closed. MULTIS donor004 run005 transfer/fixity remains unresolved. | Implement the independently reviewed plate-layer versus matched-size interior diagnostic on the fixedN24polygon; preserve total-error and time-convergence gates. Retain FEBio; compare SOFA for later interaction. |
+| Physiology | Actual VitalDB case3/subject2861 DEVELOPMENT import/replay:21,970 pump/NIBP records and7,207 boundaries independently checked;15 focused checks pass. Original arterial task fails. Unshifted native clock supported, recording-start offset and cuff-measurement age unresolved. No validated response or learning. | Add fresh-checkout cache preparation and observed-event integration; resolve release-specific native origin. Keep this separate patient's records separate from glioma anatomy, and qualify actual action/endpoint support before learning. |
 | Independent evaluation | Refusal-only tests and read-only review expose bounded exclusion defects; historical negatives preserved. | Challenge source/role/ancestry and real-case behavior per slice; do not run generated-patient suites as new acceptance evidence. |
 
 ## Guard milestone evidence
@@ -163,6 +163,27 @@ Another four-request RESECT metadata refresh confirmed the exact revision2
 README size and hashes; its official renderer returned HTTP500. The previous
 429 download endpoint was not retried. No exact rights text or new scientific
 payload was acquired, so that source-specific dependency remains open.
+
+The [seventh](../artifacts/lausanne-train-intake-v1/acquisition-batch-07-summary.json)
+and [eighth](../artifacts/lausanne-train-intake-v1/acquisition-batch-08-summary.json)
+batches completed13 sessions from12 new people, adding527,758,292 source bytes.
+Both closed below600seconds and their268,435,456-byte source-size limits, without
+new worker failures. Root and independent audits verified all33 receipts and
+originals:32people,132files,1,340,954,110bytes. Sub074's two visits are one person.
+Sub077 is now fully verified; the earlier timeout stays in the history.
+All167 remaining people/177 sessions remain in the frozen denominator.
+
+The [VitalDB component](../artifacts/vitaldb-recorded-component-v1/RESULT.md)
+adds one separately identified DEVELOPMENT person, not a glioma patient or RL
+episode. A120second front-end timeout was preserved; the separately declared
+official mirror completed6,537,712bytes in15.585seconds with the published hash.
+Native headers refuted the live API's arterial-track inventory. A new task,
+declared before selected values, uses actual pump and intermittent cuff-monitor
+records. All21,970 records exactly match independent decoding; every7,207 event
+boundary passes prefix/age/snapshot checks. Initial zero-origin interpretation
+was also wrong and is retained as invalid evidence: accepted replay leaves the
+native recording-start origin null. Fifteen focused checks pass. No training,
+delivered dose, current-pressure inference, physiological fit or clinical result.
 
 ## Numerical mechanics evidence
 

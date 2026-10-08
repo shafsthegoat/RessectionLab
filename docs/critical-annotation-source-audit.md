@@ -64,3 +64,45 @@ desktop-inspection checks while retaining aneurysm-only support, unknown
 background and unknown review/annotation availability. The planner's `vessels`
 channel cannot turn it into complete vascular or negative coverage. Source-frame,
 brain-support and surgical planning admission remain separate unresolved gates.
+
+## Brain-support source follow-up
+
+NFBS is a candidate for brain-extraction component learning, not an admitted
+label source. The [official DOI metadata](https://api.datacite.org/dois/10.5524/100241)
+declares CC0-1.0. The [author repository](https://github.com/preprocessed-connectomes-project/NFB_skullstripped)
+describes125 acquired defaced T1s and their brain images/masks. A HEAD-only check
+of its [linked archive](https://fcp-indi.s3.amazonaws.com/data/Projects/RocklandSample/NFBS_Dataset.tar.gz)
+returned200 and1,751,464,473bytes; its multipart ETag is not a checksum. No
+patient archive, model library or individual mask was downloaded.
+
+The [primary methods](https://link.springer.com/article/10.1186/s13742-016-0150-5)
+describe BEaST1.15.00 initialization with beast-library-1.1, iterative addition
+of corrected NFBS priors,85 manually edited masks and acceptance of all125 by
+two raters. The label includes brainstem, internal vessels and specified internal
+CSF spaces; it is not pure parenchyma or reviewed glioma/cortical-entry anatomy.
+The cohort excludes detected brain abnormalities and conditions including cancer.
+
+The [BEaST library instructions](https://github.com/BIC-MNI/BEaST/blob/master/README.library)
+identify version1.1 as ICBM, with optional ADNI additions. Real acquisitions and
+manual prior review are established. However, the [primary BEaST method, section3.2.2](https://riunet.upv.es/server/api/core/bitstreams/b49e9d35-8614-4929-90f7-37bc0c4aad92/content)
+describes augmenting its priors through midsagittal reflection. Anatomical
+augmentation differs from a storage-coordinate conversion preserving physical
+locations. The [pinned NFBS script](https://github.com/preprocessed-connectomes-project/NFB_skullstripped/blob/ca2fcf78ec10c3f64d28010172b4ad7eb96b386f/validation_scripts/beastskullstrip.sh)
+does not establish the exact original seed-library membership. Its release-specific
+ancestry therefore remains unresolved, rather than proved eligible or proved
+synthetic. Human corrections cannot erase an actually prohibited ancestor.
+
+Next qualify the exact seed release and executed configuration using public
+source metadata. If that fails, these acquired T1s would require new source-linked
+annotations drawn from blank masks by qualified reviewers, without prohibited
+seeds. No such review is claimed. Before any payload use, declare family roles
+and check overlap with NKI-NFB derivatives; iterative label dependencies make a
+random within-library split inadequate as untouched independent evaluation.
+No NFBS roles or learning contribution have been declared here.
+
+The single fallback checked, [LPBA40](https://loni.usc.edu/research/atlas_downloads),
+offers native images/brain masks but requires a new
+[LONI Research License3.0 agreement](https://www.loni.usc.edu/loni/licenseagreement)
+with research-use restrictions. No agreement was accepted and no payload acquired.
+Neither source currently supplies accepted Lausanne brain support. Even a future
+eligible model's prediction remains an estimate requiring same-person review.
