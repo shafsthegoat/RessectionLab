@@ -1,0 +1,73 @@
+{
+  "schema": "resect-train-intake-preparation-v1",
+  "status": "focused_controls_passed_pending_independent_review",
+  "source_files_sha256": {
+    "manifests/resect-train-cavity-acquisition-v1.json": "09a15ffe52af966c27d53fba4924a7c67fba5590b12e53cb48aa022ef60f04f1",
+    "scripts/resect_train_intake.py": "02887e7fc526cec5ce6e8cd2cf8908ddf6f7c045cd61651d6371c48d0ce1d538",
+    "tests/test_resect_train_intake.py": "8aae720eda6aa73eda1ba1992c6ae9eed015a2056d1b2bd40f8ccde067c8073d"
+  },
+  "preserved_existing_files_sha256": {
+    "scripts/acquire_resect_cavity.py": "6ece649ba346c9e7a0e93af462a91a9bf863728bea3fba83f5eccd681e1d0d51",
+    "scripts/real_intake_io.py": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8",
+    "src/resectionlab/imaging.py": "0b3fbc7890c9a79daee6d5f7f94d2b677dc98ae6b03e1067a2fe0449bbdc8bb2",
+    "manifests/resect-component-cohort-v1.json": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77",
+    "manifests/resect-case3-cavity-pilot-v1.json": "9765796da5abc4464a50e063703c60ef9d77387667475d4ccb317eb596e0f08f"
+  },
+  "design_sha256": "77fe3502202f990cfcf93cd2f0663984efe59de31ec3e85b1b251cbd95538c1d",
+  "tests": {
+    "command": ".venv/bin/python -m pytest -q tests/test_resect_train_intake.py",
+    "passed": 54,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 1.21,
+    "coverage": [
+      "all25pairs/50sources against committed source qualification and frozen roles",
+      "ten short aliases bind same OSF file ID/revision/hash",
+      "native exact URL/command/deadline/byte and child cleanup controls",
+      "annotation actual cached bytes with mocked redirect/transport",
+      "corrupt/missing/oversized/symlink/receipt mismatch controls",
+      "two actual cached Case3 pair worker runs, isolated cache, mocked launch, zero network",
+      "real local child supervision interruption/timeout kills and reaps",
+      "retained active source/attempt links for launch failure, marker failure, interruption and invalid receipt",
+      "explicit retry gates; no automatic retry"
+    ]
+  },
+  "manifest": {
+    "pairs": 25,
+    "sources": 50,
+    "remaining_pairs": 24,
+    "remaining_files": 48,
+    "remaining_bytes": 548605591,
+    "absent": [
+      "Case11-during",
+      "Case11-after",
+      "Case15-during"
+    ],
+    "noncommercial_only": true
+  },
+  "runtime_limits": {
+    "one_pair_per_invocation": true,
+    "supervisor_seconds_max": 300,
+    "worker_seconds_max": 295,
+    "original_file_bytes_max": 40283369,
+    "annotation_requests_max": 5,
+    "native_original_requests_max": 1,
+    "pair_bytes_max": 40350122,
+    "source_history_records_max": 100,
+    "decoded_array_bytes": 0
+  },
+  "real_network_requests": 0,
+  "new_patient_payloads_acquired": 0,
+  "arrays_decoded": 0,
+  "training_admitted": false,
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "commits": 0,
+  "portable_metadata": "Existing committed artifacts/resect-train-expansion-v1 and preserved source inventory/rights/pilot receipts; no ignored build path runtime dependency",
+  "limitations": [
+    "No real expansion transfer attempted; source service or new redirect syntax can fail closed.",
+    "No structural/anatomical QC in this acquisition adapter.",
+    "Per-volume512MiB allowance of existing pilot QC is not a peak-RSS guarantee; future cohort QC requires separately bounded workspace.",
+    "Historical Case3 and all existing scripts/modules remain unchanged."
+  ]
+}

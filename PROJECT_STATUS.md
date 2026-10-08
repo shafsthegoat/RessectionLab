@@ -1736,6 +1736,11 @@ within the frozen 14-person TRAIN cohort. Case11 has no labels; Case15 lacks a
 during-resection label. The remaining 24 pairs total 548,605,591 bytes. Independent
 inventory review passed; expanded download routes, payload QC and training remain
 unexecuted. Annotation restrictions and protected Case4/SELECT/evaluation roles remain.
+The separate exact-file TRAIN importer is now prepared and independently reviewed:
+75 controls pass after incomplete-receipt and late-completion acceptance defects
+were reproduced and repaired. Both negatives are preserved. It attempts one pair
+per explicit bounded invocation; source acquisition and image/label QC remain
+separate. See [preparation](artifacts/resect-train-intake-preparation-v1/RESULT.md).
 
 [IBSR qualification](artifacts/ibsr-source-qualification-v1/RESULT.md) did not establish
 an eligible support-label source: noncommercial terms, README login, unresolved label

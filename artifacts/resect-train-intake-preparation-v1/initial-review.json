@@ -1,0 +1,91 @@
+{
+  "actual_existing_cache": [
+    {
+      "bytes": 9156131,
+      "decoded": false,
+      "md5": "5043491e6b4cea1fe3be1003a42a2cf5",
+      "sha256": "431ae1e23bd2984801c0b0d2720c9f4c240a404bab5fe37f5d8afdac521ddb20",
+      "source_id": "Case3-during-image"
+    },
+    {
+      "bytes": 28518,
+      "decoded": false,
+      "md5": "569676cbc4bd98a800497c03f91959d9",
+      "sha256": "88a8534d2a6fd90d7abf4655dccf2b75a9a87d45adb82e29f1ef197f8eb3ba63",
+      "source_id": "Case3-during-mask"
+    }
+  ],
+  "actual_existing_cache_bytes": 9184649,
+  "commits": 0,
+  "controls": {
+    "command": ".venv/bin/python -B -m pytest -q -p no:cacheprovider --basetemp=build/resect-train-intake-independent-review-v1/tmp tests/test_resect_train_intake.py build/resect-train-intake-independent-review-v1/test_independent.py",
+    "independent_failed": 4,
+    "independent_passed": 2,
+    "independent_test_snapshot": {
+      "path": "build/resect-train-intake-independent-review-v1/initial-independent-tests.py",
+      "sha256": "6ed5a3626b843abc11c1f71dde7ae1b35e4e0762390e8863c7abeb3b261ee1cc"
+    },
+    "log": {
+      "path": "build/resect-train-intake-independent-review-v1/initial-tests.log",
+      "sha256": "20e6ef1d9a8103a2c4fe270deedf5b78e51b2c7e3cc377d38321afa2da87f304"
+    },
+    "owner_passed": 54,
+    "seconds": 2.35,
+    "total_failed": 4,
+    "total_passed": 56
+  },
+  "decompressed_arrays": 0,
+  "findings": [
+    {
+      "functions": [
+        "retain_worker",
+        "run_pair"
+      ],
+      "id": "F1",
+      "kind": "parent_completed_worker_receipt_not_validated_per_source",
+      "observed": "Parent reports completed for a bound completed worker envelope containing zero files, duplicate source IDs, or one failed source item. Three metadata-only fault-injection controls fail.",
+      "required_correction": "Before promoting success, require the exact ordered pair source IDs, unique complete successful records, source bindings and byte/hash/claim fields, with matching immutable per-file receipts or equivalent authenticated joins. Preserve malformed evidence and non-success status."
+    },
+    {
+      "function": "run_pair final accounting",
+      "id": "F2",
+      "kind": "late_parent_success",
+      "observed": "Mocked worker completion yields status completed with elapsed_seconds=3.125 and max_seconds=3; final parent deadline is not rechecked.",
+      "required_correction": "Use one final finite elapsed reading to determine saved elapsed and admission. Exceeded budget must remain failed/incomplete; explicitly document whether final durable receipt publication is excluded."
+    }
+  ],
+  "initial_pins": {
+    "manifests/resect-train-cavity-acquisition-v1.json": "09a15ffe52af966c27d53fba4924a7c67fba5590b12e53cb48aa022ef60f04f1",
+    "scripts/resect_train_intake.py": "02887e7fc526cec5ce6e8cd2cf8908ddf6f7c045cd61651d6371c48d0ce1d538",
+    "tests/test_resect_train_intake.py": "8aae720eda6aa73eda1ba1992c6ae9eed015a2056d1b2bd40f8ccde067c8073d"
+  },
+  "limitations": [
+    "No real acquisition attempted; provider redirect/service availability remains untested. All transfer controls used local authentic compressed bytes or metadata-only refusal responses.",
+    "Fresh checkout result is metadata preflight portability. Acquisition still deliberately requires the exact rights/README.txt in the ignored cache; its verified committed evidence exists, but this adapter does not populate it automatically.",
+    "Per-file source fields inherit role, phase and license from the pinned manifest; acquisition alone does not admit images/labels into planning or training.",
+    "SIGKILL/filesystem failures cannot promise final receipts; partial files and source markers may require explicit recovery under the documented retry protocol.",
+    "Original ultrasound releases publish MD5 rather than SHA256; computed SHA256 becomes receipt provenance, while annotations also have pinned published SHA256."
+  ],
+  "metadata_binding_count": 22,
+  "model_calls": 0,
+  "network_requests": 0,
+  "new_scientific_payloads": 0,
+  "passed_scope": [
+    "Exact frozen 25 pairs / 50 sources / 557790240 compressed bytes, all TRAIN roles, three declared missing annotations and protected exclusions.",
+    "Exact file-specific NIRD and OSF revision-2 routes including ten short aliases, selected terminal content hashes, URL/query redaction, redirect/request/byte limits.",
+    "All retained metadata bindings are tracked; a copied minimal fresh checkout passes offline preflight without data cache or ignored build dependencies.",
+    "Actual existing compressed Case3 pair fixity verifies; no arrays decompressed. Partial-cache first-source success remains retained across explicit failed-pair retry; implicit retry refused.",
+    "Owner real local software child interruption/timeout controls kill and reap, retain attempts and reserved-source links; source snapshots, rights and helper pins checked."
+  ],
+  "phase": "initial-frozen-source-review",
+  "preserved_source": {
+    "capture": "exact bytes copied before first independent controls",
+    "path": "build/resect-train-intake-independent-review-v1/initial-source.py",
+    "sha256": "02887e7fc526cec5ce6e8cd2cf8908ddf6f7c045cd61651d6371c48d0ce1d538"
+  },
+  "production_source_sha256": "02887e7fc526cec5ce6e8cd2cf8908ddf6f7c045cd61651d6371c48d0ce1d538",
+  "reviewer_repairs": 0,
+  "schema": "resect-train-intake-independent-review-v1",
+  "status": "two_acceptance_defects_reproduced_repair_required",
+  "tracked_writes": 0
+}

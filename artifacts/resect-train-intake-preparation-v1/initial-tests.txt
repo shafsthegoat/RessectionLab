@@ -1,0 +1,69 @@
+......................................................FFFF..             [100%]
+=================================== FAILURES ===================================
+________ test_parent_refuses_incomplete_or_wrong_worker_success[empty] _________
+
+intake = <module 'resect_train_intake' from '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/resect_train_intake.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b0aefc0>
+files = 'empty'
+
+    @pytest.mark.parametrize('files',['empty','duplicate','failed'])
+    def test_parent_refuses_incomplete_or_wrong_worker_success(intake,monkeypatch,files):
+     fake_completed_launch(intake,monkeypatch,files=files)
+     r=intake.run_pair('Case2-during','wrong-result-'+files,existing_only=True)
+>    assert r['status']!='completed',{'status':r['status'],'source_results':r.get('source_results')}
+E    AssertionError: {'status': 'completed', 'source_results': []}
+E    assert 'completed' != 'completed'
+
+build/resect-train-intake-independent-review-v1/test_independent.py:43: AssertionError
+______ test_parent_refuses_incomplete_or_wrong_worker_success[duplicate] _______
+
+intake = <module 'resect_train_intake' from '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/resect_train_intake.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b00e870>
+files = 'duplicate'
+
+    @pytest.mark.parametrize('files',['empty','duplicate','failed'])
+    def test_parent_refuses_incomplete_or_wrong_worker_success(intake,monkeypatch,files):
+     fake_completed_launch(intake,monkeypatch,files=files)
+     r=intake.run_pair('Case2-during','wrong-result-'+files,existing_only=True)
+>    assert r['status']!='completed',{'status':r['status'],'source_results':r.get('source_results')}
+E    AssertionError: {'status': 'completed', 'source_results': [{'source_id': 'Case2-during-image', 'status': 'existing_verified', 'sha256'...fied', 'sha256': '1111111111111111111111111111111111111111111111111111111111111111', 'verified_bytes': 15970191, ...}]}
+E    assert 'completed' != 'completed'
+
+build/resect-train-intake-independent-review-v1/test_independent.py:43: AssertionError
+________ test_parent_refuses_incomplete_or_wrong_worker_success[failed] ________
+
+intake = <module 'resect_train_intake' from '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/resect_train_intake.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b00f860>
+files = 'failed'
+
+    @pytest.mark.parametrize('files',['empty','duplicate','failed'])
+    def test_parent_refuses_incomplete_or_wrong_worker_success(intake,monkeypatch,files):
+     fake_completed_launch(intake,monkeypatch,files=files)
+     r=intake.run_pair('Case2-during','wrong-result-'+files,existing_only=True)
+>    assert r['status']!='completed',{'status':r['status'],'source_results':r.get('source_results')}
+E    AssertionError: {'status': 'completed', 'source_results': [{'source_id': 'Case2-during-image', 'status': 'failed', 'sha256': '11111111...erified', 'sha256': 'fbf87d2a6c26f4d12e802eb4d85e28f411a2510ee210651e136e67f243062d40', 'verified_bytes': 44010, ...}]}
+E    assert 'completed' != 'completed'
+
+build/resect-train-intake-independent-review-v1/test_independent.py:43: AssertionError
+___________ test_final_parent_elapsed_over_limit_cannot_be_completed ___________
+
+intake = <module 'resect_train_intake' from '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/resect_train_intake.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10b00f380>
+
+    def test_final_parent_elapsed_over_limit_cannot_be_completed(intake,monkeypatch):
+     clock=[100.]
+     monkeypatch.setattr(intake.time,'monotonic',lambda:clock[0])
+     fake_completed_launch(intake,monkeypatch,late=clock)
+     r=intake.run_pair('Case2-during','late-completion',seconds=3,existing_only=True)
+     assert r['elapsed_seconds']>3
+>    assert r['status']!='completed',{'status':r['status'],'elapsed':r['elapsed_seconds'],'cap':r['max_seconds']}
+E    AssertionError: {'status': 'completed', 'elapsed': 3.125, 'cap': 3}
+E    assert 'completed' != 'completed'
+
+build/resect-train-intake-independent-review-v1/test_independent.py:51: AssertionError
+=========================== short test summary info ============================
+FAILED build/resect-train-intake-independent-review-v1/test_independent.py::test_parent_refuses_incomplete_or_wrong_worker_success[empty]
+FAILED build/resect-train-intake-independent-review-v1/test_independent.py::test_parent_refuses_incomplete_or_wrong_worker_success[duplicate]
+FAILED build/resect-train-intake-independent-review-v1/test_independent.py::test_parent_refuses_incomplete_or_wrong_worker_success[failed]
+FAILED build/resect-train-intake-independent-review-v1/test_independent.py::test_final_parent_elapsed_over_limit_cannot_be_completed
+4 failed, 56 passed in 2.35s

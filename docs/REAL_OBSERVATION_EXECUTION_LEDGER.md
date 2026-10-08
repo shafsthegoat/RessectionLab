@@ -368,3 +368,12 @@ confirms the actual 592-byte prefix. The original failed receipt and a reviewer
 control typo remain recorded. The next executable step is an explicit cache-only
 QC repeat, followed by bounded inventory processing; no optimizer update or
 clinical/planning admission is supplied by this repair.
+
+The [RESECT TRAIN importer](../artifacts/resect-train-intake-preparation-v1/RESULT.md)
+now passes 75 independent/owner controls. Four initial counterexamples exposed
+two acceptance defects: incomplete file lists could report completion, and late
+parent bookkeeping could remain accepted. Exact pair/per-file receipt validation
+and a final elapsed-time gate repair both. Authentic Case3 compressed-cache
+controls and fresh-checkout metadata preflight passed without downloads or
+decompression. The first new-pair acquisition, independent source check and
+separate label/image QC remain the next steps; all patient roles and rights remain.

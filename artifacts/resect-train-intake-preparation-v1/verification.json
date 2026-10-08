@@ -1,0 +1,72 @@
+{
+  "blocking_defects": [],
+  "commits": 0,
+  "controls": {
+    "command": ".venv/bin/python -B -m pytest -q -p no:cacheprovider --basetemp=build/resect-train-intake-independent-review-v1/final-tmp tests/test_resect_train_intake.py build/resect-train-intake-independent-review-v1/test_independent.py",
+    "failed": 0,
+    "independent_checks": 6,
+    "independent_tests": {
+      "path": "build/resect-train-intake-independent-review-v1/test_independent.py",
+      "sha256": "90c256c5e299243eb0cc465da4654c13e723312072f91ea168d4dc6c8374747b"
+    },
+    "log": {
+      "path": "build/resect-train-intake-independent-review-v1/final-tests.log",
+      "sha256": "451ae56ef5b646daa3f328e7a74cbf2933fc864a6b5928f9fd679a73fa88fe18"
+    },
+    "owner_checks": 69,
+    "passed": 75,
+    "seconds": 4.75,
+    "skipped": 0
+  },
+  "decompressed_arrays": 0,
+  "final_source_files_sha256": {
+    "manifests/resect-train-cavity-acquisition-v1.json": "09a15ffe52af966c27d53fba4924a7c67fba5590b12e53cb48aa022ef60f04f1",
+    "scripts/resect_train_intake.py": "272de65244d750ec763946f063733e96a3d21a1891b04020960b3187be84feb3",
+    "tests/test_resect_train_intake.py": "038e448006910f77e591e5c425c04a70be5e6f0ac0fd28abbd7dc3bbb7cfec6e"
+  },
+  "initial_review": {
+    "path": "build/resect-train-intake-independent-review-v1/initial-review.json",
+    "sha256": "6b79ec9db8a45d9fd336b78a989f31340736e76b0ac95eb5d1de90a696fed941",
+    "source_negative_and_log_preserved": true
+  },
+  "limitations": [
+    "No real acquisition attempted; provider redirect/service availability remains untested. All transfer controls used local authentic compressed bytes or metadata-only refusal responses.",
+    "Fresh checkout result is metadata preflight portability. Acquisition still deliberately requires the exact rights/README.txt in the ignored cache; its verified committed evidence exists, but this adapter does not populate it automatically.",
+    "Per-file source fields inherit role, phase and license from the pinned manifest; acquisition alone does not admit images/labels into planning or training.",
+    "SIGKILL/filesystem failures cannot promise final receipts; partial files and source markers may require explicit recovery under the documented retry protocol.",
+    "Original ultrasound releases publish MD5 rather than SHA256; computed SHA256 becomes receipt provenance, while annotations also have pinned published SHA256.",
+    "Final durable supervision receipt publication is after the final acceptance clock reading. A filesystem stall/failure during that publication is outside the recorded final elapsed boundary; do not describe this as a hard wall-clock guarantee for arbitrary storage failures.",
+    "This is offline importer verification only, not acquisition release, source service availability, anatomical validity or permission to use downloaded labels for planning/training."
+  ],
+  "model_calls": 0,
+  "network_requests": 0,
+  "new_scientific_payloads_acquired": 0,
+  "phase": "repaired-frozen-source-review",
+  "pins_unchanged_before_after_controls": true,
+  "resolved_findings": [
+    {
+      "evidence": "Original empty/duplicate/failed-success counterexamples now refuse; 13 owner actual-cache corruptions test both altered worker records and per-file agreement/source fields.",
+      "id": "F1",
+      "repair": "Parent clears stale summaries, requires exact ordered complete pair, correct source/patient/role/rights bindings, strict claims and successful source byte/hash fields, then joins each item to its immutable per-file receipt. Failed workers retain only a valid ordered prefix.",
+      "status": "resolved"
+    },
+    {
+      "evidence": "Independent test executes real worker over isolated authentic Case3 cache, confirms completed worker and both valid receipts/9184649 verified bytes, advances only parent final clock to3.125s with cap3s, and requires timeout with prior status completed. Owner additionally tests late final bookkeeping and explicit continuation from retained timeout.",
+      "id": "F2",
+      "repair": "One final elapsed reading after receipt bookkeeping determines both saved elapsed and timeout status; >= cap cannot remain completed.",
+      "status": "resolved"
+    }
+  ],
+  "reviewer_source_repairs": 0,
+  "schema": "resect-train-intake-independent-review-v1",
+  "scope_confirmed": [
+    "25 pairs / 50 exact frozen sources from 13 TRAIN people, with14 TRAIN people in cohort and declared missing labels retained.",
+    "22 source/role/rights metadata files tracked; minimal copied checkout passes metadata-only preflight without ignored build dependencies.",
+    "Exact original URLs and selected annotation file aliases/revision2/content hashes; host-wide or other-patient routing rejected.",
+    "No implicit retries; failed partial pair can preserve its successful file and continue only via explicit failed-attempt linkage; first attempt remains unchanged.",
+    "Actual local software child interruption/timeout cleanup retains source/attempt links and reaps groups.",
+    "Original compressed Case3 cache unchanged,9,184,649bytes; no decompression/array creation."
+  ],
+  "status": "focused_offline_review_passed_no_remaining_blocker",
+  "tracked_writes": 0
+}
