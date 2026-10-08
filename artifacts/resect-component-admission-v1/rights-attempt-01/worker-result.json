@@ -1,0 +1,34 @@
+{
+  "scope": "rights",
+  "patient_group": "RESECT:Case3",
+  "role": "TRAIN",
+  "status": "failed",
+  "manifest_sha256": "9765796da5abc4464a50e063703c60ef9d77387667475d4ccb317eb596e0f08f",
+  "cohort_sha256": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77",
+  "execution_source_sha256": "84a261cd3811aad90fefca8100649c6580526663883f7afca677eb44209d6e82",
+  "events": [
+    {
+      "source_path": "rights/README.txt",
+      "host": "osf.io",
+      "path": "/download/4mkfg/",
+      "full_url_sha256": "a0de8857ce3b9f13f5536307d71e598f1fa6098cbdc1c6ae2f3ef86aadab0744",
+      "status": 302,
+      "retry_after": null
+    },
+    {
+      "source_path": "rights/README.txt",
+      "host": "files.de-1.osf.io",
+      "path": "/v1/resources/jv8bk/providers/osfstorage/65cddcd16d0cb801d21a96bc",
+      "full_url_sha256": "a026e844fa93d70e3d8969081a2091b208c207e4e87ab7a7d24ebba7a2a6fb9f",
+      "status": 429,
+      "retry_after": null
+    }
+  ],
+  "files": [],
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "training_admitted": false,
+  "error_type": "RuntimeError",
+  "error": "Source HTTP 429; no automatic retry",
+  "elapsed_seconds": 0.6243345411494374
+}

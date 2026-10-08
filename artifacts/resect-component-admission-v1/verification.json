@@ -1,0 +1,12 @@
+{
+  "command": ".venv/bin/python -m pytest -q tests/test_resect_cavity_intake.py tests/test_real_intake_io.py",
+  "exit_code": 0,
+  "passed": 24,
+  "elapsed_seconds": 1.06,
+  "resect_specific_controls": 10,
+  "shared_intake_controls": 14,
+  "patient_images_generated_or_loaded": false,
+  "network_requests_during_tests": 0,
+  "independent_source_review": "No remaining concrete bounded-pilot blocker after checkout-import, watchdog and setup-closure corrections; reviewer did not run tests",
+  "initial_test_fixture_failure": "Temporary DATA path was outside unchanged ROOT; test fixture corrected; not a production acquisition failure"
+}
