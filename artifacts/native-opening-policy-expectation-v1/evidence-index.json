@@ -1,0 +1,24 @@
+{
+  "files": [
+    {
+      "bytes": 12899,
+      "path": "expectation.py",
+      "sha256": "0ee5c3abef5c5db2475bab272d2eb029a3e60a57d3def76b0127ffcefc7a8382"
+    },
+    {
+      "bytes": 67429,
+      "path": "expectation.json",
+      "sha256": "c1a95a46b6bdee2a5a9a981563402fe0301c99e2f399214f457c2dc698783f55"
+    }
+  ],
+  "note": "Saved-result arithmetic only; source inputs and before/after checks are bound inside expectation.json.",
+  "schema": "native-opening-policy-expectation-evidence-v1",
+  "scope": {
+    "checkpoints_loaded": 0,
+    "new_forwards": 0,
+    "new_simulator_transitions": 0,
+    "optimizer_updates": 0,
+    "patient_access": false
+  },
+  "status": "complete"
+}

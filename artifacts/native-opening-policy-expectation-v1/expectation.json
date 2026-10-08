@@ -1,0 +1,1583 @@
+{
+  "all_inputs_unchanged_after_calculation": true,
+  "execution_scope": {
+    "checkpoints_loaded": 0,
+    "new_forwards": 0,
+    "new_simulator_transitions": 0,
+    "optimizer_updates": 0,
+    "patient_access": false
+  },
+  "initial_to_final_decomposition": {
+    "BC": {
+      "any_target_probability_change": -0.06963340400435242,
+      "continuation_effect_under_final_root_distribution": -0.02143447120219865,
+      "expected_return_change": 0.016317290776847404,
+      "root_distribution_effect_with_initial_continuations": 0.037751761979045985
+    },
+    "BC256": {
+      "any_target_probability_change": 0.39605683228689825,
+      "continuation_effect_under_final_root_distribution": 0.9397347035412572,
+      "expected_return_change": 0.891075575741499,
+      "root_distribution_effect_with_initial_continuations": -0.04865912779975836
+    },
+    "scratch-RL": {
+      "any_target_probability_change": -0.015121892685589278,
+      "continuation_effect_under_final_root_distribution": -0.0029844666292524118,
+      "expected_return_change": 0.005312469861955549,
+      "root_distribution_effect_with_initial_continuations": 0.008296936491207886
+    }
+  },
+  "input_files": {
+    "artifacts/native-opening-bc-capacity-v1/output-sha256.json": "7c4cc90b3883ec2760029d9f9d558c52980702bc7d1441a6661a743d2c35d684",
+    "artifacts/native-opening-bc-capacity-v1/result.json": "fca1c98193f585b283a215397843b1b2a41604627ff2bcc3a6ab6884b443ea3b",
+    "artifacts/native-opening-learning-v1/output-sha256.json": "54136e02405df6ff61be23d9c5791a02ed36c97e0a1de56015a73da41b323eac",
+    "artifacts/native-opening-learning-v1/preparation.json": "63181c0754443730925e758019007ff472d58b9db1b72d9e3aacf9a28d8a3884",
+    "artifacts/native-opening-learning-v1/result.json": "ae038fac3f3e85a2aeaab709a2f078626c5bea9722edf53289b60346a6ee17e3",
+    "artifacts/native-opening-learning-v1/rl-00-0.json": "19801a12d9082a983d7087a8efbb23d2fc24a523f9ad712bec925f2aca12fae6",
+    "artifacts/native-opening-learning-v1/rl-00-1.json": "28ccbf8f06f64037b62d5224354952415f5fd6b5ef28d51539614fb38812462b",
+    "artifacts/native-opening-learning-v1/rl-00-2.json": "3a7d080548ee58b46f5ea5c02fb3b7df4cee6acda089ab6550a2aead3da847bb",
+    "artifacts/native-opening-learning-v1/rl-00-3.json": "653bb865661c5e4c55fa119a06342de2b7d6fc80836ba6c5427aa63adef9e3f8",
+    "artifacts/native-opening-learning-v1/rl-01-0.json": "8f5359d3b5433dd4b5eed98f20c55d64e0550f1696ad2506fb332f11bcbdac9b",
+    "artifacts/native-opening-learning-v1/rl-01-1.json": "94a49857893782e0158303745bb25f472c29b954eab5762fe15b109e95770df7",
+    "artifacts/native-opening-learning-v1/rl-01-2.json": "1f0e72a3c59a7ce214fdcecbc8b8212a1115faa7d432b0e23c19d7f750ff9e1d",
+    "artifacts/native-opening-learning-v1/rl-01-3.json": "56223e7810af484d1517df9f5932d25ef3e5502e93ccac949cd396d2f4982c66",
+    "artifacts/native-opening-learning-v1/rl-02-0.json": "192faac266eb3c7d9383ef9e875c7a8b1bc9c95eb2206a62e725862cd624ba25",
+    "artifacts/native-opening-learning-v1/rl-02-1.json": "260e89d5c98022c63ef64cd87b91999abeb32f4d2c2b2fca4ea4c8bb103753af",
+    "artifacts/native-opening-learning-v1/rl-02-2.json": "6040ab70e10d974cb781318c2693d7de4d89a8b8a57239853c3108e667f1043e",
+    "artifacts/native-opening-learning-v1/rl-02-3.json": "68b7cdb87bec52078b59f35c18cdf99c5627ae3debe10edc04466edc636d636e",
+    "artifacts/native-opening-learning-v1/rl-03-0.json": "43a0d41437d061ecef7878b974d00d9fbd8b75dfb5777c81e4a1112871fc9bea",
+    "artifacts/native-opening-learning-v1/rl-03-1.json": "5fe7a91559c425e7d931bfd0777d109b8e3af0263080685ca86b584a31f2146c",
+    "artifacts/native-opening-learning-v1/rl-03-2.json": "ef9035a829ce922acd975640f035efbea2a3aeec633e5890b7af9e3c958f6b08",
+    "artifacts/native-opening-learning-v1/rl-03-3.json": "4c4ef31b80c4819232378b5d1bd49a1540742b911d348e6bef7059157fdfc918",
+    "artifacts/native-opening-learning-v1/rl-04-0.json": "c573d3b6a228b7469362bc09195e3d664e223cbb008311739bd0d4348f203763",
+    "artifacts/native-opening-learning-v1/rl-04-1.json": "e4c4a96c09755e18b3ee253d1f6c2d533eb971ded1848d7fb7e7158de417e9c6",
+    "artifacts/native-opening-learning-v1/rl-04-2.json": "8beef1c28a39a7705a85e8c4df1540b7ce72e71b41304cbaaeeba403201218da",
+    "artifacts/native-opening-learning-v1/rl-04-3.json": "c7ce72af5c5d67da506ca47aed7f1fb622201284cafe8e17cb6ffcf674a311cc",
+    "artifacts/native-opening-learning-v1/rl-05-0.json": "e457d5fc1412bb1f134a6559bb2a743ae52ea43304ef29e2cce7250bdc845538",
+    "artifacts/native-opening-learning-v1/rl-05-1.json": "1f467f0f657abedf2f768f0e823d656416b664044173b86e2c64e76a9726fa03",
+    "artifacts/native-opening-learning-v1/rl-05-2.json": "ce57ed79d115cd600ede2ec4fcc015e63c7b6fec3357a7d17b580bb029b1a9e3",
+    "artifacts/native-opening-learning-v1/rl-05-3.json": "061ac19570640e324ed2e62d2dbf56a866841ddebc1e98d589f1ca094e892e93",
+    "artifacts/native-opening-learning-v1/rl-06-0.json": "9205e635763678322612cf8cb0582080689cca77c2c7565d15fe84fc01575360",
+    "artifacts/native-opening-learning-v1/rl-06-1.json": "02df2e7c46436b60aa5fea57c537c8133c2d5df8ed4a1ed24fb24c1ad3cf3be6",
+    "artifacts/native-opening-learning-v1/rl-06-2.json": "8d33914163adbda2d8b8475e2afcdc52f905eed5fb260efe5d8848f50044aa06",
+    "artifacts/native-opening-learning-v1/rl-06-3.json": "9ec84e8e9a7b812c909029fd7a0e807e07ac0cfb7025c86fac324d8f0499e34a",
+    "artifacts/native-opening-learning-v1/rl-07-0.json": "a81fcd4df40d2f1db859280da7193a8c1a213e90eddd3d7b4ba50e06bc0e0de0",
+    "artifacts/native-opening-learning-v1/rl-07-1.json": "54ef8efc44c59a87d9260ca5e7f6767b94a0cbfedcc5abe0324e7beb9f6396de",
+    "artifacts/native-opening-learning-v1/rl-07-2.json": "ee2704cc68e826ca9059cd26fb0692ea67e4b7db274fc8c595c306eebef31070",
+    "artifacts/native-opening-learning-v1/rl-07-3.json": "2055f0d25d94fb1663734a71b504e8d16d45c690a77324f5a7356f9bcbde0779",
+    "artifacts/native-opening-learning-v1/rl-08-0.json": "8cd5656119b86ad812a2c01ee32d4c7e79385476a4480e5a55ea61cefce31067",
+    "artifacts/native-opening-learning-v1/rl-08-1.json": "4cd229e1195743783cb2382b1dc99ce2360d0e632200f127794561011f2a97ef",
+    "artifacts/native-opening-learning-v1/rl-08-2.json": "189afd0aeed42b3f5c9fc90c0904cf07ae9837f74ebfe0f4cf5c82fade2c3a6a",
+    "artifacts/native-opening-learning-v1/rl-08-3.json": "c10c4cf4dd04d4334614a15ac816e4f653fe7b1417b44ddc1e62c29b872345e0",
+    "artifacts/native-opening-learning-v1/rl-09-0.json": "1df792131a2b168ae849738ad2fb1a0d55da4e5b8aa6426a7f0647cd2ff31f16",
+    "artifacts/native-opening-learning-v1/rl-09-1.json": "56eab34587b5f63cc2248b7f1c818b1af7e2314e72f144f8f125506bf13feb28",
+    "artifacts/native-opening-learning-v1/rl-09-2.json": "495c1d5e0e8d338f4bd246dc033da1dfbb25e2f01924ff8e515a8d01390b05af",
+    "artifacts/native-opening-learning-v1/rl-09-3.json": "1795aac4f7a583e6b1cd4394fd258686fce73a90881b71724d4119a10a87192e",
+    "artifacts/native-opening-learning-v1/rl-10-0.json": "452ed7accf3f3f9b972944c4e2358da68b5c55c9ea1dce6dcaf44c11cb3d5613",
+    "artifacts/native-opening-learning-v1/rl-10-1.json": "d8b10b094aaa13d3cda119fbc64227a0643e8f27cfd89655e183b8bcfb8536a9",
+    "artifacts/native-opening-learning-v1/rl-10-2.json": "1a6672f3bc3b795c1a385bd1c936149fb2a5292db657a1bacdf30a47cb10cd29",
+    "artifacts/native-opening-learning-v1/rl-10-3.json": "b5d98593608b06a3d3feb34d0fd3cfbb0dcea9e04ccfd0e3e3ec68bc4c1f2b93",
+    "artifacts/native-opening-learning-v1/rl-11-0.json": "258d3c6b63593caccc21c7d6ff0ae57641d8875c2c2e0b07eadc419fbe7308ff",
+    "artifacts/native-opening-learning-v1/rl-11-1.json": "6f4d3f6ab9b7c9322a5f492483991e5f19a2f41f184183c8681c3011dc2e4bef",
+    "artifacts/native-opening-learning-v1/rl-11-2.json": "32552a17502e4860e607aad58e7f1d07e951f66bfec8a8ad203a3a33b8a6c007",
+    "artifacts/native-opening-learning-v1/rl-11-3.json": "a4be01dae73da7415f9619692e5b1f2df2bf36abf60416f6ce5de1f2d94849c0",
+    "artifacts/native-opening-learning-v1/rl-12-0.json": "692264ec04bf2b265af6aae3c77a1a524150638f6c222aebe835218aae8c6e4e",
+    "artifacts/native-opening-learning-v1/rl-12-1.json": "4eccfb7439bd2190cf45baf82bd0efa0c44c9d683cabc12399bad7c834948983",
+    "artifacts/native-opening-learning-v1/rl-12-2.json": "b11e4f3356aeae23b8da0bd68a8e9f8566908bfdbfa9cbbb9152dea0e1b07bc2",
+    "artifacts/native-opening-learning-v1/rl-12-3.json": "65d144fe6d5d3248edf81e47083c6d53cdf74afd294e2068cbe6587177909b08",
+    "artifacts/native-opening-learning-v1/rl-13-0.json": "9198868dfc9a7e601b1a0da4cd1daf5fc27771184740c21f55185b6fb7e840f0",
+    "artifacts/native-opening-learning-v1/rl-13-1.json": "4e6aa9ff50cecf7c85aa10f64dafb9b74eb2f44451af5c0fae0e27b3ce23d2b7",
+    "artifacts/native-opening-learning-v1/rl-13-2.json": "280a279e5064f7573238bb19affb873f8207bdd72269bb30045d418ddd273e6a",
+    "artifacts/native-opening-learning-v1/rl-13-3.json": "379d90af4c09bfa7233d029303e08abe22a369e68a0c5dcfe262829b65d7a391",
+    "artifacts/native-opening-learning-v1/rl-14-0.json": "88edba6d1ec5d3304c23d9b25563a0be32f22442f3a92daf844bf48441817fab",
+    "artifacts/native-opening-learning-v1/rl-14-1.json": "7a0111517ddcf9397b55cbbb77b9388f1e204f4a043f84971815432d12a7b8a5",
+    "artifacts/native-opening-learning-v1/rl-14-2.json": "8233f710bf0eb8e4863f3df86f43a8bfa8a4a0ba1ae5e3f9048a5db7c49bdee5",
+    "artifacts/native-opening-learning-v1/rl-14-3.json": "ddfc7c3a0032191c204d0b19479a9f43a724798f23bf1d505ba52eb5808c6a3d",
+    "artifacts/native-opening-learning-v1/rl-15-0.json": "07757a8f276ce3be427201a3f46867fc776a885aae936356c1472fc4991834b7",
+    "artifacts/native-opening-learning-v1/rl-15-1.json": "abfe86de728e4ea40e6a5b393bfb620d0f37ab652a637815f5674fe609585954",
+    "artifacts/native-opening-learning-v1/rl-15-2.json": "b19bebbf9b19d6a3b3a5fdda1618bcffb08734088f5a7a2f9e69f377876c8629",
+    "artifacts/native-opening-learning-v1/rl-15-3.json": "18f5e7b410d09771b0766f8d16770c46d24054841b9670c4cdefcbfcf827a5ae",
+    "artifacts/native-opening-learning-v1/teacher.json": "d40c9e75fb47563212d1b2c88d5f96edc25de823e45d7e230f198a13547f1d87",
+    "build/native-opening-learning-diagnostic-v1/evidence-index.json": "7eff5eb9aa7491ca5641dbb194f972b28a6f1271a451b8af754ced804a141c56",
+    "build/native-opening-learning-diagnostic-v1/teacher-fit-attempt-01/readout.json": "555bcc56f333e9ca505735e6ed85855e2cb034ed7179d3ac4ec06f5d873d75cd"
+  },
+  "largest_derived_first_reward_error": 1.1102230246251565e-16,
+  "largest_nominal_vs_saved_actual_return_error": 1.1102230246251565e-16,
+  "method": "Exhaustive probability products on the five-state, sixteen-leaf saved horizon-two nominal tree.",
+  "models": {
+    "BC": {
+      "root_contributions": [
+        {
+          "action_id": "STOP",
+          "any_target_probability_contribution": 0.0,
+          "conditional_future_return": 0.0,
+          "conditional_total_return": 0.0,
+          "expected_return_contribution": 0.0,
+          "immediate_nominal_reward": 0.0,
+          "probability": 0.27945598127079063,
+          "tip_mm": null,
+          "tool_id": null
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+          "any_target_probability_contribution": 0.06522999522411382,
+          "conditional_future_return": 0.37026634976267814,
+          "conditional_total_return": -0.26073365023732187,
+          "expected_return_contribution": -0.04636039971396378,
+          "immediate_nominal_reward": -0.631,
+          "probability": 0.17780750460006284,
+          "tip_mm": [
+            4.0,
+            4.0,
+            1.0
+          ],
+          "tool_id": "short-wide-opener"
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+          "any_target_probability_contribution": 0.0,
+          "conditional_future_return": -0.2892396798992205,
+          "conditional_total_return": -0.5202396798992205,
+          "expected_return_contribution": -0.09429441904650271,
+          "immediate_nominal_reward": -0.231,
+          "probability": 0.181251878105048,
+          "tip_mm": [
+            4.0,
+            4.0,
+            1.0
+          ],
+          "tool_id": "long-narrow-cutter"
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+          "any_target_probability_contribution": 0.10063290962597893,
+          "conditional_future_return": 0.812702965080738,
+          "conditional_total_return": -0.020297034919262158,
+          "expected_return_contribution": -0.0036333770290377437,
+          "immediate_nominal_reward": -0.8330000000000002,
+          "probability": 0.17901023688881884,
+          "tip_mm": [
+            4.0,
+            4.0,
+            2.0
+          ],
+          "tool_id": "short-wide-opener"
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+          "any_target_probability_contribution": 0.0,
+          "conditional_future_return": -0.19644653807102486,
+          "conditional_total_return": -0.6294465380710249,
+          "expected_return_contribution": -0.11485787882229223,
+          "immediate_nominal_reward": -0.43300000000000005,
+          "probability": 0.18247439913527969,
+          "tip_mm": [
+            4.0,
+            4.0,
+            2.0
+          ],
+          "tool_id": "long-narrow-cutter"
+        }
+      ],
+      "rounding": {
+        "actual_return_difference_against_alternative": 6.333715940609608e-09,
+        "float64_softmax_alternative_totals": {
+          "any_target": 0.16586289836840196,
+          "expected_normal_mm3": 2.303021912269549,
+          "expected_target_mm3": 0.25104522926440315,
+          "full_target": 0.08518233089600119,
+          "optimal_route": 0.03348730197597514,
+          "return": -0.2591460809455124
+        },
+        "maximum_saved_probability_sum_error": 8.940696716308594e-08,
+        "return_difference_bound_against_alternative": 7.77002815539607e-08,
+        "state_total_variation_against_float64_softmax": {
+          "sha256:a5bba06653b8644cf38722b6d99c5c21236284999afdfbe938c9055d1d6e543d": 4.753817756109058e-09,
+          "sha256:b6219c3ec2d4cac1a962c3a9c123734fb2f2eb9a5854c2f920d214b467faba54": 2.5213218818320726e-08,
+          "sha256:c9458a99068bfaae90ba69062073a674c55ee31ad66d11a5c86461ef2c834eba": 1.3714777952200663e-08,
+          "sha256:ccca16824aab833104e49e21de526444c7bc8bc1bcb52ee5a4e370c9a564124d": 1.1853255280080965e-08,
+          "sha256:e4d32b8f85642482f33aa7849ac74394e7d6a707168073343bbee9ce20ed988c": 5.773328745628525e-09
+        },
+        "terminal_total_variation_bound": 3.892799677052139e-08
+      },
+      "saved_argmax_route_return": 0.0,
+      "terminal_probabilities": [
+        {
+          "actions": [
+            "STOP"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.0,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.27945598127079063,
+          "return_contribution": 0.0
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "STOP"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.1523305141582708,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.05077683805275694,
+          "return_contribution": -0.03204018481128963
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "NATIVE-SPATIAL:9cfc4e00074d6cf93eb5cb82"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.12242490525411207,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.030606226313528016,
+          "return_contribution": -0.026443779534888207
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "NATIVE-SPATIAL:f985c763473c0225d9b56230"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.12477778003865622,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.031194445009664055,
+          "return_contribution": -0.027950222728658995
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "NATIVE-SPATIAL:b4c22140396ffbcc5f14ef15"
+          ],
+          "any_target_contribution": 0.03174269277119455,
+          "expected_normal_mm3_contribution": 0.1269707710847782,
+          "expected_target_mm3_contribution": 0.03174269277119455,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.03174269277119455,
+          "return_contribution": 0.003237754662661843
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+          ],
+          "any_target_contribution": 0.033487302452919275,
+          "expected_normal_mm3_contribution": 0.1339492098116771,
+          "expected_target_mm3_contribution": 0.06697460490583855,
+          "full_target_contribution": 0.033487302452919275,
+          "optimal_route_contribution": 0.033487302452919275,
+          "probability": 0.033487302452919275,
+          "return_contribution": 0.03683603269821121
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+            "STOP"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.0646801473511665,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.0646801473511665,
+          "return_contribution": -0.014941114038119464
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+            "NATIVE-SPATIAL:0d78540299fe5eb3a1770d83"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.11463799087586762,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.03821266362528921,
+          "return_contribution": -0.026443163228700137
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+            "NATIVE-SPATIAL:8169300cfa7db4a4742e3063"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.15396776401875611,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.03849194100468903,
+          "return_contribution": -0.034411795258192
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+            "NATIVE-SPATIAL:7afd144506d396798a525e1e"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.07973425224780652,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.03986712612390326,
+          "return_contribution": -0.018498346521491113
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+            "STOP"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.31350930905135965,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.07837732726283991,
+          "return_contribution": -0.06528831360994566
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+            "NATIVE-SPATIAL:81d9c8d011c2b37342ee27df"
+          ],
+          "any_target_contribution": 0.04893787393628951,
+          "expected_normal_mm3_contribution": 0.19575149574515804,
+          "expected_target_mm3_contribution": 0.04893787393628951,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.04893787393628951,
+          "return_contribution": 0.0048937873936289395
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+            "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07"
+          ],
+          "any_target_contribution": 0.051695035689689424,
+          "expected_normal_mm3_contribution": 0.2067801427587577,
+          "expected_target_mm3_contribution": 0.10339007137937885,
+          "full_target_contribution": 0.051695035689689424,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.051695035689689424,
+          "return_contribution": 0.05676114918727898
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+            "STOP"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.16706496106885482,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.08353248053442741,
+          "return_contribution": -0.036169564071407076
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+            "NATIVE-SPATIAL:89b67ded73fcfa7092918c12"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.14797491557641335,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.049324971858804446,
+          "return_contribution": -0.03423153047001029
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+            "NATIVE-SPATIAL:1186a2ff80d07c1941c4434b"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.19846778696819128,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.04961694674204782,
+          "return_contribution": -0.04445678428087486
+        }
+      ],
+      "totals": {
+        "any_target": 0.16586290485009275,
+        "expected_normal_mm3": 2.303021946009826,
+        "expected_target_mm3": 0.2510452429927015,
+        "full_target": 0.0851823381426087,
+        "optimal_route": 0.033487302452919275,
+        "return": -0.25914607461179645
+      }
+    },
+    "BC256": {
+      "root_contributions": [
+        {
+          "action_id": "STOP",
+          "any_target_probability_contribution": 0.0,
+          "conditional_future_return": 0.0,
+          "conditional_total_return": 0.0,
+          "expected_return_contribution": 0.0,
+          "immediate_nominal_reward": 0.0,
+          "probability": 0.0556581281112131,
+          "tip_mm": null,
+          "tool_id": null
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+          "any_target_probability_contribution": 0.6315390876119747,
+          "conditional_future_return": 1.730982630981012,
+          "conditional_total_return": 1.099982630981012,
+          "expected_return_contribution": 0.6946889975662888,
+          "immediate_nominal_reward": -0.631,
+          "probability": 0.6315454244461435,
+          "tip_mm": [
+            4.0,
+            4.0,
+            1.0
+          ],
+          "tool_id": "short-wide-opener"
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+          "any_target_probability_contribution": 0.0,
+          "conditional_future_return": -0.02186254073609892,
+          "conditional_total_return": -0.25286254073609893,
+          "expected_return_contribution": -0.07908919068236586,
+          "immediate_nominal_reward": -0.231,
+          "probability": 0.31277543305596867,
+          "tip_mm": [
+            4.0,
+            4.0,
+            1.0
+          ],
+          "tool_id": "long-narrow-cutter"
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+          "any_target_probability_contribution": 1.4053529368774421e-05,
+          "conditional_future_return": 1.930928640045466,
+          "conditional_total_return": 1.0979286400454658,
+          "expected_return_contribution": 1.543034261291838e-05,
+          "immediate_nominal_reward": -0.8330000000000002,
+          "probability": 1.4054048733330608e-05,
+          "tip_mm": [
+            4.0,
+            4.0,
+            2.0
+          ],
+          "tool_id": "short-wide-opener"
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+          "any_target_probability_contribution": 0.0,
+          "conditional_future_return": -0.0018745285371905046,
+          "conditional_total_return": -0.43487452853719055,
+          "expected_return_contribution": -3.0268736807241768e-06,
+          "immediate_nominal_reward": -0.43300000000000005,
+          "probability": 6.960337941396165e-06,
+          "tip_mm": [
+            4.0,
+            4.0,
+            2.0
+          ],
+          "tool_id": "long-narrow-cutter"
+        }
+      ],
+      "rounding": {
+        "actual_return_difference_against_alternative": 9.268998901745817e-10,
+        "float64_softmax_alternative_totals": {
+          "any_target": 0.6315531402825595,
+          "expected_normal_mm3": 2.868687408623281,
+          "expected_target_mm3": 1.2631062803014879,
+          "full_target": 0.6315531400189284,
+          "optimal_route": 0.6315390864892136,
+          "return": 0.6156122094259552
+        },
+        "maximum_saved_probability_sum_error": 8.676352081238292e-08,
+        "return_difference_bound_against_alternative": 2.280066335750132e-09,
+        "state_total_variation_against_float64_softmax": {
+          "sha256:a5bba06653b8644cf38722b6d99c5c21236284999afdfbe938c9055d1d6e543d": 1.7173050698682896e-10,
+          "sha256:b6219c3ec2d4cac1a962c3a9c123734fb2f2eb9a5854c2f920d214b467faba54": 2.0821411844286765e-12,
+          "sha256:c9458a99068bfaae90ba69062073a674c55ee31ad66d11a5c86461ef2c834eba": 9.70587296495201e-10,
+          "sha256:ccca16824aab833104e49e21de526444c7bc8bc1bcb52ee5a4e370c9a564124d": 5.492592102876733e-13,
+          "sha256:e4d32b8f85642482f33aa7849ac74394e7d6a707168073343bbee9ce20ed988c": 7.275993721038033e-11
+        },
+        "terminal_total_variation_bound": 1.14231780348203e-09
+      },
+      "saved_argmax_route_return": 1.1,
+      "terminal_probabilities": [
+        {
+          "actions": [
+            "STOP"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.0,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.0556581281112131,
+          "return_contribution": 0.0
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "STOP"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 1.901048587598971e-05,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 6.336828625329903e-06,
+          "return_contribution": -3.998538862583169e-06
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "NATIVE-SPATIAL:9cfc4e00074d6cf93eb5cb82"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 5.821224928701705e-12,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 1.4553062321754263e-12,
+          "return_contribution": -1.2573845845995684e-12
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "NATIVE-SPATIAL:f985c763473c0225d9b56230"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 1.6352769386156227e-11,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 4.088192346539057e-12,
+          "return_contribution": -3.663020342498995e-12
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "NATIVE-SPATIAL:b4c22140396ffbcc5f14ef15"
+          ],
+          "any_target_contribution": 2.6362774099776207e-10,
+          "expected_normal_mm3_contribution": 1.0545109639910483e-09,
+          "expected_target_mm3_contribution": 2.6362774099776207e-10,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 2.6362774099776207e-10,
+          "return_contribution": 2.6890029581771726e-11
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+          ],
+          "any_target_contribution": 0.631539087348347,
+          "expected_normal_mm3_contribution": 2.526156349393388,
+          "expected_target_mm3_contribution": 1.263078174696694,
+          "full_target_contribution": 0.631539087348347,
+          "optimal_route_contribution": 0.631539087348347,
+          "probability": 0.631539087348347,
+          "return_contribution": 0.6946929960831817
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+            "STOP"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.2979423910194943,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.2979423910194943,
+          "return_contribution": -0.06882469232550319
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+            "NATIVE-SPATIAL:0d78540299fe5eb3a1770d83"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.04448957731428624,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.01482985910476208,
+          "return_contribution": -0.01026226250049536
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+            "NATIVE-SPATIAL:8169300cfa7db4a4742e3063"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 7.060242351742136e-06,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 1.765060587935534e-06,
+          "return_contribution": -1.5779641656143677e-06
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+            "NATIVE-SPATIAL:7afd144506d396798a525e1e"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 2.8357422487095868e-06,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 1.4178711243547934e-06,
+          "return_contribution": -6.578922017006242e-07
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+            "STOP"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 2.077458224748641e-09,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 5.193645561871603e-10,
+          "return_contribution": -4.326306753039046e-10
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+            "NATIVE-SPATIAL:81d9c8d011c2b37342ee27df"
+          ],
+          "any_target_contribution": 3.327286404409705e-15,
+          "expected_normal_mm3_contribution": 1.330914561763882e-14,
+          "expected_target_mm3_contribution": 3.327286404409705e-15,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 3.327286404409705e-15,
+          "return_contribution": 3.3272864044096973e-16
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+            "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07"
+          ],
+          "any_target_contribution": 1.4053529365447135e-05,
+          "expected_normal_mm3_contribution": 5.621411746178854e-05,
+          "expected_target_mm3_contribution": 2.810705873089427e-05,
+          "full_target_contribution": 1.4053529365447135e-05,
+          "optimal_route_contribution": 0.0,
+          "probability": 1.4053529365447135e-05,
+          "return_contribution": 1.5430775243260954e-05
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+            "STOP"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 1.3820698322755612e-05,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 6.910349161377806e-06,
+          "return_contribution": -2.9921811868765902e-06
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+            "NATIVE-SPATIAL:89b67ded73fcfa7092918c12"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 1.499621739930245e-07,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 4.9987391331008166e-08,
+          "return_contribution": -3.469124958371967e-08
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+            "NATIVE-SPATIAL:1186a2ff80d07c1941c4434b"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 5.55474940640725e-12,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 1.3886873516018125e-12,
+          "return_contribution": -1.2442638670352243e-12
+        }
+      ],
+      "totals": {
+        "any_target": 0.6315531411413434,
+        "expected_normal_mm3": 2.8686874121353148,
+        "expected_target_mm3": 1.263106282019056,
+        "full_target": 0.6315531408777124,
+        "optimal_route": 0.631539087348347,
+        "return": 0.6156122103528551
+      }
+    },
+    "initial": {
+      "root_contributions": [
+        {
+          "action_id": "STOP",
+          "any_target_probability_contribution": 0.0,
+          "conditional_future_return": 0.0,
+          "conditional_total_return": 0.0,
+          "expected_return_contribution": 0.0,
+          "immediate_nominal_reward": 0.0,
+          "probability": 0.16420265787537905,
+          "tip_mm": null,
+          "tool_id": null
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+          "any_target_probability_contribution": 0.08661259029912566,
+          "conditional_future_return": 0.40956361313353823,
+          "conditional_total_return": -0.22143638686646178,
+          "expected_return_contribution": -0.04593898780191823,
+          "immediate_nominal_reward": -0.631,
+          "probability": 0.20745907414765546,
+          "tip_mm": [
+            4.0,
+            4.0,
+            1.0
+          ],
+          "tool_id": "short-wide-opener"
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+          "any_target_probability_contribution": 0.0,
+          "conditional_future_return": -0.35815520122647293,
+          "conditional_total_return": -0.5891552012264729,
+          "expected_return_contribution": -0.12434832543262847,
+          "immediate_nominal_reward": -0.231,
+          "probability": 0.2110620854636716,
+          "tip_mm": [
+            4.0,
+            4.0,
+            1.0
+          ],
+          "tool_id": "long-narrow-cutter"
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+          "any_target_probability_contribution": 0.1488837185553195,
+          "conditional_future_return": 1.028016710817814,
+          "conditional_total_return": 0.1950167108178138,
+          "expected_return_contribution": 0.04040940126687062,
+          "immediate_nominal_reward": -0.8330000000000002,
+          "probability": 0.2072099416373679,
+          "tip_mm": [
+            4.0,
+            4.0,
+            2.0
+          ],
+          "tool_id": "short-wide-opener"
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+          "any_target_probability_contribution": 0.0,
+          "conditional_future_return": -0.26004545468091966,
+          "conditional_total_return": -0.6930454546809197,
+          "expected_return_contribution": -0.14558545342096776,
+          "immediate_nominal_reward": -0.43300000000000005,
+          "probability": 0.210066240875926,
+          "tip_mm": [
+            4.0,
+            4.0,
+            2.0
+          ],
+          "tool_id": "long-narrow-cutter"
+        }
+      ],
+      "rounding": {
+        "actual_return_difference_against_alternative": 2.2415660994035136e-09,
+        "float64_softmax_alternative_totals": {
+          "any_target": 0.2354963090422059,
+          "expected_normal_mm3": 2.816493138876216,
+          "expected_target_mm3": 0.35296376475677393,
+          "full_target": 0.11746745571456804,
+          "optimal_route": 0.043212172267909764,
+          "return": -0.27546336763020995
+        },
+        "maximum_saved_probability_sum_error": 2.9802322387695312e-08,
+        "return_difference_bound_against_alternative": 4.438437086590197e-08,
+        "state_total_variation_against_float64_softmax": {
+          "sha256:a5bba06653b8644cf38722b6d99c5c21236284999afdfbe938c9055d1d6e543d": 4.856778451634014e-09,
+          "sha256:b6219c3ec2d4cac1a962c3a9c123734fb2f2eb9a5854c2f920d214b467faba54": 9.622811075749027e-09,
+          "sha256:c9458a99068bfaae90ba69062073a674c55ee31ad66d11a5c86461ef2c834eba": 7.798791543112138e-09,
+          "sha256:ccca16824aab833104e49e21de526444c7bc8bc1bcb52ee5a4e370c9a564124d": 6.497606105937415e-09,
+          "sha256:e4d32b8f85642482f33aa7849ac74394e7d6a707168073343bbee9ce20ed988c": 1.443786720733975e-08
+        },
+        "terminal_total_variation_bound": 2.2236658750451888e-08
+      },
+      "saved_argmax_route_return": -0.464,
+      "terminal_probabilities": [
+        {
+          "actions": [
+            "STOP"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.0,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.16420265787537905,
+          "return_contribution": 0.0
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "STOP"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.10180631772932502,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.033935439243108344,
+          "return_contribution": -0.021413262162401366
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "NATIVE-SPATIAL:9cfc4e00074d6cf93eb5cb82"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.17329251706348722,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.043323129265871806,
+          "return_contribution": -0.03743118368571324
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "NATIVE-SPATIAL:f985c763473c0225d9b56230"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.17435166135819866,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.043587915339549664,
+          "return_contribution": -0.0390547721442365
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "NATIVE-SPATIAL:b4c22140396ffbcc5f14ef15"
+          ],
+          "any_target_contribution": 0.04340041997856248,
+          "expected_normal_mm3_contribution": 0.1736016799142499,
+          "expected_target_mm3_contribution": 0.04340041997856248,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.04340041997856248,
+          "return_contribution": 0.004426842837813372
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+          ],
+          "any_target_contribution": 0.04321217032056318,
+          "expected_normal_mm3_contribution": 0.17284868128225273,
+          "expected_target_mm3_contribution": 0.08642434064112636,
+          "full_target_contribution": 0.04321217032056318,
+          "optimal_route_contribution": 0.04321217032056318,
+          "probability": 0.04321217032056318,
+          "return_contribution": 0.047533387352619506
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+            "STOP"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.043597434282455376,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.043597434282455376,
+          "return_contribution": -0.010071007319247193
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+            "NATIVE-SPATIAL:0d78540299fe5eb3a1770d83"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.16689751326001223,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.05563250442000408,
+          "return_contribution": -0.038497693058642826
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+            "NATIVE-SPATIAL:8169300cfa7db4a4742e3063"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.22222799030266052,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.05555699757566513,
+          "return_contribution": -0.049667955832644634
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+            "NATIVE-SPATIAL:7afd144506d396798a525e1e"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.11255029837109407,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.05627514918554703,
+          "return_contribution": -0.026111669222093823
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+            "STOP"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.23330489232819346,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.058326223082048365,
+          "return_contribution": -0.048585743827346296
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+            "NATIVE-SPATIAL:81d9c8d011c2b37342ee27df"
+          ],
+          "any_target_contribution": 0.07462843474902194,
+          "expected_normal_mm3_contribution": 0.29851373899608774,
+          "expected_target_mm3_contribution": 0.07462843474902194,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.07462843474902194,
+          "return_contribution": 0.007462843474902175
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+            "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07"
+          ],
+          "any_target_contribution": 0.07425528380629759,
+          "expected_normal_mm3_contribution": 0.29702113522519036,
+          "expected_target_mm3_contribution": 0.14851056761259518,
+          "full_target_contribution": 0.07425528380629759,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.07425528380629759,
+          "return_contribution": 0.08153230161931474
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+            "STOP"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.11827750307413679,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.05913875153706839,
+          "return_contribution": -0.025607079415550616
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+            "NATIVE-SPATIAL:89b67ded73fcfa7092918c12"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.22652460062672242,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.07550820020890747,
+          "return_contribution": -0.05240269094498179
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+            "NATIVE-SPATIAL:1186a2ff80d07c1941c4434b"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.3016771565198006,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.07541928912995015,
+          "return_contribution": -0.06757568306043535
+        }
+      ],
+      "totals": {
+        "any_target": 0.23549630885444517,
+        "expected_normal_mm3": 2.8164931203338672,
+        "expected_target_mm3": 0.35296376298130594,
+        "full_target": 0.11746745412686077,
+        "optimal_route": 0.04321217032056318,
+        "return": -0.27546336538864385
+      }
+    },
+    "scratch-RL": {
+      "root_contributions": [
+        {
+          "action_id": "STOP",
+          "any_target_probability_contribution": 0.0,
+          "conditional_future_return": 0.0,
+          "conditional_total_return": 0.0,
+          "expected_return_contribution": 0.0,
+          "immediate_nominal_reward": 0.0,
+          "probability": 0.19271079047257958,
+          "tip_mm": null,
+          "tool_id": null
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+          "any_target_probability_contribution": 0.08204367579907113,
+          "conditional_future_return": 0.4088541048616171,
+          "conditional_total_return": -0.2221458951383829,
+          "expected_return_contribution": -0.044112871171737324,
+          "immediate_nominal_reward": -0.631,
+          "probability": 0.19857612558745588,
+          "tip_mm": [
+            4.0,
+            4.0,
+            1.0
+          ],
+          "tool_id": "short-wide-opener"
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+          "any_target_probability_contribution": 0.0,
+          "conditional_future_return": -0.3472897086970726,
+          "conditional_total_return": -0.5782897086970726,
+          "expected_return_contribution": -0.11767939091735578,
+          "immediate_nominal_reward": -0.231,
+          "probability": 0.20349556484844894,
+          "tip_mm": [
+            4.0,
+            4.0,
+            1.0
+          ],
+          "tool_id": "long-narrow-cutter"
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+          "any_target_probability_contribution": 0.13833074036978477,
+          "conditional_future_return": 0.9913633457530542,
+          "conditional_total_return": 0.158363345753054,
+          "expected_return_contribution": 0.031658001592638256,
+          "immediate_nominal_reward": -0.8330000000000002,
+          "probability": 0.1999073803480041,
+          "tip_mm": [
+            4.0,
+            4.0,
+            2.0
+          ],
+          "tool_id": "short-wide-opener"
+        },
+        {
+          "action_id": "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+          "any_target_probability_contribution": 0.0,
+          "conditional_future_return": -0.24897623306442007,
+          "conditional_total_return": -0.6819762330644201,
+          "expected_return_contribution": -0.14001663503023343,
+          "immediate_nominal_reward": -0.43300000000000005,
+          "probability": 0.2053101387435115,
+          "tip_mm": [
+            4.0,
+            4.0,
+            2.0
+          ],
+          "tool_id": "long-narrow-cutter"
+        }
+      ],
+      "rounding": {
+        "actual_return_difference_against_alternative": 3.676921267459221e-09,
+        "float64_softmax_alternative_totals": {
+          "any_target": 0.2203744178316856,
+          "expected_normal_mm3": 2.6958391456224677,
+          "expected_target_mm3": 0.3307070213379918,
+          "full_target": 0.11033260350630616,
+          "optimal_route": 0.04107582126276601,
+          "return": -0.27015089184976704
+        },
+        "maximum_saved_probability_sum_error": 7.450580596923828e-08,
+        "return_difference_bound_against_alternative": 4.507094117350841e-08,
+        "state_total_variation_against_float64_softmax": {
+          "sha256:a5bba06653b8644cf38722b6d99c5c21236284999afdfbe938c9055d1d6e543d": 1.3963433409536208e-08,
+          "sha256:b6219c3ec2d4cac1a962c3a9c123734fb2f2eb9a5854c2f920d214b467faba54": 1.026698914774471e-08,
+          "sha256:c9458a99068bfaae90ba69062073a674c55ee31ad66d11a5c86461ef2c834eba": 8.617198440918905e-09,
+          "sha256:ccca16824aab833104e49e21de526444c7bc8bc1bcb52ee5a4e370c9a564124d": 1.0952030032873594e-08,
+          "sha256:e4d32b8f85642482f33aa7849ac74394e7d6a707168073343bbee9ce20ed988c": 6.681026079591312e-09
+        },
+        "terminal_total_variation_bound": 2.2580631850455113e-08
+      },
+      "saved_argmax_route_return": -0.8960000000000001,
+      "terminal_probabilities": [
+        {
+          "actions": [
+            "STOP"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.0,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.19271079047257958,
+          "return_contribution": 0.0
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "STOP"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.10962575699024611,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.036541918996748704,
+          "return_contribution": -0.023057950886948432
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "NATIVE-SPATIAL:9cfc4e00074d6cf93eb5cb82"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.15680873134562937,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.03920218283640734,
+          "return_contribution": -0.03387068597065594
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "NATIVE-SPATIAL:f985c763473c0225d9b56230"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.1631533918209149,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.040788347955228725,
+          "return_contribution": -0.03654635976788494
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "NATIVE-SPATIAL:b4c22140396ffbcc5f14ef15"
+          ],
+          "any_target_contribution": 0.04096785363249123,
+          "expected_normal_mm3_contribution": 0.16387141452996493,
+          "expected_target_mm3_contribution": 0.04096785363249123,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.04096785363249123,
+          "return_contribution": 0.004178721070514105
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+          ],
+          "any_target_contribution": 0.04107582216657989,
+          "expected_normal_mm3_contribution": 0.16430328866631955,
+          "expected_target_mm3_contribution": 0.08215164433315977,
+          "full_target_contribution": 0.04107582216657989,
+          "optimal_route_contribution": 0.04107582216657989,
+          "probability": 0.04107582216657989,
+          "return_contribution": 0.04518340438323788
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+            "STOP"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.04738786868465622,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.04738786868465622,
+          "return_contribution": -0.010946597666155588
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+            "NATIVE-SPATIAL:0d78540299fe5eb3a1770d83"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.15595153168440484,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.05198384389480162,
+          "return_contribution": -0.03597281997520272
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+            "NATIVE-SPATIAL:8169300cfa7db4a4742e3063"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.208804705331959,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.05220117633298975,
+          "return_contribution": -0.04666785164169284
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+            "NATIVE-SPATIAL:7afd144506d396798a525e1e"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.10384535187200275,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.051922675936001375,
+          "return_contribution": -0.024092121634304638
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+            "STOP"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.24630655991287734,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.061576639978219334,
+          "return_contribution": -0.05129334110185672
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+            "NATIVE-SPATIAL:81d9c8d011c2b37342ee27df"
+          ],
+          "any_target_contribution": 0.06907395814782433,
+          "expected_normal_mm3_contribution": 0.2762958325912973,
+          "expected_target_mm3_contribution": 0.06907395814782433,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.06907395814782433,
+          "return_contribution": 0.006907395814782416
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+            "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07"
+          ],
+          "any_target_contribution": 0.06925678222196044,
+          "expected_normal_mm3_contribution": 0.27702712888784176,
+          "expected_target_mm3_contribution": 0.13851356444392088,
+          "full_target_contribution": 0.06925678222196044,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.06925678222196044,
+          "return_contribution": 0.07604394687971255
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+            "STOP"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.12837598937553704,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.06418799468776852,
+          "return_contribution": -0.027793401699803773
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+            "NATIVE-SPATIAL:89b67ded73fcfa7092918c12"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.21122090708192184,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.07040696902730728,
+          "return_contribution": -0.04886243650495126
+        },
+        {
+          "actions": [
+            "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+            "NATIVE-SPATIAL:1186a2ff80d07c1941c4434b"
+          ],
+          "any_target_contribution": 0.0,
+          "expected_normal_mm3_contribution": 0.2828607001137428,
+          "expected_target_mm3_contribution": 0.0,
+          "full_target_contribution": 0.0,
+          "optimal_route_contribution": 0.0,
+          "probability": 0.0707151750284357,
+          "return_contribution": -0.0633607968254784
+        }
+      ],
+      "totals": {
+        "any_target": 0.2203744161688559,
+        "expected_normal_mm3": 2.695839158889316,
+        "expected_target_mm3": 0.3307070205573962,
+        "full_target": 0.11033260438854033,
+        "optimal_route": 0.04107582216657989,
+        "return": -0.2701508955266883
+      }
+    }
+  },
+  "nominal_route_rewards": "Root Q*(a) minus max child Q*(b) gives the first reward; child Q*(b) equals the terminal one-step reward. Every association checked against all64 saved independently accepted episodes.",
+  "probability_rule": "Normalize saved float32 probabilities in float64 with math.fsum; separately check float64 softmax of saved logits.",
+  "route_count": 16,
+  "routes": [
+    {
+      "actions": [
+        "STOP"
+      ],
+      "nominal_return": 0.0,
+      "saved_audited_episode_occurrences": 16,
+      "saved_audited_outcomes": {
+        "normal_removed_mm3": 0.0,
+        "target_removed_mm3": 0.0,
+        "total_reward": 0.0
+      }
+    },
+    {
+      "actions": [
+        "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+        "STOP"
+      ],
+      "nominal_return": -0.631,
+      "saved_audited_episode_occurrences": 5,
+      "saved_audited_outcomes": {
+        "normal_removed_mm3": 3.0,
+        "target_removed_mm3": 0.0,
+        "total_reward": -0.6310000000000001
+      }
+    },
+    {
+      "actions": [
+        "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+        "NATIVE-SPATIAL:9cfc4e00074d6cf93eb5cb82"
+      ],
+      "nominal_return": -0.864,
+      "saved_audited_episode_occurrences": 4,
+      "saved_audited_outcomes": {
+        "normal_removed_mm3": 4.0,
+        "target_removed_mm3": 0.0,
+        "total_reward": -0.8640000000000001
+      }
+    },
+    {
+      "actions": [
+        "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+        "NATIVE-SPATIAL:f985c763473c0225d9b56230"
+      ],
+      "nominal_return": -0.896,
+      "saved_audited_episode_occurrences": 5,
+      "saved_audited_outcomes": {
+        "normal_removed_mm3": 4.0,
+        "target_removed_mm3": 0.0,
+        "total_reward": -0.8960000000000001
+      }
+    },
+    {
+      "actions": [
+        "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+        "NATIVE-SPATIAL:b4c22140396ffbcc5f14ef15"
+      ],
+      "nominal_return": 0.10199999999999998,
+      "saved_audited_episode_occurrences": 1,
+      "saved_audited_outcomes": {
+        "normal_removed_mm3": 4.0,
+        "target_removed_mm3": 1.0,
+        "total_reward": 0.10199999999999987
+      }
+    },
+    {
+      "actions": [
+        "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+        "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+      ],
+      "nominal_return": 1.1,
+      "saved_audited_episode_occurrences": 3,
+      "saved_audited_outcomes": {
+        "normal_removed_mm3": 4.0,
+        "target_removed_mm3": 2.0,
+        "total_reward": 1.1
+      }
+    },
+    {
+      "actions": [
+        "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+        "STOP"
+      ],
+      "nominal_return": -0.231,
+      "saved_audited_episode_occurrences": 2,
+      "saved_audited_outcomes": {
+        "normal_removed_mm3": 1.0,
+        "target_removed_mm3": 0.0,
+        "total_reward": -0.231
+      }
+    },
+    {
+      "actions": [
+        "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+        "NATIVE-SPATIAL:0d78540299fe5eb3a1770d83"
+      ],
+      "nominal_return": -0.6920000000000001,
+      "saved_audited_episode_occurrences": 1,
+      "saved_audited_outcomes": {
+        "normal_removed_mm3": 3.0,
+        "target_removed_mm3": 0.0,
+        "total_reward": -0.6920000000000001
+      }
+    },
+    {
+      "actions": [
+        "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+        "NATIVE-SPATIAL:8169300cfa7db4a4742e3063"
+      ],
+      "nominal_return": -0.8940000000000001,
+      "saved_audited_episode_occurrences": 1,
+      "saved_audited_outcomes": {
+        "normal_removed_mm3": 4.0,
+        "target_removed_mm3": 0.0,
+        "total_reward": -0.8940000000000001
+      }
+    },
+    {
+      "actions": [
+        "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+        "NATIVE-SPATIAL:7afd144506d396798a525e1e"
+      ],
+      "nominal_return": -0.464,
+      "saved_audited_episode_occurrences": 3,
+      "saved_audited_outcomes": {
+        "normal_removed_mm3": 2.0,
+        "target_removed_mm3": 0.0,
+        "total_reward": -0.464
+      }
+    },
+    {
+      "actions": [
+        "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+        "STOP"
+      ],
+      "nominal_return": -0.8330000000000002,
+      "saved_audited_episode_occurrences": 3,
+      "saved_audited_outcomes": {
+        "normal_removed_mm3": 4.0,
+        "target_removed_mm3": 0.0,
+        "total_reward": -0.8330000000000001
+      }
+    },
+    {
+      "actions": [
+        "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+        "NATIVE-SPATIAL:81d9c8d011c2b37342ee27df"
+      ],
+      "nominal_return": 0.09999999999999976,
+      "saved_audited_episode_occurrences": 2,
+      "saved_audited_outcomes": {
+        "normal_removed_mm3": 4.0,
+        "target_removed_mm3": 1.0,
+        "total_reward": 0.09999999999999987
+      }
+    },
+    {
+      "actions": [
+        "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+        "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07"
+      ],
+      "nominal_return": 1.0979999999999999,
+      "saved_audited_episode_occurrences": 4,
+      "saved_audited_outcomes": {
+        "normal_removed_mm3": 4.0,
+        "target_removed_mm3": 2.0,
+        "total_reward": 1.0979999999999999
+      }
+    },
+    {
+      "actions": [
+        "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+        "STOP"
+      ],
+      "nominal_return": -0.43300000000000005,
+      "saved_audited_episode_occurrences": 3,
+      "saved_audited_outcomes": {
+        "normal_removed_mm3": 2.0,
+        "target_removed_mm3": 0.0,
+        "total_reward": -0.43300000000000005
+      }
+    },
+    {
+      "actions": [
+        "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+        "NATIVE-SPATIAL:89b67ded73fcfa7092918c12"
+      ],
+      "nominal_return": -0.6940000000000001,
+      "saved_audited_episode_occurrences": 8,
+      "saved_audited_outcomes": {
+        "normal_removed_mm3": 3.0,
+        "target_removed_mm3": 0.0,
+        "total_reward": -0.6940000000000001
+      }
+    },
+    {
+      "actions": [
+        "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+        "NATIVE-SPATIAL:1186a2ff80d07c1941c4434b"
+      ],
+      "nominal_return": -0.8960000000000001,
+      "saved_audited_episode_occurrences": 3,
+      "saved_audited_outcomes": {
+        "normal_removed_mm3": 4.0,
+        "target_removed_mm3": 0.0,
+        "total_reward": -0.8960000000000001
+      }
+    }
+  ],
+  "saved_episode_count": 64,
+  "schema": "native-opening-saved-policy-expectation-v1",
+  "source_sha256": "0ee5c3abef5c5db2475bab272d2eb029a3e60a57d3def76b0127ffcefc7a8382",
+  "status": "complete",
+  "success_rule": "Any/full target indicators come from saved audited per-route target removal (greater than0 / exactly2mm3). No new geometry audit, clinical outcome or rollout.",
+  "uncertainty": "No Monte Carlo sampling error conditional on this complete deterministic task and frozen probabilities. Reported float32 probabilities/logits introduce rounding; the alternative and TV bound quantify only numerical representation differences. No anatomy, mechanics or generalization uncertainty is estimated."
+}

@@ -24,8 +24,12 @@ All 78 simulated episodes passed their geometry audits; this does not establish
 useful learning or physical fidelity. Legacy patient/model-loading guards remain.
 The [five-state diagnostic](artifacts/native-opening-learning-diagnostic-v1/RESULT.md)
 shows that BC's average loss improved while all three tool-label states worsened.
-RL sampled every terminal route, including successful openings. A fixed longer
-fit will test optimization capacity before architecture or reward changes.
+RL sampled every terminal route, including successful openings. The [fixed longer
+imitation fit](artifacts/native-opening-bc-capacity-v1/RESULT.md) now fits all five
+labels and matches search at 1.1 after 256 updates, with exact update-16 reproduction.
+This demonstrates training-task capacity only. [Saved-tree arithmetic](artifacts/native-opening-policy-expectation-v1/RESULT.md)
+shows RL16 slightly improved expected reward while reducing target-reaching
+probability; its useful learning remains inadequate.
 
 The [full eligible annotation intake](artifacts/lausanne-annotation-full-intake-v1/RESULT.md)
 completed all 144 masks (13,977,015 bytes). Independent content checks passed for

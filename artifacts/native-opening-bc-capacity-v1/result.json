@@ -1,0 +1,1823 @@
+{
+  "architecture_hash": "sha256:a3b6740ab188f01016610c566e2009c57ba422c8f9be24adca014f695ae9c917",
+  "context": {
+    "decision_model_hash": "sha256:f607b51b66d00164c33ff9c8fa7725b0e6e15bab1b566d161efbe3fb4f4e730b",
+    "declaration_sha256": "3812bb430b0537c83604c4e18d9236d51a7dc203cafc753e0dc6f52d688b9c84",
+    "max_steps": 2,
+    "real_patient_count": 0,
+    "scope": "native-opening-generated-development-v1",
+    "source_ids": [
+      "sha256:9b39c31e1e012b0822d538451a0452fa9c564acc863d22dabb311ec4cf8c5d4e"
+    ],
+    "transition_lineage": "simulator_generated"
+  },
+  "diagnostic_forward_calls": 30,
+  "elapsed_seconds": 5.629496749956161,
+  "fit_with_readout_export_seconds": 3.6029730830341578,
+  "inherited_costs": {
+    "depth2_search_audit_seconds": 0.03724404191598296,
+    "depth2_search_online_seconds": 0.2745113328564912,
+    "original_shared_preparation": {
+      "decision_model_hash": "sha256:f607b51b66d00164c33ff9c8fa7725b0e6e15bab1b566d161efbe3fb4f4e730b",
+      "initial_observation_hash": "sha256:c9458a99068bfaae90ba69062073a674c55ee31ad66d11a5c86461ef2c834eba",
+      "inventory": {
+        "accepted_count": 4,
+        "all_support_cell_tool_pairs": 12,
+        "basis": "all_observed_support_cells_in_small_source",
+        "cavity_state_hash": "sha256:56c2016605106bfde3793d1ce171cb7d1a46dc67e6af2a2c9a5b6af689ef3ba1",
+        "complete": true,
+        "decision_model_hash": "sha256:f607b51b66d00164c33ff9c8fa7725b0e6e15bab1b566d161efbe3fb4f4e730b",
+        "declared_slots": 12,
+        "emitted": [
+          {
+            "action_id": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "feasible": true,
+            "reason": "NATIVE_CONNECTED_STROKE",
+            "tip_mm": [
+              4.0,
+              4.0,
+              1.0
+            ],
+            "tool_id": "short-wide-opener",
+            "voxel": [
+              4,
+              4,
+              1
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "feasible": true,
+            "reason": "NATIVE_CONNECTED_STROKE",
+            "tip_mm": [
+              4.0,
+              4.0,
+              1.0
+            ],
+            "tool_id": "long-narrow-cutter",
+            "voxel": [
+              4,
+              4,
+              1
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "feasible": true,
+            "reason": "NATIVE_CONNECTED_STROKE",
+            "tip_mm": [
+              4.0,
+              4.0,
+              2.0
+            ],
+            "tool_id": "short-wide-opener",
+            "voxel": [
+              4,
+              4,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "feasible": true,
+            "reason": "NATIVE_CONNECTED_STROKE",
+            "tip_mm": [
+              4.0,
+              4.0,
+              2.0
+            ],
+            "tool_id": "long-narrow-cutter",
+            "voxel": [
+              4,
+              4,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:e8884845acdac10ba7c6349a",
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "feasible": false,
+            "reason": "HARD_GEOMETRY:WORKING_REACH",
+            "tip_mm": [
+              4.0,
+              4.0,
+              3.0
+            ],
+            "tool_id": "short-wide-opener",
+            "voxel": [
+              4,
+              4,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:1a11b1896a5d31ce1144394c",
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "tip_mm": [
+              4.0,
+              4.0,
+              3.0
+            ],
+            "tool_id": "long-narrow-cutter",
+            "voxel": [
+              4,
+              4,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:e1ac057a60f075830c6e7de7",
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "feasible": false,
+            "reason": "HARD_GEOMETRY:WORKING_REACH",
+            "tip_mm": [
+              4.0,
+              4.0,
+              4.0
+            ],
+            "tool_id": "short-wide-opener",
+            "voxel": [
+              4,
+              4,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:7bef67f4f83d62f7e1d4d5c4",
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "tip_mm": [
+              4.0,
+              4.0,
+              4.0
+            ],
+            "tool_id": "long-narrow-cutter",
+            "voxel": [
+              4,
+              4,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:29db489d04a2956d8ade9c21",
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "feasible": false,
+            "reason": "HARD_GEOMETRY:WORKING_REACH",
+            "tip_mm": [
+              4.0,
+              4.0,
+              5.0
+            ],
+            "tool_id": "short-wide-opener",
+            "voxel": [
+              4,
+              4,
+              5
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:29d7a6427a98194d624f8b42",
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "tip_mm": [
+              4.0,
+              4.0,
+              5.0
+            ],
+            "tool_id": "long-narrow-cutter",
+            "voxel": [
+              4,
+              4,
+              5
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:53cb2c493848e8f816d72c5e",
+            "entry_mm": [
+              5.0,
+              5.0,
+              0.5
+            ],
+            "feasible": false,
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              5.0,
+              5.0,
+              1.0
+            ],
+            "tool_id": "short-wide-opener",
+            "voxel": [
+              5,
+              5,
+              1
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:609c1e1268b52dc2a8b38066",
+            "entry_mm": [
+              5.0,
+              5.0,
+              0.5
+            ],
+            "feasible": false,
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              5.0,
+              5.0,
+              1.0
+            ],
+            "tool_id": "long-narrow-cutter",
+            "voxel": [
+              5,
+              5,
+              1
+            ]
+          }
+        ],
+        "emitted_count": 12,
+        "evaluated_slots": 12,
+        "ledger": [
+          {
+            "action_id": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "feasible": true,
+            "reason": "NATIVE_CONNECTED_STROKE",
+            "tip_mm": [
+              4.0,
+              4.0,
+              1.0
+            ],
+            "tool_id": "short-wide-opener",
+            "voxel": [
+              4,
+              4,
+              1
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "feasible": true,
+            "reason": "NATIVE_CONNECTED_STROKE",
+            "tip_mm": [
+              4.0,
+              4.0,
+              1.0
+            ],
+            "tool_id": "long-narrow-cutter",
+            "voxel": [
+              4,
+              4,
+              1
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "feasible": true,
+            "reason": "NATIVE_CONNECTED_STROKE",
+            "tip_mm": [
+              4.0,
+              4.0,
+              2.0
+            ],
+            "tool_id": "short-wide-opener",
+            "voxel": [
+              4,
+              4,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "feasible": true,
+            "reason": "NATIVE_CONNECTED_STROKE",
+            "tip_mm": [
+              4.0,
+              4.0,
+              2.0
+            ],
+            "tool_id": "long-narrow-cutter",
+            "voxel": [
+              4,
+              4,
+              2
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:e8884845acdac10ba7c6349a",
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "feasible": false,
+            "reason": "HARD_GEOMETRY:WORKING_REACH",
+            "tip_mm": [
+              4.0,
+              4.0,
+              3.0
+            ],
+            "tool_id": "short-wide-opener",
+            "voxel": [
+              4,
+              4,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:1a11b1896a5d31ce1144394c",
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "tip_mm": [
+              4.0,
+              4.0,
+              3.0
+            ],
+            "tool_id": "long-narrow-cutter",
+            "voxel": [
+              4,
+              4,
+              3
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:e1ac057a60f075830c6e7de7",
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "feasible": false,
+            "reason": "HARD_GEOMETRY:WORKING_REACH",
+            "tip_mm": [
+              4.0,
+              4.0,
+              4.0
+            ],
+            "tool_id": "short-wide-opener",
+            "voxel": [
+              4,
+              4,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:7bef67f4f83d62f7e1d4d5c4",
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "tip_mm": [
+              4.0,
+              4.0,
+              4.0
+            ],
+            "tool_id": "long-narrow-cutter",
+            "voxel": [
+              4,
+              4,
+              4
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:29db489d04a2956d8ade9c21",
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "feasible": false,
+            "reason": "HARD_GEOMETRY:WORKING_REACH",
+            "tip_mm": [
+              4.0,
+              4.0,
+              5.0
+            ],
+            "tool_id": "short-wide-opener",
+            "voxel": [
+              4,
+              4,
+              5
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:29d7a6427a98194d624f8b42",
+            "entry_mm": [
+              4.0,
+              4.0,
+              0.5
+            ],
+            "feasible": false,
+            "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+            "tip_mm": [
+              4.0,
+              4.0,
+              5.0
+            ],
+            "tool_id": "long-narrow-cutter",
+            "voxel": [
+              4,
+              4,
+              5
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:53cb2c493848e8f816d72c5e",
+            "entry_mm": [
+              5.0,
+              5.0,
+              0.5
+            ],
+            "feasible": false,
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              5.0,
+              5.0,
+              1.0
+            ],
+            "tool_id": "short-wide-opener",
+            "voxel": [
+              5,
+              5,
+              1
+            ]
+          },
+          {
+            "action_id": "NATIVE-SPATIAL:609c1e1268b52dc2a8b38066",
+            "entry_mm": [
+              5.0,
+              5.0,
+              0.5
+            ],
+            "feasible": false,
+            "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+            "tip_mm": [
+              5.0,
+              5.0,
+              1.0
+            ],
+            "tool_id": "long-narrow-cutter",
+            "voxel": [
+              5,
+              5,
+              1
+            ]
+          }
+        ],
+        "max_steps": 2,
+        "omitted_count": 0,
+        "rejected_count": 8,
+        "remaining_steps": 2,
+        "scope": "complete_declared_source_normal_primitives_not_all_surgical_paths",
+        "source_hash": "sha256:9b39c31e1e012b0822d538451a0452fa9c564acc863d22dabb311ec4cf8c5d4e",
+        "steps_taken": 0,
+        "terminal": false,
+        "terminated_slots": 0
+      },
+      "lineage": {
+        "cavity_channel": "exact simulated committed removal; not observed operative cavity",
+        "clinical_use": false,
+        "human_roles_opened": [],
+        "images": "generated",
+        "real_patient_count": 0,
+        "teacher": "complete depth-two search over permitted nominal planning clones",
+        "transitions": "simulator_generated"
+      },
+      "preview_profile": {
+        "phases": {
+          "unclassified": {
+            "feasible": 4,
+            "raised": 0,
+            "rejected": 8,
+            "rejection_reasons": {
+              "HARD_GEOMETRY:ACCESS_APERTURE": 2,
+              "HARD_GEOMETRY:WORKING_REACH": 3,
+              "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 3
+            },
+            "returned": 12,
+            "returned_microsteps": 47,
+            "seconds": 0.030176790663972497,
+            "started": 12
+          }
+        },
+        "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+        "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+      },
+      "reference_hash": "sha256:c6693c3aff6e316fb13ae7e9f495775418e1fb78241a6bc7bf468cc245684535",
+      "seconds": 0.038635874865576625,
+      "source_hash": "sha256:9b39c31e1e012b0822d538451a0452fa9c564acc863d22dabb311ec4cf8c5d4e"
+    },
+    "prior_BC16_training_seconds": 0.24162625009194016,
+    "scope": "previously paid teacher/search and audit costs; not repeated or counted as new runtime",
+    "teacher_search_model_transitions": 20,
+    "teacher_search_preview_profile": {
+      "blocked_preview_attempts": 0,
+      "cache_hits": null,
+      "counting_reliable": true,
+      "elapsed_seconds": 0.2745113328564912,
+      "excluded_costs": "Shared original preparation, ingress screening, selected initial inventory and independent audit must be reported separately.",
+      "failure": null,
+      "history_complete_caller_attestation": true,
+      "independent_audit": "outside_this_guard_not_verified",
+      "limits": {
+        "native_preview_entries": 2048,
+        "planning_execution_seconds": 10.0
+      },
+      "native_preview_entries": 60,
+      "native_preview_profile": {
+        "phases": {
+          "execution": {
+            "feasible": 4,
+            "raised": 0,
+            "rejected": 8,
+            "rejection_reasons": {
+              "HARD_GEOMETRY:ACCESS_APERTURE": 2,
+              "HARD_GEOMETRY:WORKING_REACH": 3,
+              "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS": 3
+            },
+            "returned": 12,
+            "returned_microsteps": 65,
+            "seconds": 0.03351708478294313,
+            "started": 12
+          },
+          "planning": {
+            "feasible": 11,
+            "raised": 0,
+            "rejected": 37,
+            "rejection_reasons": {
+              "HARD_GEOMETRY:ACCESS_APERTURE": 8,
+              "HARD_GEOMETRY:WORKING_REACH": 12,
+              "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS": 11,
+              "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 6
+            },
+            "returned": 48,
+            "returned_microsteps": 224,
+            "seconds": 0.120943290181458,
+            "started": 48
+          }
+        },
+        "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+        "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+      },
+      "observed_admissions_before_accounting_failure": 60,
+      "request_interpretation": "Zero-preview returns may be cached, empty or STOP-only; cache hits are not instrumented.",
+      "requests": {},
+      "score": null,
+      "status": "complete_history_awaiting_independent_audit",
+      "time_overshoot_seconds": 0.0,
+      "version": "native-planning-budget-v1",
+      "wall_limit": "Cooperative checks; in-flight native/C work cannot be forcibly stopped here. External process supervision is required."
+    },
+    "teacher_validation": {
+      "complete_episodes": 5,
+      "reference_reward_not_used_for_labels": true,
+      "seconds": 0.3857009999919683,
+      "transitions": 10
+    }
+  },
+  "initial_parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+  "loss_forward_calls": 1280,
+  "loss_update_seconds": 2.4608987867832184,
+  "methods": {
+    "BC256": {
+      "accepted": true,
+      "actions": [
+        "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+        "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+      ],
+      "audit_seconds": 0.037269708001986146,
+      "online_seconds": 0.05999554111622274,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 10.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 6.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 2,
+        "normal_removed_mm3": 4.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 2,
+        "reference_target_fraction_removed": 1.0,
+        "simulated_removed_volume_mm3": 6.0,
+        "target_removed_mm3": 2.0,
+        "tool_changes": 1,
+        "total_reference_target_mm3": 2.0,
+        "total_reward": 1.1
+      },
+      "parameter_hash": "sha256:1c530abdc3c8c08b69dec1dad33b21976d887dcc8baa9ae6c8b84f19f35ca04b",
+      "replay_seconds": 0.05349783296696842,
+      "status": "complete"
+    },
+    "initial": {
+      "accepted": true,
+      "actions": [
+        "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+        "NATIVE-SPATIAL:7afd144506d396798a525e1e"
+      ],
+      "audit_seconds": 0.020638457965105772,
+      "online_seconds": 0.05050491588190198,
+      "outcomes": {
+        "clinical_deficit_probability": null,
+        "complete_tool_path_length_mm": 4.0,
+        "cumulative_contacted_tissue_upper_bound_mm3": 4.0,
+        "currently_retained_contacted_tissue_upper_bound_mm3": 2.0,
+        "language_surrogate": null,
+        "motor_surrogate": null,
+        "nonstop_actions": 2,
+        "normal_removed_mm3": 2.0,
+        "partial_contact_reward_weight": 0.0,
+        "positive_target_source_cells_removed": 0,
+        "reference_target_fraction_removed": 0.0,
+        "simulated_removed_volume_mm3": 2.0,
+        "target_removed_mm3": 0.0,
+        "tool_changes": 0,
+        "total_reference_target_mm3": 2.0,
+        "total_reward": -0.464
+      },
+      "parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+      "replay_seconds": 0.04545858292840421,
+      "status": "complete"
+    }
+  },
+  "parameter_count": 30827,
+  "preparation": {
+    "preview_profile": {
+      "phases": {
+        "unclassified": {
+          "feasible": 4,
+          "raised": 0,
+          "rejected": 8,
+          "rejection_reasons": {
+            "HARD_GEOMETRY:ACCESS_APERTURE": 2,
+            "HARD_GEOMETRY:WORKING_REACH": 3,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 3
+          },
+          "returned": 12,
+          "returned_microsteps": 47,
+          "seconds": 0.031016291119158268,
+          "started": 12
+        }
+      },
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "seconds": 0.03923341608606279
+  },
+  "readouts": {
+    "0": {
+      "correct_states": 0,
+      "forward_calls": 5,
+      "mean_cross_entropy": 1.4025094509124756,
+      "parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+      "seconds": 0.02910074987448752,
+      "states": [
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:9cfc4e00074d6cf93eb5cb82",
+            "NATIVE-SPATIAL:f985c763473c0225d9b56230",
+            "NATIVE-SPATIAL:b4c22140396ffbcc5f14ef15",
+            "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+          ],
+          "correct": false,
+          "critic_value": 0.180869922041893,
+          "logits": [
+            -0.10359039902687073,
+            0.1406363546848297,
+            0.14672967791557312,
+            0.14241883158683777,
+            0.1380719095468521
+          ],
+          "observation_hash": "sha256:ccca16824aab833104e49e21de526444c7bc8bc1bcb52ee5a4e370c9a564124d",
+          "probabilities": [
+            0.16357654333114624,
+            0.20882734656333923,
+            0.21010367572307587,
+            0.2091999053955078,
+            0.20829249918460846
+          ],
+          "selected_action": "NATIVE-SPATIAL:f985c763473c0225d9b56230",
+          "stop_minus_best_nonstop_logit": -0.25032007694244385,
+          "stop_probability": 0.16357654333114624,
+          "teacher_action": "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8",
+          "teacher_cross_entropy": 1.5688120126724243,
+          "teacher_logit_margin": -0.008657768368721008,
+          "teacher_probability": 0.20829249918460846,
+          "teacher_rank": 4
+        },
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:0d78540299fe5eb3a1770d83",
+            "NATIVE-SPATIAL:8169300cfa7db4a4742e3063",
+            "NATIVE-SPATIAL:7afd144506d396798a525e1e"
+          ],
+          "correct": false,
+          "critic_value": 0.1902027726173401,
+          "logits": [
+            -0.10359105467796326,
+            0.1401783525943756,
+            0.1388201117515564,
+            0.15166372060775757
+          ],
+          "observation_hash": "sha256:e4d32b8f85642482f33aa7849ac74394e7d6a707168073343bbee9ce20ed988c",
+          "probabilities": [
+            0.2065621316432953,
+            0.26358360052108765,
+            0.26322585344314575,
+            0.2666284143924713
+          ],
+          "selected_action": "NATIVE-SPATIAL:7afd144506d396798a525e1e",
+          "stop_minus_best_nonstop_logit": -0.2552547752857208,
+          "stop_probability": 0.2065621316432953,
+          "teacher_action": "STOP",
+          "teacher_cross_entropy": 1.5771540403366089,
+          "teacher_logit_margin": -0.2552547752857208,
+          "teacher_probability": 0.2065621316432953,
+          "teacher_rank": 4
+        },
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:81d9c8d011c2b37342ee27df",
+            "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07"
+          ],
+          "correct": false,
+          "critic_value": 0.17461001873016357,
+          "logits": [
+            -0.10355640947818756,
+            0.1429133415222168,
+            0.137900710105896
+          ],
+          "observation_hash": "sha256:b6219c3ec2d4cac1a962c3a9c123734fb2f2eb9a5854c2f920d214b467faba54",
+          "probabilities": [
+            0.2814837098121643,
+            0.3601585626602173,
+            0.3583577275276184
+          ],
+          "selected_action": "NATIVE-SPATIAL:81d9c8d011c2b37342ee27df",
+          "stop_minus_best_nonstop_logit": -0.24646975100040436,
+          "stop_probability": 0.2814837098121643,
+          "teacher_action": "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07",
+          "teacher_cross_entropy": 1.0262235403060913,
+          "teacher_logit_margin": -0.005012631416320801,
+          "teacher_probability": 0.3583577275276184,
+          "teacher_rank": 2
+        },
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:89b67ded73fcfa7092918c12",
+            "NATIVE-SPATIAL:1186a2ff80d07c1941c4434b"
+          ],
+          "correct": false,
+          "critic_value": 0.1624927520751953,
+          "logits": [
+            -0.1035824716091156,
+            0.14077238738536835,
+            0.1395942121744156
+          ],
+          "observation_hash": "sha256:a5bba06653b8644cf38722b6d99c5c21236284999afdfbe938c9055d1d6e543d",
+          "probabilities": [
+            0.28152430057525635,
+            0.35944947600364685,
+            0.3590262234210968
+          ],
+          "selected_action": "NATIVE-SPATIAL:89b67ded73fcfa7092918c12",
+          "stop_minus_best_nonstop_logit": -0.24435485899448395,
+          "stop_probability": 0.28152430057525635,
+          "teacher_action": "STOP",
+          "teacher_cross_entropy": 1.2675365209579468,
+          "teacher_logit_margin": -0.24435485899448395,
+          "teacher_probability": 0.28152430057525635,
+          "teacher_rank": 3
+        },
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+            "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+            "NATIVE-SPATIAL:7c300ab776942c7446a122a0"
+          ],
+          "correct": false,
+          "critic_value": 0.19706064462661743,
+          "logits": [
+            -0.12445300817489624,
+            0.10937975347042084,
+            0.12659795582294464,
+            0.10817811638116837,
+            0.1218685507774353
+          ],
+          "observation_hash": "sha256:c9458a99068bfaae90ba69062073a674c55ee31ad66d11a5c86461ef2c834eba",
+          "probabilities": [
+            0.16420266032218933,
+            0.20745907723903656,
+            0.21106208860874176,
+            0.20720994472503662,
+            0.21006624400615692
+          ],
+          "selected_action": "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+          "stop_minus_best_nonstop_logit": -0.2510509490966797,
+          "stop_probability": 0.16420266032218933,
+          "teacher_action": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+          "teacher_cross_entropy": 1.5728211402893066,
+          "teacher_logit_margin": -0.017218202352523804,
+          "teacher_probability": 0.20745907723903656,
+          "teacher_rank": 3
+        }
+      ]
+    },
+    "128": {
+      "correct_states": 5,
+      "forward_calls": 5,
+      "mean_cross_entropy": 0.27770636052591724,
+      "parameter_hash": "sha256:96c8ef93e2b550d2209e16fad78feb3827399fa6b03d17455508674d0a95ef1a",
+      "seconds": 0.004608334042131901,
+      "states": [
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:9cfc4e00074d6cf93eb5cb82",
+            "NATIVE-SPATIAL:f985c763473c0225d9b56230",
+            "NATIVE-SPATIAL:b4c22140396ffbcc5f14ef15",
+            "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+          ],
+          "correct": true,
+          "critic_value": -3.1013338565826416,
+          "logits": [
+            -12.267173767089844,
+            -19.827171325683594,
+            -19.57262420654297,
+            -17.656349182128906,
+            -4.836315631866455
+          ],
+          "observation_hash": "sha256:ccca16824aab833104e49e21de526444c7bc8bc1bcb52ee5a4e370c9a564124d",
+          "probabilities": [
+            0.0005923256394453347,
+            3.0852837085149076e-07,
+            3.979637313022977e-07,
+            2.704401822484215e-06,
+            0.9994043111801147
+          ],
+          "selected_action": "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8",
+          "stop_minus_best_nonstop_logit": -7.430858135223389,
+          "stop_probability": 0.0005923256394453347,
+          "teacher_action": "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8",
+          "teacher_cross_entropy": 0.0005958688561804593,
+          "teacher_logit_margin": 7.430858135223389,
+          "teacher_probability": 0.9994043111801147,
+          "teacher_rank": 1
+        },
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:0d78540299fe5eb3a1770d83",
+            "NATIVE-SPATIAL:8169300cfa7db4a4742e3063",
+            "NATIVE-SPATIAL:7afd144506d396798a525e1e"
+          ],
+          "correct": true,
+          "critic_value": -2.6549489498138428,
+          "logits": [
+            -12.24778938293457,
+            -13.562567710876465,
+            -19.221946716308594,
+            -19.120723724365234
+          ],
+          "observation_hash": "sha256:e4d32b8f85642482f33aa7849ac74394e7d6a707168073343bbee9ce20ed988c",
+          "probabilities": [
+            0.7870885729789734,
+            0.2113599330186844,
+            0.0007365217315964401,
+            0.0008149784989655018
+          ],
+          "selected_action": "STOP",
+          "stop_minus_best_nonstop_logit": 1.3147783279418945,
+          "stop_probability": 0.7870885729789734,
+          "teacher_action": "STOP",
+          "teacher_cross_entropy": 0.2394145131111145,
+          "teacher_logit_margin": 1.3147783279418945,
+          "teacher_probability": 0.7870885729789734,
+          "teacher_rank": 1
+        },
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:81d9c8d011c2b37342ee27df",
+            "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07"
+          ],
+          "correct": true,
+          "critic_value": -2.9738309383392334,
+          "logits": [
+            -12.288928031921387,
+            -18.040138244628906,
+            -5.098670959472656
+          ],
+          "observation_hash": "sha256:b6219c3ec2d4cac1a962c3a9c123734fb2f2eb9a5854c2f920d214b467faba54",
+          "probabilities": [
+            0.0007533255848102272,
+            2.394770262981183e-06,
+            0.9992443323135376
+          ],
+          "selected_action": "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07",
+          "stop_minus_best_nonstop_logit": -7.1902570724487305,
+          "stop_probability": 0.0007533255848102272,
+          "teacher_action": "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07",
+          "teacher_cross_entropy": 0.0007559779332950711,
+          "teacher_logit_margin": 7.1902570724487305,
+          "teacher_probability": 0.9992443323135376,
+          "teacher_rank": 1
+        },
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:89b67ded73fcfa7092918c12",
+            "NATIVE-SPATIAL:1186a2ff80d07c1941c4434b"
+          ],
+          "correct": true,
+          "critic_value": -2.669008255004883,
+          "logits": [
+            -12.261425971984863,
+            -13.981596946716309,
+            -19.96697235107422
+          ],
+          "observation_hash": "sha256:a5bba06653b8644cf38722b6d99c5c21236284999afdfbe938c9055d1d6e543d",
+          "probabilities": [
+            0.8478270173072815,
+            0.15179117023944855,
+            0.00038179566035978496
+          ],
+          "selected_action": "STOP",
+          "stop_minus_best_nonstop_logit": 1.7201709747314453,
+          "stop_probability": 0.8478270173072815,
+          "teacher_action": "STOP",
+          "teacher_cross_entropy": 0.16507868468761444,
+          "teacher_logit_margin": 1.7201709747314453,
+          "teacher_probability": 0.8478270173072815,
+          "teacher_rank": 1
+        },
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+            "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+            "NATIVE-SPATIAL:7c300ab776942c7446a122a0"
+          ],
+          "correct": true,
+          "critic_value": -2.5617055892944336,
+          "logits": [
+            -12.519315719604492,
+            -12.265279769897461,
+            -12.379860877990723,
+            -18.37039566040039,
+            -18.48497772216797
+          ],
+          "observation_hash": "sha256:c9458a99068bfaae90ba69062073a674c55ee31ad66d11a5c86461ef2c834eba",
+          "probabilities": [
+            0.29033416509628296,
+            0.3743040859699249,
+            0.33378177881240845,
+            0.0008352306904271245,
+            0.0007448075339198112
+          ],
+          "selected_action": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+          "stop_minus_best_nonstop_logit": -0.25403594970703125,
+          "stop_probability": 0.29033416509628296,
+          "teacher_action": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+          "teacher_cross_entropy": 0.9826867580413818,
+          "teacher_logit_margin": 0.11458110809326172,
+          "teacher_probability": 0.3743040859699249,
+          "teacher_rank": 1
+        }
+      ]
+    },
+    "16": {
+      "correct_states": 2,
+      "forward_calls": 5,
+      "mean_cross_entropy": 1.2900956273078918,
+      "parameter_hash": "sha256:1fbf11d5bd9e78ce26a55a21ceb4e4a1a6126cac5842b17bfa26353e1b453a7f",
+      "seconds": 0.006485834019258618,
+      "states": [
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:9cfc4e00074d6cf93eb5cb82",
+            "NATIVE-SPATIAL:f985c763473c0225d9b56230",
+            "NATIVE-SPATIAL:b4c22140396ffbcc5f14ef15",
+            "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+          ],
+          "correct": false,
+          "critic_value": 0.1547391712665558,
+          "logits": [
+            0.1690698266029358,
+            -0.3371669352054596,
+            -0.3181304633617401,
+            -0.3007079064846039,
+            -0.24720412492752075
+          ],
+          "observation_hash": "sha256:ccca16824aab833104e49e21de526444c7bc8bc1bcb52ee5a4e370c9a564124d",
+          "probabilities": [
+            0.28557196259498596,
+            0.1721312403678894,
+            0.17543941736221313,
+            0.17852279543876648,
+            0.18833458423614502
+          ],
+          "selected_action": "STOP",
+          "stop_minus_best_nonstop_logit": 0.41627395153045654,
+          "stop_probability": 0.28557196259498596,
+          "teacher_action": "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8",
+          "teacher_cross_entropy": 1.6695352792739868,
+          "teacher_logit_margin": -0.41627395153045654,
+          "teacher_probability": 0.18833458423614502,
+          "teacher_rank": 2
+        },
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:0d78540299fe5eb3a1770d83",
+            "NATIVE-SPATIAL:8169300cfa7db4a4742e3063",
+            "NATIVE-SPATIAL:7afd144506d396798a525e1e"
+          ],
+          "correct": true,
+          "critic_value": 0.16897612810134888,
+          "logits": [
+            0.16894099116325378,
+            -0.3573463261127472,
+            -0.35006439685821533,
+            -0.3149612247943878
+          ],
+          "observation_hash": "sha256:e4d32b8f85642482f33aa7849ac74394e7d6a707168073343bbee9ce20ed988c",
+          "probabilities": [
+            0.35685229301452637,
+            0.2108263075351715,
+            0.21236713230609894,
+            0.21995428204536438
+          ],
+          "selected_action": "STOP",
+          "stop_minus_best_nonstop_logit": 0.4839022159576416,
+          "stop_probability": 0.35685229301452637,
+          "teacher_action": "STOP",
+          "teacher_cross_entropy": 1.0304332971572876,
+          "teacher_logit_margin": 0.4839022159576416,
+          "teacher_probability": 0.35685229301452637,
+          "teacher_rank": 1
+        },
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:81d9c8d011c2b37342ee27df",
+            "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07"
+          ],
+          "correct": false,
+          "critic_value": 0.15357495844364166,
+          "logits": [
+            0.16913291811943054,
+            -0.3018501102924347,
+            -0.24704012274742126
+          ],
+          "observation_hash": "sha256:b6219c3ec2d4cac1a962c3a9c123734fb2f2eb9a5854c2f920d214b467faba54",
+          "probabilities": [
+            0.4378371238708496,
+            0.273380309343338,
+            0.2887825667858124
+          ],
+          "selected_action": "STOP",
+          "stop_minus_best_nonstop_logit": 0.4161730408668518,
+          "stop_probability": 0.4378371238708496,
+          "teacher_action": "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07",
+          "teacher_cross_entropy": 1.2420814037322998,
+          "teacher_logit_margin": -0.4161730408668518,
+          "teacher_probability": 0.2887825667858124,
+          "teacher_rank": 2
+        },
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:89b67ded73fcfa7092918c12",
+            "NATIVE-SPATIAL:1186a2ff80d07c1941c4434b"
+          ],
+          "correct": true,
+          "critic_value": 0.13151971995830536,
+          "logits": [
+            0.16901713609695435,
+            -0.35778793692588806,
+            -0.35188594460487366
+          ],
+          "observation_hash": "sha256:a5bba06653b8644cf38722b6d99c5c21236284999afdfbe938c9055d1d6e543d",
+          "probabilities": [
+            0.45777639746665955,
+            0.27031171321868896,
+            0.2719117999076843
+          ],
+          "selected_action": "STOP",
+          "stop_minus_best_nonstop_logit": 0.5209031105041504,
+          "stop_probability": 0.45777639746665955,
+          "teacher_action": "STOP",
+          "teacher_cross_entropy": 0.7813743948936462,
+          "teacher_logit_margin": 0.5209031105041504,
+          "teacher_probability": 0.45777639746665955,
+          "teacher_rank": 1
+        },
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+            "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+            "NATIVE-SPATIAL:7c300ab776942c7446a122a0"
+          ],
+          "correct": false,
+          "critic_value": 0.1874246597290039,
+          "logits": [
+            0.12045060843229294,
+            -0.3316926956176758,
+            -0.3125065267086029,
+            -0.32495126128196716,
+            -0.30578434467315674
+          ],
+          "observation_hash": "sha256:c9458a99068bfaae90ba69062073a674c55ee31ad66d11a5c86461ef2c834eba",
+          "probabilities": [
+            0.2794559895992279,
+            0.1778075098991394,
+            0.1812518835067749,
+            0.17901024222373962,
+            0.18247440457344055
+          ],
+          "selected_action": "STOP",
+          "stop_minus_best_nonstop_logit": 0.4262349605560303,
+          "stop_probability": 0.2794559895992279,
+          "teacher_action": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+          "teacher_cross_entropy": 1.7270537614822388,
+          "teacher_logit_margin": -0.4521433115005493,
+          "teacher_probability": 0.1778075098991394,
+          "teacher_rank": 5
+        }
+      ]
+    },
+    "256": {
+      "correct_states": 5,
+      "forward_calls": 5,
+      "mean_cross_entropy": 0.10308514669759461,
+      "parameter_hash": "sha256:1c530abdc3c8c08b69dec1dad33b21976d887dcc8baa9ae6c8b84f19f35ca04b",
+      "seconds": 0.004430790897458792,
+      "states": [
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:9cfc4e00074d6cf93eb5cb82",
+            "NATIVE-SPATIAL:f985c763473c0225d9b56230",
+            "NATIVE-SPATIAL:b4c22140396ffbcc5f14ef15",
+            "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+          ],
+          "correct": true,
+          "critic_value": -4.563992977142334,
+          "logits": [
+            -22.441625595092773,
+            -37.72829818725586,
+            -36.695411682128906,
+            -32.52897644042969,
+            -10.932088851928711
+          ],
+          "observation_hash": "sha256:ccca16824aab833104e49e21de526444c7bc8bc1bcb52ee5a4e370c9a564124d",
+          "probabilities": [
+            1.0033844773715828e-05,
+            2.3043572258685252e-12,
+            6.473314939636765e-12,
+            4.174327550288126e-10,
+            0.9999899864196777
+          ],
+          "selected_action": "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8",
+          "stop_minus_best_nonstop_logit": -11.509536743164062,
+          "stop_probability": 1.0033844773715828e-05,
+          "teacher_action": "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8",
+          "teacher_cross_entropy": 1.0013530300057027e-05,
+          "teacher_logit_margin": 11.509536743164062,
+          "teacher_probability": 0.9999899864196777,
+          "teacher_rank": 1
+        },
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:0d78540299fe5eb3a1770d83",
+            "NATIVE-SPATIAL:8169300cfa7db4a4742e3063",
+            "NATIVE-SPATIAL:7afd144506d396798a525e1e"
+          ],
+          "correct": true,
+          "critic_value": -4.025088787078857,
+          "logits": [
+            -22.366796493530273,
+            -25.367053985595703,
+            -34.40326690673828,
+            -34.62229537963867
+          ],
+          "observation_hash": "sha256:e4d32b8f85642482f33aa7849ac74394e7d6a707168073343bbee9ce20ed988c",
+          "probabilities": [
+            0.9525759816169739,
+            0.04741375520825386,
+            5.643219537887489e-06,
+            4.533191713562701e-06
+          ],
+          "selected_action": "STOP",
+          "stop_minus_best_nonstop_logit": 3.0002574920654297,
+          "stop_probability": 0.9525759816169739,
+          "teacher_action": "STOP",
+          "teacher_cross_entropy": 0.048585399985313416,
+          "teacher_logit_margin": 3.0002574920654297,
+          "teacher_probability": 0.9525759816169739,
+          "teacher_rank": 1
+        },
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:81d9c8d011c2b37342ee27df",
+            "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07"
+          ],
+          "correct": true,
+          "critic_value": -4.387299537658691,
+          "logits": [
+            -22.517541885375977,
+            -34.475746154785156,
+            -12.311763763427734
+          ],
+          "observation_hash": "sha256:b6219c3ec2d4cac1a962c3a9c123734fb2f2eb9a5854c2f920d214b467faba54",
+          "probabilities": [
+            3.695479972520843e-05,
+            2.367493145971622e-10,
+            0.9999630451202393
+          ],
+          "selected_action": "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07",
+          "stop_minus_best_nonstop_logit": -10.205778121948242,
+          "stop_probability": 3.695479972520843e-05,
+          "teacher_action": "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07",
+          "teacher_cross_entropy": 3.6954195820726454e-05,
+          "teacher_logit_margin": 10.205778121948242,
+          "teacher_probability": 0.9999630451202393,
+          "teacher_rank": 1
+        },
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:89b67ded73fcfa7092918c12",
+            "NATIVE-SPATIAL:1186a2ff80d07c1941c4434b"
+          ],
+          "correct": true,
+          "critic_value": -4.109553337097168,
+          "logits": [
+            -22.417593002319336,
+            -27.34659767150879,
+            -37.837764739990234
+          ],
+          "observation_hash": "sha256:a5bba06653b8644cf38722b6d99c5c21236284999afdfbe938c9055d1d6e543d",
+          "probabilities": [
+            0.9928179979324341,
+            0.007181747350841761,
+            1.9951434637732746e-07
+          ],
+          "selected_action": "STOP",
+          "stop_minus_best_nonstop_logit": 4.929004669189453,
+          "stop_probability": 0.9928179979324341,
+          "teacher_action": "STOP",
+          "teacher_cross_entropy": 0.00720793753862381,
+          "teacher_logit_margin": 4.929004669189453,
+          "teacher_probability": 0.9928179979324341,
+          "teacher_rank": 1
+        },
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+            "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+            "NATIVE-SPATIAL:7c300ab776942c7446a122a0"
+          ],
+          "correct": true,
+          "critic_value": -3.8925163745880127,
+          "logits": [
+            -22.797964096069336,
+            -20.369022369384766,
+            -21.071706771850586,
+            -31.0820369720459,
+            -31.784719467163086
+          ],
+          "observation_hash": "sha256:c9458a99068bfaae90ba69062073a674c55ee31ad66d11a5c86461ef2c834eba",
+          "probabilities": [
+            0.05565812811255455,
+            0.6315454244613647,
+            0.3127754330635071,
+            1.4054048733669333e-05,
+            6.960337941563921e-06
+          ],
+          "selected_action": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+          "stop_minus_best_nonstop_logit": -2.4289417266845703,
+          "stop_probability": 0.05565812811255455,
+          "teacher_action": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+          "teacher_cross_entropy": 0.45958542823791504,
+          "teacher_logit_margin": 0.7026844024658203,
+          "teacher_probability": 0.6315454244613647,
+          "teacher_rank": 1
+        }
+      ]
+    },
+    "32": {
+      "correct_states": 2,
+      "forward_calls": 5,
+      "mean_cross_entropy": 1.153210997581482,
+      "parameter_hash": "sha256:170b7ccb4fbdd2a2c428fdbd01c7e16fa57e2d436348dad708a64f475be8a1be",
+      "seconds": 0.0052068340592086315,
+      "states": [
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:9cfc4e00074d6cf93eb5cb82",
+            "NATIVE-SPATIAL:f985c763473c0225d9b56230",
+            "NATIVE-SPATIAL:b4c22140396ffbcc5f14ef15",
+            "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+          ],
+          "correct": false,
+          "critic_value": -0.009123995900154114,
+          "logits": [
+            0.09725692868232727,
+            -0.7590640187263489,
+            -0.6699039340019226,
+            -0.5888247489929199,
+            -0.16397249698638916
+          ],
+          "observation_hash": "sha256:ccca16824aab833104e49e21de526444c7bc8bc1bcb52ee5a4e370c9a564124d",
+          "probabilities": [
+            0.31618547439575195,
+            0.13429085910320282,
+            0.1468142420053482,
+            0.15921370685100555,
+            0.24349577724933624
+          ],
+          "selected_action": "STOP",
+          "stop_minus_best_nonstop_logit": 0.26122942566871643,
+          "stop_probability": 0.31618547439575195,
+          "teacher_action": "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8",
+          "teacher_cross_entropy": 1.4126557111740112,
+          "teacher_logit_margin": -0.26122942566871643,
+          "teacher_probability": 0.24349577724933624,
+          "teacher_rank": 2
+        },
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:0d78540299fe5eb3a1770d83",
+            "NATIVE-SPATIAL:8169300cfa7db4a4742e3063",
+            "NATIVE-SPATIAL:7afd144506d396798a525e1e"
+          ],
+          "correct": true,
+          "critic_value": 0.0009768307209014893,
+          "logits": [
+            0.09684991836547852,
+            -0.8136724829673767,
+            -0.7622752785682678,
+            -0.7062893509864807
+          ],
+          "observation_hash": "sha256:e4d32b8f85642482f33aa7849ac74394e7d6a707168073343bbee9ce20ed988c",
+          "probabilities": [
+            0.4397988021373749,
+            0.17693722248077393,
+            0.18626905977725983,
+            0.19699494540691376
+          ],
+          "selected_action": "STOP",
+          "stop_minus_best_nonstop_logit": 0.8031392693519592,
+          "stop_probability": 0.4397988021373749,
+          "teacher_action": "STOP",
+          "teacher_cross_entropy": 0.8214379549026489,
+          "teacher_logit_margin": 0.8031392693519592,
+          "teacher_probability": 0.4397988021373749,
+          "teacher_rank": 1
+        },
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:81d9c8d011c2b37342ee27df",
+            "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07"
+          ],
+          "correct": false,
+          "critic_value": -0.004134386777877808,
+          "logits": [
+            0.09732425212860107,
+            -0.5963982939720154,
+            -0.16637533903121948
+          ],
+          "observation_hash": "sha256:b6219c3ec2d4cac1a962c3a9c123734fb2f2eb9a5854c2f920d214b467faba54",
+          "probabilities": [
+            0.44093331694602966,
+            0.2203398495912552,
+            0.33872684836387634
+          ],
+          "selected_action": "STOP",
+          "stop_minus_best_nonstop_logit": 0.26369959115982056,
+          "stop_probability": 0.44093331694602966,
+          "teacher_action": "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07",
+          "teacher_cross_entropy": 1.0825612545013428,
+          "teacher_logit_margin": -0.26369959115982056,
+          "teacher_probability": 0.33872684836387634,
+          "teacher_rank": 2
+        },
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:89b67ded73fcfa7092918c12",
+            "NATIVE-SPATIAL:1186a2ff80d07c1941c4434b"
+          ],
+          "correct": true,
+          "critic_value": -0.022152960300445557,
+          "logits": [
+            0.09706628322601318,
+            -0.8182653784751892,
+            -0.7732536196708679
+          ],
+          "observation_hash": "sha256:a5bba06653b8644cf38722b6d99c5c21236284999afdfbe938c9055d1d6e543d",
+          "probabilities": [
+            0.5496917366981506,
+            0.2200876772403717,
+            0.23022054135799408
+          ],
+          "selected_action": "STOP",
+          "stop_minus_best_nonstop_logit": 0.8703199028968811,
+          "stop_probability": 0.5496917366981506,
+          "teacher_action": "STOP",
+          "teacher_cross_entropy": 0.5983976125717163,
+          "teacher_logit_margin": 0.8703199028968811,
+          "teacher_probability": 0.5496917366981506,
+          "teacher_rank": 1
+        },
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+            "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+            "NATIVE-SPATIAL:7c300ab776942c7446a122a0"
+          ],
+          "correct": false,
+          "critic_value": 0.02402395009994507,
+          "logits": [
+            0.02247658371925354,
+            -0.7582952380180359,
+            -0.7167839407920837,
+            -0.7113009095191956,
+            -0.6697895526885986
+          ],
+          "observation_hash": "sha256:c9458a99068bfaae90ba69062073a674c55ee31ad66d11a5c86461ef2c834eba",
+          "probabilities": [
+            0.3429294228553772,
+            0.15707962214946747,
+            0.1637374311685562,
+            0.16463766992092133,
+            0.1716158390045166
+          ],
+          "selected_action": "STOP",
+          "stop_minus_best_nonstop_logit": 0.6922661066055298,
+          "stop_probability": 0.3429294228553772,
+          "teacher_action": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+          "teacher_cross_entropy": 1.8510024547576904,
+          "teacher_logit_margin": -0.7807718515396118,
+          "teacher_probability": 0.15707962214946747,
+          "teacher_rank": 5
+        }
+      ]
+    },
+    "64": {
+      "correct_states": 4,
+      "forward_calls": 5,
+      "mean_cross_entropy": 0.4173448156565428,
+      "parameter_hash": "sha256:bb51bc77bc252a03306400b0d5185334a0c96e79eb588c738f79072390fe46ca",
+      "seconds": 0.004514417145401239,
+      "states": [
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:9cfc4e00074d6cf93eb5cb82",
+            "NATIVE-SPATIAL:f985c763473c0225d9b56230",
+            "NATIVE-SPATIAL:b4c22140396ffbcc5f14ef15",
+            "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+          ],
+          "correct": true,
+          "critic_value": -1.9739136695861816,
+          "logits": [
+            -6.428391933441162,
+            -10.025959968566895,
+            -9.722326278686523,
+            -8.783615112304688,
+            -1.5436980724334717
+          ],
+          "observation_hash": "sha256:ccca16824aab833104e49e21de526444c7bc8bc1bcb52ee5a4e370c9a564124d",
+          "probabilities": [
+            0.007495724596083164,
+            0.00020530990150291473,
+            0.00027814824716188014,
+            0.0007111372542567551,
+            0.991309642791748
+          ],
+          "selected_action": "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8",
+          "stop_minus_best_nonstop_logit": -4.8846940994262695,
+          "stop_probability": 0.007495724596083164,
+          "teacher_action": "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8",
+          "teacher_cross_entropy": 0.008728329092264175,
+          "teacher_logit_margin": 4.8846940994262695,
+          "teacher_probability": 0.991309642791748,
+          "teacher_rank": 1
+        },
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:0d78540299fe5eb3a1770d83",
+            "NATIVE-SPATIAL:8169300cfa7db4a4742e3063",
+            "NATIVE-SPATIAL:7afd144506d396798a525e1e"
+          ],
+          "correct": true,
+          "critic_value": -1.6880733966827393,
+          "logits": [
+            -6.425601482391357,
+            -7.699845790863037,
+            -9.909180641174316,
+            -9.79611587524414
+          ],
+          "observation_hash": "sha256:e4d32b8f85642482f33aa7849ac74394e7d6a707168073343bbee9ce20ed988c",
+          "probabilities": [
+            0.7436538934707642,
+            0.20795702934265137,
+            0.022828198969364166,
+            0.025560837239027023
+          ],
+          "selected_action": "STOP",
+          "stop_minus_best_nonstop_logit": 1.2742443084716797,
+          "stop_probability": 0.7436538934707642,
+          "teacher_action": "STOP",
+          "teacher_cross_entropy": 0.29617953300476074,
+          "teacher_logit_margin": 1.2742443084716797,
+          "teacher_probability": 0.7436538934707642,
+          "teacher_rank": 1
+        },
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:81d9c8d011c2b37342ee27df",
+            "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07"
+          ],
+          "correct": true,
+          "critic_value": -1.8971397876739502,
+          "logits": [
+            -6.432138919830322,
+            -8.8840913772583,
+            -1.6018531322479248
+          ],
+          "observation_hash": "sha256:b6219c3ec2d4cac1a962c3a9c123734fb2f2eb9a5854c2f920d214b467faba54",
+          "probabilities": [
+            0.007915593683719635,
+            0.0006817329558543861,
+            0.9914026856422424
+          ],
+          "selected_action": "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07",
+          "stop_minus_best_nonstop_logit": -4.830286026000977,
+          "stop_probability": 0.007915593683719635,
+          "teacher_action": "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07",
+          "teacher_cross_entropy": 0.008634494617581367,
+          "teacher_logit_margin": 4.830286026000977,
+          "teacher_probability": 0.9914026856422424,
+          "teacher_rank": 1
+        },
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:89b67ded73fcfa7092918c12",
+            "NATIVE-SPATIAL:1186a2ff80d07c1941c4434b"
+          ],
+          "correct": true,
+          "critic_value": -1.6919715404510498,
+          "logits": [
+            -6.427792549133301,
+            -7.785477161407471,
+            -10.055561065673828
+          ],
+          "observation_hash": "sha256:a5bba06653b8644cf38722b6d99c5c21236284999afdfbe938c9055d1d6e543d",
+          "probabilities": [
+            0.7789185643196106,
+            0.20038126409053802,
+            0.020700087770819664
+          ],
+          "selected_action": "STOP",
+          "stop_minus_best_nonstop_logit": 1.35768461227417,
+          "stop_probability": 0.7789185643196106,
+          "teacher_action": "STOP",
+          "teacher_cross_entropy": 0.24984876811504364,
+          "teacher_logit_margin": 1.35768461227417,
+          "teacher_probability": 0.7789185643196106,
+          "teacher_rank": 1
+        },
+        {
+          "action_ids": [
+            "STOP",
+            "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+            "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+            "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+            "NATIVE-SPATIAL:7c300ab776942c7446a122a0"
+          ],
+          "correct": false,
+          "critic_value": -1.6226575374603271,
+          "logits": [
+            -6.563520431518555,
+            -7.397668361663818,
+            -7.3286919593811035,
+            -9.671293258666992,
+            -9.602317810058594
+          ],
+          "observation_hash": "sha256:c9458a99068bfaae90ba69062073a674c55ee31ad66d11a5c86461ef2c834eba",
+          "probabilities": [
+            0.5019850134849548,
+            0.2179841548204422,
+            0.23355059325695038,
+            0.022438930347561836,
+            0.024041293188929558
+          ],
+          "selected_action": "STOP",
+          "stop_minus_best_nonstop_logit": 0.7651715278625488,
+          "stop_probability": 0.5019850134849548,
+          "teacher_action": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+          "teacher_cross_entropy": 1.523332953453064,
+          "teacher_logit_margin": -0.8341479301452637,
+          "teacher_probability": 0.2179841548204422,
+          "teacher_rank": 3
+        }
+      ]
+    }
+  },
+  "real_patient_count": 0,
+  "reconstruction": {
+    "new_teacher_search_calls": 0,
+    "prefix_transitions": 4,
+    "preview_profile": {
+      "phases": {
+        "unclassified": {
+          "feasible": 11,
+          "raised": 0,
+          "rejected": 37,
+          "rejection_reasons": {
+            "HARD_GEOMETRY:ACCESS_APERTURE": 8,
+            "HARD_GEOMETRY:WORKING_REACH": 12,
+            "NO_NEW_FULLY_CONTAINED_SURFACE_CELLS": 11,
+            "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 6
+          },
+          "returned": 48,
+          "returned_microsteps": 224,
+          "seconds": 0.1201755425427109,
+          "started": 48
+        }
+      },
+      "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+      "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+    },
+    "seconds": 0.14693237491883337,
+    "states": [
+      {
+        "action_ids": [
+          "STOP",
+          "NATIVE-SPATIAL:9cfc4e00074d6cf93eb5cb82",
+          "NATIVE-SPATIAL:f985c763473c0225d9b56230",
+          "NATIVE-SPATIAL:b4c22140396ffbcc5f14ef15",
+          "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8"
+        ],
+        "label": "NATIVE-SPATIAL:66e11c34e920b418ecd8dad8",
+        "observation_hash": "sha256:ccca16824aab833104e49e21de526444c7bc8bc1bcb52ee5a4e370c9a564124d",
+        "prefix": [
+          "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5"
+        ]
+      },
+      {
+        "action_ids": [
+          "STOP",
+          "NATIVE-SPATIAL:0d78540299fe5eb3a1770d83",
+          "NATIVE-SPATIAL:8169300cfa7db4a4742e3063",
+          "NATIVE-SPATIAL:7afd144506d396798a525e1e"
+        ],
+        "label": "STOP",
+        "observation_hash": "sha256:e4d32b8f85642482f33aa7849ac74394e7d6a707168073343bbee9ce20ed988c",
+        "prefix": [
+          "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9"
+        ]
+      },
+      {
+        "action_ids": [
+          "STOP",
+          "NATIVE-SPATIAL:81d9c8d011c2b37342ee27df",
+          "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07"
+        ],
+        "label": "NATIVE-SPATIAL:3a545ca2e035bf1812b8bb07",
+        "observation_hash": "sha256:b6219c3ec2d4cac1a962c3a9c123734fb2f2eb9a5854c2f920d214b467faba54",
+        "prefix": [
+          "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1"
+        ]
+      },
+      {
+        "action_ids": [
+          "STOP",
+          "NATIVE-SPATIAL:89b67ded73fcfa7092918c12",
+          "NATIVE-SPATIAL:1186a2ff80d07c1941c4434b"
+        ],
+        "label": "STOP",
+        "observation_hash": "sha256:a5bba06653b8644cf38722b6d99c5c21236284999afdfbe938c9055d1d6e543d",
+        "prefix": [
+          "NATIVE-SPATIAL:7c300ab776942c7446a122a0"
+        ]
+      },
+      {
+        "action_ids": [
+          "STOP",
+          "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+          "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+          "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+          "NATIVE-SPATIAL:7c300ab776942c7446a122a0"
+        ],
+        "label": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+        "observation_hash": "sha256:c9458a99068bfaae90ba69062073a674c55ee31ad66d11a5c86461ef2c834eba",
+        "prefix": []
+      }
+    ]
+  },
+  "status": "complete",
+  "update16_exact_reproduction": true,
+  "updates": 256,
+  "version": "native-opening-bc-capacity-v1"
+}

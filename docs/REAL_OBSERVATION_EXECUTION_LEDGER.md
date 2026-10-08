@@ -52,16 +52,20 @@ Independent saved-output review verified all 278 indexed outputs, actual tensor
 changes, all nine comparison arms and 78 accepted simulated histories. The run
 took 8.6398 seconds overall with 332,644,352 bytes sampled peak RSS. There were
 no retries or cap changes. Positive experiences occurred during training, so
-their complete absence cannot explain the failed learning. A saved-state fit
-diagnostic precedes configuration changes. No patient or held-out record was used.
+their complete absence cannot explain the failed learning. The fixed 256-update
+imitation diagnostic subsequently fits all five labels and matches search at 1.1,
+while reproducing the original update16 exactly. Saved-tree arithmetic shows a
+small RL16 expected-return gain despite lower target-reaching probability. No
+patient or held-out record was used; the same-model RL capacity test is next.
 
 ## Latest acquisition checkpoint
 
 All [Lausanne TRAIN originals](../artifacts/lausanne-train-acquisition-complete-v1/RESULT.md)
 are acquired and byte-verified: 199 people, 210 sessions, 840 files and
 10,020,802,851 bytes. The continuous runner finished the final 52 files without
-batch review pauses. Separate QC remains for 26 newly downloaded images; six
-historical T1 conflicts are retained. No fitting or spatial admission is implied.
+batch review pauses. Separate QC now covers all newly downloaded images: 414/420 original images pass
+with six historical T1 conflicts retained. Mask-grid checks pass for 136/144; eight
+remain unresolved. No fitting, anatomical approval or spatial admission is implied.
 
 The [full eligible Lausanne annotation intake](../artifacts/lausanne-annotation-full-intake-v1/RESULT.md)
 completed all 144 masks from 106 people/117 sessions. Independent content checks
@@ -100,7 +104,7 @@ Anatomical review, spatial admission and fitting contributions remain unestablis
 | Workstream | Verified state / missing evidence | Next implementation or acquisition |
 |---|---|---|
 | Data and anatomy | All 840 Lausanne TRAIN original files and 144 eligible masks acquired. Final 26 images and 27 pending mask references are in a separate QC phase. Six historical T1 conflicts, sub454 mask-grid failure and four metadata exclusions remain. All 25 eligible RESECT original images are acquired; 24 masks await provider cooldown. | Finish the continuous frozen queue without QC pauses; record the separate QC result and then perform intended-use anatomical review. Resolve scanner-frame and interscan alignment evidence before spatial admission. Preserve all person-level partitions. |
-| Learning | Explicit generated-experience admission now supports the fixed opening task. Sixteen BC and 16 scratch RL updates failed to exceed complete search. A 15-forward, zero-update diagnosis shows STOP collapse in BC despite lower mean loss; RL did encounter successful trajectories. | Run the declared fixed 256-update same-model BC capacity diagnostic after targeted implementation review. Reproduce update16 exactly and retain fixed-final performance. This is a generated fit test, not patient transfer; legacy learning paths require their own prospective admission. |
+| Learning | Explicit generated-experience admission now supports the fixed opening task. Sixteen BC and 16 scratch RL updates failed to exceed complete search. A 15-forward, zero-update diagnosis shows STOP collapse in BC despite lower mean loss; RL did encounter successful trajectories. | BC256 fits all five labels and matches search on the generated training task. Review one fixed same-model scratch RL256 capacity test, preserving exact first16 reproduction and separate expected-return/target-reaching metrics. Legacy patient paths require their own prospective admission. |
 | Navigation / integration | Actual sub476 annotation evidence reaches canonical exclusions and desktop inspection. The observed six-B landmark API now advances and reopens immutable states; transport and packaged-startup repairs pass independent checks. Sparse landmarks do not establish dense tissue deformation or clearance. | Add a measurable observation-to-decision comparison once the required support is available. Keep missing clearance null and distinguish observed displacement from modeled interaction. |
 | Operative science | Four supplied research reviews are read; proposed mechanisms are not implemented evidence. | Introduce an evidence-timed action/observation timeline with observed events distinct from proposals and model predictions. |
 | Exposure / instruments | Generic capsule tools; hypothetical zero-thickness brain opening; no synchronized pair checking or measured skull/tool bundle. | Acquire same-person skull evidence and device metrology; implement synchronized full-pose checks after contracts. |
