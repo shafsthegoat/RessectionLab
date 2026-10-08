@@ -1,0 +1,142 @@
+{
+  "N32_replay": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/N32-replay/execution.json",
+    "sha256": "34d08e3d334bb267b247f7bc4c86ede27abae36b1bdbdd81947582ff7583e95e"
+  },
+  "baseline_replay": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/P1-replay/execution.json",
+    "sha256": "420b7b6b72355dd6a5731af17cee0b3bc9743a210e907748ad64c1937b8c752c"
+  },
+  "cases": {},
+  "comparison": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/comparison.json",
+    "sha256": "ec4aa11104a88106310766ad9995b3a57a6399180230b467ae8dd3bef0216f1b"
+  },
+  "elapsed_seconds": 1071.8560128752142,
+  "gmsh_generation_calls": 0,
+  "levels": {},
+  "measured_data_accessed": false,
+  "phase": "solve",
+  "reused_runs": {
+    "compression:N12:S60:reference": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/reused-compression-N12-S60-reference.json",
+      "sha256": "f000ebd0e22d64923fe88fd3d1d53e8a260f240af0cb45368cf7708425014538"
+    },
+    "compression:N16:S60:reference": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/reused-compression-N16-S60-reference.json",
+      "sha256": "dbff229c78737d8ee4532cd73f87ea0e0bad3035b8e45e1542b7d107eefc7e28"
+    },
+    "compression:N8:S60:reference": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/reused-compression-N8-S60-reference.json",
+      "sha256": "41e38786c9a07d045270f1a5a7da656bd3eddd9abed16d6fbc6fe30149a2d03d"
+    }
+  },
+  "runs": {
+    "compression:N36:S60:reference": {
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+        "-noconfig",
+        "-no_title",
+        "-i",
+        "specimen.feb",
+        "-o",
+        "solver.log"
+      ],
+      "execution": {
+        "cleanup": {
+          "kill_sent": false,
+          "reaped": true
+        },
+        "command": [
+          "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+          "-noconfig",
+          "-no_title",
+          "-i",
+          "specimen.feb",
+          "-o",
+          "solver.log"
+        ],
+        "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/runs/compression-N36-S60-reference",
+        "elapsed_seconds": 873.3347458748613,
+        "exit_code": 0,
+        "pid": 80960,
+        "seconds_cap": 1500,
+        "started": true,
+        "status": "completed",
+        "timed_out": false
+      },
+      "input_bindings": {
+        "deck": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/runs/compression-N36-S60-reference/specimen.feb",
+          "sha256": "2f24c4af603c037a9929805d7243b9f4e93e9dd67644822e9d37c0d5f4ca3694"
+        },
+        "elements": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/runs/compression-N36-S60-reference/elements.log",
+          "sha256": "436bb57a05ca9b9748aa43d76c0323f1cf1bd7f15f91c7f3cdbf74567b24d812"
+        },
+        "loading": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/runs/compression-N36-S60-reference/loading.json",
+          "sha256": "6450d2aedf8902c9a02d73bf71d70f61d235ea82fe333a8ea1405df902595b69"
+        },
+        "mesh": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/N36/mesh.json",
+          "sha256": "8e7ad0e636151e007ab9fd8af0d043abfcf889b960c53e726766126691c3c075"
+        },
+        "nodes": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/runs/compression-N36-S60-reference/nodes.log",
+          "sha256": "6ddd2462408973321913130a53d80aba9550368a80a5ef3a6d96c3f10dc5d4df"
+        },
+        "solver": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/runs/compression-N36-S60-reference/solver.log",
+          "sha256": "6e57ef9d8e3e8aa9ea778dd07530f9deae3aba27059d0d0f51d6c9b6748850a7"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/runs/compression-N36-S60-reference/readout.json",
+        "sha256": "dc39d29b75edc819605a3daddba67ce1741b9cd5d45daa6009262559bfd0a92a"
+      },
+      "retained_files": {
+        "console.txt": {
+          "bytes": 198158,
+          "sha256": "75552d6d772a7acd678e8baceef5e9c80aea5b81bd833eba3e78f72f4c4f40b4"
+        },
+        "elements.log": {
+          "bytes": 259245577,
+          "sha256": "436bb57a05ca9b9748aa43d76c0323f1cf1bd7f15f91c7f3cdbf74567b24d812"
+        },
+        "execution.json": {
+          "bytes": 3891,
+          "sha256": "ea36bd4aee4440277695dc2a6d19df2f39b6d14b248554f0ad628cbc04ed672b"
+        },
+        "loading.json": {
+          "bytes": 4331,
+          "sha256": "6450d2aedf8902c9a02d73bf71d70f61d235ea82fe333a8ea1405df902595b69"
+        },
+        "nodes.log": {
+          "bytes": 387760933,
+          "sha256": "6ddd2462408973321913130a53d80aba9550368a80a5ef3a6d96c3f10dc5d4df"
+        },
+        "readout.json": {
+          "bytes": 555923,
+          "sha256": "dc39d29b75edc819605a3daddba67ce1741b9cd5d45daa6009262559bfd0a92a"
+        },
+        "solver-execution.json": {
+          "bytes": 717,
+          "sha256": "01d7f46a13a99d7ac5312aa96f7f14d94cc41f6448fa2616ac3c4cfb4c10aaa5"
+        },
+        "solver.log": {
+          "bytes": 1360840,
+          "sha256": "6e57ef9d8e3e8aa9ea778dd07530f9deae3aba27059d0d0f51d6c9b6748850a7"
+        },
+        "specimen.feb": {
+          "bytes": 7669200,
+          "sha256": "2f24c4af603c037a9929805d7243b9f4e93e9dd67644822e9d37c0d5f4ca3694"
+        }
+      },
+      "status": "passed_individual_numerical_checks"
+    }
+  },
+  "schema": "hbe-halfheight-global-n36-state-v1",
+  "solver_invocations": 1,
+  "status": "completed_numerical_diagnostic_only"
+}

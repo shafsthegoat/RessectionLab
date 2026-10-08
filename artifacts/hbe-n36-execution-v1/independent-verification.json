@@ -1,0 +1,202 @@
+{
+  "N36_complete_native_readout_canonical_equal": true,
+  "audit_source": {
+    "path": "build/hbe-n36-output-review-v1/audit.py",
+    "sha256": "191e4ae154ef41e5cbb89a696246d121bf8df2e1db43c03a322af1a390425c06"
+  },
+  "blocking_record_mismatches": [],
+  "comparison": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/comparison.json",
+    "sha256": "ec4aa11104a88106310766ad9995b3a57a6399180230b467ae8dd3bef0216f1b"
+  },
+  "comparison_canonical_equal": true,
+  "conclusion": {
+    "calibration_released": false,
+    "candidate_for_temporal_review": true,
+    "diagnostic_status": "candidate_for_finest_level_temporal_review",
+    "endpoint": {
+      "continuum_error_bound": false,
+      "force_limit_instability": false,
+      "forecast_force_N": -0.03615073691485856,
+      "fraction": 1.0,
+      "increasing_order_drift": false,
+      "latest_limit_disagreement_N": 7.30183285285596e-05,
+      "native_minus_forecast_N": -6.893130127180735e-07,
+      "older_limit_distance_from_native_N": {
+        "N12-N16-N24": 0.0009361888756611175,
+        "N8-N12-N16": 0.0016128306656832334
+      },
+      "order_changes": [
+        0.15033693260643755,
+        0.06763045529113065
+      ],
+      "orders": {
+        "N12-N16-N24": {
+          "absolute_remaining_indicator_N": 0.001123328665520275,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.03521523735221016,
+          "increment_ratio": 0.8380143449147468,
+          "levels": [
+            12,
+            16,
+            24
+          ],
+          "order": 0.4825833378127983,
+          "positive_order_ratio_lower_limit": 0.7095112913514545,
+          "signed_first_change_N": 0.00020345392111919408,
+          "signed_remaining_indicator_N": 0.001123328665520275,
+          "signed_second_change_N": 0.00024278095280086398,
+          "status": "eligible"
+        },
+        "N16-N24-N32": {
+          "absolute_remaining_indicator_N": 0.0006917018215840398,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.03550872446338969,
+          "increment_ratio": 1.7575026964070917,
+          "levels": [
+            16,
+            24,
+            32
+          ],
+          "order": 0.6329202704192358,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.00024278095280086398,
+          "signed_remaining_indicator_N": 0.0006917018215840398,
+          "signed_second_change_N": 0.00013813973275670494,
+          "status": "eligible"
+        },
+        "N24-N32-N36": {
+          "absolute_remaining_indicator_N": 0.0005696834359530271,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.03558174279191825,
+          "increment_ratio": 2.819174934181525,
+          "levels": [
+            24,
+            32,
+            36
+          ],
+          "order": 0.7005507257103665,
+          "positive_order_ratio_lower_limit": 2.4424745961808587,
+          "signed_first_change_N": 0.00013813973275670494,
+          "signed_remaining_indicator_N": 0.0005696834359530271,
+          "signed_second_change_N": 4.900005710245514e-05,
+          "status": "eligible"
+        },
+        "N8-N12-N16": {
+          "absolute_remaining_indicator_N": 0.0020427514083432552,
+          "continuum_error_bound": false,
+          "force_limit_N": -0.034538595562188044,
+          "increment_ratio": 1.5807985120624992,
+          "levels": [
+            8,
+            12,
+            16
+          ],
+          "order": 0.33003322965017934,
+          "positive_order_ratio_lower_limit": 1.4094208396532095,
+          "signed_first_change_N": 0.0003216196557785031,
+          "signed_remaining_indicator_N": 0.0020427514083432552,
+          "signed_second_change_N": 0.00020345392111919408,
+          "status": "eligible"
+        }
+      },
+      "remaining_within_allowance": true,
+      "state": 60,
+      "status": "resolved_conditional_model",
+      "two_latest_limit_envelope_N": 0.0006427017644815847
+    },
+    "endpoint_force_N": -0.03615142622787128,
+    "force_allowance_N": 0.0007231885245574256,
+    "instability_states": [],
+    "motion_vector_norm_max_m": 1.75450462441783e-06,
+    "native_N32_to_N36_max_reaction_change_N": 4.900005710245514e-05,
+    "physical_validation_pass": null,
+    "remaining_exceedance_states": [],
+    "spatial_convergence_accepted": false,
+    "temporal_adequacy_established": false,
+    "unresolved_states": []
+  },
+  "created_at": "2026-10-08T18:01:31.773768+00:00",
+  "execution_costs": {
+    "aggregate_through_result_publication_seconds": 1080.242746665841,
+    "native_elapsed_seconds": 873.3347458748613,
+    "output_watch": {
+      "maximum_active_bytes": 656799570,
+      "maximum_total_bytes": 725946639,
+      "sampling_interval_seconds": 0.1,
+      "sampling_limit": "Between-sample peaks may be missed.",
+      "status": "watching"
+    },
+    "retained_bytes_including_closeout": 725949797,
+    "sampled_worker_family_peak_rss_bytes": 1827356672
+  },
+  "independent_scalar_estimates_checked": 240,
+  "input_hash_inventory": {
+    "path": "build/hbe-n36-output-review-v1/input-hashes.json",
+    "sha256": "6d3c6a5f4f4d7246f46985536d9c5ba50cb06a0285542c5079aa880f9025b13d"
+  },
+  "limits": [
+    "One terminal uniform spatial diagnostic only. Never temporal adequacy, physical validation or calibration.",
+    "Memory/output peaks are sampled. Tiny closing receipt publication is outside its own recorded clock.",
+    "No new solver/mesh/run or measured response was used. Replaying saved records is verification, not an independent physical measurement."
+  ],
+  "maximum_scalar_field_absolute_difference": 0.0,
+  "prior_record_bindings": {
+    "compression:N12:S60:reference": {
+      "canonical_complete_record_equal": true,
+      "response_reparsed_by_this_review": false
+    },
+    "compression:N16:S60:reference": {
+      "canonical_complete_record_equal": true,
+      "response_reparsed_by_this_review": false
+    },
+    "compression:N24:S60:reference": {
+      "canonical_complete_record_equal": true,
+      "completed_original_context_replay_record": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/P1-replay/execution.json",
+        "sha256": "420b7b6b72355dd6a5731af17cee0b3bc9743a210e907748ad64c1937b8c752c"
+      },
+      "response_reparsed_by_this_review": false
+    },
+    "compression:N32:S60:reference": {
+      "canonical_complete_record_equal": true,
+      "completed_original_context_replay_record": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/N32-replay/execution.json",
+        "sha256": "34d08e3d334bb267b247f7bc4c86ede27abae36b1bdbdd81947582ff7583e95e"
+      },
+      "response_reparsed_by_this_review": false
+    },
+    "compression:N8:S60:reference": {
+      "canonical_complete_record_equal": true,
+      "response_reparsed_by_this_review": false
+    }
+  },
+  "prior_response_replay_basis": "Existing independently accepted complete prior readouts, with this execution replay records verified; no redundant prior raw replay by this reviewer.",
+  "publication": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/publication-check.json",
+    "sha256": "7d031f6d31805f01c8405e30f17de1d3e9ed8383b0e321190e855fd25af7bb5d"
+  },
+  "result": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/result.json",
+    "sha256": "7bb71645fe4146af38f8173ae612e55bf226c9699745da15d3b1ddf1d68b9e67"
+  },
+  "review_elapsed_seconds": 90.00773995905183,
+  "schema": "hbe-n36-independent-completed-output-review-v1",
+  "scope": {
+    "N36_saved_native_frames_reparsed": 61,
+    "measured_curve_access": false,
+    "new_meshes": 0,
+    "original_inputs_and_saved_outputs_unchanged": true,
+    "previous_N32_negative_preserved": true,
+    "release_created": false,
+    "review_mesher_calls": 0,
+    "review_native_calls": 0,
+    "tracked_source_edits": false
+  },
+  "source_archive": {
+    "path": "build/hbe-halfheight-global-n36-v1/source.tar",
+    "sha256": "dc2716fdbddbaa7738ed10a9229360e4d4d4dfff5db33725b73e57020f555a4e"
+  },
+  "source_commit": "169efad4d2cb3b53a80091082c9845a2c45e8b99",
+  "status": "saved_execution_and_declared_diagnostic_verified"
+}

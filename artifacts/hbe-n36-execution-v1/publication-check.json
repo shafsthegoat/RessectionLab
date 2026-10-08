@@ -1,0 +1,19 @@
+{
+  "accepted": true,
+  "cap_seconds": 1800,
+  "clock_scope": "through_result_fsync_directory_fsync_and_retained_scan_excludes_closeout_publication",
+  "durable_result_publication_checked": true,
+  "elapsed_through_result_publication_seconds": 1080.242746665841,
+  "hard_real_time_or_power_loss_guarantee": false,
+  "output_cap_bytes": 2147483648,
+  "own_publication_inside_clock_claim": false,
+  "phase": "solve",
+  "result": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/result.json",
+    "sha256": "7bb71645fe4146af38f8173ae612e55bf226c9699745da15d3b1ddf1d68b9e67"
+  },
+  "result_status": "completed_numerical_diagnostic_only",
+  "retained_bytes_before_closeout": 725948984,
+  "retained_bytes_including_closeout": 725949797,
+  "schema": "hbe-n36-result-publication-check-v1"
+}

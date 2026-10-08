@@ -45,9 +45,10 @@ are now complete: 840 files, 199 people, 210 sessions and 10,020,802,851 bytes.
 The [separate QC result](artifacts/lausanne-deferred-qc-execution-v1/RESULT.md)
 completes all 26 new images and 27 pending references. Across 420 images, 414 pass
 and six earlier T1 conflicts remain. Mask-grid checks now pass for 136 of 144;
-eight conflicts remain. Anatomical and spatial admission are still unestablished. The [N36 specimen preparation](artifacts/hbe-n36-preparation-v1/RESULT.md)
-passed independent geometry/source checks and the single capped FEBio solve is
-running. Physical and calibration gates remain closed pending its result.
+eight conflicts remain. Anatomical and spatial admission are still unestablished. The [single N36 specimen solve](artifacts/hbe-n36-execution-v1/RESULT.md)
+now passes its independently reproduced conditional consistency screen:
+0.642702 mN envelope versus 0.723189 mN allowance. It supports temporal review
+only; spatial acceptance, physical validation and calibration remain unestablished.
 The [observed six-landmark desktop API](artifacts/observed-landmark-replay-v1/RESULT.md)
 now advances acquired phases/points and reopens bound snapshots. Independent review
 cleared transport and packaged-startup repairs. Sparse landmarks still provide no
