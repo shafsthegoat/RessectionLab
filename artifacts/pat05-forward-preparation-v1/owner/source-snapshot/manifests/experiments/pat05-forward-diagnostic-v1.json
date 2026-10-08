@@ -1,0 +1,106 @@
+{
+  "admission": "exact historical hypothetical estimated support for observation reconstruction only; default anatomy/model/learning guards unchanged",
+  "architecture_hash": "sha256:a3b6740ab188f01016610c566e2009c57ba422c8f9be24adca014f695ae9c917",
+  "cavity": "hypothetical empty initial state; retained observed_procedure_state label only for exact DTO continuity",
+  "checkpoints": {
+    "RL256": {
+      "file_sha256": "1d391665f66cdd0c1fa1db150261b853820a9d30d62fc20c99cf021cf0229fbd",
+      "parameter_hash": "sha256:f52e14097ea6a35436eaf30f0ece5658e24987e289ca30ff6a529816545b5721",
+      "path": "artifacts/native-opening-rl-capacity-v1/RL-256.pt",
+      "updates": 256
+    },
+    "initial": {
+      "file_sha256": "433c95336d11a5b3d2e5b98c1d53c2b989b63ae0e277e3b43f835c4cbc2a8257",
+      "parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+      "path": "artifacts/native-opening-rl-capacity-v1/RL-000.pt",
+      "updates": 0
+    }
+  },
+  "clinical_availability": "unknown; historical acknowledgment time is not clinical evidence availability",
+  "clinical_performance_measured": false,
+  "cost_limit": "prior MRI acquisition, support estimation and historical proposal certification were previously paid and are not new inference time",
+  "deployment_compatibility_established": false,
+  "expected_native_case_source_hash": "sha256:27b51658c4445dc0eb12c0ecef2a2709e1b5873bb5bc8a3f9034e8195f4b9267",
+  "expected_observation_hash": "sha256:645770594d7988980781df8324fb76ed347f47ff8d7452ca7d032d31efc93f90",
+  "historical_inventory": "70 simulator-feasibility-filtered proposals plus STOP; simulator-derived information, not scan-only deployment input",
+  "metadata_sha256": {
+    "artifacts/btc-train-transfer-readiness-v1/contract.json": "d7130daa2a989ada77298bd754403195f6caebae4b2483db16e759ad05c0f1e5",
+    "artifacts/native-opening-rl-capacity-v1/declaration-input.json": "14df1a1fbb9bb8187d97bc7dcf99cacf923a9e5e9f4182693de0e1d01a5e1285",
+    "artifacts/native-opening-rl-capacity-v1/independent-verification.json": "2489aff1b8a783f1fd6ad97a1085abb4b54aff30b44c337deb42a654d5afc95f",
+    "artifacts/native-opening-rl-capacity-v1/output-sha256.json": "d378524c205838c28f09b2bc02e2a1e08dadc9a25acd63a0170043afc3aeea3d",
+    "artifacts/native-opening-rl-capacity-v1/summary.json": "f71c9d5e2c7e28692fefed904e57240c23f0fb00b7725a1fb83086bf1f4c78e8",
+    "artifacts/pat05-real-geometric-learning-v1/declaration-input.json": "d69c9b6cf1f0f329d698c3857bca13efaa4a4a9a7b424208711affd4ac8480f4",
+    "artifacts/pat05-real-geometric-learning-v1/initial_policy.json": "9ed4ba0c05f1823efbedd1ea0f61200d8d9ca30d98d06c29acf30702668ebe19",
+    "artifacts/pat05-real-geometric-learning-v1/output-sha256.json": "2df29d18c484dd5120129cc6915eb5fad5544654b9e824a801bbbc25e1025219",
+    "artifacts/pat05-real-geometric-learning-v1/receipt.json": "fdc575e6695a7f949f65de93e7165f7833b514fcd193094a24ac3e0f94e7ee77",
+    "manifests/experiments/btc-spatial-development-cohort-v1.json": "962d964e1d71427f3625cdbebc0f7e4759e5d2345d8f95cb211ed45810ed2985"
+  },
+  "prohibited": [
+    "native_engine",
+    "preview",
+    "task_step",
+    "search",
+    "loss",
+    "backward",
+    "optimizer",
+    "adaptation",
+    "new_patient_or_holdout"
+  ],
+  "resources_scope": "60-second supervised worker including preparation, both loads/forwards and export; sampled2GiB worker RSS",
+  "role": "TRAIN",
+  "runtime": {
+    "nibabel": "5.4.2",
+    "numpy": "2.5.3",
+    "platform": "darwin",
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "scipy": "1.18.1",
+    "torch": "2.14.1"
+  },
+  "scope": "paired frozen-checkpoint outputs on one historical annotation-assisted initial DTO",
+  "settings": {
+    "automatic_retry": false,
+    "cpu_threads": 1,
+    "executed_actions": 0,
+    "forward_order": [
+      "initial",
+      "RL256"
+    ],
+    "forwards_per_checkpoint": 1,
+    "gradient_updates": 0,
+    "max_rss_bytes": 2147483648,
+    "max_wall_seconds": 60.0,
+    "native_previews": 0
+  },
+  "source_sha256": {
+    "scripts/preflight_real_spatial_policy.py": "cfac175b072dbd8218c19f079d7ec3fa9143966b5059fe4cdfd918dff818ed3f",
+    "scripts/run_pat05_forward_diagnostic.py": "792b17514b81ef39f688975e4032084df6a41b8e55749fd228f40b5a20d3b248",
+    "src/resectionlab/__init__.py": "164a183a806e154430ebd9cfa9cefd5671b6b628929c60baa75f8e0275b5eee5",
+    "src/resectionlab/anatomy.py": "b53d86d693574b860ac193d6b62989d273cba17967744009c32584f05c286d37",
+    "src/resectionlab/brain_extraction.py": "ef7d3b8d2d4161e9d544298b7986b6438ca41fd1b058cfebe16833eaa2900900",
+    "src/resectionlab/core.py": "094bb902552117ee0be1ee4ed79ae0b09a7005e48d24ca4a9a4674ff54af077b",
+    "src/resectionlab/critical_evidence.py": "ce228327299066a52a11d941d1c8d767c8696e44d8a15f2f5698e81633fd3e99",
+    "src/resectionlab/data_policy.py": "13f95f00763fcb0816406011d52976f25ab7df4a70ad46bde7116eb95fc13a84",
+    "src/resectionlab/evaluation.py": "df49cd606450f7d086b27ff40a0a3d643b8d60849ecf40b953b1cebcb7fac10b",
+    "src/resectionlab/functional_evidence.py": "58ca24b6b0d63ef3860b33a247301a2f210857eec9719ad14ac5cab8517d5426",
+    "src/resectionlab/geometry.py": "426dedbd11f5f88ab7c85dd3fbb188915e82db7a7e08c2ff9669d77168eb3184",
+    "src/resectionlab/imaging.py": "0b3fbc7890c9a79daee6d5f7f94d2b677dc98ae6b03e1067a2fe0449bbdc8bb2",
+    "src/resectionlab/independent_geometry_batch.py": "f9b08aa6899f451e02952266538e72828a430f3c9ef269b5985cb6a296c9adf3",
+    "src/resectionlab/native_axis_simulation.py": "5ca0147885e2a8c918d10246f4889e4bbfb9c06724f62d8abc9e8cc605a540bf",
+    "src/resectionlab/native_proposals.py": "f0d37d3b427579073a3d9052c5ee769711149a9b4c2856a4852de743245b12ee",
+    "src/resectionlab/native_resection.py": "240705acaef263f58e2bce91e94d655f60a66a01fd0eb3e649ecf99cfd97ef40",
+    "src/resectionlab/native_simulation.py": "64552e5e5b5c245d4e815d0943ef4e9e5837b38d251ea891479c2a86ce026749",
+    "src/resectionlab/native_spatial_task.py": "7fe3a6dd8c602a3ac8e70d183eb1b286f0a52cdb4a0b7848daa1b366c23e58f0",
+    "src/resectionlab/observed_search.py": "cdbacc079fa3e4f8d49a356e76dfdc77e4484ef4bb1a3383970a0e937c72febd",
+    "src/resectionlab/pat05_forward_diagnostic.py": "aa8da0fe33a17eea63f40d5c5a8a1a2dd20747d3b6ffc7828120144736442f45",
+    "src/resectionlab/prior_proposals.py": "8d0f40aa3690845465f024708d19c68b3441d0d19cd356b900566fb074730f5f",
+    "src/resectionlab/real_patient_learning.py": "51107e30dd26a623aaadc9bca7f5b2dda56b798ee5ef59fa4c4d6d9aa2e58512",
+    "src/resectionlab/simulation.py": "b8e26d956c3d5637fbcd3f00962bc912264cdb1d5544356a919cb84b98991253",
+    "src/resectionlab/spatial_observations.py": "48a2a9d1c7faee791f7f327ac928e133f2d0f80f60a045a868802bb75785d711",
+    "src/resectionlab/spatial_policy.py": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4",
+    "src/resectionlab/spatial_policy_diagnostics.py": "257d355a017023831621107800d029b813f7036e1af6a8a16fd38e5760066493",
+    "src/resectionlab/structural_evidence.py": "37b7a71c51855750d15ee2570197a75c2484e6e653550f547f9a696ce06c9019",
+    "src/resectionlab/worlds.py": "f8bb81ecc0f5fad822878cb4ea8af6b2a2451e6c5c42f76c163b5261d955fa91"
+  },
+  "subject": "sub-PAT05",
+  "version": "pat05-forward-diagnostic-v1"
+}

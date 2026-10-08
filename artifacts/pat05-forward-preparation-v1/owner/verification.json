@@ -1,0 +1,86 @@
+{
+  "checks": [
+    {
+      "attempt": 1,
+      "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONPATH=src .venv/bin/python -m pytest -q tests/test_pat05_forward_diagnostic.py",
+      "exit_code": 1,
+      "failed": 14,
+      "failure": "All 14 failures occurred in tiny analytical fixture construction: positional arguments swapped max_access_angle_deg and tip_length_mm, producing tip_length35 >= working_length12. No PAT05 source or production model executed.",
+      "passed": 4,
+      "reported_pytest_seconds": 3.66,
+      "skipped": 1,
+      "source_scope": "initial test fixture before corrected ToolGeometry keyword arguments",
+      "tool_output_chunk": "b913a6",
+      "tool_session_id": 69905
+    },
+    {
+      "attempt": 2,
+      "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONPATH=src .venv/bin/python -m pytest -q tests/test_pat05_forward_diagnostic.py",
+      "exit_code": 0,
+      "failed": 0,
+      "passed": 18,
+      "reported_pytest_seconds": 3.09,
+      "skipped": 1,
+      "source_scope": "corrected fixture; prospective manifest not yet written; manifest test skipped",
+      "tool_output_chunk": "f2b0fe",
+      "tool_session_id": 8258
+    },
+    {
+      "attempt": 3,
+      "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONPATH=src .venv/bin/python -m pytest -q tests/test_pat05_forward_diagnostic.py",
+      "exit_code": 0,
+      "failed": 0,
+      "passed": 19,
+      "reported_pytest_seconds": 3.64,
+      "skipped": 0,
+      "source_scope": "final frozen four-file implementation including manifest",
+      "tool_output_chunk": "946ea0",
+      "tool_session_id": 31905
+    }
+  ],
+  "created_at": "2026-10-08T19:45:04.125236+00:00",
+  "evidence_limitation": "Original pytest stdout/stderr and preflight stdout were retained in conversation tool outputs only. No original log or JUnit file was saved. This receipt is an accurate summary, not a reconstructed original execution log.",
+  "execution_state": "Held for root review/commit/release at owner handoff; this receipt grants no execution.",
+  "expected_frozen_files_sha256": {
+    "manifests/experiments/pat05-forward-diagnostic-v1.json": "a1ba271626e71d76303a8bf34f87e2ade2e30da13107ca94633b958212df370a",
+    "scripts/run_pat05_forward_diagnostic.py": "792b17514b81ef39f688975e4032084df6a41b8e55749fd228f40b5a20d3b248",
+    "src/resectionlab/pat05_forward_diagnostic.py": "aa8da0fe33a17eea63f40d5c5a8a1a2dd20747d3b6ffc7828120144736442f45",
+    "tests/test_pat05_forward_diagnostic.py": "b6fef867619aa358f55774eee5ff52fecdefa53933884f96cbf904e5ab65574e"
+  },
+  "frozen_bytes_unchanged": true,
+  "metadata_preflight": {
+    "command": "OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 PYTHONPATH=src .venv/bin/python scripts/run_pat05_forward_diagnostic.py --declaration manifests/experiments/pat05-forward-diagnostic-v1.json",
+    "exit_code": 0,
+    "reported_stdout_json": {
+      "declaration_sha256": "a1ba271626e71d76303a8bf34f87e2ade2e30da13107ca94633b958212df370a",
+      "execution_requires": "--execute after source freeze",
+      "model_forwards": 0,
+      "patient_arrays_decoded": 0,
+      "status": "metadata_preflight_passed"
+    },
+    "tool_output_chunk": "789e5b"
+  },
+  "new_actual_PAT05_array_decodes": 0,
+  "new_actual_PAT05_checkpoint_forwards": 0,
+  "new_tracked_scope": [
+    "src/resectionlab/pat05_forward_diagnostic.py",
+    "scripts/run_pat05_forward_diagnostic.py",
+    "tests/test_pat05_forward_diagnostic.py",
+    "manifests/experiments/pat05-forward-diagnostic-v1.json"
+  ],
+  "packaging_files_sha256": {
+    "manifests/experiments/pat05-forward-diagnostic-v1.json": "a1ba271626e71d76303a8bf34f87e2ade2e30da13107ca94633b958212df370a",
+    "scripts/run_pat05_forward_diagnostic.py": "792b17514b81ef39f688975e4032084df6a41b8e55749fd228f40b5a20d3b248",
+    "src/resectionlab/pat05_forward_diagnostic.py": "aa8da0fe33a17eea63f40d5c5a8a1a2dd20747d3b6ffc7828120144736442f45",
+    "tests/test_pat05_forward_diagnostic.py": "b6fef867619aa358f55774eee5ff52fecdefa53933884f96cbf904e5ab65574e"
+  },
+  "portable_input_dependencies": {
+    "metadata": "Ten exact metadata paths/hashes in frozen manifest.metadata_sha256; already existing local/committed records. No new dependency files created by this implementation.",
+    "raw_local_inputs": "PAT05 bundle and RL-000.pt/RL-256.pt remain local ignored artifacts. Exact paths/hashes fixed by historical authorities and manifest; do not stage/rewrite them.",
+    "readiness_contract": "artifacts/btc-train-transfer-readiness-v1/contract.json is committed9562917; exact SHA d7130daa2a989ada77298bd754403195f6caebae4b2483db16e759ad05c0f1e5",
+    "source_closure": "28 Python files in frozen manifest.source_sha256; 26 existing sources plus new helper and runner. New tests are preparation evidence, not runtime dependency."
+  },
+  "schema": "pat05-forward-owner-preparation-verification-v1",
+  "scope": "Post-hoc transcription of actual owner tool-output summaries; no new test, patient decode, model forward or source change during packaging.",
+  "unit_test_forward_scope": "Analytical5x5x5 software fixtures with explicitly replaced test-only checkpoint authority; no patient forward."
+}

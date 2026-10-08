@@ -1,0 +1,44 @@
+{
+  "accounting": {
+    "attempted_checkpoints": [],
+    "checkpoint_attempts": 0,
+    "completed_checkpoints": [],
+    "completed_forwards": 0,
+    "declaration_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "executed_actions": 0,
+    "forward_attempts": 0,
+    "native_previews": 0,
+    "optimizer_updates": 0,
+    "scope": "annotation-assisted fixed-input compatibility; no patient-performance assessment"
+  },
+  "clinical_performance_measured": false,
+  "deployment_compatibility_established": false,
+  "elapsed_seconds": 0.0016629169695079327,
+  "error": {
+    "message": "CHECKPOINT_BYTES_CHANGED",
+    "traceback": "Traceback (most recent call last):\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/run_pat05_forward_diagnostic.py\", line 145, in worker\n    row = context.forward_checkpoint(ROOT, name, observation)\n          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat05-forward-independent-review-v1/test_independent_pat05.py\", line 61, in refuse\n    def refuse(*a):raise ValueError('CHECKPOINT_BYTES_CHANGED')\n                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nValueError: CHECKPOINT_BYTES_CHANGED\n",
+    "type": "ValueError"
+  },
+  "historical_preparation": {
+    "new_previews": 0,
+    "proposals_accepted": 70,
+    "proposals_emitted": 78,
+    "scope": "previously paid historical native certification; excluded from this observation-only clock",
+    "seconds": 0.0
+  },
+  "methods": {
+    "RL256": {
+      "outputs": null,
+      "status": "not_started"
+    },
+    "initial": {
+      "outputs": null,
+      "status": "running"
+    }
+  },
+  "reconstruction_seconds": 1.2919772416353226e-06,
+  "role": "TRAIN",
+  "status": "failed",
+  "subject": "sub-PAT05",
+  "version": "pat05-forward-diagnostic-v1"
+}

@@ -1,0 +1,30 @@
+....F                                                                    [100%]
+=================================== FAILURES ===================================
+____________ test_terminal_checkpoint_failure_closes_running_method ____________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11059be90>
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/pat05-forward-independent-review-v1/pytest-initial/test_terminal_checkpoint_failu0')
+
+    def test_terminal_checkpoint_failure_closes_running_method(monkeypatch,tmp_path):
+        import torch
+        monkeypatch.setattr(torch,'load',forbidden)
+        monkeypatch.setattr(runner,'validate',lambda _: {bridge.HISTORICAL+'receipt.json':{'preparation_seconds':0.}})
+        monkeypatch.setattr(bridge,'reconstruct_pat05',lambda *a:(object(),{}))
+        monkeypatch.setattr(bridge,'describe_observation',lambda *a:{})
+        monkeypatch.setattr(bridge.Pat05ForwardContext,'require_observation',lambda *a:None)
+        def refuse(*a):raise ValueError('CHECKPOINT_BYTES_CHANGED')
+        monkeypatch.setattr(bridge.Pat05ForwardContext,'forward_checkpoint',refuse)
+        with pytest.raises(ValueError,match='CHECKPOINT_BYTES_CHANGED'):
+            runner.worker({},tmp_path,'0'*64)
+        result=json.loads((tmp_path/'result.json').read_text())
+        assert result['status']=='failed'
+>       assert result['methods']['initial']['status']=='failed'
+E       AssertionError: assert 'running' == 'failed'
+E         
+E         - failed
+E         + running
+
+build/pat05-forward-independent-review-v1/test_independent_pat05.py:67: AssertionError
+=========================== short test summary info ============================
+FAILED build/pat05-forward-independent-review-v1/test_independent_pat05.py::test_terminal_checkpoint_failure_closes_running_method
+1 failed, 4 passed in 1.53s

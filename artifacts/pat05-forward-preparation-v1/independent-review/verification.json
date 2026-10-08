@@ -1,0 +1,71 @@
+{
+  "artifact_sha256": {
+    "pytest-initial.log": "5920292d26e814b247c83ac516bf4ff39e94de793c0eb705b68d1656a1d1a14e",
+    "pytest-repaired.log": "c46951216fb22cb70c4bbba01b026cd9532f4bdb3308e82f9390b88874bf801f",
+    "review-initial.json": "fa3d41c2a250f95d085f2a3cebb4ec7b0804234f660aa4e8bae85784230eb23f",
+    "test_independent_pat05.py": "a0d4583c267d1149e9721d48fd28b15928735e0bdd45067dee2a49d8ec6ec314"
+  },
+  "bindings_and_boundaries": [
+    "Pinned readiness/cohort/historical metadata fix PAT05 TRAIN, exact bundle/semantic/planning/support lineage and accepted-inventory ordering. Modified authority records fail before load_case.",
+    "The helper reconstructs only the recorded initial DTO, checks its complete fingerprint and mask, then the context checks source, track,64-cubed crop,71 actions,horizon3 and empty cavity before any checkpoint byte access or model construction.",
+    "Only pinned RL-000 and RL-256 bytes/tensor hashes/architecture/training declaration are eligible. Each checkpoint attempt is consumed before loading and cannot retry in the worker context. The default loader/admission code is unchanged.",
+    "The new context is rejected by imitation, REINFORCE and gradient APIs; the default pinned SynthStrip rejection remains effective.",
+    "Static reviewed path builds source/observation containers without constructing a task or native engine, proposing new actions, previewing geometry, stepping, searching or learning. Counts of prohibited operations are declarative zero counters justified by the frozen code path, not a runtime sandbox against arbitrary monkeypatching.",
+    "Each model is eval/frozen/inference-only and checked again for unchanged tensor/architecture identity and absence of gradients; raw checkpoint bytes are rechecked. Two completed outputs are required for successful worker closure."
+  ],
+  "controls": {
+    "actions": 0,
+    "actual_patient_arrays_loaded": 0,
+    "checkpoint_payloads_loaded": 0,
+    "initial_run": {
+      "failed": 1,
+      "passed": 4,
+      "seconds": 1.53
+    },
+    "model_forwards": 0,
+    "native_previews": 0,
+    "repaired_run": {
+      "seconds": 1.06,
+      "targeted_regression_passed": 1
+    },
+    "repeated_previously_passed_controls": 0,
+    "training_updates": 0,
+    "unique_independent_controls": 5
+  },
+  "decision": "No remaining concrete blocker found for the declared one PAT05 historical-initial-DTO/two-checkpoint compatibility attempt; no actual patient execution was performed by this reviewer.",
+  "declaration_sha256": "54100dfb6cc8f54a3df4ac63120b19104c7ab75b82fb64f062978a2800c8d9dd",
+  "fixed_finding": {
+    "file": "scripts/run_pat05_forward_diagnostic.py",
+    "function": "worker except block",
+    "independent_confirmation": "The original failing orchestration regression now passes. Root-added initial/second-checkpoint failure tests were inspected; they were not repeated by this reviewer.",
+    "original": "Terminal failed checkpoint retained method status running.",
+    "original_review_sha256": "fa3d41c2a250f95d085f2a3cebb4ec7b0804234f660aa4e8bae85784230eb23f",
+    "repair": "Only running methods become failed with outputs null, leaving earlier complete and later not-started methods unchanged."
+  },
+  "frozen_files_sha256": {
+    "manifests/experiments/pat05-forward-diagnostic-v1.json": "54100dfb6cc8f54a3df4ac63120b19104c7ab75b82fb64f062978a2800c8d9dd",
+    "scripts/run_pat05_forward_diagnostic.py": "7e264ba1d6bafac840f8a024a337fa9cbeb7b5dd2e69fcc8688df1d47a018430",
+    "src/resectionlab/pat05_forward_diagnostic.py": "aa8da0fe33a17eea63f40d5c5a8a1a2dd20747d3b6ffc7828120144736442f45",
+    "tests/test_pat05_forward_diagnostic.py": "ef09710f6dc8b9c3d10b5e24ea4a7bc06fda686c513d8e51ac2fb61d57420fdf"
+  },
+  "limitations": [
+    "This review intentionally did not test actual PAT05 reconstruction, patient arrays or frozen checkpoint forwards. A fingerprint mismatch or resource failure must be retained without fallback.",
+    "The supervisor uses sampled worker RSS and polled wall thresholds with termination grace; actual measured runtime/memory should be reported.",
+    "Byte and DTO identity checks establish compatibility with the pinned historical research inputs, not independent source authenticity, clinical availability, anatomical correctness or real transfer."
+  ],
+  "numerical_source_files_verified": 28,
+  "pinned_metadata_files_verified": 10,
+  "remaining_findings": [],
+  "runtime_declaration_validated": true,
+  "schema": "pat05-forward-independent-review-final-v1",
+  "semantics": [
+    "The pair compares two generated-trained checkpoints on one already-consulted historical initial TRAIN observation; it is not two procedural states or held-out evaluation.",
+    "The exact historical mask remains an unreviewed synthetic-trained SynthStrip estimate. It affects support, normalization, access and the original candidate preparation; reconstruction does not admit it as observed tissue or cortex.",
+    "The supplied tumor annotation is used as a nominal target; its clinical availability/review is unknown. Empty cavity/access are hypothetical, despite retained historical DTO provenance labels.",
+    "STOP plus70 saved simulator-feasibility-filtered proposals remain simulator-derived inputs. Reusing them avoids new previews but does not establish scan-only deployment compatibility.",
+    "Missing motor/language/vascular/deformation/force evidence remains unknown. Outputs are uncalibrated value/action preferences, not safety, deficit probability or clinical outcomes.",
+    "The generated-to-historical shifts in crop, normalization, tool geometry, action inventory and horizon2-to3 are described. Previous preparation cost is separate from two forward timings; no end-to-end planning speed claim follows."
+  ],
+  "semantics_review_readme_sha256": "35f8c26875cac171b94e412852757019229bece807869bab2d1dd0be2aabb481",
+  "status": "passed_bounded_two_forward_protocol_review"
+}
