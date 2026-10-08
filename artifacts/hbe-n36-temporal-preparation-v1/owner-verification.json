@@ -1,0 +1,86 @@
+{
+  "budgets": {
+    "aggregate_specimen_seconds": 2400,
+    "each_active_run_output_bytes": 1610612736,
+    "each_solver_seconds": 2100,
+    "generated_output_bytes": 2147483648,
+    "gmsh_generation_calls": 0,
+    "maximum_specimen_solver_calls": 1,
+    "preparation_nested_in_aggregate": true,
+    "pure_preparation_seconds": 60,
+    "runtime_threads": 1,
+    "sampled_process_family_rss_bytes": 3221225472
+  },
+  "compile_checks": "four Python files compiled in memory without bytecode files",
+  "failed_control_attempts": [],
+  "files": {
+    "manifests/experiments/hbe-01-03-halfheight-global-n36-temporal-v1.json": {
+      "bytes": 22780,
+      "sha256": "c726bc9299ed0cbb394a4889586df9487aa26cf6b932bae9ddc5b1db5914991f"
+    },
+    "scripts/mechanics_hbe_halfheight_global_n36_temporal.py": {
+      "bytes": 8765,
+      "sha256": "5af7a1d9beac06412c9a20c91fb6cf8d3834c2b8eb91c3053541f8d0256a9c93"
+    },
+    "scripts/mechanics_hbe_halfheight_global_n36_temporal_experiment.py": {
+      "bytes": 27125,
+      "sha256": "7fbd7dc4fdf773c5db2f0bbaa0a9a20891b7828ba57731817e62456f928faa8e"
+    },
+    "scripts/mechanics_hbe_halfheight_global_n36_temporal_readout.py": {
+      "bytes": 19175,
+      "sha256": "550d8300ebcdef18778026d1150bcd32feca4991bd94a57406a360234800ede1"
+    },
+    "tests/test_mechanics_hbe_halfheight_global_n36_temporal.py": {
+      "bytes": 8841,
+      "sha256": "3fa8d8675c741a33732b63e65245db1ed0e88eaaa6f65c06f688156a1bd46cb4"
+    }
+  },
+  "future_archive_declarations": 7,
+  "future_archive_regular_file_count": 30,
+  "future_archive_source_modules": 23,
+  "inherited_modules_unchanged": {
+    "scripts/febio_runtime.py": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e",
+    "scripts/mechanics_hbe_access.py": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "scripts/mechanics_hbe_backend.py": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+    "scripts/mechanics_hbe_evaluation.py": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "scripts/mechanics_hbe_experiment.py": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa",
+    "scripts/mechanics_hbe_halfheight_global.py": "a56c3dd761ed8bab5f57ff9051ce5305743ae2c85e4e91d5398cd0995a0de2d0",
+    "scripts/mechanics_hbe_halfheight_global_experiment.py": "0ea6c6d2026cb32bf470967f5e7b9f08f0ffbdbefeb6fa7426e79e6c37bc91f2",
+    "scripts/mechanics_hbe_halfheight_global_n36.py": "61024ff1b3c874a870bf83d5af84ee37e566ea37ed0f967d52fd3a6ca92b360d",
+    "scripts/mechanics_hbe_halfheight_global_n36_experiment.py": "21d5a26d6edc0075d9bd362968ea1edb15ac5e6c5f4d09123c654376ae3f2e80",
+    "scripts/mechanics_hbe_halfheight_global_n36_readout.py": "d7384416693efb5d8383a4cff06ca2581e678abc7ce630b01f99894d09fb7a27",
+    "scripts/mechanics_hbe_halfheight_global_readout.py": "5a6b3af67f20c8a0f9630e17c5b5c139d6e6528b7999e81f92f38cae5b722343",
+    "scripts/mechanics_hbe_halfheight_mesh.py": "6d8aef586fd454c262cd4afd3ad4e2b43580c9e74db0c380a020838dc8379084",
+    "scripts/mechanics_hbe_halfheight_readout.py": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30",
+    "scripts/mechanics_hbe_halfheight_spatial.py": "9093900ce30a7fb35aaded799c9f8aedbc9abc22f7fface57b83092ae83066da",
+    "scripts/mechanics_hbe_halfheight_spatial_experiment.py": "2c793883238d15ad65539c4b04f777aa283ab07a104734080420055180cd6abd",
+    "scripts/mechanics_hbe_halfheight_spatial_readout.py": "f193dde271438145632907414161ceb8c210008d5fa4e97058d1c477d195032c",
+    "scripts/mechanics_hbe_mesh.py": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414",
+    "scripts/mechanics_hbe_outputs.py": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19",
+    "scripts/mechanics_hbe_physics.py": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "scripts/mechanics_hbe_readout.py": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0"
+  },
+  "new_files": 5,
+  "schema": "hbe-n36-temporal-owner-implementation-check-v1",
+  "scope": {
+    "immutable_saved_geometry_checked": true,
+    "measured_curves_accessed": false,
+    "mesher_calls": 0,
+    "native_calls": 0,
+    "phase_execution": false,
+    "release_created": false,
+    "scientific_response_logs_or_fixtures_read_or_generated": false
+  },
+  "source_commit_before_new_files": "93a757f9434a3c4b913f8209d60d5ec8d25b7c8a",
+  "status": "pure_controls_and_saved_geometry_deck_checked_no_execution",
+  "tests": {
+    "command": ".venv/bin/python -B -m pytest -q -p no:cacheprovider tests/test_mechanics_hbe_halfheight_global_n36_temporal.py",
+    "elapsed_seconds": 16.854237917112187,
+    "failed": 0,
+    "output": {
+      "path": "build/hbe-n36-temporal-implementation-v1/pytest-attempt-01.txt",
+      "sha256": "2290b020fa9b745b0843c4e070bb328037276c1942b716db149d748a50011267"
+    },
+    "passed": 22
+  }
+}

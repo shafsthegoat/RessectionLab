@@ -1,0 +1,209 @@
+{
+  "authorized": false,
+  "baseline": {
+    "backend_profile": {
+      "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+      "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+    },
+    "comparison": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/comparison.json",
+      "sha256": "ec4aa11104a88106310766ad9995b3a57a6399180230b467ae8dd3bef0216f1b"
+    },
+    "declaration": {
+      "path": "manifests/experiments/hbe-01-03-halfheight-global-n36-v1.json",
+      "sha256": "1f6e740d9e0e5ce77598db785732d2a17178ef8db79176ee2827930e0638542b"
+    },
+    "execution": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/runs/compression-N36-S60-reference/execution.json",
+      "sha256": "ea36bd4aee4440277695dc2a6d19df2f39b6d14b248554f0ad628cbc04ed672b"
+    },
+    "full_mesh": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/N36/generated/mesh.json",
+      "sha256": "6ba012cc042ec0a537a6c61283d444488ccf69de0bc9c385f319a827d69c8e74"
+    },
+    "independent_output_review": {
+      "path": "build/hbe-n36-output-review-v1/verification.json",
+      "sha256": "cb8f66db67560ecc65f35b90b7db6d716e480ae2851b2d3ffff0470a77147bda"
+    },
+    "interpreter": {
+      "path": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+      "sha256": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a"
+    },
+    "original_protocol": {
+      "path": "manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+      "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+    },
+    "primitive_bindings": {
+      "deck": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/runs/compression-N36-S60-reference/specimen.feb",
+        "sha256": "2f24c4af603c037a9929805d7243b9f4e93e9dd67644822e9d37c0d5f4ca3694"
+      },
+      "elements": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/runs/compression-N36-S60-reference/elements.log",
+        "sha256": "436bb57a05ca9b9748aa43d76c0323f1cf1bd7f15f91c7f3cdbf74567b24d812"
+      },
+      "loading": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/runs/compression-N36-S60-reference/loading.json",
+        "sha256": "6450d2aedf8902c9a02d73bf71d70f61d235ea82fe333a8ea1405df902595b69"
+      },
+      "mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/N36/mesh.json",
+        "sha256": "8e7ad0e636151e007ab9fd8af0d043abfcf889b960c53e726766126691c3c075"
+      },
+      "nodes": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/runs/compression-N36-S60-reference/nodes.log",
+        "sha256": "6ddd2462408973321913130a53d80aba9550368a80a5ef3a6d96c3f10dc5d4df"
+      },
+      "solver": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/runs/compression-N36-S60-reference/solver.log",
+        "sha256": "6e57ef9d8e3e8aa9ea778dd07530f9deae3aba27059d0d0f51d6c9b6748850a7"
+      }
+    },
+    "publication": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/publication-check.json",
+      "sha256": "7d031f6d31805f01c8405e30f17de1d3e9ed8383b0e321190e855fd25af7bb5d"
+    },
+    "readout": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/runs/compression-N36-S60-reference/readout.json",
+      "sha256": "dc39d29b75edc819605a3daddba67ce1741b9cd5d45daa6009262559bfd0a92a"
+    },
+    "reconstruction": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/preparation/N36/reconstruction.json",
+      "sha256": "9e0265495f47ece2d315746f79f40e71f717e0720f6f1621fa9c7f9d2d9eba8f"
+    },
+    "result": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/result.json",
+      "sha256": "7bb71645fe4146af38f8173ae612e55bf226c9699745da15d3b1ddf1d68b9e67"
+    },
+    "run_id": "compression:N36:S60:reference",
+    "runtime_identity": {
+      "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+      "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+    },
+    "source_archive": {
+      "path": "build/hbe-halfheight-global-n36-v1/source.tar",
+      "sha256": "dc2716fdbddbaa7738ed10a9229360e4d4d4dfff5db33725b73e57020f555a4e"
+    },
+    "source_commit": "169efad4d2cb3b53a80091082c9845a2c45e8b99"
+  },
+  "baseline_evidence_reuse": "Authenticate the independent N36 output review, source closure, complete S60 readout/execution, result and publication receipt, and their bound input identities. Reuse independently accepted complete prior readouts as pinned compact inputs for sensitivity. No repeated N8/N12/N16/N24/N32 or N36 raw-response replay inside this new experiment; those already have independent complete verification. Any identity discrepancy stops rather than triggering replay or repair.",
+  "case": {
+    "K_Pa": 49666.666666666664,
+    "common_states": 61,
+    "element_fields": 8,
+    "fixed_probes": 75,
+    "frames_including_actual_initial_state": 121,
+    "full_axial_endpoint_m": -0.0007337385,
+    "full_height_m": 0.00489159,
+    "interpretation": "Static load-increment/equilibrium verification, not temporal tissue dynamics.",
+    "mesh_N": 36,
+    "midplane_nodes": 3961,
+    "mu_Pa": 1000.0,
+    "native_hex8_cells": 34992,
+    "native_midplane_endpoint_m": -0.00036686925,
+    "native_nodes": 39610,
+    "new_mesher_calls": 0,
+    "new_native_solver_calls": 1,
+    "node_fields": 9,
+    "radius_m": 0.004,
+    "reconstructed_full_hex8_cells": 69984,
+    "reconstructed_full_nodes": 75259,
+    "run_id": "compression:N36:S120:reference",
+    "steps": 120,
+    "unchanged_physics": "Original Ogden exponent 2, three-field hex8, laugon0, bonded bottom/free cylindrical side and free tangential midplane; original accepted reconstruction. Mu is a numerical gauge, not an identified material measurement."
+  },
+  "classification_fragility": {
+    "margin_scope": "Endpoint-only scalar perturbation with other mesh levels and other S60 states fixed. Not an all-state error bound or a new acceptance threshold.",
+    "observed_S60_endpoint_margin": {
+      "force_error_bound": false,
+      "interpretation": "fixed-other-state scalar classification sensitivity; compare actual later S120 shifts to this margin, not only its 0.2 percent allowance",
+      "minimum_absolute_loss_delta_N": 8.317139479872837e-07,
+      "negative_loss_delta_N": -8.317139479872837e-07,
+      "positive_loss_delta_N": 1.3257825473393658e-06,
+      "status": "bounded_scalar_decision_margin",
+      "used_as_acceptance_gate": false
+    },
+    "original_step_force_allowance_over_minimum_margin_forecast": 86.9515927089493,
+    "required_reports": [
+      "Report signed endpoint delta against negative loss delta -8.317139479872837e-7 N and positive loss delta 1.3257825473393658e-6 N, including absolute delta/minimum margin ratio. A temporal tolerance pass alone does not establish classification stability.",
+      "Re-evaluate the existing frozen conditional state_diagnostic on all61 common states with N36 replaced by the observed S120 even-index force and N8/12/16/24/32 kept at their accepted S60 values; recompute series-wide original spatial force allowance from all61 N36 S120 common forces. Report every changed eligibility, order-drift, limit-instability, envelope and adjacent force/probe classification.",
+      "Label the substitution mixed-step sensitivity only, never a new homogeneous spatial convergence study. Preserve the original S60 comparison byte-for-byte. Stable classification supports this compression candidate only; it does not bound temporal error at other mesh levels or certify the continuum."
+    ]
+  },
+  "deck_and_readout_contract": [
+    "Reuse immutable accepted full/half mesh bytes and reconstruction mapping; verify hashes and original source origins. No extraction mutation, new geometry or Gmsh invocation.",
+    "New declaration/adapter only: original deterministic generator at steps120, same accepted half constraints and backend transformation. Allow only steps=120, step_size=dtmin=dtmax=1/120 and 121-point sampling of the same affine load path, with corresponding loading metadata. Canonically verify unchanged Mesh, MeshDomains, Material, Boundary, solver tolerances, backend and output fields; confirm 61 even-index loading coordinates and endpoints equal the S60 grid.",
+    "Keep max_retries=0, output_stride=1, no cutback, no restart and no selective state output. All 121 node/element states including true CB_INIT and all 120 nonzero solver residual states required.",
+    "New N36/S120-only parser/readout wrapper; do not widen legacy or N36/S60 contracts. Reuse streaming record parser, exact printed-time mapping, independent half/full reconstruction and physics mathematics. Never retain 121 complete field arrays.",
+    "All 121 native and reconstructed individual balance, free-DOF, prescribed-motion, sampled-J, residual, reconstruction and 75-probe checks; integrate work/energy on all 121 states. No claim of an unavailable full-native N36 equivalence comparison.",
+    "Keep raw outputs and source-bound readout; authenticate raw logs before and after parsing using existing chunked SHA verification. Do not thin, synthesize, compress/delete active logs or hide odd states."
+  ],
+  "outcomes": {
+    "automatic_next_run_permitted": false,
+    "calibration_released": false,
+    "held_out_torsion_unchanged_and_unopened": true,
+    "if_both_temporal_and_sensitivity_checks_pass": "Finest compression S60/S120 temporal candidate supported. Still not calibration release or physical validation; separate branch/scaling/numerical-evidence decisions remain.",
+    "if_native_or_individual_or_temporal_gate_fails": "Retain partial/negative evidence and stop. No S240, automatic retry, mesh change or recalibration.",
+    "if_original_temporal_gates_pass_but_spatial_sensitivity_changes": "Report temporal tolerance pass and fragile spatial classification; numerical release remains closed pending separate root scientific review. Do not promote either result by relaxing a threshold.",
+    "measured_curves_accessed": false
+  },
+  "prospective_caps_require_separate_root_release": {
+    "aggregate_execution_seconds": 2400,
+    "aggregate_scope": "Source/input preflight, native solve, all121-state readout, comparison, cleanup, result fsync/directory fsync and output scan. Closing receipt timing declared honestly as existing contract; no OS hard-real-time guarantee.",
+    "each_active_run_output_bytes": 1610612736,
+    "each_solver_seconds": 2100,
+    "element_log_maximum_bytes": 536870912,
+    "generated_new_output_bytes": 2147483648,
+    "loading_maximum_bytes": 1048576,
+    "maximum_native_solver_calls": 1,
+    "mesh_and_deck_maximum_bytes_each": 33554432,
+    "new_mesher_calls": 0,
+    "no_retry_resume_or_automatic_budget_increase": true,
+    "node_log_maximum_bytes": 805306368,
+    "pure_deck_preparation_seconds": 60,
+    "runtime_threads": 1,
+    "sampled_process_family_rss_bytes": 3221225472,
+    "solver_log_maximum_bytes": 16777216
+  },
+  "recommendation": "One compression:N36:S120:reference solve on the already accepted N36 half mesh; compare all 61 common states to independently accepted N36 S60. No new mesh or automatic continuation.",
+  "resource_basis": {
+    "assessment": "Old1500s native/1800s aggregate/768MiB active and384/256MiB parser caps are inadequate for the linear projection. Propose2100s native/2400s aggregate/1536MiB active and768/512MiB case-specific parser caps. Retain3GiB sampled RSS and2GiB total: mesh/linear system dimensions unchanged; parser and hash verification already stream. Projection is not guaranteed; cap failure is terminal. New total excludes existing baseline inputs because they are hash-bound references, not copied raw logs.",
+    "forecast_not_observation": {
+      "active_bytes_121_over_61": 1302831933.9344263,
+      "conservative_aggregate_seconds_twice_old_inclusive": 2160.485493331682,
+      "element_bytes_121_over_61": 514241226.5081967,
+      "element_parser_headroom_fraction": 0.04400597292726505,
+      "native_seconds_linear_120_over_60": 1746.6694917497225,
+      "node_bytes_121_over_61": 769165129.3934426,
+      "node_parser_headroom_fraction": 0.046987619726154284
+    },
+    "observed_S60_active_bytes": 656799570,
+    "observed_S60_aggregate_seconds": 1080.242746665841,
+    "observed_S60_elements_bytes": 259245577,
+    "observed_S60_native_seconds": 873.3347458748613,
+    "observed_S60_nodes_bytes": 387760933,
+    "observed_S60_non_native_difference_seconds": 206.9080007909797,
+    "observed_S60_retained_total_bytes": 725949797,
+    "observed_S60_sampled_family_RSS_bytes": 1827356672
+  },
+  "schema": "hbe-n36-s120-prospective-temporal-diagnostic-v1",
+  "scope_of_this_proposal": {
+    "code_or_tests_written": false,
+    "measured_curve_access": false,
+    "mesh_preparation": false,
+    "native_solver_calls": 0,
+    "release_created": false,
+    "response_logs_read": false,
+    "tracked_edits": false
+  },
+  "status": "proposal_only_not_implementation_or_release",
+  "temporal_comparison": {
+    "all_121_individual_checks_required": true,
+    "common_state_mapping": "S60 i=0..60 maps exactly to S120 2*i; both use fraction i/60 and identical full load coordinate. No fitted interpolation.",
+    "force_gate_forecast_using_S60_max_N": 7.231885245574255e-05,
+    "original_force_gate": "max_i abs(deltaF[i]) <= 1.6e-8 N + 0.002*max_i abs(F120[2*i]); the maximum is over the 61 common states, preserving original _refinement_group(kind=step) mathematics.",
+    "original_motion_gate": "max over all61 common states and75 probes of Euclidean norm(u120[2*i,p]-u60[i,p]) <= 8e-7 m (0.8 micrometre).",
+    "signed_force_shift_N": "deltaF[i]=F120[2*i]-F60[i]; publish all61 signed shifts, absolute maximum and its state, and endpoint shift.",
+    "trend": "No temporal monotonicity/order assertion from only two step levels; original temporal comparison does not impose a mesh trend gate."
+  }
+}

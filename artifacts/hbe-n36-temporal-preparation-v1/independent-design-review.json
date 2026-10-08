@@ -1,0 +1,108 @@
+{
+  "blocking_findings": [],
+  "checked_evidence": {
+    "comparison": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/comparison.json",
+      "sha256": "ec4aa11104a88106310766ad9995b3a57a6399180230b467ae8dd3bef0216f1b"
+    },
+    "declaration": {
+      "path": "manifests/experiments/hbe-01-03-halfheight-global-n36-v1.json",
+      "sha256": "1f6e740d9e0e5ce77598db785732d2a17178ef8db79176ee2827930e0638542b"
+    },
+    "execution": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/runs/compression-N36-S60-reference/execution.json",
+      "sha256": "ea36bd4aee4440277695dc2a6d19df2f39b6d14b248554f0ad628cbc04ed672b"
+    },
+    "independent_output_review": {
+      "path": "build/hbe-n36-output-review-v1/verification.json",
+      "sha256": "cb8f66db67560ecc65f35b90b7db6d716e480ae2851b2d3ffff0470a77147bda"
+    },
+    "original_protocol": {
+      "path": "manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+      "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+    },
+    "publication": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/publication-check.json",
+      "sha256": "7d031f6d31805f01c8405e30f17de1d3e9ed8383b0e321190e855fd25af7bb5d"
+    },
+    "readout": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/runs/compression-N36-S60-reference/readout.json",
+      "sha256": "dc39d29b75edc819605a3daddba67ce1741b9cd5d45daa6009262559bfd0a92a"
+    },
+    "result": {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-global-n36-v1/experiment/result.json",
+      "sha256": "7bb71645fe4146af38f8173ae612e55bf226c9699745da15d3b1ddf1d68b9e67"
+    }
+  },
+  "counts_and_denominators": {
+    "N": 36,
+    "all_121_individual_checks_required": true,
+    "native_frames": 121,
+    "native_hex8_cells": 34992,
+    "native_nodes": 39610,
+    "new_mesh_calls": 0,
+    "new_solver_calls": 1,
+    "nonzero_solver_residual_states": 120,
+    "physical_probes": 75,
+    "same_material_endpoints_and_mesh": true,
+    "shared_index_mapping": "S60 i -> S120 2*i for i=0..60, exact load coordinates; no interpolation",
+    "shared_states": 61,
+    "steps": 120
+  },
+  "created_at": "2026-10-08T18:23:48.150366+00:00",
+  "implementation_clarification_before_release": "Explicitly specify whether the 60 s pure-deck preparation cap is nested in the 2400 s aggregate or a separate reported preparation phase. Do not silently omit its cost. This is a clock-scope clarification, not a requested budget increase.",
+  "next_physical_evidence": "After separately required branch/scaling/numerical checks, physical credibility still requires source-authorized actual measured fitting responses and genuinely held-out physical responses under declared roles, geometry, boundary/loading conditions, units and uncertainty. Mu=1000 Pa here is a numerical gauge, not a measured patient parameter. Neither synthetic RL permission nor this temporal result substitutes for physical measurement; no curves are opened by this review.",
+  "preserved_criteria": {
+    "S60_based_force_allowance_forecast_N": 7.231885245574255e-05,
+    "comparison_scope": "61 common states, not an observed error at the 60 newly sampled odd states",
+    "max_common_force_difference_N": "1.6e-8 + 0.002 * max(abs(S120 force at even indices))",
+    "max_common_probe_vector_difference_m": 8e-07
+  },
+  "proposal": {
+    "path": "build/hbe-n36-temporal-design-v1/proposal.json",
+    "sha256": "321367067aed07e94eb55bb16ee524d35951bdf83c2925582eec7a41566a4c13"
+  },
+  "resource_checks": {
+    "active_GiB": 1.5,
+    "aggregate_cap_seconds": 2400,
+    "assessment": "Plausible prospective limits, not upper-bound forecasts. Same mesh/linear-system size and streaming prevent intentional double retention of complete fields; runtime or numerical behavior can still exceed limits. Exactly one attempt; retain failures. Existing baseline raw files are authenticated references, not copied into the new total.",
+    "element_parser_MiB": 512,
+    "element_parser_remaining_MiB": 21.581349841883934,
+    "headroom_fraction_definition": "Proposal uses (cap/projection)-1. This equals 4.70% nodes and 4.40% elements relative to projected bytes; margins relative to caps are 4.49% and 4.22%.",
+    "log_scaling": 1.9836065573770492,
+    "native_cap_seconds": 2100,
+    "native_time_scaling": 2,
+    "new_total_GiB": 2,
+    "node_parser_MiB": 768,
+    "node_parser_remaining_MiB": 34.46697102218377,
+    "projected_active_bytes": 1302831933.9344263,
+    "projected_element_bytes": 514241226.5081967,
+    "projected_native_seconds": 1746.6694917497225,
+    "projected_node_bytes": 769165129.3934426,
+    "sampled_RSS_GiB": 3,
+    "threads": 1,
+    "twice_old_inclusive_seconds_not_a_bound": 2160.485493331682
+  },
+  "review_actions": {
+    "compact_saved_metadata_readouts_only": true,
+    "implementation_edits": 0,
+    "measured_curve_access": false,
+    "new_meshes": 0,
+    "raw_response_reparses": 0,
+    "releases": 0,
+    "solver_calls": 0,
+    "tracked_edits": 0
+  },
+  "schema": "hbe-n36-s120-independent-prospective-design-review-v1",
+  "signed_sensitivity": {
+    "allowance_over_minimum_margin": 86.9515927089493,
+    "negative_loss_delta_N": -8.317139479872837e-07,
+    "positive_loss_delta_N": 1.3257825473393658e-06,
+    "report_only_not_new_error_bound_or_tolerance": true,
+    "required": "Report the actual signed endpoint change and both directional margins; recompute every common-state classification using observed S120 even-index forces and the fixed older S60 levels. Keep this provenance explicitly mixed-step. Preserve original S60 and N32 reports.",
+    "signed_difference": "S120[2*i] minus S60[i]; more negative is stronger compression"
+  },
+  "status": "no_blocking_numerical_design_defect_not_execution_release",
+  "stopping": "Any source, native, individual-state, original temporal or resource failure is terminal; no retry, S240, mesh change or threshold relaxation. A temporal pass with changed mixed-step classification is explicitly fragile and keeps numerical promotion closed pending separate review.",
+  "what_pass_permits": "At most a finest-compression static load-increment candidate on this accepted N36 mesh, with the declared tolerance and mixed-step classification stability reported separately. It cannot establish a homogeneous refined spatial convergence result, continuum accuracy, temporal tissue dynamics, physical fidelity, calibration or patient risk."
+}
