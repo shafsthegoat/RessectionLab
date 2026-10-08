@@ -1,0 +1,2951 @@
+{
+  "schema_version": 1,
+  "id": "synthrad-component-cohort-v1",
+  "prepared_utc": "2026-10-08T21:11:53.134221+00:00",
+  "declaration_status": "PROSPECTIVE_BUILD_DECLARATION_FOR_ROOT_FREEZE_BEFORE_ARCHIVE_PAYLOAD",
+  "source": {
+    "dataset": "SynthRAD2023",
+    "release_record": 7260705,
+    "doi": "10.5281/zenodo.7260705",
+    "version": "0.1",
+    "archive": "Task1.zip"
+  },
+  "scope": "Brain acquired CT/MRI component only; whole archive may be staged as opaque bytes. No current scientific admission.",
+  "identity_source": {
+    "preview_path": "artifacts/synthrad-acquisition-preparation-v1/source-metadata/task1-archive-preview.html",
+    "preview_sha256": "3be973c1871ec9eb3b03665a2cf0a71480e506000ef53fb7bf631801393559ed",
+    "record_path": "artifacts/synthrad-acquisition-preparation-v1/source-metadata/zenodo-record-7260705.json",
+    "record_sha256": "1761a3dc69342aa82bf77cdbaf961bda1698cb4bf06196aad04f7be136afe14b",
+    "observed_brain_ids": 180,
+    "per_center": {
+      "A": 60,
+      "B": 60,
+      "C": 60
+    },
+    "preview_full_archive_inventory": false,
+    "source_metadata_conflict": "The record prose says Task1 brain center B lacked MRI, but its training table and actual archive preview both enumerate 60 brain subjects in A/B/C; no correction of publisher text is claimed."
+  },
+  "split": {
+    "algorithm": "SHA256 of UTF-8(namespace + exact subject_id); ascending hash then subject_id within anonymous center; one-based ranks 1..42 TRAIN, 43..51 SELECT, 52..60 MEASUREMENT_EVAL",
+    "namespace": "RessectionLab:SynthRAD2023:component:v1|",
+    "counts": {
+      "TRAIN": 126,
+      "SELECT": 27,
+      "MEASUREMENT_EVAL": 27
+    },
+    "per_center_counts": {
+      "TRAIN": 42,
+      "SELECT": 9,
+      "MEASUREMENT_EVAL": 9
+    },
+    "pixels_outcomes_used": false,
+    "clinical_stratification": false,
+    "held_out_institution_claim": false
+  },
+  "family_policy": {
+    "within_release": "All CT, MRI, masks, overview images and future derivatives of an enumerated subject inherit its one role. Source challenge TRAIN is distinct from project roles.",
+    "same_source_rerelease": "Matching proven patient identities across rereleases inherit this role; changed identifiers require a crosswalk before joint admission.",
+    "task2": "Not acquired. Task1 and Task2 patients need not be the same; neither disjointness nor identity is inferred from task-prefixed numbers.",
+    "other_release_or_dataset": "Overlap with other SynthRAD releases or same-institution cohorts is unresolved. No claim of independent external validation. Conflicts must be resolved before training or measurement admission.",
+    "existing_project_roles": "Unchanged."
+  },
+  "access": {
+    "archive_transport": "Opaque whole-object bytes permitted after root freezes contract; contains mixed project roles and other anatomy.",
+    "current_member_extraction_allowed": false,
+    "current_image_decoding_allowed": false,
+    "future_candidate_admission": "Only explicitly listed acquired brain CT/MRI; only TRAIN may enter a future authorized training/admission workflow. SELECT and MEASUREMENT_EVAL remain protected from tuning.",
+    "all_other_members": "QUARANTINED_UNREVIEWED; no default admission. Unknown identity, generated synthesis output, pelvis, outline mask, spreadsheets and overview pictures are not training admissions.",
+    "role_inheritance_for_outline": "Recorded for ancestry only; no human skull/tumor/vessel-label claim."
+  },
+  "unresolved": [
+    "Source-family/person overlap",
+    "Glioma diagnosis and surgical time",
+    "Tumor and access trajectory evidence",
+    "Calvarium coverage after defacing/cropping",
+    "Native-to-released transforms and anatomical registration accuracy",
+    "Clinical CT intensity/scaling and usable bone contrast",
+    "Clinical applicability and full TRAIN use"
+  ],
+  "members": [
+    {
+      "subject_id": "1BA001",
+      "patient_group": "SynthRAD2023:1BA001",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 28,
+      "identity_sha256": "78fc7bd32fb4cfaa075caa815d6d92d62a1a964a774d2a99179cf5e9cbaf82fd",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA001/ct.nii.gz",
+        "Task1/brain/1BA001/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA001/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA005",
+      "patient_group": "SynthRAD2023:1BA005",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 22,
+      "identity_sha256": "5404b9543a83b602fbbe3aa2ac22ffbb1040da4faf67ef0c7ff1d00c91708106",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA005/ct.nii.gz",
+        "Task1/brain/1BA005/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA005/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA012",
+      "patient_group": "SynthRAD2023:1BA012",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 57,
+      "identity_sha256": "ea7b5bb7d8d662b57c8f9ee819ca876ef80abaa79ad06138ef24b98bd18cfd50",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA012/ct.nii.gz",
+        "Task1/brain/1BA012/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA012/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA014",
+      "patient_group": "SynthRAD2023:1BA014",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 51,
+      "identity_sha256": "d6d0541a08209cb895161abe89322944d72b45021cb2855147647fbd02543e20",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA014/ct.nii.gz",
+        "Task1/brain/1BA014/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA014/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA022",
+      "patient_group": "SynthRAD2023:1BA022",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 46,
+      "identity_sha256": "b5449d2b700f56afc79c045d4672eabab25c747814539921a9ebb8061dff5d74",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA022/ct.nii.gz",
+        "Task1/brain/1BA022/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA022/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA032",
+      "patient_group": "SynthRAD2023:1BA032",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 13,
+      "identity_sha256": "2a61e56349d78a42839ec859dcb8adf67d6166d1929633a6bda33c3248d1c7b6",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA032/ct.nii.gz",
+        "Task1/brain/1BA032/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA032/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA040",
+      "patient_group": "SynthRAD2023:1BA040",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 7,
+      "identity_sha256": "13f4588f9c3bb1a5a3959f109abb0edd087035397deaecbda942324d42e2a08c",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA040/ct.nii.gz",
+        "Task1/brain/1BA040/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA040/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA054",
+      "patient_group": "SynthRAD2023:1BA054",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 20,
+      "identity_sha256": "4eaa9cf940a65a1f66df2999b397c2b6b59f57ca03bb139988dbc82a92104fbe",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA054/ct.nii.gz",
+        "Task1/brain/1BA054/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA054/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA058",
+      "patient_group": "SynthRAD2023:1BA058",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 19,
+      "identity_sha256": "4e2a35bc0c09baab7d316239c7bac4fdf114d6a29d7dd248693bc2a60c39f3e2",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA058/ct.nii.gz",
+        "Task1/brain/1BA058/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA058/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA075",
+      "patient_group": "SynthRAD2023:1BA075",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 52,
+      "identity_sha256": "db4fcbfed9509cdd3b32807d4e41286f1205564d29b13fbe7092b1aac4b63df8",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA075/ct.nii.gz",
+        "Task1/brain/1BA075/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA075/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA076",
+      "patient_group": "SynthRAD2023:1BA076",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 4,
+      "identity_sha256": "08ec98539b167db08f4e34871ba45f31d413924e3fdafb9415a1755716384e97",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA076/ct.nii.gz",
+        "Task1/brain/1BA076/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA076/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA082",
+      "patient_group": "SynthRAD2023:1BA082",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 55,
+      "identity_sha256": "e8dba1b1c232278eb40ae82d18d89508c682bd83070e4bfe2f7b3513ed44e95a",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA082/ct.nii.gz",
+        "Task1/brain/1BA082/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA082/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA085",
+      "patient_group": "SynthRAD2023:1BA085",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 25,
+      "identity_sha256": "648b95bf965e4ef3d27b1f776e6d87b1eae053e5f5ace290e203b7cf61a3c68b",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA085/ct.nii.gz",
+        "Task1/brain/1BA085/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA085/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA091",
+      "patient_group": "SynthRAD2023:1BA091",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 45,
+      "identity_sha256": "abd965710da2bb7f8ea4843e03cd1aaafee5029f3ef1c84e4e3d6d0721f8b70f",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA091/ct.nii.gz",
+        "Task1/brain/1BA091/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA091/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA097",
+      "patient_group": "SynthRAD2023:1BA097",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 58,
+      "identity_sha256": "ee48f1e6e167a0836ee03f1b816e12c004be2294e0fd7cd142b7efa6f0783fae",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA097/ct.nii.gz",
+        "Task1/brain/1BA097/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA097/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA100",
+      "patient_group": "SynthRAD2023:1BA100",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 42,
+      "identity_sha256": "a0f112dc1b37e682bf35832d0e9669d01cc1cb6a0742b2940f2d3ab04bcdae74",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA100/ct.nii.gz",
+        "Task1/brain/1BA100/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA100/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA103",
+      "patient_group": "SynthRAD2023:1BA103",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 29,
+      "identity_sha256": "7b680c0eb9b3d65f0712871bd4dd8d3562cca62f9e509462c7046c25c55a9258",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA103/ct.nii.gz",
+        "Task1/brain/1BA103/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA103/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA105",
+      "patient_group": "SynthRAD2023:1BA105",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 47,
+      "identity_sha256": "bdb9bf45fb378b18233bd6160fcf65099c3893b611e51336dfd1d15a2bfcc94e",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA105/ct.nii.gz",
+        "Task1/brain/1BA105/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA105/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA111",
+      "patient_group": "SynthRAD2023:1BA111",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 41,
+      "identity_sha256": "9bd209b02da160b76cc1a66e89b246e26e8dab952710b77cd5c077f2dfdb786a",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA111/ct.nii.gz",
+        "Task1/brain/1BA111/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA111/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA116",
+      "patient_group": "SynthRAD2023:1BA116",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 31,
+      "identity_sha256": "7ea1a783c7ec0ccea7b51a7123cad742a82167d4b90cfe20e9a16b9b58fb5c63",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA116/ct.nii.gz",
+        "Task1/brain/1BA116/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA116/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA125",
+      "patient_group": "SynthRAD2023:1BA125",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 60,
+      "identity_sha256": "fe76c3a45056d049c2ba1abc12e315eff01c446aea2f58205306b32d3279ebdb",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA125/ct.nii.gz",
+        "Task1/brain/1BA125/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA125/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA131",
+      "patient_group": "SynthRAD2023:1BA131",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 35,
+      "identity_sha256": "8c5c77738251b598c02b65cc4ffd8d8d18116d5b7bb286bb700a79f0f1c5913f",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA131/ct.nii.gz",
+        "Task1/brain/1BA131/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA131/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA141",
+      "patient_group": "SynthRAD2023:1BA141",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 9,
+      "identity_sha256": "1d60c4bc90a49ad551b30ffb2ff389da5d08d58ce3def2d5618a1d78c61151ac",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA141/ct.nii.gz",
+        "Task1/brain/1BA141/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA141/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA143",
+      "patient_group": "SynthRAD2023:1BA143",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 33,
+      "identity_sha256": "890f65d55e33f06d15e5335aa3a2b9a20e9796bc1da5ff581f04b69c99768b20",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA143/ct.nii.gz",
+        "Task1/brain/1BA143/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA143/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA151",
+      "patient_group": "SynthRAD2023:1BA151",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 59,
+      "identity_sha256": "f90bc32f164ca47d179afd683f42c8f3a94d1123858331f8f94d3eccf7280dbd",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA151/ct.nii.gz",
+        "Task1/brain/1BA151/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA151/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA158",
+      "patient_group": "SynthRAD2023:1BA158",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 24,
+      "identity_sha256": "64860cea77935b211e90427c41e1c0296904ff8280a03e86e7c7cfedd373d1ea",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA158/ct.nii.gz",
+        "Task1/brain/1BA158/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA158/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA159",
+      "patient_group": "SynthRAD2023:1BA159",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 56,
+      "identity_sha256": "ea665cce9bb2470c35e1f4c5546879a4e90f4012e2021cd42c37120314d565d0",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA159/ct.nii.gz",
+        "Task1/brain/1BA159/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA159/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA164",
+      "patient_group": "SynthRAD2023:1BA164",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 44,
+      "identity_sha256": "ab7fbfeb6386d13dcfba46272ab5e1ea2cafce14f48d9627fa12f87153c137e1",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA164/ct.nii.gz",
+        "Task1/brain/1BA164/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA164/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA172",
+      "patient_group": "SynthRAD2023:1BA172",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 10,
+      "identity_sha256": "274350426bc96acd78e5c21a154971f08d0f83e9938541394409a878430a5832",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA172/ct.nii.gz",
+        "Task1/brain/1BA172/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA172/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA175",
+      "patient_group": "SynthRAD2023:1BA175",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 15,
+      "identity_sha256": "38dd1e51d51f024eb4a921445124e9a464dbabf875967dfa9fceb2a7075cedbb",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA175/ct.nii.gz",
+        "Task1/brain/1BA175/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA175/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA184",
+      "patient_group": "SynthRAD2023:1BA184",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 43,
+      "identity_sha256": "a474fbe310cd0f70105977039ace9ce2e6d04917ea08dfeae47fc8aa3fa7cc93",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA184/ct.nii.gz",
+        "Task1/brain/1BA184/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA184/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA185",
+      "patient_group": "SynthRAD2023:1BA185",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 39,
+      "identity_sha256": "98dcc209830d743418347a2d7d57c7e79405d79959203750e195d1b14165ac6c",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA185/ct.nii.gz",
+        "Task1/brain/1BA185/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA185/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA189",
+      "patient_group": "SynthRAD2023:1BA189",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 36,
+      "identity_sha256": "9031bf4dfd78a30e4377ef40cf2ad795abfbb89ec4a6df7e2a131adf0ef59a8d",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA189/ct.nii.gz",
+        "Task1/brain/1BA189/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA189/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA201",
+      "patient_group": "SynthRAD2023:1BA201",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 5,
+      "identity_sha256": "0b8b3517c7e5ea75fcd75eb541d06385aae5cd14631c93335deeedad2b6a3306",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA201/ct.nii.gz",
+        "Task1/brain/1BA201/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA201/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA206",
+      "patient_group": "SynthRAD2023:1BA206",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 32,
+      "identity_sha256": "7fca0a96d67d3dc268930aee5d465c86c0d6e2067fb15cd12ac172d15376d1bd",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA206/ct.nii.gz",
+        "Task1/brain/1BA206/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA206/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA220",
+      "patient_group": "SynthRAD2023:1BA220",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 54,
+      "identity_sha256": "dda27645a0c6e10ef1de365e05008a0154847306f04d391c12711f74f2e5d5a0",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA220/ct.nii.gz",
+        "Task1/brain/1BA220/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA220/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA222",
+      "patient_group": "SynthRAD2023:1BA222",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 14,
+      "identity_sha256": "2e367fa6fbee3066988718a815d5fbf927acf01ec6c2b5f43d2c9b6a58e3f888",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA222/ct.nii.gz",
+        "Task1/brain/1BA222/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA222/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA227",
+      "patient_group": "SynthRAD2023:1BA227",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 34,
+      "identity_sha256": "8c1d09f46d3263f56996f6a0921a777badeb2f3f8d36d419cf52158cc1e0021f",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA227/ct.nii.gz",
+        "Task1/brain/1BA227/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA227/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA234",
+      "patient_group": "SynthRAD2023:1BA234",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 49,
+      "identity_sha256": "cf5446f172983e51b64b43f47b3b7c07d27ff6df1d05c1c7580cc3fe9fd843e5",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA234/ct.nii.gz",
+        "Task1/brain/1BA234/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA234/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA239",
+      "patient_group": "SynthRAD2023:1BA239",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 40,
+      "identity_sha256": "9b9e2acf042a07b640ea012b8d07fb2a694715903fd9066a321f7af982cd285d",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA239/ct.nii.gz",
+        "Task1/brain/1BA239/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA239/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA247",
+      "patient_group": "SynthRAD2023:1BA247",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 11,
+      "identity_sha256": "275847a3e2419bf905314709507eed75b893afee772bd94b7cdbd5df68878951",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA247/ct.nii.gz",
+        "Task1/brain/1BA247/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA247/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA253",
+      "patient_group": "SynthRAD2023:1BA253",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 2,
+      "identity_sha256": "052041d4facec5379b80e7bb93b78778173e5f89886d724a6e29c79eb0f83d22",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA253/ct.nii.gz",
+        "Task1/brain/1BA253/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA253/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA256",
+      "patient_group": "SynthRAD2023:1BA256",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 16,
+      "identity_sha256": "3a0329fa2c24c461676043a332070bce6e5ce5bc1899fdb29e221929193bb71e",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA256/ct.nii.gz",
+        "Task1/brain/1BA256/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA256/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA260",
+      "patient_group": "SynthRAD2023:1BA260",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 6,
+      "identity_sha256": "119af5fa942e7a4f4c5740890fa680861a9fb7b2b33a3b7942ad8c47eb1990ad",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA260/ct.nii.gz",
+        "Task1/brain/1BA260/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA260/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA266",
+      "patient_group": "SynthRAD2023:1BA266",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 18,
+      "identity_sha256": "4aa2f6f315e1463fc0864174c5a1a874fcdd5f933cdf5a1d77c0c848844b1b05",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA266/ct.nii.gz",
+        "Task1/brain/1BA266/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA266/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA278",
+      "patient_group": "SynthRAD2023:1BA278",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 27,
+      "identity_sha256": "72b6c4ab54f77ccb5f3d727849efa0afd2e7c0cce477d8633231b324d4fbaba0",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA278/ct.nii.gz",
+        "Task1/brain/1BA278/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA278/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA288",
+      "patient_group": "SynthRAD2023:1BA288",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 38,
+      "identity_sha256": "930c673e8d520af2cce2ff4239301d8ec66a219e317ffa4d3b78086ff77df7b7",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA288/ct.nii.gz",
+        "Task1/brain/1BA288/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA288/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA292",
+      "patient_group": "SynthRAD2023:1BA292",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 50,
+      "identity_sha256": "d3d67ab218671068bbf565165fe9b5cd459397276b71102b5dbb641f21829522",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA292/ct.nii.gz",
+        "Task1/brain/1BA292/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA292/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA294",
+      "patient_group": "SynthRAD2023:1BA294",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 12,
+      "identity_sha256": "27868b44767c9351d24682f9ab92d63fdec0ffc18fa3f962f0a3e3ab3c729192",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA294/ct.nii.gz",
+        "Task1/brain/1BA294/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA294/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA300",
+      "patient_group": "SynthRAD2023:1BA300",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 17,
+      "identity_sha256": "413d18357b80b9cd3dce57505593814b2e67dbca9d62636c8c41d192b1f2bf96",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA300/ct.nii.gz",
+        "Task1/brain/1BA300/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA300/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA305",
+      "patient_group": "SynthRAD2023:1BA305",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 37,
+      "identity_sha256": "9239bb27634ac42a3b0fd3bfdeffb66122dd96e857590fc028f712fb996ce768",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA305/ct.nii.gz",
+        "Task1/brain/1BA305/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA305/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA307",
+      "patient_group": "SynthRAD2023:1BA307",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 8,
+      "identity_sha256": "1b4e988d09f580671a7d8408fb886b1a8f4c0c38c8d3c9ef1055bf2aa8168c74",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA307/ct.nii.gz",
+        "Task1/brain/1BA307/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA307/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA325",
+      "patient_group": "SynthRAD2023:1BA325",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 48,
+      "identity_sha256": "c0d26b5d459a17b39da1e9f119fbfb68e8b611ba816e26a7c408ff65f60f0987",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA325/ct.nii.gz",
+        "Task1/brain/1BA325/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA325/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA328",
+      "patient_group": "SynthRAD2023:1BA328",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 3,
+      "identity_sha256": "06edab96a1958f5c7eb8deef0f3f18064f1a4b522e40b6254070105d0229dc14",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA328/ct.nii.gz",
+        "Task1/brain/1BA328/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA328/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA336",
+      "patient_group": "SynthRAD2023:1BA336",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 1,
+      "identity_sha256": "047a747b201536601507acd58496f691112d454b6ae811acb925ee76cf2ac578",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA336/ct.nii.gz",
+        "Task1/brain/1BA336/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA336/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA345",
+      "patient_group": "SynthRAD2023:1BA345",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 26,
+      "identity_sha256": "68ceb5d6967757c4cb6073181196e20c7f2c2d7892d04dc4943edad20fff1419",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA345/ct.nii.gz",
+        "Task1/brain/1BA345/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA345/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA358",
+      "patient_group": "SynthRAD2023:1BA358",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 21,
+      "identity_sha256": "4f72a4f0894eebfc3cd900dfbf303aaa4c806659fcdb7cfd5aad6a4db778855f",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA358/ct.nii.gz",
+        "Task1/brain/1BA358/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA358/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA359",
+      "patient_group": "SynthRAD2023:1BA359",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 23,
+      "identity_sha256": "61c9801f893d2e6538ac9211b47c21928e8e0bd98a17f6315d9f7a8476c3af2f",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA359/ct.nii.gz",
+        "Task1/brain/1BA359/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA359/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA368",
+      "patient_group": "SynthRAD2023:1BA368",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 53,
+      "identity_sha256": "dd785e1bbc726ffe987d89bd363c396a8e7356a1c05fff73ca533978a2e4f002",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA368/ct.nii.gz",
+        "Task1/brain/1BA368/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA368/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BA379",
+      "patient_group": "SynthRAD2023:1BA379",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "A",
+      "rank_within_center": 30,
+      "identity_sha256": "7c79ac82da7baf5f934858516e1e90e016282085cbac34a2ac970c2692a7e6d8",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BA379/ct.nii.gz",
+        "Task1/brain/1BA379/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BA379/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB002",
+      "patient_group": "SynthRAD2023:1BB002",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 45,
+      "identity_sha256": "ace35583b682fec7c6de4c218af4fe76963c478722986a68d6f54998b3646d62",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB002/ct.nii.gz",
+        "Task1/brain/1BB002/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB002/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB003",
+      "patient_group": "SynthRAD2023:1BB003",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 11,
+      "identity_sha256": "2c28774a4cbbd8f82e104ccd7865acbee39c1d8868fbbc86bdd644d49940912d",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB003/ct.nii.gz",
+        "Task1/brain/1BB003/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB003/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB005",
+      "patient_group": "SynthRAD2023:1BB005",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 38,
+      "identity_sha256": "926820e28dc55ce569053b3224ed233b92e32eb2c7386e1e0285ef719f136804",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB005/ct.nii.gz",
+        "Task1/brain/1BB005/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB005/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB006",
+      "patient_group": "SynthRAD2023:1BB006",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 40,
+      "identity_sha256": "9a7f185afcb80b842396da3489b4c261d82fd70d4664af26960b77b518089a1c",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB006/ct.nii.gz",
+        "Task1/brain/1BB006/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB006/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB007",
+      "patient_group": "SynthRAD2023:1BB007",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 46,
+      "identity_sha256": "b32ab59f8cb865d4367b8b07c2be8fcfea8d137bcf2088e654c21d2635736898",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB007/ct.nii.gz",
+        "Task1/brain/1BB007/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB007/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB008",
+      "patient_group": "SynthRAD2023:1BB008",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 10,
+      "identity_sha256": "2a627bcf7f4ef68d4d765e5e851f863680e67978c5b694ec00ddee44a895d2bf",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB008/ct.nii.gz",
+        "Task1/brain/1BB008/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB008/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB011",
+      "patient_group": "SynthRAD2023:1BB011",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 23,
+      "identity_sha256": "5fcbd93420cb6660a4788172c8943c879e8ae96ab652991bcfed04f2347f7cd9",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB011/ct.nii.gz",
+        "Task1/brain/1BB011/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB011/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB016",
+      "patient_group": "SynthRAD2023:1BB016",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 4,
+      "identity_sha256": "09c2be2ff9e2d0561029df3972829ae9da3a056fc9c13c28b0155cc1ad8434f4",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB016/ct.nii.gz",
+        "Task1/brain/1BB016/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB016/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB017",
+      "patient_group": "SynthRAD2023:1BB017",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 39,
+      "identity_sha256": "9931a4a66f220c6daedbf8f181ca05069841eedad3444ac0bffc3eb0dce61003",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB017/ct.nii.gz",
+        "Task1/brain/1BB017/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB017/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB026",
+      "patient_group": "SynthRAD2023:1BB026",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 44,
+      "identity_sha256": "aabf17c983f9f9751d24cae862514d3ff02a0f555291075c6b5485cd38604614",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB026/ct.nii.gz",
+        "Task1/brain/1BB026/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB026/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB028",
+      "patient_group": "SynthRAD2023:1BB028",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 7,
+      "identity_sha256": "18b08c8de9c09c87b31fa84e40770eb726c77296de9b0f38f951480e4aaec063",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB028/ct.nii.gz",
+        "Task1/brain/1BB028/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB028/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB030",
+      "patient_group": "SynthRAD2023:1BB030",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 9,
+      "identity_sha256": "28e53b04c43dccf903a1819498d0b5f12705d57d2c145e166fbd35ec08824d64",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB030/ct.nii.gz",
+        "Task1/brain/1BB030/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB030/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB031",
+      "patient_group": "SynthRAD2023:1BB031",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 27,
+      "identity_sha256": "6fcd9b2ead4176c43904f50dad94e56a2d2528f4355f42a9f8f050fcea467120",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB031/ct.nii.gz",
+        "Task1/brain/1BB031/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB031/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB033",
+      "patient_group": "SynthRAD2023:1BB033",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 1,
+      "identity_sha256": "0177bd09c9e95705f2eaa8567db37d0a10643198d5e81b3daf5aacf40dc94459",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB033/ct.nii.gz",
+        "Task1/brain/1BB033/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB033/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB034",
+      "patient_group": "SynthRAD2023:1BB034",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 57,
+      "identity_sha256": "f8bfb4896fc826ef35dda446bbcc55ee7de942ab6c04d6661344afca7fdb9b51",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB034/ct.nii.gz",
+        "Task1/brain/1BB034/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB034/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB039",
+      "patient_group": "SynthRAD2023:1BB039",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 30,
+      "identity_sha256": "75c5fe26410ba71b4f314c0adae85e27e5ed83f11df7994295c8eaf046f38ac2",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB039/ct.nii.gz",
+        "Task1/brain/1BB039/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB039/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB041",
+      "patient_group": "SynthRAD2023:1BB041",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 58,
+      "identity_sha256": "fa2691b16804524c653641df86b38fc0320615c0b9e9f8f012dfc343bce97d32",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB041/ct.nii.gz",
+        "Task1/brain/1BB041/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB041/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB043",
+      "patient_group": "SynthRAD2023:1BB043",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 17,
+      "identity_sha256": "3c52ca90da1116a6a5eb725e381e1b3fec6de850a3f0f5dcf256757ce0776e45",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB043/ct.nii.gz",
+        "Task1/brain/1BB043/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB043/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB044",
+      "patient_group": "SynthRAD2023:1BB044",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 50,
+      "identity_sha256": "d1d9154bc47fff8efa7d6ab7fe2a29bce8cdb00b5469f9f9c61313ddaf73d73f",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB044/ct.nii.gz",
+        "Task1/brain/1BB044/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB044/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB048",
+      "patient_group": "SynthRAD2023:1BB048",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 35,
+      "identity_sha256": "85f5b7c7ebc9bc3d63943d23a8b12152fac89a5917d46e2d566eb430f18da14b",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB048/ct.nii.gz",
+        "Task1/brain/1BB048/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB048/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB049",
+      "patient_group": "SynthRAD2023:1BB049",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 36,
+      "identity_sha256": "8e352774c2975c1aad27d1b2c4f9a0f8d550a50a2f2b6762fc972b76ea40487f",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB049/ct.nii.gz",
+        "Task1/brain/1BB049/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB049/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB050",
+      "patient_group": "SynthRAD2023:1BB050",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 25,
+      "identity_sha256": "6a053751ba4d9289afaec146709f8c442e530fee9b78f9714d22c39e3a52c53f",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB050/ct.nii.gz",
+        "Task1/brain/1BB050/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB050/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB051",
+      "patient_group": "SynthRAD2023:1BB051",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 31,
+      "identity_sha256": "75e254ca33446b2c60d42a0cf229b89155a5ff7af76bd204b8033420e048485f",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB051/ct.nii.gz",
+        "Task1/brain/1BB051/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB051/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB052",
+      "patient_group": "SynthRAD2023:1BB052",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 48,
+      "identity_sha256": "bf5f8e42f62ce9f14f156e9593c9b05c4fcf5224ad6446d60e2af3defed3192d",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB052/ct.nii.gz",
+        "Task1/brain/1BB052/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB052/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB059",
+      "patient_group": "SynthRAD2023:1BB059",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 21,
+      "identity_sha256": "52afd022c35321f38ce35d98e4c60bf753181030eab1752810256a7a81f7aa23",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB059/ct.nii.gz",
+        "Task1/brain/1BB059/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB059/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB062",
+      "patient_group": "SynthRAD2023:1BB062",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 20,
+      "identity_sha256": "45c981b996499b4f7f75fc1e5ff3da05ea7bf11eb0ef52689788b7fc697a76cd",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB062/ct.nii.gz",
+        "Task1/brain/1BB062/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB062/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB066",
+      "patient_group": "SynthRAD2023:1BB066",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 15,
+      "identity_sha256": "30fb5a13a8c8adde91aea95350eea10ddc959d6e940c238d31b04d156f8d6c65",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB066/ct.nii.gz",
+        "Task1/brain/1BB066/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB066/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB071",
+      "patient_group": "SynthRAD2023:1BB071",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 59,
+      "identity_sha256": "fb8bc33cc35283b08b8abe6889ca19239dd48d4f2fcffd27b18ac8ec9d5fef1e",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB071/ct.nii.gz",
+        "Task1/brain/1BB071/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB071/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB072",
+      "patient_group": "SynthRAD2023:1BB072",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 51,
+      "identity_sha256": "da1d7635ec8a16df7fe38efd0400edccf025a93cf8f00347ef020ad96411cc26",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB072/ct.nii.gz",
+        "Task1/brain/1BB072/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB072/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB073",
+      "patient_group": "SynthRAD2023:1BB073",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 12,
+      "identity_sha256": "2d65ea4ebcfb021cc1ec30239fb987cfe39caee1814154ac5583d47b4f20e827",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB073/ct.nii.gz",
+        "Task1/brain/1BB073/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB073/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB075",
+      "patient_group": "SynthRAD2023:1BB075",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 47,
+      "identity_sha256": "bccfa6db5080f32d0d96159c797b66b8cd303cdb35354c1e73e6e9112d49d28e",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB075/ct.nii.gz",
+        "Task1/brain/1BB075/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB075/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB076",
+      "patient_group": "SynthRAD2023:1BB076",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 3,
+      "identity_sha256": "08ccc5314c77f067ae1d8c4c3f9cb8b94ece6ea77342d3e20c8e1ff90948ba69",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB076/ct.nii.gz",
+        "Task1/brain/1BB076/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB076/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB079",
+      "patient_group": "SynthRAD2023:1BB079",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 53,
+      "identity_sha256": "eacdcffd4f5aec215d628b43d966bae9b202ce8758d23d569f4c2c2cb1512cea",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB079/ct.nii.gz",
+        "Task1/brain/1BB079/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB079/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB082",
+      "patient_group": "SynthRAD2023:1BB082",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 13,
+      "identity_sha256": "302fc58760bcb9a09b580f74371bf61b2510e992b281a77585e2231535952324",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB082/ct.nii.gz",
+        "Task1/brain/1BB082/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB082/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB083",
+      "patient_group": "SynthRAD2023:1BB083",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 22,
+      "identity_sha256": "5ac447712bfcf0e71a2128607f2b1350675015c7e66c9729107ee69bdfb77015",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB083/ct.nii.gz",
+        "Task1/brain/1BB083/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB083/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB085",
+      "patient_group": "SynthRAD2023:1BB085",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 49,
+      "identity_sha256": "cb08d90809bddf59a1ff0033d4d72f808cc33e09e0fb999c85f19ce1a6553832",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB085/ct.nii.gz",
+        "Task1/brain/1BB085/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB085/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB090",
+      "patient_group": "SynthRAD2023:1BB090",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 55,
+      "identity_sha256": "f1ae656d2fcfc0ef0b94bc8bd1014275da4d995a3e381cf223dc42576a404cba",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB090/ct.nii.gz",
+        "Task1/brain/1BB090/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB090/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB091",
+      "patient_group": "SynthRAD2023:1BB091",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 6,
+      "identity_sha256": "18194957d178d470f58880044f5fd0474b9189e90ee5bb08a1489c2a336329f3",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB091/ct.nii.gz",
+        "Task1/brain/1BB091/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB091/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB095",
+      "patient_group": "SynthRAD2023:1BB095",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 54,
+      "identity_sha256": "ecad80840890837c2ffc0b3ada1d9d4476766b9334efce1403a7934ef8ce2113",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB095/ct.nii.gz",
+        "Task1/brain/1BB095/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB095/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB096",
+      "patient_group": "SynthRAD2023:1BB096",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 14,
+      "identity_sha256": "30929a7c58c6061526b3ede52846a89f76c9e02095a1308257f7f5f6b694cc9b",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB096/ct.nii.gz",
+        "Task1/brain/1BB096/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB096/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB098",
+      "patient_group": "SynthRAD2023:1BB098",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 26,
+      "identity_sha256": "6ba934942db5bab831e4d529f5ce90993e7f1b915d7dc81dc926f061b12bceb7",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB098/ct.nii.gz",
+        "Task1/brain/1BB098/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB098/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB099",
+      "patient_group": "SynthRAD2023:1BB099",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 19,
+      "identity_sha256": "43636b4bd1bd044b5e2ed144bec72a98602f0ec07b575614d798e99e33179fcd",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB099/ct.nii.gz",
+        "Task1/brain/1BB099/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB099/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB100",
+      "patient_group": "SynthRAD2023:1BB100",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 5,
+      "identity_sha256": "125971ca39c5b5fe47d2d45dc4a6f148c3829efaf94e7cc8675887e33dad5fd2",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB100/ct.nii.gz",
+        "Task1/brain/1BB100/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB100/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB102",
+      "patient_group": "SynthRAD2023:1BB102",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 18,
+      "identity_sha256": "41895b70b4634a8a97875b70a4f5d7cba1ca0122f31bf8029c8034de5360191b",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB102/ct.nii.gz",
+        "Task1/brain/1BB102/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB102/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB109",
+      "patient_group": "SynthRAD2023:1BB109",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 37,
+      "identity_sha256": "917273dfc6aaaa1fd47ac0b4694cc139dcf300ba7ace4f819efd4be51d86a995",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB109/ct.nii.gz",
+        "Task1/brain/1BB109/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB109/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB111",
+      "patient_group": "SynthRAD2023:1BB111",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 52,
+      "identity_sha256": "e10478a7877cb4211ff45e98556435d3f60fb1986d005a203ba9de684b526ed4",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB111/ct.nii.gz",
+        "Task1/brain/1BB111/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB111/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB145",
+      "patient_group": "SynthRAD2023:1BB145",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 28,
+      "identity_sha256": "70331e6dc54d415975cfa7cba229bbe1244e99ada9d9164868ae4dff10d4126e",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB145/ct.nii.gz",
+        "Task1/brain/1BB145/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB145/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB151",
+      "patient_group": "SynthRAD2023:1BB151",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 8,
+      "identity_sha256": "1aa26c39334f345fdd54926c8a4ca82c85ca76c8e5ac4299ae344a65dd5f8764",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB151/ct.nii.gz",
+        "Task1/brain/1BB151/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB151/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB152",
+      "patient_group": "SynthRAD2023:1BB152",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 42,
+      "identity_sha256": "9cc23f176891bc5cfe9e2e854d9eeb16086d12d11aa5de835db4982e9907902b",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB152/ct.nii.gz",
+        "Task1/brain/1BB152/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB152/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB171",
+      "patient_group": "SynthRAD2023:1BB171",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 43,
+      "identity_sha256": "a378d5febd8fba294af0d1697c0f973790e4bdf25f38dd4f2731bfea8aef9fe6",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB171/ct.nii.gz",
+        "Task1/brain/1BB171/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB171/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB173",
+      "patient_group": "SynthRAD2023:1BB173",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 60,
+      "identity_sha256": "fbf7d1367a6c0b3b82f9102442ebe2aac26a8e6bd23e4d6f1fbb0531844d4379",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB173/ct.nii.gz",
+        "Task1/brain/1BB173/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB173/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB175",
+      "patient_group": "SynthRAD2023:1BB175",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 41,
+      "identity_sha256": "9bba55003ea5f02aadc61aa0e418a7e952cca76fe4c5abcaa377529bf1fae3d7",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB175/ct.nii.gz",
+        "Task1/brain/1BB175/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB175/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB177",
+      "patient_group": "SynthRAD2023:1BB177",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 2,
+      "identity_sha256": "077d37fba41f446330b1ec6037d97b193e7e16079d0a3460d97ef4941a890796",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB177/ct.nii.gz",
+        "Task1/brain/1BB177/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB177/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB179",
+      "patient_group": "SynthRAD2023:1BB179",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 16,
+      "identity_sha256": "31857e3764cf8fdbe5a18a0fd267d46d373d5118ccd61ef40202104a35a60d84",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB179/ct.nii.gz",
+        "Task1/brain/1BB179/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB179/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB182",
+      "patient_group": "SynthRAD2023:1BB182",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 29,
+      "identity_sha256": "71fbc2f895ab7067493915be442cca1909f8984a68df4d0df06a42585b19d6c3",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB182/ct.nii.gz",
+        "Task1/brain/1BB182/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB182/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB184",
+      "patient_group": "SynthRAD2023:1BB184",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 24,
+      "identity_sha256": "64bed67013975e02b025868337e2c63e791f849f972393763e580568ac2441f6",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB184/ct.nii.gz",
+        "Task1/brain/1BB184/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB184/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB189",
+      "patient_group": "SynthRAD2023:1BB189",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 56,
+      "identity_sha256": "f34c31369517f63ad180f03954f7c34d26acf89711610478959643d5a04cb5c2",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB189/ct.nii.gz",
+        "Task1/brain/1BB189/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB189/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB198",
+      "patient_group": "SynthRAD2023:1BB198",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 32,
+      "identity_sha256": "7f2c17e5abbcaf78a046a7aeb9502371e2cfb27ddec658aa98d57e87e56a3e83",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB198/ct.nii.gz",
+        "Task1/brain/1BB198/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB198/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB200",
+      "patient_group": "SynthRAD2023:1BB200",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 33,
+      "identity_sha256": "81a194085b46d994dfc0f30d126da6c9aeb6373eed8cafda06b9416308914eb8",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB200/ct.nii.gz",
+        "Task1/brain/1BB200/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB200/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BB205",
+      "patient_group": "SynthRAD2023:1BB205",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "B",
+      "rank_within_center": 34,
+      "identity_sha256": "841a3e41343b306f0b507b3e66ad31581478e2dbb4803819f984f1d6a6731b03",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BB205/ct.nii.gz",
+        "Task1/brain/1BB205/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BB205/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC001",
+      "patient_group": "SynthRAD2023:1BC001",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 41,
+      "identity_sha256": "a6af8965b6f3bfcc6f5f44d74a633578ab9b3de81f2f3cdd8a8bc8db4e4ecaac",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC001/ct.nii.gz",
+        "Task1/brain/1BC001/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC001/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC004",
+      "patient_group": "SynthRAD2023:1BC004",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 37,
+      "identity_sha256": "96047246d2cb93d896cc0be9b5a9306c51a25cac2aaf058b7d610eb0052d7add",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC004/ct.nii.gz",
+        "Task1/brain/1BC004/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC004/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC006",
+      "patient_group": "SynthRAD2023:1BC006",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 43,
+      "identity_sha256": "a9ba11c1828ea04162297e69a4abff109f1407fa02fb74afe65a77abe2cd8e93",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC006/ct.nii.gz",
+        "Task1/brain/1BC006/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC006/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC007",
+      "patient_group": "SynthRAD2023:1BC007",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 48,
+      "identity_sha256": "ce3741aa1b7194e2299a779c2b4f3ca220c3a10e4ef4442cc09cafcfef1e700b",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC007/ct.nii.gz",
+        "Task1/brain/1BC007/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC007/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC008",
+      "patient_group": "SynthRAD2023:1BC008",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 13,
+      "identity_sha256": "32722a076d3b0904b72ba44002f7ecb360c3032ba138545218b2cba685c84737",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC008/ct.nii.gz",
+        "Task1/brain/1BC008/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC008/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC009",
+      "patient_group": "SynthRAD2023:1BC009",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 12,
+      "identity_sha256": "30eca4d5303d50b2468c5bb3a0590068e8582dd4c2c3ab0530cf719450acd3e7",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC009/ct.nii.gz",
+        "Task1/brain/1BC009/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC009/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC010",
+      "patient_group": "SynthRAD2023:1BC010",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 60,
+      "identity_sha256": "ff004a191c8316ddf8f65989ec07752638154e4d1dcb10e9df79ae7f7e0df05e",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC010/ct.nii.gz",
+        "Task1/brain/1BC010/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC010/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC014",
+      "patient_group": "SynthRAD2023:1BC014",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 15,
+      "identity_sha256": "34aa41eaf522a69b28de55a349c237d98822743fd086b9f8edc3dfa40e7e6261",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC014/ct.nii.gz",
+        "Task1/brain/1BC014/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC014/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC017",
+      "patient_group": "SynthRAD2023:1BC017",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 14,
+      "identity_sha256": "349359ef0849c7237c91fc68f075176ebbf15b9ab7f60e11209198e6640d1351",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC017/ct.nii.gz",
+        "Task1/brain/1BC017/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC017/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC019",
+      "patient_group": "SynthRAD2023:1BC019",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 39,
+      "identity_sha256": "a1f27493f99c30eaa99ceafce1ce1d1be34d2337618a5a4d41d30832641150e2",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC019/ct.nii.gz",
+        "Task1/brain/1BC019/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC019/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC020",
+      "patient_group": "SynthRAD2023:1BC020",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 20,
+      "identity_sha256": "5649ef4d337fd6d79b5842c6e58f37ca7b95387e3e64bf1573cb53d000fd3dc7",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC020/ct.nii.gz",
+        "Task1/brain/1BC020/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC020/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC021",
+      "patient_group": "SynthRAD2023:1BC021",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 4,
+      "identity_sha256": "0953fd8008b15d14288bd0d3858728e8eca76460496308a0f1a8bdabaf286a34",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC021/ct.nii.gz",
+        "Task1/brain/1BC021/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC021/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC022",
+      "patient_group": "SynthRAD2023:1BC022",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 7,
+      "identity_sha256": "1c0a886329edf96846a69a792c268b401976a4b031b8a597d16fb1846b98e1db",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC022/ct.nii.gz",
+        "Task1/brain/1BC022/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC022/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC023",
+      "patient_group": "SynthRAD2023:1BC023",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 33,
+      "identity_sha256": "843eda2598706bade879832109cef1dc1aaa87d21ef3261704ae3b33b6e718d8",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC023/ct.nii.gz",
+        "Task1/brain/1BC023/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC023/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC025",
+      "patient_group": "SynthRAD2023:1BC025",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 26,
+      "identity_sha256": "724a14fd62781878e22429c9dec4b1c2b96f475602b0927e67d4fde4d5fd09eb",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC025/ct.nii.gz",
+        "Task1/brain/1BC025/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC025/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC027",
+      "patient_group": "SynthRAD2023:1BC027",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 10,
+      "identity_sha256": "28954d23f0ff7164e57f729dbc11de900bc78de1cf5df2d2399cc9a907e8d6b7",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC027/ct.nii.gz",
+        "Task1/brain/1BC027/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC027/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC028",
+      "patient_group": "SynthRAD2023:1BC028",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 2,
+      "identity_sha256": "04be7922831505fadd922ba1249a2a2a2ec5ab9d5fc300e23ce4ab1557786467",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC028/ct.nii.gz",
+        "Task1/brain/1BC028/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC028/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC031",
+      "patient_group": "SynthRAD2023:1BC031",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 45,
+      "identity_sha256": "b5c7773c85a30857fba62311db945bbe323bd21cf7acd4faaf8409ac18c251d6",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC031/ct.nii.gz",
+        "Task1/brain/1BC031/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC031/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC034",
+      "patient_group": "SynthRAD2023:1BC034",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 9,
+      "identity_sha256": "287e34da82e0a248356e34d24fbe0baeea51e4396ddc6e933a52e5a75939574f",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC034/ct.nii.gz",
+        "Task1/brain/1BC034/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC034/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC035",
+      "patient_group": "SynthRAD2023:1BC035",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 44,
+      "identity_sha256": "acc140cc751307eb15230ab6bdbfb9f0ee025a7afd2e706ac88ce2ffa24dd3e5",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC035/ct.nii.gz",
+        "Task1/brain/1BC035/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC035/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC036",
+      "patient_group": "SynthRAD2023:1BC036",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 8,
+      "identity_sha256": "28493e29a2ff32e1a6564a1d49d8e45f7d9039744b38901a69fc4562bbbd9ba6",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC036/ct.nii.gz",
+        "Task1/brain/1BC036/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC036/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC037",
+      "patient_group": "SynthRAD2023:1BC037",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 46,
+      "identity_sha256": "ca1682c17a912d5dac93bc03112e37f7246bddb432d504aa076bf90acab6cb09",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC037/ct.nii.gz",
+        "Task1/brain/1BC037/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC037/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC038",
+      "patient_group": "SynthRAD2023:1BC038",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 28,
+      "identity_sha256": "74cad9809af52c448754a26bdcaf2e7d26622bd27709df72d6c4caa287906655",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC038/ct.nii.gz",
+        "Task1/brain/1BC038/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC038/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC039",
+      "patient_group": "SynthRAD2023:1BC039",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 47,
+      "identity_sha256": "caa2479969f50ebbcbd003f8120e468f943b4ff7b1e03cc0f04b811b4664bb1e",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC039/ct.nii.gz",
+        "Task1/brain/1BC039/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC039/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC041",
+      "patient_group": "SynthRAD2023:1BC041",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 3,
+      "identity_sha256": "073f260cc35783e15b881d7527081a1d56bf5c15973102df9868df559c4d20bd",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC041/ct.nii.gz",
+        "Task1/brain/1BC041/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC041/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC046",
+      "patient_group": "SynthRAD2023:1BC046",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 38,
+      "identity_sha256": "99d03a51404efaa927b6e851d4a72e1a8f9be22d21c0c29a2317190fb78e97f0",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC046/ct.nii.gz",
+        "Task1/brain/1BC046/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC046/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC047",
+      "patient_group": "SynthRAD2023:1BC047",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 16,
+      "identity_sha256": "367000276f8b4006be0f8f6b4498687b4030bc333051603985bf576a9bcc4693",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC047/ct.nii.gz",
+        "Task1/brain/1BC047/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC047/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC048",
+      "patient_group": "SynthRAD2023:1BC048",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 59,
+      "identity_sha256": "fca0ce4eede668d03b9257593fef5bc5584b4ed158f4e771c0f4e3a5c74447f7",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC048/ct.nii.gz",
+        "Task1/brain/1BC048/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC048/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC049",
+      "patient_group": "SynthRAD2023:1BC049",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 49,
+      "identity_sha256": "d1940da91700f5d457b914ecde7b9e67d4d8c1e6f99deb0aa1637858c4a16f89",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC049/ct.nii.gz",
+        "Task1/brain/1BC049/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC049/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC050",
+      "patient_group": "SynthRAD2023:1BC050",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 18,
+      "identity_sha256": "47228e32098bce27549c3af22bf28c801f7eb30145092c5c243701072b3f7909",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC050/ct.nii.gz",
+        "Task1/brain/1BC050/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC050/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC051",
+      "patient_group": "SynthRAD2023:1BC051",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 42,
+      "identity_sha256": "a71f7f35e3853d1fd82cb4ce7181234a7531d66a314002ae3ecb8baee28d3139",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC051/ct.nii.gz",
+        "Task1/brain/1BC051/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC051/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC052",
+      "patient_group": "SynthRAD2023:1BC052",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 5,
+      "identity_sha256": "113b76eb01a23194c75f9e7cb85b8d980854cfb7782837139c00df9733bab3ac",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC052/ct.nii.gz",
+        "Task1/brain/1BC052/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC052/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC053",
+      "patient_group": "SynthRAD2023:1BC053",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 27,
+      "identity_sha256": "73f6d598bd52e202e1bdd87716b0ef682286e464943eeaf8c1a2a107b83de641",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC053/ct.nii.gz",
+        "Task1/brain/1BC053/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC053/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC054",
+      "patient_group": "SynthRAD2023:1BC054",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 53,
+      "identity_sha256": "e59dac5af8ee05113827bbd7498a9248fdf8c9236104f88a4a6790d1e5219f3b",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC054/ct.nii.gz",
+        "Task1/brain/1BC054/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC054/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC056",
+      "patient_group": "SynthRAD2023:1BC056",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 32,
+      "identity_sha256": "826266b24849b5207e87de521afb14b2c5c86a6ac554bd53635ed82bbaecfdb7",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC056/ct.nii.gz",
+        "Task1/brain/1BC056/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC056/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC058",
+      "patient_group": "SynthRAD2023:1BC058",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 6,
+      "identity_sha256": "1ba3b9c98e38200dcef78ca4336d97b62200478f1eeb1153fbf28ee2ee7a3094",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC058/ct.nii.gz",
+        "Task1/brain/1BC058/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC058/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC062",
+      "patient_group": "SynthRAD2023:1BC062",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 35,
+      "identity_sha256": "8a4a3f4f04d0b92001182de4edf2c4460194556d96b38b245dacdd42ac40f390",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC062/ct.nii.gz",
+        "Task1/brain/1BC062/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC062/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC063",
+      "patient_group": "SynthRAD2023:1BC063",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 57,
+      "identity_sha256": "f468e3f952c48fa9e4ad1b701b117a9cb3cf10c8f9d23629afce77b00a77db68",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC063/ct.nii.gz",
+        "Task1/brain/1BC063/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC063/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC064",
+      "patient_group": "SynthRAD2023:1BC064",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 56,
+      "identity_sha256": "ef96b548f8cfde2ca2978f2846315dfa4046d186166fe6fcc24d963deaca89c0",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC064/ct.nii.gz",
+        "Task1/brain/1BC064/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC064/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC065",
+      "patient_group": "SynthRAD2023:1BC065",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 23,
+      "identity_sha256": "6a45ef317e1169de8d02fd6027b1da85e2c7ed524a93550e0db7a09225468c42",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC065/ct.nii.gz",
+        "Task1/brain/1BC065/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC065/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC066",
+      "patient_group": "SynthRAD2023:1BC066",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 17,
+      "identity_sha256": "41994c1630031620d3dd6e3a32482bb753597040bc0e1b4d24fe434107a2a854",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC066/ct.nii.gz",
+        "Task1/brain/1BC066/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC066/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC067",
+      "patient_group": "SynthRAD2023:1BC067",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 24,
+      "identity_sha256": "6ff2a8bbd39e88728f0f2624559990c01a5ef6f8a68dd124963b779f37cd6c43",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC067/ct.nii.gz",
+        "Task1/brain/1BC067/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC067/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC068",
+      "patient_group": "SynthRAD2023:1BC068",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 52,
+      "identity_sha256": "dc24349ac6811cce344e4228722d9089860d7fc004087019a34e6534c7e4dc47",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC068/ct.nii.gz",
+        "Task1/brain/1BC068/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC068/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC070",
+      "patient_group": "SynthRAD2023:1BC070",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 11,
+      "identity_sha256": "307d98d19cacb5cbf2b0937d7a4ebe37e1d573202ce17ee4c6523788e0380001",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC070/ct.nii.gz",
+        "Task1/brain/1BC070/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC070/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC073",
+      "patient_group": "SynthRAD2023:1BC073",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 34,
+      "identity_sha256": "896375f9ddc8dee6d1f71f428b04bee70fd16a2bdef7cfca4a84f43f374936d0",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC073/ct.nii.gz",
+        "Task1/brain/1BC073/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC073/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC074",
+      "patient_group": "SynthRAD2023:1BC074",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 55,
+      "identity_sha256": "ed84e819c638a108e8f446bfa28e06c6c4a9fdfeb1601fc823f5e031c43d0a65",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC074/ct.nii.gz",
+        "Task1/brain/1BC074/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC074/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC075",
+      "patient_group": "SynthRAD2023:1BC075",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 19,
+      "identity_sha256": "4bb73be2a35eae32343d7248914836697026fe2248660b573ff78b88c58329a9",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC075/ct.nii.gz",
+        "Task1/brain/1BC075/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC075/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC076",
+      "patient_group": "SynthRAD2023:1BC076",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 25,
+      "identity_sha256": "705b74da81a583d3470c80a8f328ef3c2b019f3c4b3ead696572fff4ddbe09d8",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC076/ct.nii.gz",
+        "Task1/brain/1BC076/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC076/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC077",
+      "patient_group": "SynthRAD2023:1BC077",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 1,
+      "identity_sha256": "01fb1216893a40e014b23cb03db81d42e9e5c1d148fa9c38a5c26db6d886d001",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC077/ct.nii.gz",
+        "Task1/brain/1BC077/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC077/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC080",
+      "patient_group": "SynthRAD2023:1BC080",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 30,
+      "identity_sha256": "792a2a0ce62936b7d0074b76ffd1f553978ec2cdea243f5590319a3361ccc7d5",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC080/ct.nii.gz",
+        "Task1/brain/1BC080/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC080/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC081",
+      "patient_group": "SynthRAD2023:1BC081",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 36,
+      "identity_sha256": "921b684202ca68e63de4eb057c35df613c9b18f52663acfeaf55800ec00eca8e",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC081/ct.nii.gz",
+        "Task1/brain/1BC081/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC081/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC082",
+      "patient_group": "SynthRAD2023:1BC082",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 50,
+      "identity_sha256": "d209650fabbc02140190e10bd6c76e75febfbc3080dddc2955f9cab580688321",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC082/ct.nii.gz",
+        "Task1/brain/1BC082/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC082/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC083",
+      "patient_group": "SynthRAD2023:1BC083",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 54,
+      "identity_sha256": "ed1f25d6d6808c157be80784cd24618b467c782ad5bca61051c8d2c82bc99ff3",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC083/ct.nii.gz",
+        "Task1/brain/1BC083/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC083/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC084",
+      "patient_group": "SynthRAD2023:1BC084",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 22,
+      "identity_sha256": "5c52f5e1a3449ca5de94f5a478c85ec040304335a6b4d322c9cd6bd728bad409",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC084/ct.nii.gz",
+        "Task1/brain/1BC084/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC084/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC085",
+      "patient_group": "SynthRAD2023:1BC085",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 51,
+      "identity_sha256": "d94144f6dcda6f316a21a758e3bba0bf7c795181de263c0b196231f6c074688d",
+      "role": "SELECT",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC085/ct.nii.gz",
+        "Task1/brain/1BC085/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC085/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC086",
+      "patient_group": "SynthRAD2023:1BC086",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 29,
+      "identity_sha256": "784cf01e2685fe6b66ca9c38f65c237b113aa2c8dc64a7036d30c166d5c059f4",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC086/ct.nii.gz",
+        "Task1/brain/1BC086/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC086/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC087",
+      "patient_group": "SynthRAD2023:1BC087",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 58,
+      "identity_sha256": "f5c7bc8d66443e69f35ab5c3a59624d06071fd236a81409a4c473f4dfd46c20a",
+      "role": "MEASUREMENT_EVAL",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC087/ct.nii.gz",
+        "Task1/brain/1BC087/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC087/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC088",
+      "patient_group": "SynthRAD2023:1BC088",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 40,
+      "identity_sha256": "a2ba459db65a00bc4e26fd28ae29a14212d5c44424bfc17b6e59734bb392554d",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC088/ct.nii.gz",
+        "Task1/brain/1BC088/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC088/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC090",
+      "patient_group": "SynthRAD2023:1BC090",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 21,
+      "identity_sha256": "5a5b9202f1fb15b138324100ab91f7e610035808569f630ed4fa67dbdbedaba9",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC090/ct.nii.gz",
+        "Task1/brain/1BC090/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC090/mask.nii.gz"
+    },
+    {
+      "subject_id": "1BC094",
+      "patient_group": "SynthRAD2023:1BC094",
+      "source_family": "SynthRAD2023",
+      "anonymous_center": "C",
+      "rank_within_center": 31,
+      "identity_sha256": "7efc483818cb344ad464ef13871cd3b3e4b6c8cff92c8f03fc98c537593fe819",
+      "role": "TRAIN",
+      "source_challenge_role": "TRAIN",
+      "scientific_admission": "UNRESOLVED",
+      "candidate_acquired_members": [
+        "Task1/brain/1BC094/ct.nii.gz",
+        "Task1/brain/1BC094/mr.nii.gz"
+      ],
+      "derived_outline_member": "Task1/brain/1BC094/mask.nii.gz"
+    }
+  ]
+}

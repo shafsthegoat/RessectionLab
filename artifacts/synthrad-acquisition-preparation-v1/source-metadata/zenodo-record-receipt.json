@@ -1,0 +1,49 @@
+{
+  "derived_extract_of_existing_receipt": true,
+  "parent_path": "build/cfb-supported-transport-followup-v1/metadata-receipts.json",
+  "parent_sha256": "31f2f5ade9308ad016f50d84d69db821ea8fb4f374977772e9a8133cff6700dc",
+  "receipts": [
+    {
+      "name": "synthrad-record.json",
+      "url": "https://zenodo.org/api/records/7260705",
+      "started_utc": "2026-10-08T20:57:28.051225+00:00",
+      "status": 200,
+      "bytes": 21427,
+      "sha256": "1761a3dc69342aa82bf77cdbaf961bda1698cb4bf06196aad04f7be136afe14b",
+      "license": {
+        "id": "cc-by-nc-4.0"
+      },
+      "access_right": "open",
+      "files": [
+        {
+          "id": "efec8c8c-4931-4b3a-a46f-3b536c708de5",
+          "key": "Task2.zip",
+          "size": 10886603058,
+          "checksum": "md5:6d6d90d9851cc424356ef0c0564c92c5",
+          "links": {
+            "self": "https://zenodo.org/api/records/7260705/files/Task2.zip/content"
+          }
+        },
+        {
+          "id": "ed4242bb-da80-4d24-859a-302572dde3ef",
+          "key": "Task1.zip",
+          "size": 14471900926,
+          "checksum": "md5:360bc61e2320d5c5a7145454a81c566a",
+          "links": {
+            "self": "https://zenodo.org/api/records/7260705/files/Task1.zip/content"
+          }
+        },
+        {
+          "id": "1a18a410-fe84-485e-94c3-a401bfb7a7f9",
+          "key": "synthRAD2023_dataset_article.pdf",
+          "size": 2033948,
+          "checksum": "md5:90e596aa18fafba1c34f6376644bdb9c",
+          "links": {
+            "self": "https://zenodo.org/api/records/7260705/files/synthRAD2023_dataset_article.pdf/content"
+          }
+        }
+      ],
+      "elapsed_seconds": 0.603709083
+    }
+  ]
+}

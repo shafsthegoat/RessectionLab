@@ -1,0 +1,231 @@
+{
+  "schema_version": 1,
+  "id": "synthrad-task1-original-archive-v1",
+  "prepared_utc": "2026-10-08T21:11:53.134221+00:00",
+  "state": "PREPARATION_ONLY_NO_ARCHIVE_PAYLOAD_REQUESTED",
+  "scope": "One complete Task1.zip byte object; acquired brain CT/MRI are the sole candidate scientific component. Other members remain unreviewed and no images are opened.",
+  "dataset": {
+    "title": "SynthRAD2023 Grand Challenge dataset: synthetizing computed tomography for radiotherapy",
+    "doi": "10.5281/zenodo.7260705",
+    "release_record": 7260705,
+    "concept_record": 7260704,
+    "version": "0.1",
+    "publication_date": "2023-04-01",
+    "official_metadata_url": "https://zenodo.org/api/records/7260705",
+    "official_record_url": "https://zenodo.org/records/7260705",
+    "institutions": [
+      "Radboud University Medical Center",
+      "University Medical Center Utrecht",
+      "University Medical Center Groningen"
+    ],
+    "anonymous_center_to_institution_mapping": "Not disclosed; no mapping inferred."
+  },
+  "rights": {
+    "access": "open",
+    "license_spdx": "CC-BY-NC-4.0",
+    "license_url": "https://creativecommons.org/licenses/by-nc/4.0/",
+    "permitted_project_scope": "Noncommercial research only under source license; retain attribution, license link and indicate changes when sharing derivatives.",
+    "commercial_product_use_admitted": false,
+    "accounts_agreements_billing_required_for_observed_endpoint": false,
+    "attribution": {
+      "creators": [
+        {
+          "name": "Thummerer, Adrian",
+          "affiliation": "UMC Groningen",
+          "orcid": "0000-0002-1874-5030"
+        },
+        {
+          "name": "van der Bijl, Erik",
+          "affiliation": "Radboud UMC",
+          "orcid": "0000-0001-7663-4390"
+        },
+        {
+          "name": "Maspero, Matteo",
+          "affiliation": "UMC Utrecht",
+          "orcid": "0000-0003-0347-3375"
+        }
+      ],
+      "title": "SynthRAD2023 Grand Challenge dataset: synthetizing computed tomography for radiotherapy",
+      "publication_date": "2023-04-01",
+      "doi": "10.5281/zenodo.7260705",
+      "version": "0.1"
+    },
+    "preprocessing_code_license": "Repository listing reports GPL-3.0 for preprocessing code; that separate code license does not replace dataset CC-BY-NC-4.0."
+  },
+  "sources": [
+    {
+      "id": "synthrad-2023-task1-archive",
+      "source_url": "https://zenodo.org/api/records/7260705/files/Task1.zip/content",
+      "source_path": "Task1.zip",
+      "destination": "data/acquisition/synthrad-task1-v1/verified/Task1.zip",
+      "bytes": 14471900926,
+      "expected_md5": "360bc61e2320d5c5a7145454a81c566a",
+      "publisher_checksum_kind": "md5",
+      "publisher_sha256": null,
+      "measured_sha256": "Record after complete local verification; never present as publisher SHA256.",
+      "provider_file_id": "ed4242bb-da80-4d24-859a-302572dde3ef",
+      "kind": "source_release_archive_of_acquired_images_and_provider_derivatives",
+      "role": "MIXED_PROSPECTIVE_COMPONENT_ROLES_AND_QUARANTINED_OTHER_ANATOMY"
+    }
+  ],
+  "role_source": {
+    "path": "manifests/synthrad-component-cohort-v1.json",
+    "sha256": "3bb4dd48e2e674bd921653d938ec7c7695c77afb8776c517800bbefb6a32ff30"
+  },
+  "cache_root": "data/acquisition/synthrad-task1-v1",
+  "proofs": [
+    {
+      "path": "artifacts/synthrad-acquisition-preparation-v1/source-metadata/cc-by-nc-4.0.html",
+      "bytes": 35271,
+      "sha256": "3f69255e6550c75072122fe7b143143154bf31703cca14fd23e444bfaf12687c"
+    },
+    {
+      "path": "artifacts/synthrad-acquisition-preparation-v1/source-metadata/creator-repositories.json",
+      "bytes": 22513,
+      "sha256": "bfadabe426f526f385b30945fc871602a2a568a8e3d14ffeb84fa6e91b9c6237"
+    },
+    {
+      "path": "artifacts/synthrad-acquisition-preparation-v1/source-metadata/new-metadata-receipts.json",
+      "bytes": 1001,
+      "sha256": "219bba1467a1006216fbbcf2a8a52298efe844f8dc98a5b0c7cc6d1905a69082"
+    },
+    {
+      "path": "artifacts/synthrad-acquisition-preparation-v1/source-metadata/task1-archive-preview.html",
+      "bytes": 298538,
+      "sha256": "3be973c1871ec9eb3b03665a2cf0a71480e506000ef53fb7bf631801393559ed"
+    },
+    {
+      "path": "artifacts/synthrad-acquisition-preparation-v1/source-metadata/zenodo-head-preview-receipts.json",
+      "bytes": 7392,
+      "sha256": "5ffdf515c9de1d32fc8f2b101868655abb6ded0ff10aa5c639e06106d3a91167"
+    },
+    {
+      "path": "artifacts/synthrad-acquisition-preparation-v1/source-metadata/zenodo-record-7260705.json",
+      "bytes": 21427,
+      "sha256": "1761a3dc69342aa82bf77cdbaf961bda1698cb4bf06196aad04f7be136afe14b"
+    },
+    {
+      "path": "artifacts/synthrad-acquisition-preparation-v1/source-metadata/zenodo-record-receipt.json",
+      "bytes": 1677,
+      "sha256": "55d18bbda969d0d1b3ba995204cf7e1497498c0b851b44743950ab3f17dbe935"
+    }
+  ],
+  "claims": {
+    "training_admitted": false,
+    "spatial_planning_admitted": false,
+    "header_qc": "not_run",
+    "geometry_qc": "not_run",
+    "anatomy_qc": "not_run",
+    "decoded_array_bytes": 0,
+    "optimizer_updates": 0,
+    "recorded_rl_transitions": 0
+  },
+  "lineage": {
+    "acquisition_origin": "Provider reports clinical CT and MRI acquired for radiotherapy planning, including T1-weighted MRI. They are acquired images released after preprocessing, not CT generated by a synthesis model.",
+    "provider_preprocessing": [
+      "DICOM to compressed NIfTI",
+      "Rigid registration of CT and MRI",
+      "Face removal for brain patients",
+      "Patient outline segmentation",
+      "Cropping to remove background"
+    ],
+    "original_definition": "Preserve exact publisher archive bytes and released acquired CT/MRI. This is not a claim of untouched scanner DICOM or native geometry.",
+    "mask": "Provider mask is a dilated patient outline; it is not an annotated skull, tumor, vessel, or surgical corridor.",
+    "excluded": [
+      "Generated synthetic CT",
+      "Any synthesis outputs",
+      "Unknown-origin members",
+      "Task2 archive",
+      "Pelvis scientific use",
+      "Provider outline as human anatomical ground truth"
+    ],
+    "transforms_and_model_ancestry": "Exact conversion/registration transforms, preprocessing execution revision and any model dependence are unresolved; no anatomical-fidelity claim."
+  },
+  "transport": {
+    "observed_head": {
+      "method": "HEAD",
+      "url": "https://zenodo.org/api/records/7260705/files/Task1.zip/content",
+      "status": 200,
+      "content_length": 14471900926,
+      "default_verified_tls": true,
+      "body_bytes_read": 0,
+      "started_utc": "2026-10-08T20:58:09.732289+00:00",
+      "last_modified": "Thu, 06 Aug 2026 20:00:09 GMT"
+    },
+    "initial_request": "Ordinary verified-HTTPS whole-object GET with identity encoding, no range and no redirect; require HTTP 200 and exact Content-Length.",
+    "resume": "Only after a retained partial from a real attempt; request bytes=N-(total-1). Require HTTP 206 with exactly bytes N-(total-1)/total and Content-Length total-N before appending staged bytes. Never append a 200 response to an existing prefix.",
+    "range_support_observed": false,
+    "range_probe_needed_before_start": false,
+    "range_failure_behavior": "Retain prefix and failure state, refuse append; do not silently restart or use remote ZIP extraction.",
+    "final_fixity": "Exact 14,471,900,926 bytes and published MD5 360bc61e2320d5c5a7145454a81c566a; additionally measure local SHA256 before atomic publication.",
+    "persistent_state": "One writer lock, source/manifest/helper/client hashes, attempt intents, response headers, elapsed/bytes, cooldowns, results, staged suffixes, append journals, failure/interruption receipts and completion fixity. Never reset attempt count on restart.",
+    "byte_only": "No ZIP extraction, NIfTI reading, overview viewing, registration, training or tuning.",
+    "manual_review_between_chunks": false
+  },
+  "bounds": {
+    "workers": 1,
+    "compressed_cache_bytes": 34359738368,
+    "free_disk_reserve_bytes": 8589934592,
+    "max_attempts_per_object": 3,
+    "network_attempt_seconds": 21600,
+    "supervisor_termination_grace_seconds": 30,
+    "hash_or_recovery_phase_seconds": 1800,
+    "total_campaign_seconds": 86400,
+    "minimum_cooldown_seconds": 900,
+    "retry_after": "Honor longer server Retry-After; persist and defer if beyond campaign deadline.",
+    "memory_stream_chunk_bytes": 1048576,
+    "streaming_rss_target_bytes": 536870912,
+    "headers_per_attempt_bytes": 65536,
+    "worker_log_bytes": 65536,
+    "source_metadata_file_bytes": 2097152,
+    "scope_includes": "All retained partial, staged, verified and metadata/log files, hardlink-inode deduplicated; no decompression allocation.",
+    "disk_reservation": "Existing helper conservatively reserves two times remaining source bytes plus 65,536 before each attempt; initial reservation 28,943,867,388 bytes fits 32 GiB."
+  },
+  "implementation": {
+    "existing_helpers": [
+      {
+        "path": "scripts/acquire_resect_train_originals.py",
+        "bytes": 35108,
+        "sha256": "1c04d548348654700ff4f57ea1aae5312d6269b829edeb15dd7c74c11a0fef50",
+        "change_allowed": false
+      },
+      {
+        "path": "scripts/acquire_resect_cavity.py",
+        "bytes": 22551,
+        "sha256": "6ece649ba346c9e7a0e93af462a91a9bf863728bea3fba83f5eccd681e1d0d51",
+        "change_allowed": false
+      },
+      {
+        "path": "scripts/real_intake_io.py",
+        "bytes": 4305,
+        "sha256": "496821360b1daee79459952f970d299856baacad75fcc57ee589e55115036fd8",
+        "change_allowed": false
+      }
+    ],
+    "minimal_new_tracked_files": [
+      "manifests/synthrad-component-cohort-v1.json",
+      "manifests/synthrad-task1-original-archive-v1.json",
+      "scripts/acquire_synthrad_task1_archive.py",
+      "tests/test_synthrad_task1_archive.py"
+    ],
+    "reuse_functions": [
+      "file_hash",
+      "verify",
+      "header_contract",
+      "prefix_state",
+      "native_fetch",
+      "merge_suffix",
+      "publish",
+      "close_attempt",
+      "recover"
+    ],
+    "new_binding_needed": "New one-archive Queue constructor and attempts validator, manifest/proof/source/client binding and minimal driver. Do not invoke existing RESECT load_manifest/worker/run/CLI or alter module globals; its scope is fixed to RESECT.",
+    "ready_for_execution": false,
+    "remaining_transfer_prerequisites": [
+      "Root freezes/copies these declarations and portable proofs before payload access.",
+      "Implement narrow new runner/Queue binding and focused offline controls using unchanged tested transfer functions.",
+      "Verify preflight source/role/proof/helper/client binding and resource counters, then run continuously within bounds."
+    ],
+    "proposed_command_after_implementation": "PYTHONDONTWRITEBYTECODE=1 .venv/bin/python scripts/acquire_synthrad_task1_archive.py run"
+  }
+}

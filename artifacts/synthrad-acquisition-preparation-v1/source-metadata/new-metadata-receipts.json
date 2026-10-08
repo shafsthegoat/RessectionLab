@@ -1,0 +1,30 @@
+[
+  {
+    "name": "cc-by-nc-4.0.html",
+    "url": "https://creativecommons.org/licenses/by-nc/4.0/",
+    "started_utc": "2026-10-08T21:03:23.371296+00:00",
+    "purpose": "license or creator preprocessing metadata only",
+    "verified_tls": true,
+    "status": 200,
+    "bytes": 35271,
+    "sha256": "3f69255e6550c75072122fe7b143143154bf31703cca14fd23e444bfaf12687c",
+    "elapsed_seconds": 0.077693
+  },
+  {
+    "name": "creator-repositories.json",
+    "url": "https://api.github.com/orgs/SynthRAD2023/repos?per_page=100",
+    "started_utc": "2026-10-08T21:03:23.372169+00:00",
+    "purpose": "license or creator preprocessing metadata only",
+    "verified_tls": true,
+    "status": 200,
+    "bytes": 22513,
+    "sha256": "bfadabe426f526f385b30945fc871602a2a568a8e3d14ffeb84fa6e91b9c6237",
+    "repository_names": [
+      "SynthRAD2023/preprocessing",
+      "SynthRAD2023/metrics",
+      "SynthRAD2023/algorithm-template",
+      "SynthRAD2023/ranking"
+    ],
+    "elapsed_seconds": 0.305802833
+  }
+]
