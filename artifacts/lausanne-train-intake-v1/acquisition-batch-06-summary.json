@@ -1,0 +1,33 @@
+{
+  "status": "time_budget_exhausted",
+  "problem": "Insufficient batch time to start another worker",
+  "local_run": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T070709763045Z",
+  "elapsed_seconds": 598.5174910831265,
+  "attempted_source_bytes": 213831608,
+  "source_size_budget": 268435456,
+  "byte_accounting": "source-size budget, not measured network transfer",
+  "new_complete_people": 4,
+  "new_complete_source_bytes": 213831608,
+  "new_sessions": [
+    "sub-047/ses-20100908",
+    "sub-051/ses-20100920",
+    "sub-052/ses-20100920",
+    "sub-062/ses-20100601"
+  ],
+  "total_complete_people": 20,
+  "total_complete_sessions": 20,
+  "total_complete_source_bytes": 813195818,
+  "remaining_incomplete_train_sessions": 190,
+  "root_reverified_original_fixity_and_retained_source": true,
+  "new_worker_failures": 0,
+  "prior_sub077_partial_still_excluded": true,
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "spatial_admissions": 0,
+  "independent_audit": "independent_policy_audit reverified all20 source receipts, original file fixity, retained source snapshots and frozen TRAIN roles; no image decoding",
+  "not_reverified_inside_timed_batch": 192,
+  "cached_sessions_reverified_by_later_audit": [
+    "sub-450/ses-20141125",
+    "sub-476/ses-20140519"
+  ]
+}

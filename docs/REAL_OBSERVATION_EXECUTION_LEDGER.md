@@ -34,13 +34,13 @@ compact execution record, not a replacement specification.
 
 | Workstream | Verified state / missing evidence | Next implementation or acquisition |
 |---|---|---|
-| Data and anatomy | Lausanne originals are CC0 acquired T1/TOF; 284 people, 296 sessions. Full 199-person/210-session TRAIN index is frozen (10.02 GB). Sixteen original pairs acquired (599,364,210 bytes); sub077 timeout/partial remains excluded. Bounded intake/cache checks pass; no acquisition batch remains running. TOF orientation provenance and interscan alignment unresolved. | Continue remaining 194 TRAIN sessions using the tested runner; separately qualify sub476's source-manual aneurysm annotation. Exclude atlas-derived vessel maps from measurement truth. |
+| Data and anatomy | Lausanne originals are CC0 acquired T1/TOF; 284 people, 296 sessions. Full 199-person/210-session TRAIN index is frozen (10.02 GB). Twenty original pairs acquired (813,195,818 bytes); sub077 timeout/partial remains excluded. One source-manual aneurysm component is prepared for retrospective inspection. TOF scanner-frame provenance and interscan alignment unresolved. | Continue remaining 190 TRAIN sessions and eligible annotation preparation. Exclude atlas-derived vessel maps from measurement truth. |
 | Learning | No inspected historical checkpoint meets the new lineage rule. Scans supply no recorded actions/next observations. RESECT family roles are frozen (14 TRAIN/4 SELECT/4 EVAL/Case4 DEVELOPMENT); the bounded Case3 source/rights/QC runner passes 24 combined controls. A rights-only HTTP429 stopped acquisition. | Archive exact rights text when service permits, then acquire/QC the frozen image/mask before cavity-component fitting. Case4 and missing labels remain protected. No recorded-action cohort acquired or outreach sent. |
-| Navigation / integration | Typed source-bound critical evidence now reaches static/desktop/native planning, coarse exclusions and independent native auditing. Replay bindings and future-history-independent beam ties are checked. Real-source absence/refusal, clock and ordering checks pass; no positive vascular acceptance yet. | Acquire an eligible same-person image/annotation pair and verify positive route changes, coverage and invalidation through the desktop/API. Source declarations still require independent authentication. |
+| Navigation / integration | Typed evidence reaches canonical exclusions and desktop inspection with the actual 193-positive sub476 annotation. Explicit source-grid normalization, unknown background/timing and false planning-admission flags survive replay/export. The focused suite passes 77 checks. | Obtain accepted source-frame/brain-support evidence before claiming positive surgical route changes. This component is aneurysm-only, not whole-vascular or glioma acceptance. |
 | Operative science | Four supplied research reviews are read; proposed mechanisms are not implemented evidence. | Introduce an evidence-timed action/observation timeline with observed events distinct from proposals and model predictions. |
 | Exposure / instruments | Generic capsule tools; hypothetical zero-thickness brain opening; no synchronized pair checking or measured skull/tool bundle. | Acquire same-person skull evidence and device metrology; implement synchronized full-pose checks after contracts. |
-| Tissue / vascular | HBE half-height N8/N12 axial equivalence passed with independent raw-log reconstruction; spatial convergence and RESECT mesh fidelity remain unresolved. No calibrated cutting/bleeding response. MULTIS donor004 run005 is creator-accepted; earlier001 candidate was rejected. Core234 files/343.5 MB identified; authenticated transfer, pairing and spatial transform unverified. | Prospectively declare/review the next HBE spatial-refinement test; no automatic promotion or curve access. Separately resolve MULTIS transfer, freeze donor role and acquire measurement support. Cadaver leg evidence cannot validate brain forces. Retain FEBio; compare SOFA for later interaction. |
-| Physiology | No Pulse/BioGears adapter or validated patient response. VitalDB provides real perioperative signals but is non-neurosurgical. | Inspect actual timestamped infusion/monitor records and rights; implement common-clock/units/conservation contracts without invented baselines. |
+| Tissue / vascular | Three finer axial native runs pass individually; spatial study fails one compression reaction-trend criterion, reproduced independently. Fine motion differences fall below 8 µm. Material calibration remains closed. MULTIS donor004 run005 transfer/fixity remains unresolved. | Use saved force-order/error diagnostics to prospectively resolve the spatial accuracy question before additional mesh sweeps or curve access. Preserve the failed result and all original thresholds. Retain FEBio; compare SOFA for later interaction. |
+| Physiology | VitalDB case3/subject2861 DEVELOPMENT candidate has pinned 6,537,712-byte source metadata. Official native parser inspected; resampling helpers and permissive parse failures cannot certify native timing. No signal payload or validated response. | Follow the [source/parser record](vitaldb-recorded-component-intake.md): bounded local-file numeric importer, then original-record acquisition/QC and common-clock replay; no inferred dose or fabricated baselines. |
 | Independent evaluation | Refusal-only tests and read-only review expose bounded exclusion defects; historical negatives preserved. | Challenge source/role/ancestry and real-case behavior per slice; do not run generated-patient suites as new acceptance evidence. |
 
 ## Guard milestone evidence
@@ -50,13 +50,18 @@ combined checks, including actual-source save/reopen and desktop missing-support
 refusal, plus the existing 42 policy checks. Independent reviews found additional
 consumption and hash-dependent ordering gaps; these are repaired. No generated
 patient, fabricated label, simulator trajectory or learning update was used.
-Positive vascular behavior and clinical coverage remain unproved.
+The subsequent [actual annotation component](../artifacts/lausanne-sub476-annotation-v1/RESULT.md)
+passes 77 combined checks, plus a final 13-check license-binding rerun. Actual
+positives reach canonical exclusions and desktop inspection. The source-grid
+interpretation, inferred units and false scanner/planning admission flags remain
+explicit. Positive surgical route behavior and clinical coverage remain unproved.
 
 The [annotation source audit](critical-annotation-source-audit.md) records a
 specific IXI SynthStrip-lineage exclusion; COSTA's restricted dataset and unresolved
 release rights/ancestry; and TubeTK's documented clinical MRA/tube pair with
 unresolved release metadata. COSTA's separate weights archive is not patient data.
-No label payload was acquired and no existing patient assignment changed.
+One original Lausanne manual mask was subsequently acquired; the other candidate
+labels were not. No existing patient assignment changed.
 
 See [guard receipt](../artifacts/real-observation-policy-v1/RESULT.md).
 No patient fixture, model forward pass, optimizer update or simulator episode was
@@ -130,6 +135,14 @@ before annotation payload inspection. Current totals are16 people/16 sessions,
 review reverified every source receipt, original-file fixity and retained source
 snapshot. All spatial admissions and fitting/IL/RL contributions remain zero.
 
+The sixth [bounded expansion](../artifacts/lausanne-train-intake-v1/acquisition-batch-06-summary.json)
+completed sub047/051/052/062, adding 213,831,608 bytes in 598.517 seconds. It
+stopped before launching another worker; no new worker failed. Root and an
+independent audit reverified all 20 retained receipts (80 files,813,195,818 bytes).
+Cumulative unacquired sessions are190. The batch-specific192-not-reverified
+list also includes cached sub450/sub476, which it did not revisit before the
+time stop; this later audit verified both. The prior sub077 partial stays excluded.
+
 RESECT's official file-version endpoint now resolves revision2 to its explicit
 download route. The [bounded pilot](../artifacts/resect-component-admission-v1/RESULT.md)
 requires the pinned rights README before image/mask acquisition or QC. Its actual
@@ -146,6 +159,10 @@ indentation run005. DataCite confirms the HTTP archive as the official DOI
 destination but supplies no byte fixity or authenticated alternate. The project
 download-index HTTPS attempt timed out. No TLS bypass or scientific payload
 access occurred; authenticated run005 source/fixity remains the next dependency.
+Another four-request RESECT metadata refresh confirmed the exact revision2
+README size and hashes; its official renderer returned HTTP500. The previous
+429 download endpoint was not retried. No exact rights text or new scientific
+payload was acquired, so that source-specific dependency remains open.
 
 ## Numerical mechanics evidence
 
@@ -161,7 +178,18 @@ This is numerical equivalence for the tested symmetric axial branch. The
 earlier spatial-convergence failure and full N24 timeout remain, and the
 1000-Pa modulus is still a numerical gauge. No tissue-force/material accuracy,
 calibration, RL data or finer-mesh acceptance follows. The next spatial study
-requires its own prospective declaration; measured-response partitions stay closed.
+was separately declared and executed; measured-response partitions stay closed.
+
+The [finer axial study](../artifacts/mechanics/hbe-halfheight-spatial-execution-v1/RESULT.md)
+completed three new native cases and exactly replayed five old cases. All new
+individual checks passed; the co-primary spatial comparison failed only the
+compression N12→16→24 force trend. Fine motion changes are4.799680/3.638568 µm;
+all other15 group criteria passed. Total duration365.799 seconds, sampled peak
+memory761,856,000 bytes and final output477,486,884 bytes stayed within budget.
+Independent replay matched all eight records/488 states without field differences.
+Saved-output diagnostics indicate positive but slowly varying convergence order;
+estimated remaining error is not measured accuracy. No threshold changed, curve
+opened, material fitted or prediction converted into RL experience.
 
 ## Remaining delivery gates
 

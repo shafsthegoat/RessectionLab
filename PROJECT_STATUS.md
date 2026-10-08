@@ -14,8 +14,8 @@ results remain unchanged. See [receipt](artifacts/real-observation-policy-v1/RES
 
 Lausanne's CC0 source metadata confirms 284 unique people and 296 original paired
 T1/TOF sessions. A fixed split now assigns 199 TRAIN / 43 SELECT / 42 measurement
-evaluation people, grouping visits and TopCoW copies. Sixteen TRAIN original pairs
-and their sidecars are acquired (599,364,210 bytes); published byte fixity and
+evaluation people, grouping visits and TopCoW copies. Twenty TRAIN original pairs
+and their sidecars are acquired (813,195,818 bytes); published byte fixity and
 worker header/scalar checks pass. Independent pilot inspection found TOF
 sidecar versus NIfTI orientation differs by about 1.70 degrees,
 so scanner-frame provenance and interscan registration remain unresolved. Two
@@ -37,10 +37,16 @@ The fourth batch completed five further people in 599.141 seconds; sub077 timed
 out with a retained 5,242,880-byte partial and no admission. A separate source-
 annotation-led intake completed sub476 in 60.898 seconds. Root and independent
 byte/receipt audits reverified all sixteen originals and execution snapshots.
-There are 194 incomplete TRAIN sessions. [Batch04](artifacts/lausanne-train-intake-v1/acquisition-batch-04-summary.json)
+[Batch04](artifacts/lausanne-train-intake-v1/acquisition-batch-04-summary.json)
 and [batch05](artifacts/lausanne-train-intake-v1/acquisition-batch-05-summary.json)
 retain all excluded cases and separate closure totals. Both timeouts are
-preserved. No acquisition batch is currently running.
+preserved. The sixth batch added sub047/051/052/062 in 598.517 seconds and
+stopped before starting another worker. All 20 source receipts and snapshots
+passed root and independent rechecks; 190 TRAIN sessions remain incomplete.
+Its closure lists 192 sessions not reverified within that batch, including two
+previously acquired sessions that this separate audit verified. See
+[batch06](artifacts/lausanne-train-intake-v1/acquisition-batch-06-summary.json).
+No acquisition batch is currently running.
 Full TRAIN acquisition/use and annotation eligibility remain outstanding. No newly compliant
 RL training has run: eligible recorded surgical transitions remain missing.
 Before further code edits, a fresh fetch again verified remote/local main at
@@ -51,9 +57,15 @@ Source-bound critical annotations now connect to static/desktop routes, native
 planning, coarse geometric planning and independent native audits. Replay checks
 current canonical exclusions; equal-score beam ties no longer depend on hashes
 containing future case history. The focused real-source/refusal/clock suite passes
-64 checks and TypeScript checking passes. This proves the named absent-evidence
-and protocol behavior; positive vascular acceptance remains unverified without
-an eligible acquired image/annotation pair. See
+64 checks and TypeScript checking passes. A subsequent actual sub476 manual
+aneurysm component preserves 193 positive labels through canonical exclusions,
+save/reopen and desktop inspection. Its explicit source-reference normalization
+retains the untouched headers and inferred-unit rationale. The combined suite
+passes 77 checks; all 13 component checks pass after the final license binding.
+Unknown background, missing motor/language and unknown availability remain
+visible. This proves retrospective component behavior; scanner-world accuracy,
+brain support and surgical route acceptance remain unresolved. See
+[component result](artifacts/lausanne-sub476-annotation-v1/RESULT.md) and
 [contract and evidence](docs/critical-structure-evidence.md).
 
 RESECT cavity-component roles are now frozen at14 TRAIN/four SELECT/four
@@ -73,8 +85,18 @@ reconstruction agree. The supervised solve phase took 40.9184 seconds, with
 164,626,432 bytes sampled peak memory and four native calls. This establishes
 N8/N12 symmetric-branch numerical equivalence only; the earlier spatial
 convergence failure, N24 timeout and missing material validation remain.
-No measured curves, fitting or finer-mesh run was released. See
-[result](artifacts/mechanics/hbe-halfheight-execution-v1/RESULT.md).
+The subsequent finer axial experiment completed three individually passing
+native runs in 365.799 seconds, with 761.9 MB sampled peak memory. Fine displacement
+differences are 4.800/3.639 µm (compression/tension), below 8 µm. One compression
+reaction-trend comparison failed; the other 15 criteria passed. Independent
+raw replay reproduced all eight readouts (488 states) exactly. The failure is
+retained; measured curves and material fitting remain closed. Posthoc diagnosis
+suggests slow positive-order force convergence, with uncertain remaining error.
+See [finer result](artifacts/mechanics/hbe-halfheight-spatial-execution-v1/RESULT.md).
+
+[VitalDB source/parser research](docs/vitaldb-recorded-component-intake.md)
+identifies a 6.54 MB recorded perioperative component candidate and native-time
+import requirements. No signal payload or training has been acquired from it.
 
 ## Historical status through October 5
 
