@@ -1,0 +1,157 @@
+{
+  "P1_response_replay": false,
+  "actual_final_output_bytes": 71245700,
+  "actual_max_preparation_directory_bytes": 21370895,
+  "archive": {
+    "path": "build/hbe-halfheight-boundary-v1/source.tar",
+    "sha256": "c3a0f26c074abb3cc81fc24e4c74c596c9e46764638e42688b5355c804e19e52"
+  },
+  "archive_file_count": 22,
+  "declaration_count": 5,
+  "executing_runner_path": "build/hbe-halfheight-boundary-v1/source/scripts/mechanics_hbe_halfheight_boundary_experiment.py",
+  "gmsh_generation_calls": 0,
+  "limitations": [
+    "Pure preparation acceptance only; no new numerical solves, convergence or calibration acceptance.",
+    "RSS/output watch sampled; between-sample peaks may be missed.",
+    "Study elapsed time excludes final result publication as explicitly declared."
+  ],
+  "measured_response_access": false,
+  "original_input_hashes_unchanged": true,
+  "output_watch": {
+    "maximum_active_bytes": 15356630,
+    "maximum_total_bytes": 71243569,
+    "sampling_interval_seconds": 0.1,
+    "sampling_limit": "Between-sample peaks may be missed.",
+    "status": "watching"
+  },
+  "phase_elapsed_seconds": 25.63466641586274,
+  "prepared_hashes_unchanged": true,
+  "prepared_unique_bindings": 18,
+  "release": {
+    "path": "artifacts/mechanics/hbe-halfheight-boundary-execution-v1/prepare-release.json",
+    "sha256": "bc29b810d2cb803a2d7c8733b6aac95af68b87979410ef8015b9b7fc01d6420b"
+  },
+  "result": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/result.json",
+    "sha256": "b9c1d622dbbd2c659fe2d6ca019d16f949407ae10c5062ed4ff14b0d257aa025"
+  },
+  "result_receipt_bytes": 2080,
+  "retained_bytes_before_result": 71243620,
+  "review_elapsed_seconds": 23.230442167026922,
+  "review_scope": "saved_preparation_hashes_metadata_and_in_memory_exact_geometry_deck_reconstruction",
+  "sampled_peak_group_RSS_bytes": 637337600,
+  "schema": "hbe-boundary-preparation-independent-review-v1",
+  "solver_calls": 0,
+  "solver_invocations": 0,
+  "source_bindings": {
+    "access": {
+      "path": "build/hbe-halfheight-boundary-v1/source/scripts/mechanics_hbe_access.py",
+      "sha256": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab"
+    },
+    "backend_profile": {
+      "path": "build/hbe-halfheight-boundary-v1/source/scripts/mechanics_hbe_backend.py",
+      "sha256": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae"
+    },
+    "curve_evaluator": {
+      "path": "build/hbe-halfheight-boundary-v1/source/scripts/mechanics_hbe_evaluation.py",
+      "sha256": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098"
+    },
+    "halfheight_boundary": {
+      "path": "build/hbe-halfheight-boundary-v1/source/scripts/mechanics_hbe_halfheight_boundary.py",
+      "sha256": "e66ef87fd9c7c6de94525cee97b4b7d225e94be88958c7b4916f02ef7c6e1a33"
+    },
+    "halfheight_boundary_readout": {
+      "path": "build/hbe-halfheight-boundary-v1/source/scripts/mechanics_hbe_halfheight_boundary_readout.py",
+      "sha256": "4742cf75fc1fa8214825cd9f681cc4b5243649fc2b58dd25d7b2ade0705f2544"
+    },
+    "halfheight_boundary_runner": {
+      "path": "build/hbe-halfheight-boundary-v1/source/scripts/mechanics_hbe_halfheight_boundary_experiment.py",
+      "sha256": "47212cc5ed8f2f38d0583ed12187d6bd4ad651dac8dda74c77ac60b0fb0e842d"
+    },
+    "halfheight_mesh": {
+      "path": "build/hbe-halfheight-boundary-v1/source/scripts/mechanics_hbe_halfheight_mesh.py",
+      "sha256": "6d8aef586fd454c262cd4afd3ad4e2b43580c9e74db0c380a020838dc8379084"
+    },
+    "halfheight_readout": {
+      "path": "build/hbe-halfheight-boundary-v1/source/scripts/mechanics_hbe_halfheight_readout.py",
+      "sha256": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30"
+    },
+    "halfheight_spatial": {
+      "path": "build/hbe-halfheight-boundary-v1/source/scripts/mechanics_hbe_halfheight_spatial.py",
+      "sha256": "9093900ce30a7fb35aaded799c9f8aedbc9abc22f7fface57b83092ae83066da"
+    },
+    "halfheight_spatial_readout": {
+      "path": "build/hbe-halfheight-boundary-v1/source/scripts/mechanics_hbe_halfheight_spatial_readout.py",
+      "sha256": "f193dde271438145632907414161ceb8c210008d5fa4e97058d1c477d195032c"
+    },
+    "halfheight_spatial_runner": {
+      "path": "build/hbe-halfheight-boundary-v1/source/scripts/mechanics_hbe_halfheight_spatial_experiment.py",
+      "sha256": "2c793883238d15ad65539c4b04f777aa283ab07a104734080420055180cd6abd"
+    },
+    "mesh_deck": {
+      "path": "build/hbe-halfheight-boundary-v1/source/scripts/mechanics_hbe_mesh.py",
+      "sha256": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414"
+    },
+    "orchestrator": {
+      "path": "build/hbe-halfheight-boundary-v1/source/scripts/mechanics_hbe_experiment.py",
+      "sha256": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa"
+    },
+    "physics": {
+      "path": "build/hbe-halfheight-boundary-v1/source/scripts/mechanics_hbe_physics.py",
+      "sha256": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d"
+    },
+    "primitive_parser": {
+      "path": "build/hbe-halfheight-boundary-v1/source/scripts/mechanics_hbe_outputs.py",
+      "sha256": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19"
+    },
+    "readout": {
+      "path": "build/hbe-halfheight-boundary-v1/source/scripts/mechanics_hbe_readout.py",
+      "sha256": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0"
+    },
+    "runtime_driver": {
+      "path": "build/hbe-halfheight-boundary-v1/source/scripts/febio_runtime.py",
+      "sha256": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+    }
+  },
+  "source_commit": "a85261bbe0f3aa546e4dff7849db7d495c60e725",
+  "source_edits": false,
+  "source_inputs_rehashed_before_after": 179,
+  "source_module_count": 17,
+  "status": "PASS_saved_preparation_only",
+  "subdivision_invocations": 3,
+  "variants": [
+    {
+      "exact_saved_geometry_mapping_deck_loading_recomputed": true,
+      "full_elements": 24192,
+      "full_nodes": 26655,
+      "half_elements": 12096,
+      "half_nodes": 14216,
+      "maximum_parent_volume_error_ratio": 0.00020922286331868245,
+      "maximum_reflection_m": 4.336808689942018e-19,
+      "midplane_nodes": 1777,
+      "variant": "P2"
+    },
+    {
+      "exact_saved_geometry_mapping_deck_loading_recomputed": true,
+      "full_elements": 24192,
+      "full_nodes": 26655,
+      "half_elements": 12096,
+      "half_nodes": 14216,
+      "maximum_parent_volume_error_ratio": 0.00019800378508123416,
+      "maximum_reflection_m": 4.336808689942018e-19,
+      "midplane_nodes": 1777,
+      "variant": "I2"
+    },
+    {
+      "exact_saved_geometry_mapping_deck_loading_recomputed": true,
+      "full_elements": 31104,
+      "full_nodes": 33763,
+      "half_elements": 15552,
+      "half_nodes": 17770,
+      "maximum_parent_volume_error_ratio": 0.00011314502004628813,
+      "maximum_reflection_m": 4.336808689942018e-19,
+      "midplane_nodes": 1777,
+      "variant": "P4"
+    }
+  ]
+}

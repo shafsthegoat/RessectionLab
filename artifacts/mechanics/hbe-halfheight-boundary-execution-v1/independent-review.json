@@ -1,0 +1,602 @@
+{
+  "actual_final_output_bytes": 826166526,
+  "archive_member_count": 22,
+  "calibration_released": false,
+  "comparison": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/comparison.json",
+    "sha256": "01e0fdcba6a21ba6c28e5845fd32c2c61feef7e8ae223368eee7ed632c5d2302"
+  },
+  "endpoint_signed_forces_N": {
+    "I2": -0.0363251920911012,
+    "P1": -0.03633856601773044,
+    "P2": -0.03629202613542333,
+    "P4": -0.036280746397935736
+  },
+  "independent_scalar_and_probe_comparisons": {
+    "I2:P2": {
+      "difference_direction": "P2_minus_I2",
+      "endpoint_delta_N": 3.316595567787184e-05,
+      "force_check": true,
+      "force_limit_N": 0.0007260005227084667,
+      "max_absolute_delta_N": 5.530828536166876e-05,
+      "maximum_motion_m": 6.565255112115689e-07,
+      "motion_check": true,
+      "motion_limit_m": 8e-06
+    },
+    "P1:I2": {
+      "difference_direction": "I2_minus_P1",
+      "endpoint_delta_N": 1.33739266292357e-05,
+      "force_check": true,
+      "force_limit_N": 0.0007266638418220241,
+      "max_absolute_delta_N": 1.33739266292357e-05,
+      "maximum_motion_m": 4.2932143465094963e-07,
+      "motion_check": true,
+      "motion_limit_m": 8e-06
+    },
+    "P1:P2": {
+      "difference_direction": "P2_minus_P1",
+      "endpoint_delta_N": 4.653988230710754e-05,
+      "force_check": true,
+      "force_limit_N": 0.0007260005227084667,
+      "max_absolute_delta_N": 6.428688554279555e-05,
+      "maximum_motion_m": 5.191154422106855e-07,
+      "motion_check": true,
+      "motion_limit_m": 8e-06
+    },
+    "P2:P4": {
+      "difference_direction": "P4_minus_P2",
+      "endpoint_delta_N": 1.1279737487594754e-05,
+      "force_check": true,
+      "force_limit_N": 0.0007257749279587147,
+      "max_absolute_delta_N": 2.7712171386012202e-05,
+      "maximum_motion_m": 2.7322370539685733e-07,
+      "motion_check": true,
+      "motion_limit_m": 8e-06
+    }
+  },
+  "input_hash_count": 201,
+  "limitations": [
+    "Replays certify reproducibility and source bindings, not independent physical validity.",
+    "The fixed radial/circumferential and unaffected bulk errors remain unbounded; local order is not continuum accuracy.",
+    "No finest-level time-step convergence or calibration release.",
+    "RSS/output sampling can miss between-sample peaks; reported phase timing excludes result publication."
+  ],
+  "maximum_active_native_directory_bytes": 293289328,
+  "measured_curves_accessed": false,
+  "method": "Existing pinned readout replay from raw native logs plus separate NumPy signed-force/probe/local-order arithmetic; no new solver execution",
+  "native_calls_in_original_study": 3,
+  "native_seconds": {
+    "I2": 165.31746754213236,
+    "P2": 144.25709262490273,
+    "P4": 257.5333874579519
+  },
+  "native_solver_calls": 0,
+  "old_failed_spatial_result_preserved": true,
+  "output_watch": {
+    "maximum_active_bytes": 293289328,
+    "maximum_total_bytes": 826164167,
+    "sampling_interval_seconds": 0.1,
+    "sampling_limit": "Between-sample peaks may be missed.",
+    "status": "watching"
+  },
+  "phase_elapsed_seconds": 739.1935630829539,
+  "regional_summary": {
+    "I2": {
+      "J_volume_mean": [
+        0.9885791690575405,
+        0.9903591291200846,
+        0.9886517807104208,
+        0.9903983267211639,
+        0.9928861448700175,
+        0.9967062433350814,
+        0.9917638105208678,
+        0.9947928899007255,
+        0.9983836017197492,
+        0.9924458072035088,
+        0.9955994339708814,
+        0.9987602358340558
+      ],
+      "bottom_traction_area_mean_Pa": [
+        -628.57035467795,
+        -564.4489412593132,
+        -1173.063791569613
+      ],
+      "regional_integrals_reproduce_half_force_and_energy": true,
+      "stress_vm_volume_mean_Pa": [
+        247.18986218559135,
+        464.19840144198645,
+        724.7853510041183,
+        414.72269912320473,
+        514.711800268708,
+        504.1336541466222,
+        563.0496122932708,
+        562.6598190975463,
+        417.06109650303245,
+        635.5984401463768,
+        582.4095581258609,
+        420.7545759058956
+      ],
+      "volume_bins_rR_zH": [
+        [
+          0.0,
+          0.5,
+          0.0,
+          0.08333333333333333
+        ],
+        [
+          0.5,
+          0.875,
+          0.0,
+          0.08333333333333333
+        ],
+        [
+          0.875,
+          1.0000000001,
+          0.0,
+          0.08333333333333333
+        ],
+        [
+          0.0,
+          0.5,
+          0.08333333333333333,
+          0.25
+        ],
+        [
+          0.5,
+          0.875,
+          0.08333333333333333,
+          0.25
+        ],
+        [
+          0.875,
+          1.0000000001,
+          0.08333333333333333,
+          0.25
+        ],
+        [
+          0.0,
+          0.5,
+          0.25,
+          0.3333333333333333
+        ],
+        [
+          0.5,
+          0.875,
+          0.25,
+          0.3333333333333333
+        ],
+        [
+          0.875,
+          1.0000000001,
+          0.25,
+          0.3333333333333333
+        ],
+        [
+          0.0,
+          0.5,
+          0.3333333333333333,
+          0.5
+        ],
+        [
+          0.5,
+          0.875,
+          0.3333333333333333,
+          0.5
+        ],
+        [
+          0.875,
+          1.0000000001,
+          0.3333333333333333,
+          0.5
+        ]
+      ]
+    },
+    "P1": {
+      "J_volume_mean": [
+        0.9885753581541777,
+        0.9903606685710202,
+        0.9886284500646538,
+        0.9903959394227674,
+        0.9928839202874143,
+        0.996702401782037,
+        0.9917443332062944,
+        0.9947645859252036,
+        0.998414507320208,
+        0.992442597256163,
+        0.9956051313089203,
+        0.998747336960794
+      ],
+      "bottom_traction_area_mean_Pa": [
+        -628.8189978310477,
+        -564.4873125817553,
+        -1173.8489577645603
+      ],
+      "regional_integrals_reproduce_half_force_and_energy": true,
+      "stress_vm_volume_mean_Pa": [
+        247.43439486565322,
+        464.6128428480443,
+        724.9671936767039,
+        415.07308822557354,
+        514.9616284741192,
+        504.4852826043861,
+        561.2889456786374,
+        560.8930169207961,
+        418.4434070017792,
+        635.9954779599893,
+        583.0680158606593,
+        420.3316012229103
+      ],
+      "volume_bins_rR_zH": [
+        [
+          0.0,
+          0.5,
+          0.0,
+          0.08333333333333333
+        ],
+        [
+          0.5,
+          0.875,
+          0.0,
+          0.08333333333333333
+        ],
+        [
+          0.875,
+          1.0000000001,
+          0.0,
+          0.08333333333333333
+        ],
+        [
+          0.0,
+          0.5,
+          0.08333333333333333,
+          0.25
+        ],
+        [
+          0.5,
+          0.875,
+          0.08333333333333333,
+          0.25
+        ],
+        [
+          0.875,
+          1.0000000001,
+          0.08333333333333333,
+          0.25
+        ],
+        [
+          0.0,
+          0.5,
+          0.25,
+          0.3333333333333333
+        ],
+        [
+          0.5,
+          0.875,
+          0.25,
+          0.3333333333333333
+        ],
+        [
+          0.875,
+          1.0000000001,
+          0.25,
+          0.3333333333333333
+        ],
+        [
+          0.0,
+          0.5,
+          0.3333333333333333,
+          0.5
+        ],
+        [
+          0.5,
+          0.875,
+          0.3333333333333333,
+          0.5
+        ],
+        [
+          0.875,
+          1.0000000001,
+          0.3333333333333333,
+          0.5
+        ]
+      ]
+    },
+    "P2": {
+      "J_volume_mean": [
+        0.9885946365353857,
+        0.9903427851833516,
+        0.9896279462817823,
+        0.9904049998317352,
+        0.9929004301193075,
+        0.9963813424816026,
+        0.9917529655628636,
+        0.9947941515209702,
+        0.9982296845911061,
+        0.9924512100883808,
+        0.9956075294074963,
+        0.9987791194135679
+      ],
+      "bottom_traction_area_mean_Pa": [
+        -628.2197017648868,
+        -564.4245471496354,
+        -1170.6757848934021
+      ],
+      "regional_integrals_reproduce_half_force_and_energy": true,
+      "stress_vm_volume_mean_Pa": [
+        252.18254409992355,
+        473.1835519264581,
+        778.8773778940257,
+        415.0278514945963,
+        514.6543913829959,
+        470.0559796900544,
+        561.1775644081342,
+        559.6260730961573,
+        413.19972779212543,
+        635.8035117855992,
+        582.4040613663122,
+        420.35693972350896
+      ],
+      "volume_bins_rR_zH": [
+        [
+          0.0,
+          0.5,
+          0.0,
+          0.08333333333333333
+        ],
+        [
+          0.5,
+          0.875,
+          0.0,
+          0.08333333333333333
+        ],
+        [
+          0.875,
+          1.0000000001,
+          0.0,
+          0.08333333333333333
+        ],
+        [
+          0.0,
+          0.5,
+          0.08333333333333333,
+          0.25
+        ],
+        [
+          0.5,
+          0.875,
+          0.08333333333333333,
+          0.25
+        ],
+        [
+          0.875,
+          1.0000000001,
+          0.08333333333333333,
+          0.25
+        ],
+        [
+          0.0,
+          0.5,
+          0.25,
+          0.3333333333333333
+        ],
+        [
+          0.5,
+          0.875,
+          0.25,
+          0.3333333333333333
+        ],
+        [
+          0.875,
+          1.0000000001,
+          0.25,
+          0.3333333333333333
+        ],
+        [
+          0.0,
+          0.5,
+          0.3333333333333333,
+          0.5
+        ],
+        [
+          0.5,
+          0.875,
+          0.3333333333333333,
+          0.5
+        ],
+        [
+          0.875,
+          1.0000000001,
+          0.3333333333333333,
+          0.5
+        ]
+      ]
+    },
+    "P4": {
+      "J_volume_mean": [
+        0.9886008306529913,
+        0.9903503004033979,
+        0.9896168131031697,
+        0.9904085235720925,
+        0.9929023463635528,
+        0.9963916897294885,
+        0.9917560608011889,
+        0.9947866888301194,
+        0.9982783787773202,
+        0.9924545553837553,
+        0.9956118823437164,
+        0.9987683823616201
+      ],
+      "bottom_traction_area_mean_Pa": [
+        -627.9954149473914,
+        -564.0848570515705,
+        -1170.7035203960481
+      ],
+      "regional_integrals_reproduce_half_force_and_energy": true,
+      "stress_vm_volume_mean_Pa": [
+        253.41411730248032,
+        475.31385677389676,
+        778.755825141929,
+        415.01963056784643,
+        515.1465290669558,
+        467.4001034796276,
+        561.156465985674,
+        559.3320994785545,
+        414.2434709615896,
+        635.7642502990483,
+        582.2391424157531,
+        420.0840688116611
+      ],
+      "volume_bins_rR_zH": [
+        [
+          0.0,
+          0.5,
+          0.0,
+          0.08333333333333333
+        ],
+        [
+          0.5,
+          0.875,
+          0.0,
+          0.08333333333333333
+        ],
+        [
+          0.875,
+          1.0000000001,
+          0.0,
+          0.08333333333333333
+        ],
+        [
+          0.0,
+          0.5,
+          0.08333333333333333,
+          0.25
+        ],
+        [
+          0.5,
+          0.875,
+          0.08333333333333333,
+          0.25
+        ],
+        [
+          0.875,
+          1.0000000001,
+          0.08333333333333333,
+          0.25
+        ],
+        [
+          0.0,
+          0.5,
+          0.25,
+          0.3333333333333333
+        ],
+        [
+          0.5,
+          0.875,
+          0.25,
+          0.3333333333333333
+        ],
+        [
+          0.875,
+          1.0000000001,
+          0.25,
+          0.3333333333333333
+        ],
+        [
+          0.0,
+          0.5,
+          0.3333333333333333,
+          0.5
+        ],
+        [
+          0.5,
+          0.875,
+          0.3333333333333333,
+          0.5
+        ],
+        [
+          0.875,
+          1.0000000001,
+          0.3333333333333333,
+          0.5
+        ]
+      ]
+    }
+  },
+  "release": {
+    "path": "artifacts/mechanics/hbe-halfheight-boundary-execution-v1/solve-release.json",
+    "sha256": "f1c1601959d9de61f0282b59ec4297277e6f524572567b5505f0319bda6b84f8"
+  },
+  "replayed": [
+    {
+      "endpoint_regions_equal": true,
+      "frames": 61,
+      "seconds": 31.56098937499337,
+      "variant": "P1",
+      "whole_record_equal": true
+    },
+    {
+      "frames": 61,
+      "individual_numerical_checks_pass": true,
+      "seconds": 33.69136404199526,
+      "variant": "P2",
+      "whole_record_equal": true
+    },
+    {
+      "frames": 61,
+      "individual_numerical_checks_pass": true,
+      "seconds": 33.55299987504259,
+      "variant": "I2",
+      "whole_record_equal": true
+    },
+    {
+      "frames": 61,
+      "individual_numerical_checks_pass": true,
+      "seconds": 42.17331108287908,
+      "variant": "P4",
+      "whole_record_equal": true
+    }
+  ],
+  "result": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/result.json",
+    "sha256": "f8c89aa49f5f8a12bf910a97c6d235944ee2d88d6cb37142fa387570f34c2db7"
+  },
+  "result_receipt_bytes": 2095,
+  "retained_native_file_count": 27,
+  "review_elapsed_seconds": 144.66541237500496,
+  "sampled_peak_group_RSS_bytes": 1176420352,
+  "schema": "hbe-boundary-solve-independent-review-v1",
+  "secondary_all_state_original_trend": {
+    "maximum_absolute_force_difference_N": {
+      "first": 6.428688554279555e-05,
+      "floor": 1.6e-07,
+      "last": 2.7712171386012202e-05,
+      "original_decrease_check": true
+    },
+    "maximum_probe_difference_m": {
+      "first": 5.191154422106855e-07,
+      "floor": 8e-06,
+      "last": 2.7322370539685733e-07,
+      "original_decrease_check": true
+    }
+  },
+  "secondary_endpoint": {
+    "continuum_error_bound": false,
+    "delta12_N": 4.653988230710754e-05,
+    "delta24_N": 1.1279737487594754e-05,
+    "eligible": true,
+    "local_limit_N": -0.03627713800442402,
+    "local_remaining_indicator_N": 3.6083935117203667e-06,
+    "order": 2.0447340699686123
+  },
+  "source_archive": {
+    "path": "build/hbe-halfheight-boundary-v1/source.tar",
+    "sha256": "c3a0f26c074abb3cc81fc24e4c74c596c9e46764638e42688b5355c804e19e52"
+  },
+  "source_commit": "a85261bbe0f3aa546e4dff7849db7d495c60e725",
+  "source_inputs_outputs_unchanged": true,
+  "source_module_count": 17,
+  "status": "PASS_saved_diagnostic_replay_only",
+  "total_replayed_states": 244,
+  "tracked_writes": false,
+  "whole_record_mismatch_count": 0
+}

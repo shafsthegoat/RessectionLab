@@ -39,7 +39,7 @@ compact execution record, not a replacement specification.
 | Navigation / integration | Typed evidence reaches canonical exclusions and desktop inspection with the actual 193-positive sub476 annotation. Explicit source-grid normalization, unknown background/timing and false planning-admission flags survive replay/export. The focused suite passes 77 checks. | Obtain accepted source-frame/brain-support evidence before claiming positive surgical route changes. This component is aneurysm-only, not whole-vascular or glioma acceptance. |
 | Operative science | Four supplied research reviews are read; proposed mechanisms are not implemented evidence. | Introduce an evidence-timed action/observation timeline with observed events distinct from proposals and model predictions. |
 | Exposure / instruments | Generic capsule tools; hypothetical zero-thickness brain opening; no synchronized pair checking or measured skull/tool bundle. | Acquire same-person skull evidence and device metrology; implement synchronized full-pose checks after contracts. |
-| Tissue / vascular | Three finer axial native runs pass individually; spatial study fails one compression reaction-trend criterion, reproduced independently. Saved fields show plate-edge concentration and more stable core values. Material calibration remains closed. MULTIS donor004 run005 transfer/fixity remains unresolved. | Pure preparation of the reviewed plate-layer/matched-size interior diagnostic completed25.635seconds; saved-artifact review passed and three fixedN24 native cases are running; preserve total-error and time-convergence gates. Retain FEBio; compare SOFA for later interaction. |
+| Tissue / vascular | Three finer axial native runs pass individually; spatial study fails one compression reaction-trend criterion, reproduced independently. Saved fields show plate-edge concentration and more stable core values. Material calibration remains closed. MULTIS donor004 run005 transfer/fixity remains unresolved. | The three fixed-N24 boundary/interior cases and independent 244-state replay passed. Primary force difference is55.308µN and probe difference0.657µm; local plate order2.0447 does not bound total error. Prepare one prospective global N32 check; preserve total-error and load-step gates. Retain FEBio; compare SOFA for later interaction. |
 | Physiology | Actual VitalDB case3/subject2861 DEVELOPMENT import/replay:21,970 pump/NIBP records and7,207 boundaries independently checked;15 focused checks pass. Original arterial task fails. Unshifted native clock supported, recording-start offset and cuff-measurement age unresolved. No validated response or learning. | Fresh-checkout cache preparation passes16independently repeated controls and real-record admission. Add observed-event integration; resolve release-specific native origin. Keep this separate patient's records separate from glioma anatomy, and qualify actual action/endpoint support before learning. |
 | Independent evaluation | Refusal-only tests and read-only review expose bounded exclusion defects; historical negatives preserved. | Challenge source/role/ancestry and real-case behavior per slice; do not run generated-patient suites as new acceptance evidence. |
 
@@ -260,3 +260,17 @@ The [annotation metadata review](../artifacts/lausanne-annotation-expansion-v1/R
 qualified144TRAIN masks across106people/117sessions (13,977,015prospective bytes).
 Four failures remain excluded, including two wrong-patient/session source links.
 No new mask payload, label-quality acceptance or optimizer update follows.
+
+## October 8: completed plate-boundary numerical diagnostic
+
+The [saved study](../artifacts/mechanics/hbe-halfheight-boundary-execution-v1/RESULT.md)
+completed all three native variants in 739.194 seconds with 1.176 GB sampled RSS.
+Independent raw replay reproduced four complete histories (244 states), regional
+diagnostics and the comparison exactly. All original source/output hashes and
+resource bounds passed. No measured curves or material fitting were used.
+
+Plate refinement has a larger effect than the equally sized interior refinement,
+but the conditional plate correction explains only part of the earlier global
+change. The old spatial study remains failed. One prospective global N32 check
+is being specified; it is not yet implemented or released. Final spatial and
+load-step acceptance are required before physical calibration.

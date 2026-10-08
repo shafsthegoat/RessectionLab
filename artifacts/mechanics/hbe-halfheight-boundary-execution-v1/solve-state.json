@@ -1,0 +1,332 @@
+{
+  "baseline_replay": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/P1-replay/execution.json",
+    "sha256": "b75c189187f89aa167493dd278a54fc282af355eee5c56093ec446de07e8158c"
+  },
+  "cases": {},
+  "comparison": {
+    "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/comparison.json",
+    "sha256": "01e0fdcba6a21ba6c28e5845fd32c2c61feef7e8ae223368eee7ed632c5d2302"
+  },
+  "elapsed_seconds": 734.5298726670444,
+  "gmsh_generation_calls": 0,
+  "levels": {},
+  "measured_data_accessed": false,
+  "phase": "solve",
+  "reused_runs": {},
+  "runs": {
+    "compression:N24:I2:S60:reference": {
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+        "-noconfig",
+        "-no_title",
+        "-i",
+        "specimen.feb",
+        "-o",
+        "solver.log"
+      ],
+      "execution": {
+        "cleanup": {
+          "kill_sent": false,
+          "reaped": true
+        },
+        "command": [
+          "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+          "-noconfig",
+          "-no_title",
+          "-i",
+          "specimen.feb",
+          "-o",
+          "solver.log"
+        ],
+        "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/runs/compression-N24-I2-S60-reference",
+        "elapsed_seconds": 165.31746754213236,
+        "exit_code": 0,
+        "pid": 57680,
+        "seconds_cap": 420,
+        "started": true,
+        "status": "completed",
+        "timed_out": false
+      },
+      "input_bindings": {
+        "deck": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/runs/compression-N24-I2-S60-reference/specimen.feb",
+          "sha256": "5b7f4e37bf750c8c8dacbaf24b7486bf809b2d269128f184c7e44a7d8f226e62"
+        },
+        "elements": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/runs/compression-N24-I2-S60-reference/elements.log",
+          "sha256": "360dd3c4d794a86f84c9a5905cae966cf5b3bdc7324a72e79b5ba33973d3624b"
+        },
+        "loading": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/runs/compression-N24-I2-S60-reference/loading.json",
+          "sha256": "6b7c281235280747a63aee9c8121a97ba99c801e578847d85f3cb231d2025648"
+        },
+        "mesh": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/I2/mesh.json",
+          "sha256": "44ca9008ad38904248231e0a3daa61c6de61adcd1e3109ce886b8da2553924fc"
+        },
+        "nodes": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/runs/compression-N24-I2-S60-reference/nodes.log",
+          "sha256": "e2f335adb85883649c03ca7d608d9e01f3eb95fcc3c18d10bb02c94d8a2fd6bd"
+        },
+        "solver": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/runs/compression-N24-I2-S60-reference/solver.log",
+          "sha256": "8e53edf475635df8328b58532f6bc2efa1695422b59361bafe82a84bab448771"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/runs/compression-N24-I2-S60-reference/readout.json",
+        "sha256": "9b7afc0f6a4e1a4bb8c338e59a565ad723af0e1d689bf8b68926e8ef667862a7"
+      },
+      "retained_files": {
+        "console.txt": {
+          "bytes": 195858,
+          "sha256": "4e2590a804bfbc7c56c35a6a1816276fa834aad47eac8007ee35106e0a49bf1f"
+        },
+        "elements.log": {
+          "bytes": 89135835,
+          "sha256": "360dd3c4d794a86f84c9a5905cae966cf5b3bdc7324a72e79b5ba33973d3624b"
+        },
+        "execution.json": {
+          "bytes": 3892,
+          "sha256": "6a91f940659d9a1f27a8a2a7a1f9cfa7915b82a8c2831adedd38190888c27c2c"
+        },
+        "loading.json": {
+          "bytes": 4348,
+          "sha256": "6b7c281235280747a63aee9c8121a97ba99c801e578847d85f3cb231d2025648"
+        },
+        "nodes.log": {
+          "bytes": 137025102,
+          "sha256": "e2f335adb85883649c03ca7d608d9e01f3eb95fcc3c18d10bb02c94d8a2fd6bd"
+        },
+        "readout.json": {
+          "bytes": 559361,
+          "sha256": "9b7afc0f6a4e1a4bb8c338e59a565ad723af0e1d689bf8b68926e8ef667862a7"
+        },
+        "solver-execution.json": {
+          "bytes": 718,
+          "sha256": "d589fb1ddab5dec46b03356c06787dac47d4ecb56431061379fdf5f16f253e94"
+        },
+        "solver.log": {
+          "bytes": 720814,
+          "sha256": "8e53edf475635df8328b58532f6bc2efa1695422b59361bafe82a84bab448771"
+        },
+        "specimen.feb": {
+          "bytes": 2770291,
+          "sha256": "5b7f4e37bf750c8c8dacbaf24b7486bf809b2d269128f184c7e44a7d8f226e62"
+        }
+      },
+      "status": "passed_individual_numerical_checks"
+    },
+    "compression:N24:P2:S60:reference": {
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+        "-noconfig",
+        "-no_title",
+        "-i",
+        "specimen.feb",
+        "-o",
+        "solver.log"
+      ],
+      "execution": {
+        "cleanup": {
+          "kill_sent": false,
+          "reaped": true
+        },
+        "command": [
+          "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+          "-noconfig",
+          "-no_title",
+          "-i",
+          "specimen.feb",
+          "-o",
+          "solver.log"
+        ],
+        "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/runs/compression-N24-P2-S60-reference",
+        "elapsed_seconds": 144.25709262490273,
+        "exit_code": 0,
+        "pid": 56186,
+        "seconds_cap": 420,
+        "started": true,
+        "status": "completed",
+        "timed_out": false
+      },
+      "input_bindings": {
+        "deck": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/runs/compression-N24-P2-S60-reference/specimen.feb",
+          "sha256": "697a5f1154d54e5eefbcadb5e64a4d76e371fd1f4b2d5fe3fef63011eaa4bff8"
+        },
+        "elements": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/runs/compression-N24-P2-S60-reference/elements.log",
+          "sha256": "956d8ba2a498c1ecb2ea9f4badc815eb4a52801ea81586d1cce7ff1aa53afb5a"
+        },
+        "loading": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/runs/compression-N24-P2-S60-reference/loading.json",
+          "sha256": "a4a1e2f927565913caee668572592cf24e6fbcf89909295f5c4a83833dc67229"
+        },
+        "mesh": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/P2/mesh.json",
+          "sha256": "f73ea0dcb5d566913819c4a2a9943bc573ac587aed4bd401ac069e922db06199"
+        },
+        "nodes": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/runs/compression-N24-P2-S60-reference/nodes.log",
+          "sha256": "dc36a82556e5aefa801fab9a5286c88482249998198433070c4f4e4a100735ec"
+        },
+        "solver": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/runs/compression-N24-P2-S60-reference/solver.log",
+          "sha256": "0bae5c0d82e3b07729a231c4b4ae9cc7abcb86782546892b8f17e7bbd879dc40"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/runs/compression-N24-P2-S60-reference/readout.json",
+        "sha256": "89ed53c3012f63ebe2b441efad2107910dfffc9f06fc6770ab002917d1ffee96"
+      },
+      "retained_files": {
+        "console.txt": {
+          "bytes": 198823,
+          "sha256": "249f17a352c327d64f9f9cb37888a874dafbfd0ea8ffdee332fa193670400bc9"
+        },
+        "elements.log": {
+          "bytes": 89127870,
+          "sha256": "956d8ba2a498c1ecb2ea9f4badc815eb4a52801ea81586d1cce7ff1aa53afb5a"
+        },
+        "execution.json": {
+          "bytes": 3892,
+          "sha256": "04e026aec5bce5fc125ec9b6f7aa873cb40f2ccf2739fb53d8a61199714c5eba"
+        },
+        "loading.json": {
+          "bytes": 4348,
+          "sha256": "a4a1e2f927565913caee668572592cf24e6fbcf89909295f5c4a83833dc67229"
+        },
+        "nodes.log": {
+          "bytes": 137126089,
+          "sha256": "dc36a82556e5aefa801fab9a5286c88482249998198433070c4f4e4a100735ec"
+        },
+        "readout.json": {
+          "bytes": 559495,
+          "sha256": "89ed53c3012f63ebe2b441efad2107910dfffc9f06fc6770ab002917d1ffee96"
+        },
+        "solver-execution.json": {
+          "bytes": 718,
+          "sha256": "110df2820eeb246a90367b4b0ae41f0119cecfbe2a1a69e8df584ad64ca26efc"
+        },
+        "solver.log": {
+          "bytes": 723778,
+          "sha256": "0bae5c0d82e3b07729a231c4b4ae9cc7abcb86782546892b8f17e7bbd879dc40"
+        },
+        "specimen.feb": {
+          "bytes": 2772068,
+          "sha256": "697a5f1154d54e5eefbcadb5e64a4d76e371fd1f4b2d5fe3fef63011eaa4bff8"
+        }
+      },
+      "status": "passed_individual_numerical_checks"
+    },
+    "compression:N24:P4:S60:reference": {
+      "command": [
+        "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+        "-noconfig",
+        "-no_title",
+        "-i",
+        "specimen.feb",
+        "-o",
+        "solver.log"
+      ],
+      "execution": {
+        "cleanup": {
+          "kill_sent": false,
+          "reaped": true
+        },
+        "command": [
+          "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/data/optional-runtimes/febio-4.13-accelerate-csc-v1/install/bin/febio4",
+          "-noconfig",
+          "-no_title",
+          "-i",
+          "specimen.feb",
+          "-o",
+          "solver.log"
+        ],
+        "cwd": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/runs/compression-N24-P4-S60-reference",
+        "elapsed_seconds": 257.5333874579519,
+        "exit_code": 0,
+        "pid": 59289,
+        "seconds_cap": 420,
+        "started": true,
+        "status": "completed",
+        "timed_out": false
+      },
+      "input_bindings": {
+        "deck": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/runs/compression-N24-P4-S60-reference/specimen.feb",
+          "sha256": "1c1a4eb4d023cd2b48483218ad07a1a44a1f8ea0057406c9da12b207c38a5661"
+        },
+        "elements": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/runs/compression-N24-P4-S60-reference/elements.log",
+          "sha256": "78025fc0b330d726c97948e06a47dd85747dafd15c2c8e27a42faa4b5660c05e"
+        },
+        "loading": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/runs/compression-N24-P4-S60-reference/loading.json",
+          "sha256": "15fc6214c0650ebe87e3ae0cb1619f60956fa5f9072d1227deefaa26a40202fc"
+        },
+        "mesh": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/P4/mesh.json",
+          "sha256": "6add5227bcb6c06e16f588507dac225d98d3d4a998ad96be09613970f9b9b4d7"
+        },
+        "nodes": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/runs/compression-N24-P4-S60-reference/nodes.log",
+          "sha256": "14f86d5da724ca15d1c863d66454b36f4c7a31673abdd421630fc29008035b2e"
+        },
+        "solver": {
+          "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/runs/compression-N24-P4-S60-reference/solver.log",
+          "sha256": "88bf4856c816ebd17dabb57f07f36c42b9858c76fd3d641aff932de92fbb7350"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/runs/compression-N24-P4-S60-reference/readout.json",
+        "sha256": "24c8434e4c64c4091965642d2a581b283920334a1d02625ab2d91e1546d4f569"
+      },
+      "retained_files": {
+        "console.txt": {
+          "bytes": 201653,
+          "sha256": "cd925cbb177e829fb280fa001d9feb4a92a84c5bd7d8b5f2baf881fe68118f3f"
+        },
+        "elements.log": {
+          "bytes": 114791621,
+          "sha256": "78025fc0b330d726c97948e06a47dd85747dafd15c2c8e27a42faa4b5660c05e"
+        },
+        "execution.json": {
+          "bytes": 3891,
+          "sha256": "408cf021420312863ea7c02cad1304fcfe1bc17056888842f3b8af3cdf03dc13"
+        },
+        "loading.json": {
+          "bytes": 4348,
+          "sha256": "15fc6214c0650ebe87e3ae0cb1619f60956fa5f9072d1227deefaa26a40202fc"
+        },
+        "nodes.log": {
+          "bytes": 173616085,
+          "sha256": "14f86d5da724ca15d1c863d66454b36f4c7a31673abdd421630fc29008035b2e"
+        },
+        "readout.json": {
+          "bytes": 559132,
+          "sha256": "24c8434e4c64c4091965642d2a581b283920334a1d02625ab2d91e1546d4f569"
+        },
+        "solver-execution.json": {
+          "bytes": 717,
+          "sha256": "8698af824814510c96b6df450a6451de1974f853b571a70561f3f94915a65a1d"
+        },
+        "solver.log": {
+          "bytes": 726609,
+          "sha256": "88bf4856c816ebd17dabb57f07f36c42b9858c76fd3d641aff932de92fbb7350"
+        },
+        "specimen.feb": {
+          "bytes": 3385272,
+          "sha256": "1c1a4eb4d023cd2b48483218ad07a1a44a1f8ea0057406c9da12b207c38a5661"
+        }
+      },
+      "status": "passed_individual_numerical_checks"
+    }
+  },
+  "schema": "hbe-halfheight-boundary-state-v1",
+  "solver_invocations": 3,
+  "status": "completed_numerical_diagnostic_only",
+  "subdivision_invocations": 0
+}

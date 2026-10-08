@@ -1,0 +1,146 @@
+{
+  "cases": {
+    "compression:N24:I2:S60:reference": {
+      "backend_source_deck": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/cases/compression-N24-I2-S60-reference/skyline.feb",
+        "sha256": "7a1aba1ea5522deb2960fb7730ef7b3e9c977d9781cc86eb5e888105feff786d"
+      },
+      "deck": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/cases/compression-N24-I2-S60-reference/specimen.feb",
+        "sha256": "5b7f4e37bf750c8c8dacbaf24b7486bf809b2d269128f184c7e44a7d8f226e62"
+      },
+      "full_mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/I2/full-mesh.json",
+        "sha256": "63ca38e061a7d92ebcff881f548499deada14b72425479229a0d6ba3fafb6761"
+      },
+      "loading": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/cases/compression-N24-I2-S60-reference/loading.json",
+        "sha256": "6b7c281235280747a63aee9c8121a97ba99c801e578847d85f3cb231d2025648"
+      },
+      "mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/I2/mesh.json",
+        "sha256": "44ca9008ad38904248231e0a3daa61c6de61adcd1e3109ce886b8da2553924fc"
+      },
+      "reconstruction": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/I2/reconstruction.json",
+        "sha256": "004d974b2af47503712f7e1cba7cf0d84ae2abda60112eddb9c07e27ff819825"
+      }
+    },
+    "compression:N24:P2:S60:reference": {
+      "backend_source_deck": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/cases/compression-N24-P2-S60-reference/skyline.feb",
+        "sha256": "414c8e6a9a3c7b45c1a76b35c1703f24cebebc25feecb36d3649045f513b2cbc"
+      },
+      "deck": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/cases/compression-N24-P2-S60-reference/specimen.feb",
+        "sha256": "697a5f1154d54e5eefbcadb5e64a4d76e371fd1f4b2d5fe3fef63011eaa4bff8"
+      },
+      "full_mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/P2/full-mesh.json",
+        "sha256": "77b05f98b5b7791beacd38e6afaa45f4b3fc12ab020631cf55a0798ee752416b"
+      },
+      "loading": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/cases/compression-N24-P2-S60-reference/loading.json",
+        "sha256": "a4a1e2f927565913caee668572592cf24e6fbcf89909295f5c4a83833dc67229"
+      },
+      "mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/P2/mesh.json",
+        "sha256": "f73ea0dcb5d566913819c4a2a9943bc573ac587aed4bd401ac069e922db06199"
+      },
+      "reconstruction": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/P2/reconstruction.json",
+        "sha256": "f37bdeab69f06862e2a18799c63cd60c6fc5352000b508f227e90f349d9317ee"
+      }
+    },
+    "compression:N24:P4:S60:reference": {
+      "backend_source_deck": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/cases/compression-N24-P4-S60-reference/skyline.feb",
+        "sha256": "ce4b68e9fc43ec9b6847a2e4ce97bd9b8bc79b87aeda1849261590200e10a74a"
+      },
+      "deck": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/cases/compression-N24-P4-S60-reference/specimen.feb",
+        "sha256": "1c1a4eb4d023cd2b48483218ad07a1a44a1f8ea0057406c9da12b207c38a5661"
+      },
+      "full_mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/P4/full-mesh.json",
+        "sha256": "b762bdf0639b9d84025400b7111a34ee4e98767056249ab85ed8d7e3ef742dc5"
+      },
+      "loading": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/cases/compression-N24-P4-S60-reference/loading.json",
+        "sha256": "15fc6214c0650ebe87e3ae0cb1619f60956fa5f9072d1227deefaa26a40202fc"
+      },
+      "mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/P4/mesh.json",
+        "sha256": "6add5227bcb6c06e16f588507dac225d98d3d4a998ad96be09613970f9b9b4d7"
+      },
+      "reconstruction": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/P4/reconstruction.json",
+        "sha256": "216c3f168c664710bb31a1c0c1306e4685605259b8f854ce31a127d10c2edce0"
+      }
+    }
+  },
+  "elapsed_seconds": 23.43725608312525,
+  "gmsh_generation_calls": 0,
+  "levels": {
+    "I2": {
+      "full_mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/I2/full-mesh.json",
+        "sha256": "63ca38e061a7d92ebcff881f548499deada14b72425479229a0d6ba3fafb6761"
+      },
+      "mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/I2/mesh.json",
+        "sha256": "44ca9008ad38904248231e0a3daa61c6de61adcd1e3109ce886b8da2553924fc"
+      },
+      "reconstruction": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/I2/reconstruction.json",
+        "sha256": "004d974b2af47503712f7e1cba7cf0d84ae2abda60112eddb9c07e27ff819825"
+      }
+    },
+    "P2": {
+      "full_mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/P2/full-mesh.json",
+        "sha256": "77b05f98b5b7791beacd38e6afaa45f4b3fc12ab020631cf55a0798ee752416b"
+      },
+      "mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/P2/mesh.json",
+        "sha256": "f73ea0dcb5d566913819c4a2a9943bc573ac587aed4bd401ac069e922db06199"
+      },
+      "reconstruction": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/P2/reconstruction.json",
+        "sha256": "f37bdeab69f06862e2a18799c63cd60c6fc5352000b508f227e90f349d9317ee"
+      }
+    },
+    "P4": {
+      "full_mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/P4/full-mesh.json",
+        "sha256": "b762bdf0639b9d84025400b7111a34ee4e98767056249ab85ed8d7e3ef742dc5"
+      },
+      "mesh": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/P4/mesh.json",
+        "sha256": "6add5227bcb6c06e16f588507dac225d98d3d4a998ad96be09613970f9b9b4d7"
+      },
+      "reconstruction": {
+        "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/preparation/P4/reconstruction.json",
+        "sha256": "216c3f168c664710bb31a1c0c1306e4685605259b8f854ce31a127d10c2edce0"
+      }
+    }
+  },
+  "measured_data_accessed": false,
+  "phase": "prepare",
+  "reused_runs": {},
+  "runs": {
+    "compression:N24:I2:S60:reference": {
+      "status": "not_executed"
+    },
+    "compression:N24:P2:S60:reference": {
+      "status": "not_executed"
+    },
+    "compression:N24:P4:S60:reference": {
+      "status": "not_executed"
+    }
+  },
+  "schema": "hbe-halfheight-boundary-state-v1",
+  "solver_invocations": 0,
+  "status": "prepared_not_solved",
+  "subdivision_invocations": 3
+}

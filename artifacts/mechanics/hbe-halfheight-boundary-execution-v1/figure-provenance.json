@@ -1,0 +1,17 @@
+{
+  "meaning": "plot of saved numerical predictions only; no measured-response access",
+  "inputs": [
+    {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/comparison.json",
+      "sha256": "01e0fdcba6a21ba6c28e5845fd32c2c61feef7e8ae223368eee7ed632c5d2302"
+    },
+    {
+      "path": "outputs/mechanics/hbe-01-03-halfheight-boundary-v1/experiment/runs/compression-N24-P2-S60-reference/readout.json",
+      "sha256": "89ed53c3012f63ebe2b441efad2107910dfffc9f06fc6770ab002917d1ffee96"
+    }
+  ],
+  "outputs": {
+    "comparison.png": "50edef74eb93cc15b76f08629b0c09c34dd7ec337ca53a04070d1e63d8fbc96d",
+    "comparison.pdf": "504102c4028a34dc48ab1af8823b2ed2167829f313c6f212ae63aff81e5b357e"
+  }
+}

@@ -121,8 +121,12 @@ versus matched-size interior-refinement diagnostic. Its scope is local numerical
 sensitivity, not proof of a singularity, total continuum accuracy or calibration
 release. Implementation passes18controls and independent review; actual pure
 preparation completed in25.635seconds with637.3MB sampled peak memory.
-Preparation artifact review passed. The separately released three native solves
-are running; measured curves remain closed. See [next diagnostic](docs/hbe-halfheight-spatial.md#next-diagnostic-after-the-failed-study).
+Preparation review and all three native solves passed. Independent raw replay
+reproduced 244 states and the complete comparison exactly. The primary plate
+versus interior contrast reaches 55.308 µN and 0.657 µm; the local plate sequence
+has order 2.0447. This is conditional plate sensitivity, not total spatial error.
+The solve took 739.194 seconds with 1.176 GB sampled RSS. Global spatial and
+load-step convergence remain unresolved; measured curves remain closed. See [next diagnostic](docs/hbe-halfheight-spatial.md#next-diagnostic-after-the-failed-study).
 
 [VitalDB replay](artifacts/vitaldb-recorded-component-v1/RESULT.md) now imports
 21,970 actual pump/cuff-monitor records from one separate DEVELOPMENT person.

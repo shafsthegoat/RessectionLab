@@ -93,3 +93,17 @@ using element-average density and fixed physical bin volumes. Next archive the
 committed source and separately release preparation and solving. This diagnostic cannot
 release measured curves, establish total continuum accuracy, replace finest-mesh
 time convergence, or validate patient-specific material or clinical force.
+
+## Completed fixed-N24 boundary diagnostic
+
+The [three native solves and independent raw replay](../artifacts/mechanics/hbe-halfheight-boundary-execution-v1/RESULT.md)
+passed. Primary P2 minus I2 reaches 55.308 µN across the loading history and
+0.657 µm at the fixed probes. Plate endpoint increments decrease from 46.540 to
+11.280 µN, with conditional local order 2.0447. The 3.608 µN remaining indicator
+applies only to plate-normal refinement at fixed transverse/bulk resolution.
+It is not a continuum-error bound or a calibration release.
+
+The earlier failed global comparison remains authoritative. Another plate split
+has limited value; a separately declared N32 uniform compression check can test
+the unresolved global trend before selecting the finest load-step checks. No
+new mesh or native call is authorized merely by this interpretation.
