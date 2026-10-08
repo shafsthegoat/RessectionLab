@@ -1,0 +1,245 @@
+.....................................................................FFF [ 97%]
+FF                                                                       [100%]
+=================================== FAILURES ===================================
+_____ test_redirect_retry_after_requires_cooldown_before_next_request[301] _____
+
+status = 301
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-674/test_redirect_retry_after_requ0')
+
+    @pytest.mark.parametrize('status',[301,302,303,307,308])
+    def test_redirect_retry_after_requires_cooldown_before_next_request(status,tmp_path):
+     # A transport-only HTTP response. No payload or scientific record.
+     headers=Message();headers['Retry-After']='7200';headers['Location']='https://osf.io/control-next'
+     def redirect(request,**kwargs):
+      raise HTTPError(request.full_url,status,'control',headers,io.BytesIO())
+     # Metadata writer requires ignored path under project root.
+     import tempfile
+     with tempfile.TemporaryDirectory(dir=ROOT/'build',prefix='http-redirect-control-') as name:
+      opener=q.ObservedOpener(redirect,Path(name),time.monotonic()+10)
+      with pytest.raises(HTTPError):
+>      opener.open(Request('https://osf.io/control'),timeout=5)
+
+build/continuous-source-acquisition-review-v1/test_provider_contracts.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/continuous_source_acquisition.py:205: in open
+    return self(request, timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <continuous_source_acquisition.ObservedOpener object at 0x108c4e900>
+request = <urllib.request.Request object at 0x108c00ad0>, timeout = 5
+
+    def __call__(self, request, *, timeout):
+        check_deadline(self.deadline)
+        self.number += 1
+        try:
+            response = self.open_function(request, timeout=min(timeout, max(.001, self.deadline-time.monotonic())))
+        except HTTPError as error:
+            now = time.time()
+            event = {'status': error.code, 'observed_utc_epoch': now,
+                     'retry_after_utc_epoch': retry_after(error.headers.get('Retry-After'), now)}
+            save(self.trial / f'http-{self.number:02d}.json', event)
+            if error.code in (301, 302, 303, 307, 308) and event['retry_after_utc_epoch'] is not None:
+                self.failure = event
+                error.close()
+                # A non-HTTP exception prevents the guarded annotation helper
+                # from following this redirect before the provider's deadline.
+>               raise Refusal('redirect_retry_after_deferred') from None
+E               resect_train_intake.Refusal: redirect_retry_after_deferred
+
+scripts/continuous_source_acquisition.py:187: Refusal
+_____ test_redirect_retry_after_requires_cooldown_before_next_request[302] _____
+
+status = 302
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-674/test_redirect_retry_after_requ1')
+
+    @pytest.mark.parametrize('status',[301,302,303,307,308])
+    def test_redirect_retry_after_requires_cooldown_before_next_request(status,tmp_path):
+     # A transport-only HTTP response. No payload or scientific record.
+     headers=Message();headers['Retry-After']='7200';headers['Location']='https://osf.io/control-next'
+     def redirect(request,**kwargs):
+      raise HTTPError(request.full_url,status,'control',headers,io.BytesIO())
+     # Metadata writer requires ignored path under project root.
+     import tempfile
+     with tempfile.TemporaryDirectory(dir=ROOT/'build',prefix='http-redirect-control-') as name:
+      opener=q.ObservedOpener(redirect,Path(name),time.monotonic()+10)
+      with pytest.raises(HTTPError):
+>      opener.open(Request('https://osf.io/control'),timeout=5)
+
+build/continuous-source-acquisition-review-v1/test_provider_contracts.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/continuous_source_acquisition.py:205: in open
+    return self(request, timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <continuous_source_acquisition.ObservedOpener object at 0x108c022d0>
+request = <urllib.request.Request object at 0x108c4e930>, timeout = 5
+
+    def __call__(self, request, *, timeout):
+        check_deadline(self.deadline)
+        self.number += 1
+        try:
+            response = self.open_function(request, timeout=min(timeout, max(.001, self.deadline-time.monotonic())))
+        except HTTPError as error:
+            now = time.time()
+            event = {'status': error.code, 'observed_utc_epoch': now,
+                     'retry_after_utc_epoch': retry_after(error.headers.get('Retry-After'), now)}
+            save(self.trial / f'http-{self.number:02d}.json', event)
+            if error.code in (301, 302, 303, 307, 308) and event['retry_after_utc_epoch'] is not None:
+                self.failure = event
+                error.close()
+                # A non-HTTP exception prevents the guarded annotation helper
+                # from following this redirect before the provider's deadline.
+>               raise Refusal('redirect_retry_after_deferred') from None
+E               resect_train_intake.Refusal: redirect_retry_after_deferred
+
+scripts/continuous_source_acquisition.py:187: Refusal
+_____ test_redirect_retry_after_requires_cooldown_before_next_request[303] _____
+
+status = 303
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-674/test_redirect_retry_after_requ2')
+
+    @pytest.mark.parametrize('status',[301,302,303,307,308])
+    def test_redirect_retry_after_requires_cooldown_before_next_request(status,tmp_path):
+     # A transport-only HTTP response. No payload or scientific record.
+     headers=Message();headers['Retry-After']='7200';headers['Location']='https://osf.io/control-next'
+     def redirect(request,**kwargs):
+      raise HTTPError(request.full_url,status,'control',headers,io.BytesIO())
+     # Metadata writer requires ignored path under project root.
+     import tempfile
+     with tempfile.TemporaryDirectory(dir=ROOT/'build',prefix='http-redirect-control-') as name:
+      opener=q.ObservedOpener(redirect,Path(name),time.monotonic()+10)
+      with pytest.raises(HTTPError):
+>      opener.open(Request('https://osf.io/control'),timeout=5)
+
+build/continuous-source-acquisition-review-v1/test_provider_contracts.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/continuous_source_acquisition.py:205: in open
+    return self(request, timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <continuous_source_acquisition.ObservedOpener object at 0x108c4d9a0>
+request = <urllib.request.Request object at 0x108e4acf0>, timeout = 5
+
+    def __call__(self, request, *, timeout):
+        check_deadline(self.deadline)
+        self.number += 1
+        try:
+            response = self.open_function(request, timeout=min(timeout, max(.001, self.deadline-time.monotonic())))
+        except HTTPError as error:
+            now = time.time()
+            event = {'status': error.code, 'observed_utc_epoch': now,
+                     'retry_after_utc_epoch': retry_after(error.headers.get('Retry-After'), now)}
+            save(self.trial / f'http-{self.number:02d}.json', event)
+            if error.code in (301, 302, 303, 307, 308) and event['retry_after_utc_epoch'] is not None:
+                self.failure = event
+                error.close()
+                # A non-HTTP exception prevents the guarded annotation helper
+                # from following this redirect before the provider's deadline.
+>               raise Refusal('redirect_retry_after_deferred') from None
+E               resect_train_intake.Refusal: redirect_retry_after_deferred
+
+scripts/continuous_source_acquisition.py:187: Refusal
+_____ test_redirect_retry_after_requires_cooldown_before_next_request[307] _____
+
+status = 307
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-674/test_redirect_retry_after_requ3')
+
+    @pytest.mark.parametrize('status',[301,302,303,307,308])
+    def test_redirect_retry_after_requires_cooldown_before_next_request(status,tmp_path):
+     # A transport-only HTTP response. No payload or scientific record.
+     headers=Message();headers['Retry-After']='7200';headers['Location']='https://osf.io/control-next'
+     def redirect(request,**kwargs):
+      raise HTTPError(request.full_url,status,'control',headers,io.BytesIO())
+     # Metadata writer requires ignored path under project root.
+     import tempfile
+     with tempfile.TemporaryDirectory(dir=ROOT/'build',prefix='http-redirect-control-') as name:
+      opener=q.ObservedOpener(redirect,Path(name),time.monotonic()+10)
+      with pytest.raises(HTTPError):
+>      opener.open(Request('https://osf.io/control'),timeout=5)
+
+build/continuous-source-acquisition-review-v1/test_provider_contracts.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/continuous_source_acquisition.py:205: in open
+    return self(request, timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <continuous_source_acquisition.ObservedOpener object at 0x108c4f6b0>
+request = <urllib.request.Request object at 0x108c4f290>, timeout = 5
+
+    def __call__(self, request, *, timeout):
+        check_deadline(self.deadline)
+        self.number += 1
+        try:
+            response = self.open_function(request, timeout=min(timeout, max(.001, self.deadline-time.monotonic())))
+        except HTTPError as error:
+            now = time.time()
+            event = {'status': error.code, 'observed_utc_epoch': now,
+                     'retry_after_utc_epoch': retry_after(error.headers.get('Retry-After'), now)}
+            save(self.trial / f'http-{self.number:02d}.json', event)
+            if error.code in (301, 302, 303, 307, 308) and event['retry_after_utc_epoch'] is not None:
+                self.failure = event
+                error.close()
+                # A non-HTTP exception prevents the guarded annotation helper
+                # from following this redirect before the provider's deadline.
+>               raise Refusal('redirect_retry_after_deferred') from None
+E               resect_train_intake.Refusal: redirect_retry_after_deferred
+
+scripts/continuous_source_acquisition.py:187: Refusal
+_____ test_redirect_retry_after_requires_cooldown_before_next_request[308] _____
+
+status = 308
+tmp_path = PosixPath('/private/var/folders/dr/822x6zgj7r9f_8tn3g3vp11r0000gn/T/pytest-of-sayemkamal/pytest-674/test_redirect_retry_after_requ4')
+
+    @pytest.mark.parametrize('status',[301,302,303,307,308])
+    def test_redirect_retry_after_requires_cooldown_before_next_request(status,tmp_path):
+     # A transport-only HTTP response. No payload or scientific record.
+     headers=Message();headers['Retry-After']='7200';headers['Location']='https://osf.io/control-next'
+     def redirect(request,**kwargs):
+      raise HTTPError(request.full_url,status,'control',headers,io.BytesIO())
+     # Metadata writer requires ignored path under project root.
+     import tempfile
+     with tempfile.TemporaryDirectory(dir=ROOT/'build',prefix='http-redirect-control-') as name:
+      opener=q.ObservedOpener(redirect,Path(name),time.monotonic()+10)
+      with pytest.raises(HTTPError):
+>      opener.open(Request('https://osf.io/control'),timeout=5)
+
+build/continuous-source-acquisition-review-v1/test_provider_contracts.py:39: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/continuous_source_acquisition.py:205: in open
+    return self(request, timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <continuous_source_acquisition.ObservedOpener object at 0x108e49e50>
+request = <urllib.request.Request object at 0x108e4a9f0>, timeout = 5
+
+    def __call__(self, request, *, timeout):
+        check_deadline(self.deadline)
+        self.number += 1
+        try:
+            response = self.open_function(request, timeout=min(timeout, max(.001, self.deadline-time.monotonic())))
+        except HTTPError as error:
+            now = time.time()
+            event = {'status': error.code, 'observed_utc_epoch': now,
+                     'retry_after_utc_epoch': retry_after(error.headers.get('Retry-After'), now)}
+            save(self.trial / f'http-{self.number:02d}.json', event)
+            if error.code in (301, 302, 303, 307, 308) and event['retry_after_utc_epoch'] is not None:
+                self.failure = event
+                error.close()
+                # A non-HTTP exception prevents the guarded annotation helper
+                # from following this redirect before the provider's deadline.
+>               raise Refusal('redirect_retry_after_deferred') from None
+E               resect_train_intake.Refusal: redirect_retry_after_deferred
+
+scripts/continuous_source_acquisition.py:187: Refusal
+=========================== short test summary info ============================
+FAILED build/continuous-source-acquisition-review-v1/test_provider_contracts.py::test_redirect_retry_after_requires_cooldown_before_next_request[301]
+FAILED build/continuous-source-acquisition-review-v1/test_provider_contracts.py::test_redirect_retry_after_requires_cooldown_before_next_request[302]
+FAILED build/continuous-source-acquisition-review-v1/test_provider_contracts.py::test_redirect_retry_after_requires_cooldown_before_next_request[303]
+FAILED build/continuous-source-acquisition-review-v1/test_provider_contracts.py::test_redirect_retry_after_requires_cooldown_before_next_request[307]
+FAILED build/continuous-source-acquisition-review-v1/test_provider_contracts.py::test_redirect_retry_after_requires_cooldown_before_next_request[308]
+5 failed, 69 passed in 1.55s

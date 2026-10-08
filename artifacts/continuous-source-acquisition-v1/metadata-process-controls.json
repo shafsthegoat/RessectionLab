@@ -1,0 +1,34 @@
+{
+  "schema": "continuous-source-independent-metadata-process-controls-v1",
+  "files": 890,
+  "bytes": 10578593091,
+  "datasets": {
+    "lausanne": 840,
+    "resect": 50
+  },
+  "scientific_modules_imported": false,
+  "scientific_payload_reads": 0,
+  "network_calls": 0,
+  "timeout_parent_and_descendant": {
+    "supervisor_result": [
+      "timeout",
+      null
+    ],
+    "pids": [
+      78183,
+      78184
+    ],
+    "all_reaped_or_absent": true
+  },
+  "start_callback_failure": {
+    "pids": [
+      78185
+    ],
+    "all_absent": true
+  },
+  "source_hashes": {
+    "scripts/continuous_source_acquisition.py": "7244a4a97530a985468b967c4655da4644d4e78b85ee743e4b27a1b4cf74769a",
+    "scripts/resect_train_intake.py": "f1db114086aae742b1913aa552095daa57eb321bfeafe6b78bd84693508bcdaa",
+    "tests/test_continuous_source_acquisition.py": "2b6aa11a1b9cf3bd266e3d7f3682dda4d0c5944f480790e3143f9a154369a5c1"
+  }
+}

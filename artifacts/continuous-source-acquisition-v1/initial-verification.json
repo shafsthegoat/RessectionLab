@@ -1,0 +1,47 @@
+{
+  "schema": "continuous-source-acquisition-independent-initial-review-v1",
+  "conclusion": "material_retry_after_gaps_reproduced_before_final_source_freeze",
+  "source_hashes": {
+    "scripts/continuous_source_acquisition.py": {
+      "sha256": "8a28f91eb8e90b1f4e11e2ac1dcbd0b76e2e3d43985595b20572c09d57d76dd5",
+      "bytes": 28672
+    },
+    "tests/test_continuous_source_acquisition.py": {
+      "sha256": "bfa0c0a11ac5984c2d8192fbc81b5400f3c569b2c7c219acf639559249e899cf",
+      "bytes": 20886
+    },
+    "scripts/resect_train_intake.py": {
+      "sha256": "f1db114086aae742b1913aa552095daa57eb321bfeafe6b78bd84693508bcdaa",
+      "bytes": 38938
+    }
+  },
+  "checks": {
+    "pure_metadata_HTTP_controls": 17,
+    "passed": 4,
+    "failed": 13,
+    "live_transfers": 0,
+    "image_decodes": 0,
+    "tracked_edits": 0
+  },
+  "findings": [
+    {
+      "id": "provider-retry-after-terminal-status",
+      "priority": "P1",
+      "trigger": "403/404/409/413 with numeric or HTTP-date Retry-After",
+      "observed": "Object becomes transport_failed; provider delay absent; another source on provider can immediately run.",
+      "required": "Persist provider cooldown independently of whether failed object is automatically retryable."
+    },
+    {
+      "id": "redirect-retry-after",
+      "priority": "P1",
+      "trigger": "301/302/303/307/308 with Retry-After",
+      "observed": "ObservedOpener leaves failure unset, and annotation helper follows redirect immediately.",
+      "required": "Stop/defer before issuing redirected request and persist provider delay."
+    }
+  ],
+  "evidence": {
+    "controls_sha256": "0292cbfb6533e72346e3dfe3a34fbe97a199c8e2ce1842835a6f239cee8593b1",
+    "output_sha256": "e32f40cd6433f51575597357fdc1172232ba5a1e0d69ec41d7213b979fb68198"
+  },
+  "note": "Owner continues implementation. This negative record is retained; final verdict awaits owner freeze and independent repair checks."
+}

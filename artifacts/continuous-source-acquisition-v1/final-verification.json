@@ -1,0 +1,129 @@
+{
+  "schema": "continuous-source-acquisition-independent-final-review-v1",
+  "conclusion": "reviewed_ready_for_continuous_download_only_queue",
+  "material_open_findings": [],
+  "source_hashes": {
+    "scripts/continuous_source_acquisition.py": "7244a4a97530a985468b967c4655da4644d4e78b85ee743e4b27a1b4cf74769a",
+    "scripts/resect_train_intake.py": "f1db114086aae742b1913aa552095daa57eb321bfeafe6b78bd84693508bcdaa",
+    "tests/test_continuous_source_acquisition.py": "2b6aa11a1b9cf3bd266e3d7f3682dda4d0c5944f480790e3143f9a154369a5c1"
+  },
+  "frozen_metadata_queue": {
+    "files": 890,
+    "bytes": 10578593091,
+    "lausanne": {
+      "files": 840,
+      "people": 199,
+      "sessions": 210,
+      "license": "CC0",
+      "release": "exact frozen originals index including embedded source sidecars"
+    },
+    "resect": {
+      "files": 50,
+      "people": 13,
+      "qualified_pairs": 25,
+      "original_image_license": "CC-BY-4.0",
+      "annotation_license": "CC-BY-NC-SA-4.0",
+      "annotation_revision": 2
+    },
+    "all_roles": "TRAIN",
+    "existing_roles_and_missing_label_denominators_preserved": true,
+    "lausanne_144_already_acquired_annotations": "separate acquisition/QC inventory, not new source selection in this runner"
+  },
+  "focused_tests": {
+    "owner_and_existing_transport_controls": 126,
+    "independent_provider_controls": 17,
+    "passed": 143,
+    "failed": 0,
+    "seconds": 5.04,
+    "output_sha256": "1a7359eea0289f2c7dcf4cecb9dc8bcc8dba7ae57623000f6f9640489f76bc9b"
+  },
+  "independent_additional_controls": {
+    "schema": "continuous-source-independent-metadata-process-controls-v1",
+    "files": 890,
+    "bytes": 10578593091,
+    "datasets": {
+      "lausanne": 840,
+      "resect": 50
+    },
+    "scientific_modules_imported": false,
+    "scientific_payload_reads": 0,
+    "network_calls": 0,
+    "timeout_parent_and_descendant": {
+      "supervisor_result": [
+        "timeout",
+        null
+      ],
+      "pids": [
+        78183,
+        78184
+      ],
+      "all_reaped_or_absent": true
+    },
+    "start_callback_failure": {
+      "pids": [
+        78185
+      ],
+      "all_absent": true
+    },
+    "source_hashes": {
+      "scripts/continuous_source_acquisition.py": "7244a4a97530a985468b967c4655da4644d4e78b85ee743e4b27a1b4cf74769a",
+      "scripts/resect_train_intake.py": "f1db114086aae742b1913aa552095daa57eb321bfeafe6b78bd84693508bcdaa",
+      "tests/test_continuous_source_acquisition.py": "2b6aa11a1b9cf3bd266e3d7f3682dda4d0c5944f480790e3143f9a154369a5c1"
+    }
+  },
+  "repairs_verified": [
+    {
+      "finding": "Retry-After on terminal object HTTP statuses",
+      "verification": "403/404/409/413 numeric and date advice persists provider cooldown while preserving terminal object status; 429/503 continue deferred behavior."
+    },
+    {
+      "finding": "Retry-After on redirects",
+      "verification": "301/302/303/307/308 with valid advice raises sanitized refusal before redirect followup, retains timing evidence and becomes durable deferred outcome."
+    },
+    {
+      "finding": "incomplete overall queue exit",
+      "verification": "Finished queue with unresolved sources retains their denominator, reports completed_with_unresolved_files and exits2."
+    }
+  ],
+  "contracts_reviewed": {
+    "sources": "Exact frozen roles, full queue cardinality, pinned source URLs/versions, provider route restrictions, published size/MD5/SHA where available and measured SHA; default/native verified TLS remains mandatory.",
+    "rights": "Frozen metadata bindings and retained rights statements remain checked; image and annotation licenses remain separate.",
+    "restart": "Immutable per-object intents/results/outcomes and run source snapshots; history result hash checks; previous cooldown and automatic failure count persist.",
+    "retry": "One supervised network worker; provider-wide numeric/date Retry-After, other providers proceed; maximum3 failed transport attempts per object across restarts; no integrity/TLS retries.",
+    "partial_preservation": "Corrupt final files refused unchanged. Lausanne validated Range resumes source partials; refused Range never truncates existing partial. RESECT resumes completed-file queue only and retains old partial bodies untouched.",
+    "cleanup": "Parent deadline rejects late results; supervised timeout and callback failure reap dedicated worker/process group; attempted paths remain linked.",
+    "claim_separation": "Download byte receipts use separate continuous-source-v1 journal and never fabricate old acquired/QC receipts; header/geometry/anatomy QC not run; arrays0 and training/planning admissionfalse."
+  },
+  "review_scope": {
+    "live_transfers": 0,
+    "image_header_or_scalar_decodes": 0,
+    "tracked_edits": 0,
+    "authentic_cached_compressed_bytes_only_for_existing_focused_transport_tests": true,
+    "synthetic_patient_images_created": false,
+    "new_per_batch_review_gates": false
+  },
+  "limitations": [
+    "Review verifies controls and cached exact bytes, not current live provider availability or future download success.",
+    "RESECT has no byte-range resume; complete files are reused, previous partial bodies preserved.",
+    "Hard-killed/unclosed attempt remains preserved and causes an explicit refusal on restart; ordinary interruption writes its outcome. No fabricated completion is inferred.",
+    "No anatomical, registration, negative-annotation-domain, training or planning admission follows from download-only success.",
+    "Retry/cooldown interruption and source-integrity errors can leave unresolved files; complete download success is not promised."
+  ],
+  "preserved_initial_negative": {
+    "path": "build/continuous-source-acquisition-review-v1/initial-verification.json",
+    "sha256": "de9b6907c77e078a4623e9a15a79d6e5034d2df134aace4b5c0addaa1f2daac2"
+  },
+  "reviewer_control_update": {
+    "first_repair_run": "69passed/5failed solely because original reviewer oracle expected HTTPError; repaired code correctly raises sanitized Refusal to prevent helper redirect followup",
+    "original_control_and_output_preserved": true,
+    "final_control": "test_final_provider_contracts.py changes only expected exception for intended stop behavior; all17 pass"
+  },
+  "evidence_hashes": {
+    "test_provider_contracts.py": "0292cbfb6533e72346e3dfe3a34fbe97a199c8e2ce1842835a6f239cee8593b1",
+    "initial-provider-controls.txt": "e32f40cd6433f51575597357fdc1172232ba5a1e0d69ec41d7213b979fb68198",
+    "test_final_provider_contracts.py": "b7806e6cb81b8a8ece6834d530a16fe429e571f0cd1a91215378072ec7d79c9a",
+    "final-focused-controls.txt": "308b2ab348ac0e49a082b03d2b6ce05027d4f70f5566b548b57b3d5d69e3d40b",
+    "final-repair-controls.txt": "1a7359eea0289f2c7dcf4cecb9dc8bcc8dba7ae57623000f6f9640489f76bc9b",
+    "metadata-process-controls.json": "f170036b7bc31ce864a1a51271e287166eb37d3226b85a98e8e48b4dd6819f6f"
+  }
+}
