@@ -56,7 +56,13 @@ their complete absence cannot explain the failed learning. The fixed 256-update
 imitation diagnostic subsequently fits all five labels and matches search at 1.1,
 while reproducing the original update16 exactly. Saved-tree arithmetic shows a
 small RL16 expected-return gain despite lower target-reaching probability. No
-patient or held-out record was used; the same-model RL capacity test is next.
+patient or held-out record was used. The [same-model RL capacity run](../artifacts/native-opening-rl-capacity-v1/RESULT.md)
+has now completed: 256 updates, 1,024 independently audited training histories,
+and exact first-16 reproduction. Final argmax return is 1.098 versus search's
+1.100; expected stochastic return is +0.546023. The run took 93.6124 seconds;
+geometry and auditing dominate its cost. This supports fixed-task learning only.
+Next is a narrow frozen-forward compatibility check on declared TRAIN anatomy,
+with no action execution, patient fitting or generalization claim.
 
 ## Latest acquisition checkpoint
 
@@ -104,7 +110,7 @@ Anatomical review, spatial admission and fitting contributions remain unestablis
 | Workstream | Verified state / missing evidence | Next implementation or acquisition |
 |---|---|---|
 | Data and anatomy | All 840 Lausanne TRAIN original files and 144 eligible masks acquired. Separate QC is complete: 414/420 original images and 136/144 mask grids pass. Six historical T1 conflicts, eight mask-grid failures and four metadata exclusions remain. All 25 eligible RESECT original images are acquired; 24 masks await provider cooldown. | Finish the continuous frozen queue without QC pauses; record the separate QC result and then perform intended-use anatomical review. Resolve scanner-frame and interscan alignment evidence before spatial admission. Preserve all person-level partitions. |
-| Learning | Explicit generated-experience admission now supports the fixed opening task. Sixteen BC and 16 scratch RL updates failed to exceed complete search. A 15-forward, zero-update diagnosis shows STOP collapse in BC despite lower mean loss; RL did encounter successful trajectories. | BC256 fits all five labels and matches search on the generated training task. Review one fixed same-model scratch RL256 capacity test, preserving exact first16 reproduction and separate expected-return/target-reaching metrics. Legacy patient paths require their own prospective admission. |
+| Learning | BC256 matches search at 1.100; scratch RL256 reaches 1.098 on the same generated task, with 1,024 audited episodes and exact first-16 reproduction. Earlier failed fits remain. Stochastic recovery and transfer remain unproved. | Check two frozen forwards on the unchanged, prospectively admitted PAT05 TRAIN initial observation. Preserve all default learning and support guards, perform no actions or updates, and report distribution changes rather than patient performance. |
 | Navigation / integration | Actual sub476 annotation evidence reaches canonical exclusions and desktop inspection. The observed six-B landmark API now advances and reopens immutable states; transport and packaged-startup repairs pass independent checks. Sparse landmarks do not establish dense tissue deformation or clearance. | Add a measurable observation-to-decision comparison once the required support is available. Keep missing clearance null and distinguish observed displacement from modeled interaction. |
 | Operative science | Four supplied research reviews are read; proposed mechanisms are not implemented evidence. | Introduce an evidence-timed action/observation timeline with observed events distinct from proposals and model predictions. |
 | Exposure / instruments | Generic capsule tools; hypothetical zero-thickness brain opening; no synchronized pair checking or measured skull/tool bundle. | Acquire same-person skull evidence and device metrology; implement synchronized full-pose checks after contracts. |

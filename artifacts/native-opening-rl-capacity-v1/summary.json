@@ -1,0 +1,189 @@
+{
+  "claim_limits": [
+    "One seed and one six-cell generated training fixture; zero real patients or held-out cases.",
+    "Final deterministic behavior is near the complete finite search optimum, not equal to it.",
+    "Finite-tree probabilities use privileged generated-model assessment; they are not fresh empirical or clinical probabilities.",
+    "Only 2 of 5 teacher labels match at RL256; RL is not claimed to clone all teacher actions.",
+    "No anatomical generalization, physical realism, clinical benefit, real transfer, seed robustness or computational advantage over search established."
+  ],
+  "conclusion": "On this one generated training fixture, fixed update 256 scratch RL attains argmax return 1.098 versus complete search 1.1. Two extra millimeters of complete tool travel account for the 0.002 gap. Privileged finite-tree expected return is +0.5460230346. This is a result on the training task; real-patient transfer was not evaluated.",
+  "counts": {
+    "RL_updates": 256,
+    "accepted_actual_episodes": 1026,
+    "actual_episode_transitions": 1846,
+    "argmax_inference_forwards": 4,
+    "assessment_readout_forwards": 30,
+    "clipped_updates": 18,
+    "evaluation_prefix_transitions": 4,
+    "native_previews": {
+      "argmax_inference": 24,
+      "evaluation_reconstruction": 48,
+      "preparation": 12,
+      "total": 9900,
+      "training": 9816
+    },
+    "new_teacher_search_calls": 0,
+    "training_collection_forwards": 1842,
+    "training_episodes": 1024,
+    "training_loss_forwards": 1842,
+    "training_transitions": 1842
+  },
+  "experiment": "native-opening-rl-capacity-v1",
+  "fixed_final_argmax": {
+    "complete_search_return": 1.1,
+    "complete_tool_path_mm": 12.0,
+    "gap_to_search": 0.002,
+    "independent_audit_accepted": true,
+    "normal_removed_mm3": 4.0,
+    "parameter_hash": "sha256:f52e14097ea6a35436eaf30f0ece5658e24987e289ca30ff6a529816545b5721",
+    "return": 1.0979999999999999,
+    "search_complete_tool_path_mm": 10.0,
+    "target_removed_mm3": 2.0,
+    "tool_changes": 1
+  },
+  "fixed_final_privileged_assessment": {
+    "expected_normal_mm3": 3.580561662609253,
+    "expected_target_mm3": 1.3533763055793715,
+    "generated_any_target_probability": 0.6798739893425487,
+    "generated_full_target_probability": 0.6735023162368228,
+    "nominal_expected_return": 0.5460230346172619,
+    "root_stop_probability": 0.06724855798302003,
+    "scope": "privileged nominal-model expectation; target indicators from matching audited generated fixture routes",
+    "terminal_probability_sum": 1.0
+  },
+  "fixed_readouts": [
+    {
+      "generated_any_target_probability": 0.23549630885444517,
+      "generated_full_target_probability": 0.11746745412686077,
+      "nominal_expected_return": -0.27546336538864385,
+      "teacher_cross_entropy": 1.4025094509124756,
+      "teacher_labels_correct": 0,
+      "update": 0
+    },
+    {
+      "generated_any_target_probability": 0.2203744161688559,
+      "generated_full_target_probability": 0.11033260438854033,
+      "nominal_expected_return": -0.2701508955266883,
+      "teacher_cross_entropy": 1.3744704008102417,
+      "teacher_labels_correct": 2,
+      "update": 16
+    },
+    {
+      "generated_any_target_probability": 0.22466157326855904,
+      "generated_full_target_probability": 0.11293875169185866,
+      "nominal_expected_return": -0.2630680538814393,
+      "teacher_cross_entropy": 1.3713213920593261,
+      "teacher_labels_correct": 2,
+      "update": 32
+    },
+    {
+      "generated_any_target_probability": 0.23256804409977996,
+      "generated_full_target_probability": 0.1177204490922106,
+      "nominal_expected_return": -0.2515870382979253,
+      "teacher_cross_entropy": 1.3747188329696656,
+      "teacher_labels_correct": 2,
+      "update": 64
+    },
+    {
+      "generated_any_target_probability": 0.2377360647293126,
+      "generated_full_target_probability": 0.12594364822328669,
+      "nominal_expected_return": -0.19224553328934813,
+      "teacher_cross_entropy": 1.3159043908119201,
+      "teacher_labels_correct": 2,
+      "update": 128
+    },
+    {
+      "generated_any_target_probability": 0.6798739893425487,
+      "generated_full_target_probability": 0.6735023162368228,
+      "nominal_expected_return": 0.5460230346172619,
+      "teacher_cross_entropy": 1.4363576786592602,
+      "teacher_labels_correct": 2,
+      "update": 256
+    }
+  ],
+  "inherited_assessment_evidence": {
+    "previous_source_experiment_worker_seconds": 6.54656691593118,
+    "previous_teacher_model_calls": 20,
+    "previous_teacher_validated_episodes": 5,
+    "previous_teacher_validation_seconds": 0.3857009999919683,
+    "previous_teacher_validation_transitions": 10,
+    "scope": "Previously paid saved tree/route evidence, not repeated training or a new runtime component."
+  },
+  "integrity": {
+    "accepted_audited_training_episodes": 1024,
+    "accepted_initial_and_final_episodes": 2,
+    "audit_method": "Saved source/JSON/tensor inspection and scalar recomputation only; no new model execution or geometric replay.",
+    "indexed_execution_files_verified": 3125,
+    "inherited_inputs_verified": 81,
+    "source_files_verified": 33
+  },
+  "previous_results_preserved": {
+    "initial_argmax_return": -0.464,
+    "original_BC16_action": "STOP",
+    "original_BC16_return": 0.0,
+    "original_RL16_argmax_return": -0.896
+  },
+  "protocol": {
+    "algorithm": "unchanged masked REINFORCE with spatial value baseline",
+    "checkpoint_selection": "Fixed update 256, even if an earlier checkpoint is better.",
+    "entropy_weight": 0.01,
+    "episodes_per_update": 4,
+    "fixed_updates": 256,
+    "gamma": 1.0,
+    "global_gradient_clip": 5.0,
+    "horizon": 2,
+    "initialization": "same original initial tensors; fresh Adam; no BC warm start",
+    "learning_rate": 0.001,
+    "seed": 11,
+    "training_inputs": "Only fresh complete independently audited on-policy episodes; saved teacher states/tree/route outcomes are assessment-only.",
+    "value_weight": 0.5
+  },
+  "publication_scope": "Compact scalar summary and per-update ledger only. Raw sampled trajectories, per-action arrays, checkpoint tensors and optimizer states remain outside these publication files.",
+  "reproduction": {
+    "all256_update_hashes_and_checkpoint_Adam_steps_verified": true,
+    "all_sampled_loss_scalars_recomputed_from_saved_rewards_logits_values": true,
+    "checkpoint16_weights_and_Adam_moments_exact": true,
+    "first16_losses_and_gradient_hash_records_exact": true,
+    "first64_sampled_trajectories_exact": true,
+    "new_evaluation_rollouts_during_audit": 0
+  },
+  "resources": {
+    "CPU_threads": 1,
+    "RSS_samples": 446,
+    "RSS_threshold_bytes": 2147483648,
+    "automatic_retry": false,
+    "limits_scope": "Sampled worker memory and supervised wall threshold; actual recorded values are retained.",
+    "sampled_peak_worker_RSS_bytes": 334151680,
+    "termination_reason": null,
+    "wall_threshold_seconds": 180
+  },
+  "schema": "native-opening-rl-capacity-publication-summary-v1",
+  "source_bindings_sha256": {
+    "artifacts/native-opening-rl-capacity-v1/declaration-input.json": "14df1a1fbb9bb8187d97bc7dcf99cacf923a9e5e9f4182693de0e1d01a5e1285",
+    "artifacts/native-opening-rl-capacity-v1/output-sha256.json": "d378524c205838c28f09b2bc02e2a1e08dadc9a25acd63a0170043afc3aeea3d",
+    "artifacts/native-opening-rl-capacity-v1/result.json": "301e690fb87adff99b715c1371cb0fc692b0adc16fc3576ff7b0725336c56f68",
+    "artifacts/native-opening-rl-capacity-v1/supervisor.json": "84b19eea5c26c20cb3a93046d39c75d54d4c6154a1eaab874ad41394a7d4b643",
+    "artifacts/native-opening-rl-capacity-v1/updates.json": "fc73fa8289f76b0852586551453ac16f2619b034de19797bc4d39358604d5880",
+    "build/native-opening-rl-capacity-output-review-v1/verification.json": "2489aff1b8a783f1fd6ad97a1085abb4b54aff30b44c337deb42a654d5afc95f"
+  },
+  "status": "complete_and_independently_verified",
+  "timing_interpretation": "Scopes overlap. Supervisor contains worker; worker contains fit plus setup and initial/final checks; fit contains training collection, audits, loss updates, later readouts and exports. The all-six-readout total spans initial and in-fit readouts. No sum of these rows is a new elapsed-time measurement.",
+  "timing_seconds": {
+    "all_six_no_gradient_readouts": 0.052440290339291096,
+    "evaluation_state_reconstruction": 0.14496004208922386,
+    "fit_including_collection_audits_loss_readouts_exports": 88.39223999995738,
+    "initial_and_final_argmax_audits": 0.06394329201430082,
+    "initial_and_final_argmax_online": 0.11543600005097687,
+    "loss_and_optimizer_updates": 4.14033754565753,
+    "new_preparation": 0.041515500051900744,
+    "supervisor_elapsed_including_worker_launch": 93.61241391696967,
+    "training_independent_audits": 24.60230153426528,
+    "training_online_collection": 50.38457432342693,
+    "worker_elapsed": 91.27454804209992
+  },
+  "update_ledger": {
+    "file": "update-ledger.json",
+    "rows": 256,
+    "sha256": "e206debab7e80d8c12e40ec861c32457bddd9a3c6643c6db25463fd7c455493e"
+  }
+}

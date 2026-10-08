@@ -1,0 +1,325 @@
+{
+  "schema": "native-opening-rl-capacity-saved-output-audit-v1",
+  "created_at": "2026-10-08T18:25:06.072240+00:00",
+  "status": "passed",
+  "checks": 163683,
+  "declaration_sha256": "14df1a1fbb9bb8187d97bc7dcf99cacf923a9e5e9f4182693de0e1d01a5e1285",
+  "output_inventory_sha256": "d378524c205838c28f09b2bc02e2a1e08dadc9a25acd63a0170043afc3aeea3d",
+  "result_sha256": "301e690fb87adff99b715c1371cb0fc692b0adc16fc3576ff7b0725336c56f68",
+  "updates_sha256": "fc73fa8289f76b0852586551453ac16f2619b034de19797bc4d39358604d5880",
+  "sources_verified": 33,
+  "inherited_inputs_verified": 81,
+  "output_files_verified": 3125,
+  "prior_output_files_verified": 278,
+  "indexed_original_and_new_files_unchanged_before_after": true,
+  "counts": {
+    "RL_updates": 256,
+    "training_episodes": 1024,
+    "training_transitions": 1842,
+    "training_collection_forwards": 1842,
+    "training_loss_forwards": 1842,
+    "assessment_readout_forwards": 30,
+    "argmax_inference_forwards": 4,
+    "accepted_actual_episodes": 1026,
+    "actual_episode_transitions": 1846,
+    "evaluation_prefix_transitions": 4,
+    "new_teacher_search_calls": 0,
+    "clipped_updates": 18,
+    "native_previews": {
+      "preparation": 12,
+      "evaluation_reconstruction": 48,
+      "training": 9816,
+      "argmax_inference": 24,
+      "total": 9900
+    }
+  },
+  "training_outcomes": {
+    "episodes": 1024,
+    "distinct_routes": 16,
+    "return_distribution": {
+      "-0.231000": 30,
+      "-0.433000": 56,
+      "-0.464000": 41,
+      "-0.631000": 21,
+      "-0.692000": 39,
+      "-0.694000": 71,
+      "-0.833000": 33,
+      "-0.864000": 25,
+      "-0.894000": 55,
+      "-0.896000": 88,
+      "0.000000": 206,
+      "0.100000": 64,
+      "0.102000": 27,
+      "1.098000": 157,
+      "1.100000": 111
+    },
+    "target_and_STOP_counts": {
+      "any_target": 359,
+      "full_target": 268,
+      "STOP_at_root": 206
+    },
+    "interpretation": "Behavior-mixture collection during optimization; not fixed-final evaluation episodes."
+  },
+  "methods": {
+    "initial": {
+      "return": -0.464,
+      "transitions": 2,
+      "target_mm3": 0.0,
+      "normal_mm3": 2.0,
+      "behavior_parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+      "online_seconds": 0.050434666918590665,
+      "audit_seconds": 0.02137112501077354,
+      "native_previews": 12,
+      "forwards": 2
+    },
+    "RL256": {
+      "return": 1.0979999999999999,
+      "transitions": 2,
+      "target_mm3": 2.0,
+      "normal_mm3": 4.0,
+      "behavior_parameter_hash": "sha256:f52e14097ea6a35436eaf30f0ece5658e24987e289ca30ff6a529816545b5721",
+      "online_seconds": 0.06500133313238621,
+      "audit_seconds": 0.042572167003527284,
+      "native_previews": 12,
+      "forwards": 2
+    }
+  },
+  "fixed_final_details": {
+    "clinical_deficit_probability": null,
+    "complete_tool_path_length_mm": 12.0,
+    "cumulative_contacted_tissue_upper_bound_mm3": 6.0,
+    "currently_retained_contacted_tissue_upper_bound_mm3": 0.0,
+    "language_surrogate": null,
+    "motor_surrogate": null,
+    "nonstop_actions": 2,
+    "normal_removed_mm3": 4.0,
+    "partial_contact_reward_weight": 0.0,
+    "positive_target_source_cells_removed": 2,
+    "reference_target_fraction_removed": 1.0,
+    "simulated_removed_volume_mm3": 6.0,
+    "target_removed_mm3": 2.0,
+    "tool_changes": 1,
+    "total_reference_target_mm3": 2.0,
+    "total_reward": 1.0979999999999999
+  },
+  "search_gap": {
+    "search_return": 1.1,
+    "fixed_final_return": 1.0979999999999999,
+    "return_gap": 0.002,
+    "search_tool_path_mm": 10.0,
+    "fixed_final_tool_path_mm": 12.0,
+    "extra_path_penalty": 0.002
+  },
+  "checkpoints": {
+    "0": {
+      "tensor_sha256": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+      "file_sha256": "433c95336d11a5b3d2e5b98c1d53c2b989b63ae0e277e3b43f835c4cbc2a8257",
+      "actual_Adam_steps": 0,
+      "changed_modules": {
+        "encoder": false,
+        "actor": false,
+        "stop": false,
+        "critic": false
+      },
+      "action_rng_sha256": null
+    },
+    "16": {
+      "tensor_sha256": "sha256:5134b5ff817c87dbc31f9b51fb082626a06883efb75471cfe38e8d41f6ccbfa7",
+      "file_sha256": "27a0a3755d8b346af41d7c9552115461d92888b864528ad44ff66d331dea47c6",
+      "actual_Adam_steps": 16,
+      "changed_modules": {
+        "encoder": true,
+        "actor": true,
+        "stop": true,
+        "critic": true
+      },
+      "action_rng_sha256": "2f20f6721dd6b4891069a6736bc4f4891d4e0e5ea9393d0e89781db2a34dbb76"
+    },
+    "32": {
+      "tensor_sha256": "sha256:f2fb0d3f7a758a00d26508f94a041f60817dd7c11042a664a875b1b54f0a9e2f",
+      "file_sha256": "c0283b335b824c55b9afb3f3b55781601769e34de7985bb982ce5690b393926e",
+      "actual_Adam_steps": 32,
+      "changed_modules": {
+        "encoder": true,
+        "actor": true,
+        "stop": true,
+        "critic": true
+      },
+      "action_rng_sha256": "46b899a2c78891f1c6f365fc5c8b236b120692c925c461dd899c6a63238f112c"
+    },
+    "64": {
+      "tensor_sha256": "sha256:20b78d543dca618aafb35eab9aeb94cf7cc45a17d51d68e2d6a7a294dd46c3e8",
+      "file_sha256": "e8ba30c17f1370821d1b8ffd9fb968df5644ae07219ac735d2ff2c6be3d80929",
+      "actual_Adam_steps": 64,
+      "changed_modules": {
+        "encoder": true,
+        "actor": true,
+        "stop": true,
+        "critic": true
+      },
+      "action_rng_sha256": "c26e1403141b1104e1a3895c9f69a6dd47bd634d195f6228b9b5a1ff25d829d2"
+    },
+    "128": {
+      "tensor_sha256": "sha256:1fd4f541a605386f907eaa8c2060bfa3390c9c443d433c06f30e376717915bd1",
+      "file_sha256": "d3c6839c457e92e957456bdc3931e5c546d68d060cfce16c701195d0b5b9d4fa",
+      "actual_Adam_steps": 128,
+      "changed_modules": {
+        "encoder": true,
+        "actor": true,
+        "stop": true,
+        "critic": true
+      },
+      "action_rng_sha256": "42d69b40d432080aaa1fea510021532fd9b295ddbf865f7171a075e0f15c2d7d"
+    },
+    "256": {
+      "tensor_sha256": "sha256:f52e14097ea6a35436eaf30f0ece5658e24987e289ca30ff6a529816545b5721",
+      "file_sha256": "1d391665f66cdd0c1fa1db150261b853820a9d30d62fc20c99cf021cf0229fbd",
+      "actual_Adam_steps": 256,
+      "changed_modules": {
+        "encoder": true,
+        "actor": true,
+        "stop": true,
+        "critic": true
+      },
+      "action_rng_sha256": "103b8009f2ff85d28bbda5b212353cd4fe3606af5113800203fc63027f24c25c"
+    }
+  },
+  "readouts": {
+    "0": {
+      "teacher_labels_correct": 0,
+      "teacher_cross_entropy": 1.4025094509124756,
+      "nominal_expected_return": -0.27546336538864385,
+      "generated_any_target_probability": 0.23549630885444517,
+      "generated_full_target_probability": 0.11746745412686077,
+      "expected_target_mm3": 0.35296376298130594,
+      "expected_normal_mm3": 2.8164931203338672,
+      "root_stop_probability": 0.16420265787537905,
+      "terminal_probability_sum": 1.0,
+      "assessment_scope": "privileged nominal-model expectation; target indicators from matching audited generated fixture routes"
+    },
+    "16": {
+      "teacher_labels_correct": 2,
+      "teacher_cross_entropy": 1.3744704008102417,
+      "nominal_expected_return": -0.2701508955266883,
+      "generated_any_target_probability": 0.2203744161688559,
+      "generated_full_target_probability": 0.11033260438854033,
+      "expected_target_mm3": 0.3307070205573962,
+      "expected_normal_mm3": 2.695839158889316,
+      "root_stop_probability": 0.19271079047257958,
+      "terminal_probability_sum": 1.0,
+      "assessment_scope": "privileged nominal-model expectation; target indicators from matching audited generated fixture routes"
+    },
+    "32": {
+      "teacher_labels_correct": 2,
+      "teacher_cross_entropy": 1.3713213920593261,
+      "nominal_expected_return": -0.2630680538814393,
+      "generated_any_target_probability": 0.22466157326855904,
+      "generated_full_target_probability": 0.11293875169185866,
+      "expected_target_mm3": 0.3376003249604177,
+      "expected_normal_mm3": 2.694238153468635,
+      "root_stop_probability": 0.1953526884317398,
+      "terminal_probability_sum": 1.0,
+      "assessment_scope": "privileged nominal-model expectation; target indicators from matching audited generated fixture routes"
+    },
+    "64": {
+      "teacher_labels_correct": 2,
+      "teacher_cross_entropy": 1.3747188329696656,
+      "nominal_expected_return": -0.2515870382979253,
+      "generated_any_target_probability": 0.23256804409977996,
+      "generated_full_target_probability": 0.1177204490922106,
+      "expected_target_mm3": 0.35028849319199057,
+      "expected_normal_mm3": 2.69777853428022,
+      "root_stop_probability": 0.19939596951007843,
+      "terminal_probability_sum": 1.0,
+      "assessment_scope": "privileged nominal-model expectation; target indicators from matching audited generated fixture routes"
+    },
+    "128": {
+      "teacher_labels_correct": 2,
+      "teacher_cross_entropy": 1.3159043908119201,
+      "nominal_expected_return": -0.19224553328934813,
+      "generated_any_target_probability": 0.2377360647293126,
+      "generated_full_target_probability": 0.12594364822328669,
+      "expected_target_mm3": 0.36367971295259927,
+      "expected_normal_mm3": 2.4924900691367693,
+      "root_stop_probability": 0.26697398027700125,
+      "terminal_probability_sum": 1.0,
+      "assessment_scope": "privileged nominal-model expectation; target indicators from matching audited generated fixture routes"
+    },
+    "256": {
+      "teacher_labels_correct": 2,
+      "teacher_cross_entropy": 1.4363576786592602,
+      "nominal_expected_return": 0.5460230346172619,
+      "generated_any_target_probability": 0.6798739893425487,
+      "generated_full_target_probability": 0.6735023162368228,
+      "expected_target_mm3": 1.3533763055793715,
+      "expected_normal_mm3": 3.580561662609253,
+      "root_stop_probability": 0.06724855798302003,
+      "terminal_probability_sum": 1.0,
+      "assessment_scope": "privileged nominal-model expectation; target indicators from matching audited generated fixture routes"
+    }
+  },
+  "maximum_recomputed_loss_errors": {
+    "policy_loss": 2.9838335002807526e-07,
+    "value_loss": 1.848212696220486e-07,
+    "entropy": 3.0663740546721385e-07,
+    "loss": 3.695295971439805e-07,
+    "mean_return": 1.1102230246251565e-16
+  },
+  "maximum_recomputed_readout_errors": {
+    "probability": 2.6433089994615244e-08,
+    "cross_entropy": 1.9460946543148339e-07,
+    "margin": 1.1920928955078125e-07
+  },
+  "costs": {
+    "training_online_seconds": 50.38457432342693,
+    "training_audit_seconds": 24.60230153426528,
+    "loss_update_seconds": 4.14033754565753,
+    "fit_with_readout_export_seconds": 88.39223999995738,
+    "preparation_seconds": 0.041515500051900744,
+    "evaluation_reconstruction_seconds": 0.14496004208922386,
+    "readout_seconds_sum": 0.052440290339291096,
+    "all_episode_guarded_seconds": 50.50001032347791,
+    "all_episode_audit_seconds": 24.66624482627958,
+    "inherited_evaluation_costs": {
+      "source_experiment_seconds": 6.54656691593118,
+      "teacher_model_calls": 20,
+      "teacher_validation": {
+        "complete_episodes": 5,
+        "reference_reward_not_used_for_labels": true,
+        "seconds": 0.3857009999919683,
+        "transitions": 10
+      },
+      "prior_RL_training": {
+        "fit_seconds": 4.023205250035971,
+        "initial_parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+        "latest_parameter_hash": "sha256:5134b5ff817c87dbc31f9b51fb082626a06883efb75471cfe38e8d41f6ccbfa7",
+        "loss_forward_calls": 112,
+        "optimization_transitions": 112,
+        "status": "complete",
+        "updates": 16
+      },
+      "scope": "previously paid complete-tree and audited-route evidence; assessment only, not training replay"
+    },
+    "overlap_note": "Detailed collection/audit/loss/export costs overlap the broad fit/worker timing; do not add scopes twice."
+  },
+  "bounds": {
+    "worker_seconds": 91.27454804209992,
+    "supervisor_seconds": 93.61241391696967,
+    "wall_threshold_seconds": 180,
+    "sampled_peak_RSS_bytes": 334151680,
+    "RSS_threshold_bytes": 2147483648,
+    "RSS_samples": 446,
+    "automatic_retry": false,
+    "termination_reason": null
+  },
+  "prior_negatives_preserved": {
+    "initial_argmax_return": -0.464,
+    "RL16_argmax_return": -0.896,
+    "BC16_action": "STOP"
+  },
+  "interpretation": "Fixed-final scratch RL reaches both target cells on this same generated task with argmax return1.098,0.002 below exact search due to2mm extra complete tool path. Its privileged finite-tree expected return is0.546023; any-target and full-target probabilities are generated-model expectations, not clinical probabilities. Only2of5 teacher labels match; no requirement or claim that RL clones the teacher. First16 negative trajectories/weights/losses reproduce exactly. No seed robustness, held-out anatomical generalization, physical validation, clinical benefit or computational advantage over search established.",
+  "scope": "Saved byte/source/JSON and safe weights-only checkpoint audit. Recomputed all sampled native-cell removal/reward totals, on-policy loss scalars from actual saved rewards/logits/values, and finite-tree assessment probabilities. Existing independent geometry acceptance and bound history inspected; geometric clearances not recomputed. No project imports, model construction, forward, optimizer update, rollout, search, network, image decoding, patient or holdout access.",
+  "findings": [],
+  "unindexed_reporting_files": [],
+  "audit_elapsed_seconds": 3.416698083980009
+}

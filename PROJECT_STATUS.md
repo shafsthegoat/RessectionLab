@@ -5,8 +5,9 @@ remains active, with the [later human steering](docs/REAL_OBSERVATION_EXECUTION_
 superseding its incompatible real-data-only training restriction. Synthetic data
 and simulator-generated RL experience are now permitted, separately labeled from
 observed patient records, with held-out real-patient and physical validation still
-required. The first fixed generated-development comparison has now run and
-retains a negative learning result; no real-patient training or transfer is claimed.
+required. The first fixed generated-development comparison retains its negative
+result; longer fixed fits now demonstrate learning on that same task. No new
+real-patient training or transfer is claimed.
 
 Eligible downloads will continue without small-batch review pauses; detailed image,
 geometry and anatomical QC is a separate phase. Unreviewed data stays unreviewed.
@@ -29,7 +30,11 @@ imitation fit](artifacts/native-opening-bc-capacity-v1/RESULT.md) now fits all f
 labels and matches search at 1.1 after 256 updates, with exact update-16 reproduction.
 This demonstrates training-task capacity only. [Saved-tree arithmetic](artifacts/native-opening-policy-expectation-v1/RESULT.md)
 shows RL16 slightly improved expected reward while reducing target-reaching
-probability; its useful learning remains inadequate.
+probability. The [fixed longer scratch RL run](artifacts/native-opening-rl-capacity-v1/RESULT.md)
+now scores 1.098 against search's 1.100 after 256 updates and 1,024 audited
+training episodes. Expected return improves to +0.546023, but stochastic failures
+remain. First-16 trajectories and optimizer state reproduce exactly. This is
+capacity on one generated task; real-patient input compatibility and transfer remain open.
 
 The [full eligible annotation intake](artifacts/lausanne-annotation-full-intake-v1/RESULT.md)
 completed all 144 masks (13,977,015 bytes). Independent content checks passed for
