@@ -1,0 +1,18 @@
+{
+  "schema": "lausanne-deferred-qc-output-independent-review-v1",
+  "status": "review_failed",
+  "payload_files_opened": 0,
+  "scalar_arrays_decoded": 0,
+  "network_requests": 0,
+  "tracked_edits": 0,
+  "source_commit": "e2fe6d4bdc4bcc52808280d5d4e1ff2a8afb6dc7",
+  "error": {
+    "type": "KeyError",
+    "message": "'receipt'"
+  },
+  "traceback": "Traceback (most recent call last):\n  File \"/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/lausanne-deferred-qc-output-review-v1/audit_saved_results.py\", line 143, in <module>\n    r=proof(row['receipt']);p=row['path']\n            ~~~^^^^^^^^^^^\nKeyError: 'receipt'\n",
+  "elapsed_seconds": 1.8795675409492105,
+  "input_summary_sha256": "af9e4c67b64d48135a0e792145ee1746b9a97f872e1a6f1c9933122610129ae3",
+  "input_receipt_index_sha256": "5568bf96755df0aed141ef3552bba9eda5e2cabe1df15e6d9e0051cddc8c86b4",
+  "audit_script_sha256": "710fa26c51066d24c8bfebeedc8577d11f114fe28f4ea69199da1a2c21cec84f"
+}

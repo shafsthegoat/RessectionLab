@@ -1,0 +1,1028 @@
+{
+  "schema": "lausanne-deferred-qc-output-independent-review-v1",
+  "status": "saved_results_verified",
+  "payload_files_opened": 0,
+  "scalar_arrays_decoded": 0,
+  "network_requests": 0,
+  "tracked_edits": 0,
+  "source_commit": "e2fe6d4bdc4bcc52808280d5d4e1ff2a8afb6dc7",
+  "runs": {
+    "new-originals-review-01": {
+      "stage": "originals",
+      "outcomes": 26,
+      "elapsed_seconds": 28.447022875072435,
+      "limit_seconds": 1800,
+      "declaration_sha256": "a4d22e6a5e12eca0d643def6ee1411fdb6791c2dc02273b6daf0b48a7a9463cb",
+      "batch_sha256": "96a1da706968d2e92538af2f40d2f7be987276358a03f4e1e9d49403615147db"
+    },
+    "pending-mask-references-01": {
+      "stage": "references",
+      "outcomes": 27,
+      "elapsed_seconds": 27.321247291052714,
+      "limit_seconds": 1800,
+      "declaration_sha256": "fa2f69460932f3b2e4aa761b4d113406b47a0f0edbf2a9f1036d2d8bb0719b73",
+      "batch_sha256": "2382c3c305ecd6b8b1cc7bae5914177fcbbc66cff8a0c70215d0117c0039dc5f"
+    }
+  },
+  "source_snapshot_files_verified": 19,
+  "copied_receipt_outcome_intent_files_verified": 159,
+  "parent_completed_outcomes_verified": 53,
+  "worker_PIDs_and_process_groups_absent": 53,
+  "original_findings": {
+    "new_originals_passed": 26,
+    "new_people": 13,
+    "new_sessions": 13,
+    "source_compressed_bytes_receipted": 739832012,
+    "legacy_sessions": 197,
+    "combined_sessions": 210,
+    "combined_people": 199,
+    "combined_image_qc_passed": 414,
+    "combined_image_qc_failed": 6,
+    "combined_TOF_passed": 210,
+    "combined_T1_passed": 204,
+    "retained_failures": [
+      {
+        "path": "sub-253/ses-20110628/anat/sub-253_ses-20110628_T1w.nii.gz",
+        "subject": "sub-253",
+        "session": "ses-20110628",
+        "passed": false,
+        "failure_reason": "QFORM_SFORM_DISAGREEMENT: Active qform and sform differ across the image extent; review the source transform.",
+        "receipt": {
+          "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-253_ses-20110628.json",
+          "bytes": 4058,
+          "sha256": "dbda41dcfa35591e27657a595cf3fcc776f56edfcacd3582c3ddb6bb94363fbb"
+        }
+      },
+      {
+        "path": "sub-410/ses-20131015/anat/sub-410_ses-20131015_T1w.nii.gz",
+        "subject": "sub-410",
+        "session": "ses-20131015",
+        "passed": false,
+        "failure_reason": "QFORM_SFORM_DISAGREEMENT: Active qform and sform differ across the image extent; review the source transform.",
+        "receipt": {
+          "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-410_ses-20131015.json",
+          "bytes": 3964,
+          "sha256": "d49b388f8b678e373ccb99e4dc969ac81aab80b6e6a65dd7da38f07d75869a03"
+        }
+      },
+      {
+        "path": "sub-411/ses-20131109/anat/sub-411_ses-20131109_T1w.nii.gz",
+        "subject": "sub-411",
+        "session": "ses-20131109",
+        "passed": false,
+        "failure_reason": "QFORM_SFORM_DISAGREEMENT: Active qform and sform differ across the image extent; review the source transform.",
+        "receipt": {
+          "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-411_ses-20131109.json",
+          "bytes": 3987,
+          "sha256": "b790af773abc2ac6f83586d1fe7bbd9bde386102fb338426f7ebcd8c9f87e8f7"
+        }
+      },
+      {
+        "path": "sub-418/ses-20130908/anat/sub-418_ses-20130908_T1w.nii.gz",
+        "subject": "sub-418",
+        "session": "ses-20130908",
+        "passed": false,
+        "failure_reason": "QFORM_SFORM_DISAGREEMENT: Active qform and sform differ across the image extent; review the source transform.",
+        "receipt": {
+          "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-418_ses-20130908.json",
+          "bytes": 3986,
+          "sha256": "8a7e48d2cb388500002d7aa1cba27a91367b935aae5cd666b023155b88bfe49a"
+        }
+      },
+      {
+        "path": "sub-424/ses-20130818/anat/sub-424_ses-20130818_T1w.nii.gz",
+        "subject": "sub-424",
+        "session": "ses-20130818",
+        "passed": false,
+        "failure_reason": "QFORM_SFORM_DISAGREEMENT: Active qform and sform differ across the image extent; review the source transform.",
+        "receipt": {
+          "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-424_ses-20130818.json",
+          "bytes": 3987,
+          "sha256": "fdcff9f2403a69676a0741e9e4a42be5b5ed65189e0c8067d9a30052934c9fba"
+        }
+      },
+      {
+        "path": "sub-473/ses-20140701/anat/sub-473_ses-20140701_T1w.nii.gz",
+        "subject": "sub-473",
+        "session": "ses-20140701",
+        "passed": false,
+        "failure_reason": "QFORM_SFORM_DISAGREEMENT: Active qform and sform differ across the image extent; review the source transform.",
+        "receipt": {
+          "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-473_ses-20140701.json",
+          "bytes": 4935,
+          "sha256": "7ba7b71f095f373d851843bb9d77a47c25d52ca2e32965f6baf781dbfbcb6132"
+        }
+      }
+    ],
+    "scalar_passes_authenticated_from_saved_receipts_not_redecoded": true
+  },
+  "reference_findings": {
+    "new_reference_passed": 27,
+    "new_grid_counts": {
+      "passed": 20,
+      "unresolved": 7
+    },
+    "combined_grid_counts": {
+      "passed": 136,
+      "unresolved": 8
+    },
+    "combined_content_passed": 144,
+    "combined_reference_passed": 144,
+    "metadata_exclusions": 4,
+    "independent_saved_header_recalculations": 28,
+    "reference_rows": [
+      {
+        "path": "derivatives/manual_masks/sub-452/ses-20141127/anat/sub-452_ses-20141127_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-452",
+        "session": "ses-20141127",
+        "reference_mode": "legacy_session_receipt",
+        "reference_status": "passed",
+        "grid_status": "passed",
+        "rule": "source_reference_serialization_equivalence",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-452/ses-20141127/anat/sub-452_ses-20141127_desc-Lesion_2_mask.nii.gz",
+        "subject": "sub-452",
+        "session": "ses-20141127",
+        "reference_mode": "legacy_session_receipt",
+        "reference_status": "passed",
+        "grid_status": "passed",
+        "rule": "source_reference_serialization_equivalence",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-452/ses-20141127/anat/sub-452_ses-20141127_desc-Lesion_3_mask.nii.gz",
+        "subject": "sub-452",
+        "session": "ses-20141127",
+        "reference_mode": "legacy_session_receipt",
+        "reference_status": "passed",
+        "grid_status": "passed",
+        "rule": "source_reference_serialization_equivalence",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-453/ses-20141021/anat/sub-453_ses-20141021_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-453",
+        "session": "ses-20141021",
+        "reference_mode": "legacy_session_receipt",
+        "reference_status": "passed",
+        "grid_status": "passed",
+        "rule": "source_reference_serialization_equivalence",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-460/ses-20140812/anat/sub-460_ses-20140812_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-460",
+        "session": "ses-20140812",
+        "reference_mode": "legacy_session_receipt",
+        "reference_status": "passed",
+        "grid_status": "passed",
+        "rule": "source_reference_serialization_equivalence",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-461/ses-20140802/anat/sub-461_ses-20140802_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-461",
+        "session": "ses-20140802",
+        "reference_mode": "legacy_session_receipt",
+        "reference_status": "passed",
+        "grid_status": "passed",
+        "rule": "source_reference_serialization_equivalence",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-464/ses-20140724/anat/sub-464_ses-20140724_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-464",
+        "session": "ses-20140724",
+        "reference_mode": "legacy_session_receipt",
+        "reference_status": "passed",
+        "grid_status": "passed",
+        "rule": "source_reference_serialization_equivalence",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-464/ses-20140724/anat/sub-464_ses-20140724_desc-Lesion_2_mask.nii.gz",
+        "subject": "sub-464",
+        "session": "ses-20140724",
+        "reference_mode": "legacy_session_receipt",
+        "reference_status": "passed",
+        "grid_status": "passed",
+        "rule": "source_reference_serialization_equivalence",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-466/ses-20140901/anat/sub-466_ses-20140901_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-466",
+        "session": "ses-20140901",
+        "reference_mode": "legacy_session_receipt",
+        "reference_status": "passed",
+        "grid_status": "unresolved",
+        "rule": null,
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-467/ses-20140817/anat/sub-467_ses-20140817_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-467",
+        "session": "ses-20140817",
+        "reference_mode": "separate_original_review",
+        "reference_status": "passed",
+        "grid_status": "unresolved",
+        "rule": null,
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-470/ses-20140807/anat/sub-470_ses-20140807_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-470",
+        "session": "ses-20140807",
+        "reference_mode": "legacy_session_receipt",
+        "reference_status": "passed",
+        "grid_status": "passed",
+        "rule": "source_reference_serialization_equivalence",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-472/ses-20140705/anat/sub-472_ses-20140705_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-472",
+        "session": "ses-20140705",
+        "reference_mode": "legacy_session_receipt",
+        "reference_status": "passed",
+        "grid_status": "passed",
+        "rule": "source_reference_serialization_equivalence",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-473/ses-20140701/anat/sub-473_ses-20140701_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-473",
+        "session": "ses-20140701",
+        "reference_mode": "legacy_session_receipt",
+        "reference_status": "passed",
+        "grid_status": "unresolved",
+        "rule": null,
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-474/ses-20140630/anat/sub-474_ses-20140630_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-474",
+        "session": "ses-20140630",
+        "reference_mode": "separate_original_review",
+        "reference_status": "passed",
+        "grid_status": "passed",
+        "rule": "source_reference_serialization_equivalence",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-475/ses-20140503/anat/sub-475_ses-20140503_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-475",
+        "session": "ses-20140503",
+        "reference_mode": "separate_original_review",
+        "reference_status": "passed",
+        "grid_status": "passed",
+        "rule": "source_reference_serialization_equivalence",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-478/ses-20140513/anat/sub-478_ses-20140513_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-478",
+        "session": "ses-20140513",
+        "reference_mode": "separate_original_review",
+        "reference_status": "passed",
+        "grid_status": "unresolved",
+        "rule": null,
+        "annotation_subtype_status": "source_voxelwise_exact_crosswalk"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-480/ses-20140208/anat/sub-480_ses-20140208_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-480",
+        "session": "ses-20140208",
+        "reference_mode": "separate_original_review",
+        "reference_status": "passed",
+        "grid_status": "passed",
+        "rule": "source_reference_serialization_equivalence",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-480/ses-20140208/anat/sub-480_ses-20140208_desc-Lesion_2_mask.nii.gz",
+        "subject": "sub-480",
+        "session": "ses-20140208",
+        "reference_mode": "separate_original_review",
+        "reference_status": "passed",
+        "grid_status": "passed",
+        "rule": "source_reference_serialization_equivalence",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-481/ses-20140201/anat/sub-481_ses-20140201_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-481",
+        "session": "ses-20140201",
+        "reference_mode": "separate_original_review",
+        "reference_status": "passed",
+        "grid_status": "passed",
+        "rule": "source_reference_serialization_equivalence",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-481/ses-20140201/anat/sub-481_ses-20140201_desc-Lesion_2_mask.nii.gz",
+        "subject": "sub-481",
+        "session": "ses-20140201",
+        "reference_mode": "separate_original_review",
+        "reference_status": "passed",
+        "grid_status": "passed",
+        "rule": "source_reference_serialization_equivalence",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-484/ses-20140116/anat/sub-484_ses-20140116_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-484",
+        "session": "ses-20140116",
+        "reference_mode": "separate_original_review",
+        "reference_status": "passed",
+        "grid_status": "unresolved",
+        "rule": null,
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-485/ses-20140131/anat/sub-485_ses-20140131_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-485",
+        "session": "ses-20140131",
+        "reference_mode": "separate_original_review",
+        "reference_status": "passed",
+        "grid_status": "unresolved",
+        "rule": null,
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-486/ses-20140121/anat/sub-486_ses-20140121_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-486",
+        "session": "ses-20140121",
+        "reference_mode": "separate_original_review",
+        "reference_status": "passed",
+        "grid_status": "passed",
+        "rule": "source_reference_serialization_equivalence",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-486/ses-20140121/anat/sub-486_ses-20140121_desc-Lesion_2_mask.nii.gz",
+        "subject": "sub-486",
+        "session": "ses-20140121",
+        "reference_mode": "separate_original_review",
+        "reference_status": "passed",
+        "grid_status": "passed",
+        "rule": "source_reference_serialization_equivalence",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-489/ses-20151226/anat/sub-489_ses-20151226_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-489",
+        "session": "ses-20151226",
+        "reference_mode": "separate_original_review",
+        "reference_status": "passed",
+        "grid_status": "unresolved",
+        "rule": null,
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-491/ses-20151124/anat/sub-491_ses-20151124_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-491",
+        "session": "ses-20151124",
+        "reference_mode": "separate_original_review",
+        "reference_status": "passed",
+        "grid_status": "passed",
+        "rule": "source_reference_serialization_equivalence",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      },
+      {
+        "path": "derivatives/manual_masks/sub-492/ses-20151228/anat/sub-492_ses-20151228_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-492",
+        "session": "ses-20151228",
+        "reference_mode": "separate_original_review",
+        "reference_status": "passed",
+        "grid_status": "passed",
+        "rule": "source_reference_serialization_equivalence",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch"
+      }
+    ],
+    "remaining_unresolved_subjects": [
+      "sub-454",
+      "sub-466",
+      "sub-467",
+      "sub-473",
+      "sub-478",
+      "sub-484",
+      "sub-485",
+      "sub-489"
+    ]
+  },
+  "history": {
+    "original_mask_checkpoint_and144receipt_hashes_unchanged": true,
+    "prior_known_T1_failures_retained": 6,
+    "prior_mask_grid_failure_retained": "sub-454",
+    "separate_review_namespace_preserved": true
+  },
+  "outcomes": [
+    {
+      "path": "sub-467/ses-20140817/anat/sub-467_ses-20140817_angio.nii.gz",
+      "subject": "sub-467",
+      "session": "ses-20140817",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "6dfed2e0c479cee65d79e45eec34bd885a205f24135b1695424e576420dc64a2",
+      "elapsed_seconds": 1.725848708068952
+    },
+    {
+      "path": "sub-474/ses-20140630/anat/sub-474_ses-20140630_angio.nii.gz",
+      "subject": "sub-474",
+      "session": "ses-20140630",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "c2d0957f887743dd78cdb3f5f89cf9880326453937702f27a45023a7665b618c",
+      "elapsed_seconds": 1.6195047500077635
+    },
+    {
+      "path": "sub-475/ses-20140503/anat/sub-475_ses-20140503_angio.nii.gz",
+      "subject": "sub-475",
+      "session": "ses-20140503",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "5ec9fb64a3284a572416428ecb27866aec0d86f92eb8247c9b94af38150eafda",
+      "elapsed_seconds": 1.2767999998759478
+    },
+    {
+      "path": "sub-478/ses-20140513/anat/sub-478_ses-20140513_angio.nii.gz",
+      "subject": "sub-478",
+      "session": "ses-20140513",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "d2977d94c965026eef431a24a7b3eee2702c4d8399cdcb2987f8bc1bae6d9632",
+      "elapsed_seconds": 1.4705323749221861
+    },
+    {
+      "path": "sub-480/ses-20140208/anat/sub-480_ses-20140208_angio.nii.gz",
+      "subject": "sub-480",
+      "session": "ses-20140208",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "43c688d93d6398e0eb1f0c99a49d466d2c96ff6bb3c92e28bc6c148dccf50ba4",
+      "elapsed_seconds": 0.8207819999661297
+    },
+    {
+      "path": "sub-481/ses-20140201/anat/sub-481_ses-20140201_angio.nii.gz",
+      "subject": "sub-481",
+      "session": "ses-20140201",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "feed74d000038222ff6fcf8bae1b60e655754ee8c7e41841bb298f3bc8aa756a",
+      "elapsed_seconds": 1.3498633750714362
+    },
+    {
+      "path": "sub-484/ses-20140116/anat/sub-484_ses-20140116_angio.nii.gz",
+      "subject": "sub-484",
+      "session": "ses-20140116",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "39f41e3a2837ed8f2be2f56018c52d8b7db3f3563bad6141286cd7e5ae5fd7d5",
+      "elapsed_seconds": 0.8059472080785781
+    },
+    {
+      "path": "sub-485/ses-20140131/anat/sub-485_ses-20140131_angio.nii.gz",
+      "subject": "sub-485",
+      "session": "ses-20140131",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "f0159fa70814096df9ec095d5671792b571848ae97e0360bb850f3afe3e3b9f8",
+      "elapsed_seconds": 0.8535420000553131
+    },
+    {
+      "path": "sub-486/ses-20140121/anat/sub-486_ses-20140121_angio.nii.gz",
+      "subject": "sub-486",
+      "session": "ses-20140121",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "965a85e684a1ae3c8a8386bfb4c21d18cad6ba3d97166901360d9148b426ff90",
+      "elapsed_seconds": 0.7733742501586676
+    },
+    {
+      "path": "sub-489/ses-20151226/anat/sub-489_ses-20151226_angio.nii.gz",
+      "subject": "sub-489",
+      "session": "ses-20151226",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "547673744ea5490563799752276e3ccb67d9ccbf7ee1202018514da6af3f35cd",
+      "elapsed_seconds": 0.7541391248814762
+    },
+    {
+      "path": "sub-491/ses-20151124/anat/sub-491_ses-20151124_angio.nii.gz",
+      "subject": "sub-491",
+      "session": "ses-20151124",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "613b6b4958c79ea1dad3621128fea61bac9b5e9e78d33c64be3d187c95052b19",
+      "elapsed_seconds": 1.4872036669403315
+    },
+    {
+      "path": "sub-492/ses-20151228/anat/sub-492_ses-20151228_angio.nii.gz",
+      "subject": "sub-492",
+      "session": "ses-20151228",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "eca3515e5dc6558a5544c4c797027855aa7b6000b78e4cd0363c547b70aa6c6f",
+      "elapsed_seconds": 1.4875142918899655
+    },
+    {
+      "path": "sub-467/ses-20140817/anat/sub-467_ses-20140817_T1w.nii.gz",
+      "subject": "sub-467",
+      "session": "ses-20140817",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "bdf8bb8e6c59950e326cc52545fae8b15b3dc9b9e670c16f710b2d877eacdc0d",
+      "elapsed_seconds": 0.641382958041504
+    },
+    {
+      "path": "sub-474/ses-20140630/anat/sub-474_ses-20140630_T1w.nii.gz",
+      "subject": "sub-474",
+      "session": "ses-20140630",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "a3cafca8b4e0495bf7cea7c6ad9f587339a8b5b1d52679e5c294d3fa7c4011ea",
+      "elapsed_seconds": 0.6277717920020223
+    },
+    {
+      "path": "sub-475/ses-20140503/anat/sub-475_ses-20140503_T1w.nii.gz",
+      "subject": "sub-475",
+      "session": "ses-20140503",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "fe002bccfdc3edbc1f0b95778470907680553b53b73cd1bae78a270b2aab0587",
+      "elapsed_seconds": 0.6257318330463022
+    },
+    {
+      "path": "sub-478/ses-20140513/anat/sub-478_ses-20140513_T1w.nii.gz",
+      "subject": "sub-478",
+      "session": "ses-20140513",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "02a78140c3e85142ca1e5a7058ddf7e537cb30214c9d7c1a3683c3069080aac3",
+      "elapsed_seconds": 0.665278916945681
+    },
+    {
+      "path": "sub-480/ses-20140208/anat/sub-480_ses-20140208_T1w.nii.gz",
+      "subject": "sub-480",
+      "session": "ses-20140208",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "be11e69c62abab2f4890af8e523f2acfdad7096f27af978d4d86b999edaa066f",
+      "elapsed_seconds": 0.6554911250714213
+    },
+    {
+      "path": "sub-481/ses-20140201/anat/sub-481_ses-20140201_T1w.nii.gz",
+      "subject": "sub-481",
+      "session": "ses-20140201",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "9522390c17045d01ba6f5a85b6e9c272c8c6c0791ef710fe4df620787ea0797c",
+      "elapsed_seconds": 0.6223461250774562
+    },
+    {
+      "path": "sub-482/ses-20140210/anat/sub-482_ses-20140210_T1w.nii.gz",
+      "subject": "sub-482",
+      "session": "ses-20140210",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "814b94bde1c848d2d221192b75c72c297b47a55527340d46a4e3d3d3fd923259",
+      "elapsed_seconds": 0.6286556250415742
+    },
+    {
+      "path": "sub-482/ses-20140210/anat/sub-482_ses-20140210_angio.nii.gz",
+      "subject": "sub-482",
+      "session": "ses-20140210",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "c95efd5d914be421bf5f81f03055aea480a3844bfd0c5ac4dc8522d608deea4d",
+      "elapsed_seconds": 1.251280624885112
+    },
+    {
+      "path": "sub-484/ses-20140116/anat/sub-484_ses-20140116_T1w.nii.gz",
+      "subject": "sub-484",
+      "session": "ses-20140116",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "f98a6f1bdf6dcac51e27792e641da7561b9abb404b3c0446bfb6baea50358c2e",
+      "elapsed_seconds": 0.6234611668623984
+    },
+    {
+      "path": "sub-485/ses-20140131/anat/sub-485_ses-20140131_T1w.nii.gz",
+      "subject": "sub-485",
+      "session": "ses-20140131",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "6a1b738e3a04aed36b50ff90f36436241109267a8fd9c52c75d1aa571b88aba5",
+      "elapsed_seconds": 0.6790615839418024
+    },
+    {
+      "path": "sub-486/ses-20140121/anat/sub-486_ses-20140121_T1w.nii.gz",
+      "subject": "sub-486",
+      "session": "ses-20140121",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "2f9de1c6fc4ad3b52ea476e229e061f0736de5c7f9126ec9564d15fc835edec1",
+      "elapsed_seconds": 0.6368515000212938
+    },
+    {
+      "path": "sub-489/ses-20151226/anat/sub-489_ses-20151226_T1w.nii.gz",
+      "subject": "sub-489",
+      "session": "ses-20151226",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "e2d0084c9dba38a73bd58b1fd05b54df9406cc4927b7befe2231dfde2d0f321d",
+      "elapsed_seconds": 0.6432894580066204
+    },
+    {
+      "path": "sub-491/ses-20151124/anat/sub-491_ses-20151124_T1w.nii.gz",
+      "subject": "sub-491",
+      "session": "ses-20151124",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "6f398b0c17b11408c5da57878a5f4d11d9f3c1016ad2f4abbc334140d7088f08",
+      "elapsed_seconds": 0.6243066659662873
+    },
+    {
+      "path": "sub-492/ses-20151228/anat/sub-492_ses-20151228_T1w.nii.gz",
+      "subject": "sub-492",
+      "session": "ses-20151228",
+      "stage": "originals",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "a235e2f90b629570cb76b29b3561c8bd993e00d71d6901d4606d45883472492f",
+      "elapsed_seconds": 0.6308467499911785
+    },
+    {
+      "path": "derivatives/manual_masks/sub-452/ses-20141127/anat/sub-452_ses-20141127_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-452",
+      "session": "ses-20141127",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "07ec1e9e01a8b7bed144f34cd9573b00d474888198e5a7ec7abd66dd5d47204d",
+      "elapsed_seconds": 0.6703467920888215
+    },
+    {
+      "path": "derivatives/manual_masks/sub-452/ses-20141127/anat/sub-452_ses-20141127_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-452",
+      "session": "ses-20141127",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "4a986e57436206bc5ddebd2358e76d5f3417e9872f7c552b74fafed09003ea16",
+      "elapsed_seconds": 0.6535534998402
+    },
+    {
+      "path": "derivatives/manual_masks/sub-452/ses-20141127/anat/sub-452_ses-20141127_desc-Lesion_3_mask.nii.gz",
+      "subject": "sub-452",
+      "session": "ses-20141127",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "63148f96eca6255b98256b4a690183d710e05f9955435a0ff799d6ccbeed1109",
+      "elapsed_seconds": 0.6706467499025166
+    },
+    {
+      "path": "derivatives/manual_masks/sub-453/ses-20141021/anat/sub-453_ses-20141021_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-453",
+      "session": "ses-20141021",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "e7953198006a5f53fc8d58ed16d70f7e8b810ba56707c316955f329631d615b1",
+      "elapsed_seconds": 0.6560498750768602
+    },
+    {
+      "path": "derivatives/manual_masks/sub-460/ses-20140812/anat/sub-460_ses-20140812_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-460",
+      "session": "ses-20140812",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "f24b527459ab495d2015da4b74c5ae2c65ce79814986511bcfd398331ac148cb",
+      "elapsed_seconds": 0.6931118748616427
+    },
+    {
+      "path": "derivatives/manual_masks/sub-461/ses-20140802/anat/sub-461_ses-20140802_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-461",
+      "session": "ses-20140802",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "7c70790f4ce8535b5a95888692bd5777e90886ae7b391815e059b5267c706621",
+      "elapsed_seconds": 0.6645256250631064
+    },
+    {
+      "path": "derivatives/manual_masks/sub-464/ses-20140724/anat/sub-464_ses-20140724_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-464",
+      "session": "ses-20140724",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "6e6b4a2e8398955ede1a5b0e3c86773836dd4a4a08fe94958b3b9a313f620d12",
+      "elapsed_seconds": 0.7316756250802428
+    },
+    {
+      "path": "derivatives/manual_masks/sub-464/ses-20140724/anat/sub-464_ses-20140724_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-464",
+      "session": "ses-20140724",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "a80d3be0c46b91db1298217d8e62d2ff28d8402d99160dcfdccf88e2cdf0d526",
+      "elapsed_seconds": 0.6961818330455571
+    },
+    {
+      "path": "derivatives/manual_masks/sub-466/ses-20140901/anat/sub-466_ses-20140901_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-466",
+      "session": "ses-20140901",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_failed",
+      "receipt_sha256": "8bb7ae06cd19483e5c691d7c40dfd71202cd64f364c686e2cb0cae52af521cac",
+      "elapsed_seconds": 0.537499750033021
+    },
+    {
+      "path": "derivatives/manual_masks/sub-467/ses-20140817/anat/sub-467_ses-20140817_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-467",
+      "session": "ses-20140817",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_failed",
+      "receipt_sha256": "1449d58a2898f252d16e475a35c163b836de1f2120791fdb0c077d97c6edc928",
+      "elapsed_seconds": 1.1485707089304924
+    },
+    {
+      "path": "derivatives/manual_masks/sub-470/ses-20140807/anat/sub-470_ses-20140807_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-470",
+      "session": "ses-20140807",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "5839ec4649b50902990e7e38555e97ac1e4bec3e39f7f7a5389a5f8105859ca9",
+      "elapsed_seconds": 0.4932594171259552
+    },
+    {
+      "path": "derivatives/manual_masks/sub-472/ses-20140705/anat/sub-472_ses-20140705_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-472",
+      "session": "ses-20140705",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "e150d629b35bc9a760a3f76a620d4efcad5c085327f0d45bdad3e534a8f1fa77",
+      "elapsed_seconds": 0.561304375063628
+    },
+    {
+      "path": "derivatives/manual_masks/sub-473/ses-20140701/anat/sub-473_ses-20140701_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-473",
+      "session": "ses-20140701",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_failed",
+      "receipt_sha256": "7f27c1d430dfc3687b1d2d2419f166e8306127f3d7344401bf93381dcbe2364d",
+      "elapsed_seconds": 0.48988779191859066
+    },
+    {
+      "path": "derivatives/manual_masks/sub-474/ses-20140630/anat/sub-474_ses-20140630_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-474",
+      "session": "ses-20140630",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "35b4c6828acf35f76b756d0258d7ea67c91c2f217b7c9397b1826e327c29b375",
+      "elapsed_seconds": 1.1122698751278222
+    },
+    {
+      "path": "derivatives/manual_masks/sub-475/ses-20140503/anat/sub-475_ses-20140503_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-475",
+      "session": "ses-20140503",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "46bf26f6d7e9f22835452d7f0f816626381b3ba295b5d4e585271783c8a2ad2c",
+      "elapsed_seconds": 1.0170612500514835
+    },
+    {
+      "path": "derivatives/manual_masks/sub-478/ses-20140513/anat/sub-478_ses-20140513_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-478",
+      "session": "ses-20140513",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_failed",
+      "receipt_sha256": "6833f92206cabef58335f15714ca1ec0ce099b9b2d3137a87ce23b0274826dc5",
+      "elapsed_seconds": 1.0574903332162648
+    },
+    {
+      "path": "derivatives/manual_masks/sub-480/ses-20140208/anat/sub-480_ses-20140208_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-480",
+      "session": "ses-20140208",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "c3b508771da7f97248cedf9dbe729fd891f22e2a7d1a76868ba2ec80ae33438b",
+      "elapsed_seconds": 0.930929166963324
+    },
+    {
+      "path": "derivatives/manual_masks/sub-480/ses-20140208/anat/sub-480_ses-20140208_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-480",
+      "session": "ses-20140208",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "8786518bbfb9f9062b30c268a906fdce84a64aeab3e2faaa21eb5f4484aede44",
+      "elapsed_seconds": 0.9345444580540061
+    },
+    {
+      "path": "derivatives/manual_masks/sub-481/ses-20140201/anat/sub-481_ses-20140201_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-481",
+      "session": "ses-20140201",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "a2ef6b37abf4bff3001f556214c5454df01edaf539ab658e1cf3437ad4885922",
+      "elapsed_seconds": 1.0579023328609765
+    },
+    {
+      "path": "derivatives/manual_masks/sub-481/ses-20140201/anat/sub-481_ses-20140201_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-481",
+      "session": "ses-20140201",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "be3eacb1fab1854b289eb85bb1c11f95784e8c63d1f0fb905ce921debda8d4f0",
+      "elapsed_seconds": 1.075607042061165
+    },
+    {
+      "path": "derivatives/manual_masks/sub-484/ses-20140116/anat/sub-484_ses-20140116_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-484",
+      "session": "ses-20140116",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_failed",
+      "receipt_sha256": "3b9de565a97d26436142084b1f21fbacebc7b12670105de7b1300e85b3093027",
+      "elapsed_seconds": 0.9381771660409868
+    },
+    {
+      "path": "derivatives/manual_masks/sub-485/ses-20140131/anat/sub-485_ses-20140131_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-485",
+      "session": "ses-20140131",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_failed",
+      "receipt_sha256": "ee38c3136ee7b890df348c8afd086c6ee68dd93639be0ebf0fd44775258d31e4",
+      "elapsed_seconds": 0.920850208029151
+    },
+    {
+      "path": "derivatives/manual_masks/sub-486/ses-20140121/anat/sub-486_ses-20140121_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-486",
+      "session": "ses-20140121",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "1a57bd8a43227964a1bccdf20814e5fe87cb719610e16685101bedf9d3117463",
+      "elapsed_seconds": 0.9634331669658422
+    },
+    {
+      "path": "derivatives/manual_masks/sub-486/ses-20140121/anat/sub-486_ses-20140121_desc-Lesion_2_mask.nii.gz",
+      "subject": "sub-486",
+      "session": "ses-20140121",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "89165152fa36cb481c8024dba85f0fd1520d516bdcfe1b8a395c92241c5e68f7",
+      "elapsed_seconds": 0.8764563328586519
+    },
+    {
+      "path": "derivatives/manual_masks/sub-489/ses-20151226/anat/sub-489_ses-20151226_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-489",
+      "session": "ses-20151226",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_failed",
+      "receipt_sha256": "7b8c20982b7a87f00f1b043fa652aa60a7429c460b189149c01814365d26049e",
+      "elapsed_seconds": 0.9147156670223922
+    },
+    {
+      "path": "derivatives/manual_masks/sub-491/ses-20151124/anat/sub-491_ses-20151124_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-491",
+      "session": "ses-20151124",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "55b49d9354c53fc9b068f20fefc9154aadaea8fd46ffadc6ecbf29f481b8545a",
+      "elapsed_seconds": 1.0155219167936593
+    },
+    {
+      "path": "derivatives/manual_masks/sub-492/ses-20151228/anat/sub-492_ses-20151228_desc-Lesion_1_mask.nii.gz",
+      "subject": "sub-492",
+      "session": "ses-20151228",
+      "stage": "references",
+      "role": "TRAIN",
+      "parent_status": "completed",
+      "review_status": "review_passed",
+      "receipt_sha256": "067dcb60f5f473bdd32caa88f8a85b1a95d09e0f0d05f6b58948d28b2914293b",
+      "elapsed_seconds": 1.0391670421231538
+    }
+  ],
+  "resources": {
+    "maximum_saved_worker_elapsed_seconds": 1.725848708068952,
+    "maximum_saved_scalar_workspace_bytes": 2883584,
+    "scientific_execution_RSS": "not measured; no claim made"
+  },
+  "limitations": [
+    "This independent audit read saved receipts, source snapshots and 348-byte headers already embedded in metadata; it did not open original or mask payload files.",
+    "New scalar checks are authenticated execution results; scalar values were not independently recounted in this review.",
+    "An image geometry pass does not establish annotation-to-reference grid equivalence. Seven new grid refusals and the prior sub454 refusal remain unresolved.",
+    "No anatomy or annotation-semantics review, timestamp availability, negative annotation coverage, scanner/planning/training admission or tolerance change follows.",
+    "Continuous downloads remain independent and were not interrupted."
+  ],
+  "elapsed_seconds": 1.861846584128216,
+  "input_summary_sha256": "af9e4c67b64d48135a0e792145ee1746b9a97f872e1a6f1c9933122610129ae3",
+  "input_receipt_index_sha256": "5568bf96755df0aed141ef3552bba9eda5e2cabe1df15e6d9e0051cddc8c86b4",
+  "audit_script_sha256": "dc66e8ecf2b0c7d713bac620718f3b460fb417da8629f8f52c8958a81b2c369f",
+  "reviewer_execution_note": {
+    "initial_attempt": "Reviewer assumed every reconciliation row carried its own receipt pointer; new separate-review rows instead join through receipt-index.json. Initial reviewer KeyError evidence is retained; correcting that metadata join completed successfully. No source or execution result defect found.",
+    "initial_review_record_sha256": "0d95f748067e98b5de74705a899e589ddde1e48b2ed74745d9b749a41185d484",
+    "scientific_payload_reads_across_both_attempts": 0
+  }
+}

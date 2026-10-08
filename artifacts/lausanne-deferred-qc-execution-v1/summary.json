@@ -1,0 +1,352 @@
+{
+  "schema": "lausanne-deferred-qc-execution-summary-v1",
+  "status": "executed_pending_independent_result_review",
+  "manifest": {
+    "path": "manifests/lausanne-deferred-qc-v1.json",
+    "bytes": 128752,
+    "sha256": "65224289e26db6656d99ee9bdfb089bf80ca309fcbdee63fb469989e9e3d6e19"
+  },
+  "implementation_report": {
+    "path": "build/lausanne-deferred-qc-implementation-v2/review.json",
+    "bytes": 6666,
+    "sha256": "0c1cb3ab3cd4a86ff2f4eb465af75a042e06baaf456b3541fff76e2b45c62f4e"
+  },
+  "runs": {
+    "new-originals-review-01": {
+      "declaration": {
+        "path": "data/anatomy/ds003949-v1.0.1/deferred-qc-v1/runs/new-originals-review-01/declaration.json",
+        "bytes": 4714,
+        "sha256": "a4d22e6a5e12eca0d643def6ee1411fdb6791c2dc02273b6daf0b48a7a9463cb"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/deferred-qc-v1/runs/new-originals-review-01/batch.json",
+        "bytes": 29455,
+        "sha256": "96a1da706968d2e92538af2f40d2f7be987276358a03f4e1e9d49403615147db"
+      },
+      "elapsed_seconds": 28.447022875072435,
+      "stage": "originals",
+      "status": "bounded_attempts_finished",
+      "outcome_counts": {
+        "completed": 26
+      }
+    },
+    "pending-mask-references-01": {
+      "declaration": {
+        "path": "data/anatomy/ds003949-v1.0.1/deferred-qc-v1/runs/pending-mask-references-01/declaration.json",
+        "bytes": 8083,
+        "sha256": "fa2f69460932f3b2e4aa761b4d113406b47a0f0edbf2a9f1036d2d8bb0719b73"
+      },
+      "batch": {
+        "path": "data/anatomy/ds003949-v1.0.1/deferred-qc-v1/runs/pending-mask-references-01/batch.json",
+        "bytes": 31147,
+        "sha256": "2382c3c305ecd6b8b1cc7bae5914177fcbbc66cff8a0c70215d0117c0039dc5f"
+      },
+      "elapsed_seconds": 27.321247291052714,
+      "stage": "references",
+      "status": "bounded_attempts_finished",
+      "outcome_counts": {
+        "completed": 27
+      }
+    }
+  },
+  "original_reconciliation": {
+    "sessions": 210,
+    "people": 199,
+    "legacy_session_receipts": 197,
+    "new_separate_image_reviews": 26,
+    "new_sessions": 13,
+    "image_total": 420,
+    "image_integrity_geometry_passed": 414,
+    "image_integrity_geometry_failed": 6,
+    "TOF_passed": 210,
+    "T1_passed": 204,
+    "all_modalities_qc_passed_sessions": 204,
+    "sessions_with_retained_modality_failure": 6,
+    "people_with_any_passed_pair_session": 193,
+    "people_with_retained_failed_pair_session": 6,
+    "new_header_qc": {
+      "passed": 26
+    },
+    "new_scalar_qc": {
+      "passed": 26
+    },
+    "new_geometry_qc": {
+      "passed": 26
+    },
+    "retained_failures": [
+      {
+        "path": "sub-253/ses-20110628/anat/sub-253_ses-20110628_T1w.nii.gz",
+        "subject": "sub-253",
+        "session": "ses-20110628",
+        "passed": false,
+        "failure_reason": "QFORM_SFORM_DISAGREEMENT: Active qform and sform differ across the image extent; review the source transform.",
+        "receipt": {
+          "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-253_ses-20110628.json",
+          "bytes": 4058,
+          "sha256": "dbda41dcfa35591e27657a595cf3fcc776f56edfcacd3582c3ddb6bb94363fbb"
+        }
+      },
+      {
+        "path": "sub-410/ses-20131015/anat/sub-410_ses-20131015_T1w.nii.gz",
+        "subject": "sub-410",
+        "session": "ses-20131015",
+        "passed": false,
+        "failure_reason": "QFORM_SFORM_DISAGREEMENT: Active qform and sform differ across the image extent; review the source transform.",
+        "receipt": {
+          "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-410_ses-20131015.json",
+          "bytes": 3964,
+          "sha256": "d49b388f8b678e373ccb99e4dc969ac81aab80b6e6a65dd7da38f07d75869a03"
+        }
+      },
+      {
+        "path": "sub-411/ses-20131109/anat/sub-411_ses-20131109_T1w.nii.gz",
+        "subject": "sub-411",
+        "session": "ses-20131109",
+        "passed": false,
+        "failure_reason": "QFORM_SFORM_DISAGREEMENT: Active qform and sform differ across the image extent; review the source transform.",
+        "receipt": {
+          "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-411_ses-20131109.json",
+          "bytes": 3987,
+          "sha256": "b790af773abc2ac6f83586d1fe7bbd9bde386102fb338426f7ebcd8c9f87e8f7"
+        }
+      },
+      {
+        "path": "sub-418/ses-20130908/anat/sub-418_ses-20130908_T1w.nii.gz",
+        "subject": "sub-418",
+        "session": "ses-20130908",
+        "passed": false,
+        "failure_reason": "QFORM_SFORM_DISAGREEMENT: Active qform and sform differ across the image extent; review the source transform.",
+        "receipt": {
+          "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-418_ses-20130908.json",
+          "bytes": 3986,
+          "sha256": "8a7e48d2cb388500002d7aa1cba27a91367b935aae5cd666b023155b88bfe49a"
+        }
+      },
+      {
+        "path": "sub-424/ses-20130818/anat/sub-424_ses-20130818_T1w.nii.gz",
+        "subject": "sub-424",
+        "session": "ses-20130818",
+        "passed": false,
+        "failure_reason": "QFORM_SFORM_DISAGREEMENT: Active qform and sform differ across the image extent; review the source transform.",
+        "receipt": {
+          "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-424_ses-20130818.json",
+          "bytes": 3987,
+          "sha256": "fdcff9f2403a69676a0741e9e4a42be5b5ed65189e0c8067d9a30052934c9fba"
+        }
+      },
+      {
+        "path": "sub-473/ses-20140701/anat/sub-473_ses-20140701_T1w.nii.gz",
+        "subject": "sub-473",
+        "session": "ses-20140701",
+        "passed": false,
+        "failure_reason": "QFORM_SFORM_DISAGREEMENT: Active qform and sform differ across the image extent; review the source transform.",
+        "receipt": {
+          "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-473_ses-20140701.json",
+          "bytes": 4935,
+          "sha256": "7ba7b71f095f373d851843bb9d77a47c25d52ca2e32965f6baf781dbfbcb6132"
+        }
+      }
+    ],
+    "no_legacy_receipts_created_or_relabelled": true
+  },
+  "mask_reconciliation": {
+    "candidate_inventory": 148,
+    "metadata_exclusions": 4,
+    "qualified_content_reviewed_masks": 144,
+    "prior_checkpoint_grid_passed": 116,
+    "prior_checkpoint_reference_deferred": 27,
+    "prior_checkpoint_grid_unresolved": 1,
+    "new_reference_passed": 27,
+    "new_grid_passed": 20,
+    "new_grid_unresolved": 7,
+    "final_content_passed": 144,
+    "final_reference_passed": 144,
+    "final_grid_passed": 136,
+    "final_grid_unresolved": 8,
+    "mask_scalars_redecoded": false,
+    "new_unresolved": [
+      {
+        "path": "derivatives/manual_masks/sub-466/ses-20140901/anat/sub-466_ses-20140901_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-466",
+        "session": "ses-20140901",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+        "content_qc_status": "passed",
+        "reference_qc_status": "passed",
+        "grid_qc_status": "unresolved",
+        "grid_failure_reason": "Unresolved coded grid: Active raw qform/sform disagree beyond serialization precision",
+        "new_followup": true,
+        "background_semantics": "unknown",
+        "annotation_available_at": null,
+        "review_available_at": null,
+        "saved_grid_metrics": null,
+        "saved_within_image_qform_sform_maximum": null,
+        "maximum_not_recorded_in_receipt": true
+      },
+      {
+        "path": "derivatives/manual_masks/sub-467/ses-20140817/anat/sub-467_ses-20140817_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-467",
+        "session": "ses-20140817",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+        "content_qc_status": "passed",
+        "reference_qc_status": "passed",
+        "grid_qc_status": "unresolved",
+        "grid_failure_reason": "Unresolved coded grid: Active raw qform/sform disagree beyond serialization precision",
+        "new_followup": true,
+        "background_semantics": "unknown",
+        "annotation_available_at": null,
+        "review_available_at": null,
+        "saved_grid_metrics": null,
+        "saved_within_image_qform_sform_maximum": null,
+        "maximum_not_recorded_in_receipt": true
+      },
+      {
+        "path": "derivatives/manual_masks/sub-473/ses-20140701/anat/sub-473_ses-20140701_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-473",
+        "session": "ses-20140701",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+        "content_qc_status": "passed",
+        "reference_qc_status": "passed",
+        "grid_qc_status": "unresolved",
+        "grid_failure_reason": "Unresolved coded grid: Active raw qform/sform disagree beyond serialization precision",
+        "new_followup": true,
+        "background_semantics": "unknown",
+        "annotation_available_at": null,
+        "review_available_at": null,
+        "saved_grid_metrics": null,
+        "saved_within_image_qform_sform_maximum": null,
+        "maximum_not_recorded_in_receipt": true
+      },
+      {
+        "path": "derivatives/manual_masks/sub-478/ses-20140513/anat/sub-478_ses-20140513_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-478",
+        "session": "ses-20140513",
+        "annotation_subtype_status": "source_voxelwise_exact_crosswalk",
+        "content_qc_status": "passed",
+        "reference_qc_status": "passed",
+        "grid_qc_status": "unresolved",
+        "grid_failure_reason": "Unresolved coded grid: Active raw qform/sform disagree beyond serialization precision",
+        "new_followup": true,
+        "background_semantics": "unknown",
+        "annotation_available_at": null,
+        "review_available_at": null,
+        "saved_grid_metrics": null,
+        "saved_within_image_qform_sform_maximum": null,
+        "maximum_not_recorded_in_receipt": true
+      },
+      {
+        "path": "derivatives/manual_masks/sub-484/ses-20140116/anat/sub-484_ses-20140116_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-484",
+        "session": "ses-20140116",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+        "content_qc_status": "passed",
+        "reference_qc_status": "passed",
+        "grid_qc_status": "unresolved",
+        "grid_failure_reason": "Unresolved coded grid: Active raw qform/sform disagree beyond serialization precision",
+        "new_followup": true,
+        "background_semantics": "unknown",
+        "annotation_available_at": null,
+        "review_available_at": null,
+        "saved_grid_metrics": null,
+        "saved_within_image_qform_sform_maximum": null,
+        "maximum_not_recorded_in_receipt": true
+      },
+      {
+        "path": "derivatives/manual_masks/sub-485/ses-20140131/anat/sub-485_ses-20140131_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-485",
+        "session": "ses-20140131",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+        "content_qc_status": "passed",
+        "reference_qc_status": "passed",
+        "grid_qc_status": "unresolved",
+        "grid_failure_reason": "Unresolved coded grid: Active raw qform/sform disagree beyond serialization precision",
+        "new_followup": true,
+        "background_semantics": "unknown",
+        "annotation_available_at": null,
+        "review_available_at": null,
+        "saved_grid_metrics": null,
+        "saved_within_image_qform_sform_maximum": null,
+        "maximum_not_recorded_in_receipt": true
+      },
+      {
+        "path": "derivatives/manual_masks/sub-489/ses-20151226/anat/sub-489_ses-20151226_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-489",
+        "session": "ses-20151226",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+        "content_qc_status": "passed",
+        "reference_qc_status": "passed",
+        "grid_qc_status": "unresolved",
+        "grid_failure_reason": "Unresolved coded grid: Active raw qform/sform disagree beyond serialization precision",
+        "new_followup": true,
+        "background_semantics": "unknown",
+        "annotation_available_at": null,
+        "review_available_at": null,
+        "saved_grid_metrics": null,
+        "saved_within_image_qform_sform_maximum": null,
+        "maximum_not_recorded_in_receipt": true
+      }
+    ],
+    "prior_unresolved": [
+      {
+        "path": "derivatives/manual_masks/sub-454/ses-20141123/anat/sub-454_ses-20141123_desc-Lesion_1_mask.nii.gz",
+        "subject": "sub-454",
+        "session": "ses-20141123",
+        "annotation_subtype_status": "source_voxelwise_person_date_mismatch",
+        "content_qc_status": "passed",
+        "reference_qc_status": "passed",
+        "grid_qc_status": "unresolved",
+        "grid_failure_reason": "Unresolved coded grid: Active raw qform/sform disagree beyond serialization precision",
+        "new_followup": false,
+        "background_semantics": "unknown",
+        "annotation_available_at": null,
+        "review_available_at": null,
+        "saved_grid_metrics": null,
+        "saved_within_image_qform_sform_maximum": null,
+        "maximum_not_recorded_in_receipt": true
+      }
+    ]
+  },
+  "criteria_and_saved_measurements": {
+    "original_image_qform_sform_corner_displacement_limit_mm": 0.01,
+    "source_grid_maximum_allowed_float32_steps": 4,
+    "source_grid_requires_unchanged_reference_voxel_indices": true,
+    "new_unresolved_numeric_qform_sform_maxima": "not saved in failure receipts; no new calculation or decoding performed",
+    "new_passing_mask_vs_reference_metrics_not_within_image_qform_sform_differences": true,
+    "maximum_saved_passing_mask_reference_float32_steps": 4,
+    "maximum_saved_passing_mask_reference_displacement_mm": 3.3574591358544666e-05,
+    "maximum_saved_passing_mask_reference_displacement_voxels": 8.417967988113112e-05,
+    "source_tolerances_changed": false
+  },
+  "resources": {
+    "workers": 1,
+    "native_thread_environment_limit": 1,
+    "declared_each_batch_seconds": 1800,
+    "actual_original_seconds": 28.447022875072435,
+    "actual_reference_seconds": 27.321247291052714,
+    "original_compressed_source_bytes_reviewed": 739832012,
+    "maximum_recorded_scalar_workspace_bound_bytes": 2883584,
+    "maximum_recorded_native_payload_bytes": 213811200,
+    "maximum_recorded_worker_elapsed_seconds": 1.725848708068952,
+    "peak_rss": "not measured; no live worker was captured by the post-completion process samples",
+    "network_requests": 0,
+    "optimizer_updates": 0
+  },
+  "admission": {
+    "anatomy_qc": "not_run",
+    "annotation_semantics_review": "not_run",
+    "training_admitted": false,
+    "scanner_frame_admitted": false,
+    "spatial_planning_admitted": false,
+    "annotation_available_at": null,
+    "review_available_at": null,
+    "optimizer_updates": 0,
+    "recorded_rl_transitions": 0,
+    "network_requests": 0,
+    "array_operation": "none"
+  },
+  "scope_limits": [
+    "Only the frozen26 originals and27 reference followups were executed.",
+    "Original image-level geometry passes do not establish mask/reference grid equivalence.",
+    "All historical checkpoint receipts remain unchanged; these are separate new receipts.",
+    "No anatomy review, source-frame repair, registration, training, clinical inference or tolerance relaxation."
+  ]
+}

@@ -23,7 +23,7 @@
         "TOF-MRA"
       ],
       "acquired_bytes": 10020802851,
-      "byte_and_scalar_qc_passed_people": 180,
+      "byte_and_scalar_qc_passed_people": 193,
       "scanner_frame_accepted_people": 0,
       "prepared_for_spatial_planning_people": 0,
       "used_in_component_fitting_people": 0,
@@ -34,7 +34,7 @@
       "checkpoint_contributions": [],
       "receipt": "artifacts/lausanne-original-pilot-v1/acquisition.json",
       "geometry_gate": "TOF sidecar/NIfTI orientation mismatch; T1/TOF alignment unresolved",
-      "next": "Original TRAIN acquisition complete; review newly downloaded images and pending annotation reference grids in a separate phase, then source-appropriate component fitting",
+      "next": "Original and mask reference review complete; diagnose eight retained grid conflicts, review anatomy/semantics and resolve scanner-world alignment before intended-use admission",
       "train_source_index": "manifests/lausanne-train-originals-v1.json",
       "train_source_index_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
       "indexed_train_people": 199,
@@ -56,12 +56,12 @@
       "metadata_qualified_annotation_source_bytes": 13977015,
       "annotation_metadata_failures": 4,
       "annotation_metadata_review": "artifacts/lausanne-annotation-expansion-v1/RESULT.md",
-      "full_pair_qc_passed_sessions": 191,
+      "full_pair_qc_passed_sessions": 204,
       "acquired_qc_failed_people": 6,
       "acquired_qc_failed_sessions": 6,
       "qc_failed_image_count": 6,
-      "passed_tof_image_count": 197,
-      "passed_t1_image_count": 191,
+      "passed_tof_image_count": 210,
+      "passed_t1_image_count": 204,
       "remaining_train_people_to_acquire": 0,
       "retained_qc_failure": {
         "person": "sub-253",
@@ -80,18 +80,18 @@
       "manual_annotation_historical_failed_attempts": 1,
       "manual_annotation_latest_content_receipt": "artifacts/lausanne-annotation-full-intake-v1/independent-verification.json",
       "acquired_source_annotation_masks": 144,
-      "manual_annotation_reference_grid_qc_passed_masks": 116,
+      "manual_annotation_reference_grid_qc_passed_masks": 136,
       "manual_annotation_historically_missing_reference_masks": 27,
-      "manual_annotation_grid_unresolved_masks": 1,
+      "manual_annotation_grid_unresolved_masks": 8,
       "manual_annotation_subtype_counts": {
         "manual_region_subtype_unresolved": 111,
         "source_voxelwise_person_date_mismatch": 31,
         "source_voxelwise_exact_crosswalk": 2
       },
-      "manual_annotation_grid_status_is_historical_checkpoint": true,
+      "manual_annotation_grid_status_is_historical_checkpoint": false,
       "latest_download_completion": "artifacts/lausanne-train-acquisition-complete-v1/completion.json",
-      "acquired_image_header_scalar_qc_pending_sessions": 13,
-      "image_qc_checkpoint": "artifacts/lausanne-train-acquisition-complete-v1/original-batch31-independent-review.json",
+      "acquired_image_header_scalar_qc_pending_sessions": 0,
+      "image_qc_checkpoint": "artifacts/lausanne-deferred-qc-execution-v1/independent-verification.json",
       "retained_t1_frame_conflict_subjects": [
         "sub-253",
         "sub-410",
@@ -99,6 +99,32 @@
         "sub-418",
         "sub-424",
         "sub-473"
+      ],
+      "previous_image_qc_checkpoint": {
+        "byte_and_scalar_qc_passed_people": 180,
+        "full_pair_qc_passed_sessions": 191,
+        "passed_tof_image_count": 197,
+        "passed_t1_image_count": 191,
+        "acquired_image_header_scalar_qc_pending_sessions": 13,
+        "image_qc_checkpoint": "artifacts/lausanne-train-acquisition-complete-v1/original-batch31-independent-review.json"
+      },
+      "manual_annotation_previous_grid_checkpoint": {
+        "passed": 116,
+        "reference_pending": 27,
+        "unresolved": 1,
+        "receipt": "artifacts/lausanne-annotation-full-intake-v1/RESULT.md"
+      },
+      "manual_annotation_current_missing_reference_masks": 0,
+      "manual_annotation_latest_grid_review": "artifacts/lausanne-deferred-qc-execution-v1/RESULT.md",
+      "manual_annotation_unresolved_grid_subjects": [
+        "sub-454",
+        "sub-466",
+        "sub-467",
+        "sub-473",
+        "sub-478",
+        "sub-484",
+        "sub-485",
+        "sub-489"
       ]
     },
     {

@@ -38,11 +38,10 @@ passes 143 focused controls and is running the full frozen 890-file queue. New
 receipts report byte verification only, with all scientific QC separately pending.
 All [Lausanne TRAIN originals](artifacts/lausanne-train-acquisition-complete-v1/RESULT.md)
 are now complete: 840 files, 199 people, 210 sessions and 10,020,802,851 bytes.
-The final 26 images await separate header/scalar QC. Six earlier T1 frame conflicts
-remain unresolved; download completion does not establish anatomical admission.
-The [separate QC implementation](artifacts/lausanne-deferred-qc-preparation-v1/RESULT.md)
-now has independently verified lifecycle repairs; its 26-image and 27-reference
-review is running independently of downloads. The [N36 specimen preparation](artifacts/hbe-n36-preparation-v1/RESULT.md)
+The [separate QC result](artifacts/lausanne-deferred-qc-execution-v1/RESULT.md)
+completes all 26 new images and 27 pending references. Across 420 images, 414 pass
+and six earlier T1 conflicts remain. Mask-grid checks now pass for 136 of 144;
+eight conflicts remain. Anatomical and spatial admission are still unestablished. The [N36 specimen preparation](artifacts/hbe-n36-preparation-v1/RESULT.md)
 passed independent geometry/source checks and the single capped FEBio solve is
 running. Physical and calibration gates remain closed pending its result.
 The [observed six-landmark desktop API](artifacts/observed-landmark-replay-v1/RESULT.md)
