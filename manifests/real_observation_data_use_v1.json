@@ -1,6 +1,6 @@
 {
   "schema": "real-observation-data-use-v1",
-  "updated_at": "2026-10-08T10:48:00.900527+00:00",
+  "updated_at": "2026-10-08",
   "scope": "New admissions in the October6 real-observation program, not a complete historical data inventory",
   "sources": [
     {
@@ -16,14 +16,14 @@
       "discovered_people": 284,
       "declared_train_people": 199,
       "declared_train_sessions": 210,
-      "acquired_train_people": 90,
-      "acquired_train_sessions": 95,
+      "acquired_train_people": 106,
+      "acquired_train_sessions": 111,
       "acquired_modalities": [
         "T1w",
         "TOF-MRA"
       ],
-      "acquired_bytes": 4315283541,
-      "byte_and_scalar_qc_passed_people": 90,
+      "acquired_bytes": 5086888757,
+      "byte_and_scalar_qc_passed_people": 105,
       "scanner_frame_accepted_people": 0,
       "prepared_for_spatial_planning_people": 0,
       "used_in_component_fitting_people": 0,
@@ -34,7 +34,7 @@
       "checkpoint_contributions": [],
       "receipt": "artifacts/lausanne-original-pilot-v1/acquisition.json",
       "geometry_gate": "TOF sidecar/NIfTI orientation mismatch; T1/TOF alignment unresolved",
-      "next": "Continue remaining 115 TRAIN sessions; acquire and check 144 metadata-qualified TRAIN masks with annotation subtype and missingness retained; no component learning admission yet",
+      "next": "Continue remaining 99 TRAIN sessions; independently review the prepared 144-mask intake before payload execution; source-appropriate component learning remains unexecuted",
       "train_source_index": "manifests/lausanne-train-originals-v1.json",
       "train_source_index_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
       "indexed_train_people": 199,
@@ -42,8 +42,8 @@
       "indexed_source_files": 840,
       "indexed_source_bytes": 10020802851,
       "intake_acceptance_receipt": "artifacts/lausanne-train-intake-v1/RESULT.md",
-      "remaining_train_sessions_to_acquire": 115,
-      "latest_bounded_intake": "artifacts/lausanne-train-intake-v1/acquisition-batch-18-summary.json",
+      "remaining_train_sessions_to_acquire": 99,
+      "latest_bounded_intake": "artifacts/lausanne-train-intake-v1/acquisition-batch-21-summary.json",
       "acquired_source_manual_aneurysm_masks": 1,
       "manual_annotation_bytes": 82420,
       "manual_annotation_positive_voxels": 193,
@@ -57,7 +57,24 @@
       "metadata_qualified_annotation_sessions": 117,
       "metadata_qualified_annotation_source_bytes": 13977015,
       "annotation_metadata_failures": 4,
-      "annotation_metadata_review": "artifacts/lausanne-annotation-expansion-v1/RESULT.md"
+      "annotation_metadata_review": "artifacts/lausanne-annotation-expansion-v1/RESULT.md",
+      "full_pair_qc_passed_sessions": 110,
+      "acquired_qc_failed_people": 1,
+      "acquired_qc_failed_sessions": 1,
+      "qc_failed_image_count": 1,
+      "passed_tof_image_count": 111,
+      "passed_t1_image_count": 110,
+      "remaining_train_people_to_acquire": 93,
+      "retained_qc_failure": {
+        "person": "sub-253",
+        "session": "ses-20110628",
+        "modality": "T1w",
+        "reason": "QFORM_SFORM_DISAGREEMENT",
+        "tof_qc": "passed_header_and_scalar_checks",
+        "full_pair_qc": "failed",
+        "acquired_bytes_retained": 58454783,
+        "receipt": "artifacts/lausanne-train-intake-v1/acquisition-batch-19-sub-253-ses-20110628.json"
+      }
     },
     {
       "accession": "TopCoW external Lausanne",
@@ -98,7 +115,7 @@
       "used_in_offline_rl_people": 0,
       "checkpoint_contributions": [],
       "receipt": "artifacts/resect-component-admission-v1/RESULT.md",
-      "next": "Qualify full labeled TRAIN inventory, preserve absent labels and withheld patients, and define a source-faithful cavity component study before fitting",
+      "next": "Implement exact-file TRAIN expansion transport for 24 remaining pairs, preserving rights and absent labels; independently check actual payloads before defining a source-faithful component study",
       "exclusions": [
         "Case4 prior exposed/protected development observations are not new TRAIN acquisitions",
         "Case11 has no cavity label; Case15 lacks a during label; missing does not mean negative",
@@ -130,7 +147,13 @@
         "recorded_rl_transitions": 0
       },
       "pair_qc": "artifacts/resect-component-admission-v1/pair-qc-01/independent-review.json",
-      "source_annotated_cavity_voxels": 20005
+      "source_annotated_cavity_voxels": 20005,
+      "metadata_qualified_train_pairs": 25,
+      "metadata_qualified_train_people": 13,
+      "missing_label_slots": 3,
+      "remaining_qualified_pairs_to_acquire": 24,
+      "remaining_qualified_source_bytes": 548605591,
+      "expansion_metadata_receipt": "artifacts/resect-train-expansion-v1/RESULT.md"
     },
     {
       "accession": "VitalDB",

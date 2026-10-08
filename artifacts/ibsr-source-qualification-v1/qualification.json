@@ -1,0 +1,159 @@
+{
+  "schema": "ibsr-real-brain-support-source-qualification-v1",
+  "created_at": "2026-10-08T10:45:40.275751+00:00",
+  "status": "not_admitted_access_license_ancestry_and_label_domain_unresolved",
+  "scope": "IBSR18 potential REAL brain-support/component-learning source; metadata only. Not a patient substitute, planner admission, source download release, or training declaration.",
+  "local_audit_first": {
+    "paths_searched": [
+      "docs",
+      "manifests",
+      "PROJECT_STATUS.md",
+      "artifacts",
+      "build"
+    ],
+    "existing_ibsr_exclusion_found": false,
+    "existing_context": "NFBS seed-library augmentation ancestry unresolved; LPBA40 requires a new license agreement. No previously completed IBSR qualification was located.",
+    "prior_audit": {
+      "path": "docs/critical-annotation-source-audit.md",
+      "sha256": "9dc0f95331212df195e4c3b6dd2e2c7360a3622f7570ec2d041674b05952c84a"
+    }
+  },
+  "primary_sources": {
+    "project": {
+      "url": "https://www.nitrc.org/projects/ibsr/",
+      "final_url": "https://www.nitrc.org/projects/ibsr/",
+      "status": 200,
+      "observed_at": "2026-10-08T10:43:44.757313+00:00",
+      "response": {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/ibsr-real-brain-support-source-audit-v1/project.html",
+        "bytes": 90630,
+        "sha256": "d67aadbae362aa09d0110dc0c9f3bf2653457f0019c0791f528f0b42cffd8cb7"
+      }
+    },
+    "filelist": {
+      "url": "https://www.nitrc.org/frs/?group_id=48&rel=",
+      "final_url": "https://www.nitrc.org/frs/?group_id=48&rel=",
+      "status": 200,
+      "observed_at": "2026-10-08T10:44:03.353250+00:00",
+      "response": {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/ibsr-real-brain-support-source-audit-v1/filelist.html",
+        "bytes": 96407,
+        "sha256": "0ef74cbbe2a28ac03a28cbb2f724b44baf97362753d4ed35f5b4c8fac5783e45"
+      }
+    },
+    "readme_access": {
+      "url": "https://www.nitrc.org/frs/download.php/5720/README.txt",
+      "final_url": "https://www.nitrc.org/account/login.php?return_to=%2Ffrs%2Fdownload.php%2F5720%2FREADME.txt&feedback=The+tool%2Fresource+administrator+has+requested+that+you+log+in+to+download+this+file.",
+      "status": 200,
+      "observed_at": "2026-10-08T10:44:03.808823+00:00",
+      "response": {
+        "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/ibsr-real-brain-support-source-audit-v1/readme_access.html",
+        "bytes": 39334,
+        "sha256": "470f090e0fecfa7a721bc97606818507df1618c1111708207c05d9190ff7838c"
+      }
+    }
+  },
+  "source_limit": {
+    "distinct_official_metadata_sources_inspected": 3,
+    "additional_search_hits_used_as_eligibility_evidence": false
+  },
+  "legal_access": {
+    "published_license": "Free For Non-Commercial Use Only",
+    "source": "https://www.nitrc.org/projects/ibsr/",
+    "public_metadata_accessible": true,
+    "readme_url": "https://www.nitrc.org/frs/download.php/5720/README.txt",
+    "readme_access": "Current unauthenticated GET redirects to NITRC login at the resource administrator’s request; README contents were not obtained.",
+    "download_archive_access": "Published routes identified, but no archive request was made; access behind login and any further terms were not tested.",
+    "commercial_company_pipeline_permission_established": false,
+    "additional_agreement_required": null,
+    "rights_interpretation": "The displayed non-commercial scope does not authorize company/commercial model use. No exception, redistribution/model-rights interpretation, or agreement acceptance is inferred."
+  },
+  "release_inventory": {
+    "dataset": "IBSR18 / IBSR_V2.0",
+    "declared_subjects": 18,
+    "primary_ANALYZE_release_date": "2013-07-05 19:31 (site display; timezone unspecified)",
+    "stripped_NIfTI_release_date": "2013-07-11 21:28 (site display; timezone unspecified)",
+    "listing": "https://www.nitrc.org/frs/?group_id=48&rel=",
+    "published_routes_not_requested": [
+      {
+        "text": "IBSR_V2.0_nifti_stripped.tgz",
+        "url": "https://www.nitrc.org/frs/download.php/5731/IBSR_V2.0_nifti_stripped.tgz"
+      },
+      {
+        "text": "IBSR_01_ANALYZE.tgz",
+        "url": "https://www.nitrc.org/frs/download.php/5684/IBSR_01_ANALYZE.tgz"
+      },
+      {
+        "text": "IBSR_01parc_ANALYZE.tgz",
+        "url": "https://www.nitrc.org/frs/download.php/5685/IBSR_01parc_ANALYZE.tgz"
+      },
+      {
+        "text": "README.txt",
+        "url": "https://www.nitrc.org/frs/download.php/5720/README.txt"
+      },
+      {
+        "text": "20Normals.README.txt",
+        "url": "https://www.nitrc.org/frs/download.php/8151/20Normals.README.txt"
+      }
+    ],
+    "sizes_are_display_rounding_not_byte_bounds": {
+      "IBSR_V2.0_nifti_stripped.tgz": "82 MB",
+      "IBSR_01_ANALYZE.tgz": "3 MB",
+      "IBSR_01parc_ANALYZE.tgz": "151 KB",
+      "README.txt": "20 KB"
+    },
+    "dataset_exact_bytes": null,
+    "dataset_published_checksums": null,
+    "immutable_object_version": null,
+    "hash_limit": "Saved HTML hashes bind observed metadata pages only. No dataset byte hash or exact archive size was measured; no dataset checksum appears in the inspected file rows."
+  },
+  "real_acquisition_and_annotation": {
+    "supported": "Official project describes MR images with manually guided expert segmentations; official release identifies eighteen 1.5 mm scans with segmentations.",
+    "original_participant_identity": "Eighteen is the advertised source-person count. ANALYZE, parcellation, and stripped NIfTI releases are representations/labels of that cohort, not independent subjects.",
+    "ibsr20_overlap": "IBSR20 is listed as a separate 20-normal-subject package. No participant alias/crosswalk or explicit overlap exclusion was available in the inspected sources;18+20 must not be claimed as 38 independent people.",
+    "overlap_with_other_component_sources": "No person-level crosswalk to NFBS, LPBA40, Lausanne or other derivatives was established; shared institutional authorship or different dataset name is insufficient.",
+    "manual_method_and_initializer": null,
+    "trained_weights_or_atlas_ancestry": null,
+    "ancestry_limit": "Manually guided does not identify an initializer. It establishes neither absence nor presence of prohibited synthetic/augmented training ancestors; later manual correction cannot remove an actual prohibited ancestor.",
+    "classical_preprocessing_distinction": "Deterministic/nonlearned bias correction or coordinate conversion is conceptually distinct from learned weights trained on fabricated data. The accessible pages do not establish the release-specific executed preprocessing/initialization, so neither is asserted here."
+  },
+  "image_and_label_contract": {
+    "advertised_spacing": "1.5mm scans; full 3-axis spacing and orientation not verified",
+    "formats": [
+      "ANALYZE",
+      "stripped NIfTI derivative"
+    ],
+    "scanner_native_frame": null,
+    "intensity_units": null,
+    "label_codes_units": null,
+    "whole_brain_support_definition": null,
+    "CSF_brainstem_vessel_inclusion": null,
+    "image_label_alignment": null,
+    "coverage_limit": "A skull-stripped image is not by itself a validated brain-support mask. Label codes, tissue/support inclusion and retained extracranial context require official documentation and later separately permitted binary QC.",
+    "clinical_scope": "No glioma/operative-field support, functional evidence, or review of any uploaded patient is established."
+  },
+  "one_concrete_next_step": {
+    "action": "Keep IBSR out of current training. If a separate non-commercial component study is intended, obtain only the official 20 KB IBSR18 README through separately authorized existing NITRC access, then resolve exact initialization/annotation ancestry and participant aliases before proposing any payload acquisition.",
+    "blocker_for_current_company_scope": "Non-commercial-only published terms; commercial rights not established.",
+    "not_performed": "No login, account creation, contact, license acceptance or payload acquisition."
+  },
+  "admission": {
+    "payload_acquisition": false,
+    "training": false,
+    "planning": false,
+    "cross_person_anatomy_substitution": false
+  },
+  "actions": {
+    "scientific_payload_downloads": 0,
+    "scientific_payload_decodes": 0,
+    "authentication_attempts": 0,
+    "new_agreements": 0,
+    "external_contacts": 0,
+    "pretrained_weights_imports": 0,
+    "synthetic_augmentation": 0,
+    "optimizer_steps": 0,
+    "tracked_source_edits": 0
+  },
+  "metadata_capture_script_sha256": "2889734abda5ed16341d458b94f77f834ce6c6b6ff5488b029c180881481fe89",
+  "metadata_requests_sha256": "c108e307705a0e5146c0b05f927142ff2498fec55d2d7c308240e91e0c595a26"
+}

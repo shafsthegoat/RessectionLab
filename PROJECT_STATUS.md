@@ -14,9 +14,11 @@ results remain unchanged. See [receipt](artifacts/real-observation-policy-v1/RES
 
 Lausanne's CC0 source metadata confirms 284 unique people and 296 original paired
 T1/TOF sessions. A fixed split now assigns 199 TRAIN / 43 SELECT / 42 measurement
-evaluation people, grouping visits and TopCoW copies. Ninety-five TRAIN original
-pairs from 90 people and their sidecars are acquired (4,315,283,541 bytes); published byte fixity and
-worker header/scalar checks pass. Independent pilot inspection found TOF
+evaluation people, grouping visits and TopCoW copies. One hundred eleven TRAIN original
+pairs from 106 people and their sidecars are acquired (5,086,888,757 bytes).
+Published byte fixity passes for all acquired files. Full-pair header/scalar QC
+passes for 105 people / 110 sessions; sub253 T1 retains a qform/sform conflict.
+All 111 TOF images pass their image-level checks; that does not clear the T1 failure. Independent pilot inspection found TOF
 sidecar versus NIfTI orientation differs by about 1.70 degrees,
 so scanner-frame provenance and interscan registration remain unresolved. Two
 source/deadline software controls pass after a timeout-propagation correction.
@@ -70,7 +72,11 @@ remain unchanged. Batch16 retained a sub208 timeout; later batch17 data are
 excluded from its closure. Batches 17–18 subsequently added 19 sessions from
 16 people; all 95 cumulative receipts passed root and independent checks.
 There are 115 sessions remaining after batch18; its sub251 timeout is preserved.
-The nineteenth serial intake continues with 600 seconds and 536,870,912 source bytes.
+Batches 19–21 added 16 people/sessions. Root and independent byte/receipt audits
+verified all 111 acquired sessions, preserving sub253’s T1 failure separately
+from acquisition and its passing TOF. There are 99 sessions from 93 people left
+to acquire after batch21; its sub283 timeout is preserved. The twenty-second
+serial intake continues with 600 seconds and 536,870,912 source bytes.
 Full TRAIN acquisition/use and annotation eligibility remain outstanding. No newly compliant
 RL training has run: eligible recorded surgical transitions remain missing.
 Before further code edits, a fresh fetch again verified remote/local main at
@@ -1723,3 +1729,14 @@ readiness. Current evidence supports a local research prototype only.
 No cloud infrastructure or billing changes have been made. Source imaging stays
 outside Git. Numerical arrays and checkpoints are excluded; compact experiment
 records and source snapshots preserve the executed development evidence.
+
+The complete [RESECT TRAIN metadata inventory](artifacts/resect-train-expansion-v1/RESULT.md)
+now qualifies 25 original ultrasound/cavity-mask pairs across 13 labeled people
+within the frozen 14-person TRAIN cohort. Case11 has no labels; Case15 lacks a
+during-resection label. The remaining 24 pairs total 548,605,591 bytes. Independent
+inventory review passed; expanded download routes, payload QC and training remain
+unexecuted. Annotation restrictions and protected Case4/SELECT/evaluation roles remain.
+
+[IBSR qualification](artifacts/ibsr-source-qualification-v1/RESULT.md) did not establish
+an eligible support-label source: noncommercial terms, README login, unresolved label
+ancestry/domain and participant overlap remain. No scientific payload was accessed.

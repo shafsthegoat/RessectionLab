@@ -1,0 +1,2110 @@
+{
+  "data": [
+    {
+      "id": "64cd22929cbf033b041e4765",
+      "type": "files",
+      "attributes": {
+        "guid": null,
+        "checkout": null,
+        "name": "Case11",
+        "kind": "folder",
+        "path": "/64cd22929cbf033b041e4765/",
+        "size": null,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case11/",
+        "last_touched": null,
+        "date_modified": null,
+        "date_created": null,
+        "extra": {
+          "hashes": {
+            "md5": null,
+            "sha256": null
+          }
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 1,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd20819cbf033b051e46c8/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd20819cbf033b051e46c8",
+            "type": "files"
+          }
+        },
+        "files": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd22929cbf033b041e4765/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd22929cbf033b041e4765/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd22929cbf033b041e4765/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd22929cbf033b041e4765/",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd22929cbf033b041e4765/",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd22929cbf033b041e4765/",
+        "new_folder": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd22929cbf033b041e4765/",
+        "self": "https://api.osf.io/v2/files/64cd22929cbf033b041e4765/"
+      }
+    },
+    {
+      "id": "64cd2364c7ab292b22d4e187",
+      "type": "files",
+      "attributes": {
+        "guid": null,
+        "checkout": null,
+        "name": "Case17",
+        "kind": "folder",
+        "path": "/64cd2364c7ab292b22d4e187/",
+        "size": null,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case17/",
+        "last_touched": null,
+        "date_modified": null,
+        "date_created": null,
+        "extra": {
+          "hashes": {
+            "md5": null,
+            "sha256": null
+          }
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 1,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd20819cbf033b051e46c8/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd20819cbf033b051e46c8",
+            "type": "files"
+          }
+        },
+        "files": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd2364c7ab292b22d4e187/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd2364c7ab292b22d4e187/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd2364c7ab292b22d4e187/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2364c7ab292b22d4e187/",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2364c7ab292b22d4e187/",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2364c7ab292b22d4e187/",
+        "new_folder": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2364c7ab292b22d4e187/",
+        "self": "https://api.osf.io/v2/files/64cd2364c7ab292b22d4e187/"
+      }
+    },
+    {
+      "id": "64cd21f0a2be6b3ada3146f5",
+      "type": "files",
+      "attributes": {
+        "guid": null,
+        "checkout": null,
+        "name": "Case3",
+        "kind": "folder",
+        "path": "/64cd21f0a2be6b3ada3146f5/",
+        "size": null,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case3/",
+        "last_touched": null,
+        "date_modified": null,
+        "date_created": null,
+        "extra": {
+          "hashes": {
+            "md5": null,
+            "sha256": null
+          }
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 1,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd20819cbf033b051e46c8/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd20819cbf033b051e46c8",
+            "type": "files"
+          }
+        },
+        "files": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd21f0a2be6b3ada3146f5/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd21f0a2be6b3ada3146f5/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd21f0a2be6b3ada3146f5/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd21f0a2be6b3ada3146f5/",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd21f0a2be6b3ada3146f5/",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd21f0a2be6b3ada3146f5/",
+        "new_folder": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd21f0a2be6b3ada3146f5/",
+        "self": "https://api.osf.io/v2/files/64cd21f0a2be6b3ada3146f5/"
+      }
+    },
+    {
+      "id": "64cd22b59cbf033b051e4853",
+      "type": "files",
+      "attributes": {
+        "guid": null,
+        "checkout": null,
+        "name": "Case12",
+        "kind": "folder",
+        "path": "/64cd22b59cbf033b051e4853/",
+        "size": null,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case12/",
+        "last_touched": null,
+        "date_modified": null,
+        "date_created": null,
+        "extra": {
+          "hashes": {
+            "md5": null,
+            "sha256": null
+          }
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 1,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd20819cbf033b051e46c8/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd20819cbf033b051e46c8",
+            "type": "files"
+          }
+        },
+        "files": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd22b59cbf033b051e4853/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd22b59cbf033b051e4853/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd22b59cbf033b051e4853/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd22b59cbf033b051e4853/",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd22b59cbf033b051e4853/",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd22b59cbf033b051e4853/",
+        "new_folder": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd22b59cbf033b051e4853/",
+        "self": "https://api.osf.io/v2/files/64cd22b59cbf033b051e4853/"
+      }
+    },
+    {
+      "id": "64cd2327c7ab292b22d4e16b",
+      "type": "files",
+      "attributes": {
+        "guid": null,
+        "checkout": null,
+        "name": "Case15",
+        "kind": "folder",
+        "path": "/64cd2327c7ab292b22d4e16b/",
+        "size": null,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case15/",
+        "last_touched": null,
+        "date_modified": null,
+        "date_created": null,
+        "extra": {
+          "hashes": {
+            "md5": null,
+            "sha256": null
+          }
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 1,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd20819cbf033b051e46c8/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd20819cbf033b051e46c8",
+            "type": "files"
+          }
+        },
+        "files": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd2327c7ab292b22d4e16b/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd2327c7ab292b22d4e16b/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd2327c7ab292b22d4e16b/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2327c7ab292b22d4e16b/",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2327c7ab292b22d4e16b/",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2327c7ab292b22d4e16b/",
+        "new_folder": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2327c7ab292b22d4e16b/",
+        "self": "https://api.osf.io/v2/files/64cd2327c7ab292b22d4e16b/"
+      }
+    },
+    {
+      "id": "64cd2278c7ab292b22d4e130",
+      "type": "files",
+      "attributes": {
+        "guid": null,
+        "checkout": null,
+        "name": "Case8",
+        "kind": "folder",
+        "path": "/64cd2278c7ab292b22d4e130/",
+        "size": null,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case8/",
+        "last_touched": null,
+        "date_modified": null,
+        "date_created": null,
+        "extra": {
+          "hashes": {
+            "md5": null,
+            "sha256": null
+          }
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 1,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd20819cbf033b051e46c8/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd20819cbf033b051e46c8",
+            "type": "files"
+          }
+        },
+        "files": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd2278c7ab292b22d4e130/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd2278c7ab292b22d4e130/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd2278c7ab292b22d4e130/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2278c7ab292b22d4e130/",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2278c7ab292b22d4e130/",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2278c7ab292b22d4e130/",
+        "new_folder": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2278c7ab292b22d4e130/",
+        "self": "https://api.osf.io/v2/files/64cd2278c7ab292b22d4e130/"
+      }
+    },
+    {
+      "id": "64cd23d3a2be6b3ada3147a3",
+      "type": "files",
+      "attributes": {
+        "guid": null,
+        "checkout": null,
+        "name": "Case23",
+        "kind": "folder",
+        "path": "/64cd23d3a2be6b3ada3147a3/",
+        "size": null,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case23/",
+        "last_touched": null,
+        "date_modified": null,
+        "date_created": null,
+        "extra": {
+          "hashes": {
+            "md5": null,
+            "sha256": null
+          }
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 1,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd20819cbf033b051e46c8/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd20819cbf033b051e46c8",
+            "type": "files"
+          }
+        },
+        "files": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd23d3a2be6b3ada3147a3/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd23d3a2be6b3ada3147a3/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd23d3a2be6b3ada3147a3/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd23d3a2be6b3ada3147a3/",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd23d3a2be6b3ada3147a3/",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd23d3a2be6b3ada3147a3/",
+        "new_folder": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd23d3a2be6b3ada3147a3/",
+        "self": "https://api.osf.io/v2/files/64cd23d3a2be6b3ada3147a3/"
+      }
+    },
+    {
+      "id": "64cd22619cbf033b041e4759",
+      "type": "files",
+      "attributes": {
+        "guid": null,
+        "checkout": null,
+        "name": "Case7",
+        "kind": "folder",
+        "path": "/64cd22619cbf033b041e4759/",
+        "size": null,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case7/",
+        "last_touched": null,
+        "date_modified": null,
+        "date_created": null,
+        "extra": {
+          "hashes": {
+            "md5": null,
+            "sha256": null
+          }
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 1,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd20819cbf033b051e46c8/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd20819cbf033b051e46c8",
+            "type": "files"
+          }
+        },
+        "files": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd22619cbf033b041e4759/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd22619cbf033b041e4759/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd22619cbf033b041e4759/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd22619cbf033b041e4759/",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd22619cbf033b041e4759/",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd22619cbf033b041e4759/",
+        "new_folder": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd22619cbf033b041e4759/",
+        "self": "https://api.osf.io/v2/files/64cd22619cbf033b041e4759/"
+      }
+    },
+    {
+      "id": "64cd21cf9cbf033b041e472c",
+      "type": "files",
+      "attributes": {
+        "guid": null,
+        "checkout": null,
+        "name": "Case2",
+        "kind": "folder",
+        "path": "/64cd21cf9cbf033b041e472c/",
+        "size": null,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case2/",
+        "last_touched": null,
+        "date_modified": null,
+        "date_created": null,
+        "extra": {
+          "hashes": {
+            "md5": null,
+            "sha256": null
+          }
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 1,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd20819cbf033b051e46c8/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd20819cbf033b051e46c8",
+            "type": "files"
+          }
+        },
+        "files": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd21cf9cbf033b041e472c/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd21cf9cbf033b041e472c/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd21cf9cbf033b041e472c/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd21cf9cbf033b041e472c/",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd21cf9cbf033b041e472c/",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd21cf9cbf033b041e472c/",
+        "new_folder": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd21cf9cbf033b041e472c/",
+        "self": "https://api.osf.io/v2/files/64cd21cf9cbf033b041e472c/"
+      }
+    },
+    {
+      "id": "64cd237c4f0a44340c99453b",
+      "type": "files",
+      "attributes": {
+        "guid": null,
+        "checkout": null,
+        "name": "Case18",
+        "kind": "folder",
+        "path": "/64cd237c4f0a44340c99453b/",
+        "size": null,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case18/",
+        "last_touched": null,
+        "date_modified": null,
+        "date_created": null,
+        "extra": {
+          "hashes": {
+            "md5": null,
+            "sha256": null
+          }
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 1,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd20819cbf033b051e46c8/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd20819cbf033b051e46c8",
+            "type": "files"
+          }
+        },
+        "files": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd237c4f0a44340c99453b/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd237c4f0a44340c99453b/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd237c4f0a44340c99453b/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd237c4f0a44340c99453b/",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd237c4f0a44340c99453b/",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd237c4f0a44340c99453b/",
+        "new_folder": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd237c4f0a44340c99453b/",
+        "self": "https://api.osf.io/v2/files/64cd237c4f0a44340c99453b/"
+      }
+    },
+    {
+      "id": "64cd243ba2be6b3ade3149a6",
+      "type": "files",
+      "attributes": {
+        "guid": null,
+        "checkout": null,
+        "name": "Case27",
+        "kind": "folder",
+        "path": "/64cd243ba2be6b3ade3149a6/",
+        "size": null,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case27/",
+        "last_touched": null,
+        "date_modified": null,
+        "date_created": null,
+        "extra": {
+          "hashes": {
+            "md5": null,
+            "sha256": null
+          }
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 1,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd20819cbf033b051e46c8/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd20819cbf033b051e46c8",
+            "type": "files"
+          }
+        },
+        "files": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd243ba2be6b3ade3149a6/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd243ba2be6b3ade3149a6/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd243ba2be6b3ade3149a6/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd243ba2be6b3ade3149a6/",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd243ba2be6b3ade3149a6/",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd243ba2be6b3ade3149a6/",
+        "new_folder": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd243ba2be6b3ade3149a6/",
+        "self": "https://api.osf.io/v2/files/64cd243ba2be6b3ade3149a6/"
+      }
+    },
+    {
+      "id": "64cd240d9cbf033b011e4767",
+      "type": "files",
+      "attributes": {
+        "guid": null,
+        "checkout": null,
+        "name": "Case25",
+        "kind": "folder",
+        "path": "/64cd240d9cbf033b011e4767/",
+        "size": null,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case25/",
+        "last_touched": null,
+        "date_modified": null,
+        "date_created": null,
+        "extra": {
+          "hashes": {
+            "md5": null,
+            "sha256": null
+          }
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 1,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd20819cbf033b051e46c8/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd20819cbf033b051e46c8",
+            "type": "files"
+          }
+        },
+        "files": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd240d9cbf033b011e4767/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd240d9cbf033b011e4767/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd240d9cbf033b011e4767/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd240d9cbf033b011e4767/",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd240d9cbf033b011e4767/",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd240d9cbf033b011e4767/",
+        "new_folder": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd240d9cbf033b011e4767/",
+        "self": "https://api.osf.io/v2/files/64cd240d9cbf033b011e4767/"
+      }
+    },
+    {
+      "id": "64cd234ac7ab292b22d4e182",
+      "type": "files",
+      "attributes": {
+        "guid": null,
+        "checkout": null,
+        "name": "Case16",
+        "kind": "folder",
+        "path": "/64cd234ac7ab292b22d4e182/",
+        "size": null,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case16/",
+        "last_touched": null,
+        "date_modified": null,
+        "date_created": null,
+        "extra": {
+          "hashes": {
+            "md5": null,
+            "sha256": null
+          }
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 1,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd20819cbf033b051e46c8/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd20819cbf033b051e46c8",
+            "type": "files"
+          }
+        },
+        "files": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd234ac7ab292b22d4e182/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd234ac7ab292b22d4e182/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd234ac7ab292b22d4e182/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd234ac7ab292b22d4e182/",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd234ac7ab292b22d4e182/",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd234ac7ab292b22d4e182/",
+        "new_folder": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd234ac7ab292b22d4e182/",
+        "self": "https://api.osf.io/v2/files/64cd234ac7ab292b22d4e182/"
+      }
+    },
+    {
+      "id": "64cd2300c7ab292b22d4e161",
+      "type": "files",
+      "attributes": {
+        "guid": null,
+        "checkout": null,
+        "name": "Case14",
+        "kind": "folder",
+        "path": "/64cd2300c7ab292b22d4e161/",
+        "size": null,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case14/",
+        "last_touched": null,
+        "date_modified": null,
+        "date_created": null,
+        "extra": {
+          "hashes": {
+            "md5": null,
+            "sha256": null
+          }
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 1,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd20819cbf033b051e46c8/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd20819cbf033b051e46c8",
+            "type": "files"
+          }
+        },
+        "files": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd2300c7ab292b22d4e161/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd2300c7ab292b22d4e161/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd2300c7ab292b22d4e161/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2300c7ab292b22d4e161/",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2300c7ab292b22d4e161/",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2300c7ab292b22d4e161/",
+        "new_folder": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2300c7ab292b22d4e161/",
+        "self": "https://api.osf.io/v2/files/64cd2300c7ab292b22d4e161/"
+      }
+    },
+    {
+      "id": "64cd223f4f0a443410994563",
+      "type": "files",
+      "attributes": {
+        "guid": null,
+        "checkout": null,
+        "name": "Case6",
+        "kind": "folder",
+        "path": "/64cd223f4f0a443410994563/",
+        "size": null,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case6/",
+        "last_touched": null,
+        "date_modified": null,
+        "date_created": null,
+        "extra": {
+          "hashes": {
+            "md5": null,
+            "sha256": null
+          }
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 1,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd20819cbf033b051e46c8/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd20819cbf033b051e46c8",
+            "type": "files"
+          }
+        },
+        "files": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd223f4f0a443410994563/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd223f4f0a443410994563/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd223f4f0a443410994563/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd223f4f0a443410994563/",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd223f4f0a443410994563/",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd223f4f0a443410994563/",
+        "new_folder": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd223f4f0a443410994563/",
+        "self": "https://api.osf.io/v2/files/64cd223f4f0a443410994563/"
+      }
+    },
+    {
+      "id": "64cd2229a2be6b3ade31483a",
+      "type": "files",
+      "attributes": {
+        "guid": null,
+        "checkout": null,
+        "name": "Case5",
+        "kind": "folder",
+        "path": "/64cd2229a2be6b3ade31483a/",
+        "size": null,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case5/",
+        "last_touched": null,
+        "date_modified": null,
+        "date_created": null,
+        "extra": {
+          "hashes": {
+            "md5": null,
+            "sha256": null
+          }
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 1,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd20819cbf033b051e46c8/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd20819cbf033b051e46c8",
+            "type": "files"
+          }
+        },
+        "files": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd2229a2be6b3ade31483a/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd2229a2be6b3ade31483a/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd2229a2be6b3ade31483a/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2229a2be6b3ade31483a/",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2229a2be6b3ade31483a/",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2229a2be6b3ade31483a/",
+        "new_folder": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2229a2be6b3ade31483a/",
+        "self": "https://api.osf.io/v2/files/64cd2229a2be6b3ade31483a/"
+      }
+    },
+    {
+      "id": "64cd21ad9cbf033b041e4713",
+      "type": "files",
+      "attributes": {
+        "guid": null,
+        "checkout": null,
+        "name": "Case1",
+        "kind": "folder",
+        "path": "/64cd21ad9cbf033b041e4713/",
+        "size": null,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case1/",
+        "last_touched": null,
+        "date_modified": null,
+        "date_created": null,
+        "extra": {
+          "hashes": {
+            "md5": null,
+            "sha256": null
+          }
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 1,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd20819cbf033b051e46c8/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd20819cbf033b051e46c8",
+            "type": "files"
+          }
+        },
+        "files": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd21ad9cbf033b041e4713/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd21ad9cbf033b041e4713/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd21ad9cbf033b041e4713/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd21ad9cbf033b041e4713/",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd21ad9cbf033b041e4713/",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd21ad9cbf033b041e4713/",
+        "new_folder": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd21ad9cbf033b041e4713/",
+        "self": "https://api.osf.io/v2/files/64cd21ad9cbf033b041e4713/"
+      }
+    },
+    {
+      "id": "64cd22e22fe4962f1461b2c4",
+      "type": "files",
+      "attributes": {
+        "guid": null,
+        "checkout": null,
+        "name": "Case13",
+        "kind": "folder",
+        "path": "/64cd22e22fe4962f1461b2c4/",
+        "size": null,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case13/",
+        "last_touched": null,
+        "date_modified": null,
+        "date_created": null,
+        "extra": {
+          "hashes": {
+            "md5": null,
+            "sha256": null
+          }
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 1,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd20819cbf033b051e46c8/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd20819cbf033b051e46c8",
+            "type": "files"
+          }
+        },
+        "files": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd22e22fe4962f1461b2c4/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd22e22fe4962f1461b2c4/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd22e22fe4962f1461b2c4/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd22e22fe4962f1461b2c4/",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd22e22fe4962f1461b2c4/",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd22e22fe4962f1461b2c4/",
+        "new_folder": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd22e22fe4962f1461b2c4/",
+        "self": "https://api.osf.io/v2/files/64cd22e22fe4962f1461b2c4/"
+      }
+    },
+    {
+      "id": "64cd23912fe4962f1461b31e",
+      "type": "files",
+      "attributes": {
+        "guid": null,
+        "checkout": null,
+        "name": "Case19",
+        "kind": "folder",
+        "path": "/64cd23912fe4962f1461b31e/",
+        "size": null,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case19/",
+        "last_touched": null,
+        "date_modified": null,
+        "date_created": null,
+        "extra": {
+          "hashes": {
+            "md5": null,
+            "sha256": null
+          }
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 1,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd20819cbf033b051e46c8/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd20819cbf033b051e46c8",
+            "type": "files"
+          }
+        },
+        "files": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd23912fe4962f1461b31e/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd23912fe4962f1461b31e/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd23912fe4962f1461b31e/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd23912fe4962f1461b31e/",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd23912fe4962f1461b31e/",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd23912fe4962f1461b31e/",
+        "new_folder": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd23912fe4962f1461b31e/",
+        "self": "https://api.osf.io/v2/files/64cd23912fe4962f1461b31e/"
+      }
+    },
+    {
+      "id": "64cd23f62fe4962f0f61b14f",
+      "type": "files",
+      "attributes": {
+        "guid": null,
+        "checkout": null,
+        "name": "Case24",
+        "kind": "folder",
+        "path": "/64cd23f62fe4962f0f61b14f/",
+        "size": null,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case24/",
+        "last_touched": null,
+        "date_modified": null,
+        "date_created": null,
+        "extra": {
+          "hashes": {
+            "md5": null,
+            "sha256": null
+          }
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 1,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd20819cbf033b051e46c8/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd20819cbf033b051e46c8",
+            "type": "files"
+          }
+        },
+        "files": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd23f62fe4962f0f61b14f/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd23f62fe4962f0f61b14f/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd23f62fe4962f0f61b14f/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd23f62fe4962f0f61b14f/",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd23f62fe4962f0f61b14f/",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd23f62fe4962f0f61b14f/",
+        "new_folder": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd23f62fe4962f0f61b14f/",
+        "self": "https://api.osf.io/v2/files/64cd23f62fe4962f0f61b14f/"
+      }
+    },
+    {
+      "id": "64cd23afa2be6b3ada314791",
+      "type": "files",
+      "attributes": {
+        "guid": null,
+        "checkout": null,
+        "name": "Case21",
+        "kind": "folder",
+        "path": "/64cd23afa2be6b3ada314791/",
+        "size": null,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case21/",
+        "last_touched": null,
+        "date_modified": null,
+        "date_created": null,
+        "extra": {
+          "hashes": {
+            "md5": null,
+            "sha256": null
+          }
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 1,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd20819cbf033b051e46c8/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd20819cbf033b051e46c8",
+            "type": "files"
+          }
+        },
+        "files": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd23afa2be6b3ada314791/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd23afa2be6b3ada314791/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd23afa2be6b3ada314791/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd23afa2be6b3ada314791/",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd23afa2be6b3ada314791/",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd23afa2be6b3ada314791/",
+        "new_folder": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd23afa2be6b3ada314791/",
+        "self": "https://api.osf.io/v2/files/64cd23afa2be6b3ada314791/"
+      }
+    },
+    {
+      "id": "64cd220ba2be6b3ad53146b0",
+      "type": "files",
+      "attributes": {
+        "guid": null,
+        "checkout": null,
+        "name": "Case4",
+        "kind": "folder",
+        "path": "/64cd220ba2be6b3ad53146b0/",
+        "size": null,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case4/",
+        "last_touched": null,
+        "date_modified": null,
+        "date_created": null,
+        "extra": {
+          "hashes": {
+            "md5": null,
+            "sha256": null
+          }
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 1,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd20819cbf033b051e46c8/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd20819cbf033b051e46c8",
+            "type": "files"
+          }
+        },
+        "files": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd220ba2be6b3ad53146b0/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd220ba2be6b3ad53146b0/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd220ba2be6b3ad53146b0/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd220ba2be6b3ad53146b0/",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd220ba2be6b3ad53146b0/",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd220ba2be6b3ad53146b0/",
+        "new_folder": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd220ba2be6b3ad53146b0/",
+        "self": "https://api.osf.io/v2/files/64cd220ba2be6b3ad53146b0/"
+      }
+    },
+    {
+      "id": "64cd2421c7ab292b1dd4dfb8",
+      "type": "files",
+      "attributes": {
+        "guid": null,
+        "checkout": null,
+        "name": "Case26",
+        "kind": "folder",
+        "path": "/64cd2421c7ab292b1dd4dfb8/",
+        "size": null,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case26/",
+        "last_touched": null,
+        "date_modified": null,
+        "date_created": null,
+        "extra": {
+          "hashes": {
+            "md5": null,
+            "sha256": null
+          }
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 1,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd20819cbf033b051e46c8/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd20819cbf033b051e46c8",
+            "type": "files"
+          }
+        },
+        "files": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd2421c7ab292b1dd4dfb8/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd2421c7ab292b1dd4dfb8/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd2421c7ab292b1dd4dfb8/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2421c7ab292b1dd4dfb8/",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2421c7ab292b1dd4dfb8/",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2421c7ab292b1dd4dfb8/",
+        "new_folder": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2421c7ab292b1dd4dfb8/",
+        "self": "https://api.osf.io/v2/files/64cd2421c7ab292b1dd4dfb8/"
+      }
+    }
+  ],
+  "links": {
+    "first": null,
+    "last": null,
+    "prev": null,
+    "next": null,
+    "meta": {
+      "total": 23,
+      "per_page": 100
+    }
+  },
+  "meta": {
+    "version": "2.0"
+  }
+}

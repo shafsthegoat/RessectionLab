@@ -1,0 +1,90 @@
+[
+  {
+    "name": "project",
+    "url": "https://www.nitrc.org/projects/ibsr/",
+    "started_at": "2026-10-08T10:43:44.757313+00:00",
+    "method": "GET",
+    "scope": "official textual metadata only",
+    "byte_cap": 524288,
+    "automatic_retries": 0,
+    "status": 200,
+    "final_url": "https://www.nitrc.org/projects/ibsr/",
+    "headers": {
+      "Date": "Thu, 08 Oct 2026 10:44:00 GMT",
+      "Content-Type": "text/html; charset=UTF-8"
+    },
+    "body": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/ibsr-real-brain-support-source-audit-v1/project.html",
+      "bytes": 90630,
+      "sha256": "d67aadbae362aa09d0110dc0c9f3bf2653457f0019c0791f528f0b42cffd8cb7"
+    },
+    "ok": true,
+    "elapsed_seconds": 18.596043834
+  },
+  {
+    "name": "filelist",
+    "url": "https://www.nitrc.org/frs/?group_id=48&rel=",
+    "started_at": "2026-10-08T10:44:03.353250+00:00",
+    "method": "GET",
+    "scope": "official textual metadata only",
+    "byte_cap": 524288,
+    "automatic_retries": 0,
+    "status": 200,
+    "final_url": "https://www.nitrc.org/frs/?group_id=48&rel=",
+    "headers": {
+      "Date": "Thu, 08 Oct 2026 10:44:03 GMT",
+      "Content-Type": "text/html; charset=UTF-8"
+    },
+    "body": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/ibsr-real-brain-support-source-audit-v1/filelist.html",
+      "bytes": 96407,
+      "sha256": "0ef74cbbe2a28ac03a28cbb2f724b44baf97362753d4ed35f5b4c8fac5783e45"
+    },
+    "published_download_links_not_requested": [
+      {
+        "text": "IBSR_V2.0_nifti_stripped.tgz",
+        "url": "https://www.nitrc.org/frs/download.php/5731/IBSR_V2.0_nifti_stripped.tgz"
+      },
+      {
+        "text": "IBSR_01_ANALYZE.tgz",
+        "url": "https://www.nitrc.org/frs/download.php/5684/IBSR_01_ANALYZE.tgz"
+      },
+      {
+        "text": "IBSR_01parc_ANALYZE.tgz",
+        "url": "https://www.nitrc.org/frs/download.php/5685/IBSR_01parc_ANALYZE.tgz"
+      },
+      {
+        "text": "README.txt",
+        "url": "https://www.nitrc.org/frs/download.php/5720/README.txt"
+      },
+      {
+        "text": "20Normals.README.txt",
+        "url": "https://www.nitrc.org/frs/download.php/8151/20Normals.README.txt"
+      }
+    ],
+    "ok": true,
+    "elapsed_seconds": 0.4555739160000023
+  },
+  {
+    "name": "readme_access",
+    "url": "https://www.nitrc.org/frs/download.php/5720/README.txt",
+    "started_at": "2026-10-08T10:44:03.808823+00:00",
+    "method": "GET",
+    "scope": "official textual metadata only",
+    "byte_cap": 524288,
+    "automatic_retries": 0,
+    "status": 200,
+    "final_url": "https://www.nitrc.org/account/login.php?return_to=%2Ffrs%2Fdownload.php%2F5720%2FREADME.txt&feedback=The+tool%2Fresource+administrator+has+requested+that+you+log+in+to+download+this+file.",
+    "headers": {
+      "Date": "Thu, 08 Oct 2026 10:44:04 GMT",
+      "Content-Type": "text/html; charset=UTF-8"
+    },
+    "body": {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/ibsr-real-brain-support-source-audit-v1/readme_access.html",
+      "bytes": 39334,
+      "sha256": "470f090e0fecfa7a721bc97606818507df1618c1111708207c05d9190ff7838c"
+    },
+    "ok": true,
+    "elapsed_seconds": 0.41107337500000085
+  }
+]

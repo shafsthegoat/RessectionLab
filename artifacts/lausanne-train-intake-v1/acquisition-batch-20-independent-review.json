@@ -1,0 +1,3397 @@
+{
+  "schema": "lausanne-independent-batch-audit-v1",
+  "batch_number": 20,
+  "batch_record": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T105105417978Z/batch.json",
+  "closure_keys_frozen_at": "2026-10-08T11:05:28.299402+00:00",
+  "audit_completed_at": "2026-10-08T11:05:42.824895+00:00",
+  "result": "passed_bounded_byte_receipt_audit_with_retained_qc_failures",
+  "precedent_verification": {
+    "path": "build/lausanne-batch19-review-v1/verification.json",
+    "sha256": "9fda268bb514269d2258577772b030530d8de4e55b3bee09e815d92d41b07ed9",
+    "all_prior_receipt_hashes_unchanged": true
+  },
+  "audit_method": {
+    "validator": "scripts/lausanne_train_intake.py:validated_index and validate_receipt",
+    "validated_closure_receipts": 106,
+    "closure_derivation": "Union of acquired_qc_passed and acquired_qc_failed prior closed-batch outcomes/cache checks plus current acquired outcomes, frozen before file verification and independently matched to receipt execution-source run identities. Acquisition counts include the retained QC-failed case.",
+    "checks": [
+      "frozen TRAIN role and full index identity",
+      "original byte sizes and MD5/source SHA256/receipt SHA256",
+      "retained execution-source records and source snapshots",
+      "exact cache/origin receipt identity",
+      "prior review receipt hashes unchanged",
+      "batch/declaration/worker started and outcome consistency",
+      "strict recorded time and source-size budget",
+      "unique people across repeated visits",
+      "retained session and per-image QC failures",
+      "partial and unreceipted bytes excluded"
+    ],
+    "image_decoding": false,
+    "network_transfers": false,
+    "qc_rerun": false,
+    "model_or_training_execution": false,
+    "tests_run": false,
+    "saved_qc_statuses": {
+      "acquired_qc_passed": 105,
+      "acquired_qc_failed": 1
+    }
+  },
+  "identity": {
+    "index_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+    "cohort_sha256": "891a53680edfce604eed9a1791bc790efa615db8ce54da0c92de834a6b87d49a",
+    "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766",
+    "source_intact_at_audit": true,
+    "source_unchanged_at_closure": true,
+    "index_unchanged_at_closure": true,
+    "closure_check_errors": [],
+    "metadata_sha256": {
+      "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T105105417978Z/batch.json": "ae7b713e4f63758e1ba3d43c7fe37e7dd2bf3ddffc83ae2689f570a5576ef1f6",
+      "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T105105417978Z/declaration.json": "0df4f7a888e078c37823a62394aa3053d3e4ddfd1ee2064de615e59f44626815",
+      "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T105105417978Z/source.json": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    }
+  },
+  "denominator": {
+    "role": "TRAIN",
+    "people": 199,
+    "sessions": 210
+  },
+  "prior_batch_records": [
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T045323379079Z/batch.json",
+      "sha256": "772cdf9b126e79ccf673d35858eb3b952e9e7e6c1c845385ce68300badd2bec6"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T045430344872Z/batch.json",
+      "sha256": "0f216d79de75482fef6424dddae3a58a0a01ae3cf274947adb4939dcba9143de"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T050403174907Z/batch.json",
+      "sha256": "7a73659502b32c2365471280760c38ba549ee62f5f6661662250b1cbb61fb2af"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T051948867697Z/batch.json",
+      "sha256": "1bd6b2909e2003d27f790c82e08cec782c0f507288dfaa90b8b95e4c7fada098"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T055310920558Z/batch.json",
+      "sha256": "da8b6cded6f4e3afd8b57dffa4eec576c10d0c1eeca5b6b1d876c82441bb31fc"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T062841681634Z/batch.json",
+      "sha256": "462611efd536869e65b6dd5bfe58acccfd2433934018796638a630146afaf867"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T064025830178Z/batch.json",
+      "sha256": "330af685ede12eb762594ca3bcb8bd95ad26d78a52c2af1d2c5964a1efc74c8e"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T070709763045Z/batch.json",
+      "sha256": "f0a3568e0f6929a2c68806492ddb02a2174d859a75d861cadfa31e7356a71328"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T073827120509Z/batch.json",
+      "sha256": "512effc4f4e41f02326ce11e5d5f0ba3c8ad3932fa2ac788ff199476fc285d97"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T075000412015Z/batch.json",
+      "sha256": "67e07ae95002726dfdb07647a0678cbdf757aceacb3f4fc81eec6a9f11f40011"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T081836327157Z/batch.json",
+      "sha256": "e5ecceef10f64157fd760d8bcac32df0d28e5282fa01778fc526d3f4f005f26f"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T082821313872Z/batch.json",
+      "sha256": "c79f37b68fd904385f059fc5d46b555dd011e84ea2251a2023e46175e37dc0d2"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084104895344Z/batch.json",
+      "sha256": "07cc4e44c00c71193ddc2f150a06a71070fdcbc05ab84a2d2aa75f1e6ff63b8f"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084822919930Z/batch.json",
+      "sha256": "87d75bf6a82d58b1ca639a62155cc94a632dab6441582b6157fe7ee469ea38dd"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T090012362505Z/batch.json",
+      "sha256": "a49087ad6b25655f714b3b94c4c44c64be94a9de45f29ff2e10740959c05fbc1"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T092128002277Z/batch.json",
+      "sha256": "9369d09bf75706c0eb671e69da4e0f8c0ff055898fcbf25655fb6b1d6d6015fd"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T093542120207Z/batch.json",
+      "sha256": "a27452351642d66108e23e46026028756d4d40cda09a6707211d309e17d9be22"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T094623156283Z/batch.json",
+      "sha256": "52d6936681f9d5e61959707ddde29c2341e0be4ebc8a5f3d1cfbcd7dc7e4d54b"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T101114177521Z/batch.json",
+      "sha256": "699d2028def84ffe5c47e20ba77572ee088b7a8ddbb33e9a9cfaabc14895d85e"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T102303533353Z/batch.json",
+      "sha256": "db19f44a3d1684e96803cc874920725eb993e8ed21fa89183e4a751db73b70e7"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T103459488456Z/batch.json",
+      "sha256": "4d82dd917113ac61f05f61aa83b79b2274de836f58a7bf8675b3891e5450e8d5"
+    }
+  ],
+  "prior_closure": {
+    "people": 97,
+    "sessions": 102,
+    "files": 408,
+    "bytes": 4627674215,
+    "image_files": 204,
+    "image_bytes": 4627354288,
+    "people_with_all_declared_visits_complete_in_this_set": 97,
+    "remaining_people": 102,
+    "remaining_sessions": 108
+  },
+  "closure": {
+    "people": 101,
+    "sessions": 106,
+    "files": 424,
+    "bytes": 4859530373,
+    "image_files": 212,
+    "image_bytes": 4859198981,
+    "people_with_all_declared_visits_complete_in_this_set": 101,
+    "remaining_people": 98,
+    "remaining_sessions": 104,
+    "receipt_sessions": [
+      "sub-000/ses-20110101",
+      "sub-001/ses-20101222",
+      "sub-002/ses-20110127",
+      "sub-005/ses-20101215",
+      "sub-006/ses-20101217",
+      "sub-007/ses-20101225",
+      "sub-015/ses-20101111",
+      "sub-021/ses-20101111",
+      "sub-022/ses-20101011",
+      "sub-030/ses-20101012",
+      "sub-034/ses-20101005",
+      "sub-035/ses-20101019",
+      "sub-036/ses-20101030",
+      "sub-045/ses-20101006",
+      "sub-047/ses-20100908",
+      "sub-051/ses-20100920",
+      "sub-052/ses-20100920",
+      "sub-062/ses-20100601",
+      "sub-065/ses-20100703",
+      "sub-066/ses-20100526",
+      "sub-069/ses-20100513",
+      "sub-073/ses-20100426",
+      "sub-074/ses-20100421",
+      "sub-074/ses-20101117",
+      "sub-075/ses-20100502",
+      "sub-077/ses-20100414",
+      "sub-078/ses-20100430",
+      "sub-091/ses-20100405",
+      "sub-099/ses-20100321",
+      "sub-100/ses-20100213",
+      "sub-103/ses-20100301",
+      "sub-104/ses-20100228",
+      "sub-105/ses-20100212",
+      "sub-107/ses-20100206",
+      "sub-109/ses-20100120",
+      "sub-112/ses-20100121",
+      "sub-116/ses-20091229",
+      "sub-119/ses-20091226",
+      "sub-120/ses-20100117",
+      "sub-121/ses-20100128",
+      "sub-126/ses-20100105",
+      "sub-128/ses-20120124",
+      "sub-129/ses-20120107",
+      "sub-130/ses-20111130",
+      "sub-134/ses-20111127",
+      "sub-140/ses-20111208",
+      "sub-141/ses-20111229",
+      "sub-144/ses-20111211",
+      "sub-147/ses-20111209",
+      "sub-148/ses-20111106",
+      "sub-149/ses-20111126",
+      "sub-153/ses-20111127",
+      "sub-159/ses-20111127",
+      "sub-160/ses-20111010",
+      "sub-163/ses-20111014",
+      "sub-164/ses-20111124",
+      "sub-167/ses-20111013",
+      "sub-170/ses-20100422",
+      "sub-170/ses-20111112",
+      "sub-171/ses-20111105",
+      "sub-172/ses-20111110",
+      "sub-178/ses-20111105",
+      "sub-186/ses-20110925",
+      "sub-187/ses-20111023",
+      "sub-188/ses-20111013",
+      "sub-189/ses-20110927",
+      "sub-191/ses-20111010",
+      "sub-192/ses-20110930",
+      "sub-194/ses-20110911",
+      "sub-197/ses-20110914",
+      "sub-198/ses-20110922",
+      "sub-203/ses-20110727",
+      "sub-207/ses-20110729",
+      "sub-208/ses-20110808",
+      "sub-209/ses-20110724",
+      "sub-211/ses-20110817",
+      "sub-214/ses-20110901",
+      "sub-216/ses-20110729",
+      "sub-217/ses-20100819",
+      "sub-217/ses-20110811",
+      "sub-220/ses-20110626",
+      "sub-222/ses-20110808",
+      "sub-225/ses-20100515",
+      "sub-225/ses-20110617",
+      "sub-228/ses-20110626",
+      "sub-231/ses-20110617",
+      "sub-234/ses-20110613",
+      "sub-234/ses-20111203",
+      "sub-235/ses-20110528",
+      "sub-239/ses-20110628",
+      "sub-240/ses-20110701",
+      "sub-242/ses-20110710",
+      "sub-243/ses-20110620",
+      "sub-250/ses-20110525",
+      "sub-251/ses-20110702",
+      "sub-253/ses-20110628",
+      "sub-254/ses-20110622",
+      "sub-255/ses-20110526",
+      "sub-262/ses-20110620",
+      "sub-263/ses-20110611",
+      "sub-264/ses-20110622",
+      "sub-265/ses-20110507",
+      "sub-268/ses-20110522",
+      "sub-270/ses-20110522",
+      "sub-450/ses-20141125",
+      "sub-476/ses-20140519"
+    ],
+    "repeated_people": {
+      "sub-170": 2,
+      "sub-234": 2,
+      "sub-225": 2,
+      "sub-074": 2,
+      "sub-217": 2
+    },
+    "meaning": "Verified original-byte acquisition totals, including QC-failed originals."
+  },
+  "newly_acquired": {
+    "people": 4,
+    "sessions": 4,
+    "files": 16,
+    "bytes": 231856158,
+    "image_files": 8,
+    "image_bytes": 231844693,
+    "people_with_all_declared_visits_complete_in_this_set": 4,
+    "session_ids": [
+      "sub-264/ses-20110622",
+      "sub-265/ses-20110507",
+      "sub-268/ses-20110522",
+      "sub-270/ses-20110522"
+    ],
+    "qc_statuses": {
+      "acquired_qc_passed": 4
+    }
+  },
+  "quality": {
+    "full_pair_qc_passed": {
+      "people": 100,
+      "sessions": 105,
+      "files": 420,
+      "bytes": 4801075590,
+      "image_files": 210,
+      "image_bytes": 4800747064,
+      "people_with_all_declared_visits_complete_in_this_set": 100,
+      "session_ids": [
+        "sub-000/ses-20110101",
+        "sub-001/ses-20101222",
+        "sub-002/ses-20110127",
+        "sub-005/ses-20101215",
+        "sub-006/ses-20101217",
+        "sub-007/ses-20101225",
+        "sub-015/ses-20101111",
+        "sub-021/ses-20101111",
+        "sub-022/ses-20101011",
+        "sub-030/ses-20101012",
+        "sub-034/ses-20101005",
+        "sub-035/ses-20101019",
+        "sub-036/ses-20101030",
+        "sub-045/ses-20101006",
+        "sub-047/ses-20100908",
+        "sub-051/ses-20100920",
+        "sub-052/ses-20100920",
+        "sub-062/ses-20100601",
+        "sub-065/ses-20100703",
+        "sub-066/ses-20100526",
+        "sub-069/ses-20100513",
+        "sub-073/ses-20100426",
+        "sub-074/ses-20100421",
+        "sub-074/ses-20101117",
+        "sub-075/ses-20100502",
+        "sub-077/ses-20100414",
+        "sub-078/ses-20100430",
+        "sub-091/ses-20100405",
+        "sub-099/ses-20100321",
+        "sub-100/ses-20100213",
+        "sub-103/ses-20100301",
+        "sub-104/ses-20100228",
+        "sub-105/ses-20100212",
+        "sub-107/ses-20100206",
+        "sub-109/ses-20100120",
+        "sub-112/ses-20100121",
+        "sub-116/ses-20091229",
+        "sub-119/ses-20091226",
+        "sub-120/ses-20100117",
+        "sub-121/ses-20100128",
+        "sub-126/ses-20100105",
+        "sub-128/ses-20120124",
+        "sub-129/ses-20120107",
+        "sub-130/ses-20111130",
+        "sub-134/ses-20111127",
+        "sub-140/ses-20111208",
+        "sub-141/ses-20111229",
+        "sub-144/ses-20111211",
+        "sub-147/ses-20111209",
+        "sub-148/ses-20111106",
+        "sub-149/ses-20111126",
+        "sub-153/ses-20111127",
+        "sub-159/ses-20111127",
+        "sub-160/ses-20111010",
+        "sub-163/ses-20111014",
+        "sub-164/ses-20111124",
+        "sub-167/ses-20111013",
+        "sub-170/ses-20100422",
+        "sub-170/ses-20111112",
+        "sub-171/ses-20111105",
+        "sub-172/ses-20111110",
+        "sub-178/ses-20111105",
+        "sub-186/ses-20110925",
+        "sub-187/ses-20111023",
+        "sub-188/ses-20111013",
+        "sub-189/ses-20110927",
+        "sub-191/ses-20111010",
+        "sub-192/ses-20110930",
+        "sub-194/ses-20110911",
+        "sub-197/ses-20110914",
+        "sub-198/ses-20110922",
+        "sub-203/ses-20110727",
+        "sub-207/ses-20110729",
+        "sub-208/ses-20110808",
+        "sub-209/ses-20110724",
+        "sub-211/ses-20110817",
+        "sub-214/ses-20110901",
+        "sub-216/ses-20110729",
+        "sub-217/ses-20100819",
+        "sub-217/ses-20110811",
+        "sub-220/ses-20110626",
+        "sub-222/ses-20110808",
+        "sub-225/ses-20100515",
+        "sub-225/ses-20110617",
+        "sub-228/ses-20110626",
+        "sub-231/ses-20110617",
+        "sub-234/ses-20110613",
+        "sub-234/ses-20111203",
+        "sub-235/ses-20110528",
+        "sub-239/ses-20110628",
+        "sub-240/ses-20110701",
+        "sub-242/ses-20110710",
+        "sub-243/ses-20110620",
+        "sub-250/ses-20110525",
+        "sub-251/ses-20110702",
+        "sub-254/ses-20110622",
+        "sub-255/ses-20110526",
+        "sub-262/ses-20110620",
+        "sub-263/ses-20110611",
+        "sub-264/ses-20110622",
+        "sub-265/ses-20110507",
+        "sub-268/ses-20110522",
+        "sub-270/ses-20110522",
+        "sub-450/ses-20141125",
+        "sub-476/ses-20140519"
+      ]
+    },
+    "acquired_qc_failed": {
+      "people": 1,
+      "sessions": 1,
+      "files": 4,
+      "bytes": 58454783,
+      "image_files": 2,
+      "image_bytes": 58451917,
+      "people_with_all_declared_visits_complete_in_this_set": 1,
+      "session_ids": [
+        "sub-253/ses-20110628"
+      ]
+    },
+    "failed_image_count": 1,
+    "failed_images": [
+      {
+        "session": "sub-253/ses-20110628",
+        "subject": "sub-253",
+        "modality": "T1w",
+        "path": "sub-253/ses-20110628/anat/sub-253_ses-20110628_T1w.nii.gz",
+        "status": "qc_failed",
+        "bytes": 23410961,
+        "sha256": "14cbaf8e6c5348a3d116d713869ad52dfccef118fc6413b9a663d54f095319a2",
+        "reason": "QFORM_SFORM_DISAGREEMENT: Active qform and sform differ across the image extent; review the source transform."
+      }
+    ],
+    "per_image_status_counts": {
+      "header_and_scalar_checks_passed": 211,
+      "qc_failed": 1
+    },
+    "modality_status_counts": {
+      "T1w": {
+        "header_and_scalar_checks_passed": {
+          "images": 105,
+          "sessions": 105,
+          "people": 100,
+          "bytes": 1258994105
+        },
+        "qc_failed": {
+          "images": 1,
+          "sessions": 1,
+          "people": 1,
+          "bytes": 23410961
+        }
+      },
+      "angio": {
+        "header_and_scalar_checks_passed": {
+          "images": 106,
+          "sessions": 106,
+          "people": 101,
+          "bytes": 3576793915
+        }
+      }
+    },
+    "modality_interpretation": "Header/scalar QC gates only. sub253 T1 retains QFORM_SFORM_DISAGREEMENT and is excluded from the T1 QC-passed set and full-pair QC-passed set. Its TOF passed that image gate; this does not erase the failed T1/session history or admit source frame, registration, spatial planning, clinical use, component updates, IL or RL.",
+    "per_image_statuses": [
+      {
+        "session": "sub-000/ses-20110101",
+        "subject": "sub-000",
+        "modality": "T1w",
+        "path": "sub-000/ses-20110101/anat/sub-000_ses-20110101_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 8250277,
+        "sha256": "404a3b927f5efd5debc6e886aca57ae0e9a6fd830d047382c1f0fb929ab3ff0f"
+      },
+      {
+        "session": "sub-000/ses-20110101",
+        "subject": "sub-000",
+        "modality": "angio",
+        "path": "sub-000/ses-20110101/anat/sub-000_ses-20110101_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 28408253,
+        "sha256": "8e1e772825aafbdf898e0c06e9482640098d9722514b59566957bc3ff22cc2b2"
+      },
+      {
+        "session": "sub-001/ses-20101222",
+        "subject": "sub-001",
+        "modality": "T1w",
+        "path": "sub-001/ses-20101222/anat/sub-001_ses-20101222_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 9536437,
+        "sha256": "c84f3e4df07f6dd7de4cfabdc1b4dbb4a074587f9ca7c61af7f5bfafbc6ecfea"
+      },
+      {
+        "session": "sub-001/ses-20101222",
+        "subject": "sub-001",
+        "modality": "angio",
+        "path": "sub-001/ses-20101222/anat/sub-001_ses-20101222_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 23175457,
+        "sha256": "f2d8b306a6f685a0b9282745fbc3eae3a7f4e965ac6f9ec02932e082062d866c"
+      },
+      {
+        "session": "sub-002/ses-20110127",
+        "subject": "sub-002",
+        "modality": "T1w",
+        "path": "sub-002/ses-20110127/anat/sub-002_ses-20110127_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 6728705,
+        "sha256": "73aa1c9dd53c5b958effd02a4a3b3e0593bb404b8984f1deedeecdb074d10328"
+      },
+      {
+        "session": "sub-002/ses-20110127",
+        "subject": "sub-002",
+        "modality": "angio",
+        "path": "sub-002/ses-20110127/anat/sub-002_ses-20110127_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 27476207,
+        "sha256": "21b42e1060909de8380009b619f5ea09ad050a69f833e4f5dea14fb7082885be"
+      },
+      {
+        "session": "sub-005/ses-20101215",
+        "subject": "sub-005",
+        "modality": "T1w",
+        "path": "sub-005/ses-20101215/anat/sub-005_ses-20101215_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7467435,
+        "sha256": "c63122885c7923eee06fc34f79d1f0fcee57ef0df89a1f807122dcd7f686a16e"
+      },
+      {
+        "session": "sub-005/ses-20101215",
+        "subject": "sub-005",
+        "modality": "angio",
+        "path": "sub-005/ses-20101215/anat/sub-005_ses-20101215_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 23476491,
+        "sha256": "951d98915a062ec60b3011d27fb768811f2e1d64f106cc8dff0e540ff6769228"
+      },
+      {
+        "session": "sub-006/ses-20101217",
+        "subject": "sub-006",
+        "modality": "T1w",
+        "path": "sub-006/ses-20101217/anat/sub-006_ses-20101217_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7332725,
+        "sha256": "ac9c2dcc7df5ce4f9f6ebf63d6eb2ff746273b2905891f0d674f014abcba079e"
+      },
+      {
+        "session": "sub-006/ses-20101217",
+        "subject": "sub-006",
+        "modality": "angio",
+        "path": "sub-006/ses-20101217/anat/sub-006_ses-20101217_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 27107531,
+        "sha256": "ea88fc655f779af5d5b77e95f1635e100ca5879d17e3be5bd1af0192a5777085"
+      },
+      {
+        "session": "sub-007/ses-20101225",
+        "subject": "sub-007",
+        "modality": "T1w",
+        "path": "sub-007/ses-20101225/anat/sub-007_ses-20101225_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7394545,
+        "sha256": "1e1fc6dbac5085af14360cc26fd01b5a2ea097a21c45338764dcc229c3854cde"
+      },
+      {
+        "session": "sub-007/ses-20101225",
+        "subject": "sub-007",
+        "modality": "angio",
+        "path": "sub-007/ses-20101225/anat/sub-007_ses-20101225_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 30726796,
+        "sha256": "d470ee4f687ce22914aed2c44f580c07bf5203f76bda652496f7929b76d7e2be"
+      },
+      {
+        "session": "sub-015/ses-20101111",
+        "subject": "sub-015",
+        "modality": "T1w",
+        "path": "sub-015/ses-20101111/anat/sub-015_ses-20101111_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7099627,
+        "sha256": "e9b3d9aeb8a697c5fab0830537a15b30bb6dbcee6ed38c40aefb5658864c6d17"
+      },
+      {
+        "session": "sub-015/ses-20101111",
+        "subject": "sub-015",
+        "modality": "angio",
+        "path": "sub-015/ses-20101111/anat/sub-015_ses-20101111_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 27389280,
+        "sha256": "f02e1ccee6aa543528781a66f4bcac4efa412c95e236a8fd274d58ba205b03a9"
+      },
+      {
+        "session": "sub-021/ses-20101111",
+        "subject": "sub-021",
+        "modality": "T1w",
+        "path": "sub-021/ses-20101111/anat/sub-021_ses-20101111_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7312630,
+        "sha256": "b79ce2c68993a8c4696c51a344dcbdc6cb183a44152ef5cdcec0aea1e3abab4a"
+      },
+      {
+        "session": "sub-021/ses-20101111",
+        "subject": "sub-021",
+        "modality": "angio",
+        "path": "sub-021/ses-20101111/anat/sub-021_ses-20101111_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 21194991,
+        "sha256": "c208267be5ce8db75e518e37e1bae027ff555ef66d716152c7e31d721237228a"
+      },
+      {
+        "session": "sub-022/ses-20101011",
+        "subject": "sub-022",
+        "modality": "T1w",
+        "path": "sub-022/ses-20101011/anat/sub-022_ses-20101011_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 25213806,
+        "sha256": "a053fc396f83fd9bb30d93ffd58c6edcdb4af33c0481de308949bc63c5a8bb3a"
+      },
+      {
+        "session": "sub-022/ses-20101011",
+        "subject": "sub-022",
+        "modality": "angio",
+        "path": "sub-022/ses-20101011/anat/sub-022_ses-20101011_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 36003691,
+        "sha256": "ab3e10cfc0483efe93aa7fbc39d7d4aaf67df5d6e9a9cb9c18bf76d84beb83b5"
+      },
+      {
+        "session": "sub-030/ses-20101012",
+        "subject": "sub-030",
+        "modality": "T1w",
+        "path": "sub-030/ses-20101012/anat/sub-030_ses-20101012_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 23758039,
+        "sha256": "6b4b4db83bc31ff359986a7d584a7e6082cac3d861de5a9454bc3a9fe0f4d4a6"
+      },
+      {
+        "session": "sub-030/ses-20101012",
+        "subject": "sub-030",
+        "modality": "angio",
+        "path": "sub-030/ses-20101012/anat/sub-030_ses-20101012_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 35198881,
+        "sha256": "bbdf435bf2772ba010521c1022c18aaeda7d51c45183944f14ee359a3803a691"
+      },
+      {
+        "session": "sub-034/ses-20101005",
+        "subject": "sub-034",
+        "modality": "T1w",
+        "path": "sub-034/ses-20101005/anat/sub-034_ses-20101005_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 6869375,
+        "sha256": "11b8363b0e596cdd10e3c2df2510b1e2dbfa5b63b76174ccb7f468bce9ce927e"
+      },
+      {
+        "session": "sub-034/ses-20101005",
+        "subject": "sub-034",
+        "modality": "angio",
+        "path": "sub-034/ses-20101005/anat/sub-034_ses-20101005_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 29344210,
+        "sha256": "024ea17205ad2349c1b757830f7dd8171e9da093fef739ed23aa2d1552ad9ead"
+      },
+      {
+        "session": "sub-035/ses-20101019",
+        "subject": "sub-035",
+        "modality": "T1w",
+        "path": "sub-035/ses-20101019/anat/sub-035_ses-20101019_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 8330209,
+        "sha256": "f02141795bfaefaf6469c10912126bb7394ef227b801c881e26dd908f8622c08"
+      },
+      {
+        "session": "sub-035/ses-20101019",
+        "subject": "sub-035",
+        "modality": "angio",
+        "path": "sub-035/ses-20101019/anat/sub-035_ses-20101019_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 20495171,
+        "sha256": "c27b790aec9a49f652748a687120e7c884fe2fdd74c654c5ce41f95277272cde"
+      },
+      {
+        "session": "sub-036/ses-20101030",
+        "subject": "sub-036",
+        "modality": "T1w",
+        "path": "sub-036/ses-20101030/anat/sub-036_ses-20101030_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 23009646,
+        "sha256": "2f58649f939367bf8d5e257718fade4b9b0560613298ffd7c40e044b23ddaf60"
+      },
+      {
+        "session": "sub-036/ses-20101030",
+        "subject": "sub-036",
+        "modality": "angio",
+        "path": "sub-036/ses-20101030/anat/sub-036_ses-20101030_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 37767467,
+        "sha256": "fb167e88833561d9cf994cd7d818c33f62c6d8f36b7821ff2f6271e10d33327f"
+      },
+      {
+        "session": "sub-045/ses-20101006",
+        "subject": "sub-045",
+        "modality": "T1w",
+        "path": "sub-045/ses-20101006/anat/sub-045_ses-20101006_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 23473902,
+        "sha256": "590cc1488873f4ad22abe7823721fe02686dcb266ad1a6e9cb7a6e25efb9f2b9"
+      },
+      {
+        "session": "sub-045/ses-20101006",
+        "subject": "sub-045",
+        "modality": "angio",
+        "path": "sub-045/ses-20101006/anat/sub-045_ses-20101006_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 33366500,
+        "sha256": "a9318f763123a908570fb200d299cdb610b5862f90c95fd3b23af4ce33522975"
+      },
+      {
+        "session": "sub-047/ses-20100908",
+        "subject": "sub-047",
+        "modality": "T1w",
+        "path": "sub-047/ses-20100908/anat/sub-047_ses-20100908_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 23245457,
+        "sha256": "0639a6b638360326709b76fb26a3f0f250bcd79d5c3083d19b4e31dfb2d2cc4f"
+      },
+      {
+        "session": "sub-047/ses-20100908",
+        "subject": "sub-047",
+        "modality": "angio",
+        "path": "sub-047/ses-20100908/anat/sub-047_ses-20100908_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 35008987,
+        "sha256": "e0ba85c9b818ad48d51202dc1e38c35cfeaec96bfeb7eabded4760975471e90d"
+      },
+      {
+        "session": "sub-051/ses-20100920",
+        "subject": "sub-051",
+        "modality": "T1w",
+        "path": "sub-051/ses-20100920/anat/sub-051_ses-20100920_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 24273151,
+        "sha256": "f77ab41b8ed7d01474b5112d8d215a4c46cec52ad88204ee90b47756d685442c"
+      },
+      {
+        "session": "sub-051/ses-20100920",
+        "subject": "sub-051",
+        "modality": "angio",
+        "path": "sub-051/ses-20100920/anat/sub-051_ses-20100920_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 35361098,
+        "sha256": "61160ad98802b43d36be8fa99637cac2aaeb5134dcda25ec12615ef1c67b76ce"
+      },
+      {
+        "session": "sub-052/ses-20100920",
+        "subject": "sub-052",
+        "modality": "T1w",
+        "path": "sub-052/ses-20100920/anat/sub-052_ses-20100920_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7316365,
+        "sha256": "d842ddd2ffe880ae1e2bd42a0af941cb6324ffd2c3bf454f803d3c8e3575269c"
+      },
+      {
+        "session": "sub-052/ses-20100920",
+        "subject": "sub-052",
+        "modality": "angio",
+        "path": "sub-052/ses-20100920/anat/sub-052_ses-20100920_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 27866144,
+        "sha256": "f957a137e9f893fc187c9bfe10556120fd7b1e1fb2717671cdd269f843879eaa"
+      },
+      {
+        "session": "sub-062/ses-20100601",
+        "subject": "sub-062",
+        "modality": "T1w",
+        "path": "sub-062/ses-20100601/anat/sub-062_ses-20100601_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 21734326,
+        "sha256": "3d88951d2580a6faaef8b8e3eea1598d600b45ada8f54bfd89113c08a4472d7f"
+      },
+      {
+        "session": "sub-062/ses-20100601",
+        "subject": "sub-062",
+        "modality": "angio",
+        "path": "sub-062/ses-20100601/anat/sub-062_ses-20100601_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 39014331,
+        "sha256": "a47cb073bce60ea755e438ff44933e3baf86abc3dbb441ce8ba5673b217b118f"
+      },
+      {
+        "session": "sub-065/ses-20100703",
+        "subject": "sub-065",
+        "modality": "T1w",
+        "path": "sub-065/ses-20100703/anat/sub-065_ses-20100703_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 24738684,
+        "sha256": "e7265f1584bf46aa2e8f0d7689a4df81e1521788d42e8b7b16a2c3753d4d4ebc"
+      },
+      {
+        "session": "sub-065/ses-20100703",
+        "subject": "sub-065",
+        "modality": "angio",
+        "path": "sub-065/ses-20100703/anat/sub-065_ses-20100703_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 35315712,
+        "sha256": "7ee9e60feff0d31b9698ff3f8f5460ceb1a8dd30e79b35d84539492b57e70dd1"
+      },
+      {
+        "session": "sub-066/ses-20100526",
+        "subject": "sub-066",
+        "modality": "T1w",
+        "path": "sub-066/ses-20100526/anat/sub-066_ses-20100526_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 23924382,
+        "sha256": "4073c48154494da11b39730d8e8d428af9326288c1bed3eaf0813ef5e44d285e"
+      },
+      {
+        "session": "sub-066/ses-20100526",
+        "subject": "sub-066",
+        "modality": "angio",
+        "path": "sub-066/ses-20100526/anat/sub-066_ses-20100526_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 40830452,
+        "sha256": "690ca48117fd4374d291b0c59367cf200b0b989d99b1635a2986496dd08c13f2"
+      },
+      {
+        "session": "sub-069/ses-20100513",
+        "subject": "sub-069",
+        "modality": "T1w",
+        "path": "sub-069/ses-20100513/anat/sub-069_ses-20100513_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7910627,
+        "sha256": "87d0d43127d6ecd5144febf2960ad20b2594ce826437576c508ac7bc24b12a48"
+      },
+      {
+        "session": "sub-069/ses-20100513",
+        "subject": "sub-069",
+        "modality": "angio",
+        "path": "sub-069/ses-20100513/anat/sub-069_ses-20100513_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 19497353,
+        "sha256": "33df0ce111bbdbb2da04717e2a3497fc4f5fe0cb7ccc6aad247b6843854c06f1"
+      },
+      {
+        "session": "sub-073/ses-20100426",
+        "subject": "sub-073",
+        "modality": "T1w",
+        "path": "sub-073/ses-20100426/anat/sub-073_ses-20100426_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 22416763,
+        "sha256": "cac4be80588e3e001ad7385662f259d4eec96807dafd05b6306842e6b52ac357"
+      },
+      {
+        "session": "sub-073/ses-20100426",
+        "subject": "sub-073",
+        "modality": "angio",
+        "path": "sub-073/ses-20100426/anat/sub-073_ses-20100426_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 34078857,
+        "sha256": "ee58c521aa6b1a664176ed07354ed7f9003f460eb92ef0201232fc9f6fc61847"
+      },
+      {
+        "session": "sub-074/ses-20100421",
+        "subject": "sub-074",
+        "modality": "T1w",
+        "path": "sub-074/ses-20100421/anat/sub-074_ses-20100421_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7029553,
+        "sha256": "e9956627422d009347bc2a41774df69a7a95eb56d14df5a2d90c198f7229b057"
+      },
+      {
+        "session": "sub-074/ses-20100421",
+        "subject": "sub-074",
+        "modality": "angio",
+        "path": "sub-074/ses-20100421/anat/sub-074_ses-20100421_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 19793624,
+        "sha256": "9215724d11b02adac012a89cae94a637a973b6d88d5330f02847c564bc43871e"
+      },
+      {
+        "session": "sub-074/ses-20101117",
+        "subject": "sub-074",
+        "modality": "T1w",
+        "path": "sub-074/ses-20101117/anat/sub-074_ses-20101117_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 6632458,
+        "sha256": "95264792906c6cd901b26307187593c867882e400360a3327e930d32c5692fbe"
+      },
+      {
+        "session": "sub-074/ses-20101117",
+        "subject": "sub-074",
+        "modality": "angio",
+        "path": "sub-074/ses-20101117/anat/sub-074_ses-20101117_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 20727978,
+        "sha256": "04098f1bc38421d61d41007a679b7635535725048d4431f6b72c389e0ffff543"
+      },
+      {
+        "session": "sub-075/ses-20100502",
+        "subject": "sub-075",
+        "modality": "T1w",
+        "path": "sub-075/ses-20100502/anat/sub-075_ses-20100502_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7979952,
+        "sha256": "986712bbf8908cc85d6762d9b07d2639dfe96c56fbc94707b67fdf6a386017de"
+      },
+      {
+        "session": "sub-075/ses-20100502",
+        "subject": "sub-075",
+        "modality": "angio",
+        "path": "sub-075/ses-20100502/anat/sub-075_ses-20100502_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 28875508,
+        "sha256": "7f06e49574168c1d5f294f6c7015f3417e9405af8e69fb4e82f24d0f1d602ba1"
+      },
+      {
+        "session": "sub-077/ses-20100414",
+        "subject": "sub-077",
+        "modality": "T1w",
+        "path": "sub-077/ses-20100414/anat/sub-077_ses-20100414_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7094141,
+        "sha256": "49e99f6b6bce164c549de41a3725a2cafd89cd42fe270890002016a818550548"
+      },
+      {
+        "session": "sub-077/ses-20100414",
+        "subject": "sub-077",
+        "modality": "angio",
+        "path": "sub-077/ses-20100414/anat/sub-077_ses-20100414_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 19185810,
+        "sha256": "5b0b123707b10cffb33f629677d8687371a744819aa90fbc95d91e5c844820a1"
+      },
+      {
+        "session": "sub-078/ses-20100430",
+        "subject": "sub-078",
+        "modality": "T1w",
+        "path": "sub-078/ses-20100430/anat/sub-078_ses-20100430_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7873642,
+        "sha256": "df98ce52638852c6af50c358275761099833637d49525eecad6afb4510915bb5"
+      },
+      {
+        "session": "sub-078/ses-20100430",
+        "subject": "sub-078",
+        "modality": "angio",
+        "path": "sub-078/ses-20100430/anat/sub-078_ses-20100430_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 32771950,
+        "sha256": "f2f8d50f986f571152106e07903703debf9a69922f273718bcc4227360ac4438"
+      },
+      {
+        "session": "sub-091/ses-20100405",
+        "subject": "sub-091",
+        "modality": "T1w",
+        "path": "sub-091/ses-20100405/anat/sub-091_ses-20100405_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7192576,
+        "sha256": "8faf4061fc77210b9d49fcb97eec8ccb4db8b8751bccd922caefd9b82daacb46"
+      },
+      {
+        "session": "sub-091/ses-20100405",
+        "subject": "sub-091",
+        "modality": "angio",
+        "path": "sub-091/ses-20100405/anat/sub-091_ses-20100405_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 28188461,
+        "sha256": "e32b591ea60a009598e5fd04ed69e8ca6f750d0c35001d1e6078e22fbd18db28"
+      },
+      {
+        "session": "sub-099/ses-20100321",
+        "subject": "sub-099",
+        "modality": "T1w",
+        "path": "sub-099/ses-20100321/anat/sub-099_ses-20100321_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 22993604,
+        "sha256": "8fbf7b7ca078d403dee6027a5a19295eeac428a61cc6e6d2483e1cd4dca06b5d"
+      },
+      {
+        "session": "sub-099/ses-20100321",
+        "subject": "sub-099",
+        "modality": "angio",
+        "path": "sub-099/ses-20100321/anat/sub-099_ses-20100321_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 39172040,
+        "sha256": "c5606a473aacb0e335e88a9d5323e32e4404865d650e12ea30a9188cea357f47"
+      },
+      {
+        "session": "sub-100/ses-20100213",
+        "subject": "sub-100",
+        "modality": "T1w",
+        "path": "sub-100/ses-20100213/anat/sub-100_ses-20100213_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 21061005,
+        "sha256": "8705c86202331a7ca3bcf169146451019fb7ef7d7a6128801e10ed06f1f00245"
+      },
+      {
+        "session": "sub-100/ses-20100213",
+        "subject": "sub-100",
+        "modality": "angio",
+        "path": "sub-100/ses-20100213/anat/sub-100_ses-20100213_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 33061406,
+        "sha256": "22ffe518778d13db412d3cc04ea839ef31e1432db73195ce90606bf127102322"
+      },
+      {
+        "session": "sub-103/ses-20100301",
+        "subject": "sub-103",
+        "modality": "T1w",
+        "path": "sub-103/ses-20100301/anat/sub-103_ses-20100301_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 21735454,
+        "sha256": "284dde05725eab08e9fd1c1b5f616535421c47836292e8df92d0381f447e6cc9"
+      },
+      {
+        "session": "sub-103/ses-20100301",
+        "subject": "sub-103",
+        "modality": "angio",
+        "path": "sub-103/ses-20100301/anat/sub-103_ses-20100301_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 32841959,
+        "sha256": "5ddce4fbf81abcfb7a6a036c5e616e5284208e435b13fbe5988f3c322641bba8"
+      },
+      {
+        "session": "sub-104/ses-20100228",
+        "subject": "sub-104",
+        "modality": "T1w",
+        "path": "sub-104/ses-20100228/anat/sub-104_ses-20100228_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7644989,
+        "sha256": "d9f01c5a6d812c2f975d13820007ca0a67dd94a16a2b6d3900b69d5404b6e925"
+      },
+      {
+        "session": "sub-104/ses-20100228",
+        "subject": "sub-104",
+        "modality": "angio",
+        "path": "sub-104/ses-20100228/anat/sub-104_ses-20100228_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 28182268,
+        "sha256": "095b1a508b775e46e42ea0160ddc65f3b94d7bdc4820c32d6e0c392360d3fa94"
+      },
+      {
+        "session": "sub-105/ses-20100212",
+        "subject": "sub-105",
+        "modality": "T1w",
+        "path": "sub-105/ses-20100212/anat/sub-105_ses-20100212_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 26916720,
+        "sha256": "8d3aaacabe5a61764d1f15fa396dc5e2eaeba552382b48bcdcc850a180e74c32"
+      },
+      {
+        "session": "sub-105/ses-20100212",
+        "subject": "sub-105",
+        "modality": "angio",
+        "path": "sub-105/ses-20100212/anat/sub-105_ses-20100212_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 41097446,
+        "sha256": "9da4e0177d6996a3dcd3faaf95fe261fad703c61698483a72a30f0ecfa49a869"
+      },
+      {
+        "session": "sub-107/ses-20100206",
+        "subject": "sub-107",
+        "modality": "T1w",
+        "path": "sub-107/ses-20100206/anat/sub-107_ses-20100206_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 22680322,
+        "sha256": "457b2ec65ed0b63f70a6f0838fccf48f613b2f782a8a5a9291929c069a591c20"
+      },
+      {
+        "session": "sub-107/ses-20100206",
+        "subject": "sub-107",
+        "modality": "angio",
+        "path": "sub-107/ses-20100206/anat/sub-107_ses-20100206_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 31517706,
+        "sha256": "9050c6658f090eaa5a652b657c9018f489b3887cc97301b9086ea818ab386520"
+      },
+      {
+        "session": "sub-109/ses-20100120",
+        "subject": "sub-109",
+        "modality": "T1w",
+        "path": "sub-109/ses-20100120/anat/sub-109_ses-20100120_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 24493863,
+        "sha256": "48a5f4a41a8fe1e096dd9a16a0e921170ae07df4d17518fc8205609932c501d9"
+      },
+      {
+        "session": "sub-109/ses-20100120",
+        "subject": "sub-109",
+        "modality": "angio",
+        "path": "sub-109/ses-20100120/anat/sub-109_ses-20100120_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 35886755,
+        "sha256": "ad56df7ac00647b928ef228676519baee2e43e5093c29cf44ae0e240e5e869e9"
+      },
+      {
+        "session": "sub-112/ses-20100121",
+        "subject": "sub-112",
+        "modality": "T1w",
+        "path": "sub-112/ses-20100121/anat/sub-112_ses-20100121_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7628417,
+        "sha256": "7cd5d373cc9c8d85e5144c3d5c4bae9f84616203c1969a6ccb9d64c7ea326a96"
+      },
+      {
+        "session": "sub-112/ses-20100121",
+        "subject": "sub-112",
+        "modality": "angio",
+        "path": "sub-112/ses-20100121/anat/sub-112_ses-20100121_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 29166185,
+        "sha256": "dd94d64ebd7b5156a7799149b96a5c901866b7e846904e4ade5103538ea3311e"
+      },
+      {
+        "session": "sub-116/ses-20091229",
+        "subject": "sub-116",
+        "modality": "T1w",
+        "path": "sub-116/ses-20091229/anat/sub-116_ses-20091229_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 25407627,
+        "sha256": "e9b368431bf7cb3223814f559f3acdd5423fbb52ce7d836834885cf8c1c96b2a"
+      },
+      {
+        "session": "sub-116/ses-20091229",
+        "subject": "sub-116",
+        "modality": "angio",
+        "path": "sub-116/ses-20091229/anat/sub-116_ses-20091229_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 34379212,
+        "sha256": "7e27aa0f7506feb3a54229edf24110f40cb11153a6ad01beb9e6166f2c450a37"
+      },
+      {
+        "session": "sub-119/ses-20091226",
+        "subject": "sub-119",
+        "modality": "T1w",
+        "path": "sub-119/ses-20091226/anat/sub-119_ses-20091226_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7075806,
+        "sha256": "95899262c6adfb8eb12c925ef8c3d6c350e0ba6172a9e1476831ca50372a75c3"
+      },
+      {
+        "session": "sub-119/ses-20091226",
+        "subject": "sub-119",
+        "modality": "angio",
+        "path": "sub-119/ses-20091226/anat/sub-119_ses-20091226_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 25679148,
+        "sha256": "06ee4f824ed0509b670de17f4e2e5d85296f34a2b0d21cb452708d85b9ebfd17"
+      },
+      {
+        "session": "sub-120/ses-20100117",
+        "subject": "sub-120",
+        "modality": "T1w",
+        "path": "sub-120/ses-20100117/anat/sub-120_ses-20100117_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 25911540,
+        "sha256": "88988df7b4eeac8b1816ff56c2cf525d4d463b2f6a072794da8f80e855aafc69"
+      },
+      {
+        "session": "sub-120/ses-20100117",
+        "subject": "sub-120",
+        "modality": "angio",
+        "path": "sub-120/ses-20100117/anat/sub-120_ses-20100117_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 40442536,
+        "sha256": "d6717179c339d11708488fd2df17e70bcc09d112fd6d5c075bc42116443db954"
+      },
+      {
+        "session": "sub-121/ses-20100128",
+        "subject": "sub-121",
+        "modality": "T1w",
+        "path": "sub-121/ses-20100128/anat/sub-121_ses-20100128_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 22140898,
+        "sha256": "342e1f89853bebec1d32057cec3acddcc4b7891645d3252b9f9744dc5bf83297"
+      },
+      {
+        "session": "sub-121/ses-20100128",
+        "subject": "sub-121",
+        "modality": "angio",
+        "path": "sub-121/ses-20100128/anat/sub-121_ses-20100128_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 43936191,
+        "sha256": "fb365786257f6f3a36c18596f5092bec587b6768670ed7b5d8a1b5b6ad21d3f4"
+      },
+      {
+        "session": "sub-126/ses-20100105",
+        "subject": "sub-126",
+        "modality": "T1w",
+        "path": "sub-126/ses-20100105/anat/sub-126_ses-20100105_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 24260605,
+        "sha256": "5234121c506f7581e7b627813f7f5856097dc7a49080ffe7c1158e903a740bf0"
+      },
+      {
+        "session": "sub-126/ses-20100105",
+        "subject": "sub-126",
+        "modality": "angio",
+        "path": "sub-126/ses-20100105/anat/sub-126_ses-20100105_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 35850624,
+        "sha256": "779b55e52f9713dcc0d91cf5672aca45c0e5c7920a50b72f02dc40138ece4951"
+      },
+      {
+        "session": "sub-128/ses-20120124",
+        "subject": "sub-128",
+        "modality": "T1w",
+        "path": "sub-128/ses-20120124/anat/sub-128_ses-20120124_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 3778366,
+        "sha256": "1abe386c6ff5530e3a72e77018bc9982f5ad44e8059bc700530564259966bfba"
+      },
+      {
+        "session": "sub-128/ses-20120124",
+        "subject": "sub-128",
+        "modality": "angio",
+        "path": "sub-128/ses-20120124/anat/sub-128_ses-20120124_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 40338306,
+        "sha256": "c32d8db0d805b9ed6806f52ed652e9770d7b255ef13aa0659170ae1736194213"
+      },
+      {
+        "session": "sub-129/ses-20120107",
+        "subject": "sub-129",
+        "modality": "T1w",
+        "path": "sub-129/ses-20120107/anat/sub-129_ses-20120107_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 6859168,
+        "sha256": "3c2647b8f6aaea1365a708874b5ea2f76d8f293c133a868504f9a379bd150828"
+      },
+      {
+        "session": "sub-129/ses-20120107",
+        "subject": "sub-129",
+        "modality": "angio",
+        "path": "sub-129/ses-20120107/anat/sub-129_ses-20120107_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 24186040,
+        "sha256": "cfbfb65163503b51daeaf3e5e39948516e29993e6047529fbb6dc156b3e595dc"
+      },
+      {
+        "session": "sub-130/ses-20111130",
+        "subject": "sub-130",
+        "modality": "T1w",
+        "path": "sub-130/ses-20111130/anat/sub-130_ses-20111130_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 3197206,
+        "sha256": "669c1afecbea2524c5f8076da477f937423e13bad14e4d1cb8604256828341b2"
+      },
+      {
+        "session": "sub-130/ses-20111130",
+        "subject": "sub-130",
+        "modality": "angio",
+        "path": "sub-130/ses-20111130/anat/sub-130_ses-20111130_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 69709458,
+        "sha256": "a787c56d5b8025285b1e00191e4d45b281254d5480026f2938ec0580b409c14f"
+      },
+      {
+        "session": "sub-134/ses-20111127",
+        "subject": "sub-134",
+        "modality": "T1w",
+        "path": "sub-134/ses-20111127/anat/sub-134_ses-20111127_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 3677355,
+        "sha256": "3e2cf9b9595a84f875000034efadb2d74e58993844c5fe7282c74f7b8f894dee"
+      },
+      {
+        "session": "sub-134/ses-20111127",
+        "subject": "sub-134",
+        "modality": "angio",
+        "path": "sub-134/ses-20111127/anat/sub-134_ses-20111127_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 34234055,
+        "sha256": "aae41ef37ed68584c8f3206a4c9524c021559723426bfa803d94d32fd0a6189a"
+      },
+      {
+        "session": "sub-140/ses-20111208",
+        "subject": "sub-140",
+        "modality": "T1w",
+        "path": "sub-140/ses-20111208/anat/sub-140_ses-20111208_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 3747476,
+        "sha256": "c2ee18ed1b9ca4299ecad43a20b0a1dcd143d8b40a3cd7443c5bd806b0e03096"
+      },
+      {
+        "session": "sub-140/ses-20111208",
+        "subject": "sub-140",
+        "modality": "angio",
+        "path": "sub-140/ses-20111208/anat/sub-140_ses-20111208_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 42330844,
+        "sha256": "8fe7154d8eedbe3cc3c4ec9da66a916ba29d77186cd0e0bdc42ba315d5533569"
+      },
+      {
+        "session": "sub-141/ses-20111229",
+        "subject": "sub-141",
+        "modality": "T1w",
+        "path": "sub-141/ses-20111229/anat/sub-141_ses-20111229_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 3651874,
+        "sha256": "19d38658942a12ad0b19a36279da234ffbb0118f0fe1b14f598a62a5cd9a8ecf"
+      },
+      {
+        "session": "sub-141/ses-20111229",
+        "subject": "sub-141",
+        "modality": "angio",
+        "path": "sub-141/ses-20111229/anat/sub-141_ses-20111229_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 79298459,
+        "sha256": "19d712a57e04b4c7d4e4704ce0c3a8bead20b5dce6fb95e879c31279f92b6ae6"
+      },
+      {
+        "session": "sub-144/ses-20111211",
+        "subject": "sub-144",
+        "modality": "T1w",
+        "path": "sub-144/ses-20111211/anat/sub-144_ses-20111211_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 4097529,
+        "sha256": "051d09ae489ca33bf28298eb7bb928d72c016d03836c266dfda18ca7f295f308"
+      },
+      {
+        "session": "sub-144/ses-20111211",
+        "subject": "sub-144",
+        "modality": "angio",
+        "path": "sub-144/ses-20111211/anat/sub-144_ses-20111211_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 41568961,
+        "sha256": "5f02b4e838bb9dfe9a60165d5cd41fe89b0d5659a46bec540080bab085dba879"
+      },
+      {
+        "session": "sub-147/ses-20111209",
+        "subject": "sub-147",
+        "modality": "T1w",
+        "path": "sub-147/ses-20111209/anat/sub-147_ses-20111209_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 4280068,
+        "sha256": "90479c52ade9117e88beafd2c4debd281619b77ee65e1b5421caf56433de7683"
+      },
+      {
+        "session": "sub-147/ses-20111209",
+        "subject": "sub-147",
+        "modality": "angio",
+        "path": "sub-147/ses-20111209/anat/sub-147_ses-20111209_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 56774808,
+        "sha256": "b172c30ffa12b61799089b9fefe2709d367590d5cce2b17d7d02152a046b3690"
+      },
+      {
+        "session": "sub-148/ses-20111106",
+        "subject": "sub-148",
+        "modality": "T1w",
+        "path": "sub-148/ses-20111106/anat/sub-148_ses-20111106_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 6829200,
+        "sha256": "8bc2c768bc0eb72b94bbf1ba2c76dcfa6ae0d9774554c9d9a1ba0c41c0fedf0e"
+      },
+      {
+        "session": "sub-148/ses-20111106",
+        "subject": "sub-148",
+        "modality": "angio",
+        "path": "sub-148/ses-20111106/anat/sub-148_ses-20111106_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 21462504,
+        "sha256": "172fa2dcca288d3dc69c691d7b92b9527b44297baa4646af6ad76ef83c781afd"
+      },
+      {
+        "session": "sub-149/ses-20111126",
+        "subject": "sub-149",
+        "modality": "T1w",
+        "path": "sub-149/ses-20111126/anat/sub-149_ses-20111126_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 6565094,
+        "sha256": "09346035cfd7d231f9c89c032a3533a25d4ef4cd0bde0972ca9bdb6cd7450104"
+      },
+      {
+        "session": "sub-149/ses-20111126",
+        "subject": "sub-149",
+        "modality": "angio",
+        "path": "sub-149/ses-20111126/anat/sub-149_ses-20111126_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 22672683,
+        "sha256": "16a8af9ff8d0a7e919f2ec54586c387c58ff8f6988a0074cddac25905b1fc667"
+      },
+      {
+        "session": "sub-153/ses-20111127",
+        "subject": "sub-153",
+        "modality": "T1w",
+        "path": "sub-153/ses-20111127/anat/sub-153_ses-20111127_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7199976,
+        "sha256": "93621af260430d7ebbd75f708c44e6993084632d240bec77208add7932c0331a"
+      },
+      {
+        "session": "sub-153/ses-20111127",
+        "subject": "sub-153",
+        "modality": "angio",
+        "path": "sub-153/ses-20111127/anat/sub-153_ses-20111127_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 23302792,
+        "sha256": "83657a2e69334f1b0e329d06b12ad73ff1898252749559b5ad68a3c0dcb4c0c7"
+      },
+      {
+        "session": "sub-159/ses-20111127",
+        "subject": "sub-159",
+        "modality": "T1w",
+        "path": "sub-159/ses-20111127/anat/sub-159_ses-20111127_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 6962071,
+        "sha256": "46266e45b7388613ce0a3e5a009b95895e4823e470f33b819b83f4566a64af39"
+      },
+      {
+        "session": "sub-159/ses-20111127",
+        "subject": "sub-159",
+        "modality": "angio",
+        "path": "sub-159/ses-20111127/anat/sub-159_ses-20111127_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 26386045,
+        "sha256": "d03f2743153c69526f9c68a4d4d9cda1cdba3ceeb055490635b9f519826905ce"
+      },
+      {
+        "session": "sub-160/ses-20111010",
+        "subject": "sub-160",
+        "modality": "T1w",
+        "path": "sub-160/ses-20111010/anat/sub-160_ses-20111010_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 3765271,
+        "sha256": "072f7fa48cbfda995b384e8ba8c9188a55940f33a7b732cf9b60a33fcacb31d0"
+      },
+      {
+        "session": "sub-160/ses-20111010",
+        "subject": "sub-160",
+        "modality": "angio",
+        "path": "sub-160/ses-20111010/anat/sub-160_ses-20111010_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 43003157,
+        "sha256": "fe0271207c25bb69bfef3e2f61e97756ce918846e3c270e5660871d7b89104ab"
+      },
+      {
+        "session": "sub-163/ses-20111014",
+        "subject": "sub-163",
+        "modality": "T1w",
+        "path": "sub-163/ses-20111014/anat/sub-163_ses-20111014_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 3254647,
+        "sha256": "bd2a1e5c5b6de80eb15e14b34db2383a48abc15ce83d449e0b5dff5c05b34932"
+      },
+      {
+        "session": "sub-163/ses-20111014",
+        "subject": "sub-163",
+        "modality": "angio",
+        "path": "sub-163/ses-20111014/anat/sub-163_ses-20111014_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 6117778,
+        "sha256": "53f602c48dda27b0961d44938e8aeff8f9d0d894a757751bb598b4a9982ef7c3"
+      },
+      {
+        "session": "sub-164/ses-20111124",
+        "subject": "sub-164",
+        "modality": "T1w",
+        "path": "sub-164/ses-20111124/anat/sub-164_ses-20111124_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 3249817,
+        "sha256": "98f7aa10b48dc2c974f0beb401ecc3d59114e57d198df83727f1dd248df04c46"
+      },
+      {
+        "session": "sub-164/ses-20111124",
+        "subject": "sub-164",
+        "modality": "angio",
+        "path": "sub-164/ses-20111124/anat/sub-164_ses-20111124_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 64399081,
+        "sha256": "1a2314989d642f9dca2f4b29ee65b2ae272a1f973b5f37500cf9ad54e3b2c253"
+      },
+      {
+        "session": "sub-167/ses-20111013",
+        "subject": "sub-167",
+        "modality": "T1w",
+        "path": "sub-167/ses-20111013/anat/sub-167_ses-20111013_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 8459411,
+        "sha256": "a691f734ee2f60750c1497c1af2c7272b13086d5a2f085766d80c478155f04e5"
+      },
+      {
+        "session": "sub-167/ses-20111013",
+        "subject": "sub-167",
+        "modality": "angio",
+        "path": "sub-167/ses-20111013/anat/sub-167_ses-20111013_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 30311277,
+        "sha256": "fc6cb24a735f3b4a14c0706f6c6c0575b4df85f36832bbd54e03b2dc9805c8d3"
+      },
+      {
+        "session": "sub-170/ses-20100422",
+        "subject": "sub-170",
+        "modality": "T1w",
+        "path": "sub-170/ses-20100422/anat/sub-170_ses-20100422_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 23426717,
+        "sha256": "b1a1f5a4ec4bf0a9da6e9c49c7b9a8e9e0c3c4cdb2374258980d9f5ac17abd91"
+      },
+      {
+        "session": "sub-170/ses-20100422",
+        "subject": "sub-170",
+        "modality": "angio",
+        "path": "sub-170/ses-20100422/anat/sub-170_ses-20100422_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 34992785,
+        "sha256": "3300f981b58e4c87617179d585397f90d752e47ef30d9c89a999ad0484a61a87"
+      },
+      {
+        "session": "sub-170/ses-20111112",
+        "subject": "sub-170",
+        "modality": "T1w",
+        "path": "sub-170/ses-20111112/anat/sub-170_ses-20111112_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7933562,
+        "sha256": "57ff31d3ade8c3e967b7a9427be4ffa0c587b7c5e0eba406f361baf96dca0aa9"
+      },
+      {
+        "session": "sub-170/ses-20111112",
+        "subject": "sub-170",
+        "modality": "angio",
+        "path": "sub-170/ses-20111112/anat/sub-170_ses-20111112_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 23321636,
+        "sha256": "c330cc873ca2f8218a9642fab2c190f08a98f171bf1e1f11936e0560af0a4e53"
+      },
+      {
+        "session": "sub-171/ses-20111105",
+        "subject": "sub-171",
+        "modality": "T1w",
+        "path": "sub-171/ses-20111105/anat/sub-171_ses-20111105_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7811757,
+        "sha256": "7084a8291a506446a614ac658dfa47484a439ad5584823d31078243be5e0eaa5"
+      },
+      {
+        "session": "sub-171/ses-20111105",
+        "subject": "sub-171",
+        "modality": "angio",
+        "path": "sub-171/ses-20111105/anat/sub-171_ses-20111105_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 26623741,
+        "sha256": "3d5a5218a7e4ecc193916ed3c9be3db8718e34c03499cc03cbffc191e4169e07"
+      },
+      {
+        "session": "sub-172/ses-20111110",
+        "subject": "sub-172",
+        "modality": "T1w",
+        "path": "sub-172/ses-20111110/anat/sub-172_ses-20111110_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 3688772,
+        "sha256": "a21edbcb9709a2732a2270afa86a1e5bc409661334ffa1dd3971eb359ad0e824"
+      },
+      {
+        "session": "sub-172/ses-20111110",
+        "subject": "sub-172",
+        "modality": "angio",
+        "path": "sub-172/ses-20111110/anat/sub-172_ses-20111110_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 96327784,
+        "sha256": "e7200c98352bdd9e7b0e358c334ca0cf4c851d5abe7fc3b2df31f55f08974874"
+      },
+      {
+        "session": "sub-178/ses-20111105",
+        "subject": "sub-178",
+        "modality": "T1w",
+        "path": "sub-178/ses-20111105/anat/sub-178_ses-20111105_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7451777,
+        "sha256": "4b843998a0c2208de8f6bf83cac6e36fd292f84a3548b524e066e218eaf944c4"
+      },
+      {
+        "session": "sub-178/ses-20111105",
+        "subject": "sub-178",
+        "modality": "angio",
+        "path": "sub-178/ses-20111105/anat/sub-178_ses-20111105_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 26031768,
+        "sha256": "e652b8d6e28c8e32b3d57e1d01bc2e04c7f981ca395af72cf99f46e5a33dfc53"
+      },
+      {
+        "session": "sub-186/ses-20110925",
+        "subject": "sub-186",
+        "modality": "T1w",
+        "path": "sub-186/ses-20110925/anat/sub-186_ses-20110925_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7342612,
+        "sha256": "e830f210591fe8edc60e76a2c81ac01c7e3c4a1e5439160548e6983a728aef5a"
+      },
+      {
+        "session": "sub-186/ses-20110925",
+        "subject": "sub-186",
+        "modality": "angio",
+        "path": "sub-186/ses-20110925/anat/sub-186_ses-20110925_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 25084324,
+        "sha256": "58284f2683eba3fd8412506e4359347b8c848a86ccc5bb5fc5a6e9eae74f26b3"
+      },
+      {
+        "session": "sub-187/ses-20111023",
+        "subject": "sub-187",
+        "modality": "T1w",
+        "path": "sub-187/ses-20111023/anat/sub-187_ses-20111023_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7702543,
+        "sha256": "b7406188043a6298bf54bbce7e92c470b8252afccb159e0e22e138dedbc6ad8e"
+      },
+      {
+        "session": "sub-187/ses-20111023",
+        "subject": "sub-187",
+        "modality": "angio",
+        "path": "sub-187/ses-20111023/anat/sub-187_ses-20111023_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 22843816,
+        "sha256": "1c75b6055bb4402d1e1e485a5396e803ee096c8b22cbbaabd57a72cdfeb6d730"
+      },
+      {
+        "session": "sub-188/ses-20111013",
+        "subject": "sub-188",
+        "modality": "T1w",
+        "path": "sub-188/ses-20111013/anat/sub-188_ses-20111013_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7230684,
+        "sha256": "78f626bbf9bd48e0bb28001d9ff821257b57527cc0ff49a0aaa1a8927fa87fe5"
+      },
+      {
+        "session": "sub-188/ses-20111013",
+        "subject": "sub-188",
+        "modality": "angio",
+        "path": "sub-188/ses-20111013/anat/sub-188_ses-20111013_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 25997944,
+        "sha256": "5fda88255aeadbce357559aa01c5427d923f352432348d02cbe78096d685d540"
+      },
+      {
+        "session": "sub-189/ses-20110927",
+        "subject": "sub-189",
+        "modality": "T1w",
+        "path": "sub-189/ses-20110927/anat/sub-189_ses-20110927_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7646524,
+        "sha256": "f8a22602d1d25a30ede38be7ed68b4d72fbbb601df224429d960514e78315759"
+      },
+      {
+        "session": "sub-189/ses-20110927",
+        "subject": "sub-189",
+        "modality": "angio",
+        "path": "sub-189/ses-20110927/anat/sub-189_ses-20110927_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 25628618,
+        "sha256": "a92de23740ed751078bf96ceb8a2058d72cd663363daa8b07e51ad2573f894a0"
+      },
+      {
+        "session": "sub-191/ses-20111010",
+        "subject": "sub-191",
+        "modality": "T1w",
+        "path": "sub-191/ses-20111010/anat/sub-191_ses-20111010_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 6262676,
+        "sha256": "64d138920fb6a8bc0dc382f914c6aa31d5d993e9574e3362b180e03b707805c7"
+      },
+      {
+        "session": "sub-191/ses-20111010",
+        "subject": "sub-191",
+        "modality": "angio",
+        "path": "sub-191/ses-20111010/anat/sub-191_ses-20111010_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 69359539,
+        "sha256": "a685c2df9388dd33bba09717f470bff8adae996cfba54f93dbccc303e17966bd"
+      },
+      {
+        "session": "sub-192/ses-20110930",
+        "subject": "sub-192",
+        "modality": "T1w",
+        "path": "sub-192/ses-20110930/anat/sub-192_ses-20110930_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 8126180,
+        "sha256": "df16e3a9b8e1567061f0f894a21af9d474b3a3e709db2b08d3e1b69e86d696a2"
+      },
+      {
+        "session": "sub-192/ses-20110930",
+        "subject": "sub-192",
+        "modality": "angio",
+        "path": "sub-192/ses-20110930/anat/sub-192_ses-20110930_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 24987737,
+        "sha256": "94c27270fe5cdadaf1f9155a7f09546d46583bcaf0248a5caa425a00177024ce"
+      },
+      {
+        "session": "sub-194/ses-20110911",
+        "subject": "sub-194",
+        "modality": "T1w",
+        "path": "sub-194/ses-20110911/anat/sub-194_ses-20110911_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 3360043,
+        "sha256": "c2a3814e009bf546955fbaf3f19cc4c0d8c4a8cf2d7a116489de671c525c17d3"
+      },
+      {
+        "session": "sub-194/ses-20110911",
+        "subject": "sub-194",
+        "modality": "angio",
+        "path": "sub-194/ses-20110911/anat/sub-194_ses-20110911_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 71815720,
+        "sha256": "5e695ab3c9f77b94c654ca11ee2f9ce2e745b1268abc3dd29c6106eaae96bec6"
+      },
+      {
+        "session": "sub-197/ses-20110914",
+        "subject": "sub-197",
+        "modality": "T1w",
+        "path": "sub-197/ses-20110914/anat/sub-197_ses-20110914_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 46610709,
+        "sha256": "7fe282fa3cd1eb58349a356bf209f1221eda5671962fd8039e8ef8b701730cd2"
+      },
+      {
+        "session": "sub-197/ses-20110914",
+        "subject": "sub-197",
+        "modality": "angio",
+        "path": "sub-197/ses-20110914/anat/sub-197_ses-20110914_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 92928725,
+        "sha256": "745a38e9df08214afd8d93695e4210bbb430ec5c41b5869a9df496803a586d50"
+      },
+      {
+        "session": "sub-198/ses-20110922",
+        "subject": "sub-198",
+        "modality": "T1w",
+        "path": "sub-198/ses-20110922/anat/sub-198_ses-20110922_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7146587,
+        "sha256": "70bbf858c8a4d97c66baf874a037a353f619d85615d04ac3a0f7930b0be807d1"
+      },
+      {
+        "session": "sub-198/ses-20110922",
+        "subject": "sub-198",
+        "modality": "angio",
+        "path": "sub-198/ses-20110922/anat/sub-198_ses-20110922_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 27279162,
+        "sha256": "fd7350a4538715793f8be8e0e5843669998d531c6cd680526966e5930a3ea316"
+      },
+      {
+        "session": "sub-203/ses-20110727",
+        "subject": "sub-203",
+        "modality": "T1w",
+        "path": "sub-203/ses-20110727/anat/sub-203_ses-20110727_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7013556,
+        "sha256": "f8a2f5d00a1e30aa66506a5b857f57aea8bf68a5bfcc839b278a63928d83bf7d"
+      },
+      {
+        "session": "sub-203/ses-20110727",
+        "subject": "sub-203",
+        "modality": "angio",
+        "path": "sub-203/ses-20110727/anat/sub-203_ses-20110727_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 23649923,
+        "sha256": "f8e91b337b90a89e8d1f295c1b60575ea750dcf9cf081859c1db9cf427760add"
+      },
+      {
+        "session": "sub-207/ses-20110729",
+        "subject": "sub-207",
+        "modality": "T1w",
+        "path": "sub-207/ses-20110729/anat/sub-207_ses-20110729_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 3057926,
+        "sha256": "74c316bca5d5edeba8ae790d8deec8b11a0762ce325df9b07145f4b51acebd80"
+      },
+      {
+        "session": "sub-207/ses-20110729",
+        "subject": "sub-207",
+        "modality": "angio",
+        "path": "sub-207/ses-20110729/anat/sub-207_ses-20110729_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 67081185,
+        "sha256": "ddc8a060335cba7a6ddbcf2af5e23ff82c5a0b742123e8dc017463b444f17fe2"
+      },
+      {
+        "session": "sub-208/ses-20110808",
+        "subject": "sub-208",
+        "modality": "T1w",
+        "path": "sub-208/ses-20110808/anat/sub-208_ses-20110808_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 3399075,
+        "sha256": "20f48fe3eee89694dd7ed7e23c0f4a02e9611638b9b05952e7a4c2b2b8ccc4a2"
+      },
+      {
+        "session": "sub-208/ses-20110808",
+        "subject": "sub-208",
+        "modality": "angio",
+        "path": "sub-208/ses-20110808/anat/sub-208_ses-20110808_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 67896676,
+        "sha256": "019b9ddb18067db0c2d7957a7c46236d04ee6516404d58d5254090e15bf4b3d5"
+      },
+      {
+        "session": "sub-209/ses-20110724",
+        "subject": "sub-209",
+        "modality": "T1w",
+        "path": "sub-209/ses-20110724/anat/sub-209_ses-20110724_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 3339963,
+        "sha256": "f166900affcd162d752ca3ea2784608e57797fc3d9d7d95e434b41994aaaecf5"
+      },
+      {
+        "session": "sub-209/ses-20110724",
+        "subject": "sub-209",
+        "modality": "angio",
+        "path": "sub-209/ses-20110724/anat/sub-209_ses-20110724_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 67484486,
+        "sha256": "e116db881050760a3c9d5cbdfb762212aa33d593607222df10232f450be6a945"
+      },
+      {
+        "session": "sub-211/ses-20110817",
+        "subject": "sub-211",
+        "modality": "T1w",
+        "path": "sub-211/ses-20110817/anat/sub-211_ses-20110817_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7367366,
+        "sha256": "9bd0897792f32076b131ba1dd8215d8e91ef89638a6ff8d9027380eb5c65d356"
+      },
+      {
+        "session": "sub-211/ses-20110817",
+        "subject": "sub-211",
+        "modality": "angio",
+        "path": "sub-211/ses-20110817/anat/sub-211_ses-20110817_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 19897265,
+        "sha256": "599a7001a75dbd314e346d0202675715d1c0e159527d616074926dede078176e"
+      },
+      {
+        "session": "sub-214/ses-20110901",
+        "subject": "sub-214",
+        "modality": "T1w",
+        "path": "sub-214/ses-20110901/anat/sub-214_ses-20110901_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 8110607,
+        "sha256": "e8d198c6a3e37a233a28f445c1eb77d23ed5f448ad8f77150a8175ec94244277"
+      },
+      {
+        "session": "sub-214/ses-20110901",
+        "subject": "sub-214",
+        "modality": "angio",
+        "path": "sub-214/ses-20110901/anat/sub-214_ses-20110901_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 9968522,
+        "sha256": "84bdb09619330eb4acd36949c7ef3d17a2b15b8ca3fbb64e8b72ba4572cf0d31"
+      },
+      {
+        "session": "sub-216/ses-20110729",
+        "subject": "sub-216",
+        "modality": "T1w",
+        "path": "sub-216/ses-20110729/anat/sub-216_ses-20110729_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 3378540,
+        "sha256": "77640630a44c16e98fe8f75f2265bb9ddd23cc39350d4ef02c3d702efdc5484c"
+      },
+      {
+        "session": "sub-216/ses-20110729",
+        "subject": "sub-216",
+        "modality": "angio",
+        "path": "sub-216/ses-20110729/anat/sub-216_ses-20110729_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 70102909,
+        "sha256": "04793f5f4a16e0f99d0c17d4541081d0dafbab208bf826be2e45b6cc44e1fcb7"
+      },
+      {
+        "session": "sub-217/ses-20100819",
+        "subject": "sub-217",
+        "modality": "T1w",
+        "path": "sub-217/ses-20100819/anat/sub-217_ses-20100819_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 21383801,
+        "sha256": "afa04d68d7e2dccdff3d846ae00a5c1706c9bfad523333167699fd7e3cd3603e"
+      },
+      {
+        "session": "sub-217/ses-20100819",
+        "subject": "sub-217",
+        "modality": "angio",
+        "path": "sub-217/ses-20100819/anat/sub-217_ses-20100819_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 40551166,
+        "sha256": "63d994d4d904eaad4d88b04bd614ea724969da51402014f33e113e94aebf0cf6"
+      },
+      {
+        "session": "sub-217/ses-20110811",
+        "subject": "sub-217",
+        "modality": "T1w",
+        "path": "sub-217/ses-20110811/anat/sub-217_ses-20110811_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 6731591,
+        "sha256": "c1f40fffc772503b2075abda0f6e7003f58fc2387670909f8114dc6f5a83958d"
+      },
+      {
+        "session": "sub-217/ses-20110811",
+        "subject": "sub-217",
+        "modality": "angio",
+        "path": "sub-217/ses-20110811/anat/sub-217_ses-20110811_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 24277130,
+        "sha256": "4d0e9d5337d70fa6ad0f7adf5877f908328b648ffbdf378b6606c607cc853f90"
+      },
+      {
+        "session": "sub-220/ses-20110626",
+        "subject": "sub-220",
+        "modality": "T1w",
+        "path": "sub-220/ses-20110626/anat/sub-220_ses-20110626_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7756304,
+        "sha256": "fe5be6f118b67ce01effeecdc3495798a4019858f2885ae0baa6b958adb0237f"
+      },
+      {
+        "session": "sub-220/ses-20110626",
+        "subject": "sub-220",
+        "modality": "angio",
+        "path": "sub-220/ses-20110626/anat/sub-220_ses-20110626_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 26801782,
+        "sha256": "36589ca5a0a980c14283ee50f4daca2f49f126c0682bfde650541485b1ee1b33"
+      },
+      {
+        "session": "sub-222/ses-20110808",
+        "subject": "sub-222",
+        "modality": "T1w",
+        "path": "sub-222/ses-20110808/anat/sub-222_ses-20110808_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7826571,
+        "sha256": "66c8dcb3566f5a395a49b66adb94dfce941780e9817a23826fa7a6f545798995"
+      },
+      {
+        "session": "sub-222/ses-20110808",
+        "subject": "sub-222",
+        "modality": "angio",
+        "path": "sub-222/ses-20110808/anat/sub-222_ses-20110808_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 26188570,
+        "sha256": "54621b563bc0a4a5d4f1f608c055e53d7c4ad6d3c3985525c41133e2d2daab3d"
+      },
+      {
+        "session": "sub-225/ses-20100515",
+        "subject": "sub-225",
+        "modality": "T1w",
+        "path": "sub-225/ses-20100515/anat/sub-225_ses-20100515_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 6482115,
+        "sha256": "541947f5f95c31d1e9081a67d3200f5c6b709332b87c8514bec002ec0d1af90b"
+      },
+      {
+        "session": "sub-225/ses-20100515",
+        "subject": "sub-225",
+        "modality": "angio",
+        "path": "sub-225/ses-20100515/anat/sub-225_ses-20100515_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 26538609,
+        "sha256": "be341e62a4d36a63c9274b5930ede82a98e56b582d69476618b2b68864d2d1ad"
+      },
+      {
+        "session": "sub-225/ses-20110617",
+        "subject": "sub-225",
+        "modality": "T1w",
+        "path": "sub-225/ses-20110617/anat/sub-225_ses-20110617_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 6174968,
+        "sha256": "4c5d71db5a457ee4107d6b55b10f0c56abea4cfd7e3fa48a6c70570e7aa65171"
+      },
+      {
+        "session": "sub-225/ses-20110617",
+        "subject": "sub-225",
+        "modality": "angio",
+        "path": "sub-225/ses-20110617/anat/sub-225_ses-20110617_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 25976728,
+        "sha256": "c094f48fbdd0122b5b5ebb7e764dc7207ee657d383b8005c3f16e01bfa5d0325"
+      },
+      {
+        "session": "sub-228/ses-20110626",
+        "subject": "sub-228",
+        "modality": "T1w",
+        "path": "sub-228/ses-20110626/anat/sub-228_ses-20110626_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7084555,
+        "sha256": "9efcb38fb62f20fee6ef0516b5bd233c4eda67bc3d1ed83966ac56a5a6017bd9"
+      },
+      {
+        "session": "sub-228/ses-20110626",
+        "subject": "sub-228",
+        "modality": "angio",
+        "path": "sub-228/ses-20110626/anat/sub-228_ses-20110626_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 27096885,
+        "sha256": "527d399c9bbd9dd942d1bf7a7025dd28c200c5395ebd7e3ec7558b3bc48eaf93"
+      },
+      {
+        "session": "sub-231/ses-20110617",
+        "subject": "sub-231",
+        "modality": "T1w",
+        "path": "sub-231/ses-20110617/anat/sub-231_ses-20110617_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7350943,
+        "sha256": "ea83543737f325f4a2ae6e2d239baa9f7aa1df131b11c798583b424b5364c65f"
+      },
+      {
+        "session": "sub-231/ses-20110617",
+        "subject": "sub-231",
+        "modality": "angio",
+        "path": "sub-231/ses-20110617/anat/sub-231_ses-20110617_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 20120381,
+        "sha256": "ded09f908305a0f40f10dabf3023681bfc823e2214e905839d79271418765a7e"
+      },
+      {
+        "session": "sub-234/ses-20110613",
+        "subject": "sub-234",
+        "modality": "T1w",
+        "path": "sub-234/ses-20110613/anat/sub-234_ses-20110613_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7237693,
+        "sha256": "a84e503fada0656424f48e7f273e083713fc62517d0c05aa4e9b776c4ecfde64"
+      },
+      {
+        "session": "sub-234/ses-20110613",
+        "subject": "sub-234",
+        "modality": "angio",
+        "path": "sub-234/ses-20110613/anat/sub-234_ses-20110613_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 24885770,
+        "sha256": "8daa2d5119f4193317413de808e692bd2ee9945742a92a3541e726364117b2a4"
+      },
+      {
+        "session": "sub-234/ses-20111203",
+        "subject": "sub-234",
+        "modality": "T1w",
+        "path": "sub-234/ses-20111203/anat/sub-234_ses-20111203_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7156162,
+        "sha256": "036ed2c422d0f74638d185f565968f3c6cb797ac0d8c5dbc852a3763637ac850"
+      },
+      {
+        "session": "sub-234/ses-20111203",
+        "subject": "sub-234",
+        "modality": "angio",
+        "path": "sub-234/ses-20111203/anat/sub-234_ses-20111203_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 26823331,
+        "sha256": "38dc0067c7754ff65ffed500bf3132d5f557400a4ffe9b015d8eecc06d4b09f5"
+      },
+      {
+        "session": "sub-235/ses-20110528",
+        "subject": "sub-235",
+        "modality": "T1w",
+        "path": "sub-235/ses-20110528/anat/sub-235_ses-20110528_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 22756882,
+        "sha256": "ab963fc5427fd2228234e74bc82efffb31145017199b145a31b50c35dca7e2e4"
+      },
+      {
+        "session": "sub-235/ses-20110528",
+        "subject": "sub-235",
+        "modality": "angio",
+        "path": "sub-235/ses-20110528/anat/sub-235_ses-20110528_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 1746055,
+        "sha256": "41859e93b5f3178bae5e665c36668b9bb442036b5474e2e60d2cdd632a442645"
+      },
+      {
+        "session": "sub-239/ses-20110628",
+        "subject": "sub-239",
+        "modality": "T1w",
+        "path": "sub-239/ses-20110628/anat/sub-239_ses-20110628_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 24678978,
+        "sha256": "850c37e1e0484ae8bdeffb9233063a5ec733c388dc223c293946db23f1443bef"
+      },
+      {
+        "session": "sub-239/ses-20110628",
+        "subject": "sub-239",
+        "modality": "angio",
+        "path": "sub-239/ses-20110628/anat/sub-239_ses-20110628_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 33694978,
+        "sha256": "af74e70efe11fdfa07a27edf034989d68cf921b5ae7703e1a876e7e8571c3539"
+      },
+      {
+        "session": "sub-240/ses-20110701",
+        "subject": "sub-240",
+        "modality": "T1w",
+        "path": "sub-240/ses-20110701/anat/sub-240_ses-20110701_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 6477259,
+        "sha256": "80160194bc2b672a8bda5130ebb353e476c5b33d96807a15dddc5b8683eba281"
+      },
+      {
+        "session": "sub-240/ses-20110701",
+        "subject": "sub-240",
+        "modality": "angio",
+        "path": "sub-240/ses-20110701/anat/sub-240_ses-20110701_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 19684014,
+        "sha256": "683b924911d04660b1b93f301c093a5fa44cc8b9643bcbc073576978f12da250"
+      },
+      {
+        "session": "sub-242/ses-20110710",
+        "subject": "sub-242",
+        "modality": "T1w",
+        "path": "sub-242/ses-20110710/anat/sub-242_ses-20110710_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 24237740,
+        "sha256": "f48a7a150e7e69c5635e0573addd16b84707a0902e3edead29131262f175ae18"
+      },
+      {
+        "session": "sub-242/ses-20110710",
+        "subject": "sub-242",
+        "modality": "angio",
+        "path": "sub-242/ses-20110710/anat/sub-242_ses-20110710_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 34906191,
+        "sha256": "dbb14fedf440b507d3e4d1ae4f8e3fbb1ebcab104827d7bbcbeeb27941f60eb9"
+      },
+      {
+        "session": "sub-243/ses-20110620",
+        "subject": "sub-243",
+        "modality": "T1w",
+        "path": "sub-243/ses-20110620/anat/sub-243_ses-20110620_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 21971043,
+        "sha256": "e37dcfa69de22d0aa03a9a806783154dc884c2c2f0d1f4aaaba6c6d82f1dfa48"
+      },
+      {
+        "session": "sub-243/ses-20110620",
+        "subject": "sub-243",
+        "modality": "angio",
+        "path": "sub-243/ses-20110620/anat/sub-243_ses-20110620_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 31646208,
+        "sha256": "e31b5c2abde4ecec52f042b7b7922fe0c91ce730d98eac5faef170cf91622a0f"
+      },
+      {
+        "session": "sub-250/ses-20110525",
+        "subject": "sub-250",
+        "modality": "T1w",
+        "path": "sub-250/ses-20110525/anat/sub-250_ses-20110525_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 24851769,
+        "sha256": "8aa54a3be076e15550d781f5b113ef3ffba83f94ff7769c01fa515f9486f628d"
+      },
+      {
+        "session": "sub-250/ses-20110525",
+        "subject": "sub-250",
+        "modality": "angio",
+        "path": "sub-250/ses-20110525/anat/sub-250_ses-20110525_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 35457784,
+        "sha256": "783cf4b0479cae972aeac63c07dc262d8c2ea2ef5c3ed0737c7f9113ee0ed6e1"
+      },
+      {
+        "session": "sub-251/ses-20110702",
+        "subject": "sub-251",
+        "modality": "T1w",
+        "path": "sub-251/ses-20110702/anat/sub-251_ses-20110702_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7502546,
+        "sha256": "f9c5dd7aa60d29576b139f3696de8c507380ae59b927ddef5f9543131f9b4b82"
+      },
+      {
+        "session": "sub-251/ses-20110702",
+        "subject": "sub-251",
+        "modality": "angio",
+        "path": "sub-251/ses-20110702/anat/sub-251_ses-20110702_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 34525502,
+        "sha256": "d72fa92a7f03974dc15d26ff208703d554b2a3843d7bd54952091738ea287312"
+      },
+      {
+        "session": "sub-253/ses-20110628",
+        "subject": "sub-253",
+        "modality": "T1w",
+        "path": "sub-253/ses-20110628/anat/sub-253_ses-20110628_T1w.nii.gz",
+        "status": "qc_failed",
+        "bytes": 23410961,
+        "sha256": "14cbaf8e6c5348a3d116d713869ad52dfccef118fc6413b9a663d54f095319a2",
+        "reason": "QFORM_SFORM_DISAGREEMENT: Active qform and sform differ across the image extent; review the source transform."
+      },
+      {
+        "session": "sub-253/ses-20110628",
+        "subject": "sub-253",
+        "modality": "angio",
+        "path": "sub-253/ses-20110628/anat/sub-253_ses-20110628_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 35040956,
+        "sha256": "6b513cadc4648275e503bb78f1dd9a79f691ae1cedff1d7d71588394f8b48435"
+      },
+      {
+        "session": "sub-254/ses-20110622",
+        "subject": "sub-254",
+        "modality": "T1w",
+        "path": "sub-254/ses-20110622/anat/sub-254_ses-20110622_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 1911851,
+        "sha256": "cefce9f13a8da7ac9168097c1de113788fcb3ae5a23a95f5f0a4923cd0b39d10"
+      },
+      {
+        "session": "sub-254/ses-20110622",
+        "subject": "sub-254",
+        "modality": "angio",
+        "path": "sub-254/ses-20110622/anat/sub-254_ses-20110622_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 23465431,
+        "sha256": "7f5bedee3f28706b03f7ea5dab2cf00a831e1fc59df96d4b53a1aa2aa95929aa"
+      },
+      {
+        "session": "sub-255/ses-20110526",
+        "subject": "sub-255",
+        "modality": "T1w",
+        "path": "sub-255/ses-20110526/anat/sub-255_ses-20110526_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7538059,
+        "sha256": "c85416fe006618372b6ddf603f96ecf6a5959c0779cd2dcddcaa72c7e6bd3e26"
+      },
+      {
+        "session": "sub-255/ses-20110526",
+        "subject": "sub-255",
+        "modality": "angio",
+        "path": "sub-255/ses-20110526/anat/sub-255_ses-20110526_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 21587520,
+        "sha256": "06fc30058995bd18f9b5e01545b1cd81acd5d1eac173d865b361e76381211e26"
+      },
+      {
+        "session": "sub-262/ses-20110620",
+        "subject": "sub-262",
+        "modality": "T1w",
+        "path": "sub-262/ses-20110620/anat/sub-262_ses-20110620_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 24958645,
+        "sha256": "e5a5cf0272a110d1e8041f935b5ce15303b4f636eec80f7c0529e7fd9eabd515"
+      },
+      {
+        "session": "sub-262/ses-20110620",
+        "subject": "sub-262",
+        "modality": "angio",
+        "path": "sub-262/ses-20110620/anat/sub-262_ses-20110620_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 40075790,
+        "sha256": "f2adafa6c056aa63432914ae12914b6b8c50b6757cd66b7a7d2432e651140c6f"
+      },
+      {
+        "session": "sub-263/ses-20110611",
+        "subject": "sub-263",
+        "modality": "T1w",
+        "path": "sub-263/ses-20110611/anat/sub-263_ses-20110611_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 7055400,
+        "sha256": "baed9c9fac74f3300a5466169bba23fe19ed7702ff85bef16c237b984b9e4acd"
+      },
+      {
+        "session": "sub-263/ses-20110611",
+        "subject": "sub-263",
+        "modality": "angio",
+        "path": "sub-263/ses-20110611/anat/sub-263_ses-20110611_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 24987292,
+        "sha256": "4b39767361de4b5b6d68f0b3f3f1133e3c13d6777863be74202b5fe80ea6cc4f"
+      },
+      {
+        "session": "sub-264/ses-20110622",
+        "subject": "sub-264",
+        "modality": "T1w",
+        "path": "sub-264/ses-20110622/anat/sub-264_ses-20110622_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 22359895,
+        "sha256": "453901a587bcb7cd912b7c7de368b280764c00642d8c9dcb0cbe8539ae262d74"
+      },
+      {
+        "session": "sub-264/ses-20110622",
+        "subject": "sub-264",
+        "modality": "angio",
+        "path": "sub-264/ses-20110622/anat/sub-264_ses-20110622_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 31714378,
+        "sha256": "0ec7fdec3d0f975518beec76d8d7a350cd122f149198a7b1ae5bd12d295d4fdb"
+      },
+      {
+        "session": "sub-265/ses-20110507",
+        "subject": "sub-265",
+        "modality": "T1w",
+        "path": "sub-265/ses-20110507/anat/sub-265_ses-20110507_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 26273147,
+        "sha256": "4090720badd8b86a6883493511777f033b0fb08aa54a44c18e463c15bc0f00cd"
+      },
+      {
+        "session": "sub-265/ses-20110507",
+        "subject": "sub-265",
+        "modality": "angio",
+        "path": "sub-265/ses-20110507/anat/sub-265_ses-20110507_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 35082108,
+        "sha256": "d83ac36f9cc720dc66b839bc3f7f7658be6be8769224386b1c12675215a3428f"
+      },
+      {
+        "session": "sub-268/ses-20110522",
+        "subject": "sub-268",
+        "modality": "T1w",
+        "path": "sub-268/ses-20110522/anat/sub-268_ses-20110522_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 24871076,
+        "sha256": "7cfe46b69de04da46d34921fc36d1aa2e2a808173ad8b9e82f356c222276cd75"
+      },
+      {
+        "session": "sub-268/ses-20110522",
+        "subject": "sub-268",
+        "modality": "angio",
+        "path": "sub-268/ses-20110522/anat/sub-268_ses-20110522_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 33210721,
+        "sha256": "d8a8a867095e8c7e9606b052fb542a5dd33fa7974576ef536c08da8af52ba33c"
+      },
+      {
+        "session": "sub-270/ses-20110522",
+        "subject": "sub-270",
+        "modality": "T1w",
+        "path": "sub-270/ses-20110522/anat/sub-270_ses-20110522_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 19853880,
+        "sha256": "0d9fd73fc3249482b79f906bfa4092bb2ee08124b6c0fb3764f2c8cbd483d2d6"
+      },
+      {
+        "session": "sub-270/ses-20110522",
+        "subject": "sub-270",
+        "modality": "angio",
+        "path": "sub-270/ses-20110522/anat/sub-270_ses-20110522_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 38479488,
+        "sha256": "98a2e0a6db9eec55e831a402ee2ed896fb86a4d513a08e3e632e0d8d44775365"
+      },
+      {
+        "session": "sub-450/ses-20141125",
+        "subject": "sub-450",
+        "modality": "T1w",
+        "path": "sub-450/ses-20141125/anat/sub-450_ses-20141125_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 4207167,
+        "sha256": "0e46e9a932dfe1cbe54b722bd7fa948d404ec88c76b28cac17e397dcf5ec5a27"
+      },
+      {
+        "session": "sub-450/ses-20141125",
+        "subject": "sub-450",
+        "modality": "angio",
+        "path": "sub-450/ses-20141125/anat/sub-450_ses-20141125_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 1151772,
+        "sha256": "973f2f189826592895056bab5fd6b54687c9a39465985a92722b794215cb60a2"
+      },
+      {
+        "session": "sub-476/ses-20140519",
+        "subject": "sub-476",
+        "modality": "T1w",
+        "path": "sub-476/ses-20140519/anat/sub-476_ses-20140519_T1w.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 4231075,
+        "sha256": "42a978473bac00f2d1409fe5dad845a865149d62368691e097b2276d4403b1e6"
+      },
+      {
+        "session": "sub-476/ses-20140519",
+        "subject": "sub-476",
+        "modality": "angio",
+        "path": "sub-476/ses-20140519/anat/sub-476_ses-20140519_angio.nii.gz",
+        "status": "header_and_scalar_checks_passed",
+        "bytes": 16816195,
+        "sha256": "6a8dffc432e43c5ddf0aa445c22ea5a36687ffcd15f4ab4e57c318feef639678"
+      }
+    ]
+  },
+  "batch_accounting": {
+    "status": "time_budget_exhausted",
+    "problem": "Insufficient batch time to start another worker",
+    "verified_cached_sessions": 100,
+    "acquired_workers": 4,
+    "acquired_qc_passed_workers": 4,
+    "acquired_qc_failed_workers": 0,
+    "timeout_workers": 1,
+    "explicit_deferrals": 0,
+    "unvisited_sessions": 105,
+    "not_verified_acquired_in_this_batch": 106,
+    "previously_acquired_but_unvisited": [
+      "sub-450/ses-20141125",
+      "sub-476/ses-20140519"
+    ],
+    "distinction": "106 not verified in this batch includes 2 previously acquired sessions not revisited before the deadline. Cumulative unacquired remaining is 104. QC failure remains separate from unacquired status."
+  },
+  "bounds": {
+    "max_seconds": 600,
+    "elapsed_seconds": 599.0984217908699,
+    "strict_recorded_elapsed_within_600": true,
+    "seconds_remaining": 0.9015782091300935,
+    "max_attempted_source_bytes": 536870912,
+    "attempted_source_bytes": 262664259,
+    "source_budget_remaining": 274206653,
+    "byte_accounting": "source-size budget, not measured network transfer"
+  },
+  "timeouts": [
+    {
+      "session": "sub-271/ses-20110518",
+      "status": "timeout",
+      "exit_code": 124,
+      "worker_max_seconds": 75.01508783409372,
+      "expected_source_bytes": 30808101,
+      "originating_attempt_acquisition_receipt_exists": false,
+      "later_canonical_receipt_present_at_audit": true,
+      "outcome_record": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T105105417978Z/sub-271_ses-20110518/outcome.json"
+    }
+  ],
+  "excluded_leftovers_at_audit": [
+    {
+      "session": "sub-275/ses-20110612",
+      "file": "sub-275_ses-20110612_T1w.nii.gz",
+      "kind": "complete_without_receipt",
+      "bytes": 9197996,
+      "expected_complete_bytes": 9197996,
+      "in_closed_batch": false
+    },
+    {
+      "session": "sub-275/ses-20110612",
+      "file": "sub-275_ses-20110612_T1w.json",
+      "kind": "complete_without_receipt",
+      "bytes": 1648,
+      "expected_complete_bytes": 1648,
+      "in_closed_batch": false
+    },
+    {
+      "session": "sub-275/ses-20110612",
+      "file": "sub-275_ses-20110612_angio.nii.gz.partial",
+      "kind": "partial",
+      "bytes": 9437184,
+      "expected_complete_bytes": 28517268,
+      "in_closed_batch": false
+    },
+    {
+      "session": "sub-454/ses-20141123",
+      "file": "sub-454_ses-20141123_T1w.nii.gz",
+      "kind": "complete_without_receipt",
+      "bytes": 4172301,
+      "expected_complete_bytes": 4172301,
+      "in_closed_batch": false
+    },
+    {
+      "session": "sub-454/ses-20141123",
+      "file": "sub-454_ses-20141123_T1w.json",
+      "kind": "complete_without_receipt",
+      "bytes": 1755,
+      "expected_complete_bytes": 1755,
+      "in_closed_batch": false
+    },
+    {
+      "session": "sub-454/ses-20141123",
+      "file": "sub-454_ses-20141123_angio.nii.gz.partial",
+      "kind": "partial",
+      "bytes": 2097152,
+      "expected_complete_bytes": 16295294,
+      "in_closed_batch": false
+    }
+  ],
+  "historical_timeouts_preserved": [
+    {
+      "session": "sub-002/ses-20110127",
+      "status": "timeout",
+      "exit_code": 124,
+      "outcome_record": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T050403174907Z/sub-002_ses-20110127/outcome.json"
+    },
+    {
+      "session": "sub-077/ses-20100414",
+      "status": "timeout",
+      "exit_code": 124,
+      "outcome_record": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T062841681634Z/sub-077_ses-20100414/outcome.json"
+    },
+    {
+      "session": "sub-128/ses-20120124",
+      "status": "timeout",
+      "exit_code": 124,
+      "outcome_record": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T082821313872Z/sub-128_ses-20120124/outcome.json"
+    },
+    {
+      "session": "sub-454/ses-20141123",
+      "status": "timeout",
+      "exit_code": 124,
+      "outcome_record": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084822919930Z/sub-454_ses-20141123/outcome.json"
+    },
+    {
+      "session": "sub-167/ses-20111013",
+      "status": "timeout",
+      "exit_code": 124,
+      "outcome_record": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T090012362505Z/sub-167_ses-20111013/outcome.json"
+    },
+    {
+      "session": "sub-186/ses-20110925",
+      "status": "timeout",
+      "exit_code": 124,
+      "outcome_record": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T092128002277Z/sub-186_ses-20110925/outcome.json"
+    },
+    {
+      "session": "sub-197/ses-20110914",
+      "status": "timeout",
+      "exit_code": 124,
+      "outcome_record": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T093542120207Z/sub-197_ses-20110914/outcome.json"
+    },
+    {
+      "session": "sub-208/ses-20110808",
+      "status": "timeout",
+      "exit_code": 124,
+      "outcome_record": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T094623156283Z/sub-208_ses-20110808/outcome.json"
+    },
+    {
+      "session": "sub-220/ses-20110626",
+      "status": "timeout",
+      "exit_code": 124,
+      "outcome_record": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T101114177521Z/sub-220_ses-20110626/outcome.json"
+    },
+    {
+      "session": "sub-251/ses-20110702",
+      "status": "timeout",
+      "exit_code": 124,
+      "outcome_record": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T102303533353Z/sub-251_ses-20110702/outcome.json"
+    }
+  ],
+  "receipt_verifications": [
+    {
+      "session": "sub-000/ses-20110101",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-000_ses-20110101.json",
+      "receipt_sha256": "3f0fe27c225ad3e50695b5eb2f52f61d84caf2ed5dee6040e2cd5aa868caced5",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T045323379079Z/sub-000_ses-20110101/acquisition.json",
+      "execution_source_sha256": "d0dd0a2566e5e1baf204e2be762b699e2aa67db6d0ff900b3ba121ac54d50d05"
+    },
+    {
+      "session": "sub-001/ses-20101222",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-001_ses-20101222.json",
+      "receipt_sha256": "235a0c6693799ec53803fe3d0efdc367c344c9599de8e5af94844c82b75404f4",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T050403174907Z/sub-001_ses-20101222/acquisition.json",
+      "execution_source_sha256": "d0dd0a2566e5e1baf204e2be762b699e2aa67db6d0ff900b3ba121ac54d50d05"
+    },
+    {
+      "session": "sub-002/ses-20110127",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-002_ses-20110127.json",
+      "receipt_sha256": "c5dd56908f2224a263a2cd9a557b80984dbfd81afc5f99924a76f951b46064d1",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T051948867697Z/sub-002_ses-20110127/acquisition.json",
+      "execution_source_sha256": "d0dd0a2566e5e1baf204e2be762b699e2aa67db6d0ff900b3ba121ac54d50d05"
+    },
+    {
+      "session": "sub-005/ses-20101215",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-005_ses-20101215.json",
+      "receipt_sha256": "0772e4c5b2059083395d5e056d4b5e17c2f1e3d9f4c2911c2fec8c542fe38e0f",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T051948867697Z/sub-005_ses-20101215/acquisition.json",
+      "execution_source_sha256": "d0dd0a2566e5e1baf204e2be762b699e2aa67db6d0ff900b3ba121ac54d50d05"
+    },
+    {
+      "session": "sub-006/ses-20101217",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-006_ses-20101217.json",
+      "receipt_sha256": "da56a0649995e022c5765948e74eebdd9dacbc57d1aea1329f5e6c5f46620a1a",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T051948867697Z/sub-006_ses-20101217/acquisition.json",
+      "execution_source_sha256": "d0dd0a2566e5e1baf204e2be762b699e2aa67db6d0ff900b3ba121ac54d50d05"
+    },
+    {
+      "session": "sub-007/ses-20101225",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-007_ses-20101225.json",
+      "receipt_sha256": "94a2700876d51df0361f89b9306da6754a39cc1ef0dfccefa2f4053ca93e17bb",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T055310920558Z/sub-007_ses-20101225/acquisition.json",
+      "execution_source_sha256": "d0dd0a2566e5e1baf204e2be762b699e2aa67db6d0ff900b3ba121ac54d50d05"
+    },
+    {
+      "session": "sub-015/ses-20101111",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-015_ses-20101111.json",
+      "receipt_sha256": "9cfa781643df2fbcde821aa0ac91ea0cdbd42b35d9d01e060e3e5e40f67fb0c4",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T051948867697Z/sub-015_ses-20101111/acquisition.json",
+      "execution_source_sha256": "d0dd0a2566e5e1baf204e2be762b699e2aa67db6d0ff900b3ba121ac54d50d05"
+    },
+    {
+      "session": "sub-021/ses-20101111",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-021_ses-20101111.json",
+      "receipt_sha256": "08e50bbd9f953072ea53f1abdb072d0c03d5fff2405063896a43ac559aed8b23",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T055310920558Z/sub-021_ses-20101111/acquisition.json",
+      "execution_source_sha256": "d0dd0a2566e5e1baf204e2be762b699e2aa67db6d0ff900b3ba121ac54d50d05"
+    },
+    {
+      "session": "sub-022/ses-20101011",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-022_ses-20101011.json",
+      "receipt_sha256": "096b904cd1704c851781dfbdcd1cea3fbca71675f89618b193e7533124446ca7",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T055310920558Z/sub-022_ses-20101011/acquisition.json",
+      "execution_source_sha256": "d0dd0a2566e5e1baf204e2be762b699e2aa67db6d0ff900b3ba121ac54d50d05"
+    },
+    {
+      "session": "sub-030/ses-20101012",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-030_ses-20101012.json",
+      "receipt_sha256": "f7546468182beb8f3f7668a1121a1f5372cd3452f2ac8c7eec59abd04605b1f3",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T062841681634Z/sub-030_ses-20101012/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-034/ses-20101005",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-034_ses-20101005.json",
+      "receipt_sha256": "f878c2500f0dda3829438876bc339de1c4bf9a6295d26f6657ec08f84da4a855",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T062841681634Z/sub-034_ses-20101005/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-035/ses-20101019",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-035_ses-20101019.json",
+      "receipt_sha256": "f804ad6b4e74e1aa1ee611720dda32b86342a8536bc9f29d039e9e9db5c5fae0",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T062841681634Z/sub-035_ses-20101019/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-036/ses-20101030",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-036_ses-20101030.json",
+      "receipt_sha256": "1c0c540d36127e99f1d26dbfd7418f0f8903132eda1edbcb6e45ac3b67116964",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T062841681634Z/sub-036_ses-20101030/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-045/ses-20101006",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-045_ses-20101006.json",
+      "receipt_sha256": "56bc78179d2bca0de84c087765fb99284153b0482d2aaa76f45ed1e08be5f1fd",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T062841681634Z/sub-045_ses-20101006/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-047/ses-20100908",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-047_ses-20100908.json",
+      "receipt_sha256": "a5640881b52ce4b158fe8d1cf437cb031688a4b89caa0ea0add40117d6b2a9b5",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T070709763045Z/sub-047_ses-20100908/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-051/ses-20100920",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-051_ses-20100920.json",
+      "receipt_sha256": "a9786a409e80e0e3fce0d88b461f8a3b3d8690dba0fd7d9ac5e2a93df96dec09",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T070709763045Z/sub-051_ses-20100920/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-052/ses-20100920",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-052_ses-20100920.json",
+      "receipt_sha256": "d5feefb95881b5112f3c45dd2e199fb7f91ac64e08c46837f0d86fa6be0a291e",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T070709763045Z/sub-052_ses-20100920/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-062/ses-20100601",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-062_ses-20100601.json",
+      "receipt_sha256": "d8d81e45bf6c70f926e4a6f0c81464c32f5b7d61efe43972b400b02c6b4c1270",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T070709763045Z/sub-062_ses-20100601/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-065/ses-20100703",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-065_ses-20100703.json",
+      "receipt_sha256": "ed2e8fe60c7fe5576212214a418d6dc62f3af0fc498b470a7bbfd25d982a2baa",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T073827120509Z/sub-065_ses-20100703/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-066/ses-20100526",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-066_ses-20100526.json",
+      "receipt_sha256": "8519d92020752e01ede4fafa49ce5857d8736e7117dd0d2448f9413674343a62",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T073827120509Z/sub-066_ses-20100526/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-069/ses-20100513",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-069_ses-20100513.json",
+      "receipt_sha256": "8385ebab25500389ea2442359a5f90d9682dc082474edcf09debfae173e78b22",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T073827120509Z/sub-069_ses-20100513/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-073/ses-20100426",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-073_ses-20100426.json",
+      "receipt_sha256": "819db43cc0d349f160ad9a8267a16570b4e59f687cd63659d8ae5d005b9396b9",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T073827120509Z/sub-073_ses-20100426/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-074/ses-20100421",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-074_ses-20100421.json",
+      "receipt_sha256": "a611d87c323acc2a7aa0a2451c62a3244f80238beb689535180136e2a91b188b",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T073827120509Z/sub-074_ses-20100421/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-074/ses-20101117",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-074_ses-20101117.json",
+      "receipt_sha256": "6608aff68489990eb21624a8ea7c4a19bab25456de144744ac91e9fff833bf55",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T073827120509Z/sub-074_ses-20101117/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-075/ses-20100502",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-075_ses-20100502.json",
+      "receipt_sha256": "59d2b7fa47cefb947591dbcd47f221b0f5f0d2838fd7c0dd1664bd4a23884bcc",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T075000412015Z/sub-075_ses-20100502/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-077/ses-20100414",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-077_ses-20100414.json",
+      "receipt_sha256": "66ac01a3dcb31bb196920a349aae5b2e254a7c98b044b0847e55b06ffe66c96a",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T075000412015Z/sub-077_ses-20100414/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-078/ses-20100430",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-078_ses-20100430.json",
+      "receipt_sha256": "166766344d9378a117814db663cca3f21ffa8a9a9c4cada0ace2299e4a731175",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T075000412015Z/sub-078_ses-20100430/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-091/ses-20100405",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-091_ses-20100405.json",
+      "receipt_sha256": "6a76dbe5200db9180311d6f7072fdc1e99c25fec67bec77ecb6231851572f787",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T075000412015Z/sub-091_ses-20100405/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-099/ses-20100321",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-099_ses-20100321.json",
+      "receipt_sha256": "a27ca8768fd3173e0632cde9c66367fd97fa8529e16f4bd7992e51a88c121c63",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T075000412015Z/sub-099_ses-20100321/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-100/ses-20100213",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-100_ses-20100213.json",
+      "receipt_sha256": "7493e822488b708acc16abb095811d4d958cfd17501e687a355ef41807a4363b",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T075000412015Z/sub-100_ses-20100213/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-103/ses-20100301",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-103_ses-20100301.json",
+      "receipt_sha256": "1cf273d103553fa4d11e294074c670f0b4ec3b9f142e7885706941f2697a5e34",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T081836327157Z/sub-103_ses-20100301/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-104/ses-20100228",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-104_ses-20100228.json",
+      "receipt_sha256": "64ade94299339bd9e9d2e65d3add9b033ef8ca8ec94c67bdd7337efbf2ef7a2e",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T081836327157Z/sub-104_ses-20100228/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-105/ses-20100212",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-105_ses-20100212.json",
+      "receipt_sha256": "fc2b7bf3bba1e4268266f54fe279e48d982c53699bbdd30bbc8bff18e4bba7d3",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T081836327157Z/sub-105_ses-20100212/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-107/ses-20100206",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-107_ses-20100206.json",
+      "receipt_sha256": "df50c4a99315c2c163a4fcbde83d60836d7b620939bde9832ec209d7d0616d13",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T081836327157Z/sub-107_ses-20100206/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-109/ses-20100120",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-109_ses-20100120.json",
+      "receipt_sha256": "0b9b6d84c7a9455663188582caf12e62a676cc6277556569ed726ef39fb6b45f",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T082821313872Z/sub-109_ses-20100120/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-112/ses-20100121",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-112_ses-20100121.json",
+      "receipt_sha256": "fe76e574be8075c6b2fa134f16e3f21f18a33fe6222bf549d5ee27710b32238e",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T081836327157Z/sub-112_ses-20100121/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-116/ses-20091229",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-116_ses-20091229.json",
+      "receipt_sha256": "206323d24d4a28aecbb2435864959acb2097e5c856b43d7a3630756b9f7f2371",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T082821313872Z/sub-116_ses-20091229/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-119/ses-20091226",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-119_ses-20091226.json",
+      "receipt_sha256": "4176c51f63b15eecf5eb21cbda1d19cfc3e2d736e4ce64388c53ad68bf35e9ee",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T082821313872Z/sub-119_ses-20091226/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-120/ses-20100117",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-120_ses-20100117.json",
+      "receipt_sha256": "2697f622f0e37a47ec9d4fb2fd5fb0293260ae88f23958379a4369061d269fe8",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T082821313872Z/sub-120_ses-20100117/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-121/ses-20100128",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-121_ses-20100128.json",
+      "receipt_sha256": "d02eaf364ee3a5c71562582312f7f7d898dd3957b9102ebd57071400f024200a",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084104895344Z/sub-121_ses-20100128/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-126/ses-20100105",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-126_ses-20100105.json",
+      "receipt_sha256": "33b856bb74b17cbdd44e09241226db598d7f1ea13f69d512f78d6de271c04f01",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084104895344Z/sub-126_ses-20100105/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-128/ses-20120124",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-128_ses-20120124.json",
+      "receipt_sha256": "48592e5764e80d40af9b28dd094e589f5e704a4dc2c39b9f7f09f9e37846bbaa",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084104895344Z/sub-128_ses-20120124/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-129/ses-20120107",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-129_ses-20120107.json",
+      "receipt_sha256": "ec16b84b171dd0df3f2c210430f8636737c0017013a2f31b3a39a338f81fdc92",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084104895344Z/sub-129_ses-20120107/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-130/ses-20111130",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-130_ses-20111130.json",
+      "receipt_sha256": "dc50a104109ffe6333bafb4cd2f899d6b9ef7e7a8d68918f110b0257acbd28d9",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084822919930Z/sub-130_ses-20111130/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-134/ses-20111127",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-134_ses-20111127.json",
+      "receipt_sha256": "e33dc1b0146ecd5a35640ff3750c8602d24753c5989a47a73b6152ba46e070ae",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084104895344Z/sub-134_ses-20111127/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-140/ses-20111208",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-140_ses-20111208.json",
+      "receipt_sha256": "fe07cd2ae0818f14f92ab2de2d5f4a048b25b8f703ba2588d9131a1564371494",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084822919930Z/sub-140_ses-20111208/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-141/ses-20111229",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-141_ses-20111229.json",
+      "receipt_sha256": "82751603ba9b8a0094ae77cddc4c6e815074c206ebde9183ecf68ccb8b94b627",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084822919930Z/sub-141_ses-20111229/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-144/ses-20111211",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-144_ses-20111211.json",
+      "receipt_sha256": "c894646498783d2e5db39d48d0f1ef421e4711f00ea704f915cd487bfe1142b8",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084822919930Z/sub-144_ses-20111211/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-147/ses-20111209",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-147_ses-20111209.json",
+      "receipt_sha256": "1bd3194afd5c7fc2c99212040b4896afca7cbfb72ee1519fb9acdaa792df76fd",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T090012362505Z/sub-147_ses-20111209/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-148/ses-20111106",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-148_ses-20111106.json",
+      "receipt_sha256": "27e2ed4ffdc69e811aced3d057bb867bf62ddde51e5187ddb85f64e998caa242",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T084104895344Z/sub-148_ses-20111106/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-149/ses-20111126",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-149_ses-20111126.json",
+      "receipt_sha256": "dab98875267487f4272b54c75533f4962e4b6c0af5a949431968f9f20f0047fc",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T090012362505Z/sub-149_ses-20111126/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-153/ses-20111127",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-153_ses-20111127.json",
+      "receipt_sha256": "0a559c3db604ab9cad66432fe8e1fe8d7f16aea1e11c01ff731eea10908ad412",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T090012362505Z/sub-153_ses-20111127/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-159/ses-20111127",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-159_ses-20111127.json",
+      "receipt_sha256": "be1520ec1504a643f94ec10f5b1310959cb22507732bb6dd9dd8a48a5c24ef14",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T090012362505Z/sub-159_ses-20111127/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-160/ses-20111010",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-160_ses-20111010.json",
+      "receipt_sha256": "23cf54b594c04e6f826c0c67f0c9ad14242ccd9b65dfc9914dd77b20c1f77b17",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T090012362505Z/sub-160_ses-20111010/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-163/ses-20111014",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-163_ses-20111014.json",
+      "receipt_sha256": "c749414bd7c5b03a364e48ca9373c4627e64924448afbfdb3d9b943444309292",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T075000412015Z/sub-163_ses-20111014/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-164/ses-20111124",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-164_ses-20111124.json",
+      "receipt_sha256": "f8a4f06aae04e921a454c8506e43e5fbaaecd01e5106362ce2500b149c1cb701",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T090012362505Z/sub-164_ses-20111124/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-167/ses-20111013",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-167_ses-20111013.json",
+      "receipt_sha256": "6bf4666a3f8872ed5b808a78bdc45e059b5ce7ca1d37c32e771aaa98d37b8599",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T092128002277Z/sub-167_ses-20111013/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-170/ses-20100422",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-170_ses-20100422.json",
+      "receipt_sha256": "3a407d558387c6a7c927dc6c13b9ac5fddd6e9c3298365fc8814be33c83a98fc",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T092128002277Z/sub-170_ses-20100422/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-170/ses-20111112",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-170_ses-20111112.json",
+      "receipt_sha256": "d994969df25b8569bac53d1ff097076d85d4e4ddf67a20e276c391839fe320d9",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T092128002277Z/sub-170_ses-20111112/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-171/ses-20111105",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-171_ses-20111105.json",
+      "receipt_sha256": "3341ee3ba12d1a91bca5e1da91e87554cd5e3ba79f19feddc1ea92520bcd998c",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T092128002277Z/sub-171_ses-20111105/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-172/ses-20111110",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-172_ses-20111110.json",
+      "receipt_sha256": "8dcaacde14dc2467cb73ee91228a84580cc126216c28b89b874ae98f339cacc6",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T092128002277Z/sub-172_ses-20111110/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-178/ses-20111105",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-178_ses-20111105.json",
+      "receipt_sha256": "3b9bee5fdf5b4e0ddc6d0c2b20f4bd42ccd742c0f70d46ddcffa18d9d995b329",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T092128002277Z/sub-178_ses-20111105/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-186/ses-20110925",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-186_ses-20110925.json",
+      "receipt_sha256": "e5dcb1cc08baaf36df5c1e57863fd1f7e807db8a7e97e3acce810e3fb9c5e5c8",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T093542120207Z/sub-186_ses-20110925/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-187/ses-20111023",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-187_ses-20111023.json",
+      "receipt_sha256": "cd8fe83ce9975097c5da7b69162ec809ca70c60f52debb0e3dd0c65438a76d45",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T093542120207Z/sub-187_ses-20111023/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-188/ses-20111013",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-188_ses-20111013.json",
+      "receipt_sha256": "d3a29dd6290cda48f61df3005cdf29bed0662b6bcc479c35104757e686969fdb",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T093542120207Z/sub-188_ses-20111013/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-189/ses-20110927",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-189_ses-20110927.json",
+      "receipt_sha256": "0d17ecd047cd3f800c2c9846ed80c8188f32bbd30175afef9a11662a34005d4a",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T093542120207Z/sub-189_ses-20110927/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-191/ses-20111010",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-191_ses-20111010.json",
+      "receipt_sha256": "2af9da273586969574e934daad1bcd18fb00be824e0e906e911a8d4c82f6ae6e",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T093542120207Z/sub-191_ses-20111010/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-192/ses-20110930",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-192_ses-20110930.json",
+      "receipt_sha256": "6af91075db0a7697351cce4ded73894f19ea4b27a8382cc4d6ab9ec732923790",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T093542120207Z/sub-192_ses-20110930/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-194/ses-20110911",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-194_ses-20110911.json",
+      "receipt_sha256": "691ad2b5f1472a783319ed6b302052fab5739daf636fb70c2e5e446f754ea3f5",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T093542120207Z/sub-194_ses-20110911/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-197/ses-20110914",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-197_ses-20110914.json",
+      "receipt_sha256": "a7a7709f3ebd08cac581592d023e097305c939f922fd7a63464b61c3694af7e3",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T094623156283Z/sub-197_ses-20110914/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-198/ses-20110922",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-198_ses-20110922.json",
+      "receipt_sha256": "28b414e7d0d8f4aff430038c359ec84096526762054bac73c209be4ebe8d8cab",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T094623156283Z/sub-198_ses-20110922/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-203/ses-20110727",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-203_ses-20110727.json",
+      "receipt_sha256": "a5791b683d295a3d2c9b7e6ee958f24b6c49a7811fc4ebd3cebac3dc9f36422a",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T094623156283Z/sub-203_ses-20110727/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-207/ses-20110729",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-207_ses-20110729.json",
+      "receipt_sha256": "4971f4db73edcd6889706e64d5713115b10cb4771d304fd50410622e612dd192",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T094623156283Z/sub-207_ses-20110729/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-208/ses-20110808",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-208_ses-20110808.json",
+      "receipt_sha256": "bb750a720fae8263c6141bef8fccc00cff8535ded9cc7b5a7a009f9e86e88f50",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T101114177521Z/sub-208_ses-20110808/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-209/ses-20110724",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-209_ses-20110724.json",
+      "receipt_sha256": "57625ab44075c3569ef57043fc61157dbe2e5e949d25769265d4974576c072cc",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T101114177521Z/sub-209_ses-20110724/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-211/ses-20110817",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-211_ses-20110817.json",
+      "receipt_sha256": "2001a7cdf780bafb3a70eff0afc875b5a9d46b5ecf05a05d4fd60a9ad5219533",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T101114177521Z/sub-211_ses-20110817/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-214/ses-20110901",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-214_ses-20110901.json",
+      "receipt_sha256": "56943e06057cbbe95feaa10d3b94f58c1b215817716ee5bd0e9d0d499220ea32",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T081836327157Z/sub-214_ses-20110901/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-216/ses-20110729",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-216_ses-20110729.json",
+      "receipt_sha256": "c9acf87b3dfcb46569362ec484ec7994c711cd587f3dacd376ed77cd30c56ca6",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T101114177521Z/sub-216_ses-20110729/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-217/ses-20100819",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-217_ses-20100819.json",
+      "receipt_sha256": "e042f6e99e99033e631b2ebee33fb3067f631b6fe1a6b525c297652e53421d02",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T101114177521Z/sub-217_ses-20100819/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-217/ses-20110811",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-217_ses-20110811.json",
+      "receipt_sha256": "6be674f3937dcaf8d0e678e0d91f7876c58c0509fc76599d94fd79e828135a25",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T101114177521Z/sub-217_ses-20110811/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-220/ses-20110626",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-220_ses-20110626.json",
+      "receipt_sha256": "f0681932b6baaa37c2ae5a00cebdf97e8feacfea00589feb207b436cf1afbe72",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T102303533353Z/sub-220_ses-20110626/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-222/ses-20110808",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-222_ses-20110808.json",
+      "receipt_sha256": "3fa3138330b86829c0a07edaaae3fc1d8a87880b49b705531a5e29a7daa8c5d8",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T102303533353Z/sub-222_ses-20110808/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-225/ses-20100515",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-225_ses-20100515.json",
+      "receipt_sha256": "7c17eaaf859c07030f7f67a712487a6e3192782bcbd9d390bb8c1a718a9c4796",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T102303533353Z/sub-225_ses-20100515/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-225/ses-20110617",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-225_ses-20110617.json",
+      "receipt_sha256": "c07397a5f5488b55f31d2f5d3710fcdabf963c1f49a1667a309910ac4b6fe477",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T102303533353Z/sub-225_ses-20110617/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-228/ses-20110626",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-228_ses-20110626.json",
+      "receipt_sha256": "0dd4f98089629c49d252184614a8b329d2478c10b989d3d38dc885272b3e06b2",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T102303533353Z/sub-228_ses-20110626/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-231/ses-20110617",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-231_ses-20110617.json",
+      "receipt_sha256": "41272c41843dac1864cf70f3b89ae05d2256932440be8462d79073dd35c05507",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T102303533353Z/sub-231_ses-20110617/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-234/ses-20110613",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-234_ses-20110613.json",
+      "receipt_sha256": "29235ebbced873b70950ea042b92ee4c8923e1f13a39b2b76b79fa19ed029a32",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T102303533353Z/sub-234_ses-20110613/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-234/ses-20111203",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-234_ses-20111203.json",
+      "receipt_sha256": "c7188918d426996f1d75c72b4656d109ce24dd025ea027a68ff14d978b8246d4",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T102303533353Z/sub-234_ses-20111203/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-235/ses-20110528",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-235_ses-20110528.json",
+      "receipt_sha256": "7306cb169da496c1bc7b6bdcda1df023117b66f7bf5211c8e23d054e828ce5d6",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T102303533353Z/sub-235_ses-20110528/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-239/ses-20110628",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-239_ses-20110628.json",
+      "receipt_sha256": "10ff8500738dda0a0a9acec698a1dde94d7c798171dd65987968086ef29fde98",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T102303533353Z/sub-239_ses-20110628/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-240/ses-20110701",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-240_ses-20110701.json",
+      "receipt_sha256": "496d70bf0b6611878f276f8f1bca34d523e4c8a8f8927f919102bb81c2d00e2f",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T102303533353Z/sub-240_ses-20110701/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-242/ses-20110710",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-242_ses-20110710.json",
+      "receipt_sha256": "5b5116844ed5e772a995abe8cfca9a373350a1ed5c494031a310465d343a3b6c",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T102303533353Z/sub-242_ses-20110710/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-243/ses-20110620",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-243_ses-20110620.json",
+      "receipt_sha256": "a42faebf42013868677da1c592ccd666872e794e5458064b524fa23f69949880",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T102303533353Z/sub-243_ses-20110620/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-250/ses-20110525",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-250_ses-20110525.json",
+      "receipt_sha256": "47ddab4b622e09e371b939c22552f0bb1cc14dbefbc70e6a16360081ee554945",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T103459488456Z/sub-250_ses-20110525/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-251/ses-20110702",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-251_ses-20110702.json",
+      "receipt_sha256": "46188ca265bb6bafbf3fbc5135dca05faa7ead7971c6f0e8304d90a5d5204b7d",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T103459488456Z/sub-251_ses-20110702/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-253/ses-20110628",
+      "status": "acquired_qc_failed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-253_ses-20110628.json",
+      "receipt_sha256": "dbda41dcfa35591e27657a595cf3fcc776f56edfcacd3582c3ddb6bb94363fbb",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T103459488456Z/sub-253_ses-20110628/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-254/ses-20110622",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-254_ses-20110622.json",
+      "receipt_sha256": "87ae728f6f44380b50301f7cb63e766d71daa7c5f30f64680b41303ab59460d6",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T103459488456Z/sub-254_ses-20110622/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-255/ses-20110526",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-255_ses-20110526.json",
+      "receipt_sha256": "b5176e09a61dfa183bbcbab29f12c9c20d3c67b56e0c6e45b89d8fd6de6acd23",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T103459488456Z/sub-255_ses-20110526/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-262/ses-20110620",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-262_ses-20110620.json",
+      "receipt_sha256": "2f0d9f2f3fcb2d1521ba1b48f8b41292ce24c73b8c86d7dfc86f62a377657a9c",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T103459488456Z/sub-262_ses-20110620/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-263/ses-20110611",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-263_ses-20110611.json",
+      "receipt_sha256": "b3daee31a9a8db1fdf3a18e70e4fab2058c2cd33e2ed8439cb4dd142d00236d3",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T103459488456Z/sub-263_ses-20110611/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-264/ses-20110622",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-264_ses-20110622.json",
+      "receipt_sha256": "1acecb1cbb47a77bffa183ead3fe2b37c46c0a069c48dc5e6ee65d5d1ef3b5aa",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T105105417978Z/sub-264_ses-20110622/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-265/ses-20110507",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-265_ses-20110507.json",
+      "receipt_sha256": "09b2726bd7a41368fe4f6ef1a9558483f9e4b7b5bdff916aaa9112a1e2c86515",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T105105417978Z/sub-265_ses-20110507/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-268/ses-20110522",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-268_ses-20110522.json",
+      "receipt_sha256": "c0763f77090b87d193b90320c0f319e173c83fe1bbc2ba188e035a4adb4ef3f4",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T105105417978Z/sub-268_ses-20110522/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-270/ses-20110522",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-270_ses-20110522.json",
+      "receipt_sha256": "a4112a806d3f587f513c41a61c4f45d6e7436fc836604b17bfcded261d2e29b4",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T105105417978Z/sub-270_ses-20110522/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    },
+    {
+      "session": "sub-450/ses-20141125",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-450_ses-20141125.json",
+      "receipt_sha256": "ccd4587a3d205c815b5c9e69638895d8112746675e5028994533630b79dc92e9",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T055310920558Z/sub-450_ses-20141125/acquisition.json",
+      "execution_source_sha256": "d0dd0a2566e5e1baf204e2be762b699e2aa67db6d0ff900b3ba121ac54d50d05"
+    },
+    {
+      "session": "sub-476/ses-20140519",
+      "status": "acquired_qc_passed",
+      "receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/acquired/sub-476_ses-20140519.json",
+      "receipt_sha256": "55d42e4392645478f6c0c50d325b3f0a23e3c1019e6c5100f8bed001d33f7dc6",
+      "origin_receipt": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T064025830178Z/sub-476_ses-20140519/acquisition.json",
+      "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766"
+    }
+  ],
+  "later_receipts_excluded_from_closure": [
+    "sub-271/ses-20110518"
+  ],
+  "leftover_snapshot_scope": "Filesystem leftovers reflect the audit timestamp during the subsequent batch21 run, not a reconstructed snapshot at batch20 closure. Resumed partials may have grown or completed after batch20 closed. No unfinished or later batch21 session enters batch20 totals.",
+  "claim_limits": {
+    "scanner_frame_admitted": false,
+    "spatial_planning_admitted": false,
+    "registration": "unverified",
+    "anatomical_coverage": "unreviewed",
+    "component_optimizer_updates": 0,
+    "recorded_rl_transitions": 0,
+    "note": "Byte/receipt integrity and saved QC consistency only. QC-passed modality counts do not establish clinical, anatomical, source-frame, spatial or learning eligibility."
+  }
+}

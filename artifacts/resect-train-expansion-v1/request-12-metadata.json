@@ -1,0 +1,738 @@
+{
+  "data": [
+    {
+      "id": "64cd2387c7ab292b22d4e1ab",
+      "type": "files",
+      "attributes": {
+        "guid": "tqk4u",
+        "checkout": null,
+        "name": "Case18-US-during-sulci.nii.gz",
+        "kind": "file",
+        "path": "/64cd2387c7ab292b22d4e1ab",
+        "size": 246511,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case18/Case18-US-during-sulci.nii.gz",
+        "last_touched": null,
+        "date_modified": "2024-02-15T08:59:04.448110",
+        "date_created": "2023-08-04T16:12:55.340781Z",
+        "extra": {
+          "hashes": {
+            "md5": "87e6a250be1595cda2c588c4d5312a42",
+            "sha256": "03262c93455cd9dabbb7c8afff2e24263f5b9039a730a61fc4543de0e1046121"
+          },
+          "downloads": 19
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 2,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd237c4f0a44340c99453b/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd237c4f0a44340c99453b",
+            "type": "files"
+          }
+        },
+        "versions": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd2387c7ab292b22d4e1ab/versions/",
+              "meta": {}
+            }
+          }
+        },
+        "comments": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/comments/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd2387c7ab292b22d4e1ab/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd2387c7ab292b22d4e1ab/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2387c7ab292b22d4e1ab",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2387c7ab292b22d4e1ab",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2387c7ab292b22d4e1ab",
+        "download": "https://osf.io/download/tqk4u/",
+        "render": "https://mfr.de-1.osf.io/render",
+        "html": "https://osf.io/jv8bk/files/osfstorage/64cd2387c7ab292b22d4e1ab",
+        "self": "https://api.osf.io/v2/files/64cd2387c7ab292b22d4e1ab/",
+        "iri": "https://osf.io/tqk4u"
+      }
+    },
+    {
+      "id": "64cd2385c7ab292b22d4e1a9",
+      "type": "files",
+      "attributes": {
+        "guid": "5cwfk",
+        "checkout": null,
+        "name": "Case18-US-during-resection.nii.gz",
+        "kind": "file",
+        "path": "/64cd2385c7ab292b22d4e1a9",
+        "size": 91615,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case18/Case18-US-during-resection.nii.gz",
+        "last_touched": null,
+        "date_modified": "2024-02-15T08:59:01.464538",
+        "date_created": "2023-08-04T16:12:53.802881Z",
+        "extra": {
+          "hashes": {
+            "md5": "cf4632c18af8915621a15a4b13edaa7b",
+            "sha256": "e75cbd59b299cd487f0c96c5222418ae9be22653657cc66e1c9a5ac5e0c11ca9"
+          },
+          "downloads": 19
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 2,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd237c4f0a44340c99453b/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd237c4f0a44340c99453b",
+            "type": "files"
+          }
+        },
+        "versions": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd2385c7ab292b22d4e1a9/versions/",
+              "meta": {}
+            }
+          }
+        },
+        "comments": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/comments/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd2385c7ab292b22d4e1a9/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd2385c7ab292b22d4e1a9/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2385c7ab292b22d4e1a9",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2385c7ab292b22d4e1a9",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2385c7ab292b22d4e1a9",
+        "download": "https://osf.io/download/5cwfk/",
+        "render": "https://mfr.de-1.osf.io/render",
+        "html": "https://osf.io/jv8bk/files/osfstorage/64cd2385c7ab292b22d4e1a9",
+        "self": "https://api.osf.io/v2/files/64cd2385c7ab292b22d4e1a9/",
+        "iri": "https://osf.io/5cwfk"
+      }
+    },
+    {
+      "id": "64cd2383a2be6b3ade314910",
+      "type": "files",
+      "attributes": {
+        "guid": "fv2yb",
+        "checkout": null,
+        "name": "Case18-US-after-sulci.nii.gz",
+        "kind": "file",
+        "path": "/64cd2383a2be6b3ade314910",
+        "size": 194117,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case18/Case18-US-after-sulci.nii.gz",
+        "last_touched": null,
+        "date_modified": "2024-02-15T08:58:44.500795",
+        "date_created": "2023-08-04T16:12:51.931113Z",
+        "extra": {
+          "hashes": {
+            "md5": "10c8e07f6771390e7ece4ff7236882bd",
+            "sha256": "a2bf2c402b308ac7340a4b331bb3d1f1160bbfe206e331ae5c158f0b03b8f9ca"
+          },
+          "downloads": 19
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 2,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd237c4f0a44340c99453b/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd237c4f0a44340c99453b",
+            "type": "files"
+          }
+        },
+        "versions": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd2383a2be6b3ade314910/versions/",
+              "meta": {}
+            }
+          }
+        },
+        "comments": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/comments/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd2383a2be6b3ade314910/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd2383a2be6b3ade314910/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2383a2be6b3ade314910",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2383a2be6b3ade314910",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2383a2be6b3ade314910",
+        "download": "https://osf.io/download/fv2yb/",
+        "render": "https://mfr.de-1.osf.io/render",
+        "html": "https://osf.io/jv8bk/files/osfstorage/64cd2383a2be6b3ade314910",
+        "self": "https://api.osf.io/v2/files/64cd2383a2be6b3ade314910/",
+        "iri": "https://osf.io/fv2yb"
+      }
+    },
+    {
+      "id": "64cd23832fe4962f0f61b132",
+      "type": "files",
+      "attributes": {
+        "guid": "hy78w",
+        "checkout": null,
+        "name": "Case18-FLAIR-tumor.nii.gz",
+        "kind": "file",
+        "path": "/64cd23832fe4962f0f61b132",
+        "size": 120248,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case18/Case18-FLAIR-tumor.nii.gz",
+        "last_touched": null,
+        "date_modified": "2023-08-04T16:12:51.933641",
+        "date_created": "2023-08-04T16:12:51.933641Z",
+        "extra": {
+          "hashes": {
+            "md5": "e8e146b0723aea6ac3a3435c9d35bf6a",
+            "sha256": "32eb31272dd7667fda60d8ed1de7dbb1e0209a72e71f3f0f8dcd284f530f0f82"
+          },
+          "downloads": 19
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 1,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd237c4f0a44340c99453b/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd237c4f0a44340c99453b",
+            "type": "files"
+          }
+        },
+        "versions": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd23832fe4962f0f61b132/versions/",
+              "meta": {}
+            }
+          }
+        },
+        "comments": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/comments/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd23832fe4962f0f61b132/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd23832fe4962f0f61b132/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd23832fe4962f0f61b132",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd23832fe4962f0f61b132",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd23832fe4962f0f61b132",
+        "download": "https://osf.io/download/hy78w/",
+        "render": "https://mfr.de-1.osf.io/render",
+        "html": "https://osf.io/jv8bk/files/osfstorage/64cd23832fe4962f0f61b132",
+        "self": "https://api.osf.io/v2/files/64cd23832fe4962f0f61b132/",
+        "iri": "https://osf.io/hy78w"
+      }
+    },
+    {
+      "id": "64cd23832fe4962f1461b312",
+      "type": "files",
+      "attributes": {
+        "guid": "mwtyz",
+        "checkout": null,
+        "name": "Case18-US-after-resection.nii.gz",
+        "kind": "file",
+        "path": "/64cd23832fe4962f1461b312",
+        "size": 95332,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case18/Case18-US-after-resection.nii.gz",
+        "last_touched": null,
+        "date_modified": "2024-02-15T08:58:42.028152",
+        "date_created": "2023-08-04T16:12:51.873559Z",
+        "extra": {
+          "hashes": {
+            "md5": "2aa55652340230ecbcfd3cc3cca06527",
+            "sha256": "6f3dcbd2d60772731280c5cdb2ba7a096f1f26e634dee9e7bda308c17705b231"
+          },
+          "downloads": 19
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 2,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd237c4f0a44340c99453b/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd237c4f0a44340c99453b",
+            "type": "files"
+          }
+        },
+        "versions": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd23832fe4962f1461b312/versions/",
+              "meta": {}
+            }
+          }
+        },
+        "comments": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/comments/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd23832fe4962f1461b312/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd23832fe4962f1461b312/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd23832fe4962f1461b312",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd23832fe4962f1461b312",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd23832fe4962f1461b312",
+        "download": "https://osf.io/download/mwtyz/",
+        "render": "https://mfr.de-1.osf.io/render",
+        "html": "https://osf.io/jv8bk/files/osfstorage/64cd23832fe4962f1461b312",
+        "self": "https://api.osf.io/v2/files/64cd23832fe4962f1461b312/",
+        "iri": "https://osf.io/mwtyz"
+      }
+    },
+    {
+      "id": "64cd2384a2be6b3ad9314746",
+      "type": "files",
+      "attributes": {
+        "guid": "729wd",
+        "checkout": null,
+        "name": "Case18-US-before-sulci.nii.gz",
+        "kind": "file",
+        "path": "/64cd2384a2be6b3ad9314746",
+        "size": 211511,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case18/Case18-US-before-sulci.nii.gz",
+        "last_touched": null,
+        "date_modified": "2024-02-15T08:58:52.343821",
+        "date_created": "2023-08-04T16:12:52.870785Z",
+        "extra": {
+          "hashes": {
+            "md5": "4884f19e9982dfa8c0de5e9594cf63bf",
+            "sha256": "cb378d140c6b32c2230c783a139c4da24559982965b9472f7302859d7c56829c"
+          },
+          "downloads": 19
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 2,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd237c4f0a44340c99453b/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd237c4f0a44340c99453b",
+            "type": "files"
+          }
+        },
+        "versions": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd2384a2be6b3ad9314746/versions/",
+              "meta": {}
+            }
+          }
+        },
+        "comments": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/comments/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd2384a2be6b3ad9314746/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd2384a2be6b3ad9314746/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2384a2be6b3ad9314746",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2384a2be6b3ad9314746",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd2384a2be6b3ad9314746",
+        "download": "https://osf.io/download/729wd/",
+        "render": "https://mfr.de-1.osf.io/render",
+        "html": "https://osf.io/jv8bk/files/osfstorage/64cd2384a2be6b3ad9314746",
+        "self": "https://api.osf.io/v2/files/64cd2384a2be6b3ad9314746/",
+        "iri": "https://osf.io/729wd"
+      }
+    },
+    {
+      "id": "64cd23832fe4962f1061b192",
+      "type": "files",
+      "attributes": {
+        "guid": "yp72z",
+        "checkout": null,
+        "name": "Case18-US-before-tumor.nii.gz",
+        "kind": "file",
+        "path": "/64cd23832fe4962f1061b192",
+        "size": 169979,
+        "provider": "osfstorage",
+        "materialized_path": "/RESECT-Segmentation/Case18/Case18-US-before-tumor.nii.gz",
+        "last_touched": null,
+        "date_modified": "2024-02-15T08:58:55.233841",
+        "date_created": "2023-08-04T16:12:51.078730Z",
+        "extra": {
+          "hashes": {
+            "md5": "a1611aff21b6ff6bad974383053ab5ef",
+            "sha256": "aaa4892ed2791d7d1feb8b67e2df7eecfa1d0601e356a7ea763ed7e31ec1233d"
+          },
+          "downloads": 21
+        },
+        "tags": [],
+        "current_user_can_comment": false,
+        "current_version": 2,
+        "show_as_unviewed": false
+      },
+      "relationships": {
+        "parent_folder": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd237c4f0a44340c99453b/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "64cd237c4f0a44340c99453b",
+            "type": "files"
+          }
+        },
+        "versions": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd23832fe4962f1061b192/versions/",
+              "meta": {}
+            }
+          }
+        },
+        "comments": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/comments/",
+              "meta": {}
+            }
+          }
+        },
+        "node": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {}
+            }
+          },
+          "data": {
+            "id": "jv8bk",
+            "type": "nodes"
+          }
+        },
+        "target": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/nodes/jv8bk/",
+              "meta": {
+                "type": "nodes"
+              }
+            }
+          },
+          "data": {
+            "type": "nodes",
+            "id": "jv8bk"
+          }
+        },
+        "cedar_metadata_records": {
+          "links": {
+            "related": {
+              "href": "https://api.osf.io/v2/files/64cd23832fe4962f1061b192/cedar_metadata_records/",
+              "meta": {}
+            }
+          }
+        }
+      },
+      "links": {
+        "info": "https://api.osf.io/v2/files/64cd23832fe4962f1061b192/",
+        "move": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd23832fe4962f1061b192",
+        "upload": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd23832fe4962f1061b192",
+        "delete": "https://files.de-1.osf.io/v1/resources/jv8bk/providers/osfstorage/64cd23832fe4962f1061b192",
+        "download": "https://osf.io/download/yp72z/",
+        "render": "https://mfr.de-1.osf.io/render",
+        "html": "https://osf.io/jv8bk/files/osfstorage/64cd23832fe4962f1061b192",
+        "self": "https://api.osf.io/v2/files/64cd23832fe4962f1061b192/",
+        "iri": "https://osf.io/yp72z"
+      }
+    }
+  ],
+  "links": {
+    "first": null,
+    "last": null,
+    "prev": null,
+    "next": null,
+    "meta": {
+      "total": 7,
+      "per_page": 100
+    }
+  },
+  "meta": {
+    "version": "2.0"
+  }
+}

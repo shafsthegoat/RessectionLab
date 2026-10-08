@@ -1,0 +1,12 @@
+{
+  "request": 4,
+  "url": "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd21f0a2be6b3ada3146f5/?page%5Bsize%5D=100",
+  "started_unix": 1791456296.873214,
+  "http_status": 200,
+  "response_bytes": 14568,
+  "outcome": "metadata_retained",
+  "response_sha256": "73c22e09efa831f6aaa42ccfd7b6306de269390cde7789219b314e4acb29e005",
+  "elapsed_seconds": 1.330178,
+  "sanitized_metadata_file": "request-04-metadata.json",
+  "sanitized_sha256": "8fc09bec917318d3740781e39105085e2bec13098cf0a28dc2542e2d7d78a2ce"
+}

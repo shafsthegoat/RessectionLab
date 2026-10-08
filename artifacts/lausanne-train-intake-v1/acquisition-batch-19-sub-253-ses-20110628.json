@@ -1,0 +1,146 @@
+{
+  "subject": "sub-253",
+  "session": "ses-20110628",
+  "role": "TRAIN",
+  "status": "acquired",
+  "index_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
+  "files": [
+    {
+      "path": "sub-253/ses-20110628/anat/sub-253_ses-20110628_T1w.nii.gz",
+      "bytes": 23410961,
+      "sha256": "14cbaf8e6c5348a3d116d713869ad52dfccef118fc6413b9a663d54f095319a2",
+      "status": "downloaded_and_verified"
+    },
+    {
+      "path": "sub-253/ses-20110628/anat/sub-253_ses-20110628_T1w.json",
+      "bytes": 1444,
+      "sha256": "cc267a4c15cb2733c3d3029be2245585c1333f26fa7959b7f2f54434e33a11c5",
+      "status": "pinned_metadata_published"
+    },
+    {
+      "path": "sub-253/ses-20110628/anat/sub-253_ses-20110628_angio.nii.gz",
+      "bytes": 35040956,
+      "sha256": "6b513cadc4648275e503bb78f1dd9a79f691ae1cedff1d7d71588394f8b48435",
+      "status": "downloaded_and_verified"
+    },
+    {
+      "path": "sub-253/ses-20110628/anat/sub-253_ses-20110628_angio.json",
+      "bytes": 1422,
+      "sha256": "7fb40c4084717df5f9e79a5c4ae14cfa28b41e43864d089c3cb87127512b7375",
+      "status": "pinned_metadata_published"
+    }
+  ],
+  "integrity_qc": [
+    {
+      "path": "sub-253/ses-20110628/anat/sub-253_ses-20110628_T1w.nii.gz",
+      "status": "qc_failed",
+      "reason": "QFORM_SFORM_DISAGREEMENT: Active qform and sform differ across the image extent; review the source transform."
+    },
+    {
+      "path": "sub-253/ses-20110628/anat/sub-253_ses-20110628_angio.nii.gz",
+      "status": "header_and_scalar_checks_passed",
+      "header": {
+        "file": "sub-253_ses-20110628_angio.nii.gz",
+        "shape": [
+          512,
+          512,
+          140
+        ],
+        "affine_ras_mm": [
+          [
+            0.41015625,
+            0.0,
+            0.0,
+            -104.58984375
+          ],
+          [
+            0.0,
+            0.41015625,
+            0.0,
+            -104.58984375
+          ],
+          [
+            0.0,
+            0.0,
+            0.549998939037323,
+            -38.49992752075195
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "source_units": "mm",
+        "physical_units": "mm",
+        "unit_scale_to_mm": 1.0,
+        "qform_code": 1,
+        "sform_code": 0,
+        "qform_native": [
+          [
+            0.41015625,
+            0.0,
+            0.0,
+            -104.58984375
+          ],
+          [
+            0.0,
+            0.41015625,
+            0.0,
+            -104.58984375
+          ],
+          [
+            0.0,
+            0.0,
+            0.549998939037323,
+            -38.49992752075195
+          ],
+          [
+            0.0,
+            0.0,
+            0.0,
+            1.0
+          ]
+        ],
+        "sform_native": null,
+        "orientation": [
+          "R",
+          "A",
+          "S"
+        ],
+        "spacing_mm": [
+          0.41015625,
+          0.41015625,
+          0.549998939037323
+        ],
+        "voxel_volume_mm3": 0.09252530369394664,
+        "handedness": "right",
+        "anisotropic": true,
+        "obliquity_degrees": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "status": "passed_header_checks",
+        "visual_alignment_review": "pending",
+        "frame": "RAS+",
+        "simulation_frame": "source_coded_frame_native_status_requires_source_provenance"
+      },
+      "minimum": 0.0,
+      "maximum": 3310.833251953125,
+      "voxels": 36700160
+    }
+  ],
+  "execution_source_sha256": "5e298765c0a0e270fd9089192ac0563d447f54e1d08be5fc64b3360bda16b766",
+  "execution_source_record": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T103459488456Z/source.json",
+  "existing_files_only": false,
+  "elapsed_seconds": 113.58487437502481,
+  "acquired_at": "2026-10-08T10:39:59.081636+00:00",
+  "scanner_frame_admitted": false,
+  "spatial_planning_admitted": false,
+  "registration": "unverified",
+  "anatomical_coverage": "unreviewed",
+  "component_optimizer_updates": 0,
+  "recorded_rl_transitions": 0
+}

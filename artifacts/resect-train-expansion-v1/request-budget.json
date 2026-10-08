@@ -1,0 +1,27 @@
+{
+  "scope": "public OSF JSON metadata only; no scientific bodies; no retry",
+  "started_unix": 1791456212.385482,
+  "maximum_requests": 30,
+  "maximum_wall_seconds": 300,
+  "maximum_response_bytes": 4194304,
+  "requests": 16,
+  "response_bytes": 278128,
+  "queried": [
+    "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/?page%5Bsize%5D=100",
+    "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd20819cbf033b051e46c8/?page%5Bsize%5D=100",
+    "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd21cf9cbf033b041e472c/?page%5Bsize%5D=100",
+    "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd21f0a2be6b3ada3146f5/?page%5Bsize%5D=100",
+    "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd2229a2be6b3ade31483a/?page%5Bsize%5D=100",
+    "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd22619cbf033b041e4759/?page%5Bsize%5D=100",
+    "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd22929cbf033b041e4765/?page%5Bsize%5D=100",
+    "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd22b59cbf033b051e4853/?page%5Bsize%5D=100",
+    "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd2327c7ab292b22d4e16b/?page%5Bsize%5D=100",
+    "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd234ac7ab292b22d4e182/?page%5Bsize%5D=100",
+    "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd2364c7ab292b22d4e187/?page%5Bsize%5D=100",
+    "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd237c4f0a44340c99453b/?page%5Bsize%5D=100",
+    "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd23afa2be6b3ada314791/?page%5Bsize%5D=100",
+    "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd23d3a2be6b3ada3147a3/?page%5Bsize%5D=100",
+    "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd23f62fe4962f0f61b14f/?page%5Bsize%5D=100",
+    "https://api.osf.io/v2/nodes/jv8bk/files/osfstorage/64cd240d9cbf033b011e4767/?page%5Bsize%5D=100"
+  ]
+}

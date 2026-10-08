@@ -1,0 +1,323 @@
+{
+  "schema": "resectionlab.resect-train-expansion-independent-metadata-review.v1",
+  "status": "metadata_inventory_verified_with_transport_and_admission_limits",
+  "proposal_sha256": "7ac325349c77d678f511346d6fbe2ef5bf9b380ff0620c583ace4bc6aaac04d4",
+  "cohort_sha256": "4fc51f01e42253d395660d850cda2296a3e7f23e5a5ade80bbd5a3ed411b6a77",
+  "pilot_sha256": "9765796da5abc4464a50e063703c60ef9d77387667475d4ccb317eb596e0f08f",
+  "all_closure_file_hashes_verified": true,
+  "summary": {
+    "frozen_train_people": 14,
+    "people_with_at_least_one_cavity_label": 13,
+    "qualified_pairs": 25,
+    "qualified_original_files": 25,
+    "qualified_mask_files": 25,
+    "during_pairs": 12,
+    "after_pairs": 13,
+    "existing_pilot_pairs": 1,
+    "remaining_pairs": 24,
+    "remaining_scientific_files": 48,
+    "new_people_whose_scientific_payloads_would_be_opened": 12,
+    "all_original_bytes": 556199973,
+    "all_mask_bytes": 1590267,
+    "all_pair_bytes": 557790240,
+    "remaining_scientific_bytes": 548605591,
+    "largest_original_bytes": 40283369,
+    "largest_mask_bytes": 99348,
+    "missing_label_slots": 3
+  },
+  "pair_comparisons": [
+    {
+      "case": "Case2",
+      "phase": "during",
+      "original_bytes": 15970191,
+      "mask_bytes": 44010,
+      "size_hash_identity_matches_saved_inventory_and_catalog": true
+    },
+    {
+      "case": "Case2",
+      "phase": "after",
+      "original_bytes": 15482998,
+      "mask_bytes": 57321,
+      "size_hash_identity_matches_saved_inventory_and_catalog": true
+    },
+    {
+      "case": "Case3",
+      "phase": "during",
+      "original_bytes": 9156131,
+      "mask_bytes": 28518,
+      "size_hash_identity_matches_saved_inventory_and_catalog": true
+    },
+    {
+      "case": "Case3",
+      "phase": "after",
+      "original_bytes": 12285987,
+      "mask_bytes": 44564,
+      "size_hash_identity_matches_saved_inventory_and_catalog": true
+    },
+    {
+      "case": "Case5",
+      "phase": "during",
+      "original_bytes": 14956524,
+      "mask_bytes": 37887,
+      "size_hash_identity_matches_saved_inventory_and_catalog": true
+    },
+    {
+      "case": "Case5",
+      "phase": "after",
+      "original_bytes": 12390869,
+      "mask_bytes": 53414,
+      "size_hash_identity_matches_saved_inventory_and_catalog": true
+    },
+    {
+      "case": "Case7",
+      "phase": "during",
+      "original_bytes": 21363715,
+      "mask_bytes": 41837,
+      "size_hash_identity_matches_saved_inventory_and_catalog": true
+    },
+    {
+      "case": "Case7",
+      "phase": "after",
+      "original_bytes": 19072334,
+      "mask_bytes": 52732,
+      "size_hash_identity_matches_saved_inventory_and_catalog": true
+    },
+    {
+      "case": "Case12",
+      "phase": "during",
+      "original_bytes": 23973313,
+      "mask_bytes": 57089,
+      "size_hash_identity_matches_saved_inventory_and_catalog": true
+    },
+    {
+      "case": "Case12",
+      "phase": "after",
+      "original_bytes": 25282562,
+      "mask_bytes": 80954,
+      "size_hash_identity_matches_saved_inventory_and_catalog": true
+    },
+    {
+      "case": "Case15",
+      "phase": "after",
+      "original_bytes": 25165476,
+      "mask_bytes": 59346,
+      "size_hash_identity_matches_saved_inventory_and_catalog": true
+    },
+    {
+      "case": "Case16",
+      "phase": "during",
+      "original_bytes": 17442716,
+      "mask_bytes": 36303,
+      "size_hash_identity_matches_saved_inventory_and_catalog": true
+    },
+    {
+      "case": "Case16",
+      "phase": "after",
+      "original_bytes": 18158379,
+      "mask_bytes": 47175,
+      "size_hash_identity_matches_saved_inventory_and_catalog": true
+    },
+    {
+      "case": "Case17",
+      "phase": "during",
+      "original_bytes": 15689935,
+      "mask_bytes": 83443,
+      "size_hash_identity_matches_saved_inventory_and_catalog": true
+    },
+    {
+      "case": "Case17",
+      "phase": "after",
+      "original_bytes": 16765158,
+      "mask_bytes": 99348,
+      "size_hash_identity_matches_saved_inventory_and_catalog": true
+    },
+    {
+      "case": "Case18",
+      "phase": "during",
+      "original_bytes": 22479713,
+      "mask_bytes": 91615,
+      "size_hash_identity_matches_saved_inventory_and_catalog": true
+    },
+    {
+      "case": "Case18",
+      "phase": "after",
+      "original_bytes": 21033465,
+      "mask_bytes": 95332,
+      "size_hash_identity_matches_saved_inventory_and_catalog": true
+    },
+    {
+      "case": "Case21",
+      "phase": "during",
+      "original_bytes": 40283369,
+      "mask_bytes": 66753,
+      "size_hash_identity_matches_saved_inventory_and_catalog": true
+    },
+    {
+      "case": "Case21",
+      "phase": "after",
+      "original_bytes": 36611111,
+      "mask_bytes": 89436,
+      "size_hash_identity_matches_saved_inventory_and_catalog": true
+    },
+    {
+      "case": "Case23",
+      "phase": "during",
+      "original_bytes": 27870850,
+      "mask_bytes": 83625,
+      "size_hash_identity_matches_saved_inventory_and_catalog": true
+    },
+    {
+      "case": "Case23",
+      "phase": "after",
+      "original_bytes": 26426798,
+      "mask_bytes": 85556,
+      "size_hash_identity_matches_saved_inventory_and_catalog": true
+    },
+    {
+      "case": "Case24",
+      "phase": "during",
+      "original_bytes": 32603719,
+      "mask_bytes": 49169,
+      "size_hash_identity_matches_saved_inventory_and_catalog": true
+    },
+    {
+      "case": "Case24",
+      "phase": "after",
+      "original_bytes": 29799833,
+      "mask_bytes": 69664,
+      "size_hash_identity_matches_saved_inventory_and_catalog": true
+    },
+    {
+      "case": "Case25",
+      "phase": "during",
+      "original_bytes": 29442412,
+      "mask_bytes": 65295,
+      "size_hash_identity_matches_saved_inventory_and_catalog": true
+    },
+    {
+      "case": "Case25",
+      "phase": "after",
+      "original_bytes": 26492415,
+      "mask_bytes": 69881,
+      "size_hash_identity_matches_saved_inventory_and_catalog": true
+    }
+  ],
+  "missing_slots": [
+    {
+      "case": "Case11",
+      "phase": "after"
+    },
+    {
+      "case": "Case11",
+      "phase": "during"
+    },
+    {
+      "case": "Case15",
+      "phase": "during"
+    }
+  ],
+  "protected_people_excluded_from_case_folder_requests_and_pairs": [
+    {
+      "patient_group": "RESECT:Case1",
+      "role": "SELECT"
+    },
+    {
+      "patient_group": "RESECT:Case4",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "patient_group": "RESECT:Case6",
+      "role": "SELECT"
+    },
+    {
+      "patient_group": "RESECT:Case8",
+      "role": "MEASUREMENT_EVAL"
+    },
+    {
+      "patient_group": "RESECT:Case13",
+      "role": "MEASUREMENT_EVAL"
+    },
+    {
+      "patient_group": "RESECT:Case14",
+      "role": "SELECT"
+    },
+    {
+      "patient_group": "RESECT:Case19",
+      "role": "MEASUREMENT_EVAL"
+    },
+    {
+      "patient_group": "RESECT:Case26",
+      "role": "SELECT"
+    },
+    {
+      "patient_group": "RESECT:Case27",
+      "role": "MEASUREMENT_EVAL"
+    }
+  ],
+  "complete_metadata_catalogs": 16,
+  "train_case_folder_catalogs": 14,
+  "catalog_response_bytes_recorded": 278128,
+  "duplicates_in_pair_key_url_cache_path_md5_or_sha256": false,
+  "rights": "CC-BY-NC-SA-4.0 annotation restrictions retained; no commercial clearance",
+  "substantive_inventory_defects": [],
+  "limits": [
+    "Expansion is a metadata-qualified proposal; no scientific transfer, structural/anatomical QC, or training admission is established.",
+    "All mask size/MD5/SHA256 and current_version=2 values agree within their saved complete OSF catalog. Per-file versions/2 metadata endpoints were not requested.",
+    "Revision-2 download URLs append an explicit revision selector to published current download links. Expanded routes were not contacted; Case3 success does not prove every expanded route, especially the ten short OSF aliases.",
+    "NIRD HTTPS URLs retain exact inventory S3 object paths on the reviewed host, but individual expansion routes and transfer availability are untested.",
+    "Before accepting acquired bytes, require exact frozen sizes and source MD5s plus mask SHA256; never infer success from URL syntax, redirects, ETag, or current_version alone.",
+    "Saved OSF bodies are sanitized, reformatted metadata copies. Their retained SHA256s verify; original raw-response SHA256s cannot be independently recomputed from those copies.",
+    "Missing Case11 during/after and Case15 during labels remain deferred, never negative masks or substituted patients.",
+    "The current original-image transport authorizes only the Case3 pilot; expansion requires a separate exact-file manifest whitelist, not host-only authorization."
+  ],
+  "short_alias_mask_count": 10,
+  "short_alias_masks": [
+    {
+      "case": "Case12",
+      "phase": "during"
+    },
+    {
+      "case": "Case12",
+      "phase": "after"
+    },
+    {
+      "case": "Case15",
+      "phase": "after"
+    },
+    {
+      "case": "Case16",
+      "phase": "during"
+    },
+    {
+      "case": "Case16",
+      "phase": "after"
+    },
+    {
+      "case": "Case17",
+      "phase": "during"
+    },
+    {
+      "case": "Case17",
+      "phase": "after"
+    },
+    {
+      "case": "Case18",
+      "phase": "during"
+    },
+    {
+      "case": "Case18",
+      "phase": "after"
+    },
+    {
+      "case": "Case21",
+      "phase": "after"
+    }
+  ],
+  "review_network_requests": 0,
+  "review_scientific_payloads_read": 0,
+  "tracked_files_edited": false,
+  "training_admitted": false,
+  "anatomical_review": "not_established_for_expansion",
+  "unique_osf_mask_file_ids": 25,
+  "retained_metadata_and_proposal_url_queries_have_only_allowed_noncredential_keys": true
+}

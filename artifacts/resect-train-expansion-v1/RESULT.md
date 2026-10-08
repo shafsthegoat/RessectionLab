@@ -1,0 +1,19 @@
+# RESECT TRAIN expansion: metadata qualification
+
+The [manifest proposal](manifest-proposal.json) qualifies **25 original-image / cavity-mask pairs** for the existing frozen TRAIN roles: 12 during and 13 after volumes across 13 labeled people. The cohort still has 14 TRAIN people. Case11 has neither cavity label, and Case15 has no during label; these three absent slots remain explicit missing annotations and cannot become negative masks.
+
+Case3 during is the already acquired, independently structurally checked pilot. Expansion therefore requires **24 additional pairs / 48 scientific files / 548,605,591 bytes**. The complete 25-pair source set is 557,790,240 bytes. No expansion payload was requested, read or decoded in this qualification.
+
+Every original has an exact official NIRD URL, version 1, size and published MD5 from the retained authenticated inventory. Published original SHA-256 is unavailable; none was invented from ETags. Every mask has an exact OSF file ID and download link, size, published MD5 and SHA-256, and `current_version: 2` in its complete TRAIN case catalog. The proposal adds the explicit `?revision=2` selector using the same route contract as the acquired pilot. Per-file version endpoints are listed but were not separately queried, and new payload redirect chains were not exercised.
+
+Source pairing is supported by the annotation README's original RESECT DOI and matching creator case/phase filenames. It remains subject to acquired byte, header, affine, vocabulary and anatomical checks. Original rights are CC BY 4.0; annotation rights are **CC BY-NC-SA 4.0**, with the retained README's financial-benefit restriction and citation requirements. This is noncommercial component research. These labels represent visible ultrasound cavity, not complete removed tissue or a surgical reward.
+
+The bounded sweep made **16 successful public metadata requests**, received **278,128 response bytes**, and ended 92.231 seconds after the first request (30.942 seconds spent in requests). No retries, redirects, signed query credentials, scientific bodies or withheld scientific payloads were used. The public family catalog exposed case-folder names; only the 14 TRAIN folders were descended into. Case4 DEVELOPMENT and all four SELECT / four MEASUREMENT_EVAL roles remain unchanged and unopened here. Sanitized catalog snapshots and individual request receipts are adjacent to this result. There were no failed metadata requests; three source-absent label slots are deferred.
+
+**First implementation step:** freeze a separate manifest from the proposal and add an exact-manifest-whitelisted TRAIN batch intake. The current native transport deliberately accepts only the frozen Case3 original; retain that pilot contract and use the reviewed native trust, rights prerequisite, checksum enforcement, exclusive partials/publication, deadline/byte limits, per-file receipts and no automatic retry in the new invocation scope. Reuse the verified pilot, then acquire only the remaining 48 files before separate QC. This qualification does not admit training.
+
+At qualification time, only ignored files under `build/resect-train-expansion-qualification-v1` were created. No tracked edits, patient reassignment, source acquisitions, QC decoding, training, or commits occurred.
+
+Independent metadata inventory review found no substantive defects. Expanded revision-2 routes, including ten short OSF aliases, remain untested. Saved catalog bodies are sanitized/reformatted copies: their retained hashes verify, while original raw-response hashes cannot be recomputed from these copies. See `independent-review.json`.
+
+Root subsequently archived these exact metadata/review files in this tracked directory. Existing bindings retain their original ignored evidence paths; no scientific payload was copied into Git.

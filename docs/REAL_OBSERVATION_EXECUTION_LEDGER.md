@@ -34,7 +34,7 @@ compact execution record, not a replacement specification.
 
 | Workstream | Verified state / missing evidence | Next implementation or acquisition |
 |---|---|---|
-| Data and anatomy | Lausanne originals are CC0 acquired T1/TOF; 284 people, 296 sessions. Full 199-person/210-session TRAIN index is frozen (10.02 GB). Ninety-five pairs from 90 people acquired (4,315,283,541 bytes); sub077 partial now completed, original timeout retained. One source-manual aneurysm component is prepared for retrospective inspection. TOF scanner-frame provenance and interscan alignment unresolved. | Continue remaining 115 TRAIN sessions and eligible annotation preparation. NFBS brain-support label ancestry unresolved; LPBA40 requires new terms. Exclude atlas-derived vessel maps from measurement truth. |
+| Data and anatomy | Lausanne originals are CC0 acquired T1/TOF; 284 people, 296 sessions. Full 199-person/210-session TRAIN index is frozen (10.02 GB). 111 pairs from 106 people acquired (5,086,888,757 bytes); 105 people/110 full pairs pass QC, sub253 T1 transform conflict retained. All 111 TOF images pass their image-level gate. One source-manual aneurysm component is prepared for retrospective inspection. TOF scanner-frame provenance and interscan alignment unresolved. | Continue remaining 99 TRAIN sessions and eligible annotation preparation. NFBS brain-support label ancestry unresolved; LPBA40 requires new terms. Exclude atlas-derived vessel maps from measurement truth. |
 | Learning | No inspected historical checkpoint meets the new lineage rule. Scans supply no recorded actions/next observations. RESECT family roles are frozen (14 TRAIN/4 SELECT/4 EVAL/Case4 DEVELOPMENT); the bounded Case3 source/rights/QC runner passes 24 combined controls. The historical rights-only HTTP429 is preserved; exact1656byte rights text now archived, exact-object redirect fix independently verified. | The exact Case3 pair is acquired after the retained HTTP429. Independent grid/binary/count QC and fixed-slice engineering inspection pass; anatomical review and component fitting remain open. Qualify the full labeled TRAIN inventory without borrowing Case4 or withheld records. Case4 and missing labels remain protected. No recorded-action cohort acquired or outreach sent. |
 | Navigation / integration | Typed evidence reaches canonical exclusions and desktop inspection with the actual 193-positive sub476 annotation. Explicit source-grid normalization, unknown background/timing and false planning-admission flags survive replay/export. The focused suite passes 77 checks. | Obtain accepted source-frame/brain-support evidence before claiming positive surgical route changes. This component is aneurysm-only, not whole-vascular or glioma acceptance. |
 | Operative science | Four supplied research reviews are read; proposed mechanisms are not implemented evidence. | Introduce an evidence-timed action/observation timeline with observed events distinct from proposals and model predictions. |
@@ -317,3 +317,22 @@ real ultrasound/cavity pair. Independent source/grid/scalar checks reproduce
 20,005 binary positives and 0.00003068 mm maximum grid difference. Fixed native
 slice inspection preserves raw header differences and source/manual annotation
 limits. No anatomical acceptance, optimizer updates, training or RL follows.
+
+## October 8: acquired bytes and modality QC are separate
+
+[Batch21](../artifacts/lausanne-train-intake-v1/acquisition-batch-21-summary.json)
+closes at 106 people / 111 sessions / 5,086,888,757 acquired source bytes.
+Root and independent checks verified every acquired receipt, original byte hash
+and source snapshot. The acquired denominator includes sub253’s T1 failure
+(`QFORM_SFORM_DISAGREEMENT`); full-pair QC passes for 105 people / 110 sessions.
+Its passing TOF is retained separately, without clearing T1 or admitting planning.
+All 111TOF checks pass. Acquisition is not fitting: optimizer updates remain zero.
+Batch21’s sub283 timeout and older failures remain; later batch22 data are excluded.
+
+[RESECT expansion metadata](../artifacts/resect-train-expansion-v1/RESULT.md)
+qualifies 25 image/mask pairs in 13 labeled TRAIN people, retaining three absent label
+slots. Another 24 pairs / 48 files / 548,605,591 bytes need exact-whitelist acquisition
+and separate QC; new revision-2 routes remain untested. Metadata review passed.
+[IBSR](../artifacts/ibsr-source-qualification-v1/RESULT.md) remains unadmitted after
+three official metadata checks: README access, label ancestry/domain, participant
+overlap and use rights remain unresolved. No new agreement or payload was used.
