@@ -1,0 +1,165 @@
+{
+  "schema": "native-opening-independent-protocol-review-v1",
+  "created_at": "2026-10-08T17:09:29.912673+00:00",
+  "status": "cleared_for_one_declared_bounded_development_pilot",
+  "source_and_manifest_sha256": {
+    "scripts/run_native_opening_learning.py": "380ec02502840c9ab8acd30bf5c7542728ee622f819c5d12c73e135cea4bf508",
+    "manifests/experiments/native-opening-learning-v1.json": "963238d34dce36f4a9128c782f0d3ca667640123a58a2eb2498abb01d68c5212",
+    "src/resectionlab/data_policy.py": "13f95f00763fcb0816406011d52976f25ab7df4a70ad46bde7116eb95fc13a84",
+    "src/resectionlab/spatial_policy.py": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4"
+  },
+  "source_unchanged_before_after_final_controls": true,
+  "checks": {
+    "admission_unique_controls_passed": 17,
+    "runner_unique_controls_passed": 9,
+    "first_runner_execution": {
+      "passed": 6,
+      "failed": 1,
+      "seconds": 4.23
+    },
+    "targeted_final_execution": {
+      "passed": 3,
+      "failed": 0,
+      "seconds": 2.47,
+      "scope": "Only the previous failed audit-refusal control plus two new manifest/teacher-proof controls; unrelated passed controls not rerun."
+    }
+  },
+  "initial_failure": {
+    "trigger": "Injected accepted=False independent evaluator result in profile branch",
+    "observed": "Execution reached gradient_step; the independent spy raised before optimization",
+    "repair": "Require accepted is True before optimizer/loss construction",
+    "preserved": true
+  },
+  "verified_invariants": [
+    "Full31-file static import closure and runtime origin refusal; desktop WIP excluded.",
+    "Prospective raw manifest SHA retained in context/checkpoints; source content matches frozen declaration.",
+    "Nine method slots exist before preparation; failure/partial outcomes remain explicit null.",
+    "Online elapsed includes planning and replay under one common budget; replay-only seconds are separately labeled.",
+    "Complete depth-two oracle agrees with independent breadth-first enumeration and cannot change with private reference substitution.",
+    "Candidate/source/state access shared on this tiny full-crop fixture; labels use nominal planning clones.",
+    "Zero-preview interruption preserves committed negative opening and failure history without returning training data.",
+    "Complete terminal JSON roundtrip precedes audit; evaluation leaves model weights unchanged.",
+    "All five unique teacher labels bind exact replay observation/action and complete audited histories; offline replay/validation cost is separate from online comparison and optimization.",
+    "Profile rejection stops before optimizer/loss; original passing profile receipt itself had accepted=True."
+  ],
+  "teacher_replay_verification": {
+    "unique_states": 5,
+    "complete_episodes": 5,
+    "transitions": 10,
+    "teacher_model_transition_calls": 20,
+    "teacher_terminal_sequences": 16,
+    "rows": [
+      {
+        "observation_hash": "sha256:ccca16824aab833104e49e21de526444c7bc8bc1bcb52ee5a4e370c9a564124d",
+        "transitions": 2,
+        "accepted": true,
+        "online_seconds": 0.059444624930620193,
+        "audit_seconds": 0.03835570905357599
+      },
+      {
+        "observation_hash": "sha256:e4d32b8f85642482f33aa7849ac74394e7d6a707168073343bbee9ce20ed988c",
+        "transitions": 2,
+        "accepted": true,
+        "online_seconds": 0.0414580840151757,
+        "audit_seconds": 0.007592500187456608
+      },
+      {
+        "observation_hash": "sha256:b6219c3ec2d4cac1a962c3a9c123734fb2f2eb9a5854c2f920d214b467faba54",
+        "transitions": 2,
+        "accepted": true,
+        "online_seconds": 0.0598131250590086,
+        "audit_seconds": 0.04682666598819196
+      },
+      {
+        "observation_hash": "sha256:a5bba06653b8644cf38722b6d99c5c21236284999afdfbe938c9055d1d6e543d",
+        "transitions": 2,
+        "accepted": true,
+        "online_seconds": 0.04473520815372467,
+        "audit_seconds": 0.014566458063200116
+      },
+      {
+        "observation_hash": "sha256:c9458a99068bfaae90ba69062073a674c55ee31ad66d11a5c86461ef2c834eba",
+        "transitions": 2,
+        "accepted": true,
+        "online_seconds": 0.10019508306868374,
+        "audit_seconds": 0.08040691609494388
+      }
+    ]
+  },
+  "prospective_pilot": {
+    "seed": 11,
+    "BC_updates": 16,
+    "scratch_RL_updates": 16,
+    "complete_episodes_per_RL_update": 4,
+    "training_initialization": "Same initial tensor bytes; independent optimizers; fixed latest checkpoint",
+    "wall_seconds": 300,
+    "max_rss_bytes": 2147483648,
+    "CPU_threads": 1,
+    "per_episode_online_seconds": 10,
+    "per_episode_native_preview_cap": 2048,
+    "allowed_retries": 0,
+    "real_patient_count": 0,
+    "lineage": "simulator_generated"
+  },
+  "remaining_limitations": [
+    "This is engineering validation on one previously known synthetic six-cell opening task, not a held-out synthetic population, observed patient trajectory, calibrated physical model or clinical result.",
+    "IL sees exact labels on all reachable states; RL samples its own trajectories. Equal online limits are enforceable, but offline supervision/information and compute are not equivalent. Report their separate actual costs.",
+    "Observation provenance and generated context remain declarations inside trusted code; this is not an authentication boundary against arbitrary Python execution.",
+    "Full study was not executed by independent reviewer. Owner/root must retain terminal supervisor, source closure, every actual update/episode and final null/complete statuses.",
+    "The already completed owner profile is preserved under its earlier source snapshot. Its accepted=True path succeeded; no profile rerun is required merely for the rejection-control repair."
+  ],
+  "activities": {
+    "patient_inputs_opened": 0,
+    "holdout_access": false,
+    "network": false,
+    "tracked_edits": false,
+    "study_or_profile_launched_by_reviewer": false,
+    "scope": "Small generated unit tests, pure source metadata, and five generated teacher-proof replay episodes only; no broad sweep."
+  },
+  "evidence_files": {
+    "runner-pre-controls-v1.json": {
+      "sha256": "b58913c4b9527c6a578e83bb832fa21cbed7e58dcc9d21d4ad7da82ad1a6da5a",
+      "bytes": 543
+    },
+    "runner-post-controls-v1.json": {
+      "sha256": "fb41a34383b8005d29dd4116e1257502bcbcbe4736ebc25a6c063c8ff53a5d28",
+      "bytes": 1156
+    },
+    "runner-controls-first-v1.log": {
+      "sha256": "4362988ad158b5728e7c95552aaf5ac08f38c9938ae9bf5663ba51444cd50029",
+      "bytes": 3066
+    },
+    "runner-controls-first-v1.xml": {
+      "sha256": "7e18d054df1d7bff759ee65c62264f4d00a9c25c6c934810358e6dc9e5b2d887",
+      "bytes": 4151
+    },
+    "runner-final-pre-v1.json": {
+      "sha256": "e47c7d0e12c7da90738a60c364c3260fcdcf700f9e80a32469ef5ea913f8bb2e",
+      "bytes": 454
+    },
+    "runner-final-controls-v1.log": {
+      "sha256": "d8fb8da7c10d7efe075954083c30da16de52ea21142a58e7c89fad65d58f1670",
+      "bytes": 98
+    },
+    "runner-final-controls-v1.xml": {
+      "sha256": "ce75fa160f41006a0610c57311a33470d3927a3bb183d86409d30200303c4f05",
+      "bytes": 787
+    },
+    "test_native_runner_independent_v1.py": {
+      "sha256": "c31fa17c88eebfa40e2d6dc82969f704575b86f6941b5524db36dc983c364aa2",
+      "bytes": 6794
+    },
+    "test_teacher_replay_final_v1.py": {
+      "sha256": "7229f77c5553be148670b076889b705a3ce51705e1db5745198779cfeaeb4c17",
+      "bytes": 3336
+    },
+    "admission-review-repaired-v1.json": {
+      "sha256": "8234f2fdf9a8ac555ac7b0e67a81e0f47bf94ba05940e6676c69f6f285658753",
+      "bytes": 1968
+    }
+  },
+  "teacher_replay_evidence": {
+    "path": "build/simulator-evaluation-review-v1/runner-final-controls-temp-v1/test_each_unique_teacher_label0/independent-label-replay-summary.json",
+    "sha256": "e32213c7caa93431acc9dd9fbd3a1743c5577a837cafd7b7934c0990f08650dd"
+  }
+}

@@ -7,7 +7,7 @@ No clinical or real-image transfer claim is made by this prototype.
 """
 from __future__ import annotations
 
-from .data_policy import historical_only
+from .data_policy import GeneratedDevelopmentContext, generated_development_only
 
 from dataclasses import asdict, dataclass
 import hashlib
@@ -280,24 +280,33 @@ def _chosen(observation, action_id: str) -> int:
     return index
 
 
-@historical_only("RECORDED_EXPERIENCE_REQUIRED")
-def imitation_loss(policy: SpatialPolicy, samples: Sequence[tuple[object, str]]) -> tuple[Tensor, dict]:
+def _generated_loss_binding(policy, learning_context):
+    return (learning_context.fingerprint, parameter_hash(policy), id(policy),
+            policy.architecture_hash, tuple((name, id(p)) for name, p in policy.named_parameters()))
+
+
+@generated_development_only
+def imitation_loss(policy: SpatialPolicy, samples: Sequence[tuple[object, str]], *,
+                   learning_context: GeneratedDevelopmentContext) -> tuple[Tensor, dict]:
     """BC on simulated teacher actions, with teacher cost owned by the runner."""
     if not samples:
         raise ValueError("Imitation batch is empty")
+    learning_context.require_observations(observation for observation, _ in samples)
     terms = []
     for observation, action_id in samples:
         index = _chosen(observation, action_id)
         logits, _ = policy(observation)
         terms.append(-logits.log_softmax(-1)[index])
     loss = torch.stack(terms).mean()
+    loss._generated_learning_binding = _generated_loss_binding(policy, learning_context)
     return loss, {"kind": "search_action_behavior_cloning", "loss": float(loss.detach()),
                   "loss_forward_calls": len(samples), "supervised_actions": len(samples)}
 
 
-@historical_only("RECORDED_EXPERIENCE_REQUIRED")
+@generated_development_only
 def reinforce_loss(policy: SpatialPolicy, episodes: Sequence[Sequence[SpatialTransition]], *,
-                   gamma: float = 1., entropy_weight: float = .01, value_weight: float = .5) -> tuple[Tensor, dict]:
+                   gamma: float = 1., entropy_weight: float = .01, value_weight: float = .5,
+                   learning_context: GeneratedDevelopmentContext) -> tuple[Tensor, dict]:
     """Masked on-policy Monte Carlo policy gradient with a spatial value baseline.
 
 Collect each batch under unchanged current weights. Loss construction repeats
@@ -307,6 +316,7 @@ collection. This is REINFORCE, not PPO, AWAC, or an off-policy replay algorithm.
     if (not episodes or not 0 <= gamma <= 1 or not np.isfinite([gamma, entropy_weight, value_weight]).all()
             or entropy_weight < 0 or value_weight < 0):
         raise ValueError("Invalid policy-gradient batch/settings")
+    learning_context.require_observations(t.observation for ep in episodes for t in ep)
     policy_terms, value_terms, entropies, returns = [], [], [], []
     for episode in episodes:
         if not episode or not episode[-1].terminated or any(t.terminated for t in episode[:-1]):
@@ -339,6 +349,7 @@ collection. This is REINFORCE, not PPO, AWAC, or an off-policy replay algorithm.
     loss = actor + value_weight * value - entropy_weight * entropy
     if not torch.isfinite(loss):
         raise FloatingPointError("Nonfinite spatial learning loss")
+    loss._generated_learning_binding = _generated_loss_binding(policy, learning_context)
     return loss, {"kind": "masked_reinforce_spatial_value_v1", "loss": float(loss.detach()),
         "policy_loss": float(actor.detach()), "value_loss": float(value.detach()),
         "entropy": float(entropy.detach()), "mean_return": float(np.mean(returns)),
@@ -347,12 +358,19 @@ collection. This is REINFORCE, not PPO, AWAC, or an off-policy replay algorithm.
         "completed_episodes": len(episodes), "loss_forward_calls": sum(map(len, episodes))}
 
 
-@historical_only("RECORDED_EXPERIENCE_REQUIRED")
-def gradient_step(policy: SpatialPolicy, optimizer, loss: Tensor, *, max_norm: float = 5.) -> dict:
+@generated_development_only
+def gradient_step(policy: SpatialPolicy, optimizer, loss: Tensor, *, max_norm: float = 5.,
+                  learning_context: GeneratedDevelopmentContext) -> dict:
     """One actual optimizer step; report submodule gradients before global clip."""
     if not np.isfinite(max_norm) or max_norm <= 0 or not torch.isfinite(loss):
         raise ValueError("Invalid loss or clipping bound")
     before = parameter_hash(policy)
+    if getattr(loss, "_generated_learning_binding", None) != _generated_loss_binding(policy, learning_context):
+        raise ValueError("Gradient requires a matching admitted loss and unchanged policy parameters")
+    members = [id(p) for group in optimizer.param_groups for p in group["params"]]
+    if len(members) != len(set(members)) or set(members) != {id(p) for p in policy.parameters()}:
+        raise ValueError("Optimizer must own exactly the admitted policy parameters")
+    loss._generated_learning_binding = None  # One backward/update attempt per admitted loss.
     optimizer.zero_grad(set_to_none=True)
     loss.backward()
     norms = {}

@@ -28,10 +28,13 @@ interrupting downloads. Compare search, imitation and RL under matched condition
 retain negative results, and prioritize working end-to-end capabilities and measured
 improvements. The original full goal remains open, including mechanical validation.
 
-The October 6 execution exclusions are still installed at this checkpoint. A scoped
-prospective migration is being implemented; this documentation does not claim a new
-optimizer update, model admission or benchmark result. Old guard-test results remain
-evidence of the old behavior, not acceptance criteria for all future generated training.
+A [scoped generated opening-task learner](native-opening-learning.md) now admits
+explicitly declared simulator experience to three spatial learning APIs. Its
+[prepared comparison](../artifacts/native-opening-learning-preparation-v1/RESULT.md)
+passes focused and independent controls; an accepted single-episode/gradient profile
+confirmed execution before the fixed study. Historical patient/model-loading guards
+remain. Old refusal results preserve the earlier behavior; they do not prohibit all
+future generated training under the user's later instruction.
 
 For all new commits use `skamal23 <sayemkamal12@gmail.com>` as author and include
 `Co-authored-by: shafsthegoat <shafrir.p@gmail.com>`. Preserve existing history.

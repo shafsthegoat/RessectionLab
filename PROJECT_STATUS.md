@@ -14,9 +14,12 @@ New commits credit `skamal23 <sayemkamal12@gmail.com>` and co-author
 `shafsthegoat <shafrir.p@gmail.com>`. An hourly thread heartbeat is active for
 normal pushes of completed reviewed commits to `origin/main`.
 
-The records below retain the earlier policy and acquisition checkpoints. The old
-execution guards are still installed pending a scoped prospective migration;
-their refusal behavior is not the new training objective.
+The records below retain earlier policy and acquisition checkpoints. A
+[scoped generated opening-task learner](artifacts/native-opening-learning-preparation-v1/RESULT.md)
+is now enabled and independently checked. One accepted simulated opening/cut
+profile and one imitation gradient completed; the declared full comparison is
+prepared. Legacy patient/model-loading guards remain, and real-patient transfer
+is not established.
 
 The [full eligible annotation intake](artifacts/lausanne-annotation-full-intake-v1/RESULT.md)
 completed all 144 masks (13,977,015 bytes). Independent content checks passed for

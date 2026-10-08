@@ -1,0 +1,108 @@
+{
+  "schema": "generated-admission-independent-review-v1",
+  "created_at": "2026-10-08T16:59:31.577134+00:00",
+  "status": "two_reproduced_defects_pending_owner_repair",
+  "tested_sources": {
+    "src/resectionlab/data_policy.py": "13f95f00763fcb0816406011d52976f25ab7df4a70ad46bde7116eb95fc13a84",
+    "src/resectionlab/spatial_policy.py": "b50fca54c310c8041ca51a39504e479928bf1df85fb48f1fab4a9f416d47677c"
+  },
+  "source_unchanged_after_tests": false,
+  "source_after_tests": {
+    "src/resectionlab/data_policy.py": "13f95f00763fcb0816406011d52976f25ab7df4a70ad46bde7116eb95fc13a84",
+    "src/resectionlab/spatial_policy.py": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4"
+  },
+  "environment": ".venv/bin/python; PYTHONDONTWRITEBYTECODE=1; pytest cache disabled; extended suite CPU/BLAS threads one",
+  "scope": "Disposable generated-geometry contract tests and tiny policy loss/update controls only; no pilot, patient source, heldout access, scientific or clinical validation. Files only under ignored review directory.",
+  "initial_launcher": {
+    "status": "failed_before_import_or_test",
+    "reason": "Bundled Python did not contain pytest; preserved separately; existing repo virtual environment used for subsequent tests."
+  },
+  "first_executed_suite": {
+    "tests": 12,
+    "passed": 12,
+    "seconds": 2.452,
+    "note": "Owner repairs landed before first actual execution. Earlier source observations are not reported as failed tests."
+  },
+  "extended_suite": {
+    "tests": 5,
+    "passed": 3,
+    "failed": 2,
+    "seconds": 1.922
+  },
+  "verified_controls": [
+    "default refusal before input work",
+    "wrong source and real track rejected before forward",
+    "explicit reference annotation forbidden in synthetic DTO",
+    "valid generated BC actual parameter update",
+    "valid complete synthetic STOP RL loss",
+    "different declaration loss rejected before backward",
+    "different horizon with same source rejected",
+    "equal-weight different model object rejected",
+    "foreign optimizer rejected",
+    "require_task catches reward-model mismatch",
+    "exact frozen task admitted",
+    "single-use loss remains consumed even at zero learning rate"
+  ],
+  "defects": [
+    {
+      "id": "D1",
+      "file": "src/resectionlab/spatial_policy.py",
+      "function": "gradient_step",
+      "trigger": "Construct admitted loss, replace model.actor with deepcopy(model.actor), then use optimizer over current model parameters.",
+      "observed": "Weight hash and model identity are unchanged; step succeeds, updates other modules, replacement actor has zero gradient. Loss graph belongs partly to replaced objects.",
+      "minimal_fix": "Bind ordered named parameter object identities at loss construction and compare before zero_grad/backward."
+    },
+    {
+      "id": "D2",
+      "file": "src/resectionlab/spatial_policy.py",
+      "function": "gradient_step",
+      "trigger": "Construct admitted loss, replace config with physical_reference_mm=20, retain same parameter values.",
+      "observed": "Architecture hash changes but step accepts stale loss under previous input normalization.",
+      "minimal_fix": "Bind architecture_hash in loss provenance and compare before backward."
+    }
+  ],
+  "admission_limits": [
+    "Context source IDs/provenance are declarations rather than independent authentication. The runner must pin exact fixture generation and call require_task before consuming or optimizing batches.",
+    "Decision-model/reward identity cannot be independently reconstructed from an observation DTO. require_task is the explicit boundary for that check.",
+    "This guard is not an adversarial Python-code sandbox; callers with arbitrary code can forge attributes or invoke torch directly."
+  ],
+  "runner_draft_findings_unexecuted": [
+    "validate accepts caller-reduced source path inventory; require the complete expected set.",
+    "result.methods online_seconds currently reads replay-only report clock, excluding earlier search planning; budget snapshot contains correct inclusive elapsed.",
+    "Initialize every declared method with explicit pending/null status to preserve failed/unattempted denominator."
+  ],
+  "evidence_files": {
+    "test_generated_admission_independent_v1.py": {
+      "sha256": "e7b3d7a1fb441bd5132ce2a7c034005a045206c9df7acc7cb8c36dd6b252710b",
+      "bytes": 5168
+    },
+    "test_generated_admission_extended_v1.py": {
+      "sha256": "eb1432b115ff68726c7f30ecd2c1277e9346d116615ff8409e57868afaeb77d1",
+      "bytes": 3015
+    },
+    "admission-initial-v1.log": {
+      "sha256": "b3b2c89476022ab97dd11302d20558bed1ac1cbf8c6a2c7674694832adc7c09e",
+      "bytes": 118
+    },
+    "admission-first-executed-v1.log": {
+      "sha256": "18bba2e700a3118f7adc48ffb0da8a5c1e9ffd7ee843561114fa81c8c294659b",
+      "bytes": 99
+    },
+    "admission-first-executed-v1.xml": {
+      "sha256": "20ce072e0e47407aeff545c34a5120c9266378de47d5590934e29e6d0cff583f",
+      "bytes": 2336
+    },
+    "admission-extended-initial-v1.log": {
+      "sha256": "c1c2ef5fb7f682bc6a4691857054c63b23ba0e4de2b855a987a83af00150d6f6",
+      "bytes": 3888
+    },
+    "admission-extended-initial-v1.xml": {
+      "sha256": "cfef9692bf24c82aad1c4006e1e0eb65c34647452c5710f3ab7df87975b6f1ab",
+      "bytes": 5718
+    },
+    "admission-pre-extended-source-v1.json": {
+      "sha256": "d8ddc1dee07f2410455cde6c59fe55781833d89488594b3a3c1caa68c8dc1ff5",
+      "bytes": 215
+    }
+  }
+}

@@ -1,0 +1,564 @@
+{
+  "decision_model_hash": "sha256:f607b51b66d00164c33ff9c8fa7725b0e6e15bab1b566d161efbe3fb4f4e730b",
+  "initial_observation_hash": "sha256:c9458a99068bfaae90ba69062073a674c55ee31ad66d11a5c86461ef2c834eba",
+  "inventory": {
+    "accepted_count": 4,
+    "all_support_cell_tool_pairs": 12,
+    "basis": "all_observed_support_cells_in_small_source",
+    "cavity_state_hash": "sha256:56c2016605106bfde3793d1ce171cb7d1a46dc67e6af2a2c9a5b6af689ef3ba1",
+    "complete": true,
+    "decision_model_hash": "sha256:f607b51b66d00164c33ff9c8fa7725b0e6e15bab1b566d161efbe3fb4f4e730b",
+    "declared_slots": 12,
+    "emitted": [
+      {
+        "action_id": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "feasible": true,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "tip_mm": [
+          4.0,
+          4.0,
+          1.0
+        ],
+        "tool_id": "short-wide-opener",
+        "voxel": [
+          4,
+          4,
+          1
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "feasible": true,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "tip_mm": [
+          4.0,
+          4.0,
+          1.0
+        ],
+        "tool_id": "long-narrow-cutter",
+        "voxel": [
+          4,
+          4,
+          1
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "feasible": true,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "tip_mm": [
+          4.0,
+          4.0,
+          2.0
+        ],
+        "tool_id": "short-wide-opener",
+        "voxel": [
+          4,
+          4,
+          2
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "feasible": true,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "tip_mm": [
+          4.0,
+          4.0,
+          2.0
+        ],
+        "tool_id": "long-narrow-cutter",
+        "voxel": [
+          4,
+          4,
+          2
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:e8884845acdac10ba7c6349a",
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "feasible": false,
+        "reason": "HARD_GEOMETRY:WORKING_REACH",
+        "tip_mm": [
+          4.0,
+          4.0,
+          3.0
+        ],
+        "tool_id": "short-wide-opener",
+        "voxel": [
+          4,
+          4,
+          3
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:1a11b1896a5d31ce1144394c",
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "feasible": false,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+        "tip_mm": [
+          4.0,
+          4.0,
+          3.0
+        ],
+        "tool_id": "long-narrow-cutter",
+        "voxel": [
+          4,
+          4,
+          3
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:e1ac057a60f075830c6e7de7",
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "feasible": false,
+        "reason": "HARD_GEOMETRY:WORKING_REACH",
+        "tip_mm": [
+          4.0,
+          4.0,
+          4.0
+        ],
+        "tool_id": "short-wide-opener",
+        "voxel": [
+          4,
+          4,
+          4
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:7bef67f4f83d62f7e1d4d5c4",
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "feasible": false,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+        "tip_mm": [
+          4.0,
+          4.0,
+          4.0
+        ],
+        "tool_id": "long-narrow-cutter",
+        "voxel": [
+          4,
+          4,
+          4
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:29db489d04a2956d8ade9c21",
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "feasible": false,
+        "reason": "HARD_GEOMETRY:WORKING_REACH",
+        "tip_mm": [
+          4.0,
+          4.0,
+          5.0
+        ],
+        "tool_id": "short-wide-opener",
+        "voxel": [
+          4,
+          4,
+          5
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:29d7a6427a98194d624f8b42",
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "feasible": false,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+        "tip_mm": [
+          4.0,
+          4.0,
+          5.0
+        ],
+        "tool_id": "long-narrow-cutter",
+        "voxel": [
+          4,
+          4,
+          5
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:53cb2c493848e8f816d72c5e",
+        "entry_mm": [
+          5.0,
+          5.0,
+          0.5
+        ],
+        "feasible": false,
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          5.0,
+          5.0,
+          1.0
+        ],
+        "tool_id": "short-wide-opener",
+        "voxel": [
+          5,
+          5,
+          1
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:609c1e1268b52dc2a8b38066",
+        "entry_mm": [
+          5.0,
+          5.0,
+          0.5
+        ],
+        "feasible": false,
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          5.0,
+          5.0,
+          1.0
+        ],
+        "tool_id": "long-narrow-cutter",
+        "voxel": [
+          5,
+          5,
+          1
+        ]
+      }
+    ],
+    "emitted_count": 12,
+    "evaluated_slots": 12,
+    "ledger": [
+      {
+        "action_id": "NATIVE-SPATIAL:c5f427c0a7efdf2c475a34e5",
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "feasible": true,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "tip_mm": [
+          4.0,
+          4.0,
+          1.0
+        ],
+        "tool_id": "short-wide-opener",
+        "voxel": [
+          4,
+          4,
+          1
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:e97ae9f707f2a45a094bb1f9",
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "feasible": true,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "tip_mm": [
+          4.0,
+          4.0,
+          1.0
+        ],
+        "tool_id": "long-narrow-cutter",
+        "voxel": [
+          4,
+          4,
+          1
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:0d2abed4477c7eef4aecafa1",
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "feasible": true,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "tip_mm": [
+          4.0,
+          4.0,
+          2.0
+        ],
+        "tool_id": "short-wide-opener",
+        "voxel": [
+          4,
+          4,
+          2
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:7c300ab776942c7446a122a0",
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "feasible": true,
+        "reason": "NATIVE_CONNECTED_STROKE",
+        "tip_mm": [
+          4.0,
+          4.0,
+          2.0
+        ],
+        "tool_id": "long-narrow-cutter",
+        "voxel": [
+          4,
+          4,
+          2
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:e8884845acdac10ba7c6349a",
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "feasible": false,
+        "reason": "HARD_GEOMETRY:WORKING_REACH",
+        "tip_mm": [
+          4.0,
+          4.0,
+          3.0
+        ],
+        "tool_id": "short-wide-opener",
+        "voxel": [
+          4,
+          4,
+          3
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:1a11b1896a5d31ce1144394c",
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "feasible": false,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+        "tip_mm": [
+          4.0,
+          4.0,
+          3.0
+        ],
+        "tool_id": "long-narrow-cutter",
+        "voxel": [
+          4,
+          4,
+          3
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:e1ac057a60f075830c6e7de7",
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "feasible": false,
+        "reason": "HARD_GEOMETRY:WORKING_REACH",
+        "tip_mm": [
+          4.0,
+          4.0,
+          4.0
+        ],
+        "tool_id": "short-wide-opener",
+        "voxel": [
+          4,
+          4,
+          4
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:7bef67f4f83d62f7e1d4d5c4",
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "feasible": false,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+        "tip_mm": [
+          4.0,
+          4.0,
+          4.0
+        ],
+        "tool_id": "long-narrow-cutter",
+        "voxel": [
+          4,
+          4,
+          4
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:29db489d04a2956d8ade9c21",
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "feasible": false,
+        "reason": "HARD_GEOMETRY:WORKING_REACH",
+        "tip_mm": [
+          4.0,
+          4.0,
+          5.0
+        ],
+        "tool_id": "short-wide-opener",
+        "voxel": [
+          4,
+          4,
+          5
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:29d7a6427a98194d624f8b42",
+        "entry_mm": [
+          4.0,
+          4.0,
+          0.5
+        ],
+        "feasible": false,
+        "reason": "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE",
+        "tip_mm": [
+          4.0,
+          4.0,
+          5.0
+        ],
+        "tool_id": "long-narrow-cutter",
+        "voxel": [
+          4,
+          4,
+          5
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:53cb2c493848e8f816d72c5e",
+        "entry_mm": [
+          5.0,
+          5.0,
+          0.5
+        ],
+        "feasible": false,
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          5.0,
+          5.0,
+          1.0
+        ],
+        "tool_id": "short-wide-opener",
+        "voxel": [
+          5,
+          5,
+          1
+        ]
+      },
+      {
+        "action_id": "NATIVE-SPATIAL:609c1e1268b52dc2a8b38066",
+        "entry_mm": [
+          5.0,
+          5.0,
+          0.5
+        ],
+        "feasible": false,
+        "reason": "HARD_GEOMETRY:ACCESS_APERTURE",
+        "tip_mm": [
+          5.0,
+          5.0,
+          1.0
+        ],
+        "tool_id": "long-narrow-cutter",
+        "voxel": [
+          5,
+          5,
+          1
+        ]
+      }
+    ],
+    "max_steps": 2,
+    "omitted_count": 0,
+    "rejected_count": 8,
+    "remaining_steps": 2,
+    "scope": "complete_declared_source_normal_primitives_not_all_surgical_paths",
+    "source_hash": "sha256:9b39c31e1e012b0822d538451a0452fa9c564acc863d22dabb311ec4cf8c5d4e",
+    "steps_taken": 0,
+    "terminal": false,
+    "terminated_slots": 0
+  },
+  "lineage": {
+    "cavity_channel": "exact simulated committed removal; not observed operative cavity",
+    "clinical_use": false,
+    "human_roles_opened": [],
+    "images": "generated",
+    "real_patient_count": 0,
+    "teacher": "complete depth-two search over permitted nominal planning clones",
+    "transitions": "simulator_generated"
+  },
+  "preview_profile": {
+    "phases": {
+      "unclassified": {
+        "feasible": 4,
+        "raised": 0,
+        "rejected": 8,
+        "rejection_reasons": {
+          "HARD_GEOMETRY:ACCESS_APERTURE": 2,
+          "HARD_GEOMETRY:WORKING_REACH": 3,
+          "SHAFT_BLOCKED_BY_REMAINING_NATIVE_TISSUE": 3
+        },
+        "returned": 12,
+        "returned_microsteps": 47,
+        "seconds": 0.031101916451007128,
+        "started": 12
+      }
+    },
+    "scope": "process cumulative native preview calls, including constructor/fresh/next-inventory work",
+    "unmeasured": "internal preview subphases, bytes copied/hashed, engine initialization and integrity time require separate profiling"
+  },
+  "reference_hash": "sha256:c6693c3aff6e316fb13ae7e9f495775418e1fb78241a6bc7bf468cc245684535",
+  "seconds": 0.038450000109151006,
+  "source_hash": "sha256:9b39c31e1e012b0822d538451a0452fa9c564acc863d22dabb311ec4cf8c5d4e"
+}

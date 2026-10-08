@@ -1,0 +1,46 @@
+......F                                                                  [100%]
+=================================== FAILURES ===================================
+____________ test_profile_audit_refusal_happens_before_any_gradient ____________
+
+runner = <module 'run_native_opening_learning' from '/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/scripts/run_native_opening_learning.py'>
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10923fb90>
+tmp_path = PosixPath('/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/simulator-evaluation-review-v1/runner-controls-temp-v1/test_profile_audit_refusal_hap0')
+
+    def test_profile_audit_refusal_happens_before_any_gradient(runner,monkeypatch,tmp_path):
+        from resectionlab import native_spatial_evaluation,spatial_policy
+        monkeypatch.setattr(runner,'validate',lambda record:None)
+        monkeypatch.setattr(native_spatial_evaluation,'evaluate_native_spatial_episode',lambda *args,**kwargs:{'accepted':False,'outcomes':None,'geometry':{'failures':['independent_test_refusal']}})
+        attempted=[]
+        def forbidden(*args,**kwargs):
+            attempted.append(True)
+            raise AssertionError('Failed independent audit reached gradient')
+        monkeypatch.setattr(spatial_policy,'gradient_step',forbidden)
+        with pytest.raises(ValueError,match='audit|evaluat|accept|geometry'):
+>           runner.worker(runner.specification(),tmp_path,declaration_sha256='a'*64,profile=True)
+
+build/simulator-evaluation-review-v1/test_native_runner_independent_v1.py:121: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/run_native_opening_learning.py:275: in worker
+    update = gradient_step(initial, optimizer, loss, learning_context=context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+args = (SpatialPolicy(
+  (encoder): Sequential(
+    (0): Conv3d(18, 8, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1... None
+    fused: None
+    lr: 0.001
+    maximize: False
+    weight_decay: 0
+), tensor(1.5708, grad_fn=<MeanBackward0>))
+kwargs = {'learning_context': GeneratedDevelopmentContext(declaration_sha256='aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...native-opening-generated-development-v1', transition_lineage='simulator_generated', real_patient_count=0, max_steps=2)}
+
+    def forbidden(*args,**kwargs):
+        attempted.append(True)
+>       raise AssertionError('Failed independent audit reached gradient')
+E       AssertionError: Failed independent audit reached gradient
+
+build/simulator-evaluation-review-v1/test_native_runner_independent_v1.py:118: AssertionError
+=========================== short test summary info ============================
+FAILED build/simulator-evaluation-review-v1/test_native_runner_independent_v1.py::test_profile_audit_refusal_happens_before_any_gradient
+1 failed, 6 passed in 4.23s

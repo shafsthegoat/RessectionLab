@@ -1,0 +1,45 @@
+...FF                                                                    [100%]
+=================================== FAILURES ===================================
+_ test_same_model_replaced_equal_weight_parameter_objects_refused_before_backward _
+
+task = <resectionlab.native_spatial_task.NativeSpatialTask object at 0x111bd6ab0>
+
+    def test_same_model_replaced_equal_weight_parameter_objects_refused_before_backward(task):
+        m=model();context=ctx(task)
+        loss,_=imitation_loss(m,[(task.observation(),'STOP')],learning_context=context)
+        before=parameter_hash(m); m.actor=deepcopy(m.actor)
+        assert before==parameter_hash(m)
+        called=[];loss.register_hook(lambda g:called.append(True))
+        error=None; result=None
+        try:result=gradient_step(m,torch.optim.Adam(m.parameters()),loss,learning_context=context)
+        except Exception as exc:error=exc
+>       assert isinstance(error,ValueError), 'Replaced graph parameter objects admitted: '+repr(result)
+E       AssertionError: Replaced graph parameter objects admitted: {'optimizer_steps': 1, 'gradient_norm_before_clip': 1.4827841520309448, 'gradient_norm_after_clip': 1.4827842712402344, 'encoder_gradient_norm_before_clip': 0.9359875917434692, 'actor_gradient_norm_before_clip': 0.0, 'stop_gradient_norm_before_clip': 1.1500332355499268, 'critic_gradient_norm_before_clip': 0.0, 'initial_parameter_hash': 'sha256:56f4b9642251b8b98c25703622dbdebcfd1b977452a3e6b5e0429a79586d8322', 'updated_parameter_hash': 'sha256:625b473a1dc4faa6b3eaaf7ea0493a4d28c00742048a56f57f59b009b8745372', 'parameters_changed': True}
+E       assert False
+E        +  where False = isinstance(None, ValueError)
+
+build/simulator-evaluation-review-v1/test_generated_admission_extended_v1.py:49: AssertionError
+__________ test_changed_forward_configuration_refused_before_backward __________
+
+task = <resectionlab.native_spatial_task.NativeSpatialTask object at 0x111bd6ab0>
+
+    def test_changed_forward_configuration_refused_before_backward(task):
+        m=model();context=ctx(task)
+        loss,_=imitation_loss(m,[(task.observation(),'STOP')],learning_context=context)
+        before=parameter_hash(m); old_arch=m.architecture_hash
+        m.config=replace(m.config,physical_reference_mm=20.)
+        assert before==parameter_hash(m) and old_arch!=m.architecture_hash
+        called=[];loss.register_hook(lambda g:called.append(True))
+        error=None; result=None
+        try:result=gradient_step(m,torch.optim.Adam(m.parameters()),loss,learning_context=context)
+        except Exception as exc:error=exc
+>       assert isinstance(error,ValueError), 'Changed policy normalization admitted: '+repr(result)
+E       AssertionError: Changed policy normalization admitted: {'optimizer_steps': 1, 'gradient_norm_before_clip': 2.1501851081848145, 'gradient_norm_after_clip': 2.1501853466033936, 'encoder_gradient_norm_before_clip': 0.9359875917434692, 'actor_gradient_norm_before_clip': 1.5571279525756836, 'stop_gradient_norm_before_clip': 1.1500332355499268, 'critic_gradient_norm_before_clip': 0.0, 'initial_parameter_hash': 'sha256:56f4b9642251b8b98c25703622dbdebcfd1b977452a3e6b5e0429a79586d8322', 'updated_parameter_hash': 'sha256:533af9149ce8e79f50f6316c82f12146c827e09bdfffae91dff43c50e4b62377', 'parameters_changed': True}
+E       assert False
+E        +  where False = isinstance(None, ValueError)
+
+build/simulator-evaluation-review-v1/test_generated_admission_extended_v1.py:62: AssertionError
+=========================== short test summary info ============================
+FAILED build/simulator-evaluation-review-v1/test_generated_admission_extended_v1.py::test_same_model_replaced_equal_weight_parameter_objects_refused_before_backward
+FAILED build/simulator-evaluation-review-v1/test_generated_admission_extended_v1.py::test_changed_forward_configuration_refused_before_backward
+2 failed, 3 passed in 1.92s

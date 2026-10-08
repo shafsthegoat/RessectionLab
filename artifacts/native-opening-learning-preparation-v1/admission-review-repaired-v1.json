@@ -1,0 +1,36 @@
+{
+  "schema": "generated-admission-independent-review-v2",
+  "created_at": "2026-10-08T17:01:34.702548+00:00",
+  "status": "all_17_independent_controls_passed",
+  "source_sha256": {
+    "src/resectionlab/data_policy.py": "13f95f00763fcb0816406011d52976f25ab7df4a70ad46bde7116eb95fc13a84",
+    "src/resectionlab/spatial_policy.py": "5801f1b59b5eed90edeb33e5182d57547de35dd0fd326c76c4e427f89c05b6a4"
+  },
+  "source_unchanged_before_after": true,
+  "tests": 17,
+  "passed": 17,
+  "failed": 0,
+  "seconds": 1.93,
+  "repairs_verified": [
+    "Loss binds exact model identity and ordered named parameter object identities, rejecting replaced equal-weight layers before backward.",
+    "Loss binds architecture hash, rejecting changed normalization before backward.",
+    "Optimizer owns exactly admitted parameters; context/task/horizon mismatch and single-use loss controls remain passing."
+  ],
+  "historical_failures_retained": [
+    "admission-extended-initial-v1.log",
+    "admission-extended-initial-v1.xml",
+    "admission-review-initial-v1.json"
+  ],
+  "limits": [
+    "Only generated contract/unit controls executed; no patient inputs, holds, study/pilot or broad sweep.",
+    "Source authenticity/reward-model identity remains runner-owned through exact frozen fixture generation and require_task.",
+    "Runner/protocol still being implemented; this is seam clearance only, not pilot clearance."
+  ],
+  "evidence": {
+    "admission-repaired-pre-v1.json": "d8b47d9439b087edb6dd894c9cc2c9e83880bab6b9524d17ccdec1d87779020f",
+    "admission-repaired-v1.xml": "d4cbd8f6487a4d64cfbb2efee039c0c33e5b8d3d29a7566ccf0e7734ecb29443",
+    "admission-repaired-v1.log": "82aa3b0c5a61045dea68cf2efb438a167efcd5c61e03dcaa796902763613788b",
+    "test_generated_admission_independent_v1.py": "e7b3d7a1fb441bd5132ce2a7c034005a045206c9df7acc7cb8c36dd6b252710b",
+    "test_generated_admission_extended_v1.py": "eb1432b115ff68726c7f30ecd2c1277e9346d116615ff8409e57868afaeb77d1"
+  }
+}

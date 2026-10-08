@@ -4,7 +4,9 @@
 > development and training, superseding the older real-only restriction. Preserve
 > splits and history; evaluate transfer on held-out real patients and physical
 > measurements. Continuous acquisition and separate QC must proceed independently.
-> Installed historical guards are awaiting scoped migration; no new RL run is claimed.
+> A scoped [generated opening-task learner](docs/native-opening-learning.md) is
+> now enabled; legacy patient/model guards remain. Read current results before
+> launching additional training or claiming transfer.
 
 # Implementing-agent handoff
 
