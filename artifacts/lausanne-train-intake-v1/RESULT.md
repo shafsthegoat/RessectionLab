@@ -47,3 +47,26 @@ Next: acquire the remaining TRAIN originals in bounded, resumable batches.
 Preserve all failures and patient roles; actual component learning additionally
 requires eligible source-linked labels or an independently justified real-data
 learning task. These scans contain no recorded surgical action trajectories.
+
+## First bounded expansion batch
+
+The first acquisition batch closed after **599.1025 seconds** under its
+600-second / 134,217,728-source-byte declaration. It verified the prior cached
+pilot, completed **sub-001/ses-20101222** (32,714,941 bytes; worker 536.9822
+seconds), then reached the time budget during sub-002. The latter retained a
+**6,291,456-byte partial T1** without a completed-source or QC claim.
+
+Both worker processes were reaped. The exact index/source bindings remained
+unchanged. Root independently rehashed all completed originals against the
+published fixity and receipt SHA256 and verified retained source snapshots.
+The new worker recorded header/scalar passes for T1 (30×512×512) and TOF
+(384×512×90). Anatomical/frame/registration acceptance remains absent.
+
+Totals are **two people / two sessions / 69,376,670 complete source bytes**;
+**208 TRAIN sessions remain incomplete**. The full 210 denominator includes the
+timeout. There are still zero optimizer updates, recorded RL transitions and
+spatial admissions. Resume the retained partial in the next bounded batch.
+
+[Batch summary](acquisition-batch-01-summary.json), [full closure](acquisition-batch-01-batch.json),
+[declaration](acquisition-batch-01-declaration.json), [new acquisition](acquisition-batch-01-sub-001.json),
+[executed source](acquisition-batch-01-source.json).

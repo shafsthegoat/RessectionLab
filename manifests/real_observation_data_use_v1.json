@@ -1,6 +1,6 @@
 {
   "schema": "real-observation-data-use-v1",
-  "updated_at": "2026-10-08T05:02:41.935634+00:00",
+  "updated_at": "2026-10-08T05:14:53.943962+00:00",
   "scope": "New admissions in the October6 real-observation program, not a complete historical data inventory",
   "sources": [
     {
@@ -16,14 +16,14 @@
       "discovered_people": 284,
       "declared_train_people": 199,
       "declared_train_sessions": 210,
-      "acquired_train_people": 1,
-      "acquired_train_sessions": 1,
+      "acquired_train_people": 2,
+      "acquired_train_sessions": 2,
       "acquired_modalities": [
         "T1w",
         "TOF-MRA"
       ],
-      "acquired_bytes": 36661729,
-      "byte_and_scalar_qc_passed_people": 1,
+      "acquired_bytes": 69376670,
+      "byte_and_scalar_qc_passed_people": 2,
       "scanner_frame_accepted_people": 0,
       "prepared_for_spatial_planning_people": 0,
       "used_in_component_fitting_people": 0,
@@ -34,7 +34,7 @@
       "checkpoint_contributions": [],
       "receipt": "artifacts/lausanne-original-pilot-v1/acquisition.json",
       "geometry_gate": "TOF sidecar/NIfTI orientation mismatch; T1/TOF alignment unresolved",
-      "next": "Resumable full TRAIN original intake, retaining source/geometry failures; no SELECT/EVAL image intake in that batch",
+      "next": "Resume retained sub-002 partial and continue bounded TRAIN intake; source/frame and annotation admission still separate",
       "train_source_index": "manifests/lausanne-train-originals-v1.json",
       "train_source_index_sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66",
       "indexed_train_people": 199,
@@ -42,7 +42,8 @@
       "indexed_source_files": 840,
       "indexed_source_bytes": 10020802851,
       "intake_acceptance_receipt": "artifacts/lausanne-train-intake-v1/RESULT.md",
-      "remaining_train_sessions_to_acquire": 209
+      "remaining_train_sessions_to_acquire": 208,
+      "latest_bounded_intake": "artifacts/lausanne-train-intake-v1/acquisition-batch-01-summary.json"
     },
     {
       "accession": "TopCoW external Lausanne",

@@ -99,3 +99,15 @@ run005 correction. Donor004 had an extra freeze–thaw cycle. Calibration projec
 reference CMULTIS filenames while released images use SMULTIS names; verify
 the mapping explicitly. This candidate can validate a human cadaver **leg**
 interaction, not live brain retraction, glioma material properties or injury.
+
+A subsequent four-request transport check could not establish authenticated
+run005 transfer: the static archive's HTTPS connection was refused; a DOI
+metadata lookup timed out; the [creator HTTPS SVN donor directory](https://simtk.org/svn/multis/app/InstrumentedSurgicalTools/SMULTIS004-1/)
+loaded at repository revision1079; the exact run005 filename beneath its Data
+folder returned404. The directory revision/weak ETag does not establish file
+equivalence, and no creator-published run005 checksum was found. Local SHA256
+after HTTP acquisition would establish local integrity, not independent source
+authentication. Keep that dependency explicit. A first schema-only sample
+would be the TDMS plus its three configurations and donor CFG/XML: six files,
+7,022,670 bytes. Resolve source/fixity and freeze donor roles before opening it;
+keep the much larger surface exports closed until actual channel/timing checks.

@@ -1,0 +1,27 @@
+{
+  "status": "bounded_batch_closed_with_resumable_timeout",
+  "local_run": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T050403174907Z",
+  "elapsed_seconds": 599.1025398329366,
+  "max_seconds": 600,
+  "max_attempted_source_bytes": 134217728,
+  "attempted_source_bytes": 66923072,
+  "new_complete_people": 1,
+  "total_complete_people": 2,
+  "total_complete_sessions": 2,
+  "total_complete_source_bytes": 69376670,
+  "remaining_incomplete_train_sessions": 208,
+  "partial_files": [
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/sub-002/ses-20110127/anat/sub-002_ses-20110127_T1w.nii.gz.partial",
+      "bytes": 6291456,
+      "source_fixity_verified": false
+    }
+  ],
+  "new_worker_elapsed_seconds": 536.9822272921447,
+  "source_and_receipt_checks": "Root independently rehashed all admitted originals against published source fixity and receipt SHA256; retained source snapshots verified",
+  "header_scalar_qc": "worker recorded pass for both new images; no independent anatomical or registration acceptance",
+  "worker_processes_remaining": 0,
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "spatial_admissions": 0
+}

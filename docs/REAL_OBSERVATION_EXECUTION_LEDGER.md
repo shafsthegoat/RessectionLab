@@ -34,7 +34,7 @@ compact execution record, not a replacement specification.
 
 | Workstream | Verified state / missing evidence | Next implementation or acquisition |
 |---|---|---|
-| Data and anatomy | Lausanne originals are CC0 acquired T1/TOF; 284 people, 296 sessions. Full 199-person/210-session TRAIN index is frozen (10.02 GB). One original pair acquired; bounded intake and cache-resume checks pass. TOF orientation provenance and interscan alignment unresolved. TopCoW overlaps 20 people. | Expand to full eligible TRAIN originals with per-record QC using the tested bounded runner. Exclude atlas-derived vessel maps from measurement truth. |
+| Data and anatomy | Lausanne originals are CC0 acquired T1/TOF; 284 people, 296 sessions. Full 199-person/210-session TRAIN index is frozen (10.02 GB). Two original pairs acquired; next session retained a partial at timeout. Bounded intake/cache checks pass; no batch remains running. TOF orientation provenance and interscan alignment unresolved. | Resume sub-002 and remaining208 TRAIN sessions using the tested runner. Exclude atlas-derived vessel maps from measurement truth. |
 | Learning | No inspected historical checkpoint meets the new lineage rule. Scans supply no recorded actions/next observations. RESECT-SEG source research identifies reviewed cavity labels with explicit noncommercial rights; family roles now frozen (14 TRAIN/4 SELECT/4 EVAL/Case4 DEVELOPMENT). | Pin image/mask sources and QC before cavity-component fitting; Case4 and missing labels remain protected. No recorded-action cohort acquired or outreach sent. |
 | Navigation / integration | Desktop route calls omit vascular critical masks; CaseData has no typed vascular evidence/coverage. | Add source-bound critical evidence and coverage, wire both planners and invalidation; positive acceptance requires actual same-person annotations. |
 | Operative science | Four supplied research reviews are read; proposed mechanisms are not implemented evidence. | Introduce an evidence-timed action/observation timeline with observed events distinct from proposals and model predictions. |
@@ -79,6 +79,22 @@ receipt is retained locally. Earlier source research read the explicit license;
 archiving the rights record and exact per-file admission remain pending.
 [Measurement follow-up](tissue-mechanics-measurements.md#october-8-real-observation-follow-up)
 records label semantics, derivative overlap and the accepted MULTIS run005.
+
+The first [bounded original-image expansion](../artifacts/lausanne-train-intake-v1/acquisition-batch-01-summary.json)
+completed sub-001, then closed at its time budget during sub-002. Acquired totals
+are two people/two sessions/69,376,670 bytes. The next T1 partial is6,291,456
+bytes and has no source/QC admission. All worker processes exited. Root checked
+published fixity, receipt identity and source snapshots; no anatomy was accepted.
+
+RESECT's saved file metadata confirms current mask version2 and exact published
+hashes but supplies an unversioned download link. Resolve the official version
+relationship and bounded HTTPS redirects before acquisition; stop on rate limits.
+Reuse the small Case4 transfer pattern, not the BTC-specific S3-version runner.
+MULTIS's HTTPS static archive refused connection; the verified HTTPS SVN donor
+directory exists, but the exact run005 filename returned404. A four-request
+metadata audit found no published run005 checksum. Local hashes alone would
+not authenticate HTTP-delivered measurements. Next inspect the official SVN
+Data listing; no TLS bypass or scientific payload access occurred.
 
 ## Remaining delivery gates
 
