@@ -74,3 +74,11 @@ no-retry behavior are unchanged. The authenticated README is installed at the
 runtime prerequisite path. The license is CC BY-NC-SA4.0, with the stated
 financial-benefit restriction; this is noncommercial research, not commercial
 clearance. Scientific acquisition and QC remain the next separate invocations.
+
+The first separately invoked scientific acquisition stopped before any payload
+bytes in1.827supervised seconds: Python's certificate-chain verification failed
+for the original NIRD image endpoint. [Worker result](acquire-attempt-01/worker-result.json)
+and [supervision](acquire-attempt-01/supervision.json) preserve the failure.
+No mask, original image, QC or training result was created. A single subsequent
+system-curl HEAD diagnosis timed out during connection; it did not establish a
+working alternate trust path. TLS verification remains enabled.

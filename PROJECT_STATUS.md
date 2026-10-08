@@ -14,8 +14,8 @@ results remain unchanged. See [receipt](artifacts/real-observation-policy-v1/RES
 
 Lausanne's CC0 source metadata confirms 284 unique people and 296 original paired
 T1/TOF sessions. A fixed split now assigns 199 TRAIN / 43 SELECT / 42 measurement
-evaluation people, grouping visits and TopCoW copies. Thirty-nine TRAIN original
-pairs from 38 people and their sidecars are acquired (1,608,462,974 bytes); published byte fixity and
+evaluation people, grouping visits and TopCoW copies. Fifty-three TRAIN original
+pairs from 52 people and their sidecars are acquired (2,342,939,538 bytes); published byte fixity and
 worker header/scalar checks pass. Independent pilot inspection found TOF
 sidecar versus NIfTI orientation differs by about 1.70 degrees,
 so scanner-frame provenance and interscan registration remain unresolved. Two
@@ -55,7 +55,12 @@ and [batch08](artifacts/lausanne-train-intake-v1/acquisition-batch-08-summary.js
 The ninth batch completed six more people/sessions in495.218seconds, adding
 267,508,864source bytes. Root and independent review reverified all39 source receipts. Closure totals are38people/39sessions;171sessions remain.
 See [batch09](artifacts/lausanne-train-intake-v1/acquisition-batch-09-summary.json).
-A tenth bounded600-second/268,435,456-source-byte batch is running.
+Batches10–12 added14sessions from14people. All53closure receipts passed root
+and independent rechecks;52people/53sessions/2,342,939,538bytes are complete.
+Sub128's timeout was resumed successfully; sub454's latest timeout has no
+admission and its partial remains. Historical failure records are unchanged.
+See [batch12](artifacts/lausanne-train-intake-v1/acquisition-batch-12-summary.json).
+A thirteenth serial intake is running with600seconds and536,870,912source bytes.
 Full TRAIN acquisition/use and annotation eligibility remain outstanding. No newly compliant
 RL training has run: eligible recorded surgical transitions remain missing.
 Before further code edits, a fresh fetch again verified remote/local main at
@@ -80,10 +85,15 @@ brain support and surgical route acceptance remain unresolved. See
 RESECT cavity-component roles are now frozen at14 TRAIN/four SELECT/four
 evaluation/Case4 protected DEVELOPMENT; an independent metadata review
 recomputed membership and preserved Case4's earlier measurement partition.
-No new RESECT image/label has been acquired. Rights-text archival remains pending
-after an HTTP429 response. The official revision-2 route is now resolved, and the
-bounded Case3 intake runner passes 24 combined controls. The rights-only attempt
-stopped without a retry; no scientific payload was acquired. See
+No new RESECT image/label has been acquired. The exact rights text is now archived after
+the earlier HTTP429 response. The official revision-2 route is now resolved, and the
+bounded Case3 intake runner passes 24 combined controls. The historical rights-only attempt
+stopped without a retry. A later deliberate official redirect-chain retrieval
+verified all1656rights bytes; an exact-object redirect correction passes13checks
+and independent review. The subsequent Case3 scientific acquisition failed before any payload bytes
+with Python certificate-chain verification; the failure is retained and
+certificate verification remains enabled. Current official-source connectivity
+is being investigated. See
 [intake result](artifacts/resect-component-admission-v1/RESULT.md).
 The measured-interaction candidate is creator-accepted MULTIS donor004 run005;
 verified HTTPS/fixity and force/pose/surface pairing remain unresolved.
@@ -106,7 +116,9 @@ Saved field inspection indicates growing plate-edge concentration with relativel
 stable core fields. Independent review supports a separately declared plate-layer
 versus matched-size interior-refinement diagnostic. Its scope is local numerical
 sensitivity, not proof of a singularity, total continuum accuracy or calibration
-release. See [next diagnostic](docs/hbe-halfheight-spatial.md#next-diagnostic-after-the-failed-study).
+release. Implementation passes18controls and independent review; actual pure
+preparation completed in25.635seconds with637.3MB sampled peak memory.
+Preparation artifact review is pending before the three native solves. See [next diagnostic](docs/hbe-halfheight-spatial.md#next-diagnostic-after-the-failed-study).
 
 [VitalDB replay](artifacts/vitaldb-recorded-component-v1/RESULT.md) now imports
 21,970 actual pump/cuff-monitor records from one separate DEVELOPMENT person.

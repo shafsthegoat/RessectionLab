@@ -1,0 +1,44 @@
+{
+  "status": "bounded_batch_finished",
+  "local_run": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T082821313872Z",
+  "elapsed_seconds": 599.2648535000626,
+  "attempted_source_bytes": 263408500,
+  "source_size_budget": 268435456,
+  "byte_accounting": "source-size budget, not measured network transfer",
+  "new_complete_people": 4,
+  "new_complete_sessions": 4,
+  "new_complete_source_bytes": 219288349,
+  "new_sessions": [
+    "sub-109/ses-20100120",
+    "sub-116/ses-20091229",
+    "sub-119/ses-20091226",
+    "sub-120/ses-20100117"
+  ],
+  "total_complete_people": 42,
+  "total_complete_sessions": 43,
+  "total_complete_source_bytes": 1827751323,
+  "remaining_incomplete_train_sessions": 167,
+  "remaining_train_people": 157,
+  "root_reverified_original_fixity_and_retained_source": true,
+  "new_worker_failures": 1,
+  "optimizer_updates": 0,
+  "recorded_rl_transitions": 0,
+  "spatial_admissions": 0,
+  "independent_audit": "independent_policy_audit independently reverified all closure receipts, original fixity, frozen TRAIN roles and retained source snapshots without decoding",
+  "cached_sessions_reverified": 39,
+  "byte_budget_deferrals": 166,
+  "sub077_status": "completed and independently verified; original timeout evidence retained",
+  "repeat_visit_accounting": "sub074 has two sessions and counts as one person",
+  "total_image_files": 86,
+  "total_image_bytes": 1827620397,
+  "total_source_files": 172,
+  "failed_outcomes": [
+    {
+      "session": "sub-128/ses-20120124",
+      "status": "timeout",
+      "exit_code": 124,
+      "output": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T082821313872Z/sub-128_ses-20120124/acquisition.json",
+      "log": "data/anatomy/ds003949-v1.0.1/train-intake-v1/attempts/batch-20261008T082821313872Z/sub-128_ses-20120124/worker.log"
+    }
+  ]
+}

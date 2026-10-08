@@ -1,11 +1,11 @@
 # Full TRAIN source index and bounded intake acceptance
 
-Latest cumulative state: **38 people /39 sessions /156files /1,608,462,974bytes**.
-[Batch09](acquisition-batch-09-summary.json) completed six more people/sessions
-in495.218seconds, using267,508,864bytes of its268,435,456-byte source-size budget.
-Root and independent review reverified every original/receipt/source snapshot.
-Sub074's two visits count as one person. Sub077's earlier partial is complete;
-its original timeout evidence remains. **171 TRAIN sessions remain unacquired.**
+Latest cumulative state: **52 people /53 sessions /212files /2,342,939,538bytes**.
+Batches10–12 added14sessions from14people. Root and independent review reverified
+all53 originals/receipts/source snapshots. [Batch12](acquisition-batch-12-summary.json)
+closed at599.169seconds; sub454 timed out and remains excluded with its partial.
+Sub128 completed on the next declared resume after its earlier timeout; both
+failure records remain. **157 TRAIN sessions remain unacquired.**
 No spatial admission or learning contribution follows from these intake checks.
 Earlier milestone totals below retain their historical meaning.
 
