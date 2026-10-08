@@ -1,0 +1,77 @@
+{
+  "scope": "native metadata only; no selected record values decoded",
+  "file_header_hex": "56495441030000000a0000000000000000000000",
+  "complete_gzip_eof_read": true,
+  "headers": {
+    "Solar8000/NIBP_MBP": {
+      "track_id": 241,
+      "type": 2,
+      "format": 1,
+      "unit": "mmHg",
+      "sample_rate": 0.0,
+      "gain": 1.0,
+      "offset": 0.0,
+      "raw_header_hex": "f1000201080000004e4942505f4d4250040000006d6d48670000000000004843ffffffff00000000000000000000f03f0000000000000000120100ee5c"
+    },
+    "Solar8000/NIBP_SBP": {
+      "track_id": 242,
+      "type": 2,
+      "format": 1,
+      "unit": "mmHg",
+      "sample_rate": 0.0,
+      "gain": 1.0,
+      "offset": 0.0,
+      "raw_header_hex": "f2000201080000004e4942505f534250040000006d6d48670000000000004843ffffffff00000000000000000000f03f0000000000000000100100ee5c"
+    },
+    "Solar8000/NIBP_DBP": {
+      "track_id": 243,
+      "type": 2,
+      "format": 1,
+      "unit": "mmHg",
+      "sample_rate": 0.0,
+      "gain": 1.0,
+      "offset": 0.0,
+      "raw_header_hex": "f3000201080000004e4942505f444250040000006d6d48670000000000004843ffffffff00000000000000000000f03f0000000000000000110100ee5c"
+    },
+    "Orchestra/PPF20_RATE": {
+      "track_id": 296,
+      "type": 2,
+      "format": 1,
+      "unit": "mL/h",
+      "sample_rate": 0.0,
+      "gain": 1.0,
+      "offset": 0.0,
+      "raw_header_hex": "280102010a00000050504632305f52415445040000006d4c2f680000000000004843ffffffff00000000000000000000f03f00000000000000000001007063"
+    },
+    "Orchestra/PPF20_VOL": {
+      "track_id": 297,
+      "type": 2,
+      "format": 1,
+      "unit": "mL",
+      "sample_rate": 0.0,
+      "gain": 1.0,
+      "offset": 0.0,
+      "raw_header_hex": "290102010900000050504632305f564f4c020000006d4c0000000000004843ffffffff00000000000000000000f03f00000000000000000001007063"
+    },
+    "Orchestra/RFTN20_RATE": {
+      "track_id": 304,
+      "type": 2,
+      "format": 1,
+      "unit": "mL/h",
+      "sample_rate": 0.0,
+      "gain": 1.0,
+      "offset": 0.0,
+      "raw_header_hex": "300102010b0000005246544e32305f52415445040000006d4c2f680000000000004843ffffffff00000000000000000000f03f00000000000000000001007063"
+    },
+    "Orchestra/RFTN20_VOL": {
+      "track_id": 305,
+      "type": 2,
+      "format": 1,
+      "unit": "mL",
+      "sample_rate": 0.0,
+      "gain": 1.0,
+      "offset": 0.0,
+      "raw_header_hex": "310102010a0000005246544e32305f564f4c020000006d4c0000000000004843ffffffff00000000000000000000f03f00000000000000000001007063"
+    }
+  }
+}

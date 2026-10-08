@@ -1,8 +1,18 @@
-# VitalDB recorded component replay candidate
+# VitalDB recorded component replay
+
+The [implemented result](../artifacts/vitaldb-recorded-component-v1/RESULT.md)
+now imports 21,970 actual pump/NIBP records and preserves their unmapped native
+clock. Independent comparison matched every record and checked all 7,207 event
+boundaries. Fifteen focused checks pass. The original arterial-channel request
+failed: those channels are absent in this immutable file. A separate declaration
+supports actual intermittent cuff-monitor records; these are never arterial
+pressure or proof of a fresh cuff measurement. Native recording-start origin
+remains unresolved. The initial candidate/source investigation below is retained
+to explain both corrected assumptions; it is not the accepted replay contract.
 
 This is a non-neurosurgical component-import/replay study, not glioma surgical
-experience, anesthesia control, or an RL cohort. No scientific signal payload
-has been acquired. Root prospectively selects case3 / subject2861 for DEVELOPMENT
+experience, anesthesia control, or an RL cohort. Before scientific signal access,
+root prospectively selected case3 / subject2861 for DEVELOPMENT
 import/replay; no existing patient assignment changes. All other VitalDB people
 remain unopened and unassigned pending a prospective family-wide declaration.
 
@@ -61,9 +71,10 @@ record ordinals and raw timestamps; report nonfinite/out-of-order records.
 Do not infer doses, interpolate gaps, generate missing monitors or call a
 successful constructor a complete import.
 
-Next executable step: retain the prospective role/source declaration and pinned
-parser source, then acquire the single6.54 MB file and validate its native
-headers/records. Implement the common-clock replay only after those checks.
+Acquisition and native-record replay are now implemented under the source-bound
+declarations linked from the result. Next resolve the native recording-start
+offset from release-specific evidence and connect this independent component
+to the observed-event API without borrowing another patient's anatomy.
 Recorded action/endpoint support and confounding remain separate RL gates.
 
 Research failures retained: one release-page timeout, one live-inventory gzip

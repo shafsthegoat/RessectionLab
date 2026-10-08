@@ -1,0 +1,92 @@
+{
+  "schema": "resectionlab.vitaldb-native-component-declaration.v1",
+  "declared_at_utc": "2026-10-08T07:54:04.462997+00:00",
+  "selected_values_opened_before_declaration": false,
+  "task": "recorded pump and intermittent cuff-pressure component replay",
+  "source_sha256": "573db0941d580167833f84497f5d1c4a1391443eeec3f95852287ea09db024e4",
+  "original_role_declaration_sha256": "8f2053f5b3a435cc3b84c27e868c22be93dd1e6995bd44ebc414cc9c5e5c98a0",
+  "case_id": 3,
+  "subject_id": 2861,
+  "role": "DEVELOPMENT",
+  "selection_basis": "exact authenticated native headers only; no new person or clinical outcome selection",
+  "native_header_evidence": {
+    "path": "artifacts/vitaldb-recorded-component-v1/native-component-headers.json",
+    "sha256": "d746c8d675430488f4d7f08593d34bab47b2de9df7206d9f5aee0859aac63978"
+  },
+  "required_tracks": {
+    "Solar8000/NIBP_MBP": {
+      "type": 2,
+      "format": 1,
+      "native_unit": "mmHg",
+      "measurement_modality": "intermittent_noninvasive_cuff_pressure"
+    },
+    "Solar8000/NIBP_SBP": {
+      "type": 2,
+      "format": 1,
+      "native_unit": "mmHg",
+      "measurement_modality": "intermittent_noninvasive_cuff_pressure"
+    },
+    "Solar8000/NIBP_DBP": {
+      "type": 2,
+      "format": 1,
+      "native_unit": "mmHg",
+      "measurement_modality": "intermittent_noninvasive_cuff_pressure"
+    },
+    "Orchestra/PPF20_RATE": {
+      "type": 2,
+      "format": 1,
+      "native_unit": "mL/h",
+      "measurement_modality": "pump_recorded_rate_or_volume"
+    },
+    "Orchestra/PPF20_VOL": {
+      "type": 2,
+      "format": 1,
+      "native_unit": "mL",
+      "measurement_modality": "pump_recorded_rate_or_volume"
+    },
+    "Orchestra/RFTN20_RATE": {
+      "type": 2,
+      "format": 1,
+      "native_unit": "mL/h",
+      "measurement_modality": "pump_recorded_rate_or_volume"
+    },
+    "Orchestra/RFTN20_VOL": {
+      "type": 2,
+      "format": 1,
+      "native_unit": "mL",
+      "measurement_modality": "pump_recorded_rate_or_volume"
+    }
+  },
+  "original_request_status": "FAILED: arterial pressure tracks absent and native rate unit spelling differs; original manifest unchanged",
+  "missing_arterial_channels": [
+    "Solar8000/ART_MBP",
+    "Solar8000/ART_SBP",
+    "Solar8000/ART_DBP"
+  ],
+  "clock": {
+    "origin_seconds": 0,
+    "authority": "PhysioNet1.0.0 Dataset development",
+    "native_header": "version3,10bytes; optional dtstart/dtend absent",
+    "mapping": "identity; no first-selected normalization",
+    "device_synchronization_and_latency": "unavailable"
+  },
+  "prohibited_claims": [
+    "continuous physiology or cuff pressure",
+    "inferred dose or bolus",
+    "causal drug response",
+    "glioma experience",
+    "RL eligibility",
+    "contemporaneous availability of retrospectively assigned pump names"
+  ],
+  "source_processing": [
+    "source removed all-zero and fewer-than-ten-sample tracks",
+    "pump names may have been retrospectively assigned using pump data or anesthesia records"
+  ],
+  "contributions": {
+    "unique_development_people": 1,
+    "component_fitting": 0,
+    "imitation": 0,
+    "RL": 0,
+    "optimizer_updates": 0
+  }
+}

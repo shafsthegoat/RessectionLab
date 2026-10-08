@@ -1,0 +1,47 @@
+{
+  "schema": "resectionlab.vitaldb-component-verification.v1",
+  "recorded_at_utc": "2026-10-08T08:04:15.982005+00:00",
+  "status": "accepted_for_unmapped_native_clock_retrospective_component_replay_only",
+  "files": {
+    "src/resectionlab/vitaldb_observed.py": "ccd92d0e36126f4b4c2b53325337b21e03c3e7861bdc43263b7acffd4b3da1be",
+    "scripts/acquire_vitaldb_component.py": "0cc38a5607f8dcfaaa46fe69f3226488ac5708d704ffac96e8cdc20ddbee32aa",
+    "scripts/replay_vitaldb_component.py": "893d0c375a282097ec1622e11bcf48fc7ff703e2f8cf5cd8cc5580f40b24060b",
+    "tests/test_vitaldb_observed.py": "f1b91e09cd67eb5f78594b19f303f5cee6a10482dc83de07155a87c4cdde9f7a",
+    "manifests/vitaldb-development-v1.json": "8f2053f5b3a435cc3b84c27e868c22be93dd1e6995bd44ebc414cc9c5e5c98a0",
+    "manifests/vitaldb-official-mirror-attempt-v1.json": "3cf0fb91715286e3cad2425aa58eb12acf4811becbd96bc40d2f4e96640ae2a5",
+    "manifests/vitaldb-native-component-v1.json": "7170c6d5c521b845e937eb69b16d0083650823ae8da4a6da201eeff71bfe9679",
+    "manifests/vitaldb-native-clock-v1.json": "11bf6b1b97cdf894a64f4c0110a2d52f053bcb6ca52237bf2515c417df253dc8"
+  },
+  "tests": {
+    "command": ".venv/bin/python -m pytest -q tests/test_vitaldb_observed.py",
+    "passed": 15,
+    "failed": 0,
+    "skipped": 0,
+    "pure_format_refusal_controls": 7,
+    "actual_source_tests": 8,
+    "seconds": 7.08
+  },
+  "cli_demo": {
+    "first_native_clock": 4102444900,
+    "reopened_native_clock": 4102444902,
+    "reopened_last_records_equal_direct_replay": true,
+    "reopened_only_new_prefix_records": true,
+    "reopened_new_records": 11,
+    "snapshot_path": "artifacts/vitaldb-recorded-component-v1/replay-snapshot.json",
+    "source_values_outputs_ignored": true
+  },
+  "independent_review": {
+    "report": "artifacts/vitaldb-recorded-component-v1/implementation-comparison.json",
+    "all_selected_records_equal": 21970,
+    "event_boundaries_checked": 7207,
+    "report_sha256": "7c5dd66a5f8aa198c551d1999dc2abe654e896af121f3ffa91e0f98e4cd8131c"
+  },
+  "retained_failures": [
+    "First original download timed out with 1,310,684 partial bytes.",
+    "Original arterial-request channels absent; native unit spelling differs.",
+    "Initial relative-zero clock interpretation invalid; source origin remains unresolved."
+  ],
+  "no_generated_patient_observations": true,
+  "unrelated_values_decoded": 0,
+  "training_or_RL_contributions": 0
+}

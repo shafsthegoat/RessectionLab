@@ -1,0 +1,82 @@
+{
+  "schema": "resectionlab.vitaldb-prospective-role.v1",
+  "declared_at_utc": "2026-10-08T07:39:30.586303+00:00",
+  "payload_opened_at_declaration": false,
+  "source": {
+    "family": "VitalDB",
+    "release": "PhysioNet 1.0.0",
+    "release_url": "https://physionet.org/content/vitaldb/1.0.0/",
+    "doi": "10.13026/czw8-9p62",
+    "institution": "Seoul National University Hospital",
+    "license": "CC-BY-4.0",
+    "case_id": 3,
+    "subject_id": 2861,
+    "role": "DEVELOPMENT",
+    "purpose": "bounded numeric format validation and observed component replay",
+    "file_url": "https://physionet.org/files/vitaldb/1.0.0/vital_files/0003.vital",
+    "bytes": 6537712,
+    "sha256": "573db0941d580167833f84497f5d1c4a1391443eeec3f95852287ea09db024e4",
+    "local_path": "data/vitaldb-1.0.0/0003.vital"
+  },
+  "parser_reference": {
+    "package": "vitaldb",
+    "version": "1.7.2",
+    "license": "MIT",
+    "url": "https://files.pythonhosted.org/packages/f4/1c/f48900276672017f7f72f3d2c0b94ac435c80fc0907ec663cedb6be76cf3/vitaldb-1.7.2.tar.gz",
+    "bytes": 67723,
+    "sha256": "70e0ce784b13d52bbf6a315b742ab06d5ed0599b8b01f76182971a391dd64130",
+    "utils_sha256": "b0e88b1365c8d9a88814123c9a5b5a5d3c696a5c4849c7db3ebda476cc7134e3"
+  },
+  "selection": {
+    "rule": "lowest case ID in previously inspected live inventory containing all seven declared tracks; release-file presence unproved until parse",
+    "outcome_independent": true,
+    "clinical_metadata_used": "caseid and subjectid only",
+    "all_person_episodes": [
+      3
+    ],
+    "other_people_status": "unopened and unassigned; family-wide role declaration required before access",
+    "existing_roles_changed": false
+  },
+  "exact_tracks": {
+    "Orchestra/PPF20_RATE": "mL/hr",
+    "Orchestra/PPF20_VOL": "mL",
+    "Orchestra/RFTN20_RATE": "mL/hr",
+    "Orchestra/RFTN20_VOL": "mL",
+    "Solar8000/ART_MBP": "mmHg",
+    "Solar8000/ART_SBP": "mmHg",
+    "Solar8000/ART_DBP": "mmHg"
+  },
+  "resources": {
+    "download_seconds_each": 120,
+    "download_attempts_each": 1,
+    "allow_redirects": false,
+    "metadata_max_bytes": 1048576,
+    "compressed_max_bytes": 6537712,
+    "decompressed_max_bytes": 134217728,
+    "packet_max_bytes": 4194304,
+    "packets_max": 1000000,
+    "selected_records_max": 250000,
+    "header_max_bytes": 4096,
+    "tracks_max": 1024,
+    "devices_max": 256
+  },
+  "processing": {
+    "mode": "observed clinical component replay",
+    "selection": "exact numeric channels only; skip all other record values and waveforms",
+    "time": "preserve raw native timestamps and packet ordinals; confirm actual header origin before common-clock mapping",
+    "resampling": false,
+    "interpolation": false,
+    "inferred_doses_or_bolus": false,
+    "model_or_patient_generation": false
+  },
+  "claims": {
+    "glioma_experience": false,
+    "RL_eligible": false,
+    "clinical_dosing": false,
+    "causal_drug_response": false,
+    "device_synchronization_validated": false,
+    "training_contributions": 0,
+    "RL_updates": 0,
+    "unique_development_people": 1
+  }
+}

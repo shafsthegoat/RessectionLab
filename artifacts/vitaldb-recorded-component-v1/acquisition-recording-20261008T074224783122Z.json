@@ -1,0 +1,21 @@
+{
+  "name": "recording",
+  "url": "https://physionet.org/files/vitaldb/1.0.0/vital_files/0003.vital",
+  "started_at_utc": "20261008T074224783122Z",
+  "declaration_sha256": "8f2053f5b3a435cc3b84c27e868c22be93dd1e6995bd44ebc414cc9c5e5c98a0",
+  "acquisition_code_sha256": "0f76825ca781523357165ae9e8255cb655240789ff0c7fd33b4b0109cc057a4d",
+  "attempts": 1,
+  "redirects_allowed": false,
+  "max_seconds": 120,
+  "max_bytes": 6537712,
+  "status": "failed",
+  "exit_code": 28,
+  "http_status": "200",
+  "stderr": "curl: (28) Operation timed out after 120010 milliseconds with 1310684 out of 6537712 bytes received\n",
+  "error": "Transfer failed or non-200 response (redirects refused)",
+  "partial_bytes": 1310684,
+  "partial_path": "data/vitaldb-1.0.0/0003.vital.20261008T074224783122Z.partial",
+  "elapsed_seconds": 120.026688,
+  "headers_sha256": "38a109195e04bd208e4cb2f0072c1d98266e3e2df5f8b8e22125c7ef982552f1",
+  "headers_path": "build/vitaldb-source-v1/recording-20261008T074224783122Z.headers"
+}

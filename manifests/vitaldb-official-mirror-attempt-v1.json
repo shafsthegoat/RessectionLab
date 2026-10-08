@@ -1,0 +1,29 @@
+{
+  "schema": "resectionlab.vitaldb-acquisition-attempt.v1",
+  "declared_at_utc": "2026-10-08T07:48:48.880604+00:00",
+  "body_opened_at_declaration": false,
+  "authorization": "Root explicitly approved one separate bounded official-mirror attempt after original timeout; no automatic retry",
+  "role_declaration_sha256": "8f2053f5b3a435cc3b84c27e868c22be93dd1e6995bd44ebc414cc9c5e5c98a0",
+  "source_release": "PhysioNet VitalDB 1.0.0",
+  "case_id": 3,
+  "subject_id": 2861,
+  "role": "DEVELOPMENT",
+  "url": "https://physionet-open.s3.amazonaws.com/vitaldb/1.0.0/vital_files/0003.vital",
+  "mirror_authority": "Official PhysioNet release page AWS public bucket physionet-open/vitaldb/1.0.0",
+  "head_verified_by_root_at_utc": "2026-10-08T07:47:44Z",
+  "bytes": 6537712,
+  "sha256": "573db0941d580167833f84497f5d1c4a1391443eeec3f95852287ea09db024e4",
+  "max_seconds": 300,
+  "attempts": 1,
+  "allow_redirects": false,
+  "curl_configuration_disabled": true,
+  "destination": "data/vitaldb-1.0.0/mirror-01/0003.vital",
+  "prior_failure": {
+    "receipt_path": "artifacts/vitaldb-recorded-component-v1/acquisition-recording-20261008T074224783122Z.json",
+    "receipt_sha256": "4f6a309541fdf1120cdce873a37ce8d8253ae03c11f338704afd91356cb50e31",
+    "partial_path": "data/vitaldb-1.0.0/0003.vital.20261008T074224783122Z.partial",
+    "partial_bytes": 1310684,
+    "partial_sha256": "5077c7a62794aaa20bbe9c39982c3e8344006db8b23a56eafc02cdd881ed8b2a",
+    "status": "retained; not admitted; not resumed"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "status": "passed",
+  "production_reader_sha256": "ccd92d0e36126f4b4c2b53325337b21e03c3e7861bdc43263b7acffd4b3da1be",
+  "independent_reader_sha256": "c10ff74a23deb8169f1c536655471a6022ade49e3fa8e0caaaca9257deb6def9",
+  "source_sha256": "573db0941d580167833f84497f5d1c4a1391443eeec3f95852287ea09db024e4",
+  "all_selected_record_fields_exactly_equal": 21970,
+  "all_selected_track_headers_equal": 7,
+  "native_clock_event_boundaries_checked": 7207,
+  "all_frames_have_only_observed_prefix": true,
+  "all_record_ages_equal_unshifted_native_differences": true,
+  "unknown_clock_origin_preserved": true,
+  "midpoint_reopen_history_and_continuation_equal": true,
+  "independent_full_prefix_digest_equal": true,
+  "snapshot_binding_changes_refused": [
+    "source_sha256",
+    "declaration_sha256",
+    "component_declaration_sha256",
+    "clock_review_sha256",
+    "reader_code_sha256",
+    "source_release",
+    "case_id",
+    "subject_id",
+    "role",
+    "time_basis",
+    "admission_evidence"
+  ],
+  "invalid_or_backward_clocks_refused": 5,
+  "protected_or_alias_output_checks_refused": 3,
+  "no_scientific_download_or_synthetic_patient_records": true,
+  "unrelated_values_decoded": 0
+}

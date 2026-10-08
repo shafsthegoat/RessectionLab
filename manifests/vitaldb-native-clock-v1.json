@@ -1,0 +1,25 @@
+{
+  "schema": "resectionlab.vitaldb-native-clock-review.v1",
+  "recorded_at_utc": "2026-10-08T07:56:39.573815+00:00",
+  "source_sha256": "573db0941d580167833f84497f5d1c4a1391443eeec3f95852287ea09db024e4",
+  "supersedes_only": "zero-relative-clock wording in native-component declaration; source, person, role and selected tracks unchanged",
+  "finding": "native file header has no optional dtstart/dtend; selected timestamps range4102444802.1943 to4102449193.2004004, incompatible with release-relative identity assumption",
+  "source_dtstart": null,
+  "recording_start_mapping_status": "unresolved",
+  "replay_clock": "unaltered native timestamp seconds",
+  "transformation": "identity on native timestamps; no subtraction",
+  "recording_start_origin_seconds": null,
+  "candidate_epoch": {
+    "seconds": 4102444800,
+    "calendar": "2100-01-01 UTC",
+    "evidence": "pinned vitaldb1.7.2 utils.py anonymize default matches this numeric epoch",
+    "status": "suggestive only; not accepted as this recording origin; not subtracted"
+  },
+  "retained_initial_qc_sha256": "837ae887b99206361b05782cbe0da78e28c246b82ebdac2b7ef5a9f557e7430e",
+  "initial_qc_status": "native counts are retained; zero-origin relative-clock interpretation is invalid and superseded",
+  "claims": {
+    "actual_acquisition_date_known": false,
+    "relative_recording_start_verified": false,
+    "raw_native_clock_order_and_differences_preserved": true
+  }
+}

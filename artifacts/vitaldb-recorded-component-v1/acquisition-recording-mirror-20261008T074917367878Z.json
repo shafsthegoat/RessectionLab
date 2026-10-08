@@ -1,0 +1,22 @@
+{
+  "name": "recording-mirror",
+  "url": "https://physionet-open.s3.amazonaws.com/vitaldb/1.0.0/vital_files/0003.vital",
+  "started_at_utc": "20261008T074917367878Z",
+  "declaration_sha256": "8f2053f5b3a435cc3b84c27e868c22be93dd1e6995bd44ebc414cc9c5e5c98a0",
+  "attempt_declaration_sha256": "3cf0fb91715286e3cad2425aa58eb12acf4811becbd96bc40d2f4e96640ae2a5",
+  "acquisition_code_sha256": "6e38bab1963265da0d199282848e3fdfadc399c647aec7781633ee7a8edba4ab",
+  "attempts": 1,
+  "redirects_allowed": false,
+  "max_seconds": 300,
+  "max_bytes": 6537712,
+  "status": "acquired",
+  "exit_code": 0,
+  "http_status": "200",
+  "stderr": "",
+  "bytes": 6537712,
+  "sha256": "573db0941d580167833f84497f5d1c4a1391443eeec3f95852287ea09db024e4",
+  "local_path": "data/vitaldb-1.0.0/mirror-01/0003.vital",
+  "elapsed_seconds": 15.585353,
+  "headers_sha256": "a5971628b927e690e46a1bfc4a40f9e2792551a5932327cc789c8e8718136f2a",
+  "headers_path": "build/vitaldb-source-v1/recording-mirror-20261008T074917367878Z.headers"
+}
