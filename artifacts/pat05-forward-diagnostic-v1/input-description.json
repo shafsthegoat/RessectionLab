@@ -1,0 +1,176 @@
+{
+  "channels": [
+    {
+      "available": true,
+      "coverage_fraction": 1.0,
+      "covered_voxels": 262144,
+      "max": 1.0,
+      "min": 0.0,
+      "name": "structural_intensity"
+    },
+    {
+      "available": true,
+      "coverage_fraction": 1.0,
+      "covered_voxels": 262144,
+      "max": 1.0,
+      "min": 0.0,
+      "name": "nominal_tissue"
+    },
+    {
+      "available": true,
+      "coverage_fraction": 1.0,
+      "covered_voxels": 262144,
+      "max": 1.0,
+      "min": 0.0,
+      "name": "nominal_target"
+    },
+    {
+      "available": true,
+      "coverage_fraction": 1.0,
+      "covered_voxels": 262144,
+      "max": 0.0,
+      "min": 0.0,
+      "name": "observed_cavity"
+    },
+    {
+      "available": false,
+      "coverage_fraction": 0.0,
+      "covered_voxels": 0,
+      "max": null,
+      "min": null,
+      "name": "nominal_motor"
+    },
+    {
+      "available": false,
+      "coverage_fraction": 0.0,
+      "covered_voxels": 0,
+      "max": null,
+      "min": null,
+      "name": "nominal_language"
+    }
+  ],
+  "geometry_ranges": {
+    "axis_x": [
+      0.9991420462450484,
+      0.9991420462450488
+    ],
+    "axis_y": [
+      -0.036693339375412484,
+      -0.03669333937540727
+    ],
+    "axis_z": [
+      -0.019203392167482836,
+      -0.019203392167480668
+    ],
+    "entry_x_mm": [
+      -55.77085909990888,
+      -55.547296859956084
+    ],
+    "entry_y_mm": [
+      23.854662948903638,
+      29.850620691434795
+    ],
+    "entry_z_mm": [
+      6.48651993455014,
+      12.485413441362482
+    ],
+    "max_access_angle_deg": [
+      35.0,
+      35.0
+    ],
+    "shaft_radius_mm": [
+      0.45,
+      1.1
+    ],
+    "stop": [
+      0.0,
+      0.0
+    ],
+    "tip_length_mm": [
+      2.0,
+      3.0
+    ],
+    "tip_radius_mm": [
+      1.25,
+      2.25
+    ],
+    "tip_x_mm": [
+      -55.217076568300826,
+      -22.075920364067834
+    ],
+    "tip_y_mm": [
+      22.662125216979604,
+      29.758887020133585
+    ],
+    "tip_z_mm": [
+      5.862407497111803,
+      12.475811704204546
+    ],
+    "tool_change": [
+      0.0,
+      0.0
+    ],
+    "working_length_mm": [
+      120.0,
+      120.0
+    ]
+  },
+  "ray_samples_inside_crop": 350,
+  "ray_samples_total": 350,
+  "shift": {
+    "generalization_or_performance_established": false,
+    "generated_access_radius_mm": 2.4,
+    "generated_horizon": 2,
+    "generated_initial_action_count": 5,
+    "generated_shape": [
+      9,
+      9,
+      7
+    ],
+    "generated_tip_lengths_mm": [
+      0.75,
+      3.0
+    ],
+    "generated_tip_radii_mm": [
+      0.9,
+      2.25
+    ],
+    "generated_working_lengths_mm": [
+      2.2,
+      12.0
+    ],
+    "intensity": "generated discrete0/.2/.8 versus support-percentile-normalized real T1",
+    "real_access_radius_mm": 6.0,
+    "real_crop_shape": [
+      64,
+      64,
+      64
+    ],
+    "real_historical_horizon": 3,
+    "real_initial_action_count": 71,
+    "real_tip_lengths_mm": [
+      2.0,
+      3.0
+    ],
+    "real_tip_radii_mm": [
+      1.25,
+      2.25
+    ],
+    "real_working_lengths_mm": [
+      120.0,
+      120.0
+    ]
+  },
+  "state": {
+    "access_center_x_mm": -55.65907797962427,
+    "access_center_y_mm": 26.85264183295658,
+    "access_center_z_mm": 9.485966679882779,
+    "access_normal_x": 0.9991420462450487,
+    "access_normal_y": -0.03669333937540993,
+    "access_normal_z": -0.01920339216748122,
+    "access_radius_mm": 6.0,
+    "current_tool_present": 0.0,
+    "max_steps": 3.0,
+    "steps_taken": 0.0
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "independent_saved_output_checks": 830,
+  "new_model_forwards": 0,
+  "patient_array_decodes": 0,
+  "schema": "pat05-result-integration-v1",
+  "source_repair_tests": {
+    "full_stdout": "...................... [100%]\n22 passed in 3.58s",
+    "passed": 22,
+    "pytest_seconds": 3.58,
+    "stdout_source": "unified command output; no original log file"
+  },
+  "ui_sha256_unchanged": {
+    "desktop/src/App.tsx": "5dbabc36fe09fe4dda7627c957588b832ffcec6df7ef4ae529d7410d09e067f3",
+    "desktop/src/NeighboringPathsPanel.tsx": "34f62bb198b48da650f4ea344e6fd9d831d62c9a367cb74abbbc86349c4a3d55",
+    "desktop/src/neighboring-paths.ts": "58292c2e4e7e4d4c4dab8a8241c192f6fc9632cad72b1b4210b099b249e0787e"
+  }
+}

@@ -1,0 +1,1003 @@
+{
+  "accounting": {
+    "attempted_checkpoints": [
+      "RL256",
+      "initial"
+    ],
+    "checkpoint_attempts": 2,
+    "completed_checkpoints": [
+      "RL256",
+      "initial"
+    ],
+    "completed_forwards": 2,
+    "declaration_sha256": "54100dfb6cc8f54a3df4ac63120b19104c7ab75b82fb64f062978a2800c8d9dd",
+    "executed_actions": 0,
+    "forward_attempts": 2,
+    "native_previews": 0,
+    "optimizer_updates": 0,
+    "scope": "annotation-assisted fixed-input compatibility; no patient-performance assessment"
+  },
+  "additional_manifest_bound_index_snapshots_verified": 2,
+  "all_action_rankings": {
+    "RL256": [
+      {
+        "action_id": "STOP",
+        "logit": -1.8087166547775269,
+        "probability": 0.8136945962905884,
+        "rank": 1
+      },
+      {
+        "action_id": "nominal-cavity-8207b5ab7d6b3cd78c34ad30",
+        "logit": -7.177417278289795,
+        "probability": 0.003791965777054429,
+        "rank": 2
+      },
+      {
+        "action_id": "nominal-cavity-d6e8a506abebf3cf438c00f1",
+        "logit": -7.232908725738525,
+        "probability": 0.0035872762091457844,
+        "rank": 3
+      },
+      {
+        "action_id": "nominal-cavity-cca5043b81e8ec3623f1b5a9",
+        "logit": -7.257079124450684,
+        "probability": 0.003501609666272998,
+        "rank": 4
+      },
+      {
+        "action_id": "nominal-cavity-8fb6c4dea169643bffbba444",
+        "logit": -7.281992435455322,
+        "probability": 0.0034154506865888834,
+        "rank": 5
+      },
+      {
+        "action_id": "nominal-cavity-432f500ae536e6937ca3ec1e",
+        "logit": -7.312570571899414,
+        "probability": 0.0033125930931419134,
+        "rank": 6
+      },
+      {
+        "action_id": "nominal-cavity-47ea35d20ded4fe4aa7f8e41",
+        "logit": -7.33299446105957,
+        "probability": 0.00324562331661582,
+        "rank": 7
+      },
+      {
+        "action_id": "nominal-cavity-4996ae42cc344780a89596b1",
+        "logit": -7.3374834060668945,
+        "probability": 0.0032310867682099342,
+        "rank": 8
+      },
+      {
+        "action_id": "nominal-cavity-01806c1001f3fce0bf0c1912",
+        "logit": -7.387587547302246,
+        "probability": 0.0030731845181435347,
+        "rank": 9
+      },
+      {
+        "action_id": "nominal-cavity-979ddcb1b9bc90562cde5853",
+        "logit": -7.436153411865234,
+        "probability": 0.0029274988919496536,
+        "rank": 10
+      },
+      {
+        "action_id": "nominal-cavity-4d0a1698f636bfe2f8ae9d44",
+        "logit": -7.439043998718262,
+        "probability": 0.0029190490022301674,
+        "rank": 11
+      },
+      {
+        "action_id": "nominal-cavity-8629211efa3fba39ef2a6f8b",
+        "logit": -7.439850330352783,
+        "probability": 0.002916696248576045,
+        "rank": 12
+      },
+      {
+        "action_id": "nominal-cavity-1b002ed5343b2a4531b01576",
+        "logit": -7.462994575500488,
+        "probability": 0.0028499667532742023,
+        "rank": 13
+      },
+      {
+        "action_id": "nominal-cavity-52e1a9f063ce130018782e04",
+        "logit": -7.4652204513549805,
+        "probability": 0.0028436300344765186,
+        "rank": 14
+      },
+      {
+        "action_id": "nominal-cavity-b53fb2bf619952845ff06218",
+        "logit": -7.475197792053223,
+        "probability": 0.002815399318933487,
+        "rank": 15
+      },
+      {
+        "action_id": "nominal-cavity-3d41eceed115ce860cc3f9aa",
+        "logit": -7.490220069885254,
+        "probability": 0.0027734215836972,
+        "rank": 16
+      },
+      {
+        "action_id": "nominal-cavity-c857c8364dc3965749cbee5e",
+        "logit": -7.491192817687988,
+        "probability": 0.0027707251720130444,
+        "rank": 17
+      },
+      {
+        "action_id": "nominal-cavity-24b02c7bce6d336b8d24e002",
+        "logit": -7.491643905639648,
+        "probability": 0.002769475569948554,
+        "rank": 18
+      },
+      {
+        "action_id": "nominal-cavity-aefeae0592777a2a8cbe76bd",
+        "logit": -7.494535446166992,
+        "probability": 0.002761479001492262,
+        "rank": 19
+      },
+      {
+        "action_id": "nominal-cavity-7712761030d1a09f2ce7d5d8",
+        "logit": -7.4953413009643555,
+        "probability": 0.002759254537522793,
+        "rank": 20
+      },
+      {
+        "action_id": "nominal-cavity-e6938ef460181ccf09e7d725",
+        "logit": -7.508047580718994,
+        "probability": 0.0027244165539741516,
+        "rank": 21
+      },
+      {
+        "action_id": "nominal-cavity-79746ce9494a716b227d9f72",
+        "logit": -7.51314640045166,
+        "probability": 0.002710560569539666,
+        "rank": 22
+      },
+      {
+        "action_id": "nominal-cavity-692fd0022b19805951ee9503",
+        "logit": -7.515574932098389,
+        "probability": 0.002703985897824168,
+        "rank": 23
+      },
+      {
+        "action_id": "nominal-cavity-466cf263d28f4a8a93e7b152",
+        "logit": -7.5207109451293945,
+        "probability": 0.002690133871510625,
+        "rank": 24
+      },
+      {
+        "action_id": "nominal-cavity-ac839dbc134870bef0038f41",
+        "logit": -7.521039962768555,
+        "probability": 0.0026892488822340965,
+        "rank": 25
+      },
+      {
+        "action_id": "nominal-cavity-081f053496f2bef2240fce52",
+        "logit": -7.521103382110596,
+        "probability": 0.0026890782173722982,
+        "rank": 26
+      },
+      {
+        "action_id": "nominal-cavity-36b387b07f04efe925b47e2b",
+        "logit": -7.522722244262695,
+        "probability": 0.0026847284752875566,
+        "rank": 27
+      },
+      {
+        "action_id": "nominal-cavity-49e487c5504f7880fc952091",
+        "logit": -7.525383949279785,
+        "probability": 0.002677591983228922,
+        "rank": 28
+      },
+      {
+        "action_id": "nominal-cavity-0f74fa2cfe5dea9445633cf9",
+        "logit": -7.52899169921875,
+        "probability": 0.0026679495349526405,
+        "rank": 29
+      },
+      {
+        "action_id": "nominal-cavity-b4268e2327285f5503c49d52",
+        "logit": -7.530948638916016,
+        "probability": 0.0026627336628735065,
+        "rank": 30
+      },
+      {
+        "action_id": "nominal-cavity-f6ffb9c11e9fc2639333876c",
+        "logit": -7.533143997192383,
+        "probability": 0.0026568942703306675,
+        "rank": 31
+      },
+      {
+        "action_id": "nominal-cavity-422b99418583537e8794d539",
+        "logit": -7.543749809265137,
+        "probability": 0.0026288647204637527,
+        "rank": 32
+      },
+      {
+        "action_id": "nominal-cavity-4e3eae40f86164d362295e21",
+        "logit": -7.545711040496826,
+        "probability": 0.002623713808134198,
+        "rank": 33
+      },
+      {
+        "action_id": "nominal-cavity-473ed633999187d9928c344d",
+        "logit": -7.548614501953125,
+        "probability": 0.0026161072310060263,
+        "rank": 34
+      },
+      {
+        "action_id": "nominal-cavity-c602adecf82625d834fe12bb",
+        "logit": -7.557842254638672,
+        "probability": 0.0025920772459357977,
+        "rank": 35
+      },
+      {
+        "action_id": "nominal-cavity-7f57eff50257b7f4c380c91d",
+        "logit": -7.558197975158691,
+        "probability": 0.002591155469417572,
+        "rank": 36
+      },
+      {
+        "action_id": "nominal-cavity-0cd22f77a232aee7ede8c455",
+        "logit": -7.558787822723389,
+        "probability": 0.0025896274019032717,
+        "rank": 37
+      },
+      {
+        "action_id": "nominal-cavity-d8f2dbb38f919f31e2052aac",
+        "logit": -7.564093112945557,
+        "probability": 0.002575925085693598,
+        "rank": 38
+      },
+      {
+        "action_id": "nominal-cavity-0b641b4e14e6de7a345b3a38",
+        "logit": -7.569805145263672,
+        "probability": 0.002561253262683749,
+        "rank": 39
+      },
+      {
+        "action_id": "nominal-cavity-2b5fe06f128d62454c94973d",
+        "logit": -7.5734100341796875,
+        "probability": 0.0025520368944853544,
+        "rank": 40
+      },
+      {
+        "action_id": "nominal-cavity-de3923211c10d6518fc2e96a",
+        "logit": -7.574445724487305,
+        "probability": 0.0025493951980024576,
+        "rank": 41
+      },
+      {
+        "action_id": "nominal-cavity-4894bc51a214662163824d92",
+        "logit": -7.574899673461914,
+        "probability": 0.002548238029703498,
+        "rank": 42
+      },
+      {
+        "action_id": "nominal-cavity-d6faa1dc312649a2415e7698",
+        "logit": -7.576231956481934,
+        "probability": 0.0025448454543948174,
+        "rank": 43
+      },
+      {
+        "action_id": "nominal-cavity-34945d742063bd09606775b3",
+        "logit": -7.576531410217285,
+        "probability": 0.002544083632528782,
+        "rank": 44
+      },
+      {
+        "action_id": "nominal-cavity-dbe37c8826f68cdc6411ab99",
+        "logit": -7.5798115730285645,
+        "probability": 0.0025357522536069155,
+        "rank": 45
+      },
+      {
+        "action_id": "nominal-cavity-d8bb826c8fb913463421aca8",
+        "logit": -7.5825300216674805,
+        "probability": 0.0025288681499660015,
+        "rank": 46
+      },
+      {
+        "action_id": "nominal-cavity-620cee50a1226717568c14eb",
+        "logit": -7.586440086364746,
+        "probability": 0.0025189993903040886,
+        "rank": 47
+      },
+      {
+        "action_id": "nominal-cavity-bce775d396e13399934891c5",
+        "logit": -7.588635444641113,
+        "probability": 0.002513475250452757,
+        "rank": 48
+      },
+      {
+        "action_id": "nominal-cavity-2a7e02c8342a3196cc0b818f",
+        "logit": -7.590475082397461,
+        "probability": 0.0025088556576520205,
+        "rank": 49
+      },
+      {
+        "action_id": "nominal-cavity-890872b680c30708d6cce619",
+        "logit": -7.598367214202881,
+        "probability": 0.0024891335051506758,
+        "rank": 50
+      },
+      {
+        "action_id": "nominal-cavity-aaa51c56a68c521c7248d16c",
+        "logit": -7.598508834838867,
+        "probability": 0.002488780999556184,
+        "rank": 51
+      },
+      {
+        "action_id": "nominal-cavity-2765925c618a11bff883966f",
+        "logit": -7.6041059494018555,
+        "probability": 0.0024748898576945066,
+        "rank": 52
+      },
+      {
+        "action_id": "nominal-cavity-79014f458bb1cb3a05cb2742",
+        "logit": -7.613332748413086,
+        "probability": 0.002452159533277154,
+        "rank": 53
+      },
+      {
+        "action_id": "nominal-cavity-c5a3767c197fbb22fc62e627",
+        "logit": -7.614278793334961,
+        "probability": 0.0024498410057276487,
+        "rank": 54
+      },
+      {
+        "action_id": "nominal-cavity-617f4ee4403519b34aeb9985",
+        "logit": -7.614752769470215,
+        "probability": 0.002448679879307747,
+        "rank": 55
+      },
+      {
+        "action_id": "nominal-cavity-c7d2a4de837cb6bae4344347",
+        "logit": -7.619584083557129,
+        "probability": 0.0024368781596422195,
+        "rank": 56
+      },
+      {
+        "action_id": "nominal-cavity-cdfcf648d72be5caf74e72f9",
+        "logit": -7.620351791381836,
+        "probability": 0.0024350080639123917,
+        "rank": 57
+      },
+      {
+        "action_id": "nominal-cavity-ede58ed31f41900d6dcc7045",
+        "logit": -7.623049736022949,
+        "probability": 0.0024284475948661566,
+        "rank": 58
+      },
+      {
+        "action_id": "nominal-cavity-6b6f1c9366f711d60f003d6a",
+        "logit": -7.628901481628418,
+        "probability": 0.002414278220385313,
+        "rank": 59
+      },
+      {
+        "action_id": "nominal-cavity-2e7b55f6b0c747907e85b056",
+        "logit": -7.629922866821289,
+        "probability": 0.002411813708022237,
+        "rank": 60
+      },
+      {
+        "action_id": "nominal-cavity-0239d7268988cdfdab49aa77",
+        "logit": -7.636061668395996,
+        "probability": 0.0023970534093677998,
+        "rank": 61
+      },
+      {
+        "action_id": "nominal-cavity-89109e272d63173a70cd622b",
+        "logit": -7.645966529846191,
+        "probability": 0.0023734280839562416,
+        "rank": 62
+      },
+      {
+        "action_id": "nominal-cavity-b636348e4a225554a7b325cc",
+        "logit": -7.652346611022949,
+        "probability": 0.0023583336733281612,
+        "rank": 63
+      },
+      {
+        "action_id": "nominal-cavity-cb10b93e0cebf99b6f0c12d7",
+        "logit": -7.6539998054504395,
+        "probability": 0.0023544379509985447,
+        "rank": 64
+      },
+      {
+        "action_id": "nominal-cavity-6e0f71d11e34ed4beee1ca54",
+        "logit": -7.655036926269531,
+        "probability": 0.002351997420191765,
+        "rank": 65
+      },
+      {
+        "action_id": "nominal-cavity-417f590381bc98e52ed7bc77",
+        "logit": -7.670243263244629,
+        "probability": 0.002316502621397376,
+        "rank": 66
+      },
+      {
+        "action_id": "nominal-cavity-8c1df74e56f9216af49bb194",
+        "logit": -7.675844192504883,
+        "probability": 0.002303564455360174,
+        "rank": 67
+      },
+      {
+        "action_id": "nominal-cavity-d085f2e19063c0245759baf9",
+        "logit": -7.6785407066345215,
+        "probability": 0.002297361381351948,
+        "rank": 68
+      },
+      {
+        "action_id": "nominal-cavity-ef7ff6fa0652f6ab23ac6ca1",
+        "logit": -7.68277645111084,
+        "probability": 0.002287650713697076,
+        "rank": 69
+      },
+      {
+        "action_id": "nominal-cavity-468edc94dea48e00ce18b7aa",
+        "logit": -7.7105278968811035,
+        "probability": 0.0022250378970056772,
+        "rank": 70
+      },
+      {
+        "action_id": "nominal-cavity-13dec7ccb6b5bfb5ce08c421",
+        "logit": -7.738266944885254,
+        "probability": 0.002164165722206235,
+        "rank": 71
+      }
+    ],
+    "initial": [
+      {
+        "action_id": "nominal-cavity-c602adecf82625d834fe12bb",
+        "logit": 0.22237122058868408,
+        "probability": 0.014313814230263233,
+        "rank": 1
+      },
+      {
+        "action_id": "nominal-cavity-d8f2dbb38f919f31e2052aac",
+        "logit": 0.22061917185783386,
+        "probability": 0.014288757927715778,
+        "rank": 2
+      },
+      {
+        "action_id": "nominal-cavity-473ed633999187d9928c344d",
+        "logit": 0.21992886066436768,
+        "probability": 0.01427889708429575,
+        "rank": 3
+      },
+      {
+        "action_id": "nominal-cavity-aaa51c56a68c521c7248d16c",
+        "logit": 0.21960780024528503,
+        "probability": 0.014274314045906067,
+        "rank": 4
+      },
+      {
+        "action_id": "nominal-cavity-f6ffb9c11e9fc2639333876c",
+        "logit": 0.21946436166763306,
+        "probability": 0.014272266998887062,
+        "rank": 5
+      },
+      {
+        "action_id": "nominal-cavity-79014f458bb1cb3a05cb2742",
+        "logit": 0.21927803754806519,
+        "probability": 0.01426960714161396,
+        "rank": 6
+      },
+      {
+        "action_id": "nominal-cavity-b4268e2327285f5503c49d52",
+        "logit": 0.21864473819732666,
+        "probability": 0.01426057331264019,
+        "rank": 7
+      },
+      {
+        "action_id": "nominal-cavity-0cd22f77a232aee7ede8c455",
+        "logit": 0.21860787272453308,
+        "probability": 0.014260047115385532,
+        "rank": 8
+      },
+      {
+        "action_id": "nominal-cavity-c7d2a4de837cb6bae4344347",
+        "logit": 0.21752598881721497,
+        "probability": 0.014244628138840199,
+        "rank": 9
+      },
+      {
+        "action_id": "nominal-cavity-ede58ed31f41900d6dcc7045",
+        "logit": 0.21716740727424622,
+        "probability": 0.014239520765841007,
+        "rank": 10
+      },
+      {
+        "action_id": "nominal-cavity-6e0f71d11e34ed4beee1ca54",
+        "logit": 0.21696817874908447,
+        "probability": 0.014236683957278728,
+        "rank": 11
+      },
+      {
+        "action_id": "nominal-cavity-2765925c618a11bff883966f",
+        "logit": 0.21683567762374878,
+        "probability": 0.014234798960387707,
+        "rank": 12
+      },
+      {
+        "action_id": "nominal-cavity-cb10b93e0cebf99b6f0c12d7",
+        "logit": 0.21651458740234375,
+        "probability": 0.014230228029191494,
+        "rank": 13
+      },
+      {
+        "action_id": "nominal-cavity-bce775d396e13399934891c5",
+        "logit": 0.21637117862701416,
+        "probability": 0.014228187501430511,
+        "rank": 14
+      },
+      {
+        "action_id": "nominal-cavity-617f4ee4403519b34aeb9985",
+        "logit": 0.21578292548656464,
+        "probability": 0.014219820499420166,
+        "rank": 15
+      },
+      {
+        "action_id": "nominal-cavity-620cee50a1226717568c14eb",
+        "logit": 0.21555157005786896,
+        "probability": 0.014216531068086624,
+        "rank": 16
+      },
+      {
+        "action_id": "nominal-cavity-c5a3767c197fbb22fc62e627",
+        "logit": 0.21551468968391418,
+        "probability": 0.014216006733477116,
+        "rank": 17
+      },
+      {
+        "action_id": "nominal-cavity-cdfcf648d72be5caf74e72f9",
+        "logit": 0.21488149464130402,
+        "probability": 0.014207008294761181,
+        "rank": 18
+      },
+      {
+        "action_id": "nominal-cavity-ef7ff6fa0652f6ab23ac6ca1",
+        "logit": 0.21470433473587036,
+        "probability": 0.01420449186116457,
+        "rank": 19
+      },
+      {
+        "action_id": "nominal-cavity-2b5fe06f128d62454c94973d",
+        "logit": 0.21458955109119415,
+        "probability": 0.014202861115336418,
+        "rank": 20
+      },
+      {
+        "action_id": "nominal-cavity-8629211efa3fba39ef2a6f8b",
+        "logit": 0.21448186039924622,
+        "probability": 0.0142013318836689,
+        "rank": 21
+      },
+      {
+        "action_id": "nominal-cavity-d085f2e19063c0245759baf9",
+        "logit": 0.21407419443130493,
+        "probability": 0.014195543713867664,
+        "rank": 22
+      },
+      {
+        "action_id": "nominal-cavity-468edc94dea48e00ce18b7aa",
+        "logit": 0.2138749659061432,
+        "probability": 0.014192715287208557,
+        "rank": 23
+      },
+      {
+        "action_id": "nominal-cavity-ac839dbc134870bef0038f41",
+        "logit": 0.213195338845253,
+        "probability": 0.014183072373270988,
+        "rank": 24
+      },
+      {
+        "action_id": "nominal-cavity-081f053496f2bef2240fce52",
+        "logit": 0.21318107843399048,
+        "probability": 0.014182870276272297,
+        "rank": 25
+      },
+      {
+        "action_id": "nominal-cavity-d8bb826c8fb913463421aca8",
+        "logit": 0.21297408640384674,
+        "probability": 0.014179935678839684,
+        "rank": 26
+      },
+      {
+        "action_id": "nominal-cavity-417f590381bc98e52ed7bc77",
+        "logit": 0.21268975734710693,
+        "probability": 0.014175904914736748,
+        "rank": 27
+      },
+      {
+        "action_id": "nominal-cavity-979ddcb1b9bc90562cde5853",
+        "logit": 0.21254819631576538,
+        "probability": 0.014173897914588451,
+        "rank": 28
+      },
+      {
+        "action_id": "nominal-cavity-8207b5ab7d6b3cd78c34ad30",
+        "logit": 0.21192482113838196,
+        "probability": 0.014165065251290798,
+        "rank": 29
+      },
+      {
+        "action_id": "nominal-cavity-8c1df74e56f9216af49bb194",
+        "logit": 0.21178829669952393,
+        "probability": 0.014163130894303322,
+        "rank": 30
+      },
+      {
+        "action_id": "nominal-cavity-4d0a1698f636bfe2f8ae9d44",
+        "logit": 0.21164602041244507,
+        "probability": 0.014161115512251854,
+        "rank": 31
+      },
+      {
+        "action_id": "nominal-cavity-13dec7ccb6b5bfb5ce08c421",
+        "logit": 0.21161115169525146,
+        "probability": 0.014160622842609882,
+        "rank": 32
+      },
+      {
+        "action_id": "nominal-cavity-6b6f1c9366f711d60f003d6a",
+        "logit": 0.21149635314941406,
+        "probability": 0.014158996753394604,
+        "rank": 33
+      },
+      {
+        "action_id": "nominal-cavity-7712761030d1a09f2ce7d5d8",
+        "logit": 0.21092981100082397,
+        "probability": 0.01415097713470459,
+        "rank": 34
+      },
+      {
+        "action_id": "nominal-cavity-cca5043b81e8ec3623f1b5a9",
+        "logit": 0.21035805344581604,
+        "probability": 0.014142888598144054,
+        "rank": 35
+      },
+      {
+        "action_id": "nominal-cavity-47ea35d20ded4fe4aa7f8e41",
+        "logit": 0.21006903052330017,
+        "probability": 0.014138801954686642,
+        "rank": 36
+      },
+      {
+        "action_id": "nominal-cavity-34945d742063bd09606775b3",
+        "logit": 0.20964327454566956,
+        "probability": 0.014132783748209476,
+        "rank": 37
+      },
+      {
+        "action_id": "nominal-cavity-4894bc51a214662163824d92",
+        "logit": 0.20962899923324585,
+        "probability": 0.014132581651210785,
+        "rank": 38
+      },
+      {
+        "action_id": "nominal-cavity-c857c8364dc3965749cbee5e",
+        "logit": 0.20944088697433472,
+        "probability": 0.014129923656582832,
+        "rank": 39
+      },
+      {
+        "action_id": "nominal-cavity-0239d7268988cdfdab49aa77",
+        "logit": 0.2094220221042633,
+        "probability": 0.014129656367003918,
+        "rank": 40
+      },
+      {
+        "action_id": "nominal-cavity-24b02c7bce6d336b8d24e002",
+        "logit": 0.20899614691734314,
+        "probability": 0.014123640023171902,
+        "rank": 41
+      },
+      {
+        "action_id": "nominal-cavity-1b002ed5343b2a4531b01576",
+        "logit": 0.2088504284620285,
+        "probability": 0.014121582731604576,
+        "rank": 42
+      },
+      {
+        "action_id": "nominal-cavity-8fb6c4dea169643bffbba444",
+        "logit": 0.20865726470947266,
+        "probability": 0.014118854887783527,
+        "rank": 43
+      },
+      {
+        "action_id": "nominal-cavity-e6938ef460181ccf09e7d725",
+        "logit": 0.20857000350952148,
+        "probability": 0.014117622748017311,
+        "rank": 44
+      },
+      {
+        "action_id": "nominal-cavity-d6e8a506abebf3cf438c00f1",
+        "logit": 0.20837275683879852,
+        "probability": 0.014114839024841785,
+        "rank": 45
+      },
+      {
+        "action_id": "nominal-cavity-52e1a9f063ce130018782e04",
+        "logit": 0.20832636952400208,
+        "probability": 0.01411418430507183,
+        "rank": 46
+      },
+      {
+        "action_id": "nominal-cavity-aefeae0592777a2a8cbe76bd",
+        "logit": 0.20809394121170044,
+        "probability": 0.014110904186964035,
+        "rank": 47
+      },
+      {
+        "action_id": "nominal-cavity-3d41eceed115ce860cc3f9aa",
+        "logit": 0.20699553191661835,
+        "probability": 0.014095412567257881,
+        "rank": 48
+      },
+      {
+        "action_id": "nominal-cavity-432f500ae536e6937ca3ec1e",
+        "logit": 0.2068059891462326,
+        "probability": 0.014092741534113884,
+        "rank": 49
+      },
+      {
+        "action_id": "nominal-cavity-01806c1001f3fce0bf0c1912",
+        "logit": 0.20651695132255554,
+        "probability": 0.01408866886049509,
+        "rank": 50
+      },
+      {
+        "action_id": "nominal-cavity-b53fb2bf619952845ff06218",
+        "logit": 0.20641043782234192,
+        "probability": 0.01408716756850481,
+        "rank": 51
+      },
+      {
+        "action_id": "nominal-cavity-422b99418583537e8794d539",
+        "logit": 0.20588883757591248,
+        "probability": 0.014079822227358818,
+        "rank": 52
+      },
+      {
+        "action_id": "nominal-cavity-49e487c5504f7880fc952091",
+        "logit": 0.2053484320640564,
+        "probability": 0.014072215184569359,
+        "rank": 53
+      },
+      {
+        "action_id": "nominal-cavity-79746ce9494a716b227d9f72",
+        "logit": 0.20529836416244507,
+        "probability": 0.014071510173380375,
+        "rank": 54
+      },
+      {
+        "action_id": "nominal-cavity-36b387b07f04efe925b47e2b",
+        "logit": 0.20511022210121155,
+        "probability": 0.014068864285945892,
+        "rank": 55
+      },
+      {
+        "action_id": "nominal-cavity-4996ae42cc344780a89596b1",
+        "logit": 0.20510518550872803,
+        "probability": 0.014068792574107647,
+        "rank": 56
+      },
+      {
+        "action_id": "nominal-cavity-7f57eff50257b7f4c380c91d",
+        "logit": 0.20501792430877686,
+        "probability": 0.014067565090954304,
+        "rank": 57
+      },
+      {
+        "action_id": "nominal-cavity-466cf263d28f4a8a93e7b152",
+        "logit": 0.20477432012557983,
+        "probability": 0.014064138755202293,
+        "rank": 58
+      },
+      {
+        "action_id": "nominal-cavity-692fd0022b19805951ee9503",
+        "logit": 0.20467819273471832,
+        "probability": 0.014062786474823952,
+        "rank": 59
+      },
+      {
+        "action_id": "nominal-cavity-de3923211c10d6518fc2e96a",
+        "logit": 0.2035120129585266,
+        "probability": 0.014046397060155869,
+        "rank": 60
+      },
+      {
+        "action_id": "nominal-cavity-4e3eae40f86164d362295e21",
+        "logit": 0.2034434676170349,
+        "probability": 0.014045433141291142,
+        "rank": 61
+      },
+      {
+        "action_id": "nominal-cavity-2a7e02c8342a3196cc0b818f",
+        "logit": 0.20306386053562164,
+        "probability": 0.014040103182196617,
+        "rank": 62
+      },
+      {
+        "action_id": "nominal-cavity-0f74fa2cfe5dea9445633cf9",
+        "logit": 0.2028583586215973,
+        "probability": 0.014037217944860458,
+        "rank": 63
+      },
+      {
+        "action_id": "nominal-cavity-890872b680c30708d6cce619",
+        "logit": 0.20247438549995422,
+        "probability": 0.014031829312443733,
+        "rank": 64
+      },
+      {
+        "action_id": "nominal-cavity-dbe37c8826f68cdc6411ab99",
+        "logit": 0.20179635286331177,
+        "probability": 0.01402231864631176,
+        "rank": 65
+      },
+      {
+        "action_id": "nominal-cavity-d6faa1dc312649a2415e7698",
+        "logit": 0.2015581727027893,
+        "probability": 0.014018978923559189,
+        "rank": 66
+      },
+      {
+        "action_id": "nominal-cavity-0b641b4e14e6de7a345b3a38",
+        "logit": 0.2011261284351349,
+        "probability": 0.014012923464179039,
+        "rank": 67
+      },
+      {
+        "action_id": "nominal-cavity-2e7b55f6b0c747907e85b056",
+        "logit": 0.19995993375778198,
+        "probability": 0.013996590860188007,
+        "rank": 68
+      },
+      {
+        "action_id": "nominal-cavity-89109e272d63173a70cd622b",
+        "logit": 0.1995117962360382,
+        "probability": 0.013990320265293121,
+        "rank": 69
+      },
+      {
+        "action_id": "nominal-cavity-b636348e4a225554a7b325cc",
+        "logit": 0.1989223062992096,
+        "probability": 0.01398207526654005,
+        "rank": 70
+      },
+      {
+        "action_id": "STOP",
+        "logit": -0.14797021448612213,
+        "probability": 0.009883667342364788,
+        "rank": 71
+      }
+    ]
+  },
+  "audit_elapsed_seconds": 0.08568887505680323,
+  "checkpoint_files_byte_sha256": {
+    "artifacts/native-opening-rl-capacity-v1/RL-000.pt": "433c95336d11a5b3d2e5b98c1d53c2b989b63ae0e277e3b43f835c4cbc2a8257",
+    "artifacts/native-opening-rl-capacity-v1/RL-256.pt": "1d391665f66cdd0c1fa1db150261b853820a9d30d62fc20c99cf021cf0229fbd"
+  },
+  "checks": 830,
+  "comparison": {
+    "RL256": {
+      "STOP_minus_best_nonSTOP_logit": 5.368700623512268,
+      "STOP_probability": 0.8136945962905884,
+      "STOP_rank": 1,
+      "entropy_nats": 1.2710649967193604,
+      "forward_seconds": 0.19082587491720915,
+      "highest_ranked_id_not_executed": "STOP",
+      "load_and_forward_seconds": 0.45257629198022187,
+      "parameter_hash": "sha256:f52e14097ea6a35436eaf30f0ece5658e24987e289ca30ff6a529816545b5721",
+      "top_minus_second_logit": 5.368700623512268,
+      "top_probability": 0.8136945962905884,
+      "value_uncalibrated": 1.686328649520874
+    },
+    "initial": {
+      "STOP_minus_best_nonSTOP_logit": -0.3703414350748062,
+      "STOP_probability": 0.009883667342364788,
+      "STOP_rank": 71,
+      "entropy_nats": 4.261954307556152,
+      "forward_seconds": 0.381639749975875,
+      "highest_ranked_id_not_executed": "nominal-cavity-c602adecf82625d834fe12bb",
+      "load_and_forward_seconds": 0.6579630831256509,
+      "parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+      "top_minus_second_logit": 0.0017520487308502197,
+      "top_probability": 0.014313814230263233,
+      "value_uncalibrated": 0.32192638516426086
+    }
+  },
+  "costs": {
+    "RSS_threshold_bytes": 2147483648,
+    "automatic_retry": false,
+    "forward_seconds_sum": 0.5724656248930842,
+    "load_forward_validation_seconds_sum": 1.1105393751058728,
+    "prior_historical_preparation_seconds": 8.175235959002748,
+    "reconstruction_seconds": 1.4415875419508666,
+    "supervisor_sampled_peak_rss_bytes": 1549369344,
+    "supervisor_seconds": 5.180709000211209,
+    "timer_scope": "Forward time is nested within load/forward/validation time, which is nested in worker and supervisor time. Prior preparation was previously paid, excluded from this diagnostic. Do not add overlapping timers. No end-to-end planning latency established.",
+    "wall_threshold_seconds": 60,
+    "worker_peak_rss_bytes": 1546911744,
+    "worker_seconds": 3.353383791167289
+  },
+  "created_at": "2026-10-08T20:39:09.114538+00:00",
+  "declaration_sha256": "54100dfb6cc8f54a3df4ac63120b19104c7ab75b82fb64f062978a2800c8d9dd",
+  "directly_indexed_files_verified": 45,
+  "input_bundle_byte_sha256": "c1af712957dc4902343995bd828eb0c3662438f8445c5cb7401e6dd50f7a4e12",
+  "interpretation": "The trained checkpoint ranks immediate STOP first (probability0.8136946 versus initial0.00988367) on this single historical annotation-assisted TRAIN observation. This is a model preference over70 simulator-filtered proposals plus STOP. No action, planning endpoint, resection outcome, target reach, risk or benefit was executed/measured. Softmax probabilities are not clinical risk probabilities; value outputs are uncalibrated. Exact-input/checkpoint compatibility succeeded; real transfer and deployment performance remain unestablished.",
+  "inventory_note": {
+    "description": "The writer excludes every basename output-sha256.json from its outer index, so two copied inherited input-index snapshots are absent from the45-entry list. Both exist and match the hashes pinned in the indexed declaration; this audit verifies them separately.",
+    "files": [
+      "input-metadata/artifacts/native-opening-rl-capacity-v1/output-sha256.json",
+      "input-metadata/artifacts/pat05-real-geometric-learning-v1/output-sha256.json"
+    ],
+    "recommendation": "Future index writers can exclude only the root output index; preserve this completed run unchanged.",
+    "severity": "nonblocking"
+  },
+  "maximum_scalar_errors": {
+    "entropy": 2.2284620815327116e-07,
+    "softmax": 1.3252194897006575e-09
+  },
+  "metadata_files_and_snapshots_verified": 10,
+  "method_output_sha256": {
+    "RL256": "ed846cda00b5c1419eb4f540e9f50c667a03cc3b3b6ebb718efdb7769e6ac0eb",
+    "initial": "8a717bf240c02f4f23d8a64dbb1491138ba59a458b8a0d3f9676a77a341d8b47"
+  },
+  "observation": {
+    "action_count": 71,
+    "annotation_status": "supplied preoperative compartment; availability/review unknown",
+    "crop_origin_voxels": [
+      3,
+      106,
+      119
+    ],
+    "crop_shape": [
+      64,
+      64,
+      64
+    ],
+    "full_historical_fingerprint": "sha256:645770594d7988980781df8324fb76ed347f47ff8d7452ca7d032d31efc93f90",
+    "full_source_target_count_crosscheck": "Historical total reference volume divided by saved source-frame voxel volume. Crop count is the authenticated reconstruction report; no patient arrays were decoded in this review.",
+    "grid_and_normalization_match_historical": true,
+    "historical_proposals_before_filter": 78,
+    "missing_evidence": [
+      "motor",
+      "language",
+      "vessels",
+      "deformation",
+      "cutting_forces"
+    ],
+    "nonSTOP_count": 70,
+    "ray_samples_inside_crop_recomputed_from_saved_geometry": 350,
+    "ray_samples_total": 350,
+    "recorded_target_cells_in_crop": 11437,
+    "source_hash": "sha256:27b51658c4445dc0eb12c0ecef2a2709e1b5873bb5bc8a3f9034e8195f4b9267",
+    "source_shape": [
+      160,
+      256,
+      256
+    ],
+    "source_target_cells": 11437,
+    "support_status": "estimated, unreviewed, synthetic-trained SynthStrip; not anatomy admission"
+  },
+  "original_and_output_bytes_unchanged_before_after": true,
+  "output_inventory_sha256": "acfa08f47a10e2fdfd654fd400a70e91d81d57fcf4af284277ec699b68ab0a01",
+  "result_sha256": "9d27ac141f98f6345605d4e81c24b0a1ab3bba528dc4d6bcef39aa6975fa3c3d",
+  "runtime": {
+    "nibabel": "5.4.2",
+    "numpy": "2.5.3",
+    "platform": "darwin",
+    "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+    "scipy": "1.18.1",
+    "torch": "2.14.1"
+  },
+  "schema": "pat05-forward-saved-output-independent-review-v1",
+  "scope": "Read-only JSON/source/runtime metadata, byte hashes of the bound case bundle and checkpoints, and scalar geometry/softmax/rank/entropy arithmetic. No patient-array or checkpoint-tensor decoding, policy forward, native preview, task/action, optimizer update, search, network or protected-patient records opened. Weight tensor identities are joined to the prior independent checkpoint audit by exact file hash.",
+  "sources_verified": 28,
+  "status": "passed_with_nonblocking_inventory_note",
+  "unindexed_later_reporting_files": []
+}

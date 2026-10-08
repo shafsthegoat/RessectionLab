@@ -1,0 +1,149 @@
+{
+  "accounting": {
+    "attempted_checkpoints": [
+      "RL256",
+      "initial"
+    ],
+    "checkpoint_attempts": 2,
+    "completed_checkpoints": [
+      "RL256",
+      "initial"
+    ],
+    "completed_forwards": 2,
+    "declaration_sha256": "54100dfb6cc8f54a3df4ac63120b19104c7ab75b82fb64f062978a2800c8d9dd",
+    "executed_actions": 0,
+    "forward_attempts": 2,
+    "native_previews": 0,
+    "optimizer_updates": 0,
+    "scope": "annotation-assisted fixed-input compatibility; no patient-performance assessment"
+  },
+  "checkpoint_forwards": 2,
+  "comparison": {
+    "RL256": {
+      "STOP_minus_best_nonSTOP_logit": 5.368700623512268,
+      "STOP_probability": 0.8136945962905884,
+      "STOP_rank": 1,
+      "entropy_nats": 1.2710649967193604,
+      "forward_seconds": 0.19082587491720915,
+      "highest_ranked_id_not_executed": "STOP",
+      "load_and_forward_seconds": 0.45257629198022187,
+      "parameter_hash": "sha256:f52e14097ea6a35436eaf30f0ece5658e24987e289ca30ff6a529816545b5721",
+      "top_minus_second_logit": 5.368700623512268,
+      "top_probability": 0.8136945962905884,
+      "value_uncalibrated": 1.686328649520874
+    },
+    "initial": {
+      "STOP_minus_best_nonSTOP_logit": -0.3703414350748062,
+      "STOP_probability": 0.009883667342364788,
+      "STOP_rank": 71,
+      "entropy_nats": 4.261954307556152,
+      "forward_seconds": 0.381639749975875,
+      "highest_ranked_id_not_executed": "nominal-cavity-c602adecf82625d834fe12bb",
+      "load_and_forward_seconds": 0.6579630831256509,
+      "parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+      "top_minus_second_logit": 0.0017520487308502197,
+      "top_probability": 0.014313814230263233,
+      "value_uncalibrated": 0.32192638516426086
+    }
+  },
+  "finding": "RL256 ranks immediate STOP first among the 71 saved actions, with softmax probability 0.8136945963; the original initial checkpoint ranks STOP last, probability 0.00988366734. No patient planning endpoint or clinical benefit was measured.",
+  "input_context": {
+    "actions_including_STOP": 71,
+    "candidate_inventory": "Saved simulator-feasibility-filtered proposals, not established scan-only deployment inputs.",
+    "crop_origin_voxels": [
+      3,
+      106,
+      119
+    ],
+    "crop_shape": [
+      64,
+      64,
+      64
+    ],
+    "historical_proposals_accepted": 70,
+    "historical_proposals_emitted": 78,
+    "normalization": "Entire estimated support percentiles 1/99: lower 18, upper 282; clip to [0,1].",
+    "ray_samples_inside_crop_from_independent_saved_geometry_arithmetic": 350,
+    "ray_samples_total": 350,
+    "recorded_annotation_cells_in_crop": 11437,
+    "source_annotation_cells": 11437,
+    "source_shape": [
+      160,
+      256,
+      256
+    ],
+    "state": "Historical hypothetical empty initial cavity/access, horizon 3. Generated training used horizon 2 and a 9x9x7 six-cell fixture.",
+    "support": "Pinned unreviewed synthetic-trained SynthStrip estimate, not verified tissue/cortex.",
+    "target": "Supplied source preoperative tumor compartment; availability timestamp and expert review unknown.",
+    "unknown_evidence": [
+      "motor",
+      "language",
+      "vessels",
+      "deformation",
+      "cutting_forces"
+    ]
+  },
+  "interpretation_limits": [
+    "Softmax values are conditional model action preferences, not clinical risk or success probabilities.",
+    "The critic values are uncalibrated and do not measure a patient outcome.",
+    "STOP was ranked; it was not executed. No procedural endpoint, simulated resection, outcome, safety or benefit was measured.",
+    "One previously consulted TRAIN observation provides no held-out accuracy, anatomical generalization, useful real transfer or deployment validation.",
+    "Inherited support/access/candidates remain hypothetical, estimated or simulator-derived. The known domain shifts and absent functional/vascular/mechanical evidence remain.",
+    "Forward timing excludes previously paid image acquisition, mask estimation and historical feasibility filtering; nested clocks must not be added."
+  ],
+  "observation_count": 1,
+  "observation_fingerprint": "sha256:645770594d7988980781df8324fb76ed347f47ff8d7452ca7d032d31efc93f90",
+  "publication_scope": "Compact descriptive outputs only; no MRI, mask, checkpoint tensors or raw patient-array payload.",
+  "role": "previously consulted TRAIN",
+  "schema": "pat05-two-forward-publication-summary-v1",
+  "source_bindings_sha256": {
+    "artifacts/pat05-forward-diagnostic-v1/RL256.json": "ed846cda00b5c1419eb4f540e9f50c667a03cc3b3b6ebb718efdb7769e6ac0eb",
+    "artifacts/pat05-forward-diagnostic-v1/declaration-input.json": "54100dfb6cc8f54a3df4ac63120b19104c7ab75b82fb64f062978a2800c8d9dd",
+    "artifacts/pat05-forward-diagnostic-v1/initial.json": "8a717bf240c02f4f23d8a64dbb1491138ba59a458b8a0d3f9676a77a341d8b47",
+    "artifacts/pat05-forward-diagnostic-v1/input-description.json": "4afdfe72136ac40b55bbd0aff80a4238fee417abdb70eba9c309a85344325d3d",
+    "artifacts/pat05-forward-diagnostic-v1/output-sha256.json": "acfa08f47a10e2fdfd654fd400a70e91d81d57fcf4af284277ec699b68ab0a01",
+    "artifacts/pat05-forward-diagnostic-v1/reconstruction.json": "57ff59cc8caf2b2bc0c2e66a4b59db3491fea394a0e498cb2f7e52ef2535a25d",
+    "artifacts/pat05-forward-diagnostic-v1/result.json": "9d27ac141f98f6345605d4e81c24b0a1ab3bba528dc4d6bcef39aa6975fa3c3d",
+    "artifacts/pat05-forward-diagnostic-v1/supervisor.json": "27671760d401b8df3ea70853f2ce7d211fb53fb7fb8477a397a6a9815110429b",
+    "build/pat05-forward-output-review-v1/verification.json": "7fb0cdbc4f7263ec1a2b12557c2ba92f668aa4f5264e05d783da49a531a654cf"
+  },
+  "source_hash": "sha256:27b51658c4445dc0eb12c0ecef2a2709e1b5873bb5bc8a3f9034e8195f4b9267",
+  "status": "completed_fixed_input_diagnostic_with_independent_saved_output_audit",
+  "subject": "sub-PAT05",
+  "timing_and_resources": {
+    "RSS_threshold_bytes": 2147483648,
+    "automatic_retry": false,
+    "forward_seconds_sum": 0.5724656248930842,
+    "load_forward_validation_seconds_sum": 1.1105393751058728,
+    "prior_historical_preparation_seconds": 8.175235959002748,
+    "reconstruction_seconds": 1.4415875419508666,
+    "supervisor_sampled_peak_rss_bytes": 1549369344,
+    "supervisor_seconds": 5.180709000211209,
+    "timer_scope": "Forward time is nested within load/forward/validation time, which is nested in worker and supervisor time. Prior preparation was previously paid, excluded from this diagnostic. Do not add overlapping timers. No end-to-end planning latency established.",
+    "wall_threshold_seconds": 60,
+    "worker_peak_rss_bytes": 1546911744,
+    "worker_seconds": 3.353383791167289
+  },
+  "verification": {
+    "additional_manifest_bound_nested_index_snapshots": 2,
+    "all350_ray_samples_independently_inside_crop": true,
+    "all71_softmax_probabilities_ranks_entropy_and_margins_recomputed": true,
+    "audit_model_or_native_executions": 0,
+    "audit_patient_or_checkpoint_array_decodes": 0,
+    "case_bundle_and_checkpoint_byte_hashes_match": true,
+    "checks": 830,
+    "direct_indexed_files": 45,
+    "full_historical_fingerprint_grid_normalization_support_metadata_match": true,
+    "inventory_note": {
+      "description": "The writer excludes every basename output-sha256.json from its outer index, so two copied inherited input-index snapshots are absent from the45-entry list. Both exist and match the hashes pinned in the indexed declaration; this audit verifies them separately.",
+      "files": [
+        "input-metadata/artifacts/native-opening-rl-capacity-v1/output-sha256.json",
+        "input-metadata/artifacts/pat05-real-geometric-learning-v1/output-sha256.json"
+      ],
+      "recommendation": "Future index writers can exclude only the root output index; preserve this completed run unchanged.",
+      "severity": "nonblocking"
+    },
+    "pinned_metadata_files_and_snapshots": 10,
+    "source_files": 28
+  }
+}

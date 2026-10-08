@@ -1,0 +1,177 @@
+{
+  "anatomy_admission": false,
+  "annotation": {
+    "availability_timestamp": null,
+    "expert_review_status": "unknown",
+    "learned_segmentation": false,
+    "source": "supplied BTC preoperative source compartment"
+  },
+  "cavity_lineage": "hypothetical empty initial simulator state; not an observed operative cavity",
+  "clinical_admission": false,
+  "crop": {
+    "basis": "scan_frame_and_declared_access_only",
+    "native_geometry_resampled": false,
+    "origin_voxels": [
+      3,
+      106,
+      119
+    ],
+    "shape": [
+      64,
+      64,
+      64
+    ]
+  },
+  "native_grid_reconciliation": {
+    "corner_domain": "full_source_cell_extent_minus_half_to_shape_minus_half",
+    "derived_affine_hash": "sha256:4e62c7cb6b1a5b405cc54cda8ddaa9e933896603fd37ed9dbf13e6d1e7154a76",
+    "derived_affine_ras_mm": [
+      [
+        0.9991455674090443,
+        0.03670010681805703,
+        0.019190453219683344,
+        -83.10478973388672
+      ],
+      [
+        -0.036693469029287086,
+        0.9993262887125605,
+        -0.0007048095092985703,
+        -110.23243713378906
+      ],
+      [
+        -0.019203459617015493,
+        4.299605653764695e-08,
+        0.9998155832247058,
+        -141.11172485351562
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "derived_spacing_mm": [
+      1.0000035241956933,
+      0.9999999645762386,
+      0.9999999853550898
+    ],
+    "handedness_preserved": true,
+    "maximum_allowed_corner_displacement_mm": 1e-06,
+    "maximum_allowed_gram_error": 1e-08,
+    "maximum_corner_displacement_mm": 1.0842083020239977e-07,
+    "method": "orthogonal_roundoff_1e-6mm",
+    "native_and_actor_physical_grid": "derived_affine_ras_mm",
+    "origin_preserved": true,
+    "original_affine_hash": "sha256:20f06ec45e8f37414c2b0629104589e19cc7bd41692252898f95bf9bb4db795e",
+    "original_affine_ras_mm": [
+      [
+        0.9991455674171448,
+        0.03670010715723038,
+        0.019190452992916107,
+        -83.10478973388672
+      ],
+      [
+        -0.03669346868991852,
+        0.9993262887001038,
+        -0.0007048094994388521,
+        -110.23243713378906
+      ],
+      [
+        -0.019203459843993187,
+        4.299106848293377e-08,
+        0.9998155832290649,
+        -141.11172485351562
+      ],
+      [
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ]
+    ],
+    "original_spacing_mm": [
+      1.000003524195693,
+      0.999999964576238,
+      0.9999999853550895
+    ],
+    "proposal_and_crop_indices_basis": "original_source_affine",
+    "resampled": false,
+    "shape": [
+      160,
+      256,
+      256
+    ],
+    "source_axis_gram_max_error": 6.788716003576174e-10,
+    "source_image_hash": "sha256:93e2812263872cbbd3f24de845c015b7dd418a4a89223887437a5f44fff35359",
+    "support_hash": "sha256:436199eb3abc24e818e13e342f69bbae45b76b8be1dd6c2ce1071013fce43949"
+  },
+  "normalization": {
+    "clip": [
+      0.0,
+      1.0
+    ],
+    "crop_used_for_statistics": false,
+    "lower": 18.0,
+    "method": "support_percentile_1_99",
+    "percentile_method": "linear",
+    "percentiles": [
+      1.0,
+      99.0
+    ],
+    "raw_source_preserved": true,
+    "reference_labels_used": false,
+    "source_image_hash": "sha256:93e2812263872cbbd3f24de845c015b7dd418a4a89223887437a5f44fff35359",
+    "statistics_scope": "entire_permitted_support",
+    "statistics_voxels": 1402135,
+    "support_hash": "sha256:436199eb3abc24e818e13e342f69bbae45b76b8be1dd6c2ce1071013fce43949",
+    "upper": 282.0
+  },
+  "observation_hash": "sha256:645770594d7988980781df8324fb76ed347f47ff8d7452ca7d032d31efc93f90",
+  "proposal_lineage": "70 historical simulator-feasibility-filtered proposals; simulator-derived information, not demonstrated scan-only deployment input; no new certification or action execution",
+  "source_hash": "sha256:27b51658c4445dc0eb12c0ecef2a2709e1b5873bb5bc8a3f9034e8195f4b9267",
+  "source_shape": [
+    160,
+    256,
+    256
+  ],
+  "supplied_annotation_cells_full_source": 11437,
+  "supplied_annotation_cells_in_crop": 11437,
+  "support_provenance": {
+    "acknowledgment": {
+      "acknowledge_unreviewed": true,
+      "case_hash": "sha256:2fd887043fc6c7d657e83cadd9f55f0f585940a82c0eefb50da8baa0b3c989ef",
+      "clinical_use_permitted": false,
+      "cortical_access_permitted": false,
+      "declared_at": "2026-10-04T17:41:37.328452+00:00",
+      "declared_by": "RessectionLab research workflow under explicit user-authorized provisional scope",
+      "evidence_hash": "sha256:1d016c7cf0e799ca57d494445f78356dbad12298a0994894b8eb93066780ccfb",
+      "evidence_id": "synthstrip_main_7be541d3d8f3",
+      "mask_hash": "sha256:436199eb3abc24e818e13e342f69bbae45b76b8be1dd6c2ce1071013fce43949",
+      "model_sha256": "sha256:37417f802196186441aae3e7f385d94f8a98c64a88acaeaa2723af995c653e33",
+      "planning_hash": "sha256:8233172d1a9455ea69b1026636f4085e97c4fd7db323e4b3d103052667f200d0",
+      "purpose": "native_spatial_provisional_research",
+      "rationale": "Use the exact existing main estimated envelope for annotation-assisted native geometry research. PAT05 main was selected prospectively for complete supplied annotation inclusion; no reward or feasibility sweep, expert review, cortical localization or clinical approval is claimed.",
+      "run_sha256": "sha256:7be541d3d8f3c2784006aae75cf8e3d420bff37790554eac9eb6990b84abd428",
+      "schema_version": 1,
+      "scope": "hypothetical_tissue_support",
+      "source_frame_hash": "sha256:6a956e22ef40ed2ce301f0583a7be3a1d655e0fa9ab2d9ed8c11d2f7b5a156b1",
+      "source_image_hash": "sha256:93e2812263872cbbd3f24de845c015b7dd418a4a89223887437a5f44fff35359"
+    },
+    "clinical_deficit_probability": null,
+    "clinical_use_permitted": false,
+    "cortical_access_permitted": false,
+    "evidence_hash": "sha256:1d016c7cf0e799ca57d494445f78356dbad12298a0994894b8eb93066780ccfb",
+    "evidence_type": "estimated",
+    "method": "explicitly_acknowledged_unreviewed_model_support",
+    "research_use": "provisional",
+    "review_status": "review_required"
+  },
+  "unknown_evidence": [
+    "motor",
+    "language",
+    "vessels",
+    "deformation",
+    "cutting_forces"
+  ]
+}

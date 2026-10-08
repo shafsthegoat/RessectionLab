@@ -61,8 +61,18 @@ has now completed: 256 updates, 1,024 independently audited training histories,
 and exact first-16 reproduction. Final argmax return is 1.098 versus search's
 1.100; expected stochastic return is +0.546023. The run took 93.6124 seconds;
 geometry and auditing dominate its cost. This supports fixed-task learning only.
-Next is a narrow frozen-forward compatibility check on declared TRAIN anatomy,
-with no action execution, patient fitting or generalization claim.
+The [PAT05 fixed-input diagnostic](../artifacts/pat05-forward-diagnostic-v1/RESULT.md)
+completed exactly two frozen forwards in 5.180709 seconds supervised time with
+1,549,369,344 bytes sampled peak RSS. All 830 independent metadata/numeric checks
+passed. RL256 ranks STOP first of 71 (0.813695 preference); initial ranks it last
+(0.009884). These are conditional model preferences, not clinical probabilities.
+No action, patient fit or planning endpoint was executed. The input is annotation-
+assisted and includes historical simulator-filtered candidates and estimated support.
+Generated-to-patient tool lengths, scale, horizon and inventory differ. The next
+mechanism test changes only the length descriptor on the familiar generated DTO,
+with two fixed forwards and no updates. The completed PAT05 run is unchanged;
+a future index-writer repair includes nested inherited index files, whose bytes
+were independently verified despite omission from the original outer index.
 
 ## Latest acquisition checkpoint
 

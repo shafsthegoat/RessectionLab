@@ -1,0 +1,19 @@
+{
+  "command": [
+    ".venv/bin/python",
+    "-B",
+    "scripts/run_pat05_forward_diagnostic.py",
+    "--declaration",
+    "manifests/experiments/pat05-forward-diagnostic-v1.json",
+    "--output",
+    "artifacts/pat05-forward-diagnostic-v1",
+    "--execute"
+  ],
+  "source_commit": "df101e1b252d26172a20093ba3c64487403fc47f",
+  "declaration_sha256": "54100dfb6cc8f54a3df4ac63120b19104c7ab75b82fb64f062978a2800c8d9dd",
+  "pid": 11233,
+  "started_utc": "2026-10-08T20:12:18.669035+00:00",
+  "exit_code": 0,
+  "elapsed_seconds": 5.7794222079683095,
+  "finished_utc": "2026-10-08T20:12:24.429055+00:00"
+}

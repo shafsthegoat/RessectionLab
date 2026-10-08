@@ -1,0 +1,61 @@
+{
+  "status": "passed_with_nonblocking_inventory_note",
+  "checks": 830,
+  "comparison": {
+    "initial": {
+      "highest_ranked_id_not_executed": "nominal-cavity-c602adecf82625d834fe12bb",
+      "STOP_probability": 0.009883667342364788,
+      "STOP_rank": 71,
+      "STOP_minus_best_nonSTOP_logit": -0.3703414350748062,
+      "top_minus_second_logit": 0.0017520487308502197,
+      "top_probability": 0.014313814230263233,
+      "entropy_nats": 4.261954307556152,
+      "value_uncalibrated": 0.32192638516426086,
+      "forward_seconds": 0.381639749975875,
+      "load_and_forward_seconds": 0.6579630831256509,
+      "parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8"
+    },
+    "RL256": {
+      "highest_ranked_id_not_executed": "STOP",
+      "STOP_probability": 0.8136945962905884,
+      "STOP_rank": 1,
+      "STOP_minus_best_nonSTOP_logit": 5.368700623512268,
+      "top_minus_second_logit": 5.368700623512268,
+      "top_probability": 0.8136945962905884,
+      "entropy_nats": 1.2710649967193604,
+      "value_uncalibrated": 1.686328649520874,
+      "forward_seconds": 0.19082587491720915,
+      "load_and_forward_seconds": 0.45257629198022187,
+      "parameter_hash": "sha256:f52e14097ea6a35436eaf30f0ece5658e24987e289ca30ff6a529816545b5721"
+    }
+  },
+  "maximum_scalar_errors": {
+    "softmax": 1.3252194897006575e-09,
+    "entropy": 2.2284620815327116e-07
+  },
+  "costs": {
+    "worker_seconds": 3.353383791167289,
+    "supervisor_seconds": 5.180709000211209,
+    "worker_peak_rss_bytes": 1546911744,
+    "supervisor_sampled_peak_rss_bytes": 1549369344,
+    "reconstruction_seconds": 1.4415875419508666,
+    "forward_seconds_sum": 0.5724656248930842,
+    "load_forward_validation_seconds_sum": 1.1105393751058728,
+    "prior_historical_preparation_seconds": 8.175235959002748,
+    "timer_scope": "Forward time is nested within load/forward/validation time, which is nested in worker and supervisor time. Prior preparation was previously paid, excluded from this diagnostic. Do not add overlapping timers. No end-to-end planning latency established.",
+    "wall_threshold_seconds": 60,
+    "RSS_threshold_bytes": 2147483648,
+    "automatic_retry": false
+  },
+  "inventory_note": {
+    "severity": "nonblocking",
+    "description": "The writer excludes every basename output-sha256.json from its outer index, so two copied inherited input-index snapshots are absent from the45-entry list. Both exist and match the hashes pinned in the indexed declaration; this audit verifies them separately.",
+    "files": [
+      "input-metadata/artifacts/native-opening-rl-capacity-v1/output-sha256.json",
+      "input-metadata/artifacts/pat05-real-geometric-learning-v1/output-sha256.json"
+    ],
+    "recommendation": "Future index writers can exclude only the root output index; preserve this completed run unchanged."
+  },
+  "audit_elapsed_seconds": 0.08568887505680323
+}
+{"verification_sha256": "7fb0cdbc4f7263ec1a2b12557c2ba92f668aa4f5264e05d783da49a531a654cf"}

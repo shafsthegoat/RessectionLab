@@ -1,0 +1,54 @@
+{
+  "accounting": {
+    "attempted_checkpoints": [
+      "RL256",
+      "initial"
+    ],
+    "checkpoint_attempts": 2,
+    "completed_checkpoints": [
+      "RL256",
+      "initial"
+    ],
+    "completed_forwards": 2,
+    "declaration_sha256": "54100dfb6cc8f54a3df4ac63120b19104c7ab75b82fb64f062978a2800c8d9dd",
+    "executed_actions": 0,
+    "forward_attempts": 2,
+    "native_previews": 0,
+    "optimizer_updates": 0,
+    "scope": "annotation-assisted fixed-input compatibility; no patient-performance assessment"
+  },
+  "clinical_performance_measured": false,
+  "deployment_compatibility_established": false,
+  "elapsed_seconds": 3.353383791167289,
+  "historical_preparation": {
+    "new_previews": 0,
+    "proposals_accepted": 70,
+    "proposals_emitted": 78,
+    "scope": "previously paid historical native certification; excluded from this observation-only clock",
+    "seconds": 8.175235959002748
+  },
+  "methods": {
+    "RL256": {
+      "forward_seconds": 0.19082587491720915,
+      "highest_ranked_id_not_executed": "STOP",
+      "load_and_forward_seconds": 0.45257629198022187,
+      "outputs": "RL256.json",
+      "parameter_hash": "sha256:f52e14097ea6a35436eaf30f0ece5658e24987e289ca30ff6a529816545b5721",
+      "status": "complete"
+    },
+    "initial": {
+      "forward_seconds": 0.381639749975875,
+      "highest_ranked_id_not_executed": "nominal-cavity-c602adecf82625d834fe12bb",
+      "load_and_forward_seconds": 0.6579630831256509,
+      "outputs": "initial.json",
+      "parameter_hash": "sha256:2fa97c0e730db09371786d5ba903ffdf467b3cc7149a111c182d6a7499cdd9b8",
+      "status": "complete"
+    }
+  },
+  "peak_worker_rss_bytes": 1546911744,
+  "reconstruction_seconds": 1.4415875419508666,
+  "role": "TRAIN",
+  "status": "complete",
+  "subject": "sub-PAT05",
+  "version": "pat05-forward-diagnostic-v1"
+}

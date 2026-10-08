@@ -241,3 +241,18 @@ def test_terminal_checkpoint_failure_closes_active_method(monkeypatch, tmp_path,
     else:
         assert result["methods"]["initial"]["status"] == "complete"
         assert result["methods"]["initial"]["outputs"] == "initial.json"
+
+
+def test_output_index_preserves_nested_input_indices(tmp_path):
+    import json
+    nested = tmp_path / "input-metadata" / "output-sha256.json"
+    nested.parent.mkdir()
+    nested.write_text('{"historical": "bound separately"}')
+    (tmp_path / "result.json").write_text('{"status": "software-control"}')
+    (tmp_path / "output-sha256.json").write_text('{}')
+    runner.write_output_index(tmp_path)
+    result = json.loads((tmp_path / "output-sha256.json").read_text())
+    assert set(result) == {"input-metadata/output-sha256.json", "result.json"}
+    assert result["input-metadata/output-sha256.json"] == hashlib.sha256(nested.read_bytes()).hexdigest()
+    runner.write_output_index(tmp_path)
+    assert json.loads((tmp_path / "output-sha256.json").read_text()) == result

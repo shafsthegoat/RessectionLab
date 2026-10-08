@@ -34,7 +34,12 @@ probability. The [fixed longer scratch RL run](artifacts/native-opening-rl-capac
 now scores 1.098 against search's 1.100 after 256 updates and 1,024 audited
 training episodes. Expected return improves to +0.546023, but stochastic failures
 remain. First-16 trajectories and optimizer state reproduce exactly. This is
-capacity on one generated task; real-patient input compatibility and transfer remain open.
+capacity on one generated task. The [two-forward PAT05 diagnostic](artifacts/pat05-forward-diagnostic-v1/RESULT.md)
+now verifies compatibility with one prepared TRAIN observation: RL256 ranks STOP
+first of 71 actions (81.3695% preference), versus last for the initial checkpoint
+(0.9884%). No action or planning endpoint ran, so useful patient transfer remains
+unestablished. Tool lengths, image/crop scale, horizon and proposal inventory differ
+from generated training; a fixed length-only input diagnostic is next.
 
 The [full eligible annotation intake](artifacts/lausanne-annotation-full-intake-v1/RESULT.md)
 completed all 144 masks (13,977,015 bytes). Independent content checks passed for
@@ -69,7 +74,7 @@ physical validation and calibration remain unestablished. The additional
 All 672,336,857 bytes passed independent size/MD5/SHA256 checks after a continuous
 265.1827-second run. Combined originals now comprise 70 images and 59 landmark files;
 cavity labels remain 25 masks for 13 people. Scientific QC remains separate. The [TRAIN compatibility contract](artifacts/btc-train-transfer-readiness-v1/contract.json)
-is archived for a two-forward PAT05 diagnostic without actions or optimization.
+is archived; its two frozen forwards completed without actions or optimization.
 The [observed six-landmark desktop API](artifacts/observed-landmark-replay-v1/RESULT.md)
 now advances acquired phases/points and reopens bound snapshots. Independent review
 cleared transport and packaged-startup repairs. Sparse landmarks still provide no

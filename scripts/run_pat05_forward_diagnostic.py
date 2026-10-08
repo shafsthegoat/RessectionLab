@@ -166,6 +166,13 @@ def worker(record, output, declaration_sha256):
         save()
 
 
+def write_output_index(output):
+    """Include inherited index files; exclude only this root index itself."""
+    index = output / "output-sha256.json"
+    write_json(index, {str(path.relative_to(output)): sha256(path)
+        for path in sorted(output.rglob("*")) if path.is_file() and path != index})
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--declaration", type=Path, required=True)
@@ -201,8 +208,7 @@ def main():
         "--output", str(args.output.resolve()), "--worker", "--expected-declaration-sha256", identity]
     supervised = supervise_worker(command, args.output, SETTINGS, identity)
     validate(record)
-    write_json(args.output / "output-sha256.json", {str(p.relative_to(args.output)): sha256(p)
-        for p in sorted(args.output.rglob("*")) if p.is_file() and p.name != "output-sha256.json"})
+    write_output_index(args.output)
     if supervised["status"] != "complete":
         raise SystemExit(1)
 
