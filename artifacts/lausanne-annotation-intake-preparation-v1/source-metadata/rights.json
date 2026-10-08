@@ -1,0 +1,25 @@
+{
+    "Name": "Lausanne_TOF-MRA_Aneurysm_Cohort",
+    "BIDSVersion": "1.6.0",
+    "License": "CC0",
+    "Authors": [
+        "Tommaso Di Noto",
+        "Guillaume Marie",
+        "Sebastien Tourbier",
+        "Yasser Alemán-Gómez",
+        "Oscar Esteban",
+        "Guillaume Saliou",
+        "Meritxell Bach Cuadra",
+        "Patric Hagmann",
+        "Jonas Richiardi"
+    ],
+    "Acknowledgements": "None",
+    "HowToAcknowledge": "None",
+    "Funding": [
+        "This work is supported by interdisciplinary fund of the Faculty of Biology and Medicine of the Lausanne University, the Centre d’Imagerie BioMedicale (CIBM) of the University of Lausanne (UNIL), and the Swiss National Science Foundation (grant numbers: 185872 for OE, 170873 for ST, 185897 for YA) "
+    ],
+    "ReferencesAndLinks": [
+        "If using this dataset, please cite our paper: 'Towards Automated Brain Aneurysm Detection in TOF-MRA: Open Data, Weak Labels, and Anatomical Knowledge', Neuroinformatics, 2022, https://doi.org/10.1007/s12021-022-09597-0"
+    ],
+    "DatasetDOI": "doi:10.18112/openneuro.ds003949.v1.0.1"
+}

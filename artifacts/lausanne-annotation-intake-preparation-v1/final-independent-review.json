@@ -1,0 +1,260 @@
+{
+  "schema": "lausanne-annotation-intake-independent-final-review-v1",
+  "created_at": "2026-10-08T11:43:12.261690+00:00",
+  "conclusion": "ready_for_bounded_source_payload_QC_pilot",
+  "ready_for_payload_pilot": true,
+  "blockers": [],
+  "scope_limit": "Acquisition and bounded per-file content/reference-grid QC only. This verdict does not admit labels for training, negative coverage, timestamped planning, scanner-frame use or clinical use. Actual mask content/grid remain unexamined by this reviewer.",
+  "frozen_files": [
+    {
+      "path": "manifests/lausanne-train-annotations-v1.json",
+      "bytes": 466329,
+      "sha256": "f779066f5cb784f623446f12565eb1405994ac9e3b41c1fef8210546598de624",
+      "snapshot": "build/lausanne-annotation-intake-independent-review-v1/final-source/manifests/lausanne-train-annotations-v1.json"
+    },
+    {
+      "path": "scripts/lausanne_annotation_intake.py",
+      "bytes": 38404,
+      "sha256": "04b71e433847d98f0d567cf24d97af77144351d4094429a630cc9f758af3a46e",
+      "snapshot": "build/lausanne-annotation-intake-independent-review-v1/final-source/scripts/lausanne_annotation_intake.py"
+    },
+    {
+      "path": "tests/test_lausanne_annotation_intake.py",
+      "bytes": 18476,
+      "sha256": "53ab6ecaa4a2294eca9a25d99504d684cec7be6b7f577bc74945a411c345821f",
+      "snapshot": "build/lausanne-annotation-intake-independent-review-v1/final-source/tests/test_lausanne_annotation_intake.py"
+    }
+  ],
+  "initial_verdict_preserved": {
+    "path": "build/lausanne-annotation-intake-independent-review-v1/verification.json",
+    "sha256": "726628f673ca95330baed5964d4dc1ac067b7447bc143853f910c7e8f9aab3b1",
+    "unchanged": true,
+    "original_exact_source_snapshots": [
+      {
+        "path": "build/lausanne-annotation-intake-independent-review-v1/initial-source/lausanne_annotation_intake.py",
+        "bytes": 37247,
+        "sha256": "6c75b797426077c513669a8410f5489018ab926d8326187f45e37f0e626ca0e1"
+      },
+      {
+        "path": "build/lausanne-annotation-intake-independent-review-v1/initial-source/test_lausanne_annotation_intake.py",
+        "bytes": 14396,
+        "sha256": "1111303f02014a8fb1f315375c72ee2acac62c097949730bfe1399691a5605c7"
+      },
+      {
+        "path": "build/lausanne-annotation-intake-independent-review-v1/initial-source/manifest.json",
+        "bytes": 466218,
+        "sha256": "589b8bfecd347154d9bc245057f94ec7c79df9a932e0f2539511fb72ce9b2ad6"
+      }
+    ]
+  },
+  "repair": {
+    "resolved_blocker": "started_attempt_loses_batch_link_on_supervision_exception",
+    "observed_code": "Outcome binds worker_launch_pending and attempt path before launch. Start callback binds status and PID before started.json. Exceptions distinguish worker_start_failed from failed_or_interrupted_after_start and retain original error. Available receipt bytes are hash-linked, claims verified and verification failure preserved without replacing original interruption.",
+    "reservation_accounting": "attempted_source_bytes is conservative source-byte reservation, including failed starts and existing-only attempts. It does not assert actual transferred bytes.",
+    "process_checks": "Pre-start failure retains attempt without PID; started children are killed/reaped; available failure receipt retained; mismatched receipt hash and verification error retained without accepted receipt status. Original independent regression passes.",
+    "control_attempts": [
+      {
+        "batch": "build/lausanne-annotation-intake-independent-review-v1/repaired-control-temporary/test_failed_supervision_preser0/data/cache/attempts/interruption-control/batch.json",
+        "outcome": {
+          "path": "derivatives/manual_masks/sub-022/ses-20101011/anat/sub-022_ses-20101011_desc-Lesion_1_mask.nii.gz",
+          "subject": "sub-022",
+          "session": "ses-20101011",
+          "role": "TRAIN",
+          "annotation_subtype_status": "manual_region_subtype_unresolved",
+          "status": "worker_start_failed",
+          "attempt": "data/cache/attempts/interruption-control/sub-022_ses-20101011_desc-Lesion_1_mask.nii.gz",
+          "error": {
+            "type": "OSError",
+            "message": "process control: launcher failed before creating a child"
+          }
+        },
+        "attempted_source_bytes": 36551
+      },
+      {
+        "batch": "build/lausanne-annotation-intake-independent-review-v1/repaired-control-temporary/test_failed_supervision_preser1/data/cache/attempts/interruption-control/batch.json",
+        "outcome": {
+          "path": "derivatives/manual_masks/sub-022/ses-20101011/anat/sub-022_ses-20101011_desc-Lesion_1_mask.nii.gz",
+          "subject": "sub-022",
+          "session": "ses-20101011",
+          "role": "TRAIN",
+          "annotation_subtype_status": "manual_region_subtype_unresolved",
+          "status": "failed_or_interrupted_after_start",
+          "attempt": "data/cache/attempts/interruption-control/sub-022_ses-20101011_desc-Lesion_1_mask.nii.gz",
+          "worker_pid": 71600,
+          "error": {
+            "type": "KeyboardInterrupt",
+            "message": "process control: interrupted after child start"
+          }
+        },
+        "attempted_source_bytes": 36551
+      },
+      {
+        "batch": "build/lausanne-annotation-intake-independent-review-v1/repaired-control-temporary/test_failed_supervision_preser2/data/cache/attempts/interruption-control/batch.json",
+        "outcome": {
+          "path": "derivatives/manual_masks/sub-022/ses-20101011/anat/sub-022_ses-20101011_desc-Lesion_1_mask.nii.gz",
+          "subject": "sub-022",
+          "session": "ses-20101011",
+          "role": "TRAIN",
+          "annotation_subtype_status": "manual_region_subtype_unresolved",
+          "status": "failed_or_interrupted_after_start",
+          "attempt": "data/cache/attempts/interruption-control/sub-022_ses-20101011_desc-Lesion_1_mask.nii.gz",
+          "worker_pid": 71601,
+          "error": {
+            "type": "KeyboardInterrupt",
+            "message": "process control: interrupted after child start"
+          },
+          "receipt_sha256": "172e1023c577992313d7166a994446849fce55de78e2238dc7b5c95bc4352fc8",
+          "receipt_status": "failed_or_incomplete",
+          "acquisition_status": "not_attempted",
+          "content_qc_status": "not_attempted",
+          "reference_qc_status": "not_attempted",
+          "grid_qc_status": "not_attempted"
+        },
+        "attempted_source_bytes": 36551
+      },
+      {
+        "batch": "build/lausanne-annotation-intake-independent-review-v1/repaired-control-temporary/test_failed_supervision_preser3/data/cache/attempts/interruption-control/batch.json",
+        "outcome": {
+          "path": "derivatives/manual_masks/sub-022/ses-20101011/anat/sub-022_ses-20101011_desc-Lesion_1_mask.nii.gz",
+          "subject": "sub-022",
+          "session": "ses-20101011",
+          "role": "TRAIN",
+          "annotation_subtype_status": "manual_region_subtype_unresolved",
+          "status": "failed_or_interrupted_after_start",
+          "attempt": "data/cache/attempts/interruption-control/sub-022_ses-20101011_desc-Lesion_1_mask.nii.gz",
+          "worker_pid": 71602,
+          "error": {
+            "type": "KeyboardInterrupt",
+            "message": "process control: interrupted after child start"
+          },
+          "receipt_sha256": "d23f0ebe3142110961e2b8c0de0ab85a54a43df4e5808c80fdfb3d2ca8772ea7",
+          "receipt_verification_error": {
+            "type": "AcquisitionError",
+            "message": "Worker receipt source/claim binding differs"
+          }
+        },
+        "attempted_source_bytes": 36551
+      },
+      {
+        "batch": "build/lausanne-annotation-intake-independent-review-v1/repaired-control-temporary/test_interrupted_started_worke0/data/cache/attempts/interruption-control/batch.json",
+        "outcome": {
+          "path": "derivatives/manual_masks/sub-022/ses-20101011/anat/sub-022_ses-20101011_desc-Lesion_1_mask.nii.gz",
+          "subject": "sub-022",
+          "session": "ses-20101011",
+          "role": "TRAIN",
+          "annotation_subtype_status": "manual_region_subtype_unresolved",
+          "status": "failed_or_interrupted_after_start",
+          "attempt": "data/cache/attempts/interruption-control/sub-022_ses-20101011_desc-Lesion_1_mask.nii.gz",
+          "worker_pid": 71603,
+          "error": {
+            "type": "KeyboardInterrupt",
+            "message": "independent pure-process interruption after child start"
+          }
+        },
+        "attempted_source_bytes": 36551
+      }
+    ]
+  },
+  "portability": {
+    "only_manifest_change": "Eleven metadata_sources paths now use repository artifact copies. Byte counts and SHA256 values are identical. Every other manifest value is exactly unchanged, including all 148 outcomes, 144 scientific objects/versions/fixities, roles, original/cohort bindings, semantics, limits and counts.",
+    "copies": {
+      "qualification": {
+        "path": "artifacts/lausanne-annotation-intake-preparation-v1/source-metadata/qualification.json",
+        "bytes": 1230019,
+        "sha256": "11bc772164ad3308583c00cc813f1f7e93d22aa96bbfd79d3c721794aa04017b"
+      },
+      "versions": {
+        "path": "artifacts/lausanne-annotation-intake-preparation-v1/source-metadata/versions.bin",
+        "bytes": 460664,
+        "sha256": "9f1b46b405dfc4049dbce32c0fd362f70f341e5e8340da990f4e9c8a6e8af953"
+      },
+      "version_response": {
+        "path": "artifacts/lausanne-annotation-intake-preparation-v1/source-metadata/version_response.json",
+        "bytes": 1248,
+        "sha256": "7f5e329ef0d01f070fe91e19d687113b0692a10a9e6b7464af0e25cc9bb878ec"
+      },
+      "participants": {
+        "path": "artifacts/lausanne-annotation-intake-preparation-v1/source-metadata/participants.tsv",
+        "bytes": 7431,
+        "sha256": "4f3fde676fec18cc6f3cfaddc5e3c22c0d194881a8c65f4af60c8d7042cf2c96"
+      },
+      "readme": {
+        "path": "artifacts/lausanne-annotation-intake-preparation-v1/source-metadata/readme.txt",
+        "bytes": 1793,
+        "sha256": "b66e136ee47c7a520d8c22380a9bdf7600b9bc387f5991a89f28c4d205faa23f"
+      },
+      "rights": {
+        "path": "artifacts/lausanne-annotation-intake-preparation-v1/source-metadata/rights.json",
+        "bytes": 1103,
+        "sha256": "39baee3ef549835c0ae13c83eed3235a6597d7ea24b1f94bf361fc1f32fffc35"
+      },
+      "methods": {
+        "path": "artifacts/lausanne-annotation-intake-preparation-v1/source-metadata/methods.xml",
+        "bytes": 124982,
+        "sha256": "105ae182b2b7da8c0d29f23700b5a3b82c6feb3255e5f09c8c4349495fd1e954"
+      },
+      "crosswalk": {
+        "path": "artifacts/lausanne-annotation-intake-preparation-v1/source-metadata/crosswalk.pkl",
+        "bytes": 1034,
+        "sha256": "18824f1c3f14a1909b966247ed7e6ac2d6144be762c6aa487ecc853baa3150eb"
+      },
+      "crosswalk_license": {
+        "path": "artifacts/lausanne-annotation-intake-preparation-v1/source-metadata/crosswalk_license.txt",
+        "bytes": 11357,
+        "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+      },
+      "qualification_runner": {
+        "path": "artifacts/lausanne-annotation-intake-preparation-v1/source-metadata/qualification_runner.py",
+        "bytes": 19657,
+        "sha256": "b1e1b4dd4389c7c1d1d0896f90841fafdc14bb1ba81f5ab696d97a6b934a8d1a"
+      },
+      "qualification_execution": {
+        "path": "artifacts/lausanne-annotation-intake-preparation-v1/source-metadata/qualification_execution.json",
+        "bytes": 1430,
+        "sha256": "49e7e0c15d595ab36417c871175f364fa7499b42ad25e81c9db603b44a25af59"
+      }
+    },
+    "copy_count": 11,
+    "copy_total_bytes": 1860718,
+    "fresh_root": "Copied only annotation/cohort/original manifests plus eleven metadata/proof files into an empty temporary root. Path.open rejected paths outside this exact fourteen-file allowlist during preflight; gzip/transport entrypoints were prohibited. Preflight passed 210 original TRAIN sessions and 148 annotation outcomes. No data/ or build/ directory/cache existed in that root before or afterward.",
+    "read_audit": "build/lausanne-annotation-intake-independent-review-v1/portable-metadata-read-audit.json",
+    "cache": "Existing content-addressed cache behavior unchanged; current original/cohort manifests remain checked directly."
+  },
+  "validation": [
+    {
+      "suites": [
+        "tests/test_lausanne_annotation_intake.py",
+        "build/lausanne-annotation-intake-independent-review-v1/test_independent_controls.py",
+        "tests/test_real_intake_io.py"
+      ],
+      "passed": 53,
+      "failed": 0,
+      "seconds": 1.46,
+      "junit": "build/lausanne-annotation-intake-independent-review-v1/repaired-controls.xml"
+    },
+    {
+      "suite": "build/lausanne-annotation-intake-independent-review-v1/test_portable_metadata.py",
+      "passed": 1,
+      "failed": 0,
+      "seconds": 0.08,
+      "junit": "build/lausanne-annotation-intake-independent-review-v1/portable-control.xml"
+    }
+  ],
+  "retained_source_findings": "Initial report source findings stand: all 296 source-response proofs and safe 38-entry crosswalk classification checked; CC0 data rights distinguished from CC-BY-4.0 methods and Apache-2.0 crosswalk rights; four failed metadata outcomes retained; 111 subtype-unresolved and 31 date-mismatch masks are not promoted to contours; sub253 passed TOF remains separate from failed T1; missing masks/background remain unknown; availability null and all frozen role assignments unchanged.",
+  "actions": {
+    "network_requests": 0,
+    "scientific_transfers": 0,
+    "original_image_or_mask_decodes": 0,
+    "generated_patient_fixtures": 0,
+    "tracked_edits_by_reviewer": 0,
+    "training_updates": 0,
+    "role_changes": 0
+  },
+  "admission": {
+    "training_admitted": false,
+    "scanner_frame_admitted": false,
+    "spatial_planning_admitted": false,
+    "annotation_available_at": null,
+    "review_available_at": null
+  }
+}

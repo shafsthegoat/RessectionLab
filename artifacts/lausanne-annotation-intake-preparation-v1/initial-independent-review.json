@@ -1,0 +1,251 @@
+{
+  "schema": "lausanne-annotation-intake-independent-review-v1",
+  "created_at": "2026-10-08T11:33:20.057510+00:00",
+  "conclusion": "Reviewed original is blocked before payload pilot pending interrupted-attempt receipt fix. Root has begun repair; changed runner is not evaluated by this initial report.",
+  "ready_for_payload_pilot": false,
+  "scope": {
+    "tracked_files_changed_by_reviewer": false,
+    "scientific_transfers": 0,
+    "scientific_payload_decodes": 0,
+    "generated_patient_images_or_arrays": 0,
+    "network_requests": 0,
+    "optimizer_updates": 0,
+    "role_changes": 0,
+    "reads": "Frozen code, source metadata, saved raw-header records and existing metadata receipts only. Crosswalk parsed by pickletools without executing pickle.",
+    "process_control": "One actual sleeping control child was launched and immediately interrupted through the supervisor start callback. No actual intake worker was launched."
+  },
+  "frozen_files": [
+    {
+      "path": "manifests/lausanne-train-annotations-v1.json",
+      "reviewed_sha256": "589b8bfecd347154d9bc245057f94ec7c79df9a932e0f2539511fb72ce9b2ad6",
+      "sha256_at_finalization": "589b8bfecd347154d9bc245057f94ec7c79df9a932e0f2539511fb72ce9b2ad6",
+      "bytes": 466218,
+      "snapshot": "build/lausanne-annotation-intake-independent-review-v1/frozen-source/manifests/lausanne-train-annotations-v1.json"
+    },
+    {
+      "path": "scripts/lausanne_annotation_intake.py",
+      "reviewed_sha256": "6c75b797426077c513669a8410f5489018ab926d8326187f45e37f0e626ca0e1",
+      "sha256_at_finalization": "d133f9774965a0a350a3d498329c5999038bba5a470e5754ccaebcc2d6eb4e2a",
+      "bytes_at_finalization": 38404,
+      "reviewed_bytes": 37247,
+      "snapshot": null,
+      "explanation": "Root began repair after reproducer was delivered. Reviewed runner identified by verified original hash and retained control source.json; current bytes are not represented as original."
+    },
+    {
+      "path": "tests/test_lausanne_annotation_intake.py",
+      "reviewed_sha256": "1111303f02014a8fb1f315375c72ee2acac62c097949730bfe1399691a5605c7",
+      "sha256_at_finalization": "53ab6ecaa4a2294eca9a25d99504d684cec7be6b7f577bc74945a411c345821f",
+      "bytes_at_finalization": 18476,
+      "reviewed_bytes": 37247,
+      "snapshot": null,
+      "explanation": "Root began repair after reproducer was delivered. Reviewed runner identified by verified original hash and retained control source.json; current bytes are not represented as original."
+    }
+  ],
+  "retained_control_source_record": "build/lausanne-annotation-intake-independent-review-v1/control-temporary/test_interrupted_started_workecurrent/data/cache/attempts/interruption-control/source.json",
+  "metadata_fixity_verified": [
+    {
+      "path": "manifests/lausanne-component-cohort-v1.json",
+      "bytes": 62650,
+      "sha256": "891a53680edfce604eed9a1791bc790efa615db8ce54da0c92de834a6b87d49a"
+    },
+    {
+      "path": "manifests/lausanne-train-originals-v1.json",
+      "bytes": 1586099,
+      "sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66"
+    },
+    {
+      "path": "build/lausanne-annotation-expansion-qualification-v1/qualification-index.json",
+      "bytes": 1230019,
+      "sha256": "11bc772164ad3308583c00cc813f1f7e93d22aa96bbfd79d3c721794aa04017b"
+    },
+    {
+      "path": "build/lausanne-annotation-expansion-qualification-v1/requests/request-001-body.bin",
+      "bytes": 460664,
+      "sha256": "9f1b46b405dfc4049dbce32c0fd362f70f341e5e8340da990f4e9c8a6e8af953"
+    },
+    {
+      "path": "build/lausanne-annotation-expansion-qualification-v1/requests/request-001.json",
+      "bytes": 1248,
+      "sha256": "7f5e329ef0d01f070fe91e19d687113b0692a10a9e6b7464af0e25cc9bb878ec"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/source-metadata/participants.tsv",
+      "bytes": 7431,
+      "sha256": "4f3fde676fec18cc6f3cfaddc5e3c22c0d194881a8c65f4af60c8d7042cf2c96"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/source-metadata/README",
+      "bytes": 1793,
+      "sha256": "b66e136ee47c7a520d8c22380a9bdf7600b9bc387f5991a89f28c4d205faa23f"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/source-metadata/dataset_description.json",
+      "bytes": 1103,
+      "sha256": "39baee3ef549835c0ae13c83eed3235a6597d7ea24b1f94bf361fc1f32fffc35"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/manual-annotation-sub476-v1/source/methods-PMC9931814.xml",
+      "bytes": 124982,
+      "sha256": "105ae182b2b7da8c0d29f23700b5a3b82c6feb3255e5f09c8c4349495fd1e954"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/manual-annotation-sub476-v1/source/voxelwise.pkl",
+      "bytes": 1034,
+      "sha256": "18824f1c3f14a1909b966247ed7e6ac2d6144be762c6aa487ecc853baa3150eb"
+    },
+    {
+      "path": "data/anatomy/ds003949-v1.0.1/manual-annotation-sub476-v1/source/Aneurysm_Detection-LICENSE",
+      "bytes": 11357,
+      "sha256": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4"
+    },
+    {
+      "path": "build/lausanne-annotation-expansion-qualification-v1/qualify_metadata.py",
+      "bytes": 19657,
+      "sha256": "b1e1b4dd4389c7c1d1d0896f90841fafdc14bb1ba81f5ab696d97a6b934a8d1a"
+    },
+    {
+      "path": "build/lausanne-annotation-expansion-qualification-v1/execution-provenance.json",
+      "bytes": 1430,
+      "sha256": "49e7e0c15d595ab36417c871175f364fa7499b42ad25e81c9db603b44a25af59"
+    }
+  ],
+  "inventory": {
+    "all_outcomes": 148,
+    "unique_paths": 148,
+    "metadata_qualified": 144,
+    "metadata_failed": 4,
+    "qualified_people": 106,
+    "qualified_sessions": 117,
+    "prospective_mask_source_bytes": 13977015,
+    "frozen_family_role_counts": {
+      "TRAIN": 199,
+      "MEASUREMENT_EVAL": 42,
+      "SELECT": 43
+    },
+    "original_train_people": 199,
+    "original_train_sessions": 210,
+    "annotation_subtypes": {
+      "manual_region_subtype_unresolved": 111,
+      "source_voxelwise_person_date_mismatch": 31,
+      "source_voxelwise_exact_crosswalk": 2
+    },
+    "failed_records": [
+      {
+        "path": "derivatives/manual_masks/sub-148/ses-20111106/anat/sub-148_ses-20111106_desc-Lesion_1_mask.nii.gz",
+        "error": {
+          "type": "ValueError",
+          "message": "Metadata request failed; no retry"
+        }
+      },
+      {
+        "path": "derivatives/manual_masks/sub-163/ses-20111014/anat/sub-163_ses-20111014_desc-Lesion_1_mask.nii.gz",
+        "error": {
+          "type": "ValueError",
+          "message": "Metadata request failed; no retry"
+        }
+      },
+      {
+        "path": "derivatives/manual_masks/sub-163/ses-20111014/anat/sub-163_ses-20111014_desc-Lesion_2_mask.nii.gz",
+        "error": {
+          "type": "ValueError",
+          "message": "Sidecar does not bind exact same-session original TOF"
+        }
+      },
+      {
+        "path": "derivatives/manual_masks/sub-220/ses-20110626/anat/sub-220_ses-20110626_desc-Lesion_1_mask.nii.gz",
+        "error": {
+          "type": "ValueError",
+          "message": "Sidecar does not bind exact same-session original TOF"
+        }
+      }
+    ],
+    "missing_mask": "Source TRAIN patient sub-482 has no candidate mask; unresolved absence is never a negative annotation.",
+    "independent_crosswalk": "All 148 rows match the 38 authentic author crosswalk strings. Only sub-476_ses-20140519 and sub-478_ses-20140513 are exact TRAIN voxelwise crosswalk matches.",
+    "split": "Every candidate binds a frozen TRAIN patient/session and all qualified sidecars bind exact same-session original TOF. No SELECT/MEASUREMENT_EVAL payloads; derivative family roles unchanged."
+  },
+  "source_proofs": {
+    "pointer_and_sidecar_response_bytes_verified": 296,
+    "source_request_urls_verified": 296,
+    "official_version_response_status": 200,
+    "official_version_listing_truncated": false,
+    "qualified_contract": "Exact Git-commit pointer blob hash, annex size/MD5, sidecar Type=Lesion/RawSources/Space=orig and immutable S3 version all agree with frozen qualification and original index.",
+    "retention": "Manifest embeds qualified pointer/sidecar bytes and failed response bytes. Qualification retains request/response records. Full version listing and request record are pinned. Intake retains metadata and execution source snapshots before attempting payloads.",
+    "archival_limit": "Earlier full Git-tree response was not retained; upstream inventory explicitly records that its archival rerequest failed. Derived inventory is retained and all 148 candidate pointer/sidecar requests were subsequently pinned/verified. No claim of retained full-tree bytes is made."
+  },
+  "rights_and_source_methods": {
+    "images_and_released_manual_masks": "CC0 in pinned dataset_description.json; source README explicitly includes binary manual aneurysm masks. Archived paper Information Sharing Statement - Data Availability states the OpenNeuro dataset is CC0.",
+    "methods_article": "Archived methods XML permissions explicitly CC-BY-4.0.",
+    "author_crosswalk": "Separate exact archived repository commit LICENSE is Apache-2.0; not inferred from image or paper rights.",
+    "annotation_section": "Aneurysm Annotation, Size, Location and Risk Groups for In-house Dataset",
+    "human_review": "Paper reports one radiologist (2 years neuroimaging experience) annotated, senior neuroradiologist (>15 years) double-checked. This is paper-reported review, not review of our imported content hashes.",
+    "weak_labels": "Manually chosen enclosing spheres in Mango 4.0.1. They are not voxelwise aneurysm contours.",
+    "voxelwise_labels": "ITK-SNAP 3.6.0 labels drawn slice by slice in the axial plane for the 38 crosswalk subjects; no learned initializer documented for those labels.",
+    "unknowns": "111 qualified masks remain manual subtype unresolved; 31 exact-release masks have author person/date mismatch. Availability dates remain null; no timestamped use, whole-vasculature coverage or negative background established."
+  },
+  "reviewed_contracts": {
+    "exact_transport": "One whitelisted versioned S3 GET per mask attempt; no redirects or automatic retries. Returned URL, version, encoding, Content-Length and resume Content-Range checked. Published annex MD5 before publication; measured SHA256 retained and rechecked after QC.",
+    "resume": "Retained partial belongs to same immutable source; correct range appends, HTTP200 restarts same object, full partial needs fixity before publication. Existing-file reuse verifies fixity.",
+    "bounds": {
+      "max_batch_seconds": 600,
+      "max_worker_seconds": 120,
+      "max_batch_source_bytes": 13977015,
+      "max_requests_per_mask_attempt": 1,
+      "automatic_retries": 0,
+      "max_concurrent_workers": 1,
+      "max_mask_voxels": 134217728,
+      "max_uncompressed_mask_bytes": 1073741824,
+      "max_logical_float64_bytes": 1073741824,
+      "max_decoded_chunk_working_bytes": 16777216,
+      "max_chunk_voxels": 262144,
+      "max_nifti_data_offset": 65536
+    },
+    "decoded_memory": "Chunked native buffer plus float64 scaling and at most three boolean temporaries; <=262144 voxels/chunk and <16 MiB declared working bound. No full image array allocation in inspect_mask. Finite exactly scaled binary 0/1 with both classes required. Unsupported NIfTI scalar/header/padding cases fail.",
+    "worker_cleanup": "Serial batch holds exclusive nonblocking flock. Worker signal timer <=120 seconds; parent supervises one process group and kills/reaps on deadline/interruption. Actual shared cleanup controls pass.",
+    "per_file_grid": "Each mask independently checks raw-header integrity, fixed 4-float32-ULP coefficient/index-preservation proof or exact coded native grid fallback. No resampling, registration, header repair or blanket admission from sub476. Saved actual sub476 header proof replayed without opening image/mask payload.",
+    "sub253": "Original metadata receipt preserves passed TOF separately from failed T1 qform/sform check. Reference verification concerns current TOF only and explicitly sets full_pair_current_fixity_checked=false; other-modality QC remains present.",
+    "semantics_and_admission": "Region bags remain separate from voxelwise contours, background unknown, availability null. All training/scanner/spatial admission flags false, optimizer updates and RL transitions zero. Intake does not construct planning evidence or invoke training."
+  },
+  "checks": [
+    {
+      "suite": "tests/test_lausanne_annotation_intake.py",
+      "passed": 32,
+      "failed": 0,
+      "seconds": 0.23,
+      "guard": "Fixture refused all scientific file/gzip opens and transport."
+    },
+    {
+      "suite": "Independent controls plus tests/test_real_intake_io.py",
+      "passed": 16,
+      "failed": 1,
+      "seconds": 1.16,
+      "junit": "build/lausanne-annotation-intake-independent-review-v1/controls.xml",
+      "failed_test": "test_interrupted_started_worker_is_not_reported_unattempted"
+    }
+  ],
+  "blockers": [
+    {
+      "id": "started_attempt_loses_batch_link_on_supervision_exception",
+      "priority": "P1_intake_audit_integrity",
+      "original_source_location": "scripts/lausanne_annotation_intake.py:560-575",
+      "trigger": "supervise raises after child start, before returning (SIGTERM/KeyboardInterrupt or callback/supervision failure).",
+      "observed": "Child is killed and reaped correctly. Batch outer error is saved, but selected mask remains deferred_not_attempted without attempt link despite started.json and reserved source bytes. An available worker receipt/request record could consequently be unlinked from the interrupted outcome.",
+      "reproduction": {
+        "test": "build/lausanne-annotation-intake-independent-review-v1/test_independent_controls.py::test_interrupted_started_worker_is_not_reported_unattempted",
+        "batch": "build/lausanne-annotation-intake-independent-review-v1/control-temporary/test_interrupted_started_workecurrent/data/cache/attempts/interruption-control/batch.json",
+        "started": "build/lausanne-annotation-intake-independent-review-v1/control-temporary/test_interrupted_started_workecurrent/data/cache/attempts/interruption-control/sub-022_ses-20101011_desc-Lesion_1_mask.nii.gz/started.json",
+        "attempted_source_bytes": 36551,
+        "observed_outcome": {
+          "path": "derivatives/manual_masks/sub-022/ses-20101011/anat/sub-022_ses-20101011_desc-Lesion_1_mask.nii.gz",
+          "subject": "sub-022",
+          "session": "ses-20101011",
+          "role": "TRAIN",
+          "annotation_subtype_status": "manual_region_subtype_unresolved",
+          "status": "deferred_not_attempted"
+        }
+      },
+      "required_fix": "Bind prepared attempt path and source-byte reservation before supervising. Distinguish failure before Popen returns (no child started) from interruption after a PID exists. On failure preserve phase, started state/PID, attempt path, original error, byte reservation and any available receipt/hash; apply the same source/claim validation to receipts recovered after interruption. Never reset a started attempt to deferred_not_attempted.",
+      "acceptance": "Re-run failing pure-process regression; separately verify pre-child supervisor/Popen failure, interrupted started child, timeout and available receipt linkage. All 148 outcomes remain. No scientific payload is required to verify this repair."
+    }
+  ],
+  "limits": "Source/contract review only. Actual binary content and per-file native grid remain unexamined until a bounded pilot. No role, clinical, training or planning admission follows from these controls."
+}

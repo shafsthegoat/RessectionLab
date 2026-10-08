@@ -1,0 +1,29 @@
+{
+  "number": 1,
+  "method": "GET",
+  "url": "https://s3.amazonaws.com/openneuro.org?versions=&prefix=ds003949%2Fderivatives%2Fmanual_masks%2F&max-keys=1000",
+  "kind": "official_S3_version_inventory",
+  "started_at": "2026-10-08T09:06:07.651390+00:00",
+  "body_limit": 2097152,
+  "scientific_payload_request": false,
+  "automatic_retries": 0,
+  "status": 200,
+  "final_url": "https://s3.amazonaws.com/openneuro.org?versions=&prefix=ds003949%2Fderivatives%2Fmanual_masks%2F&max-keys=1000",
+  "response_headers": {
+    "x-amz-id-2": "Q7i3RmIdzbvp0IUvBQBlKjdqD1Hws5baOZkqpk8KQw3cUXxF9XMd2eEJ/RN8B2WHCrL0iRxJmwE=",
+    "x-amz-request-id": "7VYX05Z8GXVAW5CK",
+    "Server": "AmazonS3",
+    "Date": "Thu, 08 Oct 2026 09:06:29 GMT",
+    "Content-Type": "application/xml",
+    "Transfer-Encoding": "chunked",
+    "Connection": "close"
+  },
+  "ok": true,
+  "completed_at": "2026-10-08T09:06:51.230028+00:00",
+  "elapsed_seconds": 43.578669917,
+  "body": {
+    "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/lausanne-annotation-expansion-qualification-v1/requests/request-001-body.bin",
+    "bytes": 460664,
+    "sha256": "9f1b46b405dfc4049dbce32c0fd362f70f341e5e8340da990f4e9c8a6e8af953"
+  }
+}

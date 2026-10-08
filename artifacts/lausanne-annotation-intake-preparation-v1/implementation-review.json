@@ -1,0 +1,49 @@
+{
+  "schema": "lausanne-annotation-intake-implementation-review-v1",
+  "created_at": "2026-10-08T11:21:38.540820+00:00",
+  "files": [
+    {
+      "path": "manifests/lausanne-train-annotations-v1.json",
+      "bytes": 466218,
+      "sha256": "589b8bfecd347154d9bc245057f94ec7c79df9a932e0f2539511fb72ce9b2ad6"
+    },
+    {
+      "path": "scripts/lausanne_annotation_intake.py",
+      "bytes": 37247,
+      "sha256": "6c75b797426077c513669a8410f5489018ab926d8326187f45e37f0e626ca0e1"
+    },
+    {
+      "path": "tests/test_lausanne_annotation_intake.py",
+      "bytes": 14396,
+      "sha256": "1111303f02014a8fb1f315375c72ee2acac62c097949730bfe1399691a5605c7"
+    }
+  ],
+  "tests": {
+    "command": ".venv/bin/python -m pytest -q tests/test_lausanne_annotation_intake.py",
+    "passed": 32,
+    "scope": "metadata/process controls and preserved real header records only; scientific opens and network forbidden by fixture"
+  },
+  "metadata_preflight": "passed for 148 outcomes / 144 masks / 106 people / 117 sessions / 13977015 prospective source bytes",
+  "manifest_subtypes": {
+    "manual_region_subtype_unresolved": 111,
+    "source_voxelwise_person_date_mismatch": 31,
+    "source_voxelwise_exact_crosswalk": 2
+  },
+  "original_dependencies": "Nine original-intake dependencies verified byte-identical to HEAD; no mechanics files edited",
+  "executed_scientific_requests": 0,
+  "decoded_patient_arrays": 0,
+  "optimizer_updates": 0,
+  "tracked_edits": [
+    "manifests/lausanne-train-annotations-v1.json",
+    "scripts/lausanne_annotation_intake.py",
+    "tests/test_lausanne_annotation_intake.py"
+  ],
+  "limitations": [
+    "No payload acquisition, content decoding or batch execution has been performed; those paths require independent review and authorized actual-source execution.",
+    "Content reader conservatively accepts single-file NIfTI-1 real scalar masks with bounded zero extension/padding, finite exact scaled 0/1 values, and both foreground/background; unsupported formats fail without repair.",
+    "Grid proof uses existing four-ULP sform envelope or exact coded-grid equality; other grids remain unresolved.",
+    "Original TOF QC/fixity is separated from retained other-modality QC; no current full-pair check is claimed.",
+    "Metadata archives must be available locally for initial preflight; scientific payloads never substitute for missing source proofs.",
+    "All receipts retain false training, scanner-frame and spatial-planning admission."
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "script": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/lausanne-annotation-expansion-qualification-v1/qualify_metadata.py",
+  "script_bytes": 19657,
+  "script_sha256": "b1e1b4dd4389c7c1d1d0896f90841fafdc14bb1ba81f5ab696d97a6b934a8d1a",
+  "python": "3.9.6 (default, May 22 2026, 11:13:45) \n[Clang 21.0.0 (clang-2100.1.1.101)]",
+  "source_inputs": [
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/build/lausanne-annotation-expansion-audit-v1/train-candidate-inventory.json",
+      "sha256": "146c92904409c9a0dfdbe452352b4fd83cef366b40ea9e14d942cfe07523591d"
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/manifests/lausanne-component-cohort-v1.json",
+      "sha256": "891a53680edfce604eed9a1791bc790efa615db8ce54da0c92de834a6b87d49a"
+    },
+    {
+      "path": "/Users/sayemkamal/.codex/.chatgpt-projects/g-p-6ac1ef0d1fc481919c65bf30beca2549/RessectionLab/manifests/lausanne-train-originals-v1.json",
+      "sha256": "6f1fc7812af0d66550076aa08d37d7f36f08d764fdab701bbbc9ca0608629e66"
+    }
+  ],
+  "request_policy": "GET pinned148 TRAIN Git pointer/sidecar URLs; GET official metadata version listing; HEAD exact148 TRAIN S3 objects; all redirects refused",
+  "network_max_concurrency": 2,
+  "no_scientific_payload_gets": true
+}
