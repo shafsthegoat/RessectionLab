@@ -1,0 +1,395 @@
+{
+  "accepted_N16_review": {
+    "path": "artifacts/mechanics/hbe-resolution-experiment-independent-review-v1/review.json",
+    "sha256": "9974e60cf64f6dda375f74a5ba362b0a9fe17153e067870d9c05d7105327792a"
+  },
+  "accepted_halfheight": {
+    "result": {
+      "path": "artifacts/mechanics/hbe-halfheight-execution-v1/solve-result.json",
+      "sha256": "16093a8c85a39a365f439898be078c46e1daa0e4aac660b6fcf3d7998d7a5cf1"
+    },
+    "review": {
+      "path": "artifacts/mechanics/hbe-halfheight-execution-v1/solve-review.md",
+      "sha256": "3cf587359f78f6a5202074c81817d072d0f00fcf6d7d7b832d851f22a01f24d8"
+    }
+  },
+  "accepted_mesh_preparation": {
+    "quality": {
+      "path": "artifacts/mechanics/hbe-resolution-mesh-result-v1/mesh-quality-summary.json",
+      "sha256": "1246a38fb65112d46497d362833c80ed7e10bcb55c2a05184bb2e936b2a075ad"
+    },
+    "review": {
+      "path": "artifacts/mechanics/hbe-resolution-mesh-independent-review-v1/review.json",
+      "sha256": "34e3f0638da5c8d38ae8cb3bc6e6e43ca386819173c7d666b8955f04c6c07fdf"
+    }
+  },
+  "branches": [
+    "compression",
+    "tension"
+  ],
+  "budgets": {
+    "aggregate_specimen_seconds": 1200,
+    "each_active_run_output_bytes": 536870912,
+    "each_solver_seconds": 420,
+    "generated_output_bytes": 2147483648,
+    "gmsh_generation_calls": 0,
+    "maximum_specimen_solver_calls": 3,
+    "pure_preparation_seconds": 60,
+    "runtime_threads": 1,
+    "sampled_process_family_rss_bytes": 3221225472
+  },
+  "calibration": false,
+  "co_primary_triplets": [
+    [
+      12,
+      16,
+      24
+    ],
+    [
+      8,
+      16,
+      24
+    ]
+  ],
+  "extraction": {
+    "full_coverage_and_oriented_cube_reflection_required": true,
+    "method": "unchanged_saved_whole_lower_cells;no_mesher_or_snapping",
+    "straddling_cells": 0
+  },
+  "frame_count": 61,
+  "full_geometry_item_limit": 25000,
+  "gates": {
+    "all_four_branch_triplet_groups_required": true,
+    "all_original_per_run_checks": true,
+    "mesh_motion_limit_m": 8e-06,
+    "mesh_reaction_absolute_floor_N": 1.6e-07,
+    "mesh_reaction_relative_to_max_abs_fine": 0.02,
+    "native_half_and_reconstructed_full_required": true,
+    "probe_coordinates": "original_fixed_physical_points",
+    "probe_count": 75,
+    "trend": "strict_decrease_unless_both_below_original_floor;motion_floor_8e-6m;force_floor_1.6e-7N"
+  },
+  "geometry": {
+    "coordinate_tolerance_m": 4.89159e-13,
+    "height_m": 0.00489159,
+    "radius_m": 0.004,
+    "retained_height_m": 0.002445795
+  },
+  "inherited_source_sha256": {
+    "access": "cfc7a6c145ea13f411a9b015917bfdcdb53017563259e04ad7c4b904464e92ab",
+    "backend_profile": "b9ea307055ee147271a745ade05b7a65ba51070b74d48f8b85e86b1f78df97ae",
+    "curve_evaluator": "275ae1ed07583273bf770d2eba26d34b380013ee195ed982b0d5272bd98eb098",
+    "halfheight_mesh": "6d8aef586fd454c262cd4afd3ad4e2b43580c9e74db0c380a020838dc8379084",
+    "halfheight_readout": "8ffe2742f20e0d426beb93bb9fa8f24d9766a705b9154d90cc83e8bd5a7efa30",
+    "mesh_deck": "b00afbb1f5f203d6918c52472bb257b6be4b2a6c114cac9f264a938119e4a414",
+    "orchestrator": "385fa5eb1700a5fd112307845e689c63c83dd63ccd5471a5e7d421637fbf36fa",
+    "physics": "00b8b5c87696609178a673ed98bbbe706ec524b4a8a09d0f0a55a85f53fb345d",
+    "primitive_parser": "f64d4f499644177a846e66a55bc9264eb7d8997f346ffa0ba27d09a9d7b19b19",
+    "readout": "7eceed74890f9c8b512d528a92948fd17d51593e58225fef057359dbdff324f0",
+    "runtime_driver": "679594d7f3759f5485b9fb868e7e5543ebb242bccd24d112f9ca862bb6d2a01e"
+  },
+  "interpreter": {
+    "path": "/Users/sayemkamal/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3.12",
+    "sha256": "b33be71b340c3829b6610a70cf5a89123a11d0afd23bc8ec5de385b410efb43a"
+  },
+  "levels": {
+    "16": {
+      "expected_counts": {
+        "full_elements": 6144,
+        "full_nodes": 7209,
+        "half_elements": 3072,
+        "half_nodes": 4005,
+        "midplane_nodes": 801
+      },
+      "full_mesh": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/N16/generated/mesh.json",
+        "sha256": "5fefdc7e0ba068461ea5d64074e11fe734a6460552798487fb2794ff65075f6b"
+      },
+      "full_mesh_fingerprint": "6ba0eec1735d94176ac2cd26c0f5f4a8352decae3e4cde74ff48aa648e8ff9ea",
+      "receipt": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/N16/generated/receipt.json",
+        "sha256": "1f8dfda34a09a92d3d58514cfcb9cb77839ae8c629eaeb449b13bb1119c970f2"
+      }
+    },
+    "24": {
+      "expected_counts": {
+        "full_elements": 20736,
+        "full_nodes": 23101,
+        "half_elements": 10368,
+        "half_nodes": 12439,
+        "midplane_nodes": 1777
+      },
+      "full_mesh": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/N24/generated/mesh.json",
+        "sha256": "61f27d63cdcb6328bcbe94e05ac1802a162d613cadd01610caf649a16f30643b"
+      },
+      "full_mesh_fingerprint": "278baa1292ca80874c459237a829fe5a46a8a7759d7e6177a438f5fe90d6a313",
+      "receipt": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/N24/generated/receipt.json",
+        "sha256": "527b4b44db9567943daf4d94e9e0c366ed194281d62cf19c509e6dd475586470"
+      }
+    }
+  },
+  "limits": [
+    "Only axial spatial convergence on the symmetric numerical branch.",
+    "No fine full-native equivalence counterpart exists for the three new cases.",
+    "1000 Pa remains a numerical gauge, not a measured or fitted modulus.",
+    "No response-curve read, fitting, torsion, patient-property or physical-validation claim.",
+    "No automatic calibration release; finer-level step convergence remains a separate dependency.",
+    "Historical failed and partial outputs remain immutable; partial N24 output is never reused.",
+    "Native half logs retain the original 20000-item parser bound; reconstructed full geometry is separately capped at25000 items."
+  ],
+  "measured_data_access": false,
+  "mechanics": {
+    "artificial_midplane": "z=d/2;xy_free",
+    "energy_scale": 2.0,
+    "force_scale": 1.0,
+    "full_load": "d(t)=+/-0.15H*t;61_states",
+    "physical_bottom": "xyz_prescribed_zero",
+    "physical_model": "original_unchanged_three_field_hex8_Ogden_exponent2;K=149mu/3;laugon=0",
+    "reaction_reconstruction": "reflect_vector_then_sum_shared_contributions",
+    "side": "traction_free",
+    "upper_displacement": "(ux,uy,d-uz)"
+  },
+  "mu_Pa": 1000.0,
+  "native_half_parser_item_limit": 20000,
+  "no_retry_or_resume": true,
+  "ordered_runs": [
+    "compression:N24:S60:reference",
+    "tension:N16:S60:reference",
+    "tension:N24:S60:reference"
+  ],
+  "original_backend_profile": {
+    "path": "artifacts/mechanics/hbe-accelerate-experiment-preparation-v1/backend-profile.json",
+    "sha256": "c9fafd50be2ed0c824b6ac15e8055b0f916d1331cc3b0e1e7e1d52a1ed1cbfc1"
+  },
+  "original_halfheight_declaration": {
+    "path": "manifests/experiments/hbe-01-03-halfheight-equivalence-v1.json",
+    "sha256": "0df5587ab7a70eb1ac092919ff067b4d85ce6c7457af9726875beb58af19ad1e"
+  },
+  "original_halfheight_source": {
+    "archive": {
+      "path": "build/hbe-halfheight-v1/source.tar",
+      "sha256": "6db8fe2156148f9b45bc768f479e53ad56dee5b284aca662d4471236062914c9"
+    },
+    "commit": "437bbeddb9ea110644315a10d11846a0d52c4a0d"
+  },
+  "original_protocol": {
+    "path": "manifests/experiments/hbe-01-03-mechanics-poc-v1.json",
+    "sha256": "ab4385f5ad315d2444ca3aedc87b455db0d36539cea4e2119114d803fba49035"
+  },
+  "original_resolution_declaration": {
+    "path": "manifests/experiments/hbe-01-03-axial-resolution-v1.json",
+    "sha256": "23b4f5e4d8a0b5ff05fcd45fbca88463a32460793d5b0f27d1a913a5e0a2443c"
+  },
+  "output_root": "outputs/mechanics/hbe-01-03-halfheight-spatial-v1",
+  "patient_data_access": false,
+  "preserved_failures": {
+    "full_domain_resolution_outcome": {
+      "path": "artifacts/mechanics/hbe-resolution-experiment-result-v1/outcome.json",
+      "sha256": "30670f554e14a55b8f88d0b269b6129c9b816ed352f6d9dfba7cc24b105950c0"
+    },
+    "full_domain_resolution_study": {
+      "path": "manifests/experiments/hbe-01-03-axial-resolution-v1.json",
+      "sha256": "23b4f5e4d8a0b5ff05fcd45fbca88463a32460793d5b0f27d1a913a5e0a2443c"
+    },
+    "original_mesh_review": {
+      "path": "artifacts/mechanics/hbe-accelerate-experiment-independent-review-v1/review.json",
+      "sha256": "289d72991067b84129ae86193420de91340b445de8ac60dadbde5c6b6e85d0ff"
+    },
+    "original_mesh_study": {
+      "path": "artifacts/mechanics/hbe-accelerate-experiment-result-v1/outcome.json",
+      "sha256": "fc3f5211e40beee246f1ceb2d9dfb0ff08f19840d61d9d6699c3cde2e1db2b4f"
+    }
+  },
+  "prior_runs": {
+    "compression:N12:S60:reference": {
+      "execution": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S60-reference/execution.json",
+        "sha256": "458ebfdcc9c28952c70e7c720af7818d8642480c7e2369932b7c537ee24db6ff"
+      },
+      "primitive_bindings": {
+        "deck": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S60-reference/specimen.feb",
+          "sha256": "6105632d45d2212d5e25f6a8cb3c011ff70a95ffdf342e0583a90e46d8f8bb57"
+        },
+        "elements": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S60-reference/elements.log",
+          "sha256": "968e43dab11576d0a1828767da80b8b7a1e98b789d24930f2d7c3aab8f5217a1"
+        },
+        "loading": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S60-reference/loading.json",
+          "sha256": "48dcbd091401d151443e81bb0ec4dc101f47d1cede01d450dd08aabdb61633b0"
+        },
+        "mesh": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/mesh.json",
+          "sha256": "0ed154be0d17c8baaac6ee0288381a53ec100f93cd936a194202f69ef32ae033"
+        },
+        "nodes": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S60-reference/nodes.log",
+          "sha256": "f875239091e2c819b085d11a611edcda7290ee6b45e7c868075ed1731bc1a339"
+        },
+        "solver": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S60-reference/solver.log",
+          "sha256": "e37c4a9b970d6af3e568dad7f53bbb14435a87e757acf9c7f95dfcea6e8912e5"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N12-S60-reference/readout.json",
+        "sha256": "f000ebd0e22d64923fe88fd3d1d53e8a260f240af0cb45368cf7708425014538"
+      }
+    },
+    "compression:N16:S60:reference": {
+      "execution": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/experiment/runs/compression-N16-S60-reference/execution.json",
+        "sha256": "c8acadcaf0d4f37a102182996ec2a628e9194aa38e5476c3af9e83171e515f0d"
+      },
+      "primitive_bindings": {
+        "deck": {
+          "path": "outputs/mechanics/hbe-01-03-resolution-v1/experiment/runs/compression-N16-S60-reference/specimen.feb",
+          "sha256": "7d181c56f50c059f03a65305598141736122b221d9d278ca0845b14f56910432"
+        },
+        "elements": {
+          "path": "outputs/mechanics/hbe-01-03-resolution-v1/experiment/runs/compression-N16-S60-reference/elements.log",
+          "sha256": "bab78396ae8e4829b4ea52d518522dfa914b53110f6965ca289f3653ae2970cc"
+        },
+        "loading": {
+          "path": "outputs/mechanics/hbe-01-03-resolution-v1/experiment/runs/compression-N16-S60-reference/loading.json",
+          "sha256": "136c9c2a072e7da817577e9b0ee372459eda24192cbe7fa4cd79c8dbad163066"
+        },
+        "mesh": {
+          "path": "outputs/mechanics/hbe-01-03-resolution-v1/mesh-preparation/N16/generated/mesh.json",
+          "sha256": "5fefdc7e0ba068461ea5d64074e11fe734a6460552798487fb2794ff65075f6b"
+        },
+        "nodes": {
+          "path": "outputs/mechanics/hbe-01-03-resolution-v1/experiment/runs/compression-N16-S60-reference/nodes.log",
+          "sha256": "04e4ff3b11255f29e6d2e02f52b7c96ea68f94f4838bd5fd8357b596428900e4"
+        },
+        "solver": {
+          "path": "outputs/mechanics/hbe-01-03-resolution-v1/experiment/runs/compression-N16-S60-reference/solver.log",
+          "sha256": "738253c38ed94ffdf6a9b61e9ac023be4622bd0a38a73e92f5a501ce0da56bdd"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-resolution-v1/experiment/runs/compression-N16-S60-reference/readout.json",
+        "sha256": "dbff229c78737d8ee4532cd73f87ea0e0bad3035b8e45e1542b7d107eefc7e28"
+      }
+    },
+    "compression:N8:S60:reference": {
+      "execution": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/execution.json",
+        "sha256": "901c1c701a95730abc5d6ff25083733f66471ef67d7d6e82d050d59494c2b1b4"
+      },
+      "primitive_bindings": {
+        "deck": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/specimen.feb",
+          "sha256": "4145e40a52be05f1418592ef1ecf02b7ef64c9dbe03a83241cab349ef161a665"
+        },
+        "elements": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/elements.log",
+          "sha256": "a94c3d38029350710eede95ee6f2584b018df8f2ca1f564bc83cb194b9e58147"
+        },
+        "loading": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/loading.json",
+          "sha256": "3d43d7143088803a5c732c85b22c259de6d2327b2fe7a92db3cf0e88909dd700"
+        },
+        "mesh": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/mesh.json",
+          "sha256": "3a6b5bb720bd3998f035abecf15d5c603d46c5ed281ce1d08c4aadec69c1dab9"
+        },
+        "nodes": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/nodes.log",
+          "sha256": "f661e96e0175b804b8d92191301236037d01f20a03605122a165aae5f3071d48"
+        },
+        "solver": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/solver.log",
+          "sha256": "4bc1fd13b1ad669d9b3556b3b41edfb1b916ed84ed1af5ae3d3c9e4a19b6ec8a"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/compression-N8-S60-reference/readout.json",
+        "sha256": "41e38786c9a07d045270f1a5a7da656bd3eddd9abed16d6fbc6fe30149a2d03d"
+      }
+    },
+    "tension:N12:S60:reference": {
+      "execution": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S60-reference/execution.json",
+        "sha256": "883c197bc8c347523e23de96aad830ef447a14d817058e8cb67961aceeb11168"
+      },
+      "primitive_bindings": {
+        "deck": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S60-reference/specimen.feb",
+          "sha256": "31f1ad9c050ea2c17a96c0a1441faa4b2c312f7b7a616d556497057e32220452"
+        },
+        "elements": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S60-reference/elements.log",
+          "sha256": "d4d352ba0bab247541284e17c372d156f1aedf5d45b64ba91fbd9f6634962250"
+        },
+        "loading": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S60-reference/loading.json",
+          "sha256": "637746d8302259447d43d741e85b0730f4cc614f3feab27f3b366d8b4bbbe23e"
+        },
+        "mesh": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N12/generated/mesh.json",
+          "sha256": "0ed154be0d17c8baaac6ee0288381a53ec100f93cd936a194202f69ef32ae033"
+        },
+        "nodes": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S60-reference/nodes.log",
+          "sha256": "6e13550b4c3c76c09e4e8bc9eef15e07f5f91d3265b0ad10ea15f03f4d07ad23"
+        },
+        "solver": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S60-reference/solver.log",
+          "sha256": "527734fefe6922468788ef894e5db3d5be6e001e306471bb2e5080c7b13e87d7"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N12-S60-reference/readout.json",
+        "sha256": "7a269ca2c1f7a4a9225b84d7660455a8832e0ed593867821d5c8a25cc9401d6a"
+      }
+    },
+    "tension:N8:S60:reference": {
+      "execution": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N8-S60-reference/execution.json",
+        "sha256": "a72afec40b1f0c2f9a89a6eade8c8dca6301c976bc06e202fbf1f7c88efa96f8"
+      },
+      "primitive_bindings": {
+        "deck": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N8-S60-reference/specimen.feb",
+          "sha256": "f4b69389104dac4cd58ad39021b64e46ce6436cfabc64ee866b84f00350a41ea"
+        },
+        "elements": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N8-S60-reference/elements.log",
+          "sha256": "d93b6a4a20233c2b3b2a5bbe8f201fb6fb07f8f902f0c5c6f6714cff6e924b9a"
+        },
+        "loading": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N8-S60-reference/loading.json",
+          "sha256": "3a0d486bf667346fe4c606e5881edb44d0f521db0c3639683065308f743a5f82"
+        },
+        "mesh": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/mesh-preparation/N8/generated/mesh.json",
+          "sha256": "3a6b5bb720bd3998f035abecf15d5c603d46c5ed281ce1d08c4aadec69c1dab9"
+        },
+        "nodes": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N8-S60-reference/nodes.log",
+          "sha256": "6ccab98630a0df79f0d9f255a1ff2779519d5ef96ff410c097874dfbc3d9a2c5"
+        },
+        "solver": {
+          "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N8-S60-reference/solver.log",
+          "sha256": "e5f8008391c5635a392476b012371ae1401132440d782939c8dc089ba6487c97"
+        }
+      },
+      "readout": {
+        "path": "outputs/mechanics/hbe-01-03-poc-v1/experiment-accelerate-csc-v1/runs/tension-N8-S60-reference/readout.json",
+        "sha256": "a9cb82b68a52d7b7f3267d83df741d6f416bb8569e3dbb2bbf7d7a94d9e50e18"
+      }
+    }
+  },
+  "release_required": "Each preparation/solve phase requires its own explicit source-archive/interpreter/runtime-bound release; this declaration alone authorizes neither phase.",
+  "runtime_identity": {
+    "path": "artifacts/febio-accelerate-csc-runtime-v3/runtime-identity.json",
+    "sha256": "13c4f60cbae8ad89232996e4f7d773bafbd2489f23a669c355f5ac09e417cc57"
+  },
+  "schema": "hbe-halfheight-spatial-v1",
+  "steps": 60,
+  "study_id": "hbe-01-03-halfheight-spatial-v1"
+}
